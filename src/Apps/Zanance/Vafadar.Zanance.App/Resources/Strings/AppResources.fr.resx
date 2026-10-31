@@ -7750,7 +7750,7 @@ Identité : {2}</value>
     <value>Exemple : sélectionnez les comptes de salaire et d’activité indépendante pour 2026. Vérifiez ensemble une dépense et son remboursement ; ne traitez pas un virement de prêt comme un revenu. Ajoutez les copies de reçus uniquement si vous souhaitez les envoyer au comptable choisi.</value>
   </data>
   <data name="Tax_PageTitle" xml:space="preserve">
-    <value>Dossier comptable</value>
+    <value>Comptable</value>
   </data>
   <data name="BankCsv_Title" xml:space="preserve">
     <value>CSV de logiciel bancaire allemand</value>
@@ -8639,5 +8639,8 @@ SHA-256 du XML original : {5}</value>
   </data>
   <data name="BillingIdentity_PreviousResult" xml:space="preserve">
     <value>Résultat de la demande précédente :</value>
+  </data>
+  <data name="Tax_SourceLoadFailed" xml:space="preserve">
+    <value>Les comptes n’ont pas pu être chargés. Rechargez les données pour réessayer.</value>
   </data>
 </root>

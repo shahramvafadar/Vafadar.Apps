@@ -7802,8 +7802,8 @@ Identity: {2}</value>
     <value>Example: select the salary and freelance accounts for 2026. Review an expense and its refund together; do not treat a loan transfer as income. Add stored receipt copies only if you want them sent to the chosen accountant.</value>
   </data>
   <data name="Tax_PageTitle" xml:space="preserve">
-    <value>Accountant packet</value>
-  </data>
+    <value>Accountant</value>
+  <comment>Compact original native page heading; detailed accountant packet disclosures remain in the body.</comment></data>
   <data name="BankCsv_Title" xml:space="preserve">
     <value>German bank-software CSV</value>
   </data>
@@ -8697,5 +8697,9 @@ Original XML SHA-256: {5}</value>
   </data>
   <data name="BillingIdentity_PreviousResult" xml:space="preserve">
     <value>Result of the previous request:</value>
+  </data>
+  <data name="Tax_SourceLoadFailed" xml:space="preserve">
+    <value>Account choices could not be loaded. Reload to try again.</value>
+    <comment>Original account-choice source read failed; no accountant packet operation is implied.</comment>
   </data>
 </root>

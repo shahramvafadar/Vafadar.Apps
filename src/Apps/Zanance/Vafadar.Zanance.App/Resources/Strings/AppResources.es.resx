@@ -7742,7 +7742,7 @@ Identidad: {2}</value>
     <value>Ejemplo: selecciona las cuentas de nómina y actividad autónoma de 2026. Revisa juntos un gasto y su reembolso; no trates un préstamo transferido como ingreso. Incluye copias de recibos solo si quieres enviarlas al asesor elegido.</value>
   </data>
   <data name="Tax_PageTitle" xml:space="preserve">
-    <value>Paquete contable</value>
+    <value>Contable</value>
   </data>
   <data name="BankCsv_Title" xml:space="preserve">
     <value>CSV de software bancario alemán</value>
@@ -8631,5 +8631,8 @@ SHA-256 del XML original: {5}</value>
   </data>
   <data name="BillingIdentity_PreviousResult" xml:space="preserve">
     <value>Resultado de la solicitud anterior:</value>
+  </data>
+  <data name="Tax_SourceLoadFailed" xml:space="preserve">
+    <value>No se pudieron cargar las cuentas. Vuelve a cargar los datos para intentarlo de nuevo.</value>
   </data>
 </root>

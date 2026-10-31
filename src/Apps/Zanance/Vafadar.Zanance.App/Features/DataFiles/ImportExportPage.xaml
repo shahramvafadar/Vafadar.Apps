@@ -235,7 +235,10 @@
             <p:WrappingAction Text="{v:Translate Import_RefreshPreview}" Command="{Binding RefreshPreviewCommand}" IsVisible="{Binding HasPreview}" />
             <p:WrappingAction Text="{Binding ImportButtonText}" Appearance="Primary" Command="{Binding ImportCommand}" IsVisible="{Binding HasPreview}" />
         </VerticalStackLayout>
-        <ActivityIndicator Grid.RowSpan="2" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}"
-                           HorizontalOptions="Center" VerticalOptions="Center" />
+        <!-- Source reads own their separate cover; preserve ordinary operation progress only after source publication. -->
+        <VerticalStackLayout Grid.RowSpan="2" IsVisible="{Binding Loading.IsReady}" InputTransparent="True"
+                             HorizontalOptions="Center" VerticalOptions="Center">
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}" />
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

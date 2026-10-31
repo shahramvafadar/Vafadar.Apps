@@ -7762,7 +7762,7 @@ Identità: {2}</value>
     <value>Esempio: seleziona i conti dello stipendio e dell’attività autonoma per il 2026. Verifica insieme una spesa e il suo rimborso; non considerare un trasferimento di prestito come reddito. Aggiungi copie delle ricevute solo se vuoi inviarle al commercialista scelto.</value>
   </data>
   <data name="Tax_PageTitle" xml:space="preserve">
-    <value>Pacchetto contabile</value>
+    <value>Commercialista</value>
   </data>
   <data name="BankCsv_Title" xml:space="preserve">
     <value>CSV di software bancario tedesco</value>
@@ -8651,5 +8651,8 @@ SHA-256 dell’XML originale: {5}</value>
   </data>
   <data name="BillingIdentity_PreviousResult" xml:space="preserve">
     <value>Risultato della richiesta precedente:</value>
+  </data>
+  <data name="Tax_SourceLoadFailed" xml:space="preserve">
+    <value>Non è stato possibile caricare i conti. Ricarica per riprovare.</value>
   </data>
 </root>

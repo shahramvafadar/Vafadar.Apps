@@ -57,7 +57,7 @@ public sealed class AccountantWorkspaceBoundaryTests
         using var f = new FlowFixture(); var factory = new Factory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>()) { Held = new() };
         var model = Create(f, factory); var read = model.LoadAsync(); await factory.Entered.Task.WaitAsync(TestContext.Current.CancellationToken);
         model.Retire(); var cancelled = factory.Token.IsCancellationRequested; factory.Held.SetResult(); await read;
-        Assert.True(cancelled); Assert.False(model.Loaded); Assert.False(model.CanShare);
+        Assert.True(cancelled); Assert.False(model.Loaded); Assert.False(model.CanShare); Assert.False(model.SourceReadFailed);
     }
     [Fact]
     public async Task An_old_public_Load_cannot_activate_a_departed_original_accountant_form()
@@ -70,7 +70,7 @@ public sealed class AccountantWorkspaceBoundaryTests
     {
         using var first = new FlowFixture(); using var other = new FlowFixture(); var factory = new Factory(first.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>()); var model = Create(first, factory);
         await model.LoadAsync(); factory.Original = other.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(); await model.LoadAsync();
-        Assert.False(model.Loaded); Assert.NotNull(model.Error); Assert.False(model.CanShare);
+        Assert.False(model.Loaded); Assert.True(model.SourceReadFailed); Assert.Null(model.Error); Assert.False(model.CanShare);
     }
     [Fact]
     public async Task Read_only_failure_and_Retry_preserve_unchanged_explicit_account_disclosure_choices()
@@ -86,6 +86,24 @@ public sealed class AccountantWorkspaceBoundaryTests
         factory.Fail = true; await model.LoadAsync(); Assert.False(model.Loaded); Assert.True(Assert.Single(model.Accounts).Selected); Assert.Equal("2025", model.Year);
         factory.Fail = false; await model.LoadAsync(); Assert.True(model.Loaded); Assert.True(Assert.Single(model.Accounts).Selected); Assert.True(model.IncludeNotes); Assert.Equal("2025", model.Year);
         Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: TestContext.Current.CancellationToken)); Assert.False(model.CanShare);
+    }
+
+    /// <summary>A failed account-choice read must not report an output failure before any packet was requested.</summary>
+    [Fact]
+    public async Task Source_failure_does_not_report_unrequested_packet_creation_and_Retry_retains_disclosure()
+    {
+        using var f = new FlowFixture(); var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        var factory = new Factory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>()) { Fail = true };
+        var model = Create(f, factory); model.Year = "2025"; model.IncludeNotes = true;
+        await model.LoadAsync();
+        Assert.True(model.SourceReadFailed);
+        Assert.Null(model.Error); Assert.False(model.Loaded); Assert.False(model.CanReview); Assert.False(model.CanShare);
+        Assert.Equal(1, factory.Reads); Assert.Equal("2025", model.Year); Assert.True(model.IncludeNotes);
+        Assert.Empty(f.Platform.ConfirmationDialogs); Assert.Empty(f.Platform.Routes);
+        factory.Fail = false; await model.LoadCommand.ExecuteAsync(null);
+        Assert.True(model.Loaded); Assert.False(model.SourceReadFailed); Assert.Null(model.Error); Assert.Equal(2, factory.Reads);
+        Assert.Empty(model.Accounts); Assert.Equal("2025", model.Year); Assert.True(model.IncludeNotes);
+        Assert.False(model.CanShare); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); model.Retire();
     }
     [Fact]
     public async Task A_terminal_original_root_cannot_grant_a_later_appearance_disclosure_authority()

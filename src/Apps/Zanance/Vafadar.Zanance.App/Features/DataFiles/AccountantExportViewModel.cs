@@ -68,6 +68,8 @@ public sealed partial class AccountantExportViewModel(AccountantExportStore stor
     [ObservableProperty] public partial string? AccountsError { get; private set; }
     /// <summary>Gets whether source input is fully published for this original native frame.</summary>
     [ObservableProperty] public partial bool Loaded { get; private set; }
+    /// <summary>Keeps account-choice read failure separate from packet creation and dynamically translated by the original view.</summary>
+    [ObservableProperty] public partial bool SourceReadFailed { get; private set; }
     /// <summary>Gets whether the actual frame may explicitly reload its original source.</summary>
     public bool CanReload => Current && !IsBusy;
     /// <summary>Gets whether original ready disclosure inputs may be reviewed or selected.</summary>
@@ -105,7 +107,7 @@ public sealed partial class AccountantExportViewModel(AccountantExportStore stor
     {
         if (!CanReload) return;
         Invalidate(); var readVersion = ++_readVersion; var operation = ++_operation; var ct = _frame.Token;
-        IsBusy = true; Loaded = false; Error = null; Refresh();
+        IsBusy = true; Loaded = false; SourceReadFailed = false; Error = null; Refresh();
         try
         {
             var workspace = await store.ReadWorkspaceAsync(ct, AcceptFile);
@@ -121,7 +123,7 @@ public sealed partial class AccountantExportViewModel(AccountantExportStore stor
             _workspace = workspace; Accounts.ReplaceAll(rows); Loaded = true;
         }
         catch (Exception error) when (error is not OutOfMemoryException)
-        { if (Current && readVersion == _readVersion) { Loaded = false; Error = translator["Tax_Failed"]; } }
+        { if (Current && readVersion == _readVersion) { Loaded = false; SourceReadFailed = true; } }
         finally { if (operation == _operation) { IsBusy = false; Refresh(); } }
     }
     /// <summary>Selects only actual current displayed account identities.</summary>

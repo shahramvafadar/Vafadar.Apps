@@ -55,6 +55,7 @@
             </VerticalStackLayout>
         </ScrollView>
         <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="8" BackgroundColor="{DynamicResource PageBackground}">
+            <Label Text="{v:Translate Tax_SourceLoadFailed}" Style="{StaticResource ErrorText}" IsVisible="{Binding SourceReadFailed}" />
             <Label Text="{Binding Error}" Style="{StaticResource ErrorText}" IsVisible="{Binding Error, Converter={StaticResource IsNotNullConverter}}" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{DynamicResource Primary}" HeightRequest="44" />
             <p:WrappingAction Text="{v:Translate Tax_Reload}" Command="{Binding LoadCommand}" IsEnabled="{Binding CanReload}" />

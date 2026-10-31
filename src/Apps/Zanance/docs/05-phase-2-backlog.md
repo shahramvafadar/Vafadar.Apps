@@ -5259,3 +5259,24 @@ before process creation, leaving11files/3013350logical bytes frozen without retr
 subset, alternate method, move, escalation or reuse. Original APK/used CoreLib/proofs
 remain; D-607 and the goal stay active and wider release gates remain open.
 [Actual packaged IL, exact code identity and limits](quality/original-managed-resource-cache-lock-evidence.md).
+
+
+### D-684 - Original CSV and accountant source covers at actual OS200
+
+The finite changed-view scope completes36 contexts/72 loading-error states and two
+original Retry actions across en/fa/de, both themes and360/412/680dp. Original duplicate
+CSV progress, clipped accountant title and misleading packet-creation error during a
+source-only read are preserved and corrected. The18 accepted CSV contexts are not
+replayed after accountant-only changes. One new red/green SQLite regression plus ten
+affected existing cases and23 resource contracts pass; shipping Windows and complete
+offline Android384AOT/408ELF/1608staticLOAD are strict and warning-free. Source21 remains
+exact with no financial/account/CSV/export/share/authentication setup or replay. Same
+UID/boot survives necessary no-reset updates; original startup/observer/invocation and
+absent-density-key failures remain recorded. Exact OS/source restoration,117 hash-matched
+owned XML removals, fresh fixture/official AVD retirement and five standard Clean scopes
+complete. Automatic review rejects two supplemental roots before process creation,
+leaving840files/125400007logical bytes frozen without retry/subset/alternate/move/
+escalation/reuse. Used signed packages and evidence remain; D-607's three deadlines,
+consumed reboot and unread source stay protected. Physical adoption and broader
+DB/key/security/stability/performance/A11Y/iOS/provider/Store/release gates remain open.
+[Original changed source covers and actual preservation evidence](quality/original-export-source-cover-os-text.md).

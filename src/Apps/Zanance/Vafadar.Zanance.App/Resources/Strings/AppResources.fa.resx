@@ -7773,7 +7773,7 @@
     <value>نمونه: حساب حقوق و حساب فعالیت مستقل را برای سال «۲۰۲۶» انتخاب کنید. هزینه و بازپرداختش را با هم بررسی کنید و انتقال وام را درآمد نگیرید. فقط اگر می‌خواهید کپی رسیدها برای حسابدار انتخاب‌شده فرستاده شود، آن گزینه را روشن کنید.</value>
   </data>
   <data name="Tax_PageTitle" xml:space="preserve">
-    <value>بستهٔ حسابدار</value>
+    <value>حسابدار</value>
   </data>
   <data name="BankCsv_Title" xml:space="preserve">
     <value>فایل CSV نرم‌افزار بانکی آلمان</value>
@@ -8662,5 +8662,8 @@
   </data>
   <data name="BillingIdentity_PreviousResult" xml:space="preserve">
     <value>نتیجهٔ درخواست قبلی:</value>
+  </data>
+  <data name="Tax_SourceLoadFailed" xml:space="preserve">
+    <value>فهرست حساب‌ها بارگیری نشد. برای تلاش دوباره، آن را بازخوانی کنید.</value>
   </data>
 </root>

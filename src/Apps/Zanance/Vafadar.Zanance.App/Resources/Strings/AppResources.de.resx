@@ -7773,7 +7773,7 @@ Identität: {2}</value>
     <value>Beispiel: Gehalts- und Geschäftskonto für 2026 auswählen. Ausgabe und Erstattung zusammen prüfen; eine Darlehensüberweisung ist kein Einkommen. Gespeicherte Belegkopien nur einschließen, wenn sie an die gewählte Steuerberatung gehen sollen.</value>
   </data>
   <data name="Tax_PageTitle" xml:space="preserve">
-    <value>Steuerberater-Paket</value>
+    <value>Steuerberater</value>
   </data>
   <data name="BankCsv_Title" xml:space="preserve">
     <value>Deutsche Banking-Software · CSV</value>
@@ -8662,5 +8662,8 @@ Original-XML SHA-256: {5}</value>
   </data>
   <data name="BillingIdentity_PreviousResult" xml:space="preserve">
     <value>Ergebnis der vorherigen Anfrage:</value>
+  </data>
+  <data name="Tax_SourceLoadFailed" xml:space="preserve">
+    <value>Die Kontenauswahl konnte nicht geladen werden. Laden Sie die Daten erneut.</value>
   </data>
 </root>
