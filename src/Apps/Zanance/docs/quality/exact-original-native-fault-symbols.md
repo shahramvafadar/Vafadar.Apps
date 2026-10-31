@@ -100,3 +100,8 @@ Samsung/D607's three original deadlines, consumed reboot and unread post-reboot 
 untouched. Main adoption retains the existing D-607 completion/cleanup prerequisite. No new
 claim is made for whole-device stability/security, two-second Home, broad accessibility,
 iOS, genuine providers/public hosting/Store or publication. The delivery goal remains active.
+
+## D-700 follow-through - exclude an already present official correction
+
+Official SGen PR125116/release10 backport125213 changes non-array LOS card-start alignment. Exact original module/debug identity and complete decoding of its two relevant native functions prove that alignment is already present at0x2d5957. The original client frame remains the separate reference-array pointer-call path, not a new failure reproduction. Reapplying/upgrading for this missing-fix hypothesis is rejected; original bad-reference origin and general stability remain unresolved. No app/runtime/GC/financial or device change occurs.
+[Actual native instructions, official source and causal limits](original-sgen-card-scan-correction-admission.md).

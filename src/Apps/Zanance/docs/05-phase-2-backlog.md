@@ -5419,3 +5419,8 @@ Complete18 OS200 contexts/36states using one retained unchanged Loading success 
 
 Qualify current post-D647 native share/return with exact producer/receiver/host PDF bytes, explicit temporary READ revocation and full21 source equality. Retain D329's already accepted physical delivery and en/fa/de PDF contents. The initial D323/D647-only lookup omitted that evidence; the repeated English raster/text inspection is corroboration, not a newly closed delivery/content gap. One new original opening0/income12.34 setup was accepted once without replaying old financial actions. No production change, new unit-test count, broad corpus or phone result is inferred; do not launch another PDF cohort for the completed content assertions.
 [Original recipient and document evidence](quality/original-report-pdf-recipient-handoff.md).
+
+### D-700 - Original native-fault correction admission
+
+Complete one named diagnostic question from D679 without replaying its successful native cohort. Official SGen non-array card-scan correction125116/125213 already appears in the exact original runtime14 executable at0x2d5957; current source and original reference-array call frame agree with that boundary. Do not reapply it, switch collectors or count this as repaired stability. No app build/test, financial write or device command occurs; the next cause-specific input remains necessary.
+[Exact binary/source result and next admission](quality/original-sgen-card-scan-correction-admission.md).

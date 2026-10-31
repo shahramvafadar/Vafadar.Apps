@@ -8612,3 +8612,8 @@ At actual OSfont2.0, both pages pass six languages/both themes at360dp and repre
 
 On a fresh API36/x64/4096 cohort, check original report12.34EUR after exactly one guarded necessary income. Invoke original Share as PDF once, choose only the independent offline local recipient in the actual Android chooser and verify provider ownership/UID/MIME/temporary READ-only grant. Producer cache/receiver/host must have identical17032bytes/SHA; inspect both actual rendered pages, full text, table continuation and disclaimer without a substitute PDF. Normal return must revoke READ and preserve all21 typed source collections. This qualifies one English overview, not all report packages/languages/recipients or physical delivery; old successful finance/KPI tests remain retained.
 [Exact original output and preserved failures](quality/original-report-pdf-recipient-handoff.md).
+
+### D-700 - Exact native correction scope, not a stability pass
+
+Verify original module/debug SHA256, GNU BuildID/debug-link CRC, positive-size executable symbol ranges and full instruction decoding before interpreting an official correction. The original binary already has the512-byte non-array card-start alignment at0x2d5957; original client0x2c667b remains inside its reference-array indirect pointer call. Five host address-arithmetic examples are not product tests or original crash reproduction. No runtime/GC change or general security/stability acceptance follows.
+[Actual source/backport and native instruction evidence](quality/original-sgen-card-scan-correction-admission.md).

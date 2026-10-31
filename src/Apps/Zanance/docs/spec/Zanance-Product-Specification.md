@@ -11792,3 +11792,8 @@ Preserve original source/financial/navigation behavior and compact Transactions 
 
 The original report's native render/cache/Share as PDF route delivers an identical17032byte/two-page English overview through Android chooser to an isolated offline recipient. Actual producer-UID ownership, temporary READ grant/revocation, visual page inspection and full21 typed source equality pass. One necessary fresh original opening0/income12.34 cohort is accepted once; no old financial scenario repeats. Production is unchanged. This does not establish all report packages/languages/consumers, wholeDB/key, phone adoption or general release acceptance.
 [Original document, preserved failures and scope](../quality/original-report-pdf-recipient-handoff.md).
+
+### D-700 - Exact runtime-correction admission
+
+Preserve the original native failure and separate managed resource-cache exception. Official SGen non-array card-scan alignment already exists in the original runtime14 executable, proved against matching module/debug identity and native instructions; do not propose it as an absent fix or infer general stability. Source-reference origin and all broader release gates remain unfinished. No product, financial or device behavior changes.
+[Exact original source/binary correction boundary](../quality/original-sgen-card-scan-correction-admission.md).

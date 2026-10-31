@@ -12520,3 +12520,8 @@ Keep the original Persian successes; actual Spanish Retry needs224px but receive
 
 Qualify the current post-D647 original report command with full21 source equality across native share/return, exact producer/recipient/host bytes and explicit temporary READ-grant revocation. D329 already qualified physical PDF recipient delivery and en/fa/de contents; retain that acceptance. D699's repeated English page inspection is corroboration, not a new capability or historical gap. The initial D323/D647-only history lookup omitted D329 and is corrected explicitly. One new opening0/income12.34 setup was accepted once; no old accepted financial action is replayed and production remains unchanged.
 [Original document, preserved failures and acceptance limits](quality/original-report-pdf-recipient-handoff.md).
+
+### D-700 - Admit runtime corrections against the exact original executable
+
+Do not replace runtime/GC merely because an official issue resembles the old native fault. Exact original module/debug identity, source/backport diff and complete native function decoding show that SGen PR125116/125213's non-array card alignment is already present. The recorded reference-array pointer-call frame is preserved separately. This rejects that missing-fix proposal, not every runtime/application cause; source-reference origin remains unresolved and no product or device change follows.
+[Exact original correction admission and limits](quality/original-sgen-card-scan-correction-admission.md).

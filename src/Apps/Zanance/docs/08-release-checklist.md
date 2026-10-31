@@ -5639,3 +5639,8 @@ Strict Windows0warnings/errors and full offline shipping692f7c936949cedd721a2fc6
 
 Original native render/cache/chooser/recipient read and two-page visual inspection pass with producer/receiver/host byte identity, temporary READ revocation and source21 exact. Only necessary independent producer192AOT/204ELF/804staticLOAD and recipient18AOT/28ELF/102staticLOAD are built strict/offline/nondebug; no unchanged shipping/Windows or financial test is repeated. Original OS/Home restore, two fresh UIDs/21hash-matched XML/officialAVD retire and two standardCleans pass. Supplementary deletion is rejected before process creation:923files130474673logicalbytes frozen without retry/subset/alternate/move/escalation/reuse. Used APKs/source/PDF/evidence remain outside those scopes. Phone/D607 and broader release gates remain unchanged.
 [Original output, local recipient and precise limits](quality/original-report-pdf-recipient-handoff.md).
+
+### D-700 - Original SGen correction admission
+
+Original module/debug/source identity and native decoding reject a proposed missing official non-array alignment fix: it already exists in the actually used runtime14 module. This closes only the named correction-admission question; native bad-reference origin, managed resource-cache cause, general stability and release gates stay open. No app/runtime/GC/build/test/financial/device change occurs. Removal of the one temporary scoped decoder is rejected before process creation:88files4196690logicalbytes frozen without retry/subset/alternate/move/escalation/reuse; output/source/licence evidence stays outside it. D607 and other pending/refused scopes remain intact.
+[Original native proof and remaining causal input](quality/original-sgen-card-scan-correction-admission.md).
