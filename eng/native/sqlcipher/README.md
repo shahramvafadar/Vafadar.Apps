@@ -1,6 +1,12 @@
 # Source-built native cipher producers
 
 Source, compiler, diagnostic, compatibility and immutable package checks are independent gates.
+
+`Observe-WindowsToolchain.ps1` records only public installed compiler metadata before
+the existing qualification in CI. It neither executes nor admits an unreviewed compiler.
+The31October host18.11.12328.437 remains unqualified until its actual signed executable
+and native producer evidence are reviewed; local baseline evidence is not hosted proof.
+[Current observed drift and unchanged gates](../../../src/Apps/Zanance/docs/quality/retired-billing-review-and-hosted-compiler-drift.md).
 An approved compiler executable is insufficient to reuse an existing native package identity.
 `Pack-Windows.ps1` refuses changed DLL or package-entry bytes under a pinned consumer version.
 Keep baseline and serviced producers separate; never allow alternative bytes for one version.

@@ -8008,7 +8008,7 @@ Maximum: {3} credit units; offer valid through {4}.</value>
     <value>The share outcome was not confirmed. The chosen app may already have readable data; check there before sharing again. No Zanance AI credit was consumed and no ledger entry changed.</value>
   </data>
   <data name="Market_Title" xml:space="preserve">
-    <value>Reference rates and prices</value>
+    <value>Reference data</value>
   </data>
   <data name="Market_MoreHint" xml:space="preserve">
     <value>Optional sources, offline cache and explicit value review</value>

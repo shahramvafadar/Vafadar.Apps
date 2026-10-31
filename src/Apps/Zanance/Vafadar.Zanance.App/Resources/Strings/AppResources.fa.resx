@@ -7979,7 +7979,7 @@
     <value>نتیجهٔ اشتراک تأیید نشد. ممکن است برنامهٔ انتخابی قبلاً دادهٔ خوانا را دریافت کرده باشد؛ پیش از اشتراک دوباره، همان‌جا بررسی کنید. اعتبار هوش مصنوعی Zanance مصرف نشد و دفتر مالی تغییر نکرد.</value>
   </data>
   <data name="Market_Title" xml:space="preserve">
-    <value>نرخ‌ها و قیمت‌های مرجع</value>
+    <value>داده‌های مرجع</value>
   </data>
   <data name="Market_MoreHint" xml:space="preserve">
     <value>منابع اختیاری، مرجع آفلاین و بررسی صریح مقدار</value>

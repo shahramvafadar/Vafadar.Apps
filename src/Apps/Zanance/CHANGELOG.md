@@ -6,6 +6,9 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-680: keep German display-unit and reference-data headings readable at large native text sizes without reducing the selected font or removing detailed source information.
+- D-681: prevent an old purchase-review dialog from blocking or clearing a newer page's review; retain explicit Reload for changed store facts.
+
 - D-665: retain original analysis source/native disclosure and independent request ownership; refresh translated feedback without reading again, preserve known historical results and newer drafts, and cancel pending source reads on Back.
 
 - D-664: bind optional identity session/native consent and request lifetimes to their original page; retain known acknowledgements and newer drafts through session-read failure, clear request-only secrets and retry only the read.

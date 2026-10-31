@@ -95,7 +95,9 @@ public sealed class BillingOfferSelectionTests
             effect.State = new(ProductBillingStatus.Ready, null, null,
                 [Offer(BillingProduct.PlusYearly) with { ExistingSubscription = true, Replacement = new(BillingProduct.PlusMonthly, Id, "plus", timing, Now.AddDays(10)) }],
                 true, true, ProRestoreRequired: true, OfferChanged: true);
-            await vm.LoadAsync(); var row = Assert.Single(vm.BillingOffers);
+            // Appearance coalesces an already visible frame; changed store facts require its explicit Reload.
+            if (vm.Loading.IsReady) await vm.ReloadCommand.ExecuteAsync(null); else await vm.LoadAsync();
+            var row = Assert.Single(vm.BillingOffers);
             Assert.Contains(dates.Format(Now.AddDays(10)), row.Terms);
             Assert.Contains(f.Translator.Format("Billing_Replacement_" + timing, "Plus", dates.Format(Now.AddDays(10))), row.Terms);
             Assert.Equal(f.Translator["Billing_OfferChanged"], vm.BillingStatusText);
@@ -105,9 +107,9 @@ public sealed class BillingOfferSelectionTests
             Assert.Contains(row.Terms, f.Platform.ConfirmationDialogs.Last().Message);
         }
         effect.State = new(ProductBillingStatus.Ready, null, null, [Offer(BillingProduct.PlusLifetime) with { ExistingSubscription = true }], true, false);
-        await vm.LoadAsync(); Assert.Contains(f.Translator["Billing_LifetimeKeepsSubscription"], Assert.Single(vm.BillingOffers).Terms);
+        await vm.ReloadCommand.ExecuteAsync(null); Assert.Contains(f.Translator["Billing_LifetimeKeepsSubscription"], Assert.Single(vm.BillingOffers).Terms);
         effect.State = new(ProductBillingStatus.ManageExisting, null, null, [], true, false);
-        await vm.LoadAsync(); Assert.False(vm.CanBuyBilling); Assert.False(vm.CanContinueBilling); Assert.True(vm.CanManageBilling);
+        await vm.ReloadCommand.ExecuteAsync(null); Assert.False(vm.CanBuyBilling); Assert.False(vm.CanContinueBilling); Assert.True(vm.CanManageBilling);
         Assert.Equal(f.Translator["Billing_Status_ManageExisting"], vm.BillingStatusText);
         Assert.Equal(0, effect.Purchases); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); vm.DeactivateBilling();
     }

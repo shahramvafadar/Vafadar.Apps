@@ -54,6 +54,8 @@ public sealed partial class ProductPlansViewModel
         // SDK observation may outlive cancellation; its epoch cannot publish to a new frame.
         if (!_sourceAccessPending) _sourceRead = null;
         _billingEpoch++; _billingPage?.Cancel(); _billingPage?.Dispose(); _billingPage = null; BillingOffers = []; BillingBusy = false; _billingOperation = false; _billingRead = false;
+        // A retired native dialog cannot reserve a new frame's review or block its initial store read.
+        _billingReview = false;
         _billingPresentation = null; OnPropertyChanged(nameof(BillingOwnedPurchases)); NotifyReadiness(); NotifyBillingCommands();
     }
     private async Task LoadBillingAsync()
@@ -142,7 +144,7 @@ public sealed partial class ProductPlansViewModel
             accepted = await _interaction.ConfirmAsync(_translator["Billing_ReviewTitle"], row.Title + Environment.NewLine + row.Terms +
                 Environment.NewLine + _translator["Billing_ReviewTerms"], _translator["Billing_ContinueStore"], _translator["Common_Cancel"]);
         }
-        finally { _billingReview = false; NotifyBillingCommands(); }
+        finally { if (epoch == _billingEpoch) { _billingReview = false; NotifyBillingCommands(); } }
         if (!accepted || epoch != _billingEpoch || disclosure != BillingDisclosure(row) || !ReferenceEquals(original, _snapshot) || !CanBuyBilling || !BillingOffers.Contains(row)) return;
         if (!await RequireOriginalSourceAsync()) return;
         await RunBillingAsync(token => _billing!.PurchaseAsync(row.Original, token), retainedWork: true);
@@ -159,7 +161,7 @@ public sealed partial class ProductPlansViewModel
             accepted = await _interaction.ConfirmAsync(_translator["Billing_Restore"], _translator["Billing_RestoreExplanation"],
                 _translator["Billing_Restore"], _translator["Common_Cancel"]);
         }
-        finally { _billingReview = false; NotifyBillingCommands(); }
+        finally { if (epoch == _billingEpoch) { _billingReview = false; NotifyBillingCommands(); } }
         if (!accepted || epoch != _billingEpoch || disclosure != BillingDisclosure() || !ReferenceEquals(original, _snapshot) || !CanRestoreBilling) return;
         if (!await RequireOriginalSourceAsync()) return;
         await RunBillingAsync(token => _billing!.RestoreAsync(token), retainedWork: true);

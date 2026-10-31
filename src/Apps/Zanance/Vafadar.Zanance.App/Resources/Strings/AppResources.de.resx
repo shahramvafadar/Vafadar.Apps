@@ -2381,7 +2381,7 @@
     <value>{0} ({1})</value>
   </data>
   <data name="Unit_Title" xml:space="preserve">
-    <value>Währungseinheiten</value>
+    <value>Anzeigeeinheiten</value>
   </data>
   <data name="Unit_Intro" xml:space="preserve">
     <value>Beträge einer Währung in einer Alltagseinheit anzeigen und eingeben, z. B. Toman statt Rial. Gespeichert, exportiert und umgerechnet wird weiter in der Währung selbst.</value>
@@ -7979,7 +7979,7 @@ Höchstens {3} Guthabeneinheiten; Angebot gültig bis {4}.</value>
     <value>Das Ergebnis des Teilens wurde nicht bestätigt. Die gewählte App kann lesbare Daten bereits haben; prüfen Sie dort vor erneutem Teilen. Kein Zanance-KI-Guthaben wurde verwendet und keine Buchung geändert.</value>
   </data>
   <data name="Market_Title" xml:space="preserve">
-    <value>Referenzkurse und Preise</value>
+    <value>Referenzdaten</value>
   </data>
   <data name="Market_MoreHint" xml:space="preserve">
     <value>Optionale Quellen, Offline-Cache und bewusste Wertprüfung</value>

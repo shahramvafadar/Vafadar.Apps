@@ -7948,7 +7948,7 @@ Máximo: {3} unidades de crédito; oferta válida hasta {4}.</value>
     <value>No se confirmó el resultado de compartir. La app elegida podría tener ya los datos legibles; compruébalo allí antes de volver a compartir. No se consumieron créditos de IA de Zanance ni se cambió el registro.</value>
   </data>
   <data name="Market_Title" xml:space="preserve">
-    <value>Tipos y precios de referencia</value>
+    <value>Datos de referencia</value>
   </data>
   <data name="Market_MoreHint" xml:space="preserve">
     <value>Fuentes opcionales, caché sin conexión y revisión explícita del valor</value>

@@ -11591,3 +11591,26 @@ two new cache/tool roots is rejected before execution and frozen, with one 15762
 duplicate remaining. Used debug/source/evidence are retained. QA-06 and the delivery goal
 remain active; D-607/phone and all broader acceptance gates remain untouched.
 [Exact symbol/source binding, actual limits and cleanup refusal](../quality/exact-original-native-fault-symbols.md).
+
+
+### D-680 / D-681 - Original native headings and retired billing reviews
+
+D-680 qualifies54 original rates/display-units/reference contexts and108 loading/error
+states at actual OSfont2.0, en/fa/de, both themes and360/412/680dp, including original
+Toolbar/Back and three visible Retry actions. Real German-unit and English-reference
+title clipping is corrected with accurate compact resource captions, retaining detailed
+source/financial disclosures. All21 typed source collections remain equal without seed,
+Save, financial/provider work, PIN or TalkBack; affected accepted states alone are updated.
+Strict Windows/full signed offline384AOT/408ELF/1608staticLOAD and21 resource contracts pass.
+[Actual defects, native evidence and limits](../quality/original-rate-cover-native-text-scale.md).
+
+D-681 reproduces seven current CI failures, uses explicit Reload in the six-language
+replacement test, and retires native-review reservations with their actual frame while
+old completions retain their epoch. The32 affected existing cases and two new late-result
+cases pass. One actual original page/native dialog in PID19111 accepts the retired dialog
+without invoking restoration, with source21 equal; the precise lifecycle retirement is a
+private diagnostic call, not accepted user navigation or a real store. The hosted Windows
+compiler remains unqualified: new public metadata observation preserves the exact existing
+signature/hash/SDK/native-package gates. No hosted-green or release claim is made.
+Phone/D-607 deadlines, consumed reboot and unread source remain untouched; the goal is active.
+[Actual CI failures, original review repair and hosted boundary](../quality/retired-billing-review-and-hosted-compiler-drift.md).

@@ -88,7 +88,30 @@ public sealed class ProductPlansWorkspaceTests
         using var f = new FlowFixture(); var billing = new Store(); var vm = Create(f, new(), billing: billing); await vm.LoadAsync();
         var pending = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously); f.Platform.PendingConfirmation = () => pending.Task;
         var action = vm.RestoreBillingCommand.ExecuteAsync(null); vm.DeactivateBilling(); await vm.LoadAsync();
+        Assert.True(vm.CanRestoreBilling); Assert.True(vm.CanLeave);
         pending.SetResult(true); await action; Assert.Equal(0, billing.Restores); Assert.True(vm.CanRestoreBilling);
+    }
+
+    /// <summary>A late old native result cannot release a newer frame's still-pending review, regardless of the old answer.</summary>
+    [Theory]
+    [InlineData(false)][InlineData(true)]
+    public async Task Retired_native_result_cannot_clear_a_new_frames_pending_review(bool oldAccepted)
+    {
+        using var f = new FlowFixture(); var billing = new Store(); var vm = Create(f, new(), billing: billing);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f); await vm.LoadAsync();
+        var oldAnswer = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        f.Platform.PendingConfirmation = () => oldAnswer.Task;
+        var oldAction = vm.RestoreBillingCommand.ExecuteAsync(null);
+        vm.DeactivateBilling(); await vm.LoadAsync(); Assert.True(vm.CanRestoreBilling);
+        var newAnswer = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        f.Platform.PendingConfirmation = () => newAnswer.Task;
+        var newAction = vm.RestoreBillingCommand.ExecuteAsync(null);
+        Assert.Equal(2, f.Platform.ConfirmationDialogs.Count); Assert.False(vm.CanLeave);
+        oldAnswer.SetResult(oldAccepted); await oldAction;
+        Assert.False(vm.CanLeave); Assert.False(vm.CanRestoreBilling); Assert.Equal(0, billing.Restores);
+        newAnswer.SetResult(false); await newAction;
+        Assert.True(vm.CanLeave); Assert.True(vm.CanRestoreBilling); Assert.Equal(0, billing.Restores);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); vm.DeactivateBilling();
     }
 
     [Fact]

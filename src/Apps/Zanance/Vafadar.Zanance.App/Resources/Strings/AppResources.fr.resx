@@ -7956,7 +7956,7 @@ Maximum : {3} unités de crédit ; offre valable jusqu’au {4}.</value>
     <value>Le résultat du partage n’a pas été confirmé. L’application choisie peut déjà disposer des données lisibles ; vérifiez avant de partager à nouveau. Aucun crédit IA Zanance n’a été consommé et aucune écriture n’a changé.</value>
   </data>
   <data name="Market_Title" xml:space="preserve">
-    <value>Taux et prix de référence</value>
+    <value>Données de référence</value>
   </data>
   <data name="Market_MoreHint" xml:space="preserve">
     <value>Sources facultatives, cache hors ligne et vérification explicite de la valeur</value>

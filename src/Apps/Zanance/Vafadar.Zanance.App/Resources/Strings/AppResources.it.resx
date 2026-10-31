@@ -7968,7 +7968,7 @@ Massimo: {3} unità di credito; offerta valida fino al {4}.</value>
     <value>L’esito della condivisione non è stato confermato. L’app scelta potrebbe già avere i dati leggibili; controlla lì prima di condividerli di nuovo. Nessun credito IA Zanance è stato consumato e nessun movimento è cambiato.</value>
   </data>
   <data name="Market_Title" xml:space="preserve">
-    <value>Tassi e prezzi di riferimento</value>
+    <value>Dati di riferimento</value>
   </data>
   <data name="Market_MoreHint" xml:space="preserve">
     <value>Fonti facoltative, cache offline e verifica esplicita del valore</value>

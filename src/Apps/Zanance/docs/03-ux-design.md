@@ -3407,3 +3407,19 @@ The first already-unlocked destination now owns the same queue drain as pending 
 
 Scoped budget/goal/plan resolution now retains its original read-only resolver ahead of later arrivals when access closes during the actual source read, then resolves and validates again after unlock without replaying navigation or writers. Three original failures,9new+13affected cases and strict Windows/full offline Android pass. Original native5282displayed GoalDetailPage above LockPage while still locked; corrected5989kept only the PIN cover, then opened the original goal exactly once after fixture-PIN unlock on the sameUID/boot/full20source. One fictitious goal and fixture PIN were created once; accounts/ledger/financial/owner credentials0. Observe-only failures and exact limits remain recorded; phone/D607 untouched and broader gates open.
 [Original failure, native access continuation and limits](quality/original-reminder-access-continuation.md).
+
+### D-680 / D-681 - Native headings and current review ownership
+
+Use accurate compact screen titles where the original native Toolbar cannot display a
+long title at the owner's text size. Keep the selected OS font, original accessible Back,
+complete detailed source/financial explanations and translated error/Retry controls.
+The German display-unit and six reference-data captions follow this rule; original
+en/fa/de Toolbar/body bounds at360/412/680dp are observed, not inferred from XAML.
+[Original native title defects and finite scope](quality/original-rate-cover-native-text-scale.md).
+
+A native billing review reserves only its original frame. Actual retirement releases that
+reservation; a late Buy/Restore result cannot clear a newer frame's pending review.
+Appearance still coalesces; only explicit Reload reads changed store facts. Real native
+dialog evidence uses a private original-lifecycle diagnostic and a non-provider port,
+with no claim of purchase/restoration, user-navigation or release acceptance.
+[Review ownership and current CI boundary](quality/retired-billing-review-and-hosted-compiler-drift.md).

@@ -55,6 +55,7 @@ jobs:
       - name: Qualify exact installed Windows compiler
         shell: pwsh
         run: |
+          ./eng/native/sqlcipher/Observe-WindowsToolchain.ps1
           ./eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 -EnvironmentFile $env:GITHUB_ENV
           ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
       # No candidate cache: this lane proves two fresh outputs, not a reused local artifact.
