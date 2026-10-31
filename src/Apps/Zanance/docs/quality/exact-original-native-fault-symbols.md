@@ -105,3 +105,8 @@ iOS, genuine providers/public hosting/Store or publication. The delivery goal re
 
 Official SGen PR125116/release10 backport125213 changes non-array LOS card-start alignment. Exact original module/debug identity and complete decoding of its two relevant native functions prove that alignment is already present at0x2d5957. The original client frame remains the separate reference-array pointer-call path, not a new failure reproduction. Reapplying/upgrading for this missing-fix hypothesis is rejected; original bad-reference origin and general stability remain unresolved. No app/runtime/GC/financial or device change occurs.
 [Actual native instructions, official source and causal limits](original-sgen-card-scan-correction-admission.md).
+
+## D-708 - Distinct generated reference-array input
+
+One unchanged-original-SGen/default-concurrent-collector native input performs53,891,361 generated old-to-young array stores/checks with2257 major-counter increments during120seconds, without observed failure. This does not reproduce, refute or fix the original fault. The missing-Delegate-barrier issue title was withdrawn and its actual non-array correction is the already excluded D700 path. No product/runtime/GC/financial change or original UI replay occurs.
+[Exact input, counters, original-source qualification and exclusions](bounded-reference-array-runtime-origin.md).
