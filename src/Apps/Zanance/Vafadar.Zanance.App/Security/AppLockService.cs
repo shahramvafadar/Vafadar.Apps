@@ -72,27 +72,29 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     }
 
     /// <summary>Reads the setting and locks the app if it is enabled (app start).</summary>
-    public async Task StartAsync()
+    public Task StartAsync() => StartOwnedAsync(() => true, CancellationToken.None);
+
+    /// <summary>Starts the original access policy only while the captured startup presentation still owns its native effects.</summary>
+    internal async Task StartOwnedAsync(Func<bool> isCurrent, CancellationToken ct)
     {
-        DeviceLockEnabled = (await store.GetSettingsAsync()).AppLockEnabled;
+        void Check()
+        {
+            ct.ThrowIfCancellationRequested();
+            if (!isCurrent()) throw new OperationCanceledException("The original startup access owner retired.", ct);
+        }
+        Check(); var settings = await store.GetSettingsAsync(ct); Check();
+        DeviceLockEnabled = settings.AppLockEnabled;
         try { await pin.LoadAsync(); }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
-            PinUnavailable = true;
+            Check(); PinUnavailable = true;
             // Do not log secure-storage exception payloads, which can contain protected values.
         }
-        host.ApplyProtection();
-        _started = true;
-        if (IsEnabled)
-        {
-            await ShowAsync(prompt: true);
-        }
-
-        if (!IsLocked)
-        {
-            await RunPendingAsync();
-        }
-        AccessChanged?.Invoke(this, EventArgs.Empty);
+        Check(); host.ApplyProtection(); Check(); _started = true;
+        if (IsEnabled) await ShowAsync(prompt: true, Check);
+        Check();
+        if (!IsLocked) await RunPendingAsync(Check);
+        Check(); AccessChanged?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>Reads the setting again, e.g. after a restore brought another value.</summary>
@@ -231,7 +233,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     }
 
     // Links and rebuilds that waited for the unlock, in the order they came.
-    private async Task RunPendingAsync()
+    private async Task RunPendingAsync(Action? validateStartup = null)
     {
         lock (_pending)
         {
@@ -243,6 +245,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         {
             while (true)
             {
+                validateStartup?.Invoke();
                 Func<Task> action;
                 lock (_pending)
                 {
@@ -267,11 +270,12 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
     }
 
-    private async Task ShowAsync(bool prompt)
+    private async Task ShowAsync(bool prompt, Action? validateStartup = null)
     {
+        validateStartup?.Invoke();
         // A missing/rebuilt window must not turn a requested lock into an unlocked application.
         _coverRequested = true;
-        AccessChanged?.Invoke(this, EventArgs.Empty);
+        AccessChanged?.Invoke(this, EventArgs.Empty); validateStartup?.Invoke();
         if (_page is not null && !_page.IsOnScreen)
         {
             _page = null;
@@ -282,14 +286,14 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
             _page.WasLockedBeforeSleep = true;
             if (prompt)
             {
-                await _page.PromptAsync();
+                validateStartup?.Invoke(); await _page.PromptAsync(); validateStartup?.Invoke();
             }
 
             return;
         }
 
-        _page = host.CreateCover(this, prompt);
-        if (_page is { } cover) { await cover.ShowAsync(); }
+        validateStartup?.Invoke(); _page = host.CreateCover(this, prompt);
+        if (_page is { } cover) { validateStartup?.Invoke(); await cover.ShowAsync(); validateStartup?.Invoke(); }
     }
 
 }

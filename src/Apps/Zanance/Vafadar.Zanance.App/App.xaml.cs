@@ -12,7 +12,6 @@ namespace Vafadar.Zanance.App;
 public partial class App : Application
 {
     private readonly IServiceProvider _services;
-    private Page? _startupPage;
     private Startup.StartupViewModel? _startup;
     private bool _databaseReady;
     private bool _isInForeground = true;
@@ -378,55 +377,62 @@ public partial class App : Application
     private async Task PrepareStartupAsync()
     {
         var window = Windows.FirstOrDefault() ?? throw new InvalidOperationException("Startup window is unavailable.");
-        var store = _services.GetRequiredService<ZananceStore>();
-        var legacyUnits = Preferences.Default.Get("display_units", string.Empty);
-        var settings = await Task.Run(async () =>
+        var original = _startup;
+        if (window.Page is not Startup.StartupPage cover || original is null || !ReferenceEquals(cover.BindingContext, original))
+            throw new InvalidOperationException("Original startup cover is unavailable.");
+        var presentation = new Startup.StartupPreparationPresentation(window, cover, () => Windows.Contains(window)
+            && ReferenceEquals(_startup, original)
+            && (!ReferenceEquals(window.Page, cover) || ReferenceEquals(cover.BindingContext, original)));
+        var succeeded = false;
+        try
         {
+            var store = _services.GetRequiredService<ZananceStore>();
+            var legacyUnits = Preferences.Default.Get("display_units", string.Empty);
+            var settings = await Task.Run(async () =>
+            {
 #if DEBUG
-            _startupStorageThread = Environment.CurrentManagedThreadId;
+                _startupStorageThread = Environment.CurrentManagedThreadId;
 #endif
-            await _services.GetRequiredService<Startup.IAppDatabaseStartup>().PrepareAsync();
-            var prepared = await store.GetSettingsAsync();
-            if (prepared.DisplayUnits is null)
-            {
-                prepared.DisplayUnits = legacyUnits; await store.SaveSettingsAsync(prepared);
-            }
-            return prepared;
-        });
-        if (!Windows.Contains(window)) throw new InvalidOperationException("Startup window closed.");
-        Presentation.DisplayUnitPreferences.Apply(settings.DisplayUnits!);
-        _startupPage = settings.OnboardingCompleted ? CreateShell()
-            : _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
-        await _services.GetRequiredService<AppLockService>().StartAsync();
-        // A rejected deep link is a navigation failure after secure initialization, not a database-startup failure.
-        await Presentation.Failures.GuardAsync(() => _services.GetRequiredService<AppLinkRouter>().StartAsync(() =>
-            {
-                if (_startupPage is { } page && Windows.FirstOrDefault() is { } window)
+                await _services.GetRequiredService<Startup.IAppDatabaseStartup>().PrepareAsync(presentation.Token);
+                var prepared = await store.GetSettingsAsync(presentation.Token);
+                if (prepared.DisplayUnits is null)
                 {
-                    _startupPage = null;
-                    window.Page = page;
+                    prepared.DisplayUnits = legacyUnits; await store.SaveSettingsAsync(prepared, presentation.Token);
                 }
-
-                // The startup PIN cover precedes the Shell: consume the link only after the real page is visible (D-73).
+                return prepared;
+            });
+            // The original protected worker has ended; cancellation never disposes its borrowed storage underneath it.
+            presentation.RequireCurrent();
+            Presentation.DisplayUnitPreferences.Apply(settings.DisplayUnits!);
+            var preparedPage = settings.OnboardingCompleted ? (Page)CreateShell()
+                : _services.GetRequiredService<OnboardingPage>().WithFlowDirection(_services.GetRequiredService<ILocalizationService>());
+            var appLock = _services.GetRequiredService<AppLockService>();
+            await appLock.StartOwnedAsync(() => presentation.IsCurrent, presentation.Token);
+            presentation.RequireCurrent(); var publicationAttempted = false;
+            // The callback may remain queued behind a genuine PIN cover; retain this exact page/window rather than global mutable state.
+            await Presentation.Failures.GuardAsync(() => _services.GetRequiredService<AppLinkRouter>().StartAsync(() =>
+            {
+                if (!presentation.IsCurrent) return Task.FromResult<string?>(null);
+                publicationAttempted = true; presentation.Publish(preparedPage);
                 string? link = null;
-                if (Windows.FirstOrDefault()?.Page is AppShell)
+                if (window.Page is AppShell)
                 {
-                    link = _pendingLink;
-                    _pendingLink = null;
-                    OfferNotificationsSoon();
+                    link = _pendingLink; _pendingLink = null; OfferNotificationsSoon();
                 }
                 return Task.FromResult(link);
             }));
-        _databaseReady = true;
-        // Local reference/cache and analysis review share this access boundary even in the offline edition (D-651).
-        if (_isInForeground)
-            _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
-        if (Features.Sync.PersonalSyncBuild.IsAvailable)
-            _services.GetRequiredService<Features.Sync.PersonalSyncForegroundWorker>().Start();
-        // The initial settings write must not schedule a competing reminder database read during preparation.
-        _services.GetRequiredService<ReminderService>().WatchChanges(_services.GetRequiredService<Profiles.ProfileService>());
-        _startupReady.TrySetResult();
-        RunForegroundWork(starting: true);
+            presentation.RequireCurrent();
+            if (publicationAttempted && !presentation.HasPublished)
+                throw new InvalidOperationException("The original startup page was not published.");
+            _databaseReady = true;
+            if (_isInForeground)
+                _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
+            if (Features.Sync.PersonalSyncBuild.IsAvailable)
+                _services.GetRequiredService<Features.Sync.PersonalSyncForegroundWorker>().Start();
+            _services.GetRequiredService<ReminderService>().WatchChanges(_services.GetRequiredService<Profiles.ProfileService>());
+            _startupReady.TrySetResult(); RunForegroundWork(starting: true); succeeded = true;
+        }
+        finally { presentation.EndPreparation(succeeded); }
     }
 
     protected override void OnSleep()

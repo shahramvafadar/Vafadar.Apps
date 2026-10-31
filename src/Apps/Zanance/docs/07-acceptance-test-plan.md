@@ -8324,3 +8324,9 @@ Bind original picker/read/confirmation/staging and terminal navigation to the ac
 
 Capture the actual covered startup and original source before native confirmation; cancel retired prompt/feedback handoffs and retain original authority through protected recovery waits.13new and3affected original cases, final strict packages and actual native counterfactuals pass with source20equal and no valid key/portable recovery or financial write. Preserve genuine authentication and the original recovery/activation protocol; phone/D607 remain untouched.
 [Original failures, corrected native continuations and limits](quality/original-startup-recovery-lifetime.md).
+
+
+### D-671 - Original startup publication ownership
+
+Retain actual startup window/root/model through original protected work, access setup and deferred publication; a retired callback cannot overwrite a replacement or consume its pending link.13new+4affected cases, final strict packages and original native counterfactual/current Retry pass with source20equal and no financial/authentication input. Preserve genuine access policy and all D607/phone state.
+[Original failure, native current retry and limits](quality/original-startup-publication-lifetime.md).

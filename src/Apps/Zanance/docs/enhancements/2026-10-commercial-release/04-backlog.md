@@ -8341,3 +8341,24 @@ supplemental requests blocked before process creation:12publishfiles535277003byt
 reuse. Usedsigned/source/evidence preserved; phone/D607/three deadlines/consumed reboot/unread
 source/lease untouched. Genuine valid recovery/authentication and broader delivery gates remain.
 [Original failures, native source lineage and exact limits](../../quality/original-startup-recovery-lifetime.md)
+
+
+### D-671 - Original startup publication ownership (completed bounded scope)
+
+Original startup now retains its actual window/root/model through protected preparation,
+access setup and the optionally deferred publication; captured target replaces global mutable
+startup-page state. Own publication follows its exact root, retired callbacks preserve the
+replacement/pending link, and real workers end before presentation observers release.
+Owned access checks guard secure/native effects and preserve unstarted pending destinations.
+Original5041after-real-worker hold/root replacement/release overwroteContentPage with
+OnboardingPage/ready1(expected0), source20equal. Corrected5411/sameUID10216/boot/source kept
+ContentPage/ready0/oldwaitended; only one actual native Tryagain after that failure published
+its own OnboardingPage/ready1. No old request revival, financial setup/replay, account, key or
+authentication input.13new+4affected original cases, strictWindows/fullOffline384AOT/408ELF/
+1608LOAD pass; shipping75d746b6/native1a640977 final. FreshUID/4XML59302capturebytes/official
+AVD retired and6Cleans passed. Two supplemental deletions blocked before process creation:
+9publishfiles422757714bytes and8roots8534files1508687798logicalbytes remain frozen without
+retry/subset/alternate/move/escalation/reuse. Usedsigned/source/evidence retained; phone/D607/
+three deadlines/consumedreboot/unreadsource/lease untouched. Genuine PIN/unlock, broad DB/key/
+security/stability/speed/platform/provider/Store/release remain separate.
+[Original failure, actual current retry and exact limits](../../quality/original-startup-publication-lifetime.md)
