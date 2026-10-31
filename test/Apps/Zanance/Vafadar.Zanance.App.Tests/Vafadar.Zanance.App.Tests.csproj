@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/StartupRecoveryContinuation.cs" Link="Application/StartupRecoveryContinuation.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/StartupBackupPackageReader.cs" Link="Application/StartupBackupPackageReader.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/RecoverySetupAuthority.cs" Link="Application/RecoverySetupAuthority.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/PinSettingsViewModel.cs" Link="Application/PinSettingsViewModel.cs" />

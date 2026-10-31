@@ -50,14 +50,14 @@ internal abstract class ProtectedBackupRecovery(IServiceProvider services) : IPr
     }
 
     /// <summary>Captures original unpublished storage and activation settings before native input or protected waiting.</summary>
-    internal RecoverySetupAuthority CaptureStartupBackupAuthority(CancellationToken ct = default)
+    internal RecoverySetupAuthority CaptureStartupBackupAuthority(CancellationToken ct = default, Action? validateStartup = null)
     {
         var capture = services.GetRequiredService<ProfileService>().CaptureStorage();
         var settings = services.GetRequiredService<ISettingsStore>();
         var active = settings.Get(ActiveRootKey); var pending = settings.Get(PendingRootKey);
         void Validate()
         {
-            capture.Validate();
+            validateStartup?.Invoke(); capture.Validate();
             if (active != settings.Get(ActiveRootKey) || pending != settings.Get(PendingRootKey))
                 throw new IOException("The original startup recovery selection changed.");
         }

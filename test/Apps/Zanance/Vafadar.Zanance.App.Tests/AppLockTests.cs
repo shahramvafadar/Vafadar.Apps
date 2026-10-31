@@ -43,7 +43,7 @@ public sealed class AppLockTests
         await setup.Lock.Pin.SetAsync("", "0137"); await setup.Lock.StartAsync();
         Assert.False(await setup.Lock.AuthenticateDeviceUnlockAsync()); Assert.Equal(0, setup.Auth.Calls);
         setup.Storage.FailReads = true;
-        Assert.False(await setup.Lock.ConfirmStartupRecoveryAsync("Fictitious recovery"));
+        Assert.False(await setup.Lock.ConfirmStartupRecoveryAsync("Fictitious recovery", cancellationToken: TestContext.Current.CancellationToken));
         Assert.False(await setup.Lock.AuthenticateDeviceUnlockAsync()); Assert.Equal(0, setup.Auth.Calls);
         Assert.True(setup.Lock.IsLocked);
     }
@@ -68,8 +68,8 @@ public sealed class AppLockTests
         var access = new AppLockService(auth, protectedServices.GetRequiredService<ZananceStore>(), f.Translator, f.Time,
             new PinLock(storage, f.Time), host);
         await access.Pin.SetAsync("", "0137"); host.PinAnswer = false;
-        Assert.False(await access.ConfirmStartupRecoveryAsync("Fictitious recovery"));
-        host.PinAnswer = true; Assert.True(await access.ConfirmStartupRecoveryAsync("Fictitious recovery"));
+        Assert.False(await access.ConfirmStartupRecoveryAsync("Fictitious recovery", cancellationToken: TestContext.Current.CancellationToken));
+        host.PinAnswer = true; Assert.True(await access.ConfirmStartupRecoveryAsync("Fictitious recovery", cancellationToken: TestContext.Current.CancellationToken));
         Assert.Equal(2, host.PinPrompts); Assert.Equal(0, auth.Calls); Assert.True(access.PinEnabled); Assert.True(access.IsLocked);
         Assert.False(File.Exists(f.Directory.Combine("covered.db")));
     }
@@ -79,7 +79,7 @@ public sealed class AppLockTests
     {
         using var f = new FlowFixture(); var setup = Create(f); setup.Storage.FailReads = true;
         setup.Auth.Outcome = AuthenticationOutcome.Success;
-        Assert.False(await setup.Lock.ConfirmStartupRecoveryAsync("Fictitious recovery"));
+        Assert.False(await setup.Lock.ConfirmStartupRecoveryAsync("Fictitious recovery", cancellationToken: TestContext.Current.CancellationToken));
         Assert.True(setup.Lock.PinUnavailable); Assert.True(setup.Lock.IsLocked);
         Assert.Null(setup.Storage.State); Assert.Equal(0, setup.Auth.Calls); Assert.Equal(0, setup.Host.PinPrompts);
     }

@@ -150,12 +150,21 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
 
     /// <summary>Confirms an explicit covered-startup recovery using existing device PIN state without reading unavailable finance.</summary>
     /// <remarks>A secure-state read failure refuses recovery; this never recreates or removes a verifier.</remarks>
-    public async Task<bool> ConfirmStartupRecoveryAsync(string reason)
+    public async Task<bool> ConfirmStartupRecoveryAsync(string reason, Func<bool>? isCurrent = null, CancellationToken cancellationToken = default)
     {
-        try { await pin.LoadAsync(); PinUnavailable = false; }
-        catch (Exception failure) when (failure is not OutOfMemoryException) { PinUnavailable = true; return false; }
-        if (PinEnabled) return await host.ConfirmPinAsync(this, reason);
-        return !DeviceLockEnabled || await authenticator.AuthenticateAsync(reason) == AuthenticationOutcome.Success;
+        bool Current() => !cancellationToken.IsCancellationRequested && isCurrent?.Invoke() != false;
+        if (!Current()) return false;
+        try { await pin.LoadAsync(); if (!Current()) return false; PinUnavailable = false; }
+        catch (Exception failure) when (failure is not OutOfMemoryException)
+        { if (Current()) PinUnavailable = true; return false; }
+        if (PinEnabled)
+        {
+            var accepted = await host.ConfirmPinAsync(this, reason);
+            return Current() && accepted;
+        }
+        if (!DeviceLockEnabled) return Current();
+        var result = await authenticator.AuthenticateAsync(reason);
+        return Current() && result == AuthenticationOutcome.Success;
     }
 
     /// <summary>Runs <paramref name="action"/> now, or after unlocking when the app is covered (REM-06).</summary>

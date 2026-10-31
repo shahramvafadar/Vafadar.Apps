@@ -25,15 +25,17 @@ internal sealed class StartupBackupPage : ContentPage
     private bool lifetimeDisposed;
     private bool restored;
     private string? errorKey;
-    private readonly CancellationTokenSource lifetime = new();
+    private readonly CancellationTokenSource lifetime;
+    private readonly RecoverySetupAuthority? startupSource;
     private readonly Window? originalWindow;
     private readonly Page? originalRoot;
     private RecoverySetupAuthority? selection;
 
     /// <summary>Creates only the explicit picker/password/confirmation surface, without touching original data.</summary>
-    internal StartupBackupPage(ProtectedBackupRecovery recovery, Translator translator)
+    internal StartupBackupPage(ProtectedBackupRecovery recovery, Translator translator, RecoverySetupAuthority? startupSource = null)
     {
-        this.recovery = recovery; this.translator = translator;
+        this.recovery = recovery; this.translator = translator; this.startupSource = startupSource;
+        lifetime = CancellationTokenSource.CreateLinkedTokenSource(startupSource?.Token ?? default);
         originalWindow = Application.Current?.Windows.FirstOrDefault(); originalRoot = originalWindow?.Page;
         heading.Style = (Style)Application.Current!.Resources["PageTitle"];
         hint.Style = (Style)Application.Current.Resources["Secondary"];
@@ -62,7 +64,7 @@ internal sealed class StartupBackupPage : ContentPage
         byte[]? loaded = null; RecoverySetupAuthority? original = null;
         try
         {
-            original = recovery.CaptureStartupBackupAuthority(lifetime.Token);
+            original = recovery.CaptureStartupBackupAuthority(lifetime.Token, () => startupSource?.RequireCurrent());
             var result = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = translator["Backup_PickFile"] });
             if (result is null || !OwnsPage) return;
             original.RequireCurrent();

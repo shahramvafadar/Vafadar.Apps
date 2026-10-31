@@ -8319,3 +8319,25 @@ and16roots10492files2530550198logicalbytes remain frozen, without retry/subset/a
 move/escalation/reuse. Usedsigned/source/evidence retained; D607/phone/three deadlines/lease/
 consumed reboot/unread source untouched. Genuine valid recovery and broader delivery gates remain.
 [Original failure, actual continuation lineage and limits](../../quality/original-startup-backup-lifetime.md)
+
+
+### D-670 - Original startup recovery command lifetime (completed bounded scope)
+
+Original code/backup callers now capture actual startup window/root/model and storage before
+native confirmation, retain source through protected waits and cancel retired native feedback.
+Secure-state/native confirmation rechecks current ownership without changing PIN/device policy;
+backup inherits original parent source while preserving its pending-activation protocol.
+Original3934stale prompt entered host1/decode0 and hung feedback; original5391late auth opened
+backup on a replaced root. Both actual failures and unchanged full20source are preserved.
+Corrected5770/sameUID10216/boot/source rejected retired prompt(host0/decode0), rejected stale
+auth destination and ended current error feedback on root departure. Current malformed control
+still reached the original validator once/decode0; no real code/key/password, authentication,
+valid restore, account or money. Only new explicit commands re-presented the actual failed
+cover after the prior command ended, never preparation/financial replay.13new+3affected
+original cases, strictWindows/fullOffline384AOT/408ELF/1608LOAD pass; shippingd23dcbe7/native
+e2db2da9 final. FreshUID/16XML139843capturebytes/officialAVD retired and7Cleans passed. Two
+supplemental requests blocked before process creation:12publishfiles535277003bytes and10roots
+9507files1639254632logicalbytes remain frozen, without retry/subset/alternate/move/escalation/
+reuse. Usedsigned/source/evidence preserved; phone/D607/three deadlines/consumed reboot/unread
+source/lease untouched. Genuine valid recovery/authentication and broader delivery gates remain.
+[Original failures, native source lineage and exact limits](../../quality/original-startup-recovery-lifetime.md)

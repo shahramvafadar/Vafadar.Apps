@@ -3383,3 +3383,9 @@ Final D668 Window.Page replacement cancels the original queued work with generat
 
 Bind original picker/read/confirmation/staging and terminal navigation to the actual startup recovery owner. Nine actual-stream cases, final strict packages and the actual native late-picker/current-consent/pop continuations pass with full20source equal and no valid restore or financial write. Preserve genuine authentication and the original durable activation protocol; phone/D607 remain untouched.
 [Actual original failures, version lineage and limits](quality/original-startup-backup-lifetime.md).
+
+
+### D-670 - Original startup recovery command ownership
+
+Capture the actual covered startup and original source before native confirmation; cancel retired prompt/feedback handoffs and retain original authority through protected recovery waits.13new and3affected original cases, final strict packages and actual native counterfactuals pass with source20equal and no valid key/portable recovery or financial write. Preserve genuine authentication and the original recovery/activation protocol; phone/D607 remain untouched.
+[Original failures, corrected native continuations and limits](quality/original-startup-recovery-lifetime.md).

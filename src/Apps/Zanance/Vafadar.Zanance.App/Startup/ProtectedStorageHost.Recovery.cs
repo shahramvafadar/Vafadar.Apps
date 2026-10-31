@@ -50,9 +50,13 @@ internal abstract partial class ProtectedStorageHost
     }
 
     /// <summary>Restores existing retained generation keys from the explicitly supplied code while startup remains covered.</summary>
-    internal async Task RecoverDeviceKeysAsync(string code, CancellationToken ct)
+    internal async Task RecoverDeviceKeysAsync(string code, CancellationToken ct, RecoverySetupAuthority? authority = null)
     {
         ArgumentNullException.ThrowIfNull(code);
+        using var ownedAuthority = authority is null ? CaptureRecoverySetupAuthority(ct) : null;
+        var original = authority ?? ownedAuthority!;
+        using var lifetime = CancellationTokenSource.CreateLinkedTokenSource(ct, original.Token);
+        ct = lifetime.Token; ct.ThrowIfCancellationRequested(); original.RequireCurrent();
         if (!code.StartsWith("ZRK1-", StringComparison.Ordinal))
             throw new CryptographicException("Recovery code format differs.");
         byte[] secret;
@@ -64,15 +68,17 @@ internal abstract partial class ProtectedStorageHost
             await preparation.WaitAsync(ct).ConfigureAwait(false);
             try
             {
+                original.RequireCurrent();
                 var catalogue = recoveryCatalogue ?? throw new IOException("Optional recovery metadata is unavailable.");
                 var native = keys ?? throw new IOException("Device key storage is unavailable.");
                 var sync = durability ?? throw new IOException("Native durability is unavailable.");
                 var location = services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>();
                 using var owner = await location.Access.AcquireExclusiveAsync(ct).ConfigureAwait(false);
+                ct.ThrowIfCancellationRequested(); original.RequireCurrent();
                 if (location.IsProtected) throw new InvalidOperationException("Key recovery requires covered startup.");
                 var profiles = services.GetRequiredService<ProfileService>();
                 var capture = profiles.CaptureStorage();
-                void Check() { location.Access.RequireDrainedOwner(owner); capture.Validate(); nativeValidation!(); }
+                void Check() { ct.ThrowIfCancellationRequested(); original.RequireCurrent(); location.Access.RequireDrainedOwner(owner); capture.Validate(); nativeValidation!(); }
                 var root = Path.GetDirectoryName(location.Path)!;
                 var roots = new Dictionary<string, string>
                 { ["database"] = root, ["keys"] = Path.Combine(root, "database-keys"),

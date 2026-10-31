@@ -296,45 +296,83 @@ public partial class App : Application
             _services.GetRequiredService<ProtectedStorageHost>(), Translator.Instance));
     }
 
+    /// <summary>Captures the actual covered startup and original storage before any native confirmation begins.</summary>
+    private StartupRecoveryPresentation CaptureStartupRecoveryPresentation()
+    {
+        var window = Windows.FirstOrDefault() ?? throw new InvalidOperationException("Startup window is unavailable.");
+        var original = _startup;
+        if (window.Page is not Startup.StartupPage root || original is null || !ReferenceEquals(root.BindingContext, original))
+            throw new InvalidOperationException("The original startup cover retired.");
+        var source = _services.GetRequiredService<ProtectedStorageHost>().CaptureRecoverySetupAuthority();
+        try { return new(window, root, source, () => Windows.Contains(window)
+            && ReferenceEquals(_startup, original) && ReferenceEquals(root.BindingContext, original)); }
+        catch { source.Dispose(); throw; }
+    }
+
     /// <summary>Restores an explicitly chosen portable backup without removing unreadable original data or the device PIN.</summary>
     private async Task<bool> RecoverStartupBackupAsync()
     {
-        if (!await _services.GetRequiredService<AppLockService>().ConfirmStartupRecoveryAsync(Translator.Instance["Lock_ConfirmRestore"])) return false;
-        var root = Windows.FirstOrDefault()?.Page ?? throw new InvalidOperationException("Startup cover is unavailable.");
-        var page = new StartupBackupPage(_services.GetRequiredService<ProtectedBackupRecovery>(), Translator.Instance)
-            { FlowDirection = root.FlowDirection };
-        await root.Navigation.PushModalAsync(page, animated: false);
-        var restored = await page.Completion;
-        if (restored)
+        using var request = CaptureStartupRecoveryPresentation();
+        var text = Translator.Instance; var reason = text["Lock_ConfirmRestore"]; var restored = false;
+        try
         {
-            _services.GetRequiredService<ILocalizationService>().Initialize();
-            _services.GetRequiredService<Presentation.ThemeService>().Initialize();
+            if (!await request.AwaitAsync(() => _services.GetRequiredService<AppLockService>()
+                .ConfirmStartupRecoveryAsync(reason, () => request.IsCurrent, request.Token))) return false;
+            if (reason != text["Lock_ConfirmRestore"]) return false;
+            var page = new StartupBackupPage(_services.GetRequiredService<ProtectedBackupRecovery>(), text, request.Source)
+                { FlowDirection = request.Page.FlowDirection };
+            await request.AwaitAsync(() => request.Page.Navigation.PushModalAsync(page, animated: false));
+            restored = await request.AwaitAsync(() => page.Completion);
+            if (restored)
+            {
+                _services.GetRequiredService<ILocalizationService>().Initialize();
+                _services.GetRequiredService<Presentation.ThemeService>().Initialize();
+            }
+            return restored;
         }
-        return restored;
+        catch (Exception failure) when (failure is not OutOfMemoryException)
+        {
+            // A returned original staging receipt survives fallible preference follow-through while its frame is current.
+            // A departed frame cannot retry preparation on a different root; durable activation remains authoritative.
+            return restored && request.IsCurrent;
+        }
     }
 
     /// <summary>Accepts the user's recorded code only in the covered startup surface; app access remains a separate gate.</summary>
     private async Task<bool> RecoverStartupKeysAsync()
     {
-        if (!await _services.GetRequiredService<AppLockService>().ConfirmStartupRecoveryAsync(Translator.Instance["Lock_ConfirmRestore"])) return false;
-        var page = Windows.FirstOrDefault()?.Page ?? throw new InvalidOperationException("Startup cover is unavailable.");
-        var text = Translator.Instance;
-        var code = await page.DisplayPromptAsync(text["Recovery_Title"], text["Recovery_CodePrompt"],
-            text["Recovery_Confirm"], text["Common_Cancel"], maxLength: 64);
-        if (code is null) return false;
+        using var request = CaptureStartupRecoveryPresentation();
+        var text = Translator.Instance; var reason = text["Lock_ConfirmRestore"]; string? code = null;
         try
         {
+            if (!await request.AwaitAsync(() => _services.GetRequiredService<AppLockService>()
+                .ConfirmStartupRecoveryAsync(reason, () => request.IsCurrent, request.Token))) return false;
+            if (reason != text["Lock_ConfirmRestore"]) return false;
+            var title = text["Recovery_Title"]; var prompt = text["Recovery_CodePrompt"];
+            var confirm = text["Recovery_Confirm"]; var cancel = text["Common_Cancel"];
+            code = await request.AwaitAsync(() => request.Page.DisplayPromptAsync(title, prompt, confirm, cancel, maxLength: 64));
+            if (code is null) return false;
+            if (title != text["Recovery_Title"] || prompt != text["Recovery_CodePrompt"]
+                || confirm != text["Recovery_Confirm"] || cancel != text["Common_Cancel"]) return false;
+            var submitted = code;
+            // Keep the request and submitted input until the actual protected operation ends, including cancellation cleanup.
             await Task.Run(() => _services.GetRequiredService<ProtectedStorageHost>()
-                .RecoverDeviceKeysAsync(code, CancellationToken.None));
-            return true;
+                .RecoverDeviceKeysAsync(submitted, request.Token, request.Source));
+            request.RequireCurrent(); return true;
         }
-        catch (Exception error) when (error is not OutOfMemoryException)
+        catch (Exception failure) when (failure is not OutOfMemoryException)
         {
-            await page.DisplayAlertAsync(text["Recovery_Title"], text["Recovery_Failed"], text["Common_Ok"]);
+            if (request.IsCurrent)
+            {
+                try { await request.AwaitAsync(() => request.Page.DisplayAlertAsync(text["Recovery_Title"],
+                    text["Recovery_Failed"], text["Common_Ok"])); }
+                catch (Exception feedback) when (feedback is not OutOfMemoryException) { /* A retired native feedback waiter cannot retain recovery ownership. */ }
+            }
             return false;
         }
         finally { code = string.Empty; }
     }
+
 #endif
 
     private async Task PrepareStartupAsync()
