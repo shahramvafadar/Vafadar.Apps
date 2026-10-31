@@ -140,3 +140,8 @@ and other ready engineering are not replaced by research or by repeated speculat
 [P03]: https://docs.truelayer.com/docs/data-api-basics
 [P04]: https://api.basiq.io/docs/supported-access-models
 [P05]: https://www.cdr.gov.au/find-a-provider?provider=ADRBNK000208
+
+## D-706 - Personal export and source-revision follow-through
+
+Original ING personal banking documentation now establishes a personal export route and390day displayed activity, independently of older business evidence; pending-inclusive balance cannot prove final CSV rows or export completeness. N26 distinguishes monthlyPDF from date-selected account/SpaceCSV activity but publishes no revisioned field/ID/relationship specimen. The rendered dated Gummersbach guide separates CSV variants from postedCAMT, not interchangeable schemas. DKB's old indexed securitiesCSV negative list redirects to a general current page; keep this discrepancy without asserting current universal unavailability. Complete original structural/finality/relationship inputs remain missing, so no preset/format expansion is invented and no account/credential/ownerbankfile/code/build/native/financial/oldsuccessfultest is touched. Existing StarMoney/SUPA4/mappedCSV remain. Documentation links/diff checks pass; D705candidate/soleCI and D607three deadlines/consumedreboot/unreadsource/adoption and broadergates remain separate;goalactive.
+[Original source admission](../../quality/german-consumer-export-admission.md).

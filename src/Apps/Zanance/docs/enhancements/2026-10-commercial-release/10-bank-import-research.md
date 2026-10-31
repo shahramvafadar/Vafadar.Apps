@@ -108,3 +108,8 @@ failed retrievals and provider candidates. Germany/USA-first priority remains. N
 live connection is implied; exact original revision/specimen/finality/id evidence remains the next format
 gate. Do not replay completed discovery or successful unrelated runtime checks merely because a bank lacks
 an admissible public field specimen.
+
+## D-706 - Current personal-export evidence boundary
+
+ING personal export and N26 account/Space activity are documented independently of business exports and monthlyPDF. Exact original CSV schemas/finality/IDs remain missing; DKB current redirect disqualifies treating its cached old securities feature list as a current universal export claim. No new preset or financial test is admitted.
+[Original sources and exact missing inputs](../../quality/german-consumer-export-admission.md).
