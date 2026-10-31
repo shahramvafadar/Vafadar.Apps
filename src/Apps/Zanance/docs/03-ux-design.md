@@ -3449,3 +3449,9 @@ A prior native height request must not hide a later clipped script line after Ap
 
 A retired Android drawer must not receive a later live theme notification through its old Shell. Retire only that root's owned observers, preserving current-root appearance and native navigation. Original saved-comparison loading/error covers retain full captions and44dp Back/Retry at OS200; this no-query scope does not invent or qualify a stored comparison name.
 [Actual native proof](quality/original-saved-comparison-covers-and-retired-flyout.md).
+
+
+### D-693 - Original Plan modal covers and flyout rebinding
+
+Original modal Cancel, full title/loading/error captions and separate44dp Retry remain readable at OS200 without shrinking text. Returning from a modal must not leave a disposed drawer observing later theme changes. Preserve original commands and financial source.
+[Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).

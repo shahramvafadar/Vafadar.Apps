@@ -16,13 +16,36 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
     private readonly List<WeakReference<Fragment>> _ownedItemFragments = [];
     private bool _navigationRetired;
     private IShellFlyoutRenderer? _ownedFlyout;
+    private Shell? _ownedFlyoutShell;
+
+    /// <inheritdoc />
+    protected override void OnElementSet(Shell shell)
+    {
+        // D-693: modal return can bind this renderer again before the managed root retires.
+        // The previous drawer must stop observing its captured Shell before its replacement is registered.
+        RemoveOwnedFlyoutObservers();
+        base.OnElementSet(shell);
+    }
 
     /// <inheritdoc />
     protected override IShellFlyoutRenderer CreateShellFlyoutRenderer()
     {
         var flyout = base.CreateShellFlyoutRenderer();
         _ownedFlyout = flyout;
+        _ownedFlyoutShell = ((IShellContext)this).Shell;
         return flyout;
+    }
+
+    /// <summary>Detaches only the previous drawer from the actual Shell on which it registered.</summary>
+    private void RemoveOwnedFlyoutObservers()
+    {
+        if (_ownedFlyoutShell is IShellController controller)
+        {
+            if (_ownedFlyout is IAppearanceObserver appearance) controller.RemoveAppearanceObserver(appearance);
+            if (_ownedFlyout is IFlyoutBehaviorObserver behavior) controller.RemoveFlyoutBehaviorObserver(behavior);
+        }
+        _ownedFlyout = null;
+        _ownedFlyoutShell = null;
     }
 
     /// <summary>Creates the platform renderer through the existing Shell handler factory.</summary>
@@ -53,10 +76,8 @@ internal sealed class AccessibleShellRenderer : ShellRenderer
         if (((IShellContext)this).Shell is IShellController controller)
         {
             controller.RemoveAppearanceObserver(this);
-            if (_ownedFlyout is IAppearanceObserver appearance) controller.RemoveAppearanceObserver(appearance);
-            if (_ownedFlyout is IFlyoutBehaviorObserver behavior) controller.RemoveFlyoutBehaviorObserver(behavior);
         }
-        _ownedFlyout = null;
+        RemoveOwnedFlyoutObservers();
         // D-360: ShellRenderer disconnects its current item but does not remove that root
         // fragment from the Activity manager. Detached containers otherwise accumulate whole
         // navigation trees. Never enumerate/remove another renderer's active fragments.

@@ -179,3 +179,9 @@ and all three original profiles/public UI/APK/OS are restored after only the new
 See [physical evidence and explicit limits](physical-plan-and-debt-forms.md). Original independent
 matrices/accepted commands are retained. This does not extend the physical result to cross-currency/
 unit changes, stale-writer races, all debt/settlement/reader variants or release acceptance.
+
+
+## Subsequent original modal large-text and theme evidence (D-693)
+
+The original empty-source new-plan modal loading/error covers now have18 OS200 contexts/36native states and exact source21/restoration proof. D693 also corrects a real post-modal disposed flyout theme callback. D429's accepted account/plan/financial writers are not replayed, and no populated ready form or broader physical acceptance is inferred.
+[Native continuation and limits](original-plan-editor-covers-and-flyout-rebinding.md).

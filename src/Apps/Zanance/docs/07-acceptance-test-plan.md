@@ -8576,3 +8576,9 @@ D691 final en/fa/de, Light/Dark,360/412/680dp OS200 covers and retained360to412 
 
 D692 native en/fa/de, two themes,360/412/680dp and OS200 covers pass actual caption/final-line/ellipsis, pushed stack2, RTL/native Back and44dp Retry targets with source21equal. Three real managed-root transitions plus theme/width changes qualify the disposed-observer regression. No new unit-test count, populated saved-name, general stability or full accessibility claim.
 [Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).
+
+
+### D-693 - Original Plan modal covers and flyout rebinding
+
+D693 original en/fa/de, both themes,360/412/680dp OS200 modal loading/error captions, complete native lines/ellipsis/bounds and44dp Cancel/Retry pass with source21equal. The actual post-modal original theme transition passes; the original disposed failure and diagnostic refusals remain preserved. This is not general stability or full accessibility acceptance.
+[Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).

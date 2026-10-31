@@ -12484,3 +12484,9 @@ Reapply a previously requested native toolbar height when AppCompat replaced its
 
 Retire only the current renderer's own flyout appearance/behavior registrations from its original Shell before native-root replacement. The original disposed UpdateScrim callback is preserved and its specific theme-after-retirement sequence passes; no global observer clearing, premature view disposal or exception swallowing is introduced.
 [Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).
+
+
+### D-693 - Original Plan modal covers and flyout rebinding
+
+Detach only the previous owned flyout from its captured Shell before Android renderer rebinding; preserve terminal root retirement and current-root appearance. Actual modal-return/theme failure and exact source/native continuation qualify the correction without global observer clearing or early native disposal.
+[Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).

@@ -97,3 +97,9 @@ Phone/D607's three deadlines, consumed reboot and unread post-reboot source rema
 protected. Physical adoption waits for its actual completion/cleanup. WholeDB/key,
 general security/stability, two-second Home, wider accessibility/iOS, genuine provider,
 Store and release gates remain open. The complete delivery goal remains active.
+
+
+## Sole CI observation and subsequent modal boundary
+
+At31October2026 15:21:49UTC the single exact-head observation reports [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41212920449) in_progress with no conclusion, and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41212920450) completed/success. The consumed marker/response are retained and only that automation is deleted; no second query is authorized. D693 subsequently observes the same disposed UpdateScrim error after original modal/width returns on a retained managed Shell. D692's narrower passing root-retirement evidence remains valid within scope; it is not proof that every drawer lifetime was fixed.
+[Original modal failure and correction](original-plan-editor-covers-and-flyout-rebinding.md).

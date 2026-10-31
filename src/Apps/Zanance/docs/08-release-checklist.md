@@ -5603,3 +5603,9 @@ D691 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16Ki
 
 D692 strictWindows/fullOffline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16KiB pass; shipping4bd51c60 awaits actual D607 completion/cleanup before phone adoption. Fresh source/OS restoration, UID/officialAVD retirement and3Cleans complete; supplementary refusal remains explicit. Wider release gates remain open.
 [Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).
+
+
+### D-693 - Original Plan modal covers and flyout rebinding
+
+D693 strict Windows/full offline384AOT/408ELF/1608staticLOAD/signature/CRC/ZIP16KiB pass. Shipping ecc1f5b0 waits for actual D607 completion/cleanup before Main adoption. Fresh source/OS restoration, UID/officialAVD retirement and3Cleans pass; the sole supplementary deletion is refused and frozen. Wider gates remain open.
+[Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).

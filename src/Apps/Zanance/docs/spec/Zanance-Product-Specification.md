@@ -11756,3 +11756,9 @@ D691 preserves original source/financial behavior while keeping a retained Andro
 
 D692 preserves original comparison/source/financial behavior while detaching retired Android flyout observers before later theme notifications. Final18contexts/36loading-error states and the actual root-retirement/theme regression pass; stored names/rows, broad stability, physical/platform and release acceptance remain separate.
 [Original native failure, retained scope and exact limits](../quality/original-saved-comparison-covers-and-retired-flyout.md).
+
+
+### D-693 - Original Plan modal covers and flyout rebinding
+
+D693 preserves original Plan/source/financial behavior while detaching prior Android flyout observers before renderer rebinding.18 contexts/36loading-error states and the actual modal/theme regression pass, with six earlier successes retained. No new unit-test count, populated plan/financial, wholeDB/key, broad stability or release acceptance is claimed.
+[Actual native evidence and limits](../quality/original-plan-editor-covers-and-flyout-rebinding.md).

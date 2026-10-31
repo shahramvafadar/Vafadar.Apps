@@ -5383,3 +5383,9 @@ D691 completes the original Insights source-cover batch with36contexts/72states 
 
 D692 completes original saved-comparison no-query loading/error OS200 covers,18contexts/36states. Five unaffected successes plus one corrected Dark context are retained; only12unfinished continue. The actual native theme failure is corrected without account/snapshot/financial setup or replay of D645/D506 accepted operations.
 [Original native failure, retained scope and exact limits](quality/original-saved-comparison-covers-and-retired-flyout.md).
+
+
+### D-693 - Original Plan modal covers and flyout rebinding
+
+D693 completes18 original Plan modal OS200 contexts/36states, retaining3 initial and3 corrected successes and continuing only12 unfinished states after a private initial-read completion correction. No account/plan/financial setup, accepted operation replay or new unit-test count.
+[Actual native failure, continuation and exact limits](quality/original-plan-editor-covers-and-flyout-rebinding.md).
