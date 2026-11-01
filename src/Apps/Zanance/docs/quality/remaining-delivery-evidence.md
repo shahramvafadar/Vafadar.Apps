@@ -22,8 +22,9 @@ runtime evidence; D736 adds normal current physical receipt-draft evidence. D737
 unfinished independent authentication cohort, not a shipping installation or acceptance.
 Its retained actual status has zero accounts/ledger/plans, unavailable device authentication
 and zero requested/completed/successful authentications. That boolean does not establish
-whether a PIN, password, pattern or fingerprint is configured. The owner is checking the
-real lock state; do not compete with that input or change global security settings.
+whether a PIN, password, pattern or fingerprint is configured. The owner subsequently
+reports screen lock None; the choice to establish a real credential remains pending.
+Do not change global security settings or substitute authentication.
 
 ## Parent requirements and the next missing input
 
@@ -122,3 +123,5 @@ This document clarifies prerequisites and prevents successful work from being re
 It does not close any of the 49 rows or the overall delivery goal. Reassess the frontier
 when real owner input, a new failure, selected artifact, original specimen, supported
 diagnostic evidence or external access changes the next executable action.
+
+D739 subsequently [admits the actual packaged JNI owner-lifetime boundaries](current-jni-owner-lifetime-admission.md), retaining its missing guards and causal limits without a speculative runtime repair.
