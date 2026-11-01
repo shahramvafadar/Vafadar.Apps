@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## Temporary Samsung turn for Consumer180 with explicit return (owner verified, 2026-11-01, D-744)
+
+The owner's fresh direct instruction authorizes coordination of a limited Samsung turn
+for the latest Loyan Consumer APK, native Share-sheet observation without sending,
+and opening the existing fictitious business profile link, then explicit return.
+The handoff is active until that return. Issue no competing Zanance phone command;
+continue D743 only on its separately owned fresh emulator-5572. Do not restart or
+reconfigure shared ADB servers, especially the existing server5038 used by that cohort.
+
+Scope remains in-place Consumer180 only, with no reboot, clear/uninstall, global
+settings/permissions/accounts/PIN changes, financial transaction or rating. All Zanance
+packages/data/processes and caller state remain untouched. Genuine authentication is
+owner-only. D607 is terminal with its fixture retired and reboot consumed; historical
+three-deadline instructions do not authorize recreating or rearming it. Current Main
+remains D734/dc774120/UID10380; last verified Home979/all141/PID32068 is a historical
+observation, not a new phone-liveness claim. Ordinary Zanance reservation resumes only
+after this limited turn is explicitly returned. No prior successful phone check is repeated.
+
 ## D-737 owner credential and terminal independent review (verified, 2026-11-01)
 
 The owner personally established a device screen PIN after reporting None. Preserve
