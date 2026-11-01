@@ -15,7 +15,7 @@ public sealed record CsvReadLimits
     public int MaximumColumns { get; init; } = 1024;
     /// <summary>Gets the maximum total cells, preventing delimiter-heavy inputs from exhausting memory.</summary>
     public int MaximumCells { get; init; } = 4000000;
-    /// <summary>Gets the maximum characters in one original field, without truncation.</summary>
+    /// <summary>Gets the maximum original field characters, excluding only one validated own-format text protection marker.</summary>
     public int MaximumFieldCharacters { get; init; } = 65536;
 
     /// <summary>Refuses an invalid resource policy before input allocation.</summary>

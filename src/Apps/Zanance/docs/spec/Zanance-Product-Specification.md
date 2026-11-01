@@ -11842,3 +11842,8 @@ Six original chooser regressions fail before and pass after one source/help/nati
 
 Accountant packet generation now validates/protects original text at one existing central boundary: a permitted65,536-character field is not rejected for its generated protection marker. Original limits, opt-ins, field content, hashes and financial/source policy remain unchanged. Eight new and23 affected cases plus one new API36/x64 original-store packet verify this bounded change; strict Windows/full signed offline Android builds pass. This is not native Import/recipient, physical adoption, whole DB/key, stability, two-second performance, accessibility, provider/Store or release acceptance. D607 remains protected and iOS waits for Android completion.
 [Failure and actual native evidence](../quality/accountant-original-field-boundary.md).
+
+### D-716 - Reversible own-file text markers do not consume original field capacity
+
+The parser preserves a full65,536-character own-format text value even when exported with one protection marker. It requires the recognized original entry/holdings header, unique current-row version3 and an actual decoded text column; generic/typed/unknown fields and all aggregate budgets remain strict. No output format, money, identity or storage schema changes. Final27new/95affected cases and one actual Android Core-only8roundtrip/2refusal task pass; strict Windows/full signed offline Android builds pass. No native Import/financial write/wholeDB/key/stability/Home-speed/A11Y/provider/Store/release acceptance is inferred. D607 remains protected and iOS follows Android completion.
+[Actual original failures, finite runtime and constraints](../quality/own-csv-protected-field-budget.md).

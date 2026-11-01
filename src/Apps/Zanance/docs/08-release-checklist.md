@@ -5699,3 +5699,8 @@ One original-SGen/default-GC source-admitted growing-list/copy input completes14
 
 The original accountant builder accepts a complete maximum-length source field before adding spreadsheet protection, with eight new/23 affected cases and one distinct Android original-store ZIP proof. Strict Windows and full signed offline shippingdccb0480/384AOT408ELF1608staticLOAD pass; the independent authority is absent from shipping. Samsung adoption still waits for actualD607 completion/cleanup. Three deadlines/consumed reboot/unread source and all wider security/stability/performance/A11Y/provider/Store/release gates remain open; iOS remains afterAndroid. Used packages/evidence remain outside the frozen supplementary-cleanup scope.
 [Exact scope and outstanding boundaries](quality/accountant-original-field-boundary.md).
+
+### D-716 - Original CSV field-budget acceptance remains bounded
+
+Final27new/95affected cases and one independent Android Core task preserve full maximum-length own-format text while generic/typed/unknown/legacy inputs retain their limits. Strict Windows and prepared full signed offline shippingd2ee4ab5/384AOT408ELF1608staticLOAD pass; the private authority is absent from shipping. No financial database or accepted Import/share is exercised, and no Home/stability/whole-device gate is waived. D607three deadlines/consumed reboot/unread source and Main-adoption condition remain protected; iOS stays afterAndroid. Four standard Cleans and fresh fixture retirement pass, with a separately frozen supplementary-removal refusal.
+[Exact acceptance and cleanup boundaries](quality/own-csv-protected-field-budget.md).

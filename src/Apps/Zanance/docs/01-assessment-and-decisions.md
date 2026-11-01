@@ -12555,3 +12555,8 @@ Actual baseline loses an opened Settings form after a queued theme callback, len
 
 The original65,536-character field budget belongs to decoded source text. The accountant writer previously revalidated values after adding its own spreadsheet-protection apostrophe. Keep the existing Row conversion as the single validation/protection boundary and pass original values into it; do not enlarge limits or alter financial/source/consent policy. Five real failures, eight final new cases,23 affected existing cases and a distinct actual Android original-store packet prove the bounded fix; one mistaken line-feed test expectation remains separately documented. Main/D607 and wider release gates are unchanged.
 [Actual failure, implementation, runtime and cleanup evidence](quality/accountant-original-field-boundary.md).
+
+### D-716 - Bind CSV marker accounting to the original own-file decoder
+
+A format3 protection marker is transport only when the actual original entry/holdings decoder removes it. The bounded parser retains at most one provisional character and admits it only after validating known header/text-column identity, unique current-row version and the existing exact marker predicate. Generic human text remains literal; no global budget is raised and no source text is truncated. Seven real failures, final27new/95affected cases and one Core-only Android task prove the finite change; the failed early generic assumption remains explicit. Physical adoption/D607 and other release gates remain open.
+[Design, initial correction and actual evidence](quality/own-csv-protected-field-budget.md).

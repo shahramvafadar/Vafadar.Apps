@@ -29,8 +29,11 @@ public static class Csv
 
     /// <summary>Decodes only format-three text; older files retain their original protection contract.</summary>
     public static string UnprotectLiteralText(string value) =>
-        value.Length > 1 && value[0] == '\'' && (value[1] == '\'' || NeedsLiteralProtection(value.AsSpan(1)))
-            ? value[1..] : value;
+        value.Length > 1 && HasLiteralTextMarker(value.AsSpan()) ? value[1..] : value;
+
+    /// <summary>Recognizes precisely the one marker removed by the existing format-three text decoder.</summary>
+    private static bool HasLiteralTextMarker(ReadOnlySpan<char> value) =>
+        value.Length > 1 && value[0] == '\'' && (value[1] == '\'' || NeedsLiteralProtection(value[1..]));
 
     /// <summary>Refuses unknown own-file text contracts instead of guessing the account or metadata meaning.</summary>
     public static bool UsesLiteralText(string version) => version.Trim() switch
@@ -41,13 +44,20 @@ public static class Csv
     };
 
     /// <summary>Finds the unique version marker even when a later producer appends optional columns.</summary>
-    internal static int TextVersionColumn(IReadOnlyList<string> header)
+    internal static int TextVersionColumn(IReadOnlyList<string> header) => FindTextVersionColumn(header, true);
+
+    /// <summary>A bounded parser cannot grant a marker allowance from an ambiguous header.</summary>
+    private static int FindTextVersionColumn(IReadOnlyList<string> header, bool refuseAmbiguity)
     {
         var found = -1;
         for (var index = 0; index < header.Count; index++)
         {
             if (!string.Equals(header[index].Trim(), "format_version", StringComparison.OrdinalIgnoreCase)) continue;
-            if (found >= 0) throw new FormatException("Ambiguous CSV text format version columns.");
+            if (found >= 0)
+            {
+                if (refuseAmbiguity) throw new FormatException("Ambiguous CSV text format version columns.");
+                return -1;
+            }
             found = index;
         }
         return found;
@@ -58,6 +68,33 @@ public static class Csv
         if (!value.IsEmpty && value[0] is '\t' or '\r' or '\n') return true;
         var visible = value.TrimStart();
         return !visible.IsEmpty && visible[0] is '=' or '+' or '-' or '@';
+    }
+
+    /// <summary>Mirrors only text columns actually decoded by the two own-file readers, never a generic version label.</summary>
+    private static bool[] LiteralTextColumns(IReadOnlyList<string> header)
+    {
+        if (CsvImport.IsOwnFormat(header))
+        {
+            var columns = new bool[header.Count];
+            foreach (var index in new[] { 5, 6, 9, 10, 11, 12, 19, 20 })
+                if (index < header.Count && string.Equals(header[index].Trim(), CsvExport.Columns[index], StringComparison.OrdinalIgnoreCase))
+                    columns[index] = true;
+            return columns;
+        }
+        if (HoldingsCsv.IsHoldingsFormat(header))
+        {
+            var columns = new bool[header.Count];
+            foreach (var name in new[] { "name", "count_unit", "reason", "note" })
+                for (var index = 0; index < header.Count; index++)
+                    if (string.Equals(header[index].Trim(), name, StringComparison.OrdinalIgnoreCase))
+                    {
+                        // The holdings decoder uses the first named column; an ignored duplicate gains no allowance.
+                        columns[index] = true;
+                        break;
+                    }
+            return columns;
+        }
+        return [];
     }
 
     /// <summary>Writes rows with <paramref name="separator"/>, quoting cells when needed, CRLF line ends.</summary>
@@ -120,12 +157,16 @@ public static class Csv
     }
 
     /// <summary>Reads all rows; quoted cells may contain separators, quotes ("") and line breaks. Empty lines are skipped.</summary>
+    /// <remarks>Only a proven format-three reversible marker is excluded from original field length; total budgets include transport.</remarks>
     public static IReadOnlyList<IReadOnlyList<string>> Read(string text, char separator, CsvReadLimits? limits = null)
     {
         ArgumentNullException.ThrowIfNull(text);
         var budget = limits ?? CsvReadLimits.Import; budget.Validate();
         if (text.Length > budget.MaximumCharacters) throw new CsvReadLimitException(CsvReadLimit.Characters, budget.MaximumCharacters);
         var cells = 0;
+        var versionColumn = -1;
+        bool[] literalColumns = [];
+        var hasExtendedCell = false;
         var rows = new List<IReadOnlyList<string>>();
         var row = new List<string>();
         var cell = new StringBuilder();
@@ -133,7 +174,13 @@ public static class Csv
         var start = text.Length > 0 && text[0] == '﻿' ? 1 : 0;
         void Append(char value)
         {
-            if (cell.Length >= budget.MaximumFieldCharacters) throw new CsvReadLimitException(CsvReadLimit.FieldCharacters, budget.MaximumFieldCharacters);
+            // D-716: retain at most one provisional marker character. The complete row must prove its contract.
+            if (cell.Length >= budget.MaximumFieldCharacters)
+            {
+                if (cell.Length != budget.MaximumFieldCharacters || cell[0] != '\'')
+                    throw new CsvReadLimitException(CsvReadLimit.FieldCharacters, budget.MaximumFieldCharacters);
+                hasExtendedCell = true;
+            }
             cell.Append(value);
         }
         void EndCell()
@@ -145,7 +192,27 @@ public static class Csv
         void EndRow()
         {
             if (rows.Count >= budget.MaximumRows) throw new CsvReadLimitException(CsvReadLimit.Rows, budget.MaximumRows);
+            if (hasExtendedCell)
+            {
+                var literalText = rows.Count > 0 && versionColumn >= 0 && versionColumn < row.Count
+                    && row[versionColumn].Trim() == "3";
+                for (var index = 0; index < row.Count; index++)
+                {
+                    var value = row[index];
+                    // Exclude only the marker the importer actually removes; generic/legacy text keeps its full budget.
+                    if (value.Length > budget.MaximumFieldCharacters
+                        && (!literalText || index >= literalColumns.Length || !literalColumns[index]
+                            || value.Length - 1 != budget.MaximumFieldCharacters || !HasLiteralTextMarker(value.AsSpan())))
+                        throw new CsvReadLimitException(CsvReadLimit.FieldCharacters, budget.MaximumFieldCharacters);
+                }
+                hasExtendedCell = false;
+            }
             rows.Add(row);
+            if (rows.Count == 1)
+            {
+                versionColumn = FindTextVersionColumn(row, false);
+                literalColumns = LiteralTextColumns(row);
+            }
         }
 
 

@@ -8662,3 +8662,8 @@ Six original chooser regressions fail before and pass after one source/help/nati
 
 Five actual import-preview/SQLite failures pass after centralizing the existing export boundary. The final set is eight new plus23 affected existing cases; only the corrected line-feed expectation is rerun. A new independent Android UID10216/PID4807 runs one original review/ZIP build over a65,536-character note: all text plus one protection marker, manifest hashes and22 typed source collections/settings remain exact. One new fictitious zero-opening account/expense100 is fixture setup, not zero data writes or native Import/share acceptance. Windows/full offline signed Android builds and package guards pass; source/OS restoration and precise cleanup limits are recorded. No successful financial/UI cohort is replayed.
 [Original inputs and finite acceptance](quality/accountant-original-field-boundary.md).
+
+### D-716 - Own CSV maximum-field round-trip with strict foreign/typed bounds
+
+Seven original own-format failures pass after source-aware marker accounting. Final27new cases cover exact original text, row/version/header/column eligibility and unchanged budgets;95 affected existing cases pass on final source after a preserved generic-contract assumption failure. One fresh API36/x64/4096 Core-only task completes8originalroundtrips/2refusals with independently matched text digest and no financial database/writes, native Import/share or old cohort replay. Strict Windows/full offline Android and used component/package guards pass. This is not a complete financial/native-picker/recipient/device suite or a performance gate.
+[Inputs, exact runtime and restoration](quality/own-csv-protected-field-budget.md).
