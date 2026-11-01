@@ -1666,3 +1666,13 @@ field, permission, SDK, identifier, authentication grant or outgoing payload. Fi
 original LockPage window checks use no PIN/account/ledger/authentication setup. This is not
 blanket coverage of native SDK dialogs/system UI or genuine owner authentication.
 [Actual baseline, twelve bounded policy observations and limits](quality/original-modal-screen-protection.md).
+
+
+### D-727 - Original native SDK dialogs inherit the same screenshot policy
+
+Observe only the pinned SDK's in-process versioned native dialog-root envelope. There is no
+telemetry, outgoing data, new persistence, SDK/dependency, permission or authentication grant.
+Keep original controls, consent and task outcomes; only the actual owned Secure flag follows
+the existing preference/background rule. Native checks use no account/PIN/ledger/auth setup.
+The pinned contract must be qualified again on SDK changes; other native popup/system windows
+are not accepted by inference. [Actual sources and privacy boundaries](quality/original-native-dialog-screen-protection.md).

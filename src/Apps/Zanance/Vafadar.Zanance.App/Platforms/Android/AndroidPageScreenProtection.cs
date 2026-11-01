@@ -18,10 +18,19 @@ internal static class AndroidPageScreenProtection
     {
         Volatile.Write(ref _block, block);
         if (Interlocked.Exchange(ref _registered, 1) != 0) return;
+        AndroidDialogScreenProtection.Register();
         Microsoft.Maui.Handlers.PageHandler.Mapper.AppendToMapping("ZanancePageScreenProtection", (handler, _) =>
         {
             if (handler.PlatformView is { } page) Pages.GetValue(page, static view => new PageObserver(view));
         });
+    }
+
+    /// <summary>Includes the actual native dialog root without replacing its SDK controls or commands.</summary>
+    internal static void TrackNativeRoot(NativeView root)
+    {
+        if (root.Context?.PackageName != Android.App.Application.Context.PackageName ||
+            !root.Equals(root.RootView)) return;
+        Pages.GetValue(root, static view => new PageObserver(view));
     }
 
     /// <summary>Updates attached roots on the UI thread when the original preference or background state changes.</summary>

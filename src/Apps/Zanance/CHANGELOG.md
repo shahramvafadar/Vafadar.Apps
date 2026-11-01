@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-727: keep original Android alerts, action sheets and prompts under the same screenshot privacy choice as the main window.
+
 - D-726: apply the existing Android screenshot preference and background protection to MAUI modal pages as well as the main window.
 
 - D-724: keep the PIN unlock and recovery actions reachable above the Android keyboard with enlarged text, without changing authentication or attempt limits.

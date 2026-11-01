@@ -3507,3 +3507,11 @@ protection policy independently of the Activity. New attached modal roots inheri
 choice without changing layout, keyboard behavior, authentication or navigation. Native SDK
 alert/popup/system windows require their own evidence; a secure Activity alone proves none.
 [Native policy and source scope](quality/original-modal-screen-protection.md).
+
+
+### D-727 - Preserve stock native dialogs while applying original screenshot privacy
+
+Keep original SDK alert, ActionSheet and Prompt controls, layout, cancellation, focus and result
+tasks. Their actual owned decor inherits the existing foreground choice and background privacy
+policy. Do not replace native consent UI to set a window flag or infer another popup's protection
+from a secure Activity. [Actual original failure and checks](quality/original-native-dialog-screen-protection.md).
