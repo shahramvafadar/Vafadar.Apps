@@ -122,3 +122,11 @@ authentication, all security/database/key/recovery paths, general stability/spee
 physical Main adoption, iOS/provider/Store or release. The three D-607 deadlines, consumed reboot
 and unread post-reboot source stay protected; Main adoption waits for actual D-607 completion.
 Android precedes iOS under D-714; the overall delivery goal stays active.
+
+## Subsequent minimum-API native input (D-725)
+
+[D-725](minimum-api-lock-keyboard-insets.md) qualifies the same unchanged adapter binary on actual
+API24/x64/4096 with a real keyboard417 boundary, original source/locked state and hidden-IME
+viewport restoration. It adds one bounded native adapter assertion without repeating the18
+contexts above or a build. Its empty image stream does not supply glyph/visual acceptance;
+broader minimum-device and other-state requirements remain separate.
