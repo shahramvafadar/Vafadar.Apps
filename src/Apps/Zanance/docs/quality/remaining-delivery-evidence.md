@@ -1,0 +1,124 @@
+# Remaining delivery evidence and execution frontier (D-738)
+
+Reviewed 1 November 2026 against published baseline
+`a1abb9e06f5c6ff73d239af765cf7ccb55150950` and the current canonical backlog.
+This is a bounded execution audit, not a new product implementation, release approval,
+percentage-complete estimate or a second backlog. The
+[canonical item states](../enhancements/2026-10-commercial-release/04-backlog.md)
+and [owner delivery order](../enhancements/2026-10-commercial-release/05-delivery-plan.md)
+remain authoritative.
+
+## What the inventory means
+
+Exactly 49 parent-table rows do not begin with `Done`. They include implemented-but-not-
+activated services, gated acceptance, explicitly deferred work and outside-scope items;
+they are not 49 missing features or equal units of effort. Every one appears below.
+Rows marked Done also retain their explicitly stated wider platform limits: this lexical
+inventory does not prove every nested acceptance requirement or the complete goal.
+Do not derive a completion percentage or remaining hours by counting these rows.
+
+Current Android product source remains D734. D735 adds minimum/simulated16KiB fallback
+runtime evidence; D736 adds normal current physical receipt-draft evidence. D737 is an
+unfinished independent authentication cohort, not a shipping installation or acceptance.
+Its retained actual status has zero accounts/ledger/plans, unavailable device authentication
+and zero requested/completed/successful authentications. That boolean does not establish
+whether a PIN, password, pattern or fingerprint is configured. The owner is checking the
+real lock state; do not compete with that input or change global security settings.
+
+## Parent requirements and the next missing input
+
+| Canonical item | Remaining evidence or execution condition |
+|---|---|
+| ZCR-SEC-01 | Android/Windows feasibility and adoption exist; native iOS and independent security acceptance remain. |
+| ZCR-SEC-02 | Current protected Android source/fallback evidence exists, including D735; iOS and wider device adoption remain. No Main private-source read is authorized by a public Home check. |
+| ZCR-SEC-03 | D483 Samsung and D520 compatibility key evidence already exist; remaining device/restore and iOS claims need their actual key-lifecycle evidence, not another unchanged key-creation test. |
+| ZCR-SEC-04 | D737 original Android adapter reports unavailable, with zero authentication requests. Await the owner's actual lock-state clarification; genuine success/cancellation/enrolment acceptance remains unproven. |
+| ZCR-SEC-05 | D263/D521/D522/D524 cover named migration faults and profile cases. Further claims require a specified unqualified upgrade/profile/device boundary; iOS remains later. |
+| ZCR-SEC-06 | Named protected recovery/alias-loss/portable cases already exist; real authentication and later iOS/device recovery remain separate. |
+| ZCR-SEC-07 | D603 proves framework policy rejection, not actual OEM transfer or iOS exclusion. Transfer acceptance requires a real supported destination/workflow. |
+| ZCR-SEC-08 | D312 already qualifies Samsung safety recovery/profile isolation; wider device/iOS evidence remains. |
+| ZCR-SEC-09 | D604 is the source/flow inventory. Select the actual online release inputs before traffic/processor/Store declarations; offline evidence cannot qualify them. |
+| ZCR-LOC-01 | Track actual new owner/native defects. D734 repairs the named disposed-peer exception; neither an empty new report nor that fix closes general stability. |
+| ZCR-LOC-07 | Approved target currency coverage is delivered. No additional jurisdiction is currently selected; do not invent one to close the parent row. |
+| ZCR-LOC-08 | Approved target holiday coverage is delivered. Additional regions/validity years require a concrete selected scope and original sources. |
+| ZCR-IMP-01 | StarMoney/SUPA and the accepted physical import/Undo remain settled. Other variants need original consumer export specimens before implementation. |
+| ZCR-IMP-02 | Explicitly on demand with actual OFX/QIF/CAMT samples; no current specimen-driven batch is established by a generic Proposed state. |
+| ZCR-QA-01 | Reuse the named physical acceptances; D733 adoption, D734 correction and D736 drafts cover finite current paths. Select only a demonstrably missing changed path; public Home equality is not complete private financial equality. |
+| ZCR-QA-02 | Genuine OAuth client/certificate setup and another-device restore remain; owner enters account/credential material. Do not replay local restore as OAuth proof. |
+| ZCR-QA-05 | D736 current normal source-to-unsaved fields are accepted. Real controlled physical-camera/corpus quality remains distinct; missing-header abstention is not a new merchant defect. |
+| ZCR-QA-06 | Ready technical investigation remains: exact native reference-origin evidence and an evidence-supported remedy; separate unmet cold/search/migration/reference workload criteria. Do not repeat closed GC/compression candidates or unchanged Home samples. |
+| ZCR-QA-07 | D607 is terminal, not pending; its precision/intervening-process limits remain. Genuine owner authentication, remaining platform parity and later iOS require their own evidence. |
+| ZCR-A11Y-01 | Owner defers further TalkBack behind every other available task; Persian speech is parked. Preserve accepted recordings and unresolved findings. |
+| ZCR-A11Y-02 | Windows commercial/platform phase is separately deferred; do not reopen it as current Android delivery. |
+| ZCR-A11Y-03 | Existing large-text/layout observations are finite. Further work needs an identified unqualified or changed surface, actual arranged bounds and preservation of accepted cases. |
+| ZCR-A11Y-04 | Native iOS VoiceOver waits for Android completion and the actual later Mac/iOS phase. |
+| ZCR-ENT-01 | Core plan policy is implemented. Commercial activation is not currently authorized; no repeated policy suite supplies that authority. |
+| ZCR-ENT-02 | Local original enforcement boundaries are implemented but inactive; actual activation/native release requirements remain. |
+| ZCR-ENT-03 | Local downgrade/history choices are implemented; genuine shared lifecycle and release acceptance remain. |
+| ZCR-ENT-04 | Original plan/purchase-history UI is locally delivered; actual store facts, device/platform acceptance remain. |
+| ZCR-ENT-05 | Current test-build policy is verified; customer activation/announcement is an owner gate. |
+| ZCR-BIL-01 | Local Android/service prerequisites exist; real catalog/account/signing/sandbox and later StoreKit2 remain. Web checkout and Windows commercial are outside the current delivery. |
+| ZCR-BIL-02 | Local verification/notification/idempotency is delivered; genuine provider/public callbacks and operational acceptance remain. |
+| ZCR-BIL-03 | Signed cache/clock/recovery cases are locally qualified; remaining genuine device/platform evidence cannot be replaced with fixture facts. |
+| ZCR-BIL-04 | Local Lifetime/trial/discount policies exist; actual provider eligibility/prices/sandbox matrix remain. |
+| ZCR-BIL-05 | Real sandbox requires the owner's store setup; production activation remains owner-only and is not implied by development authority. |
+| ZCR-ID-01 | Local deployment/tunnel-origin prerequisites exist; owner tunnel/DNS authentication, real mail and public acceptance remain. Never reuse another project's credentials. |
+| ZCR-SYNC-01 | Local protected service/Android graph delivery exists; public authenticated multi-device/platform acceptance remains. |
+| ZCR-SYNC-02 | Local conflicts/idempotency/restore cases exist; genuine deployed independent-client/platform acceptance remains. |
+| ZCR-SYNC-03 | Local status/device-revocation UI is delivered; public operation and remaining platform acceptance remain. |
+| ZCR-SHR-01 | Local E2EE membership/roles/device delivery exists; public authenticated independent-client/platform acceptance remains. |
+| ZCR-SHR-02 | Local cost/share/refund/repayment flows are delivered; public independent-client/platform acceptance remains. |
+| ZCR-SHR-03 | Local consent/audit/revocation/expiry delivery exists; public operational lifecycle and platform acceptance remain. |
+| ZCR-SHR-04 | Local pinned membership/epoch/recovery delivery exists; external security review and actual public/platform acceptance remain. |
+| ZCR-TAX-01 | Official-source research exists; expert approval of the selected German year/rules/examples remains. Do not silently implement official tax conclusions. |
+| ZCR-TAX-02 | Local accountant export and named physical disclosures are delivered; remaining expert/platform acceptance remains, without filing authority. |
+| ZCR-TAX-03 | Versioned tax calculations require TAX-01 expert/rule acceptance before implementation; no invented rates/rules. |
+| ZCR-AI-01 | Local consent/minimization/credit boundaries exist; actual provider, pricing, approved access and live sales remain gated. |
+| ZCR-BANK-01 | Research exists; exact consumer specimens and actual live provider/access decisions remain. Do not fabricate a bank preset. |
+| ZCR-FX-01 | Owner-approved ECB thirty-pair integration is delivered; other price sources/public/platform gates remain and are not a reason to fetch ECB again. |
+| ZCR-LANG-01 | Additional languages are explicitly outside current delivery. Existing six languages remain supported. |
+| ZCR-REL-01 | Final QA and selected-artifact declarations require the outstanding prerequisite evidence; actual publication remains owner-only. |
+
+## Ready work and dependency boundaries
+
+1. Preserve D737's current installed independent package and original false/zero-request
+   admission. Resume only the unfinished authentication observation after actual owner
+   readiness. No real password, pattern, biometric template or authentication substitute
+   is collected. No Main setting or accepted money needs to change for this gate.
+2. Continue independent evidence-supported Android development and QA-06 investigation.
+   [D712](exact-original-fault-word-load.md) proves the failing referenced-object first-word
+   load, not its reference origin/type/earlier writer. The
+   [official correction admission](original-sgen-card-scan-correction-admission.md)
+   already proves the known card alignment correction is present in the failing runtime.
+   Reinstalling the same runtime, suppressing its native read or attributing it to D734's
+   separate disposed-Java-peer exception would not fix the demonstrated fault.
+3. For performance, retain the original Q-02 reference workload and distinguish cold
+   command-to-ready, warm publication and tenfold evidence. A new candidate needs an
+   observed bottleneck, unchanged complete source and its original latency/memory gates;
+   do not rescue rejected nursery/worker/index/codec candidates or rerun unchanged success.
+4. Complete genuinely new missing Android cases when their concrete inputs are available.
+   A broad open parent row does not authorize recreating an accepted financial fixture,
+   retapping Save/Import/Undo, repeating camera capture or rescheduling a completed reminder.
+5. Keep owner/provider/expert/publication dependencies open. Continue independent work;
+   do not repeatedly request settled scope/account choices. iOS waits until Android work
+   is complete; TalkBack remains lowest priority and Persian speech parked.
+
+D607's terminal delivery/source/fixture retirement is authoritative. Its original reboot
+is consumed and both monitors deleted; neither this audit nor phone return authorizes
+recreating its fixture, deadlines, source observation or monitor. Frozen cleanup scopes
+stay frozen without retry, subset, alternate method, move, escalation or reuse.
+
+## Verification and limits
+
+The current canonical table was read directly; the 49-key mapping must equal its complete
+non-Done parent-row set, without duplicates or invented IDs. Local evidence links were
+resolved, documentation whitespace checked and the staged diff reviewed. D737's retained
+actual original-adapter status and the production Android authenticator were inspected;
+no new live phone query, authentication, emulator command, financial operation, build,
+unit test, profiling capture or unchanged CI request occurs for this audit. No new app
+unit-test count or security/stability/performance/platform acceptance is claimed.
+
+This document clarifies prerequisites and prevents successful work from being replayed.
+It does not close any of the 49 rows or the overall delivery goal. Reassess the frontier
+when real owner input, a new failure, selected artifact, original specimen, supported
+diagnostic evidence or external access changes the next executable action.

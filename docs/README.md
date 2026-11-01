@@ -56,3 +56,5 @@ source regression, original native receiver action, separate persisted metadata,
 startup/device boundaries. The independent maintained caller is under eng/benchmarks/Zanance.AndroidReminders.
 
 The original six-kind resource workspace now includes source-bound read/revalidation, accepted receipts and exact native parent returns: [D-659 evidence](../src/Apps/Zanance/docs/quality/original-active-resource-workspace.md). This source/native qualification does not close physical adoption or release gates.
+
+The [remaining delivery evidence audit](../src/Apps/Zanance/docs/quality/remaining-delivery-evidence.md) maps the 49 current non-Done parent rows to their missing inputs without treating them as49 missing features or replaying accepted work.
