@@ -127,3 +127,5 @@ D739 subsequently [admits the actual packaged JNI owner-lifetime boundaries](cur
 [D737 terminal evidence](physical-original-device-credential.md) supersedes its earlier unavailable/owner-decision wait, without closing broader SEC04 requirements.
 
 [D740 current protected Transactions stages](current-protected-transactions-stages.md) admit unchanged original-source copies and a later source-stamp investigation boundary; no production candidate or performance improvement is accepted.
+
+[D741 same-JSON sink](same-json-incremental-sink-admission.md) is rejected at the original tenfold5% latency gate; production remains unchanged and another unchanged sink run is not ready work.
