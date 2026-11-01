@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-724: keep the PIN unlock and recovery actions reachable above the Android keyboard with enlarged text, without changing authentication or attempt limits.
+
 - D-722: new Android PIN retry delays use actual elapsed time in the same boot, so adjusting the wall clock cannot skip or renew them; old/reboot timing remains explicitly bounded.
 
 - D-721: asking to unlock the app automatically no longer consumes an empty PIN attempt; explicit PIN submissions keep their existing checks.

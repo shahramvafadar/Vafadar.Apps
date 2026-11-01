@@ -17,6 +17,9 @@ internal sealed class LockPage : ContentPage
     private bool _prompting;
     private readonly Entry _pin;
     private readonly TaskCompletionSource<bool>? _confirmation;
+#if ANDROID
+    private LockKeyboardViewport? _keyboardViewport;
+#endif
 
     /// <summary>Creates a persistent unlock cover, or a cancellable sensitive-operation confirmation.</summary>
     public LockPage(AppLockService appLock, Translator translator, bool promptOnAppearing,
@@ -51,7 +54,7 @@ internal sealed class LockPage : ContentPage
         symbol.SetDynamicResource(SymbolIcon.ForegroundColorProperty, "Primary");
         unlock.Clicked += async (_, _) => await PromptAsync();
 
-        Content = new VerticalStackLayout
+        var body = new VerticalStackLayout
         {
             Padding = new Thickness(32),
             Spacing = 20,
@@ -82,7 +85,7 @@ internal sealed class LockPage : ContentPage
                 catch (Exception ex) when (ex is not OutOfMemoryException) { _message.Text = translator["Pin_Unavailable"]; }
                 finally { _prompting = false; }
             };
-            ((VerticalStackLayout)Content).Children.Add(forgot);
+            body.Children.Add(forgot);
         }
         if (confirmation is not null)
         {
@@ -90,8 +93,20 @@ internal sealed class LockPage : ContentPage
             cancel.SetDynamicResource(Button.TextColorProperty, "Primary");
             cancel.SetDynamicResource(Button.BackgroundColorProperty, "CardBackground");
             cancel.Clicked += async (_, _) => await CompleteAsync(false);
-            ((VerticalStackLayout)Content).Children.Add(cancel);
+            body.Children.Add(cancel);
         }
+
+        // D-724: Android's edge-to-edge modal does not shrink this stack for the IME.
+        // Let the actual safe-area container bound a scrollable body so enlarged text
+        // and the keyboard cannot strand Unlock, recovery or confirmation Cancel.
+        Content = new Grid
+        {
+            SafeAreaEdges = SafeAreaEdges.All,
+            Children = { new ScrollView { SafeAreaEdges = SafeAreaEdges.None, Content = body } },
+        };
+#if ANDROID
+        Loaded += (_, _) => UseKeyboardViewport();
+#endif
     }
 
     /// <summary>Gets or sets a value indicating whether the app was already locked when it went to the background.</summary>
@@ -180,6 +195,9 @@ internal sealed class LockPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+#if ANDROID
+        Dispatcher.Dispatch(UseKeyboardViewport);
+#endif
         if (_promptOnAppearing)
         {
             _promptOnAppearing = false;
@@ -189,9 +207,23 @@ internal sealed class LockPage : ContentPage
 
     protected override void OnDisappearing()
     {
+#if ANDROID
+        _keyboardViewport?.Dispose();
+        _keyboardViewport = null;
+#endif
         _pin.Text = string.Empty;
         base.OnDisappearing();
     }
+
+#if ANDROID
+    private void UseKeyboardViewport()
+    {
+        // A queued appearance callback cannot alter a replacement modal's window.
+        if (_keyboardViewport is null && Navigation.ModalStack.LastOrDefault() == this)
+            _keyboardViewport = LockKeyboardViewport.TryAcquire(Handler?.PlatformView as Android.Views.View,
+                (Grid)Content, (ScrollView)((Grid)Content).Children[0]);
+    }
+#endif
 
     // The back button never uncovers the app.
     protected override bool OnBackButtonPressed()

@@ -3490,3 +3490,11 @@ Automatic foreground/resume requests display or focus the original PIN entry; th
 ### Original PIN wait after clock correction (D-722)
 
 New supported Android penalties show the remaining same-boot elapsed wait, including sleep. UTC correction must neither bypass that wait nor renew it; an expired interval admits only the next original submitted operation. Preserve five initial guesses/one minute, doubling/cap, original Enter/Unlock and automatic-focus separation. A missing required clock uses existing unavailable-PIN guidance and keeps the cover; it never clears the verifier. Legacy/no-origin and known new-boot UTC behavior is explicit, not a fabricated remaining interval. [Actual source/UI scope](quality/pin-retry-elapsed-clock.md).
+
+### Original lock-cover keyboard viewport (D-724)
+
+Keep the original PIN actions in a scrollable body constrained by real system/keyboard geometry.
+The owned Android modal compensates only actual remaining IME occlusion, with no fixed keyboard
+height or global setting. Retain password/RTL semantics, complete captions, authentication and
+Back behavior; restore only that modal's unchanged mode/padding on departure.
+[Actual enlarged-text failure and bounded final native evidence](quality/lock-cover-keyboard-viewport.md).
