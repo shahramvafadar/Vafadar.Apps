@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-715: keep complete maximum-length text in accountant exports without counting the added spreadsheet-protection marker against the original field limit.
+
 - D-710: keep receipt source choices and help attached to their creating page; wait for unlock before opening the chosen camera/file source, without asking again.
 
 - D-709: keep completed receipt recognition and safe feedback behind app unlock, retain busy ownership until actual completion, and reject results whose original page has retired.

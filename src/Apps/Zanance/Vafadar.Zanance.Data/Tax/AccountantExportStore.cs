@@ -136,12 +136,12 @@ public sealed class AccountantExportStore(IDbContextFactory<ZananceDbContext> fa
         using (var file = Open("accounts.csv"))
         {
             file.Row("id", "name", "currency", "type", "archived", "explicitly_selected");
-            foreach (var a in accounts) file.Row(a.Id, Safe(a.Name), a.CurrencyCode, a.Type, a.IsArchived, selected.Contains(a.Id));
+            foreach (var a in accounts) file.Row(a.Id, a.Name, a.CurrencyCode, a.Type, a.IsArchived, selected.Contains(a.Id));
         }
         using (var file = Open("categories.csv"))
         {
             file.Row("id", "name", "system_key", "parent_id", "kind", "tax_classification");
-            foreach (var c in categories) file.Row(c.Id, Safe(c.Name), Safe(c.SystemKey), c.ParentId, c.Kind, "");
+            foreach (var c in categories) file.Row(c.Id, c.Name, c.SystemKey, c.ParentId, c.Kind, "");
         }
         using (var file = Open("transactions.csv"))
         {
@@ -156,10 +156,10 @@ public sealed class AccountantExportStore(IDbContextFactory<ZananceDbContext> fa
                 var destination = e.ToAccountId is { } to && lookup.TryGetValue(to, out var target) ? target : null;
                 file.Row(e.Id, e.Date, e.Kind, e.Amount, currency, DecimalAmount(e.Amount, currency), e.AccountId, e.ToAccountId,
                     e.Kind == EntryKind.Transfer ? e.ToAmount ?? e.Amount : null, destination?.CurrencyCode,
-                    e.CategoryId, Safe(e.Title), request.IncludeNotes ? Safe(e.Payee) : "", request.IncludeNotes ? Safe(e.Note) : "",
+                    e.CategoryId, e.Title, request.IncludeNotes ? e.Payee : "", request.IncludeNotes ? e.Note : "",
                     e.OriginalAmount, e.OriginalCurrencyCode, e.RefundOfId, e.GroupId, e.Review, e.Source, e.Direction,
-                    e.ReimbursableAmount, request.IncludeNotes ? Safe(e.ReimbursedBy) : "", e.ReimbursementDueDate, e.IsAggregated,
-                    e.AggregatedFrom, e.AggregatedTo, Safe(EntryTags.Format(e.Tags)), e.CreatedAt, e.UpdatedAt);
+                    e.ReimbursableAmount, request.IncludeNotes ? e.ReimbursedBy : "", e.ReimbursementDueDate, e.IsAggregated,
+                    e.AggregatedFrom, e.AggregatedTo, EntryTags.Format(e.Tags), e.CreatedAt, e.UpdatedAt);
                 var key = currency + "/" + e.Kind;
                 var total = totals.GetValueOrDefault(key); totals[key] = (total.Count + 1, total.Minor + e.Amount);
             }
@@ -211,7 +211,7 @@ public sealed class AccountantExportStore(IDbContextFactory<ZananceDbContext> fa
                 Check();
                 var extension = a.ContentType switch { "application/pdf" => ".pdf", "image/jpeg" => ".jpg", "image/png" => ".png", _ => ".bin" };
                 var name = "documents/" + a.Id.ToString("N") + extension;
-                index.Row(a.Id, a.EntryId, Safe(a.FileName), Safe(a.ContentType), name, a.Size, files[name], a.CreatedAt, a.UpdatedAt, "stored_copy_not_verified_original");
+                index.Row(a.Id, a.EntryId, a.FileName, a.ContentType, name, a.Size, files[name], a.CreatedAt, a.UpdatedAt, "stored_copy_not_verified_original");
             }
         }
         using (var file = Open("README.txt")) file.Text(Instructions);
@@ -219,6 +219,7 @@ public sealed class AccountantExportStore(IDbContextFactory<ZananceDbContext> fa
         Check(); return new(digest, count, documentCount, documentBytes, accounts.Count(a => !selected.Contains(a.Id)), files);
     }
 
+    /// <summary>Checks original source text once, before adding the spreadsheet protection marker.</summary>
     private static string Safe(string? value)
     {
         if (value?.Length > 65536) throw new InvalidOperationException("A source field exceeds the safe export bound.");
@@ -258,6 +259,7 @@ public sealed class AccountantExportStore(IDbContextFactory<ZananceDbContext> fa
     {
         private readonly Stream? _output = archive?.CreateEntry(name, CompressionLevel.Fastest).Open();
         private readonly IncrementalHash _hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        // D-715: this is the sole text boundary. A second source-length check would count our own protection marker.
         public void Row(params object?[] values) => Text(Csv.Write([values.Select(v => v switch
         {
             null => "", string text => Safe(text), DateOnly date => date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),

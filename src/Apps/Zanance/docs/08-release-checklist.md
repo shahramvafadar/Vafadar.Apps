@@ -5694,3 +5694,8 @@ Six original chooser regressions fail before and pass after one source/help/nati
 
 One original-SGen/default-GC source-admitted growing-list/copy input completes1467cohorts/146700000boundedidentitychecks with noobservedfailure. It doesnot reproduce/refute/fix the original crash, prove scanner coverage or accept whole-app stability. Product/runtime/GC unchanged, prior shipping09140d86 retained; only owned diagnostic state is retired. Refused supplemental scopes remain frozen; D607/phone adoption and wider release gates stay open.
 [Actual original source and bounded outcome](quality/original-list-growth-runtime-origin.md).
+
+### D-715 - Accountant field-boundary fix is not a new release gate waiver
+
+The original accountant builder accepts a complete maximum-length source field before adding spreadsheet protection, with eight new/23 affected cases and one distinct Android original-store ZIP proof. Strict Windows and full signed offline shippingdccb0480/384AOT408ELF1608staticLOAD pass; the independent authority is absent from shipping. Samsung adoption still waits for actualD607 completion/cleanup. Three deadlines/consumed reboot/unread source and all wider security/stability/performance/A11Y/provider/Store/release gates remain open; iOS remains afterAndroid. Used packages/evidence remain outside the frozen supplementary-cleanup scope.
+[Exact scope and outstanding boundaries](quality/accountant-original-field-boundary.md).
