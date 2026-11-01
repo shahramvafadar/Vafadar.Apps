@@ -1676,3 +1676,13 @@ Keep original controls, consent and task outcomes; only the actual owned Secure 
 the existing preference/background rule. Native checks use no account/PIN/ledger/auth setup.
 The pinned contract must be qualified again on SDK changes; other native popup/system windows
 are not accepted by inference. [Actual sources and privacy boundaries](quality/original-native-dialog-screen-protection.md).
+
+
+### D-728 - Bounded original managed Picker-dialog reference
+
+The app reads only the pinned SDK's original managed dialog reference to protect its owned
+window. There is no private Android framework reflection, credential/key extraction, outgoing
+payload, new persistence, SDK/dependency, permission or financial writer. Field/type admission
+occurs before input connection and preserves its metadata for AOT; SDK updates require actual
+native requalification. Original screenshot choice/background policy and stock SDK interaction
+remain. [Actual source/privacy boundaries](quality/original-native-picker-screen-protection.md).

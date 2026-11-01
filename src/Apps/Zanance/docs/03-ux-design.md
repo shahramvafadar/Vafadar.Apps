@@ -3515,3 +3515,11 @@ Keep original SDK alert, ActionSheet and Prompt controls, layout, cancellation, 
 tasks. Their actual owned decor inherits the existing foreground choice and background privacy
 policy. Do not replace native consent UI to set a window flag or infer another popup's protection
 from a secure Activity. [Actual original failure and checks](quality/original-native-dialog-screen-protection.md).
+
+
+### D-728 - Protect the stock native Picker without replacing its interaction
+
+Keep original SDK item order, current selection, captions, mappers, focus and Cancel behavior.
+An app-scoped handler observes the pinned original native-click dialog reference and attaches
+only its owned root to the existing screenshot policy. No list/layout/backend replacement.
+[Original native UI equality and selection/restoration](quality/original-native-picker-screen-protection.md).

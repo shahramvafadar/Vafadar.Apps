@@ -53,7 +53,11 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
 #if ANDROID
-            .ConfigureMauiHandlers(handlers => handlers.AddHandler<Shell, AccessibleShellRenderer>())
+            .ConfigureMauiHandlers(handlers =>
+            {
+                handlers.AddHandler<Shell, AccessibleShellRenderer>();
+                handlers.AddHandler<Picker, ProtectedPickerHandler>();
+            })
 #endif
             .UseVafadar(options =>
             {

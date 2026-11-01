@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-728: apply screenshot privacy to the original Android selection picker while preserving its choices, selection and Cancel behavior.
+
 - D-727: keep original Android alerts, action sheets and prompts under the same screenshot privacy choice as the main window.
 
 - D-726: apply the existing Android screenshot preference and background protection to MAUI modal pages as well as the main window.
