@@ -131,3 +131,5 @@ D739 subsequently [admits the actual packaged JNI owner-lifetime boundaries](cur
 [D741 same-JSON sink](same-json-incremental-sink-admission.md) is rejected at the original tenfold5% latency gate; production remains unchanged and another unchanged sink run is not ready work.
 
 D742 compares the later stable36.1.118 four selected JNI source files against the current SDK: unchanged target paths do not supply the missing guards, so no SDK update is adopted as an original-fault remedy. See [the exact source admission](current-jni-owner-lifetime-admission.md).
+
+[D745 typed transient stamp](typed-transient-ledger-stamp-admission.md) passes host admission but fails the first native memory gate despite lower latency. Production is exactly restored; do not reopen its unchanged reference/reverse/phone cohorts or count the rejected candidate as delivered performance. A genuinely changed evidence-supported premise is required.

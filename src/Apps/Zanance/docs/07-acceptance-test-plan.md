@@ -8819,3 +8819,7 @@ or another successful stress cohort. Freshfixture/requests retire, owned AVD sto
 scopes remain frozen without retry/subset/alternate/move/escalation/reuse. Main/owner PIN,
 terminal D607/consumed reboot and other cohorts remain. D744's limited phone turn was
 explicitly returned; no fresh Zanance phone acceptance is inferred or repeated.
+
+### D-745 - Typed transient source stamp fails fixed native memory admission
+
+Two actual host14 processes admit the complete32-field framing contract and10k/100k fixed gates;43 candidate contracts and14 affected original tests pass. Original native Transactions100k timing2791.7743to1715.7328ms improves38.5433%, but candidate PSS67613KiB exceeds fixed65536KiB; reject before reference/reverse/physical rescue. Native full actual post-startup schema/typed source/cookies and all100000published rows remain exact before/after. Restore original production source byte-for-byte and remove candidate-only code/tests; no shipped speedup or permanent new-test count. FreshUID/owned requests retire,2XML58508byte hash-clean, ownAVD stops, ADB5038 retained;7 standard Clean pass. Supplementary deletion is blocked before process;13exactscopes/1982files/5358365695logicalbytes freeze without retry/subset/alternate/move/escalation/reuse. Main/ownerPIN/D607terminal/overallgoal remain. [Finite result and exact scopes](quality/typed-transient-ledger-stamp-admission.md).

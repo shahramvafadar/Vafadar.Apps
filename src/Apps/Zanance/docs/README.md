@@ -143,3 +143,5 @@ again. D661 receives one delayed exact-head check. WholeDB/key/security/stabilit
 A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
 
 [Full evidence](quality/original-household-workspace.md)
+
+D-745 [typed transient source-stamp admission](quality/typed-transient-ledger-stamp-admission.md) records the host passes, native memory rejection, exact production restoration and frozen supplementary cleanup scopes; no shipped performance acceptance.

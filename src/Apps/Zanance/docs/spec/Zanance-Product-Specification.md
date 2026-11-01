@@ -12040,3 +12040,23 @@ without retry/subset/alternate/move/escalation/reuse. Nine used signed packages 
 source/evidence archives remain. Main/D734, owner PIN, terminal D607/consumed reboot,
 other cohorts and the active delivery goal stay intact. Android precedes iOS; TalkBack
 stays last. [Full finite evidence](../quality/original-mark-bit-diagnostic.md).
+
+### D-745 - Reject typed transient ledger stamp at the native memory gate
+
+A distinct framed-scalar/original-JSON-text SHA256 stamp preserves the original32-field
+contract without persisted/model/UI changes. Two actual .NET10.0.14 host processes pass
+fixed10k/100k latency/allocation gates;43 finite candidate cases and14 affected original
+Transactions tests pass. First actual original native100k pair2791.7743-to1715.7328ms
+improves38.5432841%, but within-candidate PSS growth67613KiB exceeds the predeclared65536KiB
+ceiling. Reject without reference/reverse/phone rescue, averaging or gate relaxation;
+whole-process memory is not exclusively attributable to the candidate. Actual native
+post-startup full-source control,100000published32-field rows and cookies match before
+and after. Production snapshot source is restored exactly; candidate-only code/tests
+are removed, so no shipped speedup or permanent test-count increase is claimed.
+Only freshUID10216 retires;2XML58508bytes hash-clean, ownAVD stops, ADB5038/66176 preserved.
+Seven standard Clean commands pass. Automatic review blocks supplementary deletion
+before process creation:13 exact scopes/1982files/5358365695logical bytes freeze without
+retry/subset/alternate/move/escalation/reuse. The combined archive preamble did not run;
+previously saved used sources/results remain. Main/owner PIN/terminal D607 and other
+cohorts stay untouched. Overall goal and unmet performance/stability/platform gates remain.
+[Exact finite result and frozen scopes](../quality/typed-transient-ledger-stamp-admission.md).

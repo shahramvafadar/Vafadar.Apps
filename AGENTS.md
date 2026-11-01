@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-745 rejected typed transient ledger stamp (2026-11-01)
+
+Two host processes and43 finite candidate contracts/14 affected original tests pass,
+but the first original native100k Transactions pair violates the fixed memory gate:
+2791.7743-to1715.7328ms while within-candidate PSS grows67613KiB above65536KiB.
+Reject without reference/reverse/phone rescue or post-result relaxation. This is not
+exclusive attribution of process memory growth. Actual native full-source control,
+all32fields/100000published entries and cookies match before/after; no source normalization.
+Production TransactionsReadSnapshot is exactly restored and candidate-only source/tests
+removed. Do not replay this unchanged candidate or settled financial/authentication work.
+
+Only the fresh sourceguardtenfold UID10216 retires; two XMLs58508bytes hash-clean and
+own D745 emulator stops, shared ADB5038/66176 remains. Seven standard Clean commands pass.
+Automatic review refuses supplementary deletion before process creation. Freeze exactly
+the13 scopes/1982files/5358365695logical bytes listed in
+`src/Apps/Zanance/docs/quality/typed-transient-ledger-stamp-admission.md`, without retry,
+subset, alternate method, move, escalation or reuse. Its archive preamble did not run;
+only previously saved source archives are evidence. Main/owner PIN/terminal D607 and
+other cohorts remain untouched; overall delivery remains active.
+
 ## Samsung Consumer180 limited turn explicitly returned (coordination receipt, 2026-11-01, D-744)
 
 The Windows coordinator explicitly returned the handset after its bounded Consumer180
