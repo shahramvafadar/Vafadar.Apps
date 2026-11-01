@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-747 rejected parse-once amount query (2026-11-01)
+
+The private fixed-query host comparison retains exact original rows/order/day/net,
+32-field packet and cipher bytes. Numeric gains5.68%/5.03% do not rescue the100k broad
+query's6.101637% regression beyond the fixed5% ceiling. Close before second process,
+retuning, product/native/phone/suite/shipping work; product remains exact. Do not repeat
+its unchanged candidate or D746 successful native queries/financial/authentication work.
+Standard Clean passes. Automatic review blocks supplementary deletion before process;
+freeze3 scopes/68files/1324733logical bytes listed in
+`src/Apps/Zanance/docs/quality/parsed-amount-query-admission.md`, without retry, subset,
+alternate method, move, escalation or reuse. Used source archive stays outside; Main,
+owner PIN, terminal D607 and active overall goal remain.
+
 ## D-746 terminal current native tenfold queries (2026-11-01)
 
 Two distinct current ready-page original SearchBar inputs pass on fresh API36/x64/4096

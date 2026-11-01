@@ -135,3 +135,5 @@ D742 compares the later stable36.1.118 four selected JNI source files against th
 [D745 typed transient stamp](typed-transient-ledger-stamp-admission.md) passes host admission but fails the first native memory gate despite lower latency. Production is exactly restored; do not reopen its unchanged reference/reverse/phone cohorts or count the rejected candidate as delivered performance. A genuinely changed evidence-supported premise is required.
 
 [D746 current original tenfold search](current-native-tenfold-search.md) closes only ready-page no-match-to-unique native input/result evidence with complete source equality. Do not repeat these accepted queries; early input during initial loading and broader physical/cold/Home performance remain separate.
+
+[D747 parse-once amount query](parsed-amount-query-admission.md) is rejected at its fixed broad-tenfold regression gate despite numeric gains; no product/native candidate follows. A changed text-normalization premise must retain the original parser and all source/callback semantics.

@@ -12793,3 +12793,19 @@ bytes freeze without retry/subset/alternate/move/escalation/reuse. Used signed/s
 archives remain. No phone/Main/ownerPIN/D607 action; early input during initial loading,
 physical/cold/two-second/native-fault/security/platform gates and overall goal remain.
 [Original native input, source and exact limits](quality/current-native-tenfold-search.md).
+
+### D-747 - Reject parse-once amount query at fixed broad-query gate
+
+Privately hoist only decimal parsing of the original immutable normalized query;
+keep original per-row account/display-unit/category/filter/money behavior. On retained
+current-schema protected10k/100k inputs, two numeric medians improve5.680835%/5.034105%
+but100k broad-text27.59915-to29.28315ms regresses6.101637%, above the fixed5% gate.
+Reject without second process, tuning/rescue, production patch, suite or native/phone
+replay. Six fixed alternating pairs/query preserve original32-field source, row
+reference/order/multiplicity/day/net and cipher bytes; allocation extra24bytes/query
+and18,096,128byte largest pair peak fit the predeclared gates. No new key/migration/seed/
+financial command; .NET14/X64 strict build passes after preserved CS4007 helper refusal.
+Four used private sources archived and one standard Clean passes. Supplementary deletion
+is blocked before process:3 exact scopes/68files/1324733logical bytes freeze without
+retry/subset/alternate/move/escalation/reuse. Product/Main/ownerPIN/D607 terminal unchanged;
+performance and overall goal remain open. [Exact finite result](quality/parsed-amount-query-admission.md).
