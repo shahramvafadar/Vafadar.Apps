@@ -3480,3 +3480,8 @@ Allow the original overview Retry caption to grow at the selected font. Keep ful
 
 Transactions/Reimbursements Retry grows around the full translation at the original font; no shortening or font reduction. Keep native semantics/44dp action, original read cover and disabled covered Add. Transactions retains its compact physical right-of-title Add, header and result viewport. A complete native rectangle and ellipsis0 do not excuse a clipped last line.
 [Actual original commands and geometry](quality/original-transaction-covers-and-growing-retry.md).
+
+
+### Original unlock presentation and elapsed grace (D-720/D-721)
+
+Automatic foreground/resume requests display or focus the original PIN entry; they are not submitted guesses and must not consume its attempt allowance. Only explicit Enter/Unlock submits the original verifier. A device-only unlock still uses the original device-authentication prompt. The existing short background grace requires both nonnegative wall and elapsed intervals below30seconds, including Android sleep; an already-locked/lost cover or retired authority never acquires grace. Keep the original modal, queued destinations, password masking and current translated captions. [Actual original UI and finite acceptance](quality/automatic-pin-presentation.md).

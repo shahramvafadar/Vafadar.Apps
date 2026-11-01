@@ -97,6 +97,19 @@ internal sealed class LockPage : ContentPage
     /// <summary>Gets or sets a value indicating whether the app was already locked when it went to the background.</summary>
     public bool WasLockedBeforeSleep { get; set; }
 
+    /// <summary>Requests native unlock interaction without treating an absent app-PIN submission as a guess.</summary>
+    internal Task PromptAutomaticAsync()
+    {
+        // D-721: Resume may request this cover repeatedly. Only the original Enter/Unlock
+        // handlers submit the PIN; automatic presentation must not exhaust its attempt limit.
+        if (_lock.PinEnabled)
+        {
+            _pin.Focus();
+            return Task.CompletedTask;
+        }
+        return PromptAsync();
+    }
+
     /// <summary>Checks the entered app PIN or prompts device authentication; failures leave the cover in place.</summary>
     public async Task PromptAsync()
     {

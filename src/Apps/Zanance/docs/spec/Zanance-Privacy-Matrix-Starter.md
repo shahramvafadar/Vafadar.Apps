@@ -1522,3 +1522,8 @@ services and D607 remain preserved. [Evidence](../quality/original-household-wor
 ### D-717 derived native reminder clock metadata
 
 Keep only native notification id, exact wall/offset ticks and local/elapsed clock kind in a private device-local Android preference file. It duplicates the existing pending deadline, includes no amount/account/title/route/credential and is not a financial source or portable export. Synchronous invalidation before SDK mutation and accepted-only publication refuse stale/missing authority. Normal covered source refresh can rebuild it; uninstall/reset owns removal. No SDK, permission, network, authentication, financial date/amount or publication policy changes. Historical snooze choice is never inferred.
+
+
+### D-720/D-721 local access-presentation clarification
+
+The original app-lock gate additionally compares transient same-process timestamps and Android's public sleep-inclusive clock; it stores no new identifier, credential or outgoing payload. Automatic PIN presentation focuses the existing password entry without a verifier submission. Explicit input, verifier storage and device-authentication data flows remain unchanged. This note aligns with the maintained [privacy matrix](../06-privacy-matrix.md); it is not wider device/Keystore or owner-authentication acceptance.

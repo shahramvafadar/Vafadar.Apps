@@ -98,3 +98,8 @@ uses captured timestamps. The reviewed [.NET10 Unix stopwatch](https://github.co
 and [native clock implementation](https://github.com/dotnet/runtime/blob/v10.0.0/src/native/minipal/time.c)
 explain why Android's explicit boot clock is an additional gate; this source review does not
 prove every installed/OEM clock implementation or a real suspend experiment.
+
+
+## Subsequent D-721 resolution
+
+The automatic empty-attempt defect observed above is subsequently corrected by separating original automatic focus from explicit PIN submission. A distinct new native five-request sequence keeps verifier writes1to1, and only one explicit fictitious PIN unlocks/releases its queued destination; the D-720 clock/grace sequence is not replayed. [Exact subsequent source/native scope](automatic-pin-presentation.md).

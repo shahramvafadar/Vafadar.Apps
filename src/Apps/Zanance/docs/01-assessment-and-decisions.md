@@ -12583,7 +12583,7 @@ The original UTC-only30second grace fails four real cases after elapsed time exc
 [Original failures, exact native/clock scope and cleanup limits](quality/app-lock-elapsed-background-grace.md).
 
 
-### D-721 - Original automatic PIN prompt must not consume an empty attempt (observed, ready)
+### D-721 - Separate automatic PIN presentation from explicit submitted guesses
 
-D-720's actual original native Resume keeps the cover correctly but calls LockPage.PromptAsync with no entered PIN, adding exactly one failed verifier write. Source confirms the same direct Cover.PromptAsync path. Preserve that actual delta and failed no-write observer; do not replay the accepted long-clock case, short grace, app-PIN submissions or financial setup. Next correction must separate automatic focus/display from explicit submitted verification while retaining device authentication, correct/incorrect submitted PIN, rate limiting and original modal lifetime. Only the new automatic-prompt assertion needs a changed-source native continuation; genuine owner authentication stays separate.
-[Actual delta and protected next assertion](quality/app-lock-elapsed-background-grace.md).
+The original D-720 native cover adds one failed verifier write on automatic Resume with no PIN input. Route only automatic modal requests to focus the original password entry; explicit Enter/Unlock keep the original verifier/attempt limit, and device-only prompts retain original authentication. A new original native cohort runs five automatic requests with writes1to1, cover/source unchanged and no queued access; one explicit fictitious app-PIN submission then gives writes2 and exactly one queued open. No old D-720 clock/short-grace/PIN/financial replay or unchanged managed-suite rerun; new unit-test count0. Strict Windows/full offline Android and original native package pass; only the fresh UID/XML/AVD retire with source/OS exact. Supplementary refused scopes stay frozen. Genuine owner authentication, physical/Main adoption/D607 and wider release gates remain open.
+[Actual original write delta, final native focus/submission and precise scope](quality/automatic-pin-presentation.md).

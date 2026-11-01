@@ -59,7 +59,7 @@ internal sealed class MauiAppLockHost(Translator translator) : IAppLockHost
         /// <inheritdoc />
         public Task ShowAsync() => root.Navigation.PushModalAsync(page, animated: false);
         /// <inheritdoc />
-        public Task PromptAsync() => page.PromptAsync();
+        public Task PromptAsync() => page.PromptAutomaticAsync();
         /// <inheritdoc />
         public async Task CloseAsync()
         {
