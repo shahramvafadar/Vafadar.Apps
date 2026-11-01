@@ -1697,3 +1697,8 @@ Original Android time dialogs participate in the same default screenshot block, 
 ## Original currency popup capture observation (D-731)
 
 An attached original currency popup can have no own Secure flag while its actual image still redacts under the Secure parent. Use effective owned capture and actual drawn-window evidence rather than declaring a leak from flags alone. Individual rows and wider platform behavior remain unqualified. [Evidence](quality/original-currency-popup-capture.md).
+
+
+## Native-root lifetime observation (D-732)
+
+One actual original dialog retains its weakly captured managed root through a bounded collection and later receives settled background protection. The collected-wrapper condition is not reached; preserve the failed immediate Home assertion and do not claim every transition frame or a generic lifetime fix. [Evidence and limits](quality/original-native-dialog-root-lifetime.md).
