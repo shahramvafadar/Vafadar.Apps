@@ -5709,3 +5709,8 @@ Final27new/95affected cases and one independent Android Core task preserve full 
 
 Final strictWindows/fullOffline384AOT408ELF1608staticLOAD/v2v3/ZIP/CRC pass; permissions equal D716 and private provider is absent. Preparedeb17f5d8/99,381,151byte APK is not physical adoption.28new/42affected selected cases and an actual cold receiver with stale opposite preferences verify exact accepted descriptor authority, local calendars and elapsed snooze. Missing/legacy metadata, manual clock, future delivery and broad device gates remain separate. Twofreshfixtures/AVDs50file10182027329logicalbyte andnineCleans7040registeredlines retire; initialten/finalseven supplementary scopes are frozen after separate pre-process policy refusals. Source archives/usedsigned/receipts retained outside. D607 three deadlines/consumedreboot/unreadsource/Mainadoption and Android-before-iOS remain protected.
 [Final package, native proof and cleanup limits](quality/local-reminder-clock-changes.md).
+
+### D-719 CI compile-source closure
+
+D717's actualCI failure is three matching CS0103 errors from one missingData.Tests helper input, independently reproduced before correction. One explicit original-source link restores strict full-test-solution compilation and13affected existing cases; no application/permission/runtime/workflow/package change or new release acceptance. PreparedEB17 stays unadopted. New exact-head remote CI is still required; D718's clock-restored fixture/D607three deadlines/consumedreboot/unreadsource/iOSafterAndroid remain protected. StandardClean passes; new residualroot273file10876008logicalbyte removal rejected beforeprocess, frozen withoutretry/alternate/reuse.
+[Failure/source/cleanup evidence](quality/reminder-test-source-projection.md).

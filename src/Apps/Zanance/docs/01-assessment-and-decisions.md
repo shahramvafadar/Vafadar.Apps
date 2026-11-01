@@ -12565,3 +12565,13 @@ A format3 protection marker is transport only when the actual original entry/hol
 
 Actual09:00Berlin becomes03:00NewYork after a real zone change. Rebind calendar requests through protected Android broadcasts under native queue ownership, without financial source/window access. Resolve supported gaps/earlier repeated hours, preserve elapsed one-hour snoozes and retain local tomorrow behavior. Final review rejects classification from source preferences because their commit can follow SDK acceptance; exact wall+offset/native-id descriptors are durably invalidated before mutation and published only after acceptance. Missing/legacy/stale metadata never guesses authority; normal covered refresh rebuilds it.28new+42affected cases and an actual cold receiver with deliberately opposite stale preferences verify this bounded behavior. No new financial schema, SDK or permission; wider platform/delivery gates remain open.
 [Actual defect, final source boundary and precise evidence](quality/local-reminder-clock-changes.md).
+
+### D-718 - Observe manual clock separately from travel (in progress)
+
+Actual TIME_SET backward20minutes preserves calendar/source identity but extends the RTC one-hour request's monotonic target by1200031ms. Restore actual clock/seven settings/zone and preserve the existing accepted fixture; do not relabel UTC equality as elapsed-time acceptance or replay preparation. A same-boot elapsed basis and original-day expiry need coherent verification before a repair claim.
+[Actual input and unfinished boundary](quality/manual-clock-snooze-interval.md).
+
+### D-719 - Compile the same original reminder helper in every existing coordinator projection
+
+All three failed D717 build jobs share one actual CS0103 in Data.Tests; App.Tests already includes the pure helper. The unchanged local graph reproduces that failure. Add only the explicit original ReminderLocalTime source link; compile the entire strict test solution and run13 affected existing source/store cases. No runtime change/new tests/unchanged app build/native/financial replay. Remote success remains a new exact-head CI gate; D718/D607 and broader goal stay active.
+[CI/source evidence and cleanup limits](quality/reminder-test-source-projection.md).

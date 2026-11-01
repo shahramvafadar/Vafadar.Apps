@@ -8672,3 +8672,8 @@ Seven original own-format failures pass after source-aware marker accounting. Fi
 
 The actual original09:00Berlin→03:00NewYork defect is preserved. Final exact accepted wall/offset descriptors refuse missing/stale data independently of source preferences.28new+42affected cases pass; final freshUID10216/bootdf7868/cached905 death and real broadcastPID4926 preserve elapsed hour while rebinding normal/tomorrow inTokyo and restoredBerlin despite deliberately opposite cached choices. Exactlythree native ids/handles, sourcecache/date and originalOS persist;0/+1/-1ms SDK samples are retained. Earlier simple native evidence is not final-source substitution. Manual clock, all historical zones/DST dispatch, future punctuality and complete AT-37 remain unaccepted. D607/physicalMain untouched.
 [Full admitted evidence and limitations](quality/local-reminder-clock-changes.md).
+
+### D-719 - Actual CI source-projection failure and corrected compile graph
+
+D717CI fails on three jobs because Data.Tests does not link originalReminderLocalTime required by its originalReminderService. The same local CS0103 fails before correction; one compileitem closes the source projection. EntirestrictTests solution0warnings/errors and13selected existingGoal/Review cases pass, with0new tests. Successful unchanged app/native/financial checks are retained. D718 manual-clock interval observation remains unfinished and clock/settings restored; D607 untouched.
+[Actual logs and exact selected validation](quality/reminder-test-source-projection.md).

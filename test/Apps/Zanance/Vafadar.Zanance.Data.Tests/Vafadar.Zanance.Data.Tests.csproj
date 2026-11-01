@@ -21,6 +21,7 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Startup/IAppDatabaseStartup.cs" Link="Application/IAppDatabaseStartup.cs" />
     <Compile Include="..\..\..\..\eng\benchmarks\Zanance.Performance\PerformanceFixture.cs" Link="Performance\PerformanceFixture.cs" />
     <Compile Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.App\Reminders\ReminderService.cs" Link="Reminders\ReminderService.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderLocalTime.cs" Link="Reminders/ReminderLocalTime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileCatalogueChanges.cs" Link="Application/IProfileCatalogueChanges.cs" />
     <Compile Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.App\Reminders\IReminderScheduler.cs" Link="Reminders\IReminderScheduler.cs" />
     <EmbeddedResource Include="..\..\..\..\src\Apps\Zanance\Vafadar.Zanance.App\Resources\Strings\AppResources*.resx" Link="Resources\%(Filename)%(Extension)" />
