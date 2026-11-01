@@ -269,6 +269,7 @@ public static class MauiProgram
 
 #if ANDROID
         Presentation.AndroidPickerText.Register();
+        Security.ScreenProtection.RegisterNativePages();
 #endif
 #if WINDOWS
         Presentation.WindowsPickerText.Register();

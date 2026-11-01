@@ -3498,3 +3498,12 @@ The owned Android modal compensates only actual remaining IME occlusion, with no
 height or global setting. Retain password/RTL semantics, complete captions, authentication and
 Back behavior; restore only that modal's unchanged mode/padding on departure.
 [Actual enlarged-text failure and bounded final native evidence](quality/lock-cover-keyboard-viewport.md).
+
+
+### D-726 - Modal screenshot policy follows the same original device choice
+
+MAUI page windows retain the original default-block, explicit foreground allow and background
+protection policy independently of the Activity. New attached modal roots inherit the current
+choice without changing layout, keyboard behavior, authentication or navigation. Native SDK
+alert/popup/system windows require their own evidence; a secure Activity alone proves none.
+[Native policy and source scope](quality/original-modal-screen-protection.md).

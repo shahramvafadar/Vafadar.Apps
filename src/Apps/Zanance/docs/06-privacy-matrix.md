@@ -1656,3 +1656,13 @@ The original access service additionally keeps same-process timestamps; Android 
 ### D-722 - Device-private optional PIN retry-clock metadata
 
 New supported Android penalties add only a coarse public boot generation and sleep-inclusive deadline to the existing protected device PIN state. They are not a unique device identity, financial date, plaintext PIN, new credential, outgoing payload or portable-backup field. The old six-field/version1 representation remains readable; null clock metadata is omitted. Success clears both retry deadlines, while unavailable required timing fails closed. No permission/SDK/financial schema changes. Native evidence uses one fictitious independent UID and exports only nonsecret metadata/booleans; genuine owner/platform acceptance remains open. [Source, compatibility and limits](quality/pin-retry-elapsed-clock.md).
+
+
+### D-726 - Original screenshot choice on owned MAUI modal windows
+
+The existing screenshot preference and background privacy policy now cover actual owned MAUI
+page windows as well as the Activity. Only Secure flags change; there is no new persisted
+field, permission, SDK, identifier, authentication grant or outgoing payload. Fictitious
+original LockPage window checks use no PIN/account/ledger/authentication setup. This is not
+blanket coverage of native SDK dialogs/system UI or genuine owner authentication.
+[Actual baseline, twelve bounded policy observations and limits](quality/original-modal-screen-protection.md).
