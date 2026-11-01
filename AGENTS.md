@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## D-737 owner credential and terminal independent review (verified, 2026-11-01)
+
+The owner personally established a device screen PIN after reporting None. Preserve
+that new owner credential; never reset it to the historical None state or request,
+record or enter its value. This is not Zanance's app PIN. D737's actual independent
+original-SDK enable/longer-return/cancelled-disable cohort is terminal, with three
+completed requests and fresh UID10408/package retired. Do not recreate it or replay
+accepted authentication/metadata to fill another parent gate; broader sensitive,
+biometric/enrolment and platform requirements remain separate.
+
+Original Main29013 later actually ended with OS LOW_MEMORY/status0. Its one ordinary
+return creates32068; same-process ready Home979/all141public attributes, unchanged
+dc774120 APK/UIDCEDE/caller and five OS values are verified. Earlier PIDs are historical,
+not current liveness claims. The owner's PIN change is deliberate; no genuine-authentication
+exception or new high-risk authority is granted. D607 remains terminal/reboot consumed.
+See `src/Apps/Zanance/docs/quality/physical-original-device-credential.md`.
+
+
 ## D-607 terminal retirement and current Main (verified, 2026-11-01, D-734)
 
 D-607's original two due notifications were delivered inside their original one-hour

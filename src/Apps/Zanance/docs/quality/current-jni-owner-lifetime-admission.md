@@ -110,3 +110,5 @@ terminal with its original reboot consumed and fixture absent. Main and caller a
 untouched. General stability, original bad-reference origin, cold/reference performance,
 security, accessibility, hardware 16KiB, iOS/providers/Store/release and the overall goal
 remain open. Android still precedes iOS and further TalkBack remains last.
+
+Subsequent [D737 real device-credential qualification](physical-original-device-credential.md) completes the earlier owner-decision wait; the independent JNI admission and unresolved causal limits remain unchanged.

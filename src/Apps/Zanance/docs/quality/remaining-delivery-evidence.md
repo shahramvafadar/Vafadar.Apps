@@ -18,13 +18,12 @@ inventory does not prove every nested acceptance requirement or the complete goa
 Do not derive a completion percentage or remaining hours by counting these rows.
 
 Current Android product source remains D734. D735 adds minimum/simulated16KiB fallback
-runtime evidence; D736 adds normal current physical receipt-draft evidence. D737 is an
-unfinished independent authentication cohort, not a shipping installation or acceptance.
-Its retained actual status has zero accounts/ledger/plans, unavailable device authentication
-and zero requested/completed/successful authentications. That boolean does not establish
-whether a PIN, password, pattern or fingerprint is configured. The owner subsequently
-reports screen lock None; the choice to establish a real credential remains pending.
-Do not change global security settings or substitute authentication.
+runtime evidence; D736 adds normal current physical receipt-draft evidence. D737 now
+completes a finite real Samsung device-credential cohort: owner-only PIN enable,
+longer same-process return and cancelled disable with unchanged post-enable typed
+source. Its fresh package is retired; the owner-established system PIN is preserved.
+Original Main is now32068 after an actual prior LOW_MEMORY exit and an ordinary
+same-process-ready handback. This is not general biometric/security/stability acceptance.
 
 ## Parent requirements and the next missing input
 
@@ -33,7 +32,7 @@ Do not change global security settings or substitute authentication.
 | ZCR-SEC-01 | Android/Windows feasibility and adoption exist; native iOS and independent security acceptance remain. |
 | ZCR-SEC-02 | Current protected Android source/fallback evidence exists, including D735; iOS and wider device adoption remain. No Main private-source read is authorized by a public Home check. |
 | ZCR-SEC-03 | D483 Samsung and D520 compatibility key evidence already exist; remaining device/restore and iOS claims need their actual key-lifecycle evidence, not another unchanged key-creation test. |
-| ZCR-SEC-04 | D737 original Android adapter reports unavailable, with zero authentication requests. Await the owner's actual lock-state clarification; genuine success/cancellation/enrolment acceptance remains unproven. |
+| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. Fingerprint/face/enrolment, other sensitive/cold/notification routes and platform requirements remain; do not replay the retired cohort. |
 | ZCR-SEC-05 | D263/D521/D522/D524 cover named migration faults and profile cases. Further claims require a specified unqualified upgrade/profile/device boundary; iOS remains later. |
 | ZCR-SEC-06 | Named protected recovery/alias-loss/portable cases already exist; real authentication and later iOS/device recovery remain separate. |
 | ZCR-SEC-07 | D603 proves framework policy rejection, not actual OEM transfer or iOS exclusion. Transfer acceptance requires a real supported destination/workflow. |
@@ -82,10 +81,9 @@ Do not change global security settings or substitute authentication.
 
 ## Ready work and dependency boundaries
 
-1. Preserve D737's current installed independent package and original false/zero-request
-   admission. Resume only the unfinished authentication observation after actual owner
-   readiness. No real password, pattern, biometric template or authentication substitute
-   is collected. No Main setting or accepted money needs to change for this gate.
+1. Preserve D737's terminal real callback/source/retirement evidence. Do not reinstall
+   it or repeat accepted metadata/authentication. Select only a genuinely missing
+   sensitive, biometric/enrolment or platform boundary with its actual owner input.
 2. Continue independent evidence-supported Android development and QA-06 investigation.
    [D712](exact-original-fault-word-load.md) proves the failing referenced-object first-word
    load, not its reference origin/type/earlier writer. The
@@ -125,3 +123,5 @@ when real owner input, a new failure, selected artifact, original specimen, supp
 diagnostic evidence or external access changes the next executable action.
 
 D739 subsequently [admits the actual packaged JNI owner-lifetime boundaries](current-jni-owner-lifetime-admission.md), retaining its missing guards and causal limits without a speculative runtime repair.
+
+[D737 terminal evidence](physical-original-device-credential.md) supersedes its earlier unavailable/owner-decision wait, without closing broader SEC04 requirements.
