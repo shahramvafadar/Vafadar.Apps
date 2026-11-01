@@ -88,9 +88,12 @@ outside this delivery, superseding the earlier minimum-twenty expansion for wave
 
 Tax starts with Germany/current year/accountant export, followed by expert-reviewed calculations.
 Other approved countries may be shown as being added, without an ETA or active unsupported rules.
-The owner reports a prepared recent MacBook Air; verify and execute iOS work in its actual clone/
-environment when reached. Apple account/signing, physical-device and provider acceptance remain
-evidence gates, without another request to approve the already selected product scope.
+The owner reports the Mac project environment available on1November2026, but explicitly keeps iOS
+behind completion of all remaining Android development and testing (D-714). Do not pursue Mac
+connection setup or begin iOS execution before that Android boundary. When reached, verify the
+actual clone, hardware, Xcode and workloads; reported availability is not native acceptance. Apple
+account/signing, physical-device and provider acceptance remain evidence gates, without another
+request to approve the already selected product scope.
 
 1. Security gate (after wave 1): database encryption, recovery and migration tested; privacy matrix updated.
 2. Local release gate (after wave 2): device acceptance runs, accessibility checklist, performance numbers.

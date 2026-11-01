@@ -1,5 +1,15 @@
 # AGENTS.md – working rules for this repository
 
+## Android completion before iOS execution (owner, 2026-11-01, D-714)
+
+The owner reports that the Mac project environment is available, but explicitly directs
+that iOS work start only after Android is completely tested and no Android work remains.
+Do not pursue the pending Mac connection request or treat reported Mac availability as
+authority to start iOS ahead of that order. Continue remaining approved Android work,
+preserve completed tests/financial checkpoints and all three D-607 deadlines. Keep iOS
+requirements open for the later platform phase; no iOS implementation or native acceptance
+is established by this availability answer.
+
 ## Samsung limited turn explicitly returned (coordination receipt, 2026-10-30; reconciled D-677)
 
 The owner-authorized limited Consumer175/Business147 phone turn was explicitly returned by
