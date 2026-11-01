@@ -76,3 +76,11 @@ biometric enrollment, hardware attestation, power loss, OEM transfer, ARM64/page
 Main private-key equality, general stability/performance/accessibility, iOS or external release.
 No unrelated suite, accepted financial command or successful physical source setup is repeated.
 New-head hosted CI remains pending until its own one-shot check.
+
+## Subsequent original PIN format and clock qualification (D-723)
+
+[D-723](pin-clock-platform-compatibility.md) separately qualifies D-722's new registered clock,
+neutral six-field source-generated JSON and optional anchored state on fresh API24 and API35
+userspace16KiB/kernel4096 systems with original SecurePinStorage. It reuses the exact used APK
+without a build or old key/financial replay. It does not rerun or expand the key-adapter results
+above, establish hardware16KiB or accept existing Main keys/physical adoption.
