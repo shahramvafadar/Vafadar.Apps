@@ -12825,22 +12825,22 @@ blocked before process, manifest preamble unexecuted;3conservative roots/70files
 1329084logical bytes freeze without retry/subset/alternate/move/escalation/reuse.
 Main/ownerPIN/D607terminal/goal remain. [Exact finite result](quality/lazy-text-normalization-admission.md).
 
-### D-749 - Owner biometric enrollment and original cold-request preparation
+### D-749 - Actual original cold face unlock and exact encrypted image
 
-Owner personally enables fingerprint and face with no Zanance action; preserve both
-and the real system PIN. Before the first original SDK call, amend the independent
-cold-cover target to actual biometric unlock, not cancellation/PIN. Fresh accountless
-financially-empty UID10409/PID31495 uses original startup/LockPage/SDK, one Settings
-fixture preparation and one install/launch; no Main lock or accepted D737 request is
-replayed. Strict original-source offline192AOT/204ELF/804staticLOAD/signatures/runtime14
-pass. Actual first SDK Requested1/Completed0/Succeeded0 and OS BiometricPromptRoot
-confirm a live owner wait, not acceptance or timeout. No typed source read while
-locked; encrypted-image comparison, owner method, genuine result and fixture/Main
-retirement/handback remain pending. Failed public stat observation is preserved and
-public package CE/DE metadata supplies the missing ownership facts without elevation
-or relaunch. D517 timeout restored exactly300000; owner enrollment is not reverted.
-Clarify the device-authenticator XML comment's separate OS-credential/app-PIN boundary;
-all non-documentation code lines exactly match and XML parses, so no unchanged app
-suite/build/install is repeated. This finished documentation/preparation record does
-not complete the native cohort, SEC04, cold cancellation or overall goal.
-[Exact live state and required continuation](quality/physical-original-cold-biometric.md).
+After the pre-result biometric amendment, the owner personally confirms face unlock.
+Same UID10409/PID31495 reports exactly one original SDK request/completion/success;
+original LockPage retires to OnboardingPage with IsLockedfalse and no modal. Main/WAL
+cipher images are exact (716800bytes, WALabsent), with no typed read while locked,
+financial replay, Main-lock change or credential input. Original package/runtime14
+strict/static proof and initial stat-observer failure remain. Freshfixture retires;
+no alarms/pending intents/posted records remain. Two notification matches are historical
+system removal logs, not active requests. Main32068 actually ends with OSLOW_MEMORY3;
+one normal handback gives4997/Home979/141nodes, exact D734APK/UID/CEDE/boot/OS and caller
+metadata. Preserve owner PIN/fingerprint/face; no strong-only or fingerprint claim.
+ThreeXML81766bytes hash-clean and standard Clean passes. Supplementary own-root deletion
+is rejected before process; one frozen root829files/124633853logicalbytes, no retry,
+subset, alternate, move, escalation or reuse. Used source/signed evidence preserved.
+The preparation's single CI/CodeQL response is in_progress and its monitor deleted;
+no repeat request. Face acceptance is finite; cold cancellation/other routes and wider
+security/platform/release gates remain. No product/runtime or permanent test changes.
+[Actual finite evidence and remaining gates](quality/physical-original-cold-biometric.md).

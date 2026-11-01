@@ -8827,3 +8827,23 @@ Two actual host14 processes admit the complete32-field framing contract and10k/1
 ### D-746 - Actual current tenfold SearchBar result
 
 Only two new native ready-page inputs are qualified: no-match0 and original unique transfer1, with exact expected ID and a visible clickable result button. Original full post-startup source/schema/typed rows/cookies and published32fields/100000entries remain exact in4551. Callback1288.2451/710.9423ms excludes a broad keyboard-to-paint/cold/Home claim. No financial command, old successful query, product patch, unit-suite or shipping build is repeated; independent strict Android package and7XML321080byte hash-clean/freshfixture retirement/ownAVD stop/standard Clean pass. Supplementary5scopes/864files/4986193249logicalbytes are blocked before process and frozen without retry/subset/alternate/move/escalation/reuse. Phone/Main/ownerPIN/D607 terminal and activegoal preserved. [Exact finite evidence](quality/current-native-tenfold-search.md).
+
+### D-749 - Actual original cold face unlock and exact encrypted image
+
+After the pre-result biometric amendment, the owner personally confirms face unlock.
+Same UID10409/PID31495 reports exactly one original SDK request/completion/success;
+original LockPage retires to OnboardingPage with IsLockedfalse and no modal. Main/WAL
+cipher images are exact (716800bytes, WALabsent), with no typed read while locked,
+financial replay, Main-lock change or credential input. Original package/runtime14
+strict/static proof and initial stat-observer failure remain. Freshfixture retires;
+no alarms/pending intents/posted records remain. Two notification matches are historical
+system removal logs, not active requests. Main32068 actually ends with OSLOW_MEMORY3;
+one normal handback gives4997/Home979/141nodes, exact D734APK/UID/CEDE/boot/OS and caller
+metadata. Preserve owner PIN/fingerprint/face; no strong-only or fingerprint claim.
+ThreeXML81766bytes hash-clean and standard Clean passes. Supplementary own-root deletion
+is rejected before process; one frozen root829files/124633853logicalbytes, no retry,
+subset, alternate, move, escalation or reuse. Used source/signed evidence preserved.
+The preparation's single CI/CodeQL response is in_progress and its monitor deleted;
+no repeat request. Face acceptance is finite; cold cancellation/other routes and wider
+security/platform/release gates remain. No product/runtime or permanent test changes.
+[Actual original face result](quality/physical-original-cold-biometric.md).

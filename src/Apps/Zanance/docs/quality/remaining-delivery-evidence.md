@@ -22,8 +22,9 @@ runtime evidence; D736 adds normal current physical receipt-draft evidence. D737
 completes a finite real Samsung device-credential cohort: owner-only PIN enable,
 longer same-process return and cancelled disable with unchanged post-enable typed
 source. Its fresh package is retired; the owner-established system PIN is preserved.
-Original Main is now32068 after an actual prior LOW_MEMORY exit and an ordinary
-same-process-ready handback. This is not general biometric/security/stability acceptance.
+D749 later qualifies one original cold face unlock. Main32068 subsequently has an
+actual OSLOW_MEMORY3 exit; one normal handback gives4997/Home979/141nodes with exact
+APK/public ownership/OS. Neither finite cohort is general biometric/security/stability acceptance.
 
 ## Parent requirements and the next missing input
 
@@ -32,7 +33,7 @@ same-process-ready handback. This is not general biometric/security/stability ac
 | ZCR-SEC-01 | Android/Windows feasibility and adoption exist; native iOS and independent security acceptance remain. |
 | ZCR-SEC-02 | Current protected Android source/fallback evidence exists, including D735; iOS and wider device adoption remain. No Main private-source read is authorized by a public Home check. |
 | ZCR-SEC-03 | D483 Samsung and D520 compatibility key evidence already exist; remaining device/restore and iOS claims need their actual key-lifecycle evidence, not another unchanged key-creation test. |
-| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. Fingerprint/face/enrolment, other sensitive/cold/notification routes and platform requirements remain; do not replay the retired cohort. |
+| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. D749 qualifies one owner-confirmed original cold face unlock; fingerprint/enrollment-change, actual cold cancellation, other sensitive/notification routes and platform requirements remain. Do not replay either retired cohort. |
 | ZCR-SEC-05 | D263/D521/D522/D524 cover named migration faults and profile cases. Further claims require a specified unqualified upgrade/profile/device boundary; iOS remains later. |
 | ZCR-SEC-06 | Named protected recovery/alias-loss/portable cases already exist; real authentication and later iOS/device recovery remain separate. |
 | ZCR-SEC-07 | D603 proves framework policy rejection, not actual OEM transfer or iOS exclusion. Transfer acceptance requires a real supported destination/workflow. |
@@ -140,4 +141,10 @@ D742 compares the later stable36.1.118 four selected JNI source files against th
 
 [D748 lazy text normalization](lazy-text-normalization-admission.md) lowers allocations but fails fixed tenfold latency gates. Neither it nor D747 is an adopted performance correction; do not retune or replay their unchanged host/native premises.
 
-[D749 original cold biometric preparation](physical-original-cold-biometric.md) records owner-provided fingerprint/face enrollment and one actual pending original SDK request. Keep its live process/first-request handle; genuine result/method/source/retirement evidence is still required. This is not a new availability or biometrics pass.
+[D749 actual original cold face unlock](physical-original-cold-biometric.md) now has
+owner-confirmed face plus the single real SDK success, unlocked original page and exact
+protected main/WAL image. Freshfixture/requests retire and real Main4997/Home979/141nodes
+returns with exact APK/public ownership/OS after historical32068's OSLOW_MEMORY3 exit.
+Do not repeat that accepted request or infer fingerprint, cold cancellation, strong-only
+policy or broad security acceptance. The next authentication boundary needs its own
+actual owner input. Its one refused cleanup root stays frozen; overall goal remains.

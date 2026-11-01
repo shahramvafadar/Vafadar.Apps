@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-749 terminal original cold face unlock (2026-11-01)
+
+The owner confirms face for the original single native SDK success in31495/UID10409.
+Original LockPage unlocks to Onboarding; encrypted main/WAL images are exact. Retire
+only that fresh fixture, never replay the request or label it fingerprint/cancellation.
+Main32068 actually exits with OSLOW_MEMORY3; ordinary handback4997/Home979/141nodes has
+exact D734APK/UID/CEDE/boot/OS. Preserve owner PIN/fingerprint/face and Main lock choice.
+ThreeXML81766bytes hash-clean and standard Clean passes. Supplementary deletion is
+blocked before process: freeze exactly artifacts/d749-original-cold-cancel with829files/
+124633853logicalbytes, no retry/subset/alternate/move/escalation/reuse. Used signed/source
+archives remain. Cold cancellation/other security routes remain separate; D607 stays
+terminal and the overall delivery goal remains active.
+
 ## Owner personally enabled fingerprint and face (2026-11-01, D-749)
 
 The owner directly reports enabling both fingerprint and face on Samsung, with no
