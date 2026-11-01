@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-734: prevent a crash when Android window protection encounters an already-disposed view, preserving the existing screenshot privacy choice.
+
 - D-730: apply the existing screenshot privacy choice to the original Android time dialog before it is displayed, preserving its time format and Cancel behavior.
 
 - D-729: the APK build command refuses missing, empty or ambiguous signed output instead of printing misleading installation advice.

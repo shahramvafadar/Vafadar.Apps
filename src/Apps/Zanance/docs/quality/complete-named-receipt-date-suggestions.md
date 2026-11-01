@@ -1,5 +1,10 @@
 # Complete named receipt dates as unsaved suggestions (D-621)
 
+Current physical continuation: [D736 current Samsung unsaved drafts](current-physical-receipt-drafts.md)
+qualifies the normal-ready original file/reader/editor fields on the adopted complete
+package without financial Save or old acceptance replay. Historical results and wider
+camera/corpus/locked-authentication limits below remain separate.
+
 ## Observed boundary and intended extension
 
 D-617's original forms identify Amount/Payee but not Date for28OCT2026. That date is

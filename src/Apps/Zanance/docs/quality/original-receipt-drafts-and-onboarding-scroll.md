@@ -1,5 +1,10 @@
 # Independent onboarding scroll ownership and original receipt drafts (D-617)
 
+Current physical continuation: [D736 current Samsung unsaved drafts](current-physical-receipt-drafts.md)
+qualifies the normal-ready original file/reader/editor fields on the adopted complete
+package without financial Save or old acceptance replay. Historical results and wider
+camera/corpus/locked-authentication limits below remain separate.
+
 ## Named uncovered assertion and original inputs
 
 D-615's diagnostic editor navigation began while the fresh app was still onboarding;
