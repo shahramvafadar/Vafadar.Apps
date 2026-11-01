@@ -3523,3 +3523,9 @@ Keep original SDK item order, current selection, captions, mappers, focus and Ca
 An app-scoped handler observes the pinned original native-click dialog reference and attaches
 only its owned root to the existing screenshot policy. No list/layout/backend replacement.
 [Original native UI equality and selection/restoration](quality/original-native-picker-screen-protection.md).
+
+
+## Original native time-window privacy (D-730)
+
+Use the original Android TimePicker control, format, callbacks and Cancel. Its public SDK factory applies the existing screenshot preference before display; owned background/return follows the existing policy. No extra confirmation, layout or time selection is added.
+[Evidence and limits](quality/original-native-time-screen-protection.md).

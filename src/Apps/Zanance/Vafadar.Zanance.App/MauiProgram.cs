@@ -57,6 +57,7 @@ public static class MauiProgram
             {
                 handlers.AddHandler<Shell, AccessibleShellRenderer>();
                 handlers.AddHandler<Picker, ProtectedPickerHandler>();
+                handlers.AddHandler<TimePicker, ProtectedTimePickerHandler>();
             })
 #endif
             .UseVafadar(options =>

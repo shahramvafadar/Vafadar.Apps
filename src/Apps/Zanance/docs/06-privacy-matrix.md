@@ -1686,3 +1686,9 @@ payload, new persistence, SDK/dependency, permission or financial writer. Field/
 occurs before input connection and preserves its metadata for AOT; SDK updates require actual
 native requalification. Original screenshot choice/background policy and stock SDK interaction
 remain. [Actual source/privacy boundaries](quality/original-native-picker-screen-protection.md).
+
+
+## Original native time-window privacy (D-730)
+
+Original Android time dialogs participate in the same default screenshot block, explicit allow and background protection as their owned Activity. Actual API35 images and API24 native flags qualify only the recorded original Settings input; they do not establish every window or general security acceptance.
+[Evidence and limits](quality/original-native-time-screen-protection.md).

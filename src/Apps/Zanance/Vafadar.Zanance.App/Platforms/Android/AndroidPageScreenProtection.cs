@@ -33,6 +33,16 @@ internal static class AndroidPageScreenProtection
         Pages.GetValue(root, static view => new PageObserver(view));
     }
 
+    /// <summary>Applies current privacy before an original SDK dialog is shown, then tracks later changes.</summary>
+    internal static void TrackNativeWindow(Android.Views.Window window)
+    {
+        // The public dialog factory runs before Show, so the initial native window
+        // already has the existing privacy flag before any content can be drawn.
+        if (Volatile.Read(ref _block)) window.AddFlags(WindowManagerFlags.Secure);
+        else window.ClearFlags(WindowManagerFlags.Secure);
+        if (window.DecorView is { } root) TrackNativeRoot(root);
+    }
+
     /// <summary>Updates attached roots on the UI thread when the original preference or background state changes.</summary>
     internal static void Apply(bool block)
     {
