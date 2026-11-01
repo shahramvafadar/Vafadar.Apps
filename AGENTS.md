@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-753 terminal current initial-read native cover (2026-11-01)
+
+One real original store context return is delayed only for the current Transactions
+loading page on a fresh owned API36/x64/4096 emulator. Native Search/Add/filter controls
+are disabled; one native text attempt leaves SearchText empty. Release the same read
+once: same4497/UID10216/VM publishes100000 original rows and two real native buttons,
+with complete actual SQL/schema/typed rows/sequence/cookies/32field JSON exact. No old
+ready query/financial operation or successful cohort is replayed. This is not the old
+Q02 root cause/fix, natural timing or general performance/stability acceptance.
+Fixture retires, own AVD/QEMU exits, density420/no override and original OS/boot restore;
+shared5038/66176, phone/D752 owner wait and all other cohorts remain. FourXML181066bytes
+hash-clean, one Clean13692files/720825323logicalbytes. Supplementary6scopes/1004files/
+4969427033logicalbytes are blocked before process and frozen exactly as listed in
+`src/Apps/Zanance/docs/quality/current-initial-read-native-cover.md`: no retry/subset/
+alternate/move/escalation/reuse. Used source/signed evidence stays outside. Product/
+runtime/tests unchanged; D607terminal, prior accepted proofs and overall goal remain.
+
 ## D-751 terminal original cold cancellation (2026-11-01)
 
 Owner cancels the one original Android request in fresh UID10410/PID15213. Actual SDK

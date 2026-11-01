@@ -211,3 +211,13 @@ limitations. Historical plaintext search/save measurements above are not current
 tenfold original search/group and actual validated-save/read-back/cleanup measurements, with complete
 logical preservation. Historical D-75 UI/search/save observations above remain historical and do not
 become current protected native-device acceptance. See the report for exact timer boundaries.
+
+## D-753 current initial-read cover follow-through
+
+[The current original native boundary](current-initial-read-native-cover.md) is now
+qualified with one delayed real context return: actual search/Add/filter controls are
+disabled, a native early text attempt is rejected, then the same read publishes the
+complete original100k model and visible native rows with full source equality. This
+uses a forced delay, not the original D75 binary or natural timing; its old root cause
+and the overall performance target remain unproved. Accepted ready queries/financial
+operations are not repeated and no product/runtime workaround is introduced.

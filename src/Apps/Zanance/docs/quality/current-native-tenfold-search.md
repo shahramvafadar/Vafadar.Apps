@@ -87,3 +87,10 @@ input-during-initial-loading failure, broader query/device/corpus, physical/cold
 Home/two-second, native-fault origin and general stability/security/A11Y/platform gates
 remain separate. No phone command occurs; historical Main D-734, owner PIN and terminal
 D-607/consumed reboot remain. Overall goal stays active; iOS deferred and TalkBack last.
+
+## Subsequent distinct initial-read boundary
+
+[D753](current-initial-read-native-cover.md) separately qualifies current disabled native
+controls during one delayed real initial read and its same-VM complete publication.
+D746's accepted ready queries are not replayed. It is not the old Q02 cause/fix, natural
+latency or complete physical/cold/general performance acceptance.

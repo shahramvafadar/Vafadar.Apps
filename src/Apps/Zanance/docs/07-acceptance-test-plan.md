@@ -8891,3 +8891,23 @@ freeze without retry/subset/alternate/move/escalation/reuse. Used source/signed 
 stays outside. No new permanent test or broader security/performance/platform acceptance;
 D749face and D607terminal stay settled, D750rejected, overall delivery remains active.
 [Actual finite callback, preservation and exact frozen scopes](quality/physical-original-cold-cancellation.md).
+
+### D-753 - Actual current initial-read native input cover and same-read publication
+
+A new independent original-source API36/x64/4096 cohort delays one actual store context
+return for the current loading Transactions page. Native Search/Add/filter controls are
+disabled and one fixed unused native text attempt leaves SearchText empty/rows0. Release
+that same read once: same4497/UID10216/VM becomes ready with100000 original model rows and
+two actual native row buttons. Complete actual schema/typed rows/sequence/cookies and
+all32-field published JSON equal the post-startup full control; no financial/accepted old
+query replay, product/runtime/model change or new permanent test count. One strict192AOT/
+204ELF/804staticLOAD offline signed caller passes after the retained namespace refusal.
+Initial transport is exact; one fixture preparation is not a new financial seed. A typed
+All-period drilldown is initial scope, not a post-read filter setter. This forced delay
+is neither natural timing nor the old Q02 root cause/fix. Density420/no override, boot,
+size/fiveOS restore; own fixture/AVD retire and shared5038/phone/D752 wait remain untouched.
+FourXML181066bytes hash-clean and Clean13692files/720825323logicalbytes succeeds. Six
+supplementary scopes/1004files/4969427033logicalbytes are refused before process and freeze
+without retry/subset/alternate/move/escalation/reuse; used source/signed evidence remains.
+Broader security/performance/stability/platform gates and overall goal stay open.
+[Exact current boundary and cleanup scopes](quality/current-initial-read-native-cover.md).

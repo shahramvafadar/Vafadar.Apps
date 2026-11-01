@@ -136,7 +136,7 @@ D742 compares the later stable36.1.118 four selected JNI source files against th
 
 [D745 typed transient stamp](typed-transient-ledger-stamp-admission.md) passes host admission but fails the first native memory gate despite lower latency. Production is exactly restored; do not reopen its unchanged reference/reverse/phone cohorts or count the rejected candidate as delivered performance. A genuinely changed evidence-supported premise is required.
 
-[D746 current original tenfold search](current-native-tenfold-search.md) closes only ready-page no-match-to-unique native input/result evidence with complete source equality. Do not repeat these accepted queries; early input during initial loading and broader physical/cold/Home performance remain separate.
+[D746 current original tenfold search](current-native-tenfold-search.md) closes only ready-page no-match-to-unique native input/result evidence with complete source equality. Do not repeat these accepted queries; D753 now qualifies current native controls rejecting input during one forced initial read and its same-read publication; old Q02 cause/natural scheduling and broader physical/cold/Home performance remain separate.
 
 [D747 parse-once amount query](parsed-amount-query-admission.md) is rejected at its fixed broad-tenfold regression gate despite numeric gains; no product/native candidate follows. A changed text-normalization premise must retain the original parser and all source/callback semantics.
 
@@ -165,3 +165,8 @@ separate one-request owner-cancel boundary: actual Failed/zero success, original
 LockPage over StartupPage and exact fixture cipher. Do not repeat the retired cohort or
 infer other error/biometric/sensitive routes. Main13500/D734/Home979/141/publicOS remains;
 no product/financial change. Four refused cleanup scopes are frozen. Overall goal stays.
+
+[D753 current initial-read cover](current-initial-read-native-cover.md) closes the named
+current forced-delay input-cover boundary without changing product code or repeating
+D746 queries. It does not supply a new speed/cause/physical claim. Its one fresh fixture/
+AVD retires, six refused scopes stay frozen and D752 owner readiness remains separate.
