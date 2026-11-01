@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## D-748 rejected lazy normalization premise (2026-11-01)
+
+131138 private exact UTF16/context comparisons pass and allocation falls, but fixed
+host latency admission fails in100k numeric and broad queries. Close before second
+process, retuning/rescue, product/tests/shipping or native/phone work; original
+normalizer/parser remain exact. Do not replay this unchanged premise or D746 queries.
+Standard Clean passes. File-only supplementary removal is blocked before process,
+including the manifest preamble; conservatively freeze3roots/70files/1329084logical
+bytes listed in `src/Apps/Zanance/docs/quality/lazy-text-normalization-admission.md`,
+without retry/subset/alternate/move/escalation/reuse. Used source archive stays outside;
+Main/ownerPIN/D607terminal/othercohorts/activegoal remain untouched.
+
 ## D-747 rejected parse-once amount query (2026-11-01)
 
 The private fixed-query host comparison retains exact original rows/order/day/net,

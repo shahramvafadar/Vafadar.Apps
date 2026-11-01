@@ -12097,3 +12097,18 @@ Four used private sources archived and one standard Clean passes. Supplementary 
 is blocked before process:3 exact scopes/68files/1324733logical bytes freeze without
 retry/subset/alternate/move/escalation/reuse. Product/Main/ownerPIN/D607 terminal unchanged;
 performance and overall goal remain open. [Exact finite result](../quality/parsed-amount-query-admission.md).
+
+### D-748 - Reject lower-allocation text normalization at fixed latency gates
+
+Privately allocate a normalization buffer only after the first actual mapped character,
+retaining original digit conversion/initial Trim, per-row numeric parser and all query
+callbacks/money behavior.131138 exact original UTF16/context comparisons pass. On
+retained protected sources,100k numeric49.29085-to49.48565ms and broad53.85685-to58.12540ms
+fail the preregistered every-query5% improvement gate despite lower allocations;
+matched original row references/order/day/net,32-field source and cipher bytes remain
+exact. Reject before second process, tuning/rescue, product patch/tests/build or native
+work; no new key/migration/seed/financial/device operation. Strict host14/X64 build and
+standard Clean pass, six used sources archived. File-only supplementary cleanup is
+blocked before process, manifest preamble unexecuted;3conservative roots/70files/
+1329084logical bytes freeze without retry/subset/alternate/move/escalation/reuse.
+Main/ownerPIN/D607terminal/goal remain. [Exact finite result](../quality/lazy-text-normalization-admission.md).

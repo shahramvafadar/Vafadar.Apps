@@ -137,3 +137,5 @@ D742 compares the later stable36.1.118 four selected JNI source files against th
 [D746 current original tenfold search](current-native-tenfold-search.md) closes only ready-page no-match-to-unique native input/result evidence with complete source equality. Do not repeat these accepted queries; early input during initial loading and broader physical/cold/Home performance remain separate.
 
 [D747 parse-once amount query](parsed-amount-query-admission.md) is rejected at its fixed broad-tenfold regression gate despite numeric gains; no product/native candidate follows. A changed text-normalization premise must retain the original parser and all source/callback semantics.
+
+[D748 lazy text normalization](lazy-text-normalization-admission.md) lowers allocations but fails fixed tenfold latency gates. Neither it nor D747 is an adopted performance correction; do not retune or replay their unchanged host/native premises.
