@@ -12196,3 +12196,22 @@ supplementary scopes/1004files/4969427033logicalbytes are refused before process
 without retry/subset/alternate/move/escalation/reuse; used source/signed evidence remains.
 Broader security/performance/stability/platform gates and overall goal stay open.
 [Exact current boundary and cleanup scopes](../quality/current-initial-read-native-cover.md).
+
+### D-754 - Bounded original warm Home method sampling
+
+One new independent diagnostic API36/x64/4096 caller samples one original warm Home
+reload, with full100000-entry/200-account source and32-field publication exact. Five
+actual PID5053 markers bound1920 managed-thread samples,1214 resolved and240 containing
+original methods. Same-file reader correction for Thread/Sample replaces the preserved
+false zero-sample rejection; no operation or collection repeats. Read/codec/validation/
+forecast stacks supply bounded investigation hints, not exclusive CPU costs, ordinary
+shipping performance, physical/two-second acceptance or an optimization. Thread waits
+and706 unresolved samples remain explicit. Private DI bootstrap4761 failure precedes a
+necessary no-reset correction to5053; actual strict192AOT/205ELF/807staticLOAD diagnostic
+package passes. Its tracing component/INTERNET is independent only, not offline shipping.
+Original product/runtime/GC/model/permanent tests and all financial operations remain
+unchanged. Freshfixture/2XML53248bytes/ownAVD/loopback9024 retire; fiveOS/boot/geometry/
+emptyreverse restore, shared5038/66176 and phone/D752 owner wait untouched. Two standard
+Clean commands pass. Supplementary7scopes/1019files/5171869863logicalbytes are rejected
+before process and frozen: no retry/subset/alternate/move/escalation/reuse. Used signed/
+trace/source evidence stays outside. Overall goal and wider qualification gates remain.

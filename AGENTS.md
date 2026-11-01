@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-754 terminal original warm Home method sampling (2026-11-02)
+
+One bounded original warm read is already consumed; never replay it to repair a reader.
+Correct the Thread/Sample host decoder against the same trace:1920 bounded/1214 resolved/
+240 original-method samples and exact five markers. Treat waits/unresolved frames as
+limits, not exclusive CPU attribution or release-speed evidence. Complete original source
+and32-field publication remain exact. Diagnostic-only tracing/INTERNET/private DI stays
+outside product; preserve the initial bootstrap crash and necessary no-reset correction.
+Fresh fixture/XML/own AVD/9024 transport retire and shared5038/phone/D752 wait remain.
+Two Clean commands pass. Supplementary7scopes/1019files/5171869863logicalbytes are blocked
+before process and frozen exactly in
+`src/Apps/Zanance/docs/quality/original-home-method-sampling.md`:
+no retry/subset/alternate/move/escalation/reuse. Used source/trace/signed evidence remains.
+The broader active goal, D751/D749 accepted boundaries and D607 terminal record persist.
+
+
 ## D-753 terminal current initial-read native cover (2026-11-01)
 
 One real original store context return is delayed only for the current Transactions

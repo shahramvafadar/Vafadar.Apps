@@ -170,3 +170,10 @@ no product/financial change. Four refused cleanup scopes are frozen. Overall goa
 current forced-delay input-cover boundary without changing product code or repeating
 D746 queries. It does not supply a new speed/cause/physical claim. Its one fresh fixture/
 AVD retires, six refused scopes stay frozen and D752 owner readiness remains separate.
+
+[D754 original warm Home method sampling](original-home-method-sampling.md) supplies
+bounded same-operation method hints with full original source/publication equality.
+It adopts no optimization or ordinary speed/CPU claim; fixed old rejections stay closed.
+The caller/AVD/transport retire, seven refused scopes stay frozen, and D752 owner readiness
+is separate. Inspect complete-read/codec/validation/projection evidence before another
+candidate; physical speed and broader security/stability/platform gates remain open.
