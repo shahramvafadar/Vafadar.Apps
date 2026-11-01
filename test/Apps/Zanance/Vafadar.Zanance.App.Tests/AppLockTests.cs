@@ -237,6 +237,7 @@ internal sealed class AuthPlatform : IDeviceAuthenticator
 /// <summary>Window and dialog lifetimes as native ports, rather than fake MAUI pages.</summary>
 internal sealed class LockPlatform : IAppLockHost
 {
+    public long? BackgroundElapsedMilliseconds { get; set; }
     internal bool Available = true, PinAnswer, RecoveryAnswer;
     internal int ProtectionApplied, PinPrompts, RecoveryPrompts;
     internal readonly List<LockCover> Covers = [];

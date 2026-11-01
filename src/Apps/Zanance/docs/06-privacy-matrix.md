@@ -1646,3 +1646,8 @@ A real backward clock change extended the old RTC hour by 1,200,031 ms. New Andr
 [Actual defect, source, focused/native checks and precise limits](quality/manual-clock-snooze-interval.md).
 
 The optional cache stores only a coarse boot generation, elapsed endpoint and original expiry; no unique device identifier, content export, network permission or financial schema change.
+
+
+### D-720 - Transient elapsed background-lock guard
+
+The original access service additionally keeps same-process timestamps; Android reads only its sleep-inclusive public boot clock. No unique identity, durable clock record, credential/biometric material, outgoing payload, new permission or financial schema is added. The native fixture's fictitious in-memory app verifier is not platform Keystore or genuine owner acceptance. [Scope and original-source evidence](quality/app-lock-elapsed-background-grace.md).

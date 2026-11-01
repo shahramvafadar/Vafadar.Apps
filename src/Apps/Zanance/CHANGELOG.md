@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-720: keep the app locked after a background absence of30seconds or more even when a manual clock correction makes the UTC interval appear short.
+
 - D-718: preserve a new Android hour snooze through same-boot manual clock corrections without extending its original delivery day; retain safe historical/new-boot fallback.
 
 - D-717: keep calendar reminders at the local time after travel while preserving an elapsed one-hour snooze and the original financial due date.

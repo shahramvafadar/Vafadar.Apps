@@ -18,6 +18,8 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
 
     private readonly List<Func<Task>> _pending = [];
     private DateTimeOffset? _sleptAt;
+    private long? _sleptTimestamp;
+    private long? _sleptDeviceElapsedMilliseconds;
     private ILockCover? _page;
     private bool _coverRequested;
     private bool _started;
@@ -109,6 +111,8 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
 
         _sleptAt = time.GetUtcNow();
+        _sleptTimestamp = time.GetTimestamp();
+        _sleptDeviceElapsedMilliseconds = host.BackgroundElapsedMilliseconds;
         await ShowAsync(prompt: false);
     }
 
@@ -131,7 +135,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
             return;
         }
 
-        if (_sleptAt is { } slept && time.GetUtcNow() - slept is var elapsed && elapsed >= TimeSpan.Zero && elapsed < Grace && !_page.WasLockedBeforeSleep)
+        if (IsWithinBackgroundGrace() && !_page.WasLockedBeforeSleep)
         {
             await UnlockedAsync();
         }
@@ -139,6 +143,24 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         {
             await _page.PromptAsync();
         }
+    }
+
+    /// <summary>Requires both elapsed and wall clocks to retain the original short, failure-closed grace policy.</summary>
+    private bool IsWithinBackgroundGrace()
+    {
+        if (_sleptAt is not { } slept || _sleptTimestamp is not { } timestamp) return false;
+        var wallElapsed = time.GetUtcNow() - slept;
+        var elapsed = time.GetElapsedTime(timestamp);
+        // D-720: correcting UTC into the short interval must not erase a longer real absence.
+        // Keep the original negative-wall refusal and use Android's sleep-inclusive clock as well:
+        // a Stopwatch counter alone can pause during system suspend on that platform.
+        if (wallElapsed < TimeSpan.Zero || wallElapsed >= Grace || elapsed < TimeSpan.Zero || elapsed >= Grace) return false;
+        if (_sleptDeviceElapsedMilliseconds is { } original)
+        {
+            var current = host.BackgroundElapsedMilliseconds;
+            if (original < 0 || current is null || current < original || current - original >= Grace.TotalMilliseconds) return false;
+        }
+        return true;
     }
 
     /// <summary>Confirms a sensitive operation with the app PIN, or the device lock when no app PIN is configured.</summary>

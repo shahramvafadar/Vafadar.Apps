@@ -8,6 +8,19 @@ internal sealed class MauiAppLockHost(Translator translator) : IAppLockHost
     private static Page? Root => Application.Current?.Windows.FirstOrDefault()?.Page;
 
     /// <inheritdoc />
+    public long? BackgroundElapsedMilliseconds
+    {
+        get
+        {
+#if ANDROID
+            return Android.OS.SystemClock.ElapsedRealtime();
+#else
+            return null;
+#endif
+        }
+    }
+
+    /// <inheritdoc />
     public void ApplyProtection() => ScreenProtection.Apply();
 
     /// <inheritdoc />

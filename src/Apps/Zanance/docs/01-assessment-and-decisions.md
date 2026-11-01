@@ -12575,3 +12575,15 @@ A real backward clock change extended the old RTC hour by 1,200,031 ms. New Andr
 
 All three failed D717 build jobs share one actual CS0103 in Data.Tests; App.Tests already includes the pure helper. The unchanged local graph reproduces that failure. Add only the explicit original ReminderLocalTime source link; compile the entire strict test solution and run13 affected existing source/store cases. No runtime change/new tests/unchanged app build/native/financial replay. Remote success remains a new exact-head CI gate; D718/D607 and broader goal stay active.
 [CI/source evidence and cleanup limits](quality/reminder-test-source-projection.md).
+
+
+### D-720 - Retain the original authentication cover after a clock-corrected long absence
+
+The original UTC-only30second grace fails four real cases after elapsed time exceeds the policy but UTC is corrected into its short interval. Capture an independent timestamp and Android sleep-inclusive elapsed clock; retain both original wall/elapsed bounds, already-locked/lost-cover and native authentication ownership. Eleven new plus twenty affected existing cases pass, along with strict Windows/full offline Android and an actual original LockPage:41,380ms elapsed versus1.987969seconds wall remains locked/queued, then a distinct short grace works after the required fictitious app-PIN input. Full22typed source/settings and OS restore exactly; only the fresh cohort retires. A separate automatic empty-PIN attempt is observed as D-721, not hidden by the failed initial no-write observer. Broader SEC-04, Main/D607 and release gates remain open.
+[Original failures, exact native/clock scope and cleanup limits](quality/app-lock-elapsed-background-grace.md).
+
+
+### D-721 - Original automatic PIN prompt must not consume an empty attempt (observed, ready)
+
+D-720's actual original native Resume keeps the cover correctly but calls LockPage.PromptAsync with no entered PIN, adding exactly one failed verifier write. Source confirms the same direct Cover.PromptAsync path. Preserve that actual delta and failed no-write observer; do not replay the accepted long-clock case, short grace, app-PIN submissions or financial setup. Next correction must separate automatic focus/display from explicit submitted verification while retaining device authentication, correct/incorrect submitted PIN, rate limiting and original modal lifetime. Only the new automatic-prompt assertion needs a changed-source native continuation; genuine owner authentication stays separate.
+[Actual delta and protected next assertion](quality/app-lock-elapsed-background-grace.md).

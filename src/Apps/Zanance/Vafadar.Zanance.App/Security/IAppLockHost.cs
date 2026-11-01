@@ -3,6 +3,9 @@ namespace Vafadar.Zanance.App.Security;
 /// <summary>Native lock covers and confirmations; the access policy has no dependency on a window or control.</summary>
 public interface IAppLockHost
 {
+    /// <summary>Gets the optional platform sleep-inclusive clock in milliseconds; loss after capture refuses grace.</summary>
+    long? BackgroundElapsedMilliseconds => null;
+
     /// <summary>Refreshes the platform's screenshot and recent-apps protection.</summary>
     void ApplyProtection();
     /// <summary>Creates a cover, or returns null while no window is available. This does not grant access.</summary>
