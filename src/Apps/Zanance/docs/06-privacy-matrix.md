@@ -1692,3 +1692,8 @@ remain. [Actual source/privacy boundaries](quality/original-native-picker-screen
 
 Original Android time dialogs participate in the same default screenshot block, explicit allow and background protection as their owned Activity. Actual API35 images and API24 native flags qualify only the recorded original Settings input; they do not establish every window or general security acceptance.
 [Evidence and limits](quality/original-native-time-screen-protection.md).
+
+
+## Original currency popup capture observation (D-731)
+
+An attached original currency popup can have no own Secure flag while its actual image still redacts under the Secure parent. Use effective owned capture and actual drawn-window evidence rather than declaring a leak from flags alone. Individual rows and wider platform behavior remain unqualified. [Evidence](quality/original-currency-popup-capture.md).
