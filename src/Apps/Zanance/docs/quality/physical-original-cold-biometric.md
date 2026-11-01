@@ -101,3 +101,10 @@ and page with exact encrypted-image preservation. Fingerprint, actual cold cance
 other sensitive/notification/enrollment-change routes, broader security/database/key,
 stability/performance/accessibility, iOS/provider/Store/release remain separate. D737's
 accepted real PIN cohort is not replayed; no new permanent app-unit count is claimed.
+
+## Subsequent distinct cancellation evidence
+
+[D751](physical-original-cold-cancellation.md) subsequently completes one actual original
+cold cancellation in a different fresh UID/run, with zero success and persistent cover/
+exact cipher. It does not replay or relabel D749's one successful face request. Wider
+biometric/enrollment/sensitive/platform gates remain separate.

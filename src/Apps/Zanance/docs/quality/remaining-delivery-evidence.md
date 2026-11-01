@@ -33,7 +33,7 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 | ZCR-SEC-01 | Android/Windows feasibility and adoption exist; native iOS and independent security acceptance remain. |
 | ZCR-SEC-02 | Current protected Android source/fallback evidence exists, including D735; iOS and wider device adoption remain. No Main private-source read is authorized by a public Home check. |
 | ZCR-SEC-03 | D483 Samsung and D520 compatibility key evidence already exist; remaining device/restore and iOS claims need their actual key-lifecycle evidence, not another unchanged key-creation test. |
-| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. D749 qualifies one owner-confirmed original cold face unlock; fingerprint/enrollment-change, actual cold cancellation, other sensitive/notification routes and platform requirements remain. Do not replay either retired cohort. |
+| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. D749 qualifies one owner-confirmed original cold face unlock; D751 qualifies one actual original cold cancellation with persistent cover/cipher. Fingerprint/enrollment-change, other sensitive/notification routes and platform requirements remain. Do not replay any of these retired cohorts. |
 | ZCR-SEC-05 | D263/D521/D522/D524 cover named migration faults and profile cases. Further claims require a specified unqualified upgrade/profile/device boundary; iOS remains later. |
 | ZCR-SEC-06 | Named protected recovery/alias-loss/portable cases already exist; real authentication and later iOS/device recovery remain separate. |
 | ZCR-SEC-07 | D603 proves framework policy rejection, not actual OEM transfer or iOS exclusion. Transfer acceptance requires a real supported destination/workflow. |
@@ -158,3 +158,9 @@ Home979/141nodes and public ownership/OS exact. Its earlier candidate7680/c2488e
 not current adoption. No financial/auth replay or Main private read occurred. Both fixtures/
 emulators retire,14Clean pass, and34 total refused supplementary scopes remain frozen without
 retry/subset/alternate/move/escalation/reuse. The overall goal and broader gates remain open.
+
+[D751 original cold cancellation](physical-original-cold-cancellation.md) now closes the
+separate one-request owner-cancel boundary: actual Failed/zero success, original persistent
+LockPage over StartupPage and exact fixture cipher. Do not repeat the retired cohort or
+infer other error/biometric/sensitive routes. Main13500/D734/Home979/141/publicOS remains;
+no product/financial change. Four refused cleanup scopes are frozen. Overall goal stays.

@@ -8873,3 +8873,21 @@ as are the earlier21; no retry/subset/alternate/move/escalation/reuse. Used pack
 source archives and evidence remain. General speed/stability/security/platform gates
 and the overall delivery goal stay open; D749 face unlock and D607 remain terminal.
 [Full rejected admission and exact cleanup boundaries](quality/fused-text-normalization.md).
+
+### D-751 - Actual original cold authentication cancellation with persistent cover
+
+A genuinely separate fresh accountless independent original-source caller qualifies
+owner cancellation after cold protected startup, without replaying D737 or D749.
+Strict192AOT/204ELF/804staticLOAD offline signed package passes; current product/runtime/
+financial/test sources remain unchanged. Original SDK in10410/15213 records exactly
+one requested/completed Failed, zero success; owner confirms cancelling the same prompt.
+Original LockPage stays over StartupPage with IsLocked/device preference true and exact
+716800byte encrypted image/WAL absence. No typed source while locked, credential capture,
+Unlock retry, financial or primary operation occurs. Fresh fixture retires, zero package/
+alarm/pending/posted; Main13500/D734dc77/Home979/141/public ownership/boot/OS remains.
+ThreeXML65316bytes hash-clean and one Clean13691files/651307743logicalbytes succeeds.
+Automatic review blocks supplementary4scopes/971files/183797229logicalbytes before process;
+freeze without retry/subset/alternate/move/escalation/reuse. Used source/signed evidence
+stays outside. No new permanent test or broader security/performance/platform acceptance;
+D749face and D607terminal stay settled, D750rejected, overall delivery remains active.
+[Actual finite callback, preservation and exact frozen scopes](quality/physical-original-cold-cancellation.md).

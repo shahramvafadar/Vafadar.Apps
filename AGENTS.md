@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-751 terminal original cold cancellation (2026-11-01)
+
+Owner cancels the one original Android request in fresh UID10410/PID15213. Actual SDK
+Attempts1/Requested1/Completed1/Succeeded0/Failed and original LockPage over StartupPage
+remain, with unchanged device-lock preference and exact encrypted main/WAL images.
+No typed source while locked, credential capture, financial command or second request.
+Fresh fixture retires and package/alarm/pending/posted counts are zero. Never replay it.
+Main13500/D734dc77/Home979/141/public UID/CEDE/boot/OS and owner PIN/face/fingerprint stay
+exact; ordinary handback uses the existing instance, with no Main installation/upgrade.
+ThreeXML65316bytes hash-clean, one Clean13691files/651307743logicalbytes. Supplementary
+four scopes/971files/183797229logicalbytes are blocked before process and frozen exactly
+as listed in `src/Apps/Zanance/docs/quality/physical-original-cold-cancellation.md`:
+no retry/subset/alternate/move/escalation/reuse. Used signed/source evidence stays outside.
+D749face, D750rejection, D607terminal/consumedreboot and broader active goal stay intact.
+
 ## D-750 terminal rejected fused normalization (2026-11-01)
 
 Reject the candidate after the corrected reverse pair exceeds the fixed65536KiB
