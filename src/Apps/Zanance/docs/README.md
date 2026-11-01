@@ -145,3 +145,5 @@ A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal a
 [Full evidence](quality/original-household-workspace.md)
 
 D-745 [typed transient source-stamp admission](quality/typed-transient-ledger-stamp-admission.md) records the host passes, native memory rejection, exact production restoration and frozen supplementary cleanup scopes; no shipped performance acceptance.
+
+D-746 [current native tenfold search](quality/current-native-tenfold-search.md) qualifies two actual ready-page SearchBar inputs and the unique native row with complete source equality; no financial replay or general performance claim.

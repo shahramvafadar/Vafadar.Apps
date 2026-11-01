@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-746 terminal current native tenfold queries (2026-11-01)
+
+Two distinct current ready-page original SearchBar inputs pass on fresh API36/x64/4096
+UID10216/PID4551: no-match0 and one exact unique transfer result with an actual clickable
+native row. Complete actual post-startup schema/typed-source/all32fields/100000entries
+and cookies remain exact. Do not repeat these accepted queries, source preparation,
+financial writes or D745 rejected candidate; early input during initial loading and
+broader performance/stability remain separate. No phone/Main/authentication action.
+
+Fresh fixture/requests retire,7XML321080bytes hash-clean, ownAVD stops and one standard
+Clean passes. Automatic review rejects supplementary deletion before process creation.
+Freeze exactly5 scopes/864files/4986193249logical bytes listed in
+`src/Apps/Zanance/docs/quality/current-native-tenfold-search.md`, without retry, subset,
+alternate method, move, escalation or reuse. Used signed/source archives stay outside
+those targets; shared ADB5038/66176, owner PIN, terminal D607 and other cohorts remain.
+
 ## D-745 rejected typed transient ledger stamp (2026-11-01)
 
 Two host processes and43 finite candidate contracts/14 affected original tests pass,

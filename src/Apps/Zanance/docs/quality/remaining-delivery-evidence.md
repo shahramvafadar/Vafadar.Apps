@@ -133,3 +133,5 @@ D739 subsequently [admits the actual packaged JNI owner-lifetime boundaries](cur
 D742 compares the later stable36.1.118 four selected JNI source files against the current SDK: unchanged target paths do not supply the missing guards, so no SDK update is adopted as an original-fault remedy. See [the exact source admission](current-jni-owner-lifetime-admission.md).
 
 [D745 typed transient stamp](typed-transient-ledger-stamp-admission.md) passes host admission but fails the first native memory gate despite lower latency. Production is exactly restored; do not reopen its unchanged reference/reverse/phone cohorts or count the rejected candidate as delivered performance. A genuinely changed evidence-supported premise is required.
+
+[D746 current original tenfold search](current-native-tenfold-search.md) closes only ready-page no-match-to-unique native input/result evidence with complete source equality. Do not repeat these accepted queries; early input during initial loading and broader physical/cold/Home performance remain separate.

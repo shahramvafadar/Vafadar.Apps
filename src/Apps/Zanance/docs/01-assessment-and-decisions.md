@@ -12772,3 +12772,24 @@ retry/subset/alternate/move/escalation/reuse. The combined archive preamble did 
 previously saved used sources/results remain. Main/owner PIN/terminal D607 and other
 cohorts stay untouched. Overall goal and unmet performance/stability/platform gates remain.
 [Exact finite result and frozen scopes](quality/typed-transient-ledger-stamp-admission.md).
+
+### D-746 - Current native tenfold ready-page search
+
+Close only the current original SearchBar no-match-to-unique-result gap on fresh
+API36/x64/4096 UID10216/PID4551. Actual native text input produces0 then exactly one
+original transfer ID, with a real clickable native result row and complete visible
+title; counter-only acceptance is refused. First SearchText-to-matching Days callbacks
+1288.2451/710.9423ms are not keyboard-to-paint/cold/Home or broad performance medians.
+All actual post-startup schema/typed rows including sqlite_sequence,32-field100000-row
+published source and cookies remain exact. Source preparation occurs once, with zero
+financial/Save/Import/Undo/Review/payment command or accepted old query replay.
+Strict independent signed offline192ownAOT/204ELF/804staticLOAD package passes; product
+source/model/runtime/UI/test count remain unchanged. Initial aapt2 SDK-path and wrong
+launcher-component refusals are preserved; no install or successful launch is repeated.
+OriginalOS/boot/320x640/density160 match, freshfixture/requests retire,7XML321080byte
+hash-clean and ownAVD stops with shared ADB5038/66176 retained. One standard Clean passes;
+supplementary deletion is blocked before process,5 exact scopes/864files/4986193249logical
+bytes freeze without retry/subset/alternate/move/escalation/reuse. Used signed/source
+archives remain. No phone/Main/ownerPIN/D607 action; early input during initial loading,
+physical/cold/two-second/native-fault/security/platform gates and overall goal remain.
+[Original native input, source and exact limits](quality/current-native-tenfold-search.md).
