@@ -82,6 +82,15 @@ if ($warnings) {
     throw "The APK build produced warnings; resolve them before handing it off."
 }
 
-$apk = Get-ChildItem $Output -Filter '*-Signed.apk' | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+# D-729: a successful publish exit is not a usable handoff. Never report a missing,
+# empty or arbitrarily selected package from a mixed application output directory.
+$apks = @(Get-ChildItem -LiteralPath $Output -Filter '*-Signed.apk' -File)
+if ($apks.Count -ne 1) {
+    throw "Expected exactly one signed APK in '$Output'; found $($apks.Count). Use a separate output directory for this application."
+}
+$apk = $apks[0]
+if ($apk.Length -eq 0) {
+    throw 'The signed APK is empty; no installable handoff is available.'
+}
 "APK: $($apk.FullName) ($([math]::Round($apk.Length / 1MB, 1)) MB)"
 'Copy it to the phone and open it there (allow installing from this source once), or: adb install -r "<path>"'

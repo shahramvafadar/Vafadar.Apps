@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-729: the APK build command refuses missing, empty or ambiguous signed output instead of printing misleading installation advice.
+
 - D-728: apply screenshot privacy to the original Android selection picker while preserving its choices, selection and Cancel behavior.
 
 - D-727: keep original Android alerts, action sheets and prompts under the same screenshot privacy choice as the main window.

@@ -2900,3 +2900,14 @@ starting another shared server. Do not reconnect devices or replay accepted oper
 to repair an observer argument or recover missing report chunks.
 
 [Qualified recovery, refused inputs and preserved device state](../../src/Apps/Zanance/docs/quality/withdrawn-ledger-text-reuse.md).
+
+
+## APK output admission (D-729)
+
+`Build-AndroidApk.ps1` reports a handoff only when its output contains exactly one nonempty
+`*-Signed.apk` file. Use an application-specific output directory; missing, empty or ambiguous
+outputs throw rather than selecting the newest artifact or printing installation advice.
+This does not replace complete-package, identity, signature and current-source verification.
+`eng/tests/AndroidApkHandoff.Tests.ps1` checks that entry-point boundary using tiny file fixtures
+and isolated build commands; it performs no restore, compilation, signing or device work.
+[Actual original failures and bounded evidence](../../src/Apps/Zanance/docs/quality/apk-handoff-output-admission.md).

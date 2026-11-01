@@ -308,3 +308,12 @@ expectations and checking three new refusal guards. The1337 distinct successful 
 are not a full-suite count. Direct DLL selection uses -method and -result-xml; reject absent or
 empty reports, preserve failures, and clean only owned test output after the runners exit.
 [Evidence](../../src/Apps/Zanance/docs/quality/home-revision-ci-oracles.md).
+
+
+## Focused APK handoff guard
+
+Run `./eng/tests/AndroidApkHandoff.Tests.ps1` after changes to build-script artifact admission.
+Four actual-entry cases reject missing/empty/ambiguous files and retain unique-file selection.
+Its isolated command/file fixtures do not build or validate an Android package; keep actual
+signature/package/device qualification separate. The existing Windows CI job runs this check.
+[Scope and original failures](../../src/Apps/Zanance/docs/quality/apk-handoff-output-admission.md).

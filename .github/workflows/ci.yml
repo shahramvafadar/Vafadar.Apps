@@ -139,6 +139,9 @@ jobs:
       - name: Android privacy policy regressions
         run: ./eng/tests/AndroidPrivacy.Tests.ps1
 
+      - name: Android APK handoff regressions
+        run: ./eng/tests/AndroidApkHandoff.Tests.ps1
+
       - name: Android compression cache regressions
         run: ./eng/tests/AndroidCompression.Tests.ps1
 
