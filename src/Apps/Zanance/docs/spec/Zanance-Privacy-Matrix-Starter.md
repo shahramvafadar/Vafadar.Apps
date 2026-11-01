@@ -1527,3 +1527,8 @@ Keep only native notification id, exact wall/offset ticks and local/elapsed cloc
 ### D-720/D-721 local access-presentation clarification
 
 The original app-lock gate additionally compares transient same-process timestamps and Android's public sleep-inclusive clock; it stores no new identifier, credential or outgoing payload. Automatic PIN presentation focuses the existing password entry without a verifier submission. Explicit input, verifier storage and device-authentication data flows remain unchanged. This note aligns with the maintained [privacy matrix](../06-privacy-matrix.md); it is not wider device/Keystore or owner-authentication acceptance.
+
+
+### D-722 - Device-private optional PIN retry-clock metadata
+
+New supported Android penalties add only a coarse public boot generation and sleep-inclusive deadline to the existing protected device PIN state. They are not a unique device identity, financial date, plaintext PIN, new credential, outgoing payload or portable-backup field. The old six-field/version1 representation remains readable; null clock metadata is omitted. Success clears both retry deadlines, while unavailable required timing fails closed. No permission/SDK/financial schema changes. Native evidence uses one fictitious independent UID and exports only nonsecret metadata/booleans; genuine owner/platform acceptance remains open. [Source, compatibility and limits](../quality/pin-retry-elapsed-clock.md).

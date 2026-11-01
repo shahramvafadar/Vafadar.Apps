@@ -6,7 +6,7 @@ namespace Vafadar.Zanance.Core.Security;
 /// Optional four-digit app access gate (D-63). Device-protected verifiers and growing, restart-persistent delays
 /// discourage interactive guessing. This gate does not encrypt the financial database or portable backups.
 /// </summary>
-public sealed class PinLock(IPinStorage storage, TimeProvider time)
+public sealed class PinLock(IPinStorage storage, TimeProvider time, IPinAttemptClock? attemptClock = null)
 {
     private const int Iterations = 600_000;
     private readonly SemaphoreSlim _gate = new(1, 1);
@@ -105,7 +105,8 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
     {
         var state = await storage.ReadAsync();
         if (state is not null && (state.Version != 1 || state.Iterations != Iterations || state.Salt.Length != 16
-            || state.Hash.Length != 32 || state.Failures < 0))
+            || state.Hash.Length != 32 || state.Failures < 0 ||
+            (state.RetryDeadline is { } deadline && (deadline.BootGeneration < 0 || deadline.TargetMilliseconds < 0 || state.Failures < 5 || state.RetryAt is null))))
         {
             throw new InvalidOperationException("The protected PIN state is invalid.");
         }
@@ -117,7 +118,12 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
     {
         if (state is null) { return new(PinOutcome.NotConfigured, TimeSpan.Zero); }
         var now = time.GetUtcNow();
-        if (state.RetryAt is { } retry && retry > now) { return new(PinOutcome.Delayed, retry - now); }
+        var clock = state.RetryDeadline is not null || state.Failures >= 4 ? attemptClock?.Read() : null;
+        // Preserve the original UTC fallback only for a legacy record or a proven new boot.
+        // A current same-boot deadline owns the penalty even after UTC moves in either direction.
+        var wait = state.RetryDeadline?.Remaining(clock, Penalty(state.Failures)) ??
+            (state.RetryAt is { } retry && retry > now ? retry - now : TimeSpan.Zero);
+        if (wait > TimeSpan.Zero) return new(PinOutcome.Delayed, wait);
         var matches = false;
         if (IsValid(pin))
         {
@@ -129,18 +135,23 @@ public sealed class PinLock(IPinStorage storage, TimeProvider time)
         if (matches)
         {
             validateOwner?.Invoke();
-            await storage.WriteAsync(state with { Failures = 0, RetryAt = null });
+            await storage.WriteAsync(state with { Failures = 0, RetryAt = null, RetryDeadline = null });
             return new(PinOutcome.Success, TimeSpan.Zero);
         }
 
         // Five attempts, then one minute; each further failure doubles the wait up to fifteen minutes. Keeping the
         // deadline with the verifier prevents an app restart from resetting the limit (D-63).
         var failures = Math.Min(state.Failures + 1, 20);
-        var delay = failures < 5 ? TimeSpan.Zero : TimeSpan.FromSeconds(Math.Min(60 * (1 << Math.Min(failures - 5, 4)), 900));
+        var delay = Penalty(failures);
         validateOwner?.Invoke();
-        await storage.WriteAsync(state with { Failures = failures, RetryAt = delay > TimeSpan.Zero ? now + delay : null });
+        await storage.WriteAsync(state with { Failures = failures, RetryAt = delay > TimeSpan.Zero ? now + delay : null,
+            RetryDeadline = PinRetryDeadline.Capture(clock, delay) });
         return new(delay > TimeSpan.Zero ? PinOutcome.Delayed : PinOutcome.Incorrect, delay);
     }
+
+    /// <summary>Retains the original five-attempt/minute and doubling/fifteen-minute policy.</summary>
+    private static TimeSpan Penalty(int failures) => failures < 5 ? TimeSpan.Zero :
+        TimeSpan.FromSeconds(Math.Min(60 * (1 << Math.Min(failures - 5, 4)), 900));
 
     private static byte[] Derive(string pin, byte[] salt, int iterations) =>
         Rfc2898DeriveBytes.Pbkdf2(pin, salt, iterations, HashAlgorithmName.SHA256, 32);

@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Vafadar.Zanance.Core.Security;
 
 /// <summary>Device-protected storage for the app PIN verifier and durable attempt limit; never part of a backup.</summary>
@@ -11,7 +13,8 @@ public interface IPinStorage
 }
 
 /// <summary>A versioned, salted verifier and the persisted retry deadline; contains no plain PIN.</summary>
-public sealed record PinState(int Version, int Iterations, byte[] Salt, byte[] Hash, int Failures, DateTimeOffset? RetryAt);
+public sealed record PinState(int Version, int Iterations, byte[] Salt, byte[] Hash, int Failures, DateTimeOffset? RetryAt,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] PinRetryDeadline? RetryDeadline = null);
 
 /// <summary>The outcome of checking a PIN.</summary>
 public enum PinOutcome

@@ -1651,3 +1651,8 @@ The optional cache stores only a coarse boot generation, elapsed endpoint and or
 ### D-720 - Transient elapsed background-lock guard
 
 The original access service additionally keeps same-process timestamps; Android reads only its sleep-inclusive public boot clock. No unique identity, durable clock record, credential/biometric material, outgoing payload, new permission or financial schema is added. The native fixture's fictitious in-memory app verifier is not platform Keystore or genuine owner acceptance. [Scope and original-source evidence](quality/app-lock-elapsed-background-grace.md).
+
+
+### D-722 - Device-private optional PIN retry-clock metadata
+
+New supported Android penalties add only a coarse public boot generation and sleep-inclusive deadline to the existing protected device PIN state. They are not a unique device identity, financial date, plaintext PIN, new credential, outgoing payload or portable-backup field. The old six-field/version1 representation remains readable; null clock metadata is omitted. Success clears both retry deadlines, while unavailable required timing fails closed. No permission/SDK/financial schema changes. Native evidence uses one fictitious independent UID and exports only nonsecret metadata/booleans; genuine owner/platform acceptance remains open. [Source, compatibility and limits](quality/pin-retry-elapsed-clock.md).

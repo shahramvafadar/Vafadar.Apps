@@ -132,6 +132,9 @@ public static class MauiProgram
             .AddSingleton<IDataFileInteraction, MauiDataFileInteraction>()
             .AddSingleton<AppLinkRouter>()
             .AddSingleton<Vafadar.Zanance.Core.Security.IPinStorage, SecurePinStorage>()
+#if ANDROID
+            .AddSingleton<Vafadar.Zanance.Core.Security.IPinAttemptClock, AndroidPinAttemptClock>()
+#endif
             .AddSingleton<Vafadar.Zanance.Core.Security.PinLock>()
             .AddSingleton<Profiles.IProfileRuntime, Profiles.MauiProfileRuntime>()
             .AddSingleton<Profiles.IProfileWorkAccessSource, Profiles.InactiveProfileWorkAccessSource>()

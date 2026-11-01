@@ -3485,3 +3485,8 @@ Transactions/Reimbursements Retry grows around the full translation at the origi
 ### Original unlock presentation and elapsed grace (D-720/D-721)
 
 Automatic foreground/resume requests display or focus the original PIN entry; they are not submitted guesses and must not consume its attempt allowance. Only explicit Enter/Unlock submits the original verifier. A device-only unlock still uses the original device-authentication prompt. The existing short background grace requires both nonnegative wall and elapsed intervals below30seconds, including Android sleep; an already-locked/lost cover or retired authority never acquires grace. Keep the original modal, queued destinations, password masking and current translated captions. [Actual original UI and finite acceptance](quality/automatic-pin-presentation.md).
+
+
+### Original PIN wait after clock correction (D-722)
+
+New supported Android penalties show the remaining same-boot elapsed wait, including sleep. UTC correction must neither bypass that wait nor renew it; an expired interval admits only the next original submitted operation. Preserve five initial guesses/one minute, doubling/cap, original Enter/Unlock and automatic-focus separation. A missing required clock uses existing unavailable-PIN guidance and keeps the cover; it never clears the verifier. Legacy/no-origin and known new-boot UTC behavior is explicit, not a fabricated remaining interval. [Actual source/UI scope](quality/pin-retry-elapsed-clock.md).
