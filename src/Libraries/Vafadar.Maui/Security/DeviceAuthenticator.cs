@@ -15,8 +15,8 @@ public enum AuthenticationOutcome
 
 /// <summary>
 /// Asks the operating system to confirm the device owner: biometrics with the device PIN, pattern or password as
-/// fallback. The app never stores its own PIN, so the lock is as strong as the device lock and has the device's
-/// recovery path (SEC-01).
+/// fallback. This adapter neither receives nor stores the device credential; the operating system owns that proof
+/// and its recovery path (SEC-01). A calling app's separate PIN policy is independent of this interface.
 /// </summary>
 public interface IDeviceAuthenticator
 {

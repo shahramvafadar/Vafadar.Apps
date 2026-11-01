@@ -139,3 +139,5 @@ D742 compares the later stable36.1.118 four selected JNI source files against th
 [D747 parse-once amount query](parsed-amount-query-admission.md) is rejected at its fixed broad-tenfold regression gate despite numeric gains; no product/native candidate follows. A changed text-normalization premise must retain the original parser and all source/callback semantics.
 
 [D748 lazy text normalization](lazy-text-normalization-admission.md) lowers allocations but fails fixed tenfold latency gates. Neither it nor D747 is an adopted performance correction; do not retune or replay their unchanged host/native premises.
+
+[D749 original cold biometric preparation](physical-original-cold-biometric.md) records owner-provided fingerprint/face enrollment and one actual pending original SDK request. Keep its live process/first-request handle; genuine result/method/source/retirement evidence is still required. This is not a new availability or biometrics pass.

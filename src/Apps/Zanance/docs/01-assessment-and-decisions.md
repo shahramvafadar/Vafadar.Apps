@@ -12824,3 +12824,23 @@ standard Clean pass, six used sources archived. File-only supplementary cleanup 
 blocked before process, manifest preamble unexecuted;3conservative roots/70files/
 1329084logical bytes freeze without retry/subset/alternate/move/escalation/reuse.
 Main/ownerPIN/D607terminal/goal remain. [Exact finite result](quality/lazy-text-normalization-admission.md).
+
+### D-749 - Owner biometric enrollment and original cold-request preparation
+
+Owner personally enables fingerprint and face with no Zanance action; preserve both
+and the real system PIN. Before the first original SDK call, amend the independent
+cold-cover target to actual biometric unlock, not cancellation/PIN. Fresh accountless
+financially-empty UID10409/PID31495 uses original startup/LockPage/SDK, one Settings
+fixture preparation and one install/launch; no Main lock or accepted D737 request is
+replayed. Strict original-source offline192AOT/204ELF/804staticLOAD/signatures/runtime14
+pass. Actual first SDK Requested1/Completed0/Succeeded0 and OS BiometricPromptRoot
+confirm a live owner wait, not acceptance or timeout. No typed source read while
+locked; encrypted-image comparison, owner method, genuine result and fixture/Main
+retirement/handback remain pending. Failed public stat observation is preserved and
+public package CE/DE metadata supplies the missing ownership facts without elevation
+or relaunch. D517 timeout restored exactly300000; owner enrollment is not reverted.
+Clarify the device-authenticator XML comment's separate OS-credential/app-PIN boundary;
+all non-documentation code lines exactly match and XML parses, so no unchanged app
+suite/build/install is repeated. This finished documentation/preparation record does
+not complete the native cohort, SEC04, cold cancellation or overall goal.
+[Exact live state and required continuation](quality/physical-original-cold-biometric.md).

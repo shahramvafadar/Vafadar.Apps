@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## Owner personally enabled fingerprint and face (2026-11-01, D-749)
+
+The owner directly reports enabling both fingerprint and face on Samsung, with no
+action inside Zanance. Preserve these deliberate device choices and the existing
+real screen PIN; do not restore historical None/no-enrollment or change Main's app-lock
+preference. Genuine authentication remains owner-only. Before the first actual SDK
+request, D749's held independent cold-cover cohort is explicitly amended to actual
+biometric unlock evidence; cold cancellation remains separate and a success is never
+labelled cancellation. This is no new Main, financial, enrollment or global-security
+mutation authority. The independent fixture has no account/financial seed and uses
+the original SDK/policy; retired D737 requests/metadata are not replayed.
+
 ## D-748 rejected lazy normalization premise (2026-11-01)
 
 131138 private exact UTF16/context comparisons pass and allocation falls, but fixed
