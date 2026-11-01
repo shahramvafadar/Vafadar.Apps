@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-717: keep calendar reminders at the local time after travel while preserving an elapsed one-hour snooze and the original financial due date.
+
 - D-716: allow complete maximum-length text to round-trip through the app's protected CSV format while preserving strict limits for ordinary files and non-text columns.
 
 - D-715: keep complete maximum-length text in accountant exports without counting the added spreadsheet-protection marker against the original field limit.

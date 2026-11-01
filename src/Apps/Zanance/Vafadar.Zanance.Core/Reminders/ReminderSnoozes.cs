@@ -18,7 +18,9 @@ public enum SnoozeChoice
 /// <param name="Title">Title of the original reminder (already generic unless details are allowed).</param>
 /// <param name="Body">Text of the original reminder.</param>
 /// <param name="NotifyAt">Local time of the repeated reminder.</param>
-public sealed record SnoozedReminder(int Id, string Link, string Title, string Body, DateTime NotifyAt);
+/// <param name="Choice">The original snooze choice; absent for historical caches whose choice cannot be inferred.</param>
+/// <param name="NotifyInstant">The elapsed-time deadline of a new one-hour snooze, independent of travel.</param>
+public sealed record SnoozedReminder(int Id, string Link, string Title, string Body, DateTime NotifyAt, SnoozeChoice? Choice = null, DateTimeOffset? NotifyInstant = null);
 
 /// <summary>
 /// Snoozing repeats a reminder later and nothing else: the due date of the occurrence never changes, and a snooze ends
@@ -26,6 +28,9 @@ public sealed record SnoozedReminder(int Id, string Link, string Title, string B
 /// </summary>
 public static class ReminderSnoozes
 {
+    /// <summary>The existing device-local snooze cache key.</summary>
+    public const string PreferenceKey = "reminders.snoozed";
+
     /// <summary>At most this many snoozes are kept.</summary>
     public const int MaxSnoozes = 20;
 

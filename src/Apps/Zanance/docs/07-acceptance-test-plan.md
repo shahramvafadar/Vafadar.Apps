@@ -8667,3 +8667,8 @@ Five actual import-preview/SQLite failures pass after centralizing the existing 
 
 Seven original own-format failures pass after source-aware marker accounting. Final27new cases cover exact original text, row/version/header/column eligibility and unchanged budgets;95 affected existing cases pass on final source after a preserved generic-contract assumption failure. One fresh API36/x64/4096 Core-only task completes8originalroundtrips/2refusals with independently matched text digest and no financial database/writes, native Import/share or old cohort replay. Strict Windows/full offline Android and used component/package guards pass. This is not a complete financial/native-picker/recipient/device suite or a performance gate.
 [Inputs, exact runtime and restoration](quality/own-csv-protected-field-budget.md).
+
+### D-717 - AT-37 / REM-07..08 actual native travel queue
+
+The actual original09:00Berlin→03:00NewYork defect is preserved. Final exact accepted wall/offset descriptors refuse missing/stale data independently of source preferences.28new+42affected cases pass; final freshUID10216/bootdf7868/cached905 death and real broadcastPID4926 preserve elapsed hour while rebinding normal/tomorrow inTokyo and restoredBerlin despite deliberately opposite cached choices. Exactlythree native ids/handles, sourcecache/date and originalOS persist;0/+1/-1ms SDK samples are retained. Earlier simple native evidence is not final-source substitution. Manual clock, all historical zones/DST dispatch, future punctuality and complete AT-37 remain unaccepted. D607/physicalMain untouched.
+[Full admitted evidence and limitations](quality/local-reminder-clock-changes.md).

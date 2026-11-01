@@ -1518,3 +1518,7 @@ sources retain their original protected factory and cryptographic verification. 
 fictitious Integration identity and isolated original API proved only the empty-source
 first-run branch; no genuine authentication or private key export is implied. Original
 services and D607 remain preserved. [Evidence](../quality/original-household-workspace.md).
+
+### D-717 derived native reminder clock metadata
+
+Keep only native notification id, exact wall/offset ticks and local/elapsed clock kind in a private device-local Android preference file. It duplicates the existing pending deadline, includes no amount/account/title/route/credential and is not a financial source or portable export. Synchronous invalidation before SDK mutation and accepted-only publication refuse stale/missing authority. Normal covered source refresh can rebuild it; uninstall/reset owns removal. No SDK, permission, network, authentication, financial date/amount or publication policy changes. Historical snooze choice is never inferred.

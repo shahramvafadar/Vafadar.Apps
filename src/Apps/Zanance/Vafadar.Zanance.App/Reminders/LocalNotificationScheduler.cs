@@ -14,6 +14,8 @@ namespace Vafadar.Zanance.App.Reminders;
 /// </summary>
 internal sealed class LocalNotificationScheduler : IReminderScheduler
 {
+    /// <summary>Serializes native queue mutation against a clock-change receiver in this process.</summary>
+    internal static readonly SemaphoreSlim QueueGate = new(1, 1);
     private const int SnoozeHourAction = 101;
     private const int SnoozeTomorrowAction = 102;
     private readonly INotificationService _service = LocalNotificationCenter.Current;
@@ -74,6 +76,19 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
     public async Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> reminders)
     {
         ArgumentNullException.ThrowIfNull(reminders);
+        await QueueGate.WaitAsync();
+        try { await ReplaceUnderGateAsync(reminders); }
+        finally { QueueGate.Release(); }
+    }
+
+    private async Task ReplaceUnderGateAsync(IReadOnlyList<ReminderNotification> reminders)
+    {
+        var requests = reminders.Select(reminder => (Request: Request(reminder), Local: reminder.NotifyInstant is null && !reminder.PreserveInstant)).ToArray();
+#if ANDROID
+        // A process may die after SDK acceptance but before source preferences commit. An
+        // unbound request must be refused, never classified from stale snooze preferences.
+        ReminderClockStore.Replace([]);
+#endif
         // Only notifications still waiting are replaced; ones already shown (a reminder, the budget alert) stay in the
         // notification shade until the user clears them.
         var pending = await _service.GetPendingNotificationList();
@@ -82,21 +97,46 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
             _service.Cancel([.. pending.Select(p => p.NotificationId)]);
         }
 
-        foreach (var reminder in reminders)
-        {
-            await ReminderPublication.RequireAcceptedAsync(_service.Show(Request(reminder)));
-        }
+        foreach (var item in requests)
+            await ReminderPublication.RequireAcceptedAsync(_service.Show(item.Request));
+#if ANDROID
+        ReminderClockStore.Replace(requests.Where(item => item.Request.Schedule.NotifyTime is not null)
+            .Select(item => new ReminderNativeClockBinding(item.Request.NotificationId, item.Request.Schedule.NotifyTime!.Value, item.Local)));
+#endif
     }
 
     // The SDK returns false for rejected requests without throwing; never consume a budget level after that result.
-    public Task ShowAsync(ReminderNotification notification) => ReminderPublication.RequireAcceptedAsync(_service.Show(Request(notification)));
+    public async Task ShowAsync(ReminderNotification notification)
+    {
+        await QueueGate.WaitAsync();
+        try
+        {
+            var request = Request(notification);
+#if ANDROID
+            ReminderClockStore.Remove(request.NotificationId);
+#endif
+            await ReminderPublication.RequireAcceptedAsync(_service.Show(request));
+#if ANDROID
+            if (request.Schedule.NotifyTime is { } at)
+                ReminderClockStore.Put(new(request.NotificationId, at, notification.NotifyInstant is null && !notification.PreserveInstant));
+#endif
+        }
+        finally { QueueGate.Release(); }
+    }
 
     /// <inheritdoc />
-    public Task RemoveAsync(int notificationId)
+    public async Task RemoveAsync(int notificationId)
     {
-        _service.Cancel(notificationId);
-        _service.Clear(notificationId);
-        return Task.CompletedTask;
+        await QueueGate.WaitAsync();
+        try
+        {
+#if ANDROID
+            ReminderClockStore.Remove(notificationId);
+#endif
+            _service.Cancel(notificationId);
+            _service.Clear(notificationId);
+        }
+        finally { QueueGate.Release(); }
     }
 
     /// <summary>Builds the original native request without publishing it or changing financial state.</summary>
@@ -117,15 +157,16 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
 
         if (reminder.NotifyAt is { } at)
         {
+            var scheduled = reminder.NotifyInstant ?? ReminderLocalTime.Resolve(at, TimeZoneInfo.Local);
             request.Schedule = new NotificationRequestSchedule
             {
-                NotifyTime = at,
+                NotifyTime = scheduled,
                 // Android battery restrictions can defer inexact delivery beyond an hour (D-507).
                 // The owner accepts it through this original local day, never into tomorrow.
                 Android =
                 {
                     ScheduleMode = AndroidScheduleMode.InexactAllowWhileIdle,
-                    AllowedDelay = ReminderDeliveryWindow.UntilEndOfDay(new DateTimeOffset(at), TimeZoneInfo.Local),
+                    AllowedDelay = ReminderDeliveryWindow.UntilEndOfDay(scheduled, TimeZoneInfo.Local),
                 },
             };
         }

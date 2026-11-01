@@ -38,7 +38,7 @@ public sealed class ReminderService(
     LocalDatabaseLocation<ZananceDbContext>? databaseLocation = null) : IDisposable, IAsyncDisposable
 {
     private const string BudgetAlertKey = "budget.alert.";
-    private const string SnoozeKey = "reminders.snoozed";
+    private const string SnoozeKey = ReminderSnoozes.PreferenceKey;
     private readonly SemaphoreSlim _gate = new(1, 1);
     private CancellationTokenSource? _pending;
     private readonly object _changesGate = new();
@@ -217,7 +217,8 @@ public sealed class ReminderService(
             await scheduler.ReplaceAllAsync([]);
             throw;
         }
-        var now = time.GetLocalNow().DateTime;
+        var nowOffset = time.GetLocalNow();
+        var now = nowOffset.DateTime;
         var today = DateOnly.FromDateTime(now);
         ZananceSettings settings; ReminderFinancialSnapshot financials;
         try
@@ -299,22 +300,26 @@ public sealed class ReminderService(
         var snoozes = new List<SnoozedReminder>();
         foreach (var saved in ReminderSnoozes.Deserialize(preferences.Get(SnoozeKey)).Take(ReminderSnoozes.MaxSnoozes))
         {
-            if (saved.NotifyAt <= now || Rebuild(saved.Id, saved.NotifyAt, saved.Link) is not { } current) continue;
-            snoozes.Add(new(current.Id, current.Link, current.Title, current.Body, saved.NotifyAt));
+            // New one-hour snoozes retain elapsed time through travel; tomorrow and legacy
+            // records keep their original local-time source semantics during a normal rebuild.
+            var at = saved.NotifyInstant is { } instant ? TimeZoneInfo.ConvertTime(instant, time.LocalTimeZone).DateTime : saved.NotifyAt;
+            if ((saved.NotifyInstant is { } deadline ? deadline <= nowOffset : at <= now) || Rebuild(saved.Id, at, saved.Link) is not { } current) continue;
+            snoozes.Add(new(current.Id, current.Link, current.Title, current.Body, at, saved.Choice, saved.NotifyInstant));
         }
         if (request is not null)
         {
             var id = ReminderSnoozes.IdFor(request.Notification.Id);
-            var at = ReminderSnoozes.NotifyAt(request.Choice, now);
+            DateTimeOffset? instant = request.Choice == SnoozeChoice.OneHour ? nowOffset.AddHours(1) : null;
+            var at = instant is { } elapsed ? TimeZoneInfo.ConvertTime(elapsed, time.LocalTimeZone).DateTime : ReminderSnoozes.NotifyAt(request.Choice, now);
             if (Rebuild(id, at, request.Notification.Link) is { } current)
-                snoozes = ReminderSnoozes.Add(snoozes, new(id, current.Link, current.Title, current.Body, at)).ToList();
+                snoozes = ReminderSnoozes.Add(snoozes, new(id, current.Link, current.Title, current.Body, at, request.Choice, instant)).ToList();
         }
 
         // Legacy unscoped groups cannot prove their profile or members. Drop that cache, rebuilding normal reminders.
         // The original routing format remains supported for retained historical taps, not for new snoozes.
         await ValidateCurrentBatchAsync();
         notifications.AddRange(snoozes.Where(s => notifications.All(n => n.Id != s.Id))
-            .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true)));
+            .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true, NotifyInstant: s.NotifyInstant, PreserveInstant: !ReminderLocalTime.FollowsLocalClock(s.Id, [s]))));
         try
         {
             await scheduler.ReplaceAllAsync(notifications.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id)

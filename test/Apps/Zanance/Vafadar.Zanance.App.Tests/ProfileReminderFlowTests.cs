@@ -209,7 +209,8 @@ public sealed class ProfileReminderFlowTests
         internal DateTimeOffset Now { get; set; } = new(2026, 10, 10, 8, 0, 0, TimeSpan.Zero);
         private readonly List<ManualTimer> _timers = [];
         public override DateTimeOffset GetUtcNow() => Now;
-        public override TimeZoneInfo LocalTimeZone => TimeZoneInfo.Utc;
+        internal TimeZoneInfo Zone { get; set; } = TimeZoneInfo.Utc;
+        public override TimeZoneInfo LocalTimeZone => Zone;
         public override ITimer CreateTimer(TimerCallback callback, object? state, TimeSpan dueTime, TimeSpan period)
         {
             var timer = new ManualTimer(callback, state, dueTime); _timers.Add(timer); return timer;

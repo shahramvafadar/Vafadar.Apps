@@ -7,7 +7,9 @@ namespace Vafadar.Zanance.App.Reminders;
 /// <param name="NotifyAt">Local time; <see langword="null"/> shows it now.</param>
 /// <param name="Link">Where a tap leads, e.g. <c>occurrence|{plan}|{date}</c> (REM-04).</param>
 /// <param name="CanSnooze">Whether the notification offers "In 1 hour" and "Tomorrow" (REM-04).</param>
-public sealed record ReminderNotification(int Id, string Title, string Body, DateTime? NotifyAt, string Link, bool CanSnooze = false);
+/// <param name="NotifyInstant">An elapsed one-hour snooze deadline; calendar reminders leave this unset.</param>
+/// <param name="PreserveInstant">Keeps an unclassified historical snooze fixed until its ordinary source refresh.</param>
+public sealed record ReminderNotification(int Id, string Title, string Body, DateTime? NotifyAt, string Link, bool CanSnooze = false, DateTimeOffset? NotifyInstant = null, bool PreserveInstant = false);
 
 /// <summary>A snooze action chosen on a notification.</summary>
 public sealed record SnoozeRequest(ReminderNotification Notification, Vafadar.Zanance.Core.Reminders.SnoozeChoice Choice);

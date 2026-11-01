@@ -174,6 +174,8 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Profiles/IProfileCatalogueChanges.cs" Link="Application/Profiles/IProfileCatalogueChanges.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/IReminderScheduler.cs" Link="Application/IReminderScheduler.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderPublication.cs" Link="Application/ReminderPublication.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderNativeClockBinding.cs" Link="Application/ReminderNativeClockBinding.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderLocalTime.cs" Link="Application/ReminderLocalTime.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Reminders/ReminderDeliveryWindow.cs" Link="Application/ReminderDeliveryWindow.cs" />
     <Compile Include="../../../../src/Libraries/Vafadar.Maui/Security/DeviceAuthenticator.cs" Link="Application/DeviceAuthenticator.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/AppLockService.cs" Link="Application/AppLockService.cs" />
