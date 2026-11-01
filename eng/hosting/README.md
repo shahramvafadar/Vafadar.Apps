@@ -9,7 +9,9 @@ Desktop and vafadar.pro; no paid host, account login, router/firewall change or 
 - Explicit `SelfHosted` environment plus `Service:Mode=isolated-self-hosted`; Development/Integration are not exposed.
 - Dedicated project networks/volumes and a static, narrowly trusted proxy address. Only proxy loopback port 14543
   is published initially. No database/application port is published. Source and restore targets use distinct subnets.
-- Official pinned .NET SDK 10.0.402, ASP.NET 10.0.13, PostgreSQL 18.6 and Caddy 2.11.7 images. Preserve original notices.
+- Current source-build inputs pin official .NET SDK 10.0.403 and ASP.NET 10.0.14 by immutable image digests
+  (D-556), plus PostgreSQL 18.6 and Caddy 2.11.7. Preserve original notices. A source build does not authorize
+  replacing the retained deployment with newer application code or migrations.
 - Application and migrator UID/GID 1654, PostgreSQL 70, proxy 1655. Long-running containers drop all capabilities,
   have read-only roots and scoped writable volumes/tmpfs. The network-disabled one-shot provisioner owns only the
   fixed project secret/data roots; it never mounts the Docker socket or a host secret/configuration directory.
@@ -30,6 +32,25 @@ Desktop and vafadar.pro; no paid host, account login, router/firewall change or 
   distribution points; never use `--insecure`. The original application transport retains exact local leaf pin/name/
   validity/EKU checks. The approved public-origin client uses normal system trust without a leaf pin, allowing
   ordinary public certificate renewal. An untrusted issuer is refused before credentials.
+
+## Source builds and the retained deployment (D-556)
+
+[Service.Dockerfile](Service.Dockerfile) builds current API/bootstrap sources; the three qualification
+Dockerfiles use the same SDK/runtime pins. [ServiceRuntime.Dockerfile](ServiceRuntime.Dockerfile) instead
+copies the existing immutable image's application and probe files onto ASP.NET 10.0.14. These are distinct
+operations: the completed retained-stack servicing preserved the original application files and did not
+apply newer source features or schema changes. Do not run a source rebuild or migration to reproduce it.
+
+The [D-556 qualification record](../../src/Apps/Zanance/docs/quality/service-runtime14-exact-application.md)
+records the completed runtime-only adoption and HTTPS health observation for
+`zanance-selfhost-privacy-restore-d294`, using loopback port 14645. Port 14543 above is the base Compose
+default, not that retained project's port. These are dated acceptance observations, not a fresh health
+claim. Preserve its original immutable rollback image and private snapshot dependencies. Use the guarded
+`desktop.py` lifecycle commands below for the retained group; do not recreate completed qualification
+one-shots or replace its image/configuration with a default `compose up`.
+
+Public DNS/TLS/mail, real provider/account acceptance and publication remain separate gates. Runtime14
+servicing does not establish them or full private database/key equality.
 
 ## Current commands and boundaries
 
