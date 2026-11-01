@@ -113,6 +113,8 @@ infrastructure; its existence does not imply a configured public service or live
 Recent completed source batches cover original account details, Plans, templates, Transactions, period review
 and categorization-rule/category-management/account-editor/goal-editor/budget-editor/asset-type-editor
 ownership and original asset-event frame/receipt handling. Their reports retain the exact independent scope.
+[D-750](src/Apps/Zanance/docs/quality/fused-text-normalization.md) records a rejected optimization:
+the fixed native memory gate failed, so production source and the accepted phone package were restored.
 D-607 is terminal: both physical notifications arrived inside its original one-hour window, source matched and
 the fresh fixture retired; precision/idle limitations remain. D-733 then adopted the current complete Android
 package without reset, preserving current Home979/141 and three profile names/selection. This does not accept
@@ -123,9 +125,9 @@ platform release gates remain open.
 
 | Delivery track | Current boundary |
 |---|---|
-| Completed source work | Original editor/read/command ownership batches and Android PIN/window-privacy corrections through D-734; see the dated backlog and bounded observations |
+| Completed source work | Original editor/read/command ownership batches and Android PIN/window-privacy corrections through D-734; D-750 is rejected with exact source restoration; see dated bounded evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | D-733 complete signed no-reset Main adoption after actual D-607 retirement, followed by the necessary D-734 disposed-peer repair; private DB/key and every financial/device path remain separate |
+| Physical adoption | D-733 complete signed no-reset Main adoption after actual D-607 retirement, followed by D-734 repair; D-750 temporary deployment is restored to accepted D734 (observed13500/Home979/141); private DB/key and every financial/device path remain separate |
 | Performance and stability | The general two-second Home target and general ANR/crash qualification remain open; rejected experiments are retained as historical findings |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |

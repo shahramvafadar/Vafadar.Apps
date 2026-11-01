@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-750 terminal rejected fused normalization (2026-11-01)
+
+Reject the candidate after the corrected reverse pair exceeds the fixed65536KiB
+absolute after-PSS ceiling by reporting75703KiB difference. The before-input gap
+already80473KiB forbids exclusive cause/leak claims. Do not relax the gate, resample,
+retune or rescue the unchanged premise. Original production SearchText and temporary
+tests are byte-exact restored; no permanent new test or adopted optimization remains.
+The first native timing is disqualified for unequal oracle work; preserve its functional
+facts and failures. Both corrected pairs retain exact full sources and original results.
+
+Main is restored once without reset to accepted D734/dc774120; latest observation13500/
+Home979/141nodes preserves public UID/CEDE/boot/OS/caller and owner PIN/face/fingerprint.
+No successful financial/authentication work is replayed. Both fresh native fixtures retire
+and own emulators stop; shared ADB5038 stays. Initial10Clean plus final4Clean pass.
+Automatic review blocks both supplementary operations before process. Freeze exactly
+all21 initial and13 corrected-cohort scopes listed in
+`src/Apps/Zanance/docs/quality/fused-text-normalization.md`: no retry/subset/alternate/
+move/escalation/reuse, including stopped AVDs. Used signed/source archives remain outside.
+D607terminal/consumedreboot and D749face evidence remain; overall goal stays active.
+
 ## D-749 terminal original cold face unlock (2026-11-01)
 
 The owner confirms face for the original single native SDK success in31495/UID10409.

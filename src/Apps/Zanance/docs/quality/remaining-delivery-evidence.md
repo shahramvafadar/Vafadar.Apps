@@ -148,3 +148,13 @@ returns with exact APK/public ownership/OS after historical32068's OSLOW_MEMORY3
 Do not repeat that accepted request or infer fingerprint, cold cancellation, strong-only
 policy or broad security acceptance. The next authentication boundary needs its own
 actual owner input. Its one refused cleanup root stays frozen; overall goal remains.
+
+[D750 rejected fused normalization](fused-text-normalization.md) passes finite host/functional
+checks but fails the corrected reverse native absolute-PSS gate:75703KiB exceeds65536KiB.
+The before-input80473KiB gap prevents exclusive cause/leak claims. Initial unmatched-oracle
+timing stays disqualified. Production source/tests are exact restored, with zero permanent
+new cases; accepted D734/dc774120 is restored on Main without reset, latest observed13500/
+Home979/141nodes and public ownership/OS exact. Its earlier candidate7680/c2488e27 is historical,
+not current adoption. No financial/auth replay or Main private read occurred. Both fixtures/
+emulators retire,14Clean pass, and34 total refused supplementary scopes remain frozen without
+retry/subset/alternate/move/escalation/reuse. The overall goal and broader gates remain open.

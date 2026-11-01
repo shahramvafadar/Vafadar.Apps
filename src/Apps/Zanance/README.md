@@ -25,6 +25,9 @@ native ownership/settings are preserved. This is not every changed financial/dev
 [D-734](docs/quality/disposed-native-window-peer.md) then repairs the actual disposed native-dialog
 peer exception and qualifies the original Language/Help/Time cancellation chain on the corrected
 complete no-reset package, with Home979/141 and current ownership/OS preserved.
+[D-750](docs/quality/fused-text-normalization.md) rejects a fused text-mapping candidate after its fixed
+native memory gate fails. Production source and the accepted D734 phone package are restored;
+latest observed13500/Home979/141 preserves public ownership/OS. Overall speed/security gates remain.
 
 The optional API provides identity, protected household synchronization and billing infrastructure.
 Core local finance remains usable without a service. General stability, the two-second performance

@@ -11,6 +11,7 @@ D-607 now has terminal physical delivery/source/fixture evidence with retained p
 D-733 records bounded current Main no-reset adoption. Other unfinished gates are not marked complete by this refresh.
 D-734 subsequently repairs the observed physical disposed-dialog-peer exception; its
 [finite native sequence](../src/Apps/Zanance/docs/quality/disposed-native-window-peer.md) preserves the original failure and wider limits.
+[D-750 rejected fused normalization](../src/Apps/Zanance/docs/quality/fused-text-normalization.md) preserves host/functional evidence, the failed native memory gate and exact source/phone restoration; wider gates stay open.
 
 The optional [self-hosted service guide](../eng/hosting/README.md) covers existing operational tooling;
 its presence does not establish public hosting, genuine provider acceptance or release readiness.

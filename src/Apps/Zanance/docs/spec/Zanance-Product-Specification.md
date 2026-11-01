@@ -12132,3 +12132,29 @@ The preparation's single CI/CodeQL response is in_progress and its monitor delet
 no repeat request. Face acceptance is finite; cold cancellation/other routes and wider
 security/platform/release gates remain. No product/runtime or permanent test changes.
 [Actual finite evidence and remaining gates](../quality/physical-original-cold-biometric.md).
+
+### D-750 - Fused normalization rejected by the fixed native memory gate
+
+The temporary fused mapping preserves the finite original UTF16 outputs and passes
+both fixed host processes, 27 affected cases (24 existing and three temporary new),
+strict Windows and full offline Android builds. These facts do not admit the change.
+The initial native latency pair is disqualified for unequal oracle preparation.
+A corrected fixed-oracle cohort with identical before-arm full source verification
+records 1634.1485 to 824.7339 ms, then reverse-order 618.9439 to 568.7221 ms.
+Both latency gates pass, but reverse candidate-after PSS exceeds baseline by75703KiB,
+above the unchanged65536KiB ceiling. The before-input difference is already80473KiB;
+exclusive code cause or a leak is not proved. Reject without retuning/rescue/replay.
+
+Production SearchText and the temporary category tests return to exact published bytes;
+no runtime/financial/schema change or permanent new test remains. The candidate had
+been temporarily installed on Main; restore the accepted D734 signed package once,
+without reset or downgrade override. Latest observed13500/Home979/141nodes has exact
+original APK/public UID/CEDE/boot/OS/caller state. Owner PIN/face/fingerprint and Main
+lock choice remain; no financial command, real-auth replay or Main private read occurs.
+Both fresh native fixtures retire, own emulators stop and shared ADB5038 remains.
+Four final Clean commands remove27414files/1442043579logicalbytes, in addition to the
+initial10Clean. Thirteen new supplementary scopes are refused before process and frozen,
+as are the earlier21; no retry/subset/alternate/move/escalation/reuse. Used packages,
+source archives and evidence remain. General speed/stability/security/platform gates
+and the overall delivery goal stay open; D749 face unlock and D607 remain terminal.
+[Full rejected admission and exact cleanup boundaries](../quality/fused-text-normalization.md).
