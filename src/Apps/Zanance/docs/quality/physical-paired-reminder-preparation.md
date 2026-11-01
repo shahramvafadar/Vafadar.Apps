@@ -55,7 +55,7 @@ The recorded192ownAOT/204ELF/offline/v2v3/ZIP/static alignment evidence is for t
 independent historical binary, not every linked current shipping image. Earlier
 build/helper/oracle failures remain below. This complete original batch can now be
 committed/pushed with one later exact-head CI. Its timed monitor is deleted after
-actual source/fixture retirement; other follow-ups and goal remain active. Latest Main no-reset adoption is a separate remaining step.
+actual source/fixture retirement; other follow-ups and goal remain active. D733 subsequently adopts the current complete491890c9 Main without reset after these terminal conditions; see [current Main adoption](current-physical-main-adoption.md).
 
 This terminal result does not close all original precision/idle conditions, general
 reboot/Doze/punctuality, owner authentication, whole DB/keys/security, stability/speed/

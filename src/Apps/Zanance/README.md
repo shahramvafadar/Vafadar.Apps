@@ -13,19 +13,22 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 | Status | Active Android implementation and qualification; not publicly released. Core finance and extended workflows are implemented with bounded source/native evidence. Remaining work and acceptance gates are tracked in the [canonical commercial backlog](docs/enhancements/2026-10-commercial-release/04-backlog.md), [specification status](docs/spec/Zanance-Product-Specification.md) and [release checklist](docs/08-release-checklist.md). Real OAuth/provider/store acceptance and Mac/iOS qualification remain separate. Windows is a development target. |
 | Solution filter | [`Vafadar.Zanance.slnf`](../../../Vafadar.Zanance.slnf) |
 
-## Current documentation snapshot — 29 October 2026
+## Current documentation snapshot — 1 November 2026
 
-Recent completed batches qualify original account details (D-629), Plans (D-633), templates (D-634),
-Transactions (D-635), period review (D-636), categorization rules (D-637), category management (D-638) and account editing (D-639),
-with each quality report retaining its actual source, native and package limits. Independent verification
-is complete; physical adoption remains separate. D-607 remains a protected timed physical reboot/reminder cohort; no early source
-observation or candidate upgrade is implied by this documentation refresh.
+Original source/command ownership batches and later Android PIN/window-privacy corrections
+retain their dated focused/native evidence. [D-607](docs/quality/physical-paired-reminder-preparation.md)
+is terminal: both physical notifications arrive inside the original one-hour window, the original
+source matches and only the fresh fixture retires. Precision/intervening-activity limitations remain.
+[D-733](docs/quality/current-physical-main-adoption.md) then adopts the complete current Android
+package without reset: current Home979/141 public attributes, three profile names/selection and
+native ownership/settings are preserved. This is not every changed financial/device path.
 
-The API project provides optional identity, protected household synchronization and billing infrastructure.
-Core local finance remains usable without a service. General stability, the two-second performance target,
-remaining accessibility, genuine providers/stores and platform release acceptance are still separate gates.
-Further TalkBack testing is deferred behind other ready work by the owner; Persian speech is parked.
-The cumulative notes and test counts below are historical evidence, not a current whole-product test total.
+The optional API provides identity, protected household synchronization and billing infrastructure.
+Core local finance remains usable without a service. General stability, the two-second performance
+target, remaining accessibility, genuine providers/stores and release acceptance stay open. Further
+TalkBack work is last by owner decision; Persian speech is parked. The owner reports a Mac project
+environment, but iOS execution waits until Android work/testing is complete. Cumulative notes and
+test counts below are historical evidence, not a current whole-product total or completion percentage.
 
 ## Projects
 
