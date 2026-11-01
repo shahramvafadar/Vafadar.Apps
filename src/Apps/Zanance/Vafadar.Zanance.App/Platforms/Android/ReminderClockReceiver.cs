@@ -15,10 +15,11 @@ public sealed class ReminderClockReceiver : BroadcastReceiver
     public override void OnReceive(Context? context, Intent? intent)
     {
         if (intent?.Action is not (Intent.ActionTimezoneChanged or Intent.ActionTimeChanged)) return;
+        var wallClockChanged = intent.Action == Intent.ActionTimeChanged;
         var pending = GoAsync();
         _ = Task.Run(async () =>
         {
-            try { await RebuildAsync(); }
+            try { await RebuildAsync(wallClockChanged); }
             catch (Exception ex) when (ex is not OutOfMemoryException)
             {
                 // Preserve unprocessed requests on failure. A normal covered source refresh can
@@ -30,7 +31,7 @@ public sealed class ReminderClockReceiver : BroadcastReceiver
     }
 
     /// <summary>Changes only pending calendar deadlines and their existing same-day allowance, keeping ids and payloads.</summary>
-    internal static async Task RebuildAsync()
+    internal static async Task RebuildAsync(bool wallClockChanged)
     {
         await LocalNotificationScheduler.QueueGate.WaitAsync();
         try
@@ -48,21 +49,36 @@ public sealed class ReminderClockReceiver : BroadcastReceiver
             {
                 var request = item.Request;
                 if (item.Binding is not { } binding) continue;
-                if (!binding.FollowsLocalClock) { accepted.Add(binding); continue; }
                 var original = binding.Scheduled;
-                // DateTime preserves the original wall components; ConvertTime would instead keep
-                // the old instant, reproducing D-717's 09:00 Berlin -> 03:00 New York failure.
-                var scheduled = ReminderLocalTime.Resolve(original.DateTime, zone);
-                var allowance = ReminderDeliveryWindow.UntilEndOfDay(scheduled, zone);
+                var originalExpiry = original + request.Schedule.Android.AllowedDelay;
+                if (!binding.FollowsLocalClock && originalExpiry < DateTimeOffset.UtcNow)
+                {
+                    service.Cancel(request.NotificationId);
+                    continue;
+                }
+                var elapsedCorrection = wallClockChanged && !binding.FollowsLocalClock && ReminderElapsedClock.IsCurrent(binding.ElapsedDeadline);
+                if (!binding.FollowsLocalClock && !elapsedCorrection) { accepted.Add(binding); continue; }
+                // Calendar requests keep their wall components. A same-boot elapsed hour instead
+                // keeps its actual remaining interval through TIME_SET, never extending its original day.
+                var scheduled = elapsedCorrection
+                    ? TimeZoneInfo.ConvertTime(ReminderElapsedClock.Resolve(binding.ElapsedDeadline!, original), zone)
+                    : ReminderLocalTime.Resolve(original.DateTime, zone);
+                if (elapsedCorrection && scheduled > originalExpiry)
+                {
+                    service.Cancel(request.NotificationId);
+                    continue;
+                }
+                var allowance = elapsedCorrection ? originalExpiry - scheduled : ReminderDeliveryWindow.UntilEndOfDay(scheduled, zone);
                 if (scheduled + allowance < DateTimeOffset.Now)
                 {
                     service.Cancel(request.NotificationId);
                     continue;
                 }
+                if (elapsedCorrection && scheduled <= DateTimeOffset.UtcNow) service.Cancel(request.NotificationId);
                 request.Schedule.NotifyTime = scheduled;
                 request.Schedule.Android.AllowedDelay = allowance;
                 await ReminderPublication.RequireAcceptedAsync(service.Show(request));
-                accepted.Add(new(request.NotificationId, scheduled, true));
+                accepted.Add(new(request.NotificationId, scheduled, binding.FollowsLocalClock, binding.ElapsedDeadline));
             }
             ReminderClockStore.Replace(accepted);
         }

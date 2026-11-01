@@ -191,6 +191,11 @@ public sealed class ProfileReminderFlowTests
         internal int SnoozeSubscribers; internal int EnabledReads; internal int Replacements; internal int ActionLabels;
         internal IReadOnlyList<ReminderNotification> Pending = []; internal readonly List<ReminderNotification> Shown = [];
         internal Func<Task>? AfterReplace; internal Action? AfterLabels;
+        internal Func<ReminderElapsedDeadline?>? HourCapture;
+        internal Func<ReminderElapsedDeadline, DateTimeOffset, DateTimeOffset>? HourResolve;
+        internal int HourCaptures;
+        public ReminderElapsedDeadline? CaptureHourDeadline() { HourCaptures++; return HourCapture?.Invoke(); }
+        public DateTimeOffset ResolveHourDeadline(ReminderElapsedDeadline deadline, DateTimeOffset fallback) => HourResolve?.Invoke(deadline, fallback) ?? fallback;
         public bool IsSupported => true;
         public void SetSnoozeActions(string oneHour, string tomorrow) { ActionLabels++; AfterLabels?.Invoke(); }
         public Task<bool> AreEnabledAsync() { EnabledReads++; return Task.FromResult(true); }

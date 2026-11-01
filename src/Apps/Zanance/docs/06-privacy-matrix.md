@@ -1638,3 +1638,11 @@ Scoped budget/goal/plan resolution now retains its original read-only resolver a
 ### D-717 derived native reminder clock metadata
 
 Keep only native notification id, exact wall/offset ticks and local/elapsed clock kind in a private device-local Android preference file. It duplicates the existing pending deadline, includes no amount/account/title/route/credential and is not a financial source or portable export. Synchronous invalidation before SDK mutation and accepted-only publication refuse stale/missing authority. Normal covered source refresh can rebuild it; uninstall/reset owns removal. No SDK, permission, network, authentication, financial date/amount or publication policy changes. Historical snooze choice is never inferred.
+
+
+### D-718 - Device-local elapsed reminder metadata
+
+A real backward clock change extended the old RTC hour by 1,200,031 ms. New Android hours retain a sleep-inclusive same-boot endpoint and original local-day cutoff in source and exact native request metadata; receiver/source refresh cannot start a fresh hour. Historical/unknown/new-boot fallback stays absolute, without guessed elapsed origin. Twenty new and seventy affected existing cases pass; strict Windows/full offline Android and actual cold receiver continuation preserve the native target by 0 ms (-1 ms after clock restoration). Original-day expiry removes both hours without touching the two calendar requests/source/date. Only the fresh fixture/AVD retires; refused supplementary scopes remain frozen. No future punctuality, physical adoption or whole-platform claim. D-607 remains protected and iOS follows Android completion.
+[Actual defect, source, focused/native checks and precise limits](quality/manual-clock-snooze-interval.md).
+
+The optional cache stores only a coarse boot generation, elapsed endpoint and original expiry; no unique device identifier, content export, network permission or financial schema change.

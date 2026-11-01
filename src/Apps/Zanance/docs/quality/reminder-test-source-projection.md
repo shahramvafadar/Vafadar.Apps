@@ -60,3 +60,13 @@ notification delivery or monotonic repair is claimed here. See the
 
 Samsung/D607's three deadlines, consumed reboot, unread source, Main adoption boundary, iOS-after-
 Android execution order and the overall active goal remain unchanged.
+
+
+## Actual exact-head CI receipt (1 November 2026)
+
+The single consumed check for `0bea44b2a7007012969a14f57500afc77f5dd519` returned
+[CI success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41266484028) and
+[CodeQL success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41266484020).
+Its own follow-up was deleted; no second query or old-job rerun occurred. This supersedes the
+future-CI status above only for that exact head. D-718 later completes its distinct repair and
+retires its own emulator; its new source requires its own one-shot CI, without reopening D-607.

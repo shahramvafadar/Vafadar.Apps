@@ -66,6 +66,26 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
 
     public bool IsSupported => _service.IsSupported;
 
+    /// <inheritdoc />
+    public ReminderElapsedDeadline? CaptureHourDeadline()
+    {
+#if ANDROID
+        return ReminderElapsedClock.CaptureHour();
+#else
+        return null;
+#endif
+    }
+
+    /// <inheritdoc />
+    public DateTimeOffset ResolveHourDeadline(ReminderElapsedDeadline deadline, DateTimeOffset fallback)
+    {
+#if ANDROID
+        return ReminderElapsedClock.Resolve(deadline, fallback);
+#else
+        return fallback;
+#endif
+    }
+
     public Task<bool> AreEnabledAsync() => _service.AreNotificationsEnabled();
 
     public Task<bool> RequestPermissionAsync() => _service.RequestNotificationPermission(new NotificationPermission
@@ -83,7 +103,7 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
 
     private async Task ReplaceUnderGateAsync(IReadOnlyList<ReminderNotification> reminders)
     {
-        var requests = reminders.Select(reminder => (Request: Request(reminder), Local: reminder.NotifyInstant is null && !reminder.PreserveInstant)).ToArray();
+        var requests = reminders.Select(reminder => (Request: Request(reminder), Source: reminder)).ToArray();
 #if ANDROID
         // A process may die after SDK acceptance but before source preferences commit. An
         // unbound request must be refused, never classified from stale snooze preferences.
@@ -101,7 +121,7 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
             await ReminderPublication.RequireAcceptedAsync(_service.Show(item.Request));
 #if ANDROID
         ReminderClockStore.Replace(requests.Where(item => item.Request.Schedule.NotifyTime is not null)
-            .Select(item => new ReminderNativeClockBinding(item.Request.NotificationId, item.Request.Schedule.NotifyTime!.Value, item.Local)));
+            .Select(item => ClockBinding(item.Request, item.Source)));
 #endif
     }
 
@@ -117,8 +137,8 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
 #endif
             await ReminderPublication.RequireAcceptedAsync(_service.Show(request));
 #if ANDROID
-            if (request.Schedule.NotifyTime is { } at)
-                ReminderClockStore.Put(new(request.NotificationId, at, notification.NotifyInstant is null && !notification.PreserveInstant));
+            if (request.Schedule.NotifyTime is not null)
+                ReminderClockStore.Put(ClockBinding(request, notification));
 #endif
         }
         finally { QueueGate.Release(); }
@@ -139,6 +159,12 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
         finally { QueueGate.Release(); }
     }
 
+#if ANDROID
+    private static ReminderNativeClockBinding ClockBinding(NotificationRequest request, ReminderNotification source) =>
+        new(request.NotificationId, request.Schedule.NotifyTime!.Value, source.NotifyInstant is null && !source.PreserveInstant,
+            request.Schedule.Android.AlarmType == AndroidAlarmType.ElapsedRealtimeWakeup ? source.ElapsedDeadline : null);
+#endif
+
     /// <summary>Builds the original native request without publishing it or changing financial state.</summary>
     internal static NotificationRequest Request(ReminderNotification reminder)
     {
@@ -158,6 +184,12 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
         if (reminder.NotifyAt is { } at)
         {
             var scheduled = reminder.NotifyInstant ?? ReminderLocalTime.Resolve(at, TimeZoneInfo.Local);
+#if ANDROID
+            var elapsed = reminder.NotifyInstant is not null && ReminderElapsedClock.IsCurrent(reminder.ElapsedDeadline);
+            if (elapsed) scheduled = ReminderElapsedClock.Resolve(reminder.ElapsedDeadline!, scheduled);
+#endif
+            if (reminder.DeliveryExpiresAt is { } expiry && (expiry < scheduled || expiry < DateTimeOffset.UtcNow))
+                throw new InvalidOperationException("The original snooze delivery day has expired.");
             request.Schedule = new NotificationRequestSchedule
             {
                 NotifyTime = scheduled,
@@ -166,9 +198,12 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
                 Android =
                 {
                     ScheduleMode = AndroidScheduleMode.InexactAllowWhileIdle,
-                    AllowedDelay = ReminderDeliveryWindow.UntilEndOfDay(scheduled, TimeZoneInfo.Local),
+                    AllowedDelay = reminder.DeliveryExpiresAt is { } end ? end - scheduled : ReminderDeliveryWindow.UntilEndOfDay(scheduled, TimeZoneInfo.Local),
                 },
             };
+#if ANDROID
+            if (elapsed) request.Schedule.Android.AlarmType = AndroidAlarmType.ElapsedRealtimeWakeup;
+#endif
         }
 
         return request;

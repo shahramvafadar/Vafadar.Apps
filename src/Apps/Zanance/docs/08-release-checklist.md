@@ -5714,3 +5714,9 @@ Final strictWindows/fullOffline384AOT408ELF1608staticLOAD/v2v3/ZIP/CRC pass; per
 
 D717's actualCI failure is three matching CS0103 errors from one missingData.Tests helper input, independently reproduced before correction. One explicit original-source link restores strict full-test-solution compilation and13affected existing cases; no application/permission/runtime/workflow/package change or new release acceptance. PreparedEB17 stays unadopted. New exact-head remote CI is still required; D718's clock-restored fixture/D607three deadlines/consumedreboot/unreadsource/iOSafterAndroid remain protected. StandardClean passes; new residualroot273file10876008logicalbyte removal rejected beforeprocess, frozen withoutretry/alternate/reuse.
 [Failure/source/cleanup evidence](quality/reminder-test-source-projection.md).
+
+
+### D-718 - Manual-clock candidate, not phone/release acceptance
+
+A real backward clock change extended the old RTC hour by 1,200,031 ms. New Android hours retain a sleep-inclusive same-boot endpoint and original local-day cutoff in source and exact native request metadata; receiver/source refresh cannot start a fresh hour. Historical/unknown/new-boot fallback stays absolute, without guessed elapsed origin. Twenty new and seventy affected existing cases pass; strict Windows/full offline Android and actual cold receiver continuation preserve the native target by 0 ms (-1 ms after clock restoration). Original-day expiry removes both hours without touching the two calendar requests/source/date. Only the fresh fixture/AVD retires; refused supplementary scopes remain frozen. No future punctuality, physical adoption or whole-platform claim. D-607 remains protected and iOS follows Android completion.
+[Actual defect, source, focused/native checks and precise limits](quality/manual-clock-snooze-interval.md).

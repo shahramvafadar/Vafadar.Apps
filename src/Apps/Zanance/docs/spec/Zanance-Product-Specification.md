@@ -11857,3 +11857,9 @@ Real original travel retains an offset and shifts09:00 to03:00NewYork. A protect
 
 D717's three failed CI builds share CS0103 in Data.Tests, whose linked original coordinator omits ReminderLocalTime. One original Compile input closes it after the exact unchanged local reproduction; strict full-test-solution build and13affected existing cases pass,0new tests and no app/runtime/model/writer/workflow change. Remote CI is separate. D718 actual manual clock-back20 preserves calendar/source but extends RTC-hour monotonic target1200031ms; clock/seven settings/zone restore and original fixture persists, with no monotonic repair claimed yet. D607/Samsung and wider gates remain unchanged; Android completion precedes iOS.
 [Source-projection correction](../quality/reminder-test-source-projection.md) and [unfinished manual-clock work](../quality/manual-clock-snooze-interval.md).
+
+
+### D-718 - REM-07/AT-37 same-boot manual-clock repair
+
+A real backward clock change extended the old RTC hour by 1,200,031 ms. New Android hours retain a sleep-inclusive same-boot endpoint and original local-day cutoff in source and exact native request metadata; receiver/source refresh cannot start a fresh hour. Historical/unknown/new-boot fallback stays absolute, without guessed elapsed origin. Twenty new and seventy affected existing cases pass; strict Windows/full offline Android and actual cold receiver continuation preserve the native target by 0 ms (-1 ms after clock restoration). Original-day expiry removes both hours without touching the two calendar requests/source/date. Only the fresh fixture/AVD retires; refused supplementary scopes remain frozen. No future punctuality, physical adoption or whole-platform claim. D-607 remains protected and iOS follows Android completion.
+[Actual defect, source, focused/native checks and precise limits](../quality/manual-clock-snooze-interval.md).

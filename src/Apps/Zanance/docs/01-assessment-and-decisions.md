@@ -12566,10 +12566,10 @@ A format3 protection marker is transport only when the actual original entry/hol
 Actual09:00Berlin becomes03:00NewYork after a real zone change. Rebind calendar requests through protected Android broadcasts under native queue ownership, without financial source/window access. Resolve supported gaps/earlier repeated hours, preserve elapsed one-hour snoozes and retain local tomorrow behavior. Final review rejects classification from source preferences because their commit can follow SDK acceptance; exact wall+offset/native-id descriptors are durably invalidated before mutation and published only after acceptance. Missing/legacy/stale metadata never guesses authority; normal covered refresh rebuilds it.28new+42affected cases and an actual cold receiver with deliberately opposite stale preferences verify this bounded behavior. No new financial schema, SDK or permission; wider platform/delivery gates remain open.
 [Actual defect, final source boundary and precise evidence](quality/local-reminder-clock-changes.md).
 
-### D-718 - Observe manual clock separately from travel (in progress)
+### D-718 - Preserve same-boot elapsed snoozes through actual manual-clock changes
 
-Actual TIME_SET backward20minutes preserves calendar/source identity but extends the RTC one-hour request's monotonic target by1200031ms. Restore actual clock/seven settings/zone and preserve the existing accepted fixture; do not relabel UTC equality as elapsed-time acceptance or replay preparation. A same-boot elapsed basis and original-day expiry need coherent verification before a repair claim.
-[Actual input and unfinished boundary](quality/manual-clock-snooze-interval.md).
+A real backward clock change extended the old RTC hour by 1,200,031 ms. New Android hours retain a sleep-inclusive same-boot endpoint and original local-day cutoff in source and exact native request metadata; receiver/source refresh cannot start a fresh hour. Historical/unknown/new-boot fallback stays absolute, without guessed elapsed origin. Twenty new and seventy affected existing cases pass; strict Windows/full offline Android and actual cold receiver continuation preserve the native target by 0 ms (-1 ms after clock restoration). Original-day expiry removes both hours without touching the two calendar requests/source/date. Only the fresh fixture/AVD retires; refused supplementary scopes remain frozen. No future punctuality, physical adoption or whole-platform claim. D-607 remains protected and iOS follows Android completion.
+[Actual defect, source, focused/native checks and precise limits](quality/manual-clock-snooze-interval.md).
 
 ### D-719 - Compile the same original reminder helper in every existing coordinator projection
 

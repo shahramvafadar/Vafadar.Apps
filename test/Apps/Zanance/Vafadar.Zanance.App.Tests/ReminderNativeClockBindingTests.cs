@@ -43,4 +43,31 @@ public sealed class ReminderNativeClockBindingTests
         Assert.Null(ReminderNativeClockBinding.Match(7, "0"+good, Scheduled));
         Assert.Null(ReminderNativeClockBinding.Match(7, new string('1',65), Scheduled));
     }
+
+    [Fact]
+    public void Accepted_elapsed_anchor_round_trips_without_changing_legacy_descriptor_format()
+    {
+        var binding=new ReminderNativeClockBinding(7,Scheduled,false,new(9,3700000));
+        Assert.Equal(binding,ReminderNativeClockBinding.Match(7,binding.Encode(),Scheduled));
+        Assert.Null(ReminderNativeClockBinding.Match(7,binding.Encode(),Scheduled.ToOffset(TimeSpan.FromHours(9))));
+        Assert.Equal(3,new ReminderNativeClockBinding(7,Scheduled,false).Encode().Split(':').Length);
+    }
+
+    [Theory]
+    [InlineData(":-1:3700000")]
+    [InlineData(":9:-1")]
+    [InlineData(":2147483648:3700000")]
+    [InlineData(":9")]
+    public void Malformed_elapsed_origin_refuses_clock_authority(string suffix)
+    {
+        var original=new ReminderNativeClockBinding(7,Scheduled,false).Encode();
+        Assert.Null(ReminderNativeClockBinding.Match(7,original+suffix,Scheduled));
+    }
+
+    [Fact]
+    public void A_calendar_descriptor_cannot_claim_an_elapsed_anchor()
+    {
+        var calendar=new ReminderNativeClockBinding(7,Scheduled,true).Encode();
+        Assert.Null(ReminderNativeClockBinding.Match(7,calendar+":9:3700000",Scheduled));
+    }
 }

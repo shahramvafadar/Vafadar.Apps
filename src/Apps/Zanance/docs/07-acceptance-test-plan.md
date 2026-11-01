@@ -8677,3 +8677,9 @@ The actual original09:00Berlin→03:00NewYork defect is preserved. Final exact a
 
 D717CI fails on three jobs because Data.Tests does not link originalReminderLocalTime required by its originalReminderService. The same local CS0103 fails before correction; one compileitem closes the source projection. EntirestrictTests solution0warnings/errors and13selected existingGoal/Review cases pass, with0new tests. Successful unchanged app/native/financial checks are retained. D718 manual-clock interval observation remains unfinished and clock/settings restored; D607 untouched.
 [Actual logs and exact selected validation](quality/reminder-test-source-projection.md).
+
+
+### D-718 - Bounded same-boot manual-clock acceptance
+
+A real backward clock change extended the old RTC hour by 1,200,031 ms. New Android hours retain a sleep-inclusive same-boot endpoint and original local-day cutoff in source and exact native request metadata; receiver/source refresh cannot start a fresh hour. Historical/unknown/new-boot fallback stays absolute, without guessed elapsed origin. Twenty new and seventy affected existing cases pass; strict Windows/full offline Android and actual cold receiver continuation preserve the native target by 0 ms (-1 ms after clock restoration). Original-day expiry removes both hours without touching the two calendar requests/source/date. Only the fresh fixture/AVD retires; refused supplementary scopes remain frozen. No future punctuality, physical adoption or whole-platform claim. D-607 remains protected and iOS follows Android completion.
+[Actual defect, source, focused/native checks and precise limits](quality/manual-clock-snooze-interval.md).

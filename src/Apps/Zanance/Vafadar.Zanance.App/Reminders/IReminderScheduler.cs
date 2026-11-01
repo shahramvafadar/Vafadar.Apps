@@ -9,7 +9,9 @@ namespace Vafadar.Zanance.App.Reminders;
 /// <param name="CanSnooze">Whether the notification offers "In 1 hour" and "Tomorrow" (REM-04).</param>
 /// <param name="NotifyInstant">An elapsed one-hour snooze deadline; calendar reminders leave this unset.</param>
 /// <param name="PreserveInstant">Keeps an unclassified historical snooze fixed until its ordinary source refresh.</param>
-public sealed record ReminderNotification(int Id, string Title, string Body, DateTime? NotifyAt, string Link, bool CanSnooze = false, DateTimeOffset? NotifyInstant = null, bool PreserveInstant = false);
+/// <param name="ElapsedDeadline">A sleep-inclusive same-boot anchor for a new one-hour snooze.</param>
+/// <param name="DeliveryExpiresAt">The original day-end cutoff for that snooze, independent of later clock correction.</param>
+public sealed record ReminderNotification(int Id, string Title, string Body, DateTime? NotifyAt, string Link, bool CanSnooze = false, DateTimeOffset? NotifyInstant = null, bool PreserveInstant = false, Vafadar.Zanance.Core.Reminders.ReminderElapsedDeadline? ElapsedDeadline = null, DateTimeOffset? DeliveryExpiresAt = null);
 
 /// <summary>A snooze action chosen on a notification.</summary>
 public sealed record SnoozeRequest(ReminderNotification Notification, Vafadar.Zanance.Core.Reminders.SnoozeChoice Choice);
@@ -22,6 +24,12 @@ public interface IReminderScheduler
 
     /// <summary>Raised when the user snoozes a notification; the app is not necessarily opened.</summary>
     event EventHandler<SnoozeRequest>? SnoozeRequested;
+
+    /// <summary>Captures one actual elapsed hour on supported platforms; never fabricates a historical timing origin.</summary>
+    Vafadar.Zanance.Core.Reminders.ReminderElapsedDeadline? CaptureHourDeadline() => null;
+
+    /// <summary>Resolves the current same-boot interval; unsupported/stale boot anchors retain their original UTC fallback.</summary>
+    DateTimeOffset ResolveHourDeadline(Vafadar.Zanance.Core.Reminders.ReminderElapsedDeadline deadline, DateTimeOffset fallback) => fallback;
 
     /// <summary>Sets the titles of the snooze actions in the current language.</summary>
     void SetSnoozeActions(string oneHour, string tomorrow);

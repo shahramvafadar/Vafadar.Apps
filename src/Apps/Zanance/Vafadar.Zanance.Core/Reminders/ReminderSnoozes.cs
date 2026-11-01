@@ -19,8 +19,10 @@ public enum SnoozeChoice
 /// <param name="Body">Text of the original reminder.</param>
 /// <param name="NotifyAt">Local time of the repeated reminder.</param>
 /// <param name="Choice">The original snooze choice; absent for historical caches whose choice cannot be inferred.</param>
-/// <param name="NotifyInstant">The elapsed-time deadline of a new one-hour snooze, independent of travel.</param>
-public sealed record SnoozedReminder(int Id, string Link, string Title, string Body, DateTime NotifyAt, SnoozeChoice? Choice = null, DateTimeOffset? NotifyInstant = null);
+/// <param name="NotifyInstant">The UTC deadline of a one-hour snooze, independent of travel.</param>
+/// <param name="ElapsedDeadline">An optional same-boot elapsed anchor; absent historical records keep their original timing.</param>
+/// <param name="DeliveryExpiresAt">The originally approved day-end cutoff, never extended by a clock correction.</param>
+public sealed record SnoozedReminder(int Id, string Link, string Title, string Body, DateTime NotifyAt, SnoozeChoice? Choice = null, DateTimeOffset? NotifyInstant = null, ReminderElapsedDeadline? ElapsedDeadline = null, DateTimeOffset? DeliveryExpiresAt = null);
 
 /// <summary>
 /// Snoozing repeats a reminder later and nothing else: the due date of the occurrence never changes, and a snooze ends
