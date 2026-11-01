@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## Samsung Consumer180 limited turn explicitly returned (coordination receipt, 2026-11-01, D-744)
+
+The Windows coordinator explicitly returned the handset after its bounded Consumer180
+upgrade and cancelled Share/profile-link observations, marked its lease inactive and
+stated that it will issue no more phone commands. The existing limited-turn condition
+below is satisfied. Ordinary necessary low-risk Zanance authority resumes; revalidate
+actual ownership before any phone input. The coordinator reports eight original settings,
+Zanance packages/processes and shared ADB5038 preserved. These are coordination reports,
+not independently repeated Zanance phone acceptance. No phone command is required merely
+to acknowledge return. Preserve the owner's new real screen PIN, terminal D607 state and
+consumed reboot; never recreate retired authentication or financial cohorts.
+
 ## Temporary Samsung turn for Consumer180 with explicit return (owner verified, 2026-11-01, D-744)
 
 The owner's fresh direct instruction authorizes coordination of a limited Samsung turn
@@ -17,6 +29,25 @@ three-deadline instructions do not authorize recreating or rearming it. Current 
 remains D734/dc774120/UID10380; last verified Home979/all141/PID32068 is a historical
 observation, not a new phone-liveness claim. Ordinary Zanance reservation resumes only
 after this limited turn is explicitly returned. No prior successful phone check is repeated.
+
+## D-743 terminal private mark-bit diagnostic and strict-source limits
+
+The private check-mark-bits cohort ends in two actual SIGABRT failures, including
+prepared-source6174 before ready Home. Do not replay the unchanged cohort, smaller-source rescue or old
+D378/D708/D711 stress, or promote a diagnostic/runtime/Main policy change as a repair.
+Original first-startup DisplayUnits migration and its UTC-ticks UpdatedAt delta remain
+explicit. Final strict facts have50 exact protected tables plus Settings and
+sqlite_sequence mismatches; whole-source equality remains false. Never normalize them
+to manufacture acceptance. All32ledger fields/100000rows and original block/scalar
+capture match with actual source cookies unchanged. Only the fresh fixture retires;
+owner PIN, Main, terminal D607 and other cohorts stay intact.
+
+Automatic review refused supplementary deletion before process creation. Freeze the
+exact27 scopes listed in `src/Apps/Zanance/docs/quality/original-mark-bit-diagnostic.md`
+without retry, subset, alternate method, move, escalation or reuse. The owned D743 AVD
+is normally stopped; its frozen root remains. Three XMLs were hash-cleaned and four
+standard Clean commands completed; residuals are not reclaimed host space. Used
+signed APKs and pre-refusal source archives outside those scopes remain evidence.
 
 ## D-737 owner credential and terminal independent review (verified, 2026-11-01)
 

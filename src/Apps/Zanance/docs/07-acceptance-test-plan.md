@@ -8805,3 +8805,17 @@ Official stable36.1.118 resolves todb080b91 versus current36.1.69/d549e1dc. Andr
 ### D-744 - Owner-authorized limited Samsung Consumer180 turn
 
 Verify the owner's actual fresh direct coordination/install/Share/profile-link/return request rather than treating another chat's request alone as authority. Grant only that bounded Consumer180 in-place turn and send preservation/current-transport conditions; Share is observation without sending, no rating/money/reboot/clear/uninstall/global setting/permission/account/PIN change. No Zanance package/data/process/caller action, no shared ADB restart and no command to the independent D743 emulator5572. Return must be explicit; then ordinary Zanance availability resumes. D607 is terminal/fixture absent/reboot consumed, so historical pending deadlines are not recreated. Main D734/dc774120/UID10380/Home979/all141/PID32068 observations stay historical, not refreshed by coordination. Zero phone command, product build/test/financial replay or general acceptance. D743 continues independently; goal active.
+
+
+### D-743 terminal diagnostic evidence; parent gates remain open
+
+The [original mark-bit diagnostic](quality/original-mark-bit-diagnostic.md) terminates
+on two actual native SIGABRTs before ready diagnostic Home. Ordinary source facts retain
+50 exact protected tables, explicit Settings and sqlite_sequence mismatches, full32field/
+100000entry/block-scalar equality and actual cookie guards; all-source equality is false.
+Do not count this as a native remedy, complete DB/key/device/stability/performance gate
+or another successful stress cohort. Freshfixture/requests retire, owned AVD stops and
+3XMLs hash-clean. Four standard Clean commands pass;27 automatic-review-refused deletion
+scopes remain frozen without retry/subset/alternate/move/escalation/reuse. Main/owner PIN,
+terminal D607/consumed reboot and other cohorts remain. D744's limited phone turn was
+explicitly returned; no fresh Zanance phone acceptance is inferred or repeated.

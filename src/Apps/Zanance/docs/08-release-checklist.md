@@ -5807,3 +5807,17 @@ The original paired notifications arrive09:26:22.064/.152 Europe/Berlin inside t
 
 After D607 native delivery/source/freshUID cleanup, revalidate the already strict full offline491890c9/384AOT408ELF1608staticLOAD/v2v3/CRC/ZIP16KiB package and unchanged relevant production source. One actual no-reset install upgrades original1339ab5b to491890c9; UID10380/CE155299/DE154603/grants/caller remain. Original native Profiles before/after has the same three names, selected Main and availability; no switch/financial/profile command. Main23758 starts through normal launcher after Settings is exposed; WARM567ms is not cold/Home speed. First and final Home979/141 have all public attributes exact against the immediate current baseline. Original timeout300000 restores after temporary600000; five current OS/boot/size/density/shell/caller exact, pre-existing TTS difference preserved without change. TwelveXML645906byte hash-clean; no new build/test/Clean/helper install or rejected-scope reuse. Historical D607 hashes/PIDs/source/precision/lifecycle remain unchanged, with a separate legitimate upgrade receipt. This closes current ordinary Main adoption only, not all editor/financial/privateDB/key/security/ANR/speed/A11Y/hardware16KiB/iOS/provider/Store/release gates; Android before iOS and goal active.
 [Actual no-reset install, public preservation and precise scope](quality/current-physical-main-adoption.md).
+
+
+### D-743 terminal diagnostic evidence; parent gates remain open
+
+The [original mark-bit diagnostic](quality/original-mark-bit-diagnostic.md) terminates
+on two actual native SIGABRTs before ready diagnostic Home. Ordinary source facts retain
+50 exact protected tables, explicit Settings and sqlite_sequence mismatches, full32field/
+100000entry/block-scalar equality and actual cookie guards; all-source equality is false.
+Do not count this as a native remedy, complete DB/key/device/stability/performance gate
+or another successful stress cohort. Freshfixture/requests retire, owned AVD stops and
+3XMLs hash-clean. Four standard Clean commands pass;27 automatic-review-refused deletion
+scopes remain frozen without retry/subset/alternate/move/escalation/reuse. Main/owner PIN,
+terminal D607/consumed reboot and other cohorts remain. D744's limited phone turn was
+explicitly returned; no fresh Zanance phone acceptance is inferred or repeated.

@@ -12009,3 +12009,34 @@ Official stable36.1.118 resolves todb080b91 versus current36.1.69/d549e1dc. Andr
 ### D-744 - Owner-authorized limited Samsung Consumer180 turn
 
 Verify the owner's actual fresh direct coordination/install/Share/profile-link/return request rather than treating another chat's request alone as authority. Grant only that bounded Consumer180 in-place turn and send preservation/current-transport conditions; Share is observation without sending, no rating/money/reboot/clear/uninstall/global setting/permission/account/PIN change. No Zanance package/data/process/caller action, no shared ADB restart and no command to the independent D743 emulator5572. Return must be explicit; then ordinary Zanance availability resumes. D607 is terminal/fixture absent/reboot consumed, so historical pending deadlines are not recreated. Main D734/dc774120/UID10380/Home979/all141/PID32068 observations stay historical, not refreshed by coordination. Zero phone command, product build/test/financial replay or general acceptance. D743 continues independently; goal active.
+
+D744 terminal coordination receipt: the Windows coordinator explicitly returns the
+handset after Consumer175-to180 in-place/session-preserved upgrade and a cancelled
+native text Share/profile-link observation, declares its lease inactive and no more
+phone commands. It reports all eight settings and Zanance/packages/processes/emulator
+plus existing ADB5038 untouched. These reports close the turn condition; no new Zanance
+phone result is inferred or repeated. Ordinary scoped low-risk authority resumes after
+actual ownership revalidation; owner PIN, terminal D607 and consumed reboot remain.
+
+### D-743 - Original mark-bit diagnostic ends in native refusal with strict source facts
+
+The exact serviced runtime14/check-mark-bits helpers contain code; source admission
+retains its private CLEAR_AT_GC effect with original concurrent major and no Main
+policy change. Original D740 transport preserves55tables/308schema objects/all32ledger
+fields before one fresh native protected preparation. Actual diagnostic5206 aborts
+before source creation; ordinary preparation5562 completes the original52-table and
+block/scalar oracle, then original first-startup copies legacy DisplayUnits. Existing-
+source diagnostic6174/UID10216 accepts actual cookie guards but aborts SIGABRT before
+ready Home; zero target publications, no assertion/PC/cause or repair established.
+Preserve both failures, source/observer/native identity limits and no financial/key/seed
+replay. Final ordinary7221 strictly examines all52tables:50exact, Settings typed delta
+and sqlite_sequence0-to1 mismatch retained, AllTablesExact=false; all32fields/100000
+ledger rows and original block/scalar capture exact with actual cookies unchanged.
+No source normalization or whole-DB/stability acceptance. Freshfixture/owned requests
+retire, finalHome130 and3XML107985byte hash-clean; only ownAVD stops, ADB5038/66176 stays.
+Four standard Clean commands pass. Two supplementary deletion submissions are rejected
+before process creation;27 exact scopes/2559files/6872146965logical bytes stay frozen
+without retry/subset/alternate/move/escalation/reuse. Nine used signed packages and
+source/evidence archives remain. Main/D734, owner PIN, terminal D607/consumed reboot,
+other cohorts and the active delivery goal stay intact. Android precedes iOS; TalkBack
+stays last. [Full finite evidence](../quality/original-mark-bit-diagnostic.md).
