@@ -177,3 +177,8 @@ It adopts no optimization or ordinary speed/CPU claim; fixed old rejections stay
 The caller/AVD/transport retire, seven refused scopes stay frozen, and D752 owner readiness
 is separate. Inspect complete-read/codec/validation/projection evidence before another
 candidate; physical speed and broader security/stability/platform gates remain open.
+
+[D755 UTC secondary sort-key admission](utc-secondary-sort-key-admission.md) preserves
+finite key-order/reference equivalence but misses the fixed10000-row5% host gate.
+Reject before product/native work; do not retune or replay the unchanged premise.
+Both refused cleanup scopes stay frozen. D752 owner readiness remains separate.

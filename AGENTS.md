@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-755 terminal rejected UTC sort-key premise (2026-11-02)
+
+Keep original product ordering unchanged. One fixed private host admission fails the
+10000-row5% gate at4.6754548%, despite tenfold24.7872014% and lower allocations. Preserve
+116281 finite offset/tie ordering relations and exact row references without claiming
+full native source acceptance. No second process, retuning, rescue, product/native or
+financial replay. One Clean removes49files/11856712logicalbytes. Supplementary two
+scopes/30files/411151logicalbytes are blocked before process and frozen exactly in
+`src/Apps/Zanance/docs/quality/utc-secondary-sort-key-admission.md`:
+no retry/subset/alternate/move/escalation/reuse. Used source/input/results remain outside.
+D754terminal, D752ownerreadiness and the wider active delivery goal remain separate.
+
+
 ## D-754 terminal original warm Home method sampling (2026-11-02)
 
 One bounded original warm read is already consumed; never replay it to repair a reader.

@@ -9157,3 +9157,19 @@ emptyreverse restore, shared5038/66176 and phone/D752 owner wait untouched. Two 
 Clean commands pass. Supplementary7scopes/1019files/5171869863logicalbytes are rejected
 before process and frozen: no retry/subset/alternate/move/escalation/reuse. Used signed/
 trace/source evidence stays outside. Overall goal and wider qualification gates remain.
+
+### D-755 - Rejected UTC secondary sort-key host admission
+
+D754's observed sort/comparison boundary motivates one private key-projection candidate:
+original Date descending/CreatedAt descending becomes Date descending/CreatedAt.UtcTicks
+descending, retaining stable original row references. Actual retained100k source keys and
+341 offset/tie/extreme objects preserve116281 pairwise ordering relations. Strict private
+host/runtime14 passes, but fixed six-pair10000-row gain4.6754548% misses5%, despite
+100000-row gain24.7872014% and allocation reductions400576to320576/4000576to3200576.
+Reject before second process/product/native work; no rescue, resampling, changed gate,
+shipping build, device command, financial replay or permanent test change. Initial wrong
+SQLite table-name refusal and pair spread remain. This key-only contract is not full
+native32-field source acceptance or physical/two-second evidence. One Clean removes49files/
+11856712logicalbytes. Supplementary2scopes/30files/411151logicalbytes are blocked before
+process and freeze without retry/subset/alternate/move/escalation/reuse. Used source/input/
+results remain outside. D754terminal/D752ownerwait/D749/D751/D607 and active goal persist.
