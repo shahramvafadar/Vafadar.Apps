@@ -14,6 +14,27 @@ public sealed class StatusProvider : ContentProvider
     public override ICursor? Query(Android.Net.Uri uri, string[]? projection, string? selection,
         string[]? selectionArgs, string? sortOrder)
     {
+#if PHYSICAL_TIMED_REMINDER_REVIEW
+        if (Context?.PackageName == "pro.vafadar.zanance.physicaltimedreminderreview" && uri.Path == "/physical-timed-capture")
+        {
+            // Only diagnostic files are created once; the original financial source and native queue are read-only.
+            var result = new MatrixCursor(["receipt"]);
+            var services = IPlatformApplication.Current?.Services ?? throw new IOException("Already started physical source required.");
+            var run = uri.GetQueryParameter("run") ?? throw new IOException("Original physical run required.");
+            var receipt = Task.Run(() => NativeTimedGoalPeriodReview.CapturePhysicalAdmissionAsync(services, run)).GetAwaiter().GetResult();
+            result.NewRow()?.Add(new Java.Lang.String(receipt));
+            return result;
+        }
+        if (Context?.PackageName == "pro.vafadar.zanance.physicaltimedreminderreview" && uri.Path == "/physical-timed-admission")
+        {
+            var result = new MatrixCursor(["receipt"]);
+            var services = IPlatformApplication.Current?.Services ?? throw new IOException("Already started physical source required.");
+            var run = uri.GetQueryParameter("run") ?? throw new IOException("Original physical run required.");
+            var receipt = Task.Run(() => NativeTimedGoalPeriodReview.ReadPhysicalAdmissionAsync(services, run)).GetAwaiter().GetResult();
+            result.NewRow()?.Add(new Java.Lang.String(receipt));
+            return result;
+        }
+#endif
         if (Context?.PackageName == NativeReminderReview.Package && uri.Path == "/timed-goal-period-status")
         {
             // D-494: observe only an already started original process, never prepare storage or rearm a deadline.

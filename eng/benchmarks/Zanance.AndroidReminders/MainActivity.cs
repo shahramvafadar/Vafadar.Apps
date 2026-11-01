@@ -18,6 +18,10 @@ public sealed class MainActivity : MauiAppCompatActivity
     {
         if (PackageName != NativeReminderReview.Package)
             throw new IOException("Independent reminder identity required before window creation.");
+#if PHYSICAL_TIMED_REMINDER_REVIEW
+        if (Build.Model != "SM-A176B" || Build.Hardware == "ranchu")
+            throw new IOException("Reserved physical Samsung required before timed review startup.");
+#endif
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
         var run = Intent?.GetStringExtra("review_run");
