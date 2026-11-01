@@ -28,7 +28,7 @@ internal static class AndroidPageScreenProtection
     /// <summary>Includes the actual native dialog root without replacing its SDK controls or commands.</summary>
     internal static void TrackNativeRoot(NativeView root)
     {
-        if (root.Context?.PackageName != Android.App.Application.Context.PackageName ||
+        if (!HasPeer(root) || root.Context?.PackageName != Android.App.Application.Context.PackageName ||
             !root.Equals(root.RootView)) return;
         Pages.GetValue(root, static view => new PageObserver(view));
     }
@@ -47,7 +47,7 @@ internal static class AndroidPageScreenProtection
     internal static void Apply(bool block)
     {
         Volatile.Write(ref _block, block);
-        AttachedPages.RemoveAll(item => !item.TryGetTarget(out var page) || !page.IsAttachedToWindow);
+        AttachedPages.RemoveAll(item => !item.TryGetTarget(out var page) || !IsAttached(page));
         var visited = new List<NativeView>();
         foreach (var item in AttachedPages.ToArray())
         {
@@ -62,18 +62,26 @@ internal static class AndroidPageScreenProtection
 
     private static NativeView? RememberRoot(NativeView page)
     {
+        if (!IsAttached(page)) return null;
         var root = page.RootView;
-        if (root is not { IsAttachedToWindow: true } || root.LayoutParameters is not WindowManagerLayoutParams ||
+        if (root is null || !IsAttached(root) || root.LayoutParameters is not WindowManagerLayoutParams ||
             root.Context?.PackageName != Android.App.Application.Context.PackageName) return null;
-        AttachedPages.RemoveAll(item => !item.TryGetTarget(out var existing) || !existing.IsAttachedToWindow);
+        AttachedPages.RemoveAll(item => !item.TryGetTarget(out var existing) || !IsAttached(existing));
         if (!AttachedPages.Any(item => item.TryGetTarget(out var existing) && existing.Equals(page))) AttachedPages.Add(new(page));
         return root;
     }
+
+    // D-734: a dismissed native dialog can dispose its Java peer while its managed
+    // wrapper is still reachable through a weak reference. Never query that peer.
+    private static bool HasPeer(NativeView view) => ((Java.Interop.IJavaPeerable)view).PeerReference.IsValid;
+
+    private static bool IsAttached(NativeView view) => HasPeer(view) && view.IsAttachedToWindow;
 
     private enum ApplicationResult { Current, Updated, Unavailable }
 
     private static ApplicationResult ApplyRoot(NativeView root)
     {
+        if (!HasPeer(root)) return ApplicationResult.Unavailable;
         if (!root.IsAttachedToWindow) return ApplicationResult.Current;
         var block = Volatile.Read(ref _block);
         if (root.LayoutParameters is not WindowManagerLayoutParams attributes) return ApplicationResult.Unavailable;
@@ -110,7 +118,7 @@ internal static class AndroidPageScreenProtection
         /// <inheritdoc />
         public void OnViewAttachedToWindow(NativeView? view)
         {
-            if (view?.ViewTreeObserver is not { IsAlive: true } current) return;
+            if (view is null || !HasPeer(view) || view.ViewTreeObserver is not { IsAlive: true } current) return;
             RemoveObserver();
             _observer = current;
             current.AddOnPreDrawListener(this);
@@ -124,10 +132,11 @@ internal static class AndroidPageScreenProtection
         /// <inheritdoc />
         public bool OnPreDraw()
         {
-            if (!_page.TryGetTarget(out var page) || !page.IsAttachedToWindow) return true;
-            var root = _root?.TryGetTarget(out var captured) == true ? captured : RememberRoot(page);
+            if (!_page.TryGetTarget(out var page) || !IsAttached(page)) return true;
+            var root = _root?.TryGetTarget(out var captured) == true && IsAttached(captured)
+                ? captured : RememberRoot(page);
             if (root is null) return !Volatile.Read(ref _block);
-            _root ??= new(root);
+            _root = new(root);
             var result = ApplyRoot(root);
             // Cancel this draw after a flag change so the next window traversal applies it
             // before content is painted. Missing required protection never enables drawing.
@@ -150,7 +159,8 @@ internal static class AndroidPageScreenProtection
         {
             var observer = _observer;
             _observer = null;
-            if (observer is { IsAlive: true }) observer.RemoveOnPreDrawListener(this);
+            if (observer is not null && ((Java.Interop.IJavaPeerable)observer).PeerReference.IsValid && observer.IsAlive)
+                observer.RemoveOnPreDrawListener(this);
             // D-485: do not dispose a Java peer inside a native dispatch snapshot.
             // The weak page registration and native attachment release it together.
         }

@@ -116,14 +116,16 @@ ownership and original asset-event frame/receipt handling. Their reports retain 
 D-607 is terminal: both physical notifications arrived inside its original one-hour window, source matched and
 the fresh fixture retired; precision/idle limitations remain. D-733 then adopted the current complete Android
 package without reset, preserving current Home979/141 and three profile names/selection. This does not accept
-every changed financial path. Performance, general stability, remaining accessibility, provider/store and
+every changed financial path. [D-734](src/Apps/Zanance/docs/quality/disposed-native-window-peer.md)
+then repairs an observed disposed-dialog-peer crash and qualifies the remaining physical time-dialog
+sequence on the corrected no-reset package. Performance, general stability, remaining accessibility, provider/store and
 platform release gates remain open.
 
 | Delivery track | Current boundary |
 |---|---|
-| Completed source work | Original editor/read/command ownership batches and later Android PIN/window-privacy corrections through D-730; see the dated backlog and bounded D-731/D-732 observations |
+| Completed source work | Original editor/read/command ownership batches and Android PIN/window-privacy corrections through D-734; see the dated backlog and bounded observations |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | D-733 complete signed no-reset Main adoption after actual D-607 retirement; private DB/key and every financial/device path remain separate |
+| Physical adoption | D-733 complete signed no-reset Main adoption after actual D-607 retirement, followed by the necessary D-734 disposed-peer repair; private DB/key and every financial/device path remain separate |
 | Performance and stability | The general two-second Home target and general ANR/crash qualification remain open; rejected experiments are retained as historical findings |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |

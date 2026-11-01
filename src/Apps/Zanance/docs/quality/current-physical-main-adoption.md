@@ -1,5 +1,10 @@
 # Current physical Main adoption after D607 retirement (D-733)
 
+Current handoff: D734 later observes a managed disposed native-peer crash on this
+adopted version, then installs its scoped correction without reset. See
+[the preserved failure and corrected physical sequence](disposed-native-window-peer.md).
+The491890c9/23758 observations below remain the actual D733 historical baseline.
+
 ## Admit the actual current complete package
 
 D607 has actual original-hour delivery, exact protected source comparison and fresh

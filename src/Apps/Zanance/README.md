@@ -22,6 +22,9 @@ source matches and only the fresh fixture retires. Precision/intervening-activit
 [D-733](docs/quality/current-physical-main-adoption.md) then adopts the complete current Android
 package without reset: current Home979/141 public attributes, three profile names/selection and
 native ownership/settings are preserved. This is not every changed financial/device path.
+[D-734](docs/quality/disposed-native-window-peer.md) then repairs the actual disposed native-dialog
+peer exception and qualifies the original Language/Help/Time cancellation chain on the corrected
+complete no-reset package, with Home979/141 and current ownership/OS preserved.
 
 The optional API provides identity, protected household synchronization and billing infrastructure.
 Core local finance remains usable without a service. General stability, the two-second performance

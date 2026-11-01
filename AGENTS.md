@@ -1,5 +1,27 @@
 # AGENTS.md – working rules for this repository
 
+## D-607 terminal retirement and current Main (verified, 2026-11-01, D-734)
+
+D-607's original two due notifications were delivered inside their original one-hour
+window; the recorded precision and intervening-process limitations remain failures or
+limits. Its ordinary post-delivery source read matched the original packet, then only
+the fresh fixture/UID and its remaining owned requests retired. Both original monitors
+were consumed/deleted. Historical pending/deadline/unread instructions below describe
+that earlier phase: do not recreate the fixture, rearm its requests or restore a monitor.
+The one owner-authorized reboot remains consumed, with no new reboot authority.
+See `src/Apps/Zanance/docs/quality/physical-paired-reminder-preparation.md`.
+
+D-733 subsequently installed the complete signed491890c9 Main once without reset,
+preserving UID/data ownership, three original profile captions and Home979. Earlier
+Main hashes and PIDs remain historical; do not downgrade to reproduce them. D-734
+subsequently corrected a disposed native-dialog peer exception and installed complete dc774120
+without reset. Its ordinary Main29013/Home979/141 return and current ownership/OS match
+the immediate baseline; earlier23758 actually crashed and28202 was normal recovery.
+See `src/Apps/Zanance/docs/quality/disposed-native-window-peer.md`. Necessary
+remaining Android work retains the existing risk-based authority, and iOS still waits
+for Android completion. D-734's later observed process exit is separate from D-733's
+successful adoption; never represent an old PID as current liveness.
+
 ## Android completion before iOS execution (owner, 2026-11-01, D-714)
 
 The owner reports that the Mac project environment is available, but explicitly directs
@@ -61,6 +83,20 @@ upgrade, reset, force-stop, rearm, another reboot or clock/battery/idle/permissi
 Do not perform an early D-607 source observation to support coordination. Keep its
 consumed reboot and post-reboot unread source state; historical Main PID observations
 are historical, not current liveness claims. Genuine authentication remains with the owner.
+
+## One controlled D-607 physical reboot (owner, 2026-10-28)
+
+The owner explicitly approves one controlled Samsung reboot for the already prepared
+D-607 paired-reminder fixture. The owner alone performs the real device unlock afterward.
+This authorization is consumed by the recorded28October command and is not reusable.
+Preserve the original run, signed package/UID, financial checkpoints and all three saved
+deadlines. Capture actual original queue/boot and Main/caller/settings ownership before
+the one command; retain its durable issued marker and never repeat it after a disconnect
+or timeout. Bind the real new boot and receiver-created handles afterward, without manual
+preparation, rearm, installation, clock/battery/idle-setting changes or authentication input.
+Reboot/receiver reconstruction does not establish punctual delivery, source equality after
+reboot or release acceptance. During that pending phase the original future deadline monitor
+remained active; its actual terminal retirement is recorded in the1November section above.
 
 ## Exclusive Samsung availability and Do not send installation prompt (owner, 2026-10-27, D-602)
 

@@ -9,6 +9,8 @@ and [specification](../src/Apps/Zanance/docs/spec/Zanance-Product-Specification.
 and acceptance status. The roadmap describes broader phases; dated quality reports retain historical evidence.
 D-607 now has terminal physical delivery/source/fixture evidence with retained precision/idle limitations;
 D-733 records bounded current Main no-reset adoption. Other unfinished gates are not marked complete by this refresh.
+D-734 subsequently repairs the observed physical disposed-dialog-peer exception; its
+[finite native sequence](../src/Apps/Zanance/docs/quality/disposed-native-window-peer.md) preserves the original failure and wider limits.
 
 The optional [self-hosted service guide](../eng/hosting/README.md) covers existing operational tooling;
 its presence does not establish public hosting, genuine provider acceptance or release readiness.
