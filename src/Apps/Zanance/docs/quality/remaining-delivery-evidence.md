@@ -33,7 +33,7 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 | ZCR-SEC-01 | Android/Windows feasibility and adoption exist; native iOS and independent security acceptance remain. |
 | ZCR-SEC-02 | Current protected Android source/fallback evidence exists, including D735; iOS and wider device adoption remain. No Main private-source read is authorized by a public Home check. |
 | ZCR-SEC-03 | D483 Samsung and D520 compatibility key evidence already exist; remaining device/restore and iOS claims need their actual key-lifecycle evidence, not another unchanged key-creation test. |
-| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. D749 qualifies one owner-confirmed original cold face unlock; D751 qualifies one actual original cold cancellation with persistent cover/cipher. Fingerprint/enrollment-change, other sensitive/notification routes and platform requirements remain. Do not replay any of these retired cohorts. |
+| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. D749 qualifies one owner-confirmed original cold face unlock; D751 qualifies one actual original cold cancellation with persistent cover/cipher. Actual enrollment-change behavior, other sensitive/notification routes and platform requirements remain; fingerprint is an unqualified modality, not a requirement to repeat the accepted face path without a distinct defect or changed boundary. Do not replay any of these retired cohorts. |
 | ZCR-SEC-05 | D263/D521/D522/D524 cover named migration faults and profile cases. Further claims require a specified unqualified upgrade/profile/device boundary; iOS remains later. |
 | ZCR-SEC-06 | Named protected recovery/alias-loss/portable cases already exist; real authentication and later iOS/device recovery remain separate. |
 | ZCR-SEC-07 | D603 proves framework policy rejection, not actual OEM transfer or iOS exclusion. Transfer acceptance requires a real supported destination/workflow. |
@@ -82,9 +82,10 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 
 ## Ready work and dependency boundaries
 
-1. Preserve D737's terminal real callback/source/retirement evidence. Do not reinstall
-   it or repeat accepted metadata/authentication. Select only a genuinely missing
-   sensitive, biometric/enrolment or platform boundary with its actual owner input.
+1. Preserve D737/D749/D751 terminal real callback/source/retirement evidence. Do not
+   reinstall them or repeat accepted PIN/face/cold-cancellation paths. Select only a
+   genuinely missing sensitive, enrolment-change or platform requirement with its
+   actual owner input; an unqualified modality alone does not mandate another cohort.
 2. Continue independent evidence-supported Android development and QA-06 investigation.
    [D712](exact-original-fault-word-load.md) proves the failing referenced-object first-word
    load, not its reference origin/type/earlier writer. The
