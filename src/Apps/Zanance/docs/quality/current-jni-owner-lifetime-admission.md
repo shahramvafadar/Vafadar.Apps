@@ -112,3 +112,42 @@ security, accessibility, hardware 16KiB, iOS/providers/Store/release and the ove
 remain open. Android still precedes iOS and further TalkBack remains last.
 
 Subsequent [D737 real device-credential qualification](physical-original-device-credential.md) completes the earlier owner-decision wait; the independent JNI admission and unresolved causal limits remain unchanged.
+
+
+## D-742: Later stable SDK source admission, 1 November 2026
+
+The official [Android release index](https://github.com/dotnet/android/releases) now
+lists [36.1.118](https://github.com/dotnet/android/releases/tag/36.1.118) as the latest
+stable .NET 10 servicing SDK. A newer label alone is not an admitted correction.
+Resolve official tag references to immutable commits:
+
+| SDK source | Exact Android commit | Exact Java.Interop submodule input |
+|---|---|---|
+| Current 36.1.69 | d549e1dc4e2a083b08b4f24cb5495e81b99d79b5 | 33992194b9373e9322244612c94ed9941b9bc2fd |
+| Later 36.1.118 | db080b91dbe7947a69005a203ea98d9bb207ad04 | 8e8291c9ef45b4bbc28b09456dc5888eb80af77b |
+
+Direct immutable-source comparison finds AndroidRuntime.cs and JNIEnv.cs byte-identical.
+The two Java.Interop inputs have different gitlink hashes: do not call the submodules
+identical. Initial direct Android raw-file requests correctly fail because that location
+is a submodule; retain those HTTP refusals. Resolve each official gitlink/repository
+explicitly and retrieve its own JniEnvironment.Errors.cs and JavaPeerableExtensions.cs.
+Those two selected files also compare byte-for-byte equal across the distinct inputs.
+
+Thus all four selected source files preserve the old borrowed-owner paths. The later
+stable source does not supply the selected PR12315/PR12754 corrections. This is not
+binary identity of the new SDK, a search of every upstream release/path or proof that
+those paths caused the original referenced-object SGen load. No later SDK package is
+downloaded, installed, privately patched, built or presented as a repair. No preview
+framework, collector change, unsupported regression substitute, unchanged suite or
+native/financial workload is run. Existing source metadata and bounded comparison
+receipts remain local; no redundant build outputs or cleanup scope is created.
+
+Immutable sources: [current AndroidRuntime](https://raw.githubusercontent.com/dotnet/android/d549e1dc4e2a083b08b4f24cb5495e81b99d79b5/src/Mono.Android/Android.Runtime/AndroidRuntime.cs),
+[later AndroidRuntime](https://raw.githubusercontent.com/dotnet/android/db080b91dbe7947a69005a203ea98d9bb207ad04/src/Mono.Android/Android.Runtime/AndroidRuntime.cs),
+[current Java.Interop exception path](https://raw.githubusercontent.com/dotnet/java-interop/33992194b9373e9322244612c94ed9941b9bc2fd/src/Java.Interop/Java.Interop/JniEnvironment.Errors.cs),
+[later Java.Interop exception path](https://raw.githubusercontent.com/dotnet/java-interop/8e8291c9ef45b4bbc28b09456dc5888eb80af77b/src/Java.Interop/Java.Interop/JniEnvironment.Errors.cs).
+
+This closes only the named stable-update hypothesis. A faithful supported affected-path
+candidate or new original bad-reference context is still required for this direction.
+Current product/runtime/Main, D737 owner credential, D607 terminal state and consumed
+reboot remain intact. The goal stays active; Android precedes iOS and TalkBack stays last.

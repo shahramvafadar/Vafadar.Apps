@@ -129,3 +129,5 @@ D739 subsequently [admits the actual packaged JNI owner-lifetime boundaries](cur
 [D740 current protected Transactions stages](current-protected-transactions-stages.md) admit unchanged original-source copies and a later source-stamp investigation boundary; no production candidate or performance improvement is accepted.
 
 [D741 same-JSON sink](same-json-incremental-sink-admission.md) is rejected at the original tenfold5% latency gate; production remains unchanged and another unchanged sink run is not ready work.
+
+D742 compares the later stable36.1.118 four selected JNI source files against the current SDK: unchanged target paths do not supply the missing guards, so no SDK update is adopted as an original-fault remedy. See [the exact source admission](current-jni-owner-lifetime-admission.md).
