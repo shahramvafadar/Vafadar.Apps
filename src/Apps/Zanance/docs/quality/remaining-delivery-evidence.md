@@ -125,3 +125,5 @@ diagnostic evidence or external access changes the next executable action.
 D739 subsequently [admits the actual packaged JNI owner-lifetime boundaries](current-jni-owner-lifetime-admission.md), retaining its missing guards and causal limits without a speculative runtime repair.
 
 [D737 terminal evidence](physical-original-device-credential.md) supersedes its earlier unavailable/owner-decision wait, without closing broader SEC04 requirements.
+
+[D740 current protected Transactions stages](current-protected-transactions-stages.md) admit unchanged original-source copies and a later source-stamp investigation boundary; no production candidate or performance improvement is accepted.
