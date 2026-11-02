@@ -9081,6 +9081,22 @@ reuse. Used source/binary/evidence stays outside. Original cause/actual classifi
 D752 readiness and broader goal remain open; D749/D751/D607 are not replayed.
 [Exact boundary, evidence and frozen scopes](quality/bounded-native-fault-classification.md).
 
+### D-784 - Remaining native EXIF directions and same-image metadata evidence
+
+Original DocumentImages.PrepareAsync, unchanged, now has seven distinct API36/x64/4096
+orientation1/2/3/4/5/7/8 corner/dimension assertions. Prior physical EXIF6 is retained,
+not replayed or relabelled as this same oracle. Native3603 produces all seven images
+once: RGB error at most1, exact160x96/96x160 and input digests unchanged. The initial
+metadata oracle fails because GetAttribute reports orientation0; preserve that failure.
+Only a read-only helper extension/no-reset3603to4979 follows; all14 saved image hashes
+match, input tags actually exist, and independent full JPEG marker parsing finds no
+APP1 in any output despite accessor0. No pipeline replay or product fix is needed.
+Both SDK-only18AOT/28ELF/102LOAD packages pass strict integrity/offline policy; original
+source hash/OS5/boot/geometry/reverse stay exact. Fresh package/AVD retire and2Clean
+pass; no supplementary or frozen action. No camera/OCR/financial/auth/old-suite run.
+D752 and fault/performance/broader gates remain open.
+[Actual pixels, retained oracle failure, same-image inspection and limits](quality/native-image-exif-orientation.md).
+
 ### D-783 - Exact joined receipt total and known currency
 
 D780's real `TOTALEUR 7.10` OCR failure is corrected without fuzzy labels or item-price
