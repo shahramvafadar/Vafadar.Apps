@@ -9280,6 +9280,20 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-774 - One-pass unordered day buckets rejected at host admission
+
+A distinct private unordered bucket pass combines row collection and original day
+nets without sorted recognition/fallback. Fixed7pair/6shape10k100k .NET10.0.14/X64
+process80760 fails every5% latency/allocation gate;10k sorted is18.6901% slower and
+100k sorted improves only0.9598% with1.91797% allocation reduction. Source JSON,
+row identity/order/multiplicity, days/nets/deferred/empty match. Reject before second
+process/product/native/retune/rescue; original EntrySearch exact and app testcount0new.
+Two strict private builds and pre-run interleaving correction retained; standardClean
+passes. Supplementary2scope31file414831logicalbyte delete blocked before process,
+frozen without retry/subset/alternate/move/escalation/reuse; usedsource/output preserved.
+D752 owner readiness and broader fault/performance/platform gates remain open.
+[Exact distinct premise, fixed gates and cleanup scopes](../../quality/single-pass-unordered-day-buckets.md).
+
 ### D-773 - One current original Budget fault context
 
 One newly admitted finite original Budget/de/Light/680dp/OSfont2 held-read/failure/
