@@ -9280,6 +9280,22 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-785 - Remaining onboarding languages at actual OS200%
+
+Reuse the exact complete signed D783 product without a new build/helper/managed test.
+18 new es/fr/it-Light/Dark-360/412/680 onboarding viewport/name/title/footer contexts
+pass on API36/x64/4096, samePID4218/UID10216/boot; en/fa/de matrix cases are not replayed.
+Raw XML independently binds actual language/theme, scrolled source, own-account top,
+full title/Name reachability and separate >=44dp footer targets. Two French360 account
+footers wrap vertically as original design allows; horizontal-only audit failure is
+preserved and corrected by the same rectangles, without new input. Original locale-row
+absence becomes en-US during the turn, exclusive cause unknown; restore exact absence
+and all8OS values/key-presence/size/density/boot/reverse, not a relaxed comparison.
+No Start/Save/account/receipt/financial/auth/TalkBack command or private-database/key inspection.
+158XML/3359431bytes hash-match; raw local evidence stays, fresh package/AVD retire.
+No supplementary/frozen action; D752 and fault/performance/broader gates remain open.
+[Actual18 contexts, raw-node audit and exact restoration limits](../../quality/onboarding-remaining-languages-os-text.md).
+
 ### D-784 - Remaining native EXIF directions and same-image metadata evidence
 
 Original DocumentImages.PrepareAsync, unchanged, now has seven distinct API36/x64/4096
