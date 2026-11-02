@@ -68,3 +68,5 @@ failures preserved. It changes no product code or release-performance acceptance
 [D756 canonical Home time-reader admission](../src/Apps/Zanance/docs/quality/canonical-home-schedule-time-admission.md)
 retains provider/host/native evidence but rejects the candidate at the inverse latency
 gate. Original product source is restored; this is no adopted speed or stability fix.
+
+[D757 original reference-array end](../src/Apps/Zanance/docs/quality/original-reference-array-end-admission.md) narrows one static native-fault hypothesis with exact original code; reference origin and general stability remain unresolved.

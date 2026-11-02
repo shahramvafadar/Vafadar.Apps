@@ -190,3 +190,5 @@ restore original product byte-exact, remove candidate tests and retire the owned
 Do not retune/replay that unchanged premise or infer the first50.1723% observation as a
 representative improvement. Twenty-four refused scopes stay frozen. D752 genuine owner
 readiness and broader physical speed/security/platform gates remain separate and open.
+
+[D757 original array end](original-reference-array-end-admission.md) excludes ordinary bounds-trailer scanning only under intact valid metadata, with exact original code and conditional arithmetic. It does not recover the actual reference origin or justify a runtime correction. No unchanged diagnostic/device/financial cohort is replayed; D752 owner readiness and the full goal remain open.

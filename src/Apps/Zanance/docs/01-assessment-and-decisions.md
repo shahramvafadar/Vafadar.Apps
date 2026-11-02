@@ -12968,3 +12968,17 @@ remain.10Clean remove70095files/4219278173logicalbytes; supplementary24scopes/66
 move/escalation/reuse. Used signed/source/evidence stays outside. D752ownerwait and broader
 active goal remain; D749/D751/D607 successes are not replayed.
 [Full finite admission and exact frozen scopes](quality/canonical-home-schedule-time-admission.md).
+
+### D-757 - Original reference-array element-end admission
+
+Exact serviced source and the original810byte native client function independently
+separate element end from the multidimensional bounds total. Full retained decode
+bytes revalidate against original Mono; static conditional arithmetic covers64 object
+residues/519 lengths,202129 card cases/10710784 slots and an invalid-stride negative
+control. These are not product tests or actual heap evidence. Initial local extra-LF
+serialization fails exact source admission, is preserved and corrected before the
+arithmetic; a nonexistent header lookup remains a refusal. Under intact valid metadata,
+the existing loop clamps and strides correctly, so no bounds workaround/runtime change
+is justified. Actual metadata validity/reference origin/earlier writer remain unknown.
+No product/runtime/device/build/financial work or successful cohort repeats; D752 owner
+readiness and broader goal stay open. [Exact evidence and causal limits](quality/original-reference-array-end-admission.md).
