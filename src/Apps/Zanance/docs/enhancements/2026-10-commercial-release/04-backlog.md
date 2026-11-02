@@ -9247,3 +9247,21 @@ D752 owner readiness and the overall delivery goal stay active; D749/D751/D607 s
 settled. Next input is source-supported nursery pin lifecycle investigation, not a
 replay or speculative patch.
 [Full evidence and exact frozen scopes](../../quality/sparse-native-unwind-metadata.md).
+
+
+### D-761 - Nursery pin-check phase incompatibility
+
+Exact public runtime source and installed Mono instructions show fragment construction
+clearing pin tags before the later concurrent heap-mark checker requires them. Calls
+at0x2dd637/0x2dd67c precede the check at0x2dd69f; fragment code clears low bits at
+0x304e8c and stores them at0x304e90. Concurrent state resets only after the check.
+The simple-nursery source hooks do not restore the tags. This establishes an
+incompatible diagnostic precondition for a valid pin-queue survivor, not the identity
+or corruption of D760's particular object. D760's fourteen frames remain valid;
+its assertion is not independent evidence of original D678 corruption or a repair.
+No suppression/GC patch/replay follows. Only public sources and bounded static code
+are read; zero device/build/test/financial commands and no new product test/output.
+All frozen scopes remain untouched. Next input must address the original ordinary
+reference-load failure independently of this post-fragment diagnostic. D752 genuine
+readiness and the overall goal remain active; D749/D751/D607 are not repeated.
+[Source and installed-code evidence](../../quality/nursery-pin-check-phase.md).

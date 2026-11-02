@@ -13,6 +13,8 @@ D-734 subsequently repairs the observed physical disposed-dialog-peer exception;
 [finite native sequence](../src/Apps/Zanance/docs/quality/disposed-native-window-peer.md) preserves the original failure and wider limits.
 [D-750 rejected fused normalization](../src/Apps/Zanance/docs/quality/fused-text-normalization.md) preserves host/functional evidence, the failed native memory gate and exact source/phone restoration; wider gates stay open.
 [D-751 original cold cancellation](../src/Apps/Zanance/docs/quality/physical-original-cold-cancellation.md) separately qualifies one owner-cancelled native request with persistent cover and exact fixture cipher; original Main is unchanged.
+[D-761 diagnostic phase analysis](../src/Apps/Zanance/docs/quality/nursery-pin-check-phase.md) establishes that nursery tags are cleared before the later diagnostic requires them; this narrows the assertion evidence without claiming an original-crash repair.
+
 [D-760 sparse native unwind evidence](../src/Apps/Zanance/docs/quality/sparse-native-unwind-metadata.md) locates a nursery-pinning diagnostic invariant through fourteen bounded code frames; original crash cause and repair remain open, with full source restoration and exact cleanup refusals recorded.
 
 [D-759 bounded native-exit context](../src/Apps/Zanance/docs/quality/bounded-native-exit-code-context.md) locates the terminating Android wrapper through code-only OS evidence; the missing earlier caller and general crash cause remain open, with exact source restoration and cleanup limits recorded.
