@@ -13105,6 +13105,19 @@ reuse. Used source/binary/evidence stays outside. Original cause/actual classifi
 D752 readiness and broader goal remain open; D749/D751/D607 are not replayed.
 [Exact boundary, evidence and frozen scopes](quality/bounded-native-fault-classification.md).
 
+### D-782 - Tag-occurrence counting rejected at its latency gate
+
+A distinct private candidate replaces original suggestion GroupBy occurrence storage
+with local counts/first spelling; no ledger decoder/index/date-grouping rescue occurs.
+PID56272/.NET10.0.14/X64 covers24 six-culture/10k/100k repeated/unique shapes with
+seven alternating pairs; all allocation gates pass but all12 unique shapes exceed
+the hard5% latency-regression ceiling, worst11.521682%. Exact source digest/full
+sequence/first spelling and42 culture/input controls match. Reject before second
+process/native/product/permanent tests/retune. Strict build/Clean pass; no financial,
+auth/device/shipping/old-suite or frozen-scope action occurs; source remains original.
+D752 waits for the owner; fault/performance and broader gates remain open.
+[Fixed requirements, all24 measurements and limits](quality/tag-occurrence-counting-admission.md).
+
 ### D-781 - Original interpreter small-integer return correction already present
 
 The previously unexamined actual fix117336/413d5b84 for issue115859 is admitted
