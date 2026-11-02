@@ -9280,6 +9280,18 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-768 - Reported CI failure correlation and current required jobs
+
+Six additional historical test jobs have the same seven failures already repaired
+by e1cbb1be; all four current billing/test blobs are exact. D669 Windows rejects the
+old unqualified installer, now covered by fe48b942 with both current policy blobs
+exact. D661 Android logs return404 BlobNotFound; preserve unknown original cause.
+Current fdc29ff8 run41405138359 has completed/success tests, Windows and Android
+including billing sandbox; iOS is skipped. No successful job log/test/build rerun,
+financial replay or speculative source fix occurs. Existing consumed monitors stay
+deleted. D752 readiness, original fault and external/platform gates remain open.
+[Log evidence, exact source and limits](../../quality/retired-billing-review-and-hosted-compiler-drift.md#d-768---remaining-reported-failures-compared-with-current-required-jobs).
+
 ### D-767 - Selected original scanner correction admission
 
 Public latest-change inputs for four selected original scanner paths yield three

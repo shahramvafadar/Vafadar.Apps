@@ -1,5 +1,10 @@
 # Retired billing review and current hosted compiler drift
 
+Historical D681 findings below are superseded for current Windows admission by
+[qualified hosted producer evidence](qualified-hosted-windows-producer.md).
+D768 below directly verifies current required tests/Windows/Android jobs successful;
+its missing D661 log remains explicitly unknown.
+
 ## D-681 actual CI evidence
 
 The original [CI run41180020523](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41180020523)
@@ -82,3 +87,46 @@ failures with retained earlier focused/native evidence. No new source fix, suite
 rerun is warranted. Historical host evidence remains historical, not current Linux14
 acceptance. Sanitized failure fingerprints and source-blob receipts are kept locally.
 This correlation does not claim a fresh green run or qualify the hosted compiler.
+
+## D-768 - Remaining reported failures compared with current required jobs
+
+2 November 2026. Read only the newly reported failed jobs, retaining the previous
+D765 correlation without fetching those three old logs again. No successful job log,
+whole suite, local build or accepted financial operation repeats.
+
+| Historical run | Failed job(s) | Actual available evidence |
+|---|---|---|
+|41143841360 D666|124364179435 tests|Same six replacement-language failures and one retired native review failure|
+|41147891038 D667|124377167052 tests|Same seven failures|
+|41154242075 D668|124397412503 tests|Same seven failures|
+|41156881555 D669|124405518993 tests;124405518936 Windows|Same seven tests; installed compiler/installer18.11.12328.437 refused|
+|41166591073 D673|124435380850 tests|Same seven failures|
+|41171343533 D675|124449804278 tests|Same seven failures|
+|41106754045 D661|124238479146 Android|Job failure metadata; log request returns404 BlobNotFound, original cause unknown|
+
+The four billing production/test Git blobs still equal correction e1cbb1be exactly.
+The correction and qualified Windows producer fe48b942 are ancestors of current Main.
+Both compiler-acceptance/provenance files equal the qualified producer correction
+exactly. Original policies/guards and earlier focused/native acceptance stay intact;
+there is no reason to weaken them or rerun fixed historical heads. The first local
+proof used a nonexistent Features/Plans path and refused before writing proof;
+using the actual Features/Commerce path produces the complete four-blob equality.
+
+The existing consumed D767 response binds run41405138359 to current
+fdc29ff8337559fbd596569ddbbfbf222808285d. Its actual job metadata now reports:
+
+- Libraries and tests125145442576: completed/success, including Test.
+- Windows build125145442885: completed/success, including toolchain qualification,
+  original native preparation, snapshot budgets and Release build.
+- Android build125145442987: completed/success, including Release and the selected
+  billing sandbox build.
+- iOS simulator125145444420: skipped, as separately deferred.
+
+This is direct current required-job success, not another execution or an inferred
+historical cause. In particular, current Android/billing sandbox success does not
+recover D661's missing log or establish its original failure reason. No retry of that
+log, artifact fishing, old-head rerun or financial replay follows. The exact-head
+workflow-list monitor remains consumed/deleted; this owner-requested diagnosis reads
+job subresources only. Sanitized failure fingerprints and source receipts stay local.
+The original runtime fault, D752 real owner readiness and other external/platform
+requirements remain open; no broad device/security/release acceptance is claimed.
