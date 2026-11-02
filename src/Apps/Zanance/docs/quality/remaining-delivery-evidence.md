@@ -192,3 +192,5 @@ representative improvement. Twenty-four refused scopes stay frozen. D752 genuine
 readiness and broader physical speed/security/platform gates remain separate and open.
 
 [D757 original array end](original-reference-array-end-admission.md) excludes ordinary bounds-trailer scanning only under intact valid metadata, with exact original code and conditional arithmetic. It does not recover the actual reference origin or justify a runtime correction. No unchanged diagnostic/device/financial cohort is replayed; D752 owner readiness and the full goal remain open.
+
+[D758 per-account balance reuse](home-account-balance-reuse-admission.md) fails its first native latency gate777.1095to803.5409ms after two host admissions. Both product files restore exactly and temporary tests retire; do not reopen unchanged reverse/reference/phone or rescue work. Complete source/32field snapshot and finite visible native guards pass without accepting all offscreen rows or physical performance. All new cleanup succeeds; older frozen scopes and D752 owner readiness remain separate.

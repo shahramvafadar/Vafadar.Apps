@@ -2,7 +2,7 @@
 
 ## Current status and entry points
 
-Refreshed 1 November 2026. Start with the [repository README](../README.md) for the technology map and
+Refreshed 2 November 2026. Start with the [repository README](../README.md) for the technology map and
 [Zanance README](../src/Apps/Zanance/README.md) for product scope. The
 [canonical commercial backlog](../src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/04-backlog.md)
 and [specification](../src/Apps/Zanance/docs/spec/Zanance-Product-Specification.md) own current implementation
@@ -70,3 +70,5 @@ retains provider/host/native evidence but rejects the candidate at the inverse l
 gate. Original product source is restored; this is no adopted speed or stability fix.
 
 [D757 original reference-array end](../src/Apps/Zanance/docs/quality/original-reference-array-end-admission.md) narrows one static native-fault hypothesis with exact original code; reference origin and general stability remain unresolved.
+
+[D758 Home balance reuse](../src/Apps/Zanance/docs/quality/home-account-balance-reuse-admission.md) passes host admission but fails its first complete native latency gate; product source is restored and temporary tests retire. No speed improvement is adopted.

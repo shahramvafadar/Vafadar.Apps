@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-758 terminal rejected Home per-account balance reuse (2026-11-02)
+
+Keep the original product exact. Two host processes admit operation-local reuse, but
+the first actual Home pair777.1095to803.5409ms fails the fixed5% latency improvement;
+passing memory/source gates cannot override it. No reverse/reference/phone, resampling,
+retuning or rescue for that unchanged premise. Both product files restore byte-exact,
+temporary API tests retire and0 new permanent cases remain. Shipping candidatebf93a440
+is rejected evidence, never Main adoption. Initial manifest/source-selection/Data-byte/
+nested-type/reference-order failures remain; common source mapping and ordered original
+Core compile reference produce byte-equal Data without weakening financial comparisons.
+Fresh UID10216/XML3/101643bytes/AVD retire; originalOS/boot/320x640/160 and shared5038/66176
+remain.12Clean remove70180files/4215195681logicalbytes, officialAVD25files/4855510309bytes,
+and25 supplementary scopes/6709files/1368321201bytes succeed; five used signed APKs plus
+source/evidence remain. No new frozen scope; all older refusals remain untouched. D752 genuine
+owner-readiness, accepted D749/D751/D607 and the overall active goal stay separate.
+
 ## D-756 terminal rejected Home time-reader candidate (2026-11-02)
 
 Keep the original product byte-exact. The canonical time reader passes finite provider/

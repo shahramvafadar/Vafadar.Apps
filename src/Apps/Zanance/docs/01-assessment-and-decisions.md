@@ -12982,3 +12982,24 @@ the existing loop clamps and strides correctly, so no bounds workaround/runtime 
 is justified. Actual metadata validity/reference origin/earlier writer remain unknown.
 No product/runtime/device/build/financial work or successful cohort repeats; D752 owner
 readiness and broader goal stay open. [Exact evidence and causal limits](quality/original-reference-array-end-admission.md).
+
+### D-758 - Reject per-account Home balance reuse at the first native gate
+
+Two fixed runtime14 host processes pass5% latency/1% allocation/64MiB admission for
+operation-local reuse of the original Balance result;1536 pure in-memory contracts
+pass. Forty distinct actual Core cases (14temporary new/26affected) pass with39 first
+and only the failed fixture-arrangement case corrected/rerun. Windows strict/full
+shipping offline384AOT/408ELF/1608staticLOAD and own loaded-AOT provenance pass. Initial
+manifest/source-removal/unequalData/nested-type/ordered-reference refusals remain;
+common source mapping plus the ordered original Core compile reference produce actual
+byte-equal Data before either native install. Fresh100k/200account source/control and
+all32 snapshot fields match, as do the visible pre-timer Home XMLs; all offscreen rows
+are not independently observed. Actual777.1095to803.5409ms is-3.4012453%, failing5%.
+Memory passes but the116053KiB initial PSS gap prevents exclusive cause claims. Reject
+without reverse/reference/phone/resampling/rescue; restore both product files exactly
+and remove temporary tests,0new permanent cases. Freshfixture/3XML101643bytes/AVD retire
+with originalOS/boot/geometry and shared5038/66176.12Clean70180files4215195681logicalbytes,
+officialAVD25files4855510309bytes and supplementary25scopes6709files1368321201bytes all
+succeed; five signed packages/source/evidence remain, older frozen scopes untouched.
+D752 owner readiness and broader physical speed/stability/security/platform/goal remain
+open. [Full comparison and limits](quality/home-account-balance-reuse-admission.md).
