@@ -9280,6 +9280,21 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-777 - First short-text reuse rejected at host admission
+
+Six first-value-only128byte UTF8 caches scoped to one decoded block preserve all32
+fields, complete source/order and independent mutable rows/tags. New private7pair
+10k/100k repeated/unique text comparison on.NET10.0.14/X64/PID44804 passes10k but
+100k unique latency exceeds fixed5% regression and both100k aggregate pair peaks
+exceed64MiB. Peak includes both roles/post-timing JSON audits, not exclusive candidate
+cost or leak proof. Reject before secondprocess/native/product/retune/rescue; original
+codec exact, no permanent new product tests, financial/device/runtime/GC change. Initial
+CRLF preparation refusal preserved; corrected strict build and standardClean pass.
+Supplementary2scope31file428677logicalbyte delete blocked beforeprocess and frozen
+without retry/subset/alternate/move/escalation/reuse. Usedsource/output/evidence retained.
+D752 waits; original fault, performance and broader goal remain open.
+[Fixed gates, exact controls and cleanup scopes](../../quality/first-block-text-reuse-admission.md).
+
 ### D-776 - Minimum Android original Budget failure and Cancel
 
 Reuse the actual D773192AOT/204ELF signedAPK without build/oldmatrix/financial replay
