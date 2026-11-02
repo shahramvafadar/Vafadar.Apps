@@ -110,3 +110,11 @@ The sole D735 response reports [CI completed/success](https://github.com/shahram
 and [CodeQL completed/success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/41300758208).
 Its marker/raw response remain and only its schedule is deleted, without another GET.
 This finished documentation batch receives its own single exact-head follow-up.
+
+## Subsequent D803 original physical-camera input
+
+[D803](physical-owner-framed-camera-draft.md) qualifies the distinct camera route on
+current Main19128/6a5574d1. The owner takes/accepts one controlled photograph and confirms
+complete framing in its preview; original unsaved amount/date/payee and Cancel/Discard
+return are verified without replaying either file selection above or a financial Save.
+RawJPEG/all-OCR/whole-private-source and broader corpus/platform claims remain separate.

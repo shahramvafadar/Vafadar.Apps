@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-803 - Finite physical camera draft complete (2026-11-02)
+
+One original Samsung camera request is complete: owner takes/accepts the controlled
+D615 target and confirms four corners/top/bottom in that photo preview. Current
+Main19128/6a5574d1 unsaved23.45EUR/28October/NORTH HARBOR MARKET and Cancel/Discard
+return pass with exact public Home141/package/OS preservation. Never repeat this
+accepted photo, old file-reader/financial/authentication successes, or treat owner
+preview as rawJPEG/all-OCR/whole-private-source acceptance. No new authority or
+permission/settings change occurs; seven owned XML retire and all frozen scopes stay
+frozen. Broader corpus/performance/original-fault/platform/release gates remain. See
+`src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md`.
+
+
 ## D-802 - Finite owner sensitive-cancellation sequence complete (2026-11-02)
 
 D792 CSV, D793 local backup and D802 PDF actual owner cancellations are complete and

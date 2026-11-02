@@ -12609,3 +12609,20 @@ source/evidence stay. Finite CSV/local-backup/PDF cancellation sequence complete
 original dead D752 frame remains interrupted; no owner prompt pending. Wider security/
 performance/original-fault/platform/provider/release gates and overall goal stay open.
 [Actual original input, SDK outcome and preservation](../quality/physical-pdf-cancellation-retained-input.md).
+
+### D-803 - One owner-framed physical camera result and original unsaved fields
+
+Original current Main19128/6a5574d1 opens one Samsung camera10105 from Home/Take a photo
+without build/install/permission/settings change. The owner aims at unchanged D615
+synthetic receipt, personally takes/accepts that one photo before any automated shutter,
+and confirms four corners/top merchant/bottom END in its accepted preview. Two camera
+focus observers refuse at transition/after return and continue only the same intent/
+callback. Original unsaved editor shows23.45EUR/date28October2026/payee NORTH HARBOR
+MARKET; clipped first payee bounds are not accepted, only remaining scroll continues.
+No Use amount/typing/Save/Import/Undo/payment/auth or old file-reader success repeats.
+Original Cancel/Discard returns exactHome979/all141, samePID19128 and all prior public
+packages/OS/locales/boot/geometry. Seven XML315879bytes hash-clean, no frozen/output
+cleanup. Owner-preview framing is not rawJPEG/all-nine-OCR/full-private-source proof.
+This finite physical boundary passes; historical imagefile clipping/exclusive backend
+cause/broader corpus and other release gates remain. No owner prompt pending; goal active.
+[Original physical acquisition, owner framing and exact preservation](../quality/physical-owner-framed-camera-draft.md).
