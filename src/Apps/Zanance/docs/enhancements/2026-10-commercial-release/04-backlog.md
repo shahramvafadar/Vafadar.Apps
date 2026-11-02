@@ -9724,3 +9724,21 @@ OneClean49files12008349logicalbytes pass,28files405991bytes remain; no supplemen
 frozen/device/SDKauth/financial/old-suite action. D792/D793 successes and PDF missing
 input stay; original fault/performance/broader gates and goal remain open.
 [Fixed gates, complete values, source identity and limits](../../quality/recurrence-value-date-rejection.md).
+
+
+### D-795 - Per-enumeration Persian recurrence anchor rejected at first admission
+
+A distinct private key-checked Start/Calendar anchor preserves original Lists/400day
+padding/explicitFind/calendar code and all product hashes.27 full occurrence/source,
+2160 mixed-validity generator and36 live-rule/re-enumeration controls pass; strict
+private build passes. Ten100plan shapes/1secwarm/7pair/3passes on.NET10.0.14/X64/27680
+show Persian monthly241.5977to52.9832ms and yearly26.9509to8.1903ms, but sparseGregorian
+0.4139to0.4601 and second-day0.8218to0.9045 regress11.1621%/10.0633%, failing fixed5%.
+Those calls delegate original recurrence; exclusive cause/production regression is
+unproven. Retain exact paired samples and tenfullJSON inputs; do not combine D794
+baselines. Reject before secondprocess/native/product, no retune/selective rescue.
+OneClean49files12018750logicalbytes pass; no supplementary/frozen action.
+No device/SDKauth/financial/old-successful-case replay; source/runtime/GC unchanged.
+D792/D793 successes/PDF missing input/original fault/performance/broader gates stay,
+overall goal active.
+[Exact premise, controls, paired values and limits](../../quality/persian-recurrence-anchor-rejection.md).
