@@ -9742,3 +9742,21 @@ No device/SDKauth/financial/old-successful-case replay; source/runtime/GC unchan
 D792/D793 successes/PDF missing input/original fault/performance/broader gates stay,
 overall goal active.
 [Exact premise, controls, paired values and limits](../../quality/persian-recurrence-anchor-rejection.md).
+
+
+### D-796 - Original Budget AOT exception prefixes and explicit extents
+
+Read only ten admitted original D678 native code identities/exception prefixes using
+exact VMR0427b9 format187/source hashes, original APK/moduleSHA and pairedMVID. Actual
+31667entry/group10/3167group/index4 table and25 new private decoder controls pass;
+abstract sentinel refuses before EH lookup. All ten prefixes supply explicit archEH
+lengths; MoveNextRID29322 is16989bytes/relative0xd35100toexclusive0xd3935d/four clauses/
+try holes. Admitted SetStateMachine entry0xd39360 is three bytes beyond exact end,
+not a guessed body length. GC-map flag absent in both controls and target is not a
+missing-root/map defect. No standard.eh_frame, clause payload/kind, managedPE/IL/string/
+field/resource/config/environment/key/live data or code execution is read/inferred.
+No build/testsuite/device/SDKauth/financial/cleanup/frozen action or product/runtime/GC
+change. Historical actual engine/finallyOSR/bad writer/original cause/repair remain
+unproven; bounded code-reading prerequisite closes only. D792/D793 accepted cases/PDF
+input and broader fault/performance/platform gates remain; overall goal active.
+[Exact original decoder, code lengths and interpretation limits](../../quality/original-budget-aot-exception-extents.md).

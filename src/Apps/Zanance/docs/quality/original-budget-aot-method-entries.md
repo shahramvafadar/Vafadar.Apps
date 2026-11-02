@@ -114,3 +114,13 @@ no managed image is persisted. PID10110 is historical, not current liveness.
 D752 alone waits for owner readiness. Whole-Home performance, original fault origin,
 broader security/stability/accessibility, iOS/provider/Store/release remain open and
 the overall delivery goal stays active.
+
+
+## Subsequent D796 explicit extent evidence
+
+[D796 original exception prefixes](original-budget-aot-exception-extents.md) now reads
+the exact old per-method native metadata: MoveNext has an explicit16989byte extent
+and four native clauses, independent of the three-byte gap to the other admitted
+entry. This adds a bounded code-reading prerequisite, not historical executed-engine,
+finally/OSR, reference-writer or crash-repair proof. D792/D793 subsequently qualify
+owner-cancelled CSV/local backup; PDF input remains open, with no current SDK prompt.
