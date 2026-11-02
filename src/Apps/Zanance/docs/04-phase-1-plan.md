@@ -2185,3 +2185,11 @@ again. D661 receives one delayed exact-head check. WholeDB/key/security/stabilit
 A11Y/iOS/genuine identity/provider/Store/release remain separate; overall goal active.
 
 [Evidence](quality/original-household-workspace.md)
+
+
+### D-780 receipt maintenance follow-through
+
+The implemented receipt parser now excludes supported labelled date fields from merchant suggestions,
+without inventing years or changing financial amounts. This bounded maintenance does not finish broader
+receipt/platform acceptance; remaining status stays in the canonical commercial backlog.
+[Selected tests and actual native OCR](quality/receipt-labeled-date-boundary.md).

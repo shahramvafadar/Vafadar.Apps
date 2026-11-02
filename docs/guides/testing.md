@@ -15,6 +15,13 @@
 Tests use **xUnit v3** on **Microsoft.Testing.Platform** (enabled in `global.json`). Visual Studio's Test Explorer
 discovers and runs them as usual.
 
+A directly invoked compiled test DLL can instead expose xUnit's in-process runner. Inspect that entry point's
+`--help` before supplying filters: its `-class` and `-method` arguments differ from the SDK/MTP options above.
+The current in-process runner rejects `--filter-class` before executing any test. Keep that refusal separate
+from test failures, and verify the exact selected total, errors, failures, skips and not-run count from its
+actual summary; zero selected tests never count as a passing check. Do not repeat a successful test merely
+to obtain another report format.
+
 ## Structure
 
 * One test project per production project: `test/` mirrors `src/` (`Vafadar.Backup` → `Vafadar.Backup.Tests`).

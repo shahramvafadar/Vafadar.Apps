@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-780: keep supported printed date fields out of suggested receipt merchant names, including labelled day/month fields without a year; leave incomplete purchase dates for manual review.
+
 - D-734: prevent a crash when Android window protection encounters an already-disposed view, preserving the existing screenshot privacy choice.
 
 - D-730: apply the existing screenshot privacy choice to the original Android time dialog before it is displayed, preserving its time format and Cancel behavior.

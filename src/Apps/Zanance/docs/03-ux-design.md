@@ -258,6 +258,11 @@ exchange. An unlabelled total is labelled as the account ISO unit, independent o
 The existing currency-change notice remains; if a display unit changes while a receipt value is still applied, Save
 stops and asks the user to choose or enter the amount again. This is receipt review, not an image editor.
 
+Recognized printed date fields are metadata, not merchant headers (D-780). Explicit supported date labels can
+end header search even when only day/month are printed; this does not create a purchase-year suggestion.
+Keep real names such as DATE PALM MARKET and unlabelled date-like names intact. Missing or joined total
+keywords still require manual amount review; never borrow an item price to compensate for absent evidence.
+
 ## Plan and debt forms (D-65)
 
 Place basic identity/account/amount and an optional category picker before the schedule. Keep first date, named

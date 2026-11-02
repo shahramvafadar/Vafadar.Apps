@@ -438,7 +438,7 @@ public static partial class ReceiptParser
         return false;
     }
 
-    /// <summary>Reads only a header before the first complete date, never guessing a shop from a clipped receipt body.</summary>
+    /// <summary>Reads only a header before printed date evidence, never guessing a shop from a clipped receipt body.</summary>
     private static string? FindMerchant(string[] lines, DateOnly today)
     {
         foreach (var line in lines.Take(4))
@@ -455,10 +455,15 @@ public static partial class ReceiptParser
         return null;
     }
 
-    /// <summary>Recognizes complete calendar-date rows independently of the date suggestion's precedence.</summary>
+    /// <summary>Recognizes printed date metadata independently of the date suggestion's precedence.</summary>
     private static bool IsMerchantDateBoundary(string line, DateOnly today)
     {
+        var labeled = MerchantDateLabel().Match(line);
+        if (labeled.Success) line = labeled.Groups["value"].Value.Trim();
         line = WithoutPrintedClock(line);
+        // An explicit date-field label supplies context for a yearless row. Recognizing its boundary must
+        // not infer a purchase year or remove unlabelled names such as "28 OCT" (D-780).
+        if (labeled.Success && IsLabeledYearlessDate(line)) return true;
         var numeric = DatePattern().Match(line);
         if (numeric.Success && numeric.Index == 0 && numeric.Length == line.Length && TryDate(numeric, today, out _))
             return true;
@@ -469,6 +474,40 @@ public static partial class ReceiptParser
                 return true;
         return false;
     }
+
+    /// <summary>Recognizes only labelled day/month evidence without selecting a year or calendar date.</summary>
+    private static bool IsLabeledYearlessDate(string line)
+    {
+        var numeric = MerchantYearlessNumericDate().Match(line);
+        if (numeric.Success)
+            return int.TryParse(numeric.Groups["day"].Value, NumberStyles.None, CultureInfo.InvariantCulture, out var day)
+                && day is >= 1 and <= 31
+                && int.TryParse(numeric.Groups["month"].Value, NumberStyles.None, CultureInfo.InvariantCulture, out var month)
+                && month is >= 1 and <= 12;
+
+        var named = MerchantYearlessNamedDate().Match(line);
+        if (!named.Success
+            || !int.TryParse(named.Groups["day"].Value, NumberStyles.None, CultureInfo.InvariantCulture, out var namedDay)
+            || namedDay is < 1 or > 31) return false;
+        var printedMonth = named.Groups["month"].Value;
+        foreach (var culture in MerchantDateCultures)
+        {
+            var format = culture.DateTimeFormat;
+            if (format.MonthNames.Concat(format.AbbreviatedMonthNames)
+                .Any(name => name.Length > 0 && string.Equals(name.TrimEnd('.'), printedMonth, StringComparison.OrdinalIgnoreCase)))
+                return true;
+        }
+        return false;
+    }
+
+    [GeneratedRegex(@"^(?:date|datum|fecha|data|تاریخ)\s*:\s*(?<value>.+)$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
+    private static partial Regex MerchantDateLabel();
+
+    [GeneratedRegex(@"^(?<day>\d{1,2})[./-](?<month>\d{1,2})\.?$", RegexOptions.CultureInvariant)]
+    private static partial Regex MerchantYearlessNumericDate();
+
+    [GeneratedRegex(@"^(?<day>\d{1,2})\.?\s+(?<month>\p{L}+)\.?$", RegexOptions.CultureInvariant)]
+    private static partial Regex MerchantYearlessNamedDate();
 
     /// <summary>Removes only a complete trailing printed clock; date validation still requires the entire remaining row.</summary>
     private static string WithoutPrintedClock(string line)

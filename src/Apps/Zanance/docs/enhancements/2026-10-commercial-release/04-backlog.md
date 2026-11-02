@@ -9280,6 +9280,24 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-780 - Printed receipt date fields stay outside merchant suggestions
+
+Fix14 actual baseline failures where supported explicit date labels become merchants.
+Recognize complete and bounded yearless labelled day/month evidence only for the
+merchant boundary, without inferring a purchase year or changing amounts/date precedence.
+24new+14affected cases pass in selected runs, strict Windows/full offline384AOT/408ELF/
+1608staticLOAD and both used192/204/804native package integrity checks pass. Original native OCR leaves
+first English merchant/date null but joins TOTALEUR and correctly keeps amountNotFound;
+that partial outcome is retained, not replayed. One different German source after a
+necessary no-reset upgrade preserves source20/UID/boot/old-consumed marker and returns
+Merchant/Date null with8.20EUR/820minor/Found. Source/accountledger0/OS exact; picker,
+camera/editor/Save/auth and physicalMain are not exercised. Freshfixture/AVD retire,
+5Clean pass; supplementary13scope4669file932506970logicalbyte removal is blocked before
+process and frozen without retry/subset/alternate/move/escalation/reuse. Shipping7e014834
+is ready but unadopted; initial CLI/restore/private-nullability/UID refusals are preserved.
+No schema/privacy/runtime/GC change; D752 and wider fault/performance/gates remain open.
+[Full source, native outcomes and cleanup scopes](../../quality/receipt-labeled-date-boundary.md).
+
 ### D-779 - Two-job block decoding rejected at host allocation admission
 
 Two immutable-payload jobs use independent original buffers and ordered flattening;
