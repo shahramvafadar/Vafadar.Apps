@@ -9280,6 +9280,21 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-786 - Current public CoreLib managed/AOT identity
+
+The application actually selects SourceGen; do not dismiss the official MAUI38281
+artifact-mismatch report by assuming otherwise. In the unchanged complete D783 APK,
+original format187/native symbol/relative relocations and independently decoded PE
+metadata prove CoreLib assembly GUID equals MVID on both ARM64 and x64. SDK LZ4 and
+host metadata independently agree on both complete public PE hashes/GUIDs. Preserve
+the initial zero-symbol-size observer refusal; source-bounded272byte prefixes replace
+that mistaken assumption. Nine new private reader controls are not product tests.
+No app module/configuration/private data, build, old successful suite, device/auth/
+financial command or frozen scope is accessed. This closes only the current CoreLib
+GUID-mismatch premise, not original SGen origin or all dependency/generator paths.
+D752 alone waits for owner presence; performance and broader release gates stay open.
+[Actual paired metadata, independent controls and exact limits](../../quality/current-corelib-aot-identity.md).
+
 ### D-785 - Remaining onboarding languages at actual OS200%
 
 Reuse the exact complete signed D783 product without a new build/helper/managed test.
