@@ -88,6 +88,12 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 
 ## Ready work and dependency boundaries
 
+D771 finds the original interpreter finally-OSR protection absent but does not establish
+that execution path for the original fault. Current Release evaluates to interpreter
+False/AOTNormal; do not force another mode or treat upstream reproducer success as a
+repair. The identified10k transport stays frozen and no cold cohort begins.
+[Source and mode admission](finally-osr-correction-admission.md).
+
 D770's original native common-prefix audit proves the fault precedes the membership
 branch and later header tests/masks. It supplies no actual generation/map or earlier
 writer; do not invent a nursery-only remedy or replay the incompatible pin checker.

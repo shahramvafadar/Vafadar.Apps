@@ -9280,6 +9280,20 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-771 - Original interpreter finally-OSR correction admission
+
+Official135625 repairs interpreter locals across finally OSR. Exact original source
+already has finally continuation markers but lacks the new EH live-out protection;
+do not exclude applicability just from the upstream net11 reproducer. Current actual
+Release evaluation reports AndroidUseInterpreter=False/AOTNormal; original interpreted
+finally/OSR execution is unproven, so no runtime/config change or copied reproducer is
+admitted as an original crash fix. Initial empty UseInterpreter is resolved through
+the effective property. Seven public files/SDK input hashes and receipts are retained.
+The proposed reference-cold preflight stops before reading D745 frozen APK/transport;
+no alternate export/build/device/financial action. D752 waits; original cause and
+wider gates remain open.
+[Exact source and execution-mode limits](../../quality/finally-osr-correction-admission.md).
+
 ### D-770 - Original fault before heap-membership branch
 
 Revalidate original public module/debug and all1001bytes/283decodedinstructions.
