@@ -13105,6 +13105,18 @@ reuse. Used source/binary/evidence stays outside. Original cause/actual classifi
 D752 readiness and broader goal remain open; D749/D751/D607 are not replayed.
 [Exact boundary, evidence and frozen scopes](quality/bounded-native-fault-classification.md).
 
+### D-781 - Original interpreter small-integer return correction already present
+
+The previously unexamined actual fix117336/413d5b84 for issue115859 is admitted
+against the retained original VMR0427b9ab source: the complete helper and both caller
+functions match exactly, including the narrow gsharedvt return-storage exception.
+The full files differ; this is not blanket binary/path identity or a cause/repair
+claim. The issue's tentative blanket-clear workaround is not substituted for the
+merged correction. No runtime/GC/product/build/test/device/financial change or
+old successful replay follows, and no frozen scope is accessed or cleaned.
+D752 waits for the owner; original bad-reference origin/performance and broader
+gates remain open. [Exact immutable inputs, function hashes and limits](quality/interpreter-small-integer-return-admission.md).
+
 ### D-780 - Printed receipt date fields stay outside merchant suggestions
 
 Fix14 actual baseline failures where supported explicit date labels become merchants.
