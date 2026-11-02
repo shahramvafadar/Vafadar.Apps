@@ -9280,6 +9280,18 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-775 - Frame publication and Volatile intrinsic source admission
+
+Official129795 changes only CoreCLR/interpexec for a WindowsARM64 stack-overflow
+unwinder; it is not the original Android/x64 SGen frame implementation. Exact original
+Mono interp.c already orders its own context publication. Official130303's complete
+added Volatile.ReadBarrier/WriteBarrier transform block exists byte-exact in the bound
+original transform.c, with the original memory-barrier dispatch present. No missing
+source fix or actual interpreted API/finally path is established, so no runtime/GC
+change, copied reproducer, stress/build/test/device/financial replay is admitted.
+Original fault origin remains open; no frozen scope action or product mutation occurs.
+[Immutable corrections and exact original-source limits](../../quality/frame-publication-and-volatile-admission.md).
+
 ### D-774 - One-pass unordered day buckets rejected at host admission
 
 A distinct private unordered bucket pass combines row collection and original day
