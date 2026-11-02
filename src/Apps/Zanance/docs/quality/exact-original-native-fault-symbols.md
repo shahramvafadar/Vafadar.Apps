@@ -161,3 +161,46 @@ financial operation, product/runtime/GC change or frozen-scope access occurs. Pr
 test count stays unchanged. D752 readiness stays owner-only; D749/D751/D607 remain
 terminal and broader delivery stays active. Select a new concrete original-path input
 before another runtime experiment; do not promote these unrelated reproducers as fixes.
+
+## D-767 - Selected scanner-history and unrelated closure admission
+
+2 November 2026. Continue QA06 with public source only, without another cold sample,
+financial replay, collector/runtime change or device command. Search results and a
+closed issue are candidate references, not a demonstrated product remedy.
+
+[Runtime118896](https://github.com/dotnet/runtime/issues/118896)
+is closed after maintainers locate its original ARM64/9.0.6 stack-frame write in
+init_amodule_got and discuss probable stack overflow with insufficient further evidence.
+The closure itself is not a published SGen reference-array correction. Our admitted
+D712 operation is instead the x64 referenced-object first-word read. No identical
+cause, runtime upgrade or repeated workload is justified by that closure. The issue
+number, discussion and closure are authoritative; no fabricated patch is inferred.
+
+Read bounded default-branch histories for exactly four original scanner files, then
+retrieve each latest listed change by immutable SHA. Compare with original VMR
+0427b9abbead3fa64c6655eb4290c537397131fa, using retained exact source where available.
+These are finite selected paths, not an exhaustive search of runtime fixes or proof
+that no correction elsewhere can affect the fault.
+
+| File | Latest selected history SHA | Exact comparison with original |
+|---|---|---|
+| metadata/sgen-mono.c | b54a16e65ddd3f9580732ea03c942729e1c7808d | One background callback rename, guarded by HOST_WASM and DISABLE_THREADS |
+| sgen/sgen-marksweep.c | a3fe47ef1a8def24e8d64c305172199ae5a4ed07 |96942 bytes exact; SHA256187186e75cce1955d03fed8ac888256ac79578928e64755338388dc8bb6e1ff3|
+| sgen/sgen-marksweep-drain-gray-stack.h | ff4d3d4fa9b918a2a89d6cf614345e72a9cc453d |11295 bytes exact; SHA25650ab37ab96e90bffa48373ab18865a887b228219b29ab370296e4787cc3c26f6|
+| sgen/sgen-scan-object.h |4c0a7c4c22cb09285c28f8b817263bc2765e5fc4|3324 bytes exact; SHA256c2d8b541237fb8d5c78c957c89dca9551bfc8679df4e691857355709b8e07793|
+
+The original metadata file SHA2560400cded9cd7175318c5f4942e72df0ed770fd3e9b9795a0b02a0653be9610c4
+and selected78340-byte file SHA256f893847934a6ab40e747ffa46c8120426815e7961b3992459fa74934dd9a7472
+differ only in mono_main_thread_schedule_background_job becoming SystemJS_ScheduleBackgroundJob.
+Exact single-replacement comparison and surrounding preprocessor guard are checked;
+this is not an Android scanner change. The original blanket four-file equality
+assumption fails and is retained, then actual differing source is reviewed rather
+than normalized away. An earlier local serialization adds one final LF to six fetched
+representations; those initial files/refusal are retained and only that extra LF is
+removed to recover the exact fetched UTF8 lengths before comparison.
+
+The selected histories, immutable source bytes, digests and actual-difference receipt
+are retained locally. No temporary binary, SDK, test fixture, app/AVD, cleanup scope
+or product source is created or changed. No old successful tests/builds or native
+classifier run again. All frozen scopes remain untouched. D752 genuine readiness,
+original reference origin and wider gates stay open; D749/D751/D607 stay terminal.

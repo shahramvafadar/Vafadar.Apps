@@ -9280,6 +9280,18 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-767 - Selected original scanner correction admission
+
+Public latest-change inputs for four selected original scanner paths yield three
+byte-exact original sources and one exact HOST_WASM/DISABLE_THREADS callback rename,
+not an Android remedy. Preserve the failed blanket equality assumption and initial
+extra-final-LF serialization refusal; compare actual corrected source bytes without
+hiding the real difference. Closed runtime118896 concerns a different ARM64 stack
+write and provides no published SGen correction. This finite selection is not an
+exhaustive runtime audit or fault repair. No device/build/test/financial/runtime
+change or frozen-scope access follows; original origin and D752 readiness stay open.
+[Exact source and causal limits](../../quality/exact-original-native-fault-symbols.md#d-767---selected-scanner-history-and-unrelated-closure-admission).
+
 ### D-766 - One ordinary process-cold Home boundary
 
 One current original100k/200-account/1000-manual-schedule input runs on fresh
