@@ -9280,6 +9280,21 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-779 - Two-job block decoding rejected at host allocation admission
+
+Two immutable-payload jobs use independent original buffers and ordered flattening;
+original codec/buffer/product remain exact, noSQLconcurrency or rejectedtextcache.
+Actual.NET10.0.14/X64/PID68648/7pair/4shape10k100k full32field/order/source/tagindependence
+passes and maximum2workers execute. All-thread allocation includes workers;10k shapes
+exceed fixed1% growth despite all latency/retainedheap/concurrency gates passing. Reject
+before secondprocess/native/IOintegration/failuretests/product/retune/rescue. Original
+IO/fault ordering and cancellation remain unqualified, not silently relaxed. Strict
+private build/Clean pass; supplementary2scope31file417705logicalbyte delete blocked
+beforeprocess and frozen without retry/subset/alternate/move/escalation/reuse. Used
+source/output/evidence retained; no oldsuite/financial/device/auth/runtimeGC replay.
+D752 waits and wider fault/performance/platform goal remains active.
+[Exact fixed gates, all-thread measurements and integration limits](../../quality/two-job-ledger-decode-admission.md).
+
 ### D-778 - Complete the actual680dp minimum-Android Budget assertion
 
 Preserve D776's640dp clamp result; one new official API24/x64/4096 VM with360x800base
