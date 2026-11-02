@@ -3538,3 +3538,12 @@ only its owned root to the existing screenshot policy. No list/layout/backend re
 
 Use the original Android TimePicker control, format, callbacks and Cancel. Its public SDK factory applies the existing screenshot preference before display; owned background/return follows the existing policy. No extra confirmation, layout or time selection is added.
 [Evidence and limits](quality/original-native-time-screen-protection.md).
+
+
+## One original Android camera-result owner (D-804)
+
+An in-progress receipt-camera acquisition retains its native result through reading
+and cleanup. Refuse another acquisition before a second launch; do not cancel the
+first or queue a later launch from a retired page. Keep original native camera UI,
+file grants, Cancel and source reader; no new layout/permission is added.
+[Actual original adapter failure and checks](quality/original-camera-result-ownership.md).

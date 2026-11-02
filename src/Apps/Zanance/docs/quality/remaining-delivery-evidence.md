@@ -10,6 +10,13 @@ remain authoritative.
 
 ## What the inventory means
 
+[D804 original camera ownership](original-camera-result-ownership.md) fixes one actual
+concurrent native result replacement. Current complete27d8070b is adopted without
+reset as Main1069; D800/19128 below is historical. Home979/141 and public package/OS
+checks preserve one raw ScrollView drawing-order2to1 delta, not full raw equality.
+Five new selected tests and the changed native interleaving pass; accepted physical
+photo and financial/authentication paths are not repeated. Broader gates stay open.
+
 [D800 original resume safeguards](plan-resume-date-ownership.md) now refuse invalid
 overlapping continuation ownership and keep date-error feedback on the ready form.
 Final6a5574d1 shipping is adopted once without reset as Main19128, with all141 immediate

@@ -2,6 +2,11 @@
 
 ## Product and data
 
+- [x] D-804 bounded original Android camera ownership: a competing acquisition cannot
+  replace the pending native result; five new selected tests and one original Camera2
+  interleaving pass. [Exact limits](quality/original-camera-result-ownership.md); whole
+  device/corpus/security/stability and release rows below remain separate.
+
 - [ ] Every Android phone-test handoff includes a complete signed Release APK with package/signature verified
   and the actual file path supplied (D-66); installation and physical-device acceptance are checked separately.
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations

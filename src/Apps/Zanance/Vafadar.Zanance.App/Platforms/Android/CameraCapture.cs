@@ -14,43 +14,57 @@ internal static class CameraCapture
 {
     private const int RequestCode = 0x5A43;
     private static TaskCompletionSource<bool>? _result;
+    private static readonly SemaphoreSlim CaptureOwner = new(1, 1);
 
     /// <summary>Gets a value indicating whether the device has a camera.</summary>
     public static bool IsAvailable => Platform.AppContext.PackageManager?.HasSystemFeature(PackageManager.FeatureCameraAny) == true;
 
     /// <summary>Returns the photo, or <see langword="null"/> when the user went back without taking one.</summary>
     /// <exception cref="ActivityNotFoundException">No camera app is installed.</exception>
+    /// <exception cref="InvalidOperationException">Another capture still owns the native result, or no activity is available.</exception>
     public static async Task<byte[]?> TakePhotoAsync()
     {
-        var activity = Platform.CurrentActivity ?? throw new InvalidOperationException("No activity to start the camera from.");
-        var folder = new Java.IO.File(activity.CacheDir, Presentation.AttachmentCache.CameraDirectoryName);
-        folder.Mkdirs();
-        var file = new Java.IO.File(folder, $"{Guid.NewGuid():N}.jpg");
+        // D-804: the native request code belongs to one operation through file cleanup.
+        // A second caller must not cancel its predecessor or redirect that predecessor's result.
+        if (!CaptureOwner.Wait(0))
+            throw new InvalidOperationException("Another camera capture is already pending.");
         try
         {
-            var uri = AndroidX.Core.Content.FileProvider.GetUriForFile(activity, $"{activity.PackageName}.camera", file);
-            var intent = new Intent(MediaStore.ActionImageCapture);
-            intent.PutExtra(MediaStore.ExtraOutput, uri);
-            intent.AddFlags(ActivityFlags.GrantWriteUriPermission | ActivityFlags.GrantReadUriPermission);
-
-            _result?.TrySetResult(false);
-            _result = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            activity.StartActivityForResult(intent, RequestCode);
-            if (!await _result.Task || !file.Exists() || file.Length() == 0)
+            var activity = Platform.CurrentActivity ?? throw new InvalidOperationException("No activity to start the camera from.");
+            var folder = new Java.IO.File(activity.CacheDir, Presentation.AttachmentCache.CameraDirectoryName);
+            folder.Mkdirs();
+            var file = new Java.IO.File(folder, $"{Guid.NewGuid():N}.jpg");
+            try
             {
-                return null;
-            }
+                var uri = AndroidX.Core.Content.FileProvider.GetUriForFile(activity, $"{activity.PackageName}.camera", file);
+                var intent = new Intent(MediaStore.ActionImageCapture);
+                intent.PutExtra(MediaStore.ExtraOutput, uri);
+                intent.AddFlags(ActivityFlags.GrantWriteUriPermission | ActivityFlags.GrantReadUriPermission);
 
-            if (file.Length() > Presentation.AttachmentFiles.MaxSourceBytes)
+                var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                _result = completion;
+                activity.StartActivityForResult(intent, RequestCode);
+                if (!await completion.Task || !file.Exists() || file.Length() == 0)
+                {
+                    return null;
+                }
+
+                if (file.Length() > Presentation.AttachmentFiles.MaxSourceBytes)
+                {
+                    throw new InvalidDataException("The camera source file is too large.");
+                }
+
+                return await Presentation.AttachmentFiles.ReadCameraSourceAsync(file.AbsolutePath);
+            }
+            finally
             {
-                throw new InvalidDataException("The camera source file is too large.");
+                _result = null;
+                file.Delete();
             }
-
-            return await Presentation.AttachmentFiles.ReadCameraSourceAsync(file.AbsolutePath);
         }
         finally
         {
-            file.Delete();
+            CaptureOwner.Release();
         }
     }
 

@@ -12626,3 +12626,24 @@ cleanup. Owner-preview framing is not rawJPEG/all-nine-OCR/full-private-source p
 This finite physical boundary passes; historical imagefile clipping/exclusive backend
 cause/broader corpus and other release gates remain. No owner prompt pending; goal active.
 [Original physical acquisition, owner framing and exact preservation](../quality/physical-owner-framed-camera-draft.md).
+
+### D-804 - Preserve the pending original camera result owner
+
+A second original TakePhotoAsync cancelled/replaced the first static result before
+its actual native callback. Exact linked-source host reproduction has two launches
+and first completion before its own result. A nonblocking owner gate now refuses
+before output/launch and retains local completion through original bounded read and
+cleanup; exceptions release it. Five new selected tests, strictWindows/full offline
+384AOT/408ELF/1608staticLOAD and native192/204/804 pass. Native5031/UID10216 on fresh
+API36/x64/4096 keeps actual Camera2/10154 request pending after one competing refusal,
+then one actual Back completes it Cancelled; outputs0 and account/entry/schedule
+counts0 before/after, not full typed-source equality. No financial/photo/auth replay.
+One physical no-reset upgrade adopts27d8070b/Main1069 from19128; Home979/141 semantic/
+bounds and public packages/OS exact except one retained ScrollView drawing-order2to1.
+Raw equality is not claimed or fished for by another capture. Compiled original camera
+source checksums match both builds; attempted Core/Data PE-byte equality refuses and
+is not claimed. Freshfixture/AVD and4XML145710bytes retire, five standard Clean remove
+28968files/1992852832logicalbytes; no supplementary/frozen action. Used artifacts and
+all refusals remain. Original fault/full performance/security/platform/release gates
+and overall goal stay open; no owner action pending.
+[Original failure, changed native ownership and precise physical limits](../quality/original-camera-result-ownership.md).

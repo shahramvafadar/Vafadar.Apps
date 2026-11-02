@@ -31,7 +31,11 @@ its presence does not establish public hosting, genuine provider acceptance or r
 [D-790 current physical Main adoption](../src/Apps/Zanance/docs/quality/current-physical-main-d787-adoption.md)
 records the existing D787 package on Samsung with exact public Home/profile/OS preservation;
 D752 retains its interrupted original frame. [D792/D793](../src/Apps/Zanance/docs/quality/physical-sensitive-cancellation-completion.md)
-subsequently qualify owner-cancelled CSV/local backup; PDF input remains open and no request is pending.
+qualify owner-cancelled CSV/local backup; [D802](../src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md)
+subsequently completes PDF cancellation. No prompt remains pending.
+[D803](../src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) adds one owner-framed physical camera draft;
+[D804](../src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) repairs concurrent camera-result ownership
+and adopts current Main1069/27d8070b with its explicitly retained raw drawing-order delta.
 
 ## Architecture
 

@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## D-804 - Original camera-result ownership and current Main (2026-11-02)
+
+A pending native camera request retains its own result through bounded read/cleanup;
+never cancel/replace it to start a second request or queue a later retired-owner
+launch. Five new selected tests and one actual original Camera2 concurrent-refusal/
+Back sequence pass on fresh emulator5031/UID10216; no photo/financial/auth replay.
+Its fresh package/AVD retire. Current Main is complete27d8070b/PID1069 after one
+no-reset upgrade from19128; Home979/all141 semantic/state/bounds and public package/
+OS facts match, except a retained anonymous ScrollView drawing-order2to1 raw delta.
+Do not claim complete raw equality or fish for it with another capture. Compiled
+camera-source checksums match both builds; Core/Data whole PE equality refused and
+is not claimed. D752 original interrupted frame and all accepted successor/financial/
+photo checkpoints stay retired/preserved; no owner prompt is pending. No new
+authority, private Main read, general security/stability/performance/platform/release
+acceptance follows. All frozen scopes remain frozen. See
+`src/Apps/Zanance/docs/quality/original-camera-result-ownership.md`.
+
+
 ## D-803 - Finite physical camera draft complete (2026-11-02)
 
 One original Samsung camera request is complete: owner takes/accepts the controlled
