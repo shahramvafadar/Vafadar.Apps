@@ -57,6 +57,11 @@ its missing execution-path input without claiming a causal exclusion.
 
 ## Separate reference-cold input and preservation
 
+D772 subsequently binds the original used APK's declared native AOT mode to Normal,
+without reading app images/environment tables. This improves original configuration
+provenance but still does not establish every original method's execution path.
+[Original package metadata and limits](original-apk-native-execution-mode.md).
+
 The newly considered10k cold measurement does not begin: the identified retained
 reference APK/transport roots are in D745's frozen rejection scopes. They are not read,
 hashed, copied, recreated through an alternate export or used to build another caller.

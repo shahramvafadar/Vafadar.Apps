@@ -9280,6 +9280,18 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-772 - Original APK native AOT-mode binding
+
+The actually used D678 signed adc8 APK and original Mono digest are revalidated.
+Read only the declared exported mode symbol in actual x64 libxamarin-app: ELF bounds,
+unique object/relative relocation/PT_LOAD and bounded allowed enum admit Normal.
+No live/private data, environment table, app image, pointer or arbitrary string is
+exported. This supplies original package configuration evidence beyond current
+property evaluation, not every method's execution mode or finally-OSR causality.
+No build/test/device/financial/runtime change or frozen-scope action; original fault
+and wider gates remain open, D752 waits.
+[Exact metadata boundary](../../quality/original-apk-native-execution-mode.md).
+
 ### D-771 - Original interpreter finally-OSR correction admission
 
 Official135625 repairs interpreter locals across finally OSR. Exact original source
