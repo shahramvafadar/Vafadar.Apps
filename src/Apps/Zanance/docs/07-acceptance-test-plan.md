@@ -9240,3 +9240,14 @@ frozen action. OldD752 stays unchanged; CSV/backup accepted, PDF unrequested/ope
 no pending prompt/current owner-readiness block. Broader security/fault/performance/
 platform/provider/release gates and active goal remain separate.
 [Actual owner outcomes, unavailable PDF input and preservation limits](quality/physical-sensitive-cancellation-completion.md).
+
+### D-798 - Retained original no-password notice
+
+D793 original raw XML/SHA492fa98c still matches: password switchfalse and the owned
+readable-file warning/command bounds are inside the viewport,22px apart. Original
+inverseUsePassword binding and one nonempty warning in each of six source languages
+are correct; no defect/code/test/build/device/auth/financial/backup/share replay.
+This is original caption/state/arranged-bounds evidence, not glyph/ellipsis/contrast/
+speech/all-language native or whole-backup security acceptance. CSV/backup cancellations
+remain accepted/retired, PDF input and broader gates remain open.
+[Exact retained evidence and limits](quality/retained-unprotected-backup-disclosure.md).

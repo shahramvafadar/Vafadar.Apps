@@ -9760,3 +9760,28 @@ change. Historical actual engine/finallyOSR/bad writer/original cause/repair rem
 unproven; bounded code-reading prerequisite closes only. D792/D793 accepted cases/PDF
 input and broader fault/performance/platform gates remain; overall goal active.
 [Exact original decoder, code lengths and interpretation limits](../../quality/original-budget-aot-exception-extents.md).
+
+### D-797 - Original clause contract located; decoder execution refused
+
+Exact original public metadata.h leads to metadata-types.h/VMR0427b9 and its
+None0/Filter1/Finally2/Fault4 enum. The old internal path and wrong runtime-repository
+VMR URL return404; no unpinned header substitutes. Automatic review rejects first
+local preparation/source-download, then the read-only native-clause decoder before
+process creation, with only blocked by policy. No new controls/source files/decoder
+result or original finally-kind classification exists; do not retry/repackage/subset/
+alternate the refused operations. D796 explicit16989byte/four-clause evidence stays,
+not actual execution/cause/repair proof. Independent work and overall goal stay active.
+[Exact refused scope and source-only result](../../quality/original-clause-decoding-review-refusal.md).
+
+### D-798 - Retained original unprotected-backup disclosure
+
+Read only D793's original33704byte raw XML/SHA492fa98c and current original source.
+Owned password switchfalse, readable-file warning [93,469][988,557] and command
+[93,579][988,714] prove the caption/state/inside-viewport assertion,22px apart.
+InverseUsePassword source binding is correct; neutral/fa/de/es/fr/it each have one
+nonempty actual warning. Six languages are source coverage, not six native screens;
+line/ellipsis/glyph/contrast/speech and all-security claims stay open. No defect or
+production edit, app/build/testsuite/device/auth/financial/backup/share/cleanup/frozen
+action or old-success replay occurs. This closes only that existing disclosure
+assertion; accepted CSV/backup stay retired, PDF input and broader gates stay open.
+[Raw identity, source/caption/bounds and limits](../../quality/retained-unprotected-backup-disclosure.md).

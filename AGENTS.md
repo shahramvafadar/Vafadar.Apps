@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## D-797 - Native clause-analysis execution refusals (2026-11-02)
+
+Automatic execution review refuses the proposed D797 local preparation/pinned-source
+download and then a read-only original native EH clause decoder before either process
+starts, returning only blocked by policy. No new clause result/control or original
+finally-kind classification exists. Do not retry/repackage either refused operation,
+run a subset/alternate invocation to obtain that decode, or mark proposed controls
+executed. Existing D796 prefix/body-extent evidence remains valid; independent work
+and the overall goal remain active. The exact scope and source-only observations are
+recorded in `src/Apps/Zanance/docs/quality/original-clause-decoding-review-refusal.md`.
+
 ## D-792 / D-793 - Current sensitive cancellation frontier (2026-11-02)
 
 The owner personally cancels actual CSV and local-backup Android requests in distinct

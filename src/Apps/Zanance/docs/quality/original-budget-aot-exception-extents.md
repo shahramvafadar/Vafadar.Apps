@@ -95,3 +95,11 @@ overall goal stays active.
 Related: [D789 actual original entries](original-budget-aot-method-entries.md),
 [original fault symbols](exact-original-native-fault-symbols.md),
 [current sensitive-route frontier](physical-sensitive-cancellation-completion.md).
+
+## Subsequent D797 clause-decoder refusal
+
+[D797](original-clause-decoding-review-refusal.md) locates the exact original public
+clause enum but both preparation/download and read-only decoding executions are
+refused before process creation. No actual clause-kind table or new control result
+exists; the four clauses above must not be relabelled as finally handlers. The
+explicit body extent remains the completed D796 result, not execution/cause proof.

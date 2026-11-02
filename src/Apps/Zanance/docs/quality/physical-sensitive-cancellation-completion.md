@@ -103,3 +103,11 @@ original-crash/performance work stay active; iOS/provider/Store/release remain s
 
 Related: [interrupted frame and Main binding](current-physical-main-d787-adoption.md),
 [current execution frontier](remaining-delivery-evidence.md).
+
+## Subsequent D798 retained readable-file notice
+
+[D798](retained-unprotected-backup-disclosure.md) reuses the matching original D793
+raw XML to qualify the no-password warning caption and its bounds above the original
+button, with the switch actually false. Six-language resource coverage is source-only;
+no UI/authentication/financial/file operation is replayed and wider layout/security
+claims remain open.
