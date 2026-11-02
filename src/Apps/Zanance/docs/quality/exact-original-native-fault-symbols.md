@@ -120,3 +120,44 @@ Current original Home reader growth and exact runtime library source admit a sep
 
 The original1001byte function is now decoded completely into283byte-matched instructions with an existing signed static utility, without a new package or application/native run. OriginalPC0x2edd7d/488b3b is mov rdi,qword ptr[rbx], an eight-byte read of the expected referenced object's first word on the decoded normal path; the prior field load/zero test are separate. Actual pointer/header/register values and origin remain unknown, and optimized inner DWARF line0 still does not identify a unique C statement. This narrows the operation without claiming cause or repair; the one1061byte temporary container is removed, original artifacts/textual proof retained.
 [Exact original byte mapping, method and limits](exact-original-fault-word-load.md).
+
+
+## D-762 - Recent official fixes do not admit an Android fault remedy
+
+2 November 2026. Review the actual merged changes before proposing a runtime upgrade.
+[Runtime PR136352](https://github.com/dotnet/runtime/pull/136352), merged27October2026
+as152ad965267240a3e23b6b3a24761e37aecc8c79, removes managed attribute-argument
+allocation from UnmanagedCallConv decoding. Its demonstrated failure is inside the AOT
+cross compiler: a64-bit host lays out classes for a32-bit browser-wasm target, so a
+managed Type-array allocation and target layout disagree. The admitted original D678
+record is an already built Android/x64 application's on-device SGen reference scan,
+not that host compiler execution or a32-bit-target/64-bit-host allocation. The PR also
+changes image resolution/null handling; neither is identified in the retained original
+stack. This is not proof that the patch has no benefits elsewhere, only that the
+published compiler reproducer does not establish a remedy for this recorded failure.
+
+[Runtime PR132306](https://github.com/dotnet/runtime/pull/132306), merged19August2026
+as7aac3c7ad953aaa23bad1d7867e7a0ec2c4a629c, changes OP_MOVE reference pin-area emission
+for LLVM-AOT WebAssembly. Read its actual compiler patch rather than inferring a shared
+cause from the words GC or stale reference. The changed emission and definition-count
+setup are under TARGET_WASM. In our exact original revision
+0427b9abbead3fa64c6655eb4290c537397131fa, emit_gc_pin at mini-llvm.c:3982 is likewise
+under TARGET_WASM, and the OP_MOVE exclusion at12672 is inside the guard12670..12674.
+Android/x64 is not this WebAssembly target. The upstream regression's ability to run
+on another runtime does not make its wasm-only compiler fix an admitted Android remedy.
+No new alias stress loop, target switch or replacement runtime is warranted here.
+
+The issue123537 discussion remains open with heterogeneous reported signatures and
+no attached standalone reproducer in its latest8October comment. Neither another
+application's collector/nursery choice nor a preview-runtime report is a causal
+before/after result for our source/module/workload. D700's already present non-array
+card correction and D761's incompatible diagnostic phase remain separate exclusions.
+
+These are two bounded target/phase admissions, not a complete audit of every upstream
+fix. The original referenced object's type, earlier writer and applicable remedy remain
+unknown. Only public source/PR metadata and an exact original compiler-source excerpt
+are newly retained. No compiler/SDK download, package/build/test, device command,
+financial operation, product/runtime/GC change or frozen-scope access occurs. Product
+test count stays unchanged. D752 readiness stays owner-only; D749/D751/D607 remain
+terminal and broader delivery stays active. Select a new concrete original-path input
+before another runtime experiment; do not promote these unrelated reproducers as fixes.

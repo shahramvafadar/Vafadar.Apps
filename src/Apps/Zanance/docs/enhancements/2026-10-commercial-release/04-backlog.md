@@ -9265,3 +9265,16 @@ All frozen scopes remain untouched. Next input must address the original ordinar
 reference-load failure independently of this post-fragment diagnostic. D752 genuine
 readiness and the overall goal remain active; D749/D751/D607 are not repeated.
 [Source and installed-code evidence](../../quality/nursery-pin-check-phase.md).
+
+
+### D-762 - Target and phase admission of recent official runtime fixes
+
+PR136352's demonstrated64-host/32-wasm AOT compiler allocation failure does not match
+the recorded already-built Android/x64 on-device reference scan. PR132306's reference
+MOVE pin-area emission is explicitly TARGET_WASM, including the corresponding guard
+in exact original compiler source. Neither published reproducer admits an Android
+repair here; this does not exclude all other effects/fixes. No runtime upgrade,
+new stress/replay, build/test/device/financial change or frozen-scope access follows.
+Original bad-reference origin remains open. D752 owner readiness and overall goal
+remain active; D749/D751/D607 stay terminal.
+[Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
