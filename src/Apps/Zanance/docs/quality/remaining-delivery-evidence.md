@@ -1,7 +1,7 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
-Reviewed 1 November 2026 against published baseline
-`a1abb9e06f5c6ff73d239af765cf7ccb55150950` and the current canonical backlog.
+Reconciled 2 November 2026 against published baseline
+`3da6ede8a0e030ac91d392144cf15c4a7ddce620` and the current canonical backlog.
 This is a bounded execution audit, not a new product implementation, release approval,
 percentage-complete estimate or a second backlog. The
 [canonical item states](../enhancements/2026-10-commercial-release/04-backlog.md)
@@ -10,9 +10,10 @@ remain authoritative.
 
 ## What the inventory means
 
-Exactly 49 parent-table rows do not begin with `Done`. They include implemented-but-not-
-activated services, gated acceptance, explicitly deferred work and outside-scope items;
-they are not 49 missing features or equal units of effort. Every one appears below.
+The canonical table has 61 unique parent rows: 16 begin with `Done`, and 45 do not.
+Those 45 include implemented-but-not-activated services, gated acceptance, explicitly
+deferred work and outside-scope items; they are not 45 missing features or equal units
+of effort. Every one appears below.
 Rows marked Done also retain their explicitly stated wider platform limits: this lexical
 inventory does not prove every nested acceptance requirement or the complete goal.
 Do not derive a completion percentage or remaining hours by counting these rows.
@@ -111,7 +112,7 @@ stay frozen without retry, subset, alternate method, move, escalation or reuse.
 
 ## Verification and limits
 
-The current canonical table was read directly; the 49-key mapping must equal its complete
+The current canonical table was read directly; the 45-key mapping must equal its complete
 non-Done parent-row set, without duplicates or invented IDs. Local evidence links were
 resolved, documentation whitespace checked and the staged diff reviewed. D737's retained
 actual original-adapter status and the production Android authenticator were inspected;
@@ -120,7 +121,7 @@ unit test, profiling capture or unchanged CI request occurs for this audit. No n
 unit-test count or security/stability/performance/platform acceptance is claimed.
 
 This document clarifies prerequisites and prevents successful work from being replayed.
-It does not close any of the 49 rows or the overall delivery goal. Reassess the frontier
+It does not close any of the 45 rows or the overall delivery goal. Reassess the frontier
 when real owner input, a new failure, selected artifact, original specimen, supported
 diagnostic evidence or external access changes the next executable action.
 
@@ -196,3 +197,14 @@ readiness and broader physical speed/security/platform gates remain separate and
 [D758 per-account balance reuse](home-account-balance-reuse-admission.md) fails its first native latency gate777.1095to803.5409ms after two host admissions. Both product files restore exactly and temporary tests retire; do not reopen unchanged reverse/reference/phone or rescue work. Complete source/32field snapshot and finite visible native guards pass without accepting all offscreen rows or physical performance. All new cleanup succeeds; older frozen scopes and D752 owner readiness remain separate.
 
 [D762 recent-fix admission](exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy) excludes the two named compiler/wasm correction premises for the recorded Android/x64 fault; it is not a complete upstream-fix audit or a new product repair. No runtime experiment follows from their titles.
+
+## D-763 - Current parent inventory count reconciliation
+
+The earlier narrative count 49 was stale even though the actual frontier already mapped
+the 45 current non-Done identifiers exactly. Re-read all 61 unique canonical parent
+rows and compare identifier sets in both directions: 45 frontier keys, no omissions,
+no extras and 16 Done-prefixed rows. Correct only the narrative count/review baseline;
+no canonical item state or acceptance changes. Other locally delivered, target-covered,
+Proposed and owner-gated labels retain their original meanings. Counts are not equal
+work units, a percentage, estimated hours or proof that the overall goal is complete.
+No code/build/test/device/financial or frozen-scope action occurs.
