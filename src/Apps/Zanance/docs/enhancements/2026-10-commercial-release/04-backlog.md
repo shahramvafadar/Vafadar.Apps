@@ -9280,6 +9280,19 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-770 - Original fault before heap-membership branch
+
+Revalidate original public module/debug and all1001bytes/283decodedinstructions.
+Fault0x2edd7d loads the original field value's first word before compare0x2edd80/
+branch0x2edd83; no direct jump enters the prefix and RBX is unchanged after slot load.
+Header flag tests/masks occur later. Therefore this PC does not prove nursery
+membership or justify changing those later masks; earlier reference provenance and
+actual generation/map/type remain unknown. Normal direct control flow only, no
+corrupt-flow exclusion or unique inner C-line claim. No device/build/test/financial/
+runtime/GC change, new binary or frozen-scope action. D752 waits; original cause and
+wider gates remain open.
+[Exact static evidence and causal limits](../../quality/original-fault-before-generation-branch.md).
+
 ### D-769 - Contiguous sorted day grouping host admission
 
 Private original ByDay grouping comparison preserves source references/order/multiplicity,

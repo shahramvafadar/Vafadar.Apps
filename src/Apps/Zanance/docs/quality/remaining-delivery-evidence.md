@@ -88,6 +88,11 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 
 ## Ready work and dependency boundaries
 
+D770's original native common-prefix audit proves the fault precedes the membership
+branch and later header tests/masks. It supplies no actual generation/map or earlier
+writer; do not invent a nursery-only remedy or replay the incompatible pin checker.
+[Exact control-flow boundary](original-fault-before-generation-branch.md).
+
 D769's distinct contiguous sorted-list day-grouping candidate fails the fixed
 late-inversion fallback latency gate at both shapes. Preserve sorted host gains,
 reject before product/native work and do not retune or rescue the unchanged premise.
