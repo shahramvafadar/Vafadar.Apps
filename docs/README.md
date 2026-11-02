@@ -30,7 +30,8 @@ its presence does not establish public hosting, genuine provider acceptance or r
 
 [D-790 current physical Main adoption](../src/Apps/Zanance/docs/quality/current-physical-main-d787-adoption.md)
 records the existing D787 package on Samsung with exact public Home/profile/OS preservation;
-the interrupted D752 original frame remains owner-readiness gated, without accepted SDK Cancel.
+D752 retains its interrupted original frame. [D792/D793](../src/Apps/Zanance/docs/quality/physical-sensitive-cancellation-completion.md)
+subsequently qualify owner-cancelled CSV/local backup; PDF input remains open and no request is pending.
 
 ## Architecture
 

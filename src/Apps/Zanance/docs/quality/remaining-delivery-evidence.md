@@ -28,9 +28,13 @@ occurrence identity and [D791 calendar-endpoint guards](occurrence-calendar-endp
 D791 shipping37d4f655 is ready but unadopted physically. D790 adopts the existing complete D787/d5a59bff APK once without
 reset: Main29901/Home979/141 and three original profiles match every public attribute,
 with exact public ownership and restored OS. This is not complete private-source or
-financial-path acceptance. D752 remains owner-readiness gated: its original pre-SDK CSV
-frame was already interrupted by PID17567 absence before Main action, with no SDK
-Cancel accepted. Do not release/relaunch/replay the dead frame for observation.
+financial-path acceptance. D752 original pre-SDK CSV frame was interrupted by PID17567
+absence before Main action; never release/relaunch/replay that dead frame. Subsequent
+[D792/D793 owner cancellations](physical-sensitive-cancellation-completion.md) accept
+one original CSV and one local-backup cancellation with exact protected cipher/output.
+Both successors retire. PDF remains unrequested/unaccepted: its original empty-report
+button is hidden. Identify a legitimate visible input, without financial replay or
+changing the product for an observer. No native request/current owner wait is pending.
 [Current physical binding and exact limits](current-physical-main-d787-adoption.md).
 
 The following D734/D735/D737/D749 process observations are dated history, not current
@@ -50,7 +54,7 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 | ZCR-SEC-01 | Android/Windows feasibility and adoption exist; native iOS and independent security acceptance remain. |
 | ZCR-SEC-02 | Current protected Android source/fallback evidence exists, including D735; iOS and wider device adoption remain. No Main private-source read is authorized by a public Home check. |
 | ZCR-SEC-03 | D483 Samsung and D520 compatibility key evidence already exist; remaining device/restore and iOS claims need their actual key-lifecycle evidence, not another unchanged key-creation test. |
-| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. D749 qualifies one owner-confirmed original cold face unlock; D751 qualifies one actual original cold cancellation with persistent cover/cipher. Actual enrollment-change behavior, other sensitive/notification routes and platform requirements remain; fingerprint is an unqualified modality, not a requirement to repeat the accepted face path without a distinct defect or changed boundary. Do not replay any of these retired cohorts. |
+| ZCR-SEC-04 | D737 real Samsung device-credential enable/longer return/cancelled-disable is qualified. D749 qualifies one owner-confirmed original cold face unlock; D751 qualifies one actual original cold cancellation with persistent cover/cipher. D792/D793 qualify actual CSV/local-backup cancellation; PDF still lacks a legitimate visible original input. Actual enrollment-change behavior, other sensitive/notification routes and platform requirements remain; fingerprint is an unqualified modality, not a requirement to repeat the accepted face path without a distinct defect or changed boundary. Do not replay any of these retired cohorts. |
 | ZCR-SEC-05 | D263/D521/D522/D524 cover named migration faults and profile cases. Further claims require a specified unqualified upgrade/profile/device boundary; iOS remains later. |
 | ZCR-SEC-06 | Named protected recovery/alias-loss/portable cases already exist; real authentication and later iOS/device recovery remain separate. |
 | ZCR-SEC-07 | D603 proves framework policy rejection, not actual OEM transfer or iOS exclusion. Transfer acceptance requires a real supported destination/workflow. |

@@ -9216,3 +9216,27 @@ frozen action. Used sources/APKs remain; new shipping37d4f655 is not physically 
 Main stillD790/D787d5a59bff. This is not original SGen fault repair/general speed/
 security/A11Y/platform/provider/release acceptance; D752 ownerhold and goal stay active.
 [Actual failures, running Android, package and preservation limits](quality/occurrence-calendar-endpoints.md).
+
+
+### D-792 / D-793 - Original physical CSV and local-backup cancellation
+
+Owner readiness resumes only unaccepted sensitive cases, never the interrupted D752
+frame. Fresh D792 UID10412/PID2736 one visible CSV command and actual owner Back gives
+one SDK Failed/0success, no exception, same ready page and exact protected main/WAL/
+output inventory. Original empty Reports intentionally hides SharePDF; one read-only
+scroll and source inspection preserve the planning failure, armed PDF has0attempts/
+requests/completions, no hidden invocation/financial seed/false pass. Fixed order is
+not weakened. Distinct backup-only D793 UID10413/PID8769 avoids CSV replay; original
+optional no-password empty-fixture path, one visible command and owner Cancel produce
+one Failed/0success, ready page and exact cipher/output, no manual backup/share. An
+original automatic copy already exists before comparison. No credentials captured.
+Two strict192AOT/204ELF/804staticLOAD/offline/v2v3/CRC/ZIP packages pass; product source/
+shipping/old tests/financial operations unchanged. Initial bootstrap literal mismatch
+is only private comment/trailing lines plus declared DI injection, not byte identity.
+FiveOS/locales/boot/geometry/other public packages exact; MainD787/d5a59bff/29901 is
+normally returned without another UI acceptance. Two fresh packages and7hashXML/
+235946bytes retire;2Clean27382files1302929952logicalbytes pass, no supplementary/
+frozen action. OldD752 stays unchanged; CSV/backup accepted, PDF unrequested/open,
+no pending prompt/current owner-readiness block. Broader security/fault/performance/
+platform/provider/release gates and active goal remain separate.
+[Actual owner outcomes, unavailable PDF input and preservation limits](quality/physical-sensitive-cancellation-completion.md).

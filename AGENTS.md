@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## D-792 / D-793 - Current sensitive cancellation frontier (2026-11-02)
+
+The owner personally cancels actual CSV and local-backup Android requests in distinct
+fresh successor fixtures. Each has one Failed/zero-success request, same ready page
+and exact protected main/WAL/output; both fixtures retire. Never repeat these accepted
+cases or the historical cold/auth/financial cohorts. D75217567 remains interrupted,
+not live; its original installation/proofs remain unchanged and may not be relaunched
+or released for observation. The old owner-readiness hold below is dated history.
+PDF has no request or acceptance: original empty reports intentionally hide its button.
+Preserve that preparation failure, do not invoke an invisible command/change product
+visibility/fabricate a phase outcome or replay financial setup to manufacture acceptance.
+Identify a legitimate remaining original PDF input before requesting another owner action.
+No native prompt is currently pending. MainD787/d5a59bff/29901 returns normally; OS,
+owner security settings, private Main and all frozen scopes stay unchanged. No new
+execution/authentication exception or broad security acceptance is granted. See
+`src/Apps/Zanance/docs/quality/physical-sensitive-cancellation-completion.md`.
+
+
 ## D-790 - Current Main binding and interrupted D752 frame (2026-11-02)
 
 Existing D787/d5a59bff complete signed Main is now adopted once without reset;
