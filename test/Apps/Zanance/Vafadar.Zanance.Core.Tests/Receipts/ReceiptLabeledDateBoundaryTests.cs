@@ -5,18 +5,22 @@ namespace Vafadar.Zanance.Core.Tests.Receipts;
 /// <summary>Printed date-field metadata cannot supply a merchant from a clipped receipt body.</summary>
 public sealed class ReceiptLabeledDateBoundaryTests
 {
-    /// <summary>The actual first native OCR keeps missing total evidence rather than borrowing an item price.</summary>
+    /// <summary>The retained D-780 native text now recognizes its exact joined total without borrowing an item price (D-783).</summary>
     [Fact]
-    public void The_actual_joined_native_total_preserves_manual_amount_review()
+    public void The_actual_joined_native_total_preserves_exact_amount_source()
     {
         const string text = "Date: 28/10\nBREAD EUR 7.10\nTOTALEUR 7.10";
         var result = ReceiptParser.Parse(text, new DateOnly(2026, 11, 2));
 
         Assert.Null(result.Merchant);
         Assert.Null(result.Date);
-        Assert.Null(result.Amount);
-        Assert.Equal(ReceiptAmountStatus.NotFound, result.AmountStatus);
-        Assert.Empty(result.Candidates);
+        Assert.Equal(7.10m, result.Amount);
+        Assert.Equal(ReceiptAmountStatus.Found, result.AmountStatus);
+        var candidate = Assert.Single(result.Candidates);
+        Assert.Equal("TOTALEUR 7.10", candidate.Source);
+        Assert.Equal("EUR", candidate.CurrencyCode);
+        Assert.True(candidate.TryMinor("EUR", out var minor));
+        Assert.Equal(710, minor);
     }
 
     /// <summary>Yearless explicitly labelled dates end header search without inventing a purchase year.</summary>

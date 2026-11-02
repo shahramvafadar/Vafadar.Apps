@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-783: recognize an exact joined receipt total and known currency code without changing printed evidence, guessing an item price or accepting damaged amounts.
+
 - D-780: keep supported printed date fields out of suggested receipt merchant names, including labelled day/month fields without a year; leave incomplete purchase dates for manual review.
 
 - D-734: prevent a crash when Android window protection encounters an already-disposed view, preserving the existing screenshot privacy choice.

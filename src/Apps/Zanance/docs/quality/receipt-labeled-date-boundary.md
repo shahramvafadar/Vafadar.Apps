@@ -1,5 +1,8 @@
 # D-780 - Printed date-field merchant boundary
 
+Subsequent D783 resolves only the retained joined-total amount failure using the exact same native OCR text.
+The D780 results below remain historical; see [the later correction](receipt-joined-total-unit.md).
+
 ## Reproduced defect and exact scope
 
 2 November2026. Continue independent Android development while D752 awaits the owner.

@@ -168,7 +168,7 @@ public static partial class ReceiptParser
             for (var i = 0; i < lines.Length; i++)
             {
                 // Remove bounded tax annotations, not everything after "inkl.": the gross amount may follow it.
-                var line = InclusiveTax().Replace(TaxBreakdown().Replace(lines[i], " "), " ");
+                var line = SeparateJoinedTotalUnit(InclusiveTax().Replace(TaxBreakdown().Replace(lines[i], " "), " "));
                 var tokens = Tokens(line);
                 if (!keywords.Any(k => Has(tokens, k)) || NotTotal.Any(k => Has(WithoutTotalPhrases(tokens), k))
                     || NonMoney.Any(k => Has(tokens, k)) || UnitPriceLine().IsMatch(line))
@@ -284,6 +284,23 @@ public static partial class ReceiptParser
             AmountSource = paymentSources.Count > 0 ? string.Join('\n', paymentSources.Distinct().Take(4)) : null,
         };
     }
+
+    /// <summary>Separates only an exact strong total word joined to a complete known ISO currency code.</summary>
+    private static string SeparateJoinedTotalUnit(string line) => WordPattern().Replace(line, match =>
+    {
+        var value = match.Value;
+        if (value.Length <= 3) return value;
+        var end = match.Index + match.Length;
+        // D-783: a missing OCR space is not a misspelled label, unknown unit, or a partial alphanumeric token.
+        // Keep original rows as evidence; only this private matching/amount view receives the separating space.
+        if (end < line.Length && (char.IsLetterOrDigit(line[end])
+            || char.GetUnicodeCategory(line[end]) == UnicodeCategory.ConnectorPunctuation)) return value;
+        var code = value[^3..];
+        if (!code.All(char.IsAsciiLetter)
+            || !Vafadar.Zanance.Core.Money.Currencies.TryGet(code.ToUpperInvariant(), out _)) return value;
+        var label = FoldLatinAccents(FoldPersian(value[..^3].ToLowerInvariant()));
+        return StrongTotal.Contains(label, StringComparer.Ordinal) ? value[..^3] + " " + code : value;
+    });
 
     private static (string? Code, int Factor, string? Label) Unit(string value)
     {
@@ -445,7 +462,7 @@ public static partial class ReceiptParser
         {
             // D-615: a clipped camera frame may start with its date. Item rows below it cannot restore the missing header.
             if (IsMerchantDateBoundary(line, today)) return null;
-            var tokens = Tokens(line);
+            var tokens = Tokens(SeparateJoinedTotalUnit(line));
             if (line != "[page boundary]" && line.Count(char.IsLetter) >= 3
                 && !NotMerchant.Any(k => Has(tokens, k))
                 && !StrongTotal.Concat(WeakTotal).Any(k => Has(tokens, k))

@@ -9280,6 +9280,21 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-783 - Exact joined receipt total and known currency
+
+D780's real `TOTALEUR 7.10` OCR failure is corrected without fuzzy labels or item-price
+fallback: separate only an exact existing strong total word and a complete known
+ASCII ISO code in a private matching view, retaining raw source/exclusions/review.
+25 new cases originally14fail;25+1changed historical+118affected pass,144selected
+and not fullsuite/newcount. StrictWindows/fulloffline384AOT/408ELF/1608LOAD and
+native192/204/804 integrity/policy pass. FreshAPI36/x64/4096/PID4054 actual OCR has
+exact historical text and Found/7.10/EURminor710 with merchant/date null; full20typed
+source/ledger0/OS5/boot/geometry/reverse match. No German/camera/financial replay.
+The fresh package/AVD retire, fourClean pass, no supplementary/frozen action occurs;
+Main/D752/phone remain untouched. Harness edit/no-op-build/zero-filter failures are
+preserved. Original fault/performance and broader gates remain open.
+[Exact defect, native outcome and limits](../../quality/receipt-joined-total-unit.md).
+
 ### D-782 - Tag-occurrence counting rejected at its latency gate
 
 A distinct private candidate replaces original suggestion GroupBy occurrence storage

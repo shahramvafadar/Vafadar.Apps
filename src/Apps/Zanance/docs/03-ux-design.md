@@ -258,6 +258,10 @@ exchange. An unlabelled total is labelled as the account ISO unit, independent o
 The existing currency-change notice remains; if a display unit changes while a receipt value is still applied, Save
 stops and asks the user to choose or enter the amount again. This is receipt review, not an image editor.
 
+An exact strong total word joined to a complete known ISO currency code can supply a suggestion (D-783);
+retain the printed source, original exclusions, explicit review and damaged-number refusal. Do not repair
+unknown codes/labels or substitute item prices. A joined total is not a merchant header.
+
 Recognized printed date fields are metadata, not merchant headers (D-780). Explicit supported date labels can
 end header search even when only day/month are printed; this does not create a purchase-year suggestion.
 Keep real names such as DATE PALM MARKET and unlabelled date-like names intact. Missing or joined total
