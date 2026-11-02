@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-799: leave damaged receipt amounts such as `1,234,56` for review instead of suggesting a much larger amount after stripping the separators.
+
 - D-791: avoid date-range errors when finding the next planned occurrence or shifting a weekend at the limits of the supported date range.
 
 - D-787: keep payments moved far from their original planned date visible in due lists, forecasts and reminders, preserving their original identity and payment safeguards.

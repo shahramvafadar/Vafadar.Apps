@@ -25,7 +25,10 @@ Do not derive a completion percentage or remaining hours by counting these rows.
 
 Current product source includes D780/D783 receipt corrections, D787 distant moved
 occurrence identity and [D791 calendar-endpoint guards](occurrence-calendar-endpoints.md).
-D791 shipping37d4f655 is ready but unadopted physically. D790 adopts the existing complete D787/d5a59bff APK once without
+D799 subsequently adopts the complete shippingfa32ba0a/Main16195 including D791 and
+[the repeated-separator receipt correction](receipt-repeated-separator-boundary.md),
+with immediate Home all141 attributes/public package/OS ownership preserved.
+The following D790 observations are historical: D790 adopts the existing complete D787/d5a59bff APK once without
 reset: Main29901/Home979/141 and three original profiles match every public attribute,
 with exact public ownership and restored OS. This is not complete private-source or
 financial-path acceptance. D752 original pre-SDK CSV frame was interrupted by PID17567

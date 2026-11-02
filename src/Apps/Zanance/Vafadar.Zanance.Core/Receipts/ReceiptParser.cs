@@ -146,6 +146,10 @@ public static partial class ReceiptParser
             var decimals = value.Length - index - 1;
             var groups = value.Count(c => c == separator);
 
+            // D-799: one repeated separator denotes thousands only. A short final
+            // group is damaged evidence, not permission to turn 1,234,56 into 123456.
+            if (groups > 1 && decimals != 3) return false;
+
             // One or two digits after a single separator are cents; three digits (or several separators) are thousands.
             normalized = groups == 1 && decimals is 1 or 2 ? value.Replace(separator, '.') : value.Replace(separator.ToString(), string.Empty);
         }

@@ -125,9 +125,9 @@ platform release gates remain open.
 
 | Delivery track | Current boundary |
 |---|---|
-| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
+| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint/D799 damaged receipt grouping corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | [D-790](src/Apps/Zanance/docs/quality/current-physical-main-d787-adoption.md) adopts complete D787 once without reset; Main29901/Home979/all141 and three profiles/all96 match the immediate baseline; D752 original frame is interrupted; [D792/D793](src/Apps/Zanance/docs/quality/physical-sensitive-cancellation-completion.md) accept CSV/local-backup cancellation while PDF remains open; private DB/key and every financial/device path remain separate |
+| Physical adoption | [D799](src/Apps/Zanance/docs/quality/receipt-repeated-separator-boundary.md) adopts complete shipping fa32ba0a once without reset, including D791; Main16195 and all141 immediate Home attributes/public ownership/OS match. D790 is historical. [D792/D793](src/Apps/Zanance/docs/quality/physical-sensitive-cancellation-completion.md) accept CSV/local-backup cancellation; legitimate PDF input and private DB/key/wider device gates remain open |
 | Performance and stability | The general two-second Home target and general ANR/crash qualification remain open; rejected experiments are retained as historical findings |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |

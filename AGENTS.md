@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-799 - Current physical Main binding (2026-11-02)
+
+Complete shippingfa32ba0a, including D791 calendar endpoints and D799 receipt grouping,
+is adopted once without reset. Ordinary Main16195 replaces historical29901/d5a59bff;
+immediate Home all141 public attributes, Main UID10380/CE155299/DE154603, flags,
+other Zanance package bindings and five OS/boot/geometry stay exact. No private Main
+DB/key or financial/authentication replay occurs. Two new phone XMLs retire hash-
+matched. D752 original interrupted frame/checkpoints stay untouched; its separate
+D799 authorized Main-upgrade receipt records the legitimate code change. Accepted
+CSV/backup cancellations remain retired, PDF still needs legitimate visible input.
+This is current public adoption, not original native-fault/security/performance/release
+acceptance or new authority. Every frozen/refused scope remains frozen. See
+`src/Apps/Zanance/docs/quality/receipt-repeated-separator-boundary.md`.
+
+
 ## D-797 - Native clause-analysis execution refusals (2026-11-02)
 
 Automatic execution review refuses the proposed D797 local preparation/pinned-source

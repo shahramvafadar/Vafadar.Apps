@@ -13400,3 +13400,19 @@ production edit, app/build/testsuite/device/auth/financial/backup/share/cleanup/
 action or old-success replay occurs. This closes only that existing disclosure
 assertion; accepted CSV/backup stay retired, PDF input and broader gates stay open.
 [Raw identity, source/caption/bounds and limits](quality/retained-unprotected-backup-disclosure.md).
+
+### D-799 - Refuse incomplete repeated amount separators
+
+Original TryAmount joined damaged1,234,56 into123456. A narrow repeated-separator
+final-group guard preserves complete grouping/decimals and routes damaged whole rows
+to Review/null without fragment salvage. Baseline20 failures/24 new cases; final24new
+and25 existing affected cases pass,49 distinct. Windows strict/full offline shipping
+384AOT/408ELF/1608staticLOAD and independent192/204/804 pass. Four new original Android
+parser inputs in4491 preserve full20typedsource, no account/ledger/OCR/camera setup.
+One no-reset physical upgrade adopts fa32ba0a/Main16195 including D791; immediate Home
+all141 attributes and public UID/CE/DE/flags/other packages/OS/boot/geometry stay exact.
+No financial/authentication replay or private Main read. Two phone XML103864bytes
+hash-clean; fresh fixture/AVD retires and four standard Clean remove24276files/
+1811780506logicalbytes, no supplementary/frozen action. Broader gates/actual crash
+cause/PDF input remain open; overall goal active.
+[Actual defect, selected tests, native parser and physical binding](quality/receipt-repeated-separator-boundary.md).
