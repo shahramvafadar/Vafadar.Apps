@@ -10,6 +10,15 @@ remain authoritative.
 
 ## What the inventory means
 
+[D800 original resume safeguards](plan-resume-date-ownership.md) now refuse invalid
+overlapping continuation ownership and keep date-error feedback on the ready form.
+Final6a5574d1 shipping is adopted once without reset as Main19128, with all141 immediate
+Home attributes/public package ownership/OS exact; D799/fa32ba0a is historical.
+Preserve the actual native V1 read-cover failure and separate within-version full20
+source proofs: full typed source across the necessary private upgrade is unproven.
+The original metadata setup and accepted native writer refusal are not repeated.
+
+
 D766 subsequently qualifies one current original process-cold100k Home boundary with
 full source equality, without a new native fault or speed acceptance. Preserve the
 observer refusal and single-sample limit; do not replay it as a fault reproducer.

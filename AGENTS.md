@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## D-800 - Current resume safeguard candidate and finite native lineage (2026-11-02)
+
+D800 final complete6a5574d1 is adopted once without reset as phone Main19128;16195/
+D799fa32ba0a is historical. Immediate Home all141 attributes and public UID10380/CEDE/
+flags/other packages/five OS/boot/geometry stay exact, without private Main read or
+financial/authentication replay. Two new phone XMLs retire hash-matched. The fresh
+original emulator prepares metadata once;
+V1 native4679 rejects overlap but exposes a date refusal incorrectly covering its read.
+Final5528 fixes only that unfinished UI after one necessary no-reset upgrade. Do not
+replay its accepted preparation/writer checks or old financial/authentication cohorts.
+Full20 typed source comparisons pass within each version; V1 exposes no full packet/
+digest across upgrade, so cross-version full-source equality is unproven. Matching
+UID/CEDE/flags/selected facts and actual unlinked Core/Data PE bytes are narrower proof.
+The fixture/AVD and owned XML retire. No new execution authority or physical/whole-DB/
+security/performance/native-fault/release acceptance is implied; all frozen scopes stay
+frozen. See `src/Apps/Zanance/docs/quality/plan-resume-date-ownership.md`.
+
+
 ## D-799 - Current physical Main binding (2026-11-02)
 
 Complete shippingfa32ba0a, including D791 calendar endpoints and D799 receipt grouping,

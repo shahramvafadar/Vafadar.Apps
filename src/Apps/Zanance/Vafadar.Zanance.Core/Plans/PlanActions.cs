@@ -55,6 +55,7 @@ public static class PlanActions
     /// paused plan ends before the pause and a continuation owns <paramref name="resumeFrom"/> and later.
     /// </summary>
     /// <returns>The continuation plan, or <see langword="null"/> when the plan was not paused.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">The restart date precedes the original pause.</exception>
     public static Schedule? Resume(Schedule schedule, DateOnly resumeFrom)
     {
         ArgumentNullException.ThrowIfNull(schedule);
@@ -62,6 +63,11 @@ public static class PlanActions
         {
             return null;
         }
+
+        // D-800: the predecessor still owns dates before the pause. A continuation
+        // starting earlier would create two owners for those original occurrences.
+        if (resumeFrom < pausedFrom)
+            throw new ArgumentOutOfRangeException(nameof(resumeFrom), "The restart date cannot precede the pause.");
 
         var next = Copy(schedule);
         next.State = ScheduleState.Active;

@@ -180,6 +180,11 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         ArgumentNullException.ThrowIfNull(next);
         var from = next.ActiveFrom ?? next.Rule.Start;
 
+        // D-800: public callers must not bypass the domain transition and persist
+        // two owners for one original date. Refuse before opening the writer.
+        if (previous.ActiveUntil is not { } until || from <= until)
+            throw new InvalidOperationException("A plan continuation requires disjoint, bounded predecessor dates.");
+
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         void Current() => EnsureOriginalEditorOwner(original, db, isCurrent);
         Current();

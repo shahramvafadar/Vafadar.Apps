@@ -27,8 +27,9 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*">
-        <VerticalStackLayout Padding="16,8" Spacing="4" IsVisible="{Binding Actions.Result, Converter={StaticResource IsNotNullConverter}}">
-            <Label Text="{Binding Actions.Result}" TextColor="{DynamicResource Primary}" />
+        <!-- Refusals have no accepted result, but still need their visible original feedback (D-800). -->
+        <VerticalStackLayout Padding="16,8" Spacing="4" IsVisible="{Binding Actions.HasFeedback}">
+            <Label Text="{Binding Actions.Result}" TextColor="{DynamicResource Primary}" IsVisible="{Binding Actions.Result, Converter={StaticResource IsNotNullConverter}}" />
             <Label Text="{Binding Actions.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding Actions.Feedback, Converter={StaticResource IsNotNullConverter}}" />
         </VerticalStackLayout>
         <Grid Grid.Row="1">

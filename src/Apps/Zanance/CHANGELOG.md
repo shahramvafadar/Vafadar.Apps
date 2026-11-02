@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-800: reject a plan restart before its pause and overlapping split dates; show the explanation while retaining the ready form and entered date.
+
 - D-799: leave damaged receipt amounts such as `1,234,56` for review instead of suggesting a much larger amount after stripping the separators.
 
 - D-791: avoid date-range errors when finding the next planned occurrence or shifting a weekend at the limits of the supported date range.

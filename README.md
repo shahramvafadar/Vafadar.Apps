@@ -125,9 +125,9 @@ platform release gates remain open.
 
 | Delivery track | Current boundary |
 |---|---|
-| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint/D799 damaged receipt grouping corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
+| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint/D799 damaged receipt grouping and D800 resume ownership/input-feedback corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | [D799](src/Apps/Zanance/docs/quality/receipt-repeated-separator-boundary.md) adopts complete shipping fa32ba0a once without reset, including D791; Main16195 and all141 immediate Home attributes/public ownership/OS match. D790 is historical. [D792/D793](src/Apps/Zanance/docs/quality/physical-sensitive-cancellation-completion.md) accept CSV/local-backup cancellation; legitimate PDF input and private DB/key/wider device gates remain open |
+| Physical adoption | [D800](src/Apps/Zanance/docs/quality/plan-resume-date-ownership.md) adopts complete shipping6a5574d1 once without reset as Main19128; all141 immediate Home attributes/public package ownership/OS match. D799/D790 are historical. [D792/D793](src/Apps/Zanance/docs/quality/physical-sensitive-cancellation-completion.md) accept CSV/local-backup cancellation; legitimate PDF input and private DB/key/wider device gates remain open |
 | Performance and stability | The general two-second Home target and general ANR/crash qualification remain open; rejected experiments are retained as historical findings |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |

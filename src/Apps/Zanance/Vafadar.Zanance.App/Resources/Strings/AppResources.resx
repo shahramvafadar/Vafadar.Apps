@@ -8714,4 +8714,7 @@ Original XML SHA-256: {5}</value>
     <value>Available items</value>
     <comment>Compact page heading; keep the complete original menu and explanatory copy.</comment>
   </data>
+  <data name="Plan_ResumeBeforePause" xml:space="preserve">
+    <value>Choose a restart date on or after the date the plan was paused.</value>
+  </data>
 </root>

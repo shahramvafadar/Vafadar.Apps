@@ -8675,4 +8675,7 @@ Original-XML SHA-256: {5}</value>
   <data name="ActiveItems_PageTitle" xml:space="preserve">
     <value>Elemente</value>
   </data>
+  <data name="Plan_ResumeBeforePause" xml:space="preserve">
+    <value>Wählen Sie als Neustart den Tag der Pause oder ein späteres Datum.</value>
+  </data>
 </root>

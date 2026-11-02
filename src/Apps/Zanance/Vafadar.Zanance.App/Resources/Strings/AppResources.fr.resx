@@ -8652,4 +8652,7 @@ SHA-256 du XML original : {5}</value>
   <data name="ActiveItems_PageTitle" xml:space="preserve">
     <value>Éléments disponibles</value>
   </data>
+  <data name="Plan_ResumeBeforePause" xml:space="preserve">
+    <value>Choisissez une date de reprise égale ou postérieure au jour de mise en pause du plan.</value>
+  </data>
 </root>

@@ -22,9 +22,11 @@ public sealed partial class PlanDetailActions(PlanStore plans, Translator transl
     /// <summary>Gets the confirmation/write lifetime, independently of a page read.</summary>
     [ObservableProperty] public partial bool IsBusy { get; private set; }
     /// <summary>Gets translated original refusal or known accepted follow-through feedback.</summary>
-    [ObservableProperty] public partial string? Feedback { get; private set; }
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(HasFeedback))] public partial string? Feedback { get; private set; }
     /// <summary>Gets an actual accepted result before another view, notification or route can fail.</summary>
-    [ObservableProperty] public partial string? Result { get; private set; }
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(HasFeedback))] public partial string? Result { get; private set; }
+    /// <summary>Gets whether either a refusal or a known accepted result needs the original action banner.</summary>
+    public bool HasFeedback => Feedback is not null || Result is not null;
     /// <summary>Gets the last actual accepted transition without renewing its original source authority.</summary>
     public PlanDetailChange? AcceptedChange { get; private set; }
     /// <summary>Gets a failure for the original page's covered reload; it never grants another writer.</summary>
@@ -109,9 +111,14 @@ public sealed partial class PlanDetailActions(PlanStore plans, Translator transl
             if (accepted) AcceptedChange = change;
             if (accepted ? OwnerCurrent() : Current())
             {
-                Failure = exception;
+                var invalidResume = !accepted && operation == PlanDetailOperation.Resume
+                    && exception is ArgumentOutOfRangeException { ParamName: "resumeFrom" };
+                // D-800: a refused date leaves its valid read/draft ready for correction;
+                // it is not a failed source read requiring the covered Retry path.
+                Failure = invalidResume ? null : exception;
                 if (accepted) Result = translator["Plan_DetailChanged"];
                 Feedback = accepted ? translator["Plan_DetailChangedFollowUpFailed"]
+                    : invalidResume ? translator["Plan_ResumeBeforePause"]
                     : CommercialFailureMessage.OrFallback(exception, translator, "Plan_DetailActionFailed");
             }
             return accepted ? change : null;

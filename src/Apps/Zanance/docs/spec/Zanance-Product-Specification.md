@@ -12566,3 +12566,25 @@ hash-clean; fresh fixture/AVD retires and four standard Clean remove24276files/
 1811780506logicalbytes, no supplementary/frozen action. Broader gates/actual crash
 cause/PDF input remain open; overall goal active.
 [Actual defect, selected tests, native parser and physical binding](../quality/receipt-repeated-separator-boundary.md).
+
+### D-800 - Original resume date ownership and visible input refusal
+
+Before-pause continuation dates could overlap original predecessor ownership; forged
+public split writes also accepted overlap/unbounded ranges. Domain pre-mutation and
+atomic pre-writer guards now refuse them. Baseline11fail/14new; fourteen new and two
+existing affected cases pass across versioned checks. An actual native V1 input then
+exposes the read-cover mistake; the strengthened action assertion fails and only that
+changed case continues after correction. The ready form/raw date and visible error
+now survive without acceptance. All six resource translations exist; not six native
+screens. Final strict Windows/full offline shipping384AOT/408ELF/1608staticLOAD and
+native192/204/804 pass. One original metadata preparation;4679 writer refusal retained,
+necessary no-reset5528 continues only unfinished UI. UID/CEDE/flags/unlinked CoreData
+exact, selected source adopted read-only; full20 comparisons within each version pass,
+but full typed source across that upgrade is unproven. No financial/native-auth replay.
+Fresh fixture/AVD and five158448byte XML retire; five standard Clean remove29150files/
+2114539488logicalbytes, no supplementary/frozen action. One physical no-reset upgrade
+adopts6a5574d1/Main19128 from16195 with all141 Home attributes/public metadata/OS exact;
+two phone XML103864bytes hash-clean, no private Main read or financial/auth replay.
+The pre-install semantic-caption observer refusal is retained. Broader gates and
+overall goal stay open.
+[Exact failure, original native continuation and source limits](../quality/plan-resume-date-ownership.md).
