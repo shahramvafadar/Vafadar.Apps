@@ -98,6 +98,8 @@ Open ───────┼── skip ─────────────
 ```
 
 Future / Due / Overdue are derived from the (overridden) due date and today; they are never stored.
+Explicit due-date moves have no400day distance limit. Resolve their original rule/slice identity without
+inventing occurrences; complete due work includes valid overrides before the series start (D-787).
 Early confirmation keeps the real payment date on the entry (FIN-07, AT-28). One active settlement per occurrence in
 phase 1 (REC-14).
 

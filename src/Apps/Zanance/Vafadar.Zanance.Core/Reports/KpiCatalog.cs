@@ -277,7 +277,7 @@ public static class KpiCatalog
                 continue;
             }
 
-            var since = schedule.ActiveFrom ?? schedule.Rule.Start;
+            var since = Occurrences.DueRangeStart(schedule, stateList);
             foreach (var occurrence in Occurrences.Between(schedule, stateList, since, horizon, today).Where(o => o.IsOpen))
             {
                 items.Add(new CommitmentItem(schedule.Name, account.CurrencyCode, occurrence.DueDate, occurrence.Outstanding,

@@ -189,7 +189,7 @@ public static class ForecastCalculator
         // Open occurrences only: a settled one is already in the ledger and must not be counted again (FOR-03, AT-42).
         foreach (var schedule in PlanActions.InForce(schedules))
         {
-            var since = schedule.ActiveFrom ?? schedule.Rule.Start;
+            var since = Occurrences.DueRangeStart(schedule, stateList);
             foreach (var occurrence in Occurrences.Between(schedule, stateList, since, horizon, baseDate).Where(o => o.IsOpen))
             {
                 var overdue = occurrence.DueDate < baseDate;

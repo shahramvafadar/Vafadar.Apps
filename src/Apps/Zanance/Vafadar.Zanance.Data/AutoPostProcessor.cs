@@ -53,7 +53,7 @@ public sealed class AutoPostProcessor(IDbContextFactory<ZananceDbContext> contex
 
             foreach (var schedule in schedules.Where(s => s.State == ScheduleState.Active))
             {
-                var since = schedule.ActiveFrom ?? schedule.Rule.Start;
+                var since = Occurrences.DueRangeStart(schedule, states);
                 var open = Occurrences.OpenUpTo(schedule, states, today, since);
                 var canPost = PlanActions.AutoPostBlockedBy(schedule, accounts) is null;
                 foreach (var occurrence in open)

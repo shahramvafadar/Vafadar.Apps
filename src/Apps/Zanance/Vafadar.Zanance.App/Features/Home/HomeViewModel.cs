@@ -662,7 +662,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var currency = _homeCurrency;
         var computation = await Task.Run(() => new
         {
-            Due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start))
+            Due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, Occurrences.DueRangeStart(s, states)))
                 .Where(o => work.AllowsOccurrence(o, today)).ToList(),
             Upcoming = schedules.SelectMany(s => Occurrences.Between(s, states, today.AddDays(-400), today.AddDays(14), today))
                 .Where(o => o.IsOpen && work.AllowsOccurrence(o, today)).OrderBy(o => o.DueDate).Take(3).ToList(),

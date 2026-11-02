@@ -45,6 +45,36 @@ public sealed class AutomaticOccurrenceWriteTests : IDisposable
     }
 
     [Fact, Trait("AT", "AT-140")]
+    public async Task An_early_distant_moved_suppressed_occurrence_is_reviewed_without_posting_or_source_changes()
+    {
+        var f = await FixtureAsync();
+        var original = Day.AddDays(800);
+        f.Plan.Rule.Start = original;
+        await f.Actor.GetRequiredService<PlanStore>().SaveScheduleAsync(f.Plan, Ct);
+        await using (var db = await f.Actor.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+        {
+            db.OccurrenceStates.Add(new OccurrenceState
+            {
+                ScheduleId = f.Plan.Id, OriginalDate = original, DueDate = Day.AddDays(-2),
+                AutoPostSuppressed = true,
+            });
+            await db.SaveChangesAsync(Ct);
+        }
+
+        var before = await SnapshotAsync(f.Automatic);
+        var result = await f.Processor.RunAsync(Day, Ct);
+
+        Assert.Equal(new AutoPostResult(0, 1), result);
+        Assert.Equal(before, await SnapshotAsync(f.Automatic));
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+        var state = Assert.Single(await f.Plans.GetStatesAsync(f.Plan.Id, Ct));
+        Assert.Equal(original, state.OriginalDate);
+        Assert.Equal(Day.AddDays(-2), state.DueDate);
+        Assert.True(state.AutoPostSuppressed);
+        Assert.Null(state.EntryId);
+    }
+
+    [Fact, Trait("AT", "AT-140")]
     public async Task Manual_part_after_candidate_read_prevents_automatic_full_money()
     {
         var f = await FixtureAsync(); string? reviewed = null; var storeEvents = 0; var planEvents = 0;

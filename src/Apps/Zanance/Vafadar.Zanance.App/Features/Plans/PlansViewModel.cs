@@ -203,7 +203,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
         var schedules = source.Work.Schedules; var states = source.Work.States; var work = source.Work.Work;
         IEnumerable<PreparedRow> rows; var none = schedules.Count == 0;
         if (segment == 0)
-            rows = PlanActions.InForce(schedules).SelectMany(s => Occurrences.OpenUpTo(s, states, today, s.ActiveFrom ?? s.Rule.Start))
+            rows = PlanActions.InForce(schedules).SelectMany(s => Occurrences.OpenUpTo(s, states, today, Occurrences.DueRangeStart(s, states)))
                 .Where(o => work.AllowsOccurrence(o, today)).OrderBy(o => o.DueDate).Select(o => new PreparedRow(o.Schedule, o));
         else if (segment == 1)
             rows = PlanActions.InForce(schedules).SelectMany(s => Occurrences.Between(s, states, today.AddDays(1), today.AddDays(UpcomingDays), today))

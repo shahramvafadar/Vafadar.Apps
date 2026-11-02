@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-787: keep payments moved far from their original planned date visible in due lists, forecasts and reminders, preserving their original identity and payment safeguards.
+
 - D-783: recognize an exact joined receipt total and known currency code without changing printed evidence, guessing an item price or accepting damaged amounts.
 
 - D-780: keep supported printed date fields out of suggested receipt merchant names, including labelled day/month fields without a year; leave incomplete purchase dates for manual review.

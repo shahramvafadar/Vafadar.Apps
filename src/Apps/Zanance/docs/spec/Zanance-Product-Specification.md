@@ -12380,6 +12380,26 @@ reuse. Used source/binary/evidence stays outside. Original cause/actual classifi
 D752 readiness and broader goal remain open; D749/D751/D607 are not replayed.
 [Exact boundary, evidence and frozen scopes](../quality/bounded-native-fault-classification.md).
 
+### D-787 - Complete distant moved occurrence identity
+
+Ten original failures expose explicit moved due dates outside the generated400day
+window; the first correction leaves one real consumer lower-bound failure, retained.
+Resolve only missing explicit original identities through Find, preserve number/order/
+slice/status/amount, and use complete valid due bounds in Forecast/KPI/Home/Plans/
+automatic discovery.22new Core+1new no-post/source-equal data+43affected existing pure
+Core cases pass,66distinct selected; old successful financial cohorts are not replayed.
+StrictWindows/fullOffline384AOT408ELF1608LOAD and native192/204/804 pass; all own AOT,
+v2v3/CRC/ZIP16KiB/offline/nondebuggable witnesses match. FreshAPI36/x64/4096 UID10216/
+PID4424 originalHome andPlans visibly show both800day-moved identities, due2 and35EUR
+unpaid commitments, with ledger0/opening0/full20typedsource equal. Preserve introductory
+modal/text-only-tab/reminder-fixture/build/witness-name observer refusals; same source/
+process continues, no setup/payment/permission/auth replay. Original5OS/geometry/boot/
+reverse restore;5XML54191byte hash-match and local raw stays. Fresh package/AVD retire;
+two historical uninstall Zen Log lines remain, no active alarm/intent/notification.
+FiveClean29286file2096738105logicalbyte pass; no supplementary/frozen action. Shipping
+d5a59bff remains unadopted physically. D752 and original fault/performance/broader gates
+stay open. [Complete defect, original native evidence and limits](../quality/distant-moved-occurrence-identity.md).
+
 ### D-786 - Current public CoreLib managed/AOT identity
 
 The application actually selects SourceGen; do not dismiss the official MAUI38281

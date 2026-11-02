@@ -57,8 +57,8 @@ public sealed record Occurrence(
 /// <summary>Computes occurrences of plans and the entries that settle them (§6, §7).</summary>
 public static class Occurrences
 {
-    // Moved due dates may lie far from their original date; look this far back for originals whose due date moved
-    // into the requested range.
+    // Retain padding for implicit weekend/holiday shifts. Explicit overrides outside
+    // this generated window are resolved by original identity below (D-787).
     private const int MoveWindowDays = 400;
 
     /// <summary>Returns the occurrences whose effective due date lies in [<paramref name="from"/>, <paramref name="to"/>].</summary>
@@ -92,6 +92,19 @@ public static class Occurrences
             }
         }
 
+        // REC-14 does not limit how far a user can move one due date. Resolve only
+        // explicit overrides missed by the bounded generation window, without scanning
+        // all earlier/future rule dates or adding an already generated identity twice.
+        foreach (var state in byDate.Values)
+        {
+            if ((state.OriginalDate < searchFrom || state.OriginalDate > searchTo)
+                && state.DueDate is { } due && due >= from && due <= to
+                && Find(schedule, [state], state.OriginalDate, today) is { } moved)
+            {
+                result.Add(moved);
+            }
+        }
+
         return [.. result.OrderBy(o => o.DueDate).ThenBy(o => o.Number)];
     }
 
@@ -104,6 +117,27 @@ public static class Occurrences
         var scheduled = Recurrence.Between(schedule.Rule, original, original).FirstOrDefault();
         return scheduled.Number == 0 ? null : Create(schedule, scheduled,
             states.FirstOrDefault(s => s.ScheduleId == schedule.Id && s.OriginalDate == original), today);
+    }
+
+    /// <summary>
+    /// Gets the inclusive lower bound for complete due work. An explicit occurrence
+    /// moved before the series starts must remain visible as due or overdue (REC-14).
+    /// </summary>
+    public static DateOnly DueRangeStart(Schedule schedule, IEnumerable<OccurrenceState> states)
+    {
+        ArgumentNullException.ThrowIfNull(schedule);
+        ArgumentNullException.ThrowIfNull(states);
+        var first = schedule.ActiveFrom ?? schedule.Rule.Start;
+        foreach (var state in states)
+        {
+            if (state.ScheduleId == schedule.Id && state.DueDate is { } due && due < first
+                && Find(schedule, [state], state.OriginalDate, due) is not null)
+            {
+                first = due;
+            }
+        }
+
+        return first;
     }
 
     /// <summary>Returns the open occurrences due on or before <paramref name="today"/>, oldest first.</summary>
