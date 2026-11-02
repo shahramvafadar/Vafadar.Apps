@@ -125,7 +125,7 @@ platform release gates remain open.
 
 | Delivery track | Current boundary |
 |---|---|
-| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
+| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
 | Physical adoption | [D-790](src/Apps/Zanance/docs/quality/current-physical-main-d787-adoption.md) adopts complete D787 once without reset; Main29901/Home979/all141 and three profiles/all96 match the immediate baseline; D752 original frame is interrupted and owner cancellation remains open; private DB/key and every financial/device path remain separate |
 | Performance and stability | The general two-second Home target and general ANR/crash qualification remain open; rejected experiments are retained as historical findings |

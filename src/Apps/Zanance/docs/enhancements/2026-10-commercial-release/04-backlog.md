@@ -9663,3 +9663,22 @@ D752 provider/Activity/release/relaunch/CSV/auth occurs. Owner readiness remains
 Public UI/code adoption is not private DB/key, every financial path, general crash,
 speed/security/A11Y/iOS/provider/Store/release acceptance; wider delivery stays active.
 [Actual source binding, UI preservation and interrupted hold](../../quality/current-physical-main-d787-adoption.md).
+
+
+### D-791 - Calendar endpoints in original occurrence search
+
+Nine real baseline date-range exceptions among10new cases are corrected by bounding
+NextOpen's inclusive horizon at MaxValue and stopping exhausted search there, plus
+retaining the boundary date when a Before/After weekend step cannot be represented.
+Normal horizons/padding/identity/state/count/31step rules remain;10new+6affected pure
+Core cases pass. StrictWindows/fullOffline384AOT408ELF1608staticLOAD and native192/
+204/804/signature/CRC/ZIP pass with unchanged Mono14. FreshAPI36/x64/4096 UID10216/
+PID4539 executes10 original calculator cases once on original onboarding, full20typed
+source equal and account/plan/ledger setup0. Windows globalRID/SDKhost/filter and early
+boot refusals stay; same process continues, no financial/auth/old-suite/phone replay.
+OS5/boot/geometry/reverse exact;freshpackage/AVD26file4537136745logicalbyte retire,
+shared5038/66176 remains. FourClean28916file1941526062byte pass; no supplementary/
+frozen action. Used sources/APKs remain; new shipping37d4f655 is not physically adopted,
+Main stillD790/D787d5a59bff. This is not original SGen fault repair/general speed/
+security/A11Y/platform/provider/release acceptance; D752 ownerhold and goal stay active.
+[Actual failures, running Android, package and preservation limits](../../quality/occurrence-calendar-endpoints.md).

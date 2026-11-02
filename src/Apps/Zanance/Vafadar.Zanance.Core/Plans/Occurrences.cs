@@ -151,10 +151,16 @@ public static class Occurrences
         var list = states.ToList();
         for (var window = 62; window <= 62 * 64; window *= 4)
         {
-            if (Between(schedule, list, from, from.AddDays(window), today).FirstOrDefault(o => o.IsOpen) is { } next)
+            // A valid final-calendar occurrence must not fail while extending the
+            // search horizon. Once MaxValue is searched, no later window exists (D-791).
+            var end = window >= DateOnly.MaxValue.DayNumber - from.DayNumber
+                ? DateOnly.MaxValue : from.AddDays(window);
+            if (Between(schedule, list, from, end, today).FirstOrDefault(o => o.IsOpen) is { } next)
             {
                 return next;
             }
+
+            if (end == DateOnly.MaxValue) break;
         }
 
         return null;

@@ -121,6 +121,9 @@ public sealed class RecurrenceRule
         var step = WeekendShift == WeekendShift.Before ? -1 : 1;
         for (var i = 0; i < 31 && ((WeekendDays & (1 << (int)date.DayOfWeek)) != 0 || (holidays && PublicHolidays.IsHoliday(HolidayRegion, date))); i++)
         {
+            // No representable working date exists farther in this direction.
+            // Retain the boundary date instead of throwing from AddDays (D-791).
+            if ((step < 0 && date == DateOnly.MinValue) || (step > 0 && date == DateOnly.MaxValue)) break;
             date = date.AddDays(step);
         }
 
