@@ -8992,3 +8992,27 @@ officialAVD25files4855510309bytes and supplementary25scopes6709files1368321201by
 succeed; five signed packages/source/evidence remain, older frozen scopes untouched.
 D752 owner readiness and broader physical speed/stability/security/platform/goal remain
 open. [Full comparison and limits](quality/home-account-balance-reuse-admission.md).
+
+### D-759 - Bounded native-exit code context, cause still open
+
+A code-only OS reader validates the exact native exit, package, UID, prior PID, crashed
+thread, BuildId and executable relative range. Actual Android execution passes 204
+synthetic cases, four filesystem refusals and ten exact system-metadata cases; denied
+named-FIFO creation remains unqualified. One empty-package fatal control resolves its
+known origin. One changed original diagnostic startup, PID7080/UID10217, then ends with
+reason5/status6 and a null trace. Its thread7166 record has only two frames: libc and
+libmonodroid at0xb30af, statically inside abort_application's abort call. No earlier
+caller, originating assertion or SGen reference cause is proved. Do not restart that
+diagnostic, replay successful native/financial work or introduce a speculative repair.
+Strict ordinary/diagnostic offline192AOT/204ELF/804 static LOADs and exact Mono14 pass;
+whole-PE identity and performance are not claimed. Ordinary7273 restores UID/CE/DE/boot
+and passes complete typed source and all32-field ledger controls. Both fresh packages,
+three hash-matched XMLs/16182bytes and the owned AVD retire; five OS values, geometry,
+boot and shellUID2000 restore, shared5038/66176 survives, and the phone is untouched.
+Three Clean commands remove27497files/1456721080 logicalbytes; official AVD deletion
+removes25files/5030950170bytes. Supplementary deletion of13 targets/2005files/
+430177273bytes is blocked before process and frozen without retry, subset, alternate,
+move, escalation or reuse. Three used signed APKs, source and evidence stay outside.
+Product/runtime stay exact and no permanent product tests are added. D752 genuine
+readiness and broader delivery remain open; settled authentication/D607 are not replayed.
+[Full evidence and exact frozen scopes](quality/bounded-native-exit-code-context.md).

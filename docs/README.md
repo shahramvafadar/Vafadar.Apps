@@ -13,6 +13,7 @@ D-734 subsequently repairs the observed physical disposed-dialog-peer exception;
 [finite native sequence](../src/Apps/Zanance/docs/quality/disposed-native-window-peer.md) preserves the original failure and wider limits.
 [D-750 rejected fused normalization](../src/Apps/Zanance/docs/quality/fused-text-normalization.md) preserves host/functional evidence, the failed native memory gate and exact source/phone restoration; wider gates stay open.
 [D-751 original cold cancellation](../src/Apps/Zanance/docs/quality/physical-original-cold-cancellation.md) separately qualifies one owner-cancelled native request with persistent cover and exact fixture cipher; original Main is unchanged.
+[D-759 bounded native-exit context](../src/Apps/Zanance/docs/quality/bounded-native-exit-code-context.md) locates the terminating Android wrapper through code-only OS evidence; the missing earlier caller and general crash cause remain open, with exact source restoration and cleanup limits recorded.
 
 The optional [self-hosted service guide](../eng/hosting/README.md) covers existing operational tooling;
 its presence does not establish public hosting, genuine provider acceptance or release readiness.

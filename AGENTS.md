@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-759 terminal bounded native-exit context (2026-11-02)
+
+Keep product/runtime/financial policy exact. The bounded code-only OS reader passes204
+synthetic cases,4 filesystem refusals and10 exact system-metadata cases; named FIFO
+creation is denied and unqualified. One deliberately fatal empty control proves the
+actual native path without raw tombstone/memory/register/text export. One changed
+original diagnostic startup7080/UID10217 ends reason5/status6, requested thread7166;
+its only2 frames locate libc and libmonodroid abort_application/0xb30af, not the
+originating assertion or a Mono bad-reference caller. No diagnostic restart, old
+successful context matrix, financial replay, speculative fix or general stability claim.
+Ordinary7273 restores the same UID/CEDE/boot and passes full typed source/all32-field
+ledger control. Both fresh packages/3XML16182bytes/ownedAVD retire;5OS/geometry/boot and
+shellUID2000 restore, shared5038/66176 survives, phone untouched.3Clean remove27497files/
+1456721080logicalbytes and officialAVD25files/5030950170bytes. Supplementary13 targets/
+2005files/430177273bytes are blocked before process and frozen exactly in
+`src/Apps/Zanance/docs/quality/bounded-native-exit-code-context.md`: no retry/subset/
+alternate/move/escalation/reuse. Used signed/source/evidence stays outside. D752 owner
+readiness and wider delivery goal remain active; D749/D751/D607 successes stay settled.
+
 ## D-758 terminal rejected Home per-account balance reuse (2026-11-02)
 
 Keep the original product exact. Two host processes admit operation-local reuse, but
