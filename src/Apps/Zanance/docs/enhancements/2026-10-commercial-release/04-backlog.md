@@ -9706,3 +9706,21 @@ frozen action. OldD752 stays unchanged; CSV/backup accepted, PDF unrequested/ope
 no pending prompt/current owner-readiness block. Broader security/fault/performance/
 platform/provider/release gates and active goal remain separate.
 [Actual owner outcomes, unavailable PDF input and preservation limits](../../quality/physical-sensitive-cancellation-completion.md).
+
+
+### D-794 - Per-step recurrence value dates rejected before native admission
+
+A private count/two-date representation removes original per-step List allocation,
+keeping400day padding, explicitFind/calendar/number/order and all product source exact.
+27 full occurrence/source/reference and2160 mixed valid/validation-refused generator
+comparisons pass. Strict build passes after retaining duplicate-public-type copy
+refusal; no permanent product tests are added. Nine100plan shapes use one-second
+warmup/role,7alternatingpairs/3passes; full input JSONs are retained. Actual.NET10.0.14/
+X64/PID84224 daily4.0905to3.9847ms and weekly0.6182to0.6130 improve only2.58648%/0.84115%,
+missing fixed5% despite allocation ratios0.51204/0.53057. Reject first process before
+second/native/product; no retune/monthly-only rescue or window change. Persian179ms
+component shape is a separate observation, not exclusive attribution/Android speed.
+OneClean49files12008349logicalbytes pass,28files405991bytes remain; no supplementary/
+frozen/device/SDKauth/financial/old-suite action. D792/D793 successes and PDF missing
+input stay; original fault/performance/broader gates and goal remain open.
+[Fixed gates, complete values, source identity and limits](../../quality/recurrence-value-date-rejection.md).
