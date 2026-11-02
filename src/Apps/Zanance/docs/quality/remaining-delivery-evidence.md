@@ -115,6 +115,13 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 
 ## Ready work and dependency boundaries
 
+[D801 immutable tag-query preparation](tag-query-preparation-rejection.md) fails its
+first host gate at both hash-miss sizes and the plain10000 control, despite tag-hit/
+allocation gains. It is separate from D777 input-value caching. Original source stays
+exact; do not resume second-process/native/product or selectively rescue hashtag-hit.
+This closes only that component premise, with no whole-UI/Home speed acceptance.
+
+
 D771 finds the original interpreter finally-OSR protection absent but does not establish
 that execution path for the original fault. Current Release evaluates to interpreter
 False/AOTNormal; do not force another mode or treat upstream reproducer success as a

@@ -13438,3 +13438,19 @@ two phone XML103864bytes hash-clean, no private Main read or financial/auth repl
 The pre-install semantic-caption observer refusal is retained. Broader gates and
 overall goal stay open.
 [Exact failure, original native continuation and source limits](quality/plan-resume-date-ownership.md).
+
+### D-801 - Immutable tag-query preparation rejected before product work
+
+A private original EntrySearch variant prepares only the query's tag suffix once,
+without caching normalized row values or changing predicate/source semantics. Actual
+.NET10.0.14/X64/32392 passes298 private contracts and full32-field/ordered-reference/
+tag-ownership checks on10000/100000 inputs. Fixed six alternating pairs/two passes
+show hashtag-miss gains1.0343%/3.0273% below5% and plain10000 regression8.6377% above5%.
+Hash-hit gains and lower allocations do not rescue three failed latency gates; all
+allocation/additional high-water limits pass. Reject before second process/native/
+product work, without retuning/resampling. Private strict build is clean; product
+source/runtime/GC/test count and all devices/financial operations stay unchanged.
+Standard Clean removes49files/11970289logicalbytes, no supplementary/frozen action;
+used source/full raw inputs/pair evidence stay. This is search component admission,
+not complete UI/Home speed or a production regression. Goal and broader gates stay open.
+[Actual fixed gate and retained source evidence](quality/tag-query-preparation-rejection.md).
