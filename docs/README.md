@@ -92,3 +92,9 @@ gate. Original product source is restored; this is no adopted speed or stability
 [D757 original reference-array end](../src/Apps/Zanance/docs/quality/original-reference-array-end-admission.md) narrows one static native-fault hypothesis with exact original code; reference origin and general stability remain unresolved.
 
 [D758 Home balance reuse](../src/Apps/Zanance/docs/quality/home-account-balance-reuse-admission.md) passes host admission but fails its first complete native latency gate; product source is restored and temporary tests retire. No speed improvement is adopted.
+
+[D805 pending Play task ownership](../src/Apps/Zanance/docs/quality/google-play-pending-task-ownership.md) repairs a second refusal poisoning
+the original SDK task. Six new source-linked cases and controlled compiled preconnection
+admission pass; no real Store connection/purchase, financial/auth/photo or phone replay.
+The affected Billing edition is not the default offline Main. Genuine Store/provider
+and broader security/stability/performance/platform/release gates remain open.

@@ -159,8 +159,12 @@ internal sealed class GooglePlayBillingStore : Java.Lang.Object, IBillingNativeS
         NativeBillingReplacement? replacement = null)
     {
         if (intent == Guid.Empty || accountBinding.Length != 64 || !accountBinding.All(char.IsAsciiHexDigit)) throw new NativeBillingRefusal("StoreAccountBindingRequired");
+        // D-805: reject a new observer before reconnecting while the original native task is outstanding.
+        // The check under _queries still owns admission when callers raced through connection setup.
+        if (_payment is { Task.IsCompleted: false }) throw new NativeBillingRefusal("OriginalStorePaymentPending");
         var client = await ConnectedAsync(ct); await _queries.WaitAsync(ct);
         Task<IReadOnlyList<NativeBillingPurchase>> waiting;
+        TaskCompletionSource<IReadOnlyList<NativeBillingPurchase>>? ownPayment = null;
         try
         {
             if (_payment is { Task.IsCompleted: false }) throw new NativeBillingRefusal("OriginalStorePaymentPending");
@@ -186,7 +190,7 @@ internal sealed class GooglePlayBillingStore : Java.Lang.Object, IBillingNativeS
             var parameters = parametersBuilder.SetProductDetailsParamsList([details.Build()!])!.Build()!;
             _paymentIntent = intent; _paymentProduct = selected.Product; _paymentStoreProduct = selected.Details.ProductId;
             _deferredOriginalStoreProduct = replacement?.Timing == BillingReplacementTiming.Deferred ? replacement.OriginalStoreProductId : null;
-            _payment = new(TaskCreationOptions.RunContinuationsAsynchronously); waiting = _payment.Task;
+            ownPayment = new(TaskCreationOptions.RunContinuationsAsynchronously); _payment = ownPayment; waiting = ownPayment.Task;
             var launched = await MainThread.InvokeOnMainThreadAsync(() =>
             {
                 var activity = Platform.CurrentActivity ?? throw new NativeBillingRefusal("StoreActivityUnavailable");
@@ -194,10 +198,14 @@ internal sealed class GooglePlayBillingStore : Java.Lang.Object, IBillingNativeS
             });
             // Only the synchronous SDK launch result establishes that no purchase screen was launched.
             // Later callback/transport failures remain uncertain and must retain their original intent.
-            if ((int)launched.ResponseCode != 0) _payment.TrySetException(new NativeBillingRefusal((int)launched.ResponseCode switch
+            if ((int)launched.ResponseCode != 0) ownPayment.TrySetException(new NativeBillingRefusal((int)launched.ResponseCode switch
                 { 1 => "StoreCanceled", 7 => "StoreRestoreRequired", _ => "StoreNotLaunched" }));
         }
-        catch { _payment?.TrySetException(new NativeBillingRefusal("StoreLaunchRefused")); throw; }
+        catch
+        {
+            // A refusal before this call creates a native task cannot fault the prior owner's payment.
+            ownPayment?.TrySetException(new NativeBillingRefusal("StoreLaunchRefused")); throw;
+        }
         finally { _queries.Release(); }
         // A retired observer does not cancel an actual payment or clear its original native task.
         return await waiting.WaitAsync(ct);

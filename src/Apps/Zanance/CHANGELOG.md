@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-805: refusing a second Google Play purchase no longer faults the first pending purchase; retain its original task and continuation.
+
 - D-804: prevent a second receipt-camera request from cancelling a photo already in progress; keep the original result until reading and cleanup finish.
 
 - D-800: reject a plan restart before its pause and overlapping split dates; show the explanation while retaining the ready form and entered date.

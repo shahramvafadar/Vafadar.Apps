@@ -275,3 +275,9 @@ work units, a percentage, estimated hours or proof that the overall goal is comp
 No code/build/test/device/financial or frozen-scope action occurs.
 
 [D764 categorical extension](bounded-native-fault-classification.md) is owner-authorized and qualifies79 new synthetic Android component cases only; D752 genuine readiness, actual original fault context and wider acceptance remain separate.
+
+[D805 pending Play task ownership](google-play-pending-task-ownership.md) repairs a second refusal poisoning
+the original SDK task. Six new source-linked cases and controlled compiled preconnection
+admission pass; no real Store connection/purchase, financial/auth/photo or phone replay.
+The affected Billing edition is not the default offline Main. Genuine Store/provider
+and broader security/stability/performance/platform/release gates remain open.

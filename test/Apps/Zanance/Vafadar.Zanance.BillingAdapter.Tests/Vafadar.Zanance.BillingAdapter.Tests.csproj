@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Isolate the Android billing adapter symbol from the ordinary offline app tests. -->
+    <DefineConstants>$(DefineConstants);BILLING</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../../../src/Apps/Zanance/Vafadar.Zanance.Core/Vafadar.Zanance.Core.csproj" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Platforms/Android/GooglePlayBillingStore.cs" Link="Application/GooglePlayBillingStore.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/Billing/IBillingNativeStore.cs" Link="Application/IBillingNativeStore.cs" />
+  </ItemGroup>
+</Project>

@@ -13475,3 +13475,25 @@ is not claimed. Freshfixture/AVD and4XML145710bytes retire, five standard Clean 
 all refusals remain. Original fault/full performance/security/platform/release gates
 and overall goal stay open; no owner action pending.
 [Original failure, changed native ownership and precise physical limits](quality/original-camera-result-ownership.md).
+
+
+### D-805 - Preserve the original pending Google Play task
+
+Exact linked original PurchaseAsync reproduces a second pending refusal incorrectly
+faulting the first SDK task as StoreLaunchRefused. Add preconnection pending refusal,
+retain the under-gate race check and complete only a task created by that call. Six
+new dedicated source-linked SDK-boundary cases pass on actual.NET10.0.14; solution/
+non-MAUI filter includes them without changing offline App.Tests symbols. Official
+SDK9.1.0.2 strict Billing product386AOT/410ELF/1616staticLOAD and native193/205/808 pass
+signature/ZIP/CRC/static16KiB; they intentionally have INTERNET/BILLING, not offline.
+Actual changed-source PDB checksums match both builds. FreshAPI36/x64/4096/3755/UID10216
+original Onboarding keeps one synthetic pending task/continuation after actual adapter
+refusal; _client staysnull. This is controlled preconnection admission, not a genuine
+pending Play modal/purchase/provider claim. Counts account/entry/schedule0 and OS/boot/
+geometry/reverse exact; no financial/auth/photo/phone replay. Immediate PID/missing-
+binding refusals continue the same launch. Fresh package/AVD retire, no XML created;
+standard Clean only, no supplemental/frozen action. Default offline Main27d8070b/last
+observed1069 remains untouched, with no fresh liveness claim or unnecessary rebuild.
+Broader Store/security/performance/original-fault/platform/release gates and goal remain
+open; no owner action pending.
+[Original failure, six regressions and actual compiled admission](quality/google-play-pending-task-ownership.md).

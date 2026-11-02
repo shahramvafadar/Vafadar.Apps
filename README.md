@@ -227,3 +227,9 @@ working rules of this repository.
 
 Copyright © 2026 Shahram Vafadar. All rights reserved. See [LICENSE](LICENSE).
 Third-party components are used under their own licenses.
+
+[D805 pending Play task ownership](src/Apps/Zanance/docs/quality/google-play-pending-task-ownership.md) repairs a second refusal poisoning
+the original SDK task. Six new source-linked cases and controlled compiled preconnection
+admission pass; no real Store connection/purchase, financial/auth/photo or phone replay.
+The affected Billing edition is not the default offline Main. Genuine Store/provider
+and broader security/stability/performance/platform/release gates remain open.

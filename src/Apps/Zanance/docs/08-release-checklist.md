@@ -5826,3 +5826,9 @@ or another successful stress cohort. Freshfixture/requests retire, owned AVD sto
 scopes remain frozen without retry/subset/alternate/move/escalation/reuse. Main/owner PIN,
 terminal D607/consumed reboot and other cohorts remain. D744's limited phone turn was
 explicitly returned; no fresh Zanance phone acceptance is inferred or repeated.
+
+[D805 pending Play task ownership](quality/google-play-pending-task-ownership.md) repairs a second refusal poisoning
+the original SDK task. Six new source-linked cases and controlled compiled preconnection
+admission pass; no real Store connection/purchase, financial/auth/photo or phone replay.
+The affected Billing edition is not the default offline Main. Genuine Store/provider
+and broader security/stability/performance/platform/release gates remain open.

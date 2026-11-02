@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-805 - Preserve the pending original Google Play task (2026-11-02)
+
+A refusing purchase call may complete only the native task it created, never a prior
+owner's pending SDK task. Known pending work refuses before connection setup; retain
+under-gate admission for connection races. Six new linked original-source cases and
+one compiled controlled pending-task admission pass; native client remainsnull. This
+is not a genuine Play modal/purchase, provider acceptance or new authority. Default
+offline Main27d8070b/last observed1069 is untouched, with no fresh liveness claim.
+No successful financial/photo/auth/cohort is replayed. Only fresh UID10216/3755 and its
+owned AVD retire; no XML or phone command, standard Clean only. All frozen scopes and
+terminal D607/D752 successor checkpoints stay preserved; goal remains active. See
+`src/Apps/Zanance/docs/quality/google-play-pending-task-ownership.md`.
+
+
 ## D-804 - Original camera-result ownership and current Main (2026-11-02)
 
 A pending native camera request retains its own result through bounded read/cleanup;
