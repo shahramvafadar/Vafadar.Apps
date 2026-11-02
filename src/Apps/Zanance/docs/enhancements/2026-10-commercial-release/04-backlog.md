@@ -9280,6 +9280,19 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-769 - Contiguous sorted day grouping host admission
+
+Private original ByDay grouping comparison preserves source references/order/multiplicity,
+day nets and complete source digest on fictitious10k/100k lists. Actual.NET10.0.14/X64
+and strict build pass; sorted latency/allocation improves, but late-inversion fallback
+regresses11.25895%/11.74348%, above fixed5%. Reject before second process/native/product
+adoption, without retuning/rescue or changing original EntrySearch. No successful suite,
+financial/device/authentication operation repeats. Standard Clean49files/11889177logical
+bytes succeeds; one supplementary2scope31file420862byte delete is blocked before process
+and frozen without retry/subset/alternate/move/escalation/reuse. Used sources/output and
+receipts remain outside. D752 readiness and wider gates remain open.
+[Finite evidence and exact frozen scopes](../../quality/contiguous-day-grouping-admission.md).
+
 ### D-768 - Reported CI failure correlation and current required jobs
 
 Six additional historical test jobs have the same seven failures already repaired

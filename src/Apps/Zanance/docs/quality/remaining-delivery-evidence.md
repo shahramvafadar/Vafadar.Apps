@@ -88,6 +88,11 @@ APK/public ownership/OS. Neither finite cohort is general biometric/security/sta
 
 ## Ready work and dependency boundaries
 
+D769's distinct contiguous sorted-list day-grouping candidate fails the fixed
+late-inversion fallback latency gate at both shapes. Preserve sorted host gains,
+reject before product/native work and do not retune or rescue the unchanged premise.
+[Exact host boundary](contiguous-day-grouping-admission.md).
+
 1. Preserve D737/D749/D751 terminal real callback/source/retirement evidence. Do not
    reinstall them or repeat accepted PIN/face/cold-cancellation paths. Select only a
    genuinely missing sensitive, enrolment-change or platform requirement with its
