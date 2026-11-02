@@ -9280,6 +9280,20 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-778 - Complete the actual680dp minimum-Android Budget assertion
+
+Preserve D776's640dp clamp result; one new official API24/x64/4096 VM with360x800base
+andactual680x800/density160/OSfont2 completes only its missing680dp/deLight original
+Budget loading/error/Cancel. Reuse exact usedD773signedAPK without build/oldmatrix/
+Retry/financialseed/replay. SameUID10062/PID2875 has one held read/failure/Cancel,
+full3line error/native target unclipped and20typedsource/accountledger0 exact. OS5/
+geometry/boot/reverse restore including absentkeys after Activityrecreation. No actual
+nativeevent/classifier or originalcause/repair claim; API24exitinfo unavailable. Only
+freshpackage/officialAVD retire, zeroXML/buildoutput andshared5038/66176 preserved.
+One4file5285logicalbyte residualroot delete blocked beforeprocess, frozen without
+retry/subset/alternate/move/escalation/reuse. D752/phone untouched; wider goal open.
+[Actual680 admission and exact preservation](../../quality/minimum-android-actual680-budget.md).
+
 ### D-777 - First short-text reuse rejected at host admission
 
 Six first-value-only128byte UTF8 caches scoped to one decoded block preserve all32

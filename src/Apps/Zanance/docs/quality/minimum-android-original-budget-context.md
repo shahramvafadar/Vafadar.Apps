@@ -100,3 +100,9 @@ D752 still waits for owner presence before genuine cancellation. D749/D751/D607 
 terminal. Exact680 context, original fault cause, general stability/speed/security,
 other accessibility and later iOS/provider/Store/release gates remain open; the broader
 independent Android/crash/performance goal stays active.
+
+## D-778 actual680 follow-through
+
+A distinct fresh configuration later completes the actual680dp assertion with the
+same retained APK. This original D776 observation remains640dp with its clamp failure.
+[Exact separate actual680 evidence](minimum-android-actual680-budget.md).
