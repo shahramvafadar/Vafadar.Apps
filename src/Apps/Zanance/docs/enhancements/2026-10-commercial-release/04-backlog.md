@@ -9646,3 +9646,20 @@ are blocked before process and frozen without retry/subset/alternate/move/escala
 reuse. Used source/binary/evidence stays outside. Original cause/actual classification,
 D752 readiness and broader goal remain open; D749/D751/D607 are not replayed.
 [Exact boundary, evidence and frozen scopes](../../quality/bounded-native-fault-classification.md).
+
+
+### D-790 - Current physical Main adoption and interrupted owner hold
+
+One existing D787 signed d5a59bff APK replaces historical D734/dc774120 with exactly
+one no-reset install, no rebuild/test/financial replay. Ordinary Main29901/UID10380/
+CE155299/DE154603 preserves every public Home attribute141/979EUR and every Profiles
+attribute96/three profiles/order/selection. Five OS values/boot/geometry and all other
+Zanance package bindings remain exact; timeout returns300000. Twelve remote XMLs/
+645858bytes hash-match and retire; local raw/used packages/shared5038/frozen scopes stay.
+Before any Main action original D75217567 is absent; bounded own OS reason10/status0/
+importance400 has no proven actor/cause and is not SDK Cancel. Preserve original JSON,
+reconcile dead-frame continuation and separate authorized Main code difference; no
+D752 provider/Activity/release/relaunch/CSV/auth occurs. Owner readiness remains open.
+Public UI/code adoption is not private DB/key, every financial path, general crash,
+speed/security/A11Y/iOS/provider/Store/release acceptance; wider delivery stays active.
+[Actual source binding, UI preservation and interrupted hold](../../quality/current-physical-main-d787-adoption.md).

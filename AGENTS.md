@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-790 - Current Main binding and interrupted D752 frame (2026-11-02)
+
+Existing D787/d5a59bff complete signed Main is now adopted once without reset;
+ordinary29901/Home979/all141 and three profiles/all96 match the immediate old Main.
+UID10380/CE155299/DE154603/flags and five OS/boot/geometry stay exact; timeout300000
+is restored. Older D734/dc774120 and process observations below are historical, not
+current install claims; do not downgrade/replay them. No private Main DB/key is read.
+D75217567 was absent before any Main action, with own OS reason10/status0/importance400;
+actor/cause and genuine SDK cancellation are unproven. Its original pre-SDK CSV hold
+is interrupted, not live: preserve original checkpoints and JSON, keep owner-readiness
+hold, and never release/relaunch/repeat the old button for observation. The separate
+authorized-main-upgrade-d790 receipt reconciles legitimate Main code difference;
+immutable source/package proofs remain. No new authority, auth exception, runtime/GC
+change or general stability/performance/security acceptance is granted. All frozen
+scopes remain untouched. See `src/Apps/Zanance/docs/quality/current-physical-main-d787-adoption.md`.
+
+
 ## Scoped categorical fault metadata approval (owner, 2026-11-02, D-764)
 
 The owner explicitly approves the reviewed categorical fault-output extension only on

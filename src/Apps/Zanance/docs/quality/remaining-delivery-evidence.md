@@ -23,7 +23,17 @@ Rows marked Done also retain their explicitly stated wider platform limits: this
 inventory does not prove every nested acceptance requirement or the complete goal.
 Do not derive a completion percentage or remaining hours by counting these rows.
 
-Current Android product source remains D734. D735 adds minimum/simulated16KiB fallback
+Current product source includes D780/D783 receipt corrections and D787 distant moved
+occurrence identity. D790 adopts the existing complete D787/d5a59bff APK once without
+reset: Main29901/Home979/141 and three original profiles match every public attribute,
+with exact public ownership and restored OS. This is not complete private-source or
+financial-path acceptance. D752 remains owner-readiness gated: its original pre-SDK CSV
+frame was already interrupted by PID17567 absence before Main action, with no SDK
+Cancel accepted. Do not release/relaunch/replay the dead frame for observation.
+[Current physical binding and exact limits](current-physical-main-d787-adoption.md).
+
+The following D734/D735/D737/D749 process observations are dated history, not current
+Main code/PID claims. D735 adds minimum/simulated16KiB fallback
 runtime evidence; D736 adds normal current physical receipt-draft evidence. D737 now
 completes a finite real Samsung device-credential cohort: owner-only PIN enable,
 longer same-process return and cancelled disable with unchanged post-enable typed

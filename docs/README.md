@@ -28,6 +28,10 @@ D-734 subsequently repairs the observed physical disposed-dialog-peer exception;
 The optional [self-hosted service guide](../eng/hosting/README.md) covers existing operational tooling;
 its presence does not establish public hosting, genuine provider acceptance or release readiness.
 
+[D-790 current physical Main adoption](../src/Apps/Zanance/docs/quality/current-physical-main-d787-adoption.md)
+records the existing D787 package on Samsung with exact public Home/profile/OS preservation;
+the interrupted D752 original frame remains owner-readiness gated, without accepted SDK Cancel.
+
 ## Architecture
 
 * [Overview](architecture/overview.md) – goals, building blocks, dependency rules, technology stack
