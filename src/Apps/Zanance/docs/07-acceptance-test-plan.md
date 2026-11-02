@@ -9016,3 +9016,28 @@ move, escalation or reuse. Three used signed APKs, source and evidence stay outs
 Product/runtime stay exact and no permanent product tests are added. D752 genuine
 readiness and broader delivery remain open; settled authentication/D607 are not replayed.
 [Full evidence and exact frozen scopes](quality/bounded-native-exit-code-context.md).
+
+
+### D-760 - Nursery-pinning diagnostic located through sparse unwind metadata
+
+Private non-loadable SDK unwind metadata preserves instructions/program headers and
+loaded data except ELF section-index fields; the global SDK/product/GC policy is exact.
+CIEv3's actual failed three-function control remains failed; explicit address_size8 in
+CIEv4 passes the required C/B/A native chain. One original diagnostic5757/UID10218 then
+ends OSreason5/status6 with15 frames/14 admitted code frames. Exact Mono symbols/code
+locate check_marked_callback at sgen-debug.c:578: a remaining nursery object must be
+pinned when the checker flag is true during concurrent major finish. The error-call
+return PC is not a SIGSEGV fault; object/type/writer, original D678 cause and a product
+repair remain unproved. No raw tombstone/memory/register/private Main export occurs.
+Ordinary5939 restores full typed source/schema/cookies/all32-field100000-row ledger
+exactly without normalization. Three fresh packages/3XML12525bytes/ownedAVD retire;
+five OS/geometry/boot/shellUID2000 restore and shared5038/66176 survives. Four Clean
+commands remove27610files/1471504216logicalbytes; officialAVD24files/4987368616bytes.
+Automatic review blocks the repetitive log1894963078bytes and a separate20targets/
+2075files/440440547bytes before process; exact scopes freeze without retry/subset/
+alternate/move/escalation/reuse. Four used signed APKs/source/evidence are retained.
+No successful financial/native matrix/product suite repeats; no product test is added.
+D752 owner readiness and the overall delivery goal stay active; D749/D751/D607 stay
+settled. Next input is source-supported nursery pin lifecycle investigation, not a
+replay or speculative patch.
+[Full evidence and exact frozen scopes](quality/sparse-native-unwind-metadata.md).
