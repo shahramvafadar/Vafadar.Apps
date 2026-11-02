@@ -9280,6 +9280,20 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-773 - One current original Budget fault context
+
+One newly admitted finite original Budget/de/Light/680dp/OSfont2 held-read/failure/
+Cancel context ends on PID4836/UID10216 without native exit; no old matrix, Retry,
+financial seed/write, signal injection or GC/runtime change. Current original source
+and exact original Mono are bound in a strict signed192AOT/204ELF/804staticLOAD APK.
+Full20typedsource equals before/after, account/ledger0; original OS5/geometry/boot/
+reverse restore, including a preserved locale-key recreation correction. The actual
+classifier stays unread because no own native event exists; original cause is open.
+Only fresh package/XML/officialAVD retire, standardClean passes and sharedADB stays.
+Three supplementary scopes are blocked before process and frozen without any retry/
+subset/alternate/move/escalation/reuse. D752 waits for owner; broader goal stays active.
+[Finite case, failures and exact frozen scopes](../../quality/original-budget-fault-context.md).
+
 ### D-772 - Original APK native AOT-mode binding
 
 The actually used D678 signed adc8 APK and original Mono digest are revalidated.
