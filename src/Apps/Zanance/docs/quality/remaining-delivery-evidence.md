@@ -10,6 +10,11 @@ remain authoritative.
 
 ## What the inventory means
 
+D766 subsequently qualifies one current original process-cold100k Home boundary with
+full source equality, without a new native fault or speed acceptance. Preserve the
+observer refusal and single-sample limit; do not replay it as a fault reproducer.
+[Exact boundary](ordinary-process-cold-home.md).
+
 The canonical table has 61 unique parent rows: 16 begin with `Done`, and 45 do not.
 Those 45 include implemented-but-not-activated services, gated acceptance, explicitly
 deferred work and outside-scope items; they are not 45 missing features or equal units

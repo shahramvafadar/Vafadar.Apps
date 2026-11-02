@@ -9280,6 +9280,21 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-766 - One ordinary process-cold Home boundary
+
+One current original100k/200-account/1000-manual-schedule input runs on fresh
+API36/x64/4096 with no debug/GC change or financial replay. Actual cached4882/adj900
+death precedes one COLD launch to5422. Home readiness and full schema/typed source/
+cookies/all32 ledger fields pass. A window cross-reference counting refusal is
+preserved and only observer header matching corrected on the same process, without
+another launch. Android1117ms is first-frame; late377966ms includes recovery and is
+no speed acceptance. No new native exit occurs; the bound reader is not invoked.
+Fresh package/six XML/official AVD retire; OS/boot/reverse/shared ADB remain exact.
+Standard Clean passes; four supplementary scopes are blocked before process and
+frozen without retry/subset/alternate/move/escalation/reuse. D752 readiness and
+original cause remain open; D749/D751/D607 are not repeated.
+[Exact evidence and frozen scopes](../../quality/ordinary-process-cold-home.md).
+
 ### D-764 - Owner-authorized categorical native fault metadata
 
 The owner permits only the reviewed categorical extension on an independent fictitious

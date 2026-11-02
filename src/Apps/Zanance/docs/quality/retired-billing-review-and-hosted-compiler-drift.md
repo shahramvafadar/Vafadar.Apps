@@ -66,3 +66,19 @@ review exact executable bytes and, if necessary, two fresh outputs under a new i
 producer identity. Do not add an unobserved hash, weaken policy, overwrite a published
 package or infer hosted equality from the local compiler. Windows CI is not yet green.
 The delivery goal and D-607 remain active and untouched.
+
+## D-765 - Delayed failed-head correlation
+
+2 November 2026. Read only the failed Libraries/tests logs from runs41159955237,
+41163575821 and41176124296 (D670/D672/D677). Each has the same seven failures:
+six language cases in Replacement_terms_are_complete_before_cancel_and_changed_offer_requires_new_review
+and Retired_native_confirmation_cannot_restore_for_a_new_actual_frame. Windows and
+Android build jobs succeeded; this is not overall green CI. No successful job is rerun.
+
+All three heads precede correction e1cbb1beb977d0a6884dfd9cddd9477e4ccf6954.
+The current four affected production/test Git blobs equal that correction exactly.
+Its explicit original Reload and epoch-owned review reset already address these
+failures with retained earlier focused/native evidence. No new source fix, suite or
+rerun is warranted. Historical host evidence remains historical, not current Linux14
+acceptance. Sanitized failure fingerprints and source-blob receipts are kept locally.
+This correlation does not claim a fresh green run or qualify the hosted compiler.

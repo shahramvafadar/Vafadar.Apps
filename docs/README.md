@@ -1,5 +1,9 @@
 # Documentation
 
+[D-766 ordinary process-cold Home](../src/Apps/Zanance/docs/quality/ordinary-process-cold-home.md)
+records one current original100k cold boundary and full source equality, with its
+window-observer failure preserved; original-fault and speed gates remain open.
+
 ## Current status and entry points
 
 Refreshed 2 November 2026. Start with the [repository README](../README.md) for the technology map and
