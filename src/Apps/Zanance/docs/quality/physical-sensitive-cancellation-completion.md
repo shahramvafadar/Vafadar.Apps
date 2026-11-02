@@ -111,3 +111,12 @@ raw XML to qualify the no-password warning caption and its bounds above the orig
 button, with the switch actually false. Six-language resource coverage is source-only;
 no UI/authentication/financial/file operation is replayed and wider layout/security
 claims remain open.
+
+## Subsequent D802 PDF completion
+
+The missing visible-input boundary above is historical. [D802](physical-pdf-cancellation-retained-input.md)
+reuses D699 retained fictitious source without another financial Save and qualifies
+one actual owner PDF cancellation, unchanged cipher/output and typed original input.
+Its fresh package is retired. No CSV/local-backup callback is repeated and the original
+D752 interrupted frame remains unchanged. All three finite cancellation assertions
+are complete; broader security/device/platform/release gates stay separate.

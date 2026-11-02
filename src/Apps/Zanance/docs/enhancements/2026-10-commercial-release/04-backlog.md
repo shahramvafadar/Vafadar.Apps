@@ -52,7 +52,7 @@ priority/order descriptions below.
 | ZCR-SEC-01 | Threat model and encryption decision record + feasibility proof | 1 | P1 | M | In progress (D-264 Android/Windows official Community integration locally verified; iOS/external gates remain) | OD-04 approved |
 | ZCR-SEC-02 | Encrypted database (SQLite encryption) behind the existing data layer | 1 | P1 | L | In progress (D-264 Android/Windows main encryption locally verified; D-521 original schema/typed-row snapshot checks on actual x86_64 API24/4096 and API35/16384 qualified in separate UIDs; iOS adoption and wider device gates remain) | SEC-01 |
 | ZCR-SEC-03 | Data key in Android Keystore / iOS Keychain / Windows DPAPI | 1 | P1 | M | In progress (D-264 Android Keystore/Windows DPAPI per-generation keys locally verified; D-483 actual original-adapter generation/recovered security level1, cold/binding/tamper/authorized retirement on Samsung qualified in a separate UID; D-520 original create/cold/tamper/retirement on actual API24/4096 and API35/16384 x86_64 qualified; D-535 reopens four retained independent emulator sources after KEEP_DATA maintenance with existing keys and full source/control equality; Main-key attestation, authentication, iOS/other device gates remain) | SEC-01 |
-| ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | In progress (D-737 actual Samsung device-credential enable/longer return/cancelled-disable, D-749 original cold face unlock and D-751 original cold cancellation/persistent cover/cipher qualified; D-266 success-only and D-553 emulator PIN routes retained; actual enrolment-change behavior, other sensitive routes/devices/platforms remain) | SEC-03, OD-04 |
+| ZCR-SEC-04 | Optional app password, biometrics changes, attempt limiting | 1 | P1 | M | In progress (D-737 actual Samsung device-credential enable/longer return/cancelled-disable, D-749 original cold face unlock and D-751 original cold cancellation/persistent cover/cipher qualified; D-266 success-only and D-553 emulator PIN routes retained; D-792/D-793/D-802 actual owner CSV/local-backup/PDF cancellations complete and retired; actual enrolment-change behavior, other routes/devices/platforms remain) | SEC-03, OD-04 |
 | ZCR-SEC-05 | Crash-safe migration of existing plaintext databases (all profiles) | 1 | P1 | M | In progress (D-263 Android all-profile migration/lifecycle delivered; D-521 storage faults, D-522 two-profile startup/creation and D-524 original metadata staging/hot-journal rollback/selection on actual x86_64 API24/4096 and API35/16384 qualified; arbitrary-profile/hardware/OEM/platform acceptance remains) | SEC-02, SEC-03 |
 | ZCR-SEC-06 | Recovery: recovery key / backup path, password change without data loss | 1 | P1 | M | In progress (D-264 Android/Windows optional recovery and explicit portable recovery locally verified; D-521 protected cold recovery and D-522 multiple missing envelopes/alias loss/recovered retirement/consecutive portable restores on actual x86_64 API24/4096 and API35/16384 qualified; full authentication/iOS/device acceptance remains) | SEC-04, OD-04 approved |
 | ZCR-SEC-07 | Final OS device/cloud backup rules (Android `dataExtractionRules`, iOS exclusion) | 1 | P1 | S | In progress (D-263 packaged policy; D-603 live framework rejects both owned packages on emulator/Samsung with unchanged settings; actual OEM/device-transfer and iOS acceptance remain) | OD-10 approved |
@@ -9839,3 +9839,24 @@ Standard Clean removes49files/11970289logicalbytes, no supplementary/frozen acti
 used source/full raw inputs/pair evidence stay. This is search component admission,
 not complete UI/Home speed or a production regression. Goal and broader gates stay open.
 [Actual fixed gate and retained source evidence](../../quality/tag-query-preparation-rejection.md).
+
+### D-802 - Actual owner PDF cancellation with retained original input
+
+Reuse only D699's safe retained fictitious one-account/19-category/one-Income12.34EUR
+input with all20/32/category fields exact; no financial Save, render/share success or
+accepted CSV/backup cancellation repeats. Digest/fresh/reentry guards pass on actual
+host10.0.14 after preserving/correcting its initial missing-provider refusal. Strict
+private ARM64 offline192AOT/204ELF/804staticLOAD/v2v3/ZIP packagea6780a22 passes; no
+product source/shipping/Windows/old-suite change. FreshUID10414/PID25461 original
+Reports shows October12.34EUR and visible PDF before fresh owner readiness. One
+fixture-only lock preference/actual Refresh and one visible PDF tap delegate one real
+SDK call; owner Cancel/Back returns Failed/0success, same ready page/PID and exact
+protected main/WAL/output inventory. Full admitted typed input matches after the
+cipher comparison; no PDF is created/shared. No real authentication input or Main
+private read. All prior packages/OS/locales/boot/geometry exact; normal Main19128/D800
+returns, six XML285556bytes hash-clean and fresh package retires. Two standard Clean
+remove13864files/740102305logicalbytes, no supplementary/frozen action; used package/
+source/evidence stay. Finite CSV/local-backup/PDF cancellation sequence complete,
+original dead D752 frame remains interrupted; no owner prompt pending. Wider security/
+performance/original-fault/platform/provider/release gates and overall goal stay open.
+[Actual original input, SDK outcome and preservation](../../quality/physical-pdf-cancellation-retained-input.md).

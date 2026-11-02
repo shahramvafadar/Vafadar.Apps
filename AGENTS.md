@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-802 - Finite owner sensitive-cancellation sequence complete (2026-11-02)
+
+D792 CSV, D793 local backup and D802 PDF actual owner cancellations are complete and
+their fresh successors retired; never replay them. D802 reuses the retained D699
+fictitious report input with exact original fields, not another financial Save or
+product visibility override. One original visible PDF/SDK request returns Failed/
+zero success with exact protected cipher/output; freshUID10414/PID25461 and six owned
+XML retire. Original D75217567 remains interrupted with its immutable checkpoints,
+not a live frame or another owner-readiness blocker. Current Main19128/6a5574d1 and
+all prior public package/OS bindings are preserved. No new authority, Main private
+read or broad security/stability/platform acceptance follows. Frozen scopes stay
+frozen and the overall goal remains active. See
+`src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md`.
+
+
 ## D-800 - Current resume safeguard candidate and finite native lineage (2026-11-02)
 
 D800 final complete6a5574d1 is adopted once without reset as phone Main19128;16195/

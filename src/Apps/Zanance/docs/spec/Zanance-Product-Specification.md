@@ -12588,3 +12588,24 @@ two phone XML103864bytes hash-clean, no private Main read or financial/auth repl
 The pre-install semantic-caption observer refusal is retained. Broader gates and
 overall goal stay open.
 [Exact failure, original native continuation and source limits](../quality/plan-resume-date-ownership.md).
+
+### D-802 - Actual owner PDF cancellation with retained original input
+
+Reuse only D699's safe retained fictitious one-account/19-category/one-Income12.34EUR
+input with all20/32/category fields exact; no financial Save, render/share success or
+accepted CSV/backup cancellation repeats. Digest/fresh/reentry guards pass on actual
+host10.0.14 after preserving/correcting its initial missing-provider refusal. Strict
+private ARM64 offline192AOT/204ELF/804staticLOAD/v2v3/ZIP packagea6780a22 passes; no
+product source/shipping/Windows/old-suite change. FreshUID10414/PID25461 original
+Reports shows October12.34EUR and visible PDF before fresh owner readiness. One
+fixture-only lock preference/actual Refresh and one visible PDF tap delegate one real
+SDK call; owner Cancel/Back returns Failed/0success, same ready page/PID and exact
+protected main/WAL/output inventory. Full admitted typed input matches after the
+cipher comparison; no PDF is created/shared. No real authentication input or Main
+private read. All prior packages/OS/locales/boot/geometry exact; normal Main19128/D800
+returns, six XML285556bytes hash-clean and fresh package retires. Two standard Clean
+remove13864files/740102305logicalbytes, no supplementary/frozen action; used package/
+source/evidence stay. Finite CSV/local-backup/PDF cancellation sequence complete,
+original dead D752 frame remains interrupted; no owner prompt pending. Wider security/
+performance/original-fault/platform/provider/release gates and overall goal stay open.
+[Actual original input, SDK outcome and preservation](../quality/physical-pdf-cancellation-retained-input.md).
