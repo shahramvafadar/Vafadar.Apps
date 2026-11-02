@@ -182,3 +182,11 @@ candidate; physical speed and broader security/stability/platform gates remain o
 finite key-order/reference equivalence but misses the fixed10000-row5% host gate.
 Reject before product/native work; do not retune or replay the unchanged premise.
 Both refused cleanup scopes stay frozen. D752 owner readiness remains separate.
+
+[D756 canonical Home schedule-time reader](canonical-home-schedule-time-admission.md)
+locates actual provider time parsing and passes host contracts, but its reverse native
+whole-Home gain3.5684% misses the fixed5% gate. All source/publication guards remain exact;
+restore original product byte-exact, remove candidate tests and retire the owned fixture.
+Do not retune/replay that unchanged premise or infer the first50.1723% observation as a
+representative improvement. Twenty-four refused scopes stay frozen. D752 genuine owner
+readiness and broader physical speed/security/platform gates remain separate and open.

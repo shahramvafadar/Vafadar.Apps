@@ -12943,3 +12943,28 @@ native32-field source acceptance or physical/two-second evidence. One Clean remo
 11856712logicalbytes. Supplementary2scopes/30files/411151logicalbytes are blocked before
 process and freeze without retry/subset/alternate/move/escalation/reuse. Used source/input/
 results remain outside. D754terminal/D752ownerwait/D749/D751/D607 and active goal persist.
+
+### D-756 - Rejected canonical Home schedule-time reader
+
+Same-file D754 analysis locates original SQLite TimeOnly parsing in both plan read and
+validation;190Managed/1730External samples remain distinct from CPU costs. A private
+canonical parser retains original provider fallback. Initial12985 contracts pass but an
+extra type query adds32bytes and fails the allocation gate; source-backed removal of that
+query passes28 changed-boundary checks and two fixed host processes without allocation
+growth. Sixteen temporary wrapper cases (15then only1 corrected missing-column case) and
+11 affected original Home/access/block cases pass, as do strictWindows and fullshipping
+offline384AOT/408ELF/1608staticLOAD. Initial independent packages are refused before native
+work for unequal linkedCore; explicit scopedPathMap yields actual byte equality, preserving
+13045-method diagnostics and the invalid empty-array observer. One fresh100k/200account
+API36/x64/4096 fixture keeps fullsource/32fieldpublication/nativeReady exact across four
+fixed samples. First1674.3254to834.2779ms gain50.1723% passes, but inverse741.5445to715.0832ms
+is only3.5684% and fails5%; all memory gates pass. Reject before reference/phone/resampling,
+with no exclusive cause or two-second claim. Pre-startup query/focus/archive observer
+failures remain; only unfinished actions continue on actual existing processes. Original
+trackedData byte-exact restored and helper/test candidates removed:0 new permanent tests.
+Fixture/5XML192530bytes/ownedAVD retire,5OS/geometry/boot/emptyreverse and shared5038/66176
+remain.10Clean remove70095files/4219278173logicalbytes; supplementary24scopes/6682files/
+6560488073logicalbytes are blocked before process and frozen, no retry/subset/alternate/
+move/escalation/reuse. Used signed/source/evidence stays outside. D752ownerwait and broader
+active goal remain; D749/D751/D607 successes are not replayed.
+[Full finite admission and exact frozen scopes](quality/canonical-home-schedule-time-admission.md).

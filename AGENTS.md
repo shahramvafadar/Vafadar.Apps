@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-756 terminal rejected Home time-reader candidate (2026-11-02)
+
+Keep the original product byte-exact. The canonical time reader passes finite provider/
+host/source contracts but reverse originalHome741.5445to715.0832ms gains3.5684%, below5%.
+First50.1723% and passing memory gates do not override that failure. No reference/phone/
+resampling/retuning/rescue for the unchanged premise. Initial Core-byte mismatch, empty
+metadata observer, focus/pre-startup/archive refusals remain; no successful input is
+replayed. Three tracked files restore and candidate helpers/tests retire,0 permanent cases.
+Fixture/5XML192530bytes/ownedAVD retire with exactOS/boot/geometry and shared5038/66176.
+10Clean remove70095files/4219278173logicalbytes. Supplementary24scopes/6682files/
+6560488073logicalbytes are blocked before process and frozen exactly in
+`src/Apps/Zanance/docs/quality/canonical-home-schedule-time-admission.md`:
+no retry/subset/alternate/move/escalation/reuse. Used signed/source/evidence stays outside.
+D752 owner-readiness and broader active delivery goal remain; D749/D751/D607 stay settled.
+
+
 ## D-755 terminal rejected UTC sort-key premise (2026-11-02)
 
 Keep original product ordering unchanged. One fixed private host admission fails the

@@ -64,3 +64,7 @@ The [remaining delivery evidence audit](../src/Apps/Zanance/docs/quality/remaini
 [D754 original Home sampling](../src/Apps/Zanance/docs/quality/original-home-method-sampling.md)
 records bounded method hints from one complete read, with trace-decoder and bootstrap
 failures preserved. It changes no product code or release-performance acceptance.
+
+[D756 canonical Home time-reader admission](../src/Apps/Zanance/docs/quality/canonical-home-schedule-time-admission.md)
+retains provider/host/native evidence but rejects the candidate at the inverse latency
+gate. Original product source is restored; this is no adopted speed or stability fix.
