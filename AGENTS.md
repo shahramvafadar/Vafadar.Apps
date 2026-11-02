@@ -1,5 +1,39 @@
 # AGENTS.md – working rules for this repository
 
+## Scoped categorical fault metadata approval (owner, 2026-11-02, D-764)
+
+The owner explicitly approves the reviewed categorical fault-output extension only on
+an independent owned emulator with fictitious data. This narrowly extends D561's
+code-only output: absent, near-null, mapped-readable, mapped-not-readable,
+unmapped-in-record or refused-unknown may be emitted after its original own-crash/
+identity/thread/code/file guards. Never export addresses, raw registers/memory/dumps/
+absolute stack, adjacent fault data or private Main. This is not permission for crash
+injection, generic stress, financial replay, a phone action or a runtime/GC change.
+A real observation still needs its own concrete original-path input and exact APK/
+module/OS binding. Component fixtures and their synthetic catalog are not real crash
+metadata. Keep all old successful/terminal cohorts and other owner gates unchanged.
+
+## D-764 - Owner-authorized categorical native fault metadata
+
+The owner permits only the reviewed categorical extension on an independent fictitious
+emulator, preserving D561's raw-data prohibitions. Original admission remains exact;
+protocol2 adds static absent/near-null/mapped-readable/mapped-not-readable/
+unmapped-in-record/refused-unknown labels after identity/thread/code validation.
+Proto3 zero/false defaults, bounded4096 maps, half-open ranges and overlap/duplicate/
+malformed refusals are enforced; recorded readability is not managed-object validity.
+Two strict C paths and79 distinct new API36/x64/4096 component inputs pass:70 labels
+and9 original-admission refusals. Preserve58 early passes and one mistaken observer
+expectation; continue only21 failed/unissued cases. No old suite, app install, crash
+injection, source seed, auth or financial operation occurs. Catalogs are synthetic/
+unbound, not actual D678 fault evidence or a shipping candidate. Five OS/geometry/boot/
+reverse restore exactly;81 remote files retire, launcher exits, shared5038/66176 stays.
+OfficialAVD24files/4434900128logicalbytes retire; supplementary3scopes/9files/561764bytes
+are blocked before process and frozen without retry/subset/alternate/move/escalation/
+reuse. Used source/binary/evidence stays outside. Original cause/actual classification,
+D752 readiness and broader goal remain open; D749/D751/D607 are not replayed.
+
+Exact new frozen paths: `src/Apps/Zanance/docs/quality/bounded-native-fault-classification.md`.
+
 ## D-762 - Target and phase admission of recent official runtime fixes
 
 PR136352's demonstrated64-host/32-wasm AOT compiler allocation failure does not match
