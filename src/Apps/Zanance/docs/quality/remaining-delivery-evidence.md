@@ -10,6 +10,13 @@ remain authoritative.
 
 ## What the inventory means
 
+[D806 receipt-source contrast](receipt-source-caption-contrast.md) repairs one original
+small-caption color pair. Current completebb8ceb21 is Main9187 after one no-reset
+upgrade and exact immediate Home141/public ownership/OS preservation. D804/1069 and
+older observations below are historical. Two new original native color contexts pass;
+black protected screenshot regions do not qualify pixels/glyphs, and no photo/financial/
+authentication success is repeated. Overall delivery and broader gates remain open.
+
 [D804 original camera ownership](original-camera-result-ownership.md) fixes one actual
 concurrent native result replacement. Current complete27d8070b is adopted without
 reset as Main1069; D800/19128 below is historical. Home979/141 and public package/OS

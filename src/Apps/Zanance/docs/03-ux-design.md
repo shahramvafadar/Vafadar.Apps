@@ -3547,3 +3547,11 @@ and cleanup. Refuse another acquisition before a second launch; do not cancel th
 first or queue a later launch from a retired page. Keep original native camera UI,
 file grants, Cancel and source reader; no new layout/permission is added.
 [Actual original adapter failure and checks](quality/original-camera-result-ownership.md).
+
+## D-806 - Receipt-source information uses readable secondary text
+
+The original receipt-review source caption uses existing SecondaryText on RefundBackground,
+not decorative Muted. Keep FontSize12, source direction/visibility and original layout;
+no global palette or receipt behavior changes. Native original control-color ratios
+are6.6531084 light/7.8570144 dark. Protected black captures do not prove pixels/glyphs.
+[Finite original color evidence and remaining limits](quality/receipt-source-caption-contrast.md).

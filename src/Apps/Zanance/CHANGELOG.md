@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-806: use readable secondary text for the receipt-source caption on its tinted review background in both themes.
+
 - D-805: refusing a second Google Play purchase no longer faults the first pending purchase; retain its original task and continuation.
 
 - D-804: prevent a second receipt-camera request from cancelling a photo already in progress; keep the original result until reading and cleanup finish.

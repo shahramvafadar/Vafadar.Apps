@@ -98,3 +98,8 @@ the original SDK task. Six new source-linked cases and controlled compiled preco
 admission pass; no real Store connection/purchase, financial/auth/photo or phone replay.
 The affected Billing edition is not the default offline Main. Genuine Store/provider
 and broader security/stability/performance/platform/release gates remain open.
+
+[D806 receipt-source contrast](../src/Apps/Zanance/docs/quality/receipt-source-caption-contrast.md) changes one existing semantic text token
+and qualifies actual original native colors in both themes without OCR/photo/financial
+replay. Current Main isbb8ceb21/9187 after one no-reset upgrade and exact public Home141/OS
+preservation; broader accessibility/security/stability/performance/platform/release gates remain open.

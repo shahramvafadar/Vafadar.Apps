@@ -13497,3 +13497,25 @@ observed1069 remains untouched, with no fresh liveness claim or unnecessary rebu
 Broader Store/security/performance/original-fault/platform/release gates and goal remain
 open; no owner action pending.
 [Original failure, six regressions and actual compiled admission](quality/google-play-pending-task-ownership.md).
+
+
+### D-806 - Readable original receipt-source caption
+
+Actual original FontSize12 ReceiptSource uses Muted on RefundBackground; exact light
+color ratio4.1353422 fails ordinary4.5. Change only its existing dynamic token to
+SecondaryText, giving6.6531084 light/7.8570144 dark; no palette/text/layout/financial
+change. StrictWindows/full offline384AOT/408ELF/1608staticLOAD and native192/204/804
+pass. FreshAPI36/x64/4096/3773/UID10216 observes the actual original ready EntryEditor
+with one zero-opening metadata account and review-only unsaved input, no OCR/photo/
+financial/auth replay. Two native TextView colors/visible bounds/alpha and original
+managed background pass; protected black caption screenshots are disqualified, not
+bypassed. Failed system-bar/global-black assumption is corrected only on the same
+retained images; no pixel/glyph/wholeA11Y acceptance follows. Nullable observer compile,
+premature package and early PID refusals remain; original build/launch continues.
+Original System theme/OS/boot/geometry/reverse and counts1/0/0 restore. One phone no-reset
+upgrade adoptsbb8ceb21/Main9187 from1069 with exact immediate Home979/all141 raw
+attributes and public packages/OS; no new private/receipt/financial proof. D804's old
+raw delta is historical and preserved. Only fresh UID/AVD and2XML103864bytes retire;
+standard Clean only, used artifacts retained, no supplemental/frozen action. Other
+security/performance/original-fault/platform/release gates and goal remain open.
+[Original color defect, actual control properties and precise native limits](quality/receipt-source-caption-contrast.md).

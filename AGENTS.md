@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-806 - Original receipt-source color and current Main (2026-11-02)
+
+One original receipt-source Label now uses existing SecondaryText on RefundBackground;
+no global palette, text/layout or financial behavior changes. Two controlled original
+native color contexts pass, but protected black caption screenshots are disqualified
+as pixel/glyph evidence; no protection bypass or accepted photo/OCR/auth replay occurs.
+Only one fresh zero-opening account metadata input is prepared; entries/schedules0.
+Current completebb8ceb21 is Main9187 after one no-reset upgrade from1069, with exact
+immediate Home979/all141 raw attributes and public UID/CEDE/grants/other packages/OS.
+D804's historical raw delta remains. Fresh UID10216/3773/AVD and two owned XML retire;
+standard Clean only, all frozen scopes and terminal D607/D752 successor checkpoints
+remain preserved. No new authority/general acceptance follows; overall goal stays
+active. See `src/Apps/Zanance/docs/quality/receipt-source-caption-contrast.md`.
+
+
 ## D-805 - Preserve the pending original Google Play task (2026-11-02)
 
 A refusing purchase call may complete only the native task it created, never a prior

@@ -45,7 +45,7 @@
                             <fi:SymbolIcon Symbol="ScanText" FontSize="20" ForegroundColor="{DynamicResource RefundText}" VerticalOptions="Start" />
                             <Label Grid.Column="1" Text="{Binding ReceiptNote}" TextColor="{DynamicResource RefundText}" />
                         </Grid>
-                        <Label Text="{Binding ReceiptSource}" FlowDirection="{Binding ReceiptSourceDirection}" FontSize="12" TextColor="{DynamicResource Muted}"
+                        <Label Text="{Binding ReceiptSource}" FlowDirection="{Binding ReceiptSourceDirection}" FontSize="12" TextColor="{DynamicResource SecondaryText}"
                                IsVisible="{Binding ReceiptSource, Converter={StaticResource IsNotNullConverter}}" />
                         <VerticalStackLayout Spacing="4" BindableLayout.ItemsSource="{Binding ReceiptChoices}">
                             <BindableLayout.ItemTemplate>
