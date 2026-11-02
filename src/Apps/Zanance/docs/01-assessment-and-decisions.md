@@ -13105,6 +13105,22 @@ reuse. Used source/binary/evidence stays outside. Original cause/actual classifi
 D752 readiness and broader goal remain open; D749/D751/D607 are not replayed.
 [Exact boundary, evidence and frozen scopes](quality/bounded-native-fault-classification.md).
 
+### D-788 - Narrow occurrence window rejected before native admission
+
+D787's separate explicit identity resolution gives a new basis for inspecting its
+400day generation padding; original ApplyWeekend has at most31steps. A private31day
+copy passes27 complete record/order/reference/source controls on.NET10.0.14/X64/PID68904.
+Four new100plan shapes use one-second role warmup and seven alternating pairs, three
+complete passes per sample. Dense25moves-per-plan regresses2.4712to11.8564ms and
+3607240to35138440allocatedbytes, ratios4.797831/9.741087, failing fixed1.05/1.01ceilings.
+Despite other-shape gains, reject before secondprocess/native/product/permanenttests;
+no retune/rescue/window variant follows. Full input JSON is compared in process and
+digests retained, not archived complete financial source. Product/D787/runtime/GC and
+old successful/financial/device/D752 cohorts remain unchanged. One strict privatebuild
+and standardClean49file11975305logicalbyte pass; no supplementary/frozen action.
+Original fault/performance and broader gates remain open, goal active.
+[Fixed workload/gates, actual ratios and preservation limits](quality/occurrence-window-rejection.md).
+
 ### D-787 - Complete distant moved occurrence identity
 
 Ten original failures expose explicit moved due dates outside the generated400day
