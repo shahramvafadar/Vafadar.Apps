@@ -9280,6 +9280,22 @@ remain active; D749/D751/D607 stay terminal.
 [Exact source/patch boundaries](../../quality/exact-original-native-fault-symbols.md#d-762---recent-official-fixes-do-not-admit-an-android-fault-remedy).
 
 
+### D-789 - Original Budget loader AOT method entries
+
+The actual used D678adc8 APK contains native entries for eight original Budget loader/
+state-machine methods plus two application controls. Original MethodDef RIDs map via
+format187 call slots, non-generic guards, executable bounds and paired managed/native
+MVID; an abstract interface RID787 correctly maps to the absent-entry sentinel.
+Preserve missing.symtab/unsigned-store-version/absent-AOT-BuildID observer refusals.
+Only original code identities are decoded in memory; no user-string/ILoperand/field/
+resource/config/environment/key/live data is read or managed image persisted. This
+explicitly extends the refused symbol-only attempt; it is not zero App-image decoding.
+No method-body size, actual execution engine/finallyOSR or original fault remedy is
+inferred from availability. No product/runtime/GC/build/test/device/financial/cleanup/
+frozen action or successful cohort replay; PID10110 remains historical. D752 waits
+for owner, broader fault/performance/gates and overall goal remain open.
+[Original paired identity, eleven mappings and exact limits](../../quality/original-budget-aot-method-entries.md).
+
 ### D-788 - Narrow occurrence window rejected before native admission
 
 D787's separate explicit identity resolution gives a new basis for inspecting its

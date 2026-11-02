@@ -51,3 +51,9 @@ The original APK/module and evidence remain retained. All older frozen scopes an
 protected untracked owner files remain untouched. D752 waits for the owner;
 D749/D751/D607 stay terminal. Native fault origin, performance and broader acceptance
 remain open.
+
+
+D789 now adds [exact original Budget method-table evidence](original-budget-aot-method-entries.md):
+eight Budget loader/state-machine entries are available, with two application code
+controls and an absent abstract-method sentinel. This is stronger than mode-only
+configuration, but still not actual executed-engine/OSR or fault-cause evidence.
