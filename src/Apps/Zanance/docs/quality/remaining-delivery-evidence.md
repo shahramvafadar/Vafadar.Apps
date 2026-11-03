@@ -288,3 +288,11 @@ the original SDK task. Six new source-linked cases and controlled compiled preco
 admission pass; no real Store connection/purchase, financial/auth/photo or phone replay.
 The affected Billing edition is not the default offline Main. Genuine Store/provider
 and broader security/stability/performance/platform/release gates remain open.
+
+[D807 approved slot categories](bounded-reference-slot-classification.md) establishes
+conditional original RSI retention and passes55 new synthetic Android controls, without
+actual fault/register collection or a runtime remedy. Original native fault origin
+still needs a genuinely new admitted input; old cohorts/frozen EH work stay closed.
+The old shared ADB PID66176 is absent; current5038/PID40628 is observed and preserved
+through the owned stop, without an actor/cause or continuity claim. No owner answer
+remains pending for this component; broader delivery stays active.

@@ -9354,3 +9354,26 @@ raw delta is historical and preserved. Only fresh UID/AVD and2XML103864bytes ret
 standard Clean only, used artifacts retained, no supplemental/frozen action. Other
 security/performance/original-fault/platform/release gates and goal remain open.
 [Original color defect, actual control properties and precise native limits](quality/receipt-source-caption-contrast.md).
+
+
+### D-807 - Approved bounded reference-slot categories
+
+An exact original19-instruction/64byte operand audit proves no RSI/ESI/SI/SIL write
+or implicit RSI update/call between ordinary entry and the known field-word fault.
+This gives conditional saved-slot meaning, not an actual register value or cause.
+The owner approves one narrow independent-emulator extension. Original admission and
+fault categories remain exact; protocol3 adds fixed alignment/full-eight-byte-access
+labels only after exact top frame/module/BuildId/PC. Selected RSI is interpreted only
+in memory; all scalars/maps/raw buffers wipe, other register/thread/memory bodies stay
+uninterpreted. Both strict independent C paths build; only the synthetic path deploys.
+Fresh API36/x64/4096 runs55 new cases,51 outputs/four original-admission refusals;
+old79 cases, app builds, phone, financial/auth/photo successes are not replayed.
+No real fault/register or genuine APK-bound crash is observed. Five OS values/locales/
+geometry/boot/reverse remain exact;56 remote files145622bytes hash-clean and only the
+owned AVD retires25files4274468200logicalbytes. No supplemental/frozen action occurs.
+Historical ADB66176 is absent; current5038/PID40628 is separately observed and survives
+owned stop. Its transition actor/cause is unknown; no explicit server reset/start or
+continuity claim. Main9187/bb8ceb21 stays the last D806 observation, not fresh liveness.
+Original cause/repair and broader performance/security/platform/release gates remain
+open; no owner answer pending for this approved component and overall goal active.
+[Original eligibility, owner-scoped implementation and new component evidence](quality/bounded-reference-slot-classification.md).

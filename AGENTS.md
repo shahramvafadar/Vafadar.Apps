@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## Scoped reference-slot categories (owner, 2026-11-03, D-807)
+
+The owner explicitly approves the reviewed extension only on an independent owned
+Android/x64 emulator with fictitious data. After the original own-native-exit/file/
+identity/thread/code guards, interpret only saved RSI at the exact admitted Mono
+BuildId/top relativePC0x2edd7d. Export only fixed slot_alignment and slot_word_access
+categories; never a register value, address, memory, map name, object header or Main
+source. Keep128 register/4096 map bounds and scalar/input wiping. This does not
+permit crash injection, a runtime/GC switch, successful financial/auth/photo replay
+or any D797 frozen header/EH work. A genuine observation needs its own new original
+input and actual APK/module/OS binding. Synthetic55-case success is not real crash
+metadata or a remedy. No further owner answer is pending for this approved component.
+Historical shared ADB66176 is absent; current5038/PID40628 is separately observed and
+survives owned stop, without transition actor/cause or continuous-PID claims. Do not
+reset/reconnect/pair it. Main9187/bb8ceb21 remains the last D806 observation, not fresh
+liveness; terminal D607/D752 successor checkpoints and all frozen scopes remain.
+See `src/Apps/Zanance/docs/quality/bounded-reference-slot-classification.md`.
+
+
 ## D-806 - Original receipt-source color and current Main (2026-11-02)
 
 One original receipt-source Label now uses existing SecondaryText on RefundBackground;
