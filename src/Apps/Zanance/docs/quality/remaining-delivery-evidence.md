@@ -296,3 +296,14 @@ still needs a genuinely new admitted input; old cohorts/frozen EH work stay clos
 The old shared ADB PID66176 is absent; current5038/PID40628 is observed and preserved
 through the owned stop, without an actor/cause or continuity claim. No owner answer
 remains pending for this component; broader delivery stays active.
+
+
+## D-808 - Final supported recurrence months (3 November 2026)
+
+Five current managed endpoint failures are corrected; eight new original Android
+calculations preserve twenty typed source collections without account/plan/ledger
+setup. Thirteen new and seven affected existing distinct host cases have versioned
+evidence; the passing interval premise is not patched or replayed. Strict Windows
+and corrected complete offline Android packages pass. Main remains uncommanded;
+original native fault cause, complete performance/security/platform/release gates
+and the active overall goal remain open. See [bounded evidence](recurrence-final-calendar-month.md).

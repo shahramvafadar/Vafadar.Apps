@@ -12,6 +12,11 @@ public static class Recurrence
     // starting in a 30-day month would be valid forever, but a broken rule must not hang the app).
     private const int MaxSteps = 100_000;
 
+    // Calendar endpoints are immutable; do not repeat their conversion for every
+    // generated candidate in ordinary monthly/yearly projections (D-808).
+    private static readonly (int Year, int Month) PersianLastMonth = MonthOf(DateOnly.MaxValue, PeriodCalendar.Persian);
+    private static readonly (int Year, int Month) HijriLastMonth = MonthOf(DateOnly.MaxValue, PeriodCalendar.Hijri);
+
     /// <summary>Returns a validation problem of the rule, or <see langword="null"/> when it is valid.</summary>
     public static string? Validate(RecurrenceRule rule)
     {
@@ -172,7 +177,7 @@ public static class Recurrence
 
     private static DateOnly? DayIn(RecurrenceRule rule, int year, int month, int? fixedDay = null)
     {
-        if (!IsSupportedYear(year, rule.Calendar))
+        if (!IsSupportedMonth(year, month, rule.Calendar))
         {
             return null;
         }
@@ -197,6 +202,14 @@ public static class Recurrence
             day = daysInMonth;
         }
         else
+        {
+            return null;
+        }
+
+        // The final Persian/Hijri year ends part-way through a month in DateOnly.
+        // A nominal calendar day beyond that boundary is not an occurrence (D-808).
+        var last = LastMonth(rule.Calendar);
+        if (year == last.Year && month == last.Month && day > DayOf(DateOnly.MaxValue, rule.Calendar))
         {
             return null;
         }
@@ -240,15 +253,29 @@ public static class Recurrence
             year += n;
         }
 
-        if (!IsSupportedYear(year, rule.Calendar))
+        if (!IsSupportedMonth(year, month, rule.Calendar))
         {
             return true;
         }
 
-        return PeriodMath.MonthRange(year, month, rule.Calendar).First > to;
+        // Only the first day is needed; constructing the whole final partial
+        // month could overflow while computing an unused last day (D-808).
+        return PeriodMath.ToDate(year, month, 1, rule.Calendar) > to;
     }
 
-    private static bool IsSupportedYear(int year, PeriodCalendar calendar) => PeriodMath.IsSupportedYear(year, calendar);
+    private static bool IsSupportedMonth(int year, int month, PeriodCalendar calendar)
+    {
+        if (!PeriodMath.IsSupportedYear(year, calendar)) return false;
+        var last = LastMonth(calendar);
+        return year < last.Year || (year == last.Year && month <= last.Month);
+    }
+
+    private static (int Year, int Month) LastMonth(PeriodCalendar calendar) => calendar switch
+    {
+        PeriodCalendar.Persian => PersianLastMonth,
+        PeriodCalendar.Hijri => HijriLastMonth,
+        _ => (9999, 12),
+    };
 
     private static (int Year, int Month) MonthOf(DateOnly date, PeriodCalendar calendar) => PeriodMath.MonthOf(date, calendar);
 

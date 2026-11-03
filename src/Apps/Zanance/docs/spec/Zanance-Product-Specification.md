@@ -12714,3 +12714,14 @@ continuity claim. Main9187/bb8ceb21 stays the last D806 observation, not fresh l
 Original cause/repair and broader performance/security/platform/release gates remain
 open; no owner answer pending for this approved component and overall goal active.
 [Original eligibility, owner-scoped implementation and new component evidence](../quality/bounded-reference-slot-classification.md).
+
+
+## D-808 - Final supported recurrence months (3 November 2026)
+
+Five current managed endpoint failures are corrected; eight new original Android
+calculations preserve twenty typed source collections without account/plan/ledger
+setup. Thirteen new and seven affected existing distinct host cases have versioned
+evidence; the passing interval premise is not patched or replayed. Strict Windows
+and corrected complete offline Android packages pass. Main remains uncommanded;
+original native fault cause, complete performance/security/platform/release gates
+and the active overall goal remain open. See [bounded evidence](../quality/recurrence-final-calendar-month.md).

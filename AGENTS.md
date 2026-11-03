@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-808 - Final recurrence calendar months (2026-11-03)
+
+The final Persian year and partial Persian/Hijri recurrence months are bounded before
+conversion. Five actual managed endpoint failures are corrected; initial interval
+controls pass and interval arithmetic stays unchanged. Eight new original Android
+calculations in fresh4816/UID10216 preserve twenty typed source collections, without
+account/plan/ledger setup or financial/auth/photo replay. The phone is not commanded;
+Main9187/bb8ceb21 remains only the last D806 observation. D807's component is not
+invoked and the original native fault cause/repair stays open. Fresh owned AVD retires
+officially; shared5038/PID40628 survives by the same latched handle. All frozen scopes,
+terminal D607/D752 and accepted successors remain preserved; overall goal stays active.
+See `src/Apps/Zanance/docs/quality/recurrence-final-calendar-month.md`.
+
 ## Scoped reference-slot categories (owner, 2026-11-03, D-807)
 
 The owner explicitly approves the reviewed extension only on an independent owned

@@ -90,7 +90,7 @@ public static class PeriodMath
     /// <summary>Returns whether a year can be converted in a calendar.</summary>
     public static bool IsSupportedYear(int year, PeriodCalendar calendar) => calendar switch
     {
-        PeriodCalendar.Persian => year is >= 1 and <= 9377,
+        PeriodCalendar.Persian => year is >= 1 and <= 9378,
         PeriodCalendar.Hijri => year >= LunarHijri.MinYear && year <= LunarHijri.MaxYear,
         _ => year is >= 1 and <= 9999,
     };
