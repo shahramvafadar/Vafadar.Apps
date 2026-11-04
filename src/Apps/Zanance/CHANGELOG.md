@@ -6,6 +6,10 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-813: keep incomplete budget periods rejected during synchronization even when a read preview stops at the last supported date.
+
+- D-812: keep final weekly budget ranges valid, honor explicit two-week anchors and reject period steps that would overflow to an unrelated date.
+
 - D-810: keep valid calendar-year and financial-month ranges within the last supported date; preserve valid month selection and reject unavailable start dates.
 
 - D-806: use readable secondary text for the receipt-source caption on its tinted review background in both themes.

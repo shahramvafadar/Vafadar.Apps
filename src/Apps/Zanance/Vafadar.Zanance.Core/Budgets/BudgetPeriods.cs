@@ -21,8 +21,9 @@ public static class BudgetPeriods
             : Range(budget.Period, budget.PeriodStart);
     }
 
-    /// <summary>Returns the first and last day of a week period starting on <paramref name="start"/>.</summary>
-    public static (DateOnly First, DateOnly Last) Range(BudgetPeriod period, DateOnly start) => (start, start.AddDays(Days(period) - 1));
+    /// <summary>Returns the first and last representable day of a week period starting on <paramref name="start"/>.</summary>
+    public static (DateOnly First, DateOnly Last) Range(BudgetPeriod period, DateOnly start) =>
+        (start, start.AddDays(Math.Min(Days(period) - 1, DateOnly.MaxValue.DayNumber - start.DayNumber)));
 
     /// <summary>
     /// Returns the first day of the period that contains <paramref name="date"/>: the week begins on
@@ -31,13 +32,14 @@ public static class BudgetPeriods
     /// </summary>
     public static DateOnly StartOf(BudgetPeriod period, DateOnly date, DayOfWeek firstDayOfWeek, DateOnly? fortnightStart = null)
     {
-        var weekStart = date.AddDays(-(((int)date.DayOfWeek - (int)firstDayOfWeek + 7) % 7));
         switch (period)
         {
             case BudgetPeriod.Week:
-                return weekStart;
+                return WeekStart(date, firstDayOfWeek);
             case BudgetPeriod.TwoWeeks:
-                var anchor = fortnightStart ?? weekStart;
+                // An explicit anchor owns the fortnight; calculating an unused
+                // earlier week can overflow for an otherwise valid anchor (D-812).
+                var anchor = fortnightStart ?? WeekStart(date, firstDayOfWeek);
                 var offset = date.DayNumber - anchor.DayNumber;
                 return anchor.AddDays((int)Math.Floor(offset / 14d) * 14);
             default:
@@ -46,7 +48,23 @@ public static class BudgetPeriods
     }
 
     /// <summary>Returns the start of the period before or after the one starting on <paramref name="start"/>.</summary>
-    public static DateOnly Step(BudgetPeriod period, DateOnly start, int count) => start.AddDays(Days(period) * count);
+    /// <exception cref="ArgumentOutOfRangeException">The requested period is outside the supported date range.</exception>
+    public static DateOnly Step(BudgetPeriod period, DateOnly start, int count)
+    {
+        // Multiply before narrowing: an overflowing period count must not become
+        // a different valid date or silently return the original date (D-812).
+        var targetDay = start.DayNumber + ((long)Days(period) * count);
+        if (targetDay < DateOnly.MinValue.DayNumber || targetDay > DateOnly.MaxValue.DayNumber)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count), count, "The requested period is outside the supported date range.");
+        }
+
+        return DateOnly.FromDayNumber((int)targetDay);
+    }
+
+    /// <summary>Returns the actual aligned week start; an unrepresentable start remains invalid.</summary>
+    private static DateOnly WeekStart(DateOnly date, DayOfWeek firstDayOfWeek) =>
+        date.AddDays(-(((int)date.DayOfWeek - (int)firstDayOfWeek + 7) % 7));
 
     /// <summary>
     /// Returns the last <paramref name="count"/> complete periods before (year, month) or before the week period starting

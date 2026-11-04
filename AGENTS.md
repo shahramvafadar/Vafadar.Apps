@@ -4665,3 +4665,21 @@ its original userdata/package or retained system record. Old packages/OS/boot ma
 No real-phone action, original fault remedy or whole performance/security/platform
 acceptance follows. Goal stays active; all frozen and terminal checkpoints remain.
 See `src/Apps/Zanance/docs/quality/calendar-range-endpoints.md`.
+
+
+## D-812 / D-813 - Fixed ranges and complete synchronization policy
+
+Bounded weekly/fortnight read ranges and explicit anchors must not weaken complete
+peer-budget validation. Step in wide arithmetic and reject out-of-domain targets,
+never wrap or clamp an invalid period step to another financial date. Keep the
+original complete current/following-month and whole fixed-duration sync checks,
+InvalidBudgetPeriod reason/fields and original publication/conflict ownership.
+D810's implicit dependency regression is reproduced at the original pre-Submit
+validator; do not weaken the unchanged integration test or replay its accepted
+financial/enrollment/service sequence.26new/5existing selected host cases and17+9
+versioned original Android calculations pass; final strict packages pass. This is
+not whole-PE/final-binary-all-cases, full service or release acceptance. Only new
+UID10218/10219 packages retire; D809 AVD/userdata/system record and preexisting packages/
+OS/boot stay preserved. No old successful financial/auth/photo or CI job repeats.
+All frozen scopes and terminal cohorts remain; overall goal and broader gates stay active.
+See `src/Apps/Zanance/docs/quality/synchronized-budget-complete-periods.md`.

@@ -1,5 +1,9 @@
 # Documentation
 
+[D812/D813 fixed periods and sync completeness](../src/Apps/Zanance/docs/quality/synchronized-budget-complete-periods.md)
+corrects endpoint failures and the actual CI-exposed financial validation dependency,
+with focused host/native evidence and no accepted financial/service replay.
+
 [D810 final calendar ranges](../src/Apps/Zanance/docs/quality/calendar-range-endpoints.md)
 corrects eleven endpoint failures with new host/native cases and preserves the restored
 D809 emulator and evidence, without financial or accepted-operation replay.

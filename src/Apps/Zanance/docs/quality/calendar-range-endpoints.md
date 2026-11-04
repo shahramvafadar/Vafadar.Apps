@@ -77,3 +77,5 @@ Home/command latency gain follows from these correctness checks.
 Related: [final recurrence months](recurrence-final-calendar-month.md),
 [current ordinary native exit](current-large-budget-native-exit.md),
 [remaining delivery frontier](remaining-delivery-evidence.md).
+
+D813 later proves that bounded read helpers inadvertently relaxed the separate synchronization complete-period check. [The explicit financial-policy correction](synchronized-budget-complete-periods.md) preserves the original refusal; D810 read/calculation successes above remain finite evidence, not complete peer-write acceptance.

@@ -69,8 +69,9 @@ public static partial class SyncFinancialValidation
                     if (OptionalNumber(row, "TotalLimit") is < 0) Add(record, "BudgetLimitMustBeNonnegative", ["TotalLimit"]);
                     try
                     {
-                        // Reuse the original calendar boundaries, including financial months and week overflow.
-                        _ = Budgets.BudgetPeriods.Range(new Budgets.Budget
+                        // Read ranges may clip at DateOnly.MaxValue; synchronized financial
+                        // identity must retain the original complete-period refusal (D-813).
+                        DemandCompleteBudgetPeriod(new Budgets.Budget
                         {
                             CurrencyCode = Text(row, "CurrencyCode")!,
                             Period = (Budgets.BudgetPeriod)Number(row, "Period"),
@@ -109,6 +110,32 @@ public static partial class SyncFinancialValidation
         {
             if (issues.Count < 100) issues.Add(new(record.Record, reason, fields, related));
         }
+    }
+
+    /// <summary>Retains the complete financial-period policy independently of bounded display/read ranges.</summary>
+    private static void DemandCompleteBudgetPeriod(Budgets.Budget budget, int monthStart)
+    {
+        if (budget.Period != Budgets.BudgetPeriod.Month)
+        {
+            _ = budget.PeriodStart.AddDays(Budgets.BudgetPeriods.Days(budget.Period) - 1);
+            return;
+        }
+
+        var first = Budgets.PeriodMath.ToDate(budget.Year, budget.Month, 1, budget.Calendar);
+        _ = first.AddDays(Budgets.PeriodMath.DaysInMonth(budget.Year, budget.Month, budget.Calendar) - 1);
+        var day = Math.Clamp(monthStart, 1, Budgets.PeriodMath.MaxStartDay);
+        _ = first.AddDays(day - 1);
+        if (day == 1)
+        {
+            return;
+        }
+
+        // Preserve the previously required complete following calendar month,
+        // as well as the financial end; this is not a relaxed peer-write policy.
+        var (nextYear, nextMonth) = Budgets.PeriodMath.Next(budget.Year, budget.Month);
+        var nextFirst = Budgets.PeriodMath.ToDate(nextYear, nextMonth, 1, budget.Calendar);
+        _ = nextFirst.AddDays(Budgets.PeriodMath.DaysInMonth(nextYear, nextMonth, budget.Calendar) - 1);
+        _ = nextFirst.AddDays(day - 2);
     }
 
     private static Guid Id(SyncRecord record) => record.Values!.Value.GetProperty("Id").GetGuid();

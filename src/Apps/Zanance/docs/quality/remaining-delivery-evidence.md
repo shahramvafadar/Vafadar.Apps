@@ -347,3 +347,18 @@ closes only that missing-fix premise, not D809/D678 cause/repair or broader acce
 No product/runtime/GC change, build/test replay, financial action or cleanup occurs;
 independent work and the overall active goal continue.
 See [exact evidence](original-concurrent-descriptor-correction-admission.md).
+
+
+## D-812 / D-813 - Fixed periods and complete synchronized budgets
+
+Seventeen new fixed-period cases expose ten failures; bounded final ranges, explicit
+fortnight anchors and non-wrapping steps are corrected. Seventeen native observations
+and five affected prior pure cases pass. D810 CI separately exposes an unintended sync
+complete-period relaxation; nine new original-validator cases reproduce four failures
+and pass after restoring the explicit original refusal. Nine new Android guard cases
+pass without financial/service/account setup. These are26new+5existing selected host
+cases and17+9versioned native calculations, not all on the final binary or a full suite.
+Final strict Windows/full offline Android pass; only fresh UID10218/10219 packages
+retire. D809 AVD/data/record, old packages/settings/boot and all frozen/terminal evidence
+remain. No successful financial/auth/photo/CI job is replayed; goal and wider gates stay active.
+See [exact evidence](synchronized-budget-complete-periods.md).
