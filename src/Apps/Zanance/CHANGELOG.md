@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-825: keep final-calendar goals and very large contribution targets readable, preserve correct completion dates and avoid showing free money from extreme debt or marking equal saving periods as one-offs.
+
 - D-813: keep incomplete budget periods rejected during synchronization even when a read preview stops at the last supported date.
 
 - D-812: keep final weekly budget ranges valid, honor explicit two-week anchors and reject period steps that would overflow to an unrelated date.

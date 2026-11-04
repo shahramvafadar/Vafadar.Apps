@@ -50,7 +50,7 @@ public static class ContributionSchedule
             return null;
         }
 
-        var needed = (remaining + contribution - 1) / contribution;
+        var needed = PeriodsNeeded(remaining, contribution);
         if (needed > MaxContributions)
         {
             return null;
@@ -62,5 +62,6 @@ public static class ContributionSchedule
 
     /// <summary>Returns ceil(R / C): how many contributions reach the remaining amount, or 0.</summary>
     public static long PeriodsNeeded(long remaining, long contribution) =>
-        remaining <= 0 || contribution <= 0 ? 0 : (remaining + contribution - 1) / contribution;
+        // Divide before rounding: the mathematical ceiling fits even when the usual numerator sum does not.
+        remaining <= 0 || contribution <= 0 ? 0 : remaining / contribution + (remaining % contribution == 0 ? 0 : 1);
 }

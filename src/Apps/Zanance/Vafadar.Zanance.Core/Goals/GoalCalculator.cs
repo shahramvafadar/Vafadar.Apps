@@ -29,7 +29,8 @@ public sealed record GoalStatus(Goal Goal, long Allocated, long Funded, long Rem
 public sealed record AccountEarmark(Guid AccountId, long Balance, long Earmarked)
 {
     /// <summary>Gets the money not earmarked for any goal; never negative.</summary>
-    public long Unallocated => Math.Max(0, Balance - Earmarked);
+    // Compare before subtracting: a valid nonnegative earmark cannot turn extreme debt into free money.
+    public long Unallocated => Balance <= Earmarked ? 0 : Balance - Earmarked;
 
     /// <summary>Gets how much the earmarked money exceeds the balance (F2-GOAL-05).</summary>
     public long Shortfall => Math.Max(0, Earmarked - Math.Max(0, Balance));
@@ -108,13 +109,10 @@ public static class GoalCalculator
             return ((target.DayNumber - today.DayNumber) / 7) + 1;
         }
 
-        var count = 0;
-        while (today.AddMonths(count) <= target)
-        {
-            count++;
-        }
-
-        return count;
+        // Compare the final possible anchor once. Enumerating one month beyond a December9999
+        // target overflows; using the original day anchor also preserves short-month clamping.
+        var months = (target.Year - today.Year) * 12 + target.Month - today.Month;
+        return months + (today.AddMonths(months) <= target ? 1 : 0);
     }
 
     /// <summary>
@@ -128,7 +126,8 @@ public static class GoalCalculator
             return 0;
         }
 
-        return opportunities <= 0 ? remaining : (remaining + opportunities - 1) / opportunities;
+        // Divide before rounding up so a valid large target never overflows an intermediate sum.
+        return opportunities <= 0 ? remaining : ContributionSchedule.PeriodsNeeded(remaining, opportunities);
     }
 
     // Allocated and covered money per (account, goal). Within one account, a shortfall is taken from low priority first,

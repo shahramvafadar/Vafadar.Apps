@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D825 goal calculation boundaries](goal-contribution-boundaries.md) repairs actual
+supported-date, contribution/ETA, debt-free-money and one-off threshold failures.
+33 new/32 related selected cases and original14333/two goal rows/7 native assertions/
+8 visible captions retain full20 source. Shippingb87907d1 is prepared, not on Main;
+no financial/auth/photo or original-fault record replay. Broader gates stay open.
+
 [D823/D824 one-pass Accounts candidate](account-overview-streamed-effects-admission.md)
 passes both host process gates but fails the first complete Android page gate:
 581.5534to571.5884ms is only1.713514% better, below fixed5%. Remaining orders/sizes,

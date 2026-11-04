@@ -95,7 +95,7 @@ public static class GoalTrendService
         {
             var others = periods.Where((_, j) => j != i).Select(o => o.Contribution).ToList();
             var median = KpiCatalog.Median(others);
-            return p with { IsOneOff = others.Count > 0 && median > 0 && p.Contribution > 3 * median };
+            return p with { IsOneOff = others.Count > 0 && median > 0 && p.Contribution > 3m * median };
         })];
 
         if (remaining <= 0)
@@ -115,7 +115,7 @@ public static class GoalTrendService
         }
 
         // The n-th month end from the running month on: ceil(R / C) contributions.
-        var needed = (int)Math.Min(1200, (remaining + pace - 1) / pace);
+        var needed = (int)Math.Min(1200, ContributionSchedule.PeriodsNeeded(remaining, pace));
         var (etaYear, etaMonth) = (current.Year, current.Month);
         for (var i = 1; i < needed; i++)
         {

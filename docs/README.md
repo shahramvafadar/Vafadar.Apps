@@ -1,5 +1,9 @@
 # Documentation
 
+[D825 exact goal projections](../src/Apps/Zanance/docs/quality/goal-contribution-boundaries.md)
+repairs supported-date and positive-amount overflows, with33 new/32 related selected
+cases, original native publication and complete-source preservation.
+
 [D823/D824 one-pass Accounts admission](../src/Apps/Zanance/docs/quality/account-overview-streamed-effects-admission.md)
 retains two admitted host processes but rejects the first complete native page gain
 below its fixed5% gate; no production algorithm change or successful-case replay.

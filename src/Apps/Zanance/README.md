@@ -13,7 +13,17 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 | Status | Active Android implementation and qualification; not publicly released. Core finance and extended workflows are implemented with bounded source/native evidence. Remaining work and acceptance gates are tracked in the [canonical commercial backlog](docs/enhancements/2026-10-commercial-release/04-backlog.md), [specification status](docs/spec/Zanance-Product-Specification.md) and [release checklist](docs/08-release-checklist.md). Real OAuth/provider/store acceptance and Mac/iOS qualification remain separate. Windows is a development target. |
 | Solution filter | [`Vafadar.Zanance.slnf`](../../../Vafadar.Zanance.slnf) |
 
-## Current documentation snapshot — 1 November 2026
+## Current documentation snapshot — 4 November 2026
+
+[D825 goal projection boundaries](docs/quality/goal-contribution-boundaries.md) keep
+supported final dates and large positive amounts correct across suggestions, ETAs,
+free money and observed one-offs.33 new/32 related selected cases and two original
+native goal rows preserve full source. Completeb87907d1 is prepared, not installed on
+physical Main; last D81432063/ac3a82f6 remains the current physical observation. D809
+emulator/data/record stay preserved and its bounded R13 result stays terminal unknown.
+Whole performance/security/stability/platform/provider/release gates remain open.
+
+### Retained 1 November history
 
 Original source/command ownership batches and later Android PIN/window-privacy corrections
 retain their dated focused/native evidence. [D-607](docs/quality/physical-paired-reminder-preparation.md)

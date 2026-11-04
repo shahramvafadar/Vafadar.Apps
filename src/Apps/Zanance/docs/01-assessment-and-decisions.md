@@ -13732,3 +13732,22 @@ Shipping2691be19 is prepared, not installed on Main. D809 data/record/terminal R
 accepted cohorts and frozen scopes remain protected; broader performance/original-fault/
 security/platform/release gates and overall goal stay open.
 See [host rejection](quality/account-overview-index-reuse-rejection.md) and [finite native correction](quality/archived-account-description-contrast.md).
+
+
+## D-825 - Exact goal projections at supported limits
+
+Keep valid final-month goals evaluable, positive contribution ceilings/ETAs exact,
+extreme debt free of invented available money and equal large periods free of false
+one-off flags. Shared quotient/remainder division preserves funding/recurrence/writer
+rules and1200-period caps; no schema or source normalization is added.24 genuine
+original failures across separate lineages lead to33 new and32 related selected cases
+passing, not a whole-suite claim. One initial sum oracle is separately corrected.
+Actual original Android14333/UID10226 publishes two metadata-only goals,7 Core boundary
+assertions and8 fully visible native captions with full20 typed source unchanged.
+Strict Windows/full offline shipping and private native packages pass. Only the fresh
+UID and four standard Clean profiles retire, with exact original OS/key-presence/
+geometry/boot/packages/reverse and no supplemental/frozen action. No financial/auth/
+photo replay or phone command occurs; shippingb87907d1 is prepared, not on Main.
+Original D809 data/record/terminal R13 unknown and all broader gates stay protected;
+whole performance/original-fault/security/platform/release and overall goal stay open.
+See [finite evidence](quality/goal-contribution-boundaries.md).

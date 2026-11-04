@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-825 - Complete positive goal projections at supported limits (2026-11-04)
+
+Preserve original funding, writer, source and recurrence rules while using one safe
+positive ceiling for goal suggestions/planned/observed ETA; keep1200-period caps.
+Bound legacy monthly opportunities by the final valid anchor, compare before debt
+subtraction and keep the three-times pace threshold exact.33 new/32 related selected
+cases pass after24 genuine baseline failures across explicit lineages; the corrected
+oracle failure is separate. Actual14333/UID10226 publishes two metadata-only goals,
+seven original Core assertions and8 visible native captions with full20 source equal.
+Only that fresh UID retires after exact OS/key-presence/geometry/boot/packages/reverse;
+four standard Clean profiles complete, without supplemental/frozen or accepted-operation
+replay. Full offline shippingb87907d1 is prepared, not installed on Main. D809 AVD/data/
+record and terminal R13 unknown, last D814 Main and all broader gates stay protected;
+overall goal remains active. See
+`src/Apps/Zanance/docs/quality/goal-contribution-boundaries.md`.
+
 ## D-823/D-824 - One-pass account effects rejected at the native gate (2026-11-04)
 
 Two actual host processes pass six frozen component shapes and118 private controls,
