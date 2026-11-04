@@ -10,7 +10,7 @@ namespace Vafadar.Zanance.Core.Budgets;
 public sealed record EnvelopeSummary(long Available, long Earmarked, long InEnvelopes, long Overspent)
 {
     /// <summary>Gets the money not assigned to an envelope or a goal; negative when more is assigned than there is.</summary>
-    public long Unassigned => Available - Earmarked - InEnvelopes;
+    public long Unassigned => checked((long)((Int128)Available - Earmarked - InEnvelopes));
 
     /// <summary>Gets a value indicating whether more money is assigned than the accounts hold.</summary>
     public bool IsOverAssigned => Unassigned < 0;
@@ -35,11 +35,11 @@ public static class EnvelopeCalculator
         {
             if (envelope.Remaining >= 0)
             {
-                inEnvelopes += envelope.Remaining;
+                inEnvelopes = checked(inEnvelopes + envelope.Remaining);
             }
             else
             {
-                overspent -= envelope.Remaining;
+                overspent = checked(overspent - envelope.Remaining);
             }
         }
 

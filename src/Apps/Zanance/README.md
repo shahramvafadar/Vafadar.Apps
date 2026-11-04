@@ -15,6 +15,11 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 5 November 2026
 
+[D829 budget read aggregation](docs/quality/budget-read-aggregation.md) corrects exact
+averages, envelopes, planned/Flex totals, carry and final-year lookahead.30 new/24
+related selected cases and30 native calculations retain source without preparation.
+Complete0b37aebb is prepared, not installed on Main; broader gates remain open.
+
 [D828 budget numeric boundaries](docs/quality/budget-numeric-boundaries.md) keep large
 limits,80% warnings and rounded suggestions exact.20 new/12 affected selected cases
 and20 original Android calculations preserve source without preparation. Complete

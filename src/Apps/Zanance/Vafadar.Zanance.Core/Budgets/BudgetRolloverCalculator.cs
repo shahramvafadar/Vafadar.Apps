@@ -66,12 +66,13 @@ public static class BudgetRolloverCalculator
             return BudgetCarry.None;
         }
 
-        long Pass(long rest) => nextRollover == BudgetRollover.Surplus ? Math.Max(0, rest) : rest;
+        // Complete the month exactly and apply the selected surplus clamp before narrowing its result.
+        long Pass(Int128 rest) => checked((long)(nextRollover == BudgetRollover.Surplus ? Int128.Max(0, rest) : rest));
 
-        var total = month.TotalLimit is { } limit ? Pass(limit + received.Total - month.TotalSpent) : 0;
+        var total = month.TotalLimit is { } limit ? Pass((Int128)limit + received.Total - month.TotalSpent) : 0;
         var categories = month.CategoryLimits.ToDictionary(
             l => l.Key,
-            l => Pass(l.Value + received.For(l.Key) - month.CategorySpent.GetValueOrDefault(l.Key)));
+            l => Pass((Int128)l.Value + received.For(l.Key) - month.CategorySpent.GetValueOrDefault(l.Key)));
         return new BudgetCarry(total, categories);
     }
 }

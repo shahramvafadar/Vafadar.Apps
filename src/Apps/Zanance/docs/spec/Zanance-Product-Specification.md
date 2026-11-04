@@ -12888,3 +12888,18 @@ last D814 Main and accepted operations remain protected; no phone/financial/auth
 replay or runtime/GC change. Complete offline312b0d35 is prepared, not on Main;
 four standard Clean profiles pass. Broader gates and the continuous goal stay active.
 See [finite evidence](../quality/budget-numeric-boundaries.md).
+
+## D-829 - Exact budget read aggregation
+
+D-829 completes exact budget suggestion averages and checked envelope/plan/Flex/carry
+read results, preserving representable cancellation and original surplus-only clamping.
+Final-year nonmonthly lookahead stops at the supported last day.24 genuine original
+failures,30 new/24 affected selected cases across explicit lineages and original Android
+calculations in15958/UID10230 retain full20 source/A/E/S0 without preparation.
+Only that fresh UID retires after exact OS/key-absence/geometry/boot/packages/reverse;
+source/writer/expense/recurrence rules remain. Original D809 AVD/data/record
+and terminal R13 unknown, last D814 Main and accepted operations remain protected;
+no financial/auth/photo replay, runtime/GC change or frozen action. Four standard Clean
+profiles pass; full offline0b37aebb is prepared, not on Main. Whole gates and continuous
+delivery remain active.
+See [finite evidence](../quality/budget-read-aggregation.md).

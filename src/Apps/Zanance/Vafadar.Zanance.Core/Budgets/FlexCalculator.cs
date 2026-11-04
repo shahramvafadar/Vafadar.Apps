@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Core.Budgets;
 public sealed record FlexGroup(long Planned, long Spent, int UnknownCount = 0)
 {
     /// <summary>Gets what is still expected (never below zero).</summary>
-    public long Open => Math.Max(0, Planned - Spent);
+    public long Open => Planned <= Spent ? 0 : checked(Planned - Spent);
 }
 
 /// <summary>A month read with the flex method (D-28).</summary>
@@ -22,7 +22,7 @@ public sealed record FlexGroup(long Planned, long Spent, int UnknownCount = 0)
 public sealed record FlexSummary(FlexGroup Fixed, FlexGroup NonMonthly, BudgetStatus Flexible)
 {
     /// <summary>Gets the month's total plan: fixed + non-monthly share + flexible limit.</summary>
-    public long Total => Fixed.Planned + NonMonthly.Planned + Flexible.Limit;
+    public long Total => checked((long)((Int128)Fixed.Planned + NonMonthly.Planned + Flexible.Limit));
 }
 
 /// <summary>
@@ -96,23 +96,25 @@ public static class FlexCalculator
             // A share is set aside only for a bill that is still to come within a year (not for a plan that has ended).
             if (BudgetPlanning.MonthlyEquivalent(schedule) is { } share)
             {
-                if (!Occurrences.Between(schedule, stateList, from, from.AddYears(1), today).Any(o => o.Status != OccurrenceView.Skipped))
+                // The final supported year has a shorter representable lookahead, not an absent current bill.
+                var lookaheadEnd = from.Year == 9999 ? DateOnly.MaxValue : from.AddYears(1);
+                if (!Occurrences.Between(schedule, stateList, from, lookaheadEnd, today).Any(o => o.Status != OccurrenceView.Skipped))
                 {
                     continue;
                 }
 
-                nonMonthlyPlanned += share;
+                nonMonthlyPlanned = checked(nonMonthlyPlanned + share);
                 continue;
             }
 
             var planned = BudgetPlanning.PlannedInPeriod([schedule], stateList, byAccount, from, to, currencyCode, today);
-            nonMonthlyPlanned += planned.Total;
+            nonMonthlyPlanned = checked(nonMonthlyPlanned + planned.Total);
             nonMonthlyUnknown += planned.UnknownCount;
         }
 
         var fixedSpent = Spent(fixedIds);
         var nonMonthlySpent = Spent(nonMonthlyIds);
-        var flexibleSpent = Spent(null) - fixedSpent - nonMonthlySpent;
+        var flexibleSpent = checked((long)((Int128)Spent(null) - fixedSpent - nonMonthlySpent));
         return new FlexSummary(
             new FlexGroup(fixedPlans.Total, fixedSpent, fixedPlans.UnknownCount),
             new FlexGroup(nonMonthlyPlanned, nonMonthlySpent, nonMonthlyUnknown),
@@ -157,7 +159,7 @@ public static class FlexCalculator
         var entryList = entries.ToList();
         var categoryList = categories.ToList();
         var excluded = CategoriesOf(categoryList, SpendingType.Fixed).Concat(CategoriesOf(categoryList, SpendingType.NonMonthly)).ToList();
-        return BudgetCalculator.NetExpense(accountList, entryList, from, to, currencyCode, accountIds, null, null, confirmedOnly)
-            - (excluded.Count == 0 ? 0 : BudgetCalculator.NetExpense(accountList, entryList, from, to, currencyCode, accountIds, excluded, categoryList, confirmedOnly));
+        return checked(BudgetCalculator.NetExpense(accountList, entryList, from, to, currencyCode, accountIds, null, null, confirmedOnly)
+            - (excluded.Count == 0 ? 0 : BudgetCalculator.NetExpense(accountList, entryList, from, to, currencyCode, accountIds, excluded, categoryList, confirmedOnly)));
     }
 }

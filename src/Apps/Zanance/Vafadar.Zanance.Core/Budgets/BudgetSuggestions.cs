@@ -85,8 +85,10 @@ public static class BudgetSuggestions
         var factor = Currencies.TryGet(currencyCode, out var currency) ? currency.MinorFactor : 100;
         LimitSuggestion? Average(Func<(DateOnly From, DateOnly To), long> spent)
         {
-            var total = periods.Sum(p => Math.Max(0, spent(p)));
-            var average = (long)Math.Ceiling(total / (double)periods.Count);
+            // Individual periods keep their checked expense policy; their exact average can still fit
+            // when the cross-period numerator is wider than one money value.
+            var total = periods.Aggregate((Int128)0, (sum, p) => sum + Math.Max(0, spent(p)));
+            var average = checked((long)((total + periods.Count - 1) / periods.Count));
             return average > 0 ? new LimitSuggestion(average, RoundUp(average, factor), periods.Count) : null;
         }
 

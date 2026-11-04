@@ -1,5 +1,9 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D829 budget read aggregation](budget-read-aggregation.md)
+keeps averages, envelopes, planned/Flex totals and carry exact at supported boundaries,
+with30 new/24 affected selected cases; parent acceptance gates remain open.
+
 [D828 budget numeric boundaries](budget-numeric-boundaries.md)
 keeps the80% warning and rounded limit suggestions exact at large values, with32
 selected cases and20 original Android calculations; broader gates remain open.

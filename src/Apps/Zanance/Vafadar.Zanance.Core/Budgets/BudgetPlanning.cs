@@ -46,7 +46,7 @@ public static class BudgetPlanning
                 count++;
                 if (occurrence.Amount is { } amount)
                 {
-                    total += amount;
+                    total = checked(total + amount);
                 }
                 else
                 {
