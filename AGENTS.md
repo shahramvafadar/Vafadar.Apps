@@ -4626,3 +4626,26 @@ Pending source reads must cancel on actual Back. Private diagnostic refusal must
 as a managed binder crash, and consumed markers stay consumed. A corrected distinct test
 branch must preserve earlier accepted setup and source; no marker deletion or financial replay.
 Refused cleanup scopes remain frozen without retry/subset/alternate/move/escalation/reuse.
+
+## D-809 - Current large Budget exit and approved bounded R13 continuation
+
+The owner explicitly approves only saved R13 at exact Mono BuildId/topPC2f0f66 on
+this fictitious owned emulator, exporting the existing alignment/full-eight-byte-access
+labels only. Old2edd7d remains RSI-only. Keep original admission, bounds, other-body
+skipping and wiping; refuse new-PC fault-address classification before parsing. Never
+export a register/address/map/memory or Main source. This is not a runtime/GC remedy.
+Twenty-five new/four affected private component controls pass; preserve the actual
+scope failure and corrected off-PC observer without successful-case replay. Exactly
+one newly approved real interpretation on unchanged record metadata returns both
+slot labels refused-unknown, not a slot-property/cause/repair claim.
+The owner requests the same AVD/data/evidence be made available again. One preserving
+restart retains installed V3/UID10216 and original system record, without create/wipe/
+install/app/UI/financial replay. Record the new boot separately; old boot/PID continuity
+is not assumed. Source-only SDK5913 previously verified full schema/typed rows/sequence/
+all32ledger fields without normalization or MAUI windows. Do not repeat that success.
+Thirty-three hash-matched temporary diagnostic files retire; adbd returns2000 and
+settings/geometry/reverse/new boot match. Keep the owned AVD, userdata and original
+system record; no reset/replay/deletion while the retained evidence is needed.
+All frozen scopes, terminal D607/D752 and accepted successors remain preserved.
+Phone/Main are uncommanded; broader gates and overall goal remain active. See
+`src/Apps/Zanance/docs/quality/current-large-budget-native-exit.md`.

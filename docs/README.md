@@ -1,5 +1,11 @@
 # Documentation
 
+[D809 current large Budget native exit](../src/Apps/Zanance/docs/quality/current-large-budget-native-exit.md)
+records one new original100k ready read, its genuine concurrent-scan native death
+and complete post-exit source verification without UI or financial replay.
+The approved bounded R13 observation returns unknown; the preserving restart retains
+the original AVD/data/record. Overall delivery continues without successful-case replay.
+
 [D-766 ordinary process-cold Home](../src/Apps/Zanance/docs/quality/ordinary-process-cold-home.md)
 records one current original100k cold boundary and full source equality, with its
 window-observer failure preserved; original-fault and speed gates remain open.

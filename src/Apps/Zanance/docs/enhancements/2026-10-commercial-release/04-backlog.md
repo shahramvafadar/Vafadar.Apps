@@ -9976,3 +9976,16 @@ evidence; the passing interval premise is not patched or replayed. Strict Window
 and corrected complete offline Android packages pass. Main remains uncommanded;
 original native fault cause, complete performance/security/platform/release gates
 and the active overall goal remain open. See [bounded evidence](../../quality/recurrence-final-calendar-month.md).
+
+
+## D-809 - Current large-source Budget read and native exit
+
+One retained100k source reaches original Ready/14category rows and Back, then
+PID5101/UID10216 has actual OSnative5/status11. A real guarded record locates
+concurrent object scanning at2f0f66; the old categorical guard correctly refuses
+the new PC. Source-only SDK5913 verifies full original schema/typed rows/sequence/
+32fields without normalization or UI/financial replay, with no MAUI window.
+Owner-approved R13 observation returns both slot labels refused-unknown;29 private
+component controls pass. One preserving restart retains the same package/data/record;
+no app/financial replay occurs. Independent work and the overall active goal continue.
+No product/runtime/GC/phone change or general repair/acceptance is claimed. See [actual evidence](../../quality/current-large-budget-native-exit.md).
