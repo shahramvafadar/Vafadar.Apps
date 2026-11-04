@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-822 - Archived account descriptions and retained rejection (2026-11-04)
+
+Keep original archived-row captions opaque; the explicit archive heading carries that
+state without reducing enabled small-text contrast. The two changed native color pairs
+preserve the same UID/source after one no-reset upgrade, and only the fresh fixture
+retires after exact original OS/key-presence/geometry/boot/packages/reverse restoration.
+Do not replay its one metadata preparation or accepted financial/auth/photo contexts.
+D821 index sharing is rejected before second process/native/product by both one-account
+controls; do not retune or selectively rescue it. Its original viewmodel/index/formulas
+remain unchanged. Retain failed preparation/Windows PRI invocation, unused caller and
+actual per-version source bindings. All five new standard Clean profiles complete;
+no supplemental or frozen scope is touched. D809 AVD/data/record/terminal R13 unknown,
+Main's last D814 observation and broader gates remain protected; goal stays active. See
+`src/Apps/Zanance/docs/quality/archived-account-description-contrast.md` and
+`src/Apps/Zanance/docs/quality/account-overview-index-reuse-rejection.md`.
+
 ## D-820 - Retired public density-transition control (2026-11-04)
 
 The distinct SDK-only12183/UID10223 control observes stale public MAUI conversion on

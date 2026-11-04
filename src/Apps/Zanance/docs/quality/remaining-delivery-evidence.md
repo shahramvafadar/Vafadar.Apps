@@ -466,3 +466,19 @@ fresh-package retirement and standard Clean complete; no original context, succe
 suite/build/financial/auth/photo, phone or frozen action repeats. D809 data/record/R13
 unknown and108 D818 contexts stay protected; supported handling and broader gates/goal
 remain open. See [finite evidence](public-density-conversion-transition.md).
+
+## D-821/D-822 - Account overview admission and archived descriptions
+
+The private Accounts index-sharing candidate passes32 new component controls and four
+multi-account host gates, but one-account regressions23.091454%/13.422066% reject it
+before second process/native/product. Original viewmodel and financial algorithms stay
+unchanged. Separately remove archived AccountRow opacity0.6: its enabled description's
+actual native-alpha/bound-background contrast rises from2.866895/3.702097 to7.525629/
+7.658595 in the two themes. Baseline12713 -> one no-reset12925 retains UID10224 and all20
+typed source components, with no setup/save replay. Strict Windows/full offline Android
+pass after preserving the initial PRI command failure; four new standard Clean profiles
+and fresh-UID retirement restore original OS/key-presence/geometry/boot/packages/reverse.
+Shipping2691be19 is prepared, not installed on Main. D809 data/record/terminal R13 unknown,
+accepted cohorts and frozen scopes remain protected; broader performance/original-fault/
+security/platform/release gates and overall goal stay open.
+See [host rejection](account-overview-index-reuse-rejection.md) and [finite native correction](archived-account-description-contrast.md).

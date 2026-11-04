@@ -81,7 +81,9 @@
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding Archived}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="local:AccountItem">
-                                <local:AccountRow Opacity="0.6" />
+                                <!-- D-822: the section already identifies archived accounts. Keep the
+                                     small descriptive text opaque so it retains its readable contrast. -->
+                                <local:AccountRow />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>

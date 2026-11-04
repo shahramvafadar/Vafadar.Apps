@@ -1,5 +1,10 @@
 # Documentation
 
+[D822 archived account readability](../src/Apps/Zanance/docs/quality/archived-account-description-contrast.md)
+retains two original failure colors, two corrected colors and exact source restoration;
+[D821 account-index admission](../src/Apps/Zanance/docs/quality/account-overview-index-reuse-rejection.md)
+rejects the distinct private speed candidate without changing financial algorithms.
+
 [D818 visible onboarding progress](../src/Apps/Zanance/docs/quality/onboarding-visible-step-counter.md)
 shows the existing localized step count with108 new finite native caption contexts,
 source preservation and explicit locale/live-window restoration limitations.
