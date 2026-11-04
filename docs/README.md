@@ -1,5 +1,9 @@
 # Documentation
 
+[D823/D824 one-pass Accounts admission](../src/Apps/Zanance/docs/quality/account-overview-streamed-effects-admission.md)
+retains two admitted host processes but rejects the first complete native page gain
+below its fixed5% gate; no production algorithm change or successful-case replay.
+
 [D822 archived account readability](../src/Apps/Zanance/docs/quality/archived-account-description-contrast.md)
 retains two original failure colors, two corrected colors and exact source restoration;
 [D821 account-index admission](../src/Apps/Zanance/docs/quality/account-overview-index-reuse-rejection.md)

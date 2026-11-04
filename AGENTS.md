@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-823/D-824 - One-pass account effects rejected at the native gate (2026-11-04)
+
+Two actual host processes pass six frozen component shapes and118 private controls,
+without adding product tests. The different one-pass effects candidate then improves
+first original Android10k/20 ready-page median only1.713514%, below fixed5%; reject
+before other sizes/orders or production. Do not retune/threshold/selectively rescue it.
+Keep full32-field inputs, all20 source components, original numeric oracle, five samples
+per role and same-UID no-reset adoption without financial/setup replay. Only fresh
+UID10225 retires after exact OS/key-presence/geometry/boot/packages/reverse restoration;
+four new standard Clean profiles complete, with no supplemental/frozen action. Original
+D809 AVD/data/record and terminal R13 unknown remain protected/unread. No phone command,
+shipping/Windows/old-success/auth/photo/financial replay or runtime/GC change occurs.
+Product code remains unchanged; original-fault/whole-performance/broader gates and
+continuous goal stay active. See
+`src/Apps/Zanance/docs/quality/account-overview-streamed-effects-admission.md`.
+
 ## D-822 - Archived account descriptions and retained rejection (2026-11-04)
 
 Keep original archived-row captions opaque; the explicit archive heading carries that

@@ -10155,3 +10155,19 @@ Shipping2691be19 is prepared, not installed on Main. D809 data/record/terminal R
 accepted cohorts and frozen scopes remain protected; broader performance/original-fault/
 security/platform/release gates and overall goal stay open.
 See [host rejection](../../quality/account-overview-index-reuse-rejection.md) and [finite native correction](../../quality/archived-account-description-contrast.md).
+
+
+## D-823/D-824 - One-pass Accounts host admission and native rejection
+
+A distinct private one-pass original-effect capture passes both .NET10.0.14/X64
+processes/six shapes and118 component controls (86 new/32 affected; no product test
+count increase). Actual original10k/20 AccountsPage median581.5534to571.5884ms improves
+only1.713514%, below fixed5%, so reject before reverse/larger cases or production;
+no retune/count threshold/selective rescue. SameUID10225/no-reset/full32-field input/
+20 source components and original numeric oracle remain equal, with no financial
+writer/setup/auth/photo replay. Fresh package retirement restores original OS/key
+presence/geometry/boot/packages/reverse; four new standard Clean profiles complete,
+no supplemental/frozen action. D809 AVD/data/record/R13 terminal unknown and Main's
+last D814 observation stay protected. Product code, runtime/GC and original fault/
+whole-performance/broader gates remain unchanged/open; goal remains active.
+See [finite admission](../../quality/account-overview-streamed-effects-admission.md).

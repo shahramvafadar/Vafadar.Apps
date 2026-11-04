@@ -1,5 +1,12 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D823/D824 one-pass Accounts candidate](account-overview-streamed-effects-admission.md)
+passes both host process gates but fails the first complete Android page gate:
+581.5534to571.5884ms is only1.713514% better, below fixed5%. Remaining orders/sizes,
+production adoption and rescue are not started. Exact full-source/no-reset/native-root
+checks and fresh-UID retirement preserve D809 data/record/terminal unknown and current
+Main's last D814 observation. This does not close whole performance or original fault.
+
 [D815 complete apostrophe receipt totals](receipt-apostrophe-grouped-totals.md)
 repairs one actual explicit-total fragmentation defect.27new/14affected selected cases
 and four new original native PDF/PNG inputs pass with full20typed source equality;
