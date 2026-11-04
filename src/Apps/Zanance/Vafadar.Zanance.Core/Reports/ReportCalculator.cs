@@ -92,7 +92,8 @@ public static class ReportCalculator
                 }
             }
 
-            var opening = LedgerCalculator.Balance(account, entries, from.AddDays(-1));
+            // No account or entry can predate the first representable day; its opening belongs inside this range.
+            var opening = from == DateOnly.MinValue ? 0 : LedgerCalculator.Balance(account, entries, from.AddDays(-1));
             var closing = LedgerCalculator.Balance(account, entries, to);
             var openingAdded = account.OpeningDate >= from && account.OpeningDate <= to ? account.OpeningBalance : 0;
             result.Add(new AccountMovement(account.Id, account.CurrencyCode, opening, openingAdded, income, refunds, expense, reversals, transfersIn, transfersOut, adjustments, closing) { Capital = capital });
@@ -102,7 +103,7 @@ public static class ReportCalculator
     }
 
     /// <summary>
-    /// Returns income and expense of the <paramref name="count"/> months up to the month containing
+    /// Returns income and expense of up to <paramref name="count"/> representable months up to the month containing
     /// <paramref name="today"/>, oldest first, in one currency. The current month is flagged as partial (REP-05).
     /// </summary>
     /// <param name="startDay">The day financial months start on (1 = calendar months).</param>
@@ -122,7 +123,9 @@ public static class ReportCalculator
         for (var i = 0; i < count; i++)
         {
             months.Insert(0, (year, month));
-            (year, month) = PeriodMath.Previous(year, month);
+            var previous = PeriodMath.Previous(year, month);
+            if (!PeriodMath.IsSupportedYear(previous.Year, calendar)) break;
+            (year, month) = previous;
         }
 
         return

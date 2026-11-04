@@ -52,7 +52,7 @@ public sealed record WealthChange(
 public static class WealthHistory
 {
     /// <summary>
-    /// Returns net worth at the end of each of the last <paramref name="months"/> complete financial months and today,
+    /// Returns net worth at the end of up to the last <paramref name="months"/> representable complete financial months and today,
     /// with prices and rates dated on or before each day – a new price never changes an earlier point (AS13).
     /// </summary>
     public static IReadOnlyList<WealthPoint> MonthEnds(
@@ -72,9 +72,14 @@ public static class WealthHistory
         var dates = new List<DateOnly> { today };
         var current = PeriodMath.MonthOf(today, calendar, startDay);
         var (year, month) = current;
+        // Clip unavailable history only; an invalid selected current financial period still refuses.
+        if (months > 0 && !PeriodMath.IsSupportedYear(year, calendar))
+            _ = PeriodMath.MonthRange(year, month, calendar, startDay);
         for (var i = 0; i < months; i++)
         {
-            (year, month) = PeriodMath.Previous(year, month);
+            var previous = PeriodMath.Previous(year, month);
+            if (!PeriodMath.IsSupportedYear(previous.Year, calendar)) break;
+            (year, month) = previous;
             dates.Insert(0, PeriodMath.MonthRange(year, month, calendar, startDay).Last);
         }
 
@@ -109,8 +114,10 @@ public static class WealthHistory
         ArgumentNullException.ThrowIfNull(types);
         var start = NetWorthCalculator.Compute(accounts, entries, types, events, valuations, from);
         var end = NetWorthCalculator.Compute(accounts, entries, types, events, valuations, to);
-        var flows = KpiCatalog.Surplus(accounts, entries, new LedgerFilter(from.AddDays(1), to, [.. accounts.Select(a => a.Id)]))
-            .ToDictionary(s => s.CurrencyCode, s => s.Surplus, StringComparer.OrdinalIgnoreCase);
+        // The end-of-day snapshots are identical on a same-day comparison, leaving no intervening flow range.
+        var flows = from == to ? new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase)
+            : KpiCatalog.Surplus(accounts, entries, new LedgerFilter(from.AddDays(1), to, [.. accounts.Select(a => a.Id)]))
+                .ToDictionary(s => s.CurrencyCode, s => s.Surplus, StringComparer.OrdinalIgnoreCase);
         var currencies = start.Totals.Select(t => t.CurrencyCode).Concat(end.Totals.Select(t => t.CurrencyCode)).Concat(flows.Keys)
             .Distinct(StringComparer.OrdinalIgnoreCase).Order(StringComparer.Ordinal).ToList();
         var result = new List<WealthChange>();

@@ -246,8 +246,10 @@ public static class ForecastCalculator
             var balance = start;
             var minimum = long.MaxValue;
             var minimumDate = baseDate;
-            for (var day = baseDate; day <= horizon; day = day.AddDays(1))
+            // Day numbers admit the inclusive final date without constructing a day after DateOnly.MaxValue.
+            for (var dayNumber = baseDate.DayNumber; dayNumber <= horizon.DayNumber; dayNumber++)
             {
+                var day = DateOnly.FromDayNumber(dayNumber);
                 balance += byDay.GetValueOrDefault(day);
                 path.Add(new ForecastPoint(day, balance));
                 if (balance < minimum)

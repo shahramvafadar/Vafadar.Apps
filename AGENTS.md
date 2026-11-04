@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-826 - Representable chronological reads (2026-11-04)
+
+Keep inclusive final forecast dates, first-day movement openings, elapsed rate age and
+same-day wealth flows within representable dates. Clip unavailable historical months
+using original calendar support; requested history with an invalid current financial
+period still refuses.32 new/29 affected selected cases pass after25 original failures;
+32 original Android calculations in fresh14705/UID10227 preserve all20 typed components
+without source setup. Only that UID retires after exact OS/key-presence/geometry/boot/
+packages/reverse; four standard Clean profiles complete, no supplemental/frozen action.
+Full offline shipping2a0a63ba is prepared, not installed on Main. Preserve original D809
+AVD/data/record/terminal R13 unknown, last D814 Main and accepted operation checkpoints;
+no financial/auth/photo replay or runtime/GC change. Broader gates and goal stay active.
+See `src/Apps/Zanance/docs/quality/chronological-read-boundaries.md`.
+
 ## D-825 - Complete positive goal projections at supported limits (2026-11-04)
 
 Preserve original funding, writer, source and recurrence rules while using one safe

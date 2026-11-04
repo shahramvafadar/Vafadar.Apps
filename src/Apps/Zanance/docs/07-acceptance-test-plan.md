@@ -9461,3 +9461,15 @@ photo replay or phone command occurs; shippingb87907d1 is prepared, not on Main.
 Original D809 data/record/terminal R13 unknown and all broader gates stay protected;
 whole performance/original-fault/security/platform/release and overall goal stay open.
 See [finite evidence](quality/goal-contribution-boundaries.md).
+
+
+## D-826 - Representable chronological reads
+
+32 new chronological cases pass with29 directly affected existing cases; the original
+29-case batch has25 failures/4 controls and three separate original invalid-current-period
+controls already refuse. Actual Android14705/UID10227 passes32 calculations with all20
+typed components equal and accounts/entries/schedules0, without preparation. This is
+calculation evidence, not a date-picker/layout/fullDB/phone or performance acceptance.
+Fresh UID retirement and exact OS/key-presence/geometry/boot/packages/reverse complete;
+four standard Clean profiles, no supplemental/frozen action or accepted-operation replay.
+See [scope and package receipts](quality/chronological-read-boundaries.md).

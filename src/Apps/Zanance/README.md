@@ -15,11 +15,19 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 4 November 2026
 
+[D826 chronological read boundaries](docs/quality/chronological-read-boundaries.md)
+preserve valid earliest/latest report, forecast, rate-age and history inputs, while
+invalid current financial periods still refuse.32 new/29 affected selected cases and
+32 original Android calculations preserve full source without fixture preparation.
+Complete2a0a63ba is prepared, not installed on physical Main; last D81432063/ac3a82f6
+remains the physical observation. Whole performance/security/stability/platform gates
+and the continuous delivery goal remain open.
+
 [D825 goal projection boundaries](docs/quality/goal-contribution-boundaries.md) keep
 supported final dates and large positive amounts correct across suggestions, ETAs,
 free money and observed one-offs.33 new/32 related selected cases and two original
-native goal rows preserve full source. Completeb87907d1 is prepared, not installed on
-physical Main; last D81432063/ac3a82f6 remains the current physical observation. D809
+native goal rows preserve full source. Its completeb87907d1 package remains retained
+without a physical Main installation. D809
 emulator/data/record stay preserved and its bounded R13 result stays terminal unknown.
 Whole performance/security/stability/platform/provider/release gates remain open.
 

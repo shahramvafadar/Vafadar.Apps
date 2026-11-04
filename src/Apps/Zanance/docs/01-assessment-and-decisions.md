@@ -13751,3 +13751,17 @@ photo replay or phone command occurs; shippingb87907d1 is prepared, not on Main.
 Original D809 data/record/terminal R13 unknown and all broader gates stay protected;
 whole performance/original-fault/security/platform/release and overall goal stay open.
 See [finite evidence](quality/goal-contribution-boundaries.md).
+
+
+## D-826 - Representable chronological reads
+
+Bound chronological reads at actual supported dates rather than inventing predecessor/
+successor days. Use elapsed-day rate age, an empty same-day flow range and only available
+historical months; retain rejection of an invalid selected current financial period.
+No financial/source/writer/period-identity policy is relaxed.32 new/29 affected selected
+cases and32 original Android calculations pass after25 genuine baseline failures;
+zero fixture setup and full20 typed source equality preserve the current emulator.
+Strict Windows/full offline/private Android pass; only fresh UID10227 and four standard
+Clean profiles retire. Retain the initial tuple compile refusal and source lineage.
+Shipping2a0a63ba is not installed on Main. Original native fault and broader gates/goal
+remain open. See [finite evidence](quality/chronological-read-boundaries.md).

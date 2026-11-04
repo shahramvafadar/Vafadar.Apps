@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D826 chronological reads](chronological-read-boundaries.md) preserve valid first/last
+forecast/report/rate/history dates while invalid current financial periods still refuse.
+32 new/29 affected selected cases and32 original Android calculations retain full20
+source with no setup/financial/auth/photo replay. Shipping2a0a63ba is prepared, not on
+Main; D809 source/record/terminal R13 unknown and wider gates remain protected/open.
+
 [D825 goal calculation boundaries](goal-contribution-boundaries.md) repairs actual
 supported-date, contribution/ETA, debt-free-money and one-off threshold failures.
 33 new/32 related selected cases and original14333/two goal rows/7 native assertions/

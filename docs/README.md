@@ -1,5 +1,9 @@
 # Documentation
 
+[D826 chronological read boundaries](../src/Apps/Zanance/docs/quality/chronological-read-boundaries.md)
+repairs six genuine first/last-date read failures, with32 new/29 affected selected
+cases and32 original Android calculations without source preparation.
+
 [D825 exact goal projections](../src/Apps/Zanance/docs/quality/goal-contribution-boundaries.md)
 repairs supported-date and positive-amount overflows, with33 new/32 related selected
 cases, original native publication and complete-source preservation.

@@ -12853,3 +12853,13 @@ photo replay or phone command occurs; shippingb87907d1 is prepared, not on Main.
 Original D809 data/record/terminal R13 unknown and all broader gates stay protected;
 whole performance/original-fault/security/platform/release and overall goal stay open.
 See [finite evidence](../quality/goal-contribution-boundaries.md).
+
+
+## D-826 - Representable chronological reads
+
+Valid first/last-date report, forecast, rate-age and history reads now retain their
+mathematical bounds, with no money/writer/source/recurrence change. Lookback returns
+only representable months; an invalid current financial period still refuses.
+32 new/29 affected selected cases and32 original Android calculations pass; no whole-suite,
+fullDB/device/speed or historical-native-fault claim follows. Full offline2a0a63ba is
+prepared, not on Main. See [finite evidence](../quality/chronological-read-boundaries.md).

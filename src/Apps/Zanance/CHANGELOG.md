@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-826: keep report, forecast, rate-age and wealth-history calculations within supported dates; show only available earliest history while retaining invalid financial-period refusals.
+
 - D-825: keep final-calendar goals and very large contribution targets readable, preserve correct completion dates and avoid showing free money from extreme debt or marking equal saving periods as one-offs.
 
 - D-813: keep incomplete budget periods rejected during synchronization even when a read preview stops at the last supported date.

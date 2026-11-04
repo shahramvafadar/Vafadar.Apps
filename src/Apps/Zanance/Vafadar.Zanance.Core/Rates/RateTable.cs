@@ -36,7 +36,8 @@ public sealed record RateFreshness(int? Days = 30, DateOnly? FinancialMonthStart
             return false;
         }
 
-        var tooOld = rateDate < valuationDate.AddDays(-days);
+        // Compare elapsed days directly; a threshold before the first date cannot make a valid rate too old.
+        var tooOld = valuationDate.DayNumber - rateDate.DayNumber > days;
         return tooOld && (FinancialMonthStart is not { } start || rateDate < start);
     }
 }
