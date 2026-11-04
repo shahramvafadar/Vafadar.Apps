@@ -78,3 +78,18 @@ Related: [repeated-separator boundary](receipt-repeated-separator-boundary.md),
 [current native exit and bounded observation](current-large-budget-native-exit.md),
 [current physical Main](current-complete-main-adoption.md),
 [remaining execution frontier](remaining-delivery-evidence.md).
+
+## D-818 retained-source archive correction
+
+Subsequent preparation finds that the retirement script copied the D813 sibling
+private project into the archive labelled used-private-source. Preserve that incorrect
+archive, but do not treat it as the D815 caller. The actual d815-apostrophe-reader
+project and its four source/project files were still retained outside Clean. Its
+BoundaryNative source exactly matches the original preparation script's static literal
+with the saved run/input substitutions; the run and input digests match the actual
+accepted output. Copy the correct four files into a separately identified retained
+archive and record raw hashes. No APK, actual result, product source, original input,
+retired package or native/financial/reader test is changed or replayed. This corrects
+source-archive attribution; it is not whole historical PDB/PE identity proof.
+[D818 preparation and continuation](onboarding-visible-step-counter.md) explicitly
+bind each new archive to its actual project root, package and execution run.

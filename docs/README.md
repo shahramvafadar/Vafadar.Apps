@@ -1,5 +1,9 @@
 # Documentation
 
+[D818 visible onboarding progress](../src/Apps/Zanance/docs/quality/onboarding-visible-step-counter.md)
+shows the existing localized step count with108 new finite native caption contexts,
+source preservation and explicit locale/live-window restoration limitations.
+
 [D816 R13 signal-field boundary](../src/Apps/Zanance/docs/quality/r13-signal-field-boundary.md)
 corrects a diagnostic interpretation-scope gap with new synthetic evidence only; the
 retained original record and its unknown labels are not reread or reclassified.

@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-818 - Visible onboarding progress and source retention (2026-11-04)
+
+Keep the existing localized StepText visibly available, alongside its original reader
+semantics; do not rely on segment color alone or duplicate its declared reader caption.
+The single XAML change has108new OS200% caption observations across six languages,
+two themes/three steps/360/412/680dp, without Finish/account/financial/auth/photo/TalkBack
+replay. Preserve original defaults, raw digits, full source and retired successes.
+D815's archive wrongly copied a sibling; correct provenance from actual retained source,
+not a new build/test. Bind future retained sources to actual project/package/run.
+Original OS getter values/geometry/density/packages restore, but first locale key
+presence is unproven and the additional normal-font live-window width720vs1080 assertion
+is unqualified; cause remains open, without a relaunch for a favorable frame. Preserve
+D809 AVD/data/record/terminal R13 unknown and every frozen scope. Main remains the last
+D814 observation; no phone command occurs. Overall goal remains active. See
+`src/Apps/Zanance/docs/quality/onboarding-visible-step-counter.md`.
+
 ## D-816 - R13 signal-field boundary correction (2026-11-04)
 
 The exact R13 path must interpret only Signal.code; fault-address presence/value and

@@ -10093,3 +10093,24 @@ financial/auth/photo/test operations remain unchanged. Standard Clean removes49f
 remain, without supplemental or frozen action. D809 emulator/data/R13 unknown and
 terminal checkpoints remain protected; whole performance/original-fault/gates and goal stay open.
 See [fixed evidence](../../quality/utc-timestamp-construction-rejection.md).
+
+
+## D-818 - Visible original onboarding step counter
+
+The original current/total step text existed only as reader semantics. One XAML change
+shows the existing six-language caption in an Auto header row, keeping original segment
+semantics, styles/palette, commands and finance unchanged.108new native caption contexts
+cover six languages/two themes/three steps at actual OS200% and360/412/680dp;36in7331/
+UID10221 plus72remaining-width-only in9258/UID10222, with product XAML exact and full20
+source equality within each cohort. Native digits/relayout observer failures are kept;
+accepted contexts and original financial/auth/photo/TalkBack operations do not replay.
+Strict Windows/full offline Android/signed/static checks pass. Original OS values,
+size/density/boot/packages restore; first locale key presence was not captured, second
+absence is exact. An added normal-font restored-window width720vsassumed1080 remains
+unqualified/unknown; no relaunch rescues it. Two fresh packages retire while D809 data/
+record/terminal R13 stay preserved. D815 source-archive attribution is corrected from
+the actual retained project without old reader replay. Four standard Clean operations
+retire42260files/2474448746logicalbytes;4562files/715871897bytes remain, no supplemental/
+frozen action. Broader live-DPI/layout/glyph/speech/physical/native-fault/performance/
+security/platform/release gates and the overall goal stay open.
+See [actual finite evidence](../../quality/onboarding-visible-step-counter.md).

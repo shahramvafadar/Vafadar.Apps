@@ -37,7 +37,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <!-- Progress (the step text is read by screen readers) -->
         <!-- Opaque chrome keeps a long Windows scrolling form from drawing behind the fixed progress bar (D-62). -->
-        <Grid BackgroundColor="{DynamicResource PageBackground}" ZIndex="1" Padding="0,0,0,12">
+        <Grid RowDefinitions="Auto,Auto" BackgroundColor="{DynamicResource PageBackground}" ZIndex="1" Padding="0,0,0,12">
             <Grid x:Name="Progress" ColumnDefinitions="*,*,*" ColumnSpacing="8" Padding="0,24,0,0" HorizontalOptions="Center"
                   SemanticProperties.Description="{Binding StepText}">
                 <BoxView Style="{StaticResource ProgressSegment}" Color="{DynamicResource Primary}" />
@@ -56,6 +56,11 @@
                     </BoxView.Triggers>
                 </BoxView>
             </Grid>
+            <!-- D-818: visual progress must not rely on segment color. The original
+                 grid already exposes this same text to readers, so avoid a duplicate. -->
+            <Label x:Name="StepCounter" Grid.Row="1" Text="{Binding StepText}" Style="{StaticResource Secondary}"
+                   HorizontalTextAlignment="Center" LineBreakMode="WordWrap" Margin="0,8,0,0"
+                   AutomationProperties.IsInAccessibleTree="False" />
         </Grid>
 
         <!-- Keep the scrolling form below the fixed progress bar and above the action buttons (D-62). -->
