@@ -404,3 +404,19 @@ files/51278logicalbytes retire; D809 AVD/data/record, packages/OS and all frozen
 remain. Product/runtime/GC/managed builds/tests/phone/financial/auth/photo replay0;
 overall goal and broader gates remain active.
 See [bounded evidence](r13-signal-field-boundary.md).
+
+
+## D-817 - UTC timestamp construction rejected at host admission
+
+A distinct private zero-offset constructor path retains all 32 fields and nonzero
+original behavior. One strict build and 126 new timestamp contracts pass; eight
+10k/100k repeated/unique UTC/mixed shapes preserve full source JSON, encoded byte
+digests and independent outputs in .NET10.0.14/X64/PID8312. Both 100k UTC shapes miss
+the frozen 5% latency gain: 1.888230% better / 0.938141% slower. Other allocation/
+retention/timing-pair gates pass, but no second process, native/product work, retune
+or favorable-subset rescue follows. Product source/model/runtime/GC and old successful
+financial/auth/photo/test operations remain unchanged. Standard Clean removes49files/
+12000455logicalbytes;28files/406658bytes and used source/results/eight input JSON files
+remain, without supplemental or frozen action. D809 emulator/data/R13 unknown and
+terminal checkpoints remain protected; whole performance/original-fault/gates and goal stay open.
+See [fixed evidence](utc-timestamp-construction-rejection.md).
