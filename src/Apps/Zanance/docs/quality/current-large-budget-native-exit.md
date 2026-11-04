@@ -198,3 +198,14 @@ as requested. Three used signed APKs, all versioned source/failed-output receipt
 code evidence remain retained. No supplemental/frozen action, phone command, product
 build/test replay, app launch or financial write occurs in this continuation.
 Original fault remedy, whole performance/security/platform and release gates stay open.
+
+## D-816 scope correction (4 November2026)
+
+Subsequent source review finds a gap in the preceding no-fault-address-interpretation
+claim: classify_fault returns early, but classify_slot still calls the shared signal
+helper, which interprets fault-address presence/value. No raw value was exported and
+the retained actual unknown labels are not changed or reinterpreted. A code-only
+signal helper now narrows the exact R13 path; original RSI validation remains.
+Five new fake baseline failures and thirteen selected synthetic controls qualify this
+diagnostic restriction without another actual record read. The original unknown's
+cause cannot be assigned to that gap. See [the exact correction](r13-signal-field-boundary.md).

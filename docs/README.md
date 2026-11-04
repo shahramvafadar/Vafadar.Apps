@@ -1,5 +1,9 @@
 # Documentation
 
+[D816 R13 signal-field boundary](../src/Apps/Zanance/docs/quality/r13-signal-field-boundary.md)
+corrects a diagnostic interpretation-scope gap with new synthetic evidence only; the
+retained original record and its unknown labels are not reread or reclassified.
+
 [D815 complete apostrophe receipt totals](../src/Apps/Zanance/docs/quality/receipt-apostrophe-grouped-totals.md)
 repairs a confident-shorter-amount defect with27 new/14 affected selected cases and
 four new original native PDF/PNG reads, preserving D809 data and accepted operations.

@@ -10061,3 +10061,19 @@ OS and all frozen/terminal evidence remain. The permitted R13 observation is alr
 terminal unknown and is not replayed. No phone/financial/auth/photo success repeats;
 whole original-fault/performance/security/platform/release gates and goal remain active.
 See [bounded original-reader evidence](../../quality/receipt-apostrophe-grouped-totals.md).
+
+
+## D-816 - R13 signal-field interpretation boundary
+
+The suppressed R13 fault_class output did not prevent shared class_signal from
+interpreting fault-address fields inside classify_slot. Correct only that exact-PC
+path to interpret signal code and wire-skip other signal fields, preserving original
+RSI validation and all original record/source guards. Five new synthetic inputs expose
+five failures; eleven new and two affected old-dispatch cases pass after correction.
+Three strict C paths/static16KiB pass; actual-bound binary is never deployed and the
+original actual record is not reread. Prior actual unknown labels remain terminal,
+with no explanation of their cause or app-crash repair inferred. Fifteen fresh remote
+files/51278logicalbytes retire; D809 AVD/data/record, packages/OS and all frozen scopes
+remain. Product/runtime/GC/managed builds/tests/phone/financial/auth/photo replay0;
+overall goal and broader gates remain active.
+See [bounded evidence](../../quality/r13-signal-field-boundary.md).

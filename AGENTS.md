@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-816 - R13 signal-field boundary correction (2026-11-04)
+
+The exact R13 path must interpret only Signal.code; fault-address presence/value and
+adjacent metadata stay wire-skipped. Preserve original RSI validation, original
+record/package/module admission and existing two-label output. The prior shared
+signal helper semantically read the excluded fields despite suppressed output; five
+new fake failures and thirteen selected component cases qualify its restriction.
+No actual record is reread, and D809 actual unknown labels remain terminal with no
+cause/remedy inferred. Corrected actual-bound binary stays unexecuted; no authority
+for another real read is added. D809 AVD/data/system record, original package/settings,
+all frozen scopes and accepted financial/auth/photo checkpoints remain protected.
+Overall goal stays active. See
+`src/Apps/Zanance/docs/quality/r13-signal-field-boundary.md`.
+
 ## D-815 - Complete apostrophe-grouped receipt totals (2026-11-04)
 
 Only complete ASCII/U+2019 three-digit grouping on an explicit receipt total is joined;
