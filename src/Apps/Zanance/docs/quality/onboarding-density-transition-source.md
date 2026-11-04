@@ -57,3 +57,7 @@ not a new native test, defect repair or overall acceptance. The overall goal sta
 
 Related: [D818 finite contexts and restoration limits](onboarding-visible-step-counter.md),
 [remaining frontier](remaining-delivery-evidence.md).
+
+[D820 independent native transition](public-density-conversion-transition.md) subsequently
+observes stale public conversion on a new inverse transition, with exact restoration.
+It does not reread or upgrade the missing runtime proof from the retired D818 caller.

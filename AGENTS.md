@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## D-820 - Retired public density-transition control (2026-11-04)
+
+The distinct SDK-only12183/UID10223 control observes stale public MAUI conversion on
+420->160dpi while native metrics update. Original values/key presence/geometry/boot/
+packages/reverse restore and only that fresh package retires; standard Clean completes.
+Preserve the three finite phases, refused preparation/compile and explicit used-source
+binding without replay. This is not original D818 cached-value/cause or product repair
+proof;108 named caption contexts and terminal D809 R13 unknown/data/record stay intact.
+No phone, financial/auth/photo, prior successful suite or frozen action occurs. Supported
+live-density handling and broader gates remain open; overall goal remains active. See
+`src/Apps/Zanance/docs/quality/public-density-conversion-transition.md`.
+
 ## D-819 - Preserve the saved density-transition boundary (2026-11-04)
 
 Public-source cache behavior and saved720/560px widths provide a compatible density

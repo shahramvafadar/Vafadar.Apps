@@ -453,3 +453,16 @@ no native capture, retired caller, successful test/build/financial operation or 
 scope repeats. No runtime/dependency/workaround change is made. Preserve the108 named
 contexts and unqualified extra restoration frame, D809 data/terminal R13 unknown and
 active overall goal. See [bounded correlation](onboarding-density-transition-source.md).
+
+## D-820 - Actual public density-conversion transition
+
+One SDK-only native caller12183/UID10223 observes current native density2.625->1->2.625
+while public MAUI conversion stays2.625/ToPixels100=263 in that same process. This
+qualifies the new stale-conversion component boundary, not the missing original D818
+runtime values, exclusive cause, production repair or original crash. Strict native
+81AOT/91ELF/354staticLOAD/offline/v2v3 passes after the preserved ambiguous-name refusal.
+One install/launch, exact OS/key-presence/geometry/boot/packages/reverse restoration,
+fresh-package retirement and standard Clean complete; no original context, successful
+suite/build/financial/auth/photo, phone or frozen action repeats. D809 data/record/R13
+unknown and108 D818 contexts stay protected; supported handling and broader gates/goal
+remain open. See [finite evidence](public-density-conversion-transition.md).
