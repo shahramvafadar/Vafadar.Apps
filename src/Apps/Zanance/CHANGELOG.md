@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-810: keep valid calendar-year and financial-month ranges within the last supported date; preserve valid month selection and reject unavailable start dates.
+
 - D-806: use readable secondary text for the receipt-source caption on its tinted review background in both themes.
 
 - D-805: refusing a second Google Play purchase no longer faults the first pending purchase; retain its original task and continuation.

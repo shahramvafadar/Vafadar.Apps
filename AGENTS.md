@@ -4649,3 +4649,19 @@ system record; no reset/replay/deletion while the retained evidence is needed.
 All frozen scopes, terminal D607/D752 and accepted successors remain preserved.
 Phone/Main are uncommanded; broader gates and overall goal remain active. See
 `src/Apps/Zanance/docs/quality/current-large-budget-native-exit.md`.
+
+
+## D-810 - Final representable calendar and financial ranges
+
+Bound valid PeriodMath month/year/financial ranges at DateOnly.MaxValue without
+inventing an unavailable start or future month. Financial month identity uses its
+actual local day; keep nominal calendar/recurrence/payment/storage policies unchanged.
+Sixteen new cases show eleven baseline failures, then sixteen new/six affected old
+pure cases and sixteen original Android calculations pass, with exact twenty typed
+source collections and no account/plan/ledger or accepted-operation replay. Strict
+Windows/full offline Android pass. Only the new independent UID10217/PID4750 package
+retires from the already preserved D809 AVD; do not reset/delete/recreate that AVD,
+its original userdata/package or retained system record. Old packages/OS/boot match.
+No real-phone action, original fault remedy or whole performance/security/platform
+acceptance follows. Goal stays active; all frozen and terminal checkpoints remain.
+See `src/Apps/Zanance/docs/quality/calendar-range-endpoints.md`.

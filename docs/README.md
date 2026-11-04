@@ -1,5 +1,9 @@
 # Documentation
 
+[D810 final calendar ranges](../src/Apps/Zanance/docs/quality/calendar-range-endpoints.md)
+corrects eleven endpoint failures with new host/native cases and preserves the restored
+D809 emulator and evidence, without financial or accepted-operation replay.
+
 [D809 current large Budget native exit](../src/Apps/Zanance/docs/quality/current-large-budget-native-exit.md)
 records one new original100k ready read, its genuine concurrent-scan native death
 and complete post-exit source verification without UI or financial replay.

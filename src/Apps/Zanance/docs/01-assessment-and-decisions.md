@@ -13566,3 +13566,17 @@ Owner-approved R13 observation returns both slot labels refused-unknown;29 priva
 component controls pass. One preserving restart retains the same package/data/record;
 no app/financial replay occurs. Independent work and the overall active goal continue.
 No product/runtime/GC/phone change or general repair/acceptance is claimed. See [actual evidence](quality/current-large-budget-native-exit.md).
+
+
+## D-810 - Final full calendar and financial ranges (4 November 2026)
+
+Sixteen new full calendar/year/financial range cases expose eleven actual failures;
+valid final ranges now stop at DateOnly.MaxValue, while unavailable starts still refuse.
+Financial identity uses the local day without constructing an unavailable full range.
+Six directly affected existing pure cases, strict Windows/full offline Android and
+sixteen new original Android calculations pass. Fresh UID10217/PID4750 preserves twenty
+typed source collections with no account/plan/ledger setup or financial/auth/photo replay.
+Only that new package retires; the restored D809 AVD/data/record, old packages and OS
+remain exact and available. No original crash remedy, whole performance or general
+security/platform/release acceptance follows. Overall goal remains active.
+See [bounded evidence](quality/calendar-range-endpoints.md).

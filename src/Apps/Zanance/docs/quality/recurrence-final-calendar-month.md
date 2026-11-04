@@ -86,3 +86,5 @@ iOS/provider/Store/release acceptance remain open; overall delivery stays active
 Related: [prior occurrence endpoints](occurrence-calendar-endpoints.md),
 [bounded reference-slot categories](bounded-reference-slot-classification.md),
 [remaining delivery frontier](remaining-delivery-evidence.md).
+
+D810 subsequently qualifies the separate [full month/year and financial range APIs](calendar-range-endpoints.md); the D808 recurrence observations above remain historical and are not replayed.
