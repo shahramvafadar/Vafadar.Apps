@@ -4683,3 +4683,18 @@ UID10218/10219 packages retire; D809 AVD/userdata/system record and preexisting 
 OS/boot stay preserved. No old successful financial/auth/photo or CI job repeats.
 All frozen scopes and terminal cohorts remain; overall goal and broader gates stay active.
 See `src/Apps/Zanance/docs/quality/synchronized-budget-complete-periods.md`.
+
+
+## D-814 - Current complete physical Main
+
+The existing complete offlineac3a82f6 package is installed once without reset on
+reserved Samsung USBRZGL105RSDL/ADB5037. Main changes9187/bb8ceb21 to32063 with actual
+Home141/all raw attributes and public UID10380/CE155299/DE154603/grants/other Zanance
+packages/OS/locale/boot/geometry exact. Only normal foreground/launcher entries occur;
+no authentication/security setting/private DB/key/financial/photo or original successful
+test/build replay. No new authority or whole-source/financial/stability/performance/
+accessibility/release acceptance follows. Two owned XMLs103864bytes hash-retire;
+local evidence remains and D809 owned AVD/userdata/system record are untouched.
+Current Main32063/ac3a82f6 is this dated observation; revalidate liveness/ownership
+before later input. All frozen/terminal checkpoints and active overall goal persist.
+See `src/Apps/Zanance/docs/quality/current-complete-main-adoption.md`.

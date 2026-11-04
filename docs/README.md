@@ -1,5 +1,9 @@
 # Documentation
 
+[D814 current physical Main](../src/Apps/Zanance/docs/quality/current-complete-main-adoption.md)
+records one no-reset adoption of completeac3a82f6 as Main32063, exact immediate Home141/
+public ownership/OS and preserved source evidence, without financial/auth/photo replay.
+
 [D812/D813 fixed periods and sync completeness](../src/Apps/Zanance/docs/quality/synchronized-budget-complete-periods.md)
 corrects endpoint failures and the actual CI-exposed financial validation dependency,
 with focused host/native evidence and no accepted financial/service replay.

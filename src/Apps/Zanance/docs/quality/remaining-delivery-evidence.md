@@ -10,6 +10,12 @@ remain authoritative.
 
 ## What the inventory means
 
+[D814 current Main adoption](current-complete-main-adoption.md) installs existing
+completeac3a82f6 once without reset as physical Main32063. Current before/after Home141
+raw attributes and public package/OS ownership match; no financial/auth/photo or
+private-source acceptance is repeated or inferred. D806/bb8ceb21 and earlier process
+observations below are historical. D809 emulator/data/system record stay preserved.
+
 [D806 receipt-source contrast](receipt-source-caption-contrast.md) repairs one original
 small-caption color pair. Current completebb8ceb21 is Main9187 after one no-reset
 upgrade and exact immediate Home141/public ownership/OS preservation. D804/1069 and
@@ -362,3 +368,15 @@ Final strict Windows/full offline Android pass; only fresh UID10218/10219 packag
 retire. D809 AVD/data/record, old packages/settings/boot and all frozen/terminal evidence
 remain. No successful financial/auth/photo/CI job is replayed; goal and wider gates stay active.
 See [exact evidence](synchronized-budget-complete-periods.md).
+
+
+## D-814 - Current complete signed physical Main
+
+One existing complete signedac3a82f6 candidate upgrades physical Main without reset
+from9187/bb8ceb21 to32063. The actual before/after Home141 raw attributes, public UID/
+CEDE/grants/stopped flags, all other Zanance packages and OS/locale/boot/geometry match.
+No original financial/auth/photo flow, endpoint tests, builds or old successful suite
+is repeated; no Main private DB/key/source check is inferred. Only two fresh owned
+XML103864bytes hash-clean, local evidence remains and D809 AVD/data/record stay untouched.
+Broader original-fault/performance/security/platform/release gates and goal stay active.
+See [actual bounded evidence](current-complete-main-adoption.md).
