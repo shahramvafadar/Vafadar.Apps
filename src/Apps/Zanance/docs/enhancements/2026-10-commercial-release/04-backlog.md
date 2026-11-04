@@ -10114,3 +10114,15 @@ retire42260files/2474448746logicalbytes;4562files/715871897bytes remain, no supp
 frozen action. Broader live-DPI/layout/glyph/speech/physical/native-fault/performance/
 security/platform/release gates and the overall goal stay open.
 See [actual finite evidence](../../quality/onboarding-visible-step-counter.md).
+
+## D-819 - Saved density-transition source correlation
+
+The D818 terminal caption/body widths720/560px match original app unit ceilings at
+scale1 while34.125px/13 text implies2.625. Public MAUI10.0.120 ContextExtensions at
+immutable6aca5366 has a first-context static conversion-density cache. This is a
+compatible premise, not actual cached-value/binary identity or exclusive cause proof.
+The initial one-packet local assertion is corrected to preserve all four saved packets;
+no native capture, retired caller, successful test/build/financial operation or frozen
+scope repeats. No runtime/dependency/workaround change is made. Preserve the108 named
+contexts and unqualified extra restoration frame, D809 data/terminal R13 unknown and
+active overall goal. See [bounded correlation](../../quality/onboarding-density-transition-source.md).

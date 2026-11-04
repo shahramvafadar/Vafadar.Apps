@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## D-819 - Preserve the saved density-transition boundary (2026-11-04)
+
+Public-source cache behavior and saved720/560px widths provide a compatible density
+transition premise, not actual cache/binary/exclusive-cause proof. This source-only
+review changes no framework state/runtime/dependency and does not relaunch retired
+D818 callers for a favorable frame. Keep108 named contexts and the unqualified extra restoration frame;
+future distinct checks need current native metrics/public conversions captured together.
+D809 AVD/data/record and terminal R13 unknown remain protected, with no actual reread,
+financial/auth/photo replay, repeated successful build/test or frozen action. Overall
+goal stays active. See
+`src/Apps/Zanance/docs/quality/onboarding-density-transition-source.md`.
+
 ## D-818 - Visible onboarding progress and source retention (2026-11-04)
 
 Keep the existing localized StepText visibly available, alongside its original reader
