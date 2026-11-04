@@ -13580,3 +13580,16 @@ Only that new package retires; the restored D809 AVD/data/record, old packages a
 remain exact and available. No original crash remedy, whole performance or general
 security/platform/release acceptance follows. Overall goal remains active.
 See [bounded evidence](quality/calendar-range-endpoints.md).
+
+
+## D-811 - Original concurrent descriptor correction admission
+
+The three exact source changes in official runtime63293 already exist in the original
+VMR. Original x64 Mono also contains the two corresponding masked descriptor blocks:
+a new bounded923byte/257instruction function plus the retained prior card-table packet.
+No actual register/record/device or frozen tool scope is reread. Preserve the ten-byte
+text-column parser refusal and inspect the same saved bytes after correction. This
+closes only that missing-fix premise, not D809/D678 cause/repair or broader acceptance.
+No product/runtime/GC change, build/test replay, financial action or cleanup occurs;
+independent work and the overall active goal continue.
+See [exact evidence](quality/original-concurrent-descriptor-correction-admission.md).

@@ -217,3 +217,16 @@ Owner-approved R13 observation returns both slot labels refused-unknown;29 priva
 component controls pass. One preserving restart retains the same package/data/record;
 no app/financial replay occurs. Independent work and the overall active goal continue.
 No product/runtime/GC/phone change or general repair/acceptance is claimed. See [actual evidence](current-large-budget-native-exit.md).
+
+
+## D-811 - Original concurrent descriptor correction admission
+
+The three exact source changes in official runtime63293 already exist in the original
+VMR. Original x64 Mono also contains the two corresponding masked descriptor blocks:
+a new bounded923byte/257instruction function plus the retained prior card-table packet.
+No actual register/record/device or frozen tool scope is reread. Preserve the ten-byte
+text-column parser refusal and inspect the same saved bytes after correction. This
+closes only that missing-fix premise, not D809/D678 cause/repair or broader acceptance.
+No product/runtime/GC change, build/test replay, financial action or cleanup occurs;
+independent work and the overall active goal continue.
+See [exact evidence](original-concurrent-descriptor-correction-admission.md).
