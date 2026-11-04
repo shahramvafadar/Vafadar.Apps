@@ -1,5 +1,9 @@
 # Documentation
 
+[D827 checked monetary reads](../src/Apps/Zanance/docs/quality/monetary-read-overflow.md)
+refuses numeric wrapping with69 selected tests,44 native calculations and the original
+Forecast failure cover. Shipping3e508543 is prepared; broader gates remain open.
+
 [D826 chronological read boundaries](../src/Apps/Zanance/docs/quality/chronological-read-boundaries.md)
 repairs six genuine first/last-date read failures, with32 new/29 affected selected
 cases and32 original Android calculations without source preparation.

@@ -42,10 +42,10 @@ public sealed record WealthChange(
     IReadOnlyList<RemainderCause> Causes)
 {
     /// <summary>Gets ΔNW.</summary>
-    public long Change => End - Start;
+    public long Change => checked(End - Start);
 
     /// <summary>Gets what the parts do not explain; never hidden.</summary>
-    public long Remainder => Change - Flows - PriceEffect - FxEffect - Corrections;
+    public long Remainder => checked((long)((Int128)End - Start - Flows - PriceEffect - FxEffect - Corrections));
 }
 
 /// <summary>Net worth over time and the explanation of its change (ZEX-S0801, S0802). Computed, never stored.</summary>
@@ -125,7 +125,8 @@ public static class WealthHistory
         {
             bool Same(string code) => string.Equals(code, currency, StringComparison.OrdinalIgnoreCase);
             var causes = new SortedSet<RemainderCause>();
-            long price = 0, corrections = 0;
+            // Preserve exact offsetting parts without wrapping or rejecting a representable completed part.
+            Int128 price = 0, corrections = 0;
 
             // Price effect: every price change inside the range, applied to what was held on its day.
             foreach (var type in types.Where(t => !t.IsArchived && Same(t.PriceCurrencyCode)))
@@ -138,7 +139,7 @@ public static class WealthHistory
                     var held = HoldingsLedger.Quantity(events, type.Id, day);
                     if (before is not null && after is not null && held > 0)
                     {
-                        price += AssetValuationService.ValueOf(held, after.PricePerUnitMilli) - AssetValuationService.ValueOf(held, before.PricePerUnitMilli);
+                        price += (Int128)AssetValuationService.ValueOf(held, after.PricePerUnitMilli) - AssetValuationService.ValueOf(held, before.PricePerUnitMilli);
                     }
                 }
 
@@ -187,7 +188,7 @@ public static class WealthHistory
                 currency, from, to,
                 start.Totals.FirstOrDefault(t => Same(t.CurrencyCode))?.Total ?? 0,
                 end.Totals.FirstOrDefault(t => Same(t.CurrencyCode))?.Total ?? 0,
-                flows.GetValueOrDefault(currency), price, 0, corrections, [.. causes]);
+                flows.GetValueOrDefault(currency), checked((long)price), 0, checked((long)corrections), [.. causes]);
             result.Add(change.Remainder == 0 ? change with { Causes = [] } : change);
         }
 
@@ -204,7 +205,7 @@ public static class WealthHistory
         ArgumentNullException.ThrowIfNull(changes);
         ArgumentNullException.ThrowIfNull(rates);
         var missing = new List<string>();
-        long start = 0, end = 0, flows = 0, price = 0, fx = 0, corrections = 0;
+        Int128 start = 0, end = 0, flows = 0, price = 0, fx = 0, corrections = 0;
         var causes = new SortedSet<RemainderCause>();
         var (from, to) = changes.Count == 0 ? (default, default) : (changes[0].From, changes[0].To);
         foreach (var change in changes)
@@ -227,13 +228,14 @@ public static class WealthHistory
             flows += sameCurrency ? change.Flows : AtEnd(change.Flows);
             price += sameCurrency ? change.PriceEffect : AtEnd(change.PriceEffect);
             corrections += sameCurrency ? change.Corrections : AtEnd(change.Corrections);
-            fx += sameCurrency ? 0 : startNow - startThen;
+            fx += sameCurrency ? 0 : (Int128)startNow - startThen;
             foreach (var cause in change.Causes)
             {
                 causes.Add(cause);
             }
         }
 
-        return (new WealthChange(currencyCode, from, to, start, end, flows, price, fx, corrections, [.. causes]), missing);
+        return (new WealthChange(currencyCode, from, to, checked((long)start), checked((long)end), checked((long)flows),
+            checked((long)price), checked((long)fx), checked((long)corrections), [.. causes]), missing);
     }
 }

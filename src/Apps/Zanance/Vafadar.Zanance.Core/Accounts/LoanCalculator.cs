@@ -27,9 +27,10 @@ public static class LoanCalculator
     public const int MaxInstallments = 600;
 
     /// <summary>Returns what is still owed on a loan, or still owed to the user on money lent, as a positive amount.</summary>
+    /// <exception cref="OverflowException">The positive debt magnitude cannot be represented in minor units.</exception>
     public static long Outstanding(AccountType type, long balance) => type switch
     {
-        AccountType.Loan => Math.Max(0, -balance),
+        AccountType.Loan => balance >= 0 ? 0 : checked(-balance),
         AccountType.Lent => Math.Max(0, balance),
         _ => 0,
     };

@@ -13,7 +13,12 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 | Status | Active Android implementation and qualification; not publicly released. Core finance and extended workflows are implemented with bounded source/native evidence. Remaining work and acceptance gates are tracked in the [canonical commercial backlog](docs/enhancements/2026-10-commercial-release/04-backlog.md), [specification status](docs/spec/Zanance-Product-Specification.md) and [release checklist](docs/08-release-checklist.md). Real OAuth/provider/store acceptance and Mac/iOS qualification remain separate. Windows is a development target. |
 | Solution filter | [`Vafadar.Zanance.slnf`](../../../Vafadar.Zanance.slnf) |
 
-## Current documentation snapshot — 4 November 2026
+## Current documentation snapshot — 5 November 2026
+
+[D827 checked monetary reads](docs/quality/monetary-read-overflow.md) prevent wrapped
+forecast/report/wealth values while preserving representable cancellation.69 selected
+tests,44 native calculations and the original Forecast failure cover pass. Complete
+3e508543 is prepared, not installed on Main; last D814 remains historical.
 
 [D826 chronological read boundaries](docs/quality/chronological-read-boundaries.md)
 preserve valid earliest/latest report, forecast, rate-age and history inputs, while

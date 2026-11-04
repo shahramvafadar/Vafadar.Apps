@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D827 checked monetary reads](quality/monetary-read-overflow.md)
+refuses numeric wrapping with69 selected tests,44 native calculations and the original
+Forecast failure cover. Shipping3e508543 is prepared; broader gates remain open.
+
 The accepted product baseline is the owner's [*Zanance Product Specification*](spec/Zanance-Product-Specification.md)
 (v1.1, 2026-09-26) and its [privacy matrix starter](spec/Zanance-Privacy-Matrix-Starter.md). Requirement identifiers used here and in tests (`FIN-01`, `TX-01`, `REC-13`, `AT-17`, …) are the
 identifiers of that specification. These documents translate the specification into a design that fits this

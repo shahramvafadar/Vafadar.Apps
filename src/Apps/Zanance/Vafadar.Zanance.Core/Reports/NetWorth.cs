@@ -34,7 +34,8 @@ public sealed record UnvaluedHolding(AssetType AssetType, long Quantity);
 public sealed record WealthTotal(string CurrencyCode, long Money, long Receivables, long ValuedAssets, long Holdings, long Debts)
 {
     /// <summary>Gets the net worth of the currency.</summary>
-    public long Total => Money + Receivables + ValuedAssets + Holdings - Debts;
+    // Keep exact cancelling intermediates; only an unrepresentable final amount refuses.
+    public long Total => checked((long)((Int128)Money + Receivables + ValuedAssets + Holdings - Debts));
 }
 
 /// <summary>Net worth per currency with its parts and the holdings that have no price (ZEX-K10).</summary>
@@ -95,7 +96,7 @@ public static class NetWorthCalculator
                 AccountType.Loan => (WealthGroup.Debts, LoanCalculator.Outstanding(account.Type, balance)),
                 AccountType.Lent => (WealthGroup.Receivables, balance),
                 AccountType.Asset => (WealthGroup.ValuedAssets, balance),
-                _ when balance < 0 && account.Type == AccountType.CreditCard => (WealthGroup.Debts, -balance),
+                _ when balance < 0 && account.Type == AccountType.CreditCard => (WealthGroup.Debts, checked(-balance)),
                 _ => (WealthGroup.Money, balance),
             };
             parts.Add(new WealthPart(group, account.Id, account.Name, account.CurrencyCode, amount));
@@ -176,12 +177,12 @@ public static class NetWorthCalculator
 
             if (part.Group == WealthGroup.Debts)
             {
-                debts += converted;
+                debts = checked(debts + converted);
             }
             else if (converted > 0)
             {
                 var key = part.Group == WealthGroup.Holdings ? (part.Name, true) : (part.CurrencyCode.ToUpperInvariant(), false);
-                values[key] = values.GetValueOrDefault(key) + converted;
+                values[key] = checked(values.GetValueOrDefault(key) + converted);
             }
         }
 

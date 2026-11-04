@@ -12863,3 +12863,15 @@ only representable months; an invalid current financial period still refuses.
 32 new/29 affected selected cases and32 original Android calculations pass; no whole-suite,
 fullDB/device/speed or historical-native-fault claim follows. Full offline2a0a63ba is
 prepared, not on Main. See [finite evidence](../quality/chronological-read-boundaries.md).
+
+## D-827 - Checked monetary reads
+
+D-827 refuses unrepresentable monetary read results instead of wrapping, while exact
+wider intermediates retain representable cancellation and original ledger/writer rules.
+44 new/25 affected selected tests and44 actual Android calculations pass. One new
+A1/E1 fictitious source exposes the original Forecast OverflowException failure cover,
+no cards/Save and full20 source equal; only fresh UID10228 retires after exact restoration.
+Full offline shipping3e508543 is prepared, not on Main. No financial-command/auth/photo
+replay, runtime/GC change or frozen action; D809 record/R13 unknown and broader gates
+remain protected/open. Four standard Clean profiles complete; goal remains active.
+See [scope, failures and package evidence](../quality/monetary-read-overflow.md).

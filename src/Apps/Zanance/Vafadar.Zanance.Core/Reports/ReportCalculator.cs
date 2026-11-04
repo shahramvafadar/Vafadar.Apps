@@ -28,14 +28,14 @@ public sealed record AccountMovement(
     public long Capital { get; init; }
 
     /// <summary>Gets the balance change of the period.</summary>
-    public long Change => Closing - Opening;
+    public long Change => checked(Closing - Opening);
 }
 
 /// <summary>Income and expense of one month; <see cref="IsPartial"/> marks a month that is not over yet (REP-05).</summary>
 public sealed record MonthTotals(int Year, int Month, DateOnly From, DateOnly To, long NetIncome, long NetExpense, bool IsPartial)
 {
     /// <summary>Gets net income minus net expense.</summary>
-    public long Result => NetIncome - NetExpense;
+    public long Result => checked(NetIncome - NetExpense);
 }
 
 /// <summary>Planned and recorded amounts of one plan in a period (REP: planned versus posted).</summary>
@@ -64,7 +64,8 @@ public static class ReportCalculator
 
         foreach (var account in accounts)
         {
-            long income = 0, refunds = 0, expense = 0, reversals = 0, transfersIn = 0, transfersOut = 0, adjustments = 0, capital = 0;
+            // Signed corrections can cancel within a period; narrow each completed public subtotal once.
+            Int128 income = 0, refunds = 0, expense = 0, reversals = 0, transfersIn = 0, transfersOut = 0, adjustments = 0, capital = 0;
             foreach (var entry in entries)
             {
                 if (entry.Date < from || entry.Date > to || entry.Date < account.OpeningDate)
@@ -96,7 +97,10 @@ public static class ReportCalculator
             var opening = from == DateOnly.MinValue ? 0 : LedgerCalculator.Balance(account, entries, from.AddDays(-1));
             var closing = LedgerCalculator.Balance(account, entries, to);
             var openingAdded = account.OpeningDate >= from && account.OpeningDate <= to ? account.OpeningBalance : 0;
-            result.Add(new AccountMovement(account.Id, account.CurrencyCode, opening, openingAdded, income, refunds, expense, reversals, transfersIn, transfersOut, adjustments, closing) { Capital = capital });
+            result.Add(new AccountMovement(account.Id, account.CurrencyCode, opening, openingAdded,
+                checked((long)income), checked((long)refunds), checked((long)expense), checked((long)reversals),
+                checked((long)transfersIn), checked((long)transfersOut), checked((long)adjustments), closing)
+                { Capital = checked((long)capital) });
         }
 
         return result;
@@ -159,7 +163,7 @@ public static class ReportCalculator
 
         foreach (var schedule in schedules)
         {
-            long planned = 0, actual = 0, settledPlanned = 0;
+            Int128 planned = 0, actual = 0, settledPlanned = 0;
             int plannedCount = 0, unknown = 0, settled = 0, open = 0;
             var varianceKnown = true;
             foreach (var occurrence in Occurrences.Between(schedule, stateList, from, to, today).Where(o => o.Status != OccurrenceView.Skipped))
@@ -193,7 +197,8 @@ public static class ReportCalculator
 
             if (plannedCount > 0)
             {
-                result.Add(new PlanActual(schedule, planned, plannedCount, unknown, actual, settled, open, settled > 0 && varianceKnown ? actual - settledPlanned : null));
+                result.Add(new PlanActual(schedule, checked((long)planned), plannedCount, unknown, checked((long)actual),
+                    settled, open, settled > 0 && varianceKnown ? checked((long)(actual - settledPlanned)) : null));
             }
         }
 

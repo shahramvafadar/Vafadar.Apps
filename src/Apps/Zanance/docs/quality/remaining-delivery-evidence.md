@@ -1,5 +1,9 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D827 checked monetary reads](monetary-read-overflow.md)
+refuses numeric wrapping with69 selected tests,44 native calculations and the original
+Forecast failure cover. Shipping3e508543 is prepared; broader gates remain open.
+
 [D826 chronological reads](chronological-read-boundaries.md) preserve valid first/last
 forecast/report/rate/history dates while invalid current financial periods still refuse.
 32 new/29 affected selected cases and32 original Android calculations retain full20

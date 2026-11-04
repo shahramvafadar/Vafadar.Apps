@@ -250,7 +250,8 @@ public static class ForecastCalculator
             for (var dayNumber = baseDate.DayNumber; dayNumber <= horizon.DayNumber; dayNumber++)
             {
                 var day = DateOnly.FromDayNumber(dayNumber);
-                balance += byDay.GetValueOrDefault(day);
+                // Every published day, not only the final balance, must remain representable (ZEX-S0104).
+                balance = checked(balance + byDay.GetValueOrDefault(day));
                 path.Add(new ForecastPoint(day, balance));
                 if (balance < minimum)
                 {

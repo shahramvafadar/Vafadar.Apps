@@ -9473,3 +9473,15 @@ calculation evidence, not a date-picker/layout/fullDB/phone or performance accep
 Fresh UID retirement and exact OS/key-presence/geometry/boot/packages/reverse complete;
 four standard Clean profiles, no supplemental/frozen action or accepted-operation replay.
 See [scope and package receipts](quality/chronological-read-boundaries.md).
+
+## D-827 - Checked monetary reads
+
+D-827 refuses unrepresentable monetary read results instead of wrapping, while exact
+wider intermediates retain representable cancellation and original ledger/writer rules.
+44 new/25 affected selected tests and44 actual Android calculations pass. One new
+A1/E1 fictitious source exposes the original Forecast OverflowException failure cover,
+no cards/Save and full20 source equal; only fresh UID10228 retires after exact restoration.
+Full offline shipping3e508543 is prepared, not on Main. No financial-command/auth/photo
+replay, runtime/GC change or frozen action; D809 record/R13 unknown and broader gates
+remain protected/open. Four standard Clean profiles complete; goal remains active.
+See [scope, failures and package evidence](quality/monetary-read-overflow.md).
