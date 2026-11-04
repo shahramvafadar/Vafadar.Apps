@@ -10,7 +10,7 @@ namespace Vafadar.Zanance.Core.Budgets;
 public sealed record BudgetStatus(long Limit, long Spent)
 {
     /// <summary>Gets the remaining amount (negative when overspent).</summary>
-    public long Remaining => Limit - Spent;
+    public long Remaining => checked(Limit - Spent);
 
     /// <summary>Gets the usage in percent; <see langword="null"/> for a zero limit (no division by zero, BUD-05).</summary>
     public decimal? UsagePercent => Limit > 0 ? Spent * 100m / Limit : null;
@@ -19,7 +19,7 @@ public sealed record BudgetStatus(long Limit, long Spent)
     public bool IsOver => Spent > Limit;
 
     /// <summary>Gets the alert level for the 80 %/100 % thresholds (BUD-06).</summary>
-    public BudgetAlert Alert => IsOver ? BudgetAlert.Exceeded : Limit > 0 && Spent * 100 >= Limit * 80 ? BudgetAlert.Near : BudgetAlert.None;
+    public BudgetAlert Alert => IsOver ? BudgetAlert.Exceeded : Limit > 0 && (Int128)Spent * 100 >= (Int128)Limit * 80 ? BudgetAlert.Near : BudgetAlert.None;
 }
 
 /// <summary>Budget alert levels.</summary>

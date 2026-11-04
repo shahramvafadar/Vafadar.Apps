@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-828 - Exact budget numeric boundaries (2026-11-05)
+
+D-828 keeps exact80/100 budget warnings, checked remaining money and exact rounded
+suggestions at large integer limits. Seven genuine baseline failures are separate from
+one corrected threshold oracle.20 new/12 affected selected cases and20 original Android
+calculations pass across the retained lineage, with no source setup/A/E/S and all20
+components equal. Only fresh UID10229 retires after exact OS/key-absence/geometry/boot/
+packages/reverse restoration. Original D809 AVD/data/record and terminal R13 unknown,
+last D814 Main and accepted operations remain protected; no phone/financial/auth/photo
+replay or runtime/GC change. Complete offline312b0d35 is prepared, not on Main;
+four standard Clean profiles pass. Broader gates and the continuous goal stay active.
+See `src/Apps/Zanance/docs/quality/budget-numeric-boundaries.md`.
+
 ## D-827 - Checked monetary reads (2026-11-05)
 
 D-827 refuses unrepresentable monetary read results instead of wrapping, while exact

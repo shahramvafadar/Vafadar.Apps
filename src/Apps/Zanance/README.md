@@ -15,6 +15,11 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 5 November 2026
 
+[D828 budget numeric boundaries](docs/quality/budget-numeric-boundaries.md) keep large
+limits,80% warnings and rounded suggestions exact.20 new/12 affected selected cases
+and20 original Android calculations preserve source without preparation. Complete
+312b0d35 is prepared, not installed on Main; prior3e508543 remains retained.
+
 [D827 checked monetary reads](docs/quality/monetary-read-overflow.md) prevent wrapped
 forecast/report/wealth values while preserving representable cancellation.69 selected
 tests,44 native calculations and the original Forecast failure cover pass. Complete

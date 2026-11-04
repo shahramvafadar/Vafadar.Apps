@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D828 budget numeric boundaries](quality/budget-numeric-boundaries.md)
+keeps the80% warning and rounded limit suggestions exact at large values, with32
+selected cases and20 original Android calculations; broader gates remain open.
+
 [D827 checked monetary reads](quality/monetary-read-overflow.md)
 refuses numeric wrapping with69 selected tests,44 native calculations and the original
 Forecast failure cover. Shipping3e508543 is prepared; broader gates remain open.

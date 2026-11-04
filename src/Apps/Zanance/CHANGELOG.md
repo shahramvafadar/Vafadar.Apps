@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-828: keep budget warnings and rounded limit suggestions correct for very large amounts; report an unrepresentable result instead of wrapping it.
+
 - D-827: show a calculation error instead of an incorrect wrapped amount when forecast, report, debt or wealth results exceed supported monetary limits.
 
 - D-826: keep report, forecast, rate-age and wealth-history calculations within supported dates; show only available earliest history while retaining invalid financial-period refusals.

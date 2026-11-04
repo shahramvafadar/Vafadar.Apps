@@ -119,7 +119,15 @@ public static class BudgetSuggestions
             return 0;
         }
 
-        var step = Math.Max(Math.Max(1, minorFactor), (long)Math.Pow(10, Math.Max(0, (int)Math.Floor(Math.Log10(amount)) - 1)));
-        return (amount + step - 1) / step * step;
+        // Integer magnitude preserves the boundary immediately below a power of ten.
+        long step = 1;
+        for (var magnitude = amount; magnitude >= 100; magnitude /= 10)
+        {
+            step *= 10;
+        }
+
+        step = Math.Max(Math.Max(1, minorFactor), step);
+        // The rounding numerator may exceed long even when the completed suggestion fits.
+        return checked((long)(((Int128)amount + step - 1) / step * step));
     }
 }
