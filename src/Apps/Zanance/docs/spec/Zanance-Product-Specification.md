@@ -12779,3 +12779,21 @@ is repeated; no Main private DB/key/source check is inferred. Only two fresh own
 XML103864bytes hash-clean, local evidence remains and D809 AVD/data/record stay untouched.
 Broader original-fault/performance/security/platform/release gates and goal stay active.
 See [actual bounded evidence](../quality/current-complete-main-adoption.md).
+
+
+## D-815 - Complete apostrophe-grouped receipt totals
+
+An explicit CHF1'001.00/12'012.00 total could become a confident shorter fragment.
+Only complete ASCII/U+2019 three-digit groups are joined; damaged atoms remain review,
+original source/unit evidence is preserved and item prices cannot replace a total.
+Twenty-seven new selected cases and fourteen directly affected prior cases pass;
+seventeen baseline failures are preserved across the recorded versioned lineage.
+Four new original Android PDF/PNG reads in UID10220/PID6419 return correct CHF totals
+and seller with twenty typed source collections exact and no account/ledger setup.
+The U+2019 PNG normalizes punctuation in actual OCR; it is not exact printed-text identity.
+Strict Windows/full offline Android and signed/static package checks pass. Only the
+fresh package and four standard build scopes retire; D809 AVD/data/record, old packages/
+OS and all frozen/terminal evidence remain. The permitted R13 observation is already
+terminal unknown and is not replayed. No phone/financial/auth/photo success repeats;
+whole original-fault/performance/security/platform/release gates and goal remain active.
+See [bounded original-reader evidence](../quality/receipt-apostrophe-grouped-totals.md).

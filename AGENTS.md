@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-815 - Complete apostrophe-grouped receipt totals (2026-11-04)
+
+Only complete ASCII/U+2019 three-digit grouping on an explicit receipt total is joined;
+damaged fragments stay review-only with original source/unit evidence preserved.
+Twenty-seven new and fourteen affected selected cases plus four new original native
+PDF/PNG reads pass, without account/ledger setup or accepted financial/auth/photo replay.
+Only fresh UID10220/package and four standard build scopes retire. The preserved D809
+AVD/userdata/system record remain preserved; original package and OS match. Its approved
+R13 observation is terminal unknown and must not be replayed to seek different labels.
+Current D815 complete shipping is prepared but not installed on physical Main; D814
+Main32063/ac3a82f6 remains the last observation, not fresh liveness. Original fault
+remedy, whole performance/security/platform/release gates and overall goal stay active.
+All frozen scopes remain frozen. See
+`src/Apps/Zanance/docs/quality/receipt-apostrophe-grouped-totals.md`.
+
 ## D-808 - Final recurrence calendar months (2026-11-03)
 
 The final Persian year and partial Persian/Hijri recurrence months are bounded before

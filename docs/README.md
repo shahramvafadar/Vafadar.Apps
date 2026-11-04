@@ -1,5 +1,9 @@
 # Documentation
 
+[D815 complete apostrophe receipt totals](../src/Apps/Zanance/docs/quality/receipt-apostrophe-grouped-totals.md)
+repairs a confident-shorter-amount defect with27 new/14 affected selected cases and
+four new original native PDF/PNG reads, preserving D809 data and accepted operations.
+
 [D814 current physical Main](../src/Apps/Zanance/docs/quality/current-complete-main-adoption.md)
 records one no-reset adoption of completeac3a82f6 as Main32063, exact immediate Home141/
 public ownership/OS and preserved source evidence, without financial/auth/photo replay.

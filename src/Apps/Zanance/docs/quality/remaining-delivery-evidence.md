@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D815 complete apostrophe receipt totals](receipt-apostrophe-grouped-totals.md)
+repairs one actual explicit-total fragmentation defect.27new/14affected selected cases
+and four new original native PDF/PNG inputs pass with full20typed source equality;
+no financial/account setup or accepted photo/auth/input repeats. D809 AVD/data/record
+remain available and the approved R13 unknown observation is not replayed. D815 complete
+shipping059ea05c is prepared but not installed on physical Main; D81432063/ac3a82f6
+remains its last observation. Broader original-fault/performance/security/gates stay open.
+
 Reconciled 2 November 2026 against published baseline
 `3da6ede8a0e030ac91d392144cf15c4a7ddce620` and the current canonical backlog.
 This is a bounded execution audit, not a new product implementation, release approval,

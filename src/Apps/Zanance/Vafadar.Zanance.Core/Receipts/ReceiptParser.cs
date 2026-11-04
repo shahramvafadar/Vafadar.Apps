@@ -206,6 +206,9 @@ public static partial class ReceiptParser
                 }
 
                 amountLine = SpaceGroups().Replace(amountLine, string.Empty);
+                // Join only complete three-digit apostrophe groups on an explicit
+                // total line; keep the original source text and damaged atoms (D-815).
+                amountLine = ApostropheGroups().Replace(amountLine, string.Empty);
                 amountLine = TimePattern().Replace(DatePattern().Replace(amountLine, m => new string(' ', m.Length)), m => new string(' ', m.Length));
                 var matches = AmountPattern().Matches(amountLine);
                 var unitMatches = CurrencyUnits().Matches(amountLine).Cast<Match>()
@@ -222,6 +225,7 @@ public static partial class ReceiptParser
                     var after = amountLine[(match.Index + match.Length)..].TrimStart();
                     var before = amountLine[..match.Index].TrimEnd();
                     if (before.EndsWith('-') || before.EndsWith('−') || after.StartsWith('-') || after.StartsWith('−')
+                        || before.EndsWith('\'') || before.EndsWith('\u2019') || after.StartsWith('\'') || after.StartsWith('\u2019')
                         || before.EndsWith('(') && after.StartsWith(')'))
                     {
                         damaged = true;
@@ -552,16 +556,16 @@ public static partial class ReceiptParser
     [GeneratedRegex(@"^\d{1,2}\.?\s+\p{L}+\.?\s+\d{4}$", RegexOptions.CultureInvariant)]
     private static partial Regex MerchantNamedDate();
 
-    [GeneratedRegex(@"(?<![\p{L}\p{N}.,+−-])[+−-]?\d+(?:[.,]\d+)*[−-]?(?![\p{L}\p{N}.,])", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"(?<![\p{L}\p{N}.,'\u2019+−-])[+−-]?\d+(?:[.,]\d+)*[−-]?(?![\p{L}\p{N}.,'\u2019])", RegexOptions.CultureInvariant)]
     private static partial Regex AmountPattern();
 
     [GeneratedRegex(@"^(?:\d+|\d+[.,]\d{1,2}|\d{1,3}(?:[.,]\d{3})+(?:[.,]\d{1,2})?)$", RegexOptions.CultureInvariant)]
     private static partial Regex CompleteNumber();
 
-    [GeneratedRegex(@"(?<![\p{L}\p{N}])[+−-]?\d[\p{L}\p{N}.,]*[−-]?", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"(?<![\p{L}\p{N}])[+−-]?['\u2019]?\d[\p{L}\p{N}.,'\u2019]*[−-]?", RegexOptions.CultureInvariant)]
     private static partial Regex NumericToken();
 
-    [GeneratedRegex(@"^(?:[A-Z]{3}|[€£$]|ریال|تومان)?\s*\d+(?:[.,\s]\d+)*\s*(?:[A-Z]{3}|[€£$]|ریال|تومان)?$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"^(?:[A-Z]{3}|[€£$]|ریال|تومان)?\s*\d+(?:[.,'\u2019\s]\d+)*\s*(?:[A-Z]{3}|[€£$]|ریال|تومان)?$", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
     private static partial Regex PriceOnly();
 
     [GeneratedRegex(@"(?:\b[A-Z]{3}\b|[€£$]|ریال|تومان)", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
@@ -592,6 +596,11 @@ public static partial class ReceiptParser
     // A plain space inside "1 234,56" or "12 345": up to three digits, then groups of exactly three.
     [GeneratedRegex(@"(?<=(?<!\d)\d{1,3}(?: \d{3})*) (?=\d{3}(?!\d))", RegexOptions.CultureInvariant)]
     private static partial Regex SpaceGroups();
+
+    // ASCII and typographic apostrophes are grouping marks only between a
+    // one-to-three-digit prefix and complete groups of three, never a decimal.
+    [GeneratedRegex(@"(?<=(?<![\p{L}\p{N}.,'\u2019])\d{1,3}(?:['\u2019]\d{3})*)['\u2019](?=\d{3}(?!\d))", RegexOptions.CultureInvariant)]
+    private static partial Regex ApostropheGroups();
 
     // A tax breakdown on a total line: French "(dont TVA 4,00)" or "dont TVA 4,00", Italian "(di cui IVA 4,33)".
     [GeneratedRegex(@"\([^)]*\b(?:mwst|ust|tax|vat|tva|iva)\b[^)]*\)|\b(?:dont\s+t\.?v\.?a|di\s+cui\s+iva)\s+\d+(?:[.,]\d+)?", RegexOptions.CultureInvariant | RegexOptions.IgnoreCase)]
