@@ -12903,3 +12903,19 @@ no financial/auth/photo replay, runtime/GC change or frozen action. Four standar
 profiles pass; full offline0b37aebb is prepared, not on Main. Whole gates and continuous
 delivery remain active.
 See [finite evidence](../quality/budget-read-aggregation.md).
+
+## D-830 - Original budget money publication
+
+D-830 shares checked effective budget limits and positive overspent magnitudes across
+Budget/Home/reports/alerts, validating exact displayed branches before worker publication.
+Ten original failures and one corrected fixed-refund fixture are separate; two later
+zero-limit controls reject an overstrict candidate before final publication.20 new/14
+related selected cases pass across explicit lineages. Original16336/UID10231 observes
+one carry-overflow/visible error/rows0; final17000/UID10232 publishes a valid zero-limit
+row with no failure, using different fictitious sources, never replaying either cohort.
+Both full20 sources stay equal and only fresh UIDs retire after exact system restoration.
+Original D809 AVD/data/record and R13 unknown, last D814 Main and accepted operations
+remain protected; no prior financial/auth/photo replay, runtime/GC or frozen action.
+Eight standard Clean profiles pass; full offline2ac14280 is prepared, not on Main.
+Whole gates and the continuous goal remain active.
+See [finite evidence](../quality/original-budget-money-publication.md).

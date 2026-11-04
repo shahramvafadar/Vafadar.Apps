@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-830: reject an overflowing budget limit plus carry before showing monetary rows; keep valid zero-limit budgets visible and use the same checked limit on Home, reports and alerts.
+
 - D-829: keep budget history averages precise, reject overflowing planned/envelope totals, preserve surplus/deficit carry correctly and include valid nonmonthly bills in the last supported year.
 
 - D-828: keep budget warnings and rounded limit suggestions correct for very large amounts; report an unrepresentable result instead of wrapping it.

@@ -25,7 +25,7 @@ public sealed record BudgetFinancialProjection(BudgetCarry Carry, BudgetStatus? 
             var carry = budget is null ? BudgetCarry.None : snapshot.CarryFor(budget);
             var monthly = budget?.Period == BudgetPeriod.Month;
             var flex = monthly && budget?.Method == BudgetMethod.Flex
-                ? FlexCalculator.Summarize((budget.TotalLimit ?? 0) + carry.Total, accounts, entries,
+                ? FlexCalculator.Summarize(BudgetCalculator.EffectiveLimit(budget.TotalLimit ?? 0, carry.Total), accounts, entries,
                     snapshot.Schedules, snapshot.States, categories, from, to, currency, today,
                     budget.AccountIds.Count > 0 ? budget.AccountIds : null, confirmedOnly) : null;
             BudgetStatus? total = null;
@@ -34,14 +34,14 @@ public sealed record BudgetFinancialProjection(BudgetCarry Carry, BudgetStatus? 
             {
                 var scope = budget.AccountIds.Count > 0 ? budget.AccountIds : null;
                 if (budget.TotalLimit is { } limit)
-                    total = flex?.Flexible ?? new BudgetStatus(limit + carry.Total,
+                    total = flex?.Flexible ?? new BudgetStatus(BudgetCalculator.EffectiveLimit(limit, carry.Total),
                         BudgetCalculator.NetExpense(accounts, entries, from, to, currency, scope, confirmedOnly: confirmedOnly));
                 if (flex is null)
                     foreach (var line in budget.CategoryLimits)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         var carried = carry.For(line.CategoryId);
-                        lines.Add(new(line.CategoryId, new(line.Limit + carried,
+                        lines.Add(new(line.CategoryId, new(BudgetCalculator.EffectiveLimit(line.Limit, carried),
                             BudgetCalculator.NetExpense(accounts, entries, from, to, currency, scope,
                                 [line.CategoryId], categories, confirmedOnly)), line.Limit, carried));
                     }
@@ -65,6 +65,17 @@ public sealed record BudgetFinancialProjection(BudgetCarry Carry, BudgetStatus? 
             var equivalent = snapshot.Schedules.Where(schedule => schedule.State == Core.Plans.ScheduleState.Active
                     && schedule.Kind == EntryKind.Expense && accounts.Any(account => account.Id == schedule.AccountId && account.CurrencyCode == currency))
                 .Select(BudgetPlanning.MonthlyEquivalent).Sum(value => value ?? 0);
+            // Finish every displayed magnitude on the worker. A failed result must not publish partial native rows.
+            void ValidateStatus(BudgetStatus status)
+            {
+                // Match the original row branches: a zero/negative limit has no remaining/percentage caption.
+                if (status.IsOver) _ = status.Overspent;
+                else if (status.Limit > 0) _ = status.Remaining;
+            }
+            if (total is not null) { ValidateStatus(total); _ = Math.Abs(carry.Total); }
+            foreach (var line in lines) { ValidateStatus(line.Status); _ = Math.Abs(line.Carry); }
+            if (flex is not null) { _ = flex.Total; if (flex.Fixed.Planned > 0) _ = flex.Fixed.Open; }
+            if (envelope is not null) _ = envelope.Unassigned;
             cancellationToken.ThrowIfCancellationRequested();
             return new BudgetFinancialProjection(carry, total, lines.AsReadOnly(), flex, envelope, outside,
                 entries.Count(entry => entry.Review == ReviewState.Unreviewed && entry.Kind is EntryKind.Expense or EntryKind.Refund), planned, equivalent);

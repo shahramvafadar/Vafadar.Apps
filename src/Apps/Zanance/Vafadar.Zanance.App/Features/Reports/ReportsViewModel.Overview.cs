@@ -174,11 +174,12 @@ public sealed partial class ReportsViewModel
             return;
         }
 
-        var limit = ownLimit + (await Task.FromResult(_review!.BudgetCarry(budget))).Total;
+        var limit = BudgetCalculator.EffectiveLimit(ownLimit, (await Task.FromResult(_review!.BudgetCarry(budget))).Total);
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         var status = new BudgetStatus(limit, FlexCalculator.SpentAgainstLimit(budget, [.. _accounts], [.. entries], categories.All, from, to));
+        var text = status.IsOver ? _translator.Format("Budget_Over", Money(status.Overspent)) : _translator.Format("Home_BudgetLeft", Money(status.Remaining), Money(limit));
         _budget = (limit, status.Spent);
-        BudgetText = status.IsOver ? _translator.Format("Budget_Over", Money(-status.Remaining)) : _translator.Format("Home_BudgetLeft", Money(status.Remaining), Money(limit));
+        BudgetText = text;
         BudgetDetail = limit > 0 ? _translator.Format("Report_BudgetUsage", ((decimal)status.Spent * 100 / limit).ToString("0", Culture) + " %") : null;
     }
 

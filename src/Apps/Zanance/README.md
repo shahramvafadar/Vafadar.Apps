@@ -15,6 +15,11 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 5 November 2026
 
+[D830 original budget money publication](docs/quality/original-budget-money-publication.md)
+keeps effective limits/overspent display checked and preserves zero-limit captions.
+34 selected cases across lineages and two different original native page boundaries
+retain full source. Complete2ac14280 is prepared, not installed on Main.
+
 [D829 budget read aggregation](docs/quality/budget-read-aggregation.md) corrects exact
 averages, envelopes, planned/Flex totals, carry and final-year lookahead.30 new/24
 related selected cases and30 native calculations retain source without preparation.

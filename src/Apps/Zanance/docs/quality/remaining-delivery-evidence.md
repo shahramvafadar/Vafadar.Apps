@@ -1,5 +1,9 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D830 original budget money publication](original-budget-money-publication.md)
+retains one actual overflow cover and one distinct final zero-limit ready page, with
+34 selected cases across explicit lineages and full source preservation.
+
 [D829 budget read aggregation](budget-read-aggregation.md)
 keeps averages, envelopes, planned/Flex totals and carry exact at supported boundaries,
 with30 new/24 affected selected cases; parent acceptance gates remain open.

@@ -574,7 +574,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         string statusText;
         if (status.IsOver)
         {
-            statusText = _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _currency, culture));
+            statusText = _translator.Format("Budget_Over", MoneyText.Format(status.Overspent, _currency, culture));
         }
         else if (status.UsagePercent is { } percent)
         {

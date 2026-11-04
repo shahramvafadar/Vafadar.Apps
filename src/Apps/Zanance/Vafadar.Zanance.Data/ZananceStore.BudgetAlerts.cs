@@ -29,7 +29,7 @@ public sealed partial class ZananceStore
         {
             var range = BudgetPeriods.Range(budget, review.MonthStartDay);
             var carry = CalculateBudgetCarry(budget, chains[budget.Id], review.MonthStartDay, inputs.Accounts, inputs.Entries, inputs.Categories);
-            return new BudgetAlertCandidate(budget.Id, budget.CurrencyCode, new(checked(budget.TotalLimit!.Value + carry.Total),
+            return new BudgetAlertCandidate(budget.Id, budget.CurrencyCode, new(BudgetCalculator.EffectiveLimit(budget.TotalLimit!.Value, carry.Total),
                 FlexCalculator.SpentAgainstLimit(budget, inputs.Accounts, inputs.Entries, inputs.Categories, range.First, range.Last)));
         }).ToArray();
         var snapshot = new BudgetAlertSnapshot(review, candidates, from, to, inputs.Stamp, inputs.ShowDetails);

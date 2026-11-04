@@ -521,14 +521,14 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         }
 
         // The same limit as on the budget page, including rollover (§10.3, Q-05).
-        var limit = ownLimit + snapshot.Carry.Total;
+        var limit = BudgetCalculator.EffectiveLimit(ownLimit, snapshot.Carry.Total);
         RequireCurrentPublication();
         var (from, to) = PeriodMath.MonthRange(year, month, calendar, _startDay);
         var spent = await Task.Run(() => FlexCalculator.SpentAgainstLimit(budget, accounts, entries, categories, from, to));
         RequireCurrentPublication();
         var status = new BudgetStatus(limit, spent);
         BudgetText = status.IsOver
-            ? _translator.Format("Budget_Over", MoneyText.Format(-status.Remaining, _homeCurrency, culture))
+            ? _translator.Format("Budget_Over", MoneyText.Format(status.Overspent, _homeCurrency, culture))
             : _translator.Format("Home_BudgetLeft", MoneyText.Format(status.Remaining, _homeCurrency, culture), MoneyText.Format(limit, _homeCurrency, culture));
         BudgetProgress = limit > 0 ? Math.Clamp((double)status.Spent / limit, 0, 1) : status.Spent > 0 ? 1 : 0;
 

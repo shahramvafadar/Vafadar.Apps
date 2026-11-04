@@ -12,6 +12,10 @@ public sealed record BudgetStatus(long Limit, long Spent)
     /// <summary>Gets the remaining amount (negative when overspent).</summary>
     public long Remaining => checked(Limit - Spent);
 
+    /// <summary>Gets the positive overspent magnitude, or zero when the limit is not exceeded.</summary>
+    /// <exception cref="OverflowException">The overspent magnitude cannot be represented in minor units.</exception>
+    public long Overspent => IsOver ? checked(Spent - Limit) : 0;
+
     /// <summary>Gets the usage in percent; <see langword="null"/> for a zero limit (no division by zero, BUD-05).</summary>
     public decimal? UsagePercent => Limit > 0 ? Spent * 100m / Limit : null;
 
@@ -38,6 +42,10 @@ public enum BudgetAlert
 /// <summary>Budget calculations (docs/02-domain-design.md §9).</summary>
 public static class BudgetCalculator
 {
+    /// <summary>Combines the original limit and its calculated carry, consistently on every budget surface.</summary>
+    /// <exception cref="OverflowException">The effective limit cannot be represented in minor units.</exception>
+    public static long EffectiveLimit(long limit, long carry) => checked(limit + carry);
+
     /// <summary>
     /// Net eligible expense: expenses minus refunds of the budget's accounts within the period, optionally limited to
     /// categories (a parent includes its children). Transfers, opening balances and adjustments never count (BUD-03).
