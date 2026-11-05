@@ -1,5 +1,23 @@
 # 01 – Assessment and decision log
 
+## D-878 - Exact signed earmark net readers
+
+D878 fixes actual supported signed-earmark net failures with one checked Int128/final
+long helper in original funding/account/period/detail/editor consumers. Pair/date/
+lifecycle/clamp/priority/nonnegative totals/writers/model/source guards stay.63newCore
+and3related pass; two original host flows pass in preserved lineage after correcting
+only invalid-four-fraction EUR preview oracle. Initial63baseline15fail includes three
+fixture-chronology corrections rerun separately; no false same-binary claim. Fresh
+UID10256/PID6698 executes current63 and original detail/one excess release refusal/
+editor/rawdraft with full native captions and source20exact, ledger0. StrictWindows/
+fullOffline384AOT408ELF1608LOAD/private192204804/sign/ZIPCRC/static16KiB and six current
+source/nine own-AOT bindings pass. Only freshUID retires, retained5606public/OS exact;
+six standard Cleans/no XML/supplemental/frozen/phone/financial/auth/photo replay.
+Shipping38d2ba16 is prepared, not Main;9535/acf remains datedD876. Current ARM64/
+adoption and separate eligible-income source reproduction are next independent work;
+original fault/D838pending/D841unexecuted/broader gates and overall active goal remain.
+[Original allocation readers and UI evidence](quality/signed-earmark-net-readers.md).
+
 ## D-877 - Current completed-net reader component cost
 
 D877 describes current completed Balance/three GoalTrend batch costs on one actual

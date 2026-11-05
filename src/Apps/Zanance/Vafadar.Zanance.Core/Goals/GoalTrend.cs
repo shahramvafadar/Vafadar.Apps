@@ -144,7 +144,7 @@ public static class GoalTrendService
                 return (ofType.Count == 0 ? null : ofType.Min(e => e.Date), (from, to) => Net(ofType.Where(e => e.Date >= from && e.Date <= to), Effect));
             case GoalType.Earmark:
                 var mine = allocations.Where(a => a.GoalId == goal.Id).ToList();
-                return (mine.Count == 0 ? null : mine.Min(a => a.Date), (from, to) => Net(mine.Where(a => a.Date >= from && a.Date <= to), a => a.Amount));
+                return (mine.Count == 0 ? null : mine.Min(a => a.Date), (from, to) => GoalCalculator.NetAllocations(mine.Where(a => a.Date >= from && a.Date <= to)));
             default:
                 return (null, (_, _) => 0);
         }

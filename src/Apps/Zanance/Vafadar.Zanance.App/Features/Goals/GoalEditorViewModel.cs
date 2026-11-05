@@ -452,7 +452,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             _settings = settings; _accounts = accounts; _entries = entries; _types = types; _events = events; _categories = categories;
             if (prior is null) _calendarAtOpen = Calendars.ToPeriod(_localization.CurrentCalendar);
             _savedRule = goal is null ? null : ContributionSchedule.RuleFor(goal, plan, Today).Clone();
-            _currentEarmarked = goal is null ? 0 : Math.Max(0, review.Allocations.Where(item => item.GoalId == goal.Id).Sum(item => item.Amount));
+            _currentEarmarked = goal is null ? 0 : Math.Max(0, GoalCalculator.NetAllocations(review.Allocations.Where(item => item.GoalId == goal.Id)));
             var usedCategories = plan?.CategoryIds ?? [];
             Publish(Accounts.Clear);
             foreach (var account in accounts.Where(item => (!item.IsArchived && item.Type is AccountType.Cash or AccountType.Checking or AccountType.Savings)

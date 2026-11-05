@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D878 signed earmark net readers](signed-earmark-net-readers.md)
+closes actual original funding/account/detail/editor failures; checked final limits
+and writers remain.63newCore/3related/two host flows and current native63/original
+pages/source20exact pass. Next: only missing current ARM64/full adoption and separate
+eligible-income source reproduction; original fault/D838/broader gates stay open.
+
 [D877 completed-net reader cost](current-completed-net-reader-cost.md)
 closes the named descriptive cost condition only,24new batches/full source/output exact.
 No speed or reversal acceptance. Next ready source question is original signed-earmark

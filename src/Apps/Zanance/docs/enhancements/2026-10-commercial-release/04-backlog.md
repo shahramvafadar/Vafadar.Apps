@@ -1,5 +1,11 @@
 # 04 – Canonical backlog (commercial release)
 
+[D878 signed earmark net readers](../../quality/signed-earmark-net-readers.md)
+finishes the coherent original reader/UI repair without financial replay.63newCore,
+3related, two original host flows and current63native/original pages/source20exact
+pass; strict packages ready. Missing current ARM64/full adoption and a separate
+eligible-income source reproduction remain independent; broader gates/goal stay open.
+
 [D877 completed-net reader cost](../../quality/current-completed-net-reader-cost.md)
 finishes descriptive24batch evidence without old-success/financial replay. Correctness
 remains; original signed-earmark funding/UI reproduction and broader gates are ready.

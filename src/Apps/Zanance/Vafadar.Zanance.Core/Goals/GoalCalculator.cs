@@ -43,6 +43,19 @@ public sealed record AccountEarmark(Guid AccountId, long Balance, long Earmarked
 /// </summary>
 public static class GoalCalculator
 {
+    /// <summary>
+    /// Completes the signed net of already-scoped allocation rows before checking the public long range.
+    /// Callers retain their original account/goal/period filters and any subsequent nonnegative clamp.
+    /// </summary>
+    public static long NetAllocations(IEnumerable<GoalAllocation> allocations)
+    {
+        ArgumentNullException.ThrowIfNull(allocations);
+        // D-878: storage order cannot reject a supported allocation/release net before its offset.
+        Int128 net = 0;
+        foreach (var allocation in allocations) net = checked(net + allocation.Amount);
+        return checked((long)net);
+    }
+
     /// <summary>Evaluates the active and paused goals; a paused goal keeps the money set aside for it (ZEX-P13).</summary>
     /// <param name="goals">All goals; only active and paused ones are evaluated.</param>
     /// <param name="allocations">All allocations.</param>
@@ -86,7 +99,7 @@ public static class GoalCalculator
             .. allocations
                 .Where(a => active.Contains(a.GoalId))
                 .GroupBy(a => (a.AccountId, a.GoalId))
-                .Select(g => (g.Key.AccountId, Amount: Math.Max(0, g.Sum(a => a.Amount))))
+                .Select(g => (g.Key.AccountId, Amount: Math.Max(0, NetAllocations(g))))
                 .GroupBy(x => x.AccountId)
                 .Select(g => new AccountEarmark(g.Key, balances.GetValueOrDefault(g.Key), g.Sum(x => x.Amount)))
                 .Where(e => e.Earmarked > 0),
@@ -141,7 +154,7 @@ public static class GoalCalculator
         {
             var perGoal = account
                 .GroupBy(a => a.GoalId)
-                .Select(g => (Goal: byId[g.Key], Allocated: Math.Max(0, g.Sum(a => a.Amount))))
+                .Select(g => (Goal: byId[g.Key], Allocated: Math.Max(0, NetAllocations(g))))
                 .ToList();
             var available = Math.Max(0, balances.GetValueOrDefault(account.Key));
             var shortfall = Math.Max(0, perGoal.Sum(g => g.Allocated) - available);

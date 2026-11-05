@@ -395,7 +395,7 @@ public sealed partial class GoalDetailViewModel(
                 // Subsequent display/choice reloads keep the user's explicit direction and selected account.
                 DirectionIndex = !CanContribute && CanSetAside ? 1 : 0;
                 SelectedAccount = DirectionIndex == 1
-                    ? Accounts.FirstOrDefault(account => _review!.Allocations.Where(item => item.GoalId == _goal?.Id && item.AccountId == account.Id).Sum(item => item.Amount) > 0)
+                    ? Accounts.FirstOrDefault(account => GoalCalculator.NetAllocations(_review!.Allocations.Where(item => item.GoalId == _goal?.Id && item.AccountId == account.Id)) > 0)
                         ?? Accounts.FirstOrDefault()
                     : Accounts.FirstOrDefault(account => account.CanFund && account.Id == SelectedAccount?.Id)
                         ?? Accounts.FirstOrDefault(account => account.CanFund) ?? Accounts.FirstOrDefault();
@@ -493,7 +493,7 @@ public sealed partial class GoalDetailViewModel(
         IsActive = goal.State == GoalState.Active;
         IsArchived = goal.State == GoalState.Archived;
         IsEarmark = goal.Type == GoalType.Earmark;
-        CanSetAside = IsEarmark && (CanContribute || allocations.Where(a => a.GoalId == goal.Id).GroupBy(a => a.AccountId).Any(g => g.Sum(a => a.Amount) > 0));
+        CanSetAside = IsEarmark && (CanContribute || allocations.Where(a => a.GoalId == goal.Id).GroupBy(a => a.AccountId).Any(g => GoalCalculator.NetAllocations(g) > 0));
         CanPause = goal.State is GoalState.Active or GoalState.Paused;
         PauseText = translator[goal.State == GoalState.Paused ? "Goal_Resume" : "Goal_Pause"];
         CompleteText = goal.State is GoalState.Active or GoalState.Paused ? translator["Goal_Complete"] : translator["Goal_Reactivate"];
@@ -502,7 +502,7 @@ public sealed partial class GoalDetailViewModel(
 
         var names = accounts.ToDictionary(a => a.Id, a => a.Name);
         var own = allocations.Where(a => a.GoalId == goal.Id).OrderByDescending(a => a.Date).ThenByDescending(a => a.CreatedAt).ToList();
-        var perAccount = own.GroupBy(item => item.AccountId).Select(group => new { group.Key, Amount = group.Sum(item => item.Amount) })
+        var perAccount = own.GroupBy(item => item.AccountId).Select(group => new { group.Key, Amount = GoalCalculator.NetAllocations(group) })
             .Where(group => group.Amount != 0)
             .Select(group => translator.Format("Goal_InAccount", presenter.Money(group.Amount, goal.CurrencyCode), names.GetValueOrDefault(group.Key, "?"))).ToArray();
         var history = own.Select(allocation => new AllocationRow(allocation.Id,
@@ -519,7 +519,7 @@ public sealed partial class GoalDetailViewModel(
             // Money is set aside only in money accounts – never in a loan, money lent or a valued asset (ZEX-S0307).
             .. accounts
                 .Where(a => !a.IsArchived && !a.Type.IsOutsideCash() && string.Equals(a.CurrencyCode, goal.CurrencyCode, StringComparison.OrdinalIgnoreCase)
-                    || own.Where(item => item.AccountId == a.Id).Sum(item => item.Amount) > 0)
+                    || GoalCalculator.NetAllocations(own.Where(item => item.AccountId == a.Id)) > 0)
                 .Select(a =>
                 {
                     var free = earmarks.TryGetValue(a.Id, out var e) ? e.Unallocated : Math.Max(0, facts.Balances.GetValueOrDefault(a.Id));
@@ -625,7 +625,7 @@ public sealed partial class GoalDetailViewModel(
             // The reviewed writer rejects any intervening allocation change, including another release.
             if (direction == 1)
             {
-                var earmarked = review.Allocations.Where(a => a.GoalId == goal.Id && a.AccountId == account.Id).Sum(a => a.Amount);
+                var earmarked = GoalCalculator.NetAllocations(review.Allocations.Where(a => a.GoalId == goal.Id && a.AccountId == account.Id));
                 if (amount > earmarked)
                 { AmountError = translator.Format("Goal_ReleaseTooMuch", presenter.Money(Math.Max(0, earmarked), goal.CurrencyCode)); return false; }
             }

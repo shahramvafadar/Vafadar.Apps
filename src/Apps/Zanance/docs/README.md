@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D878 signed earmark net readers](quality/signed-earmark-net-readers.md)
+finishes the original funding/detail/editor correction:63newCore/3related/two original
+host flows and current63native/source20exact, with no successful financial replay.
+Current ARM64/adoption, separate source questions and broader gates remain.
+
 [D877 completed-net reader cost](quality/current-completed-net-reader-cost.md)
 finishes24new descriptive batch workloads with full inputs/outputs exact; correctness
 stays. Original signed-earmark funding/UI aggregation is the next source question.
