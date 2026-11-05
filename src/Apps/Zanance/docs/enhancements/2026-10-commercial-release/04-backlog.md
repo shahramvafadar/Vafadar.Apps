@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D868 current holding basis ARM64/Main](../../quality/current-holding-basis-arm64-main.md)
+qualifies only current12cases, not12new tests/old28replay; existing complete060a3cb2
+is adopted once without reset as Main23174, ready141raw/public/OS exact. Broader
+gates remain open and no accepted financial/auth/photo operation is repeated.
+
 [D867 exact weighted holding basis](../../quality/holding-basis-product-boundaries.md)
 repairs six supported-history failures, preserves rounding/unknown/final refusal,
 and accepts12new native cases plus original detail/source20 without financial replay.

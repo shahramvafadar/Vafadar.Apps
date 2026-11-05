@@ -1,5 +1,22 @@
 # 01 – Assessment and decision log
 
+## D-868 - Current holding basis ARM64 and full Main
+
+D868 qualifies only current D867's12 weighted-basis cases on actual Samsung ARM64,
+SDK-only UID10420/PID21868/27AOT37ELF138staticLOAD/min36/v3/offline. Two current
+source hashes and three own-AOT bindings pass; these are12 current cases on a missing
+platform, not12 new product tests or replay of D860/D864's53/28. Only freshUID retires;
+normal return preserves Main15014/public/OS/locale-key/boot/geometry/reverse exactly.
+Existing qualified complete060a3cb2 is then adopted once without reset as Main23174,
+UID10380/CE155299/DE154603. First actual Ready141raw nodes/all attributes/order match;
+no Loading frame is accepted as ready, no reload/relaunch/input rescue occurs. Three
+original package records/grants/five OS values/fresh locale-key/reverse/boot/geometry
+match except expected APK/PID. Two XML103864bytes hash-retire/local raw retained,
+one SDK standard Clean and no full product/Windows/old host/x64/28-case/financial/auth/
+photo/R13/frozen replay. Main private DB/key/financial equality is not inferred from
+public Home. D838/original fault/whole-performance/platform gates and goal stay open.
+[Finite platform and public adoption evidence](quality/current-holding-basis-arm64-main.md).
+
 ## D-867 - Exact weighted holding basis
 
 D867 fixes six actual weighted-basis product failures with exact Int128 division,

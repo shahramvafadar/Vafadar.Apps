@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D868 current holding basis ARM64/Main](quality/current-holding-basis-arm64-main.md)
+qualifies only the current12cases on missing ARM64, then adopts existing complete
+060a3cb2 once as Main23174 with raw Home141/public/OS exact; no financial replay.
+
 [D867 exact weighted holding basis](quality/holding-basis-product-boundaries.md)
 repairs six actual large-outflow failures;12new host/native cases and original
 detail publication pass with exact source preservation, no financial replay.

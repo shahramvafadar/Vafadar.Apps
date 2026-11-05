@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D868 current holding basis ARM64/Main](current-holding-basis-arm64-main.md)
+closes D867 missing ARM64/public adoption condition only: current12native cases,
+one existing full060a3cb2 no-reset upgrade as Main23174, Home141raw/public/OS exact.
+Private DB/key, original-fault/performance/platform prerequisites remain distinct.
+
 [D867 exact weighted holding basis](holding-basis-product-boundaries.md)
 closes only the represented large-outflow product defect and one original detail
 publication.12new native cases/source20 and finite restoration pass; no performance
