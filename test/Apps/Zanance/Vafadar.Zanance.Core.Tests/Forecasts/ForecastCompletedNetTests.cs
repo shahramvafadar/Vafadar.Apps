@@ -117,8 +117,8 @@ public sealed class ForecastCompletedNetTests
     }
 }
 
+/// <summary>Provides bounded source-generated snapshots of the synthetic complete forecast inputs.</summary>
 [JsonSerializable(typeof(Account[]))]
 [JsonSerializable(typeof(LedgerEntry[]))]
 [JsonSerializable(typeof(Schedule[]))]
-/// <summary>Provides bounded source-generated snapshots of the synthetic complete forecast inputs.</summary>
 internal partial class ForecastCompletedReadJson : JsonSerializerContext { }

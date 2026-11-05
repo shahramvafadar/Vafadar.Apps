@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D891 current forecast ARM64/Main](quality/current-forecast-arm64-main.md)
+closes current35missing ARM64 and existing full2d420ef9 no-reset adoption asMain12955,
+firstReady141rawexact/publicOS preserved. A final test-XML placement error is corrected;
+no old successful host/x64/financial replay. Broader delivery requirements remain.
+
 [D890 completed forecast nets](quality/forecast-completed-currency-day-nets.md)
 fixes13actual new failures in complete currency/day sums and transfer ratios;
 35new+13affected host/current35Android/originalForecastPage/source exact pass.

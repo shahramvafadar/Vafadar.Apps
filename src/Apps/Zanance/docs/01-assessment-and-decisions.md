@@ -1,5 +1,16 @@
 # 01 – Assessment and decision log
 
+## D-891 - Current forecast ARM64 and complete Main
+
+Only missing current35Core ARM64 conditions run, SDK-only27AOT37ELF138LOAD/min36/v3;
+no old host/x64/financial replay or App/Data fixture. Initial XML-summary placement
+CS1587 is corrected before native install; strict canonical compilation and corrected
+SDK build pass, executable/assertion lines unchanged. Current source/PDB/threeAOT
+bindings pass. FreshUID retires; existing D890full2d420ef9 upgrades Main once without
+reset as12955, firstReady141 rawexact/UIDCEDE/otherpublic/OS exact. TwoXML hash-retire/
+threeCleans, emulator/R13/frozen/old cohorts untouched; broader gates/goal active.
+[Actual current35 and existing complete-candidate adoption](quality/current-forecast-arm64-main.md).
+
 ## D-890 - Exact completed forecast currency/day nets and ratios
 
 13actual new baseline failures in35cases expose premature account/day Sum overflow

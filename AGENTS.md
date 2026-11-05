@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-891 - Current forecast ARM64 and complete Main (2026-11-05)
+
+Current35originalCore conditions pass once on Samsung SDK-onlyUID10426/PID11410,
+27AOT37ELF138staticLOAD/offline/min36/v3/originalMono. No App/Data/financial setup,
+old host/x64/13affected/matrix/auth/photo replay. Initial CS1587 from the last D890
+XML summary is corrected by moving it before attributes; no executable/assertion
+change, strict canonical test compile and ARM64 pass. Saved badging minSdkVersion
+oracle and receipt suffix refusals are preserved/corrected without native replay.
+Three actual compiler-input/AOT bindings and two frozen source hashes pass. Fresh
+UID only retires, all original phone public/OS state exact. Existing D890full2d420ef9
+then upgrades Main once without reset,23260→12955/UID10380/CE155299/DE154603; first
+actualReady141 all raw attributes/order exact, other packages/grants/OS/locale/boot/
+geometry/reverse unchanged. TwoXML103864byte hash-retire/three standard Cleans; no
+private Main DB/key/financial source read, settings/security change, emulator5606/
+R13/frozen action or full package/Windows rebuild. D607/auth terminal/D838pending/
+D841unexecuted/retainedQ02 evidence remain; whole fault/performance/security/platform/
+provider/release and goal active. D890one dueCI separate/no secondGET/no CI wait.
+See `src/Apps/Zanance/docs/quality/current-forecast-arm64-main.md`.
+
 ## D-890 - Exact completed forecast currency/day results (2026-11-05)
 
 Three actual original-Core overflow paths and13of35new baseline failures are repaired:

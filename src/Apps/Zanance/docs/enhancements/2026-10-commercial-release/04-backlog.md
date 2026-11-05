@@ -1,5 +1,12 @@
 # 04 – Canonical backlog (commercial release)
 
+[D891 current forecast ARM64/Main](../../quality/current-forecast-arm64-main.md)
+closes missing current35SDK-only ARM64 and existing full2d420ef9 no-reset adoption:
+Main12955/firstReady141rawexact/publicOS exact. Initial XML-doc placement is fixed
+without executable changes; strict compile/currentnative pass, no old host/x64 or
+financial replay. ThreeCleans/freshUIDretire/twoXMLhashretire; other ready independent
+work, originalfault/broader requirements and complete goal remain active.
+
 [D890 completed forecast nets](../../quality/forecast-completed-currency-day-nets.md)
 fixes13new original failures without relaxing true daily money bounds or conversion
 policy.35new+13affected host/current35x64 and originalForecastPage A4/E3/S1/full20source

@@ -1,5 +1,14 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D891 current forecast ARM64/Main](current-forecast-arm64-main.md)
+closes D890missing current35Core ARM64 and existing full2d420ef9 no-reset Main adoption
+as12955/firstReady141rawexact/publicOS unchanged. Initial test XML placement fails
+strict SDK compile; same comment moves before attributes, canonical compile and
+current native pass without successful old host/x64 replay. Three standard Cleans/
+freshUIDretire/twoXMLhashretire preserve original phone/emulator/terminal evidence.
+Other ready Android/Home projection/read-boundary/original-fault work and broader
+performance/security/platform/provider/release requirements/goal stay active.
+
 [D890 completed forecast nets](forecast-completed-currency-day-nets.md)
 closes three premature-overflow reader paths with35new/13baselinefail and13affected
 host conditions, current35x64native and original A4/E3/S1ForecastPage/full20source exact.
