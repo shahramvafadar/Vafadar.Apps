@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D867 exact weighted holding basis](holding-basis-product-boundaries.md)
+closes only the represented large-outflow product defect and one original detail
+publication.12new native cases/source20 and finite restoration pass; no performance
+or whole-gate acceptance. Original fault/D838 and broader prerequisites remain.
+
 [D866 full-range holding display](full-range-holding-native-display.md)
 closes the named36-context native caption/viewport gap only; exact source20 and
 restoration pass. Direct hosting/programmatic scroll does not close whole A11Y,

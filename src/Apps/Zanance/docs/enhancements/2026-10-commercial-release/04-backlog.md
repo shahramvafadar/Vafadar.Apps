@@ -1,5 +1,9 @@
 # 04 – Canonical backlog (commercial release)
 
+[D867 exact weighted holding basis](../../quality/holding-basis-product-boundaries.md)
+repairs six supported-history failures, preserves rounding/unknown/final refusal,
+and accepts12new native cases plus original detail/source20 without financial replay.
+
 [D866 full-range holding display](../../quality/full-range-holding-native-display.md)
 accepts36 new six-language/theme/width/font2 contexts with exact source20;
 no product defect/edit or financial/old-test replay. Broader gates remain open.

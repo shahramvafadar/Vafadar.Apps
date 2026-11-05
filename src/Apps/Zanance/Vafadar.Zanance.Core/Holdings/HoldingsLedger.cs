@@ -131,9 +131,20 @@ public static class HoldingsLedger
         return new CostBasis(quantity, quantity == 0 ? 0 : basis, sales);
     }
 
-    // basis × q / Q, rounded half away from zero to the minor unit.
-    private static long RoundedShare(long basis, long part, long whole) =>
-        (long)Math.Round((decimal)basis * part / whole, MidpointRounding.AwayFromZero);
+    // D-867: divide the exact product before narrowing; a supported share can have a product beyond decimal.
+    private static long RoundedShare(long basis, long part, long whole)
+    {
+        var product = (Int128)basis * part;
+        var quotient = product / whole;
+        var remainder = product % whole;
+        // The caller supplies a positive current quantity. Preserve nearest-minor, midpoint-away rounding.
+        if (Int128.Abs(remainder) * 2 >= whole)
+        {
+            quotient += product < 0 ? -1 : 1;
+        }
+
+        return checked((long)quotient);
+    }
 
     private static void Add(Dictionary<(Guid, Guid), long> totals, (Guid, Guid) key, long delta) =>
         totals[key] = checked(totals.GetValueOrDefault(key) + delta);

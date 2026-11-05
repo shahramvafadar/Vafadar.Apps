@@ -1,5 +1,24 @@
 # 01 – Assessment and decision log
 
+## D-867 - Exact weighted holding basis
+
+D867 fixes six actual weighted-basis product failures with exact Int128 division,
+original midpoint-away rounding and checked final narrowing. Unknown basis/history/
+final accumulation refusal and writers/model stay unchanged.12new host cases pass;
+a later15-field source-snapshot assertion changes only the six large cases, so only
+those six continue, retaining the other six; two related existing cases pass.
+Final native UID10252/PID1127 executes all12current cases/source20 exact,
+then one four-row noncash fixture publishes quantity.001/remaining basis1 and visible
+original average10.00EUR per token with unknown market value and source20 exact.
+Direct detail hosting is not Shell/financial acceptance. Strict Windows/full offline
+384AOT408ELF1608staticLOAD/private192204804 and nine own-AOT bindings pass. The first
+private JSON context duplication fails before deployment and is corrected privately;
+full shipping success is not replayed. Only freshUID retires, original5606 public/OS
+state exact, four standard Cleans/no XML/supplemental/frozen/phone/auth/photo/R13 or
+accepted financial replay. Shipping060a3cb2 is prepared, not Main;15014/a214 stays dated
+D864. Original fault/D838/whole-performance/platform gates and goal remain open.
+[Actual failures and original native publication](quality/holding-basis-product-boundaries.md).
+
 ## D-866 - Full-range holding native display
 
 D866 qualifies only the new full-range holding display after D863:36 contexts,

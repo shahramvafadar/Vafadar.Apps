@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D867 exact weighted holding basis](quality/holding-basis-product-boundaries.md)
+repairs six actual large-outflow failures;12new host/native cases and original
+detail publication pass with exact source preservation, no financial replay.
+
 [D866 full-range holding display](quality/full-range-holding-native-display.md)
 closes only36 new native contexts after the exact-arithmetic changes; source20 and
 original preferences/OS match. No product change or old-success replay.
