@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-859: preserve exact even medians and refuse wrapped KPI surplus, spending change, essential-month and installment totals without changing financial data or classification.
+
 - D-858: refuse wrapped liquidity/protected totals and preserve exact allocation/release cancellation before current-balance coverage, without changing financial data.
 
 - D-857: refuse unrepresentable goal-capacity/commitment totals and preserve exact positive monthly needs without changing allocations or ledger data.

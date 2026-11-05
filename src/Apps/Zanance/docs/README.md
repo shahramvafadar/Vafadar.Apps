@@ -1,5 +1,18 @@
 # Zanance – design documentation
 
+[Exact KPI money/medians D859](quality/kpi-money-and-median-results.md):
+D859 corrects KPI surplus/change/essential-month/installment totals and the even
+median. Twelve actual failures among18new cases become18new+3related selected host
+passes and18 original Android calculations, UID10249/PID30117/source20/A/E/S0 exact.
+Original classification, unknown percentages, midpoint rounding/caller ownership and
+currency partition remain. Initial test-only analyzer and premature shipping observer
+refusals are preserved; the same original publisher completes, with no build restart
+or accepted native replay. Strict Windows/full offline3844081608/private192204804 and
+nine own-AOT bindings pass. Only freshUID retires, original5606 public state exact;
+four standard Cleans/no XML/supplemental/frozen/phone/R13. Shippinge848d7c1 prepared,
+not Main;31707/abf is dated D856. Original fault/D838 decision, whole-performance/
+security/platform gates and active goal remain separate.
+
 [Exact liquidity and protection D858](quality/liquidity-protection-exact-results.md):
 D858 corrects liquidity/headroom and protected-money arithmetic: unsupported deficits
 or covered currency totals refuse instead of wrapping, and unordered allocation/release

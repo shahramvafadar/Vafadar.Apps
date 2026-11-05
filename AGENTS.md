@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-859 - Exact KPI money and even medians (2026-11-05)
+
+D859 corrects KPI surplus/change/essential-month/installment totals and the even
+median. Twelve actual failures among18new cases become18new+3related selected host
+passes and18 original Android calculations, UID10249/PID30117/source20/A/E/S0 exact.
+Original classification, unknown percentages, midpoint rounding/caller ownership and
+currency partition remain. Initial test-only analyzer and premature shipping observer
+refusals are preserved; the same original publisher completes, with no build restart
+or accepted native replay. Strict Windows/full offline3844081608/private192204804 and
+nine own-AOT bindings pass. Only freshUID retires, original5606 public state exact;
+four standard Cleans/no XML/supplemental/frozen/phone/R13. Shippinge848d7c1 prepared,
+not Main;31707/abf is dated D856. Original fault/D838 decision, whole-performance/
+security/platform gates and active goal remain separate.
+See `src/Apps/Zanance/docs/quality/kpi-money-and-median-results.md`.
+
 ## D-858 - Exact liquidity and covered protected money (2026-11-05)
 
 D858 corrects liquidity/headroom and protected-money arithmetic: unsupported deficits

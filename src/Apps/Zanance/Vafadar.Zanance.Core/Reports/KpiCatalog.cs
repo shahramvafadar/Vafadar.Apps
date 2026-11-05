@@ -27,7 +27,7 @@ public sealed record SurplusResult(
     public long Consumption => Expense - Refunds;
 
     /// <summary>Gets eligible income minus consumption (ZEX-K05); negative is a deficit.</summary>
-    public long Surplus => EligibleIncome - Consumption;
+    public long Surplus => checked(EligibleIncome - Consumption);
 
     /// <summary>
     /// Gets the surplus rate in percent with one decimal (ZEX-K06), or <see langword="null"/> ("not available") when
@@ -46,7 +46,7 @@ public sealed record ComparisonRange(DateOnly From, DateOnly To, DateOnly Compar
 public sealed record SpendingChange(Guid? CategoryId, long Current, long Comparison)
 {
     /// <summary>Gets the change.</summary>
-    public long Delta => Current - Comparison;
+    public long Delta => checked(Current - Comparison);
 
     /// <summary>Gets the change in percent with one decimal, or <see langword="null"/> when the comparison is not positive ("new").</summary>
     public decimal? DeltaPercent => Comparison > 0 ? Math.Round(Delta * 100m / Comparison, 1, MidpointRounding.AwayFromZero) : null;
@@ -390,9 +390,9 @@ public static class KpiCatalog
                     var payment = plan.ToAmount ?? occurrence.Amount!.Value;
                     var (interest, principal) = LoanCalculator.Split(outstanding, loan.InterestRate ?? 0, payment);
                     outstanding = Math.Max(0, outstanding - principal);
-                    current.Total += payment;
-                    current.Interest += interest;
-                    current.Principal += principal;
+                    current.Total = checked(current.Total + payment);
+                    current.Interest = checked(current.Interest + interest);
+                    current.Principal = checked(current.Principal + principal);
                 }
 
                 if (Occurrences.NextOpen(plan, stateList, today, today) is { } next && (current.Next is null || next.DueDate < current.Next))
@@ -512,7 +512,7 @@ public static class KpiCatalog
             return new EssentialCoverage(currencyCode, usableMoney, 0, null, CoverageStatus.NotEnoughHistory);
         }
 
-        var monthly = Median(months) + share;
+        var monthly = checked(Median(months) + share);
         if (monthly <= 0)
         {
             return new EssentialCoverage(currencyCode, usableMoney, monthly, null, CoverageStatus.NotAvailable);
@@ -534,7 +534,8 @@ public static class KpiCatalog
 
         var sorted = values.Order().ToList();
         var middle = sorted.Count / 2;
-        return sorted.Count % 2 == 1 ? sorted[middle] : (long)Math.Round((sorted[middle - 1] + sorted[middle]) / 2m, MidpointRounding.AwayFromZero);
+        // D-859: the exact midpoint is supported even when adding its two stored endpoints would overflow long.
+        return sorted.Count % 2 == 1 ? sorted[middle] : (long)Math.Round(((decimal)sorted[middle - 1] + sorted[middle]) / 2m, MidpointRounding.AwayFromZero);
     }
 
     // Whether the scope has data from the start of the oldest of the three months on (an account opened or an entry

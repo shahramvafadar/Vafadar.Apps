@@ -1,5 +1,10 @@
 # 01 – Assessment and decision log
 
+D-859: [exact KPI money/medians](quality/kpi-money-and-median-results.md)
+refuses wrapped surplus/change/coverage/installments and preserves the exact even
+median.18new+3related host cases and18 original Android calculations pass with
+source20/A/E/S0 exact; wider UI/performance/security/platform gates remain separate.
+
 D-858: [exact liquidity/protection](quality/liquidity-protection-exact-results.md)
 refuses wrapped deficits/covered totals and preserves exact allocation cancellation
 before the existing balance cap.17new+2related host cases and17 original Android
