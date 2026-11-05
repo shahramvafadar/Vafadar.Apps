@@ -72,3 +72,6 @@ The D831 bounded code map is retained; no new register/fault-address interpretat
 authorized at its distinct topPC. Fault remedy, whole performance/security/accessibility,
 platform/provider/release gates and the continuous delivery goal remain open. No product
 code, schema, dependency, test count, fullshipping build or old successful suite changes.
+
+D833's later [original post-fault audit](post-fault-accounts-source-audit.md) completes
+the declared all20 typed-source comparison. Larger page timing and fault remedy stay open.

@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-833 - Original post-fault Accounts source audit (2026-11-05)
+
+One source-only original App/Core/Data activity18482/UID10234 adopts existing protected
+startup/factory with no MAUI Window, then query-only reads all20 typed components. Actual
+200accounts/100kentries SHA equals D831 pre-page/D832 checkpoint exactly. No original
+page/import/timing/financial/auth/photo/native-record replay; source health proof is only
+that declared typed equality, not schema/cipher/WAL/allDB or crash repair. Same-signer
+no-reset replacement preserves CE360537/DE90781/OS/key absence/geometry/boot/reverse/other
+packages. Current retained200 package now contains original App/Core/Data source auditor,
+not D832's SDK-only package; keep UID/data, no normal launcher/uninstall/reset. Public
+80-byte original Mono window places top0x2f3f92 at an eight-byte R13 load; no actual saved
+register or memory is interpreted and no old slot authority extends here. Reject stripped
+nearest-symbol label; use D831 exact debug function. One corrected strict192/204/804
+native build/one launch/one standard Clean, no shipping/old-suite/runtime/GC/frozen action.
+D809 record/R13 terminal unknown and broader goal/gates stay protected/open. See
+`src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md`.
+
 ## D-832 - Retained large Accounts source checkpoint (2026-11-05)
 
 One SDK-only fixed-file observation in18227/UID10234 proves D831 source.json exists

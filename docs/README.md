@@ -1,5 +1,10 @@
 # Documentation
 
+[D833 original post-fault source audit](../src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md)
+proves all20 declared typed source components equal across the new native exit,
+without a MAUI Window or page/timing replay; fault remedy remains open.
+
+
 [D832 large Accounts source checkpoint](../src/Apps/Zanance/docs/quality/large-accounts-source-checkpoint.md)
 proves the pre-page source audit completed before the new native death, retaining
 post-fault source health and large timing as unfinished.

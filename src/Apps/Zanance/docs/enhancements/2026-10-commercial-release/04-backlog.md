@@ -9,6 +9,14 @@ States: Proposed · Ready (decisions made, may start after owner approval of the
 (implemented, tested, documented, pushed) · Blocked (by an owner action) · Deferred by owner. Priority: P1 (blocks
 the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 
+## D-833 continuation checkpoint
+
+[Original post-fault source audit](../../quality/post-fault-accounts-source-audit.md)
+completes the retained200-account all20 typed-source equality through the original
+factory without a MAUI Window. Preserve UID10234/data and its current source-only
+App/Core/Data caller for the native investigation. Large-page timing/UI admission,
+fault remedy and broader gates remain open; no old-success replay.
+
 ## D-832 continuation checkpoint
 
 [Fixed source checkpoint](../../quality/large-accounts-source-checkpoint.md) confirms
