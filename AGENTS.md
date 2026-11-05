@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-873 - Private compact holding-change host admission (2026-11-05)
+
+D873 admits only a fresh private compact local-index/date-sign sorted Positions
+buffer on two actual.NET10.0.14/X64 processes79540/7160.
+512new private contracts/process,191actual overflow refusals, source15/single enumeration/
+ordered outputs/ownership agree; same12fullinputJSONs and binary remain exact.
+All48fixed latency/allocation shape-mode guards pass with raw pairs retained. These
+are private conditions, not1024new product tests or old17/28/53replay. Product Quantity/
+FindConflict/Basis/writers/model are exact; no native/device/full build/financial/auth/
+photo/R13/frozen or supplemental action. One private strict build/Clean pass.
+Host admission completes, not shipping optimization: high-place-cardinality/transfer
+cost and changed original/native integration remain independent next checks. Original
+fault/D838/broader gates and overall active goal remain; Main32234/f342 stays dated D871.
+See `src/Apps/Zanance/docs/quality/private-compact-holding-change-admission.md`.
+
 ## D-872 - Current holding chronology component cost (2026-11-05)
 
 D872 describes current chronological Quantity/Positions/combined cost in one actual

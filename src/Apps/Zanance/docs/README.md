@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D873 private compact holding-change admission](quality/private-compact-holding-change-admission.md)
+passes all48fixed host guards in two same-binary processes; product is unchanged.
+High-location/transfer cost and changed-code/native integration are next.
+
 [D872 current holding chronology cost](quality/current-holding-chronology-cost.md)
 closes descriptive12shape/36measurement cost evidence only; correct chronological
 behavior remains. A fresh correctness-preserving optimization is next, not rollback.

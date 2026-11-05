@@ -1,5 +1,9 @@
 # 04 – Canonical backlog (commercial release)
 
+[D873 private compact holding-change admission](../../quality/private-compact-holding-change-admission.md)
+finishes the private two-process fixed-guard task, with unchanged product. High-place/
+transfer cost and changed original/native integration remain ready independent work.
+
 [D872 current holding chronology cost](../../quality/current-holding-chronology-cost.md)
 completes one descriptive cost task without old-success/device/financial replay.
 Correctness fixes remain; fresh guarded optimization/original fault/broader gates stay.

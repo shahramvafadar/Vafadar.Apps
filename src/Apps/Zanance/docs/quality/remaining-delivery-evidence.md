@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D873 private compact holding-change admission](private-compact-holding-change-admission.md)
+completes two-process host admission with all48fixed guards/source exact. Native/product
+acceptance is not inferred; next ready condition is high-place/transfer cost, then
+relevant changed original/native integration without old-success/financial replay.
+
 [D872 current holding chronology cost](current-holding-chronology-cost.md)
 completes the named descriptive component measurement: one process/12shapes/36modes,
 full input and ordered outputs retained. Cost is material; next is a fresh fixed-guard
