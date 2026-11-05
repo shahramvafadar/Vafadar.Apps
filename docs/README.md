@@ -1,5 +1,12 @@
 # Documentation
 
+[D843 exact account-rate editor](../src/Apps/Zanance/docs/quality/exact-account-rate-editor.md) fixes loaded-rate truncation and silently
+rounded inputs; 29 new plus four affected selected cases and one original native
+editor/text-binding/refusal check pass with full20 source equality and no Save.
+Complete1f2509dd is prepared, not on Main; retained emulator/evidence and pending
+D838 actual authority are preserved. Broader gates and the overall goal stay open.
+
+
 [D842 current monthly-interest ARM64/Main adoption](../src/Apps/Zanance/docs/quality/current-interest-arm64-main-adoption.md) qualifies16 current Core
 outcomes on Samsung without financial records, then adopts existing complete22a3f00a
 once without reset as Main5939. Public identities and first ready141raw Home nodes

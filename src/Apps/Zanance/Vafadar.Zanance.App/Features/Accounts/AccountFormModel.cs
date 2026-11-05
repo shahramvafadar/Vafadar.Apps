@@ -287,7 +287,8 @@ public sealed partial class AccountFormModel : ObservableObject
         Counterparty = account.Counterparty ?? string.Empty;
         HasDueDate = account.DueDate is not null;
         DueDate = account.DueDate ?? DueDate;
-        RateText = account.InterestRate is { } rate ? rate.ToString("0.##########", culture) : string.Empty;
+        // D-843: reopening a metadata form must not round an already stored decimal rate.
+        RateText = account.InterestRate is { } rate ? rate.ToString(culture) : string.Empty;
         InstallmentText = account.Installment is { } installment ? _installmentMoney.Format(installment, account.CurrencyCode, culture) : string.Empty;
         _installmentMoney.Initialize(InstallmentText, account.CurrencyCode, culture);
         _rateCulture = CultureInfo.ReadOnly((CultureInfo)culture.Clone());
@@ -327,7 +328,7 @@ public sealed partial class AccountFormModel : ObservableObject
             var rateText = Digits.ToAscii(RateText.Trim()).Replace((_rateCulture ?? culture).NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal).Replace('٫', '.').TrimEnd('%', '٪').Trim();
             if (rateText.Length > 0)
             {
-                rate = decimal.TryParse(rateText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var parsed) && parsed <= 100 ? parsed : null;
+                rate = TryParseExactRate(rateText, out var parsed) ? parsed : null;
                 TermsError = rate is null ? _translator["Account_RateInvalid"] : null;
             }
 

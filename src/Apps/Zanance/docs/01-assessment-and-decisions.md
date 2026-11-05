@@ -13885,3 +13885,15 @@ current Core outcomes on reserved Samsung, only fresh UID10416 retired and one e
 complete22a3f00a no-reset adoption as Main5939. UID/CEDE/public flags/OS and all141 raw
 Home nodes stay exact; no financial/auth/photo or old suite/build replay. This is not
 complete private-source/fault/performance/security/platform/release acceptance.
+
+
+## D-843 - Preserve exact original account-rate drafts (2026-11-05)
+
+Use lossless culture-specific decimal text and a native32-character Entry; refuse
+inexact decimal parsing before the existing0..100 bound can hide rounded input.
+29new/22baseline failures and final29+4affected selected cases, original native editor
+bound text/memory-only apply/refusal/full20source equality and strict packages pass.
+No native Save/financial/real-exit replay; source and emulator preservation are exact
+within the declared sets. See [scoped evidence](quality/exact-account-rate-editor.md).
+Complete1f2509dd remains prepared; D842 Main and pending D838 authority are preserved.
+Overall goal and wider fault/performance/security/platform/provider gates stay open.

@@ -1,5 +1,12 @@
 # 03 – UX design
 
+D-843: loan/lent rate inputs retain every stored decimal digit and its original culture.
+The original Entry now accommodates the full canonical decimal text; an inexact typed
+rate is rejected with the existing validation feedback, never silently rounded into
+range. [Scoped original-editor evidence](quality/exact-account-rate-editor.md) covers
+native bound text and memory-only apply/refusal, not a new financial Save.
+
+
 ## 1. Principles
 
 Simple by default, power on demand (PR-04, UX-01); numbers are always explainable (REP-01); never shame the user

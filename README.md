@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D843 exact account-rate editor](src/Apps/Zanance/docs/quality/exact-account-rate-editor.md) preserves every stored decimal digit and refuses silently rounded inputs.29new+4affected selected cases and an original native editor check pass without Save; complete1f2509dd is prepared, not on Main. Retained emulator/evidence and broader open gates remain.
+
 [D840 exact monthly interest](src/Apps/Zanance/docs/quality/exact-monthly-loan-interest.md) corrects artificial half-unit rounding and a spurious
 loan-estimate month.19 selected host cases and one original Android ready schedule retain
 the declared source; [D842](src/Apps/Zanance/docs/quality/current-interest-arm64-main-adoption.md) now adopts complete22a3f00a on Main5939 after physical ARM64 qualification. Broader gates stay open.

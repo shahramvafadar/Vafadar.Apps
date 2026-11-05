@@ -11,6 +11,26 @@ public sealed partial class AccountFormModel
     private bool _openingContextError, _installmentContextError;
     private CultureInfo? _rateCulture;
     private long _rateRevision;
+    /// <summary>Refuses decimal parser rounding before enforcing the existing percentage range.</summary>
+    private static bool TryParseExactRate(string text, out decimal rate)
+    {
+        if (!decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out rate)
+            || rate > 100) return false;
+        // Decimal.TryParse can silently round excess significant digits, including a value above 100
+        // down to 100. Compare exact fixed-point meanings, allowing redundant leading/trailing zeros.
+        return CanonicalRate(text) == CanonicalRate(rate.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Normalizes only redundant zeros in an already validated unsigned fixed-point number.</summary>
+    private static string CanonicalRate(string text)
+    {
+        var separator = text.IndexOf('.');
+        var whole = (separator < 0 ? text : text[..separator]).TrimStart('0');
+        if (whole.Length == 0) whole = "0";
+        var fraction = separator < 0 ? string.Empty : text[(separator + 1)..].TrimEnd('0');
+        return fraction.Length == 0 ? whole : $"{whole}.{fraction}";
+    }
+
     private CultureInfo InputCulture => _localization?.CurrentCulture ?? CultureInfo.CurrentCulture;
     /// <summary>Gets the historical opening input's independent original unit.</summary>
     public string OpeningUnitName => _openingMoney.UnitName(CurrencyCode);

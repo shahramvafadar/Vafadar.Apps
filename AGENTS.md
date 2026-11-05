@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-843 - Exact account-rate form and retained emulator (2026-11-05)
+
+Correct ten-fraction loaded-rate rounding/native eight-character truncation and
+inexact Decimal.TryParse acceptance before range check.29new baseline22fail and
+final29new+4directly affected cases pass; strict Windows/fullOffline384/408/1608/
+private192/204/804 and nine actual AOT bindings pass. Original AccountEditorPage in
+21943/UID10239 loads one zero-opening metadata loan, native full text/MaxLength32;
+one detached name-only apply preserves decimal bits and one native raw above100
+refuses before target mutation. No native Save/financial/auth/photo/R13 read occurs.
+Full20typed source equal, original Onboarding restored and only fresh UID10239
+retires; original AVD/packages/boot/OS/locale key/geometry/reverse/shell exact.
+Four standard Clean profiles pass, no supplemental/frozen action; used artifacts/
+source/failures retained. Shipping1f2509dd prepared, not Main; last dated Main remains
+D8425939/22a, not fresh liveness/private-source proof. D842 sole CI main/CodeQL both
+in_progress; no second request. D838 pending/D841 actual unexecuted/D809 unknown/
+D833 source protected; broader gates and overall goal active. See
+`src/Apps/Zanance/docs/quality/exact-account-rate-editor.md`.
+
+
 ## D-842 - Current interest ARM64 and physical Main adoption (2026-11-05)
 
 Actual reserved/unlocked Samsung36/ARM64 Main27284/4a72373a owned Home baseline has
