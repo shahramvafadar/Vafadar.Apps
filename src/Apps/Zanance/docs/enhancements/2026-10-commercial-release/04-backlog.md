@@ -1,5 +1,9 @@
 # 04 – Canonical backlog (commercial release)
 
+[D877 completed-net reader cost](../../quality/current-completed-net-reader-cost.md)
+finishes descriptive24batch evidence without old-success/financial replay. Correctness
+remains; original signed-earmark funding/UI reproduction and broader gates are ready.
+
 [D876 current completed-net ARM64/Main](../../quality/current-completed-net-arm64-main.md)
 finishes current54ARM64/original goal and no-reset Main9535/acf7d16d public adoption.
 Initial Preparing16 is not a pass; actualReady141exact. Reader cost/broader gates remain.

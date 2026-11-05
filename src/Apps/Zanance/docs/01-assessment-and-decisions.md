@@ -1,5 +1,20 @@
 # 01 – Assessment and decision log
 
+## D-877 - Current completed-net reader component cost
+
+D877 describes current completed Balance/three GoalTrend batch costs on one actual
+.NET10.0.14/X64/PID82164:24new10k/100k/1or20or200group shapes, seven alternating
+pairs/three calls, full32ledger/15holding input where present and complete ordered goal/
+period outputs exact. Original row/tag ownership and336raw samples/full inputs retained;
+24private audits, not new product tests/old54replay. Historical reference is disqualified
+for reversal; wrapper/Core placement prevents exclusive Int128 causal claims. Some
+large goal batches cost more; no candidate/guard relaxation/Android or whole Home speed
+acceptance. Strict private build/one Clean pass, no product/full-build/device/financial/
+auth/photo/frozen or supplemental action. Next ready source question is raw signed
+earmark Sum in original funding/UI, requiring actual reproduction first. Main9535/acf
+remains dated D876, original fault/D838/broader gates and overall goal active.
+[One-process exact-output component costs](quality/current-completed-net-reader-cost.md).
+
 ## D-876 - Current completed-net ARM64 and complete Main
 
 D876 qualifies only current D875completed-net54 and original GoalDetail on actual

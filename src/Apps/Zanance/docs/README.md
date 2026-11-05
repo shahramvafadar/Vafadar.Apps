@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D877 completed-net reader cost](quality/current-completed-net-reader-cost.md)
+finishes24new descriptive batch workloads with full inputs/outputs exact; correctness
+stays. Original signed-earmark funding/UI aggregation is the next source question.
+
 [D876 current completed-net ARM64/Main](quality/current-completed-net-arm64-main.md)
 qualifies current54/actual GoalDetail and adopts existing completeacf7d16d once as
 Main9535; Preparing16 is disqualified, actualReady141/public/OS exact. Cost/gates remain.

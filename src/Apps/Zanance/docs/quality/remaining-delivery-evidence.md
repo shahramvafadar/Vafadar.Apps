@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D877 completed-net reader cost](current-completed-net-reader-cost.md)
+closes the named descriptive cost condition only,24new batches/full source/output exact.
+No speed or reversal acceptance. Next ready source question is original signed-earmark
+funding/UI aggregation; reproduce first, with original fault/D838/broader gates open.
+
 [D876 current completed-net ARM64/Main](current-completed-net-arm64-main.md)
 closes current D875 missing ARM64/public adoption:54current/original GoalDetail/source20
 exact, one existing fullacf7d16d adoption as Main9535 and actualReady141raw/public/OS
