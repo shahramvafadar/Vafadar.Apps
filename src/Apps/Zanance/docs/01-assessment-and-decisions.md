@@ -1,5 +1,22 @@
 # 01 – Assessment and decision log
 
+## D-879 - Current signed-earmark ARM64 and complete Main
+
+D879 qualifies only current D878 signed-earmark63 and original detail/refusal/editor/
+rawdraft on Samsung ARM64, fresh UID10423/PID17682; typed source20 exact, five
+fictitious rows/ledger0, three full native captions/no ellipsis. No host/x64/old54 or
+successful financial/auth/photo replay. Strictprivate192AOT204ELF804staticLOAD/offline/
+v2v3/ZIPCRC/six source/three own-AOT bindings pass. Only freshUID retires; normal return
+keeps Main9535/public/OS exact. Existing qualified full38d2ba16 adopts once without
+reset as Main19466/UID10380/CE155299/DE154603; first Ready141/all raw attributes/order
+exact, no transition/reload/relaunch rescue. Three original packages/grants/OS/locale-
+key/boot/geometry/reverse match except expected APK/PID. Two XML103864bytes hash-retire/
+local raw retained; one private standard Clean/no supplementary/frozen/R13/reset.
+Product/Windows/full-shipping/old successful suite not repeated. Private Main data/key,
+original fault/D838pending/D841unexecuted/performance/broader gates remain; separate
+eligible-income reproduction is next ready independent work and overall goal active.
+[Current ARM64 and original Main preservation](quality/current-signed-earmark-arm64-main.md).
+
 ## D-878 - Exact signed earmark net readers
 
 D878 fixes actual supported signed-earmark net failures with one checked Int128/final

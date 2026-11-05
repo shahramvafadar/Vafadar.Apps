@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D879 current signed-earmark ARM64/Main](quality/current-signed-earmark-arm64-main.md)
+closes missing current63/original goal pages and existing full38d2ba16 no-reset
+adoption as Main19466/Ready141rawexact. Independent source/broader gates remain.
+
 [D878 signed earmark net readers](quality/signed-earmark-net-readers.md)
 finishes the original funding/detail/editor correction:63newCore/3related/two original
 host flows and current63native/source20exact, with no successful financial replay.

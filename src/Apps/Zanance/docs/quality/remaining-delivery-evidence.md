@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D879 current signed-earmark ARM64/Main](current-signed-earmark-arm64-main.md)
+closes D878 missing current63/original detail/editor platform condition and existing
+full38d2ba16 no-reset adoption as Main19466, first Ready141rawexact/public/OS exact.
+No old-success/financial replay; eligible-income source reproduction is next ready
+work, while original fault/D838pending and broader gates/goal remain open.
+
 [D878 signed earmark net readers](signed-earmark-net-readers.md)
 closes actual original funding/account/detail/editor failures; checked final limits
 and writers remain.63newCore/3related/two host flows and current native63/original

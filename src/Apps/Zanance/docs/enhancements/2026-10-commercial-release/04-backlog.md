@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D879 current signed-earmark ARM64/Main](../../quality/current-signed-earmark-arm64-main.md)
+finishes current63/original goal pages and existing full38d2ba16 no-reset Main19466
+adoption with first Ready141/public/OS exact. Only freshUID retires; no host/full-build/
+financial replay. Separate eligible-income source reproduction and broader gates remain.
+
 [D878 signed earmark net readers](../../quality/signed-earmark-net-readers.md)
 finishes the coherent original reader/UI repair without financial replay.63newCore,
 3related, two original host flows and current63native/original pages/source20exact
