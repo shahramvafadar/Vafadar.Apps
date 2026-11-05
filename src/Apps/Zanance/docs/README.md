@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D883 physical original income-share preview](quality/physical-original-income-share-preview.md)
+finishes the missing Samsung counterpart to D882 with full original caption/draft/
+source20 exact; Main23260/public/OS preserved without upgrade. Broader gates remain.
+
 [D882 original income-share preview](quality/original-income-share-preview.md)
 closes the missing host/x64 original caller/read/draft condition with full native
 caption/source20 exact, one scroll and no financial Save/Core replay. Broader gates remain.

@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D883 physical original income-share preview](physical-original-income-share-preview.md)
+closes the missing Samsung original caller/read/draft condition, completing D882/D883
+finite preview evidence. Only freshUID retires; Main23260/public/OS exact, no upgrade/
+old-test/financial replay. Original Q02/cold/whole performance/fault/D838/broader gates
+remain separate ready work and dependencies; overall goal stays active.
+
 [D882 original income-share preview](original-income-share-preview.md)
 closes original previous-closed-month caller integration on host/x64: netMax/three rows/
 10percent suggestion, native visibility and unsaved note/source20 exact. Initial scale

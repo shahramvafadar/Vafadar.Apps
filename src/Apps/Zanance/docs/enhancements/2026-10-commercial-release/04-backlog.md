@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D883 physical original income-share preview](../../quality/physical-original-income-share-preview.md)
+finishes the Samsung counterpart to D882 with actual original preview/draft/source20
+exact and freshUID retirement; Main23260/public/OS preserved without upgrade. Q02/cold/
+whole-performance/original-fault/broader requirements remain open, no financial replay.
+
 [D882 original income-share preview](../../quality/original-income-share-preview.md)
 finishes original host/x64 read/preview/draft integration with exact source and full
 native caption after one original scroll, no financial Save/Core replay. Physical
