@@ -1,5 +1,10 @@
 # 08 – Release checklist (first public release)
 
+D-863: [exact original quantity/mass](quality/quantity-raw-and-mass-boundaries.md)
+refuses erased raw fractions and preserves supported scaled mass/purity.20new host
+cases in18+2oracle lineage/14related and20 original final-native calculations pass,
+source20/A/E/S0 exact; same startup PID continues, broader gates remain separate.
+
 D-862: [exact wealth adjustment cancellation](quality/wealth-adjustment-cancellation.md)
 fixes four actual representable-correction failures without weakening chronological
 balances.8new+2related selected host cases and8 original Android calculations pass;

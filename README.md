@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D863 exact quantity/mass](src/Apps/Zanance/docs/quality/quantity-raw-and-mass-boundaries.md) refuses rounded-away input fractions and preserves representable derived mass/fineness;20new host cases in18+2lineage/14related and20 original Android calculations pass without financial preparation. Fulla214b104 is prepared, not Main.
+
 [D862 exact wealth corrections](src/Apps/Zanance/docs/quality/wealth-adjustment-cancellation.md) preserves representable adjustment cancellation while retaining invalid-balance refusal;8new+2related host cases and8 original Android calculations pass without financial preparation. Fullbcd4b1e3 is prepared, not Main.
 
 [D861 current Main adoption](src/Apps/Zanance/docs/quality/current-money-corrections-main-adoption.md) applies existing completee848d7c1 once without reset as Main10720, carrying capacity/liquidity/KPI corrections; fresh Home141raw/public state/OS/locale/reverse match without calculation or financial replay.

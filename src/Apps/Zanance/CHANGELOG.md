@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-863: reject quantity fractions that were rounded away during input parsing, and calculate supported weights and fine-metal masses without intermediate overflow; preserve final limits and unknown values.
+
 - D-862: keep a valid wealth-change explanation available when large positive and negative adjustments cancel; continue refusing invalid balances and unsupported final amounts.
 
 - D-859: preserve exact even medians and refuse wrapped KPI surplus, spending change, essential-month and installment totals without changing financial data or classification.

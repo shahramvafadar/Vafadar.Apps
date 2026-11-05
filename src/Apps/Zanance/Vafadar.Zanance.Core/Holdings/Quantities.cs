@@ -72,13 +72,30 @@ public static class Quantities
             outsideRange = true;
             return false;
         }
-        var exact = value * factor;
-        if (exact != decimal.Truncate(exact))
+        // Decimal parsing can round a nonzero submitted tail away. Inspect the normalized original digits (D-863).
+        var scale = unit == QuantityUnit.Kilogram ? 6 : 3;
+        var point = cleaned.IndexOf('.');
+        var whole = point < 0 ? cleaned : cleaned[..point];
+        var fraction = point < 0 ? string.Empty : cleaned[(point + 1)..];
+        var storedDigits = (whole + fraction[..Math.Min(scale, fraction.Length)].PadRight(scale, '0')).TrimStart('0');
+        long units = 0;
+        if (storedDigits.Length > 0 && !long.TryParse(storedDigits, NumberStyles.None, CultureInfo.InvariantCulture, out units))
+        {
+            outsideRange = true;
+            return false;
+        }
+        var hasSubunitTail = fraction.TrimEnd('0').Length > scale;
+        if (units == long.MaxValue && hasSubunitTail)
+        {
+            outsideRange = true;
+            return false;
+        }
+        if (hasSubunitTail)
         {
             return false;
         }
 
-        quantity = (long)exact;
+        quantity = units;
         return type.Dimension == AssetDimension.Mass || type.Divisible || quantity % PerGramOrUnit == 0;
     }
 
@@ -172,14 +189,15 @@ public static class Quantities
             return quantity;
         }
 
-        return type.UnitWeightMg is { } unitWeight ? checked(quantity * unitWeight / PerGramOrUnit) : null;
+        // The scaled intermediate may exceed long even when the completed mass fits (D-863).
+        return type.UnitWeightMg is { } unitWeight ? checked((long)((Int128)quantity * unitWeight / PerGramOrUnit)) : null;
     }
 
     /// <summary>Returns the fine-metal mass in mg (mass × purity), or <see langword="null"/> without purity or weight.</summary>
     public static long? FineMassMg(long quantity, AssetType type)
     {
         ArgumentNullException.ThrowIfNull(type);
-        return type.PurityPer10000 is { } purity && MassMg(quantity, type) is { } mass ? checked(mass * purity / 10_000) : null;
+        return type.PurityPer10000 is { } purity && MassMg(quantity, type) is { } mass ? checked((long)((Int128)mass * purity / 10_000)) : null;
     }
 }
 

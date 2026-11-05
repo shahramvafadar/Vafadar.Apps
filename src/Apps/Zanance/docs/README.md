@@ -1,5 +1,17 @@
 # Zanance – design documentation
 
+[Exact quantity/mass D863](quality/quantity-raw-and-mass-boundaries.md):
+D863 preserves original normalized quantity digits and widens only mass/purity
+products before original truncating division/final checked narrowing. Twelve actual
+baseline failures lead to20new host cases in18retained+2corrected-oracle lineage,
+14related selected host cases and20 original Android calculations, UID10251/PID31691,
+source20/A/E/S0 exact. Wrong expectation constants and initial StartupPage observation
+timeout remain explicit; same PID continues without install/launch/check replay.
+Strict Windows/full offline3844081608/private192204804/nine own-AOT bindings pass;
+only freshUID retires, original5606 public state exact, four standard Cleans and no
+XML/supplemental/frozen/phone/R13/financial action. Shippinga214b104 is prepared, not
+Main;10720/e848 remains dated D861. Original fault/D838/broader gates and goal remain.
+
 [Exact wealth correction D862](quality/wealth-adjustment-cancellation.md):
 D862 fixes four actual failures of representable wealth corrections: the inner
 adjustment-only sum stays Int128 until the existing checked final publication.
