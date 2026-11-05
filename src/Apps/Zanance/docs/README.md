@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D872 current holding chronology cost](quality/current-holding-chronology-cost.md)
+closes descriptive12shape/36measurement cost evidence only; correct chronological
+behavior remains. A fresh correctness-preserving optimization is next, not rollback.
+
 [D871 current chronology/preview ARM64/Main](quality/current-chronology-preview-arm64-main.md)
 qualifies only current Core17/preview3 and adopts existing completef342113f once
 as Main32234 with raw Home141/public/OS exact. No old tests or financial replay.

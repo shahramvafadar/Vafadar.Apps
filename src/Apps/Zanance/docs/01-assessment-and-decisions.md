@@ -1,5 +1,20 @@
 # 01 – Assessment and decision log
 
+## D-872 - Current holding chronology component cost
+
+D872 describes current chronological Quantity/Positions/combined cost in one actual
+.NET10.0.14/X64/PID72816 across12benign10k/100k,1/20/200type/order shapes;
+seven alternating pairs/three calls and separate mode warmup preserve full15field JSON,
+original row reference/order/multiplicity and ordered outputs.36measurements/raw pairs
+are retained, not36product tests. Pre-D869 raw source is a disqualified correctness
+reference, never reversal candidate. Current allocation/latency cost is material;
+no optimization/gate relaxation/whole Home or Android speed acceptance. Strict private
+build/one standard Clean pass; no old successful suite/full build/financial/auth/photo/
+device/R13/frozen or supplemental action. Main32234/f342113f remains dated D871 only.
+Next is a fresh correctness-preserving candidate with fixed guards; original fault/
+D838/broader gates remain and overall goal stays active.
+[One-process descriptive cost evidence](quality/current-holding-chronology-cost.md).
+
 ## D-871 - Current chronology/preview ARM64 and complete Main
 
 D871 qualifies only current D869Core17 and D870original-preview3 on actual Samsung

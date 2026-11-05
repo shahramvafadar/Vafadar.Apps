@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D872 current holding chronology cost](current-holding-chronology-cost.md)
+completes the named descriptive component measurement: one process/12shapes/36modes,
+full input and ordered outputs retained. Cost is material; next is a fresh fixed-guard
+correctness-preserving candidate, with original fault/D838/broader gates still open.
+
 [D871 current chronology/preview ARM64/Main](current-chronology-preview-arm64-main.md)
 closes the missing D869/D870 ARM64/public adoption condition: Core17/preview3 and
 existing fullf342113f one no-reset adoption as Main32234, ready141/public/OS exact.
