@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D851 holdings CSV](src/Apps/Zanance/docs/quality/holdings-csv-exact-numeric-boundaries.md) fixes numeric overflow and silent rounding while preserving exact stored units, original row errors and financial data.26 selected host cases and24 original Android calculations pass; shipping016bfff9 is prepared.
+
 [D850 supported runtimes](src/Apps/Zanance/docs/quality/goal-validation-supported-runtimes.md) adds72 finite current goal-caption contexts on API24/API35 ps16k at OS200%; source and original emulator state stay exact. This does not qualify ARM64 hardware16KiB.
 
 [D848 retained goal validation](src/Apps/Zanance/docs/quality/goal-validation-language-native-scale.md) updates existing field errors after a language change without another Save. The changed percent-note/error cluster has36 finite native OS200% contexts; source and prior emulator evidence stay preserved. [D849](src/Apps/Zanance/docs/quality/current-physical-main-adoption-d849.md) now adopts904c1f91 as Main20144 without reset; wider gates remain open.

@@ -13989,3 +13989,18 @@ shared5038 preserved and one private standard Clean passes. No phone/R13/old-sui
 replay or product source change. D838 pending/D841 unexecuted/broader gates remain;
 Main20144 is only the dated D849 checkpoint and the overall goal stays active.
 See [finite runtime proof](quality/goal-validation-supported-runtimes.md).
+
+## D-851 - Exact holdings CSV stored units (2026-11-05)
+
+D851 fixes four actual decimal-overflow and five silent-rounding failures in the
+holdings CSV reader. Quantities and prices use exact positive stored-unit parsing
+with original grammar/currency precision; invalid rows retain Quantity/Amount errors.
+24new+2affected selected host cases and24 original Android calculations pass;
+full20typed source/A/E/S0 remain exact, no Import/Save/writer or financial replay.
+Strict Windows/fullOffline384AOT408ELF1608LOAD/private192204804 and nine own-AOT
+bindings pass. Only freshUID10243/two XML27210bytes and four standard Cleans retire,
+original5606 public state exact; no phone/R13/runtime/GC/frozen/supplementary action.
+Prepared shipping016bfff9 is not Main; Main20144/904 is only the dated D849 checkpoint.
+D838 pending/D841 unexecuted/original fault/whole performance/broader gates and active
+overall goal remain; no old success is reopened.
+See [finite original-reader evidence](quality/holdings-csv-exact-numeric-boundaries.md).

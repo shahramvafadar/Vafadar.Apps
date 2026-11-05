@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-850)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-851)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1235,6 +1235,8 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
+
+Latest reader correction: [D851](../quality/holdings-csv-exact-numeric-boundaries.md) refuses overflowing or silently rounded holdings CSV quantities/prices as original row errors;26 selected host cases and24 original Android calculations pass without Import/financial writes.
 
 Latest supported-runtime update: [D850](../quality/goal-validation-supported-runtimes.md) qualifies72 finite current goal caption contexts on API24/API35 ps16k at OS200%, with source equality and no financial operation; hardware16KiB and broader gates remain open.
 

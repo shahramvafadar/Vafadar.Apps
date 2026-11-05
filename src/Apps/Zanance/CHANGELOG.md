@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-851: refuse overflowing or overprecise holdings CSV quantities and prices as row errors instead of throwing or silently rounding; retain exact currency/storage units.
+
 - D-848: update existing goal field-validation messages when the language changes, preserving drafts and unit-review reasons without another Save.
 
 - D-847: refuse silently rounded received decimal values before synchronization decisions and review exact scientific-rate notation without changing recorded finances.

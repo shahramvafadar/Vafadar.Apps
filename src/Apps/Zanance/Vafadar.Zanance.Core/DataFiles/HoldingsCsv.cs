@@ -365,23 +365,7 @@ public static class HoldingsCsv
     // Base units (mg or thousandths) as grams or units with three decimals.
     private static string Quantity(long baseUnits) => (baseUnits / (decimal)Quantities.PerGramOrUnit).ToString("0.000", CultureInfo.InvariantCulture);
 
-    private static bool TryQuantity(string text, out long baseUnits)
-    {
-        baseUnits = 0;
-        if (!decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value) || value <= 0)
-        {
-            return false;
-        }
-
-        var exact = value * Quantities.PerGramOrUnit;
-        if (exact != decimal.Truncate(exact) || exact > long.MaxValue)
-        {
-            return false;
-        }
-
-        baseUnits = (long)exact;
-        return true;
-    }
+    private static bool TryQuantity(string text, out long baseUnits) => TryScaledPositive(text, 3, out baseUnits);
 
     private static string Amount(long minor, string currencyCode)
     {
@@ -398,21 +382,22 @@ public static class HoldingsCsv
 
     private static bool TryPricePerUnit(string text, string currencyCode, out long milli)
     {
-        milli = 0;
         var currency = Currencies.TryGet(currencyCode, out var known) ? known : new Currency(currencyCode, 2);
-        if (!decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var value) || value <= 0)
-        {
-            return false;
-        }
+        return TryScaledPositive(text, currency.MinorDigits + 3, out milli);
+    }
 
-        var exact = value * currency.MinorFactor * 1_000m;
-        if (exact != decimal.Truncate(exact) || exact > long.MaxValue)
-        {
-            return false;
-        }
-
-        milli = (long)exact;
-        return true;
+    /// <summary>Reads the original invariant fixed-point syntax into exact positive stored units.</summary>
+    private static bool TryScaledPositive(string text, int scale, out long units)
+    {
+        units = 0;
+        // Preserve the original CSV grammar, but never multiply a rounded decimal from untrusted text (D-851).
+        if (!decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out _)) return false;
+        var point = text.IndexOf('.');
+        var whole = (point < 0 ? text : text[..point]).TrimStart('0');
+        var fraction = point < 0 ? string.Empty : text[(point + 1)..].TrimEnd('0');
+        if (fraction.Length > scale) return false;
+        var digits = (whole + fraction.PadRight(scale, '0')).TrimStart('0');
+        return long.TryParse(digits, NumberStyles.None, CultureInfo.InvariantCulture, out units) && units > 0;
     }
 
     private static bool TryEnum<T>(string text, out T value)
