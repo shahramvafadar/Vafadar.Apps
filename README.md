@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D854 exact transaction nets](src/Apps/Zanance/docs/quality/transaction-net-failure-boundaries.md) fixes overflow/wrapped totals and covers original native filter failures.17 selected host cases pass; fixed cost gates fail6/16, so no speed acceptance is claimed. Preparedadef63e1 is not Main.
+
 [D853 current Main](src/Apps/Zanance/docs/quality/current-input-corrections-physical-adoption.md) now adopts the exact-input65523bd6 package as Main26327 without reset; UID/data inodes/five OS/public grants and all141raw Home nodes remain exact. Locale/reverse have no fresh pre-upgrade comparison.
 
 [D852 exact input readers](src/Apps/Zanance/docs/quality/csv-receipt-exact-amounts.md) completes CSV currency-precision and recognized receipt-number corrections:32 selected host cases/21 original Android checks, source equal and no financial writes.65523bd6 is prepared, not Main.

@@ -14032,3 +14032,22 @@ Private Main DB/key/source/whole-gate acceptance is not inferred. D607 terminal/
 returned/D838 pending/D841 unexecuted/original-fault/performance/broader gates and goal
 active remain. Existing authorized wireless5038 is used without start/reset/pair.
 See [finite public adoption](quality/current-input-corrections-physical-adoption.md).
+
+## D-854 - Exact net results and owner-bound filter failure (2026-11-05)
+
+D854 fixes seven actual net/signed-effect boundary failures: final transaction sums
+refuse overflow while exact wider cancellation preserves original rows/currency order.
+Original synchronous filter failures now use an owner/query-bound inline cover and
+retain accepted-operation feedback.12newCore+3new presentation+2affected selected
+host cases pass. NativeUID10245 lineage27402/27704/27956 preserves prior setup/Core
+successes:12 original calculations, initial A1/E2 failure cover, then only one new
+Expense2/full old-source equality and one actual Income chip produce a covered error;
+no financial Save/Import/auth/photo replay. Observer transient-VM and private-build
+failures remain.17host cases are not all final-native-binary observations. Fixed host
+cost16shapes fails6, worst latency+42.7283%; no second process/retune/native timing or
+performance acceptance. Final strict Windows/fullOffline384AOT408ELF1608LOAD/private
+192204804 and nine own-AOT bindings pass. Only freshUID retires, original5606 exact;
+seven standard Cleans, no XML/supplemental/frozen/phone/R13/runtime action. Shipping
+adef63e1 prepared, not Main;26327/655 is dated D853. Original fault/whole performance/
+security/platform gates and the active goal remain open.
+See [actual correctness and refused cost evidence](quality/transaction-net-failure-boundaries.md).

@@ -117,7 +117,7 @@ public static class EntrySearch
         return entry.Kind switch
         {
             EntryKind.Income or EntryKind.Refund => entry.Amount,
-            EntryKind.Expense or EntryKind.IncomeReversal => -entry.Amount,
+            EntryKind.Expense or EntryKind.IncomeReversal => checked(-entry.Amount),
             _ => 0,
         };
     }
@@ -125,15 +125,32 @@ public static class EntrySearch
     private static SortedDictionary<string, long> DayNet(IEnumerable<LedgerEntry> entries, IReadOnlyDictionary<Guid, Account> accounts)
     {
         var net = new SortedDictionary<string, long>(StringComparer.Ordinal);
+        Dictionary<string, Int128>? wide = null;
         foreach (var entry in entries)
         {
             var result = SignedResult(entry);
             if (result != 0 && accounts.TryGetValue(entry.AccountId, out var account))
             {
-                net[account.CurrencyCode] = net.GetValueOrDefault(account.CurrencyCode) + result;
+                var currency = account.CurrencyCode;
+                if (wide is not null && wide.TryGetValue(currency, out var retained))
+                {
+                    wide[currency] = checked(retained + result);
+                    continue;
+                }
+
+                var current = net.GetValueOrDefault(currency);
+                try { net[currency] = checked(current + result); }
+                catch (OverflowException)
+                {
+                    // D-854: promote only an overflowing currency so later refunds/reversals may cancel exactly.
+                    // Ordinary reads retain their existing result dictionary without another allocated accumulator.
+                    (wide ??= new(StringComparer.Ordinal))[currency] = (Int128)current + result;
+                }
             }
         }
 
+        if (wide is not null)
+            foreach (var pair in wide) net[pair.Key] = checked((long)pair.Value);
         return net;
     }
 

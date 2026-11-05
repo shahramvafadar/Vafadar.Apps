@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-853)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-854)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1235,6 +1235,8 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
+
+Latest net correction: [D854](../quality/transaction-net-failure-boundaries.md) rejects unrepresentable net results and covers synchronous filter failures, with17 selected host cases and distinct original Android Core/read/filter evidence. Fixed cost gates fail6/16; whole performance remains open and preparedadef63e1 is not Main.
 
 Latest exact-input correction: [D852](../quality/csv-receipt-exact-amounts.md) completes CSV currency-precision and recognized receipt-number guards with32 selected host cases and21 original Android checks, no Import/financial/OCR-image replay; larger acceptance gates remain.
 

@@ -43,6 +43,14 @@ public sealed partial class SnapshotLoadState : ObservableObject
         return completion.Task;
     }
 
+    /// <summary>Covers a completed snapshot when its current read-only filter cannot be presented safely.</summary>
+    public void CoverFailedPresentation()
+    {
+        // A filter failure must not replace the ownership or completion of an already pending source read (D-854).
+        if (!HasLoaded || IsLoading) throw new InvalidOperationException("Only a completed original snapshot may fail presentation.");
+        HasFailed = true;
+    }
+
     private async Task ExecuteAsync(Func<Task> read, Action present, TaskCompletionSource completion)
     {
         Exception? failure = null;

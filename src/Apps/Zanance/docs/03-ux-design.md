@@ -1,5 +1,10 @@
 # 03 – UX design
 
+D-854: an unrepresentable transaction total uses the existing inline error cover.
+A failed retained filter keeps its selection and cached source, hides the results and
+disables Add without replaying a write; original accepted-operation feedback remains.
+[Native read/filter proof and cost limits](quality/transaction-net-failure-boundaries.md).
+
 D-852: existing CSV amount errors also refuse a nonzero tail hidden by decimal parsing.
 The recognized receipt-number helper preserves exact evidence; oversized totals still
 require the same original review. No layout, merchant/date or confirmation change.

@@ -1,5 +1,23 @@
 # 07 – Acceptance test plan
 
+[Exact transaction nets D854](quality/transaction-net-failure-boundaries.md) records:
+D854 fixes seven actual net/signed-effect boundary failures: final transaction sums
+refuse overflow while exact wider cancellation preserves original rows/currency order.
+Original synchronous filter failures now use an owner/query-bound inline cover and
+retain accepted-operation feedback.12newCore+3new presentation+2affected selected
+host cases pass. NativeUID10245 lineage27402/27704/27956 preserves prior setup/Core
+successes:12 original calculations, initial A1/E2 failure cover, then only one new
+Expense2/full old-source equality and one actual Income chip produce a covered error;
+no financial Save/Import/auth/photo replay. Observer transient-VM and private-build
+failures remain.17host cases are not all final-native-binary observations. Fixed host
+cost16shapes fails6, worst latency+42.7283%; no second process/retune/native timing or
+performance acceptance. Final strict Windows/fullOffline384AOT408ELF1608LOAD/private
+192204804 and nine own-AOT bindings pass. Only freshUID retires, original5606 exact;
+seven standard Cleans, no XML/supplemental/frozen/phone/R13/runtime action. Shipping
+adef63e1 prepared, not Main;26327/655 is dated D853. Original fault/whole performance/
+security/platform gates and the active goal remain open.
+
+
 [Current input corrections on Main D853](quality/current-input-corrections-physical-adoption.md) records:
 D853 adopts the already-qualified complete65523bd6 once without reset on reserved
 unlocked Samsung, Main26327 from20144, carrying D851/D852 exact input corrections.

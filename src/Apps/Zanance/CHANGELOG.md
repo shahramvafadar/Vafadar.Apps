@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-854: refuse unrepresentable transaction net results while preserving exact completed cancellation; cover failed read-only filters inline instead of letting an exception escape the UI callback.
+
 - D-852: preserve submitted CSV monetary precision and recognized receipt-number magnitude; reject discarded nonzero digits while retaining original exact values and review policies.
 
 - D-851: refuse overflowing or overprecise holdings CSV quantities and prices as row errors instead of throwing or silently rounding; retain exact currency/storage units.

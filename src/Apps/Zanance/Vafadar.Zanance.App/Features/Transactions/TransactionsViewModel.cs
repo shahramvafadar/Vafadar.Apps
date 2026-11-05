@@ -296,10 +296,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         {
             // Appearance and retained navigation share one failing task; the page owns one inline error, not two native alerts.
             if (_active && revision == _publicationRevision && display == DisplayIdentity() && ReferenceEquals(owner, Loading))
-                ReadFeedback = _quick.IsBusy && _quick.Accepted || _bulk.IsBusy && _bulk.Accepted
-                    || _undoAction.IsExecuting && Undo.LastAccepted
-                    ? _translator["Occurrence_SavedRefreshFailed"]
-                    : CommercialFailureMessage.OrFallback(exception, _translator, "Error_Unexpected");
+                PublishReadFailure(exception);
         }
     }
 
@@ -405,8 +402,26 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
             return;
         }
 
-        PresentSnapshot();
+        var owner = Loading; var published = _published; var revision = _publicationRevision; var query = _queryRevision;
+        try { PresentSnapshot(); }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            // D-854: synchronous filter callbacks need the same inline failure cover as an appearance read.
+            if (_active && revision == _publicationRevision && query == _queryRevision
+                && ReferenceEquals(owner, Loading) && ReferenceEquals(published, _published))
+            {
+                owner.CoverFailedPresentation();
+                PublishReadFailure(exception);
+            }
+        }
     }
+
+    /// <summary>Retains accepted-operation receipts when either a source read or its current filter cannot be shown.</summary>
+    private void PublishReadFailure(Exception exception) =>
+        ReadFeedback = _quick.IsBusy && _quick.Accepted || _bulk.IsBusy && _bulk.Accepted
+            || _undoAction.IsExecuting && Undo.LastAccepted
+            ? _translator["Occurrence_SavedRefreshFailed"]
+            : CommercialFailureMessage.OrFallback(exception, _translator, "Error_Unexpected");
 
     // Publishing runs while the page remains covered; property changes cannot start a partial filter refresh.
     private void PresentSnapshot()
