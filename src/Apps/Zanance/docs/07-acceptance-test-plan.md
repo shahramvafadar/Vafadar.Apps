@@ -1,5 +1,12 @@
 # 07 – Acceptance test plan
 
+[D837 actual ARM64 annuity qualification](quality/physical-arm64-annuity-qualification.md)
+records157 original Core outcomes/two expected refusals on reserved Samsung without
+financial records or Main mutation. Only the fresh UID retires with exact public
+preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
+independent work and overall goal remain active. Broader gates stay open.
+
+
 Automated tests live in `test/Apps/Zanance/*` and carry the scenario id in their name or a `[Trait("AT", "AT-17")]`.
 Manual scenarios are executed on a real Android device with the **release** build (Gate 1B). The reference device and
 data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S14.

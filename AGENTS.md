@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-837 - Physical ARM64 scalar qualification and retained emulator (2026-11-05)
+
+Only the new hardware/ABI condition of D835's157 fictitious Core outcomes runs once:
+Samsung36/ARM64 PID29991/UID10415, all157/two expected refusals and ordered oracle
+match. SDK-only27/37/138/offline/nondebug/min36-v3/current actual Core AOT pass; no
+App/Data/MAUI/database/key/financial startup, host/x64/successful UI replay or product
+change. Single55.8607ms/824272bytes is not a benchmark or whole performance acceptance.
+Only fresh UID10415 retires; one normal return keeps Main27284 and exact public
+Zanance identities/settings/locale key presence/boot/geometry/reverse. Standard Clean
+109lines, no supplemental/frozen action. Existing D809 AVD/boot is available without
+restart/reset; no old source/provider/record/register read. D809 R13 terminal unknown
+and D833 UID10234 stay protected. D838 new-PC2f3f92 R13 proposal is pending separate
+owner authority; no actual interpretation executed. Independent work/goal remain
+active; broader fault/security/performance/platform/release gates remain open. See
+`src/Apps/Zanance/docs/quality/physical-arm64-annuity-qualification.md`.
+
+
 ## D-836 - Current complete physical Main adoption (2026-11-05)
 
 One exact qualified D8354a72373a no-reset install and one normal launcher adopt Main

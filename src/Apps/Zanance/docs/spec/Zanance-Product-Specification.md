@@ -1226,7 +1226,13 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-836)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-837)
+
+D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
+matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
+startup or new unit-test count. Fresh UID retires; Main/public state is preserved. D838
+new-PC R13 interpretation is proposed only; old terminal evidence and broader gates remain.
+
 
 Latest finite update: [D835 exact positive annuity](../quality/exact-positive-annuity-ceiling.md) records30 new/4 affected selected cases and157 Core Android scalar outcomes without financial records. This is not a current full-suite total. [D836](../quality/current-physical-main-adoption-d836.md) now adopts exact4a72373a as physical Main27284 with public identity/141node equality. D833 source equality and D834 original error-publication evidence stay bounded; no additional tests or private-source/fault/performance/platform acceptance is implied.
 

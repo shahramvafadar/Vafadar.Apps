@@ -1,5 +1,12 @@
 # 08 – Release checklist (first public release)
 
+[D837 actual ARM64 annuity qualification](quality/physical-arm64-annuity-qualification.md)
+records157 original Core outcomes/two expected refusals on reserved Samsung without
+financial records or Main mutation. Only the fresh UID retires with exact public
+preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
+independent work and overall goal remain active. Broader gates stay open.
+
+
 ## Product and data
 
 - [x] D-804 bounded original Android camera ownership: a competing acquisition cannot

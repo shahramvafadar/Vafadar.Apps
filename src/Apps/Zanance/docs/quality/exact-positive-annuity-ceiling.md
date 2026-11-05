@@ -118,3 +118,6 @@ continuous delivery goal remain open.
 Later [D836 physical adoption](current-physical-main-adoption-d836.md) installs this exact
 complete APK once without reset as Main27284 and preserves the141-node public Home.
 Its parent acceptance limits remain separate from this Core computation evidence.
+
+D837 later completes the previously uncovered [physical ARM64 condition](physical-arm64-annuity-qualification.md)
+with the same157 scalar oracle outcomes, no financial record or new product test count.

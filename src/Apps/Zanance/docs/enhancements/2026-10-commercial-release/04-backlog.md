@@ -1,5 +1,12 @@
 # 04 – Canonical backlog (commercial release)
 
+[D837 actual ARM64 annuity qualification](../../quality/physical-arm64-annuity-qualification.md)
+records157 original Core outcomes/two expected refusals on reserved Samsung without
+financial records or Main mutation. Only the fresh UID retires with exact public
+preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
+independent work and overall goal remain active. Broader gates stay open.
+
+
 **This file is the only place where the state of remaining Zanance work is tracked from 2026-10-07 on.**
 `05-phase-2-backlog.md` keeps the finished Phase 2A history and links here; the ZEX backlog keeps the finished ZEX
 stories, and its open stories continue here under the ids given below. Waves and sections:

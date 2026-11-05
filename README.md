@@ -1,5 +1,12 @@
 # Vafadar Apps
 
+[D837 actual ARM64 annuity qualification](src/Apps/Zanance/docs/quality/physical-arm64-annuity-qualification.md)
+records157 original Core outcomes/two expected refusals on reserved Samsung without
+financial records or Main mutation. Only the fresh UID retires with exact public
+preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
+independent work and overall goal remain active. Broader gates stay open.
+
+
 [![CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/ci.yml/badge.svg)](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/codeql.yml/badge.svg)](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/codeql.yml)
 
