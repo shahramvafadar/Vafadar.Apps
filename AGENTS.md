@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-889 - Completed-generation verified-owner handoff rejected (2026-11-05)
+
+Private Completed-at-entry same-verified-buffer handoff preserves original checks/
+connection disposal/wipe and persistent validator; original product unchanged.
+17new ownership controls and10actual hostSQLCipher4.5.2 controls pass in successive
+binaries, not27product tests. Fixed7pair/10k100k/.NET10.0.14/PID6864 comparison improves
+component latency49.3588/50.2127percent but allocation+17.0973/+17.7392percent fails
+fixed1percent ceiling. Terminal reject before second timing process/native/product:
+never retune/rescue/relax/replay it. Full typed synthetic source exact; no financial/
+old suite/auth/phone/emulator/frozen action. Three standard Cleans; source/raw failure/
+pairs preserved. Last retained5606UID10260/PID18459/source remains D888 historical,
+not fresh liveness; never reset/re-adopt/reseed. Continue other ready Home snapshot/
+projection/read-boundary development and bounded original-fault work; broader gates/
+goal active. See `src/Apps/Zanance/docs/quality/completed-generation-owner-handoff.md`.
+
 ## D-888 - Original protected startup subphases (2026-11-05)
 
 One new retained100k/200/1000 cold diagnostic completes:34outer markers count1,

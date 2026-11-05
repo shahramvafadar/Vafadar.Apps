@@ -1,5 +1,11 @@
 # 04 – Canonical backlog (commercial release)
 
+[D889 verified-owner handoff rejection](../../quality/completed-generation-owner-handoff.md)
+closes private Completed-only candidate:27new controls with lineage pass, latency
+49–50percent better but allocation17–18percent worse fails fixed1percent ceiling.
+No second timing process/native/product/rescue/retune; preserved source/pairs and
+3standard Cleans. Other independent Home/read/projection/fault work and goal active.
+
 [D888 protected startup subphases](../../quality/original-protected-startup-subphases.md)
 finishes internal protected-open evidence:92events/45pairs/34outer markers/health0,
 fullsource exact and existing-install route observed. Integrity4.345s/2.734s stays;

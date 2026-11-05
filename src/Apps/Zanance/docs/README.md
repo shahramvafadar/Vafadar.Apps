@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D889 verified-owner handoff rejection](quality/completed-generation-owner-handoff.md)
+closes a private candidate:27new scoped controls pass with lineage; component latency
+improves49–50percent but allocation+17–18percent fails fixed1percent. No native/product
+adoption or rescue; other independent development and broader gates remain active.
+
 [D888 protected startup subphases](quality/original-protected-startup-subphases.md)
 finishes one new internal diagnostic:92events/45pairs/health0/fullsource exact.
 Separate integrity spans4.345s/2.734s remain required; next guarded verified-owner

@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D889 verified-owner handoff rejection](completed-generation-owner-handoff.md)
+closes the Completed-only private candidate before native/product:17new ownership+
+10actual host-provider controls pass, but7paired10k/100k allocation+17–18percent
+fails fixed1percent despite component latency benefit49–50percent. No rescue/retune
+or old-success replay. Product/device unchanged; source/pairs preserved,3standard
+Cleans. Continue other ready Home snapshot/projection/read-boundary and bounded
+original-fault work, preserving retained source; broader gates/goal remain active.
+
 [D888 protected startup subphases](original-protected-startup-subphases.md)
 closes internal-boundary evidence on retained100k:92events/45pairs/34outer markers,
 health0/fullsource exact. ExistingInstallation rules out guessed new-install work;

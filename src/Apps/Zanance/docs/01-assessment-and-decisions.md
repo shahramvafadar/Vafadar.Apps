@@ -1,5 +1,16 @@
 # 01 – Assessment and decision log
 
+## D-889 - Completed-generation owner-handoff gate rejection
+
+A distinct private same-verified-owner prototype preserves all original checks,
+cleanup and non-Completed route.17new ownership+10actual hostSQLCipher controls pass
+with lineage;7pair10k/100k component latency improves49–50percent but allocation
+regresses17–18percent, failing the fixed1percent ceiling. Terminal reject before
+second timing process/native/product; no rescue/retune/old financial or suite replay.
+Three standard Cleans; source/pairs/refusals retained, no device/frozen action.
+Other ready independent work and overall goal remain active.
+[Actual controls, fixed gates and rejected candidate](quality/completed-generation-owner-handoff.md).
+
 ## D-888 - Original protected startup subphases
 
 One new retained-source diagnostic has34outer markers/92internal events/45pairs,
