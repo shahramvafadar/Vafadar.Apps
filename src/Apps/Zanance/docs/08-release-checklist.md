@@ -1,5 +1,11 @@
 # 08 – Release checklist (first public release)
 
+[D840 exact monthly loan interest](quality/exact-monthly-loan-interest.md) fixes ten observed artificial-midpoint
+failures;14new+5affected selected cases and one original Android single-row schedule
+with full20source equality pass. Complete22a3f00a is prepared, not on Main; broader
+gates and the active goal remain open. No financial/auth/photo success is replayed.
+
+
 [D837 actual ARM64 annuity qualification](quality/physical-arm64-annuity-qualification.md)
 records157 original Core outcomes/two expected refusals on reserved Samsung without
 financial records or Main mutation. Only the fresh UID retires with exact public

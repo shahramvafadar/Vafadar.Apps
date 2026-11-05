@@ -7,7 +7,7 @@ public static partial class LoanCalculator
     /// <summary>Rounds the original positive-rate nominal annuity up without floating-point cancellation or lost minor units.</summary>
     private static long AnnuityInstallment(long principal, decimal annualRatePercent, int months)
     {
-        var (p, q) = MonthlyAnnuityFraction(annualRatePercent);
+        var (p, q) = MonthlyRateFraction(annualRatePercent);
         // A finite positive-rate annuity is strictly above both principal/months and its initial monthly interest.
         var minimum = BigInteger.Max((BigInteger)principal / months + 1, principal * p / q + 1);
         if (minimum > long.MaxValue) { throw new OverflowException(); }
@@ -35,7 +35,7 @@ public static partial class LoanCalculator
     }
 
     /// <summary>Preserves every decimal coefficient/scale bit while converting annual percent into an exact monthly fraction.</summary>
-    private static (BigInteger Numerator, BigInteger Denominator) MonthlyAnnuityFraction(decimal annualRatePercent)
+    private static (BigInteger Numerator, BigInteger Denominator) MonthlyRateFraction(decimal annualRatePercent)
     {
         var bits = decimal.GetBits(annualRatePercent);
         // Decimal's coefficient words are unsigned; their signed array representation is not monetary arithmetic.

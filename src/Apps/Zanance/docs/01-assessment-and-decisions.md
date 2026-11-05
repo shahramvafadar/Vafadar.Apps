@@ -13859,3 +13859,12 @@ authentication, source/privateDB/key or successful route replay. No new test/bui
 This public adoption does not close private-source/calculation/fault/performance/security/
 accessibility/platform/provider/release parent gates. Continuous delivery stays active.
 See [finite evidence](quality/current-physical-main-adoption-d836.md).
+
+
+## D-840 - Exact monthly loan-interest rounding
+
+Monthly estimates use the exact entered decimal rate before applying the existing half-away
+minor-unit rule. A value strictly below a half unit must not gain a unit or another month.
+Original controls/layout/terms, principal-transfer and interest classification remain; no
+payment is posted by the preview. [Observed failures, correction and original native evidence](quality/exact-monthly-loan-interest.md)
+retain14new+5affected selected tests, one visible single-row schedule and unchanged full20 source.

@@ -1,5 +1,11 @@
 # Documentation
 
+[D840 exact monthly loan interest](../src/Apps/Zanance/docs/quality/exact-monthly-loan-interest.md) fixes ten observed artificial-midpoint
+failures;14new+5affected selected cases and one original Android single-row schedule
+with full20source equality pass. Complete22a3f00a is prepared, not on Main; broader
+gates and the active goal remain open. No financial/auth/photo success is replayed.
+
+
 [D839 new-PC R13 synthetic boundary](../src/Apps/Zanance/docs/quality/new-accounts-pc-r13-synthetic-boundary.md) records ten new fake controls/two
 baseline failures, with exact original emulator preservation and no actual-record
 interpretation. D838 actual new-PC proposal awaits authority; the goal stays active.

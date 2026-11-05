@@ -1,11 +1,5 @@
 # Vafadar Apps
 
-[D837 actual ARM64 annuity qualification](src/Apps/Zanance/docs/quality/physical-arm64-annuity-qualification.md)
-records157 original Core outcomes/two expected refusals on reserved Samsung without
-financial records or Main mutation. Only the fresh UID retires with exact public
-preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
-independent work and overall goal remain active. Broader gates stay open.
-
 
 [![CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/ci.yml/badge.svg)](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/codeql.yml/badge.svg)](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/codeql.yml)
@@ -108,6 +102,17 @@ controls.
 
 ## Current delivery status
 
+[D840 exact monthly interest](src/Apps/Zanance/docs/quality/exact-monthly-loan-interest.md) corrects artificial half-unit rounding and a spurious
+loan-estimate month.19 selected host cases and one original Android ready schedule retain
+the declared source; complete22a3f00a is prepared, not on Main. Broader gates stay open.
+
+[D837 actual ARM64 annuity qualification](src/Apps/Zanance/docs/quality/physical-arm64-annuity-qualification.md)
+records157 original Core outcomes/two expected refusals on reserved Samsung without
+financial records or Main mutation. Only the fresh UID retires with exact public
+preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
+independent work and overall goal remain active. Broader gates stay open.
+
+
 Documentation refreshed on **5 November 2026**. Android completion comes before iOS execution by the owner's
 decision; reported Mac availability does not change that order. Windows remains a development target. Local
 engineering evidence, physical-device acceptance, genuine OAuth/store integration and public release are
@@ -204,7 +209,7 @@ dotnet build src/Apps/Zanance/Vafadar.Zanance.App -t:Run -f net10.0-android
 |---|---|
 | Build and versions | [SDK selection](global.json), [central packages](Directory.Packages.props), [MAUI targets](eng/Maui.props); C# 14, .NET 10, MAUI 10.0.120 |
 | Native UI | Compiled XAML bindings, MVVM, dependency injection, semantic theme resources, Syncfusion controls and Fluent icons |
-| Financial model | Integer minor units plus ISO currency, exact rational annuity rounding, DateOnly, injected TimeProvider; domain code in [Zanance.Core](src/Apps/Zanance/Vafadar.Zanance.Core) |
+| Financial model | Integer minor units plus ISO currency, exact rational annuity and monthly-interest rounding, DateOnly, injected TimeProvider; domain code in [Zanance.Core](src/Apps/Zanance/Vafadar.Zanance.Core) |
 | Persistence | EF Core, real SQLite transactions, additive migrations/compiled models, protected SQLCipher hosts and validated derived ledger blocks; [data architecture](docs/architecture/data-and-backup.md) |
 | Privacy and recovery | Local profiles, SecureStorage/device authentication, AES-GCM backup envelopes, PBKDF2-SHA256 portable password protection, automatic device-key copies; [privacy matrix](docs/privacy/privacy-matrix.md) |
 | Languages and regional settings | Six translated languages, independent formatting/digits/calendars, RTL, Gregorian/Persian/Umm al-Qura; [localization](docs/architecture/localization.md) |

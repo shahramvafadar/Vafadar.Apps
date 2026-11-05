@@ -35,9 +35,17 @@ public static partial class LoanCalculator
         _ => 0,
     };
 
-    /// <summary>Returns the interest of one month on <paramref name="outstanding"/>.</summary>
-    public static long Interest(long outstanding, decimal annualRatePercent) =>
-        outstanding <= 0 || annualRatePercent <= 0 ? 0 : (long)Math.Round(outstanding * annualRatePercent / 1200m, MidpointRounding.AwayFromZero);
+    /// <summary>Returns the interest of one month on <paramref name="outstanding"/>, rounded half away from zero.</summary>
+    /// <exception cref="OverflowException">The rounded interest is outside the supported money range.</exception>
+    public static long Interest(long outstanding, decimal annualRatePercent)
+    {
+        if (outstanding <= 0 || annualRatePercent <= 0) { return 0; }
+
+        var (numerator, denominator) = MonthlyRateFraction(annualRatePercent);
+        var whole = System.Numerics.BigInteger.DivRem(outstanding * numerator, denominator, out var remainder);
+        // Decimal division can turn a value strictly below a half unit into an exact midpoint before rounding.
+        return checked((long)(remainder * 2 >= denominator ? whole + 1 : whole));
+    }
 
     /// <summary>
     /// Splits a payment into interest and principal. The interest of the month is paid first; the principal part never

@@ -1,11 +1,5 @@
 # Zanance
 
-[D837 actual ARM64 annuity qualification](docs/quality/physical-arm64-annuity-qualification.md)
-records157 original Core outcomes/two expected refusals on reserved Samsung without
-financial records or Main mutation. Only the fresh UID retires with exact public
-preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
-independent work and overall goal remain active. Broader gates stay open.
-
 
 Personal finance manager: record income and expenses, organize them into accounts and categories, and understand
 where the money goes with reports. Local-first and offline, multilingual (English, Persian, German, Spanish, French, Italian, with Gregorian, Persian or lunar Hijri calendar) and backed up
@@ -21,6 +15,17 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 | Solution filter | [`Vafadar.Zanance.slnf`](../../../Vafadar.Zanance.slnf) |
 
 ## Current documentation snapshot — 5 November 2026
+
+[D840 exact monthly interest](docs/quality/exact-monthly-loan-interest.md) corrects artificial half-unit rounding and a spurious
+loan-estimate month.19 selected host cases and one original Android ready schedule retain
+the declared source; complete22a3f00a is prepared, not on Main. Broader gates stay open.
+
+[D837 actual ARM64 annuity qualification](docs/quality/physical-arm64-annuity-qualification.md)
+records157 original Core outcomes/two expected refusals on reserved Samsung without
+financial records or Main mutation. Only the fresh UID retires with exact public
+preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
+independent work and overall goal remain active. Broader gates stay open.
+
 
 [D836 physical Main adoption](docs/quality/current-physical-main-adoption-d836.md)
 installs exact4a72373a without reset as Main27284. Original UID/data inodes and public

@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-840 - Exact monthly loan-interest rounding (2026-11-05)
+
+Original decimal intermediate rounding creates an artificial half unit: thirteen new
+cases expose10failures; one further range Fact passes before correction. Exact monthly
+fraction/remainder rounding preserves the existing half-away policy and final checked
+money range.14new+5directly affected pure cases pass, not full suite/19new. Original
+native20405/UID10237 has16new scalar outcomes and one new loan metadata input(-600,
+rate just below1%, installment600), original Ready/one row/interest0/four native captions
+and full20source equality/ledger0. No financial/auth/photo/accepted-catalog replay.
+Current original VM/page direct includes, one reversible private DI capture only.
+Strict Windows/full offline384/408/1608/private192/204/804/v2v3/ZIP pass; nine actual
+App/Core/Data AOT bindings, both shipping Core changed.22a3f00a prepared, not Main.
+Only fresh UID10237 retires with exact original AVD/packages/settings/locale key/boot/
+geometry/reverse/shell; four standard Clean profiles, no supplemental/frozen action.
+Preserve initial raw-byte CRLF-vs-GitLF observer refusal, D809 terminal R13 unknown,
+D833 UID10234 and D838 pending authority; no actual record or phone command. Broader
+fault/performance/security/platform/release gates and goal stay open. See
+`src/Apps/Zanance/docs/quality/exact-monthly-loan-interest.md`.
+
+
 ## D-839 - New-PC R13 synthetic-only boundary (2026-11-05)
 
 D838 new actual-PC2f3f92 proposal remains pending; no actual trace/register/record

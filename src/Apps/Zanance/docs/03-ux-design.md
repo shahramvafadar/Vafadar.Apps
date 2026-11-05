@@ -3593,3 +3593,12 @@ points, and157 actual Core Android scalar outcomes pass without App/Data/MAUI/fi
 records. Monthly rounded schedule/editor/writer policies are unchanged; no new UI flow
 or matrix is accepted. Prepared4a72373a is not on Main; broader gates and goal stay open.
 See [finite evidence](quality/exact-positive-annuity-ceiling.md).
+
+
+## D-840 - Exact monthly loan-interest rounding
+
+Monthly estimates use the exact entered decimal rate before applying the existing half-away
+minor-unit rule. A value strictly below a half unit must not gain a unit or another month.
+Original controls/layout/terms, principal-transfer and interest classification remain; no
+payment is posted by the preview. [Observed failures, correction and original native evidence](quality/exact-monthly-loan-interest.md)
+retain14new+5affected selected tests, one visible single-row schedule and unchanged full20 source.

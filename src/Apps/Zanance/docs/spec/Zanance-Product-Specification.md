@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-837)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-840)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1234,7 +1234,7 @@ startup or new unit-test count. Fresh UID retires; Main/public state is preserve
 new-PC R13 interpretation is proposed only; old terminal evidence and broader gates remain.
 
 
-Latest finite update: [D835 exact positive annuity](../quality/exact-positive-annuity-ceiling.md) records30 new/4 affected selected cases and157 Core Android scalar outcomes without financial records. This is not a current full-suite total. [D836](../quality/current-physical-main-adoption-d836.md) now adopts exact4a72373a as physical Main27284 with public identity/141node equality. D833 source equality and D834 original error-publication evidence stay bounded; no additional tests or private-source/fault/performance/platform acceptance is implied.
+Latest finite update: [D840 exact monthly interest](../quality/exact-monthly-loan-interest.md) corrects10 observed failures with14new+5affected selected tests and one original Android ready schedule/full20source equality. Complete22a3f00a is prepared, not on Main; no global test total or broader acceptance is inferred. [D835](../quality/exact-positive-annuity-ceiling.md) and [D837](../quality/physical-arm64-annuity-qualification.md) retain prior annuity evidence. [D836](../quality/current-physical-main-adoption-d836.md) remains the latest physical adoption of4a72373a/Main27284; no fresh liveness claim.
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
