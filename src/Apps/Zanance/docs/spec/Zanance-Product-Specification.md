@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-843)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-844)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1236,7 +1236,9 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
 
-Latest finite update: [D843 exact account-rate editor](../quality/exact-account-rate-editor.md) preserves loaded decimal rates/native input and refuses inexact parsing.29new+4affected selected cases and one original Android editor with no Save/full20source equality pass; complete1f2509dd is prepared, not on Main. No global test total or broader acceptance is inferred.
+Latest finite update: [D844 exact manual-rate input](../quality/exact-manual-rate-input.md) rejects silent decimal rounding before the original writer and explains precision in six languages.44new+5affected cases pass across lineage, not all on one final binary. Original native two distinct refusals/one exact reference-rate Save retain declared20source before writes/other19 afterward, with observer failure and inode limits preserved. Complete06a69637 is prepared, not on Main; broader gates remain open.
+
+Prior finite update: [D843 exact account-rate editor](../quality/exact-account-rate-editor.md) preserves loaded decimal rates/native input and refuses inexact parsing.29new+4affected selected cases and one original Android editor with no Save/full20source equality pass; complete1f2509dd is prepared, not on Main. No global test total or broader acceptance is inferred.
 
 Prior finite update: [D840 exact monthly interest](../quality/exact-monthly-loan-interest.md) corrects10 observed failures with14new+5affected selected tests and one original Android ready schedule/full20source equality. [D842](../quality/current-interest-arm64-main-adoption.md) now adopts exact22a3f00a as Main5939 after16 current Core outcomes on physical ARM64; no global test total or broader acceptance is inferred. [D835](../quality/exact-positive-annuity-ceiling.md) and [D837](../quality/physical-arm64-annuity-qualification.md) retain prior annuity evidence. [D836](../quality/current-physical-main-adoption-d836.md) is the prior4a72373a/Main27284 checkpoint. D842 public identity/Home equality is not full private-source or future liveness proof.
 

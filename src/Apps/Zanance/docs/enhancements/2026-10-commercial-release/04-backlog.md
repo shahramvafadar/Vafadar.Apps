@@ -1,5 +1,13 @@
 # 04 – Canonical backlog (commercial release)
 
+[D844 exact manual-rate input](../../quality/exact-manual-rate-input.md) refuses silent decimal rounding and explains
+exact storage in six languages.44new+5affected cases pass across declared lineage;
+versioned original native refusal/one exact metadata Save retain all20 before writes
+and other19 after the expected rate delta, ledger/account/schedule0. Observer marker
+failure/inode observation refusal are preserved; only unfinished work continues.
+Complete06a69637 is prepared, not Main. Broader gates and the overall goal stay open.
+
+
 [D843 exact account-rate editor](../../quality/exact-account-rate-editor.md) fixes loaded-rate truncation and silently
 rounded inputs; 29 new plus four affected selected cases and one original native
 editor/text-binding/refusal check pass with full20 source equality and no Save.

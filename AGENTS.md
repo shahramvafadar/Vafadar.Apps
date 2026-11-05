@@ -1,5 +1,29 @@
 # AGENTS.md – working rules for this repository
 
+## D-844 - Exact manual rate and original native continuation (2026-11-05)
+
+Thirty inexact/culture cases expose24baseline failures; eight exact controls pass.
+First38new+4affected pass, then six new current-caption cases after six-language text
+correction. Final review restores a collided original Fact exactly and moves new
+tests into a distinct file/class; original precision Fact passes, no old case removed.
+44new+5affected across lineage, not all49 on final binary or a full suite.
+Original RatesPage22497/UID10240 refuses one fraction/source20exact, old positive-only
+caption disqualified. Necessary no-reset22675/source20exact uses a different maximum
+boundary; current complete inline message passes. Observer proof reuses retained V1
+marker, returns noJSON and22675 is then absent; failure/marker kept, no generic cause.
+Observer-only no-reset22893 requires exact existing source/checkpoints and contains
+one unknown-operation error; only unfinished exact native Add saves one new reference
+rate0.1234567890123456789012345678, full visible row and other19source equal/ledger0.
+Three versioned Add clicks, not one final-process replay. Early shell CEDE inode read
+denied before first upgrade, no root/fallback/retry/identity claim. Only fresh UID10240
+retires with original AVD/packages/boot/OS/locale key/geometry/reverse/shell exact.
+Strict Windows/fullOffline384/408/1608/private192/204/804/nine current AOT bindings
+and five standard Clean runs pass; no supplemental/frozen/phone/R13 action. Final06a69637
+prepared, not Main; D842 remains last dated Main. D843 sole CI/CodeQL success, no
+second request. Pending D838/D841 unexecuted/D809 unknown/D833 source and overall
+goal/broader gates preserved. See `src/Apps/Zanance/docs/quality/exact-manual-rate-input.md`.
+
+
 ## D-843 - Exact account-rate form and retained emulator (2026-11-05)
 
 Correct ten-fraction loaded-rate rounding/native eight-character truncation and

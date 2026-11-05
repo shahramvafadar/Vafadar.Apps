@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-844: reject silently rounded manual exchange-rate inputs and explain exact storage in all six languages; recorded amounts are unchanged.
+
 - D-843: preserve exact stored loan/lent rates when editing account metadata; keep the complete rate in the native input and reject values that decimal parsing would silently round.
 
 - D-840: keep monthly loan interest exact below half-unit boundaries so estimates do not add a spurious interest unit or installment; exact ties still round away from zero.

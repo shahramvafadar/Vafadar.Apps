@@ -1271,7 +1271,7 @@
     <value>Wählen Sie zwei verschiedene Währungen.</value>
   </data>
   <data name="Rates_Invalid" xml:space="preserve">
-    <value>Geben Sie einen Kurs über null ein.</value>
+    <value>Geben Sie einen positiven Kurs ein, der ohne Rundung gespeichert werden kann.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
     <value>Zusammen ≈ {0} (Kurse vom {1})</value>

@@ -1228,7 +1228,7 @@
     <value>Selecciona dos monedas distintas.</value>
   </data>
   <data name="Rates_Invalid" xml:space="preserve">
-    <value>Introduce un tipo de cambio mayor que cero.</value>
+    <value>Introduce un tipo de cambio positivo que se pueda guardar sin redondear.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
     <value>Total convertido ≈ {0} (tipos del {1})</value>

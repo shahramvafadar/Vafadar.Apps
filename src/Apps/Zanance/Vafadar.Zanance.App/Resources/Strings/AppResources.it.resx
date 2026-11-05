@@ -1230,7 +1230,7 @@
     <value>Scegli due valute diverse.</value>
   </data>
   <data name="Rates_Invalid" xml:space="preserve">
-    <value>Inserisci un tasso maggiore di zero.</value>
+    <value>Inserisci un tasso positivo che possa essere salvato senza arrotondamenti.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
     <value>Totale convertito ≈ {0} (tassi del {1})</value>

@@ -1231,7 +1231,7 @@
     <value>Choisissez deux devises différentes.</value>
   </data>
   <data name="Rates_Invalid" xml:space="preserve">
-    <value>Saisissez un taux supérieur à zéro.</value>
+    <value>Saisissez un taux positif qui puisse être enregistré sans arrondi.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
     <value>Total converti ≈ {0} (taux du {1})</value>

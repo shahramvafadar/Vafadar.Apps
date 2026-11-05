@@ -1271,7 +1271,7 @@
     <value>دو ارز متفاوت انتخاب کنید.</value>
   </data>
   <data name="Rates_Invalid" xml:space="preserve">
-    <value>نرخی بزرگ‌تر از صفر وارد کنید.</value>
+    <value>نرخ مثبتی وارد کنید که بتوان آن را دقیق و بدون گرد کردن ذخیره کرد.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
     <value>مجموع ≈ {0} (نرخ‌های مورخ {1})</value>

@@ -1,5 +1,12 @@
 # 03 – UX design
 
+D-844: manual reference ratios accept only positive decimal values representable without
+rounding; they have no account-percentage cap. All six inline error translations now
+explain exact storage. [Original native continuation](quality/exact-manual-rate-input.md)
+qualifies complete current English feedback and one full-precision stored row; this
+is not every native language/OS text-scale context or a conversion of recorded money.
+
+
 D-843: loan/lent rate inputs retain every stored decimal digit and its original culture.
 The original Entry now accommodates the full canonical decimal text; an inexact typed
 rate is rejected with the existing validation feedback, never silently rounded into

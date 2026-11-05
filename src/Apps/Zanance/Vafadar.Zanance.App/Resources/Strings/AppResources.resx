@@ -1276,7 +1276,7 @@
     <value>Choose two different currencies.</value>
   </data>
   <data name="Rates_Invalid" xml:space="preserve">
-    <value>Enter a rate greater than zero.</value>
+    <value>Enter a positive rate that can be stored without rounding.</value>
   </data>
   <data name="Home_Combined" xml:space="preserve">
     <value>Combined ≈ {0} (rates dated {1})</value>

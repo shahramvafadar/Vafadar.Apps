@@ -236,6 +236,26 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
         RefreshInput();
     }
 
+    /// <summary>Accepts only the exact positive fixed-point ratio entered by the owner.</summary>
+    private static bool TryParseExactRate(string text, out decimal rate)
+    {
+        if (!decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out rate)
+            || rate <= 0) return false;
+        // D-844: Decimal.TryParse may round excess significant digits, even to Decimal.MaxValue.
+        // Only redundant zeros may differ; do not silently store a different reference ratio.
+        return CanonicalRate(text) == CanonicalRate(rate.ToString(CultureInfo.InvariantCulture));
+    }
+
+    /// <summary>Removes redundant zeros from a successfully parsed unsigned fixed-point spelling.</summary>
+    private static string CanonicalRate(string text)
+    {
+        var separator = text.IndexOf('.');
+        var whole = (separator < 0 ? text : text[..separator]).TrimStart('0');
+        if (whole.Length == 0) whole = "0";
+        var fraction = separator < 0 ? string.Empty : text[(separator + 1)..].TrimEnd('0');
+        return fraction.Length == 0 ? whole : $"{whole}.{fraction}";
+    }
+
     [RelayCommand(CanExecute = nameof(CanAdd))]
     private async Task AddAsync()
     {
@@ -244,7 +264,7 @@ public sealed partial class RatesViewModel(ZananceStore store, Translator transl
         if (FromCurrency is null || ToCurrency is null || FromCurrency == ToCurrency) SetPairError("Rates_SameCurrency");
         var original = _draftReview; var culture = _rateCulture ?? localization.CurrentCulture;
         var text = Digits.ToAscii(RateText.Trim()).Replace(culture.NumberFormat.NumberDecimalSeparator, ".", StringComparison.Ordinal).Replace('\u066B', '.');
-        if (!decimal.TryParse(text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out var rate) || rate <= 0)
+        if (!TryParseExactRate(text, out var rate))
             if (_rateErrorKey is null) SetRateError("Rates_Invalid");
         if (original is null || PairError is not null || RateError is not null || RateContextError is not null) return;
         var draft = new ExchangeRate { FromCurrencyCode = FromCurrency!, ToCurrencyCode = ToCurrency!, Rate = rate, Date = Date, IsEstimate = IsEstimate };

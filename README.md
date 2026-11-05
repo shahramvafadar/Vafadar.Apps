@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D844 exact manual-rate input](src/Apps/Zanance/docs/quality/exact-manual-rate-input.md) rejects silently rounded reference ratios and explains precision in six languages. Versioned selected checks and original native continuation qualify one exact rate row with other source retained; observer failures remain explicit. Complete06a69637 is prepared, not Main; broader gates stay open.
+
 [D843 exact account-rate editor](src/Apps/Zanance/docs/quality/exact-account-rate-editor.md) preserves every stored decimal digit and refuses silently rounded inputs.29new+4affected selected cases and an original native editor check pass without Save; complete1f2509dd is prepared, not on Main. Retained emulator/evidence and broader open gates remain.
 
 [D840 exact monthly interest](src/Apps/Zanance/docs/quality/exact-monthly-loan-interest.md) corrects artificial half-unit rounding and a spurious

@@ -13897,3 +13897,20 @@ No native Save/financial/real-exit replay; source and emulator preservation are 
 within the declared sets. See [scoped evidence](quality/exact-account-rate-editor.md).
 Complete1f2509dd remains prepared; D842 Main and pending D838 authority are preserved.
 Overall goal and wider fault/performance/security/platform/provider gates stay open.
+
+
+## D-844 - Preserve exact manual reference ratios (2026-11-05)
+
+Reject inexact decimal input before creating a rate/waiting for its original writer;
+retain the complete positive decimal range and original pair/culture/file/receipt
+ownership. Six inline translations explain exact storage.38new+4affected checks then
+six current-caption cases pass without replay; final review restores one original
+precision Fact and moves the new cases into a distinct file/class. That affected Fact
+passes;44new+5affected are versioned, not all-final.
+Original native continuation preserves the completed refused input, corrects its
+caption and an observer marker collision, then saves only one distinct exact reference
+row. Source20 is exact before writes/necessary upgrades; only that rate differs after,
+other19 equal/account-entry-schedule0. Inode observation is denied without fallback;
+no filesystem identity or whole private-source proof is inferred. See
+[scoped evidence](quality/exact-manual-rate-input.md). Shipping06a69637 is prepared,
+not Main; pending actual-R13 authority, wider gates and the goal remain open.
