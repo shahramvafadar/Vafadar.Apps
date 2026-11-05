@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-832 - Retained large Accounts source checkpoint (2026-11-05)
+
+One SDK-only fixed-file observation in18227/UID10234 proves D831 source.json exists
+with the pre-page all20 source digest and raw100k fictitious input SHA exactly equal.
+Original import/input/source audit completed before the new native death; post-fault
+protected-source health and valid page timing remain unproved. Same-signer no-reset
+replacement preserves UID/CE360537/DE90781, OS/key absence/geometry/boot/reverse and
+other packages. Keep its source and SDK-only package, no original provider/page/import
+replay/uninstall/reset; next is separately admitted original-factory read-only audit.
+No native record/register/key/protectedDB is read here; D809 AVD/data/record/R13 terminal
+unknown remain protected. One strict SDK build/one launch/one standard Clean, no phone,
+financial/auth/photo/runtime/GC/old-success/frozen action. Whole goal and gates stay open.
+See `src/Apps/Zanance/docs/quality/large-accounts-source-checkpoint.md`.
+
 ## D-831 - Accounts phase costs and retained native exit (2026-11-05)
 
 Only the new20-account cohort completes first/warm original page costs and all20 source

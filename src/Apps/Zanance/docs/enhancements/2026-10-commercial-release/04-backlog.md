@@ -9,6 +9,13 @@ States: Proposed · Ready (decisions made, may start after owner approval of the
 (implemented, tested, documented, pushed) · Blocked (by an owner action) · Deferred by owner. Priority: P1 (blocks
 the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 
+## D-832 continuation checkpoint
+
+[Fixed source checkpoint](../../quality/large-accounts-source-checkpoint.md) confirms
+D831's large source audit completed before its native death. Preserve UID10234 for a
+read-only post-fault original-factory source audit; no original page/import replay.
+Large timing/UI admission, fault remedy and broader gates remain open.
+
 ## D-831 continuation checkpoint
 
 [Accounts phase costs and retained native exit](../../quality/accounts-phase-cost-native-exit.md):

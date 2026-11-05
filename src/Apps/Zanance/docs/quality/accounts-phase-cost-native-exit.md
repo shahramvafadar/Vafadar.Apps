@@ -88,3 +88,6 @@ GC and test count remain unchanged. Prepared shipping remains D8302ac14280, not 
 on physical Main. D830's sole CI observation reports all four workflows completed-success;
 no second request is needed. Broader fault remedy, performance, security/accessibility,
 platform/provider/release gates and the continuous delivery goal remain open.
+
+D832's later [fixed source checkpoint](large-accounts-source-checkpoint.md) proves the
+pre-page source audit completed before death; it does not prove post-fault source health.

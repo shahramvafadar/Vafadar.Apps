@@ -1,5 +1,10 @@
 # Documentation
 
+[D832 large Accounts source checkpoint](../src/Apps/Zanance/docs/quality/large-accounts-source-checkpoint.md)
+proves the pre-page source audit completed before the new native death, retaining
+post-fault source health and large timing as unfinished.
+
+
 [D831 Accounts phase costs and retained native exit](../src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md)
 records completed20-account observations and a new preserved200-account native crash;
 UI optimization admission and fault remedy remain open.
