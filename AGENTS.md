@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-862 - Exact wealth adjustment cancellation (2026-11-05)
+
+D862 fixes four actual failures of representable wealth corrections: the inner
+adjustment-only sum stays Int128 until the existing checked final publication.
+Chronological balance refusal, source order/range/account policy and writers remain.
+Eight new plus two related selected host cases and eight original Android calculations
+pass; UID10250/PID31002/source20/A/E/S0 exact. Strict Windows/full offline3844081608/
+private192204804 and nine own-AOT bindings pass; only freshUID retires, original5606
+public state exact, four standard Cleans/no XML/supplemental/frozen/phone/R13.
+Shippingbcd4b1e3 is prepared, not Main;10720/e848 is only the dated D861 checkpoint.
+Original fault/D838 decision, whole-performance/security/platform gates and goal remain.
+See `src/Apps/Zanance/docs/quality/wealth-adjustment-cancellation.md`.
+
 ## D-861 - Current money corrections on physical Main (2026-11-05)
 
 D861 adopts the already-qualified completee848d7c1 once without reset on reserved

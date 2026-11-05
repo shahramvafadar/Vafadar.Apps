@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-861)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-862)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1235,6 +1235,8 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
+
+Latest wealth correction: [D862](../quality/wealth-adjustment-cancellation.md) preserves exact adjustment cancellation with unchanged chronological balance refusal;8new+2related selected host cases and8 original Android calculations pass with source20/A/E/S0 exact. Shippingbcd4b1e3 is prepared, not Main; wider gates remain separate.
 
 Latest physical checkpoint: [D861](../quality/current-money-corrections-main-adoption.md) adopts existing completee848d7c1 once without reset as Main10720. Fresh Home141raw/public records/OS/locale-key/reverse match; D86053-case evidence is preserved without calculation/financial/auth replay. Private-source and broader gates remain separate.
 

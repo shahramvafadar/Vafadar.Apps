@@ -1,5 +1,10 @@
 # 01 – Assessment and decision log
 
+D-862: [exact wealth adjustment cancellation](quality/wealth-adjustment-cancellation.md)
+fixes four actual representable-correction failures without weakening chronological
+balances.8new+2related selected host cases and8 original Android calculations pass;
+source20/A/E/S0 exact, freshUID retired and broader gates remain separate.
+
 D-861: [current money Main adoption](quality/current-money-corrections-main-adoption.md)
 installs already-qualified completee848d7c1 once without reset as Main10720. Fresh
 Home141raw/public records/OS/locale-key/reverse match; D86053-case evidence is reused

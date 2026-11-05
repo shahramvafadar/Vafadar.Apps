@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D862 exact wealth corrections](src/Apps/Zanance/docs/quality/wealth-adjustment-cancellation.md) preserves representable adjustment cancellation while retaining invalid-balance refusal;8new+2related host cases and8 original Android calculations pass without financial preparation. Fullbcd4b1e3 is prepared, not Main.
+
 [D861 current Main adoption](src/Apps/Zanance/docs/quality/current-money-corrections-main-adoption.md) applies existing completee848d7c1 once without reset as Main10720, carrying capacity/liquidity/KPI corrections; fresh Home141raw/public state/OS/locale/reverse match without calculation or financial replay.
 
 [D860 physical ARM64 calculations](src/Apps/Zanance/docs/quality/physical-arm64-current-money-results.md) qualifies all53 existing capacity/liquidity/KPI cases once on actual Samsung in a SDK-only caller without database/key or financial startup. Main31707/abf and public state are preserved; whole product/platform gates remain.

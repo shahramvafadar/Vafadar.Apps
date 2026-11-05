@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-862: keep a valid wealth-change explanation available when large positive and negative adjustments cancel; continue refusing invalid balances and unsupported final amounts.
+
 - D-859: preserve exact even medians and refuse wrapped KPI surplus, spending change, essential-month and installment totals without changing financial data or classification.
 
 - D-858: refuse wrapped liquidity/protected totals and preserve exact allocation/release cancellation before current-balance coverage, without changing financial data.

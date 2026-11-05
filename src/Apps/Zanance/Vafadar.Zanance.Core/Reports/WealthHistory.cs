@@ -171,8 +171,10 @@ public static class WealthHistory
             // Adjustments and opening balances of accounts opened inside the range are corrections, not flows.
             foreach (var account in accounts.Where(a => Same(a.CurrencyCode)))
             {
+                // Opening money may offset a valid balance prefix; the adjustment-only prefix need not fit money.
+                // Keep it wide until the completed explanatory component is checked below (D-862).
                 corrections += entries.Where(e => e.Kind == EntryKind.Adjustment && e.Date > from && e.Date <= to && !LedgerCalculator.IsBeforeOpening(e, account))
-                    .Sum(e => e.EffectOn(account.Id));
+                    .Aggregate((Int128)0, (sum, entry) => sum + entry.EffectOn(account.Id));
                 if (account.OpeningDate > from && account.OpeningDate <= to)
                 {
                     corrections += account.Type == AccountType.Loan ? -LoanCalculator.Outstanding(account.Type, account.OpeningBalance) : account.OpeningBalance;
