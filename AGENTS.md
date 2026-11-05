@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-831 - Accounts phase costs and retained native exit (2026-11-05)
+
+Only the new20-account cohort completes first/warm original page costs and all20 source
+preservation; its fresh UID retires after exact restoration. New200-account PID17704/
+UID10234 dies with actual own OS native reason5/status0 before admitted timings. Preserve
+its source and UID; do not relaunch/reseed/query the original provider/uninstall/reset.
+One same-signer no-reset SDK-only replacement and one bounded own-exit read retain code
+frames only. Exact Mono top0x2f3f92 maps to concurrent no-evacuation scanning, distinct
+from D809/D807; no register interpretation or cause/remedy follows. D809 original AVD/
+data/record and terminal R13 unknown remain protected/unread. UI candidate admission
+needs both workloads and remains incomplete; no20-only rescue, old-success replay,
+phone/financial/auth/photo/runtime/GC/frozen action. Emulator remains available with
+original boot. Whole gates and continuous goal stay active. See
+`src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md`.
+
+
+
 ## D-830 - Original budget money publication (2026-11-05)
 
 D-830 shares checked effective budget limits and positive overspent magnitudes across

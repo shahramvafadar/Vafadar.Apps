@@ -9,6 +9,15 @@ States: Proposed · Ready (decisions made, may start after owner approval of the
 (implemented, tested, documented, pushed) · Blocked (by an owner action) · Deferred by owner. Priority: P1 (blocks
 the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 
+## D-831 continuation checkpoint
+
+[Accounts phase costs and retained native exit](../../quality/accounts-phase-cost-native-exit.md):
+20-account first/warm observations complete with full source equality;200-account native
+reason5/status0 leaves timings/source health unfinished. Preserve UID10234 and its SDK-only
+replacement without original relaunch/reseed. Continue source-stage admission and fault
+analysis; no UI candidate until both workload gates. Original D809 R13 remains terminal
+unknown/unread; no accepted-operation replay. Broader gates and goal remain active.
+
 ## Overview
 
 **Evidence reconciliation (D-595,2026-10-27):** open parent gates do not mean that

@@ -1,5 +1,10 @@
 # Documentation
 
+[D831 Accounts phase costs and retained native exit](../src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md)
+records completed20-account observations and a new preserved200-account native crash;
+UI optimization admission and fault remedy remain open.
+
+
 [D830 original budget money publication](../src/Apps/Zanance/docs/quality/original-budget-money-publication.md)
 retains one actual overflow cover and one distinct final zero-limit ready page, with
 34 selected cases across explicit lineages and full source preservation.
