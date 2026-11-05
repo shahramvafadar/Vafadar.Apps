@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D886 original Q02 cold ready frames](original-q02-cold-native-frames.md)
+closes the missing finite3+3 current cold baseline on exact original financial inputs,
+with all12full current-source comparisons exact and D885two-field original metadata
+failure retained. Native medians12.74s/18.46s do not demonstrate the two-second target.
+Next independent condition: launcher/startup-to-Home-constructor/readiness boundaries,
+using retained tenfoldUID10260/PID15333/source; no reset/adoption/accepted cold replay.
+Original fault/broader gates and overall goal active; no owner/CI wait.
+
 [D885 original Q02 native preparation](original-q02-native-preparation.md)
 finishes existing-input reference adoption/native warm-readiness/source-difference
 qualification. Cold timing remains unexecuted: strict original-source mismatch is only

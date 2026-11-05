@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-886 - Original Q02 process-cold ready frames (2026-11-05)
+
+D886 completes3planned ordinary cold samples per exact original10k/20/100 and100k/200/
+1000 workload, same privateAPK6828c2c6/offline192204804. D885strict original-source
+failure stays exactly two Settings migration fields; a distinct full post-startup
+22table raw source epoch is sealed before timing, with all original financial32fields
+exact. All12complete pre/post sample comparisons exact; no ignored/normalized fields.
+Actual cached=true bound to package/UID/PID permits only am kill then original launcher;
+fixed900oracle/read-only timeout/short wait/syntax refusals preserved, only pending
+cases continue without accepted replay. Native ready-frame medians12731.642–12741.642ms
+and18450.715–18460.715ms, firstframe separate; not two-second/phone/release acceptance.
+Only completed referenceUID10259 retires. Prepared tenfoldUID10260/PID15333 and its
+100k/200/1000 source/epoch stay for unexecuted startup-versus-Home timestamps: never
+reset/re-adopt/reseed/replay accepted cold samples. Original5606public/OS/API36/4096
+exact except freshpackage, one7526byteXML hash-clean/one standardClean; no supplemental/
+frozen/phone/Main/auth/photo/product/old suite/runtimeGC action. D885singleCI consumed,
+no secondGET. Original fault/D838pending/D841unexecuted/broader gates and goal active.
+See `src/Apps/Zanance/docs/quality/original-q02-cold-native-frames.md`.
+
 ## D-885 - Original Q02 native preparation/source frontier (2026-11-05)
 
 D885 adopts D884 original reference10000/20/100 once into fresh emulator UID10259,

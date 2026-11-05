@@ -1,5 +1,11 @@
 # 04 – Canonical backlog (commercial release)
 
+[D886 original Q02 cold ready frames](../../quality/original-q02-cold-native-frames.md)
+finishes six planned ordinary process-cold exact-workload observations/all12fullsource
+comparisons, same privateAPK; medians12.74s/18.46s, no two-second acceptance. Original
+metadata migration failure is retained, not normalized. Prepared tenfoldUID10260/
+PID15333/source remains for missing startup/readiness timestamps without prep replay.
+
 [D885 original Q02 native preparation](../../quality/original-q02-native-preparation.md)
 finishes reference adoption/native warm readiness and complete source-difference
 qualification. Only two original Settings migration fields differ; no cold/kill sample

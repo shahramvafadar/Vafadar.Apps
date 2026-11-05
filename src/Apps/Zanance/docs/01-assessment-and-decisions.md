@@ -1,5 +1,16 @@
 # 01 – Assessment and decision log
 
+## D-886 - Original Q02 process-cold ready frames
+
+Six registered ordinary cold cases complete on the exact original reference/tenfold
+financial workloads, same privateAPK. D885two-field migration failure stays; distinct
+complete current-source epochs and all12full pre/post comparisons are exact, no
+normalization or accepted replay. Native medians12.732–12.742s/18.451–18.461s, separate
+firstframe/hostupper; no two-second or broad speed acceptance. Only completed reference
+retires; retained tenfoldUID10260/PID15333/source enables missing timestamp boundaries
+without another preparation. Original fault/broader gates and overall goal remain.
+[Native frame timings/source/protocol and preserved refusals](quality/original-q02-cold-native-frames.md).
+
 ## D-885 - Original Q02 native preparation and source frontier
 
 Original reference10000/20/100 adopts once with complete22table/32field equality;

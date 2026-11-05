@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D886 original Q02 cold ready frames](quality/original-q02-cold-native-frames.md)
+finishes six registered exact-workload cold cases/all12source comparisons; medians
+12.74s/18.46s, distinct from firstframe and no speed acceptance. Prepared tenfold source
+is retained for original startup/readiness boundary diagnosis without data replay.
+
 [D885 original Q02 native preparation](quality/original-q02-native-preparation.md)
 adopts original reference once and observes actual loaded native warm Home; strict
 pre-cold source mismatch is exactly two Settings migration fields, all other cells
