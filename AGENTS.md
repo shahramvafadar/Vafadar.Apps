@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-894 - Quick-resource generated JSON cold candidate rejected (2026-11-05)
+
+Private same-complete-JSON generated quick stamp passes361contract comparisons and
+6additional immutable IDs in separate binaries; no original property/32ledger field,
+order/null/text/source guard is dropped. Fixed28fresh.NET10.0.14/X64 children/seven
+inverse pairs per20/200accounts are2.741165/3.411527percent slower despite allocation
+reduction68.1236/50.5862percent. Reject before second cohort/native/product, without
+retune/rescue/gate relaxation. Initial unused random SettingsId and nullable-long
+helper refusal remain; product sources/testcount/runtime/GC exact. OneClean/no device/
+financial/old success/frozen action. Next inspect startup purge operation-owned
+connection while preserving preinteractive cleanup/importUndo, not delayed cleanup.
+D892oneCI consumed/CodeQLsuccess/CIcancelled; broader gates and goal active.
+See `src/Apps/Zanance/docs/quality/quick-resource-generated-json-rejection.md`.
+
 ## D-893 - Original quick-resource subphases (2026-11-05)
 
 One new retained100k cold diagnostic completes outer34/home118events/49pairs/health0
