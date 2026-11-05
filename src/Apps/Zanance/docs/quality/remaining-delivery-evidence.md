@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D839 new-PC R13 synthetic boundary](new-accounts-pc-r13-synthetic-boundary.md) records ten new fake controls/two
+baseline failures, with exact original emulator preservation and no actual-record
+interpretation. D838 actual new-PC proposal awaits authority; the goal stays active.
+
+
 [D837 actual ARM64 annuity qualification](physical-arm64-annuity-qualification.md)
 records157 original Core outcomes/two expected refusals on reserved Samsung without
 financial records or Main mutation. Only the fresh UID retires with exact public

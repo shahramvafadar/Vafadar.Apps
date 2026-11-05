@@ -1,5 +1,10 @@
 # 01 – Assessment and decision log
 
+[D839 new-PC R13 synthetic boundary](quality/new-accounts-pc-r13-synthetic-boundary.md) records ten new fake controls/two
+baseline failures, with exact original emulator preservation and no actual-record
+interpretation. D838 actual new-PC proposal awaits authority; the goal stays active.
+
+
 ## 1. Verified state of the repository (2026-09-26)
 
 | Area | Specification assumption | Verified reality |

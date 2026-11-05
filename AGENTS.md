@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-839 - New-PC R13 synthetic-only boundary (2026-11-05)
+
+D838 new actual-PC2f3f92 proposal remains pending; no actual trace/register/record
+read, actual-bound deployment or SDK transport qualification occurs. Old D8092f0f66
+R13 terminal unknown/no-reread and D833 UID10234/data stay protected. Ten new fake
+component cases pass after two actual synthetic baseline failures; no old successful
+suite or product test count replay. Exact new-PC/R13/code-only dispatch and early
+fault-address refusal are statically reviewed; inherited early-refusal gap is caught
+before any deployment, first local-only artifacts retained. Strict synthetic C builds/
+four static16KiB LOADs pass. Only twelve fresh hash-matched remote files51320bytes
+retire, original AVD/packages/boot/settings/locale key presence/geometry/reverse/shell
+exact; no app install/launch/root/product/runtime/GC/financial/auth/photo/phone/frozen
+action. D836 sole CI: CodeQL success/CI cancelled; no second request. D837 pushed;
+independent work and goal stay active, wider causal/performance/security/release gates
+open. See `src/Apps/Zanance/docs/quality/new-accounts-pc-r13-synthetic-boundary.md`.
+
+
 ## D-837 - Physical ARM64 scalar qualification and retained emulator (2026-11-05)
 
 Only the new hardware/ABI condition of D835's157 fictitious Core outcomes runs once:
