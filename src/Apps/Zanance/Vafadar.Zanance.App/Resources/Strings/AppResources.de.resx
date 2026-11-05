@@ -5869,7 +5869,7 @@ Das Überspringen möglicher Duplikate erstellt die Vorschau neu und löscht die
     <value>Währung oder Maßeinheit geändert. Löschen Sie den Wert und geben Sie ihn vor dem Speichern in der angezeigten Einheit neu ein.</value>
   </data>
   <data name="Goal_PercentInvalid" xml:space="preserve">
-    <value>Geben Sie einen Prozentsatz größer als 0 und höchstens 100 ein.</value>
+    <value>Geben Sie einen Prozentsatz über 0 bis höchstens 100 ein, der ohne Rundung gespeichert werden kann.</value>
   </data>
   <data name="Goal_ResetPriceForHolding" xml:space="preserve">
     <value>Wenn Sie den Vermögenswert oder seine Preiswährung ändern, wird die gespeicherte Preisannahme gelöscht. Änderungen speichern?</value>

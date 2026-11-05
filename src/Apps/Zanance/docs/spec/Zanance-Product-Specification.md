@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-844)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-845)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1236,7 +1236,9 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
 
-Latest finite update: [D844 exact manual-rate input](../quality/exact-manual-rate-input.md) rejects silent decimal rounding before the original writer and explains precision in six languages.44new+5affected cases pass across lineage, not all on one final binary. Original native two distinct refusals/one exact reference-rate Save retain declared20source before writes/other19 afterward, with observer failure and inode limits preserved. Complete06a69637 is prepared, not on Main; broader gates remain open.
+Latest finite update: [D845 exact goal percentages](../quality/exact-goal-percent-input.md) preserves loaded precision/original culture and refuses inexact parsing, with a format note and six precision messages.50new+4affected cases pass across lineage, not all on one final binary. Original native one refused Save/full20source/format restoration pass after a private route-order correction. D843 range-control interpretation is corrected without rewriting prior evidence. Complete868f06c0 is prepared, not Main; broader gates remain open.
+
+Prior finite update: [D844 exact manual-rate input](../quality/exact-manual-rate-input.md) rejects silent decimal rounding before the original writer and explains precision in six languages.44new+5affected cases pass across lineage, not all on one final binary. Original native two distinct refusals/one exact reference-rate Save retain declared20source before writes/other19 afterward, with observer failure and inode limits preserved. Complete06a69637 is prepared, not on Main; broader gates remain open.
 
 Prior finite update: [D843 exact account-rate editor](../quality/exact-account-rate-editor.md) preserves loaded decimal rates/native input and refuses inexact parsing.29new+4affected selected cases and one original Android editor with no Save/full20source equality pass; complete1f2509dd is prepared, not on Main. No global test total or broader acceptance is inferred.
 

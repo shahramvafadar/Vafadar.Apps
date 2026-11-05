@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D845 exact goal percentages](src/Apps/Zanance/docs/quality/exact-goal-percent-input.md) preserves complete stored digits and the original numeric format through partial edits, with exact input validation and six-language feedback. Versioned selected/native checks retain the declared source without a financial write. Complete868f06c0 is prepared, not Main; wider gates stay open.
+
 [D844 exact manual-rate input](src/Apps/Zanance/docs/quality/exact-manual-rate-input.md) rejects silently rounded reference ratios and explains precision in six languages. Versioned selected checks and original native continuation qualify one exact rate row with other source retained; observer failures remain explicit. Complete06a69637 is prepared, not Main; broader gates stay open.
 
 [D843 exact account-rate editor](src/Apps/Zanance/docs/quality/exact-account-rate-editor.md) preserves every stored decimal digit and refuses silently rounded inputs.29new+4affected selected cases and an original native editor check pass without Save; complete1f2509dd is prepared, not on Main. Retained emulator/evidence and broader open gates remain.

@@ -136,6 +136,7 @@
                         <VerticalStackLayout IsVisible="{Binding IsShareMethod}">
                             <Label Text="{v:Translate Goal_Percent}" Style="{StaticResource FieldLabel}" />
                             <Entry Text="{Binding PercentText}" Keyboard="Numeric" Placeholder="10" IsEnabled="{Binding CanEditContribution}" SemanticProperties.Description="{v:Translate Goal_Percent}" />
+                            <Label Text="{Binding PercentFormatNote}" Style="{StaticResource Secondary}" IsVisible="{Binding PercentFormatNote, Converter={StaticResource IsNotNullConverter}}" />
                             <Label Text="{Binding PercentError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PercentError, Converter={StaticResource IsNotNullConverter}}" />
                         </VerticalStackLayout>
                         <VerticalStackLayout IsVisible="{Binding IsCutMethod}">

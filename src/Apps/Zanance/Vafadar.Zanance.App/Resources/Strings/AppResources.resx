@@ -5898,7 +5898,7 @@ Skipping possible duplicates rebuilds the preview and clears these choices. Rela
     <value>The currency or measurement unit changed. Clear and reenter this value in the displayed unit before saving.</value>
   </data>
   <data name="Goal_PercentInvalid" xml:space="preserve">
-    <value>Enter a percentage greater than 0 and no greater than 100.</value>
+    <value>Enter a percentage above 0 and up to 100 that can be stored without rounding.</value>
   </data>
   <data name="Goal_ResetPriceForHolding" xml:space="preserve">
     <value>Changing the holding or its price currency will clear the saved price assumption. Save these changes?</value>

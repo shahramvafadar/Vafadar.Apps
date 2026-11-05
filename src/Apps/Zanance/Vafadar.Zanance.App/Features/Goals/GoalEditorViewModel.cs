@@ -100,7 +100,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     {
         _store = store; _goals = goals; _translator = translator; _localization = localization; _dates = dates;
         _time = time; _holdings = holdings; _holdingText = holdingText; _interaction = interaction; _notifications = notifications;
-        _targetCulture = _contributionCulture = _percentCulture = localization.CurrentCulture;
+        _targetCulture = _contributionCulture = localization.CurrentCulture; _percentCulture = CapturePercentCulture();
         Title = translator["Goal_NewTitle"]; Name = AmountText = Note = string.Empty; CurrencyCode = "EUR";
         TargetDate = Today.AddYears(1); FirstDate = Today; PriorityIndex = (int)GoalPriority.Normal;
         PropertyChanged += (_, args) => { if (args.PropertyName == nameof(IsBusy) && !_departed && OwnsRoot) { UpdatePreview(); RefreshCapabilities(); } };
@@ -490,14 +490,14 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             Publish(() => FirstDate = _savedRule?.Start ?? Today); Publish(() => ReminderEnabled = plan?.ReminderEnabled ?? false);
             Publish(() => MethodIndex = (int)(plan?.Method ?? ContributionMethod.FixedAmount));
             Publish(() => ContributionText = plan?.Amount is { } amount ? FormatTarget(amount) : string.Empty);
-            Publish(() => PercentText = plan?.Percent?.ToString("0.##", _localization.CurrentCulture) ?? string.Empty);
+            Publish(() => PercentText = plan?.Percent?.ToString(_localization.CurrentCulture) ?? string.Empty);
             Publish(() => CutCategory = CutCategories.FirstOrDefault(item => usedCategories.Contains(item.Id)));
             Publish(() => ShowOnHome = goal?.HomePin is not null); Publish(() => Protect = goal?.Protect ?? false);
             Publish(() => PriorityIndex = (int)(goal?.Priority ?? GoalPriority.Normal));
             Publish(() => IconKey = goal?.Icon); Publish(() => Note = goal?.Note ?? string.Empty);
             Publish(() => CurrencyLocked = goal is not null && review.Allocations.Any(item => item.GoalId == goal.Id));
             _baseline = CaptureDraft();
-            _targetCulture = _contributionCulture = _percentCulture = _localization.CurrentCulture;
+            _targetCulture = _contributionCulture = _localization.CurrentCulture; _percentCulture = CapturePercentCulture();
             _targetUnit = _contributionUnit = UnitKey();
             if (draft is not null && baseline is not null)
             {
@@ -558,6 +558,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             UpdateUnits(false); UnitNote = IsQuantityGoal ? null : DisplayUnitNote.For(_translator, CurrencyCode);
             RetainedCategoriesText = _existingPlan is { CategoryIds.Count: > 1 } saved
                 ? _translator.Format("Goal_SavedCategories", saved.CategoryIds.Count) : null;
+            OnPropertyChanged(nameof(PercentFormatNote));
             RefreshReminderNote();
         }
         finally { _loading = publishing; }
@@ -625,7 +626,17 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         }
         ChangedDraft();
     }
-    partial void OnPercentTextChanged(string value) { if (!_loading) { _percentCulture = _localization.CurrentCulture; PercentError = null; } ChangedDraft(); }
+    partial void OnPercentTextChanged(string oldValue, string newValue)
+    {
+        if (!_loading)
+        {
+            // D-845: partial typing retains its original parser; complete clearing renews only this field.
+            if (string.IsNullOrWhiteSpace(oldValue) || string.IsNullOrWhiteSpace(newValue))
+                _percentCulture = CapturePercentCulture();
+            PercentError = null;
+        }
+        OnPropertyChanged(nameof(PercentFormatNote)); ChangedDraft();
+    }
     partial void OnHoldingTypeChanged(HoldingChoice? value)
     {
         if (!_loading)
@@ -818,8 +829,43 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         return plan;
     }
 
-    private bool TryPercent(out decimal percent) => decimal.TryParse(Vafadar.Core.Text.Digits.ToAscii(PercentText.Trim().TrimEnd('%')),
-        NumberStyles.Number, _percentCulture, out percent) && percent is > 0 and <= 100;
+    /// <summary>Captures an immutable input culture independently of later display changes.</summary>
+    private CultureInfo CapturePercentCulture() => CultureInfo.ReadOnly((CultureInfo)_localization.CurrentCulture.Clone());
+
+    /// <summary>Explains the retained numeric format without reinterpreting the original percentage draft.</summary>
+    public string? PercentFormatNote => !string.IsNullOrWhiteSpace(PercentText)
+        && (_percentCulture.NumberFormat.NumberDecimalSeparator != _localization.CurrentCulture.NumberFormat.NumberDecimalSeparator
+            || _percentCulture.NumberFormat.NumberGroupSeparator != _localization.CurrentCulture.NumberFormat.NumberGroupSeparator)
+        ? _translator.Format("Numeric_OriginalInputFormat", "\u2066\u200E" + 1.25m.ToString("0.##", _percentCulture) + "\u200E\u2069") : null;
+
+    /// <summary>Preserves the original positive sign/grouping grammar while refusing decimal parser rounding.</summary>
+    private bool TryPercent(out decimal percent)
+    {
+        var text = Vafadar.Core.Text.Digits.ToAscii(PercentText.Trim().TrimEnd('%', '٪'));
+        var format = _percentCulture.NumberFormat;
+        var decimalSeparator = Vafadar.Core.Text.Digits.ToAscii(format.NumberDecimalSeparator);
+        var groupSeparator = Vafadar.Core.Text.Digits.ToAscii(format.NumberGroupSeparator);
+        // Digits.ToAscii also normalizes Arabic separators. Match that original keyboard normalization
+        // in the parser format instead of making valid Persian input fail under an Arabic-separator culture.
+        if (decimalSeparator != format.NumberDecimalSeparator || groupSeparator != format.NumberGroupSeparator)
+        {
+            format = (NumberFormatInfo)format.Clone();
+            format.NumberDecimalSeparator = decimalSeparator; format.NumberGroupSeparator = groupSeparator;
+        }
+        if (!decimal.TryParse(text, NumberStyles.Number, format, out percent) || percent is <= 0 or > 100)
+            return false;
+        return PercentMeaning(text, decimalSeparator) == PercentMeaning(percent.ToString(CultureInfo.InvariantCulture), ".");
+    }
+
+    /// <summary>Extracts exact fixed-point magnitude only after the original culture grammar has accepted the input.</summary>
+    private static string PercentMeaning(string text, string decimalSeparator)
+    {
+        var separator = text.IndexOf(decimalSeparator, StringComparison.Ordinal);
+        var whole = string.Concat((separator < 0 ? text : text[..separator]).Where(char.IsAsciiDigit)).TrimStart('0');
+        if (whole.Length == 0) whole = "0";
+        var fraction = separator < 0 ? string.Empty : string.Concat(text[(separator + decimalSeparator.Length)..].Where(char.IsAsciiDigit)).TrimEnd('0');
+        return fraction.Length == 0 ? whole : $"{whole}.{fraction}";
+    }
 
     private bool DraftWorkAllowed()
     {

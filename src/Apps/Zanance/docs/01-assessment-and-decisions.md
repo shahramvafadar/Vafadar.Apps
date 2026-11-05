@@ -13914,3 +13914,18 @@ other19 equal/account-entry-schedule0. Inode observation is denied without fallb
 no filesystem identity or whole private-source proof is inferred. See
 [scoped evidence](quality/exact-manual-rate-input.md). Shipping06a69637 is prepared,
 not Main; pending actual-R13 authority, wider gates and the goal remain open.
+
+
+## D-845 - Exact share-percent drafts and original context (2026-11-05)
+
+Original goal percentages retain complete actual stored precision and immutable input
+culture until complete clearing. Normalize the same Arabic keyboard separators in
+NumberStyles.Number and require exact magnitude; preserve accepted sign/grouping and
+original0<percent<=100/writer/financial policy. Add original-format note/six precision
+messages.43baseline cases expose27failures across40+3;50new+4affected pass across the
+explicit oracle-corrected lineage. Original native one refused Save/note/source20 and
+exact emulator restoration pass after a private route-order correction; neither
+preparation nor successful input repeats. D843's representable100+1e-26 range control
+is explicitly corrected, without rewriting packets. See
+[finite evidence](quality/exact-goal-percent-input.md). Complete868f06c0 is prepared,
+not Main; pending R13 authority and broader fault/performance/platform gates stay open.

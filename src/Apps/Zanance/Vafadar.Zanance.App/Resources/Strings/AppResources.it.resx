@@ -5858,7 +5858,7 @@ Saltare i possibili duplicati ricrea l’anteprima e cancella queste scelte. Rim
     <value>La valuta o l’unità è cambiata. Cancella il valore e reinseriscilo nell’unità visualizzata prima di salvare.</value>
   </data>
   <data name="Goal_PercentInvalid" xml:space="preserve">
-    <value>Inserisci una percentuale maggiore di 0 e non superiore a 100.</value>
+    <value>Inserisci una percentuale maggiore di 0 e fino a 100 che possa essere salvata senza arrotondamenti.</value>
   </data>
   <data name="Goal_ResetPriceForHolding" xml:space="preserve">
     <value>Cambiare il bene o la valuta del suo prezzo cancellerà l’ipotesi di prezzo salvata. Vuoi salvare queste modifiche?</value>

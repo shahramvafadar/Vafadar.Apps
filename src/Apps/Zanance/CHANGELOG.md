@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-845: retain exact goal share percentages and their original input format; reject silent decimal rounding and explain precision in all six languages.
+
 - D-844: reject silently rounded manual exchange-rate inputs and explain exact storage in all six languages; recorded amounts are unchanged.
 
 - D-843: preserve exact stored loan/lent rates when editing account metadata; keep the complete rate in the native input and reject values that decimal parsing would silently round.

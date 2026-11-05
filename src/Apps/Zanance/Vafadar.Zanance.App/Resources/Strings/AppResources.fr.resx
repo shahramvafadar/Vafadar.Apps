@@ -5846,7 +5846,7 @@ Ignorer les doublons possibles reconstruit l’aperçu et efface ces choix. Les 
     <value>La devise ou l’unité a changé. Effacez cette valeur et saisissez-la à nouveau dans l’unité affichée avant d’enregistrer.</value>
   </data>
   <data name="Goal_PercentInvalid" xml:space="preserve">
-    <value>Saisissez un pourcentage supérieur à 0 et inférieur ou égal à 100.</value>
+    <value>Saisissez un pourcentage supérieur à 0 et au plus égal à 100, enregistrable sans arrondi.</value>
   </data>
   <data name="Goal_ResetPriceForHolding" xml:space="preserve">
     <value>Changer l’actif ou la devise de son prix effacera l’hypothèse de prix enregistrée. Enregistrer ces modifications ?</value>

@@ -1,5 +1,13 @@
 # 04 – Canonical backlog (commercial release)
 
+[D845 exact goal percentages](../../quality/exact-goal-percent-input.md) preserves stored precision/original input culture,
+refuses parser rounding and explains format/precision.50new+4affected checks pass
+across declared lineage; original native loaded text/note/one refused Save retain
+source20 and original formatting/root. Route/scale/clipping failures and the D843
+range-control correction stay explicit.868f06c0 prepared, not Main; broader gates
+and the overall goal remain open, pending actual R13 authority is unchanged.
+
+
 [D844 exact manual-rate input](../../quality/exact-manual-rate-input.md) refuses silent decimal rounding and explains
 exact storage in six languages.44new+5affected cases pass across declared lineage;
 versioned original native refusal/one exact metadata Save retain all20 before writes

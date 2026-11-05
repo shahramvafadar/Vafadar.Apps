@@ -1,5 +1,12 @@
 # 03 – UX design
 
+D-845: share-of-income percentages display their complete actual stored decimal.
+Partial edits retain their original numeric culture; complete clearing renews it,
+with the existing original-format explanation visible when formats differ. All six
+error messages state the >0/<=100 bound and exact storage. [Native scoped evidence](quality/exact-goal-percent-input.md)
+covers original Entry/note/one refused Save, not all native language/OS200% contexts.
+
+
 D-844: manual reference ratios accept only positive decimal values representable without
 rounding; they have no account-percentage cap. All six inline error translations now
 explain exact storage. [Original native continuation](quality/exact-manual-rate-input.md)

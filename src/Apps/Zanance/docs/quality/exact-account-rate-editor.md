@@ -12,8 +12,13 @@ TryApply then writes the parsed displayed rate even when only the name was edite
 The native Entry also had MaxLength 8, so changing the formatter alone is insufficient.
 
 A distinct parsing defect occurs before the range check: Decimal.TryParse can round
-an inexact input such as `100.00000000000000000000000001` down to 100. It can also
-round a tiny positive rate to zero or discard excess significant fractional digits.
+excess significant fractional digits or a tiny positive value. Correction from D845:
+`100.00000000000000000000000001` is still exactly representable and was already
+refused by the existing maximum-100 check; it is a range control, not proof of parser
+rounding. With one more fractional zero before its final 1 (100 + 1e-27), the framework
+really rounds down to 100. D845 records that separate original-goal failure/control.
+The actual D843 Android above-100 refusal is consequently a range control; its new
+loaded native text/name-only memory precision checks and host rounding failures remain.
 
 Load now uses the culture's lossless default decimal fixed-point representation,
 retaining the stored scale. The native Entry permits 32 characters, sufficient for a

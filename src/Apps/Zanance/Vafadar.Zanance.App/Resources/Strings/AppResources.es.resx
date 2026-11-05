@@ -5838,7 +5838,7 @@ Omitir posibles duplicados reconstruye la vista previa y borra estas decisiones.
     <value>La moneda o la unidad ha cambiado. Borra el valor y vuelve a introducirlo con la unidad mostrada antes de guardar.</value>
   </data>
   <data name="Goal_PercentInvalid" xml:space="preserve">
-    <value>Introduce un porcentaje mayor que 0 y como máximo de 100.</value>
+    <value>Introduce un porcentaje mayor que 0 y de hasta 100 que se pueda guardar sin redondear.</value>
   </data>
   <data name="Goal_ResetPriceForHolding" xml:space="preserve">
     <value>Cambiar el activo o la moneda de su precio borrará la estimación de precio guardada. ¿Quieres guardar estos cambios?</value>

@@ -1,5 +1,30 @@
 # AGENTS.md – working rules for this repository
 
+## D-845 - Exact goal percentages and original native continuation (2026-11-05)
+
+Original40cases expose25failures; three distinct real100+1e-27 boundary controls add2.
+Lossless actual stored text, immutable retained culture until clearing, normalized
+Arabic separators/exact original NumberStyles.Number magnitude, original-format note
+and six precision messages correct the batch without writer/financial/Core/Data changes.
+First corrected50 passes44; six seed-trailing-zero oracle mismatches are corrected to
+actual original stored decimal plus seed numeric equality. Only those six+4affected
+run/pass;50new+4affected across lineage, not54 on one final binary or a full suite.
+D843100+1e-26 example/native refusal corrected to an already-refused range control;
+original packets/loaded-native precision/host failures kept, no successful replay.
+Native23666/UID10241 first private caller publishes before id, original empty-route
+appearance correctly retires different id.0Save and failure preserved; query-before-
+page no-reset23926 requires exact existing20source, no preparation replay. Loaded
+native tiny value/note initially clipped then one remaining owned scroll/full note
+and one actual invalid Save/full native error pass. Source20exact, original formatting/
+Onboarding restored and only freshUID10241 retires; original AVD/packages/boot/OS/
+locale key/geometry/reverse/shell exact. Initial private nullable build refusal kept.
+Strict Windows/fullOffline384/408/1608/private192/204/804/nine actual AOT bindings and
+four standard Cleans pass; final868f06c0 prepared, not Main. No supplemental/frozen/
+phone/R13/old-cohort launch action. D844 sole CIin_progress/CodeQLsuccess, no second
+request. Pending D838/D841 unexecuted/D809 unknown/D833 source and overall goal/
+broader gates preserved. See `src/Apps/Zanance/docs/quality/exact-goal-percent-input.md`.
+
+
 ## D-844 - Exact manual rate and original native continuation (2026-11-05)
 
 Thirty inexact/culture cases expose24baseline failures; eight exact controls pass.
