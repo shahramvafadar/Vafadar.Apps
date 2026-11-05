@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D880 exact eligible-income period net](../../quality/eligible-income-period-net.md)
+finishes the original period-net arithmetic correction:7baseline failures,15new+1related
+host and current15native/source20exact, no database fixture/financial replay. Missing
+current ARM64/adoption/original preview and broader gates remain independent.
+
 [D879 current signed-earmark ARM64/Main](../../quality/current-signed-earmark-arm64-main.md)
 finishes current63/original goal pages and existing full38d2ba16 no-reset Main19466
 adoption with first Ready141/public/OS exact. Only freshUID retires; no host/full-build/

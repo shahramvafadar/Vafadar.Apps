@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D880 exact eligible-income period net](quality/eligible-income-period-net.md)
+fixes7actual failures,15new+1related host/current15native/source20exact with no financial
+Save or fixture. Current ARM64/adoption/original-preview and broader gates remain.
+
 [D879 current signed-earmark ARM64/Main](quality/current-signed-earmark-arm64-main.md)
 closes missing current63/original goal pages and existing full38d2ba16 no-reset
 adoption as Main19466/Ready141rawexact. Independent source/broader gates remain.

@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-880 - Exact eligible-income period net (2026-11-05)
+
+D880 fixes seven actual EligibleIncome completed-period net failures with checked
+Int128 accumulation/final long; original count/date order/identity/kind/currency/
+opening/category/scope/sign/Suggestion/writer/model/source guards stay. Two zero-opening
+accounts/linked full reversal have supported per-account daily balances and closing
+netMax; gross2Max is not this API's published result.15new+1related host and current15
+Android pass, full public account/all32ledger JSON/row/tag ownership preserved.
+Fresh UID10257/PID7617 runs only in-memory cases with source20exact/A/E/S0; no database
+fixture or financial Save. StrictWindows/fullOffline384AOT408ELF1608LOAD/private192204804/
+sign/ZIPCRC/static16KiB/two source/nine own-AOT bindings pass. Only freshUID retires,
+original5606public/OS exact, four standard Cleans/no XML/supplemental/frozen/phone/auth/
+photo/old-success replay. Shipping46f3dc51 prepared, not Main;19466/38d2 stays dated
+D879. Missing current ARM64/adoption and original preview integration remain independent;
+original fault/D838pending/D841unexecuted/performance/broader gates and goal stay active.
+See `src/Apps/Zanance/docs/quality/eligible-income-period-net.md`.
+
 ## D-879 - Current signed-earmark ARM64 and complete Main (2026-11-05)
 
 D879 qualifies only current D878 signed-earmark63 and original detail/refusal/editor/

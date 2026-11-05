@@ -45,8 +45,14 @@ public static class EligibleIncome
                 && (excludedCategoryIds is null || e.CategoryId is not { } category || !excludedCategoryIds.Contains(category)))
             .OrderBy(e => e.Date)
             .ToList();
-        var total = counted.Sum(e => e.Kind == EntryKind.Income ? e.Amount : -e.Amount);
-        return new EligibleIncomeResult(currencyCode, total, counted);
+        // D-880: eligible income is the completed period net, not a gross-income intermediate limit.
+        Int128 total = 0;
+        foreach (var entry in counted)
+        {
+            var effect = entry.Kind == EntryKind.Income ? entry.Amount : -entry.Amount;
+            total = checked(total + effect);
+        }
+        return new EligibleIncomeResult(currencyCode, checked((long)total), counted);
     }
 
     /// <summary>Returns the suggestion of a share-of-income plan: percent × eligible income, rounded to the minor unit, never negative.</summary>

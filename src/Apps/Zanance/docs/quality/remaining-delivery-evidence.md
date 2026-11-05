@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D880 exact eligible-income period net](eligible-income-period-net.md)
+closes7actual completed-net failures;15new+1related host/current15native pass with
+original scope/order/source20 preserved, no financial replay. Next independent work:
+missing current ARM64/existing full adoption and original contribution-preview
+integration; original fault/D838/broader gates and overall goal remain open.
+
 [D879 current signed-earmark ARM64/Main](current-signed-earmark-arm64-main.md)
 closes D878 missing current63/original detail/editor platform condition and existing
 full38d2ba16 no-reset adoption as Main19466, first Ready141rawexact/public/OS exact.
