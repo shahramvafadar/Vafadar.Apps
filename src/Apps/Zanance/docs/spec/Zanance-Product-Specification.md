@@ -1234,6 +1234,8 @@ startup or new unit-test count. Fresh UID retires; Main/public state is preserve
 new-PC R13 interpretation is proposed only; old terminal evidence and broader gates remain.
 
 
+Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
+
 Latest finite update: [D840 exact monthly interest](../quality/exact-monthly-loan-interest.md) corrects10 observed failures with14new+5affected selected tests and one original Android ready schedule/full20source equality. Complete22a3f00a is prepared, not on Main; no global test total or broader acceptance is inferred. [D835](../quality/exact-positive-annuity-ceiling.md) and [D837](../quality/physical-arm64-annuity-qualification.md) retain prior annuity evidence. [D836](../quality/current-physical-main-adoption-d836.md) remains the latest physical adoption of4a72373a/Main27284; no fresh liveness claim.
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:

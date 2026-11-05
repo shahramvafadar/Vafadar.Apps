@@ -1,5 +1,29 @@
 # AGENTS.md – working rules for this repository
 
+## D-841 - Prepared SDK memory boundary, no actual R13 read (2026-11-05)
+
+D838 remains pending; no actual-bound SDK install/launch/history/trace/register read.
+Own SDK module metadata/PDB checks prove fake history/trace API exclusion and exact
+source; prepared actual target remains only D83117704/10234/17731/time1793838038872/
+reason5/status0/five saved frames. One native export returns two fixed category codes,
+no generic selector/file/network/output imports or recorded-pointer dereference.
+Signal code/map range+readability only, other fields opaque. Native-before-return and
+managed-finally buffer erasure pass12 new fake SDK cases in20941/UID10238. Before any
+actual deployment correct inherited4MiB to original SDK8MiB, retaining prior outcomes;
+one necessary no-reset fake upgrade to21185 preserves UID/CEDE and runs only two new
+boundary cases, valid4195107bytes and full8MiB refusal. Not14product tests/all-final-binary.
+Final actual-only success refuses unknown/absent categories; synthetic effective source
+unchanged/no replay. Final6149a7a8 actual candidate retained uninstalled/unexecuted,
+19AOT/30ELF/109 static16KiB/offline/nondebug/min36-v3/original Mono; no App/Core/Data/
+MAUI/DB/key startup. Public signer matches retained D833, not fresh installed-source proof.
+Only fresh UID10238 retires with original AVD/inventory/OS/locale key/boot/geometry/
+reverse/shell exact; six standard Clean401lines, no supplemental/frozen/phone/financial/
+auth/photo/product-suite action. D809 terminal unknown/record and D833 data protected.
+D840 soleCI three workflows success/main in_progress at22.49min, no second request.
+Broader gates and goal stay active. See
+`src/Apps/Zanance/docs/quality/sdk-word-category-memory-boundary.md`.
+
+
 ## D-840 - Exact monthly loan-interest rounding (2026-11-05)
 
 Original decimal intermediate rounding creates an artificial half unit: thirteen new

@@ -1,5 +1,11 @@
 # Zanance – design documentation
 
+[D841 prepared SDK word-category memory boundary](quality/sdk-word-category-memory-boundary.md) retains12+2 versioned
+fake cases and original8MiB quota, with exact emulator preservation. The actual
+candidate is uninstalled/unexecuted pending D838; no original R13/source read or
+product test replay is implied. The overall goal and wider gates stay open.
+
+
 [D840 exact monthly loan interest](quality/exact-monthly-loan-interest.md) fixes ten observed artificial-midpoint
 failures;14new+5affected selected cases and one original Android single-row schedule
 with full20source equality pass. Complete22a3f00a is prepared, not on Main; broader

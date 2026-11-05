@@ -13868,3 +13868,11 @@ minor-unit rule. A value strictly below a half unit must not gain a unit or anot
 Original controls/layout/terms, principal-transfer and interest classification remain; no
 payment is posted by the preview. [Observed failures, correction and original native evidence](quality/exact-monthly-loan-interest.md)
 retain14new+5affected selected tests, one visible single-row schedule and unchanged full20 source.
+
+
+## D-841 - SDK word-category memory boundary preparation
+
+[Versioned synthetic SDK evidence](quality/sdk-word-category-memory-boundary.md) qualifies only the
+bounded memory bridge and original8MiB quota. The actual6149a7a8 candidate is retained
+without installation/execution; D838 authority and causal/security/release gates remain open.
+No product source/test count or accepted financial/authentication/photo path changes.
