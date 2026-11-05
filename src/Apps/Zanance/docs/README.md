@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D882 original income-share preview](quality/original-income-share-preview.md)
+closes the missing host/x64 original caller/read/draft condition with full native
+caption/source20 exact, one scroll and no financial Save/Core replay. Broader gates remain.
+
 [D881 current eligible-income ARM64/Main](quality/current-eligible-income-arm64-main.md)
 finishes current15/native source20exact and existing full46f3dc51 no-reset Main23260/
 first Ready141rawexact. Original share-preview integration and broader gates remain.

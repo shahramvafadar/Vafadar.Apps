@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D882 original income-share preview](original-income-share-preview.md)
+closes original previous-closed-month caller integration on host/x64: netMax/three rows/
+10percent suggestion, native visibility and unsaved note/source20 exact. Initial scale
+oracle/offscreen frame retained, one needed scroll, no financial/Core replay. Physical
+preview, original fault/D838, whole performance and broader requirements remain open.
+
 [D881 current eligible-income ARM64/Main](current-eligible-income-arm64-main.md)
 closes current15ARM64 and existing full46f3dc51 no-reset Main23260 adoption with first
 Ready141/public/OS exact. No fixture/financial/old-host replay. Original share-of-income

@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D882 original income-share preview](../../quality/original-income-share-preview.md)
+finishes original host/x64 read/preview/draft integration with exact source and full
+native caption after one original scroll, no financial Save/Core replay. Physical
+preview, original fault/performance and broader gates remain independent work.
+
 [D881 current eligible-income ARM64/Main](../../quality/current-eligible-income-arm64-main.md)
 finishes current15ARM64 and existing full46f3dc51 no-reset Main23260/Ready141rawexact;
 only freshUID retires and public/OS exact. Original share-preview integration remains

@@ -1,5 +1,23 @@
 # 01 – Assessment and decision log
 
+## D-882 - Original closed-month income-share preview
+
+D882 qualifies only the missing original closed-month share-income GoalEditor preview,
+without product/Core15/63/old financial/auth/photo/Windows/full-shipping/phone replay.
+One new host flow passes with all-model-table equality after preserving/correcting only
+lexical10vsstored10.0 percent oracle; exact raw field is retained. Fresh UID10258/PID8222
+prepares seven declared fictitious rows (two accounts/three ledger entries/goal/plan)
+and actual original page shows eligibleMax/3transactions/10percent/suggestion minor
+922337203685477581. Initial offscreen Shownfalse is not accepted despite equal rect;
+one original scroll yields full native bounds[87, 884, 994, 1007]/ellipsis0. Unsaved note/
+percent/preview and typedsource20 exact; no financial Save. Strictprivate192204804/
+offline/v2v3/ZIPCRC/static16KiB/five source/three own-AOT bindings pass. Only freshUID
+retires, original5606public/OS exact, two standard Cleans/no XML/supplementary/frozen/
+R13. Current Main23260/46f3 stays datedD881. Named x64 original-preview condition done;
+physical-preview/performance/original fault/D838pending/D841unexecuted/broader gates and
+overall goal active. D880 one CIcancelled/three successful workflows consumed, no retry.
+[Original read/draft and native visibility evidence](quality/original-income-share-preview.md).
+
 ## D-881 - Current eligible-income ARM64 and complete Main
 
 D881 qualifies only current D880 eligible-income15 on Samsung ARM64, freshUID10424/
