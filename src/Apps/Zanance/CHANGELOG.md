@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-848: update existing goal field-validation messages when the language changes, preserving drafts and unit-review reasons without another Save.
+
 - D-847: refuse silently rounded received decimal values before synchronization decisions and review exact scientific-rate notation without changing recorded finances.
 
 - D-845: retain exact goal share percentages and their original input format; reject silent decimal rounding and explain precision in all six languages.

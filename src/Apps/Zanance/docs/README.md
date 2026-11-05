@@ -1,5 +1,15 @@
 # Zanance – design documentation
 
+[Goal validation language/native scale D848](quality/goal-validation-language-native-scale.md) records:
+D848 refreshes existing goal field-validation captions without another Save, keeping
+unit-review reasons/raw drafts/writer policy.12new+2affected host cases pass. Separate
+fresh5612/UID10216/PID4577 qualifies36 six-language/two-effective-theme/three-width
+contexts at real OS200%, one original rejected Save/20source exact. Original5606,
+R13/source/phone remain untouched. Theme-policy and native-digit observer failures
+are explicit; not pixel/contrast/whole-A11Y proof. Strict builds/four standard Cleans
+and exact fresh OS restoration/official AVD retirement pass.904c1f91 prepared, not Main.
+
+
 [Exact sync decimals D847](quality/exact-sync-decimal-admission.md) records:
 D847 refuses received decimal text that only parses after rounding, preserves exact
 scientific notation and uses the same rule in original conflict review.44new+1affected

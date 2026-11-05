@@ -13951,3 +13951,15 @@ state; genuine network Capture refusal and clipped exact-rate viewport stay expl
 Strict final Windows/fullOffline384/408/1608/private192/204/804 and five standard Clean
 commands pass. Shippinga1427c84 is prepared, not Main; no phone/R13/frozen action.
 See [finite source/native evidence](quality/exact-sync-decimal-admission.md).
+
+
+## D-848 - Retained validation language and scaled percent cluster (2026-11-05)
+
+D848 refreshes existing goal field-validation captions without another Save, keeping
+unit-review reasons/raw drafts/writer policy.12new+2affected host cases pass. Separate
+fresh5612/UID10216/PID4577 qualifies36 six-language/two-effective-theme/three-width
+contexts at real OS200%, one original rejected Save/20source exact. Original5606,
+R13/source/phone remain untouched. Theme-policy and native-digit observer failures
+are explicit; not pixel/contrast/whole-A11Y proof. Strict builds/four standard Cleans
+and exact fresh OS restoration/official AVD retirement pass.904c1f91 prepared, not Main.
+See [finite original surface](quality/goal-validation-language-native-scale.md).

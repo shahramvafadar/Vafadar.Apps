@@ -127,3 +127,7 @@ Related: [manual-rate input](exact-manual-rate-input.md),
 Later [D846 physical qualification/adoption](physical-goal-percent-main-adoption.md)
 qualifies the current original goal page on ARM64 and adopts868f06c0 as Main15641
 without reset. The prepared-only statement above is the historical D845 checkpoint.
+
+Later [D848 validation language/native scale](goal-validation-language-native-scale.md)
+qualifies36 new note/error OS200% contexts and corrects retained field-caption language
+without another Save. Normal-text evidence and historical limits above are preserved.

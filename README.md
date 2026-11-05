@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D848 retained goal validation](src/Apps/Zanance/docs/quality/goal-validation-language-native-scale.md) updates existing field errors after a language change without another Save. The changed percent-note/error cluster has36 finite native OS200% contexts; source and prior emulator evidence stay preserved. Complete904c1f91 is prepared, not Main.
+
 [D847 exact sync decimals](src/Apps/Zanance/docs/quality/exact-sync-decimal-admission.md) refuses rounded wire values and retains exact scientific rates in conflict review. Selected checks and controlled local Android cards preserve source without financial writes; genuine network/platform acceptance stays separate. Completea1427c84 is prepared, not Main.
 
 [D845 exact goal percentages](src/Apps/Zanance/docs/quality/exact-goal-percent-input.md) preserves complete stored digits and the original numeric format through partial edits, with exact input validation and six-language feedback. Versioned selected/native checks retain the declared source without a financial write. [D846](src/Apps/Zanance/docs/quality/physical-goal-percent-main-adoption.md) now qualifies the current goal page on ARM64 and adopts868f06c0 as Main15641 without reset; wider gates stay open.

@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-848 - Goal validation language and native OS200 (2026-11-05)
+
+D848 refreshes existing goal field-validation captions without another Save, keeping
+unit-review reasons/raw drafts/writer policy.12new+2affected host cases pass. Separate
+fresh5612/UID10216/PID4577 qualifies36 six-language/two-effective-theme/three-width
+contexts at real OS200%, one original rejected Save/20source exact. Original5606,
+R13/source/phone remain untouched. Theme-policy and native-digit observer failures
+are explicit; not pixel/contrast/whole-A11Y proof. Strict builds/four standard Cleans
+and exact fresh OS restoration/official AVD retirement pass.904c1f91 prepared, not Main.
+Original dynamic SaveError/receipts/permissions and native theme policy are unchanged.
+No successful financial/auth/photo/old matrix or actual new-PC R13 read is replayed.
+D838 pending/D841 unexecuted and the active overall goal/broader gates remain. See
+`src/Apps/Zanance/docs/quality/goal-validation-language-native-scale.md`.
+
+
 ## D-847 - Exact wire decimals and original review (2026-11-05)
 
 D847 refuses received decimal text that only parses after rounding, preserves exact

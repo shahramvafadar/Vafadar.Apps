@@ -558,6 +558,15 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             UpdateUnits(false); UnitNote = IsQuantityGoal ? null : DisplayUnitNote.For(_translator, CurrencyCode);
             RetainedCategoriesText = _existingPlan is { CategoryIds.Count: > 1 } saved
                 ? _translator.Format("Goal_SavedCategories", saved.CategoryIds.Count) : null;
+            // Retain each existing field failure while refreshing its caption, without another validation or Save.
+            // Unit-review failures remain distinct from invalid numeric input when the display context changes.
+            if (NameError is not null) NameError = _translator["Goal_NameRequired"];
+            if (AmountError is not null) AmountError = _translator[_targetNeedsReview ? "Goal_DraftUnitChanged"
+                : IsQuantityGoal ? "AssetEvent_QuantityInvalid" : "Amount_Invalid"];
+            if (ContributionError is not null) ContributionError = _translator[_contributionNeedsReview ? "Goal_DraftUnitChanged"
+                : IsQuantityGoal ? "AssetEvent_QuantityInvalid" : "Amount_Invalid"];
+            if (PercentError is not null) PercentError = _translator["Goal_PercentInvalid"];
+            if (RuleError is not null) RuleError = _translator["Plan_RuleInvalid"];
             OnPropertyChanged(nameof(PercentFormatNote));
             RefreshReminderNote();
         }

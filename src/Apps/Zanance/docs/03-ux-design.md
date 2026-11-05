@@ -1,5 +1,10 @@
 # 03 – UX design
 
+D-848: already-visible goal field errors follow a language change without revalidation
+or Save; raw values and original unit-review reasons stay intact. [Native OS200 cluster](quality/goal-validation-language-native-scale.md)
+covers36 distinct note/error contexts, not all forms, speech, glyphs or contrast.
+
+
 D-847: conflict cards retain exact scientific wire values and disable both choices
 when decimal text would silently round. The existing incomplete-review hint applies.
 [Controlled original native surface](quality/exact-sync-decimal-admission.md) is
