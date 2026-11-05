@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D856 current Main adoption](src/Apps/Zanance/docs/quality/retained-query-current-main-adoption.md) applies the already-qualified completeabf072cd once without reset as Main31707; all141raw Home attributes/public state and fresh locale/reverse match. No financial/authentication or successful-test replay.
+
 [D855 retained filter recovery](src/Apps/Zanance/docs/quality/retained-transaction-query-recovery.md) completes query correction without another original VM read; six new host cases and original Android recovery pass. Preparedabf072cd is not Main; whole performance remains open.
 
 [D854 exact transaction nets](src/Apps/Zanance/docs/quality/transaction-net-failure-boundaries.md) fixes overflow/wrapped totals and covers original native filter failures.17 selected host cases pass; fixed cost gates fail6/16, so no speed acceptance is claimed. Preparedadef63e1 is not Main.

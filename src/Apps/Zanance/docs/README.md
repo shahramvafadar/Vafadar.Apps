@@ -1,5 +1,16 @@
 # Zanance – design documentation
 
+[Current Main adoption D856](quality/retained-query-current-main-adoption.md):
+D856 adopts the already-qualified completeabf072cd once without reset on reserved
+unlocked Samsung, Main31707 from26327, carrying D854 exact nets/covered failure and
+D855 retained query recovery. UID10380/CE155299/DE154603, all141raw Home attributes/order,
+three public package records/grants/five OS values, fresh locale/key-presence/reverse,
+boot and geometry match except expected APK/PID. Two owned XML103864bytes hash-retire;
+used signed package/local raw remain. No build/test/source-preparation/financial/auth/
+camera/R13 replay or setting write. Private Main source/key/financial and broad-gate
+acceptance are not inferred. D854 cost failure/D838 decision/original fault/performance/
+security/platform gates and active goal remain separate.
+
 [Retained transaction filter recovery D855](quality/retained-transaction-query-recovery.md):
 D855 enables correction of a failed read-only Transactions filter on its same completed
 owned source while results/Add stay covered. Six new host cases and actual Android

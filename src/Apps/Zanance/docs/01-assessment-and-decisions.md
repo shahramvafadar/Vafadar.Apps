@@ -1,5 +1,10 @@
 # 01 – Assessment and decision log
 
+D-856: [current Main adoption](quality/retained-query-current-main-adoption.md)
+installs qualifiedabf072cd once without reset as Main31707. Fresh Home141raw/public
+records/OS/locale-key/reverse match; no successful financial/auth/test replay.
+Private-source and broader-gate acceptance remain separate.
+
 D-855: [retained query recovery](quality/retained-transaction-query-recovery.md)
 lets a failed read-only filter be corrected on the same owned source; financial actions
 remain covered until presentation succeeds. Six selected host cases and original Android
