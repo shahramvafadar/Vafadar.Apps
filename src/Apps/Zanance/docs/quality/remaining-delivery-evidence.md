@@ -1,5 +1,18 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D893 original quick-resource clocks](original-quick-resource-subphases.md)
+One new retained100k cold diagnostic completes outer34/home118events/49pairs/health0
+and full22table101220row3247272cell source exact in23550/UID10260. Initial quick JSON
+capture803.640ms dominates observed read1160.513ms; constructor815.927ms, template/
+filterchoices55.643/32.739ms, initialvalidation26.369ms. Nested wall observations,
+not speed/exclusive-cause acceptance. Count oracle114/four item reads refuses;
+actualsource proves118/five reads, same saved packet/PID continues without replay.
+Three new private sources reverse exactly; original guards/awaits/crypto/444sources/
+8SQL/fourOwnAOT/strict192204804 pass. One preserving observer upgrade/preparation22087
+is separate. Retain23550/source; publicOS exact/oneClean/no phone/financial/old suite/
+frozen action. Next same-JSON quick stamp cold metadata/serialization question, not
+D741/D745/D889 rescue. Broader original-fault/performance gates and goal active.
+
 [D892 original Home read/projection clocks](original-home-read-projection-subphases.md)
 closes whole-pipeline boundary evidence:one new cold/outer34/home69events/34pairs/
 health0/full22table source exact, existing prepared tenfold retained. QuickResource

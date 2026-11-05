@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-893 - Original quick-resource subphases (2026-11-05)
+
+One new retained100k cold diagnostic completes outer34/home118events/49pairs/health0
+and full22table101220row3247272cell source exact in23550/UID10260. Initial quick JSON
+capture803.640ms dominates observed read1160.513ms; constructor815.927ms, template/
+filterchoices55.643/32.739ms, initialvalidation26.369ms. Nested wall observations,
+not speed/exclusive-cause acceptance. Count oracle114/four item reads refuses;
+actualsource proves118/five reads, same saved packet/PID continues without replay.
+Three new private sources reverse exactly; original guards/awaits/crypto/444sources/
+8SQL/fourOwnAOT/strict192204804 pass. One preserving observer upgrade/preparation22087
+is separate. Retain23550/source; publicOS exact/oneClean/no phone/financial/old suite/
+frozen action. Next same-JSON quick stamp cold metadata/serialization question, not
+D741/D745/D889 rescue. Broader original-fault/performance gates and goal active.
+See `src/Apps/Zanance/docs/quality/original-quick-resource-subphases.md`.
+
 ## D-892 - Original Home read/projection subphases (2026-11-05)
 
 One new whole-Home cold diagnostic on retained100k/200/1000,UID10260/PID21277,
