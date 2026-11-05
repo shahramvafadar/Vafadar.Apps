@@ -69,4 +69,3 @@ public sealed class EntryNetBoundaryTests
     private static LedgerEntry Row(Account a, EntryKind kind, long amount) => new()
     { AccountId = a.Id, Kind = kind, Amount = amount, Date = new DateOnly(2026, 11, 5), Title = "Original row", Tags = ["bounded"] };
 }
-
