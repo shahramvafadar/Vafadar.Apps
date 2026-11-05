@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D884 original Q02 input readiness](original-q02-input-readiness-admission.md)
+closes independent original workload availability with full22table/32field current
+migration and typed transport equality, no new financial generation/frozen reuse.
+Next independent condition is actual ordinary-cold command-to-loaded-Home on these
+exact reference/tenfold inputs; no speed acceptance yet. No owner/CI wait, goal active.
+
 [D883 physical original income-share preview](physical-original-income-share-preview.md)
 closes the missing Samsung original caller/read/draft condition, completing D882/D883
 finite preview evidence. Only freshUID retires; Main23260/public/OS exact, no upgrade/

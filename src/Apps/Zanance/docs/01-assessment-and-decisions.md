@@ -1,5 +1,16 @@
 # 01 – Assessment and decision log
 
+## D-884 - Original Q02 input-readiness admission
+
+Independent original worker1 archives preserve reference10000/20/100 and tenfold
+100000/200/1000 without financial regeneration or frozen-transport reuse. New copies
+migrate once; all22source tables/all32ledger fields and complete typed transport
+roundtrips are exact. Historical fingerprints and actual totals match. Initial helper
+provider/enum failures retained; one strict private host/standard Clean, no device or
+old-success replay. Input prerequisite closes; original command-to-loaded-Home timing,
+fault and broader gates remain, overall goal active.
+[Original input/source and transport evidence](quality/original-q02-input-readiness-admission.md).
+
 ## D-883 - Physical original income-share preview
 
 D883 qualifies only D882missing original share-income preview on Samsung ARM64,

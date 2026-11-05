@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-884 - Original Q02 input-readiness admission (2026-11-05)
+
+D884 recovers independent original October9 worker1 reference10000/20/100 and
+ tenfold100000/200/1000 archives, not frozen D766/D745 inputs or aliases. Originals
+are byte-read only; new owned copies migrate once to current52table schema with all22
+original source tables/all32ledger fields exact. Original legacy fingerprints match;
+historical settings changes are only producer DefaultAccountId/UpdatedAt, no operational
+normalization. Both complete typed transports roundtrip every row/cell/int64/doublebit
+exact, with source hashes/totals/kind mix preserved. Initial enum-oracle/provider helper
+failures remain; corrected strict private host passes on10.0.14/X64. One standard Clean,
+no device/product/old successful suite/financial seed-Save/auth/photo/runtimeGC/frozen
+replay. This closes input availability only; original cold command-to-loaded-Home
+measurement is next, not speed acceptance. D882/D883 single CI responses consumed;
+no secondGET. Original fault/D838pending/D841unexecuted/broader gates and goal active.
+See `src/Apps/Zanance/docs/quality/original-q02-input-readiness-admission.md`.
+
 ## D-883 - Physical original income-share preview (2026-11-05)
 
 D883 qualifies only D882missing original share-income preview on Samsung ARM64,

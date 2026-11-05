@@ -1,5 +1,11 @@
 # 04 – Canonical backlog (commercial release)
 
+[D884 original Q02 input readiness](../../quality/original-q02-input-readiness-admission.md)
+finishes independent original10k/20/100 and100k/200/1000 input availability; current
+migration preserves22source tables/all32ledger fields and full typed transport roundtrip.
+No financial seed/Save or frozen input reuse. Actual cold loaded-Home timing, original
+fault/broader requirements remain independent; overall goal active.
+
 [D883 physical original income-share preview](../../quality/physical-original-income-share-preview.md)
 finishes the Samsung counterpart to D882 with actual original preview/draft/source20
 exact and freshUID retirement; Main23260/public/OS preserved without upgrade. Q02/cold/

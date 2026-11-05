@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D884 original Q02 input readiness](quality/original-q02-input-readiness-admission.md)
+finishes source availability for exact10k/20/100 and100k/200/1000 workloads; all22tables/
+32fields/typed transports exact, no financial regeneration/frozen reuse. Actual cold
+loaded-Home timing and broader gates remain; goal active.
+
 [D883 physical original income-share preview](quality/physical-original-income-share-preview.md)
 finishes the missing Samsung counterpart to D882 with full original caption/draft/
 source20 exact; Main23260/public/OS preserved without upgrade. Broader gates remain.
