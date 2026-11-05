@@ -1,5 +1,9 @@
 # 04 – Canonical backlog (commercial release)
 
+[D874 broad-history rejection](../../quality/compact-holding-broad-history-rejection.md)
+finishes the new broad-workload guard check and closes the entire compact candidate.
+No subset rescue/product change; GoalTrend source reproduction and broader gates remain.
+
 [D873 private compact holding-change admission](../../quality/private-compact-holding-change-admission.md)
 finishes the private two-process fixed-guard task, with unchanged product. High-place/
 transfer cost and changed original/native integration remain ready independent work.

@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D874 broad-history rejection](compact-holding-broad-history-rejection.md)
+closes D873 integration candidacy after24new location/transfer shapes fail fixed guards.
+Do not resume/retune/select pooled-only work. Next independent source question is the
+GoalTrend period Sum; reproduce first. Original fault/D838/broader gates remain active.
+
 [D873 private compact holding-change admission](private-compact-holding-change-admission.md)
 completes two-process host admission with all48fixed guards/source exact. Native/product
 acceptance is not inferred; next ready condition is high-place/transfer cost, then

@@ -1,5 +1,21 @@
 # 01 – Assessment and decision log
 
+## D-874 - Compact holding broad-history rejection
+
+D874 keeps D873 compact candidate byte-identical and measures24new high-location/
+transfer-heavy10k/100k/1or200type/order shapes in.NET10.0.14/X64/PID46464.
+Original FindConflict/source15/row references-order-multiplicity/ordered outputs agree;
+48paired measurements/672raw samples/full inputs retained, no old512contract replay.
+8fixed shape-mode guards fail; unique-location allocation reduction misses5percent
+despite latency gains. Entire candidate is rejected before second broad process/native/
+product, without retune/key variant/pooled-only subset rescue; D873 gains remain finite.
+Original product Quantity/Positions/Basis/writers/model stay exact. Strict private build/
+one standard Clean pass; no device/financial/auth/photo/R13/frozen/supplemental action.
+Next ready source question is GoalTrend's period Sum, requiring actual reproduction;
+not a claimed defect yet. Main32234/f342 remains dated D871; original fault/D838/broader
+gates and overall goal remain active.
+[Whole-candidate fixed-guard rejection](quality/compact-holding-broad-history-rejection.md).
+
 ## D-873 - Private compact holding-change host admission
 
 D873 admits only a fresh private compact local-index/date-sign sorted Positions

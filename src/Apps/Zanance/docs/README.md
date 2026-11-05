@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D874 broad-history rejection](quality/compact-holding-broad-history-rejection.md)
+closes the unchanged D873 candidate: high-location allocation misses its fixed guard,
+so no native/product/subset rescue. Correct product remains; GoalTrend reader audit is next.
+
 [D873 private compact holding-change admission](quality/private-compact-holding-change-admission.md)
 passes all48fixed host guards in two same-binary processes; product is unchanged.
 High-location/transfer cost and changed-code/native integration are next.
