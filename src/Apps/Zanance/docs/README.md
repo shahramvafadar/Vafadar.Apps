@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D881 current eligible-income ARM64/Main](quality/current-eligible-income-arm64-main.md)
+finishes current15/native source20exact and existing full46f3dc51 no-reset Main23260/
+first Ready141rawexact. Original share-preview integration and broader gates remain.
+
 [D880 exact eligible-income period net](quality/eligible-income-period-net.md)
 fixes7actual failures,15new+1related host/current15native/source20exact with no financial
 Save or fixture. Current ARM64/adoption/original-preview and broader gates remain.

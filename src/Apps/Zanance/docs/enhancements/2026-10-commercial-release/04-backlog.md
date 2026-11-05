@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D881 current eligible-income ARM64/Main](../../quality/current-eligible-income-arm64-main.md)
+finishes current15ARM64 and existing full46f3dc51 no-reset Main23260/Ready141rawexact;
+only freshUID retires and public/OS exact. Original share-preview integration remains
+ready independent work without Core/financial replay; broader gates/goal stay open.
+
 [D880 exact eligible-income period net](../../quality/eligible-income-period-net.md)
 finishes the original period-net arithmetic correction:7baseline failures,15new+1related
 host and current15native/source20exact, no database fixture/financial replay. Missing

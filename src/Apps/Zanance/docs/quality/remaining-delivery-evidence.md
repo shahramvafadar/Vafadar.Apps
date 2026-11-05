@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D881 current eligible-income ARM64/Main](current-eligible-income-arm64-main.md)
+closes current15ARM64 and existing full46f3dc51 no-reset Main23260 adoption with first
+Ready141/public/OS exact. No fixture/financial/old-host replay. Original share-of-income
+preview is the next independent integration condition; original fault/D838/broader
+requirements and overall goal remain open.
+
 [D880 exact eligible-income period net](eligible-income-period-net.md)
 closes7actual completed-net failures;15new+1related host/current15native pass with
 original scope/order/source20 preserved, no financial replay. Next independent work:

@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-881 - Current eligible-income ARM64 and complete Main (2026-11-05)
+
+D881 qualifies only current D880 eligible-income15 on Samsung ARM64, freshUID10424/
+PID21742; all fixtures in-memory, typed source20exact/A/E/S0, no DB preparation or
+financial/auth/photo/old host/x64/63/54replay. Strictprivate192AOT204ELF804staticLOAD/
+offline/v2v3/ZIPCRC/two source/three own-AOT bindings pass. Only freshUID retires;
+normal return preserves Main19466/three public packages/OS exact. Existing qualified
+full46f3dc51 adopts once without reset as Main23260/UID10380/CE155299/DE154603;
+first Ready141/all raw attributes/order exact, no pending/reload/relaunch rescue.
+Original public/grants/OS/locale-key/boot/geometry/reverse match except APK/PID. Two
+XML103864bytes hash-retire/local raw retained; one private standard Clean/no
+supplemental/frozen/R13/reset. Product/Windows/full-shipping/old successful tests not
+repeated. Original share-of-income preview is next independent missing integration;
+private Main DB/key, original fault/D838pending/D841unexecuted/performance/broader gates
+remain, overall goal active. D879 one CI cancelled/CodeQLsuccess consumed, no secondGET.
+See `src/Apps/Zanance/docs/quality/current-eligible-income-arm64-main.md`.
+
 ## D-880 - Exact eligible-income period net (2026-11-05)
 
 D880 fixes seven actual EligibleIncome completed-period net failures with checked
