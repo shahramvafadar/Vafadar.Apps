@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D892 original Home read/projection clocks](quality/original-home-read-projection-subphases.md)
+finishes one new diagnostic:69events/34pairs/health0/fullsource exact. QuickResource
+read7.550s, ledger1.230s; next narrow original quick-resource internals. Existing
+hidden-row/key-reopen fixes stay; no speed/whole-gate acceptance or old-case replay.
+
 [D891 current forecast ARM64/Main](quality/current-forecast-arm64-main.md)
 closes current35missing ARM64 and existing full2d420ef9 no-reset adoption asMain12955,
 firstReady141rawexact/publicOS preserved. A final test-XML placement error is corrected;

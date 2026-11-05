@@ -1,5 +1,14 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D892 original Home read/projection clocks](original-home-read-projection-subphases.md)
+closes whole-pipeline boundary evidence:one new cold/outer34/home69events/34pairs/
+health0/full22table source exact, existing prepared tenfold retained. QuickResource
+read7.550s versus ledger1.230s and VMforecast/plans0.640/0.634s narrows next work to
+original quick-resource/choice/materialization/stamp internals, with all guards.
+Existing hidden-row and same captured connection fixes are present, not missing
+optimizations. No D889/codec rescue, old financial/cold suite replay or speed claim.
+Retain21277/source; broader original-fault/performance/platform requirements/goal active.
+
 [D891 current forecast ARM64/Main](current-forecast-arm64-main.md)
 closes D890missing current35Core ARM64 and existing full2d420ef9 no-reset Main adoption
 as12955/firstReady141rawexact/publicOS unchanged. Initial test XML placement fails

@@ -1,5 +1,17 @@
 # 01 – Assessment and decision log
 
+## D-892 - Original Home read/projection subphases
+
+One new original cold diagnostic preserves retained22table source and completes
+outer34/home69events/34pairs/health0. QuickResourceReview read7.550s exceeds ledger
+1.230s and VMforecast/plans0.640/0.634s; actualblocks-present/lazy scalar not entered.
+Original crypto/guard/query bodies remain, privateVM/data boundaries reverse exactly,
+444source/8SQL/fourOwnAOT/strictprivate pass. No speed or exclusive-cause claim. Existing
+hidden-row and captured-choice-connection fixes already exist. Next narrow QuickResource
+read/choice/materialization/stamp costs without dropping guards or rescuing D889.
+RetainUID10260/PID21277/source; oneClean/publicOS exact, other gates/goal active.
+[Actual full-pipeline clocks and preservation](quality/original-home-read-projection-subphases.md).
+
 ## D-891 - Current forecast ARM64 and complete Main
 
 Only missing current35Core ARM64 conditions run, SDK-only27AOT37ELF138LOAD/min36/v3;

@@ -1,5 +1,12 @@
 # 04 – Canonical backlog (commercial release)
 
+[D892 original Home read/projection clocks](../../quality/original-home-read-projection-subphases.md)
+finishes one new retained100k cold diagnostic/all69events34pairs/health0/fullsource
+exact; QuickResource read7.550s dominates observed snapshot, ledger1.230s. Original
+crypto/guards/source remain; next narrow quick-resource internals, not already-present
+hidden-row/key-reopen fixes or a closed candidate. RetainUID10260/PID21277/source;
+oneClean/publicOS exact, no phone/financial/old-suite replay; goal/broader gates active.
+
 [D891 current forecast ARM64/Main](../../quality/current-forecast-arm64-main.md)
 closes missing current35SDK-only ARM64 and existing full2d420ef9 no-reset adoption:
 Main12955/firstReady141rawexact/publicOS exact. Initial XML-doc placement is fixed

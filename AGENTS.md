@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-892 - Original Home read/projection subphases (2026-11-05)
+
+One new whole-Home cold diagnostic on retained100k/200/1000,UID10260/PID21277,
+outer34count1/home69events/34completepairs/health0 and full22table101220row3247272cell
+source epoch exact. OldPID18459 admitted; one preserving observer upgrade/preparation
+20249 separate, actualcached=true/adj900 kill then original launcher; no reset/adopt/
+financial/old six-case replay. PrivateVM reverses exactly; original crypto bodies link
+directly,444original source/8SQL/fourOwnAOT/strict192204804/offline/sign pass. One local
+alias retains original lazy block/scalar await order; actualblocks-present, fallback
+selected-read0.0065ms. QuickResourceReview7549.763ms dominates observed read, ledger
+1230.015ms, VMforecast639.713/plans634.242ms; nested wall spans, no exclusive cause or
+speed/regression acceptance. ExistingD95/D342hidden rows andD274same captured choice
+connection already present; never reimplement those as missing fixes or rescueD889.
+Next narrow actual quick-resource/choice/materialization/stamp boundaries, preserving
+all access/source/choice guards. Retain21277/source; one standardClean/publicOS exact,
+no XML/supplemental/frozen/phone/R13/old unit/Windows/fullshipping action. D891singleCI
+consumed/inprogress+CodeQLsuccess/no secondGET. Originalfault/broader gates/goal active.
+See `src/Apps/Zanance/docs/quality/original-home-read-projection-subphases.md`.
+
 ## D-891 - Current forecast ARM64 and complete Main (2026-11-05)
 
 Current35originalCore conditions pass once on Samsung SDK-onlyUID10426/PID11410,
