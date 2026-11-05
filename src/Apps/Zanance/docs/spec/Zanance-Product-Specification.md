@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-852)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-853)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1242,7 +1242,9 @@ Latest reader correction: [D851](../quality/holdings-csv-exact-numeric-boundarie
 
 Latest supported-runtime update: [D850](../quality/goal-validation-supported-runtimes.md) qualifies72 finite current goal caption contexts on API24/API35 ps16k at OS200%, with source equality and no financial operation; hardware16KiB and broader gates remain open.
 
-Latest physical update: [D849](../quality/current-physical-main-adoption-d849.md) adopts904c1f91 as Main20144 once without reset, with UID/data inodes/first141raw Home nodes and public OS/package/locale state exact. No private Main/full financial/gate acceptance or old successful test is inferred.
+Latest physical input correction: [D853](../quality/current-input-corrections-physical-adoption.md) adopts65523bd6 as Main26327 once without reset; UID/data inodes/public package/five OS/boot/geometry and first141raw Home nodes exact. Locale/reverse lack fresh pre-upgrade observations; private-source and broader gates remain separate.
+
+Prior physical checkpoint: [D849](../quality/current-physical-main-adoption-d849.md) adopts904c1f91 as Main20144 once without reset, with UID/data inodes/first141raw Home nodes and public OS/package/locale state exact. No private Main/full financial/gate acceptance or old successful test is inferred.
 
 Prior physical update: [D846](../quality/physical-goal-percent-main-adoption.md) qualifies the current original goal page on ARM64 and adopts complete868f06c0 as Main15641 once without reset. First141raw Home nodes/public identities/settings exact; no financial/auth/photo/R13 replay or whole private-source acceptance.
 

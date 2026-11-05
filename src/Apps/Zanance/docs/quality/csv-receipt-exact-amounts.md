@@ -83,3 +83,7 @@ No second query, successful job log/rerun or waiting is used. This new step stil
 its own single later CI receipt. D607 is terminal; original fault cause/remedy, whole
 performance/security/A11Y/platform/provider/Store/release remain open. The overall
 continuous goal stays active; these two bounded reader corrections are complete.
+
+Later [D853 physical adoption](current-input-corrections-physical-adoption.md) adopts
+this same65523bd6 once without reset as Main26327; no reader/financial/auth/photo
+success is replayed and private Main source remains unread.

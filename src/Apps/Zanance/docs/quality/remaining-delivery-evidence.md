@@ -1,5 +1,18 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[Current input corrections on Main D853](current-input-corrections-physical-adoption.md) records:
+D853 adopts the already-qualified complete65523bd6 once without reset on reserved
+unlocked Samsung, Main26327 from20144, carrying D851/D852 exact input corrections.
+UID10380/CE155299/DE154603, three package public records/grants/five observed OS values,
+boot/geometry and all141raw Home nodes/attributes/order are exact except expected APK/PID.
+Two owned XML103864bytes hash-match/retire; local raw/used signed packages remain.
+No build/old test/financial/auth/photo/provider/R13 replay or setting write occurs.
+Locale/reverse lack a fresh pre-upgrade capture, so no around-upgrade continuity claim.
+Private Main DB/key/source/whole-gate acceptance is not inferred. D607 terminal/D744
+returned/D838 pending/D841 unexecuted/original-fault/performance/broader gates and goal
+active remain. Existing authorized wireless5038 is used without start/reset/pair.
+
+
 [Exact input readers D852](csv-receipt-exact-amounts.md) records:
 D852 completes two independent exact-number reader corrections: CSV rejects a
 submitted nonzero tail beyond currency precision even when decimal parsing rounds it;

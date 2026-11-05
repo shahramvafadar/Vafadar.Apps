@@ -14018,3 +14018,17 @@ retires, original5606 public state exact and four standard Cleans pass; no XML/s
 frozen/phone/R13/runtime action. Shipping65523bd6 prepared, not Main;20144/904 stays dated.
 D838 pending/D841 unexecuted/original-fault/whole-performance/broader gates and goal active.
 See [finite verification](quality/csv-receipt-exact-amounts.md).
+
+## D-853 - Current exact-input physical adoption (2026-11-05)
+
+D853 adopts the already-qualified complete65523bd6 once without reset on reserved
+unlocked Samsung, Main26327 from20144, carrying D851/D852 exact input corrections.
+UID10380/CE155299/DE154603, three package public records/grants/five observed OS values,
+boot/geometry and all141raw Home nodes/attributes/order are exact except expected APK/PID.
+Two owned XML103864bytes hash-match/retire; local raw/used signed packages remain.
+No build/old test/financial/auth/photo/provider/R13 replay or setting write occurs.
+Locale/reverse lack a fresh pre-upgrade capture, so no around-upgrade continuity claim.
+Private Main DB/key/source/whole-gate acceptance is not inferred. D607 terminal/D744
+returned/D838 pending/D841 unexecuted/original-fault/performance/broader gates and goal
+active remain. Existing authorized wireless5038 is used without start/reset/pair.
+See [finite public adoption](quality/current-input-corrections-physical-adoption.md).
