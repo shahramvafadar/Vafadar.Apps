@@ -3571,3 +3571,14 @@ remain protected; no prior financial/auth/photo replay, runtime/GC or frozen act
 Eight standard Clean profiles pass; full offline2ac14280 is prepared, not on Main.
 Whole gates and the continuous goal remain active.
 See [finite evidence](quality/original-budget-money-publication.md).
+
+
+## D-834 - Loan estimate numeric range guards
+
+The original read now preserves representable zero-rate installments and refuses
+unrepresentable annuity/cumulative-interest results before a schedule is published.
+15 new+3 directly affected selected cases and15 native scalar checks pass, with one
+original LoanSchedulePage error/rows0/Retry-available boundary and unchanged full20
+source. No payment, writer/model/rounding/date policy or old-success replay. Prepared
+shippingfbdd70f2 is not on Main; positive-rate precision and broader gates remain open.
+See [finite evidence](quality/loan-estimate-numeric-range.md).

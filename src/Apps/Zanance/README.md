@@ -15,6 +15,12 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 5 November 2026
 
+[D834 loan estimate range guards](docs/quality/loan-estimate-numeric-range.md)
+keeps zero-interest ceilings exact and rejects unrepresentable payment/interest results.
+18 selected cases and one original native error publication retain full source. Complete
+fbdd70f2 is prepared, not installed on physical Main; broader gates remain open.
+
+
 [D830 original budget money publication](docs/quality/original-budget-money-publication.md)
 keeps effective limits/overspent display checked and preserves zero-limit captions.
 34 selected cases across lineages and two different original native page boundaries

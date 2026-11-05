@@ -55,6 +55,7 @@ public static class LoanCalculator
     }
 
     /// <summary>Returns the monthly installment that repays <paramref name="principal"/> in <paramref name="months"/>, rounded up.</summary>
+    /// <exception cref="OverflowException">The calculated estimate is nonfinite or outside the supported money range.</exception>
     public static long Installment(long principal, decimal annualRatePercent, int months)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(months, 1);
@@ -65,18 +66,21 @@ public static class LoanCalculator
 
         if (annualRatePercent <= 0)
         {
-            return (principal + months - 1) / months;
+            // Divide before rounding: the final installment can fit even when principal + months - 1 does not.
+            return principal / months + (principal % months == 0 ? 0 : 1);
         }
 
         var rate = (double)(annualRatePercent / 1200m);
         var factor = Math.Pow(1 + rate, months);
-        return (long)Math.Ceiling(principal * rate * factor / (factor - 1));
+        // An unrepresentable/nonfinite estimate must refuse instead of converting to a negative money value.
+        return checked((long)Math.Ceiling(principal * rate * factor / (factor - 1)));
     }
 
     /// <summary>
     /// Calculates the installments from <paramref name="firstDate"/> on, one per month on the same day (clamped to the
     /// month end), until <paramref name="outstanding"/> is repaid.
     /// </summary>
+    /// <exception cref="OverflowException">The accumulated public interest total cannot be represented in minor units.</exception>
     public static LoanSchedule Schedule(long outstanding, decimal annualRatePercent, long installment, DateOnly firstDate)
     {
         var rows = new List<LoanInstallment>();
@@ -101,7 +105,8 @@ public static class LoanCalculator
 
             var (interest, principal) = Split(remaining, annualRatePercent, installment);
             remaining -= principal;
-            totalInterest += interest;
+            // Individually valid installments do not guarantee that the published cumulative interest fits.
+            totalInterest = checked(totalInterest + interest);
 
             // Months are counted from the first date, so 31 January gives 28/29 February and then 31 March again.
             rows.Add(new LoanInstallment(number, firstDate.AddMonths(number - 1), interest + principal, interest, principal, remaining));

@@ -6,6 +6,8 @@ the first release candidate. Requirement ids refer to the [specification](docs/s
 
 ## [Unreleased]
 
+- D-834: keep very large zero-interest installments positive and exact; show a calculation error when a loan payment or cumulative interest exceeds the supported monetary range.
+
 - D-830: reject an overflowing budget limit plus carry before showing monetary rows; keep valid zero-limit budgets visible and use the same checked limit on Home, reports and alerts.
 
 - D-829: keep budget history averages precise, reject overflowing planned/envelope totals, preserve surplus/deficit carry correctly and include valid nonmonthly bills in the last supported year.

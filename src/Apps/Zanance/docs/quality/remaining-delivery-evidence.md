@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D834 loan estimate range guards](loan-estimate-numeric-range.md)
+retains18 selected cases and one original native overflow/error cover with full source
+equality; completefbdd70f2 is prepared, not on physical Main. Broader gates stay open.
+
+
 [D830 original budget money publication](original-budget-money-publication.md)
 retains one actual overflow cover and one distinct final zero-limit ready page, with
 34 selected cases across explicit lineages and full source preservation.

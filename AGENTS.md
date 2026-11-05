@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-834 - Loan estimate numeric range guards (2026-11-05)
+
+D834 preserves exact zero/nonpositive-rate installment ceilings, refuses out-of-range
+annuity conversion and checks cumulative schedule interest before publication.12 original
+failures/15 new+3 affected selected cases and15 actual native scalar checks pass. One
+fresh loan monetary-opening/terms metadata source, no entries/schedules/payment, produces
+one original LoanSchedulePage Overflow/error/rows0 and full20 source equality in18819/
+UID10235. Focus-observer refusal continues the same read without prepare/scalar replay.
+Only that fresh UID retires after exact OS/key-absence/geometry/boot/packages/reverse;
+retained D833 UID10234 and D809 AVD/data/record/R13 unknown stay protected. Strict Windows/
+full offline384/408/1608 and private192/204/804/signature/ZIP pass. Four standard Clean
+profiles, no phone/financial-command/auth/photo/runtime/GC/frozen action; preparedfbdd70f2
+is not on Main. Original positive-rate precision is not broadly accepted; whole gates
+and goal remain open. See `src/Apps/Zanance/docs/quality/loan-estimate-numeric-range.md`.
+
+
 ## D-833 - Original post-fault Accounts source audit (2026-11-05)
 
 One source-only original App/Core/Data activity18482/UID10234 adopts existing protected

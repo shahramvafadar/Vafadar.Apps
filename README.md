@@ -100,7 +100,7 @@ controls.
 
 ## Current delivery status
 
-Documentation refreshed on **1 November 2026**. Android completion comes before iOS execution by the owner's
+Documentation refreshed on **5 November 2026**. Android completion comes before iOS execution by the owner's
 decision; reported Mac availability does not change that order. Windows remains a development target. Local
 engineering evidence, physical-device acceptance, genuine OAuth/store integration and public release are
 separate gates.
@@ -116,8 +116,8 @@ ownership and original asset-event frame/receipt handling. Their reports retain 
 [D-750](src/Apps/Zanance/docs/quality/fused-text-normalization.md) records a rejected optimization:
 the fixed native memory gate failed, so production source and the accepted phone package were restored.
 D-607 is terminal: both physical notifications arrived inside its original one-hour window, source matched and
-the fresh fixture retired; precision/idle limitations remain. D-733 then adopted the current complete Android
-package without reset, preserving current Home979/141 and three profile names/selection. This does not accept
+the fresh fixture retired; precision/idle limitations remain. D-733 then adopted its then-current complete Android
+package without reset, preserving its observed Home979/141 and three profile names/selection. This does not accept
 every changed financial path. [D-734](src/Apps/Zanance/docs/quality/disposed-native-window-peer.md)
 then repairs an observed disposed-dialog-peer crash and qualifies the remaining physical time-dialog
 sequence on the corrected no-reset package. Performance, general stability, remaining accessibility, provider/store and
@@ -127,14 +127,18 @@ platform release gates remain open.
 |---|---|
 | Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint/D799 damaged receipt grouping and D800 resume ownership/input-feedback and D804 pending camera-result ownership corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | [D804](src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) adopts complete27d8070b without reset as Main1069; Home979/141 and public package/OS checks retain one raw drawing-order delta. D800/D799/D790 are historical. [D802](src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md) completes the three finite owner-cancelled CSV/local-backup/PDF routes; [D803](src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) adds one owner-framed camera draft. Private DB/key, broader device/security and release gates remain open |
-| Performance and stability | The general two-second Home target and general ANR/crash qualification remain open; rejected experiments are retained as historical findings |
+| Physical adoption | Latest recorded physical adoption is [D814](src/Apps/Zanance/docs/quality/current-complete-main-adoption.md), ac3a82f6/PID32063, not fresh liveness. D834fbdd70f2 is prepared, not installed there. Historical [D804](src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) adopts complete27d8070b without reset as Main1069; Home979/141 and public package/OS checks retain one raw drawing-order delta. D800/D799/D790 are historical. [D802](src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md) completes the three finite owner-cancelled CSV/local-backup/PDF routes; [D803](src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) adds one owner-framed camera draft. Private DB/key, broader device/security and release gates remain open |
+| Performance and stability | [D831](src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md) retains a new large-page native exit; [D833](src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md) proves the declared source equal after it. Fault remedy, large-page timing and the general two-second target remain open; rejected hypotheses are not replayed |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |
 
 Use the [canonical commercial backlog](src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/04-backlog.md)
 and [specification status](src/Apps/Zanance/docs/spec/Zanance-Product-Specification.md)
 for detailed evidence and remaining work; historical test totals are not current completion percentages.
+
+[D834 loan range guards](src/Apps/Zanance/docs/quality/loan-estimate-numeric-range.md) preserve exact large
+zero-rate installments and refuse unrepresentable loan payment/interest results before publication.
+Eighteen selected cases and one original Android error cover retain source; wider delivery gates stay open.
 
 ## Shared libraries
 
@@ -236,5 +240,5 @@ and broader security/stability/performance/platform/release gates remain open.
 
 [D806 receipt-source contrast](src/Apps/Zanance/docs/quality/receipt-source-caption-contrast.md) changes one existing semantic text token
 and qualifies actual original native colors in both themes without OCR/photo/financial
-replay. Current Main isbb8ceb21/9187 after one no-reset upgrade and exact public Home141/OS
+replay. Its dated Main observation isbb8ceb21/9187 after one no-reset upgrade and exact public Home141/OS
 preservation; broader accessibility/security/stability/performance/platform/release gates remain open.

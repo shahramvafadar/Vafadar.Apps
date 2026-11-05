@@ -1,5 +1,10 @@
 # Documentation
 
+[D834 loan estimate range guards](../src/Apps/Zanance/docs/quality/loan-estimate-numeric-range.md)
+retains18 selected cases and one original native overflow/error cover with full source
+equality; completefbdd70f2 is prepared, not on physical Main. Broader gates stay open.
+
+
 [D833 original post-fault source audit](../src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md)
 proves all20 declared typed source components equal across the new native exit,
 without a MAUI Window or page/timing replay; fault remedy remains open.
