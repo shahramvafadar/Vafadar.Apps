@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D885 original Q02 native preparation](original-q02-native-preparation.md)
+finishes existing-input reference adoption/native warm-readiness/source-difference
+qualification. Cold timing remains unexecuted: strict original-source mismatch is only
+Settings.DisplayUnits/UpdatedAt; all other22table cells/all32ledger fields exact.
+Keep UID10259/PID9881 prepared source; next seal explicit post-startup epoch before
+cold samples without normalizing failure, retuning workload or repeating preparation.
+Overall goal active; no owner/CI wait.
+
 [D884 original Q02 input readiness](original-q02-input-readiness-admission.md)
 closes independent original workload availability with full22table/32field current
 migration and typed transport equality, no new financial generation/frozen reuse.

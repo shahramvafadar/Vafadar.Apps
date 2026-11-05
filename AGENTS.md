@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## D-885 - Original Q02 native preparation/source frontier (2026-11-05)
+
+D885 adopts D884 original reference10000/20/100 once into fresh emulator UID10259,
+all22tables/10140rows/324972cells/all32ledger fields exact; original warm Home9530
+publishes actual balance -122337821minorEUR and full native frame commit. Initial
+APIguard/window/fresh-category predicate failures remain; only private helpers fixed,
+three necessary no-reset observer upgrades, no successful data/adoption/financial replay.
+Strict source audit before cold sample1 then fails. Final readonly PID9881 compares
+all original cells and finds only Settings.DisplayUnits/UpdatedAt changed by original
+legacy display-unit migration; every other cell/financial32field exact. Do not normalize
+that failure or call it cold/speed acceptance. Zero cold/kill samples; tenfold not adopted.
+UID10259/PID9881 and its prepared source are intentionally retained for explicit current
+post-startup source epoch and remaining cold work: never reset/re-adopt/reseed it.
+Original5606public/OS exact except freshpackage; one7526byteXML hash-clean, one standard
+Clean, no supplemental/frozen/phone/Main/auth/photo/old suite. D884singleCI consumed,
+no secondGET; original fault/D838pending/D841unexecuted/broader gates and goal active.
+See `src/Apps/Zanance/docs/quality/original-q02-native-preparation.md`.
+
 ## D-884 - Original Q02 input-readiness admission (2026-11-05)
 
 D884 recovers independent original October9 worker1 reference10000/20/100 and

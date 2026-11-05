@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D885 original Q02 native preparation](quality/original-q02-native-preparation.md)
+adopts original reference once and observes actual loaded native warm Home; strict
+pre-cold source mismatch is exactly two Settings migration fields, all other cells
+exact. Zero cold samples; same prepared UID retained, no financial replay. Goal active.
+
 [D884 original Q02 input readiness](quality/original-q02-input-readiness-admission.md)
 finishes source availability for exact10k/20/100 and100k/200/1000 workloads; all22tables/
 32fields/typed transports exact, no financial regeneration/frozen reuse. Actual cold

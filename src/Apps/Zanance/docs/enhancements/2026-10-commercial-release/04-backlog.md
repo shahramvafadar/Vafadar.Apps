@@ -1,5 +1,11 @@
 # 04 – Canonical backlog (commercial release)
 
+[D885 original Q02 native preparation](../../quality/original-q02-native-preparation.md)
+finishes reference adoption/native warm readiness and complete source-difference
+qualification. Only two original Settings migration fields differ; no cold/kill sample
+or speed acceptance. Prepared UID10259/PID9881 stays intact for explicit post-startup
+source epoch and remaining reference/tenfold timing; no financial/setup replay.
+
 [D884 original Q02 input readiness](../../quality/original-q02-input-readiness-admission.md)
 finishes independent original10k/20/100 and100k/200/1000 input availability; current
 migration preserves22source tables/all32ledger fields and full typed transport roundtrip.

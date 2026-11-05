@@ -1,5 +1,15 @@
 # 01 – Assessment and decision log
 
+## D-885 - Original Q02 native preparation and source frontier
+
+Original reference10000/20/100 adopts once with complete22table/32field equality;
+actual original warm Home balance/native frame commit pass. Strict pre-cold source
+audit fails on only original Settings.DisplayUnits/UpdatedAt migration; all other
+cells exact. No normalization/cold timing/kill or financial replay. FreshUID10259/
+PID9881 remains with its prepared source for explicit current-source epoch and cold
+continuation, not another setup. Original fault/broader gates and goal remain active.
+[Original native preparation and complete source difference](quality/original-q02-native-preparation.md).
+
 ## D-884 - Original Q02 input-readiness admission
 
 Independent original worker1 archives preserve reference10000/20/100 and tenfold
