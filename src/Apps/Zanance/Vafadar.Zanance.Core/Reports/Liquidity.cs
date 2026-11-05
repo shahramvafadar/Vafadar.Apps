@@ -34,7 +34,7 @@ public sealed record LiquidityResult(
     IReadOnlyList<ForecastItem> ItemsAfter)
 {
     /// <summary>Gets the lowest liquidity minus protected money; negative means the plans would use protected money.</summary>
-    public long Headroom => Minimum - Protected;
+    public long Headroom => checked(Minimum - Protected);
 
     /// <summary>Gets a value indicating whether unknown amounts make the result incomplete.</summary>
     public bool IsIncomplete => UnknownCount > 0;
@@ -67,7 +67,7 @@ public static class LiquidityCalculator
             decimal? perDay = essentialEstimate is { } estimate && estimate > 0 && string.Equals(essentialCurrency, forecast.CurrencyCode, StringComparison.OrdinalIgnoreCase)
                 ? PerDay(estimate, essentialPeriod)
                 : null;
-            long Liquidity(ForecastPoint point) => point.Balance - Essential(perDay, point.Date.DayNumber - today.DayNumber);
+            long Liquidity(ForecastPoint point) => checked(point.Balance - Essential(perDay, point.Date.DayNumber - today.DayNumber));
 
             var after = forecast.Path.Where(p => p.Date > today).ToList();
             var lowest = after.Count == 0 ? new ForecastPoint(today, forecast.StartBalance) : after.MinBy(Liquidity);
@@ -104,12 +104,14 @@ public static class LiquidityCalculator
         ArgumentNullException.ThrowIfNull(goals);
         ArgumentNullException.ThrowIfNull(allocations);
         var protectedGoals = goals.Where(g => g.Protect && g.Type == GoalType.Earmark && g.State is GoalState.Active or GoalState.Paused).Select(g => g.Id).ToHashSet();
-        var earmarks = allocations.Where(a => protectedGoals.Contains(a.GoalId)).GroupBy(a => a.AccountId).ToDictionary(g => g.Key, g => g.Sum(a => a.Amount));
+        // D-858: unordered allocation/release history may cancel exactly before the current balance caps coverage.
+        var earmarks = allocations.Where(a => protectedGoals.Contains(a.GoalId)).GroupBy(a => a.AccountId)
+            .ToDictionary(g => g.Key, g => g.Aggregate((Int128)0, (sum, allocation) => checked(sum + allocation.Amount)));
         var result = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
         foreach (var account in accounts.Where(a => !a.IsArchived && a.UsableForPayments && earmarks.ContainsKey(a.Id)))
         {
-            var covered = Math.Min(Math.Max(0, earmarks[account.Id]), Math.Max(0, LedgerCalculator.Balance(account, entries, today)));
-            result[account.CurrencyCode] = result.GetValueOrDefault(account.CurrencyCode) + covered;
+            var covered = checked((long)Int128.Min(Int128.Max(0, earmarks[account.Id]), Math.Max(0, LedgerCalculator.Balance(account, entries, today))));
+            result[account.CurrencyCode] = checked(result.GetValueOrDefault(account.CurrencyCode) + covered);
         }
 
         return result;

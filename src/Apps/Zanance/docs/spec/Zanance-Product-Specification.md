@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-857)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-858)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1235,6 +1235,8 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
+
+Latest liquidity correction: [D858](../quality/liquidity-protection-exact-results.md) refuses wrapped headroom/projected money/covered totals and sums allocation history exactly before the existing account cap.17new+2related host cases and17 original Android calculations pass without financial DB preparation; broader gates remain separate.
 
 Latest capacity correction: [D857](../quality/goal-capacity-exact-boundaries.md) checks final capacity/combined commitments and exact monthly ceiling needs.18new+1 related selected host cases and18 original Android calculations pass with source20/A/E/S0 exact; quantities, allocations and wider gates remain unchanged.
 

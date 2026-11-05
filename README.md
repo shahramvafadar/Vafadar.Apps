@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D858 exact liquidity/protection](src/Apps/Zanance/docs/quality/liquidity-protection-exact-results.md) corrects wrapped deficits and covered totals while preserving allocation/release cancellation;17new+2related host cases and17 original Android calculations pass without financial preparation. Shipping4f7d3f80 is prepared; dated Main remains31707/abf.
+
 [D857 exact goal capacity](src/Apps/Zanance/docs/quality/goal-capacity-exact-boundaries.md) corrects wrapped suggestion totals and monthly needs;18new+1 related selected host cases and18 original Android calculations pass without financial preparation. Shippinga5442ada is prepared; dated Main remains31707/abf.
 
 [D856 current Main adoption](src/Apps/Zanance/docs/quality/retained-query-current-main-adoption.md) applies the already-qualified completeabf072cd once without reset as Main31707; all141raw Home attributes/public state and fresh locale/reverse match. No financial/authentication or successful-test replay.

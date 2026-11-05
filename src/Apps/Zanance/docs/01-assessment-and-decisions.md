@@ -1,5 +1,10 @@
 # 01 – Assessment and decision log
 
+D-858: [exact liquidity/protection](quality/liquidity-protection-exact-results.md)
+refuses wrapped deficits/covered totals and preserves exact allocation cancellation
+before the existing balance cap.17new+2related host cases and17 original Android
+calculations pass; source20/A/E/S0 exact, broader UI/platform/performance gates separate.
+
 D-857: [exact goal capacity](quality/goal-capacity-exact-boundaries.md)
 refuses wrapped capacity/commitments and preserves positive exact ceiling needs.
 18new+1 related selected host cases and18 original native calculations pass with

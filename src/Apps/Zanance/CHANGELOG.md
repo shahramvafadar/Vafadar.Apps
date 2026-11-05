@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-858: refuse wrapped liquidity/protected totals and preserve exact allocation/release cancellation before current-balance coverage, without changing financial data.
+
 - D-857: refuse unrepresentable goal-capacity/commitment totals and preserve exact positive monthly needs without changing allocations or ledger data.
 
 - D-855: allow correction of failed Transactions filters using the same completed source, preserving the financial cover, input and accepted feedback.

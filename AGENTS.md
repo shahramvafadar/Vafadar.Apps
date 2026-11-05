@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-858 - Exact liquidity and covered protected money (2026-11-05)
+
+D858 corrects liquidity/headroom and protected-money arithmetic: unsupported deficits
+or covered currency totals refuse instead of wrapping, and unordered allocation/release
+history cancels exactly before the existing positive account-balance cap. Eight actual
+baseline failures lead to17new+2related selected host passes and17 original native
+calculations, UID10248/PID29683/source20/A/E/S0 exact without financial DB preparation.
+Initial test-only analyzer and early PID observer refusals remain; the same launch
+continues without restart or successful check replay. Strict Windows/full offline
+3844081608/private192204804/nine own-AOT bindings pass. Only freshUID retires, original
+5606 public state exact; four standard Cleans/no XML/supplemental/frozen/phone/R13.
+Shipping4f7d3f80 prepared, not Main;31707/abf is dated D856. Original fault, D838 decision,
+whole-performance/security/platform gates and active goal remain separate.
+See `src/Apps/Zanance/docs/quality/liquidity-protection-exact-results.md`.
+
 ## D-857 - Exact goal capacity and monthly need boundaries (2026-11-05)
 
 D857 corrects final goal-capacity money, combined monthly loan/goal commitments and
