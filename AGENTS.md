@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-861 - Current money corrections on physical Main (2026-11-05)
+
+D861 adopts the already-qualified completee848d7c1 once without reset on reserved
+unlocked Samsung, Main10720 from31707, carrying D857 capacity/D858 liquidity/D859 KPI
+corrections with D860's separate current53-case ARM64 source condition retained.
+UID10380/CE155299/DE154603, all141raw Home attributes/order, three public package
+records/grants/five OS values, fresh locale/key-presence/reverse, boot and geometry
+match except expected APK/PID. Two owned XML103864bytes hash-retire; used signed/local
+raw remain. No build/old host/x64/ARM64 case/financial/auth/camera/R13 replay or setting
+write. D859 qualified package/nine own-AOT binding and D860 six current source hashes
+are reused; no whole-PE or private Main source/key acceptance is inferred. Original
+fault/D838 decision, whole-performance/security/platform gates and active goal remain.
+See `src/Apps/Zanance/docs/quality/current-money-corrections-main-adoption.md`.
+
 ## D-860 - Current money calculations on physical ARM64 (2026-11-05)
 
 D860 completes a previously unqualified actual ARM64 condition for the current

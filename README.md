@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D861 current Main adoption](src/Apps/Zanance/docs/quality/current-money-corrections-main-adoption.md) applies existing completee848d7c1 once without reset as Main10720, carrying capacity/liquidity/KPI corrections; fresh Home141raw/public state/OS/locale/reverse match without calculation or financial replay.
+
 [D860 physical ARM64 calculations](src/Apps/Zanance/docs/quality/physical-arm64-current-money-results.md) qualifies all53 existing capacity/liquidity/KPI cases once on actual Samsung in a SDK-only caller without database/key or financial startup. Main31707/abf and public state are preserved; whole product/platform gates remain.
 
 [D859 exact KPI money/medians](src/Apps/Zanance/docs/quality/kpi-money-and-median-results.md) corrects wrapped report results and even medians;18new+3related host cases and18 original Android calculations pass without financial preparation. Shippinge848d7c1 is prepared; dated Main remains31707/abf.

@@ -1,5 +1,10 @@
 # 01 – Assessment and decision log
 
+D-861: [current money Main adoption](quality/current-money-corrections-main-adoption.md)
+installs already-qualified completee848d7c1 once without reset as Main10720. Fresh
+Home141raw/public records/OS/locale-key/reverse match; D86053-case evidence is reused
+without another calculation or financial/auth/photo operation. Private-source/gates separate.
+
 D-860: [physical ARM64 money](quality/physical-arm64-current-money-results.md)
 qualifies the same53 current capacity/liquidity/KPI assertions once in a SDK-only
 caller, without App/Data/database/key startup or host/x64/financial replay. Main31707/abf
