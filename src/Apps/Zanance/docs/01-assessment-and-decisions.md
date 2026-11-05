@@ -1,5 +1,24 @@
 # 01 – Assessment and decision log
 
+## D-876 - Current completed-net ARM64 and complete Main
+
+D876 qualifies only current D875completed-net54 and original GoalDetail on actual
+Samsung ARM64, fresh UID10422/PID7641;192AOT204ELF804staticLOAD/offline/v2v3/CRC,
+three current-source/three own-AOT bindings pass. These are54current conditions on a
+missing platform, not54new tests or old host/x64/17/28/53/financial/auth/photo replay.
+Empty source20 and one six-row new-platform noncash fixture/original GoalDetail retain
+source20, full native current-month caption/no ellipsis. Only freshUID retires; normal
+return keeps Main32234/public/OS/locale-key/boot/geometry/reverse exactly. Existing
+complete D875acf7d16d is adopted once without reset as Main9535,UID10380/CE155299/
+DE154603. Initial16-node Preparing frame is disqualified; same PID continues without
+launch/Reload/input rescue to first actualReady141/all raw attributes/order exact.
+Original three package/grant/five OS/fresh locale-key/reverse/boot/geometry match except
+expected APK/PID. Three XML109811bytes hash-retire/local raw retained, one private
+standard Clean/no unchanged Windows/full-shipping/old-host build or supplemental/frozen
+action. Private Main DB/key/financial equality and speed are not inferred. Reader cost/
+original fault/D838/broader gates remain; compact candidate stays rejected and goal active.
+[Current missing-platform and actual public adoption](quality/current-completed-net-arm64-main.md).
+
 ## D-875 - Exact completed balance and goal contribution nets
 
 D875 fixes14actual completed-net failures across end-of-day account Balance and

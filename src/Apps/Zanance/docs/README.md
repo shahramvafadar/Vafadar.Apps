@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D876 current completed-net ARM64/Main](quality/current-completed-net-arm64-main.md)
+qualifies current54/actual GoalDetail and adopts existing completeacf7d16d once as
+Main9535; Preparing16 is disqualified, actualReady141/public/OS exact. Cost/gates remain.
+
 [D875 exact completed nets](quality/completed-balance-goal-net-reads.md)
 fixes14actual balance/goal-period failures;54new+13related host and54current native
 conditions plus original GoalDetail/source20 pass. Current ARM64/adoption/cost remain.

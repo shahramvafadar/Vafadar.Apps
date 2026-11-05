@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D876 current completed-net ARM64/Main](current-completed-net-arm64-main.md)
+closes current D875 missing ARM64/public adoption:54current/original GoalDetail/source20
+exact, one existing fullacf7d16d adoption as Main9535 and actualReady141raw/public/OS
+exact after disqualified Preparing16. Reader cost/original-fault/broader gates remain.
+
 [D875 exact completed nets](completed-balance-goal-net-reads.md)
 closes14actual failures in completed Balance/three goal contribution readers, with
 54new+13related host/54current native and original GoalDetail/source20 exact. Next

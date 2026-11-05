@@ -1,5 +1,9 @@
 # 04 – Canonical backlog (commercial release)
 
+[D876 current completed-net ARM64/Main](../../quality/current-completed-net-arm64-main.md)
+finishes current54ARM64/original goal and no-reset Main9535/acf7d16d public adoption.
+Initial Preparing16 is not a pass; actualReady141exact. Reader cost/broader gates remain.
+
 [D875 exact completed nets](../../quality/completed-balance-goal-net-reads.md)
 completes the represented reader/actual GoalDetail correction without financial replay.
 Current54ARM64/full adoption, reader cost/original fault and broader gates remain.
