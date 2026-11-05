@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D866 full-range holding display](full-range-holding-native-display.md)
+closes the named36-context native caption/viewport gap only; exact source20 and
+restoration pass. Direct hosting/programmatic scroll does not close whole A11Y,
+physical layout, original-fault or statistical-performance requirements.
+
 [D865 bound muted-contrast source premise](bound-muted-contrast-source-admission.md)
 identifies no declared ordinary-text failure for an immediate global recolor; keep
 all low-ratio hypothetical controls and broader runtime/accessibility requirements.

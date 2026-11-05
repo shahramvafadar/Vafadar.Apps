@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D866 full-range holding display](quality/full-range-holding-native-display.md)
+closes only36 new native contexts after the exact-arithmetic changes; source20 and
+original preferences/OS match. No product change or old-success replay.
+
 [D865 bound muted-contrast source admission](quality/bound-muted-contrast-source-admission.md):
 actual declared text/card and archived-category alpha models do not establish the
 proposed global-palette defect; no code/native/build/test replay or broad A11Y pass.

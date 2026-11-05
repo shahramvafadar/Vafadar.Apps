@@ -1,5 +1,9 @@
 # 04 – Canonical backlog (commercial release)
 
+[D866 full-range holding display](../../quality/full-range-holding-native-display.md)
+accepts36 new six-language/theme/width/font2 contexts with exact source20;
+no product defect/edit or financial/old-test replay. Broader gates remain open.
+
 [D865 bound muted-contrast source premise](../../quality/bound-muted-contrast-source-admission.md)
 closes only the immediate global-recolor premise: actual declared text/card and
 archived-label alpha pairs exceed4.5. Hypothetical failing pairs remain unbound,

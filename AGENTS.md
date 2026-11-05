@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-866 - Full-range holding native display (2026-11-05)
+
+D866 qualifies only the new full-range holding display after D863:36 contexts,
+six languages/two themes/360412680/OSfont2 on fresh API36/x64/4096 UID10216/PID3079.
+Original detail reader/VM/AmountReadout show exact maximum quantity, derived mass
+and fine mass; wrapped native captions have no ellipsis and full visible bounds,
+and original horizontal viewport reaches both ends. Direct hosting/programmatic
+endpoint is not Shell navigation, glyph/touch or whole A11Y acceptance. One valid
+three-row noncash fixture, account/ledger/valuation0; complete source20 remains exact.
+Persian numeric-oracle punctuation failure is retained and corrected in the observer;
+completed contexts0/1 never replay. Private compiler/discovery failures remain.
+Private strict192AOT204ELF804staticLOAD/offline/nondebuggable/v2v3/CRC/ZIP and three
+own-AOT/six current-source/sole DI-reversal bindings pass; product/Windows/full build
+and old host/ARM64/financial/auth/photo/R13 tests are not repeated. UI preferences,
+original root kind and original OS/public state restore exactly; only freshUID/AVD
+retire, one standard Clean, no supplemental/frozen or old5606/phone command. Main15014/
+a214 remains dated D864. D838/original fault/whole-performance/platform gates and goal
+remain open.
+See `src/Apps/Zanance/docs/quality/full-range-holding-native-display.md`.
+
 ## D-865 - Bound muted-contrast source premise (2026-11-05)
 
 D865 inventories698tracked App sources/44direct Muted references and48explicit
