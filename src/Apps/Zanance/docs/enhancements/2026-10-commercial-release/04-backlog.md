@@ -1,5 +1,20 @@
 # 04 – Canonical backlog (commercial release)
 
+[Current28 ARM64/Main D864](../../quality/current-quantity-wealth-arm64-main.md):
+D864 qualifies only current D862wealth8/D863quantity20 on actual Samsung ARM64,
+SDK-only UID10419/PID13566/27AOT37ELF138staticLOAD/min36/v3/offline. Four current
+source hashes and three own-AOT bindings pass; these are28current cases on a missing
+platform, not28new tests or replay of D860's53. FreshUID retires and original Main10720/
+public/OS state matches. Existing qualified completea214b104 is then adopted once
+without reset as Main15014. First51-node Loading frame fails premature raw comparison
+and is disqualified; same PID continues without Reload/relaunch, Ready141all raw
+attributes/order exact. UID10380/CE155299/DE154603/three original public package records,
+five OS/locale-key/boot/geometry/reverse match except expected APK/PID. Three XML123416
+bytes hash-retire; local raw/used packages remain. One SDK standard Clean, no product/
+Windows/full-package rebuild, old host/x64/53-case/financial/auth/photo/R13/frozen replay.
+Private Main source/key, original fault/D838 and whole-performance/security/platform
+gates remain separate; overall goal active.
+
 [Exact quantity/mass D863](../../quality/quantity-raw-and-mass-boundaries.md):
 D863 preserves original normalized quantity digits and widens only mass/purity
 products before original truncating division/final checked narrowing. Twelve actual

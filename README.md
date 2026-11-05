@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D864 current28 ARM64/Main](src/Apps/Zanance/docs/quality/current-quantity-wealth-arm64-main.md) qualifies only current8wealth+20quantity on physical ARM64 and adopts existing completea214 once without reset as Main15014. First Loading frame is disqualified; same-process Ready141raw/public/OS match. No old53-case or financial/auth replay.
+
 [D863 exact quantity/mass](src/Apps/Zanance/docs/quality/quantity-raw-and-mass-boundaries.md) refuses rounded-away input fractions and preserves representable derived mass/fineness;20new host cases in18+2lineage/14related and20 original Android calculations pass without financial preparation. Fulla214b104 is prepared, not Main.
 
 [D862 exact wealth corrections](src/Apps/Zanance/docs/quality/wealth-adjustment-cancellation.md) preserves representable adjustment cancellation while retaining invalid-balance refusal;8new+2related host cases and8 original Android calculations pass without financial preparation. Fullbcd4b1e3 is prepared, not Main.

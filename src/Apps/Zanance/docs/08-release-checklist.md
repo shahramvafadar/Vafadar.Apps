@@ -1,5 +1,11 @@
 # 08 – Release checklist (first public release)
 
+D-864: [current28 ARM64/full Main](quality/current-quantity-wealth-arm64-main.md)
+qualifies only current8wealth+20quantity cases in fresh SDK-only ARM64, then adopts
+existing completea214 once without reset as Main15014. First Loading51 comparison
+is disqualified; same PID Ready141raw/public/OS exact. No new unit tests/financial
+replay or private Main/general-gate acceptance; overall goal remains active.
+
 D-863: [exact original quantity/mass](quality/quantity-raw-and-mass-boundaries.md)
 refuses erased raw fractions and preserves supported scaled mass/purity.20new host
 cases in18+2oracle lineage/14related and20 original final-native calculations pass,
