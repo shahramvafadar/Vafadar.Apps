@@ -1,5 +1,14 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D888 protected startup subphases](original-protected-startup-subphases.md)
+closes internal-boundary evidence on retained100k:92events/45pairs/34outer markers,
+health0/fullsource exact. ExistingInstallation rules out guessed new-install work;
+candidate and retained-key integrity remain required distinct paths. Next independent
+private development investigates Completed-only same-verified-owner transfer with
+all original checks/wipes/ownership, preregistered adversarial/performance gates.
+RetainUID10260/PID18459/source; no reset/adoption/accepted case replay. Original fault
+and broader gates/goal remain active, no owner/CI wait.
+
 [D887 cold startup/Home phase boundaries](original-cold-startup-home-phases.md)
 closes the missing one-case stage trace/all33markers/fullsource exact: original
 protected resolve-await8.262s and snapshotwait4.835s are broad observed spans, not a

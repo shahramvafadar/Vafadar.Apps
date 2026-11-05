@@ -1,5 +1,17 @@
 # 01 – Assessment and decision log
 
+## D-888 - Original protected startup subphases
+
+One new retained-source diagnostic has34outer markers/92internal events/45pairs,
+all health counters0 and full22table source exact. ExistingInstallation is observed;
+candidate integrity4.345s and retained-key integrity2.734s are separate required paths.
+Private graph/two linked Data libraries/8resources/source444/fourOwnAOT/strict pass.
+Observer throw risk was fixed before deployment, with2new private isolation controls;
+no product or old-suite replay. RetainUID10260/PID18459/source, investigate a guarded
+Completed-only verified-owner handoff preserving every check and wipe; no speed fix
+or security acceptance. Broader gates/goal active.
+[Evidence and next guarded development](quality/original-protected-startup-subphases.md).
+
 ## D-887 - Original cold startup/Home phase boundaries
 
 One newly registered cold phase diagnostic reuses retained100k/200/1000 with all33

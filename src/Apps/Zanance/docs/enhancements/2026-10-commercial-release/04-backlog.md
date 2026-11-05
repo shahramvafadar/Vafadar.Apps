@@ -1,5 +1,12 @@
 # 04 – Canonical backlog (commercial release)
 
+[D888 protected startup subphases](../../quality/original-protected-startup-subphases.md)
+finishes internal protected-open evidence:92events/45pairs/34outer markers/health0,
+fullsource exact and existing-install route observed. Integrity4.345s/2.734s stays;
+next guarded Completed-only verified-owner handoff development must preserve checks,
+wipes/cancellation/publication, with adversarial/equivalence/performance gates first.
+RetainUID10260/PID18459/source; no financial/preparation/old successful case replay.
+
 [D887 cold startup/Home phase boundaries](../../quality/original-cold-startup-home-phases.md)
 finishes one new cold diagnostic/all33markers/source exact on retained100k; original
 protected resolve-await8.262s/snapshotwait4.835s need internal boundary evidence before

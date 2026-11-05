@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D888 protected startup subphases](quality/original-protected-startup-subphases.md)
+finishes one new internal diagnostic:92events/45pairs/health0/fullsource exact.
+Separate integrity spans4.345s/2.734s remain required; next guarded verified-owner
+handoff investigation, no skipped checks/speed acceptance/financial replay.
+
 [D887 cold startup/Home phase boundaries](quality/original-cold-startup-home-phases.md)
 finishes one missing diagnostic/all33markers/source exact on retained100k: protected
 resolve-await8.262s/snapshotwait4.835s, no exclusive cause or speed acceptance. Next

@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-888 - Original protected startup subphases (2026-11-05)
+
+One new retained100k/200/1000 cold diagnostic completes:34outer markers count1,
+92internal events/45pairs and all observer health/drops0; full22table source exact.
+ExistingInstallation/initial-generation route is observed; selected-session fast path
+already exists. Candidate plain integrity4345.423ms and retained-key integrity2734.267ms
+remain distinct required verification paths, not removable checks or exclusive cause.
+Private graph/source444/resources8/reversals/fourOwnAOT and strict192204804/offline/sign
+pass. Initial observer throw risk fixed before any deployment; unused APK preserved,
+2new private isolation controls pass, original crypto failures untouched. No product
+code/financial/old suite/phone/frozen change. Two standard Cleans/publicstate exact;
+retainUID10260/PID18459/source for guarded Completed-only verified-owner-handoff
+investigation with all checks/wipe/cancellation/publication intact; no reset/adoption
+or accepted case replay. D887CI consumed/no secondGET. Broader gates/goal active.
+See `src/Apps/Zanance/docs/quality/original-protected-startup-subphases.md`.
+
 ## D-887 - Original cold startup/Home phase boundaries (2026-11-05)
 
 D887 adds only reversible clock/count hooks to four original App source bodies and
