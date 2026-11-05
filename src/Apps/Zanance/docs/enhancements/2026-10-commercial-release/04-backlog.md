@@ -1,5 +1,12 @@
 # 04 – Canonical backlog (commercial release)
 
+[D890 completed forecast nets](../../quality/forecast-completed-currency-day-nets.md)
+fixes13new original failures without relaxing true daily money bounds or conversion
+policy.35new+13affected host/current35x64 and originalForecastPage A4/E3/S1/full20source
+exact pass; strictWindows/fullpackage/source/AOT pass.6Cleans/freshretirement restore
+original5606state. Next: only missing current35ARM64 and existing full2d420ef9 Main
+adoption; original fault/broader gates/goal active, no financial/old matrix replay.
+
 [D889 verified-owner handoff rejection](../../quality/completed-generation-owner-handoff.md)
 closes private Completed-only candidate:27new controls with lineage pass, latency
 49–50percent better but allocation17–18percent worse fails fixed1percent ceiling.

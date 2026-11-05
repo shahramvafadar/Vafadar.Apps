@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D890 completed forecast nets](quality/forecast-completed-currency-day-nets.md)
+fixes13actual new failures in complete currency/day sums and transfer ratios;
+35new+13affected host/current35Android/originalForecastPage/source exact pass.
+Full offline candidate ready; current ARM64/Main adoption and broader gates remain.
+
 [D889 verified-owner handoff rejection](quality/completed-generation-owner-handoff.md)
 closes a private candidate:27new scoped controls pass with lineage; component latency
 improves49–50percent but allocation+17–18percent fails fixed1percent. No native/product

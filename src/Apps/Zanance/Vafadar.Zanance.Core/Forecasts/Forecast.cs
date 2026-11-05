@@ -212,7 +212,7 @@ public static class ForecastCalculator
                 // The other currency follows the plan's rate for whatever amount is still to come (partly paid, a
                 // changed occurrence amount or an assumption).
                 var toAmount = schedule.ToAmount is { } to && schedule.Amount is > 0 && amount is { } used
-                    ? (long)Math.Round((decimal)to * used / schedule.Amount.Value, MidpointRounding.AwayFromZero)
+                    ? RoundedTransferAmount(to, used, schedule.Amount.Value)
                     : schedule.ToAmount;
                 var effects = Effects(schedule.Kind, schedule.AccountId, schedule.ToAccountId, amount ?? 0, toAmount, scope, null, known: amount is not null, accountCurrencies.GetValueOrDefault(schedule.AccountId));
                 foreach (var (currency, effect) in effects)
@@ -238,9 +238,12 @@ public static class ForecastCalculator
         var result = new List<CurrencyForecast>();
         foreach (var currency in currencies)
         {
-            var start = scope.Values.Where(a => Same(a.CurrencyCode, currency)).Sum(a => LedgerCalculator.Balance(a, accountEntries.For(a.Id), baseDate));
+            // D-890: a currency balance is the completed account net, not an arbitrary enumeration prefix.
+            var start = checked((long)ExactSum(scope.Values.Where(a => Same(a.CurrencyCode, currency))
+                .Select(a => LedgerCalculator.Balance(a, accountEntries.For(a.Id), baseDate))));
             var currencyItems = items.Where(i => Same(i.CurrencyCode, currency)).OrderBy(i => i.Date).ToList();
-            var byDay = currencyItems.Where(i => i.Effect is not null && !i.IsExcluded).GroupBy(i => i.Date).ToDictionary(g => g.Key, g => g.Sum(i => i.Effect!.Value));
+            var byDay = currencyItems.Where(i => i.Effect is not null && !i.IsExcluded).GroupBy(i => i.Date)
+                .ToDictionary(g => g.Key, g => ExactSum(g.Select(i => i.Effect!.Value)));
 
             var path = new List<ForecastPoint>();
             var balance = start;
@@ -251,7 +254,8 @@ public static class ForecastCalculator
             {
                 var day = DateOnly.FromDayNumber(dayNumber);
                 // Every published day, not only the final balance, must remain representable (ZEX-S0104).
-                balance = checked(balance + byDay.GetValueOrDefault(day));
+                // The unpublished day delta may be wider than long while its balance remains valid.
+                balance = checked((long)((Int128)balance + byDay.GetValueOrDefault(day)));
                 path.Add(new ForecastPoint(day, balance));
                 if (balance < minimum)
                 {
@@ -267,6 +271,25 @@ public static class ForecastCalculator
     }
 
     private static bool Same(string a, string b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+
+    // D-890: only complete currency/day results are public money; keep cancelling intermediates exact.
+    private static Int128 ExactSum(IEnumerable<long> values)
+    {
+        Int128 total = 0;
+        foreach (var value in values) total = checked(total + value);
+        return total;
+    }
+
+    // A supported final ratio can exceed decimal during multiplication. Preserve nearest-minor,
+    // midpoint-away rounding after exact division; the original caller supplies a positive divisor.
+    private static long RoundedTransferAmount(long destination, long used, long original)
+    {
+        var product = (Int128)destination * used;
+        var quotient = product / original;
+        var remainder = product % original;
+        if (Int128.Abs(remainder) * 2 >= original) quotient += product < 0 ? -1 : 1;
+        return checked((long)quotient);
+    }
 
     // Effect on the scope per currency. A transfer inside the scope moves nothing in total, unless the currencies differ.
     private static List<(string Currency, long? Effect)> Effects(

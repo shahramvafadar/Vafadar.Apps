@@ -1,5 +1,14 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D890 completed forecast nets](forecast-completed-currency-day-nets.md)
+closes three premature-overflow reader paths with35new/13baselinefail and13affected
+host conditions, current35x64native and original A4/E3/S1ForecastPage/full20source exact.
+All26daily points and existing native horizontal end captions pass; true invalid
+public-day guards remain. StrictWindows/full3844081608 and own-source/AOT bindings
+pass. Next independent condition is changed35ARM64/runtime and existing signed
+2d420ef9 no-reset Main adoption; no old successful case/financial replay. Original
+fault/D838pending/D841unexecuted/broader requirements and goal remain active.
+
 [D889 verified-owner handoff rejection](completed-generation-owner-handoff.md)
 closes the Completed-only private candidate before native/product:17new ownership+
 10actual host-provider controls pass, but7paired10k/100k allocation+17–18percent

@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-890 - Exact completed forecast currency/day results (2026-11-05)
+
+Three actual original-Core overflow paths and13of35new baseline failures are repaired:
+completed currency/day nets use checkedInt128 until the public long balance; transfer
+ratios divide exact products before original midpoint-away rounding. True invalid
+daily/final results still refuse; no writer/rate/scope/model/security/runtime change.
+35new host+13affected selected and current35Android calculations pass. Fresh5606/
+UID10261/PID19422 prepares one distinctA4/E3/S1 packet, originalForecastPage publishes
+EURMax→-Max/USD0→Max/all26daily points; full20typed source/all32ledger fields exact.
+One EUR horizontal/end, one vertical and one USD horizontal/end gesture qualify
+existing readout design, not a new layout repair/old matrix replay. Initial Startup
+observation disqualified; sameprocess continues. StrictWindows/fullOffline3844081608/
+native192204804/PDBsource/threeCoreAOT/sign pass. Six standard Cleans/freshUIDretire/
+original5606publicOS exact; no phone/XML/supplemental/frozen/auth/photo/financialSave.
+Current ARM64 runtime and existingfull2d420ef9 no-reset Main adoption remain next
+changed-platform work; Main not freshly read. D888/D889singleCI consumed/no secondGET.
+Originalfault/D838pending/D841unexecuted/broader gates and goal remain active.
+See `src/Apps/Zanance/docs/quality/forecast-completed-currency-day-nets.md`.
+
 ## D-889 - Completed-generation verified-owner handoff rejected (2026-11-05)
 
 Private Completed-at-entry same-verified-buffer handoff preserves original checks/

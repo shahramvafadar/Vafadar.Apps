@@ -1,5 +1,17 @@
 # 01 – Assessment and decision log
 
+## D-890 - Exact completed forecast currency/day nets and ratios
+
+13actual new baseline failures in35cases expose premature account/day Sum overflow
+and decimal transfer-product overflow despite valid final money. CheckedInt128 retains
+complete nets/exact ratios, original rounding and every true published-day guard.
+35new+13affected host/current35native and one originalForecastPage A4/E3/S1 with all
+26daily points/native scroll-end captions/full20source exact pass. StrictWindows/full
+shipping/native/PDB/AOT bindings pass;6standardCleans/original5606state exact/freshUID
+retired. No old successful financial/auth/photo/matrix replay. Current ARM64/full
+Main adoption is next; original fault/broader gates/goal active.
+[Actual failures, correction and current native caller](quality/forecast-completed-currency-day-nets.md).
+
 ## D-889 - Completed-generation owner-handoff gate rejection
 
 A distinct private same-verified-owner prototype preserves all original checks,
