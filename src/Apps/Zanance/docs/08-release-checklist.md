@@ -1,5 +1,18 @@
 # 08 – Release checklist (first public release)
 
+[Supported runtimes D850](quality/goal-validation-supported-runtimes.md) records:
+D850 qualifies the current goal note/error on API24 and API35 ps16k:72 distinct
+OS200% contexts/144 native caption observations, two original rejected Saves total,
+full20typed source unchanged and no financial posting. Complete904c1f91 first-run
+Onboarding is observed once per runtime; original ThemeService choices are used.
+ps16k reports userspace16384 but kernel/MMU4096, not ARM64 hardware16KiB acceptance.
+Observer/restoration failures remain explicit; only unfinished work continues.
+Fresh packages/remote XML/official AVDs retire, original5606/public templates exact,
+shared5038 preserved and one private standard Clean passes. No phone/R13/old-suite
+replay or product source change. D838 pending/D841 unexecuted/broader gates remain;
+Main20144 is only the dated D849 checkpoint and the overall goal stays active.
+
+
 [Current physical Main D849](quality/current-physical-main-adoption-d849.md) records:
 D849 adopts already-qualified complete904c1f91 once without reset on reserved,
 unlocked Samsung as Main20144 from15641. UID10380/CE155299/DE154603 and first141raw

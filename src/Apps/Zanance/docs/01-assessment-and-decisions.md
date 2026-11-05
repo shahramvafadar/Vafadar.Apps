@@ -13975,3 +13975,17 @@ No setting/auth/financial/photo/provider/R13 test command or old build/test repl
 Two owned XML103864bytes hash-match/retire; local raw and used signed APK remain.
 This is public preservation, not private Main DB/key/full financial or broader acceptance.
 See [finite physical proof](quality/current-physical-main-adoption-d849.md).
+
+## D-850 - Current goal captions on supported runtimes (2026-11-05)
+
+D850 qualifies the current goal note/error on API24 and API35 ps16k:72 distinct
+OS200% contexts/144 native caption observations, two original rejected Saves total,
+full20typed source unchanged and no financial posting. Complete904c1f91 first-run
+Onboarding is observed once per runtime; original ThemeService choices are used.
+ps16k reports userspace16384 but kernel/MMU4096, not ARM64 hardware16KiB acceptance.
+Observer/restoration failures remain explicit; only unfinished work continues.
+Fresh packages/remote XML/official AVDs retire, original5606/public templates exact,
+shared5038 preserved and one private standard Clean passes. No phone/R13/old-suite
+replay or product source change. D838 pending/D841 unexecuted/broader gates remain;
+Main20144 is only the dated D849 checkpoint and the overall goal stays active.
+See [finite runtime proof](quality/goal-validation-supported-runtimes.md).
