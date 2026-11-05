@@ -123,3 +123,7 @@ Related: [manual-rate input](exact-manual-rate-input.md),
 [original goal editor](complete-original-goal-editor-source.md),
 [current Main](current-interest-arm64-main-adoption.md),
 [canonical backlog](../enhancements/2026-10-commercial-release/04-backlog.md).
+
+Later [D846 physical qualification/adoption](physical-goal-percent-main-adoption.md)
+qualifies the current original goal page on ARM64 and adopts868f06c0 as Main15641
+without reset. The prepared-only statement above is the historical D845 checkpoint.

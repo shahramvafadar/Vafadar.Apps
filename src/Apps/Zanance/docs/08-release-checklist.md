@@ -1,5 +1,13 @@
 # 08 – Release checklist (first public release)
 
+[Physical goal/Main checkpoint D846](quality/physical-goal-percent-main-adoption.md) records:
+D846 qualifies the current original goal-percent page once on Samsung36/ARM64,
+with one refused native Save, retained raw draft/original format and full20source equality.
+Only its fresh UID retires. Reused complete868f06c0 is adopted once without reset as
+Main15641: UID/data inodes/settings and first141raw Home nodes exact; timeout300000
+restored. No old catalog/financial/auth/photo/R13 replay or broader acceptance.
+
+
 [D845 exact goal percentages](quality/exact-goal-percent-input.md) preserves stored precision/original input culture,
 refuses parser rounding and explains format/precision.50new+4affected checks pass
 across declared lineage; original native loaded text/note/one refused Save retain

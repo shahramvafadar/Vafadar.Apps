@@ -13929,3 +13929,13 @@ preparation nor successful input repeats. D843's representable100+1e-26 range co
 is explicitly corrected, without rewriting packets. See
 [finite evidence](quality/exact-goal-percent-input.md). Complete868f06c0 is prepared,
 not Main; pending R13 authority and broader fault/performance/platform gates stay open.
+
+
+## D-846 - Physical current goal page and Main (2026-11-05)
+
+D846 qualifies the current original goal-percent page once on Samsung36/ARM64,
+with one refused native Save, retained raw draft/original format and full20source equality.
+Only its fresh UID retires. Reused complete868f06c0 is adopted once without reset as
+Main15641: UID/data inodes/settings and first141raw Home nodes exact; timeout300000
+restored. No old catalog/financial/auth/photo/R13 replay or broader acceptance.
+See [finite evidence](quality/physical-goal-percent-main-adoption.md).

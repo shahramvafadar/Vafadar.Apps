@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-846 - Physical current goal percentages and Main (2026-11-05)
+
+D846 qualifies the current original goal-percent page once on Samsung36/ARM64,
+with one refused native Save, retained raw draft/original format and full20source equality.
+Only its fresh UID retires. Reused complete868f06c0 is adopted once without reset as
+Main15641: UID/data inodes/settings and first141raw Home nodes exact; timeout300000
+restored. No old catalog/financial/auth/photo/R13 replay or broader acceptance.
+Distinct pending D838 authority remains necessary for the new original PC; D841
+actual branch stays uninstalled/unexecuted. Preserved emulator/source/frozen scopes
+and the overall active goal remain unchanged. See
+`src/Apps/Zanance/docs/quality/physical-goal-percent-main-adoption.md`.
+
+
 ## D-845 - Exact goal percentages and original native continuation (2026-11-05)
 
 Original40cases expose25failures; three distinct real100+1e-27 boundary controls add2.

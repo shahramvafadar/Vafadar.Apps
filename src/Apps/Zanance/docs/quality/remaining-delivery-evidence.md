@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[Physical goal/Main checkpoint D846](physical-goal-percent-main-adoption.md) records:
+D846 qualifies the current original goal-percent page once on Samsung36/ARM64,
+with one refused native Save, retained raw draft/original format and full20source equality.
+Only its fresh UID retires. Reused complete868f06c0 is adopted once without reset as
+Main15641: UID/data inodes/settings and first141raw Home nodes exact; timeout300000
+restored. No old catalog/financial/auth/photo/R13 replay or broader acceptance.
+
+
 [D842 current monthly-interest ARM64/Main adoption](current-interest-arm64-main-adoption.md) qualifies16 current Core
 outcomes on Samsung without financial records, then adopts existing complete22a3f00a
 once without reset as Main5939. Public identities and first ready141raw Home nodes

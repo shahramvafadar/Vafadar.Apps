@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-845)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-846)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1235,6 +1235,8 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
+
+Latest physical update: [D846](../quality/physical-goal-percent-main-adoption.md) qualifies the current original goal page on ARM64 and adopts complete868f06c0 as Main15641 once without reset. First141raw Home nodes/public identities/settings exact; no financial/auth/photo/R13 replay or whole private-source acceptance.
 
 Latest finite update: [D845 exact goal percentages](../quality/exact-goal-percent-input.md) preserves loaded precision/original culture and refuses inexact parsing, with a format note and six precision messages.50new+4affected cases pass across lineage, not all on one final binary. Original native one refused Save/full20source/format restoration pass after a private route-order correction. D843 range-control interpretation is corrected without rewriting prior evidence. Complete868f06c0 is prepared, not Main; broader gates remain open.
 
