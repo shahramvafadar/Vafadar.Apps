@@ -19,7 +19,7 @@ namespace Vafadar.Zanance.Core.Reports;
 public sealed record CapacityResult(string CurrencyCode, long Income, long Spending, long NonMonthly, long LoanPrincipal, long OtherGoals, bool EnoughHistory)
 {
     /// <summary>Gets the capacity per month, or <see langword="null"/> without enough history ("not enough history").</summary>
-    public long? Amount => EnoughHistory ? Income - Spending - NonMonthly - LoanPrincipal - OtherGoals : null;
+    public long? Amount => EnoughHistory ? checked((long)((Int128)Income - Spending - NonMonthly - LoanPrincipal - OtherGoals)) : null;
 }
 
 /// <summary>What a goal needs per month to reach its target on time.</summary>
@@ -89,7 +89,7 @@ public static class CapacityCalculator
             {
                 var payment = plan.ToAmount ?? plan.Amount!.Value;
                 var (_, part) = LoanCalculator.Split(outstanding, loan.InterestRate ?? 0, payment);
-                principal += (long)Math.Round(part * Recurrence.PerYear(plan.Rule) / 12m, MidpointRounding.AwayFromZero);
+                principal = checked(principal + (long)Math.Round(part * Recurrence.PerYear(plan.Rule) / 12m, MidpointRounding.AwayFromZero));
             }
         }
 
@@ -105,7 +105,7 @@ public static class CapacityCalculator
                 ContributionMethod.ShareOfIncome => (long)Math.Round(income * (plan.Percent ?? 0) / 100m, MidpointRounding.AwayFromZero),
                 _ => 0,
             };
-            other += (long)Math.Round(perDate * Recurrence.PerYear(plan.Rule) / 12m, MidpointRounding.AwayFromZero);
+            other = checked(other + (long)Math.Round(perDate * Recurrence.PerYear(plan.Rule) / 12m, MidpointRounding.AwayFromZero));
         }
 
         return new CapacityResult(currencyCode, income, KpiCatalog.Median(spending), nm, principal, other, enough && incomes.Count == 3);
@@ -136,7 +136,8 @@ public static class CapacityCalculator
         }
 
         var months = Math.Max(1, ((target.Year - today.Year) * 12) + target.Month - today.Month + (target.Day >= today.Day ? 0 : -1));
-        return new GoalNeed(goal.Id, goal.Priority, goal.TargetDate, (remaining + months - 1) / months);
+        // D-857: the supported remaining amount must not wrap before its monthly ceiling is divided.
+        return new GoalNeed(goal.Id, goal.Priority, goal.TargetDate, checked((long)(((Int128)remaining + months - 1) / months)));
     }
 
     /// <summary>

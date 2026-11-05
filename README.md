@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D857 exact goal capacity](src/Apps/Zanance/docs/quality/goal-capacity-exact-boundaries.md) corrects wrapped suggestion totals and monthly needs;18new+1 related selected host cases and18 original Android calculations pass without financial preparation. Shippinga5442ada is prepared; dated Main remains31707/abf.
+
 [D856 current Main adoption](src/Apps/Zanance/docs/quality/retained-query-current-main-adoption.md) applies the already-qualified completeabf072cd once without reset as Main31707; all141raw Home attributes/public state and fresh locale/reverse match. No financial/authentication or successful-test replay.
 
 [D855 retained filter recovery](src/Apps/Zanance/docs/quality/retained-transaction-query-recovery.md) completes query correction without another original VM read; six new host cases and original Android recovery pass. Preparedabf072cd is not Main; whole performance remains open.

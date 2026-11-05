@@ -1,5 +1,10 @@
 # 07 – Acceptance test plan
 
+D-857: [exact goal capacity](quality/goal-capacity-exact-boundaries.md)
+refuses wrapped capacity/commitments and preserves positive exact ceiling needs.
+18new+1 related selected host cases and18 original native calculations pass with
+source20/A/E/S0 exact. Quantity implementation and wider gates remain unchanged.
+
 D-856: [current Main adoption](quality/retained-query-current-main-adoption.md)
 installs qualifiedabf072cd once without reset as Main31707. Fresh Home141raw/public
 records/OS/locale-key/reverse match; no successful financial/auth/test replay.

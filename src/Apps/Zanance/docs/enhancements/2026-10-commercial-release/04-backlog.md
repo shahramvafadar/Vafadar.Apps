@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+[Exact goal capacity D857](../../quality/goal-capacity-exact-boundaries.md):
+D857 corrects final goal-capacity money, combined monthly loan/goal commitments and
+ceiling monthly needs without changing suggestions into allocations. Eight initial
+failures lead to18new selected host passes; two strengthened valid-domain cases also
+fail the original namespace-only relocated source and pass the correction. One related
+old case passes; counts are distinct lineage, not20new or a full suite. QuantityFor's
+suspected floor defect is not reproduced and its implementation stays exact unchanged.
+Actual nativeUID10247/PID29274 runs18direct original calculations with source20 equal,
+A/E/S0 and no DB preparation/financial/auth/photo action. Strict Windows/full offline
+3844081608/private192204804 and nine own-AOT bindings pass. Only freshUID retires,
+original5606 public state exact; six standard Cleans/no XML/supplemental/frozen/phone/R13.
+Shippinga5442ada prepared, not Main;31707/abf is dated D856. D838 decision/original fault/
+whole-performance/security/platform gates and active goal remain separate.
+
 [Current Main adoption D856](../../quality/retained-query-current-main-adoption.md):
 D856 adopts the already-qualified completeabf072cd once without reset on reserved
 unlocked Samsung, Main31707 from26327, carrying D854 exact nets/covered failure and
