@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-887 - Original cold startup/Home phase boundaries (2026-11-05)
+
+D887 adds only reversible clock/count hooks to four original App source bodies and
+completes one new ordinary-cold diagnostic on retained100k/200/1000, UID10260/PID16846.
+All33labels occur once; all22table/101220row/3247272cell prepared-source comparisons
+exact, no reset/adoption/financial/old six-case replay. First-upgrade preparation
+trace97.377s afterMaui/64.334s protected resolve-await stays separate from registered
+cold23.159–23.169s/firstframe2576ms. Actual cold protected resolve-await8262.281ms,
+snapshotwait4835.063ms, queuedfacts231.602ms, laterprojection2900.584ms and validation
+762.586ms narrow next work; no exclusive internal cause, speed/GC/crypto remedy claim.
+Current selected-session fast-path source is already present; never remove key/
+integrity/ownership verification or rescue a closed candidate. Next independently
+observe internal protected-prepare/DI/session boundaries using retainedUID10260/
+PID16846/source/epoch; do not reset/re-adopt/reseed/replay accepted distribution.
+Strictprivate192204804/offline/sign/CRC/static16KiB/source4/ownAOT3 and one standard
+Clean pass, original5606public/OS exact except retainedpackage; no XML/supplemental/
+frozen/phone/Main/auth/photo/product/old suite/runtimeGC action. D886singleCI consumed,
+no secondGET. Original fault/D838pending/D841unexecuted/broader gates and goal active.
+See `src/Apps/Zanance/docs/quality/original-cold-startup-home-phases.md`.
+
 ## D-886 - Original Q02 process-cold ready frames (2026-11-05)
 
 D886 completes3planned ordinary cold samples per exact original10k/20/100 and100k/200/

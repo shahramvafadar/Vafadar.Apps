@@ -1,5 +1,11 @@
 # 04 – Canonical backlog (commercial release)
 
+[D887 cold startup/Home phase boundaries](../../quality/original-cold-startup-home-phases.md)
+finishes one new cold diagnostic/all33markers/source exact on retained100k; original
+protected resolve-await8.262s/snapshotwait4.835s need internal boundary evidence before
+optimization. No key/integrity/ownership weakening or exclusive cause/speed acceptance.
+PreparedUID10260/PID16846/source stays; no financial/preparation/old six-case replay.
+
 [D886 original Q02 cold ready frames](../../quality/original-q02-cold-native-frames.md)
 finishes six planned ordinary process-cold exact-workload observations/all12fullsource
 comparisons, same privateAPK; medians12.74s/18.46s, no two-second acceptance. Original

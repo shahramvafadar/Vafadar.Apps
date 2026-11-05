@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D887 cold startup/Home phase boundaries](original-cold-startup-home-phases.md)
+closes the missing one-case stage trace/all33markers/fullsource exact: original
+protected resolve-await8.262s and snapshotwait4.835s are broad observed spans, not a
+proven internal cause. Upgrade-first-start trace stays separate. Next independently
+observe DI/selected-session/key/integrity/migration boundaries without removing guards,
+using retainedUID10260/PID16846/source; no accepted distribution or preparation replay.
+Original fault/broader gates and overall goal remain active; no owner/CI wait.
+
 [D886 original Q02 cold ready frames](original-q02-cold-native-frames.md)
 closes the missing finite3+3 current cold baseline on exact original financial inputs,
 with all12full current-source comparisons exact and D885two-field original metadata

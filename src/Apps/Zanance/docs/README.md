@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D887 cold startup/Home phase boundaries](quality/original-cold-startup-home-phases.md)
+finishes one missing diagnostic/all33markers/source exact on retained100k: protected
+resolve-await8.262s/snapshotwait4.835s, no exclusive cause or speed acceptance. Next
+narrow internal protected-prepare boundaries; no financial/preparation replay.
+
 [D886 original Q02 cold ready frames](quality/original-q02-cold-native-frames.md)
 finishes six registered exact-workload cold cases/all12source comparisons; medians
 12.74s/18.46s, distinct from firstframe and no speed acceptance. Prepared tenfold source

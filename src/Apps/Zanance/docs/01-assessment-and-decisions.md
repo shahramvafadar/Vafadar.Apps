@@ -1,5 +1,17 @@
 # 01 – Assessment and decision log
 
+## D-887 - Original cold startup/Home phase boundaries
+
+One newly registered cold phase diagnostic reuses retained100k/200/1000 with all33
+markers count1/full22table source exact, no financial or accepted distribution replay.
+First-upgrade preparation remains separate. Cold protected resolve/await8.262s and
+snapshotwait4.835s exceed queuedfacts0.232s; no internal exclusive cause or speed fix
+is inferred. Four original source bodies reverse exactly; strict private/source/
+ownAOT/sign/standardClean and original emulator state pass. Existing selected-session
+fast path stays; next narrow internal protected-prepare boundaries without weakening
+key/integrity/ownership. UID10260/PID16846/source retained; broader gates/goal active.
+[Actual phase clocks, scope and retained source](quality/original-cold-startup-home-phases.md).
+
 ## D-886 - Original Q02 process-cold ready frames
 
 Six registered ordinary cold cases complete on the exact original reference/tenfold
