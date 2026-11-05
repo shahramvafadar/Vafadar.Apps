@@ -1226,9 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-835)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-836)
 
-Latest finite update: [D835 exact positive annuity](../quality/exact-positive-annuity-ceiling.md) records30 new/4 affected selected cases and157 Core Android scalar outcomes without financial records. This is not a current full-suite total. Complete4a72373a is prepared, not on physical Main; D833 source equality and D834 original error-publication evidence stay bounded, with native-fault remedy/performance/platform gates open.
+Latest finite update: [D835 exact positive annuity](../quality/exact-positive-annuity-ceiling.md) records30 new/4 affected selected cases and157 Core Android scalar outcomes without financial records. This is not a current full-suite total. [D836](../quality/current-physical-main-adoption-d836.md) now adopts exact4a72373a as physical Main27284 with public identity/141node equality. D833 source equality and D834 original error-publication evidence stay bounded; no additional tests or private-source/fault/performance/platform acceptance is implied.
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -12943,3 +12943,14 @@ points, and157 actual Core Android scalar outcomes pass without App/Data/MAUI/fi
 records. Monthly rounded schedule/editor/writer policies are unchanged; no new UI flow
 or matrix is accepted. Prepared4a72373a is not on Main; broader gates and goal stay open.
 See [finite evidence](../quality/exact-positive-annuity-ceiling.md).
+
+
+## D-836 - Current complete physical Main adoption
+
+One no-reset exact-qualified4a72373a install and normal launcher create Main27284.
+Original UID10380/CE155299/DE154603, public package/OS/locale/boot/geometry and141raw Home
+nodes remain exact except expected APK/PID. Two owned XMLs hash-clean; no financial,
+authentication, source/privateDB/key or successful route replay. No new test/build count.
+This public adoption does not close private-source/calculation/fault/performance/security/
+accessibility/platform/provider/release parent gates. Continuous delivery stays active.
+See [finite evidence](../quality/current-physical-main-adoption-d836.md).

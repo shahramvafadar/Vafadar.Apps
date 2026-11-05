@@ -9551,3 +9551,14 @@ points, and157 actual Core Android scalar outcomes pass without App/Data/MAUI/fi
 records. Monthly rounded schedule/editor/writer policies are unchanged; no new UI flow
 or matrix is accepted. Prepared4a72373a is not on Main; broader gates and goal stay open.
 See [finite evidence](quality/exact-positive-annuity-ceiling.md).
+
+
+## D-836 - Current complete physical Main adoption
+
+One no-reset exact-qualified4a72373a install and normal launcher create Main27284.
+Original UID10380/CE155299/DE154603, public package/OS/locale/boot/geometry and141raw Home
+nodes remain exact except expected APK/PID. Two owned XMLs hash-clean; no financial,
+authentication, source/privateDB/key or successful route replay. No new test/build count.
+This public adoption does not close private-source/calculation/fault/performance/security/
+accessibility/platform/provider/release parent gates. Continuous delivery stays active.
+See [finite evidence](quality/current-physical-main-adoption-d836.md).

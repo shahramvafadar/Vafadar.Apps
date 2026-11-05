@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-836 - Current complete physical Main adoption (2026-11-05)
+
+One exact qualified D8354a72373a no-reset install and one normal launcher adopt Main
+27284 from32063 on actual reserved/unlocked Samsung. UID10380/CE155299/DE154603,
+all three public Zanance package/grant/stopped identities, five OS settings/locale key
+presence/boot/geometry/shell stay exact except expected Main APK/PID. First ready Home
+141raw nodes/all attributes/order equal, no normalization or recapture to seek equality.
+Two owned XML103864bytes hash-clean; local raw retained and27284live after retirement.
+No build/test/sign/financial/auth/photo/source/privateDB/key/other-route replay, setting
+write, reset/reboot/force-stop or emulator/frozen action. This public adoption supersedes
+D814 as latest checkpoint, not private-source/key, every calculation, original-fault/
+performance/security/platform/release acceptance. D809/R13 terminal unknown/D833 UID10234
+and accepted operations remain protected; goal and broader gates stay open. See
+`src/Apps/Zanance/docs/quality/current-physical-main-adoption-d836.md`.
+
+
 ## D-835 - Exact positive-rate nominal annuity ceiling (2026-11-05)
 
 Retain the original nominal formula but calculate its exact minor-unit ceiling from the

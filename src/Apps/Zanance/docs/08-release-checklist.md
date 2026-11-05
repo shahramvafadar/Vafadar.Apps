@@ -5837,3 +5837,12 @@ and broader security/stability/performance/platform/release gates remain open.
 and qualifies actual original native colors in both themes without OCR/photo/financial
 replay. Current Main isbb8ceb21/9187 after one no-reset upgrade and exact public Home141/OS
 preservation; broader accessibility/security/stability/performance/platform/release gates remain open.
+
+
+## D-836 current Android public adoption boundary
+
+Exact complete4a72373a is installed without reset as Main27284. Its first ready Home
+141raw nodes and original public identity/settings match. This is a bounded current-code
+adoption, not whole private-source/key, financial, crash/performance/accessibility/
+platform/provider/store acceptance. No release gate is silently checked off.
+See [current physical evidence](quality/current-physical-main-adoption-d836.md).

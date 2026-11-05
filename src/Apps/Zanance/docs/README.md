@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D836 current physical Main adoption](quality/current-physical-main-adoption-d836.md)
+records one no-reset adoption of4a72373a as Main27284 with original UID/data inodes,
+all141 raw Home nodes and public OS/package identity preservation. Broader gates stay open.
+
+
 [D835 exact positive-rate annuity ceiling](quality/exact-positive-annuity-ceiling.md)
 retains30 new/4 affected selected cases and157 original Core Android outcomes without
 financial records or UI replay. Complete4a72373a is prepared; broader gates stay open.

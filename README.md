@@ -128,7 +128,7 @@ platform release gates remain open.
 |---|---|
 | Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint/D799 damaged receipt grouping and D800 resume ownership/input-feedback and D804 pending camera-result ownership corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | Latest recorded physical adoption is [D814](src/Apps/Zanance/docs/quality/current-complete-main-adoption.md), ac3a82f6/PID32063, not fresh liveness. D8354a72373a is prepared, not installed there. Historical [D804](src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) adopts complete27d8070b without reset as Main1069; Home979/141 and public package/OS checks retain one raw drawing-order delta. D800/D799/D790 are historical. [D802](src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md) completes the three finite owner-cancelled CSV/local-backup/PDF routes; [D803](src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) adds one owner-framed camera draft. Private DB/key, broader device/security and release gates remain open |
+| Physical adoption | Latest actual physical adoption is [D836](src/Apps/Zanance/docs/quality/current-physical-main-adoption-d836.md), 4a72373a/PID27284: one no-reset install, original UID/data inodes and all141 raw Home nodes preserved. It is a dated observation, not future liveness. Historical [D804](src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) adopts complete27d8070b without reset as Main1069; Home979/141 and public package/OS checks retain one raw drawing-order delta. D800/D799/D790 are historical. [D802](src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md) completes the three finite owner-cancelled CSV/local-backup/PDF routes; [D803](src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) adds one owner-framed camera draft. Private DB/key, broader device/security and release gates remain open |
 | Performance and stability | [D831](src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md) retains a new large-page native exit; [D833](src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md) proves the declared source equal after it. Fault remedy, large-page timing and the general two-second target remain open; rejected hypotheses are not replayed |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |
@@ -144,7 +144,7 @@ Eighteen selected cases and one original Android error cover retain source; wide
 [D835 exact positive annuity](src/Apps/Zanance/docs/quality/exact-positive-annuity-ceiling.md)
 qualifies the unchanged nominal formula with exact minor-unit rounding:34 selected host
 cases and157 original Core Android outcomes, no financial records or new UI flow.
-Its prepared package is not physical-device or whole performance/stability acceptance.
+D836 adopts its exact package on Main; whole calculation/private-source/performance/stability acceptance remains separate.
 
 ## Shared libraries
 

@@ -113,3 +113,8 @@ CI and is not queried again. The current full APK4a72373a is prepared, not on ph
 Main; last D81432063/ac3a82f6 is historical, not new liveness. Native-fault remedy,
 whole performance/security/accessibility/platform/provider/Store/release gates and the
 continuous delivery goal remain open.
+
+
+Later [D836 physical adoption](current-physical-main-adoption-d836.md) installs this exact
+complete APK once without reset as Main27284 and preserves the141-node public Home.
+Its parent acceptance limits remain separate from this Core computation evidence.

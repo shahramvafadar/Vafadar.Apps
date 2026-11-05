@@ -15,10 +15,16 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 5 November 2026
 
+[D836 physical Main adoption](docs/quality/current-physical-main-adoption-d836.md)
+installs exact4a72373a without reset as Main27284. Original UID/data inodes and public
+OS/package identities match; all141 raw Home nodes remain equal. This is not every
+calculation/private-source/security/performance/platform gate; current goal stays open.
+
+
 [D835 exact positive annuity](docs/quality/exact-positive-annuity-ceiling.md) fixes
 false refusals and lost minor units without changing monthly schedule or writer rules.
 34 selected host cases and157 native scalar outcomes pass without financial records.
-Complete4a72373a is prepared, not on physical Main; broader gates remain open.
+Complete4a72373a is now adopted through D836; broader gates remain open.
 
 
 [D834 loan estimate range guards](docs/quality/loan-estimate-numeric-range.md)

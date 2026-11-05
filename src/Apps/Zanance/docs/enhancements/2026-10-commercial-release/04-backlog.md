@@ -9,6 +9,14 @@ States: Proposed · Ready (decisions made, may start after owner approval of the
 (implemented, tested, documented, pushed) · Blocked (by an owner action) · Deferred by owner. Priority: P1 (blocks
 the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 
+## D-836 continuation checkpoint
+
+[Current physical Main adoption](../../quality/current-physical-main-adoption-d836.md)
+completes one no-reset current-code adoption: Main27284/4a72373a, original UID/data
+inodes,141raw Home nodes and public OS/package state exact. No test/build/financial/
+auth/source/privateDB replay. Original fault/performance/security/accessibility/platform/
+provider/release gates stay open; D809/R13 terminal unknown and D833 source remain held.
+
 ## D-835 continuation checkpoint
 
 [Exact positive-rate annuity ceiling](../../quality/exact-positive-annuity-ceiling.md)
