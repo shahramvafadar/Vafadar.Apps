@@ -158,7 +158,18 @@ public static partial class ReceiptParser
             normalized = value;
         }
 
-        return decimal.TryParse(normalized, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount) && amount >= 0;
+        if (!decimal.TryParse(normalized, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out amount) || amount < 0) return false;
+        // D-852: a recognized amount is evidence, so a nonzero digit lost during decimal parsing must not disappear.
+        // Trailing zeroes carry no additional magnitude; the separate total-size/currency policies remain unchanged.
+        var point = normalized.IndexOf('.');
+        var storedScale = (decimal.GetBits(amount)[3] >> 16) & 0xff;
+        if (point >= 0 && normalized[(point + 1)..].TrimEnd('0').Length > storedScale)
+        {
+            amount = 0;
+            return false;
+        }
+
+        return true;
     }
 
     private static ReceiptSuggestion FindTotal(string[] lines, bool uncertainLayout)

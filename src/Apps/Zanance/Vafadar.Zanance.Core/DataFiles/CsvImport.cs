@@ -407,7 +407,10 @@ public static class CsvImport
         }
 
         var currency = Currencies.TryGet(currencyCode, out var known) ? known : new Currency(currencyCode, 2);
-        if (decimal.Round(value, currency.MinorDigits) != value)
+        // D-852: parsed precision may already be rounded. Check the submitted nonzero fraction as well;
+        // redundant zeroes remain valid under the original CSV grammar and chosen separator.
+        if ((parts.Length == 2 && parts[1].TrimEnd('0').Length > currency.MinorDigits)
+            || decimal.Round(value, currency.MinorDigits) != value)
         {
             return false;
         }

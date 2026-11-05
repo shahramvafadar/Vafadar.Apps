@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D852 exact input readers](src/Apps/Zanance/docs/quality/csv-receipt-exact-amounts.md) completes CSV currency-precision and recognized receipt-number corrections:32 selected host cases/21 original Android checks, source equal and no financial writes.65523bd6 is prepared, not Main.
+
 [D851 holdings CSV](src/Apps/Zanance/docs/quality/holdings-csv-exact-numeric-boundaries.md) fixes numeric overflow and silent rounding while preserving exact stored units, original row errors and financial data.26 selected host cases and24 original Android calculations pass; shipping016bfff9 is prepared.
 
 [D850 supported runtimes](src/Apps/Zanance/docs/quality/goal-validation-supported-runtimes.md) adds72 finite current goal-caption contexts on API24/API35 ps16k at OS200%; source and original emulator state stay exact. This does not qualify ARM64 hardware16KiB.

@@ -1,5 +1,10 @@
 # 03 – UX design
 
+D-852: existing CSV amount errors also refuse a nonzero tail hidden by decimal parsing.
+The recognized receipt-number helper preserves exact evidence; oversized totals still
+require the same original review. No layout, merchant/date or confirmation change.
+[Exact input-reader proof](quality/csv-receipt-exact-amounts.md).
+
 D-851: existing holdings CSV Quantity/Amount row errors also cover excessive magnitude
 and nonzero precision beyond stored units; invalid rows are not rounded into accepted
 values. No picker/preview layout or financial confirmation changes.

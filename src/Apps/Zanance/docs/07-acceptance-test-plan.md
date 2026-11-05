@@ -1,5 +1,18 @@
 # 07 – Acceptance test plan
 
+[Exact input readers D852](quality/csv-receipt-exact-amounts.md) records:
+D852 completes two independent exact-number reader corrections: CSV rejects a
+submitted nonzero tail beyond currency precision even when decimal parsing rounds it;
+receipt TryAmount refuses discarded nonzero digits while preserving exact trailing-zero
+values and the original oversized-total policy.9CSV+4receipt baseline failures lead to
+21new+11affected selected host passes and21 original Android calculations, source20/A/E/S0
+exact with no Import/Save/OCR image/financial/auth/photo replay. Strict Windows and full
+Offline384AOT408ELF1608LOAD/private192204804/nine own-AOT bindings pass. Only freshUID10244
+retires, original5606 public state exact and four standard Cleans pass; no XML/supplemental/
+frozen/phone/R13/runtime action. Shipping65523bd6 prepared, not Main;20144/904 stays dated.
+D838 pending/D841 unexecuted/original-fault/whole-performance/broader gates and goal active.
+
+
 [Exact holdings CSV D851](quality/holdings-csv-exact-numeric-boundaries.md) records:
 D851 fixes four actual decimal-overflow and five silent-rounding failures in the
 holdings CSV reader. Quantities and prices use exact positive stored-unit parsing

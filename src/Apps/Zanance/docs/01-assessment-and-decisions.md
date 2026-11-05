@@ -14004,3 +14004,17 @@ Prepared shipping016bfff9 is not Main; Main20144/904 is only the dated D849 chec
 D838 pending/D841 unexecuted/original fault/whole performance/broader gates and active
 overall goal remain; no old success is reopened.
 See [finite original-reader evidence](quality/holdings-csv-exact-numeric-boundaries.md).
+
+## D-852 - Exact submitted CSV and receipt numbers (2026-11-05)
+
+D852 completes two independent exact-number reader corrections: CSV rejects a
+submitted nonzero tail beyond currency precision even when decimal parsing rounds it;
+receipt TryAmount refuses discarded nonzero digits while preserving exact trailing-zero
+values and the original oversized-total policy.9CSV+4receipt baseline failures lead to
+21new+11affected selected host passes and21 original Android calculations, source20/A/E/S0
+exact with no Import/Save/OCR image/financial/auth/photo replay. Strict Windows and full
+Offline384AOT408ELF1608LOAD/private192204804/nine own-AOT bindings pass. Only freshUID10244
+retires, original5606 public state exact and four standard Cleans pass; no XML/supplemental/
+frozen/phone/R13/runtime action. Shipping65523bd6 prepared, not Main;20144/904 stays dated.
+D838 pending/D841 unexecuted/original-fault/whole-performance/broader gates and goal active.
+See [finite verification](quality/csv-receipt-exact-amounts.md).
