@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D860 physical ARM64 calculations](src/Apps/Zanance/docs/quality/physical-arm64-current-money-results.md) qualifies all53 existing capacity/liquidity/KPI cases once on actual Samsung in a SDK-only caller without database/key or financial startup. Main31707/abf and public state are preserved; whole product/platform gates remain.
+
 [D859 exact KPI money/medians](src/Apps/Zanance/docs/quality/kpi-money-and-median-results.md) corrects wrapped report results and even medians;18new+3related host cases and18 original Android calculations pass without financial preparation. Shippinge848d7c1 is prepared; dated Main remains31707/abf.
 
 [D858 exact liquidity/protection](src/Apps/Zanance/docs/quality/liquidity-protection-exact-results.md) corrects wrapped deficits and covered totals while preserving allocation/release cancellation;17new+2related host cases and17 original Android calculations pass without financial preparation. Shipping4f7d3f80 is prepared; dated Main remains31707/abf.

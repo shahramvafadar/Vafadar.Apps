@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-859)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-860)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1235,6 +1235,8 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
+
+Latest ABI condition: [D860](../quality/physical-arm64-current-money-results.md) qualifies the53 same current capacity/liquidity/KPI assertions on real Samsung ARM64 in a SDK-only caller without financial/database/key startup. No new unit-test count or whole Main acceptance is inferred; existing Main31707/abf is preserved.
 
 Latest KPI correction: [D859](../quality/kpi-money-and-median-results.md) checks surplus/change/essential-month/installment totals and computes the even median without overflowing its endpoints.18new+3related host cases and18 original Android calculations pass without financial DB preparation; broader gates remain separate.
 

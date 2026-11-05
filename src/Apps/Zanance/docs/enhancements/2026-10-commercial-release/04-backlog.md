@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+[Current money on physical ARM64 D860](../../quality/physical-arm64-current-money-results.md):
+D860 completes a previously unqualified actual ARM64 condition for the current
+D857/D858/D859 Core changes: all53 same tracked assertions pass once on Samsung,
+UID10418/PID8266 (18capacity/17liquidity/18KPI). These are not53new tests or a host/x64/
+financial replay. SDK-only27AOT/37ELF/138staticLOAD/min36/v3/offline/nondebuggable has
+no App/Data/MAUI/SQLite/database/key startup; three own-AOT objects and six current
+source hashes bind the caller. Two pre-install AOT-path/badging observer refusals stay;
+no rebuild or accepted computation repeats. Only freshUID retires and normal handback
+resumes existing Main31707/abf. All original public package/UID/CE/DE/grant/stopped,
+five OS/locale-key/boot/geometry/reverse match; no Main private DB/key/provider/XML,
+auth/photo/Save/R13/frozen action. One standard Clean passes; used APK/source/receipts
+remain. Full shippinge848d7c1 stays prepared, not adopted by this step. Whole product/
+fault/performance/security/platform gates and active goal remain separate.
+
 [Exact KPI money/medians D859](../../quality/kpi-money-and-median-results.md):
 D859 corrects KPI surplus/change/essential-month/installment totals and the even
 median. Twelve actual failures among18new cases become18new+3related selected host

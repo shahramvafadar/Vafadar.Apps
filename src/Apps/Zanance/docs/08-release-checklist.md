@@ -1,5 +1,10 @@
 # 08 – Release checklist (first public release)
 
+D-860: [physical ARM64 money](quality/physical-arm64-current-money-results.md)
+qualifies the same53 current capacity/liquidity/KPI assertions once in a SDK-only
+caller, without App/Data/database/key startup or host/x64/financial replay. Main31707/abf
+and public package/OS/locale/boot/geometry/reverse are exact after fresh-UID retirement.
+
 D-859: [exact KPI money/medians](quality/kpi-money-and-median-results.md)
 refuses wrapped surplus/change/coverage/installments and preserves the exact even
 median.18new+3related host cases and18 original Android calculations pass with
