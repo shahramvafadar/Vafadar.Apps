@@ -1,5 +1,25 @@
 # 01 – Assessment and decision log
 
+## D-869 - Chronological original holding quantities
+
+D869 corrects eight actual chronological quantity/position failures: valid input/Id
+permutations must not overflow, while an unsupported earlier day cannot be rescued
+by a later outflow. Original checked arithmetic, increase-before-decrease day rule,
+first-seen position keys, single source enumeration/type/date/transfer policy and
+entire D867 basis tail remain.17new+10affected selected host cases and17current native
+cases pass in UID10253/PID3033. One five-row noncash fixture uses original
+Id-ordered HoldingPriceReview/detail and publishes exact Max quantity/unknown value;
+source20 exact before/after, account/ledger/schedule/valuation0. Bound native text is
+not a new full-digit/glyph/scroll-matrix acceptance. Initial combined test filters
+select0 and are disqualified; corrected10selection is explicit. Strict Windows/full
+Offline384AOT408ELF1608staticLOAD/private192204804/nine own-AOT bindings pass. Only
+freshUID retires, original5606 public/OS exact, four standard Cleans/no XML/supplemental/
+frozen/phone/auth/photo/R13/financial replay. Sorting adds work/allocation, so no
+latency or whole-performance acceptance. Asset-event draft's separate raw Sum preview
+is the next unclosed consumer, not claimed fixed here. Shipping8239cbe3 is prepared,
+not Main;23174/060a remains dated D868. Broader gates and goal remain active.
+[Actual failures, preserved guards and native consumer](quality/chronological-holding-quantity-reads.md).
+
 ## D-868 - Current holding basis ARM64 and full Main
 
 D868 qualifies only current D867's12 weighted-basis cases on actual Samsung ARM64,

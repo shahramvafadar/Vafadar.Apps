@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D869 chronological holding reads](../../quality/chronological-holding-quantity-reads.md)
+repairs8actual valid-order/invalid-prefix failures,17new/10related host and17native
+plus original Id-ordered detail/source20. Draft preview and performance remain open;
+shipping8239cbe3 is prepared, not Main. No financial replay.
+
 [D868 current holding basis ARM64/Main](../../quality/current-holding-basis-arm64-main.md)
 qualifies only current12cases, not12new tests/old28replay; existing complete060a3cb2
 is adopted once without reset as Main23174, ready141raw/public/OS exact. Broader

@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D869 chronological holding reads](quality/chronological-holding-quantity-reads.md)
+repairs8actual order/prefix failures;17new+10related host and17native cases plus
+original Id-ordered detail/source20 pass. Separate draft preview/cost gates remain.
+
 [D868 current holding basis ARM64/Main](quality/current-holding-basis-arm64-main.md)
 qualifies only the current12cases on missing ARM64, then adopts existing complete
 060a3cb2 once as Main23174 with raw Home141/public/OS exact; no financial replay.

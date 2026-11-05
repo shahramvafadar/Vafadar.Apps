@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D869 chronological holding reads](chronological-holding-quantity-reads.md)
+closes only Quantity/Positions chronological order and original Id-ordered detail
+publication; checked invalid prefixes/source20 preserved. Next: actual event-draft
+raw Sum preview, then changed-platform/adoption and cost evidence; no old replay.
+
 [D868 current holding basis ARM64/Main](current-holding-basis-arm64-main.md)
 closes D867 missing ARM64/public adoption condition only: current12native cases,
 one existing full060a3cb2 no-reset upgrade as Main23174, Home141raw/public/OS exact.

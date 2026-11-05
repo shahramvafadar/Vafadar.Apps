@@ -39,21 +39,38 @@ public static class HoldingsLedger
     {
         ArgumentNullException.ThrowIfNull(events);
         var totals = new Dictionary<(Guid Type, Guid Location), long>();
+        var changes = new List<((Guid Type, Guid Location) Key, DateOnly Date, long Delta)>();
         foreach (var e in events.Where(e => e.Date <= at))
         {
-            Add(totals, (e.AssetTypeId, e.LocationId), e.EffectAt(e.LocationId));
+            Track(e, e.LocationId);
             if (e.Kind == AssetEventKind.LocationTransfer && e.ToLocationId is { } to)
             {
-                Add(totals, (e.AssetTypeId, to), e.EffectAt(to));
+                Track(e, to);
             }
         }
 
+        // D-869: database/id order is not chronology. Keep the same per-day increase-first rule as FindConflict.
+        foreach (var change in changes.OrderBy(c => c.Date).ThenBy(c => c.Delta < 0))
+        {
+            Add(totals, change.Key, change.Delta);
+        }
+
         return [.. totals.Where(t => t.Value != 0).Select(t => new HoldingPosition(t.Key.Type, t.Key.Location, t.Value))];
+
+        void Track(AssetEvent e, Guid location)
+        {
+            var key = (e.AssetTypeId, location);
+            // Calculation order must not change the original first-seen presentation order or enumerate twice.
+            totals.TryAdd(key, 0);
+            changes.Add((key, e.Date, e.EffectAt(location)));
+        }
     }
 
     /// <summary>Returns the total quantity of an asset type at the end of <paramref name="at"/>.</summary>
     public static long Quantity(IEnumerable<AssetEvent> events, Guid assetTypeId, DateOnly at) =>
-        events.Where(e => e.AssetTypeId == assetTypeId && e.Date <= at).Aggregate(0L, (sum, e) => checked(sum + e.TotalEffect));
+        events.Where(e => e.AssetTypeId == assetTypeId && e.Date <= at)
+            .OrderBy(e => e.Date).ThenBy(e => e.TotalEffect < 0)
+            .Aggregate(0L, (sum, e) => checked(sum + e.TotalEffect));
 
     /// <summary>
     /// Returns the first point where any holding would be negative (design §7.5, AT16), or <see langword="null"/>. Call it
