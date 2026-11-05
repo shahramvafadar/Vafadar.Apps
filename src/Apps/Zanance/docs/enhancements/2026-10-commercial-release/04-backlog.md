@@ -1,5 +1,9 @@
 # 04 – Canonical backlog (commercial release)
 
+[D875 exact completed nets](../../quality/completed-balance-goal-net-reads.md)
+completes the represented reader/actual GoalDetail correction without financial replay.
+Current54ARM64/full adoption, reader cost/original fault and broader gates remain.
+
 [D874 broad-history rejection](../../quality/compact-holding-broad-history-rejection.md)
 finishes the new broad-workload guard check and closes the entire compact candidate.
 No subset rescue/product change; GoalTrend source reproduction and broader gates remain.

@@ -137,16 +137,25 @@ public static class GoalTrendService
         {
             case GoalType.AccountBalance when goal.AccountId is { } accountId && accounts.FirstOrDefault(a => a.Id == accountId) is { } account:
                 var own = entries.Where(e => (e.AccountId == accountId || e.ToAccountId == accountId) && e.Kind != EntryKind.Adjustment && !LedgerCalculator.IsBeforeOpening(e, account)).ToList();
-                return (account.OpeningDate, (from, to) => own.Where(e => e.Date >= from && e.Date <= to).Sum(e => e.EffectOn(accountId)));
+                return (account.OpeningDate, (from, to) => Net(own.Where(e => e.Date >= from && e.Date <= to), e => e.EffectOn(accountId)));
             case GoalType.HoldingQuantity when goal.AssetTypeId is { } typeId:
                 var ofType = events.Where(e => e.AssetTypeId == typeId).ToList();
                 long Effect(AssetEvent e) => goal.LocationId is { } location ? (e.Kind == AssetEventKind.LocationTransfer ? 0 : e.EffectAt(location)) : e.TotalEffect;
-                return (ofType.Count == 0 ? null : ofType.Min(e => e.Date), (from, to) => ofType.Where(e => e.Date >= from && e.Date <= to).Sum(Effect));
+                return (ofType.Count == 0 ? null : ofType.Min(e => e.Date), (from, to) => Net(ofType.Where(e => e.Date >= from && e.Date <= to), Effect));
             case GoalType.Earmark:
                 var mine = allocations.Where(a => a.GoalId == goal.Id).ToList();
-                return (mine.Count == 0 ? null : mine.Min(a => a.Date), (from, to) => mine.Where(a => a.Date >= from && a.Date <= to).Sum(a => a.Amount));
+                return (mine.Count == 0 ? null : mine.Min(a => a.Date), (from, to) => Net(mine.Where(a => a.Date >= from && a.Date <= to), a => a.Amount));
             default:
                 return (null, (_, _) => 0);
         }
+    }
+
+    /// <summary>Completes the original signed period net before checking its public long range.</summary>
+    private static long Net<T>(IEnumerable<T> source, Func<T, long> effect)
+    {
+        // D-875: a monthly contribution is a net flow, not a storage-order running holding or account history.
+        Int128 net = 0;
+        foreach (var item in source) net = checked(net + effect(item));
+        return checked((long)net);
     }
 }

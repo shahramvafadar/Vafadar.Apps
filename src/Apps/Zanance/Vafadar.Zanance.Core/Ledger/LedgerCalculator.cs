@@ -59,7 +59,8 @@ public static class LedgerCalculator
             return 0;
         }
 
-        var balance = account.OpeningBalance;
+        // D-875: storage order must not reject a supported completed end-of-day net before offsetting effects.
+        Int128 balance = account.OpeningBalance;
         foreach (var entry in entries)
         {
             if (entry.Date > at || entry.Date < account.OpeningDate || (confirmedOnly && entry.Review != ReviewState.Confirmed))
@@ -70,7 +71,7 @@ public static class LedgerCalculator
             balance = checked(balance + entry.EffectOn(account.Id));
         }
 
-        return balance;
+        return checked((long)balance);
     }
 
     /// <summary>

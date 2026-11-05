@@ -1,5 +1,25 @@
 # 01 – Assessment and decision log
 
+## D-875 - Exact completed balance and goal contribution nets
+
+D875 fixes14actual completed-net failures across end-of-day account Balance and
+all three GoalTrend contribution sources with Int128 intermediate/final checked long.
+Original filters/effects/opening basis/true final overflow and holdings historical
+validation/writers/model remain.54new host+13selected related and54current original
+native cases pass; not whole suites or108new tests. First probe's uncaught raw Balance
+and corrected observer/three actual branch failures are retained. Native focus reader
+first used a subcommand missing global focus and issued0checks; full-window observation
+continues same UID10255/PID5230 without install/launch/case replay. One six-row
+noncash fixture opens original GoalDetail Ready with full native current-month caption
+9,223,372,036,854,775.806tokens; source20 exact, account/entry/schedule/valuation0.
+Strict Windows/fullOffline384AOT408ELF1608LOAD/private192204804/sign/ZIPCRC/static16KiB
+and three current-source/nine own-AOT bindings pass. Only freshUID retires, original
+5606public/OS exact, five standard Cleans; no XML/supplemental/frozen/phone/auth/photo/
+financial Save replay. Shippingacf7d16d is prepared, not Main;32234/f342 stays dated
+D871. Missing current ARM64/adoption, reader cost/original fault/D838/broader gates
+remain; D873compact candidate stays terminal-rejected and overall goal stays active.
+[Original complete-net and actual goal-page evidence](quality/completed-balance-goal-net-reads.md).
+
 ## D-874 - Compact holding broad-history rejection
 
 D874 keeps D873 compact candidate byte-identical and measures24new high-location/

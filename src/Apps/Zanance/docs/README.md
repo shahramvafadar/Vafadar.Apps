@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D875 exact completed nets](quality/completed-balance-goal-net-reads.md)
+fixes14actual balance/goal-period failures;54new+13related host and54current native
+conditions plus original GoalDetail/source20 pass. Current ARM64/adoption/cost remain.
+
 [D874 broad-history rejection](quality/compact-holding-broad-history-rejection.md)
 closes the unchanged D873 candidate: high-location allocation misses its fixed guard,
 so no native/product/subset rescue. Correct product remains; GoalTrend reader audit is next.

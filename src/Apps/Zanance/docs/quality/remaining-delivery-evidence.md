@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D875 exact completed nets](completed-balance-goal-net-reads.md)
+closes14actual failures in completed Balance/three goal contribution readers, with
+54new+13related host/54current native and original GoalDetail/source20 exact. Next
+independent conditions are current ARM64/full adoption and reader cost; broader gates stay.
+
 [D874 broad-history rejection](compact-holding-broad-history-rejection.md)
 closes D873 integration candidacy after24new location/transfer shapes fail fixed guards.
 Do not resume/retune/select pooled-only work. Next independent source question is the
