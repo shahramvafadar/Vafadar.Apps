@@ -1,5 +1,10 @@
 # 08 – Release checklist (first public release)
 
+D-855: [retained query recovery](quality/retained-transaction-query-recovery.md)
+lets a failed read-only filter be corrected on the same owned source; financial actions
+remain covered until presentation succeeds. Six selected host cases and original Android
+query/clear pass without a second VM read. Whole performance/security/platform gates remain.
+
 [Exact transaction nets D854](quality/transaction-net-failure-boundaries.md) records:
 D854 fixes seven actual net/signed-effect boundary failures: final transaction sums
 refuse overflow while exact wider cancellation preserves original rows/currency order.

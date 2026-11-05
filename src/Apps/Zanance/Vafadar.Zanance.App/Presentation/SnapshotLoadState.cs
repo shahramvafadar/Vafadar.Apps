@@ -11,11 +11,11 @@ public sealed partial class SnapshotLoadState : ObservableObject
     private Task? _pending;
 
     /// <summary>Gets whether initial loading or a reload is in progress; the first frame starts covered.</summary>
-    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsReady))]
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsReady)), NotifyPropertyChangedFor(nameof(CanPresentRetained))]
     public partial bool IsLoading { get; private set; } = true;
 
     /// <summary>Gets whether at least one complete snapshot has been presented.</summary>
-    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsReady))]
+    [ObservableProperty, NotifyPropertyChangedFor(nameof(IsReady)), NotifyPropertyChangedFor(nameof(CanPresentRetained))]
     public partial bool HasLoaded { get; private set; }
 
     /// <summary>Gets whether the last attempt failed and the page should offer a retry.</summary>
@@ -24,6 +24,18 @@ public sealed partial class SnapshotLoadState : ObservableObject
 
     /// <summary>Gets whether the current snapshot can be shown and interacted with.</summary>
     public bool IsReady => HasLoaded && !IsLoading && !HasFailed;
+
+    /// <summary>Gets whether a completed original source may be presented again without a new read.</summary>
+    public bool CanPresentRetained => HasLoaded && !IsLoading;
+
+    /// <summary>Re-presents only a completed source under the same cover and pending-task ownership as a read.</summary>
+    public Task RunPresentationAsync(Action present)
+    {
+        ArgumentNullException.ThrowIfNull(present);
+        if (!CanPresentRetained) throw new InvalidOperationException("A completed original source is required for presentation recovery.");
+        // D-855: no new source delegate runs; the original owner still covers errors and coalesces reentrant callers.
+        return RunAsync(static () => Task.CompletedTask, present);
+    }
 
     /// <summary>Shares a pending read, presents before uncovering the page, and propagates failure to its caller.</summary>
     public Task RunAsync(Func<Task> read, Action present)

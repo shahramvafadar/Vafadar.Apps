@@ -1,5 +1,16 @@
 # Documentation
 
+[Retained transaction filter recovery D855](../src/Apps/Zanance/docs/quality/retained-transaction-query-recovery.md):
+D855 enables correction of a failed read-only Transactions filter on its same completed
+owned source while results/Add stay covered. Six new host cases and actual Android
+query/clear recovery pass: one original VM read, three presentations, same source20
+and row references, retained feedback. Container-versus-editable-target observer refusal
+is preserved; no accepted input/setup is replayed. Strict Windows/full offline384/408/1608,
+private192/204/804 and nine own-AOT bindings pass. FreshUID10246/three XML180130bytes
+retire, original emulator public state exact; four standard Cleans, no supplemental,
+phone/R13/financial Save. Preparedabf072cd is not Main. D854 cost failure and broader
+fault/performance/security/platform gates remain open; goal active.
+
 [Exact transaction nets D854](../src/Apps/Zanance/docs/quality/transaction-net-failure-boundaries.md) records:
 D854 fixes seven actual net/signed-effect boundary failures: final transaction sums
 refuse overflow while exact wider cancellation preserves original rows/currency order.

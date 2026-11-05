@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D855 retained filter recovery](src/Apps/Zanance/docs/quality/retained-transaction-query-recovery.md) completes query correction without another original VM read; six new host cases and original Android recovery pass. Preparedabf072cd is not Main; whole performance remains open.
+
 [D854 exact transaction nets](src/Apps/Zanance/docs/quality/transaction-net-failure-boundaries.md) fixes overflow/wrapped totals and covers original native filter failures.17 selected host cases pass; fixed cost gates fail6/16, so no speed acceptance is claimed. Preparedadef63e1 is not Main.
 
 [D853 current Main](src/Apps/Zanance/docs/quality/current-input-corrections-physical-adoption.md) now adopts the exact-input65523bd6 package as Main26327 without reset; UID/data inodes/five OS/public grants and all141raw Home nodes remain exact. Locale/reverse have no fresh pre-upgrade comparison.

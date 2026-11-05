@@ -101,6 +101,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         PeriodNames = [translator["Period_ThisMonth"], translator["Period_LastMonth"], translator["Period_ThisYear"], translator["Period_All"]];
         KindNames = [translator["KindFilter_All"], translator["KindFilter_Expenses"], translator["KindFilter_Income"], translator["KindFilter_Transfers"]];
         AccountOptions = [];
+        Loading.PropertyChanged += OnLoadingReadinessChanged;
     }
 
     public UndoService Undo { get; }
@@ -258,6 +259,21 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _searchDelay?.Cancel();
     }
 
+    /// <summary>Gets whether the same completed source still permits read-only filter correction.</summary>
+    public bool CanAdjustFilters => _active && _published is not null && Loading.CanPresentRetained;
+
+    private void OnLoadingReadinessChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        if (ReferenceEquals(sender, Loading)) OnPropertyChanged(nameof(CanAdjustFilters));
+    }
+
+    partial void OnLoadingChanged(SnapshotLoadState oldValue, SnapshotLoadState newValue)
+    {
+        oldValue.PropertyChanged -= OnLoadingReadinessChanged;
+        newValue.PropertyChanged += OnLoadingReadinessChanged;
+        OnPropertyChanged(nameof(CanAdjustFilters));
+    }
+
     /// <summary>Gets the initial/reload cover and retry state, separate from a bulk-write dialog.</summary>
     [ObservableProperty]
     public partial SnapshotLoadState Loading { get; private set; } = new();
@@ -269,6 +285,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         if (active) _localization.Changed += OnDisplayChanged;
         if (_active == active) return;
         _active = active;
+        OnPropertyChanged(nameof(CanAdjustFilters));
         if (active) return;
         ++_publicationRevision; _published = null; _quick.Retire(); _bulk.Retire();
         var retired = _lifetime; _lifetime = new(); Loading = new();
@@ -304,7 +321,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     {
         current(); ReadFeedback = null; current();
         // D-635: capture all original references and complete ledger fields before changing any visible filter.
-        _published = null; _quick.CoverTransactionCenter();
+        _published = null; OnPropertyChanged(nameof(CanAdjustFilters)); _quick.CoverTransactionCenter();
         var snapshot = await _store.ReadTransactionsAsync(path =>
         { current(); _originalFile ??= path; return _originalFile == path; }, token);
         current();
@@ -318,7 +335,7 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
         _accounts = accounts.ToDictionary(a => a.Id);
         _categories = categories;
         _entries = snapshot.Entries;
-        _published = snapshot;
+        _published = snapshot; OnPropertyChanged(nameof(CanAdjustFilters));
         _quick.PublishTransactionCenter(snapshot.Resources);
         current();
         _rows = null; // Even unchanged ids must reflect fresh amounts, categories, review states and account names.
@@ -397,23 +414,34 @@ public sealed partial class TransactionsViewModel : ViewModelBase, IQueryAttribu
     private void Refresh()
     {
         if (!_loading && !Loading.IsLoading) { ++_queryRevision; _bulk.Retire(); }
-        if (!_active || _published is null || _loading || !Loading.IsReady || _categories is null)
-        {
-            return;
-        }
+        if (_loading || !CanAdjustFilters || _categories is null) return;
+        _ = PresentRetainedAsync();
+    }
 
-        var owner = Loading; var published = _published; var revision = _publicationRevision; var query = _queryRevision;
-        try { PresentSnapshot(); }
+    /// <summary>Recovers a read-only filter on its original source without resetting input or replaying a source read.</summary>
+    private async Task PresentRetainedAsync()
+    {
+        var owner = Loading; var published = _published; var revision = _publicationRevision;
+        var query = _queryRevision; var display = DisplayIdentity(); var token = _lifetime.Token;
+        bool Owns() => _active && revision == _publicationRevision && query == _queryRevision
+            && display == DisplayIdentity() && ReferenceEquals(owner, Loading) && ReferenceEquals(published, _published);
+        void Current()
+        {
+            token.ThrowIfCancellationRequested();
+            if (!Owns() || published is null) throw new OperationCanceledException("The original retained transaction presentation retired.", token);
+            published.Resources.EnsureCurrent();
+        }
+        try
+        {
+            // D-855: a completed failed query keeps its original input and can be corrected while results stay covered.
+            await owner.RunPresentationAsync(() => { Current(); PresentSnapshot(); Current(); });
+        }
+        catch (OperationCanceledException) when (!Owns()) { }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            // D-854: synchronous filter callbacks need the same inline failure cover as an appearance read.
-            if (_active && revision == _publicationRevision && query == _queryRevision
-                && ReferenceEquals(owner, Loading) && ReferenceEquals(published, _published))
-            {
-                owner.CoverFailedPresentation();
-                PublishReadFailure(exception);
-            }
+            if (Owns()) PublishReadFailure(exception);
         }
+        // Keep original feedback/accepted-operation receipts; a successful owner hides its error cover itself.
     }
 
     /// <summary>Retains accepted-operation receipts when either a source read or its current filter cannot be shown.</summary>

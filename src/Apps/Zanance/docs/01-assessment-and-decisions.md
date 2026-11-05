@@ -1,5 +1,10 @@
 # 01 – Assessment and decision log
 
+D-855: [retained query recovery](quality/retained-transaction-query-recovery.md)
+lets a failed read-only filter be corrected on the same owned source; financial actions
+remain covered until presentation succeeds. Six selected host cases and original Android
+query/clear pass without a second VM read. Whole performance/security/platform gates remain.
+
 [D839 new-PC R13 synthetic boundary](quality/new-accounts-pc-r13-synthetic-boundary.md) records ten new fake controls/two
 baseline failures, with exact original emulator preservation and no actual-record
 interpretation. D838 actual new-PC proposal awaits authority; the goal stays active.

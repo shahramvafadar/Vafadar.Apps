@@ -1,5 +1,10 @@
 # 03 – UX design
 
+D-855: [retained query recovery](quality/retained-transaction-query-recovery.md)
+lets a failed read-only filter be corrected on the same owned source; financial actions
+remain covered until presentation succeeds. Six selected host cases and original Android
+query/clear pass without a second VM read. Whole performance/security/platform gates remain.
+
 D-854: an unrepresentable transaction total uses the existing inline error cover.
 A failed retained filter keeps its selection and cached source, hides the results and
 disables Add without replaying a write; original accepted-operation feedback remains.

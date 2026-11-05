@@ -29,7 +29,7 @@
         <!-- Search and frequent filters precede the optional controls opened with the filter button (D-27). -->
         <!-- D-108: long report scope captions remain reachable without consuming the result viewport. -->
         <ScrollView x:Name="FiltersViewport" Grid.Row="1" VerticalScrollBarVisibility="Default">
-        <VerticalStackLayout Padding="16,8,16,4" Spacing="10" BackgroundColor="{DynamicResource PageBackground}" IsEnabled="{Binding Loading.IsReady}">
+        <VerticalStackLayout Padding="16,8,16,4" Spacing="10" BackgroundColor="{DynamicResource PageBackground}" IsEnabled="{Binding CanAdjustFilters}">
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                 <Border BackgroundColor="{DynamicResource CardBackground}" Stroke="{DynamicResource DividerColor}" StrokeShape="RoundRectangle 14" Padding="4,0">
                     <SearchBar Text="{Binding SearchText}" Placeholder="{v:Translate Tx_Search}" SemanticProperties.Description="{v:Translate Common_Search}" />

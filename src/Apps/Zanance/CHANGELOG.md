@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-855: allow correction of failed Transactions filters using the same completed source, preserving the financial cover, input and accepted feedback.
+
 All notable changes to Zanance (project `src/Apps/Zanance`). The format follows [Keep a Changelog](https://keepachangelog.com/),
 versions follow [Semantic Versioning](https://semver.org/). Nothing has been released yet; everything below is in
 the first release candidate. Requirement ids refer to the [specification](docs/spec/Zanance-Product-Specification.md).
