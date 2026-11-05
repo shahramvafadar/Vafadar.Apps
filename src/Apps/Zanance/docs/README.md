@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D871 current chronology/preview ARM64/Main](quality/current-chronology-preview-arm64-main.md)
+qualifies only current Core17/preview3 and adopts existing completef342113f once
+as Main32234 with raw Home141/public/OS exact. No old tests or financial replay.
+
 [D870 chronological event preview](quality/chronological-asset-event-preview.md)
 closes the remaining raw-Sum draft consumer: two actual failures, three new host
 flows and final3native conditions with retained source/UID and no financial Save.

@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D871 current chronology/preview ARM64/Main](../../quality/current-chronology-preview-arm64-main.md)
+qualifies20current conditions, not20new tests/old28/53replay, then existing fullf342113f
+is adopted once as Main32234/raw141/public/OS exact. Cost/original-fault/broader gates
+remain, no financial/auth/photo replay.
+
 [D870 chronological event preview](../../quality/chronological-asset-event-preview.md)
 closes the raw-Sum effect gap with two real native failures/final3conditions,3new
 host flows/full table equality and same UID/source20. No financial Save/re-preparation;

@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D871 current chronology/preview ARM64/Main](current-chronology-preview-arm64-main.md)
+closes the missing D869/D870 ARM64/public adoption condition: Core17/preview3 and
+existing fullf342113f one no-reset adoption as Main32234, ready141/public/OS exact.
+Next independent condition is ordering/preview cost; original-fault/broader gates stay.
+
 [D870 chronological event preview](chronological-asset-event-preview.md)
 closes D869 named raw-Sum consumer. Two failed original drafts continue on retained
 UID/source through one necessary upgrade, final3/native and3new host flows pass.

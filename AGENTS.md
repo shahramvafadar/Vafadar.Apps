@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-871 - Current chronology/preview ARM64 and complete Main (2026-11-05)
+
+D871 qualifies only current D869Core17 and D870original-preview3 on actual Samsung
+ARM64 in fresh full-source review UID10421/PID30122; 192AOT204ELF804staticLOAD/offline/
+v2v3/CRC and three own-AOT/three current-source bindings pass. These are20 current
+conditions on missing platform, not20new tests/old28/53/emulator/financial replay.
+Core empty-source20 and seven new-platform noncash fixture rows/final three original
+forms preserve source20; two actual native preview captions match/no ellipsis/full
+bounds after original scroll, true overflow preserves raw/no guessed effect. No
+Save/Import/auth/photo or original fault/R13 operation. Only freshUID retires; normal
+return keeps Main23174/public/OS/locale/boot/geometry/reverse exactly. Existing qualified
+completef342113f is then adopted once without reset as Main32234, UID10380/CE155299/
+DE154603. First Ready141raw nodes/all attributes/order and three original package/
+grant/five OS/fresh locale-key/reverse/boot/geometry match except expected APK/PID.
+Two XML103864bytes hash-retire/local raw retained, one private standard Clean/no
+unchanged Windows/full-shipping/old-host rebuild or supplemental/frozen action.
+Private Main DB/key/whole-financial equality is not inferred from public Home.
+Ordering/preview cost, original-fault/D838/broader gates remain; overall goal active.
+See `src/Apps/Zanance/docs/quality/current-chronology-preview-arm64-main.md`.
+
 ## D-870 - Chronological original asset-event preview (2026-11-05)
 
 D870 fixes two actual original AssetEventEditor missing-preview failures by reusing
