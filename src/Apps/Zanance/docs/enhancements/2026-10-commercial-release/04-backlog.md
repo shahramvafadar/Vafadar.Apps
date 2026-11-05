@@ -1,5 +1,10 @@
 # 04 – Canonical backlog (commercial release)
 
+[D870 chronological event preview](../../quality/chronological-asset-event-preview.md)
+closes the raw-Sum effect gap with two real native failures/final3conditions,3new
+host flows/full table equality and same UID/source20. No financial Save/re-preparation;
+shippingf342113f prepared, ARM64/adoption/cost/original-fault gates remain.
+
 [D869 chronological holding reads](../../quality/chronological-holding-quantity-reads.md)
 repairs8actual valid-order/invalid-prefix failures,17new/10related host and17native
 plus original Id-ordered detail/source20. Draft preview and performance remain open;

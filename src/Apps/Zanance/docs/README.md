@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D870 chronological event preview](quality/chronological-asset-event-preview.md)
+closes the remaining raw-Sum draft consumer: two actual failures, three new host
+flows and final3native conditions with retained source/UID and no financial Save.
+
 [D869 chronological holding reads](quality/chronological-holding-quantity-reads.md)
 repairs8actual order/prefix failures;17new+10related host and17native cases plus
 original Id-ordered detail/source20 pass. Separate draft preview/cost gates remain.

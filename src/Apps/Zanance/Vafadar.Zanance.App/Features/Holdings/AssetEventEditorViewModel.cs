@@ -567,12 +567,15 @@ public sealed partial class AssetEventEditorViewModel : ViewModelBase, Presentat
             ToLocationId = IsTransfer ? ToLocation?.Id : null, IsIncrease = IsCorrection && DirectionIndex == 0,
         };
         var events = _otherEvents.Append(probe).ToList();
-        string At(LocationChoice place) => _translator.Format("AssetEvent_At", _text.Quantity(Math.Max(0, events.Sum(e => e.EffectAt(place.Id))), type), place.Name);
         List<string> parts;
         try
         {
             // D-412: preserve checked quantity rules; an unrepresentable draft has no guessed or wrapped preview.
             _ = HoldingsLedger.Quantity(events, type.Id, DateOnly.MaxValue);
+            // D-870: the source can be Id-ordered; reuse chronological positions for both transfer legs.
+            var positions = HoldingsLedger.Positions(events, DateOnly.MaxValue);
+            string At(LocationChoice place) => _translator.Format("AssetEvent_At", _text.Quantity(Math.Max(0,
+                positions.SingleOrDefault(p => p.AssetTypeId == type.Id && p.LocationId == place.Id)?.Quantity ?? 0), type), place.Name);
             parts = [At(Location)];
             if (IsTransfer && ToLocation is { } to && to.Id != Location.Id) parts.Add(At(to));
         }

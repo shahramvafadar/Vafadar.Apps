@@ -1,5 +1,25 @@
 # 01 – Assessment and decision log
 
+## D-870 - Chronological original asset-event preview
+
+D870 fixes two actual original AssetEventEditor missing-preview failures by reusing
+checked chronological Positions once after the unchanged total Quantity guard. Both
+transfer legs and original zero clamp/money/raw/owner behavior remain. Three new host
+flows compare all actual tables; initial test CS1503 argument mismatch fails before
+cases and is corrected. Native baseline3658/UID10254 prepares seven noncash rows once,
+then necessary no-reset upgrade4118 preserves UID/CE360478/DE90988/source20 exactly.
+Only failed correction/move inputs continue; final two native captions are complete,
+two lines/no ellipsis/full bounds after original scroll, plus new true-overflow draft
+stays ready/raw-preserved with no guessed preview. Private handoff is not product OS
+draft recovery/Shell/touch or whole A11Y acceptance. Strict Windows/fullOffline384AOT/
+408ELF/1608staticLOAD/baseline-final192204804/twelve own-AOT bindings pass; D869Core is
+exact, no old Core17/28/53 or successful financial/auth/photo/R13 suite is replayed.
+Only freshUID retires/original5606 public/OS exact, five standard Cleans/no XML or
+supplementary/frozen/phone action. Shippingf342113f is prepared, not Main;23174/060a
+remains dated D868. Missing current ARM64/adoption, cost/original-fault/D838 and broader
+gates stay open; overall goal active.
+[Actual failed drafts and same-source continuation](quality/chronological-asset-event-preview.md).
+
 ## D-869 - Chronological original holding quantities
 
 D869 corrects eight actual chronological quantity/position failures: valid input/Id

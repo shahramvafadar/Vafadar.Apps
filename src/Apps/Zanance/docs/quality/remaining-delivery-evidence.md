@@ -1,5 +1,10 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D870 chronological event preview](chronological-asset-event-preview.md)
+closes D869 named raw-Sum consumer. Two failed original drafts continue on retained
+UID/source through one necessary upgrade, final3/native and3new host flows pass.
+Next: only missing current Core17/preview3 ARM64, full adoption and actual cost gates.
+
 [D869 chronological holding reads](chronological-holding-quantity-reads.md)
 closes only Quantity/Positions chronological order and original Id-ordered detail
 publication; checked invalid prefixes/source20 preserved. Next: actual event-draft
