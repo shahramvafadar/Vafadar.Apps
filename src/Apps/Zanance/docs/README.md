@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D835 exact positive-rate annuity ceiling](quality/exact-positive-annuity-ceiling.md)
+retains30 new/4 affected selected cases and157 original Core Android outcomes without
+financial records or UI replay. Complete4a72373a is prepared; broader gates stay open.
+
+
 [D834 loan estimate range guards](quality/loan-estimate-numeric-range.md)
 retains18 selected cases and one original native overflow/error cover with full source
 equality; completefbdd70f2 is prepared, not on physical Main. Broader gates stay open.

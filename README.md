@@ -21,6 +21,7 @@
 ![Brotli](https://img.shields.io/badge/Brotli-455A64)
 ![System.Text.Json source generation](https://img.shields.io/badge/System.Text.Json%20source%20generation-512BD4)
 ![EF compiled models](https://img.shields.io/badge/EF%20compiled%20models-512BD4)
+![Exact rational arithmetic](https://img.shields.io/badge/Exact%20rational%20arithmetic-00695C)
 
 **Platforms, documents and integrations**
 
@@ -127,7 +128,7 @@ platform release gates remain open.
 |---|---|
 | Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint/D799 damaged receipt grouping and D800 resume ownership/input-feedback and D804 pending camera-result ownership corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | Latest recorded physical adoption is [D814](src/Apps/Zanance/docs/quality/current-complete-main-adoption.md), ac3a82f6/PID32063, not fresh liveness. D834fbdd70f2 is prepared, not installed there. Historical [D804](src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) adopts complete27d8070b without reset as Main1069; Home979/141 and public package/OS checks retain one raw drawing-order delta. D800/D799/D790 are historical. [D802](src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md) completes the three finite owner-cancelled CSV/local-backup/PDF routes; [D803](src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) adds one owner-framed camera draft. Private DB/key, broader device/security and release gates remain open |
+| Physical adoption | Latest recorded physical adoption is [D814](src/Apps/Zanance/docs/quality/current-complete-main-adoption.md), ac3a82f6/PID32063, not fresh liveness. D8354a72373a is prepared, not installed there. Historical [D804](src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) adopts complete27d8070b without reset as Main1069; Home979/141 and public package/OS checks retain one raw drawing-order delta. D800/D799/D790 are historical. [D802](src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md) completes the three finite owner-cancelled CSV/local-backup/PDF routes; [D803](src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) adds one owner-framed camera draft. Private DB/key, broader device/security and release gates remain open |
 | Performance and stability | [D831](src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md) retains a new large-page native exit; [D833](src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md) proves the declared source equal after it. Fault remedy, large-page timing and the general two-second target remain open; rejected hypotheses are not replayed |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |
@@ -139,6 +140,11 @@ for detailed evidence and remaining work; historical test totals are not current
 [D834 loan range guards](src/Apps/Zanance/docs/quality/loan-estimate-numeric-range.md) preserve exact large
 zero-rate installments and refuse unrepresentable loan payment/interest results before publication.
 Eighteen selected cases and one original Android error cover retain source; wider delivery gates stay open.
+
+[D835 exact positive annuity](src/Apps/Zanance/docs/quality/exact-positive-annuity-ceiling.md)
+qualifies the unchanged nominal formula with exact minor-unit rounding:34 selected host
+cases and157 original Core Android outcomes, no financial records or new UI flow.
+Its prepared package is not physical-device or whole performance/stability acceptance.
 
 ## Shared libraries
 
@@ -191,7 +197,7 @@ dotnet build src/Apps/Zanance/Vafadar.Zanance.App -t:Run -f net10.0-android
 |---|---|
 | Build and versions | [SDK selection](global.json), [central packages](Directory.Packages.props), [MAUI targets](eng/Maui.props); C# 14, .NET 10, MAUI 10.0.120 |
 | Native UI | Compiled XAML bindings, MVVM, dependency injection, semantic theme resources, Syncfusion controls and Fluent icons |
-| Financial model | Integer minor units plus ISO currency, DateOnly, injected TimeProvider; domain code in [Zanance.Core](src/Apps/Zanance/Vafadar.Zanance.Core) |
+| Financial model | Integer minor units plus ISO currency, exact rational annuity rounding, DateOnly, injected TimeProvider; domain code in [Zanance.Core](src/Apps/Zanance/Vafadar.Zanance.Core) |
 | Persistence | EF Core, real SQLite transactions, additive migrations/compiled models, protected SQLCipher hosts and validated derived ledger blocks; [data architecture](docs/architecture/data-and-backup.md) |
 | Privacy and recovery | Local profiles, SecureStorage/device authentication, AES-GCM backup envelopes, PBKDF2-SHA256 portable password protection, automatic device-key copies; [privacy matrix](docs/privacy/privacy-matrix.md) |
 | Languages and regional settings | Six translated languages, independent formatting/digits/calendars, RTL, Gregorian/Persian/Umm al-Qura; [localization](docs/architecture/localization.md) |

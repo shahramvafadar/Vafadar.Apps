@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-835 - Exact positive-rate nominal annuity ceiling (2026-11-05)
+
+Retain the original nominal formula but calculate its exact minor-unit ceiling from the
+full decimal monthly fraction. A proved64-month integer boundary and outward inverse-
+power intervals preserve positive Int32 terms without huge requested-count powers.
+29+1 original baseline cases expose20 failures;30 new/4 affected selected cases pass,
+including128 independent grid points. SDK-only19379/UID10236 executes157 new scalar
+outcomes/two expected refusals without App/Data/MAUI/DB/keys/financial records. Only that
+fresh UID retires after exact OS/key absence/geometry/boot/packages/reverse; D833 UID10234
+and D809 data/record/R13 terminal unknown stay untouched. Strict Windows/full offline
+384/408/1608 and SDK27/37/138 pass; prepared4a72373a is not on Main. Monthly rounded
+schedule/editor limits/writers/runtime/GC stay unchanged; no financial/auth/photo/phone/
+frozen/old-success replay. Four standard Clean profiles; whole gates and goal stay open.
+See `src/Apps/Zanance/docs/quality/exact-positive-annuity-ceiling.md`.
+
+
 ## D-834 - Loan estimate numeric range guards (2026-11-05)
 
 D834 preserves exact zero/nonpositive-rate installment ceilings, refuses out-of-range

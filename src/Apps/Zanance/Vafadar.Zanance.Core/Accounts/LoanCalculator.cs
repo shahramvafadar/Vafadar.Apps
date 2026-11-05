@@ -21,7 +21,7 @@ public sealed record LoanSchedule(IReadOnlyList<LoanInstallment> Installments, l
 /// rate changes, day counts and special payments are not known, so the app always labels the result as an estimate.
 /// Amounts are positive minor units; interest is rounded to the minor unit each month.
 /// </summary>
-public static class LoanCalculator
+public static partial class LoanCalculator
 {
     /// <summary>The longest schedule that is calculated (50 years of monthly installments).</summary>
     public const int MaxInstallments = 600;
@@ -55,7 +55,7 @@ public static class LoanCalculator
     }
 
     /// <summary>Returns the monthly installment that repays <paramref name="principal"/> in <paramref name="months"/>, rounded up.</summary>
-    /// <exception cref="OverflowException">The calculated estimate is nonfinite or outside the supported money range.</exception>
+    /// <exception cref="OverflowException">The calculated installment is outside the supported money range.</exception>
     public static long Installment(long principal, decimal annualRatePercent, int months)
     {
         ArgumentOutOfRangeException.ThrowIfLessThan(months, 1);
@@ -70,10 +70,7 @@ public static class LoanCalculator
             return principal / months + (principal % months == 0 ? 0 : 1);
         }
 
-        var rate = (double)(annualRatePercent / 1200m);
-        var factor = Math.Pow(1 + rate, months);
-        // An unrepresentable/nonfinite estimate must refuse instead of converting to a negative money value.
-        return checked((long)Math.Ceiling(principal * rate * factor / (factor - 1)));
+        return AnnuityInstallment(principal, annualRatePercent, months);
     }
 
     /// <summary>

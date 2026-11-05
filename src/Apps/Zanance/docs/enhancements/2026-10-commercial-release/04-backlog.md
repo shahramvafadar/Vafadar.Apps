@@ -9,6 +9,14 @@ States: Proposed · Ready (decisions made, may start after owner approval of the
 (implemented, tested, documented, pushed) · Blocked (by an owner action) · Deferred by owner. Priority: P1 (blocks
 the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 
+## D-835 continuation checkpoint
+
+[Exact positive-rate annuity ceiling](../../quality/exact-positive-annuity-ceiling.md)
+completes D834's ready conditioning investigation:30 new/4 affected selected cases and
+157 original Core Android outcomes pass, without a financial record or UI replay.
+Prepared4a72373a is not on Main; retain D833 UID10234/source and D809 terminal R13/data.
+Whole crash/performance/security/platform/external acceptance and delivery goal stay open.
+
 ## D-834 continuation checkpoint
 
 [Loan estimate numeric guards](../../quality/loan-estimate-numeric-range.md) complete
@@ -16,8 +24,8 @@ the release), P2 (in the release), P3 (later milestone). Size: S/M/L.
 boundary with full20 source equality. Preparedfbdd70f2 is not on Main; positive-rate
 annuity precision, large-page timing, fault remedy and broader gates remain open.
 Preserve D833 UID10234/data, D809 terminal R13 and all accepted-operation checkpoints.
-Next qualify whether positive-rate intermediate conditioning can falsely refuse a
-representable estimate; establish an original-contract failure before changing its formula.
+That next conditioning investigation is now completed by D835 above; its finite evidence
+does not close the independent page/crash/performance gates.
 
 ## D-833 continuation checkpoint
 

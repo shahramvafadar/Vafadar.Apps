@@ -91,3 +91,8 @@ retune or rescue it. D831/D832 sole CI responses say CIcancelled/CodeQLsuccess; 
 CIin_progress/CodeQLsuccess at its sole observation. None is queried again or proves this
 new unpushed correction. Whole performance/security/accessibility/platform/provider/
 Store/release gates and the continuous delivery goal remain open.
+
+
+Later [D835 exact positive annuity](exact-positive-annuity-ceiling.md) completes the
+separate positive-rate conditioning investigation, retaining this original schedule error
+cohort without replay. Wider acceptance gates remain open.

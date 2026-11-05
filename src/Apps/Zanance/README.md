@@ -15,6 +15,12 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 5 November 2026
 
+[D835 exact positive annuity](docs/quality/exact-positive-annuity-ceiling.md) fixes
+false refusals and lost minor units without changing monthly schedule or writer rules.
+34 selected host cases and157 native scalar outcomes pass without financial records.
+Complete4a72373a is prepared, not on physical Main; broader gates remain open.
+
+
 [D834 loan estimate range guards](docs/quality/loan-estimate-numeric-range.md)
 keeps zero-interest ceilings exact and rejects unrepresentable payment/interest results.
 18 selected cases and one original native error publication retain full source. Complete

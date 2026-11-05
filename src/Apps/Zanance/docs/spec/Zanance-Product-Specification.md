@@ -1226,9 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-834)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-835)
 
-Latest finite update: [D834 loan range guards](../quality/loan-estimate-numeric-range.md) adds15 new/3 affected selected cases and one original native error-publication boundary. This is not a current full-suite total. Completefbdd70f2 is prepared, not on physical Main; D833 source preservation is complete only within its declared typed scope and native-fault remedy/performance/platform gates remain open.
+Latest finite update: [D835 exact positive annuity](../quality/exact-positive-annuity-ceiling.md) records30 new/4 affected selected cases and157 Core Android scalar outcomes without financial records. This is not a current full-suite total. Complete4a72373a is prepared, not on physical Main; D833 source equality and D834 original error-publication evidence stay bounded, with native-fault remedy/performance/platform gates open.
 
 This section records what the repository actually contains. "Verified" is qualified by each scenario's evidence:
 automated tests, running Windows layouts, targeted Android emulator checks or specifically recorded physical
@@ -12932,3 +12932,14 @@ original LoanSchedulePage error/rows0/Retry-available boundary and unchanged ful
 source. No payment, writer/model/rounding/date policy or old-success replay. Prepared
 shippingfbdd70f2 is not on Main; positive-rate precision and broader gates remain open.
 See [finite evidence](../quality/loan-estimate-numeric-range.md).
+
+
+## D-835 - Exact positive-rate nominal annuity ceiling
+
+Use exact decimal monthly fractions and proved outward bounds for the original nominal
+annuity ceiling, preserving long money and positive Int32 terms without floating-point
+false refusals/lost minor units.30 new+4 affected selected cases, including128 grid
+points, and157 actual Core Android scalar outcomes pass without App/Data/MAUI/financial
+records. Monthly rounded schedule/editor/writer policies are unchanged; no new UI flow
+or matrix is accepted. Prepared4a72373a is not on Main; broader gates and goal stay open.
+See [finite evidence](../quality/exact-positive-annuity-ceiling.md).

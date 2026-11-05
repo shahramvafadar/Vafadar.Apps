@@ -13832,3 +13832,14 @@ original LoanSchedulePage error/rows0/Retry-available boundary and unchanged ful
 source. No payment, writer/model/rounding/date policy or old-success replay. Prepared
 shippingfbdd70f2 is not on Main; positive-rate precision and broader gates remain open.
 See [finite evidence](quality/loan-estimate-numeric-range.md).
+
+
+## D-835 - Exact positive-rate nominal annuity ceiling
+
+Use exact decimal monthly fractions and proved outward bounds for the original nominal
+annuity ceiling, preserving long money and positive Int32 terms without floating-point
+false refusals/lost minor units.30 new+4 affected selected cases, including128 grid
+points, and157 actual Core Android scalar outcomes pass without App/Data/MAUI/financial
+records. Monthly rounded schedule/editor/writer policies are unchanged; no new UI flow
+or matrix is accepted. Prepared4a72373a is not on Main; broader gates and goal stay open.
+See [finite evidence](quality/exact-positive-annuity-ceiling.md).
