@@ -108,3 +108,8 @@ Related: [exact annuity lineage](exact-positive-annuity-ceiling.md),
 [current physical Main](current-physical-main-adoption-d836.md),
 [new-PC synthetic controls](new-accounts-pc-r13-synthetic-boundary.md),
 [canonical backlog](../enhancements/2026-10-commercial-release/04-backlog.md).
+
+
+Later [D842 current ARM64/Main adoption](current-interest-arm64-main-adoption.md) qualifies the new monthly-interest
+hardware condition and adopts existing22a3f00a without reset as Main5939. This is the
+new dated public checkpoint; the original observations above retain their historical scope.

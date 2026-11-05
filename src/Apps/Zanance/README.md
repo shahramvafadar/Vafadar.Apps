@@ -16,9 +16,14 @@ Interface language, regional date/number formats, digit shapes and holiday rules
 
 ## Current documentation snapshot — 5 November 2026
 
+[D842 current ARM64/Main adoption](docs/quality/current-interest-arm64-main-adoption.md)
+qualifies16 current monthly-interest Core outcomes on Samsung, then adopts existing22a3f00a
+once without reset as Main5939, preserving public identity and all141 raw Home nodes.
+D836 below is historical; private-source/fault/performance/platform gates remain open.
+
 [D840 exact monthly interest](docs/quality/exact-monthly-loan-interest.md) corrects artificial half-unit rounding and a spurious
 loan-estimate month.19 selected host cases and one original Android ready schedule retain
-the declared source; complete22a3f00a is prepared, not on Main. Broader gates stay open.
+the declared source; D842 now adopts complete22a3f00a as Main5939. Broader gates stay open.
 
 [D837 actual ARM64 annuity qualification](docs/quality/physical-arm64-annuity-qualification.md)
 records157 original Core outcomes/two expected refusals on reserved Samsung without

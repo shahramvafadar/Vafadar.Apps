@@ -1,5 +1,11 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D842 current monthly-interest ARM64/Main adoption](current-interest-arm64-main-adoption.md) qualifies16 current Core
+outcomes on Samsung without financial records, then adopts existing complete22a3f00a
+once without reset as Main5939. Public identities and first ready141raw Home nodes
+are exact; wider private-source/fault/performance/platform gates and goal stay open.
+
+
 [D841 prepared SDK word-category memory boundary](sdk-word-category-memory-boundary.md) retains12+2 versioned
 fake cases and original8MiB quota, with exact emulator preservation. The actual
 candidate is uninstalled/unexecuted pending D838; no original R13/source read or

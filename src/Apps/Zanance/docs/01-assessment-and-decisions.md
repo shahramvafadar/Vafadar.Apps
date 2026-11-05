@@ -13876,3 +13876,12 @@ retain14new+5affected selected tests, one visible single-row schedule and unchan
 bounded memory bridge and original8MiB quota. The actual6149a7a8 candidate is retained
 without installation/execution; D838 authority and causal/security/release gates remain open.
 No product source/test count or accepted financial/authentication/photo path changes.
+
+
+## D-842 - Current monthly interest on ARM64 and physical Main
+
+[Finite hardware/adoption evidence](quality/current-interest-arm64-main-adoption.md) records16
+current Core outcomes on reserved Samsung, only fresh UID10416 retired and one existing
+complete22a3f00a no-reset adoption as Main5939. UID/CEDE/public flags/OS and all141 raw
+Home nodes stay exact; no financial/auth/photo or old suite/build replay. This is not
+complete private-source/fault/performance/security/platform/release acceptance.

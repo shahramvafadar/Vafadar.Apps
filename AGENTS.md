@@ -1,5 +1,28 @@
 # AGENTS.md – working rules for this repository
 
+## D-842 - Current interest ARM64 and physical Main adoption (2026-11-05)
+
+Actual reserved/unlocked Samsung36/ARM64 Main27284/4a72373a owned Home baseline has
+no pending draft command. Fresh Core-only SDK4677/UID10416 runs exactly16 existing
+D840 outcomes in the previously uncovered hardware/ABI condition; all pass, no new
+unit count/annuity157/financial/auth/photo replay or App/Data/MAUI/DB/key startup.
+Only fresh UID10416 retires; Main27284 automatically returns, public state exact.
+Strict SDK27/37/138/offline/nondebug/min36-v3/current actual Core AOT/original Mono
+pass,108line standard Clean. Reuse qualified full22a3f00a99471263bytes384/408/1608,
+no old full builds/tests. Current loan source and whole Data-project source preflight
+pass; public signer matches, no private Main source/schema/key proof inferred.
+One no-reset install/one normal launcher adopts Main5939 from27284 with UID10380/
+CE155299/DE154603 unchanged. All public packages/flags/OS/locales key/boot/geometry/
+reverse exact except expected Main APK/PID; first ready Home141raw nodes/all attrs/
+order exactly equal, no recapture or normalization. Three owned XML155796bytes hash-
+clean, local evidence retained and5939 live/owned after retirement. Latest dated Main
+is now5939/22a, not future liveness or full private-source/stability/performance proof.
+No scanning override, setting/auth/financial/camera/other-route/emulator/frozen action.
+D838 pending/D841 actual candidate unexecuted/D809 unknown/D833 data/terminal cohorts
+remain protected; goal and broader gates stay active. See
+`src/Apps/Zanance/docs/quality/current-interest-arm64-main-adoption.md`.
+
+
 ## D-841 - Prepared SDK memory boundary, no actual R13 read (2026-11-05)
 
 D838 remains pending; no actual-bound SDK install/launch/history/trace/register read.

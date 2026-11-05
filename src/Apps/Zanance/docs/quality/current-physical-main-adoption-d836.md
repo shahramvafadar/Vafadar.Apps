@@ -86,3 +86,8 @@ Related: [D835 exact annuity](exact-positive-annuity-ceiling.md),
 [previous D814 Main checkpoint](current-complete-main-adoption.md),
 [retained post-fault source](post-fault-accounts-source-audit.md),
 [remaining frontier](remaining-delivery-evidence.md).
+
+
+Later [D842 current ARM64/Main adoption](current-interest-arm64-main-adoption.md) qualifies the new monthly-interest
+hardware condition and adopts existing22a3f00a without reset as Main5939. This is the
+new dated public checkpoint; the original observations above retain their historical scope.

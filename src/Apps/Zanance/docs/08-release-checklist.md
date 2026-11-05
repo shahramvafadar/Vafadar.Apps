@@ -1,5 +1,11 @@
 # 08 – Release checklist (first public release)
 
+[D842 current monthly-interest ARM64/Main adoption](quality/current-interest-arm64-main-adoption.md) qualifies16 current Core
+outcomes on Samsung without financial records, then adopts existing complete22a3f00a
+once without reset as Main5939. Public identities and first ready141raw Home nodes
+are exact; wider private-source/fault/performance/platform gates and goal stay open.
+
+
 [D840 exact monthly loan interest](quality/exact-monthly-loan-interest.md) fixes ten observed artificial-midpoint
 failures;14new+5affected selected cases and one original Android single-row schedule
 with full20source equality pass. Complete22a3f00a is prepared, not on Main; broader
