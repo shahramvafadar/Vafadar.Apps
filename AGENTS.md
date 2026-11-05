@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-849 - Current physical Main without reset (2026-11-05)
+
+D849 adopts already-qualified complete904c1f91 once without reset on reserved,
+unlocked Samsung as Main20144 from15641. UID10380/CE155299/DE154603 and first141raw
+Home nodes/all attributes/order are exact; three Zanance package records, five OS,
+locale key/boot/geometry/reverse remain unchanged except expected Main APK/PID.
+No setting/auth/financial/photo/provider/R13 test command or old build/test replay.
+Two owned XML103864bytes hash-match/retire; local raw and used signed APK remain.
+This is public preservation, not private Main DB/key/full financial or broader acceptance.
+Bare-caption oracle refusal is preserved and corrected on the same XML with complete
+original141-node equality, no recapture. Existing wireless5038 is used, no pair/reset.
+D607 terminal/D744 returned/D838 pending/D841 unexecuted and active goal remain. See
+`src/Apps/Zanance/docs/quality/current-physical-main-adoption-d849.md`.
+
+
 ## D-848 - Goal validation language and native OS200 (2026-11-05)
 
 D848 refreshes existing goal field-validation captions without another Save, keeping

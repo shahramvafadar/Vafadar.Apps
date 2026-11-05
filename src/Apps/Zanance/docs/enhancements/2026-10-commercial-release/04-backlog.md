@@ -1,5 +1,15 @@
 # 04 – Canonical backlog (commercial release)
 
+[Current physical Main D849](../../quality/current-physical-main-adoption-d849.md) records:
+D849 adopts already-qualified complete904c1f91 once without reset on reserved,
+unlocked Samsung as Main20144 from15641. UID10380/CE155299/DE154603 and first141raw
+Home nodes/all attributes/order are exact; three Zanance package records, five OS,
+locale key/boot/geometry/reverse remain unchanged except expected Main APK/PID.
+No setting/auth/financial/photo/provider/R13 test command or old build/test replay.
+Two owned XML103864bytes hash-match/retire; local raw and used signed APK remain.
+This is public preservation, not private Main DB/key/full financial or broader acceptance.
+
+
 [Goal validation language/native scale D848](../../quality/goal-validation-language-native-scale.md) records:
 D848 refreshes existing goal field-validation captions without another Save, keeping
 unit-review reasons/raw drafts/writer policy.12new+2affected host cases pass. Separate

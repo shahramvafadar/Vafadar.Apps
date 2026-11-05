@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-848)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-849)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1236,7 +1236,9 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
 
-Latest physical update: [D846](../quality/physical-goal-percent-main-adoption.md) qualifies the current original goal page on ARM64 and adopts complete868f06c0 as Main15641 once without reset. First141raw Home nodes/public identities/settings exact; no financial/auth/photo/R13 replay or whole private-source acceptance.
+Latest physical update: [D849](../quality/current-physical-main-adoption-d849.md) adopts904c1f91 as Main20144 once without reset, with UID/data inodes/first141raw Home nodes and public OS/package/locale state exact. No private Main/full financial/gate acceptance or old successful test is inferred.
+
+Prior physical update: [D846](../quality/physical-goal-percent-main-adoption.md) qualifies the current original goal page on ARM64 and adopts complete868f06c0 as Main15641 once without reset. First141raw Home nodes/public identities/settings exact; no financial/auth/photo/R13 replay or whole private-source acceptance.
 
 Latest finite update: [D848 retained validation/native scale](../quality/goal-validation-language-native-scale.md) refreshes existing field captions without Save replay.12new+2affected cases and36 original note/error contexts at actual OS200% preserve raw/20source; original emulator/source/R13 untouched. Effective system themes/digit mapping and limited accessibility scope remain explicit.904c1f91 is prepared, not Main.
 

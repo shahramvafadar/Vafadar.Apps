@@ -115,3 +115,7 @@ and the overall goal remain open/active.
 Related: [original percent precision](exact-goal-percent-input.md),
 [physical normal-text checkpoint](physical-goal-percent-main-adoption.md),
 [execution frontier](remaining-delivery-evidence.md).
+
+Later [D849 physical adoption](current-physical-main-adoption-d849.md) installs the
+existing904c1f91 once without reset as Main20144, preserving first141raw Home nodes
+and original public identity/settings. The prepared-only statement above is historical.

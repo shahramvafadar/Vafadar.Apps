@@ -13963,3 +13963,15 @@ R13/source/phone remain untouched. Theme-policy and native-digit observer failur
 are explicit; not pixel/contrast/whole-A11Y proof. Strict builds/four standard Cleans
 and exact fresh OS restoration/official AVD retirement pass.904c1f91 prepared, not Main.
 See [finite original surface](quality/goal-validation-language-native-scale.md).
+
+
+## D-849 - Physical current Main adoption (2026-11-05)
+
+D849 adopts already-qualified complete904c1f91 once without reset on reserved,
+unlocked Samsung as Main20144 from15641. UID10380/CE155299/DE154603 and first141raw
+Home nodes/all attributes/order are exact; three Zanance package records, five OS,
+locale key/boot/geometry/reverse remain unchanged except expected Main APK/PID.
+No setting/auth/financial/photo/provider/R13 test command or old build/test replay.
+Two owned XML103864bytes hash-match/retire; local raw and used signed APK remain.
+This is public preservation, not private Main DB/key/full financial or broader acceptance.
+See [finite physical proof](quality/current-physical-main-adoption-d849.md).
