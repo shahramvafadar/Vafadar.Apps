@@ -342,7 +342,7 @@ public sealed partial class PersonalSyncReviewPresenter(Translator translator, I
         }
         if (column.Kind == "decimal")
         {
-            if (!decimal.TryParse(value.GetString(), NumberStyles.Number, CultureInfo.InvariantCulture, out var number)) return false;
+            if (!SyncDecimal.TryParseExact(value.GetString(), out var number)) return false;
             text = NativeDigits.Apply(number.ToString(CultureInfo.CurrentCulture))! + (column.Name == "Percent" ? " %" : ""); return true;
         }
         if (column.Kind == "integer")

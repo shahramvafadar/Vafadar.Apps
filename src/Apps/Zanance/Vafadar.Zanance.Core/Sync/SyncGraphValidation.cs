@@ -213,7 +213,7 @@ public static class SyncGraphValidation
             "guid" => Guid.TryParseExact(text, "D", out var guid) && text == guid.ToString("D").ToUpperInvariant(),
             "date" => DateOnly.TryParseExact(text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _),
             "time" => TimeOnly.TryParseExact(text, ["HH:mm:ss", "HH:mm:ss.FFFFFFF"], CultureInfo.InvariantCulture, DateTimeStyles.None, out _),
-            "decimal" => decimal.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out _),
+            "decimal" => SyncDecimal.TryParseExact(text, out _),
             "json-guid" or "json-string" or "json-integer" => ValidCollection(text, column),
             "text" => true,
             _ => false,

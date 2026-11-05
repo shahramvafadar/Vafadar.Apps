@@ -13939,3 +13939,15 @@ Only its fresh UID retires. Reused complete868f06c0 is adopted once without rese
 Main15641: UID/data inodes/settings and first141raw Home nodes exact; timeout300000
 restored. No old catalog/financial/auth/photo/R13 replay or broader acceptance.
 See [finite evidence](quality/physical-goal-percent-main-adoption.md).
+
+
+## D-847 - Exact sync decimal admission (2026-11-05)
+
+D847 refuses received decimal text that only parses after rounding, preserves exact
+scientific notation and uses the same rule in original conflict review.44new+1affected
+selected cases pass across the recorded lineage, not a full suite. Controlled native
+local-only review24964/UID10242 retains20source/0financial and exact original emulator
+state; genuine network Capture refusal and clipped exact-rate viewport stay explicit.
+Strict final Windows/fullOffline384/408/1608/private192/204/804 and five standard Clean
+commands pass. Shippinga1427c84 is prepared, not Main; no phone/R13/frozen action.
+See [finite source/native evidence](quality/exact-sync-decimal-admission.md).

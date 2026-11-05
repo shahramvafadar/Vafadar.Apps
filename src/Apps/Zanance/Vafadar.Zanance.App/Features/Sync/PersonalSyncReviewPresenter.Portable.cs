@@ -39,7 +39,7 @@ public sealed partial class PersonalSyncReviewPresenter
         }
         if (table.Name == "ExchangeRates" && column.Name == "Rate")
         {
-            if (!decimal.TryParse(value.GetString(), NumberStyles.Number, CultureInfo.InvariantCulture, out var rate) || rate <= 0 ||
+            if (!SyncDecimal.TryParseExact(value.GetString(), out var rate) || rate <= 0 ||
                 !Currencies.TryGet(body.GetProperty("FromCurrencyCode").GetString(), out var source) ||
                 !Currencies.TryGet(body.GetProperty("ToCurrencyCode").GetString(), out var target)) return false;
             text = NativeDigits.Apply("\u2066\u200e1 " + source.Code + " = " + rate.ToString(localization.CurrentCulture) + " " + target.Code + "\u200e\u2069")!;

@@ -102,6 +102,8 @@ controls.
 
 ## Current delivery status
 
+[D847 exact sync decimals](src/Apps/Zanance/docs/quality/exact-sync-decimal-admission.md) refuses rounded wire values and retains exact scientific rates in conflict review. Selected checks and controlled local Android cards preserve source without financial writes; genuine network/platform acceptance stays separate. Completea1427c84 is prepared, not Main.
+
 [D845 exact goal percentages](src/Apps/Zanance/docs/quality/exact-goal-percent-input.md) preserves complete stored digits and the original numeric format through partial edits, with exact input validation and six-language feedback. Versioned selected/native checks retain the declared source without a financial write. [D846](src/Apps/Zanance/docs/quality/physical-goal-percent-main-adoption.md) now qualifies the current goal page on ARM64 and adopts868f06c0 as Main15641 without reset; wider gates stay open.
 
 [D844 exact manual-rate input](src/Apps/Zanance/docs/quality/exact-manual-rate-input.md) rejects silently rounded reference ratios and explains precision in six languages. Versioned selected checks and original native continuation qualify one exact rate row with other source retained; observer failures remain explicit. Complete06a69637 is prepared, not Main; broader gates stay open.

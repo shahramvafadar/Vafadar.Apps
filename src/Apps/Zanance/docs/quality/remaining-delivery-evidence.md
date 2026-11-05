@@ -1,5 +1,15 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[Exact sync decimals D847](exact-sync-decimal-admission.md) records:
+D847 refuses received decimal text that only parses after rounding, preserves exact
+scientific notation and uses the same rule in original conflict review.44new+1affected
+selected cases pass across the recorded lineage, not a full suite. Controlled native
+local-only review24964/UID10242 retains20source/0financial and exact original emulator
+state; genuine network Capture refusal and clipped exact-rate viewport stay explicit.
+Strict final Windows/fullOffline384/408/1608/private192/204/804 and five standard Clean
+commands pass. Shippinga1427c84 is prepared, not Main; no phone/R13/frozen action.
+
+
 [Physical goal/Main checkpoint D846](physical-goal-percent-main-adoption.md) records:
 D846 qualifies the current original goal-percent page once on Samsung36/ARM64,
 with one refused native Save, retained raw draft/original format and full20source equality.

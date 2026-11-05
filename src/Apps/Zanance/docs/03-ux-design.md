@@ -1,5 +1,11 @@
 # 03 – UX design
 
+D-847: conflict cards retain exact scientific wire values and disable both choices
+when decimal text would silently round. The existing incomplete-review hint applies.
+[Controlled original native surface](quality/exact-sync-decimal-admission.md) is
+local-only; its horizontal tiny-rate viewport is not full simultaneous glyph proof.
+
+
 D-845: share-of-income percentages display their complete actual stored decimal.
 Partial edits retain their original numeric culture; complete clearing renews it,
 with the existing original-format explanation visible when formats differ. All six

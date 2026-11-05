@@ -1226,7 +1226,7 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-846)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-05, D-847)
 
 D837: [physical ARM64 original Core qualification](../quality/physical-arm64-annuity-qualification.md)
 matches157 existing scalar oracle outcomes/two genuine refusals without App/Data/financial
@@ -1238,7 +1238,9 @@ Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-
 
 Latest physical update: [D846](../quality/physical-goal-percent-main-adoption.md) qualifies the current original goal page on ARM64 and adopts complete868f06c0 as Main15641 once without reset. First141raw Home nodes/public identities/settings exact; no financial/auth/photo/R13 replay or whole private-source acceptance.
 
-Latest finite update: [D845 exact goal percentages](../quality/exact-goal-percent-input.md) preserves loaded precision/original culture and refuses inexact parsing, with a format note and six precision messages.50new+4affected cases pass across lineage, not all on one final binary. Original native one refused Save/full20source/format restoration pass after a private route-order correction. D843 range-control interpretation is corrected without rewriting prior evidence. Complete868f06c0 is prepared, not Main; broader gates remain open.
+Latest finite update: [D847 exact sync decimals](../quality/exact-sync-decimal-admission.md) rejects rounding before scalar/choice acceptance while retaining exact exponent syntax.44new+1affected selected cases and controlled local original conflict cards retain20source/0financial; real network Capture refusal and viewport limits remain explicit. Shippinga1427c84 is prepared, not Main.
+
+Prior finite update: [D845 exact goal percentages](../quality/exact-goal-percent-input.md) preserves loaded precision/original culture and refuses inexact parsing, with a format note and six precision messages.50new+4affected cases pass across lineage, not all on one final binary. Original native one refused Save/full20source/format restoration pass after a private route-order correction. D843 range-control interpretation is corrected without rewriting prior evidence. Complete868f06c0 is prepared, not Main; broader gates remain open.
 
 Prior finite update: [D844 exact manual-rate input](../quality/exact-manual-rate-input.md) rejects silent decimal rounding before the original writer and explains precision in six languages.44new+5affected cases pass across lineage, not all on one final binary. Original native two distinct refusals/one exact reference-rate Save retain declared20source before writes/other19 afterward, with observer failure and inode limits preserved. Complete06a69637 is prepared, not on Main; broader gates remain open.
 
