@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## D-865 - Bound muted-contrast source premise (2026-11-05)
+
+D865 inventories698tracked App sources/44direct Muted references and48explicit
+placeholder declarations; four shared fields resolve to Card in both actual hosts.
+Declared Muted/Card ratios4.67767/5.19807 and archived-category normal-text alpha
+ratios4.78035/5.66267 do not support the proposed global recolor. Ten hypothetical
+low-ratio pairs stay retained and unbound. Source-only, no native/glyph/all-A11Y claim,
+product change/build/test/device/financial/frozen/R13 replay; broader gates and goal
+stay open. Main15014/a214 remains dated D864.
+See `src/Apps/Zanance/docs/quality/bound-muted-contrast-source-admission.md`.
+
 ## D-864 - Current28 ARM64 and complete Main (2026-11-05)
 
 D864 qualifies only current D862wealth8/D863quantity20 on actual Samsung ARM64,

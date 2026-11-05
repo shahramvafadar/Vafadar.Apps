@@ -1,5 +1,9 @@
 # Zanance – design documentation
 
+[D865 bound muted-contrast source admission](quality/bound-muted-contrast-source-admission.md):
+actual declared text/card and archived-category alpha models do not establish the
+proposed global-palette defect; no code/native/build/test replay or broad A11Y pass.
+
 [Current28 ARM64/Main D864](quality/current-quantity-wealth-arm64-main.md):
 D864 qualifies only current D862wealth8/D863quantity20 on actual Samsung ARM64,
 SDK-only UID10419/PID13566/27AOT37ELF138staticLOAD/min36/v3/offline. Four current

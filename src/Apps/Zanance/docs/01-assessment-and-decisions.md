@@ -1,5 +1,16 @@
 # 01 – Assessment and decision log
 
+## D-865 - Bound muted text and archived-category source admission
+
+D865 inventories698tracked App sources/44direct Muted references and48explicit
+placeholder declarations; four shared fields resolve to Card in both actual hosts.
+Declared Muted/Card ratios4.67767/5.19807 and archived-category normal-text alpha
+ratios4.78035/5.66267 do not support the proposed global recolor. Ten hypothetical
+low-ratio pairs stay retained and unbound. Source-only, no native/glyph/all-A11Y claim,
+product change/build/test/device/financial/frozen/R13 replay; broader gates and goal
+stay open. Main15014/a214 remains dated D864.
+[Actual source bindings and retained negative controls](quality/bound-muted-contrast-source-admission.md).
+
 D-864: [current28 ARM64/full Main](quality/current-quantity-wealth-arm64-main.md)
 qualifies only current8wealth+20quantity cases in fresh SDK-only ARM64, then adopts
 existing completea214 once without reset as Main15014. First Loading51 comparison
