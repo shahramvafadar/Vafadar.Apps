@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-895 - Startup purge connection admission rejected (2026-11-06)
+
+Operation-owned purge connection passes two fixed hostSQLCipher4.5.2 cohorts/56children
+and4new cancellation/journal controls; exact live/durable receipt IDs/source and2→1opens
+hold. First native100k pair passes7.7257percent, but separate fixed4inverse pairs fail:
+purge median2163.953→2869.417ms, loaded24222.618→38088.109ms. Keep all slow samples;
+no exclusive-cause claim, retune/rescue or product/Windows/shipping/old suite patch.
+All10cold cases/source22tables/32fields/frame fields/38marks/118events49pairs/health0
+pass. OriginalD893observer restored once without reset as12833/UID10260/source/publicOS
+exact; retain source. SixCleans/no supplemental/frozen/phone/auth/photo/financial replay.
+Actual independentD896probe after timing confirms4original wealth-group overflowfail/
+8pass/no write; next correct that report path, not this rejected performance candidate.
+Broader gates and goal active; D894singleCI consumed, never secondGET.
+See `src/Apps/Zanance/docs/quality/startup-purge-connection-admission.md`.
+
 ## D-894 - Quick-resource generated JSON cold candidate rejected (2026-11-05)
 
 Private same-complete-JSON generated quick stamp passes361contract comparisons and
