@@ -14935,3 +14935,23 @@ frozen/phone action. Fullb90c2d6d is prepared/notMain; current28CoreARM64/Main r
 D910soleCIcancelled/CodeQLsuccess and D911soleCIin_progress/CodeQLsuccess consumed,
 never secondGET. Originalfault/D838pending/D841undeployed/broader gates/goal open.
 [Complete signed reconciliation](quality/complete-signed-reconciliation-input.md).
+
+
+## D-913 - Signed reconciliation ARM64 and Main adoption (2026-11-06)
+
+Only D912's missing28Core ARM64 condition executes once: Samsung36/ARM64/4096/
+.NET10.0.14 PID25817/UID10434 passes28 with the predeclared ordered catalogue.
+Strict SDK27AOT37ELF138LOAD/offline/nondebug/min36-v3/CRC/ZIP passes;10actual
+compiler-source bindings match four current Core files in SDK/existing shipping
+and two test files in SDK. No wholePE claim or six App/host/x64/financial replay.
+FreshUID retires; Main22204/public and extraOS state return exact. Existing full
+b90c2d6d is adopted once without reset to Main27334/UID10380/CE155299/DE154603.
+First Ready Home979/102landscape all raw nodes/order, grants/other packages/OS/
+locale-keypresence/rotation/timezone remain exact except expected APK/PID. No
+secondframe/Reload/relaunch/orientation rescue or privateMainDB/key read. TwoXML
+75732bytes hash-retire, four compiler files/used APKs/source/output retained.
+One scopedSDKClean179files38667587logicalbytes; no supplemental/frozen/emulator/
+auth/photo/old-success action. D912's original observer failures remain recorded;
+these28platform outcomes add zero product tests. Originalfault/D838pending/
+D841undeployed/wholeperformance/security/platform/provider/release and goal open.
+[Signed reconciliation ARM64/Main](quality/signed-reconciliation-arm64-main.md).

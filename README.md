@@ -102,11 +102,17 @@ controls.
 
 ## Current delivery status
 
+[Signed reconciliation ARM64/Main D913](src/Apps/Zanance/docs/quality/signed-reconciliation-arm64-main.md):
+D913 completes only D912's missing28Core ARM64 outcomes once, then adopts existing
+fullb90c2d6d without reset as Main27334. First Ready Home979/102landscape raw nodes/
+order, public packages/grants/OS and extra locale state match. These are28platform
+observations and zero new tests; private Main DB/key and whole-project gates remain.
+
 [Signed reconciliation D912](src/Apps/Zanance/docs/quality/complete-signed-reconciliation-input.md):
 Complete signed observed-balance input and checked Core differences pass34new host
-cases/32affected guards and28native calculations plus one original read-only form
-comparison. Prepared fullb90c2d6d is not yet Main; current ARM64/adoption are separate.
-No adjustment, accepted financial replay or whole-project readiness is claimed.
+cases/32affected guards and28x64 calculations plus one original read-only form
+comparison. D913 completes current ARM64/adoption; no adjustment, accepted financial
+replay or whole-project readiness is claimed.
 
 [Current negative-goal ARM64/Main D910](src/Apps/Zanance/docs/quality/negative-goal-arm64-main.md):
 D910 qualifies only the12 current D909 goal-overshoot outcomes once on physical
