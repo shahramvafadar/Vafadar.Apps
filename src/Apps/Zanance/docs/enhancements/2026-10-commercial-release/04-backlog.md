@@ -1,5 +1,22 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-908 - Static new-fault reference-element provenance (2026-11-06)
+
+Exact original Mono/debug hashes and positive function bounds admit4966bytes/
+1280contiguous verified instructions. The sole indirect jump resolves seven
+bounded public relative entries; all direct targets are instruction boundaries.
+Normal-return CFG proves slot-load0x2f3f51 and array-data initializer0x2f39c9
+precede admitted fault0x2f3f92; R13 is unchanged between slot load and header read.
+Pinned vector-reference macro/raw source137 and exact-PC DWARF agree: this is an
+array reference-element scan, not the direct gray-stack entry load. Arrays of
+all-reference structs remain possible; no actual managed type/value/validity,
+earlier writer/cause/repair/nursery membership is proved. Later header untagging
+does not align R13. Historical event remains reason5/status0. Public-only static
+work has no new register/map/record/private memory/device/build/test/financial/
+auth/cleanup/frozen action. D838pending/D841undeployed and original cause/whole
+performance/security/platform/provider/release gates remain; goal stays active.
+[Static operand provenance](../../quality/new-accounts-field-word-provenance.md).
+
 ## D-907 - Current completed-read ARM64 and Main adoption (2026-11-06)
 
 Only the missing physical condition of D904Core27/D906Core49 runs once: actual
