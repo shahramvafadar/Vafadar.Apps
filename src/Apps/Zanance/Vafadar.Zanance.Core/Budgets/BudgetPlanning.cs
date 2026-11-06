@@ -85,17 +85,7 @@ public static class BudgetPlanning
     public static long? MonthlyEquivalent(Schedule schedule, DateOnly from)
     {
         var share = MonthlyEquivalent(schedule);
-        if (share is null) return null;
-        var first = schedule.ActiveFrom is { } start && start > from ? start : from;
-        var last = schedule.ActiveUntil ?? DateOnly.MaxValue;
-        if (schedule.State == ScheduleState.Paused && schedule.PausedFrom is { } paused)
-        {
-            if (paused <= first) return null;
-            if (paused <= last) last = paused.AddDays(-1);
-        }
-
-        // D-902: retain the original anchor, count/end rules and slice ownership; never manufacture a fresh recurrence.
-        return first <= last && Recurrence.Between(schedule.Rule, first, last).Any(date => schedule.Owns(date.Date)) ? share : null;
+        return share is not null && PlanActions.HasScheduledDateOnOrAfter(schedule, from) ? share : null;
     }
 
     /// <summary>

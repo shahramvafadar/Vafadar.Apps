@@ -97,6 +97,22 @@ public static class PlanActions
         return [.. all.Where(s => s.State != ScheduleState.Ended || all.Any(n => n.PreviousScheduleId == s.Id))];
     }
 
+    /// <summary>Returns whether the original rule still has a date owned by this slice on or after <paramref name="from"/>.</summary>
+    public static bool HasScheduledDateOnOrAfter(Schedule schedule, DateOnly from)
+    {
+        ArgumentNullException.ThrowIfNull(schedule);
+        var first = schedule.ActiveFrom is { } start && start > from ? start : from;
+        var last = schedule.ActiveUntil ?? DateOnly.MaxValue;
+        if (schedule.State == ScheduleState.Paused && schedule.PausedFrom is { } paused)
+        {
+            if (paused <= first) return false;
+            if (paused <= last) last = paused.AddDays(-1);
+        }
+
+        // D-902/D-903: share the original anchor, end/count and ownership check; never re-anchor a retired slice.
+        return first <= last && Recurrence.Between(schedule.Rule, first, last).Any(date => schedule.Owns(date.Date));
+    }
+
     /// <summary>Ends a plan: no occurrences after <paramref name="lastDate"/>.</summary>
     public static void End(Schedule schedule, DateOnly lastDate)
     {

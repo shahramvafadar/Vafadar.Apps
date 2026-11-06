@@ -1,5 +1,31 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-903 - Current capacity commitment dates and units (2026-11-06)
+
+D903 repairs remaining capacity P/G commitments: retired/exhausted installment
+and contribution dates stop subtracting current costs, spending cuts retain their
+documented financial-month unit, and income shares reuse the existing nonnegative
+preview. Original interest/principal, fixed-date annualization/rounding, scope and
+final-money guards remain. D902 date ownership moves exactly to PlanActions, with
+its undated formula unchanged.20 new tests reproduce11 failures, then20 host/x64/
+ARM64 plus6 affected host cases pass; not60 new tests/fullsuite. Strict Windows/
+full offline384AOT408ELF1608LOAD/private192204804/SDK27AOT37ELF138LOAD pass;11actual
+source bindings stay equal across private continuation.17885/UID10266 passes20 once;
+one new2account/2installment/2goal/2contribution/ledger0 setup preserves20component
+source. The original report intentionally shows only summary; component visibility
+is not invented. One no-reset readonly continuation18173/sameUID preserves source/
+case receipt; reminder intro/route InvalidOperation and two missing XML captures
+remain. Only Not now/no permission, original Goals/help/Close UI continue, no case/
+setup replay. Actual paired rows110EUR principal/120EUR goals/−230EUR capacity fit
+the original KpiSheet viewport; no ellipsis/glyph claim from XML. ARM64 SDK-only
+8512/10431 passes20 once/retires; one full9f8f480d Main no-reset upgrade6511to10611
+preserves UIDCEDE/grants/publicOS and first Ready Home979/102landscape raw nodes/order.
+Fresh review/seven bound XML retire; Q0215609 returns normally; five scoped Cleans/
+no supplemental/frozen/auth/photo/financial UI replay. D902oneCI consumed in_progress/
+three successes at response, never secondGET. Originalfault/D838pending/D841undeployed/
+wholeperformance/security/platform/provider/release gates and goal remain active.
+[Current capacity commitments](../../quality/current-capacity-commitment-units.md).
+
 ## D-902 - Current owned monthly plan shares (2026-11-06)
 
 D902 fixes current annualized costs retaining retired split slices, exhausted rules

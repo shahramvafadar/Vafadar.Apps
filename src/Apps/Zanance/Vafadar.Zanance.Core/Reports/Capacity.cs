@@ -86,7 +86,8 @@ public static class CapacityCalculator
         foreach (var loan in accountList.Where(a => a.Type == AccountType.Loan && !a.IsArchived && Same(a.CurrencyCode)))
         {
             var outstanding = LoanCalculator.Outstanding(loan.Type, LedgerCalculator.Balance(loan, entries, today));
-            foreach (var plan in inForce.Where(s => s.Kind == EntryKind.Transfer && s.ToAccountId == loan.Id && (s.ToAmount ?? s.Amount) is > 0))
+            foreach (var plan in inForce.Where(s => s.Kind == EntryKind.Transfer && s.ToAccountId == loan.Id && (s.ToAmount ?? s.Amount) is > 0
+                         && PlanActions.HasScheduledDateOnOrAfter(s, today)))
             {
                 var payment = plan.ToAmount ?? plan.Amount!.Value;
                 var (_, part) = LoanCalculator.Split(outstanding, loan.InterestRate ?? 0, payment);
@@ -98,15 +99,18 @@ public static class CapacityCalculator
         // Quantity goals plan grams or units, never money, so their plans are not part of G.
         var active = goals.Where(g => g.State == GoalState.Active && g.Type != GoalType.HoldingQuantity && Same(g.CurrencyCode) && g.Id != exceptGoalId).Select(g => g.Id).ToHashSet();
         long other = 0;
-        foreach (var plan in contributionPlans.Where(p => active.Contains(p.GoalId)))
+        foreach (var plan in contributionPlans.Where(p => active.Contains(p.GoalId) && Recurrence.Between(p.Rule, today, DateOnly.MaxValue).Any()))
         {
-            var perDate = plan.Method switch
+            var suggested = plan.Method switch
             {
                 ContributionMethod.FixedAmount or ContributionMethod.SpendingCut => plan.Amount ?? 0,
-                ContributionMethod.ShareOfIncome => (long)Math.Round(income * (plan.Percent ?? 0) / 100m, MidpointRounding.AwayFromZero),
+                ContributionMethod.ShareOfIncome => EligibleIncome.Suggestion(income, plan.Percent ?? 0),
                 _ => 0,
             };
-            other = checked(other + (long)Math.Round(perDate * Recurrence.PerYear(plan.Rule) / 12m, MidpointRounding.AwayFromZero));
+            // D-903: a spending cut is already per financial month; the other methods suggest an amount per date.
+            var monthly = plan.Method == ContributionMethod.SpendingCut ? suggested
+                : (long)Math.Round(suggested * Recurrence.PerYear(plan.Rule) / 12m, MidpointRounding.AwayFromZero);
+            other = checked(other + monthly);
         }
 
         return new CapacityResult(currencyCode, income, KpiCatalog.Median(spending), nm, principal, other, enough && incomes.Count == 3);
