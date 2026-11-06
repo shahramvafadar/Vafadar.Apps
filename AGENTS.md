@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-897 - Complete converted currency nets and current Main (2026-11-06)
+
+D897 repairs4actual converted-net prefix failures with checkedInt128 accumulation and
+completed known-long guard; per-currency conversion/rounding/date/missing evidence
+remain.20newhost/x64/ARM64 and5affected host conditions pass; not60newtests/fullsuite.
+OriginalAccounts14916/UID10263 Ready publishes netMin with actual visible complete
+caption/ellipsis0 and full20source exact; new3account/2fictitiousrate fixture/ledger0.
+SDK-only10428/26118 passes20once and retires. One complete3f4ea438 Main no-reset
+upgrade12955to27699/UIDCEDE/grants/OS exact; actual preexisting landscape102nodes/
+rotation1/rawattrs/order exact in same packets. Wrong141portrait oracle remains,
+no recapture or orientation change. Fresh review/threeXML retire, Q0212833/frame/
+full22source exact; sevenCleans/no supplemental/frozen/oldsuccess/financial replay.
+D896CI pending once; D838pending/D841unexecuted/originalfault/performance/security/
+platform/provider/release gates and goal remain active.
+See `src/Apps/Zanance/docs/quality/completed-converted-currency-nets.md`.
+
 ## D-896 - Complete wealth groups and current CI contract (2026-11-06)
 
 D896 repairs4actual wealth-group prefix failures with completed checkedInt128 groups,

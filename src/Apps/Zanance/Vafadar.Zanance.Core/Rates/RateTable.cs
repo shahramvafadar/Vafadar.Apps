@@ -161,7 +161,8 @@ public sealed class RateTable
     {
         ArgumentNullException.ThrowIfNull(perCurrency);
         freshness ??= RateFreshness.Default;
-        long total = 0;
+        // D-897: complete the converted net before checking its public money bound, independent of source order.
+        Int128 total = 0;
         var missing = new List<string>();
         var rates = new List<RateInfo>();
         DateOnly? oldest = null;
@@ -188,7 +189,8 @@ public sealed class RateTable
             }
         }
 
-        return new CombinedTotal(missing.Count == 0 ? total : null, reportCurrency, missing, oldest) { Rates = rates };
+        var completed = checked((long)total);
+        return new CombinedTotal(missing.Count == 0 ? completed : null, reportCurrency, missing, oldest) { Rates = rates };
     }
 
     private ExchangeRate? Latest((string, string) key, DateOnly date) =>
