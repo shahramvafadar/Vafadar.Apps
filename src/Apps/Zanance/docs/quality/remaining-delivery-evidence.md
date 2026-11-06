@@ -1,5 +1,22 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-911 - Conditional public concurrent-vector correlation (2026-11-06)
+
+Public runtime issue123537 names source137/59 and descriptor245957; current selected
+metadata is open/updated8October. Only public facts/response digest are retained,
+not public object/register addresses or the body. Under the admitted current VMR
+format,245957/0x3c0c5 selects vector5/subtype3/element24/bitmap3. Four new arithmetic
+controls pass, not product tests. D908's saved exact-code path instead requires
+reference-only subtype1 before newPC0x2f3f92. Shared source lines do not prove an
+identical branch; historical public binary/format identity remains unproved, so
+this correlation is conditional and does not declare unrelated causes or a remedy.
+No original descriptor/R13/map/record/private memory, runtimeGC/config/build/test/
+device/auth/photo/financial/cleanup/frozen action occurs. Public workaround claims
+do not authorize collector/runtime changes. D838pending/D841undeployed, terminal
+cohorts, original cause/wholeperformance/security/platform/provider/release and goal
+remain open. Main22204/Q0215609 are only priorD910/D909 observations in this step.
+[Conditional public-vector correlation](public-concurrent-vector-correlation.md).
+
 ## D-910 - Current negative-goal ARM64 and Main adoption (2026-11-06)
 
 Only D909's missing12case ARM64 condition executes once: actual Samsung36/ARM64/
