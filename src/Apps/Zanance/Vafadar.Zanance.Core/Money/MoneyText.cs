@@ -109,11 +109,22 @@ public static class MoneyText
 
     /// <summary>Parses with the original explicit unit without rereading global preferences; null preserves ISO major units.</summary>
     public static bool TryParse(string? text, Currency currency, CultureInfo culture, DisplayUnit? unit, out long minor)
+        => TryParseInput(text, currency, culture, unit, signed: false, out minor);
+
+    /// <summary>Parses an explicitly signed balance in its captured unit; ordinary financial amounts stay sign-free.</summary>
+    public static bool TryParseSigned(string? text, Currency currency, CultureInfo culture, DisplayUnit? unit, out long minor)
+        => TryParseInput(text, currency, culture, unit, signed: true, out minor);
+
+    /// <summary>Shares original unit scaling and precision without replacing a captured parser or widening positive amounts.</summary>
+    private static bool TryParseInput(string? text, Currency currency, CultureInfo culture, DisplayUnit? unit, bool signed, out long minor)
     {
         ArgumentNullException.ThrowIfNull(currency); ArgumentNullException.ThrowIfNull(culture); ValidateInputUnit(currency, unit);
+        bool Parse(Currency precision, out long value) => signed
+            ? MoneyAmount.TryParseSigned(text, precision, culture, out value)
+            : MoneyAmount.TryParse(text, precision, culture, out value);
         if (unit is null)
         {
-            return MoneyAmount.TryParse(text, currency, culture, out minor);
+            return Parse(currency, out minor);
         }
 
         // One minor unit of the currency is 10^-(digits + exponent) display units; a display amount with fewer
@@ -121,10 +132,10 @@ public static class MoneyText
         var digits = currency.MinorDigits + unit.Exponent;
         var accepted = Math.Min(2, digits);
         minor = 0;
-        if (!MoneyAmount.TryParse(text, new Currency(currency.Code, accepted), culture, out var parsed))
+        if (!Parse(new Currency(currency.Code, accepted), out var parsed))
         {
             accepted = digits;
-            if (!MoneyAmount.TryParse(text, new Currency(currency.Code, accepted), culture, out parsed))
+            if (!Parse(new Currency(currency.Code, accepted), out parsed))
             {
                 return false;
             }

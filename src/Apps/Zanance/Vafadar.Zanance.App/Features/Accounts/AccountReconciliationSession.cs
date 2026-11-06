@@ -25,10 +25,9 @@ public sealed class AccountReconciliationSession(ZananceStore store)
     {
         var input = ObservedMoney; var edit = input.Revision;
         if (input.NeedsReview(currency)) throw new InvalidOperationException("The observed balance requires complete monetary reentry.");
-        var text = input.Text.Trim(); var negative = text.StartsWith('-') || text.StartsWith('−');
-        if (input.Context is not { } context || !context.TryParse(negative ? text[1..] : text, out var observed))
+        if (input.Context is not { } context || !context.TryParseSigned(input.Text, out var observed))
             throw new FormatException("The original observed balance is invalid.");
-        return CompareAsync(accountId, negative ? -observed : observed, date,
+        return CompareAsync(accountId, observed, date,
             () => input.Revision == edit && input.MatchesCurrent(currency) && isCurrent?.Invoke() != false, originalCurrency: currency, originalFile: originalFile);
     }
 

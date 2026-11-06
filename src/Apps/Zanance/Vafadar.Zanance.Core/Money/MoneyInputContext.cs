@@ -36,6 +36,8 @@ public sealed class MoneyInputContext
         && Culture.NumberFormat.NumberGroupSeparator == culture.NumberFormat.NumberGroupSeparator;
     /// <summary>Parses through the central monetary rules using the original immutable inputs.</summary>
     public bool TryParse(string? text, out long minor) => MoneyText.TryParse(text, Currency, Culture, Unit, out minor);
+    /// <summary>Parses an observed signed balance using the same immutable currency, unit and grammar.</summary>
+    public bool TryParseSigned(string? text, out long minor) => MoneyText.TryParseSigned(text, Currency, Culture, Unit, out minor);
     /// <summary>Initializes a displayed saved value in this exact original input context.</summary>
     public string ForInput(long minor) => MoneyText.ForInput(minor, Currency.Code, Culture, Unit);
 }

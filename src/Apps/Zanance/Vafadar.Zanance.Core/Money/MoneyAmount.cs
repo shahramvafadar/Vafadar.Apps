@@ -41,6 +41,19 @@ public static class MoneyAmount
     /// and anything else are rejected – nothing is guessed or silently rounded.
     /// </remarks>
     public static bool TryParse(string? text, Currency currency, CultureInfo culture, out long minor)
+        => TryParseMagnitude(text, currency, culture, negative: false, out minor);
+
+    /// <summary>Parses an observed signed balance with the same exact separator/precision rules as positive money.</summary>
+    /// <remarks>Only an initial ASCII or mathematical minus is accepted; positive financial amounts remain sign-free.</remarks>
+    public static bool TryParseSigned(string? text, Currency currency, CultureInfo culture, out long minor)
+    {
+        var value = text?.Trim();
+        var negative = value is { Length: > 0 } && value[0] is '-' or '−';
+        return TryParseMagnitude(negative ? value![1..] : value, currency, culture, negative, out minor);
+    }
+
+    /// <summary>Keeps one original grammar while applying the asymmetric signed minor-unit boundary.</summary>
+    private static bool TryParseMagnitude(string? text, Currency currency, CultureInfo culture, bool negative, out long minor)
     {
         ArgumentNullException.ThrowIfNull(currency);
         ArgumentNullException.ThrowIfNull(culture);
@@ -119,12 +132,14 @@ public static class MoneyAmount
         }
 
         // An amount beyond what minor units can hold is invalid input, not a crash.
-        if (amount > long.MaxValue / (decimal)currency.MinorFactor)
+        // D-912: the lowest signed balance has no positive Int64 magnitude; apply its sign before narrowing.
+        var maximum = negative ? -(decimal)long.MinValue : long.MaxValue;
+        if (amount > maximum / currency.MinorFactor)
         {
             return false;
         }
 
-        minor = ToMinor(amount, currency);
+        minor = ToMinor(negative ? -amount : amount, currency);
         return true;
     }
 }

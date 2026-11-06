@@ -14912,3 +14912,26 @@ do not authorize collector/runtime changes. D838pending/D841undeployed, terminal
 cohorts, original cause/wholeperformance/security/platform/provider/release and goal
 remain open. Main22204/Q0215609 are only priorD910/D909 observations in this step.
 [Conditional public-vector correlation](quality/public-concurrent-vector-correlation.md).
+
+## D-912 - Complete signed reconciliation input (2026-11-06)
+
+The observed-balance session now uses an explicit captured signed parser, sharing
+original grammar/unit/precision and sign-free positive APIs. NegativeMin converts
+before narrowing; CoreDifference is checked. Existing operational correction guard
+is unchanged, not a newly discovered incorrect writer. Five Core/six App failures
+reproduce;28newCore+6newApp and32directly affected host cases pass, not a fullsuite.
+Strict Windows/full offline384AOT408ELF1608LOAD/native192204804/sign/CRC/ZIP pass;
+12actual compiler-source bindings match. Fresh21756/UID10270 passes28Core once;
+one negative Checking/ledger0 original AccountDetail reaches Ready. Private input
+observer refuses before mutation; nonunique scroller/bare-text/transport failures
+are preserved. Same PID continues via one actual visible input and one native
+Compare, exact rawMin/recordedMin+1/difference−1 with source20 exact, ledger0 and
+LastReconciledOnnull. Helper driver flags stayfalse; model/native action/XML receipts
+prove the continuation, not fresh line/ellipsis/glyph proof. No Adjust/financial
+Save/old accepted replay or helper upgrade. FreshUID/fourXML125232bytes retire,
+publicOS/packages/boot exact; Q0215609 returns. Five scopedCleans29155files2278277410
+logicalbytes; eight compiler files/used APKs/source/evidence retained, no supplemental/
+frozen/phone action. Fullb90c2d6d is prepared/notMain; current28CoreARM64/Main remain.
+D910soleCIcancelled/CodeQLsuccess and D911soleCIin_progress/CodeQLsuccess consumed,
+never secondGET. Originalfault/D838pending/D841undeployed/broader gates/goal open.
+[Complete signed reconciliation](quality/complete-signed-reconciliation-input.md).

@@ -10,7 +10,7 @@ namespace Vafadar.Zanance.Core.Accounts;
 public sealed record ReconciliationResult(long Recorded, long Observed, int UnreviewedCount, int PossibleDuplicates)
 {
     /// <summary>Gets observed minus recorded; zero means the account matches.</summary>
-    public long Difference => Observed - Recorded;
+    public long Difference => checked(Observed - Recorded);
 }
 
 /// <summary>

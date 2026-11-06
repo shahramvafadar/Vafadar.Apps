@@ -1,5 +1,11 @@
 # Documentation
 
+[Signed reconciliation D912](../src/Apps/Zanance/docs/quality/complete-signed-reconciliation-input.md):
+Complete signed observed-balance input and checked Core differences pass34new host
+cases/32affected guards and28native calculations plus one original read-only form
+comparison. Prepared fullb90c2d6d is not yet Main; current ARM64/adoption are separate.
+No adjustment, accepted financial replay or whole-project readiness is claimed.
+
 [Current negative-goal ARM64/Main D910](../src/Apps/Zanance/docs/quality/negative-goal-arm64-main.md):
 D910 qualifies only the12 current D909 goal-overshoot outcomes once on physical
 ARM64 and adopts the existing complete37518cfa without reset as Main22204. First

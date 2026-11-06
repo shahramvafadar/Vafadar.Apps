@@ -1226,11 +1226,13 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-910)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-912)
 
 The latest bounded physical condition is recorded in [D910](../quality/negative-goal-arm64-main.md):
 12 current D909 goal-overshoot outcomes and one preserving Main37518cfa/22204 adoption.
-D907's earlier76 outcomes remain accepted without replay. Current source corrections
+D907's earlier76 outcomes remain accepted without replay. D912 prepares the newer
+[signed reconciliation correction](../quality/complete-signed-reconciliation-input.md),
+with current ARM64/Main adoption still separate. Current source corrections
 include [negative goal overshoot](../quality/negative-goal-overshoot.md),
 [earliest complete history](../quality/earliest-complete-financial-history.md) and
 [completed currency/comparison nets](../quality/completed-ledger-and-snapshot-nets.md).
