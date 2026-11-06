@@ -1,5 +1,27 @@
 # AGENTS.md – working rules for this repository
 
+## D-922 - Verification-only page-cache budget rejected (2026-11-06)
+
+A distinct fixed8192KiB temporary verification-connection candidate preserves exact
+original full integrity/cipher-integrity/FK source, keyed/query-only/unpooled open/
+disposal; no KDF/runtime/GC/pooling/check relaxation or D889/D894/D895 rescue.
+Strict SDK-only99844678/33AOT44ELF165LOAD/offline/nondebug/v2v3/CRC/ZIP passes; three
+actual private PDB source bindings. Initial switch-typing build/PDBpivot refusals and
+unused predeployment stop-rule APK remain, no sample on those versions. FreshAPI36/
+x64/4096/5612/PID4930/UID10216 passes8new private control groups, then14samples/7inverse
+pairs at10k preserve all32typed synthetic columns and exact cipher bytes. Not original
+financial32fields or whole Home. Actual4.19.0/page4096/default-2000:98.5171→96.4ms only
+2.148967percent gain, allocation11720→12016/ratio1.025255973; both gates fail, extra
+whole-process peak2.75390625MiB passes. No app query during timing, terminal digest
+binds one result. Stop before100k/secondprocess/product; no retune/budgetvariant/rescue.
+Only freshUID/AVD25file4373558667logicalbyte retires; original5606/Q0215609/publicOS
+and sameADB50972/creation exact, no phone/XML/financial/cold replay. OneClean162file/
+28151302byte;144file6650440byte and6userhome7732byte remain, no supplemental/frozen.
+Usedsigned/source/two compiler files/raw pairs/failures retained,0new product tests.
+Fixed candidate terminal; originalfault/ANR/wholeperformance/broader gates/goal open.
+D921soleCI/CodeQLcompleted-success consumed once late, no secondGET/rerun.
+[Verification-cache first native rejection](src/Apps/Zanance/docs/quality/verification-page-cache-budget-rejection.md).
+
 ## D-921 - Protected-startup performance priority from saved evidence (2026-11-06)
 
 Saved D89323550/UID10260 has34single monotonic marks: protected9363.8998ms/purge

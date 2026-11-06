@@ -1,5 +1,10 @@
 # Protected-startup performance priority from saved evidence (D-921)
 
+Subsequent [D922 actual native admission](verification-page-cache-budget-rejection.md)
+rejects the fixed cache budget at the first10k latency/allocation gates. Its100k/
+second-process/product stages are unexecuted; the registration below is historical,
+not pending work to repeat.
+
 ## Actual source and historical critical path
 
 This step reuses the existing D89323550/UID10260 outer packet, without running a
