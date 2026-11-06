@@ -66,8 +66,7 @@ model/migration/runtime/GC/testcount/build or dependency changes. No phone/emula
 authentication/photo/financial input, old successful controls, cleanup or frozen
 scope action occurs. Existing original D678 fault, terminal D809 R13 unknown and
 unapproved new-PC observation remain unchanged. Identity equality is not executed
-method-engine proof, all206assembly consistency or a crash fix. No extra approval
-or Daybreak/model configuration is required for this completed static scope.
+method-engine proof, all206assembly consistency or a crash fix. This completed static scope grants no additional runtime or device authority.
 
 The private D899 candidate is already terminal rejected by its frozen sparse10k
 gate; do not reopen selective-index/100k-only/native rescue. Its single CI check
