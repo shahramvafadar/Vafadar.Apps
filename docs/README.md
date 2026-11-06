@@ -1,5 +1,9 @@
 # Documentation
 
+[Generated-output cleanup,7November2026](../src/Apps/Zanance/docs/quality/generated-output-cleanup-2026-11-07.md)
+records the owner-requested bulk/empty-directory cleanup, exact D927 retirement,
+merged branch removal, preserved artifacts and explicit policy-blocked residuals.
+
 [Current loan-calendar Main adoption D926](../src/Apps/Zanance/docs/quality/loan-calendar-current-main-adoption.md)
 records one preserving upgrade to the existing complete candidate. First Ready
 Home/public identity matches exactly; no new build/test/financial operation is used.

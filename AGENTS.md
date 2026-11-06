@@ -1,5 +1,37 @@
 # AGENTS.md – working rules for this repository
 
+## Owner-directed output cleanup and location boundary (2026-11-07)
+
+The owner requests removal of unnecessary generated data, especially the accumulated
+E:\Zanance.ReviewBuilds and repository artifacts outputs, and removal of unused merged
+branches. New project-controlled build, test, review, diagnostic and disposable AVD
+output roots belong under D:\_Projects\Vafadar.Apps\artifacts. Do not create new output
+roots in E:\Zanance.ReviewBuilds or another unspecified location without explicit owner
+approval. This does not authorize changing global tool/cache configuration or moving
+the retained native-fault emulator, credentials or user data.
+
+Treat evidence retention separately from build-cache retention: keep small original
+results/inputs/hashes, current delivery and binaries needed by unresolved findings;
+do not keep every copied runtime, intermediate object and obsolete publish directory.
+Clean owned disposable outputs after their cohort completes. Preserve accepted-operation
+checkpoints, source, signing/security material and active/unmerged work. Never use git
+clean, force-delete an unmerged branch or remove a worktree still in use.
+
+This cleanup is separately authorized while the development goal remains paused; it
+does not resume qualification or replay successful tests/financial actions. D927's72
+accepted observations are preserved; its source/root/settings are restored, fresh
+package retired and its own emulator stopped/deleted officially. Six residual D927
+paths encountered a new pre-process policy rejection. Those paths remain frozen:
+no retry, subset, alternate mechanism, move or escalation. All earlier refused scopes
+and the retained original-fault cohort remain protected.
+
+The subsequent direct-file deletion request for109 obsolete APK/AAB outputs under
+artifacts/android was also rejected before process creation. The hashed package plan
+is preserved; none of those109 files was deleted. Do not retry or repackage that
+request. The main verified bulk cleanup and nonrecursive empty-directory cleanup
+completed without errors; see the dated cleanup record.
+[Owner-directed cleanup](src/Apps/Zanance/docs/quality/generated-output-cleanup-2026-11-07.md).
+
 ## D-926 - Current loan calendar Main adoption (2026-11-06)
 
 Existing fullf2c1835f/384AOT408ELF1608LOAD/offline/sign/ZIP is rehashed and public
