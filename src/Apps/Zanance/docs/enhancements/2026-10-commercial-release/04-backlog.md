@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-920 - Current offline package audit scope from existing builds (2026-11-06)
+
+Existing D916shipping/D918ARM64 assets match all190 exact resolved package ID/version
+pairs for the actual ARM64 target; no product/project graph is regenerated. Both
+retain enableAudit=true/low/all; original strict ARM64 log has no NU19xx and assets
+log is empty. This is existing evidence admission, not a new scan or proof of fresh
+advisory data/no vulnerabilities/native/runtime/wholePE/all-edition security. Exact
+asset/log hashes and190pair inventories retained. Xml/Pkcs10.0.13 and SQLite/EF10.0.12
+are resolved versions, not new updates. No restore/network-audit/build/test/device/
+financial/cleanup/frozen/credential action occurs. Reuse this finite graph/configuration evidence; new advisory data still needs its
+own evaluation. Independent security/platform/provider/release gates/goal stay open.
+[Existing current package audit scope](../../quality/current-offline-package-audit-scope.md).
+
 ## D-919 - Retained Q02 ANR reason availability (2026-11-06)
 
 A preregistered bounded OS reason read verifies retained5606/boot/Q0215609/UID10260.
