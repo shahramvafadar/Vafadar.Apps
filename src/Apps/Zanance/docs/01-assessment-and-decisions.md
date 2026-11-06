@@ -15091,3 +15091,20 @@ are resolved versions, not new updates. No restore/network-audit/build/test/devi
 financial/cleanup/frozen/credential action occurs. Reuse this finite graph/configuration evidence; new advisory data still needs its
 own evaluation. Independent security/platform/provider/release gates/goal stay open.
 [Existing current package audit scope](quality/current-offline-package-audit-scope.md).
+
+## D-921 - Protected-startup performance priority from saved evidence (2026-11-06)
+
+Saved D89323550/UID10260 has34single monotonic marks: protected9363.8998ms/purge
+1874.8333ms precede root/Home. Five current startup/access/generation source hashes
+match exact originals. This prioritizes the earlier critical path, not new timing,
+exclusive attribution or proof of current speed. Three native SQLCipher APK members
+match the selected package; common profile exact, build source already requestsO2/
+no no-asm, not actual compiler/instruction proof. No security/KDF/pooling/runtime/GC
+change or D889/D894/D895 rescue. Distinct fixed8192KiB verification-only cache premise
+D922 is preregistered, not implemented/accepted: full original checks remain,8new
+contract groups,7inversepairs per10k/100k, both5percent latency/1percent allocation/
+64MiB peak gates, stop without retune, full pipeline still required. D918soleCodeQL
+success/CIcancelled consumed late once; no timelyclaim/secondGET. No new device/test/
+build/financial/cleanup work; originalfault/ANR/broader gates and goal remain open.
+D919soleCIcancelled/CodeQLsuccess andD920soleCI/CodeQLsuccess consumed, no rerun.
+[Protected-startup performance priority](quality/protected-startup-performance-priority.md).
