@@ -128,13 +128,21 @@ public static class NetWorthCalculator
         var totals = parts.GroupBy(p => p.CurrencyCode, StringComparer.OrdinalIgnoreCase).OrderBy(g => g.Key, StringComparer.Ordinal)
             .Select(g => new WealthTotal(
                 g.Key,
-                g.Where(p => p.Group == WealthGroup.Money).Sum(p => p.Amount),
-                g.Where(p => p.Group == WealthGroup.Receivables).Sum(p => p.Amount),
-                g.Where(p => p.Group == WealthGroup.ValuedAssets).Sum(p => p.Amount),
-                g.Where(p => p.Group == WealthGroup.Holdings).Sum(p => p.Amount),
-                g.Where(p => p.Group == WealthGroup.Debts).Sum(p => p.Amount)))
+                CompleteGroup(g.Where(p => p.Group == WealthGroup.Money)),
+                CompleteGroup(g.Where(p => p.Group == WealthGroup.Receivables)),
+                CompleteGroup(g.Where(p => p.Group == WealthGroup.ValuedAssets)),
+                CompleteGroup(g.Where(p => p.Group == WealthGroup.Holdings)),
+                CompleteGroup(g.Where(p => p.Group == WealthGroup.Debts))))
             .ToList();
         return new NetWorthResult(date, totals, parts, unvalued);
+    }
+
+    // D-896: account order cannot reject a representable completed group; each public component still must fit.
+    private static long CompleteGroup(IEnumerable<WealthPart> parts)
+    {
+        Int128 total = 0;
+        foreach (var part in parts) total = checked(total + part.Amount);
+        return checked((long)total);
     }
 
     /// <summary>

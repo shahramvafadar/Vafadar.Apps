@@ -4,7 +4,7 @@ using Vafadar.Zanance.Core.Reports;
 
 namespace Vafadar.Zanance.Core.Tests.Reports;
 
-/// <summary>Wealth corrections cancel exactly without changing chronological balance validation.</summary>
+/// <summary>Wealth corrections cancel exactly while retaining completed end-of-day balance limits.</summary>
 public sealed class WealthAdjustmentCancellationTests
 {
     private static readonly DateOnly Day = new(2026, 11, 5);
@@ -58,13 +58,19 @@ public sealed class WealthAdjustmentCancellationTests
         Assert.Equal(0, change.Remainder);
     }
 
-    /// <summary>A balance prefix outside the domain must still refuse; only the explanatory sum is widened.</summary>
+    /// <summary>D-875 permits a completed net, while an unsupported selected end-of-day balance still refuses.</summary>
     [Fact]
-    public void An_invalid_chronological_balance_is_not_rescued()
+    public void Completed_balance_cancellation_keeps_the_selected_day_limit()
     {
         var account = Account(0);
         LedgerEntry[] entries = [Adjustment(account, long.MaxValue, 1), Adjustment(account, 20, 2), Adjustment(account, -20, 3)];
-        Assert.Throws<OverflowException>(() => WealthHistory.Explain([account], entries, [], [], [], Day, Day.AddDays(3)));
+        Assert.Throws<OverflowException>(() => WealthHistory.Explain([account], entries, [], [], [], Day, Day.AddDays(2)));
+        var change = Assert.Single(WealthHistory.Explain([account], entries, [], [], [], Day, Day.AddDays(3)));
+        Assert.Equal(long.MaxValue, change.End);
+        Assert.Equal(long.MaxValue, change.Corrections);
+        Assert.Equal(0, change.Remainder);
+        Assert.Equal(0, account.OpeningBalance);
+        Assert.Equal(new[] { long.MaxValue, 20, -20 }, entries.Select(entry => entry.EffectOn(account.Id)).ToArray());
     }
 
     private static Account Account(long opening) => new()

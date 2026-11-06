@@ -14580,3 +14580,21 @@ seven standard Cleans, no XML/supplemental/frozen/phone/R13/runtime action. Ship
 adef63e1 prepared, not Main;26327/655 is dated D853. Original fault/whole performance/
 security/platform gates and the active goal remain open.
 See [actual correctness and refused cost evidence](quality/transaction-net-failure-boundaries.md).
+
+
+## D-896 - Complete original wealth groups and CI contract (2026-11-06)
+
+D896 repairs4actual wealth-group prefix failures with completed checkedInt128 groups,
+while public component/gross/debt/source bounds remain.18newhost/x64/ARM64 and7affected
+host conditions pass; not54newtests. ActualD895CI has one staleD862test afterD875;
+that one failure reproduces and its revised selected-day refusal/completed-net contract
+passes alone, no product Balance relaxation or suite replay. Original Reports Holdings
+UI13999/sameUID10262 publishes netMin/grossMax/100percent with full20source exact;
+initial13795calculations/setup and observer compile/route/dialog failures remain.
+Unbound VM flags are disqualified; only native caption/visible-bound proof is accepted.
+SamsungSDK-only10427/24075 passes18once and retires; Main12955/2d420ef9/publicOS exact,
+shipping764e6fa3 prepared not installed. Fresh review/5XML167426bytes retire; retained
+Q0212833/frame/full22source exact. Seven scoped Cleans/no supplemental/frozen/auth/
+photo/financial replay. D838pending/D841unexecuted/originalfault/performance/broader
+gates and goal remain active; D895singleCI consumed and never queried twice.
+See [bounded correction and actual Android evidence](quality/completed-wealth-group-reads.md).

@@ -1,5 +1,20 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D896 complete wealth groups and CI contract](completed-wealth-group-reads.md)
+D896 repairs4actual wealth-group prefix failures with completed checkedInt128 groups,
+while public component/gross/debt/source bounds remain.18newhost/x64/ARM64 and7affected
+host conditions pass; not54newtests. ActualD895CI has one staleD862test afterD875;
+that one failure reproduces and its revised selected-day refusal/completed-net contract
+passes alone, no product Balance relaxation or suite replay. Original Reports Holdings
+UI13999/sameUID10262 publishes netMin/grossMax/100percent with full20source exact;
+initial13795calculations/setup and observer compile/route/dialog failures remain.
+Unbound VM flags are disqualified; only native caption/visible-bound proof is accepted.
+SamsungSDK-only10427/24075 passes18once and retires; Main12955/2d420ef9/publicOS exact,
+shipping764e6fa3 prepared not installed. Fresh review/5XML167426bytes retire; retained
+Q0212833/frame/full22source exact. Seven scoped Cleans/no supplemental/frozen/auth/
+photo/financial replay. D838pending/D841unexecuted/originalfault/performance/broader
+gates and goal remain active; D895singleCI consumed and never queried twice.
+
 [D895 purge connection candidate rejected](startup-purge-connection-admission.md)
 Operation-owned purge connection passes two fixed hostSQLCipher4.5.2 cohorts/56children
 and4new cancellation/journal controls; exact live/durable receipt IDs/source and2→1opens
