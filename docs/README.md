@@ -1,5 +1,13 @@
 # Documentation
 
+[Current ARM64/Main D907](../src/Apps/Zanance/docs/quality/current-completed-read-arm64-main.md):
+D907 qualifies the current27 history/49 completed-net Core outcomes once on physical
+ARM64 and adopts existing complete16b7b889 without reset as Main17183. First Ready
+landscape102raw Home nodes/public package/grants/OS and extra locale state match.
+These are76new platform observations, zero new tests; private Main DB/key equality,
+original fault repair, whole performance/security/platform/provider/release remain
+unaccepted. Earlier entries below retain their original dates and artifact scopes.
+
 [D899 nullable-index host rejection](../src/Apps/Zanance/docs/quality/nullable-index-host-rejection.md)
 D899 closes the private four-optional-index candidate before second cohort/native/
 product. Actual original SQLCipher4.5.2 context qualifies14query and4FK/unique

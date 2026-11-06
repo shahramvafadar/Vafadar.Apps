@@ -102,6 +102,14 @@ controls.
 
 ## Current delivery status
 
+[Current ARM64/Main D907](src/Apps/Zanance/docs/quality/current-completed-read-arm64-main.md):
+D907 qualifies the current27 history/49 completed-net Core outcomes once on physical
+ARM64 and adopts existing complete16b7b889 without reset as Main17183. First Ready
+landscape102raw Home nodes/public package/grants/OS and extra locale state match.
+These are76new platform observations, zero new tests; private Main DB/key equality,
+original fault repair, whole performance/security/platform/provider/release remain
+unaccepted. Earlier entries below retain their original dates and artifact scopes.
+
 [D864 current28 ARM64/Main](src/Apps/Zanance/docs/quality/current-quantity-wealth-arm64-main.md) qualifies only current8wealth+20quantity on physical ARM64 and adopts existing completea214 once without reset as Main15014. First Loading frame is disqualified; same-process Ready141raw/public/OS match. No old53-case or financial/auth replay.
 
 [D863 exact quantity/mass](src/Apps/Zanance/docs/quality/quantity-raw-and-mass-boundaries.md) refuses rounded-away input fractions and preserves representable derived mass/fineness;20new host cases in18+2lineage/14related and20 original Android calculations pass without financial preparation. Fulla214b104 is prepared, not Main.

@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-907 - Current completed-read ARM64 and Main adoption (2026-11-06)
+
+Only the missing physical condition of D904Core27/D906Core49 runs once: actual
+Samsung36/ARM64/4096/.NET10.0.14 PID15405/UID10432 passes76 with bound ordered catalogue.
+Strict SDK27AOT37ELF138LOAD/offline/nondebug/min36-v3/ZIP passes;14actual source checks
+bind6Corefiles in SDK/existing shipping and2test sources, not wholePE.0new product
+tests; no host/x64/old20cases/AppData/financial/auth/photo replay. FreshUID retires
+and normal return preserves Main10611/public snapshot. Extra locale baseline begins
+before Main upgrade, not before SDK. Existing full16b7b889 is adopted once without
+reset to Main17183/UID10380/CE155299/DE154603; first Ready Home979/102landscape all
+raw nodes/order, grants/other packages/OS and extra locale/keypresence/timezone exact.
+No secondframe/Reload/relaunch/orientation rescue or privateMainDB/key claim.2XML/
+75732byte hashclean;1scopedSDKClean passes, used compiler/source/APKs/output retained,
+no supplemental/frozen/emulator action. D906soleCI is consumed late at19.974min:
+mainin_progress/CodeQL-backend-service success at that response, never secondGET.
+Originalfault/D838pending/D841undeployed/wholeperformance/security/platform/provider/
+release gates and overall goal stay open.
+See `src/Apps/Zanance/docs/quality/current-completed-read-arm64-main.md`.
+
 ## D-906 - Completed ledger and saved-comparison currency nets (2026-11-06)
 
 D906 batches independent currency-balance/review/month-net and saved-comparison
