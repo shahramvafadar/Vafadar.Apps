@@ -14698,3 +14698,28 @@ D899oneCI consumed cancelled/CodeQLsuccess; D900oneCI consumed in_progress/CodeQ
 success at its response, never secondGET. Originalfault/D838pending/D841undeployed/
 wholeperformance/security/platform/provider/release gates and goal remain active.
 See [actual defect, execution lineage and Main adoption](quality/completed-essential-coverage-balance.md).
+
+
+## D-902 - Current owned monthly plan shares (2026-11-06)
+
+D902 fixes current annualized costs retaining retired split slices, exhausted rules
+and paused ownership. A dated MonthlyEquivalent overload uses the original recurrence
+anchor/end/count and slice bounds; the undated BUD09 formula and occurrence/payment
+rules remain. Capacity and K07 keep all historical nonmonthly settlement IDs, but
+only still-owned future dates contribute their ongoing share. Six original private
+observations expose the discrepancy;16 new tests reproduce12 failures, then16 host/
+x64/ARM64 plus3 affected host cases pass, not48 new tests or a full suite. Strict
+Windows/full offline384AOT408ELF1608LOAD/private192204804/SDK27AOT37ELF138LOAD pass;
+11actual compiler source bindings match. Fresh17192/UID10265 calculates16 once,
+then one account/two original split plans/ledger0 gives original ReportsPage Ready,
+capacity−100EUR/essential100EUR/10.0months, three full native captions/ellipsis0 and
+exact20component source. No helper upgrade or setup/case replay. ARM64 SDK-only
+4906/10430 passes16 once and retires; one f720215f Main no-reset upgrade1345to6511
+preserves UIDCEDE/grants/publicOS and first Ready Home979/102landscape raw nodes/
+order exact. Fresh review/three bound XML retire, retained Q0215609 returns normally.
+Six scoped Cleans/no supplemental/frozen/auth/photo/financial UI replay. Initial
+private YearView helper compile refusal is preserved. D901oneCI consumed in_progress/
+three successes at its response, never secondGET. Originalfault/D838pending/
+D841undeployed/wholeperformance/security/platform/provider/release gates and goal
+remain active.
+See [actual current cost correction and bounds](quality/current-owned-monthly-shares.md).

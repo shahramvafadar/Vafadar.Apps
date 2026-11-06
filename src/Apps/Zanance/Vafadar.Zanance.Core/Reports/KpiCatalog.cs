@@ -508,7 +508,7 @@ public static class KpiCatalog
         }
 
         var share = nonMonthly.Where(s => accountList.Any(a => a.Id == s.AccountId && string.Equals(a.CurrencyCode, currencyCode, StringComparison.OrdinalIgnoreCase)))
-            .Sum(s => BudgetPlanning.MonthlyEquivalent(s)!.Value);
+            .Sum(s => BudgetPlanning.MonthlyEquivalent(s, today) ?? 0);
         // Three complete months of data are needed; inside them, no essential spending at all is "not available".
         if (!HasHistory(accountList, entries, scope, oldest))
         {

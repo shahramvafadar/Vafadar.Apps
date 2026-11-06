@@ -78,7 +78,8 @@ public static class CapacityCalculator
         }
 
         var income = KpiCatalog.Median(incomes);
-        var nm = nonMonthly.Sum(s => BudgetPlanning.MonthlyEquivalent(s)!.Value);
+        // Keep every historical settlement ID above, while retired slices no longer add an ongoing cost (D-902).
+        var nm = nonMonthly.Sum(s => BudgetPlanning.MonthlyEquivalent(s, today) ?? 0);
 
         // P: the principal part of installments of loans in this currency, per month.
         long principal = 0;
