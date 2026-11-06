@@ -15030,3 +15030,19 @@ Two phoneXML89798bytes retire against unchanged current observed state. Broad A1
 privateDB/key/security/originalfault/performance/platform/provider/release gates and
 overall goal stay open; Q02 availability is a distinct remaining concern.
 [Large-text report change rows](quality/report-change-large-text-layout.md).
+
+## D-917 - Retained Q02 current ANR availability (2026-11-06)
+
+One registered read-only availability slice binds retained5606/boot/Q0215609/UID10260/
+original bddbd334 APK. Actual full-window focus identifies own system ANR/resumed app;
+initial windows-subset missingfocus is incomplete evidence, not pass. Process remains
+same start tick/sleeping/42threads, finite observation delta user0/system4ticks.
+TracerPid0 and actual OS-reported cgroup freeze0/frozen0 exclude neither historical
+conditions nor other causes. Initial shorter cgroup file is absent, explicit original
+membership resolves without escalation. Original observer Query awaits main-thread
+dispatch synchronously; source only, not actual blocked-stack proof, so no provider
+request is added. No extra Wait/kill/reset/upgrade/relaunch, native record/trace/
+register/map/heap/DB/key read, test/build/financial/cold replay/cleanup/phone or runtime
+change occurs. Earlier22table equality stays historical, Q02ANR unresolved; D916's
+independent36contexts stay accepted and originalfault/broader gates/goal remain open.
+[Retained current ANR availability](quality/retained-q02-current-anr-availability.md).
