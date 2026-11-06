@@ -1,5 +1,30 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-904 - Earliest complete financial history (2026-11-06)
+
+D904 corrects unavailable three-month history at supported calendar starts without
+inventing complete months or accepting an invalid current financial period. The
+shared nullable window reaches Capacity/K07/daily suggestions and the original
+Settings worker/constructor/validation/writer; account/reference guards remain.
+27newCore cases reproduce18 failures then pass;21newApp and3affected range cases
+pass on.NET10.0.14/X64, not a fullsuite.48new product tests, not75 with Android.
+Strict Windows/full offline384AOT408ELF1608LOAD/private192204804/sign/CRC/static16KiB
+pass;11actual compiler source checks match. New19125/UID10267 executes27 once,
+then original SettingsPage at private injected0001-03-01 becomes Ready/no failure/
+null suggestion with all20source exact and zero persisted account/plan/ledger setup.
+Initial loading is not accepted as Ready. Native original date/controls and one
+ordinary scroll are observed; Simple hides the advanced estimate group, no visible
+estimate/glyph/wholeA11Y claim. FreshUID/two bound XML42287bytes retire, public OS/
+boot/packages/geometry exact; Q0215609 returns normally, no cold/source reacceptance.
+Five scoped Cleans/no supplemental/frozen/auth/photo/financial replay. Fullshipping
+fda94407 is prepared, not Main; no phone command and Main10611/9f8 is only lastD903.
+D903 one CI request is consumed: CI42154135799 is in_progress at that response;
+service42154135875/backend42154135929/CodeQL42154135867 are completed-success.
+No second request is permitted.
+Originalfault/D838pending/D841undeployed/wholeperformance/security/platform/provider/
+release gates and overall goal remain open.
+[Earliest complete history](earliest-complete-financial-history.md).
+
 ## D-903 - Current capacity commitment dates and units (2026-11-06)
 
 D903 repairs remaining capacity P/G commitments: retired/exhausted installment

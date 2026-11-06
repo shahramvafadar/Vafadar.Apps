@@ -494,6 +494,9 @@ public static class KpiCatalog
         var usableMoney = checked((long)usableNet);
         var scope = accountList.Where(a => a.IncludeInTotals && string.Equals(a.CurrencyCode, currencyCode, StringComparison.OrdinalIgnoreCase)).Select(a => a.Id).ToList();
 
+        if (PeriodMath.PreviousCompleteMonthsRange(today, calendar, startDay, 3) is null)
+            return new EssentialCoverage(currencyCode, usableMoney, 0, null, CoverageStatus.NotEnoughHistory);
+
         var months = new List<long>();
         var current = PeriodMath.MonthOf(today, calendar, startDay);
         var (year, month) = PeriodMath.Previous(current.Year, current.Month);

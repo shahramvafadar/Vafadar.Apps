@@ -61,7 +61,7 @@ public static class CapacityCalculator
         // I and S of the last three complete financial months on the usable accounts.
         var incomes = new List<long>();
         var spending = new List<long>();
-        var enough = usable.Count > 0;
+        var enough = usable.Count > 0 && PeriodMath.PreviousCompleteMonthsRange(today, calendar, startDay, 3) is not null;
         var current = PeriodMath.MonthOf(today, calendar, startDay);
         var (year, month) = PeriodMath.Previous(current.Year, current.Month);
         var scope = usable.Select(a => a.Id).ToList();

@@ -126,7 +126,7 @@ public static class LiquidityCalculator
     {
         ArgumentNullException.ThrowIfNull(accounts);
         var usable = accounts.Where(a => !a.IsArchived && a.UsableForPayments && string.Equals(a.CurrencyCode, currencyCode, StringComparison.OrdinalIgnoreCase)).ToList();
-        if (usable.Count == 0)
+        if (usable.Count == 0 || PeriodMath.PreviousCompleteMonthsRange(today, calendar, startDay, 3) is null)
         {
             return null;
         }
@@ -157,12 +157,15 @@ public static class LiquidityCalculator
     /// </summary>
     public static (DateOnly From, DateOnly To) SuggestionRange(DateOnly today, PeriodCalendar calendar, int startDay = 1)
     {
-        var current = PeriodMath.MonthOf(today, calendar, startDay);
-        var latest = PeriodMath.Previous(current.Year, current.Month);
-        var middle = PeriodMath.Previous(latest.Year, latest.Month);
-        var oldest = PeriodMath.Previous(middle.Year, middle.Month);
-        return (PeriodMath.MonthRange(oldest.Year, oldest.Month, calendar, startDay).First,
-            PeriodMath.MonthRange(latest.Year, latest.Month, calendar, startDay).Last);
+        return AvailableSuggestionRange(today, calendar, startDay)
+            ?? throw new ArgumentOutOfRangeException(nameof(today), "Three complete preceding financial months are unavailable.");
+    }
+
+    /// <summary>Returns the exact complete-history window, or null when fewer than three earlier calendar months exist.</summary>
+    public static (DateOnly From, DateOnly To)? AvailableSuggestionRange(DateOnly today, PeriodCalendar calendar, int startDay = 1)
+    {
+        var range = PeriodMath.PreviousCompleteMonthsRange(today, calendar, startDay, 3);
+        return range is { } value ? (value.First, value.Last) : null;
     }
 
     /// <summary>Returns an estimate per day: a week is 7 days, a month 365 / 12 days.</summary>

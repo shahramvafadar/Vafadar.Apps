@@ -109,6 +109,28 @@ public static class PeriodMath
         _ => year is >= 1 and <= 9999,
     };
 
+    /// <summary>Returns the complete preceding financial-month window, or null when the calendar has too few earlier months.</summary>
+    /// <remarks>The selected current period must itself be representable; missing history never legitimizes an invalid current period.</remarks>
+    public static (DateOnly First, DateOnly Last)? PreviousCompleteMonthsRange(DateOnly today, PeriodCalendar calendar, int startDay, int count)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);
+        var current = MonthOf(today, calendar, startDay);
+        _ = MonthRange(current.Year, current.Month, calendar, startDay);
+        var cursor = current;
+        DateOnly first = default, last = default;
+        for (var i = 0; i < count; i++)
+        {
+            cursor = Previous(cursor.Year, cursor.Month);
+            // D-904: an unsupported earlier year is missing history, never a fabricated complete month.
+            if (!IsSupportedYear(cursor.Year, calendar)) return null;
+            var range = MonthRange(cursor.Year, cursor.Month, calendar, startDay);
+            first = range.First;
+            if (i == 0) last = range.Last;
+        }
+
+        return (first, last);
+    }
+
     /// <summary>Returns the month after (year, month).</summary>
     public static (int Year, int Month) Next(int year, int month) => month == 12 ? (year + 1, 1) : (year, month + 1);
 

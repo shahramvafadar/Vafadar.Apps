@@ -32,9 +32,9 @@ public sealed class SettingsWorkSnapshot
     /// <summary>Gets the original estimate writer contract from this same transaction.</summary>
     public EssentialEstimateReview EstimateReview { get; }
     internal SettingsWorkInputs Inputs { get; }
-    internal (DateOnly From, DateOnly To) OriginalRange { get; }
+    internal (DateOnly From, DateOnly To)? OriginalRange { get; }
     internal SettingsWorkSnapshot(string path, CommercialFileAccess access, DateOnly day, PeriodCalendar calendar, SettingsWorkInputs inputs)
-    { DatabasePath = path; _access = access; Day = day; Calendar = calendar; Inputs = inputs; _stamp = Stamp(inputs); EstimateReview = new(path, inputs.Settings); OriginalRange = LiquidityCalculator.SuggestionRange(day, calendar, inputs.Settings.MonthStartDay); }
+    { DatabasePath = path; _access = access; Day = day; Calendar = calendar; Inputs = inputs; _stamp = Stamp(inputs); EstimateReview = new(path, inputs.Settings); OriginalRange = LiquidityCalculator.AvailableSuggestionRange(day, calendar, inputs.Settings.MonthStartDay); }
     /// <summary>Refuses retired cached access without creating settings or requesting permission.</summary>
     public void EnsureCurrent() => _access.EnsureSnapshotCurrent();
     internal void RequireOriginal(ZananceDbContext db)
@@ -105,11 +105,11 @@ public sealed partial class ZananceStore
     private static async Task<SettingsWorkInputs> ReadSettingsWorkInputsAsync(ZananceDbContext db, DateOnly day, PeriodCalendar calendar, CancellationToken ct)
     {
         var settings = await SettingsRowReader.ReadAsync(db, ct) ?? throw new InvalidOperationException("The original settings are unavailable.");
-        var range = LiquidityCalculator.SuggestionRange(day, calendar, settings.MonthStartDay);
+        var range = LiquidityCalculator.AvailableSuggestionRange(day, calendar, settings.MonthStartDay);
         return new(settings,
             await db.Accounts.AsNoTracking().OrderBy(account => account.IsArchived).ThenBy(account => account.SortOrder).ThenBy(account => account.Name).ToListAsync(ct),
-            await db.Entries.AsNoTracking().Where(entry => entry.Date >= range.From && entry.Date <= range.To)
-                .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).ToListAsync(ct));
+            range is { } available ? await db.Entries.AsNoTracking().Where(entry => entry.Date >= available.From && entry.Date <= available.To)
+                .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).ToListAsync(ct) : []);
     }
     /// <summary>Serializes one original native preference change, preserving unrelated current fields and refusing another file/row/frame.</summary>
     public async Task UpdateSettingsWorkAsync(SettingsWorkSnapshot original, Action<ZananceSettings> change, Func<bool> isCurrent,
@@ -129,8 +129,8 @@ public sealed partial class ZananceStore
             var range = original.OriginalRange;
             var references = new SettingsWorkInputs(original.Inputs.Settings,
                 await db.Accounts.AsNoTracking().OrderBy(account => account.IsArchived).ThenBy(account => account.SortOrder).ThenBy(account => account.Name).ToListAsync(cancellationToken),
-                await db.Entries.AsNoTracking().Where(entry => entry.Date >= range.From && entry.Date <= range.To)
-                    .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).ToListAsync(cancellationToken));
+                range is { } available ? await db.Entries.AsNoTracking().Where(entry => entry.Date >= available.From && entry.Date <= available.To)
+                    .OrderByDescending(entry => entry.Date).ThenByDescending(entry => entry.CreatedAt).ToListAsync(cancellationToken) : []);
             if (!original.Matches(references)) throw new InvalidOperationException("The original settings account or suggestion references changed.");
             Current(); db.Attach(current); change(current);
             Current(); write.EnsureCurrent(); await db.SaveChangesAsync(cancellationToken); original.RequireIdentity(db, current); Current();
