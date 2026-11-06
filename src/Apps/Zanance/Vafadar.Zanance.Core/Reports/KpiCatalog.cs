@@ -251,7 +251,8 @@ public static class KpiCatalog
             .. current.Keys.Union(comparison.Keys)
                 .Select(id => new SpendingChange(id == Guid.Empty ? null : id, current.GetValueOrDefault(id), comparison.GetValueOrDefault(id)))
                 .Where(c => c.Current != 0 || c.Comparison != 0)
-                .OrderByDescending(c => Math.Abs(c.Delta))
+                // D-914: a valid minimum signed change has a magnitude beyond Int64; Delta still checks its own range.
+                .OrderByDescending(c => Int128.Abs((Int128)c.Delta))
                 .ThenBy(c => c.CategoryId),
         ];
     }

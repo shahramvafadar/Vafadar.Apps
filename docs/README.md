@@ -1,5 +1,12 @@
 # Documentation
 
+[Full-range spending-change ranking D914](../src/Apps/Zanance/docs/quality/spending-change-full-range-order.md):
+A supported minimum signed category change now ranks without absolute-value
+overflow; true money-overflow guards remain. Twelve new/one affected host cases,
+twelve x64 and twelve ARM64 outcomes pass. Full a4677eba is adopted without reset
+as Main31259, first Home102landscape raw nodes/public and extraOS state exact.
+No financial replay, original-fault remedy or whole-project readiness is claimed.
+
 [Signed reconciliation ARM64/Main D913](../src/Apps/Zanance/docs/quality/signed-reconciliation-arm64-main.md):
 D913 completes only D912's missing28Core ARM64 outcomes once, then adopts existing
 fullb90c2d6d without reset as Main27334. First Ready Home979/102landscape raw nodes/

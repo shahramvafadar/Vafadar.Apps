@@ -1226,13 +1226,13 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-913)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-914)
 
-The latest bounded physical condition is recorded in [D913](../quality/signed-reconciliation-arm64-main.md):
-28 current D912 Core outcomes and one preserving Mainb90c2d6d/27334 adoption.
-D910's earlier12 and D907's76 outcomes remain accepted without replay. D912's
-[signed reconciliation correction](../quality/complete-signed-reconciliation-input.md)
-has its missing current ARM64/Main conditions completed, without financial replay.
+The latest bounded physical condition is recorded in [D914](../quality/spending-change-full-range-order.md):
+12 current category-change ranking outcomes and one preserving Maina4677eba/31259
+adoption. D913's28, D910's12 and D907's76 earlier outcomes remain accepted without
+replay. D912's [signed reconciliation correction](../quality/complete-signed-reconciliation-input.md)
+has its current ARM64/Main conditions completed by D913 without financial replay.
 Current source corrections
 include [negative goal overshoot](../quality/negative-goal-overshoot.md),
 [earliest complete history](../quality/earliest-complete-financial-history.md) and

@@ -14955,3 +14955,27 @@ auth/photo/old-success action. D912's original observer failures remain recorded
 these28platform outcomes add zero product tests. Originalfault/D838pending/
 D841undeployed/wholeperformance/security/platform/provider/release and goal open.
 [Signed reconciliation ARM64/Main](quality/signed-reconciliation-arm64-main.md).
+
+
+## D-914 - Full-range spending-change ranking (2026-11-06)
+
+A supported category change of Int64.MinValue failed in the original absolute-value
+sort. Only its magnitude key now widens to Int128; checked Delta, original category
+tie order, currency/account/review/group filters and financial writers are unchanged.
+Twelve new host cases reproduce eight failures, then pass; one affected K11 case
+passes. Generated complete-entry JSON keeps the same source assertions on trimmed
+Android; the final twelve are rechecked after that assertion portability change,
+not counted twice. Strict Windows/full offline384AOT408ELF1608LOAD/native192204804/
+SDK27AOT37ELF138LOAD and eight actual compiler-source bindings pass. Fresh x64
+22854/UID10271 passes12 once on original Onboarding with full20source exact and
+account/entry/schedule0; premature observer before process receipt is retained,
+before any provider request. Same launch continues, freshUID retires and Q0215609
+returns exact. ARM64 29300/UID10435 passes12 once, retires and Main27334 returns
+exact. Fulla4677eba adopts once without reset to Main31259, first Home979/102raw
+landscape nodes/order/publicOS/packages/extra locale exact. TwoXML75732bytes retire;
+16compiler files/source/used APKs/output retained. Five scopedCleans29097files/
+2149031543logicalbytes; no supplemental/frozen/financial/auth/photo/old-suite replay.
+D912soleCIcancelled/three successes and D913soleCIin_progress/CodeQLsuccess consumed;
+D913 check is late after the owner pause, not repeated. Originalfault/D838pending/
+D841undeployed/wholeperformance/security/platform/provider/release and goal remain open.
+[Full-range spending-change ranking](quality/spending-change-full-range-order.md).
