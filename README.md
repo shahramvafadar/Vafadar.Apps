@@ -102,6 +102,11 @@ controls.
 
 ## Current delivery status
 
+[D918](src/Apps/Zanance/docs/quality/physical-report-change-large-text.md) adds only two missing actual Samsung ARM64 report-row contexts:
+English Light/Dark, OSfont2 and existing832dp landscape/density450. Exact native
+captions/source/target and original OS restoration pass; only freshUID retires,
+same Main9717 returns. No Main upgrade, 36x64 or financial replay; broader gates remain.
+
 [D916](src/Apps/Zanance/docs/quality/report-change-large-text-layout.md) corrects the original Reports change-row clipping at large OS text:
 36 distinct native six-language/theme/width contexts pass, without successful-case
 or financial UI replay. Full863e5cd4 installs once without reset as Main9717.

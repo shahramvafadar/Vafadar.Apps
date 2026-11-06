@@ -15046,3 +15046,22 @@ register/map/heap/DB/key read, test/build/financial/cold replay/cleanup/phone or
 change occurs. Earlier22table equality stays historical, Q02ANR unresolved; D916's
 independent36contexts stay accepted and originalfault/broader gates/goal remain open.
 [Retained current ANR availability](quality/retained-q02-current-anr-availability.md).
+
+## D-918 - Physical report change row at large text (2026-11-06)
+
+Only D916's missing actual ARM64 row condition runs, no scalar/36x64/financial replay.
+Strict private ecee8daa/192AOT204ELF804LOAD/offline/nondebug/v2v3/CRC/ZIP passes;
+initial flattened compiler-pair failure stays partial, checker alone then proves all
+four actual current source bindings. Fresh Samsung12655/UID10436 prepares one distinct
+fictitious Checking0/expenseMax-3/refund4 fixture without financial UI Save. Actual
+English Light/Dark at OSfont2/existing832dp landscape/density450 pass all three native
+caption texts/fullvisibility/ellipsis0/nonoverlap/original44dp overlay target. Full20/
+32field source BABE3092 remains exact through displays/restoration. TwoXML35476bytes
+hash-retire, freshUID only uninstalls, original font/keypresence/publicOS/packages/
+locale/geometry/boot restore exact; Main9717/863e5cd4 returns in same owned window.
+No Main install/private read/new Homeframe/auth/photo/retainedQ02 action. Four compiler
+files/usedsigned/source/raw evidence archived; one Clean13691file654848249logicalbytes,
+966file129624866byte remain, no supplemental/frozen action. Zero new product tests;
+D916 prior rotation mismatch, Q02ANR/originalfault/broader gates and goal stay open.
+D916soleCIcompleted/cancelled andCodeQLsuccess consumed fromoneGET, no secondquery.
+[Actual ARM64 large-text report row](quality/physical-report-change-large-text.md).

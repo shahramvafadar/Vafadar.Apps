@@ -1226,7 +1226,12 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-916)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-918)
+
+[D918](../quality/physical-report-change-large-text.md) adds only two missing actual Samsung ARM64 report-row contexts:
+English Light/Dark, OSfont2 and existing832dp landscape/density450. Exact native
+captions/source/target and original OS restoration pass; only freshUID retires,
+same Main9717 returns. No Main upgrade, 36x64 or financial replay; broader gates remain.
 
 [D916](../quality/report-change-large-text-layout.md) corrects the original Reports change-row clipping at large OS text:
 36 distinct native six-language/theme/width contexts pass, without successful-case
