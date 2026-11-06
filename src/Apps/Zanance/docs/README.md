@@ -1,5 +1,23 @@
 # Zanance – design documentation
 
+## D-900 - Original public CoreLib identity (2026-11-06)
+
+D900 closes only the originalD678 public CoreLib managed/AOT identity premise.
+Exact used56815522byte/adc8a82a APK has one x64 pair: original format187/native
+assembly_guid equals ModuleMVID6c6da183-caf7-4d1a-9fe8-4e42ea888ec3. Existing bounded
+D786reader and independent installed SDKLZ4/System.Reflection.Metadata agree on
+2495488byte/67bc3a83 public PE; original source header/runtime hashes and offsets
+192/264 match. NativeAOTbe73500c/2802496bytes and APK remain unchanged. Only public
+framework identity is decoded in memory; no managed image written, App/EH/private/
+live-register/map data read or Android code executed. No build/test/device/auth/
+financial/photo/cleanup/frozen action or old controls replay. This is original-package
+identity, not currentD786pair equivalence, all206assembly proof, executed engine,
+exclusive SourceGen exclusion or cause/repair of SGen. D899private fixed56point
+candidate remains rejected before native/product; no selective rescue. D838pending/
+D841undeployed and originalfault/wholeperformance/security/platform/provider/release
+gates remain separate; goal stays active. Main27699/Q0215609 are dated observations.
+[Original public CoreLib identity](quality/original-corelib-aot-identity.md).
+
 [D898 original nullable-index shape](quality/original-nullable-index-shape.md)
 D898 reads actual retained Entries index shape once under original protected query_only/
 read-transaction and full22table/32field before-after equality.15453/UID10260 has
