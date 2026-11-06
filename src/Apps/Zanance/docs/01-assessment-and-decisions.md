@@ -15065,3 +15065,16 @@ files/usedsigned/source/raw evidence archived; one Clean13691file654848249logica
 D916 prior rotation mismatch, Q02ANR/originalfault/broader gates and goal stay open.
 D916soleCIcompleted/cancelled andCodeQLsuccess consumed fromoneGET, no secondquery.
 [Actual ARM64 large-text report row](quality/physical-report-change-large-text.md).
+
+## D-919 - Retained Q02 ANR reason availability (2026-11-06)
+
+A preregistered bounded OS reason read verifies retained5606/boot/Q0215609/UID10260.
+One am_anr-only1000record events tail has0exact currentPID/package matches; one
+separate first12line lastanr metadata header does not bind that owner/PID, so category
+staysnull. No absence/expiry/cause/repair inference, raw event/header/address output,
+wider trace search or induced ANR. No provider/input/extraWait/lifecycle/build/test/
+financial/cold/cleanup/phone or native record/register/map/heap/DB/key action occurs.
+D917window/D898fullsource stay separately dated, not refreshed by negative metadata.
+D917soleCIcompleted/cancelled andCodeQLsuccess consumed once at19m7s, no timelycheck
+claim/secondGET. This reason-availability slice ends unknown; underlying gates/goal open.
+[Bounded ANR reason availability](quality/retained-q02-anr-reason-availability.md).
