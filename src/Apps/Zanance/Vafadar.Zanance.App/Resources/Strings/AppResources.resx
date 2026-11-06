@@ -8717,4 +8717,7 @@ Original XML SHA-256: {5}</value>
   <data name="Plan_ResumeBeforePause" xml:space="preserve">
     <value>Choose a restart date on or after the date the plan was paused.</value>
   </data>
+  <data name="Loan_DateLimit" xml:space="preserve">
+    <value>The estimate stops at the end of the supported calendar, before full repayment.</value>
+  </data>
 </root>

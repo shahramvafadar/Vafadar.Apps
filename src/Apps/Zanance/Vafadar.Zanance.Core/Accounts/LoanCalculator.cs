@@ -7,10 +7,14 @@ public sealed record LoanInstallment(int Number, DateOnly Date, long Payment, lo
 
 /// <summary>
 /// An estimated repayment schedule. <see cref="PaysOff"/> is <see langword="false"/> when the installment does not even
-/// cover the interest, or when the loan would run longer than <see cref="LoanCalculator.MaxInstallments"/>.
+/// cover the interest, when the loan would run longer than <see cref="LoanCalculator.MaxInstallments"/>,
+/// or when the supported calendar ends before repayment.
 /// </summary>
 public sealed record LoanSchedule(IReadOnlyList<LoanInstallment> Installments, long TotalInterest, bool PaysOff)
 {
+    /// <summary>Gets whether the remaining estimate requires a month beyond the supported calendar.</summary>
+    public bool IsDateLimited { get; init; }
+
     /// <summary>Gets the date of the last installment, if the loan is paid off.</summary>
     public DateOnly? LastDate => PaysOff && Installments.Count > 0 ? Installments[^1].Date : null;
 }
@@ -108,6 +112,12 @@ public static partial class LoanCalculator
                 return new LoanSchedule(rows, totalInterest, PaysOff: false);
             }
 
+            // D-924: stop before calculating money for a row which cannot have a valid date.
+            if (number - 1 > (9999 - firstDate.Year) * 12 + 12 - firstDate.Month)
+            {
+                return new LoanSchedule(rows, totalInterest, PaysOff: false) { IsDateLimited = true };
+            }
+
             var (interest, principal) = Split(remaining, annualRatePercent, installment);
             remaining -= principal;
             // Individually valid installments do not guarantee that the published cumulative interest fits.
@@ -118,6 +128,21 @@ public static partial class LoanCalculator
         }
 
         return new LoanSchedule(rows, totalInterest, PaysOff: true);
+    }
+
+    /// <summary>Estimates monthly installments starting next month, without inventing a date after the calendar ends.</summary>
+    /// <exception cref="OverflowException">An original interest or accumulated interest amount cannot be represented.</exception>
+    public static LoanSchedule ScheduleFromNextMonth(long outstanding, decimal annualRatePercent, long installment, DateOnly day)
+    {
+        if (day.Year != 9999 || day.Month != 12)
+        {
+            return Schedule(outstanding, annualRatePercent, installment, day.AddMonths(1));
+        }
+
+        // Preserve the original cleared-debt and underpayment outcomes before attributing a stop to dates.
+        if (outstanding <= 0) return new LoanSchedule([], 0, PaysOff: true);
+        if (installment <= Interest(outstanding, annualRatePercent)) return new LoanSchedule([], 0, PaysOff: false);
+        return new LoanSchedule([], 0, PaysOff: false) { IsDateLimited = true };
     }
 
     /// <summary>

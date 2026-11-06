@@ -416,7 +416,7 @@ public sealed partial class AccountDetailViewModel(
             var schedule = reviewed.Schedule(account);
             LoanPayoffText = schedule.LastDate is { } last
                 ? translator.Format("Loan_Payoff", schedule.Installments.Count, dates.Format(last, DateFormatStyle.MonthYear), Money(schedule.TotalInterest))
-                : translator["Loan_NeverPaidOff"];
+                : translator[schedule.IsDateLimited ? "Loan_DateLimit" : "Loan_NeverPaidOff"];
             ShowLoanEstimate = true; ManualLoanActionText = translator["Loan_OtherAmount"];
         }
     }

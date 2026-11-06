@@ -1,5 +1,10 @@
 # Documentation
 
+[Loan-calendar horizon D924](../src/Apps/Zanance/docs/quality/loan-calendar-horizon.md)
+corrects original estimate/read/page failures at the calendar end without inventing
+an installment date. Focused host and four actual native contexts pass, exact
+fictitious source remains, no system-clock or financial UI operation occurs.
+
 [D918](../src/Apps/Zanance/docs/quality/physical-report-change-large-text.md) adds only two missing actual Samsung ARM64 report-row contexts:
 English Light/Dark, OSfont2 and existing832dp landscape/density450. Exact native
 captions/source/target and original OS restoration pass; only freshUID retires,

@@ -1,5 +1,11 @@
 # Zanance – design documentation
 
+[D924](quality/loan-calendar-horizon.md) fixes loan schedules at the supported
+calendar end across Core, the original reader and both pages.21new/3affected host
+cases and four original native contexts pass with exact fictitious source, no
+financial UI write or system-clock change. Strict full offline f2c1835f is prepared;
+Main adoption and broader platform/fault/performance gates remain separate.
+
 [D923](quality/approved-new-accounts-r13-terminal.md) records the owner's newly
 approved exact D838 operation. One actual stream/classifier call admits the saved
 frames but returns two refused-unknown labels, so classification is not accepted

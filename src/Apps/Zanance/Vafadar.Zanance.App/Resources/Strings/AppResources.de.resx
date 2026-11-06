@@ -8678,4 +8678,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Plan_ResumeBeforePause" xml:space="preserve">
     <value>Wählen Sie als Neustart den Tag der Pause oder ein späteres Datum.</value>
   </data>
+  <data name="Loan_DateLimit" xml:space="preserve">
+    <value>Die Schätzung endet am Ende des unterstützten Kalenders, bevor das Darlehen vollständig zurückgezahlt ist.</value>
+  </data>
 </root>

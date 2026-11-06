@@ -1,5 +1,20 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-924 - Original loan calendar horizon completed (2026-11-06)
+
+Three Core/two original-flow failures are corrected across calculator, reviewed
+next-month reader and both original page projections. Feasible rows/interest and
+existing underpayment/600month guards remain; six translations distinguish the
+calendar limit.14newCore+7newflow+3affected cases, strictWindows/fullOffline384/408/
+1608 and native192/204/804 pass. Four distinct original native contexts in fresh
+4926/UID10216 show complete captions and exact20component source/ledger0. Only loan
+reader clock is fixed; no device-clock or financial UI operation. Fresh fixture/AVD
+retires, six standard Cleans complete, used artifacts/failures preserved without
+supplemental/frozen work. Fullf2c1835f prepared, not adopted on Main. Native ARM64/
+broad layout, underlying fault/ANR/performance/security/platform/provider/release
+remain separate; goal active.
+[Verified original date-boundary behavior](../../quality/loan-calendar-horizon.md).
+
 ## D-923 - Approved D838 operation ends unknown (2026-11-06)
 
 Owner-approved exact new Accounts R13 operation finishes once: same UID10234/

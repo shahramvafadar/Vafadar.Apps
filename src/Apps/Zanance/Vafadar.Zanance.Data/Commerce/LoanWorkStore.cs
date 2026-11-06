@@ -71,7 +71,7 @@ public sealed class LoanReadReview
         Demand(CommercialFeature.LoanAnalysis); EnsureOriginalInputs();
         if (!account.Type.IsDebt() || account.IsArchived || account.Installment is not > 0)
             throw new InvalidOperationException("The original account has no usable loan terms.");
-        var result = LoanCalculator.Schedule(Outstanding(account), account.InterestRate ?? 0, account.Installment.Value, Day.AddMonths(1));
+        var result = LoanCalculator.ScheduleFromNextMonth(Outstanding(account), account.InterestRate ?? 0, account.Installment.Value, Day);
         EnsureCurrent(); return result;
     }
     /// <summary>Calls the original monthly split only for authorized new analytical work.</summary>

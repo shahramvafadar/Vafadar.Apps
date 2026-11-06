@@ -137,7 +137,7 @@ public sealed partial class LoanScheduleViewModel(
         var schedule = reviewed.Schedule(account);
         string Money(long value) => MoneyText.Format(value, account.CurrencyCode, localization.CurrentCulture);
         var summary = schedule.PaysOff ? translator.Format("Loan_ScheduleSummary", Money(reviewed.Outstanding(account)), schedule.Installments.Count, Money(schedule.TotalInterest))
-            : translator["Loan_NeverPaidOff"];
+            : translator[schedule.IsDateLimited ? "Loan_DateLimit" : "Loan_NeverPaidOff"];
         foreach (var row in schedule.Installments)
         {
             token.ThrowIfCancellationRequested();

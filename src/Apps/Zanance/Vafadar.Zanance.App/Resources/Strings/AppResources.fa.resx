@@ -8678,4 +8678,7 @@
   <data name="Plan_ResumeBeforePause" xml:space="preserve">
     <value>تاریخ ادامه را از روز توقف پلن یا پس از آن انتخاب کنید.</value>
   </data>
+  <data name="Loan_DateLimit" xml:space="preserve">
+    <value>برآورد پیش از بازپرداخت کامل، در پایان محدودهٔ تقویم پشتیبانی‌شده متوقف می‌شود.</value>
+  </data>
 </root>

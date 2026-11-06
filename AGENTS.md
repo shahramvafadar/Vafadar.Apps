@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-924 - Original loan calendar horizon (2026-11-06)
+
+Three Core/two original-flow failures establish calendar overflow before correction.
+LoanSchedule.IsDateLimited and next-month admission preserve feasible rows, exact
+money/month-end/cleared/underpayment/600month outcomes; no fake date or writer change.
+Both original pages use six translated calendar-limit captions, not a false50year
+claim.14newCore/7newflow/3existing affected overflow cases pass; strictWindows/full
+offline384AOT408ELF1608LOAD and native192/204/804/sign/ZIP/static16KiB pass. Six PDB
+source checks exact, not wholePE. Fresh5612/API36/x64/4096/4926 has four distinct
+original November/December schedule/detail contexts, exact native captions/source20
+and ledger0, only reader clock fixed; no system/global clock or financial UI replay.
+Only freshUID/AVD26file4413208080logicalbyte retires, publicOS and old5606/Q0215609/
+sameADB50972 exact. Six standard Cleans pass after scoped Windows-asset correction;
+initial restore/native syntax/boot/timestamp/partialClean failures retained. Used
+signed/PDB/source/evidence preserved, no supplemental/frozen/phone action. Full
+f2c1835f is prepared, Main not upgraded. ARM64/native broad layouts, originalfault/
+ANR/wholeperformance/security/platform/provider/release and goal remain open.
+[Loan calendar horizon](src/Apps/Zanance/docs/quality/loan-calendar-horizon.md).
+
 ## D-923 - Approved new Accounts R13 operation is terminal unknown (2026-11-06)
 
 The owner explicitly approves D838 once for original17704/UID10234/TID17731/

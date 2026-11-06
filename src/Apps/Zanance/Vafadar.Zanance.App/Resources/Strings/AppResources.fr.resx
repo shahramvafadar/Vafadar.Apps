@@ -8655,4 +8655,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Plan_ResumeBeforePause" xml:space="preserve">
     <value>Choisissez une date de reprise égale ou postérieure au jour de mise en pause du plan.</value>
   </data>
+  <data name="Loan_DateLimit" xml:space="preserve">
+    <value>L’estimation s’arrête à la fin du calendrier pris en charge, avant le remboursement complet.</value>
+  </data>
 </root>
