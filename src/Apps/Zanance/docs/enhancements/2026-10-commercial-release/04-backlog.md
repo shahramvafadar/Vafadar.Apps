@@ -1,5 +1,17 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-923 - Approved D838 operation ends unknown (2026-11-06)
+
+Owner-approved exact new Accounts R13 operation finishes once: same UID10234/
+CE360537/DE90781, prepared6149a7a8 replacement, original five frames admitted and
+one native classifier call, native/managed buffers zero. Both labels refused-unknown
+make Passed=false; no category/cause/repair success, no retry or alternate record.
+PublicOS and retained Q0215609 remain exact; target publicAPK delta is retained,
+not falsely called whole-source restoration. No phone/financial/oldtest/frozen work.
+D838 is terminal unknown rather than awaiting permission; native fault/ANR/whole
+performance/broader gates and goal remain open. Independent D924 continues.
+[Exact approved operation and limits](../../quality/approved-new-accounts-r13-terminal.md).
+
 ## D-922 - Verification-only page-cache budget rejected (2026-11-06)
 
 A distinct fixed8192KiB temporary verification-connection candidate preserves exact

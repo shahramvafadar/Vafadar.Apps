@@ -1,5 +1,11 @@
 # Zanance – design documentation
 
+[D923](quality/approved-new-accounts-r13-terminal.md) records the owner's newly
+approved exact D838 operation. One actual stream/classifier call admits the saved
+frames but returns two refused-unknown labels, so classification is not accepted
+and no retry follows. Public identity/state preservation passes with the expected
+retained SDK APK replacement; private-source equality and fault repair are not claimed.
+
 ## D-922 - Verification-only page-cache budget rejected (2026-11-06)
 
 A distinct fixed8192KiB temporary verification-connection candidate preserves exact

@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-923 - Approved new Accounts R13 operation is terminal unknown (2026-11-06)
+
+The owner explicitly approves D838 once for original17704/UID10234/TID17731/
+time1793838038872/MonoPC0x2f3f92. Final prepared D8416149a7a8 is installed once
+without reset and launched once as26902 after public binding; UID/CE360537/DE90781
+remain. Exact five frames/BuildId are admitted and one native call occurs, both
+buffer-zero checks true, but both labels refused-unknown and Passed=false. This is
+terminal, not classified success or an absent-register/cause claim. Never retry,
+read another record/register, widen output or use an alternate transport. No raw
+register/address/map/memory/trace/privateDB/key exported. Original bounds and old
+D809/D831 consumed markers remain. PublicOS/boot/geometry/reverse/packageUIDs exact;
+target publicAPK replacement is expected and retained, no uninstall/restoreback.
+Q0215609 untouched; no phone/financial/auth/photo/build/oldtest/frozen action.
+D838 permission is no longer pending; underlying fault/ANR/broader gates/goal stay
+open and independent D924 continues.
+[Approved R13 terminal](src/Apps/Zanance/docs/quality/approved-new-accounts-r13-terminal.md).
+
 ## D-922 - Verification-only page-cache budget rejected (2026-11-06)
 
 A distinct fixed8192KiB temporary verification-connection candidate preserves exact
