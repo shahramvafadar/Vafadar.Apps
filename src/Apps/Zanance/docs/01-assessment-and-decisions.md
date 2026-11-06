@@ -14776,3 +14776,21 @@ No second request is permitted.
 Originalfault/D838pending/D841undeployed/wholeperformance/security/platform/provider/
 release gates and overall goal remain open.
 See [earliest complete history](quality/earliest-complete-financial-history.md).
+
+
+## D-905 - Fixed-day prefix step rejected at first admission (2026-11-06)
+
+A distinct private recurrence step/number jump keeps known one-date fixed-day old
+prefixes and original cap/end/count/generation/fallback semantics.3510component
+output/source comparisons and36mutation/re-enumeration controls pass, not product
+tests. One strict host build and.NET10.0.14/X64/PID22304 use22fixed100rule shapes,
+7inversepairs/10materializations/1secwarmup per role. All allocation/old-rule target
+gates pass, but once1.101214575 and recentGregorianYearly1.077830189 latency ratios
+exceed1.05. Close before second process/native/product/retune/favorable rescue;
+large old-rule gains do not qualify whole Home. Original product source/runtimeGC
+exact, no device/auth/photo/financial/old-test replay. One scoped Clean passes;
+source/input/pairs/output remain, no supplemental/frozen action. No actual PDB/DLL
+receipt exists after Clean; do not rebuild a rejected candidate to manufacture it.
+D904shipping prepared/notMain/soleCI separate, originalfault/D838pending/D841undeployed/
+wholeperformance/security/platform/provider/release gates and goal remain active.
+See [fixed prefix step](quality/fixed-day-prefix-step-rejection.md).
