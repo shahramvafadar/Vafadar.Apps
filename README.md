@@ -102,6 +102,14 @@ controls.
 
 ## Current delivery status
 
+[D924](src/Apps/Zanance/docs/quality/loan-calendar-horizon.md) corrects original loan calendar-end failures across
+Core, the reviewed next-month reader and both page summaries.21new/3affected host cases, four original x64 page
+contexts and [D925's14actual ARM64 outcomes](src/Apps/Zanance/docs/quality/loan-calendar-arm64.md) pass without
+financial UI replay. [D926](src/Apps/Zanance/docs/quality/loan-calendar-current-main-adoption.md) adopts the existing
+complete f2c1835f once without reset as Main23978; first Ready Home979/102landscape raw nodes/order and original
+public identity/OS state match. [D923](src/Apps/Zanance/docs/quality/approved-new-accounts-r13-terminal.md) consumes
+the newly approved exact R13 operation once; its two unknown labels are terminal, not successful classification.
+
 [D918](src/Apps/Zanance/docs/quality/physical-report-change-large-text.md) adds only two missing actual Samsung ARM64 report-row contexts:
 English Light/Dark, OSfont2 and existing832dp landscape/density450. Exact native
 captions/source/target and original OS restoration pass; only freshUID retires,
@@ -199,11 +207,11 @@ the declared source; [D842](src/Apps/Zanance/docs/quality/current-interest-arm64
 [D837 actual ARM64 annuity qualification](src/Apps/Zanance/docs/quality/physical-arm64-annuity-qualification.md)
 records157 original Core outcomes/two expected refusals on reserved Samsung without
 financial records or Main mutation. Only the fresh UID retires with exact public
-preservation. D838 new-PC R13 proposal awaits its separate bounded authority; the
+preservation. D923 subsequently consumes D838's separate explicit authority once and ends unknown; the
 independent work and overall goal remain active. Broader gates stay open.
 
 
-Documentation refreshed on **5 November 2026**. Android completion comes before iOS execution by the owner's
+Documentation refreshed on **6 November 2026**. Android completion comes before iOS execution by the owner's
 decision; reported Mac availability does not change that order. Windows remains a development target. Local
 engineering evidence, physical-device acceptance, genuine OAuth/store integration and public release are
 separate gates.
@@ -228,10 +236,10 @@ platform release gates remain open.
 
 | Delivery track | Current boundary |
 |---|---|
-| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy and D780/D783 receipt/D787 distant moved occurrence and D791 calendar-endpoint/D799 damaged receipt grouping and D800 resume ownership/input-feedback and D804 pending camera-result ownership corrections; D-750 is rejected with exact source restoration; see dated bounded evidence |
+| Completed source work | Original editor/read/command ownership, Android PIN/window-privacy, receipt/occurrence/resume/camera ownership corrections, subsequent complete signed reconciliation/spending-change and large-text report repairs, and D924 loan calendar horizons; see dated bounded evidence. Rejected candidates remain rejected without retuning or financial replay |
 | Remaining implementation and acceptance | Follow the canonical backlog; completed source batches do not close physical, provider or platform acceptance |
-| Physical adoption | Latest dated checkpoint [D853](src/Apps/Zanance/docs/quality/current-input-corrections-physical-adoption.md) adopts65523bd6 as Main26327 once without reset, preserving UID/data inodes/five OS/public grants and all141raw Home nodes; no fresh locale/reverse continuity claim. Prior checkpoint [D849](src/Apps/Zanance/docs/quality/current-physical-main-adoption-d849.md) adopts904c1f91 as Main20144 once without reset: UID/data inodes/public state and all141raw Home nodes exact. Prior checkpoint [D846](src/Apps/Zanance/docs/quality/physical-goal-percent-main-adoption.md) adopts868f06c0 as Main15641 after current goal-page ARM64 qualification, with UID/data inodes/settings and all141raw Home nodes exact. Prior checkpoint [D842](src/Apps/Zanance/docs/quality/current-interest-arm64-main-adoption.md) adopts22a3f00a as Main5939 after16 current Core ARM64 outcomes: one no-reset install, original UID/data inodes/public settings and all141 raw Home nodes preserved. [D836](src/Apps/Zanance/docs/quality/current-physical-main-adoption-d836.md) is the prior4a72373a/27284 checkpoint; [D804](src/Apps/Zanance/docs/quality/original-camera-result-ownership.md) retains its historical drawing-order delta. [D802](src/Apps/Zanance/docs/quality/physical-pdf-cancellation-retained-input.md) completes the finite owner CSV/local-backup/PDF cancellations; [D803](src/Apps/Zanance/docs/quality/physical-owner-framed-camera-draft.md) retains one owner-framed camera draft. This is not future liveness or complete private DB/key/device/security/release acceptance |
-| Performance and stability | [D831](src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md) retains a new large-page native exit; [D833](src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md) proves the declared source equal after it. [D841](src/Apps/Zanance/docs/quality/sdk-word-category-memory-boundary.md) prepares the bounded SDK memory bridge with versioned fake cases; actual D838 read remains pending. Fault remedy, large-page timing and the general two-second target remain open; rejected hypotheses are not replayed |
+| Physical adoption | Latest dated checkpoint [D926](src/Apps/Zanance/docs/quality/loan-calendar-current-main-adoption.md) adopts complete f2c1835f as Main23978 once without reset, preserving UID10380/CE155299/DE154603, all102landscape raw Home nodes/order and original Zanance public package/grant/OS/extra locale-key/boot/geometry state. Earlier checkpoints keep their recorded scopes, including D916's historical rotation mismatch. This is not future liveness, a private DB/key comparison or complete device/security/release acceptance |
+| Performance and stability | [D831](src/Apps/Zanance/docs/quality/accounts-phase-cost-native-exit.md) retains the large-page native exit and [D833](src/Apps/Zanance/docs/quality/post-fault-accounts-source-audit.md) its declared source comparison. [D923](src/Apps/Zanance/docs/quality/approved-new-accounts-r13-terminal.md) finishes the explicitly approved D838 operation once: frames admitted, two refused-unknown labels, no retry. The original fault/ANR remedy, large-page timing and general two-second target remain open; [D922](src/Apps/Zanance/docs/quality/verification-page-cache-budget-rejection.md) is rejected at its fixed native gates, without retuning |
 | Accessibility | Completed observations remain valid within their scope; further TalkBack work is deferred behind other ready work, with Persian speech parked |
 | External and release gates | Genuine provider/account acceptance, public hosting, stores, iOS qualification and publication remain separate prerequisites |
 
