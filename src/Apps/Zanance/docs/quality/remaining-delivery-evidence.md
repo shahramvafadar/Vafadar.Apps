@@ -1,5 +1,23 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+[D899 nullable-index host rejection](nullable-index-host-rejection.md)
+D899 closes the private four-optional-index candidate before second cohort/native/
+product. Actual original SQLCipher4.5.2 context qualifies14query and4FK/unique
+controls per role plus2additional rolled-back category updates; complete32field/
+all-table state exact, only four index predicates differ, raw cookies370/378 retained.
+Fixed56points/seven inverse pairs/four sparse-dense10k100k shapes on.NET10.0.14/X64
+PID3544 preserve every source/query/frozen-source hash. Sparse10k integrity median
+316.9034to306.827ms improves3.179644percent, below required5percent; sparse100k
+988.9797to874.5503ms improves11.570450percent but cannot rescue failed small gate.
+Other latency/allocation/conservative lifetime-peak gates pass; no production speed/
+exclusive-cause inference. Constructor/shadowing/raw-connection helper failures remain;
+original registered write function is never replaced or bypassed. One scoped Clean,
+no supplemental/frozen/device/auth/photo/financial/old-suite replay; product/model/
+migration/runtime/GC/testcount unchanged. Used private sources/binary/results and
+synthetic encrypted files retained. D898oneCI consumed late: CIin_progress/CodeQL
+success at that response, no secondGET. Main27699/Q0215609 are dated observations.
+Originalfault/D838pending/D841undeployed/broader gates and goal remain active.
+
 [D898 original nullable-index shape](original-nullable-index-shape.md)
 D898 reads actual retained Entries index shape once under original protected query_only/
 read-transaction and full22table/32field before-after equality.15453/UID10260 has
