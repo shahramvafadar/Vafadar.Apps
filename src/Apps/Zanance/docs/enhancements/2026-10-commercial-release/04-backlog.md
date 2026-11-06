@@ -1,5 +1,25 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-915 - Original spending-change endpoint captions (2026-11-06)
+
+D914's calculation/adoption evidence is preserved without scalar/host/ARM64/Windows/
+full-shipping/phone replay. One fresh original ReportsPage uses one new fictitious
+Checking opening0 and two linked rows: previous expenseMax/current refund1, prepared
+once without financial UI Save. Current source is unchanged. Strict private offline
+192AOT204ELF804LOAD/v2v3/CRC/static16KiB and five actual compiler-source bindings pass.
+PID23350/UID10272 first shows Loading, then the same appearance reaches Ready with
+original permission true, one exact MinValue/-100percent change and period details.
+One owning-scroll action exposes both original TextView captions: exact expected/
+actual text, full native/global bounds equal and ellipsis0. Full20typed source SHA
+remains exact across report read/scroll; account1/entry2/schedule0, no ledger UI command
+or old fixture replay. Only freshUID retires; Q0215609/publicOS/locale/boot/geometry/
+reverse/packages return exact, no XML created. One scopedClean13693files824084995
+logicalbytes; four actual compiler files/five sources/used signed APK/output retained,
+no supplemental/frozen action. Main31259/a4677eba is only priorD914 evidence, not fresh
+phone liveness. Zero new product tests or glyph/all-report/A11Y/security/wholeprivateDB/
+originalfault/performance/platform/provider/release acceptance; overall goal stays active.
+[Original endpoint captions](../../quality/original-spending-change-endpoint-row.md).
+
 ## D-914 - Full-range spending-change ranking (2026-11-06)
 
 A supported category change of Int64.MinValue failed in the original absolute-value

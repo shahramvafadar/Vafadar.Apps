@@ -6,6 +6,9 @@ overflow; true money-overflow guards remain. Twelve new/one affected host cases,
 twelve x64 and twelve ARM64 outcomes pass. Full a4677eba is adopted without reset
 as Main31259, first Home102landscape raw nodes/public and extraOS state exact.
 No financial replay, original-fault remedy or whole-project readiness is claimed.
+[D915](../src/Apps/Zanance/docs/quality/original-spending-change-endpoint-row.md) adds the distinct original Reports endpoint display:
+two exact native captions fully visible/ellipsis0, full20source unchanged after
+one new fictitious fixture, with no scalar/financial UI/phone replay.
 
 [Signed reconciliation ARM64/Main D913](../src/Apps/Zanance/docs/quality/signed-reconciliation-arm64-main.md):
 D913 completes only D912's missing28Core ARM64 outcomes once, then adopts existing
