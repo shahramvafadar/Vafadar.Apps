@@ -1,5 +1,26 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-909 - Negative balance goal overshoot (2026-11-06)
+
+GoalProgress compares before subtracting so supported negative balances cannot
+wrap into a positive overshoot.12new cases reproduce7failures, then pass on
+.NET10.0.14/X64; one affected original balance-overflow guard passes. Original
+presenter already gates Overshoot on IsReached: no visible-caption defect claim.
+Strict Windows/full offline384AOT408ELF1608LOAD/native192204804/sign/CRC/ZIP pass;
+six actual compiler-source checks bind current Core/test inputs, not wholePE.
+Fresh20950/UID10269 passes12once, then one fictitious negative Checking/one balance
+goal/ledger0 gives original GoalDetailPage Ready with exact negative warning,
+zero progress and0.01EURremaining. Three native strings/visible bounds/ellipsis0
+and oneXML agree; full20source exact, initial Loading not accepted. FreshUID/one
+16726byteXML retires, public OS/boot/packages exact and retainedQ0215609 returns;
+eight compiler files retained before4Cleans28918files/2110147445logicalbytes.
+No phone/auth/photo/financial UI replay or supplemental/frozen action. Fullshipping
+37518cfa is prepared/notMain; current12ARM64/Main adoption remain missing separate
+conditions. D907soleCIcancelled/CodeQLsuccess consumed; no secondGET. Originalfault/
+D838pending/D841undeployed/wholeperformance/security/platform/provider/release and
+goal remain open.
+[Negative goal overshoot](../../quality/negative-goal-overshoot.md).
+
 ## D-908 - Static new-fault reference-element provenance (2026-11-06)
 
 Exact original Mono/debug hashes and positive function bounds admit4966bytes/

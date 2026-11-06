@@ -56,7 +56,8 @@ public sealed record GoalProgress(
     public long Remaining => Math.Max(0, Target - Math.Max(0, Current));
 
     /// <summary>Gets max(0, F − T): how far the goal is above its target.</summary>
-    public long Overshoot => Math.Max(0, Current - Target);
+    // D-909: compare before subtracting so a negative balance cannot wrap into a positive surplus.
+    public long Overshoot => Current <= Target ? 0 : checked(Current - Target);
 
     /// <summary>Gets clamp(F / T, 0, 1) for the bar; the real numbers are always shown next to it.</summary>
     public double Progress => Target <= 0 ? 0 : Math.Clamp((double)Current / Target, 0, 1);
