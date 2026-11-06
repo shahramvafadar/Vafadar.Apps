@@ -19,7 +19,7 @@ public sealed record PeriodTotals(string CurrencyCode, long Income, long IncomeR
     public long NetExpense => GrossExpense - Refunds;
 
     /// <summary>Gets net income minus net expense.</summary>
-    public long Result => NetIncome - NetExpense;
+    public long Result => checked(NetIncome - NetExpense);
 }
 
 /// <summary>Expense of one category in one currency; <see cref="CategoryId"/> is <see langword="null"/> for entries without category.</summary>
@@ -100,13 +100,17 @@ public static class LedgerCalculator
         bool confirmedOnly = false)
     {
         ArgumentNullException.ThrowIfNull(indexed);
-        var totals = new SortedDictionary<string, long>(StringComparer.Ordinal);
+        var totals = new SortedDictionary<string, Int128>(StringComparer.Ordinal);
         foreach (var account in InScope(accounts, accountIds).Where(a => accountIds is not null || !a.IsArchived))
         {
             totals[account.CurrencyCode] = checked(totals.GetValueOrDefault(account.CurrencyCode) + Balance(account, indexed.For(account.Id), at, confirmedOnly));
         }
 
-        return totals;
+        // D-906: independent account balances may offset an unsupported prefix; each original balance still checks its own range.
+        var completed = new SortedDictionary<string, long>(StringComparer.Ordinal);
+        foreach (var pair in totals) completed.Add(pair.Key, checked((long)pair.Value));
+
+        return completed;
     }
 
     /// <summary>Income and expense of the period per currency. Transfers and adjustments never count (FIN-02, FIN-10).</summary>
@@ -202,10 +206,11 @@ public static class LedgerCalculator
     public static IReadOnlyList<UnreviewedSummary> Unreviewed(IEnumerable<Account> accounts, IEnumerable<LedgerEntry> entries, IReadOnlyCollection<Guid>? accountIds = null)
     {
         // D-373: route each entry to its two possible accounts instead of rescanning the whole
-        // scope. Keep original positions: duplicate ids and checked per-currency sums are order-sensitive.
+        // scope. Keep original positions: duplicate ids and each entry's checked currency sum remain order-sensitive.
+        // D-906: only the completed cross-entry currency net is checked after independent entry effects cancel.
         var scope = InScope(accounts, accountIds).Select((account, order) => (Account: account, Order: order))
             .ToLookup(row => row.Account.Id);
-        var result = new SortedDictionary<string, (int Count, long Sum)>(StringComparer.Ordinal);
+        var result = new SortedDictionary<string, (int Count, Int128 Sum)>(StringComparer.Ordinal);
 
         foreach (var entry in entries.Where(e => e.Review == ReviewState.Unreviewed))
         {
@@ -217,7 +222,7 @@ public static class LedgerCalculator
             }
         }
 
-        return [.. result.Select(pair => new UnreviewedSummary(pair.Key, pair.Value.Count, pair.Value.Sum))];
+        return [.. result.Select(pair => new UnreviewedSummary(pair.Key, pair.Value.Count, checked((long)pair.Value.Sum)))];
     }
 
     /// <summary>Enumerates only touched scope records in their original order, including repeated ids once per record.</summary>

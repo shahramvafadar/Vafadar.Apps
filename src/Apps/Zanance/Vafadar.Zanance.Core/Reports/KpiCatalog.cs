@@ -506,7 +506,9 @@ public static class KpiCatalog
         {
             var (from, to) = PeriodMath.MonthRange(year, month, calendar, startDay);
             oldest = from;
-            months.Add(LedgerCalculator.ExpenseByCategory(accountList, relevant, new LedgerFilter(from, to, scope), id => id).Sum(c => c.Net));
+            // D-906: category refunds can offset another category's expense; check only the complete month net.
+            months.Add(checked((long)LedgerCalculator.ExpenseByCategory(accountList, relevant, new LedgerFilter(from, to, scope), id => id)
+                .Aggregate((Int128)0, (total, category) => checked(total + category.Net))));
             (year, month) = PeriodMath.Previous(year, month);
         }
 

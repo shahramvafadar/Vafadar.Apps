@@ -1,5 +1,27 @@
 # AGENTS.md – working rules for this repository
 
+## D-906 - Completed ledger and saved-comparison currency nets (2026-11-06)
+
+D906 batches independent currency-balance/review/month-net and saved-comparison
+opening/day/category/residual reads. Int128 preserves completed valid nets; true
+long money overflows, original per-account and per-entry duplicate-id review guards
+remain. Period result/difference/actual-day/residual wrapping now refuses.49new
+cases reproduce23 failures then pass on.NET10.0.14/X64;6affected old guards pass,
+not fullsuite or98new tests. Strict Windows/full offline384AOT408ELF1608LOAD/private
+192204804/sign/CRC/static16KiB pass;7actual source bindings match. Private initial
+Entity.Id CS0200 is preserved/corrected without product model change. New19937/
+UID10268 passes49 once, then one3account/one saved-definition/ledger0 metadata
+source gives original SnapshotPage Ready/CanCompare/two exact MaxValue rows/zero
+differences. First3native captions match/ellipsis0;1px right visible-edge delta is
+retained, no fullrect/glyph claim. All20source exact through terminal read; freshUID/
+oneXML35746byte retires; original public OS/boot/packages exact, Q0215609 returns
+normally.4scopedCleans/used compiler receipts archived/no supplemental/frozen/phone/
+auth/photo/financial UI replay. Shipping16b7b889 prepared/notMain. D904soleCIcancelled/
+three successes and D905soleCIin_progress/CodeQLsuccess consumed, never secondGET.
+Originalfault/D838pending/D841undeployed/wholeperformance/security/platform/provider/
+release gates and overall goal stay open.
+See `src/Apps/Zanance/docs/quality/completed-ledger-and-snapshot-nets.md`.
+
 ## D-905 - Fixed-day prefix step rejected at first admission (2026-11-06)
 
 A distinct private recurrence step/number jump keeps known one-date fixed-day old

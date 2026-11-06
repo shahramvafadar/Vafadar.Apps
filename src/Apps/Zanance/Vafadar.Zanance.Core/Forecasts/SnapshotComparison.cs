@@ -7,7 +7,7 @@ namespace Vafadar.Zanance.Core.Forecasts;
 public sealed record SnapshotDay(DateOnly Date, long Saved, long Actual)
 {
     /// <summary>Gets actual minus saved.</summary>
-    public long Difference => Actual - Saved;
+    public long Difference => checked(Actual - Saved);
 }
 
 /// <summary>
@@ -22,7 +22,7 @@ public sealed record SnapshotComparison(IReadOnlyList<SnapshotDay> Days, long Re
     public long Difference => Days.Count == 0 ? 0 : Days[^1].Difference;
 
     /// <summary>Gets the residual difference from changed planned transactions or earlier data, after the known movement categories.</summary>
-    public long PlansChanged => Difference - RecordedLater - UnplannedSpending - UnplannedIncome - OtherMovements;
+    public long PlansChanged => checked((long)((Int128)Difference - RecordedLater - UnplannedSpending - UnplannedIncome - OtherMovements));
 }
 
 /// <summary>Compares a forecast snapshot with what happened (ZEX-S0804).</summary>
@@ -51,16 +51,16 @@ public static class SnapshotComparer
         if (saved.Count > 0)
         {
             var first = saved[0].Date;
-            var balance = scoped.Sum(a => LedgerCalculator.Balance(a, entries, first));
-            var deltas = new Dictionary<DateOnly, long>();
+            Int128 balance = CompletedSum(scoped.Select(a => LedgerCalculator.Balance(a, entries, first)));
+            var deltas = new Dictionary<DateOnly, Int128>();
             foreach (var entry in entries.Where(e => e.Date > first && e.Date <= end))
             {
-                deltas[entry.Date] = deltas.GetValueOrDefault(entry.Date) + Effect(entry);
+                deltas[entry.Date] = checked(deltas.GetValueOrDefault(entry.Date) + Effect(entry));
             }
 
             foreach (var account in scoped.Where(a => a.OpeningDate > first && a.OpeningDate <= end))
             {
-                deltas[account.OpeningDate] = deltas.GetValueOrDefault(account.OpeningDate) + account.OpeningBalance;
+                deltas[account.OpeningDate] = checked(deltas.GetValueOrDefault(account.OpeningDate) + account.OpeningBalance);
             }
 
             var day = first;
@@ -68,20 +68,30 @@ public static class SnapshotComparer
             {
                 for (; day < point.Date; day = day.AddDays(1))
                 {
-                    balance += deltas.GetValueOrDefault(day.AddDays(1));
+                    balance = checked(balance + deltas.GetValueOrDefault(day.AddDays(1)));
                 }
 
-                days.Add(new SnapshotDay(point.Date, point.Balance, balance));
+                days.Add(new SnapshotDay(point.Date, point.Balance, checked((long)balance)));
             }
         }
         var later = entries.Where(e => e.CreatedAt > snapshot.CreatedAt).ToList();
-        var recordedLater = later.Where(e => e.Date <= snapshot.BaseDate).Sum(Effect);
+        var recordedLater = CompletedSum(later.Where(e => e.Date <= snapshot.BaseDate).Select(Effect));
         var unplanned = later.Where(e => e.Date > snapshot.BaseDate && e.Date <= end && e.ScheduleId is null).ToList();
         // D-487: classify original ledger kinds, not cash signs. Refunds reduce spending and
         // reversals reduce income; transfers, capital trades and corrections are neither.
-        var spending = unplanned.Where(e => e.Kind is EntryKind.Expense or EntryKind.Refund).Sum(Effect);
-        var income = unplanned.Where(e => e.Kind is EntryKind.Income or EntryKind.IncomeReversal).Sum(Effect);
-        var other = unplanned.Where(e => e.Kind is not (EntryKind.Expense or EntryKind.Refund or EntryKind.Income or EntryKind.IncomeReversal)).Sum(Effect);
+        var spending = CompletedSum(unplanned.Where(e => e.Kind is EntryKind.Expense or EntryKind.Refund).Select(Effect));
+        var income = CompletedSum(unplanned.Where(e => e.Kind is EntryKind.Income or EntryKind.IncomeReversal).Select(Effect));
+        var other = CompletedSum(unplanned.Where(e => e.Kind is not (EntryKind.Expense or EntryKind.Refund or EntryKind.Income or EntryKind.IncomeReversal)).Select(Effect));
         return new SnapshotComparison(days, recordedLater, spending, income, other);
     }
+
+    /// <summary>Sums independent original effects before checking the completed money boundary.</summary>
+    private static long CompletedSum(IEnumerable<long> values)
+    {
+        // D-906: preserve individual balance/effect guards while allowing a representable completed net.
+        Int128 total = 0;
+        foreach (var value in values) total = checked(total + value);
+        return checked((long)total);
+    }
+
 }
