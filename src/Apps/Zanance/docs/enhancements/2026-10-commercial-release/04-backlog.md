@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-925 - Current loan calendar ARM64 arithmetic completed (2026-11-06)
+
+Fourteen D924 Core calculation outcomes pass once on actual Samsung ARM64/4096,
+PID21373/UID10437, with current source checksum binding. Separate provider-only
+5b8c5cef/27AOT37ELF138LOAD/offline/sign/ZIP has no Activity/App/Data/SQL or financial
+source. No host/x64/old financial fixture replay,0new unit cases. Only freshUID
+retires; all original public package/grant/OS/locale/boot/geometry state and same
+Main9717 remain. Two standard Cleans pass, usedsigned/source/PDB/results retained,
+no supplemental/frozen action. Fullf2c1835f stays prepared; ARM64 original layouts/
+Main adoption/underlying fault/ANR/performance/security/platform/provider/release
+remain distinct open conditions, goal active.
+[Fourteen actual platform outcomes](../../quality/loan-calendar-arm64.md).
+
 ## D-924 - Original loan calendar horizon completed (2026-11-06)
 
 Three Core/two original-flow failures are corrected across calculator, reviewed

@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-925 - Current loan calendar ARM64 outcomes (2026-11-06)
+
+Only14new D924 Core outcomes execute once on actual Samsung API36/ARM64/4096,
+21373/UID10437. Private provider-only5b8c5cef/27AOT37ELF138LOAD/offline/nondebug/
+v2v3/ZIP passes with original Mono and two exact actual PDB source checks. No
+Activity/MAUI/App/Data/SQL/authclock/financial source; one state start and one bound
+run, exclusive marker. All14pass on finalbinary,0new product tests; host/x64/old
+financial fixtures not replayed. Only freshUID10437 retires, all original public
+package/grant/OS/locale-key/boot/geometry exact, same Main9717 untouched. Two standard
+Cleans pass; usedsigned/source/PDB/results retained, no supplemental/frozen/setting/
+auth/photo/financial action. Current fullf2c1835f remains prepared, not Main-installed.
+ARM64 page layouts, originalfault/ANR/wholeperformance/security/platform/provider/
+release and overall goal remain open.
+[Actual loan calendar ARM64](src/Apps/Zanance/docs/quality/loan-calendar-arm64.md).
+
 ## D-924 - Original loan calendar horizon (2026-11-06)
 
 Three Core/two original-flow failures establish calendar overflow before correction.

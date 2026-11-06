@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D925](quality/loan-calendar-arm64.md) completes only D924's14new Core outcomes on
+actual Samsung ARM64. The separate provider-only package opens no Activity or
+financial source; all14pass and only its freshUID retires. Original public state
+and Main9717 stay exact. No old suite/financial fixture or product build is repeated.
+
 [D924](quality/loan-calendar-horizon.md) fixes loan schedules at the supported
 calendar end across Core, the original reader and both pages.21new/3affected host
 cases and four original native contexts pass with exact fictitious source, no
