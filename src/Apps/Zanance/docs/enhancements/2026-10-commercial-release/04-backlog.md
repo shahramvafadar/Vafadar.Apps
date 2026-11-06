@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-926 - Current loan calendar Main adoption completed (2026-11-06)
+
+One existing fullf2c1835f no-reset upgrade adopts D924 as Main23978/UID10380/
+CE155299/DE154603. First ReadyHome979/102landscape/rawattrs/order/rotation1 exact,
+other original Zanance public packages/grants and OS/extra locale-key/boot/geometry exact; no second
+frame, privateMainDB/key, new build/test/financial/auth/photo/provider replay.
+Two hash-bound remoteXML75732bytes retire, localraw/evidence retained, no frozen
+action. D923 soleCIcancelled/CodeQLsuccess consumed once. D924+14actualARM64 D925
+arithmetic and current Main adoption are complete at their stated scopes. Original
+fault/ANR/wholeperformance/security/accessibility/platform/provider/release remain
+open; overall goal active.
+[Exact first current Home and preservation](../../quality/loan-calendar-current-main-adoption.md).
+
 ## D-925 - Current loan calendar ARM64 arithmetic completed (2026-11-06)
 
 Fourteen D924 Core calculation outcomes pass once on actual Samsung ARM64/4096,

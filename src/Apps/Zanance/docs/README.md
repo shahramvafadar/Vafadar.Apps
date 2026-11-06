@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D926](quality/loan-calendar-current-main-adoption.md) adopts the existing complete
+D924 build once without reset as Main23978. First Ready Home979/102landscape raw
+nodes/order and original public package/OS state match exactly, with no financial
+or successful-test replay. Broader fault/performance/security/platform gates remain.
+
 [D925](quality/loan-calendar-arm64.md) completes only D924's14new Core outcomes on
 actual Samsung ARM64. The separate provider-only package opens no Activity or
 financial source; all14pass and only its freshUID retires. Original public state

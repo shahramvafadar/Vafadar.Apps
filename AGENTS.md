@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-926 - Current loan calendar Main adoption (2026-11-06)
+
+Existing fullf2c1835f/384AOT408ELF1608LOAD/offline/sign/ZIP is rehashed and public
+signer admitted, no rebuild/test/financial replay. Actual reserved Main9717/UID10380/
+CE155299/DE154603 is foreground; one no-reset install/normal launch yields23978.
+First ReadyHome979/102landscape nodes/all rawattrs/order/rotation1 exact; other
+original Zanance public packages/grants and OS/extra locale-key/boot/geometry remain, only expectedAPK/PID
+delta. No secondframe/reload/rotation write or privateMainDB/key comparison. Two
+new remoteXML75732bytes hash-match retire; localraw retained, no buildClean needed,
+no supplemental/frozen/auth/photo/financial action. Old D916 mismatch stays dated.
+D923 soleCIcancelled/CodeQLsuccess consumed after preGET schema correction, never
+query again. Current Main includes D924; underlying fault/ANR/wholeperformance/
+security/accessibility/platform/provider/release gates and overall goal remain open.
+[Current loan calendar adoption](src/Apps/Zanance/docs/quality/loan-calendar-current-main-adoption.md).
+
 ## D-925 - Current loan calendar ARM64 outcomes (2026-11-06)
 
 Only14new D924 Core outcomes execute once on actual Samsung API36/ARM64/4096,

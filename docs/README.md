@@ -1,5 +1,9 @@
 # Documentation
 
+[Current loan-calendar Main adoption D926](../src/Apps/Zanance/docs/quality/loan-calendar-current-main-adoption.md)
+records one preserving upgrade to the existing complete candidate. First Ready
+Home/public identity matches exactly; no new build/test/financial operation is used.
+
 [Loan-calendar horizon D924](../src/Apps/Zanance/docs/quality/loan-calendar-horizon.md)
 corrects original estimate/read/page failures at the calendar end without inventing
 an installment date. Focused host and four actual native contexts pass, exact
