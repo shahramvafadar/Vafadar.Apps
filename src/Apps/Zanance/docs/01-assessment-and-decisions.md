@@ -14615,3 +14615,22 @@ full22source exact; sevenCleans/no supplemental/frozen/oldsuccess/financial repl
 D896CI pending once; D838pending/D841unexecuted/originalfault/performance/security/
 platform/provider/release gates and goal remain active.
 See [actual correction and native evidence](quality/completed-converted-currency-nets.md).
+
+
+## D-898 - Original nullable-index shape admission (2026-11-06)
+
+D898 reads actual retained Entries index shape once under original protected query_only/
+read-transaction and full22table/32field before-after equality.15453/UID10260 has
+100krows, four nonunique/unfiltered optional indexes with390k/400kNULLslots; dbstat
+actually absent,10076x4096pages/free0, no per-index byte or speed inference. Saved
+D895fouroriginal packets put protected median10457.9259ms; nested historical spans,
+not current speed/cause. No D889/D895rescue, product/schema/model/integrity/runtime
+change or old suite/financial replay. Private serializer/parser failures remain;
+strict192AOT204ELF804LOAD/offline/sign and compiler/4ownAOT bindings pass. Original
+D893observer restored without reset as15609/sameUID/fullsource/frame/publicOS exact;
+twoCleans/no XML/supplemental/frozen/phone/R13. Next private optional-index candidate
+needs actual query/FK/source/cookie and fixed cost gates before additive migration/
+compiled-model change. D896oneCI consumed (CIcancelled/three successes), D897oneCI consumed
+(in_progress/three successes), never secondGET;
+originalfault/D838pending/D841undeployed/broadergates and goal remain active.
+See [actual read-only admission and limits](quality/original-nullable-index-shape.md).
