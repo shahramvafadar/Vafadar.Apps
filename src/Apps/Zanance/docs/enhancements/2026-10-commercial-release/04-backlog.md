@@ -1,5 +1,35 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-916 - Report change rows at large OS text (2026-11-06)
+
+The original two-column change row clips a full signed amount and reduces its
+category name to zero width at360dp/OSfont2. Only XAML changes to three wrapping
+rows; original money, captions, command/semantics and target remain. Strict Windows/
+complete offline384AOT408ELF1608LOAD/private192204804 pass; zero new unit tests.
+Retained cohort10273/24089→24458 preserves source20 but contributes zero accepted
+window contexts because Q0215609's system ANR reappears after one verified Wait.
+No Close/kill/reset/restart or native-fault interpretation occurs. Its OS restores,
+only freshUID/XML retires; retainedQ02 remains unresolved/preserved.
+A registered independent API36/x64/4096 cohort uses a different finite fictitious
+payload, no financial UI Save/replay. All36 unique six-language/two-theme/three-width
+OSfont2 contexts pass original three-caption exact text/full native visibility/
+ellipsis0/nonoverlap and44dp target:20on5006,16on7052 after one read-only observer
+upgrade. Initial Persian digit and French trailing-whitespace oracles refuse;
+original NativeDigits/actual Android line-content metadata correct only observers,
+successes are not replayed. Full20source stays exact within each cohort, not between
+different inputs. Thirty-six XML784530bytes and only freshUID retire; original OS/
+absent locale-keypresence restores. FreshAVD25files4803212754logicalbytes retires,
+sameADB50972. Seven standard Cleans remove69675files/4454205264logicalbytes;
+6504files/978318468bytes remain, no supplemental/frozen action.28compiler/
+reference files and used signed/source/raw evidence retained;14final source bindings.
+One Main no-reset install succeeds31259→9717/863e5cd4, UIDCEDE preserved. Rotation
+mode0→1/portrait141→landscape102 is observed without a setting-write command; actor/
+cause unknown and exact Home/OS adoption comparison refused, no second-frame rescue.
+Two phoneXML89798bytes retire against unchanged current observed state. Broad A11Y/
+privateDB/key/security/originalfault/performance/platform/provider/release gates and
+overall goal stay open; Q02 availability is a distinct remaining concern.
+[Large-text report change rows](../../quality/report-change-large-text-layout.md).
+
 ## D-915 - Original spending-change endpoint captions (2026-11-06)
 
 D914's calculation/adoption evidence is preserved without scalar/host/ARM64/Windows/

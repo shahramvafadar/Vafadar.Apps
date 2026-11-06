@@ -1,5 +1,12 @@
 # Documentation
 
+[D916](../src/Apps/Zanance/docs/quality/report-change-large-text-layout.md) corrects the original Reports change-row clipping at large OS text:
+36 distinct native six-language/theme/width contexts pass, without successful-case
+or financial UI replay. Full863e5cd4 installs once without reset as Main9717.
+Observed rotation-mode0→1/portrait141→landscape102 prevents exact Home/OS comparison;
+no setting write, extra frame or rotation rescue occurs. Retained Q02 ANR remains
+unresolved/preserved. This is finite layout evidence, not whole-project acceptance.
+
 [Full-range spending-change ranking D914](../src/Apps/Zanance/docs/quality/spending-change-full-range-order.md):
 A supported minimum signed category change now ranks without absolute-value
 overflow; true money-overflow guards remain. Twelve new/one affected host cases,

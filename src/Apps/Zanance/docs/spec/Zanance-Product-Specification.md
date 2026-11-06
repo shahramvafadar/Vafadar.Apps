@@ -1226,9 +1226,16 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-915)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-916)
 
-The latest bounded physical condition is recorded in [D914](../quality/spending-change-full-range-order.md):
+[D916](../quality/report-change-large-text-layout.md) corrects the original Reports change-row clipping at large OS text:
+36 distinct native six-language/theme/width contexts pass, without successful-case
+or financial UI replay. Full863e5cd4 installs once without reset as Main9717.
+Observed rotation-mode0→1/portrait141→landscape102 prevents exact Home/OS comparison;
+no setting write, extra frame or rotation rescue occurs. Retained Q02 ANR remains
+unresolved/preserved. This is finite layout evidence, not whole-project acceptance.
+
+The earlier bounded physical condition is recorded in [D914](../quality/spending-change-full-range-order.md):
 12 current category-change ranking outcomes and one preserving Maina4677eba/31259
 adoption. D913's28, D910's12 and D907's76 earlier outcomes remain accepted without
 replay. D912's [signed reconciliation correction](../quality/complete-signed-reconciliation-input.md)
@@ -1236,7 +1243,7 @@ has its current ARM64/Main conditions completed by D913 without financial replay
 [D915](../quality/original-spending-change-endpoint-row.md) adds only the original
 Reports endpoint row on x64: two exact fully visible native captions/ellipsis0 and
 full20source equality after one fresh finite fixture, without financial UI replay.
-The physical Main checkpoint above remains D914; no new phone liveness is inferred.
+That historical physical checkpoint remains D914; D916 records the newer limited adoption separately.
 Current source corrections
 include [negative goal overshoot](../quality/negative-goal-overshoot.md),
 [earliest complete history](../quality/earliest-complete-financial-history.md) and

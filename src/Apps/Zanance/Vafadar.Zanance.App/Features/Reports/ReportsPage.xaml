@@ -173,11 +173,12 @@
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Changes}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:ChangeRow">
-                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Padding="0,6">
+                                    <!-- D-916: full signed changes need their own wrapping viewport at large OS text sizes. -->
+                                    <Grid RowDefinitions="Auto,Auto,Auto" Padding="0,6">
                                         <Label Text="{Binding Name}" VerticalOptions="Center" />
-                                        <Label Grid.Column="1" Text="{Binding DeltaText}" TextColor="{Binding DeltaColor}" FontAttributes="Bold" VerticalOptions="Center" />
-                                        <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Detail}" Style="{StaticResource Secondary}" FontSize="12" />
-                                        <Button Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="-4,-6" Style="{StaticResource OverlayButton}" CornerRadius="8"
+                                        <Label Grid.Row="1" Text="{Binding DeltaText}" TextColor="{Binding DeltaColor}" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="End" LineBreakMode="WordWrap" />
+                                        <Label Grid.Row="2" Text="{Binding Detail}" Style="{StaticResource Secondary}" FontSize="12" />
+                                        <Button Grid.RowSpan="3" Margin="-4,-6" Style="{StaticResource OverlayButton}" CornerRadius="8"
                                                 Command="{Binding OpenChangeCommand, Source={RelativeSource AncestorType={x:Type local:ReportsViewModel}}, x:DataType=local:ReportsViewModel}"
                                                 CommandParameter="{Binding .}" SemanticProperties.Description="{Binding Name}" SemanticProperties.Hint="{Binding DeltaText}" />
                                     </Grid>
