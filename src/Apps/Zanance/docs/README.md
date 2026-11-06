@@ -1,5 +1,25 @@
 # Zanance – design documentation
 
+## D-910 - Current negative-goal ARM64 and Main adoption (2026-11-06)
+
+Only D909's missing12case ARM64 condition executes once: actual Samsung36/ARM64/
+4096/.NET10.0.14 PID20621/UID10433 passes12 with bound ordered catalogue. Strict
+SDK27AOT37ELF138LOAD/offline/nondebug/min36-v3/ZIP passes; three actual compiler
+source checks bind current Core in SDK/existing shipping and test in SDK, not
+wholePE. Initial checker array/path errors are retained/corrected without another
+build/case run.0new product tests; no host/x64/old76/AppData/financial/auth/photo
+replay. FreshUID retires and Main17183/public state returns exact. Complete extra
+locale/keypresence/rotation/timezone baseline begins before SDK install. Existing
+full37518cfa is adopted once without reset to Main22204/UID10380/CE155299/DE154603;
+first Ready Home979/102landscape all raw nodes/order, grants/other packages/OS and
+extra state exact. No secondframe/Reload/relaunch/orientation rescue or private
+MainDB/key claim. TwoXML75732byte hashclean; one scopedSDKClean179files38651879
+logicalbytes, four compiler files/used APKs/output retained; no supplemental/frozen/
+emulator action. D908soleCIcancelled/CodeQLsuccess consumed, never secondGET.
+Originalfault/D838pending/D841undeployed/wholeperformance/security/platform/provider/
+release gates and overall goal stay open.
+[Current negative-goal ARM64/Main](quality/negative-goal-arm64-main.md).
+
 ## D-909 - Negative balance goal overshoot (2026-11-06)
 
 GoalProgress compares before subtracting so supported negative balances cannot

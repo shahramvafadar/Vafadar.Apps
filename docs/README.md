@@ -1,6 +1,14 @@
 # Documentation
 
-[Current ARM64/Main D907](../src/Apps/Zanance/docs/quality/current-completed-read-arm64-main.md):
+[Current negative-goal ARM64/Main D910](../src/Apps/Zanance/docs/quality/negative-goal-arm64-main.md):
+D910 qualifies only the12 current D909 goal-overshoot outcomes once on physical
+ARM64 and adopts the existing complete37518cfa without reset as Main22204. First
+Ready landscape102raw Home nodes, public packages/grants/OS and extra locale state
+match. These are12new platform observations and zero new tests. Private Main DB/key
+equality, original fault repair and whole performance/security/platform/provider/
+release remain unaccepted. Earlier evidence keeps its original date and scope.
+
+[Earlier ARM64/Main D907](../src/Apps/Zanance/docs/quality/current-completed-read-arm64-main.md):
 D907 qualifies the current27 history/49 completed-net Core outcomes once on physical
 ARM64 and adopts existing complete16b7b889 without reset as Main17183. First Ready
 landscape102raw Home nodes/public package/grants/OS and extra locale state match.

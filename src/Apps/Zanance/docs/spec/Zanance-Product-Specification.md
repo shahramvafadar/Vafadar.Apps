@@ -1226,12 +1226,14 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-907)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-06, D-910)
 
-The latest bounded physical condition is recorded in [D907](../quality/current-completed-read-arm64-main.md):
-76 current Core outcomes and one preserving Main16b7b889/17183 adoption. The current
-source corrections include [earliest complete history](../quality/earliest-complete-financial-history.md)
-and [completed currency/comparison nets](../quality/completed-ledger-and-snapshot-nets.md).
+The latest bounded physical condition is recorded in [D910](../quality/negative-goal-arm64-main.md):
+12 current D909 goal-overshoot outcomes and one preserving Main37518cfa/22204 adoption.
+D907's earlier76 outcomes remain accepted without replay. Current source corrections
+include [negative goal overshoot](../quality/negative-goal-overshoot.md),
+[earliest complete history](../quality/earliest-complete-financial-history.md) and
+[completed currency/comparison nets](../quality/completed-ledger-and-snapshot-nets.md).
 This updates implementation evidence only; original requirements and the remaining
 security/stability/performance/platform/provider/release gates below are unchanged.
 
@@ -1244,7 +1246,7 @@ new-PC R13 interpretation is proposed only; old terminal evidence and broader ga
 
 Diagnostic-only frontier: [D841 SDK memory bridge](../quality/sdk-word-category-memory-boundary.md) retains12+2 versioned fake cases and preserves original8MiB bounds; actual D838 interpretation is not authorized or executed. This adds no product unit-test count or native-fault acceptance.
 
-Latest ARM64/Main checkpoint: [D864](../quality/current-quantity-wealth-arm64-main.md) qualifies current8wealth+20quantity cases in a new SDK-only ARM64 caller and adopts already-qualified fulla214 once without reset as Main15014. First Loading51 comparison is disqualified; same-process Ready141raw/public/OS/locale-reverse match. No new permanent test count, old53-case/financial replay or private Main/general-gate acceptance.
+Historical scoped ARM64/Main checkpoint: [D864](../quality/current-quantity-wealth-arm64-main.md) qualifies current8wealth+20quantity cases in a new SDK-only ARM64 caller and adopts already-qualified fulla214 once without reset as Main15014. First Loading51 comparison is disqualified; same-process Ready141raw/public/OS/locale-reverse match. No new permanent test count, old53-case/financial replay or private Main/general-gate acceptance.
 
 Latest quantity correction: [D863](../quality/quantity-raw-and-mass-boundaries.md) validates normalized original digits and widens scaled mass/purity products without changing final range/truncation policy.20new host cases in18+2lineage/14related and20 original Android calculations pass with source20/A/E/S0 exact. Fulla214b104 is prepared, not Main; wider gates remain separate.
 
