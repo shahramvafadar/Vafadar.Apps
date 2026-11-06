@@ -14674,3 +14674,27 @@ candidate remains rejected before native/product; no selective rescue. D838pendi
 D841undeployed and originalfault/wholeperformance/security/platform/provider/release
 gates remain separate; goal stays active. Main27699/Q0215609 are dated observations.
 See [original public identity and limits](quality/original-corelib-aot-identity.md).
+
+
+## D-901 - Completed usable essential-coverage balance (2026-11-06)
+
+D901 fixes four reproduced K07 usable-balance prefix overflows with checked Int128
+accumulation and one final checked long conversion. Individual account balances,
+currency/archive/payment scope, costs, rounding and actual final-net refusal stay
+unchanged. Fifteen new host/x64/ARM64 cases and two affected host cases pass, not
+45 new tests or a full suite. Strict Windows/full offline384AOT/408ELF/1608LOAD and
+private192/204/804 pass; five actual compiler source bindings match. Native16269
+passes15 once; initial page preparation then reports ArgumentNullException after
+the new3account/one manual plan/ledger0 source committed. Keep that unlocalized
+failure. One necessary no-reset helper continuation16520/sameUID10264 readonly-
+adopts exact20component source, never repeats cases/setup, and original ReportsPage
+Goals publishes full min-balance/0.01EUR/0.0months captions with visible native bounds/
+ellipsis0. ARM64 SDK-only31694/10429 passes15 once and retires; Main27699/public
+returns exact, then one full788feb20 no-reset Main upgrade to1345 preserves UID/CE/DE/
+grants/OS and first Ready Home979/102landscape raw nodes/order exactly. Fresh review/
+three bound XML retire; retained Q0215609 returns normally in same PID. Five scoped
+Cleans, no supplemental/frozen/auth/photo/financial UI Save/old-success replay.
+D899oneCI consumed cancelled/CodeQLsuccess; D900oneCI consumed in_progress/CodeQL
+success at its response, never secondGET. Originalfault/D838pending/D841undeployed/
+wholeperformance/security/platform/provider/release gates and goal remain active.
+See [actual defect, execution lineage and Main adoption](quality/completed-essential-coverage-balance.md).

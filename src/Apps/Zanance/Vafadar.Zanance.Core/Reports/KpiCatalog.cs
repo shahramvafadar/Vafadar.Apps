@@ -488,7 +488,10 @@ public static class KpiCatalog
         var nonMonthly = PlanActions.InForce(schedules).Where(s => s.Kind == EntryKind.Expense && Essential(s.CategoryId) && BudgetPlanning.MonthlyEquivalent(s) is not null).ToList();
         var nonMonthlyIds = nonMonthly.Select(s => s.Id).ToHashSet();
         var usable = accountList.Where(a => !a.IsArchived && a.UsableForPayments && string.Equals(a.CurrencyCode, currencyCode, StringComparison.OrdinalIgnoreCase)).ToList();
-        var usableMoney = usable.Sum(a => LedgerCalculator.Balance(a, entries, today));
+        // Independent account balances can offset an unsupported prefix; only the completed K07 net is money (D-901).
+        Int128 usableNet = 0;
+        foreach (var account in usable) usableNet = checked(usableNet + LedgerCalculator.Balance(account, entries, today));
+        var usableMoney = checked((long)usableNet);
         var scope = accountList.Where(a => a.IncludeInTotals && string.Equals(a.CurrencyCode, currencyCode, StringComparison.OrdinalIgnoreCase)).Select(a => a.Id).ToList();
 
         var months = new List<long>();
