@@ -4,10 +4,10 @@ namespace Vafadar.Zanance.App.Features.Plans;
 public sealed partial class SettlementViewModel : IQueryAttributable
 {
     /// <inheritdoc />
-    public async void ApplyQueryAttributes(IDictionary<string, object> query) => await Presentation.Failures.GuardAsync(async () =>
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
         if (!query.TryGetValue("id", out var value) || value is not Guid id) return;
-        query.Clear(); await LoadAsync(id);
-    });
+        SetOriginalQuery(id); query.Clear();
+    }
 }

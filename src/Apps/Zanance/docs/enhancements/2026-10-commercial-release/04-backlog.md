@@ -1,5 +1,34 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-938 - Original settlement source/owner batch (2026-11-07)
+
+Seven actual failures in correction lineage: late read after Cancel, replacement-file
+Retry, validation reentry accepting a changed fictitious draft, and retained account/
+currency retargets, Busy draft replacement and a retired Busy owner opening consent.
+Complete plan/account/history worker snapshot, mutation/access/
+file/original-plan and same-writer checks, attempted-draft capture and actual page/
+root/modal/consent retirement correct the original paths.21new logical host outcomes
+pass in lineage, not a full suite or21onfinaltestbinary. The new validation baseline
+proves HasCommitted=true without its exact delta; a distinct Busy baseline records
+123/222minor entries. Neither counterexample is replayed. Final Busy guards are
+host-qualified after native retirement; native lineage is not final-binary coverage.
+A distinct new bound GBP bill preserves its accepted receipt after notification
+failure and exactly retains old inputs. Its first date oracle incorrectly expected
+period end; the original injected-today policy corrects only that failed new probe
+in a fresh disposable fixture. No second Save occurs within the accepted fixture.
+Six original native contexts4857/5748/6320 share UID10216/boot and exact complete20
+base source via two preserving upgrades/read-only adoption. One raw input advance
+remains; native money acceptance0. Two deliberate metadata target deltas are checked
+separately and restored exactly. Invalid precision/transparent semantic-button/helper
+compile/DateTime-observer refusals remain; successful cases are not replayed.
+Original root/OS restore,10XML156111bytes hash-bound and fresh package/officialAVD
+24files4679873809logicalbytes retire. Existing ADB50972/creation matches by UTC ticks;
+phone/retainedfault/frozen/external output roots remain untouched. Final strict builds/
+standard Cleans and used signed/compiler evidence are recorded. D937sole4CIworkflows
+completed-success consumed. Physical ARM64/UI, broader fault/ANR/performance/security/
+A11Y/platform/provider/release gates and overall delivery goal remain open.
+[Original settlement source and ownership](../../quality/original-settlement-source-ownership.md).
+
 ## D-937 - Original occurrence source/owner batch (2026-11-07)
 
 Two actual host failures combine a replacement source or accept Skip in it. One

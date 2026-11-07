@@ -3,7 +3,11 @@ namespace Vafadar.Zanance.App.Features.Plans;
 public partial class SettlementPage : ContentPage
 {
     private readonly SettlementViewModel _viewModel;
+    private AppShell? _ownerShell;
+    private bool _shellRetired;
     private bool _observingValidation;
+    /// <summary>Gets the actual original appearance read so native callers never replay it for observation.</summary>
+    internal Task PendingPublication { get; private set; } = Task.CompletedTask;
     private int _validationVersion;
 
     public SettlementPage(SettlementViewModel viewModel)
@@ -13,17 +17,34 @@ public partial class SettlementPage : ContentPage
     }
 
     /// <summary>Observes validation only while this form is presented.</summary>
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
+        if (_shellRetired) return;
+        if (Shell.Current is AppShell shell)
+        {
+            if (_ownerShell is not null && !ReferenceEquals(_ownerShell, shell)) { RetireShellPublication(); return; }
+            _ownerShell = shell; shell.RegisterSettlement(this);
+        }
+        var window = Window; var root = window?.Page;
+        // D-938: the original bill may itself be modal, but a different top modal covers its authority.
+        _viewModel.SetActive(true, () => !_shellRetired && window is not null && root is not null && ReferenceEquals(Window, window)
+            && ReferenceEquals(window.Page, root) && (root.Navigation.ModalStack.LastOrDefault() is { } modal
+                ? ReferenceEquals(modal, this) : root is AppShell owner ? ReferenceEquals(owner.CurrentPage, this) : ReferenceEquals(root, this)));
         _observingValidation = true;
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
+        PendingPublication = _viewModel.RefreshForNavigationAsync();
+        await Presentation.Failures.GuardAsync(() => PendingPublication);
     }
 
-    /// <summary>Stops scroll requests when this form leaves the visible navigation lifetime.</summary>
+    /// <summary>Permanently retires original bill reads, native discard and pending writer authority after root replacement.</summary>
+    internal void RetireShellPublication() { _shellRetired = true; _viewModel.SetActive(false); }
+
+    /// <summary>Stops original read/command and scroll work when this form leaves the visible navigation lifetime.</summary>
     protected override void OnDisappearing()
     {
+        _viewModel.SetActive(false);
         _viewModel.ValidationFailed -= OnValidationFailed;
         _observingValidation = false;
         _validationVersion++;

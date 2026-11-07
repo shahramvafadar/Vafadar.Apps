@@ -1235,7 +1235,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
     /// <summary>Recomputes an owned advance bill under the same writer that saves its correction entries.</summary>
     public async Task<SaveResult> SaveAdvanceSettlementAsync(Schedule reviewedPlan, DateOnly from, DateOnly to,
         SettlementResult reviewed, string title, CancellationToken cancellationToken = default,
-        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null, AdvanceSettlementDraft? original = null)
     {
         ArgumentNullException.ThrowIfNull(reviewedPlan);
         ArgumentNullException.ThrowIfNull(reviewed);
@@ -1247,7 +1247,7 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         var access = new CommercialFileAccess(commercialAccess, path);
         void ValidateReview()
         {
-            access.EnsureSnapshotCurrent();
+            access.EnsureSnapshotCurrent(); original?.RequireOriginal(reviewedPlan, db);
             if (isCurrent?.Invoke() == false) throw new InvalidOperationException("The advance-bill draft changed before commit.");
         }
         ValidateReview();
@@ -1255,9 +1255,12 @@ public sealed partial class ZananceStore(IDbContextFactory<ZananceDbContext> con
         write.DemandFeature(CommercialFeature.Corrections);
         var plan = await db.Schedules.AsNoTracking().SingleAsync(p => p.Id == reviewedPlan.Id, cancellationToken);
         if (plan.Kind != EntryKind.Expense) throw new InvalidOperationException("Only an expense plan has advance bills.");
-        if (expectedCurrency is not null && await db.Accounts.Where(a => a.Id == plan.AccountId).Select(a => a.CurrencyCode).SingleAsync(cancellationToken) != expectedCurrency)
+        var account = original is not null ? await db.Accounts.AsNoTracking().SingleAsync(a => a.Id == plan.AccountId, cancellationToken) : null;
+        if (expectedCurrency is not null && (account?.CurrencyCode ?? await db.Accounts.Where(a => a.Id == plan.AccountId)
+                .Select(a => a.CurrencyCode).SingleAsync(cancellationToken)) != expectedCurrency)
             throw new InvalidOperationException("The reviewed bill currency changed.");
         var history = await db.Entries.AsNoTracking().ToListAsync(cancellationToken);
+        if (original is not null) { original.Validate(plan, account!, history.OrderBy(e => e.Id).ToList()); ValidateReview(); }
         var result = AdvanceSettlement.Compute(plan, history, from, to, reviewed.Actual);
         // A reviewed bill must not silently acquire changed amounts, refund links or a different account.
         if (System.Text.Json.JsonSerializer.Serialize(plan) != System.Text.Json.JsonSerializer.Serialize(reviewedPlan)

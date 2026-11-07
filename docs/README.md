@@ -1,5 +1,10 @@
 # Documentation
 
+[Original settlement ownership D938](../src/Apps/Zanance/docs/quality/original-settlement-source-ownership.md)
+records original read/cancel/reentrant/retarget failures, complete bill source and
+writer ownership,21new host outcomes and six original native contexts in lineage.
+Raw drafts/source restoration and scoped retirement do not close broader delivery gates.
+
 [Original occurrence ownership D937](../src/Apps/Zanance/docs/quality/original-occurrence-source-ownership.md)
 records coherent actual-file snapshots, original writer/consent lifetime guards,
 raw drafts/accepted receipts and a real retained-page modal failure/correction.

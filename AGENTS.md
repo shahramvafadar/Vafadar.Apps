@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-938 - Original bill source, draft and page ownership (2026-11-07)
+
+Original advance-bill review retains a complete plan/account/history packet from
+one configured-file worker transaction. Pin the first published account/currency
+and actual file across Retry; reject packet/source mutation or owner/draft retirement
+inside the original writer. Capture the attempted draft before validation callbacks.
+Keep raw fields and terminal accepted receipts; a delayed discard or old navigation
+cannot affect a replacement root. Bind native query loading to actual appearance,
+including ownership of the bill's own top modal and weak Shell retirement.
+Seven failures in correction lineage and21new logical host outcomes are recorded;
+one new fictitious host counterexample reaches the accepted flag, not a replay of
+old financial qualification. Six distinct original native contexts pass across
+three stages/two no-reset upgrades with read-only adoption, not all on final binary.
+Original complete20typed source restores after two declared temporary metadata
+changes; native accepted money0. Root/OS restore and fresh-only retirement preserve
+used packages/evidence, existing ADB and frozen/phone/retainedfault boundaries.
+Final strict builds and scoped standard Cleans are recorded; broader gates and the
+full delivery goal remain open.
+[Evidence](src/Apps/Zanance/docs/quality/original-settlement-source-ownership.md).
+
 ## D-937 - Original occurrence source and command ownership (2026-11-07)
 
 Original occurrence review must use one complete actual-file worker transaction,

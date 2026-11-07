@@ -28,13 +28,51 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
     private string? _file;
     private long _draftVersion;
     private readonly MoneyDraftInput _actual = new();
+    private AdvanceSettlementDraft? _review;
+    private long _readRevision;
+    private bool _active = true;
+    private bool _closed;
+    private Func<bool>? _isOwnerCurrent;
+    private CancellationTokenSource _lifetime = new();
+    private DateOnly _reviewDay;
+    private (Guid Account, string Currency)? _originalTarget;
+    private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+    private bool IsOwnerCurrent => !_closed && _active && (_isOwnerCurrent?.Invoke() ?? true);
+    private string DisplayIdentity() => $"{localization.CurrentLanguage.CultureName}|{localization.CurrentCulture.Name}|{localization.CurrentCalendar}|{localization.CurrentDigits}|{localization.FormattingCultureName}";
+
+    /// <summary>Retires original read/confirmation/writer authority while retaining raw unsaved bill input.</summary>
+    public void SetActive(bool active, Func<bool>? isCurrent = null)
+    {
+        if (active && isCurrent is not null) _isOwnerCurrent = isCurrent;
+        if (_active == active || _closed) return;
+        _active = active;
+        if (!active) RetireRead();
+    }
+
+    private void RetireRead()
+    {
+        _readRevision++; _draftVersion++; _review = null; _plan = null; _entries = []; _result = null;
+        CanEdit = false; CanSave = false; Loading = new();
+        var retired = _lifetime; _lifetime = new(); retired.Cancel(); retired.Dispose();
+    }
+
+    /// <summary>Captures an original native route without beginning work before actual page appearance.</summary>
+    internal void SetOriginalQuery(Guid id)
+    {
+        if (id == Guid.Empty) throw new ArgumentException("An original bill plan is required.", nameof(id));
+        if (_id != Guid.Empty && _id != id) throw new InvalidOperationException("A retained bill form cannot target another plan.");
+        _id = id;
+    }
+
+    /// <summary>Shares the actual appearance load; an already prepared native caller does not replay its read.</summary>
+    internal Task RefreshForNavigationAsync() => Loading.IsReady && _review is not null ? Task.CompletedTask : LoadAsync(_id);
 
     /// <summary>Explains the original bill's numeric format after a display-only change.</summary>
     public string? InputFormatNote => _actual.OriginalExample(localization.CurrentCulture) is { } example
         ? translator.Format("Plan_OriginalInputFormat", example) : null;
 
     /// <summary>Gets the original coherent loading/failed/retry lifetime; no half-read form is interactive.</summary>
-    public SnapshotLoadState Loading { get; } = new();
+    [ObservableProperty] public partial SnapshotLoadState Loading { get; private set; } = new();
     /// <summary>Gets whether this exact form already committed, even if notification or navigation failed.</summary>
     [ObservableProperty, NotifyPropertyChangedFor(nameof(SaveText)), NotifyPropertyChangedFor(nameof(CancelText))]
     public partial bool HasCommitted { get; private set; }
@@ -90,23 +128,41 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
     /// <summary>Loads only this original form target, preserving drafts on explicit retry.</summary>
     public async Task LoadAsync(Guid id)
     {
-        if (HasCommitted || IsBusy) return;
-        if (_id != Guid.Empty && _id != id) throw new InvalidOperationException("A retained bill form cannot target another plan.");
-        _id = id; CanEdit = false; Error = null;
+        if (HasCommitted || IsBusy || !IsOwnerCurrent) return;
+        SetOriginalQuery(id);
+        var owner = Loading; var revision = _readRevision; var token = _lifetime.Token;
+        var day = Today; var display = DisplayIdentity();
+        bool Current() => IsOwnerCurrent && ReferenceEquals(Loading, owner) && revision == _readRevision
+            && _id == id && Today == day && DisplayIdentity() == display;
+        void RequireCurrent() { token.ThrowIfCancellationRequested(); if (!Current()) throw new OperationCanceledException("The original bill read retired.", token); }
+        CanEdit = false; CanSave = false; Error = null;
         try
         {
-            await Loading.RunAsync(async () =>
+            await owner.RunAsync(async () =>
             {
-                var draft = await Task.Run(() => store.ReadAdvanceSettlementDraftAsync(id));
-                _plan = draft.Plan; _entries = draft.Entries; _file = draft.DatabasePath; _currency = draft.Account.CurrencyCode;
+                RequireCurrent(); _review = null; _plan = null; _entries = []; _result = null;
+                var draft = await store.ReadAdvanceSettlementDraftAsync(id, token, path =>
+                { RequireCurrent(); _file ??= path; return path == _file; });
+                RequireCurrent(); await store.ValidateAdvanceSettlementDraftAsync(draft, token); RequireCurrent(); draft.EnsureAccessCurrent();
+                var target = (draft.Plan.AccountId, draft.Account.CurrencyCode);
+                if (_originalTarget is { } originalTarget && originalTarget != target)
+                    throw new InvalidOperationException("The original bill account or currency changed; close and review it again.");
+                _plan = draft.Plan; _entries = draft.Entries; _currency = draft.Account.CurrencyCode;
                 if (string.IsNullOrWhiteSpace(ActualText)) _actual.Initialize(ActualText, _currency, localization.CurrentCulture);
-                PlanName = _plan.Name;
-                Update(); _snapshot ??= Snapshot();
-            }, () => { });
+                PlanName = _plan.Name; RequireCurrent(); draft.EnsureAccessCurrent();
+                Update(RequireCurrent); RequireCurrent(); draft.EnsureAccessCurrent(); _snapshot ??= Snapshot();
+                _reviewDay = day; _originalTarget ??= target; _review = draft;
+            }, RequireCurrent);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { Error = CommercialFailureMessage.OrFallback(exception, translator, "Settlement_ReadFailed", draftKept: true); }
-        finally { RefreshInteraction(); }
+        {
+            if (Current())
+            {
+                _review = null; CanSave = false;
+                Error = CommercialFailureMessage.OrFallback(exception, translator, "Settlement_ReadFailed", draftKept: true);
+            }
+        }
+        finally { if (Current()) RefreshInteraction(); }
     }
 
     /// <summary>Retries only the original failed/read target; accepted bills are never reloaded as new drafts.</summary>
@@ -115,7 +171,7 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
 
     Task IThemeAware.RefreshThemeAsync()
     {
-        if (Loading.IsReady) Update();
+        if (IsOwnerCurrent && Loading.IsReady) Update();
         OnPropertyChanged(nameof(SaveText)); OnPropertyChanged(nameof(CancelText));
         if (HasCommitted) SaveFeedback = translator["Settlement_Recorded"];
         return Task.CompletedTask;
@@ -131,8 +187,10 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
         _draftVersion++; Update();
     }
 
-    private void Update()
+    private void Update(Action? requireCurrent = null)
     {
+        void Publish(Action action) { requireCurrent?.Invoke(); action(); requireCurrent?.Invoke(); }
+        requireCurrent?.Invoke();
         if (HasCommitted) { CanSave = false; return; }
         if (_plan is null || From == default || To == default)
         {
@@ -140,85 +198,101 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
         }
 
         var culture = localization.CurrentCulture;
-        UnitNote = DisplayUnitNote.ForInput(translator, _actual, _currency);
-        OnPropertyChanged(nameof(InputFormatNote));
+        Publish(() => UnitNote = DisplayUnitNote.ForInput(translator, _actual, _currency));
+        Publish(() => OnPropertyChanged(nameof(InputFormatNote)));
         var validation = SettlementDraftValidation.Validate(From, To, ActualText, _currency, culture, _actual.Context);
-        Error = null;
-        AmountError = validation.AmountErrorKey is { } amountKey && (_validationRequested || !string.IsNullOrWhiteSpace(ActualText))
-            ? translator[amountKey] : null;
-        if (_actual.NeedsReview(_currency)) AmountError = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(_currency));
-        PeriodError = validation.PeriodErrorKey is { } periodKey ? translator[periodKey] : null;
+        Publish(() => Error = null);
+        Publish(() => AmountError = validation.AmountErrorKey is { } amountKey && (_validationRequested || !string.IsNullOrWhiteSpace(ActualText))
+            ? translator[amountKey] : null);
+        if (_actual.NeedsReview(_currency)) Publish(() => AmountError = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(_currency)));
+        Publish(() => PeriodError = validation.PeriodErrorKey is { } periodKey ? translator[periodKey] : null);
         // D-102: an inverted period must not look like a legitimate period with no payments.
         _result = validation.PeriodErrorKey is null ? AdvanceSettlement.Compute(_plan, _entries, From, To, validation.Actual ?? 0) : null;
         if (_result is null)
         {
-            AdvancesText = null;
-            ResultText = null;
-            CanSave = false;
+            Publish(() => AdvancesText = null);
+            Publish(() => ResultText = null);
+            Publish(() => CanSave = false);
             return;
         }
 
-        AdvancesText = translator.Format("Settlement_Advances", _result.Advances.Count, MoneyText.Format(_result.Paid, _currency, culture));
-        if (_result.Advances.Count == 0) { PeriodError = translator["Settlement_NoAdvances"]; }
+        Publish(() => AdvancesText = translator.Format("Settlement_Advances", _result.Advances.Count, MoneyText.Format(_result.Paid, _currency, culture)));
+        if (_result.Advances.Count == 0) { Publish(() => PeriodError = translator["Settlement_NoAdvances"]); }
         if (validation.Actual is null || PeriodError is not null)
         {
-            ResultText = null;
-            CanSave = false;
+            Publish(() => ResultText = null);
+            Publish(() => CanSave = false);
             return;
         }
 
-        ResultText = _result.Difference switch
+        Publish(() => ResultText = _result.Difference switch
         {
             > 0 => translator.Format("Settlement_Extra", MoneyText.Format(_result.Difference, _currency, culture)),
             < 0 => translator.Format("Settlement_Back", MoneyText.Format(-_result.Difference, _currency, culture)),
             _ => translator["Settlement_Even"],
-        };
-        CanSave = _result.Difference != 0 && _result.Advances.Count > 0 && (_result.Difference > 0 || -_result.Difference <= _result.Paid);
+        });
+        Publish(() => CanSave = _result.Difference != 0 && _result.Advances.Count > 0 && (_result.Difference > 0 || -_result.Difference <= _result.Paid));
     }
 
     [RelayCommand]
     private async Task SaveAsync()
     {
-        if (IsBusy) return;
+        if (IsBusy || !IsOwnerCurrent) return;
         if (HasCommitted) { await LeaveCommittedAsync(); return; }
-        if (!Loading.IsReady || _plan is null || _file is null) return;
+        if (!Loading.IsReady || _plan is null || _file is null || _review is not { } source) return;
+        var attemptedVersion = _draftVersion; var attemptedRead = _readRevision; var attemptedDisplay = DisplayIdentity();
         _validationRequested = true; Update();
+        if (!IsOwnerCurrent || attemptedVersion != _draftVersion || attemptedRead != _readRevision || attemptedDisplay != DisplayIdentity() || !ReferenceEquals(_review, source)) return;
         if (_result is null || !CanSave) { ValidationFailed?.Invoke(this, EventArgs.Empty); return; }
+        // D-938: disabling the form can publish synchronous input/owner callbacks too.
+        // Keep the attempted values from before those callbacks, never a newly edited bill.
+        var version = attemptedVersion; var read = attemptedRead; var display = attemptedDisplay;
+        var plan = _plan; var result = _result; var from = From; var to = To;
+        var file = source.DatabasePath; var currency = source.Account.CurrencyCode;
+        bool Current() => IsOwnerCurrent && Loading.IsReady && read == _readRevision && version == _draftVersion && ReferenceEquals(_review, source)
+            && _reviewDay == Today && display == DisplayIdentity() && !HasCommitted && !_actual.NeedsReview(currency);
         IsBusy = true; RefreshInteraction(); Error = null;
-        var version = _draftVersion; var plan = _plan; var result = _result; var from = From; var to = To;
         try
         {
+            if (!Current()) return;
             var title = translator.Format(result.Difference > 0 ? "Settlement_ExtraTitle" : "Settlement_BackTitle", plan.Name);
             SaveResult saved; var notificationFailed = false;
             try
             {
                 saved = await store.SaveAdvanceSettlementAsync(plan, from, to, result, title,
-                    expectedPath: _file, expectedCurrency: _currency,
-                    isCurrent: () => version == _draftVersion && !HasCommitted && !_actual.NeedsReview(_currency));
+                    expectedPath: file, expectedCurrency: currency,
+                    isCurrent: Current, original: source);
             }
             catch (CommittedWriteNotificationException<SaveResult> accepted)
             { saved = accepted.Result; notificationFailed = true; }
             if (!saved.Succeeded)
-            { Error = string.Join(Environment.NewLine, saved.Errors.Distinct().Select(e => translator[$"LedgerError_{e}"])); return; }
+            { if (IsOwnerCurrent) Error = string.Join(Environment.NewLine, saved.Errors.Distinct().Select(e => translator[$"LedgerError_{e}"])); return; }
 
             // Acceptance retires this form before any notification/error display or native navigation can fail.
-            HasCommitted = true; CanSave = false; _snapshot = Snapshot(); SaveFeedback = translator["Settlement_Recorded"];
+            HasCommitted = true; _review = null; CanSave = false; _snapshot = Snapshot(); SaveFeedback = translator["Settlement_Recorded"];
             RefreshInteraction();
+            if (!IsOwnerCurrent) return;
             if (notificationFailed) { Error = translator["Settlement_RecordedFollowUpFailed"]; return; }
             await ReturnAfterCommitAsync();
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { Error = HasCommitted ? translator["Settlement_RecordedFollowUpFailed"]
-            : CommercialFailureMessage.OrFallback(exception, translator, "Common_SaveFailed", draftKept: true); }
+        {
+            if (IsOwnerCurrent)
+            {
+                if (!HasCommitted) { _review = null; CanSave = false; if (Loading.IsReady) Loading.CoverFailedPresentation(); }
+                Error = HasCommitted ? translator["Settlement_RecordedFollowUpFailed"]
+                    : CommercialFailureMessage.OrFallback(exception, translator, "Common_SaveFailed", draftKept: true);
+            }
+        }
         finally { IsBusy = false; RefreshInteraction(); }
     }
 
-    private void RefreshInteraction() => CanEdit = Loading.IsReady && !IsBusy && !HasCommitted;
+    private void RefreshInteraction() => CanEdit = IsOwnerCurrent && Loading.IsReady && !IsBusy && !HasCommitted && _review is not null;
 
     /// <summary>Retries only returning from an already accepted form, keeping the execution guard across native effects.</summary>
     private async Task LeaveCommittedAsync()
     {
-        if (IsBusy) return;
+        if (IsBusy || !IsOwnerCurrent) return;
         IsBusy = true; RefreshInteraction();
         try { await ReturnAfterCommitAsync(); }
         finally { IsBusy = false; RefreshInteraction(); }
@@ -226,21 +300,38 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
 
     private async Task ReturnAfterCommitAsync()
     {
+        if (!IsOwnerCurrent) return;
         try { await interaction.NavigateAsync(".."); }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { Error = translator["Editor_SavedReturnFailed"]; }
+        { if (IsOwnerCurrent) Error = translator["Editor_SavedReturnFailed"]; }
     }
 
     [RelayCommand]
     private async Task CancelAsync()
     {
-        if (IsBusy) return;
+        if (IsBusy || !IsOwnerCurrent) return;
         if (HasCommitted) { await LeaveCommittedAsync(); return; }
+        var revision = _readRevision; var draft = _draftVersion;
         IsBusy = true; RefreshInteraction();
         try
         {
-            if (!IsDirty || await interaction.ConfirmAsync(translator["Common_DiscardTitle"], translator["Common_DiscardMessage"],
-                translator["Common_Discard"], translator["Common_KeepEditing"])) await interaction.NavigateAsync("..");
+            if (!IsOwnerCurrent || revision != _readRevision || draft != _draftVersion) return;
+            var discard = !IsDirty || await interaction.ConfirmAsync(translator["Common_DiscardTitle"], translator["Common_DiscardMessage"],
+                translator["Common_Discard"], translator["Common_KeepEditing"]);
+            if (!discard || !IsOwnerCurrent || revision != _readRevision || draft != _draftVersion) return;
+            // D-938: end the old read before fallible navigation, so it cannot reactivate a departed form.
+            RetireRead(); _closed = true;
+            try { await interaction.NavigateAsync(".."); }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                if (_active && (_isOwnerCurrent?.Invoke() ?? true))
+                {
+                    _closed = false;
+                    try { await Loading.RunAsync(() => Task.FromException(exception), () => { }); }
+                    catch (Exception failure) when (failure is not OutOfMemoryException)
+                    { Error = CommercialFailureMessage.OrFallback(failure, translator, "Settlement_ReadFailed", draftKept: true); }
+                }
+            }
         }
         finally { IsBusy = false; RefreshInteraction(); }
     }

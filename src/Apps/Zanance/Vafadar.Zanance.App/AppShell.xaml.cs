@@ -23,6 +23,7 @@ public partial class AppShell : Shell
     private readonly Presentation.WeakPublicationSet<ReimbursementsPage> _publishedReimbursements = new();
     private readonly Presentation.WeakPublicationSet<PlanDetailPage> _publishedPlanDetails = new();
     private readonly Presentation.WeakPublicationSet<OccurrencePage> _publishedOccurrences = new();
+    private readonly Presentation.WeakPublicationSet<SettlementPage> _publishedSettlements = new();
     private readonly Presentation.WeakPublicationSet<PlansPage> _publishedPlanCenters = new();
     private readonly Presentation.WeakPublicationSet<Features.Templates.TemplatesPage> _publishedTemplateCenters = new();
     private readonly Presentation.WeakPublicationSet<TransactionsPage> _publishedTransactionCenters = new();
@@ -297,6 +298,12 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedOccurrences.Add(page);
+    }
+    /// <summary>Registers weak original bill forms so root retirement cancels source and native continuation authority.</summary>
+    internal void RegisterSettlement(SettlementPage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedSettlements.Add(page);
     }
     /// <summary>Registers the original plan-center root so retained source and native continuations retire together.</summary>
     internal void RegisterPlanCenter(PlansPage page)
@@ -826,6 +833,8 @@ public partial class AppShell : Shell
         _publishedPlanDetails.Clear();
         foreach (var occurrence in _publishedOccurrences) occurrence.RetireShellPublication();
         _publishedOccurrences.Clear();
+        foreach (var settlement in _publishedSettlements) settlement.RetireShellPublication();
+        _publishedSettlements.Clear();
         foreach (var planCenter in _publishedPlanCenters) planCenter.RetireShellPublication();
         _publishedPlanCenters.Clear();
         foreach (var templates in _publishedTemplateCenters) templates.RetireShellPublication();

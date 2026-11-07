@@ -102,6 +102,11 @@ controls.
 
 ## Current delivery status
 
+[Original settlement ownership D938](src/Apps/Zanance/docs/quality/original-settlement-source-ownership.md)
+binds complete bill inputs, writes and retained drafts to their original file/account/currency and page/root lifetime.
+Twenty-one new selected host outcomes and six original x64 native contexts pass in recorded binary lineage;
+final strict builds are prepared, while physical adoption and broader delivery gates remain open.
+
 [D924](src/Apps/Zanance/docs/quality/loan-calendar-horizon.md) corrects original loan calendar-end failures across
 Core, the reviewed next-month reader and both page summaries.21new/3affected host cases, four original x64 page
 contexts and [D925's14actual ARM64 outcomes](src/Apps/Zanance/docs/quality/loan-calendar-arm64.md) pass without
