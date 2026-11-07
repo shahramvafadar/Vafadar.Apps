@@ -1,5 +1,15 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-927 - Original loan calendar large-text cohort completed (2026-11-07)
+
+Existing72 distinct x64 native contexts cover both original pages, six languages,
+two themes and actual360/412/680dp at OSfont2. Complete native caption/bounds,
+ellipsis0 and full20source equality are preserved; saved receipts and six current
+source bindings are admitted without successful-case or financial replay.
+Original settings/root/source restore and freshUID/officialAVD retirement completed
+during cleanup; six rejected residual paths stay frozen. Physical large-text,
+originalfault/ANR/wholeperformance and broader gates remain separate; goal resumed.
+[Accepted scope and terminal restoration](../../quality/loan-calendar-large-text.md).
 ## D-926 - Current loan calendar Main adoption completed (2026-11-06)
 
 One existing fullf2c1835f no-reset upgrade adopts D924 as Main23978/UID10380/

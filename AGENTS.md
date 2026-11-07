@@ -1,5 +1,14 @@
 # AGENTS.md – working rules for this repository
 
+## Development resumed by owner (2026-11-07)
+
+The owner explicitly resumes the full delivery goal after cleanup. Continue ready
+independent development and qualification without waiting for CI or repeating accepted
+tests, diagnostics or financial operations. The earlier cleanup-only pause is historical;
+all output-location, frozen-scope and retained-cohort preservation rules remain active.
+D927's72 accepted contexts and exact restoration/retirement are now recorded in
+[the qualification record](src/Apps/Zanance/docs/quality/loan-calendar-large-text.md).
+
 ## Owner-directed output cleanup and location boundary (2026-11-07)
 
 The owner requests removal of unnecessary generated data, especially the accumulated
