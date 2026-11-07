@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-940 - Original reconciliation command publication (2026-11-07)
+
+Capture original balance/date/reason and page/source ownership before fallible
+Error/Busy notifications. Recheck each result/hint/action publication and native
+consent answer; edited-and-restored reasons still need a new attempt. Preserve
+original session/writer, financial policy, raw input and accepted feedback.
+Seven new original failures and8selected host outcomes pass in7+1lineage; no
+financial acceptance/old successful suite replay. Two controlled original native
+commands4200/UID10216 preserve full20source/ledger0 and newer raw fields, with
+zero context acquisition in refused attempts. One different valid comparison
+prepares only the remaining reason boundary; these are not physical taps/timing.
+Original root/OS restore,1XML39490bytes hash-retire and freshUID/officialAVD
+24files4552013067logicalbytes retire. ExistingADB50972/phone/retainedfault/frozen
+remain;5standardCleans pass, no supplementary deletion. StrictWindows/fullOffline
+384/408/1608/private192/204/804 and actual compiler-source bindings pass; full904c545a
+prepared, not Main-installed. D938soleCIcancelled/threeotherworkflowssuccess consumed
+late once without cause/secondGET/rerun. Broader gates and delivery goal remain open.
+[Original reconciliation publication evidence](src/Apps/Zanance/docs/quality/original-reconciliation-command-publication.md).
+
 ## D-939 - Original bill calendar boundaries (2026-11-07)
 
 Five new failures expose first-year default underflow, explicit first-day periods

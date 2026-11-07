@@ -32,6 +32,8 @@ public sealed partial class AccountDetailViewModel(
     private Guid _id;
     private bool _pageActive;
     private long _readRevision;
+    private long _reconciliationDraftRevision;
+    private long _reconciliationReasonRevision;
     private CancellationTokenSource _readLifetime = new();
     private AccountDetailSnapshot? _displayed;
     private string? _originalFile;
@@ -441,6 +443,7 @@ public sealed partial class AccountDetailViewModel(
     /// <summary>Retires a previous comparison immediately when its original amount or date changes.</summary>
     partial void OnObservedTextChanged(string value)
     {
+        _reconciliationDraftRevision++;
         _reconciliation.ObservedMoney.ChangeText(value, _account?.CurrencyCode ?? Currencies.Euro.Code, localization.CurrentCulture);
         InvalidateReconciliation(); RefreshObservedMoney();
     }
@@ -470,7 +473,10 @@ public sealed partial class AccountDetailViewModel(
         UnitNote = DisplayUnitNote.ForInput(translator, _reconciliation.ObservedMoney, _account?.CurrencyCode ?? Currencies.Euro.Code);
         OnPropertyChanged(nameof(ObservedUnitName)); OnPropertyChanged(nameof(ObservedFormatNote));
     }
-    partial void OnReconcileDateChanged(DateOnly value) => InvalidateReconciliation();
+    partial void OnReconcileDateChanged(DateOnly value)
+    { _reconciliationDraftRevision++; InvalidateReconciliation(); }
+
+    partial void OnReasonChanged(string value) => _reconciliationReasonRevision++;
 
     private void InvalidateReconciliation()
     {
@@ -481,35 +487,41 @@ public sealed partial class AccountDetailViewModel(
     private async Task CompareAsync()
     {
         if (IsBusy || !_pageActive || !Loading.IsReady || _account is not { } account || _displayed is not { } snapshot) return;
-        var current = CurrentPublication(snapshot);
-        Error = null; InvalidateReconciliation();
+        var owner = CurrentPublication(snapshot); var draft = _reconciliationDraftRevision; var date = ReconcileDate;
+        bool Current() => owner() && draft == _reconciliationDraftRevision;
+        bool Publish(Action change) { if (!Current()) return false; change(); return Current(); }
+        // D-940: clearing errors, retiring results and disabling controls can synchronously edit the input.
+        // A comparison owns the draft from before those notifications, never their replacement.
+        Error = null; if (!Current()) return;
+        InvalidateReconciliation(); if (!Current()) return;
         if (_reconciliation.ObservedMoney.NeedsReview(account.CurrencyCode))
         { Error = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(account.CurrencyCode)); return; }
         IsBusy = true;
         try
         {
-            var review = await _reconciliation.CompareObservedAsync(account.Id, account.CurrencyCode, ReconcileDate, current, snapshot.DatabasePath);
-            if (review is null || !current()) return;
+            if (!Current()) return;
+            var review = await _reconciliation.CompareObservedAsync(account.Id, account.CurrencyCode, date, Current, snapshot.DatabasePath);
+            if (review is null || !Current()) return;
             var result = review.Result; var culture = localization.CurrentCulture;
-            ResultText = result.Difference == 0 ? translator["Reconcile_Match"]
+            if (!Publish(() => ResultText = result.Difference == 0 ? translator["Reconcile_Match"]
                 : translator.Format("Reconcile_Difference", MoneyText.Format(result.Recorded, review.CurrencyCode, culture),
-                    MoneyText.Format(result.Difference, review.CurrencyCode, culture, showPlus: true));
+                    MoneyText.Format(result.Difference, review.CurrencyCode, culture, showPlus: true)))) return;
             var hints = new List<string>();
             if (result.UnreviewedCount > 0) hints.Add(translator.Format("Reconcile_Unreviewed", result.UnreviewedCount));
             if (result.PossibleDuplicates > 0) hints.Add(translator.Format("Reconcile_Duplicates", result.PossibleDuplicates));
             if (result.Difference != 0) hints.Add(translator["Reconcile_Missing"]);
-            HintText = hints.Count > 0 ? string.Join(Environment.NewLine, hints) : null;
-            CanAdjust = result.Difference != 0;
+            if (!Publish(() => HintText = hints.Count > 0 ? string.Join(Environment.NewLine, hints) : null)) return;
+            if (!Publish(() => CanAdjust = result.Difference != 0)) return;
             if (result.Difference == 0)
             {
-                IncompleteText = null;
-                var date = account.LastReconciledOn is { } previous && previous > review.Date ? previous : review.Date;
-                ReconciledText = translator.Format("Account_LastReconciled", dates.Format(date, DateFormatStyle.Short));
+                if (!Publish(() => IncompleteText = null)) return;
+                var reconciledDate = account.LastReconciledOn is { } previous && previous > review.Date ? previous : review.Date;
+                Publish(() => ReconciledText = translator.Format("Account_LastReconciled", dates.Format(reconciledDate, DateFormatStyle.Short)));
             }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            if (!current()) return;
+            if (!Current()) return;
             InvalidateReconciliation();
             Error = _reconciliation.Committed ? translator["Reconcile_Done"]
                 : exception is FormatException ? translator["Amount_Invalid"]
@@ -522,8 +534,11 @@ public sealed partial class AccountDetailViewModel(
     private async Task AdjustAsync()
     {
         if (IsBusy || !_pageActive || !Loading.IsReady || _displayed is not { } snapshot) return;
-        var current = CurrentPublication(snapshot);
-        Error = null;
+        var current = CurrentPublication(snapshot); var draft = _reconciliationDraftRevision;
+        var reason = _reconciliationReasonRevision; var review = _reconciliation.Review;
+        bool AttemptCurrent() => current() && draft == _reconciliationDraftRevision
+            && reason == _reconciliationReasonRevision && ReferenceEquals(review, _reconciliation.Review);
+        Error = null; if (!AttemptCurrent()) return;
         if (_account is { } original && _reconciliation.ObservedMoney.NeedsReview(original.CurrencyCode))
         {
             InvalidateReconciliation(); Error = translator.Format("Plan_InputUnitChanged", MoneyText.UnitName(original.CurrencyCode)); return;
@@ -533,8 +548,14 @@ public sealed partial class AccountDetailViewModel(
         IsBusy = true;
         try
         {
-            var saved = await _reconciliation.AdjustAsync(() => interaction.ConfirmAsync(translator["Reconcile_Adjust"],
-                translator["Reconcile_AdjustMessage"], translator["Reconcile_Adjust"], translator["Common_Cancel"]), () => Reason);
+            if (!AttemptCurrent()) return;
+            var saved = await _reconciliation.AdjustAsync(async () =>
+            {
+                if (!AttemptCurrent()) return false;
+                var accepted = await interaction.ConfirmAsync(translator["Reconcile_Adjust"],
+                    translator["Reconcile_AdjustMessage"], translator["Reconcile_Adjust"], translator["Common_Cancel"]);
+                return accepted && AttemptCurrent();
+            }, () => Reason);
             if (!current()) return;
             if (saved is null) { CanAdjust = _reconciliation.Review is not null; return; }
             if (!saved.Succeeded)

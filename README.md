@@ -102,6 +102,10 @@ controls.
 
 ## Current delivery status
 
+[Original reconciliation publication D940](src/Apps/Zanance/docs/quality/original-reconciliation-command-publication.md)
+keeps attempted commands separate from input edited during UI callbacks. Eight new host outcomes and
+two native command refusals preserve source/ledger0; broader delivery gates stay open.
+
 [Original bill calendar D939](src/Apps/Zanance/docs/quality/original-bill-calendar-boundaries.md)
 corrects representable period/default boundaries. Nine new host outcomes in lineage and one original
 x64 native bill preserve full source without financial Save; physical and broader gates stay open.

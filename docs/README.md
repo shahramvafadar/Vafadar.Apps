@@ -1,5 +1,9 @@
 # Documentation
 
+[Original reconciliation publication D940](../src/Apps/Zanance/docs/quality/original-reconciliation-command-publication.md)
+records seven original failures, eight new host outcomes in lineage and two native
+command/callback refusals, preserving newer drafts and source with no financial acceptance.
+
 [Original bill calendar D939](../src/Apps/Zanance/docs/quality/original-bill-calendar-boundaries.md)
 records five actual failures, nine new host outcomes in lineage and one corrected
 original native period with source preservation and no financial Save replay.
