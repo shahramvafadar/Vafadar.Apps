@@ -37,6 +37,13 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
     private DateOnly _reviewDay;
     private (Guid Account, string Currency)? _originalTarget;
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
+    // D-939: preserve the inclusive trailing year; a supported editor day must not
+    // send an earlier default into DateField, whose original policy substitutes today.
+    private static DateOnly InitialPeriodStart(DateOnly today)
+    {
+        var from = today.Year == 1 ? DateOnly.MinValue : today.AddYears(-1).AddDays(1);
+        return today >= CalendarDates.MinDate && from < CalendarDates.MinDate ? CalendarDates.MinDate : from;
+    }
     private bool IsOwnerCurrent => !_closed && _active && (_isOwnerCurrent?.Invoke() ?? true);
     private string DisplayIdentity() => $"{localization.CurrentLanguage.CultureName}|{localization.CurrentCulture.Name}|{localization.CurrentCalendar}|{localization.CurrentDigits}|{localization.FormattingCultureName}";
 
@@ -93,7 +100,7 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
     public partial string? PlanName { get; set; }
 
     [ObservableProperty]
-    public partial DateOnly From { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().DateTime).AddYears(-1).AddDays(1);
+    public partial DateOnly From { get; set; } = InitialPeriodStart(DateOnly.FromDateTime(time.GetLocalNow().DateTime));
 
     [ObservableProperty]
     public partial DateOnly To { get; set; } = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
@@ -192,7 +199,7 @@ public sealed partial class SettlementViewModel(ZananceStore store, Translator t
         void Publish(Action action) { requireCurrent?.Invoke(); action(); requireCurrent?.Invoke(); }
         requireCurrent?.Invoke();
         if (HasCommitted) { CanSave = false; return; }
-        if (_plan is null || From == default || To == default)
+        if (_plan is null)
         {
             return;
         }

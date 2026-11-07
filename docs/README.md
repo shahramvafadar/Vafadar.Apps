@@ -1,5 +1,9 @@
 # Documentation
 
+[Original bill calendar D939](../src/Apps/Zanance/docs/quality/original-bill-calendar-boundaries.md)
+records five actual failures, nine new host outcomes in lineage and one corrected
+original native period with source preservation and no financial Save replay.
+
 [Original settlement ownership D938](../src/Apps/Zanance/docs/quality/original-settlement-source-ownership.md)
 records original read/cancel/reentrant/retarget failures, complete bill source and
 writer ownership,21new host outcomes and six original native contexts in lineage.

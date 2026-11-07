@@ -102,6 +102,10 @@ controls.
 
 ## Current delivery status
 
+[Original bill calendar D939](src/Apps/Zanance/docs/quality/original-bill-calendar-boundaries.md)
+corrects representable period/default boundaries. Nine new host outcomes in lineage and one original
+x64 native bill preserve full source without financial Save; physical and broader gates stay open.
+
 [Original settlement ownership D938](src/Apps/Zanance/docs/quality/original-settlement-source-ownership.md)
 binds complete bill inputs, writes and retained drafts to their original file/account/currency and page/root lifetime.
 Twenty-one new selected host outcomes and six original x64 native contexts pass in recorded binary lineage;

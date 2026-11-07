@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## D-939 - Original bill calendar boundaries (2026-11-07)
+
+Five new failures expose first-year default underflow, explicit first-day periods
+ignored as unset and a default before the supported editor minimum. Preserve the
+inclusive trailing year, clip only the supported editor default and retain actual
+nonnullable historical periods; shared DateField range and money policy stay fixed.
+Nine new host outcomes pass in4+4+1lineage, not all on one final test binary.
+One original native modal bill4303/UID10216 keeps both1900-01-01controls and preview
+1.11EUR with full20source exact/financialSave0. Bare-year XML oracle refused;
+same saved semantic text/bounds finishes the assertion without page/capture replay.
+Original root/OS restore, oneXML34024bytes hash-retire and freshUID/officialAVD
+24files4523701499logicalbytes retire; existingADB50972/retainedfault/phone/frozen
+unchanged. StrictWindows/fullOffline384/408/1608/private192/204/804 and original
+compiler bindings pass; first multi-platform Windows restore refusal stays recorded.
+Five standard Cleans pass; used signed/source/evidence remain, no supplementary
+removal. Fullc369aaab is prepared, not Main-installed. Broader gates/goal remain open.
+[Original bill calendar evidence](src/Apps/Zanance/docs/quality/original-bill-calendar-boundaries.md).
+
 ## D-938 - Original bill source, draft and page ownership (2026-11-07)
 
 Original advance-bill review retains a complete plan/account/history packet from
