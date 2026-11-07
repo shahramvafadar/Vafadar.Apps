@@ -1,5 +1,9 @@
 # Documentation
 
+[Current calendar ARM64 D935](../src/Apps/Zanance/docs/quality/current-calendar-arm64.md)
+records21distinct original memory contracts on Samsung ARM64, exact public-state
+preservation and fresh-package retirement. Original UI and broader gates remain.
+
 [Original archived category contrast D934](../src/Apps/Zanance/docs/quality/original-archived-category-contrast.md)
 records two actual enabled-row contrast passes with the existing archived treatment,
 exact source and scoped retirement. No product patch or old successful suite follows.

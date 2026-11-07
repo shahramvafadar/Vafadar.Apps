@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-935 - Remaining current calendar ARM64 outcomes accepted (2026-11-07)
+
+Twenty-one distinct D929/D930/D932 Core/localization contracts pass once on actual
+Samsung36/ARM64/4096/7053/10438. No Activity/App/Data/SQL/private Main source or owner
+authentication; original compiler/checksum and complete typed-memory input guards
+pass. Initial CS1503 and pre-first-run readiness amendment retained; no old14loan/
+72layout/host/x64/financial replay. Ready8938f0a6/31AOT41ELF154LOAD offline/v2v3/ZIP
+passes. Main23978 and public packages/OS/locale/boot/geometry exact; only freshUID
+retires, two standard Cleans pass. No product patch/full rebuild/frozen action.
+D928four actual UI contexts still await unlocked owned window; nativefault/ANR/
+wholeperformance/security/A11Y/platform/provider/release and goal remain open.
+[Current calendar ARM64](../../quality/current-calendar-arm64.md).
+
 ## D-934 - Original enabled archived row contrast passes unchanged (2026-11-07)
 
 Two actual original Category contexts pass normal16text4.780355Light/5.662671Dark

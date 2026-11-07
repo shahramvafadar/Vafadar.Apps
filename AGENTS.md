@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-935 - Current calendar ARM64 contracts accepted (2026-11-07)
+
+Only21unqualified Core/localization memory contracts execute once on Samsung36/
+ARM64/4096/PID7053/UID10438; all pass with original compiler bindings/input equality.
+Private SDK has no Activity/App/Data/MAUI/SQLCipher/auth/financial source. Unnecessary
+private unlock preparation condition removed before first deployment under existing
+D597; no Android authentication/protected-resource boundary invoked or bypassed,
+all original UID/PID/boot/model/shell/one-run guards kept. UI work stays parked while
+locked. Main23978/public packages/OS/locale/boot/geometry exact, freshUID retires,
+two standard Cleans pass. No product edit/old suite/financial/fault/frozen replay.
+D934soleCI/CodeQLsuccess consumed. Broader gates and full delivery goal remain open.
+[Evidence](src/Apps/Zanance/docs/quality/current-calendar-arm64.md).
+
 ## D-934 - Original archived-category contrast accepted unchanged (2026-11-07)
 
 Opacity0.6 is not a defect by itself: actual original enabled row normal16text passes
