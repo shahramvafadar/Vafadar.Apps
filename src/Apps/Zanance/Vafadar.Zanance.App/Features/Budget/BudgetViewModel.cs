@@ -61,6 +61,8 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     private int _month;
     private BudgetPeriod _period;
     private DateOnly _periodStart;
+    // DateOnly.MinValue is a valid saved weekly start, not an absent coordinate (D-933).
+    private bool _periodStartKnown;
     private bool _refreshing;
     private long _pageRevision;
     private bool _visible = true;
@@ -73,6 +75,11 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     public BudgetActionsViewModel Actions { get; }
     /// <summary>Gets the same covered/busy state for period navigation and original view actions.</summary>
     public bool CanNavigate => Actions.CanInteract;
+    /// <summary>Gets whether an original preceding period can be shown without leaving the supported calendar.</summary>
+    public bool CanPrevious => CanNavigate && BudgetActionsViewModel.Adjacent(CurrentVisit, -1, _startDay) is not null;
+    /// <summary>Gets whether an original following period can be shown without leaving the supported calendar.</summary>
+    public bool CanNext => CanNavigate && BudgetActionsViewModel.Adjacent(CurrentVisit, 1, _startDay) is not null;
+    private BudgetVisit CurrentVisit => new(_year, _month, _calendar, _period, _periodStart, _currency);
 
     /// <summary>Retains a validated notification destination until the actual page reload resolves its profile again.</summary>
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -99,7 +106,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         {
             if (e.PropertyName == nameof(Actions.CanInteract))
             {
-                OnPropertyChanged(nameof(CanNavigate)); PreviousCommand.NotifyCanExecuteChanged(); NextCommand.NotifyCanExecuteChanged();
+                OnPropertyChanged(nameof(CanNavigate)); OnPropertyChanged(nameof(CanPrevious)); OnPropertyChanged(nameof(CanNext)); PreviousCommand.NotifyCanExecuteChanged(); NextCommand.NotifyCanExecuteChanged();
             }
         };
         PeriodText = string.Empty;
@@ -206,7 +213,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         }
 
         _period = (BudgetPeriod)value;
-        _periodStart = default;
+        _periodStart = default; _periodStartKnown = false;
         _ = Presentation.Failures.GuardAsync(LoadAsync);
     }
 
@@ -221,7 +228,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         await Presentation.Failures.GuardAsync(async () =>
         {
             await _store.UpdateSettingsAsync(s => s.FortnightStart = value);
-            _periodStart = default;
+            _periodStart = default; _periodStartKnown = false;
             await LoadAsync();
         });
     }
@@ -245,7 +252,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         if (!_backFromEditor)
         {
             _year = 0;
-            _periodStart = default;
+            _periodStart = default; _periodStartKnown = false;
             _visitCurrency = null;
         }
 
@@ -339,7 +346,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             if (visit is not null)
             {
                 _year = visit.Year; _month = visit.Month; _calendar = visit.Calendar;
-                _period = visit.Period; _periodStart = visit.Start; _visitCurrency = visit.Currency;
+                _period = visit.Period; _periodStart = visit.Start; _periodStartKnown = visit.Period != BudgetPeriod.Month; _visitCurrency = visit.Currency;
             }
             Actions.BeginLoad();
             await LoadCoreAsync();
@@ -369,7 +376,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         {
             _calendar = original.Calendar;
             _year = original.Year; _month = original.Month;
-            _period = original.Period; _periodStart = original.PeriodStart;
+            _period = original.Period; _periodStart = original.PeriodStart; _periodStartKnown = original.Period != BudgetPeriod.Month;
             _visitCurrency = original.CurrencyCode;
         }
         var financialRead = await _store.GetBudgetReadSnapshotAsync();
@@ -447,14 +454,15 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
 
             _budget = original is null ? BudgetActionsViewModel.Find(budgets, new(_year, _month, _calendar, _period, _periodStart, _currency))
                 : budgets.SingleOrDefault(budget => budget.Id == original.Id);
-            var (py, pm) = PeriodMath.Previous(_year, _month);
-            CanCopyPrevious = _budget is null && BudgetActionsViewModel.Find(budgets, new(py, pm, _calendar, _period, _periodStart, _currency)) is not null;
+            var previous = BudgetActionsViewModel.Adjacent(CurrentVisit, -1, _startDay);
+            CanCopyPrevious = _budget is null && previous is not null && BudgetActionsViewModel.Find(budgets, previous) is not null;
         }
         else
         {
-            if (_periodStart == default)
+            if (!_periodStartKnown)
             {
                 _periodStart = BudgetPeriods.StartOf(_period, Today, _localization.FirstDayOfWeek, settings.FortnightStart);
+                _periodStartKnown = true;
             }
 
             // A budget made before the week start was changed keeps its own dates.
@@ -462,13 +470,13 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
                 : budgets.SingleOrDefault(budget => budget.Id == original.Id);
             if (_budget is not null)
             {
-                _periodStart = _budget.PeriodStart;
+                _periodStart = _budget.PeriodStart; _periodStartKnown = true;
             }
 
             (from, to) = BudgetPeriods.Range(_period, _periodStart);
             PeriodText = $"{_dates.Format(from, DateFormatStyle.Short)} – {_dates.Format(to, DateFormatStyle.Short)}";
-            CanCopyPrevious = _budget is null && BudgetActionsViewModel.Find(budgets, new(_year, _month, _calendar, _period,
-                BudgetPeriods.Step(_period, _periodStart, -1), _currency)) is not null;
+            var previous = BudgetActionsViewModel.Adjacent(CurrentVisit, -1, _startDay);
+            CanCopyPrevious = _budget is null && previous is not null && BudgetActionsViewModel.Find(budgets, previous) is not null;
         }
 
         CurrencyText = _period == BudgetPeriod.Month
@@ -605,18 +613,18 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             color);
     }
 
-    [RelayCommand(CanExecute = nameof(CanNavigate))]
+    [RelayCommand(CanExecute = nameof(CanPrevious))]
     private Task PreviousAsync()
     {
-        if (!CanNavigate) return Task.CompletedTask;
+        if (!CanPrevious) return Task.CompletedTask;
         Move(-1);
         return LoadAsync();
     }
 
-    [RelayCommand(CanExecute = nameof(CanNavigate))]
+    [RelayCommand(CanExecute = nameof(CanNext))]
     private Task NextAsync()
     {
-        if (!CanNavigate) return Task.CompletedTask;
+        if (!CanNext) return Task.CompletedTask;
         Move(1);
         return LoadAsync();
     }

@@ -1,5 +1,22 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-933 - Original budget/review calendar read batch complete (2026-11-07)
+
+Original15native contexts show9failures/3wrong previous commands/3accepted review
+counter-cases. Only12affected contexts continue after one preserving private upgrade;
+all12Ready, full20source exact, no copy/checkbox/Finish/financial action. Two necessary
+same-page minimum weekly/fortnight reloads retain original coordinates. Budget period
+navigation/copy shares validated adjacent ranges; valid saved minimum starts no longer
+mean unset. Period-review strict60day cutoff matches DataStatus without date underflow.
+16new managed outcomes pass in lineage, including four new contract/cutoff outcomes;
+old accepted review counter-cases not rerun. StrictWindows/fullOffline384/408/1608 and
+native192/204/804 pass.9XML203748bytes hash-match, original root/public OS restores,
+freshUID/officialAVD24files4692260091logicalbytes retire, five standard Cleans pass.
+Full4e2dd510 prepared, not Main-installed/ARM64 accepted. No phone/frozen/retainedfault/
+ADB reset action; originalfault/ANR/performance/security/A11Y/platform/provider/release
+remain open and goal active. D932soleCIin_progress/three others success, consumed.
+[Original budget/review boundaries](../../quality/original-budget-review-read-boundaries.md).
+
 ## D-932 - Original first/last calendar read batch complete (2026-11-07)
 
 34baseline original contexts have20exceptions/14Ready; three Ready navigation controls

@@ -1,5 +1,9 @@
 # Documentation
 
+[Original budget/review reads D933](../src/Apps/Zanance/docs/quality/original-budget-review-read-boundaries.md)
+records original neighbor/copy and early-review failures,12corrected native contexts,
+two retained reads and exact fictitious source. ARM64 and broader delivery gates remain.
+
 [Original calendar reads D932](../src/Apps/Zanance/docs/quality/original-calendar-read-boundaries.md)
 records actual missing-history/navigation failures,23changed original contexts and
 three retained comparison transitions, exact fictitious source and bounded cleanup.

@@ -113,12 +113,14 @@ public sealed partial class BudgetActionsViewModel(ZananceStore store, Translato
         ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(visit);
         var originals = review.Choices.Items.Select(item => item.ToBudget()).ToArray();
         var original = originalId is { } id ? originals.Single(budget => budget.Id == id) : null;
-        var previousVisit = Step(visit, -1); var nextVisit = Step(visit, 1);
-        var previous = Find(originals, previousVisit); var next = Find(originals, nextVisit);
+        var previousVisit = Adjacent(visit, -1, review.Choices.MonthStartDay);
+        var nextVisit = Adjacent(visit, 1, review.Choices.MonthStartDay);
+        var previous = previousVisit is null ? null : Find(originals, previousVisit);
+        var next = nextVisit is null ? null : Find(originals, nextVisit);
         // Resolve every candidate before replacing the published packet; ambiguous periods never guess a source.
         _review = review; _visit = visit; _original = original; _nextVisit = nextVisit; _nextOriginal = next;
         _previousCopy = previous is null ? null : Copy(previous, visit);
-        _nextCopy = original is null ? null : Copy(original, nextVisit);
+        _nextCopy = original is null || nextVisit is null ? null : Copy(original, nextVisit);
         _ready = true; _loading = false; _needsReload = false; Feedback = null; RetireCommands(); RefreshActions();
     }
 
@@ -130,11 +132,33 @@ public sealed partial class BudgetActionsViewModel(ZananceStore store, Translato
     };
     private static Core.Budgets.Budget Copy(Core.Budgets.Budget source, BudgetVisit visit) => visit.Period == BudgetPeriod.Month
         ? BudgetPlanning.CopyTo(source, visit.Year, visit.Month) : BudgetPlanning.CopyTo(source, visit.Start);
-    private static BudgetVisit Step(BudgetVisit visit, int step)
+    /// <summary>Returns an existing adjacent period, or null at a calendar boundary; the current period must itself be valid.</summary>
+    public static BudgetVisit? Adjacent(BudgetVisit visit, int step, int monthStartDay)
     {
-        if (visit.Period != BudgetPeriod.Month) return visit with { Start = BudgetPeriods.Step(visit.Period, visit.Start, step) };
-        var (year, month) = step < 0 ? PeriodMath.Previous(visit.Year, visit.Month) : PeriodMath.Next(visit.Year, visit.Month);
-        return visit with { Year = year, Month = month };
+        ArgumentNullException.ThrowIfNull(visit);
+        if (step is not (-1 or 1)) throw new ArgumentOutOfRangeException(nameof(step));
+        // D-933: missing neighbors cannot legitimize an invalid current period or
+        // change the strict alignment/range contract of the original calculators.
+        _ = Range(visit);
+        try
+        {
+            BudgetVisit candidate;
+            if (visit.Period != BudgetPeriod.Month)
+                candidate = visit with { Start = BudgetPeriods.Step(visit.Period, visit.Start, step) };
+            else
+            {
+                var (year, month) = step < 0 ? PeriodMath.Previous(visit.Year, visit.Month) : PeriodMath.Next(visit.Year, visit.Month);
+                candidate = visit with { Year = year, Month = month };
+            }
+
+            _ = Range(candidate);
+            return candidate;
+        }
+        catch (ArgumentOutOfRangeException) { return null; }
+
+        (DateOnly First, DateOnly Last) Range(BudgetVisit period) => period.Period == BudgetPeriod.Month
+            ? PeriodMath.MonthRange(period.Year, period.Month, period.Calendar, monthStartDay)
+            : BudgetPeriods.Range(period.Period, period.Start);
     }
     /// <summary>Resolves an original period from the complete review, preserving its named calendar and explicit week dates.</summary>
     public static Core.Budgets.Budget? Find(IEnumerable<Core.Budgets.Budget> originals, BudgetVisit visit) => originals

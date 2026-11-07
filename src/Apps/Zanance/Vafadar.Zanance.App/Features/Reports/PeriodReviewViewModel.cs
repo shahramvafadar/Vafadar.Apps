@@ -141,7 +141,9 @@ public sealed partial class PeriodReviewViewModel(
         var (from, to) = PeriodMath.MonthRange(state.Year, state.Month, calendar, start);
         return new(state, from, source.Entries.Count(entry => entry.Review == ReviewState.Unreviewed && entry.Date <= to),
             source.Schedules.Sum(schedule => Occurrences.Between(schedule, source.States, schedule.ActiveFrom ?? schedule.Rule.Start, to, day).Count(occurrence => occurrence.IsOpen)),
-            source.Accounts.Count(account => !account.IsArchived && (account.LastReconciledOn ?? account.OpeningDate) < to.AddDays(-DataStatus.ReconcileDays)),
+            // D-933: use the same strict elapsed-day rule as DataStatus.Check,
+            // without materializing a date before DateOnly.MinValue.
+            source.Accounts.Count(account => !account.IsArchived && (account.LastReconciledOn ?? account.OpeningDate).DayNumber < to.DayNumber - DataStatus.ReconcileDays),
             source.Goals.Count(goal => goal.State == Core.Goals.GoalState.Active));
     }
     private ReviewStepRow[] CreateRows(PeriodReviewReadSnapshot source, PeriodReviewState state, Prepared prepared, int revision, DateOnly day, string display)

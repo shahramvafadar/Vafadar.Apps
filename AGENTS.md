@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-933 - Original budget/review read boundaries (2026-11-07)
+
+Original budget neighbors validate actual periods before navigation/copy preparation;
+saved minimum weekly starts retain explicit presence. Review attention uses the same
+strict elapsed-day rule without an unrepresentable prior date.16new managed outcomes
+pass in lineage,12affected native contexts and two necessary retained reads pass with
+full20source exact; three accepted review counter-cases not replayed. StrictWindows/
+fullOffline384/408/1608/private192/204/804 and original compiler bindings pass. Original
+root/public state restores; freshUID/officialAVD retires and five standard Cleans pass.
+New custom roots under artifacts, no phone/frozen/retained5606/native-record action.
+Full4e2dd510 prepared, not Main-installed; broader gates and delivery goal remain open.
+[Evidence](src/Apps/Zanance/docs/quality/original-budget-review-read-boundaries.md).
+
 ## D-932 - Original calendar read boundaries (2026-11-07)
 
 Twenty actual native read failures and three invalid navigation commands are fixed
