@@ -1,5 +1,24 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-937 - Original occurrence source/owner batch (2026-11-07)
+
+Two actual host failures combine a replacement source or accept Skip in it. One
+complete actual-file/worker/transaction review now carries full references/history/
+work/candidate rows into original publication and same-transaction writer guards.
+Page/root/tab/query/day/display/native-consent ownership and raw draft/Retry/known
+accepted receipt preservation are retained.22new logical host outcomes pass in
+lineage, not a full suite or all on final testbinary. Four native controls4211 keep
+source20exact with one raw expense input/zero financial Save. Separate empty-source
+modal3429 incorrectly opens2contexts/Ready under cover; one no-reset5176 accepts
+uncovered positive control then refuses covered Refresh with0contexts/noReady.
+Source20/root/publicOSexact in both cohorts,12XML188141bytes+2XML5772bytes hashbound;
+only freshUIDs/two officialAVDs retire. Initial compile/observer/query-oracle failures
+remain. Final page compiler binding matches. Complete package is prepared rather
+than Main-installed; no old successful money/suite/phone/frozen/R13/ADB action.
+D936soleCIall4completed-success consumed. Wholefault/ANR/performance/security/A11Y/
+ARM64/platform/provider/release gates and overall delivery goal remain open.
+[Original occurrence source and ownership](../../quality/original-occurrence-source-ownership.md).
+
 ## D-936 - Original plan/occurrence read batch complete (2026-11-07)
 
 Seven original baseline contexts show4failed reads/3wrongNotFound on valid moved

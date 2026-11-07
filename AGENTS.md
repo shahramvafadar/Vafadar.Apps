@@ -1,5 +1,25 @@
 # AGENTS.md – working rules for this repository
 
+## D-937 - Original occurrence source and command ownership (2026-11-07)
+
+Original occurrence review must use one complete actual-file worker transaction,
+including reference/history/work inputs and complete bounded candidate rows. Bind
+all writes, rows, native consent and receipts to that reviewed source and actual
+page/query/day/display/root lifetime; revalidate inside the existing writer before
+commit. Preserve raw drafts on failure/Retry and known accepted receipts before
+fallible refresh/feedback. A retained CurrentPage beneath a modal is not a current
+owner: reject covered refresh and replacement-root feedback. Preserve established
+money, settlement uniqueness/conflict policy and unbound non-form contracts.
+Two original host failures/22new logical outcomes pass in lineage. Four first native
+contexts preserve complete20source including one raw input expense; a separate
+empty-source modal cohort shows2wrongcontexts and corrected0after one no-reset
+upgrade. Actual roots/OS/source restore; only fresh packages/AVDs retire. No claim
+all native controls ran on the final binary, or financial Save/old success replay.
+Current Windows/full offline package checks and compiler bindings are recorded;
+no Main install, phone/frozen/retainedfault/ADB-reset action. Broader gates and full
+delivery goal remain open.
+[Evidence](src/Apps/Zanance/docs/quality/original-occurrence-source-ownership.md).
+
 ## D-936 - Original plan/occurrence read boundaries corrected (2026-11-07)
 
 Four failed original reads/three wrong NotFound cases now pass in six-plus-one

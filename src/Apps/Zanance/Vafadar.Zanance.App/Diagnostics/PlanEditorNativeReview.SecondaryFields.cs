@@ -218,7 +218,7 @@ internal sealed partial class PlanEditorNativeReview
             {
                 DisplayUnits.Set([]); await SetTabMoneyCultureAsync("en-US", ct);
                 var plan = (await Plans.GetSchedulesAsync(ct)).Single(row => row.Name == "Original secondary occurrence");
-                var model = new OccurrenceViewModel(Store, Plans, Translator, Localization, dates, Time, new(Plans, Translator, effects));
+                var model = new OccurrenceViewModel(Plans, Translator, Localization, dates, Time, new(Plans, Translator, effects));
                 model.ApplyQueryAttributes(new Dictionary<string, object> { ["plan"] = plan.Id, ["date"] = plan.Rule.Start });
                 var page = new OccurrencePage(model); route = await ShowAsync(page);
                 await WaitAsync(() => model.Loading.IsReady && page.Width > 0, ct); await page.PendingPublication.WaitAsync(ct);

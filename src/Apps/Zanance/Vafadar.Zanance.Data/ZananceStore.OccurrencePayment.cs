@@ -10,12 +10,19 @@ public sealed partial class ZananceStore
 {
     /// <summary>Saves new occurrence money and its state through the established ledger pipeline in one actual writer.</summary>
     internal async Task<SaveResult> SaveOccurrencePaymentAsync(Occurrence reviewed, LedgerEntry entry, bool partial,
-        CancellationToken cancellationToken, string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
+        CancellationToken cancellationToken, string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null,
+        OccurrenceReadSnapshot? original = null, Func<ZananceDbContext, CancellationToken, Task>? validateSnapshot = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        void Current() => RequireOccurrenceInputOwner(db, reviewed.Schedule, expectedPath, expectedCurrency, isCurrent);
+        void Current()
+        {
+            RequireOccurrenceInputOwner(db, reviewed.Schedule, expectedPath, expectedCurrency, isCurrent);
+            original?.RequireOriginal(reviewed, db);
+        }
         Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        Current();
+        if (validateSnapshot is not null) await validateSnapshot(db, cancellationToken);
         Current();
         write.DemandFeature(CommercialFeature.Corrections);
         var plan = await db.Schedules.AsNoTracking().FirstOrDefaultAsync(s => s.Id == reviewed.Schedule.Id, cancellationToken);

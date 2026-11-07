@@ -1,5 +1,10 @@
 # Documentation
 
+[Original occurrence ownership D937](../src/Apps/Zanance/docs/quality/original-occurrence-source-ownership.md)
+records coherent actual-file snapshots, original writer/consent lifetime guards,
+raw drafts/accepted receipts and a real retained-page modal failure/correction.
+Selected host/native lineage preserves full source; broader delivery gates remain.
+
 [Original plan/occurrence reads D936](../src/Apps/Zanance/docs/quality/original-plan-read-boundaries.md)
 records seven actual endpoint/moved-date failures and corrected original pages,
 full source preservation, strict builds and scoped retirement. Broader gates remain.

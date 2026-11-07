@@ -9,10 +9,21 @@ namespace Vafadar.Zanance.Data;
 public sealed partial class ZananceStore
 {
     /// <summary>Reopens exactly the reviewed settlement, preserving manual money or the complete generated deletion journal.</summary>
-    internal async Task<IReadOnlyList<LedgerEntry>> ReopenOccurrenceAsync(Occurrence reviewed, CancellationToken cancellationToken)
+    internal async Task<IReadOnlyList<LedgerEntry>> ReopenOccurrenceAsync(Occurrence reviewed, CancellationToken cancellationToken,
+        OccurrenceReadSnapshot? original = null, Func<bool>? isCurrent = null,
+        Func<ZananceDbContext, CancellationToken, Task>? validateSnapshot = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        void Current()
+        {
+            original?.RequireOriginal(reviewed, db);
+            if (isCurrent?.Invoke() == false) throw new OperationCanceledException("The original occurrence reopening retired.");
+        }
+        Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
+        Current();
+        if (validateSnapshot is not null) await validateSnapshot(db, cancellationToken);
+        Current();
         write.DemandFeature(CommercialFeature.Corrections);
         var state = await db.OccurrenceStates.FirstOrDefaultAsync(s => s.ScheduleId == reviewed.Schedule.Id
             && s.OriginalDate == reviewed.OriginalDate, cancellationToken);
@@ -26,7 +37,7 @@ public sealed partial class ZananceStore
         {
             // D-135: the established deletion pipeline owns groups, refund links, paid totals and the exact Undo journal.
             // It already reopens states atomically; never reacquire a second writer after its committed Changed event.
-            var deleted = await DeleteEntriesUnderWriterAsync(db, write, [id], cancellationToken, committedPublication: true);
+            var deleted = await DeleteEntriesUnderWriterAsync(db, write, [id], cancellationToken, committedPublication: true, validateReview: Current);
             if (deleted.Count == 0)
                 throw new InvalidOperationException("The settlement belongs to a holding; correct its holding event instead.");
             return deleted;
@@ -38,9 +49,9 @@ public sealed partial class ZananceStore
         state.Status = OccurrenceStatus.Open;
         state.EntryId = null;
         state.AutoPostSuppressed = true;
-        write.EnsureCurrent();
+        Current(); write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        await write.CommitAsync(cancellationToken);
+        Current(); await write.CommitAsync(cancellationToken);
         return CommittedWriteNotification.Publish(OnChanged, (IReadOnlyList<LedgerEntry>)Array.Empty<LedgerEntry>());
     }
 }

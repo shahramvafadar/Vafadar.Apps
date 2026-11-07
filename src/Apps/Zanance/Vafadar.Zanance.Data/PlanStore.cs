@@ -323,11 +323,12 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
     /// other; the unique index guarantees one settlement per occurrence (D-07).
     /// </summary>
     public async Task<SaveResult> SettleAsync(Occurrence occurrence, LedgerEntry entry, CancellationToken cancellationToken = default,
-        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null, OccurrenceReadSnapshot? original = null)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
-        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: false, cancellationToken, expectedPath, expectedCurrency, isCurrent);
+        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: false, cancellationToken, expectedPath, expectedCurrency, isCurrent, original,
+            original is null ? null : (db, ct) => ValidateOccurrenceUnderContextAsync(original, db, ct));
         if (result.Succeeded) return CommittedWriteNotification.Publish(OnChanged, result);
         return result;
     }
@@ -397,11 +398,12 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
     /// overpayment is visible as a larger actual amount.
     /// </summary>
     public async Task<SaveResult> PayPartAsync(Occurrence occurrence, LedgerEntry entry, CancellationToken cancellationToken = default,
-        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null)
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null, OccurrenceReadSnapshot? original = null)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         ArgumentNullException.ThrowIfNull(entry);
-        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: true, cancellationToken, expectedPath, expectedCurrency, isCurrent);
+        var result = await store.SaveOccurrencePaymentAsync(occurrence, entry, partial: true, cancellationToken, expectedPath, expectedCurrency, isCurrent, original,
+            original is null ? null : (db, ct) => ValidateOccurrenceUnderContextAsync(original, db, ct));
         if (result.Succeeded) return CommittedWriteNotification.Publish(OnChanged, result);
         return result;
     }
@@ -418,7 +420,8 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
     }
 
     /// <summary>Settles an occurrence with an existing entry instead of creating a second one (REC-17, AT-29).</summary>
-    public async Task LinkAsync(Occurrence occurrence, Guid entryId, CancellationToken cancellationToken = default)
+    public async Task LinkAsync(Occurrence occurrence, Guid entryId, CancellationToken cancellationToken = default,
+        OccurrenceReadSnapshot? original = null, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
         await UpdateStateAsync(occurrence, state =>
@@ -442,7 +445,7 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
             await db.Entries.Where(e => e.Id == entryId).ExecuteUpdateAsync(
                 e => e.SetProperty(x => x.ScheduleId, plan.Id).SetProperty(x => x.OccurrenceDate, occurrence.OriginalDate),
                 cancellationToken);
-        }, linkedEntryId: entryId);
+        }, linkedEntryId: entryId, original: original, isCurrent: isCurrent);
     }
 
     /// <summary>
@@ -450,40 +453,52 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
     /// and only unlinked. Automatic posting will not recreate it (REC-18, AT-31).
     /// </summary>
     /// <returns>The deleted entries (for undo).</returns>
-    public async Task<IReadOnlyList<LedgerEntry>> UnsettleAsync(Occurrence occurrence, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<LedgerEntry>> UnsettleAsync(Occurrence occurrence, CancellationToken cancellationToken = default,
+        OccurrenceReadSnapshot? original = null, Func<bool>? isCurrent = null)
     {
         ArgumentNullException.ThrowIfNull(occurrence);
-        var deleted = await store.ReopenOccurrenceAsync(occurrence, cancellationToken);
+        var deleted = await store.ReopenOccurrenceAsync(occurrence, cancellationToken, original, isCurrent,
+            original is null ? null : (db, ct) => ValidateOccurrenceUnderContextAsync(original, db, ct));
         return CommittedWriteNotification.Publish(OnChanged, deleted);
     }
 
     /// <summary>Skips an occurrence (REC-14); the series does not get an extra occurrence (AT-27).</summary>
-    public Task SkipAsync(Occurrence occurrence, CancellationToken cancellationToken = default) =>
-        UpdateStateAsync(occurrence, state => state.Status = OccurrenceStatus.Skipped, cancellationToken);
+    public Task SkipAsync(Occurrence occurrence, CancellationToken cancellationToken = default,
+        OccurrenceReadSnapshot? original = null, Func<bool>? isCurrent = null) =>
+        UpdateStateAsync(occurrence, state => state.Status = OccurrenceStatus.Skipped, cancellationToken, original: original, isCurrent: isCurrent);
 
     /// <summary>Undoes a skip.</summary>
-    public Task UnskipAsync(Occurrence occurrence, CancellationToken cancellationToken = default) =>
-        UpdateStateAsync(occurrence, state => state.Status = OccurrenceStatus.Open, cancellationToken);
+    public Task UnskipAsync(Occurrence occurrence, CancellationToken cancellationToken = default,
+        OccurrenceReadSnapshot? original = null, Func<bool>? isCurrent = null) =>
+        UpdateStateAsync(occurrence, state => state.Status = OccurrenceStatus.Open, cancellationToken, original: original, isCurrent: isCurrent);
 
     /// <summary>Changes the due date, amount or note of this occurrence only (AT-26).</summary>
     public Task ChangeOccurrenceAsync(Occurrence occurrence, DateOnly? dueDate, long? amount, string? note, CancellationToken cancellationToken = default,
-        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null) =>
+        string? expectedPath = null, string? expectedCurrency = null, Func<bool>? isCurrent = null, OccurrenceReadSnapshot? original = null) =>
         UpdateStateAsync(occurrence, state =>
         {
             state.DueDate = dueDate == occurrence.OriginalDate ? null : dueDate;
             state.Amount = amount;
             state.Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim();
         }, cancellationToken, validateOriginal: db => ZananceStore.RequireOccurrenceInputOwner(db, occurrence.Schedule,
-            expectedPath, expectedCurrency, isCurrent));
+            expectedPath, expectedCurrency, isCurrent), original: original);
 
     // alsoInTransaction runs in the same transaction as the state change: both are saved or neither.
     private async Task UpdateStateAsync(Occurrence occurrence, Action<OccurrenceState> change, CancellationToken cancellationToken,
-        Func<ZananceDbContext, Task>? alsoInTransaction = null, Guid? linkedEntryId = null, Action<ZananceDbContext>? validateOriginal = null)
+        Func<ZananceDbContext, Task>? alsoInTransaction = null, Guid? linkedEntryId = null, Action<ZananceDbContext>? validateOriginal = null,
+        OccurrenceReadSnapshot? original = null, Func<bool>? isCurrent = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
-        validateOriginal?.Invoke(db);
+        void Current()
+        {
+            validateOriginal?.Invoke(db); original?.RequireOriginal(occurrence, db);
+            if (isCurrent?.Invoke() == false) throw new OperationCanceledException("The original occurrence command retired.");
+        }
+        Current();
         await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, cancellationToken, requireTransaction: true);
-        validateOriginal?.Invoke(db);
+        Current();
+        if (original is not null) await ValidateOccurrenceUnderContextAsync(original, db, cancellationToken);
+        Current();
         write.DemandFeature(CommercialFeature.Corrections);
         var state = await db.OccurrenceStates.FirstOrDefaultAsync(
             s => s.ScheduleId == occurrence.Schedule.Id && s.OriginalDate == occurrence.OriginalDate, cancellationToken);
@@ -504,10 +519,10 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
         }
 
         change(state);
-        validateOriginal?.Invoke(db);
+        Current();
         write.EnsureCurrent();
         await db.SaveChangesAsync(cancellationToken);
-        validateOriginal?.Invoke(db);
+        Current();
         await write.CommitAsync(cancellationToken);
         CommittedWriteNotification.Publish(OnChanged);
     }

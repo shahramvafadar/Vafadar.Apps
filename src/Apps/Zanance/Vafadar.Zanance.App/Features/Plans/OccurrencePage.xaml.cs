@@ -3,6 +3,8 @@ namespace Vafadar.Zanance.App.Features.Plans;
 public partial class OccurrencePage : ContentPage
 {
     private readonly OccurrenceViewModel _viewModel;
+    private AppShell? _ownerShell;
+    private bool _shellRetired;
     private bool _observingValidation;
     private int _validationVersion;
     /// <summary>Gets the original appearance load so native callers await its actual lifetime rather than starting another read.</summary>
@@ -17,6 +19,12 @@ public partial class OccurrencePage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        if (_shellRetired) return;
+        if (Shell.Current is AppShell shell)
+        {
+            if (_ownerShell is not null && !ReferenceEquals(_ownerShell, shell)) { RetireShellPublication(); return; }
+            _ownerShell = shell; shell.RegisterOccurrence(this);
+        }
         _observingValidation = true;
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
@@ -25,11 +33,27 @@ public partial class OccurrencePage : ContentPage
     }
 
     /// <summary>Shares the original covered read after appearance or retained Shell-tab activation.</summary>
-    internal Task RefreshForNavigationAsync() => PendingPublication = _viewModel.RefreshForNavigationAsync();
+    internal Task RefreshForNavigationAsync()
+    {
+        if (_shellRetired) return Task.CompletedTask;
+        var window = Window; var root = window?.Page;
+        // D-937: CurrentPage can remain this page beneath a lock or other modal.
+        // Retained-tab refresh and accepted notices must not cross that visible cover.
+        _viewModel.SetActive(true, () => !_shellRetired && window is not null && root is not null && ReferenceEquals(Window, window)
+            && ReferenceEquals(window.Page, root) && root.Navigation.ModalStack.Count == 0
+            && (root is AppShell shell ? ReferenceEquals(shell.CurrentPage, this) : ReferenceEquals(root, this)),
+            () => !_shellRetired && window is not null && root is not null && ReferenceEquals(window.Page, root)
+                && root.Navigation.ModalStack.Count == 0);
+        return PendingPublication = _viewModel.RefreshForNavigationAsync();
+    }
+
+    /// <summary>Permanently retires this original root's read and pending native consent ownership.</summary>
+    internal void RetireShellPublication() { _shellRetired = true; _viewModel.SetActive(false); }
 
     /// <summary>Stops scroll requests when this form leaves the visible navigation lifetime.</summary>
     protected override void OnDisappearing()
     {
+        _viewModel.SetActive(false);
         _viewModel.ValidationFailed -= OnValidationFailed;
         _observingValidation = false;
         _validationVersion++;

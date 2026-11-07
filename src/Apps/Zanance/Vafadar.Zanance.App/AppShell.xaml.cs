@@ -22,6 +22,7 @@ public partial class AppShell : Shell
     private readonly Presentation.WeakPublicationSet<LoanSchedulePage> _publishedLoanSchedules = new();
     private readonly Presentation.WeakPublicationSet<ReimbursementsPage> _publishedReimbursements = new();
     private readonly Presentation.WeakPublicationSet<PlanDetailPage> _publishedPlanDetails = new();
+    private readonly Presentation.WeakPublicationSet<OccurrencePage> _publishedOccurrences = new();
     private readonly Presentation.WeakPublicationSet<PlansPage> _publishedPlanCenters = new();
     private readonly Presentation.WeakPublicationSet<Features.Templates.TemplatesPage> _publishedTemplateCenters = new();
     private readonly Presentation.WeakPublicationSet<TransactionsPage> _publishedTransactionCenters = new();
@@ -290,6 +291,12 @@ public partial class AppShell : Shell
     {
         if (_navigationRetired) page.RetireShellPublication();
         else _publishedPlanDetails.Add(page);
+    }
+    /// <summary>Retains weak original occurrence owners so root replacement cancels reads and native consent.</summary>
+    internal void RegisterOccurrence(OccurrencePage page)
+    {
+        if (_navigationRetired) page.RetireShellPublication();
+        else _publishedOccurrences.Add(page);
     }
     /// <summary>Registers the original plan-center root so retained source and native continuations retire together.</summary>
     internal void RegisterPlanCenter(PlansPage page)
@@ -817,6 +824,8 @@ public partial class AppShell : Shell
         _publishedReimbursements.Clear();
         foreach (var planDetail in _publishedPlanDetails) planDetail.RetireShellPublication();
         _publishedPlanDetails.Clear();
+        foreach (var occurrence in _publishedOccurrences) occurrence.RetireShellPublication();
+        _publishedOccurrences.Clear();
         foreach (var planCenter in _publishedPlanCenters) planCenter.RetireShellPublication();
         _publishedPlanCenters.Clear();
         foreach (var templates in _publishedTemplateCenters) templates.RetireShellPublication();

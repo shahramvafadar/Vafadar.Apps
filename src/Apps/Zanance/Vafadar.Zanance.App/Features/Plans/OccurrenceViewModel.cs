@@ -17,7 +17,6 @@ namespace Vafadar.Zanance.App.Features.Plans;
 /// change the amount of this occurrence, skip – and undo each of them (REC-14, REC-17, REC-18).
 /// </summary>
 public sealed partial class OccurrenceViewModel(
-    ZananceStore store,
     PlanStore plans,
     Translator translator,
     ILocalizationService localization,
@@ -34,6 +33,13 @@ public sealed partial class OccurrenceViewModel(
     private readonly OccurrenceMoneyInputs _money = new(localization);
     private string? _file;
     private long _draftRevision;
+    private long _readRevision;
+    private bool _active = true;
+    private Func<bool>? _isOwnerCurrent;
+    private Func<bool>? _isRootCurrent;
+    private bool _hasOriginalDate;
+    private CancellationTokenSource _lifetime = new();
+    private OccurrenceReadSnapshot? _review;
     /// <summary>Gets the payment's original visible unit independently of later display preferences.</summary>
     public string PaymentUnitName => _money.Payment.UnitName(_currency);
     /// <summary>Explains the payment's original display-unit factor.</summary>
@@ -57,7 +63,7 @@ public sealed partial class OccurrenceViewModel(
     private (EntryKind Kind, Guid Account, Guid? Destination, string Currency)? _publishedFinancialTarget;
 
     /// <summary>Keeps original fields covered until one complete appearance or retained-tab read is published.</summary>
-    public SnapshotLoadState Loading { get; } = new();
+    [ObservableProperty] public partial SnapshotLoadState Loading { get; private set; } = new();
 
     /// <summary>Requests visibility of the input belonging to the attempted action without changing focus.</summary>
     public event Action<OccurrenceInput>? ValidationFailed;
@@ -181,18 +187,39 @@ public sealed partial class OccurrenceViewModel(
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         ArgumentNullException.ThrowIfNull(query);
-        if (query.TryGetValue("plan", out var plan) && plan is Guid id)
+        var id = _scheduleId; var original = _originalDate; var hasDate = _hasOriginalDate;
+        if (query.TryGetValue("plan", out var plan))
+            id = plan is Guid value && value != Guid.Empty ? value : throw new ArgumentException("An original plan identity is required.", nameof(query));
+        if (query.TryGetValue("date", out var date))
         {
-            if (_scheduleId != id) _draftRevision++;
-            _scheduleId = id;
+            original = date is DateOnly value ? value : throw new ArgumentException("An original occurrence date is required.", nameof(query));
+            hasDate = true;
         }
-
-        if (query.TryGetValue("date", out var date) && date is DateOnly original)
-        {
-            if (_originalDate != original) _draftRevision++;
-            _originalDate = original;
-        }
+        if (id == _scheduleId && original == _originalDate && hasDate == _hasOriginalDate) return;
+        _scheduleId = id; _originalDate = original; _hasOriginalDate = hasDate;
+        RetireRead();
     }
+
+    /// <summary>Retires actual page/tab/root work and native consent while preserving the unsaved raw draft.</summary>
+    public void SetActive(bool active, Func<bool>? isCurrent = null, Func<bool>? isRootCurrent = null)
+    {
+        if (active && isCurrent is not null) _isOwnerCurrent = isCurrent;
+        if (active && isRootCurrent is not null) _isRootCurrent = isRootCurrent;
+        if (_active == active) return;
+        _active = active;
+        if (!active) RetireRead();
+    }
+
+    private bool IsOwnerCurrent => _active && (_isOwnerCurrent?.Invoke() ?? true);
+
+    private void RetireRead()
+    {
+        _readRevision++; _draftRevision++; _occurrence = null; _review = null;
+        var retired = _lifetime; _lifetime = new(); Loading = new();
+        retired.Cancel(); retired.Dispose();
+    }
+
+    private string DisplayIdentity() => $"{localization.CurrentLanguage.CultureName}|{localization.CurrentCulture.Name}|{localization.CurrentCalendar}|{localization.CurrentDigits}|{localization.FormattingCultureName}";
 
     Task Presentation.IThemeAware.RefreshThemeAsync() => RefreshForNavigationAsync();
 
@@ -202,89 +229,104 @@ public sealed partial class OccurrenceViewModel(
     /// <summary>Refreshes retained suggestions without replacing typed fields or interrupting native consent.</summary>
     internal async Task RefreshForNavigationAsync()
     {
-        if (IsBusy) { return; }
+        if (IsBusy || !IsOwnerCurrent) { return; }
+        var revision = _readRevision;
         try { await ReadAndPublishAsync(preserveDraft: true); }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             // D-401: the failed cover owns retry feedback. A rejected read must never expose the old writable packet.
-            Error = CommercialFailureMessage.OrFallback(exception, translator, "Occurrence_ReadFailed");
+            if (_active && revision == _readRevision)
+                Error = CommercialFailureMessage.OrFallback(exception, translator, "Occurrence_ReadFailed");
         }
     }
 
     [RelayCommand]
     private Task ReloadAsync() => RefreshForNavigationAsync();
 
-    private Task ReadAndPublishAsync(bool preserveDraft) => Loading.RunAsync(async () =>
+    private Task ReadAndPublishAsync(bool preserveDraft)
     {
-        _draftRevision++;
-        var query = (Schedule: _scheduleId, Original: _originalDate);
-        var keepInputs = preserveDraft && _publishedQuery is { } published && published == query;
-        try
+        if (!IsOwnerCurrent) return Task.CompletedTask;
+        var owner = Loading; var revision = _readRevision; var token = _lifetime.Token;
+        var query = (Schedule: _scheduleId, Original: _originalDate); var day = Today; var display = DisplayIdentity();
+        bool Current() => IsOwnerCurrent && ReferenceEquals(owner, Loading) && revision == _readRevision
+            && query == (_scheduleId, _originalDate) && day == Today && display == DisplayIdentity();
+        void RequireCurrent() { token.ThrowIfCancellationRequested(); if (!Current()) throw new OperationCanceledException("The original occurrence read retired.", token); }
+        return owner.RunAsync(async () =>
         {
-            await LoadCoreAsync(query.Schedule, query.Original, keepInputs);
-            if (query != (_scheduleId, _originalDate)) throw new InvalidOperationException("The original occurrence route changed during its read.");
-            if (_occurrence is { } current)
+            RequireCurrent(); _draftRevision++;
+            var keepInputs = preserveDraft && _publishedQuery is { } published && published == query;
+            try
             {
-                var target = (current.Schedule.Kind, current.Schedule.AccountId, current.Schedule.ToAccountId, _currency);
-                if (keepInputs && _publishedFinancialTarget is { } previous && target != previous)
-                    throw new InvalidOperationException("The original payment target changed; close and review it again.");
-                _publishedFinancialTarget = target;
-                _publishedQuery = query;
+                await LoadCoreAsync(query.Schedule, query.Original, day, keepInputs, RequireCurrent, token);
+                RequireCurrent();
+                if (_occurrence is { } current)
+                {
+                    var target = (current.Schedule.Kind, current.Schedule.AccountId, current.Schedule.ToAccountId, _currency);
+                    if (keepInputs && _publishedFinancialTarget is { } previous && target != previous)
+                        throw new InvalidOperationException("The original payment target changed; close and review it again.");
+                    _publishedFinancialTarget = target; _publishedQuery = query;
+                }
+                Error = null; RequireCurrent();
             }
-            Error = null;
-        }
-        catch (Exception exception)
-        {
-            _occurrence = null;
-            if (exception is not OutOfMemoryException)
-                Error = CommercialFailureMessage.OrFallback(exception, translator, "Occurrence_ReadFailed");
-            throw;
-        }
-    }, () => { });
+            catch (Exception exception)
+            {
+                if (Current())
+                {
+                    _occurrence = null; _review = null;
+                    if (exception is not OutOfMemoryException)
+                        Error = CommercialFailureMessage.OrFallback(exception, translator, "Occurrence_ReadFailed");
+                }
+                throw;
+            }
+        }, RequireCurrent);
+    }
 
-    private async Task LoadCoreAsync(Guid scheduleId, DateOnly originalDate, bool keepInputs)
+    private async Task LoadCoreAsync(Guid scheduleId, DateOnly originalDate, DateOnly today, bool keepInputs,
+        Action requireCurrent, CancellationToken ct)
     {
-        _occurrence = null;
-        var original = await plans.ReadOriginalScheduleAsync(scheduleId);
-        var schedule = original.Schedule; _file = original.DatabasePath;
-        var states = await plans.GetStatesAsync(scheduleId);
-
-        // D-936: the route identifies the original occurrence, independently of how
-        // far its due date moved. A due-date search window must not hide that identity.
-        var loaded = schedule is null ? null : Occurrences.Find(schedule, states, originalDate, Today);
-        NotFound = loaded is null;
-        if (loaded is null || schedule is null)
+        requireCurrent(); _occurrence = null; _review = null;
+        if (scheduleId == Guid.Empty || !_hasOriginalDate) { NotFound = true; return; }
+        var source = await plans.ReadOccurrenceSnapshotAsync(scheduleId, originalDate, today, path =>
+        { requireCurrent(); _file ??= path; return _file == path; }, ct);
+        requireCurrent();
+        await plans.ValidateOccurrenceSnapshotAsync(source, ct); requireCurrent(); source.EnsureAccessCurrent();
+        var schedule = source.Source.Inputs.Schedule; var loaded = source.Occurrence;
+        void Publish(Action action)
         {
-            return;
+            requireCurrent(); source.EnsureAccessCurrent(); action();
+            requireCurrent(); source.EnsureAccessCurrent();
         }
+        Publish(() => NotFound = loaded is null);
+        if (loaded is null || schedule is null) return;
+        if (!source.Source.IsAvailable) throw new InvalidOperationException("The original occurrence references are unavailable.");
 
         var occurrence = loaded;
         var culture = localization.CurrentCulture;
-        var accounts = (await store.GetAccountsAsync()).ToDictionary(a => a.Id);
-        var categories = new CategoryLookup(await store.GetCategoriesAsync(), translator);
+        var accounts = source.Source.Inputs.Accounts.ToDictionary(a => a.Id);
+        var categories = new CategoryLookup(source.Source.Inputs.Categories, translator);
         var text = new PlanText(translator, dates, localization);
         _currency = accounts.TryGetValue(schedule.AccountId, out var account) ? account.CurrencyCode : Currencies.Euro.Code;
         _money.SelectCurrency(_currency);
 
-        Name = schedule.Name;
-        CurrencyCode = _currency;
-        DueText = translator.Format("Occurrence_DueOn", text.Date(occurrence.DueDate));
-        PlannedAmountText = text.Amount(occurrence.Amount, occurrence.AmountMode, _currency);
-        StatusText = text.Status(occurrence.Status);
-        IsOpen = occurrence.IsOpen;
-        IsSettled = occurrence.Status == OccurrenceView.Settled;
-        IsSkipped = occurrence.Status == OccurrenceView.Skipped;
+        Publish(() => Name = schedule.Name);
+        Publish(() => CurrencyCode = _currency);
+        Publish(() => DueText = translator.Format("Occurrence_DueOn", text.Date(occurrence.DueDate)));
+        Publish(() => PlannedAmountText = text.Amount(occurrence.Amount, occurrence.AmountMode, _currency));
+        Publish(() => StatusText = text.Status(occurrence.Status));
+        Publish(() => IsOpen = occurrence.IsOpen);
+        Publish(() => IsSettled = occurrence.Status == OccurrenceView.Settled);
+        Publish(() => IsSkipped = occurrence.Status == OccurrenceView.Skipped);
 
         // Paying early or late keeps the real date (FIN-07); the default is today, or the due date when it is past.
         if (!keepInputs)
         {
-            ActualDate = occurrence.DueDate < Today ? occurrence.DueDate : Today;
+            Publish(() => ActualDate = occurrence.DueDate < Today ? occurrence.DueDate : Today);
             var expected = occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount;
             _money.Initialize(expected, occurrence.State?.Amount);
-            ActualAmountText = _money.Payment.Text;
-            DueDate = occurrence.DueDate;
-            OverrideAmountText = _money.Override.Text;
-            OccurrenceNote = occurrence.State?.Note ?? string.Empty;
+            Publish(() => ActualAmountText = _money.Payment.Text);
+            Publish(() => DueDate = occurrence.DueDate);
+            Publish(() => OverrideAmountText = _money.Override.Text);
+            Publish(() => OccurrenceNote = occurrence.State?.Note ?? string.Empty);
         }
         // Preserving a draft must not temporarily reseed DateField or its partial native input segments.
         // Re-translate requested feedback independently of the retained raw amount/date/note values.
@@ -295,41 +337,40 @@ public sealed partial class OccurrenceViewModel(
         }
         RefreshMoneyCaptions();
 
-        Candidates.Clear();
-        SettledText = null;
+        Publish(Candidates.Clear);
+        Publish(() => SettledText = null);
         var presenter = new EntryPresenter(accounts, categories, translator, culture);
         if (IsOpen)
         {
-            // Clip only the suggestion window; keep the original due date and matching policy.
-            var due = occurrence.DueDate;
-            var from = due.AddDays(-Math.Min(10, due.DayNumber));
-            var through = due.AddDays(Math.Min(10, DateOnly.MaxValue.DayNumber - due.DayNumber));
-            var entries = await store.GetEntriesAsync(from, through);
-            foreach (var candidate in PlanActions.LinkCandidates(occurrence, entries).Take(5))
+            foreach (var candidate in PlanActions.LinkCandidates(occurrence, source.Candidates).Take(5))
             {
-                Candidates.Add(presenter.Row(candidate) with { Subtitle = dates.Format(candidate.Date, DateFormatStyle.Long) });
+                Publish(() => Candidates.Add(presenter.Row(candidate) with { Subtitle = dates.Format(candidate.Date, DateFormatStyle.Long) }));
             }
         }
-        else if (occurrence.State?.EntryId is { } entryId && await store.GetEntryAsync(entryId) is { } entry)
+        else if (occurrence.State?.EntryId is { } entryId && source.Source.Inputs.Settlements.SingleOrDefault(e => e.Id == entryId) is { } entry)
         {
-            SettledText = translator.Format("Occurrence_SettledWith", presenter.Amount(entry), dates.Format(entry.Date, DateFormatStyle.Long));
+            Publish(() => SettledText = translator.Format("Occurrence_SettledWith", presenter.Amount(entry), dates.Format(entry.Date, DateFormatStyle.Long)));
         }
 
-        HasCandidates = Candidates.Count > 0;
+        Publish(() => HasCandidates = Candidates.Count > 0);
 
-        Payments.Clear();
-        foreach (var payment in await plans.GetPartialPaymentsAsync(occurrence))
+        Publish(Payments.Clear);
+        foreach (var payment in source.Source.Inputs.Settlements.Where(e => e.OccurrenceDate == originalDate && e.IsPartialPayment).OrderBy(e => e.Date).ThenBy(e => e.CreatedAt))
         {
-            Payments.Add(presenter.Row(payment) with { Subtitle = dates.Format(payment.Date, DateFormatStyle.Long) });
+            Publish(() => Payments.Add(presenter.Row(payment) with { Subtitle = dates.Format(payment.Date, DateFormatStyle.Long) }));
         }
 
-        HasPayments = Payments.Count > 0;
-        PaidText = occurrence.Paid <= 0 ? null
+        Publish(() => HasPayments = Payments.Count > 0);
+        Publish(() => PaidText = occurrence.Paid <= 0 ? null
             : occurrence.Outstanding is { } outstanding
                 ? translator.Format("Occurrence_PaidSoFar", MoneyText.Format(occurrence.Paid, _currency, culture), MoneyText.Format(outstanding, _currency, culture))
-                : translator.Format("Occurrence_PaidSoFarUnknown", MoneyText.Format(occurrence.Paid, _currency, culture));
-        _occurrence = occurrence;
+                : translator.Format("Occurrence_PaidSoFarUnknown", MoneyText.Format(occurrence.Paid, _currency, culture)));
+        requireCurrent(); source.EnsureAccessCurrent(); _review = source; _occurrence = occurrence;
     }
+
+    private bool Current(OccurrenceReadSnapshot source, Occurrence occurrence, long revision, string display) =>
+        IsOwnerCurrent && revision == _readRevision && ReferenceEquals(_review, source) && ReferenceEquals(_occurrence, occurrence)
+        && Loading.IsReady && source.Source.Request.Today == Today && display == DisplayIdentity();
 
     // D-136: one visible busy gate spans every write and confirmation. Rejected writes never reload the draft.
     [RelayCommand]
@@ -341,28 +382,42 @@ public sealed partial class OccurrenceViewModel(
     /// <summary>Validates the current input before sending its captured actual amount/date to the writer.</summary>
     private async Task PayAsync(bool partial)
     {
-        if (_occurrence is not { } occurrence || IsBusy || !Loading.IsReady) { return; }
+        if (_review is not { } source || _occurrence is not { } occurrence || !IsOwnerCurrent || IsBusy || !Loading.IsReady) { return; }
         Error = null;
         if (ValidatePayment() is not { } amount) { return; }
         if (_file is not { } file) return;
-        var revision = _draftRevision; var date = ActualDate; var currency = _currency;
+        var revision = _draftRevision; var read = _readRevision; var display = DisplayIdentity(); var root = Shell.Current; var receiptRoot = _isRootCurrent; var date = ActualDate; var currency = _currency;
         await RunCommandAsync(() => commands.PayAsync(occurrence, amount, date, partial,
             error => Error = error, () => CompleteCommandAsync(navigate: !partial), file, currency,
-            () => revision == _draftRevision && ReferenceEquals(_occurrence, occurrence) && Loading.IsReady
-                && !_money.Payment.NeedsReview(currency)));
+            () => revision == _draftRevision && Current(source, occurrence, read, display)
+                && !_money.Payment.NeedsReview(currency), source, accepted => accepted ? receiptRoot?.Invoke() ?? ReferenceEquals(Shell.Current, root) : IsOwnerCurrent && read == _readRevision,
+            exception => RejectCommand(exception, read)));
     }
 
     [RelayCommand]
-    private Task OpenPaymentAsync(EntryRow row) => Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
+    private Task OpenPaymentAsync(EntryRow row) => !IsOwnerCurrent || IsBusy || !Loading.IsReady || !Payments.Contains(row)
+        ? Task.CompletedTask : Shell.Current.GoToAsync(AppShell.EntryDetailRoute, new Dictionary<string, object> { ["id"] = row.Id });
 
     [RelayCommand]
-    private Task LinkAsync(EntryRow row) => _occurrence is { } occurrence
-        ? RunCommandAsync(() => commands.LinkAsync(occurrence, row.Id, row.Title, row.AmountText,
-            () => CompleteCommandAsync(navigate: true))) : Task.CompletedTask;
+    private Task LinkAsync(EntryRow row)
+    {
+        if (_review is not { } source || _occurrence is not { IsOpen: true } occurrence || !Candidates.Contains(row)) return Task.CompletedTask;
+        var read = _readRevision; var display = DisplayIdentity(); var root = Shell.Current; var receiptRoot = _isRootCurrent;
+        return RunCommandAsync(() => commands.LinkAsync(occurrence, row.Id, row.Title, row.AmountText,
+            () => CompleteCommandAsync(navigate: true), source, () => Current(source, occurrence, read, display),
+            accepted => accepted ? receiptRoot?.Invoke() ?? ReferenceEquals(Shell.Current, root) : IsOwnerCurrent && read == _readRevision,
+            exception => RejectCommand(exception, read)));
+    }
 
     [RelayCommand]
-    private Task SkipAsync() => _occurrence is { } occurrence
-        ? RunCommandAsync(() => commands.SkipAsync(occurrence, () => CompleteCommandAsync(navigate: true))) : Task.CompletedTask;
+    private Task SkipAsync()
+    {
+        if (_review is not { } source || _occurrence is not { IsOpen: true } occurrence) return Task.CompletedTask;
+        var read = _readRevision; var display = DisplayIdentity(); var root = Shell.Current; var receiptRoot = _isRootCurrent;
+        return RunCommandAsync(() => commands.SkipAsync(occurrence, () => CompleteCommandAsync(navigate: true),
+            source, () => Current(source, occurrence, read, display), accepted => accepted ? receiptRoot?.Invoke() ?? ReferenceEquals(Shell.Current, root) : IsOwnerCurrent && read == _readRevision,
+            exception => RejectCommand(exception, read)));
+    }
 
     [RelayCommand]
     private void ToggleChange() { if (!IsBusy && Loading.IsReady) { ShowChange = !ShowChange; } }
@@ -370,7 +425,7 @@ public sealed partial class OccurrenceViewModel(
     [RelayCommand]
     private async Task SaveChangeAsync()
     {
-        if (_occurrence is not { } occurrence || IsBusy || !Loading.IsReady) { return; }
+        if (_review is not { } source || _occurrence is not { } occurrence || !IsOwnerCurrent || IsBusy || !Loading.IsReady) { return; }
         Error = null;
         _overrideValidationRequested = true;
         var validation = ValidateAmount(OccurrenceInput.Override);
@@ -380,21 +435,36 @@ public sealed partial class OccurrenceViewModel(
             return;
         }
         if (_file is not { } file) return;
-        var revision = _draftRevision; var due = DueDate; var note = OccurrenceNote; var currency = _currency;
+        var revision = _draftRevision; var read = _readRevision; var display = DisplayIdentity(); var root = Shell.Current; var receiptRoot = _isRootCurrent; var due = DueDate; var note = OccurrenceNote; var currency = _currency;
         await RunCommandAsync(() => commands.ChangeAsync(occurrence, due, validation.Amount, note,
             () => CompleteCommandAsync(navigate: false, hideChange: true), file, currency,
-            () => revision == _draftRevision && ReferenceEquals(_occurrence, occurrence) && Loading.IsReady
-                && !_money.Override.NeedsReview(currency)));
+            () => revision == _draftRevision && Current(source, occurrence, read, display)
+                && !_money.Override.NeedsReview(currency), source, accepted => accepted ? receiptRoot?.Invoke() ?? ReferenceEquals(Shell.Current, root) : IsOwnerCurrent && read == _readRevision,
+            exception => RejectCommand(exception, read)));
     }
 
     [RelayCommand]
-    private Task UndoAsync() => _occurrence is { } occurrence
-        ? RunCommandAsync(() => commands.UndoAsync(occurrence, () => CompleteCommandAsync(navigate: false))) : Task.CompletedTask;
+    private Task UndoAsync()
+    {
+        if (_review is not { } source || _occurrence is not { } occurrence) return Task.CompletedTask;
+        var read = _readRevision; var display = DisplayIdentity(); var root = Shell.Current; var receiptRoot = _isRootCurrent;
+        return RunCommandAsync(() => commands.UndoAsync(occurrence, () => CompleteCommandAsync(navigate: false),
+            source, () => Current(source, occurrence, read, display), accepted => accepted ? receiptRoot?.Invoke() ?? ReferenceEquals(Shell.Current, root) : IsOwnerCurrent && read == _readRevision,
+            exception => RejectCommand(exception, read)));
+    }
+
+    private void RejectCommand(Exception exception, long revision)
+    {
+        if (!IsOwnerCurrent || revision != _readRevision || !Loading.HasLoaded || Loading.IsLoading) return;
+        _occurrence = null; _review = null;
+        Error = CommercialFailureMessage.OrFallback(exception, translator, "Occurrence_ReadFailed");
+        Loading.CoverFailedPresentation();
+    }
 
     /// <summary>Keeps all commands mutually exclusive, including while the native consent/failure dialog is open.</summary>
     private async Task RunCommandAsync(Func<Task<bool>> command)
     {
-        if (IsBusy || !Loading.IsReady) { return; }
+        if (!IsOwnerCurrent || IsBusy || !Loading.IsReady) { return; }
         IsBusy = true;
         try { await command(); }
         finally { IsBusy = false; }
@@ -403,7 +473,8 @@ public sealed partial class OccurrenceViewModel(
     /// <summary>Retires the previous payment identity before any fallible post-commit navigation or reload.</summary>
     private async Task CompleteCommandAsync(bool navigate, bool hideChange = false)
     {
-        _occurrence = null;
+        _occurrence = null; _review = null;
+        if (!IsOwnerCurrent) return;
         if (navigate) { await Shell.Current.GoToAsync(".."); }
         else
         {
@@ -413,6 +484,6 @@ public sealed partial class OccurrenceViewModel(
     }
 
     [RelayCommand]
-    private Task OpenPlanAsync() => IsBusy || !Loading.IsReady ? Task.CompletedTask
+    private Task OpenPlanAsync() => !IsOwnerCurrent || IsBusy || !Loading.IsReady ? Task.CompletedTask
         : Shell.Current.GoToAsync(AppShell.PlanDetailRoute, new Dictionary<string, object> { ["id"] = _scheduleId });
 }
