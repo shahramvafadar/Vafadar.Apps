@@ -560,22 +560,26 @@ public sealed partial class AccountDetailViewModel(
             if (saved is null) { CanAdjust = _reconciliation.Review is not null; return; }
             if (!saved.Succeeded)
             { Error = string.Join(Environment.NewLine, saved.Errors.Select(e => translator[$"LedgerError_{e}"])); return; }
-            await PublishReconciliationAsync(current);
+            await PublishReconciliationAsync(current, draft, reason);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
             if (!current()) return;
-            if (_reconciliation.Committed) await PublishReconciliationAsync(current);
+            if (_reconciliation.Committed) await PublishReconciliationAsync(current, draft, reason);
             else { InvalidateReconciliation(); Error = CommercialFailureMessage.OrFallback(exception, translator, "Reconcile_ReviewAgain"); }
         }
         finally { IsBusy = false; }
     }
 
     /// <summary>Publishes the accepted outcome even if a subscriber failed; never repeats the financial operation.</summary>
-    private async Task PublishReconciliationAsync(Func<bool> current)
+    private async Task PublishReconciliationAsync(Func<bool> current, long draft, long reason)
     {
-        if (!current()) return; ObservedText = string.Empty;
-        if (!current()) return; Reason = string.Empty;
+        // D-941: accepted-write subscribers can create newer input before follow-through.
+        // Clear only each original submitted field, keeping the known receipt independent.
+        if (!current()) return;
+        if (_reconciliationDraftRevision == draft) ObservedText = string.Empty;
+        if (!current()) return;
+        if (_reconciliationReasonRevision == reason) Reason = string.Empty;
         if (!current()) return; CanAdjust = false;
         if (!current()) return; HintText = null;
         if (!current()) return; ResultText = translator["Reconcile_Done"];

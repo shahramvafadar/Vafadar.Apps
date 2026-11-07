@@ -1,5 +1,9 @@
 # Documentation
 
+[Accepted reconciliation draft D941](../src/Apps/Zanance/docs/quality/reconciliation-accepted-newer-draft.md)
+records one same-page data-loss failure/correction and one distinct original native
+acceptance, preserving newer input and exact expected source delta after feedback fails.
+
 [Original reconciliation publication D940](../src/Apps/Zanance/docs/quality/original-reconciliation-command-publication.md)
 records seven original failures, eight new host outcomes in lineage and two native
 command/callback refusals, preserving newer drafts and source with no financial acceptance.

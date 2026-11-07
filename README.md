@@ -102,6 +102,10 @@ controls.
 
 ## Current delivery status
 
+[Accepted reconciliation draft D941](src/Apps/Zanance/docs/quality/reconciliation-accepted-newer-draft.md)
+keeps newer same-page balance/reason/date after accepted-write notification failure. One new host
+contract and a distinct original native acceptance pass; full46ad4a00 is prepared, not Main-installed.
+
 [Original reconciliation publication D940](src/Apps/Zanance/docs/quality/original-reconciliation-command-publication.md)
 keeps attempted commands separate from input edited during UI callbacks. Eight new host outcomes and
 two native command refusals preserve source/ledger0; broader delivery gates stay open.

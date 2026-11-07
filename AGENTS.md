@@ -1,5 +1,26 @@
 # AGENTS.md – working rules for this repository
 
+## D-941 - Accepted reconciliation preserves newer same-page drafts (2026-11-07)
+
+Known acceptance must not erase newer same-page input from post-commit callbacks.
+Before clearing each submitted observed balance/date or reason, retain its original
+revision independently of the accepted receipt and page/source ownership checks.
+One new host failure accepts234minor but clears newer raw input; correction passes
+in a separate disposable fixture. Each fixture has one terminal adjustment, no old
+successful financial qualification or accepted-fixture replay. One distinct original
+native dialog/positive consent4121/UID10216 accepts345minor only, then a controlled
+notification fault keeps new raw777.7700/reason/date and the known receipt/Ready.
+Full20expected-delta/all32newrow match, literal base equality false; only declared
+account metadata and new generated identity/bounded timestamps are admitted.
+Original root/OS restore,2XML47204bytes hash-retire and freshUID/officialAVD24files
+4518130949logicalbytes retire. ExistingADB50972/phone/retainedfault/frozen remain;
+5standardCleans pass, no supplementary deletion. StrictWindows/fullOffline384/408/
+1608/private192/204/804 and compiler bindings pass; full46ad4a00 prepared, not Main.
+D939/D940soleCIpending/CodeQLsuccess consumed once, no final conclusion/secondGET.
+Broader fault/performance/security/accessibility/platform/provider/release gates
+and the full delivery goal remain open.
+[Accepted reconciliation newer draft](src/Apps/Zanance/docs/quality/reconciliation-accepted-newer-draft.md).
+
 ## D-940 - Original reconciliation command publication (2026-11-07)
 
 Capture original balance/date/reason and page/source ownership before fallible
