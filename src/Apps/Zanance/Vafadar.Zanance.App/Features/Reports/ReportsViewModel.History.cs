@@ -72,13 +72,26 @@ public sealed partial class ReportsViewModel
 
         // The range of the decomposition ends today and starts at the end of the period before it.
         var current = PeriodMath.MonthOf(today, Calendar, _startDay);
-        var (lastYear, lastMonth) = PeriodMath.Previous(current.Year, current.Month);
-        var (from, to) = ChangeRangeIndex switch
+        var yearStart = PeriodMath.ToDate(current.Year, 1, 1, Calendar);
+        var previous = PeriodMath.PreviousCompleteMonthsRange(today, Calendar, _startDay, 1);
+        (DateOnly From, DateOnly To)? range = ChangeRangeIndex switch
         {
-            1 => (PeriodMath.MonthRange(current.Year, 1, Calendar).First.AddDays(-1), today),
-            2 => (today.AddMonths(-12), today),
-            _ => (PeriodMath.MonthRange(lastYear, lastMonth, Calendar, _startDay).First.AddDays(-1), PeriodMath.MonthRange(lastYear, lastMonth, Calendar, _startDay).Last),
+            1 => yearStart > DateOnly.MinValue ? (yearStart.AddDays(-1), today) : null,
+            2 => today.Year > 1 ? (today.AddMonths(-12), today) : null,
+            _ => previous is { } month && month.First > DateOnly.MinValue ? (month.First.AddDays(-1), month.Last) : null,
         };
+        _change = null;
+        ChangeLines.Clear();
+        ChangeNote = null;
+        if (range is not { } available)
+        {
+            // D-932: clear retained decomposition state instead of inventing a baseline.
+            ChangeTitle = _translator["Report_NoHistory"];
+            await BuildStatusAsync(entries, full: false);
+            return;
+        }
+
+        var (from, to) = available;
         var changes = WealthHistory.Explain(_accounts, entries, types, events, valuations, from, to);
         IReadOnlyList<string> missing = [];
         if (converted)
@@ -121,5 +134,5 @@ public sealed partial class ReportsViewModel
     }
 
     [RelayCommand]
-    private Task ExplainChangeAsync() => ExplainAsync("K10H", _change is { } c ? Money(c.Change, c.CurrencyCode, showPlus: true) : string.Empty, [.. ChangeLines], () => CreateDrill(KindFilter.All, null, null, _change?.From.AddDays(1), _change?.To));
+    private Task ExplainChangeAsync() => ExplainAsync("K10H", _change is { } c ? Money(c.Change, c.CurrencyCode, showPlus: true) : string.Empty, [.. ChangeLines], _change is { } change ? () => CreateDrill(KindFilter.All, null, null, change.From.AddDays(1), change.To) : null);
 }

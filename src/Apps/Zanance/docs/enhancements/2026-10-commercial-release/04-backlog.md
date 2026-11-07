@@ -1,5 +1,20 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-932 - Original first/last calendar read batch complete (2026-11-07)
+
+34baseline original contexts have20exceptions/14Ready; three Ready navigation controls
+still offer unavailable previous periods. Corrected23affected contexts pass with
+full20source/32field rows exact on one preserving private upgrade,11other successes
+not replayed. Three separate necessary retained-page continuations prove actual
+comparison rows disappear at missing history while valid raw-date history remains.
+12new managed outcomes pass in lineage; strictWindows/fullOffline384/408/1608 and
+native192/204/804 pass. Fullb1410682 prepared, not Main-installed/ARM64 accepted.
+NineXML353120bytes hash-match, original root/OS/locale/geometry/boot restore, freshUID/
+officialAVD24files4819793147logicalbytes retire, six standard Cleans pass. No old
+financial/test replay, phone/retained5606/frozen/ADB-reset action. Remaining whole
+fault/ANR/performance/security/A11Y/platform/provider/release gates and goal active.
+[Original read boundaries and retained comparisons](../../quality/original-calendar-read-boundaries.md).
+
 ## D-931 - Original excluded forecast row readable (2026-11-07)
 
 Enabled original excluded-row alpha0.45 makes all four text roles fail4.5contrast

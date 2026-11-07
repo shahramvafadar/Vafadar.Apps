@@ -82,6 +82,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         ReportLoading = OwnsPublication && _workspace.Loading.IsLoading; ReportReady = OwnsPublication && _workspace.CanInteract;
         if (_workspace.Failure is { } failure) ReportFeedback = CommercialFailureMessage.OrFallback(failure, _translator, "Report_ReadFailed");
         OnPropertyChanged(nameof(CanRunCommands)); OnPropertyChanged(nameof(CanReload)); RefreshReportsCommand.NotifyCanExecuteChanged();
+        PreviousCommand.NotifyCanExecuteChanged(); NextCommand.NotifyCanExecuteChanged();
     }
     private bool RowCurrent<T>(IEnumerable<T> rows, T? row, int? package = null) where T : class => row is not null
         && (package is null || PackageIndex == package) && rows.Any(item => ReferenceEquals(item, row));
@@ -365,7 +366,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         NextIcon = _localization.IsRightToLeft ? Symbol.ChevronLeft : Symbol.ChevronRight;
 
         // Months follow the financial month (a pay cycle shows its exact range); years stay calendar years.
-        (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar, _startDay) : (PeriodMath.MonthRange(_year, 1, Calendar).First, PeriodMath.MonthRange(_year, 12, Calendar).Last);
+        (_from, _to) = PeriodKind == 0 ? PeriodMath.MonthRange(_year, _month, Calendar, _startDay) : PeriodMath.YearRange(PeriodMath.ToDate(_year, 1, 1, Calendar), Calendar);
         PeriodText = PeriodKind != 0 ? _year.ToString(CultureInfo.InvariantCulture)
             : _startDay > 1 ? $"{_dates.Format(_from, DateFormatStyle.Short)} – {_dates.Format(_to, DateFormatStyle.Short)}"
             : _dates.Format(_from, DateFormatStyle.MonthYear);
@@ -572,10 +573,33 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     [RelayCommand]
     private Task OpenReviewAsync() => NavigateReportAsync(new(AppShell.ReviewRoute));
 
-    [RelayCommand]
+    /// <summary>Gets whether an actual earlier selected period can be opened.</summary>
+    public bool CanPrevious => CanRunCommands && CanMovePeriod(-1);
+
+    /// <summary>Gets whether an actual later selected period can be opened.</summary>
+    public bool CanNext => CanRunCommands && CanMovePeriod(1);
+
+    private bool CanMovePeriod(int direction)
+    {
+        var candidate = PeriodKind == 0
+            ? direction < 0 ? PeriodMath.Previous(_year, _month) : PeriodMath.Next(_year, _month)
+            : (_year + direction, 1);
+        if (!PeriodMath.IsSupportedYear(candidate.Item1, Calendar)) return false;
+        try
+        {
+            // D-932: a supported final year can still have nonexistent later months.
+            _ = PeriodKind == 0
+                ? PeriodMath.MonthRange(candidate.Item1, candidate.Item2, Calendar, _startDay)
+                : PeriodMath.YearRange(PeriodMath.ToDate(candidate.Item1, 1, 1, Calendar), Calendar);
+            return true;
+        }
+        catch (ArgumentOutOfRangeException) { return false; }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanPrevious))]
     private Task PreviousAsync()
     {
-        if (!CanRunCommands) return Task.CompletedTask;
+        if (!CanPrevious) return Task.CompletedTask;
         if (PeriodKind == 0)
         {
             (_year, _month) = PeriodMath.Previous(_year, _month);
@@ -588,10 +612,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         return LoadAsync();
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanNext))]
     private Task NextAsync()
     {
-        if (!CanRunCommands) return Task.CompletedTask;
+        if (!CanNext) return Task.CompletedTask;
         if (PeriodKind == 0)
         {
             (_year, _month) = PeriodMath.Next(_year, _month);

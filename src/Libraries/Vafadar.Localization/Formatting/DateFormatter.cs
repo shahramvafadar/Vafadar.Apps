@@ -68,7 +68,8 @@ public sealed partial class DateFormatter(ILocalizationService localization) : I
         var dateTime = date.ToDateTime(TimeOnly.MinValue);
 
         // Dates outside the calendar's range (e.g. an unset default value) must never crash the UI.
-        if (dateTime < Persian.MinSupportedDateTime || dateTime > Persian.MaxSupportedDateTime)
+        if (dateTime < Persian.MinSupportedDateTime || dateTime > Persian.MaxSupportedDateTime
+            || calendar == CalendarSystem.Hijri && dateTime < LunarHijri.ForYear(LunarHijri.MinYear).MinSupportedDateTime)
         {
             return date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }

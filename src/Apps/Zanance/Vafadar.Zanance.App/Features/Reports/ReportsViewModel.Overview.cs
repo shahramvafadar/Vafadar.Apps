@@ -143,7 +143,7 @@ public sealed partial class ReportsViewModel
 
         HasSeparateLines = SeparateLines.Count > 0;
         await BuildBudgetAsync(entries, categories);
-        Changes.Clear(); HasChanges = false; ComparisonText = null;
+        Changes.Clear(); HasChanges = false; ComparisonText = null; _range = null;
         if (CanUseAdvancedReports) BuildChanges(entries, categories);
         BuildExpenses(entries, categories);
         if (IsAdvanced)
@@ -193,9 +193,19 @@ public sealed partial class ReportsViewModel
     {
         _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
         Changes.Clear();
+        var previous = PeriodKind == 0 ? PeriodMath.Previous(_year, _month) : (_year - 1, 1);
+        if (!PeriodMath.IsSupportedYear(previous.Item1, Calendar))
+        {
+            // D-932: absent comparison history has no amount, rows or drill target.
+            _range = null;
+            HasChanges = false;
+            ComparisonText = _translator["Report_NoHistory"];
+            return;
+        }
+
         var (previousFrom, previousTo) = PeriodKind == 0
-            ? PeriodMath.MonthRange(PeriodMath.Previous(_year, _month).Year, PeriodMath.Previous(_year, _month).Month, Calendar, _startDay)
-            : (PeriodMath.MonthRange(_year - 1, 1, Calendar).First, PeriodMath.MonthRange(_year - 1, 12, Calendar).Last);
+            ? PeriodMath.MonthRange(previous.Item1, previous.Item2, Calendar, _startDay)
+            : PeriodMath.YearRange(PeriodMath.ToDate(previous.Item1, 1, 1, Calendar), Calendar);
         _range = KpiCatalog.Compare(_from, _to, previousFrom, previousTo, Today);
         ComparisonText = _translator.Format("Report_Comparison",
             $"{_dates.Format(_range.From, DateFormatStyle.Short)} – {_dates.Format(_range.To, DateFormatStyle.Short)}",
@@ -348,5 +358,5 @@ public sealed partial class ReportsViewModel
 
     [RelayCommand]
     private Task ExplainChangesAsync() => ExplainAsync("K11", ComparisonText ?? string.Empty, [.. Changes.Select(c => new AmountLine(c.Name, c.DeltaText, false))],
-        () => CreateDrill(KindFilter.Expenses, null, null, _range?.From, _range?.To));
+        _range is { } range ? () => CreateDrill(KindFilter.Expenses, null, null, range.From, range.To) : null);
 }

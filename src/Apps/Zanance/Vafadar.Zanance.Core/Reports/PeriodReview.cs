@@ -47,7 +47,10 @@ public static class PeriodReview
     {
         var current = PeriodMath.MonthOf(today, calendar, startDay);
         var (year, month) = PeriodMath.Previous(current.Year, current.Month);
-        if (firstData is not { } first || first > PeriodMath.MonthRange(year, month, calendar, startDay).Last)
+        // D-932: the first supported month has no preceding review. Validate the
+        // real current period through the shared history boundary before returning.
+        var previous = PeriodMath.PreviousCompleteMonthsRange(today, calendar, startDay, 1);
+        if (firstData is not { } first || previous is not { } range || first > range.Last)
         {
             return null;
         }

@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-932 - Original calendar read boundaries (2026-11-07)
+
+Twenty actual native read failures and three invalid navigation commands are fixed
+without fabricated history, financial policy changes or source repair. Only those
+23primary contexts continue after one preserving upgrade; three necessary retained
+comparison transitions follow in a separate diagnostic continuation. Full20source
+and32field rows exact;12new managed outcomes pass in recorded lineage, strictWindows/
+fullOffline384/408/1608/native192/204/804 pass. Original root/public state restores,
+freshUID/officialAVD retires and six standard Cleans pass; all new roots under artifacts,
+no frozen/phone/retained5606/native-record action. Fullb1410682 prepared, not Main-
+installed; ARM64/fault/ANR/performance/security/platform gates and goal remain open.
+[Evidence](src/Apps/Zanance/docs/quality/original-calendar-read-boundaries.md).
+
 ## D-931 - Readable interactive excluded forecast rows (2026-11-07)
 
 Only ForecastPage whole-row opacity is removed after actual native contrast failures

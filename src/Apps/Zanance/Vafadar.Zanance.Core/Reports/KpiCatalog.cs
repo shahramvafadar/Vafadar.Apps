@@ -384,7 +384,10 @@ public static class KpiCatalog
                 continue;
             }
 
-            var outstanding = LoanCalculator.Outstanding(loan.Type, LedgerCalculator.Balance(loan, entries, from.AddDays(-1)));
+            // D-932: no opening observation predates DateOnly.MinValue. This is
+            // the same zero-before-time convention as the original period report.
+            var previousBalance = from == DateOnly.MinValue ? 0 : LedgerCalculator.Balance(loan, entries, from.AddDays(-1));
+            var outstanding = LoanCalculator.Outstanding(loan.Type, previousBalance);
             foreach (var plan in plans)
             {
                 foreach (var occurrence in Occurrences.Between(plan, stateList, from, to, today).Where(o => o.Status != OccurrenceView.Skipped && o.Amount is not null))

@@ -77,11 +77,15 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         _dates = dates;
         _localization = localization;
         _time = time;
-        PeriodNames = [translator["Period_ThisMonth"], translator["Period_LastMonth"]];
         ScopeText = string.Empty;
     }
 
-    public IReadOnlyList<string> PeriodNames { get; }
+    private bool _hasPreviousPeriod = true;
+
+    /// <summary>Gets only periods that actually exist in the selected calendar.</summary>
+    public IReadOnlyList<string> PeriodNames => _hasPreviousPeriod
+        ? [_translator["Period_ThisMonth"], _translator["Period_LastMonth"]]
+        : [_translator["Period_ThisMonth"]];
 
     /// <summary>Gets complete currency totals without disconnecting every native amount row during a reload.</summary>
     public SnapshotCollection<CurrencyTotal> Balances { get; } = [];
@@ -333,6 +337,9 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var settings = templateReview.Settings ?? new ZananceSettings();
         _reportCurrency = settings.ReportCurrencyCode;
         _startDay = settings.MonthStartDay;
+        // D-932: do not offer a fictitious month before the selected calendar begins.
+        _hasPreviousPeriod = PeriodMath.PreviousCompleteMonthsRange(today, Calendar, _startDay, 1) is not null;
+        OnPropertyChanged(nameof(PeriodNames));
         var (from, to) = PeriodRange(today);
 
         var allAccounts = templateReview.Accounts.OrderBy(a => a.IsArchived).ThenBy(a => a.SortOrder).ThenBy(a => TemplateNavigationViewModel.StoredNameOrderKey(a.Name), StringComparer.Ordinal).ToList();
@@ -466,7 +473,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         {
             var row = presenter.Row(entry);
             var day = entry.Date == today ? _translator["Common_Today"]
-                : entry.Date == today.AddDays(-1) ? _translator["Home_Yesterday"]
+                : today != DateOnly.MinValue && entry.Date == today.AddDays(-1) ? _translator["Home_Yesterday"]
                 : _dates.Format(entry.Date, DateFormatStyle.DayMonth);
             recentRows.Add(row with { Subtitle = $"{day} · {row.Subtitle}" });
         }
@@ -665,7 +672,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             Due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, Occurrences.DueRangeStart(s, states)))
                 .Where(o => work.AllowsOccurrence(o, today)).ToList(),
             // D-930: show the remaining supported upcoming days without constructing a date after the calendar.
-            Upcoming = schedules.SelectMany(s => Occurrences.Between(s, states, today.AddDays(-400), today.AddDays(Math.Min(14, DateOnly.MaxValue.DayNumber - today.DayNumber)), today))
+            Upcoming = schedules.SelectMany(s => Occurrences.Between(s, states, today.AddDays(-Math.Min(400, today.DayNumber)), today.AddDays(Math.Min(14, DateOnly.MaxValue.DayNumber - today.DayNumber)), today))
                 .Where(o => o.IsOpen && work.AllowsOccurrence(o, today)).OrderBy(o => o.DueDate).Take(3).ToList(),
             Contracts = Core.Reminders.ContractReminderPlanner.Upcoming(allSchedules, today),
             Next30 = Core.Reports.KpiCatalog.Commitments(accounts.Values, schedules, states, today)

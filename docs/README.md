@@ -1,5 +1,10 @@
 # Documentation
 
+[Original calendar reads D932](../src/Apps/Zanance/docs/quality/original-calendar-read-boundaries.md)
+records actual missing-history/navigation failures,23changed original contexts and
+three retained comparison transitions, exact fictitious source and bounded cleanup.
+Physical ARM64 and broader fault/performance/security/platform gates remain open.
+
 [Excluded forecast text D931](../src/Apps/Zanance/docs/quality/excluded-forecast-row-contrast.md)
 records actual enabled-row contrast failure/correction in both themes. The original
 exclusion badge and all financial source stay unchanged; broader A11Y remains open.

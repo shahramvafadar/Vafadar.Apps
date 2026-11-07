@@ -213,6 +213,21 @@ public sealed class DateFormatterTests : IDisposable
         Assert.Equal("14 ربیع‌الثانی", CreateFormatter(AppLanguages.Persian, CalendarSystem.Hijri).Format(Date, DateFormatStyle.DayMonthShort));
     }
 
+    /// <summary>A real raw-date baseline before the Hijri epoch keeps its ISO identity in every report date style.</summary>
+    [Theory]
+    [InlineData(DateFormatStyle.Short)]
+    [InlineData(DateFormatStyle.Long)]
+    [InlineData(DateFormatStyle.MonthYear)]
+    [InlineData(DateFormatStyle.DayMonth)]
+    [InlineData(DateFormatStyle.DayMonthShort)]
+    public void Day_before_Hijri_epoch_is_formatted_without_inventing_a_calendar_date(DateFormatStyle style)
+    {
+        var first = Vafadar.Core.Dates.LunarHijri.ToDate(1, 1, 1);
+        var previous = first.AddDays(-1);
+        var formatter = CreateFormatter(AppLanguages.English, CalendarSystem.Hijri);
+        Assert.Equal(previous.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), formatter.Format(previous, style));
+    }
+
     private static DateFormatter CreateFormatter(AppLanguage language, CalendarSystem calendar)
     {
         var service = new LocalizationService(new LocalizationOptions(), new InMemorySettingsStore(), new Translator());
