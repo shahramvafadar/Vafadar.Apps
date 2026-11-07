@@ -664,7 +664,8 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         {
             Due = schedules.SelectMany(s => Occurrences.OpenUpTo(s, states, today, Occurrences.DueRangeStart(s, states)))
                 .Where(o => work.AllowsOccurrence(o, today)).ToList(),
-            Upcoming = schedules.SelectMany(s => Occurrences.Between(s, states, today.AddDays(-400), today.AddDays(14), today))
+            // D-930: show the remaining supported upcoming days without constructing a date after the calendar.
+            Upcoming = schedules.SelectMany(s => Occurrences.Between(s, states, today.AddDays(-400), today.AddDays(Math.Min(14, DateOnly.MaxValue.DayNumber - today.DayNumber)), today))
                 .Where(o => o.IsOpen && work.AllowsOccurrence(o, today)).OrderBy(o => o.DueDate).Take(3).ToList(),
             Contracts = Core.Reminders.ContractReminderPlanner.Upcoming(allSchedules, today),
             Next30 = Core.Reports.KpiCatalog.Commitments(accounts.Values, schedules, states, today)

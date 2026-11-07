@@ -519,7 +519,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             var events = await Task.FromResult(Inputs.AssetEvents);
             var values = Core.Holdings.AssetValuationService.Values(await Task.FromResult(Inputs.AssetTypes), events, await Task.FromResult(Inputs.AssetValuations), Today);
             holdingsWithoutPrice = values.Count(v => v.Quantity > 0 && v.Value is null);
-            var forecasts = Core.Forecasts.ForecastCalculator.Compute(_accounts, entries, await Task.FromResult(Inputs.Schedules), await Task.FromResult(Inputs.OccurrenceStates), Today, Today.AddDays(30));
+            var forecasts = Core.Forecasts.ForecastCalculator.Compute(_accounts, entries, await Task.FromResult(Inputs.Schedules), await Task.FromResult(Inputs.OccurrenceStates), Today, Today.AddDays(Math.Min(30, DateOnly.MaxValue.DayNumber - Today.DayNumber)));
             unknownAmounts = forecasts.Sum(f => f.UnknownCount);
         }
 

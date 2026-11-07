@@ -1,5 +1,9 @@
 # Documentation
 
+[Original calendar endpoint pages D930](../src/Apps/Zanance/docs/quality/original-calendar-horizon-pages.md)
+records two real page failures, one preserving correction and both original Ready
+results, with exact fictitious source and no financial replay. ARM64 and broader gates remain.
+
 [Generated-output cleanup,7November2026](../src/Apps/Zanance/docs/quality/generated-output-cleanup-2026-11-07.md)
 records the owner-requested bulk/empty-directory cleanup, exact D927 retirement,
 merged branch removal, preserved artifacts and explicit policy-blocked residuals.

@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## D-930 - Original upper-calendar page publication (2026-11-07)
+
+Actual original Home/Reports fail before projection correction and pass after one
+preserving private upgrade, same complete20source/UIDCEDE and no fixture/financial
+replay. Clamp only unavailable forward display/attention ranges; amounts, notification
+delivery and financial policy remain.3newCore+1affected, strictWindows/fullOffline and
+original x64 pages pass;4native/3shipping source bindings. Fresh cohort officially
+retires, five standard Cleans, no supplemental/frozen action. Full24296d0a prepared,
+not Main-installed. ARM64/lower-calendar/fault/ANR/broader gates remain open; goal active.
+[Evidence](src/Apps/Zanance/docs/quality/original-calendar-horizon-pages.md).
+
 ## D-929 - Original KPI calendar horizons (2026-11-07)
 
 Forward commitment/yearly horizons retain the last supported due day without calendar

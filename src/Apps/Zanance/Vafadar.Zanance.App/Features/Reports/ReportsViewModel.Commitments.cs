@@ -78,7 +78,8 @@ public sealed partial class ReportsViewModel
         var states = await Task.FromResult(Inputs.OccurrenceStates);
 
         // K02 and headroom: usable accounts, the next 30 days, protected money and the day-to-day estimate if set.
-        var forecasts = ForecastCalculator.Compute(_accounts, entries, schedules, states, today, today.AddDays(30));
+        // D-930: the original report must reach its final valid commitments before any range exhausts the calendar.
+        var forecasts = ForecastCalculator.Compute(_accounts, entries, schedules, states, today, today.AddDays(Math.Min(30, DateOnly.MaxValue.DayNumber - today.DayNumber)));
         var protectedMoney = LiquidityCalculator.ProtectedMoney(await Task.FromResult(Inputs.Goals), await Task.FromResult(Inputs.GoalAllocations), _accounts, entries, today);
         _liquidity = LiquidityCalculator.Compute(forecasts, protectedMoney, today, _settings.EssentialEstimate, _settings.EssentialEstimatePeriod, _settings.EssentialEstimateCurrency)
             .FirstOrDefault(l => string.Equals(l.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase));

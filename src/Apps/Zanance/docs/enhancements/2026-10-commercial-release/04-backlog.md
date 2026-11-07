@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-930 - Original upper-calendar Home/Reports ready (2026-11-07)
+
+Both original pages actually fail with ArgumentOutOfRange on fresh4065/UID10216,
+complete20source unchanged. Home14day, Reports30day and contract attention horizons
+retain the supported remainder;3newCore failures→passes plus1affected pass. One
+no-reset upgrade/read-only adoption to5013 keeps UIDCEDE/source exact, no preparation
+or financial replay. Both original pages Ready; current report exposes totals and
+plan name in2XML57863bytes after one unfinished scroll. Four native/three shipping
+compiler bindings, strictWindows/fullOffline384/408/1608 and private192/204/804 pass.
+Only freshUID/ownAVD24files4631770373logicalbytes retire, five standard Cleans pass;
+used evidence retained under repository artifacts, no supplemental/frozen action.
+Full24296d0a is prepared, not Main-installed. Actual ARM64/lower-calendar/fault/ANR/
+wholeperformance/broader gates remain; goal active.
+[Original failures, preserving correction and limits](../../quality/original-calendar-horizon-pages.md).
 ## D-929 - KPI commitment horizon correction (2026-11-07)
 
 Six new original host failures establish forward-day/year horizons beyond the

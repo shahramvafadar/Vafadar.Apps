@@ -64,7 +64,8 @@ public static class ContractReminderPlanner
     public static IReadOnlyList<(Schedule Schedule, ContractDateKind Kind, DateOnly Date)> Upcoming(IEnumerable<Schedule> schedules, DateOnly today, int days = 30)
     {
         ArgumentNullException.ThrowIfNull(schedules);
-        var until = today.AddDays(days);
+        // D-930: attention includes a valid final-day deadline even when its forward horizon is unavailable.
+        var until = days > DateOnly.MaxValue.DayNumber - today.DayNumber ? DateOnly.MaxValue : today.AddDays(days);
         return
         [
             .. schedules

@@ -1,5 +1,9 @@
 # KPI calendar horizon endpoints (D-929)
 
+Subsequent [D930 original page qualification](original-calendar-horizon-pages.md)
+corrects the earlier original Home/Reports pre-projection failures and admits both
+upper-calendar Ready outcomes. The SDK-only scope below remains separately dated.
+
 ## Original failures and correction
 
 Six new host cases all fail on the original KpiCatalog: three commitment horizons
