@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-929 - KPI commitment horizon correction (2026-11-07)
+
+Six new original host failures establish forward-day/year horizons beyond the
+supported calendar. Clamp only the unavailable remainder and retain the final valid
+payment, original partial amount/state/reference and earlier-year behavior. Sixnew+
+twoaffected host cases, strictWindows/fullOffline384AOT408ELF1608LOAD and six actual
+SDK-only API36/x64 outcomes pass. No Activity/Data/financial source or writer.
+Fresh package/own emulator officially retire;24AVDfiles4364317941logicalbytes and
+four standard Cleans, no supplemental/frozen/old-success replay. Used signed/source/
+compiler/results remain, all new roots under repository artifacts. Full shipping
+9714ef2f is prepared, not Main-installed. ARM64/original endpoint presentation and
+underlying fault/ANR/wholeperformance/broader gates remain open; goal active.
+[Original failures, runtime outcomes and limits](../../quality/kpi-calendar-horizon-endpoints.md).
 ## D-927 - Original loan calendar large-text cohort completed (2026-11-07)
 
 Existing72 distinct x64 native contexts cover both original pages, six languages,

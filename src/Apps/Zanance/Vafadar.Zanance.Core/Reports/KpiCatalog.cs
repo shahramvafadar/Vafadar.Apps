@@ -269,7 +269,8 @@ public static class KpiCatalog
         ArgumentNullException.ThrowIfNull(schedules);
         var byId = accounts.ToDictionary(a => a.Id);
         var stateList = states.ToList();
-        var horizon = today.AddDays(days);
+        // D-929: a valid final-day payment stays reportable when the requested horizon exceeds the calendar.
+        var horizon = days > DateOnly.MaxValue.DayNumber - today.DayNumber ? DateOnly.MaxValue : today.AddDays(days);
         var items = new List<CommitmentItem>();
         foreach (var schedule in PlanActions.InForce(schedules))
         {
@@ -309,7 +310,8 @@ public static class KpiCatalog
         var byId = accounts.ToDictionary(a => a.Id);
         var categoryById = categories.ToDictionary(c => c.Id);
         var stateList = states.ToList();
-        var to = today.AddMonths(12).AddDays(-1);
+        // D-929: retain the complete supported remainder; never subtract a day from a clamped exclusive end.
+        var to = today.Year == DateOnly.MaxValue.Year ? DateOnly.MaxValue : today.AddMonths(12).AddDays(-1);
         var plans = new List<(string Currency, YearlyPlan Plan)>();
         foreach (var schedule in PlanActions.InForce(schedules).Where(s => s.Kind == EntryKind.Expense))
         {

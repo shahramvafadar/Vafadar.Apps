@@ -1,5 +1,15 @@
 # AGENTS.md – working rules for this repository
 
+## D-929 - Original KPI calendar horizons (2026-11-07)
+
+Forward commitment/yearly horizons retain the last supported due day without calendar
+overflow; original amounts/partial states/earlier years/financial policy stay unchanged.
+Six new host failures then passes, two affected cases, strictWindows/fullOffline and
+six actual SDK-only x64 outcomes pass. Fresh cohort officially retires; four standard
+Cleans complete, no supplemental/frozen/financial replay. Physical ARM64 and original
+Home/Reports endpoint presentation remain separate; prepared full9714ef2f is not
+Main-installed. Goal active. [Evidence](src/Apps/Zanance/docs/quality/kpi-calendar-horizon-endpoints.md).
+
 ## Development resumed by owner (2026-11-07)
 
 The owner explicitly resumes the full delivery goal after cleanup. Continue ready
