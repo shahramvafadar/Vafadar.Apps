@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## D-934 - Original archived-category contrast accepted unchanged (2026-11-07)
+
+Opacity0.6 is not a defect by itself: actual original enabled row normal16text passes
+4.780355Light/5.662671Dark after text/card composition over the resolved original page.
+Two new native contexts/full20source and original compiler binding pass; no category/
+financial action or product/palette/style change. Root/System/public state restores,
+freshUID/officialAVD retires and two standard Cleans pass. No old suite, Windows/full-
+shipping build, phone/frozen/retained5606/native-record action. This finite contrast
+question closes without a patch; broader gates and overall goal remain open.
+[Evidence](src/Apps/Zanance/docs/quality/original-archived-category-contrast.md).
+
 ## D-933 - Original budget/review read boundaries (2026-11-07)
 
 Original budget neighbors validate actual periods before navigation/copy preparation;

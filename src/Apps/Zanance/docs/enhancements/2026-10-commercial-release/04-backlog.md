@@ -1,5 +1,21 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-934 - Original enabled archived row contrast passes unchanged (2026-11-07)
+
+Two actual original Category contexts pass normal16text4.780355Light/5.662671Dark
+with native text/card alpha0.6, resolved page surfaces, enabled original overlay
+command/row and full text/bounds/ellipsis0. Source20exact/one archived category,
+account/entry/schedule0; no Open/Archive/Restore/Merge/financial action or successful
+old matrix replay. Page/VM/palette unchanged and original compiler binding exact;
+no product edit, managed test or Windows/full-shipping rebuild. Private192/204/804/
+offline/sign/ZIP passes. Original root/System/public state restores;2XML23270bytes
+hash-match, freshUID/officialAVD24files4558959895logicalbytes retire, two Cleans pass.
+New custom outputs under artifacts, no supplemental/frozen/phone/retainedfault/ADB
+reset action. D933soleCIin_progress/CodeQLsuccess consumed, never secondGET. Only this
+finite contrast question closes; whole A11Y/security/fault/ANR/performance/ARM64/
+platform/provider/release and full delivery goal remain open.
+[Original archived category contrast](../../quality/original-archived-category-contrast.md).
+
 ## D-933 - Original budget/review calendar read batch complete (2026-11-07)
 
 Original15native contexts show9failures/3wrong previous commands/3accepted review

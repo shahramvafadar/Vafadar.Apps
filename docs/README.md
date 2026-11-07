@@ -1,5 +1,9 @@
 # Documentation
 
+[Original archived category contrast D934](../src/Apps/Zanance/docs/quality/original-archived-category-contrast.md)
+records two actual enabled-row contrast passes with the existing archived treatment,
+exact source and scoped retirement. No product patch or old successful suite follows.
+
 [Original budget/review reads D933](../src/Apps/Zanance/docs/quality/original-budget-review-read-boundaries.md)
 records original neighbor/copy and early-review failures,12corrected native contexts,
 two retained reads and exact fictitious source. ARM64 and broader delivery gates remain.
