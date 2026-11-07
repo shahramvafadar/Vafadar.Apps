@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-936 - Original plan/occurrence read boundaries corrected (2026-11-07)
+
+Four failed original reads/three wrong NotFound cases now pass in six-plus-one
+native binary lineage, not seven on final APK. Exact original occurrence identity,
+complete due lower bound and representable read horizons preserve payment policy.
+Explicit first-day detail read is valid while empty identity/file/source/writer
+checks remain.3new managed outcomes in lineage, fullrawtable/source20 exact;
+strictWindows/fullOffline384/408/1608 and original compiler bindings pass. Two
+necessary no-reset upgrades, one metadata setup/ledger0, no successful financial/
+old-suite replay. Root/OS restores,8XML200402bytes hash-match, freshUID/officialAVD
+retires and five standard Cleans pass. Command/observer failures retained; no
+phone/retainedfault/frozen action. Full8dd64471 prepared, not Main-installed; ARM64/
+broader gates and full delivery goal remain open.
+[Evidence](src/Apps/Zanance/docs/quality/original-plan-read-boundaries.md).
+
 ## D-935 - Current calendar ARM64 contracts accepted (2026-11-07)
 
 Only21unqualified Core/localization memory contracts execute once on Samsung36/

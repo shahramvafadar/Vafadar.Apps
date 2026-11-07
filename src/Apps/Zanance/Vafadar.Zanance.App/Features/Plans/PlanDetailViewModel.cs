@@ -216,10 +216,13 @@ public sealed partial class PlanDetailViewModel(
             lines.Add(new DetailLine(translator["Entry_Note"], schedule.Note));
         }
 
+        // D-936: a read horizon must preserve endpoint dates and all due overrides,
+        // rather than excluding a legitimate overdue item with an arbitrary lookback.
+        var through = today.Year <= 9997 ? today.AddYears(2) : DateOnly.MaxValue;
         var upcoming = new List<OccurrenceRow>();
         if (schedule.State == ScheduleState.Active)
         {
-            foreach (var occurrence in Occurrences.Between(schedule, states, today.AddDays(-400), today.AddYears(2), today)
+            foreach (var occurrence in Occurrences.Between(schedule, states, Occurrences.DueRangeStart(schedule, states), through, today)
                          .Where(o => o.IsOpen && snapshot.Work.Work.AllowsOccurrence(o, today)).Take(6))
             {
                 upcoming.Add(Row(occurrence, text, currency, colors));
@@ -227,7 +230,7 @@ public sealed partial class PlanDetailViewModel(
         }
 
         var history = new List<OccurrenceRow>();
-        foreach (var occurrence in Occurrences.Between(schedule, states, DateOnly.MinValue, today.AddYears(2), today).Where(o => !o.IsOpen).Reverse().Take(12))
+        foreach (var occurrence in Occurrences.Between(schedule, states, DateOnly.MinValue, through, today).Where(o => !o.IsOpen).Reverse().Take(12))
         {
             history.Add(Row(occurrence, text, currency, colors));
         }

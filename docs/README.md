@@ -1,5 +1,9 @@
 # Documentation
 
+[Original plan/occurrence reads D936](../src/Apps/Zanance/docs/quality/original-plan-read-boundaries.md)
+records seven actual endpoint/moved-date failures and corrected original pages,
+full source preservation, strict builds and scoped retirement. Broader gates remain.
+
 [Current calendar ARM64 D935](../src/Apps/Zanance/docs/quality/current-calendar-arm64.md)
 records21distinct original memory contracts on Samsung ARM64, exact public-state
 preservation and fresh-package retirement. Original UI and broader gates remain.

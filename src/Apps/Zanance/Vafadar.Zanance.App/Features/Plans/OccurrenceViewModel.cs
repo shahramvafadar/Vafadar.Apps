@@ -249,9 +249,9 @@ public sealed partial class OccurrenceViewModel(
         var schedule = original.Schedule; _file = original.DatabasePath;
         var states = await plans.GetStatesAsync(scheduleId);
 
-        // The due date may have been moved away from the original date; search around it.
-        var loaded = schedule is null ? null : Occurrences.Between(schedule, states, originalDate.AddDays(-400), originalDate.AddDays(400), Today)
-            .FirstOrDefault(o => o.OriginalDate == originalDate);
+        // D-936: the route identifies the original occurrence, independently of how
+        // far its due date moved. A due-date search window must not hide that identity.
+        var loaded = schedule is null ? null : Occurrences.Find(schedule, states, originalDate, Today);
         NotFound = loaded is null;
         if (loaded is null || schedule is null)
         {
@@ -300,7 +300,11 @@ public sealed partial class OccurrenceViewModel(
         var presenter = new EntryPresenter(accounts, categories, translator, culture);
         if (IsOpen)
         {
-            var entries = await store.GetEntriesAsync(occurrence.DueDate.AddDays(-10), occurrence.DueDate.AddDays(10));
+            // Clip only the suggestion window; keep the original due date and matching policy.
+            var due = occurrence.DueDate;
+            var from = due.AddDays(-Math.Min(10, due.DayNumber));
+            var through = due.AddDays(Math.Min(10, DateOnly.MaxValue.DayNumber - due.DayNumber));
+            var entries = await store.GetEntriesAsync(from, through);
             foreach (var candidate in PlanActions.LinkCandidates(occurrence, entries).Take(5))
             {
                 Candidates.Add(presenter.Row(candidate) with { Subtitle = dates.Format(candidate.Date, DateFormatStyle.Long) });

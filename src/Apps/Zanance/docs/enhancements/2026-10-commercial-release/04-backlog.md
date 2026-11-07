@@ -1,5 +1,22 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-936 - Original plan/occurrence read batch complete (2026-11-07)
+
+Seven original baseline contexts show4failed reads/3wrongNotFound on valid moved
+occurrences. Exact original identity and bounded suggestion/detail horizons fix
+six; explicit first-day detail source guard fixes the remaining one. Six successes
+on5382 remain, only failed minimum-day continues6169, sameUID10216/boot/source20.
+No claim all7onfinalAPK.3new managed outcomes pass in lineage/fullrawtable equality,
+strictWindows/fullOffline384/408/1608/private192/204/804 and source bindings pass.
+Full8dd64471 prepared, not Main-installed. Only one opening0account/seven unpaid
+plans/three overrides setup; entry0 and no financial writer/auth/photo/old-suite
+replay. Inlinecover observer/globalRID/PRI/Clean-asset failures retained; only
+unfinished work continues. Root/OS/source exact,8XML200402bytes hash-match, freshUID/
+officialAVD24files4839650527logicalbytes retire, five standard Cleans pass. No new
+external root/supplemental/frozen/retainedfault/phone action. Wholefault/ANR/speed/
+security/A11Y/ARM64/platform/provider/release and delivery goal remain open.
+[Original plan/occurrence read boundaries](../../quality/original-plan-read-boundaries.md).
+
 ## D-935 - Remaining current calendar ARM64 outcomes accepted (2026-11-07)
 
 Twenty-one distinct D929/D930/D932 Core/localization contracts pass once on actual

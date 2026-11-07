@@ -71,7 +71,9 @@ public sealed partial class PlanStore
     public async Task<PlanDetailSnapshot> ReadDetailSnapshotAsync(Guid planId, DateOnly today,
         Func<string, bool>? acceptsFile = null, CancellationToken ct = default)
     {
-        if (planId == Guid.Empty || today == default) throw new ArgumentException("The original plan identity and day are required.");
+        // D-936: this explicit nonnullable read day can be DateOnly.MinValue;
+        // absence is represented by the empty identity, not by a valid calendar day.
+        if (planId == Guid.Empty) throw new ArgumentException("The original plan identity is required.", nameof(planId));
         await using var db = await contextFactory.CreateDbContextAsync(ct); var path = DatabaseFileIdentity.ConfiguredPath(db);
         if (acceptsFile?.Invoke(path) == false) throw new InvalidOperationException("The original plan detail cannot follow another file.");
         var access = new CommercialFileAccess(commercialAccess, path); access.DemandFeature(CommercialFeature.History);
