@@ -1,5 +1,20 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-931 - Original excluded forecast row readable (2026-11-07)
+
+Enabled original excluded-row alpha0.45 makes all four text roles fail4.5contrast
+in Light/Dark. Only XAML row opacity is removed; existing translated badge/commands/
+layout/palette/calculations remain. Two baseline and two changed native contexts
+prove alpha1 and all eight corrected pairs≥4.5 with exact20source, original rights
+and UIDCEDE preserved through one no-reset upgrade. One unsaved scenario input is
+reinstated for the changed view, not claimed as ordinary process-death persistence.
+StrictWindows/fullOffline384/408/1608/private192/204/804 and three original VM compiler
+bindings pass;0new unit tests/financial saves/old-success replay. FreshUID/officialAVD
+24files4740625687logicalbytes and four standard Cleans complete, no supplemental/
+frozen action; all new outputs under repository artifacts. Full73c4c0f5 prepared,
+not Main-installed. ARM64/broader A11Y/security/fault/ANR/performance/platform/provider/
+release remain open; goal active. D930sole4workflows completed-success, no secondGET.
+[Actual native contrast and unchanged state](../../quality/excluded-forecast-row-contrast.md).
 ## D-930 - Original upper-calendar Home/Reports ready (2026-11-07)
 
 Both original pages actually fail with ArgumentOutOfRange on fresh4065/UID10216,

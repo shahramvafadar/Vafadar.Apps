@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## D-931 - Readable interactive excluded forecast rows (2026-11-07)
+
+Only ForecastPage whole-row opacity is removed after actual native contrast failures
+in both themes; original translated exclusion badge, commands, palette/layout and
+financial source remain. Two changed contexts pass alpha1/all4textroles≥4.5, exact20
+source and current original rights; one preserving upgrade, no financial/Snapshot
+Save or old successful matrix replay. Strict builds and three original VM compiler
+bindings pass. Fresh cohort officially retires, four standard Cleans, no supplemental/
+frozen action. Full73c4c0f5 prepared, not Main-installed; ARM64/broader gates and goal
+remain open. [Evidence](src/Apps/Zanance/docs/quality/excluded-forecast-row-contrast.md).
+
 ## D-930 - Original upper-calendar page publication (2026-11-07)
 
 Actual original Home/Reports fail before projection correction and pass after one

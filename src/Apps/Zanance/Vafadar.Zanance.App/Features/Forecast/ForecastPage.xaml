@@ -95,7 +95,8 @@
                                     </BindableLayout.EmptyView>
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate x:DataType="local:ForecastRow">
-                                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto" Opacity="{Binding Opacity}">
+                                            <!-- D-931: this row stays interactive; its existing status badge marks exclusion without dimming text. -->
+                                            <Grid Style="{StaticResource ListRow}" ColumnDefinitions="Auto,*,Auto">
                                                 <Label Text="{Binding DateText}" Style="{StaticResource Secondary}" VerticalOptions="Center" />
                                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                                     <Label Text="{Binding Name}" />
