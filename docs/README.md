@@ -1,5 +1,8 @@
 # Documentation
 
+[Original metadata publication D966](../src/Apps/Zanance/docs/quality/analysis-metadata-publication.md) records14original failures,17new/31affected host and17native contracts with coherent metadata,
+resource/draft ownership, full source preservation and explicit intermediate build/observer limits.
+
 [Original analysis language publication D965](../src/Apps/Zanance/docs/quality/analysis-language-publication.md) fixes11actual original failures with13new/18affected host and13native contracts,
 immutable historical text and full fictitious source preserved. [CI admission evidence](../src/Apps/Zanance/docs/quality/ci-internal-service-failures.md) records GitHub internal server errors without failed-code inference or reruns.
 

@@ -1,5 +1,14 @@
 # AGENTS.md – working rules for this repository
 
+## D-966 - Coherent original analysis metadata and quote ownership
+
+[Metadata publication](src/Apps/Zanance/docs/quality/analysis-metadata-publication.md) corrects14original valid-input failures across explicit observer lineages;
+17new+31affected host and same17native model conditions pass. Complete metadata
+stages before notification; incomplete/obsolete feedback has no follow-up authority,
+resource ownership and newer drafts survive. Full54typed source/zero primary and
+financial effects, strict final builds and owned retirement qualify only this scope.
+D944phone/Main/retained/frozen and all canonical parent/broader gates remain open.
+
 ## D-965 - Original language feedback and preview invalidation ownership (2026-11-09)
 
 13initial harness inputs refused original digest for missing totals; guard unchanged,

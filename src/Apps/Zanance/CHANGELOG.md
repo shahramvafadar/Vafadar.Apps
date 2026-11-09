@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-966: keep provider, balance and retained analysis results consistent during reload; stop outdated quote feedback after leaving or editing, and require a complete metadata refresh before follow-up.
+
 - D-965: keep historical analysis results intact when switching language, stop obsolete language feedback after leaving the page, and preserve a newer preview during an older refresh.
 
 - D-863: reject quantity fractions that were rounded away during input parsing, and calculate supported weights and fine-metal masses without intermediate overflow; preserve final limits and unknown values.

@@ -36,3 +36,10 @@ responses and extracted failure/correlation fields are retained in
 errors. A legitimate subsequent changed commit gets its own once-only check;
 that is not a rerun of a successful job. Full CI/security/release acceptance stays
 unproved, and the complete delivery goal remains active.
+
+## Subsequent changed commit - D965 once-only status
+
+At2026-11-09T19:31:07Z,927.004497seconds after observed push, one head-statusGET
+records [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42681635125) in_progress and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42681634859) completed-success. Raw response/exclusive consumed marker/receipt remain in the
+D965root. No second request or successful log/rerun occurs; this observation is
+not full CI acceptance or a diagnosis of an unreported failure.

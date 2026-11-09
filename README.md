@@ -108,6 +108,7 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Analysis metadata/quote D966](src/Apps/Zanance/docs/quality/analysis-metadata-publication.md) | Coherent metadata, guarded follow-up and preserved draft/resource ownership; original-model scope |
 | [Analysis language/invalidation D965](src/Apps/Zanance/docs/quality/analysis-language-publication.md) | Current-owner feedback, immutable historical packet/text and preservation of newer local previews |
 | [Analysis loaded form D964](src/Apps/Zanance/docs/quality/analysis-input-large-text.md) | Native large-text account/date/option captions and input errors; source/observer lineage limits remain explicit |
 | [Account Load D963](src/Apps/Zanance/docs/quality/analysis-account-load-publication.md) | Late publication/file defaults, retained selection and exact fictitious source |

@@ -1,5 +1,7 @@
 # 03 – UX design
 
+D-966: analysis metadata bindings see one coherent provider/balance/history snapshot. A failed or interrupted refresh grants no follow-up authority; preserve current draft/language and allow explicit Retry. [Original-model evidence](quality/analysis-metadata-publication.md) does not replace actual page/provider/security acceptance.
+
 D-965: language refresh may translate analysis feedback/status, but historical request
 JSON and untrusted result text remain unchanged. Remove old sharing authority before
 fallible notifications; an obsolete refresh stops after owner/draft/language changes

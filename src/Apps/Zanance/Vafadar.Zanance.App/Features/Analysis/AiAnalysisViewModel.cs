@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using PropertyChangingEventArgs = System.ComponentModel.PropertyChangingEventArgs;
+using PropertyChangedEventArgs = System.ComponentModel.PropertyChangedEventArgs;
 using System.Net;
 using System.Text.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -42,6 +44,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private bool active;
     private long choiceEpoch;
     private bool operationActive, readingSource, rootRetired;
+    private bool metadataReady, stagingMetadata;
     private CancellationTokenSource? visible;
     private Func<bool>? ownsRoot;
     private bool OwnsPresentation => active && !rootRetired && (ownsRoot?.Invoke() ?? true);
@@ -98,12 +101,12 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Explicit metadata check is separate from local preparation.</summary>
     public bool CanCheckProvider => OwnsPresentation && Loaded && !HasPendingOperation && runtime.NetworkAvailable;
     /// <summary>Gets whether metadata-only original terms can be requested.</summary>
-    public bool CanQuote => OwnsPresentation && !HasPendingOperation && review is not null && remote is not null && availability?.Configured == true && !Pending;
+    public bool CanQuote => OwnsPresentation && !HasPendingOperation && review is not null && metadataReady && remote is not null && availability?.Configured == true && !Pending;
     /// <summary>Gets whether current literal terms and actual available quantities permit a request attempt; the service rechecks authority.</summary>
     public bool CanSend => CanQuote && offer is not null && availability is not null &&
         checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= offer.MaximumUnits;
     /// <summary>Gets whether an existing private original request needs explicit continuation or closure.</summary>
-    public bool CanContinue => OwnsPresentation && !HasPendingOperation && remote is not null && Pending;
+    public bool CanContinue => OwnsPresentation && !HasPendingOperation && metadataReady && remote is not null && Pending;
     private bool Pending => retained is not null && (retained.Result is null || retained.Result.State == AiRequestState.Pending);
     partial void OnFromChanged(DateOnly value) => Invalidate();
     partial void OnToChanged(DateOnly value) => Invalidate();
@@ -135,7 +138,15 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         Refresh(); Validate(original);
     }
     /// <summary>Stops pending native/network publication into a departed profile/form while preserving private continuation.</summary>
-    public void Retire() { local.Changed -= OnLanguageChanged; frameEpoch++; active = false; visible?.Cancel(); visible?.Dispose(); visible = null; Loaded = false; choiceEpoch++; Invalidate(); remote?.Dispose(); remote = null; Refresh(); }
+    public void Retire()
+    {
+        // Detach before any callback/disposal can reenter retirement or adopt a newer connection.
+        var detached = remote; remote = null; metadataReady = false;
+        local.Changed -= OnLanguageChanged; frameEpoch++; active = false;
+        visible?.Cancel(); visible?.Dispose(); visible = null;
+        try { Loaded = false; choiceEpoch++; Invalidate(); }
+        finally { detached?.Dispose(); Refresh(); }
+    }
     /// <summary>Loads actual account choices only, with no HTTP, automatic selection, settings write or model run.</summary>
     [RelayCommand] public async Task LoadAsync()
     {
@@ -143,7 +154,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         local.Changed -= OnLanguageChanged; local.Changed += OnLanguageChanged;
         frameEpoch++; active = true; visible ??= new(); var ct = visible.Token; var original = ++epoch;
         var selected = Accounts.Where(a => a.Selected).Select(a => a.Id).ToHashSet(); var oldFile = scope?.File;
-        readingSource = true; operationActive = true;
+        readingSource = true; operationActive = true; metadataReady = false;
         try
         {
             StartOperation(original); Loaded = false; Validate(original);
@@ -249,19 +260,68 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     [RelayCommand] public async Task CheckProviderAsync()
     {
         if (!CanCheckProvider || scope is null) return;
-        var version = epoch; var originalFile = scope.File; operationActive = true; IAiRemote? opened = null;
+        var version = epoch; var originalFile = scope.File; operationActive = true; metadataReady = false; IAiRemote? opened = null;
         try
         {
             StartOperation(version); offer = null;
             opened = await runtime.OpenAsync(originalFile, CancellationToken.None); Validate(version);
             var status = await opened.AvailabilityAsync(CancellationToken.None); Validate(version);
             var saved = await opened.ReadAsync(CancellationToken.None); Validate(version);
-            remote?.Dispose(); remote = opened; opened = null; availability = status; retained = saved;
-            ProviderText = status.Configured ? remote.Destination : text["Ai_NoProvider"]; ShowBalance(status.Balance); ShowRecord(saved);
+            // Stage one coherent metadata snapshot before the first binding callback.
+            var destination = status.Configured || saved is not null ? opened.Destination : null; Validate(version);
+            var provider = status.Configured ? destination : text["Ai_NoProvider"];
+            var balance = BalanceCaption(status.Balance);
+            var snapshot = saved is null ? null : destination + Environment.NewLine + JsonSerializer.Serialize(saved.Submission, AiJson.Default.AiSubmission);
+            var result = saved?.Result?.Text; var state = saved is null ? null : RecordStatus(saved); Validate(version);
+            var detached = remote; remote = null;
+            if (!ReferenceEquals(detached, opened)) detached?.Dispose();
+            Validate(version);
+            PublishMetadata(version, provider, balance, snapshot, result, state, () =>
+            {
+                remote = opened; opened = null; availability = status; retained = saved;
+            });
+            // A partial/obsolete notification sequence never grants Continue/Quote/Send authority.
+            metadataReady = true;
         }
-        catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation && version == epoch) { remote?.Dispose(); remote = null; availability = null; SetError(FailureKey(error)); } }
-        finally { opened?.Dispose(); operationActive = false; readingSource = false; IsBusy = false; Refresh(); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (OwnsPresentation && version == epoch)
+            {
+                var failed = remote; remote = null; availability = null; metadataReady = false;
+                failed?.Dispose();
+                if (OwnsPresentation && version == epoch) SetError(FailureKey(error));
+            }
+        }
+        finally
+        {
+            try { opened?.Dispose(); }
+            finally { operationActive = false; readingSource = false; IsBusy = false; Refresh(); }
+        }
     }
+    // D-966: changing observers see the old complete values; changed observers see the new
+    // complete values. Revalidate after each callback, before any later publication/authority.
+    private void PublishMetadata(int version, string? provider, string? balance, string? snapshot, string? result, string? state, Action adopt)
+    {
+        var fields = new (string Name, string? Before, string? After)[]
+        {
+            (nameof(ProviderText), ProviderText, provider), (nameof(BalanceText), BalanceText, balance),
+            (nameof(ResultSnapshot), ResultSnapshot, snapshot), (nameof(ResultText), ResultText, result),
+            (nameof(ResultStatus), ResultStatus, state),
+        };
+        var changed = fields.Where(field => field.Before != field.After).Select(field => field.Name).ToArray();
+        foreach (var name in changed) { base.OnPropertyChanging(new PropertyChangingEventArgs(name)); Validate(version); }
+        stagingMetadata = true;
+        try { ProviderText = provider; BalanceText = balance; ResultSnapshot = snapshot; ResultText = result; ResultStatus = state; }
+        finally { stagingMetadata = false; }
+        adopt();
+        foreach (var name in changed) { base.OnPropertyChanged(new PropertyChangedEventArgs(name)); Validate(version); }
+        Validate(version);
+    }
+    /// <summary>Metadata assignment publishes only after the complete staged snapshot has been installed.</summary>
+    protected override void OnPropertyChanging(PropertyChangingEventArgs e) { if (!stagingMetadata) base.OnPropertyChanging(e); }
+    /// <summary>Ordinary input and accepted-result notifications keep their original behavior.</summary>
+    protected override void OnPropertyChanged(PropertyChangedEventArgs e) { if (!stagingMetadata) base.OnPropertyChanged(e); }
+
     /// <summary>Fetches explicit metadata-only original terms; the native Send confirmation still has not happened.</summary>
     [RelayCommand] public async Task QuoteAsync()
     {
@@ -270,8 +330,11 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         try
         {
             StartOperation(version); ValidateReview(version, original);
-            var terms = await connection.OfferAsync(original.Payload.Purpose, CancellationToken.None); ValidateReview(version, original); offer = terms;
-            ProviderText = text.Format("Ai_Offer", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits), terms.ExpiresAt.ToString("u", local.CurrentCulture));
+            var terms = await connection.OfferAsync(original.Payload.Purpose, CancellationToken.None); ValidateReview(version, original);
+            var caption = text.Format("Ai_Offer", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits), terms.ExpiresAt.ToString("u", local.CurrentCulture));
+            ValidateReview(version, original); offer = terms;
+            PublishMetadata(version, caption, BalanceText, ResultSnapshot, ResultText, ResultStatus, () => { });
+            ValidateReview(version, original);
             if (!CanAfford(terms)) SetError("Ai_Insufficient");
         }
         catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation && version == epoch) SetError(FailureKey(error)); }
@@ -362,7 +425,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             AiRequestState.Completed => text.Format("Ai_ResultUnits", N(record.Result.ChargedUnits)),
             AiRequestState.Refunded => text["Ai_Refunded"], AiRequestState.NotAccepted => text["Ai_NotAccepted"], _ => text["Ai_Pending"],
         };
-    private void ShowBalance(AiBalance balance) => BalanceText = text.Format("Ai_Balance", N(balance.PurchasedAvailable), N(balance.GiftedAvailable), N(balance.PurchasedReserved), N(balance.GiftedReserved));
+    private void ShowBalance(AiBalance balance) => BalanceText = BalanceCaption(balance);
+    private string BalanceCaption(AiBalance balance) => text.Format("Ai_Balance", N(balance.PurchasedAvailable), N(balance.GiftedAvailable), N(balance.PurchasedReserved), N(balance.GiftedReserved));
     private string Period(AiPeriod period) => text.Format("Ai_Summary", dates.Format(period.From, DateFormatStyle.Long), dates.Format(period.To, DateFormatStyle.Long), N(period.AccountCount), N(period.UnreviewedCount)) +
         Environment.NewLine + string.Join(Environment.NewLine, period.Totals.Select(t => text.Format("Ai_CurrencySummary", t.CurrencyCode,
             MoneyText.Format(t.NetIncome, t.CurrencyCode, local.CurrentCulture), MoneyText.Format(t.NetExpense, t.CurrencyCode, local.CurrentCulture), MoneyText.Format(checked(t.NetIncome - t.NetExpense), t.CurrencyCode, local.CurrentCulture))));

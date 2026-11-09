@@ -1,5 +1,14 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-966 - Coherent original analysis metadata and quote ownership
+
+[Metadata publication](../../quality/analysis-metadata-publication.md) corrects14original valid-input failures across explicit observer lineages;
+17new+31affected host and same17native model conditions pass. Complete metadata
+stages before notification; incomplete/obsolete feedback has no follow-up authority,
+resource ownership and newer drafts survive. Full54typed source/zero primary and
+financial effects, strict final builds and owned retirement qualify only this scope.
+D944phone/Main/retained/frozen and all canonical parent/broader gates remain open.
+
 ## D-965 - Original analysis translation and invalidation corrected
 
 [Publication evidence](../../quality/analysis-language-publication.md) fixes11original valid-input failures;13new+18affected host/same13native model

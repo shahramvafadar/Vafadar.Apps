@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-965)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-966)
+
+[D966 metadata/quote publication](../quality/analysis-metadata-publication.md) corrects14original failures across valid observer lineages, with17new+31affected host and17native model cases/full54source exact. Intermediate compilation/encoding refusals stay explicit; final strict builds pass. No primary/provider/financial replay or full parent/platform acceptance.
 
 [D965 language/invalidation](../quality/analysis-language-publication.md) corrects11original failures with13new/18affected host and13native model contracts,
 immutable historical packet/text and full54table fictitious source preserved.
