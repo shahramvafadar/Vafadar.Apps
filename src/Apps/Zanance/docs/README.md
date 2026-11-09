@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D948 fresh known-advisory audit](quality/fresh-current-package-advisories.md) matches190current offline package
+versions against all retrieved official pages:58relevant ranges, zero affected
+matches. Source/native/runtime/other-edition and whole-security gates remain open.
+No package/build/test/financial/device replay; independent delivery continues.
+
 [D947 current cipher code](quality/static-cipher-accelerated-code.md) proves bounded acceleration implementations
 are present in both packed public native modules. This rules out absent code;
 actual runtime selection, protected-startup speed and fault repair remain open.

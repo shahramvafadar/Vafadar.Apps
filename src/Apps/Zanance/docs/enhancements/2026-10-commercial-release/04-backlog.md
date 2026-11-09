@@ -14,6 +14,21 @@ freshUID retirement/final phone restoration are unfinished. Two local Cleans pas
 Do not touch this held phone cohort for independent emulator work or Main adoption.
 [Physical continuation evidence](../../quality/reconciliation-writer-arm64.md).
 
+## D-948 - Fresh known advisories matched to current offline graph (2026-11-09)
+
+Current retained assets7cd6c8cc bind190equal ARM64/x64 exact package pairs, with
+tracked dependency inputs unchanged sinceD920 and same asset hash after matching.
+Four public NuGet GETs retrieve index+all2pages; successful compressed bodies are
+reused after gzip refusal, no repeated request/restore/feed credential. Base644IDs/
+7493records and empty9Novupdate are dated as supplied. Actual SDK version engine
+matches58ranges for4known IDs;8new private boundary controls pass,0affected matches.
+This closes only fresh known-range matching for this graph, not undisclosed/native/
+runtime/other-edition/whole-security acceptance. No package update inferred. Initial
+pre-network syntax, gzip/header-loss and absent empty-pipeline artifact preserved;
+correct empty array derives from saved58rows without replay. No product/build/test/
+crypto/financial/device/frozen/cleanup change; D944held cohort/goal remain preserved.
+[Fresh current package advisory evidence](../../quality/fresh-current-package-advisories.md).
+
 ## D-947 - Actual current cipher contains bounded acceleration code (2026-11-09)
 
 Existing D943shipping/candidate5 native hashes and GNU BuildIDs bind both public
