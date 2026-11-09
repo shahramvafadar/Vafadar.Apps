@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-956 - Original conversion startup owns cleanup and source (2026-11-09)
+
+6actual startup failures/1control expose Busy leak and context-factory attempts after
+owner/external/day/language/error-clear retirement, not proof of completed old SQL.
+Startup publication inside cleanup and original Current checks fix7selected new
+cases.4corrected Android original-session cases in4643/10216/boot preserve full54
+noninternal schema/typed tables; one retained error supplies the next case without
+read/setup replay.0account/entry/plan/interaction/writer; no financial success replay.
+StrictWindows/full3844081608/private93104405/compiler bindings pass. FreshUID/
+AVD25file4420089302logicalbyte retire,5Cleans; original OS/ADB exact. No phone
+command/repeated question/Main adoption; D944held/retained/frozen/full goal preserved.
+[Conversion startup evidence](src/Apps/Zanance/docs/quality/account-conversion-startup-publication.md).
+
 ## D-955 - Snapshot native-sort cancellation stops before the next stage (2026-11-09)
 
 Two actual public-verifier failures expose peer sort5120callbacks after cancellation

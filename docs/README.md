@@ -1,5 +1,9 @@
 # Documentation
 
+[Original conversion startup D956](../src/Apps/Zanance/docs/quality/account-conversion-startup-publication.md) records6original failures,
+7focused corrected cases and4Android session outcomes with full54table/source
+preservation, complete strict packages and owned retirement, without financial replay.
+
 [Snapshot native-sort cancellation D955](../src/Apps/Zanance/docs/quality/snapshot-native-sort-cancellation.md) records the original failures,
 cooperative step-boundary correction, exact typed-source controls and two corrected
 native cases. It does not claim preemption, a speed percentage or whole-app acceptance.

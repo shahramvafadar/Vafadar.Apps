@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-956 - Original account-conversion startup correction complete
+
+6actual failures/1control become7selected passes after startup inside cleanup and
+original-owner checks after Busy/error notifications. No change to consent/writer/
+accepted receipt;0old financial success replay.4corrected native session cases keep
+54noninternal schema/typed tables exact,0accounts/entries/plans/interaction; retained
+first-case error supplies error-clear case without source preparation replay. Strict
+Windows/fullshipping/private/source bindings pass, fresh4643/10216/AVD25files/
+4420089302logicalbytes retire,5Cleans/OS/ADB exact. This is not original native page/
+ARM64/wholeDB-key/crash/performance acceptance. D944phone attempt/Main adoption held
+while owner away; frozen/retained/goal preserved.
+[Original conversion startup](../../quality/account-conversion-startup-publication.md).
+
 ## D-955 - Snapshot native-sort cancellation correction complete
 
 2actual failures are fixed by checking the original token after each native step,

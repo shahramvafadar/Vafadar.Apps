@@ -71,16 +71,19 @@ public sealed partial class AccountConversionSession(HoldingStore holdings, Tran
         bool OwnerCurrent() => !token.IsCancellationRequested && revision == Volatile.Read(ref _revision)
             && _active && _account == accountId && day == Today && display == DisplayIdentity();
         bool Current() => OwnerCurrent() && ownerCurrent();
-        IsBusy = true;
         try
         {
+            // D-956: startup publications can fail or retire this original owner synchronously.
+            // Keep cleanup active and refuse source/receipt validation after either notification.
+            IsBusy = true; if (!Current()) return null;
             if (AcceptedOutcome is { } prior && prior.AccountId == accountId && _acceptedReview is { } accepted)
             {
                 // A retained result may be opened elsewhere, but the accepted conversion itself is never repeated.
                 await holdings.ValidateAccountConversionFileAsync(accepted, token);
                 return Current() ? prior.TypeId : null;
             }
-            Error = null; _errorKey = null; _feedbackException = null;
+            _errorKey = null; _feedbackException = null; Error = null;
+            if (!Current()) return null;
             var review = await holdings.ReadAccountConversionAsync(accountId, day, token);
             if (!Current()) return null;
             if (review is null) { ShowError("Account_ConversionReviewAgain"); return null; }

@@ -1,5 +1,9 @@
 # Vafadar Apps
 
+[D956 conversion startup](src/Apps/Zanance/docs/quality/account-conversion-startup-publication.md) fixes six actual publication/cleanup failures
+with7new selected cases and4corrected native session outcomes. Original consent,
+writer and accepted receipt stay intact; no financial conversion or phone action.
+
 [D955 snapshot cancellation](src/Apps/Zanance/docs/quality/snapshot-native-sort-cancellation.md) fixes two actual native-sort cancellation failures
 without weakening full typed comparison:2new+7affected cases and2native observations
 pass. Complete strict packages and owned cleanup pass; held phone/overall gates remain.
