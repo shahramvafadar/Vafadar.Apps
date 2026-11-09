@@ -1,5 +1,7 @@
 # Documentation
 
+[Original native private analysis storage D973](../src/Apps/Zanance/docs/quality/private-analysis-native-storage.md) qualifies9new actual backend/marker/process-persistence conditions without account/financial/authentication/provider replay; key-loss/platform limits remain explicit.
+
 [Current complete Main D972](../src/Apps/Zanance/docs/quality/current-complete-main-adoption-d972.md) reuses the identical prepared shipping package for one no-reset physical update and same-process original Home observation, with explicit public/private/CI limits.
 
 [Retained ARM64 reconciliation D971](../src/Apps/Zanance/docs/quality/reconciliation-writer-arm64-continuation.md) completes the missing original writer-revision condition using the existing account after a changed-boot interruption; no financial/setup replay.

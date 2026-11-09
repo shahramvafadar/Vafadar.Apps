@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-973 - Original native private analysis storage boundaries
+
+[Private storage evidence](../../quality/private-analysis-native-storage.md) links unmodified SecureAiStorage to actual Android
+SecureStorage, with9new native conditions across one scoped force-stop/relaunch,
+exact65536UTF8 bytes, oversize/cancel refusal, retained marker update, process
+persistence and controlled missing-value/directory/oversize-read refusal. No key
+material/Main/account/ledger/HTTP/auth or old-success replay. Strict104114446/two
+compiler bindings pass; freshUID/OS restore and four original host handles signal
+before official24file4385486091byte AVD retirement.2own-outputCleans remove146files/
+111748950bytes;6userhome7732bytes remain, no supplementary/frozen action. Occupied
+port/privatecompile/official-child preflight refusals are preserved before effects.
+This is not whole journal/keystore-loss/ARM64/iOS/security acceptance; all parent
+States, retained resources and active delivery goal remain open.
+
 ## D-972 - Current complete offline Main adopted without reset
 
 [Current Main](../../quality/current-complete-main-adoption-d972.md) reuses the exact final D969 shipping07b0a043/99594143byte package;

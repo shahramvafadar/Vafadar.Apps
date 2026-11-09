@@ -108,6 +108,7 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Native private storage D973](src/Apps/Zanance/docs/quality/private-analysis-native-storage.md) | Nine new original Android storage/marker/persistence conditions, with explicit key-loss/platform limits |
 | [Current Android Main D972](src/Apps/Zanance/docs/quality/current-complete-main-adoption-d972.md) | Complete current offline package installed without reset; original Home ready, no financial replay |
 | [Pending OS reminder order D970](src/Apps/Zanance/docs/quality/original-pending-os-notification-order.md) | Two genuine warm notification taps preserve original destination order while the first read waits |
 | [Returned analysis results D969](src/Apps/Zanance/docs/quality/analysis-result-publication.md) | Frame-owned coherent outcomes and exact retained-request follow-up; finite host/native evidence |
