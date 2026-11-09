@@ -1,5 +1,9 @@
 # Vafadar Apps
 
+[Analysis account-load publication D963](src/Apps/Zanance/docs/quality/analysis-account-load-publication.md) corrects six late publication/default failures with11focused host and native
+conditions, preserving same-file selection and both full fictitious sources.
+Broader provider/security/platform/full delivery acceptance remains open.
+
 [Analysis preview publication D962](src/Apps/Zanance/docs/quality/analysis-review-preview-publication.md) fixes incomplete/stale review authority with7focused host and7native observations,
 complete fictitious source preservation and strict offline builds. Genuine provider,
 security, platform and full delivery acceptance remain open.

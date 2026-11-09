@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-963 - Original analysis account Load (9 November 2026)
+
+[Account Load publication](analysis-account-load-publication.md) fixes six original late collection/default failures with11new host/same11native
+conditions and both complete54table sources preserved. Same-file selection and
+actual different-file defaults pass; no accepted review/provider/auth/financial
+replay. Strict builds/17compiler docs/owned retirement/5Cleans pass; held D944phone/
+Main/retained/frozen remain untouched. All49non-Done parents/full goal remain open.
+
 ## D-962 - Original review publication (9 November 2026)
 
 [Preview ownership](analysis-review-preview-publication.md) fixes six controlled original failures with7new host/same7Android model outcomes,

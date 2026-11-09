@@ -1,5 +1,15 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-963 - Original analysis account Load publication corrected
+
+[Account Load evidence](../../quality/analysis-account-load-publication.md) closes the concrete D962late-publication question:6original failures/5controls,
+11new host/same11native model outcomes, same-file selection and actual different-file
+defaults. Both full54typed/schema inputs exact,4metadata accounts/ledger0; no accepted
+review/provider/auth/share/financial replay.17compiler docs/strictWindows/fullOffline/
+native pass; freshfixture retires/5Cleans/OSexact. Initial wrong PDB archive path is
+retained then corrected without rebuilding. D944phone/Main/retained/frozen untouched;
+all49non-Done parents and broader provider/security/performance/platform gates open.
+
 ## D-962 - Original analysis preview publication corrected
 
 [Preview evidence](../../quality/analysis-review-preview-publication.md) records6original failures/1control,7new focused host passes and the same7

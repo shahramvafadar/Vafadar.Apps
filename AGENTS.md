@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-963 - Original account Load owns late publication and file defaults (2026-11-09)
+
+Six actual failures/5controls become11new selected host passes and same11Android
+original-model cases. Stage restored choices before callbacks become live; validate
+after Clear/eachAdd/Loaded and each intentional file-default revision. Retired roots
+and newer edits cannot be overwritten; same-file selection/different-file defaults
+remain. Two fictitious full54typed/schema sources278900byte exact,4metadata/ledger0,
+no review/provider/auth/share/financial replay.17actual compiler documents,strict
+Windows/fullOffline3844081608/private93104405 pass. PDB-path archive refusal is
+retained; actual shared Android PDB then matches, no build repeat. FreshUID/official
+AVD24file4400821521logicalbyte retire,5Cleans/OSexact/same65060;6userhome7732remain.
+No supplemental/frozen/phone/Main/retained5606 action; broader gates/full goal open.
+[Account Load publication](src/Apps/Zanance/docs/quality/analysis-account-load-publication.md).
+
 ## D-962 - Original analysis preview commits sharing authority last (2026-11-09)
 
 Six original failures/one control become7new selected host passes and the same7

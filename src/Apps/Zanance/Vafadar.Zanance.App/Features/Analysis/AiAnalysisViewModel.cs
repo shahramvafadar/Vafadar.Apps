@@ -140,16 +140,39 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             remote?.Dispose(); remote = null; availability = null; retained = null; offer = null; review = null;
             Summary = Disclosure = ResultText = ResultStatus = ResultSnapshot = ShareStatus = BalanceText = null; ProviderText = text["Ai_NoProvider"];
             Validate(original);
-            var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); Validate(original); scope = current;
+            var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); Validate(original);
             if (oldFile is not null && oldFile != current.File)
-            { From = FirstDay(time); To = DateOnly.FromDateTime(time.GetLocalNow().Date); ConfirmedOnly = true; ComparePrevious = false; AccountsError = FromError = ToError = null; }
-            var originalChoices = ++choiceEpoch;
-            Accounts.Clear(); foreach (var account in current.Accounts)
-                Accounts.Add(new(account, () => { if (OwnsPresentation && originalChoices == choiceEpoch) Invalidate(); })
-                    { Selected = current.File == oldFile && selected.Contains(account.Id) });
-            Loaded = true;
+            {
+                // D-963: only our own default changes advance the expected revision. A nested draft edit
+                // or root retirement must stop before the next default or account publication.
+                Reset(From, FirstDay(time), value => From = value);
+                Reset(To, DateOnly.FromDateTime(time.GetLocalNow().Date), value => To = value);
+                Reset(ConfirmedOnly, true, value => ConfirmedOnly = value);
+                Reset(ComparePrevious, false, value => ComparePrevious = value);
+                AccountsError = null; Validate(original); FromError = null; Validate(original); ToError = null; Validate(original);
+            }
+            var originalChoices = choiceEpoch + 1;
+            // Build restored choices before their callbacks become live; restoring a selection is not a new user edit.
+            var replacement = current.Accounts.Select(account => new AiAccountChoice(account,
+                () => { if (OwnsPresentation && originalChoices == choiceEpoch) Invalidate(); })
+                { Selected = current.File == oldFile && selected.Contains(account.Id) }).ToArray();
+            Validate(original); scope = current; choiceEpoch = originalChoices;
+            Accounts.Clear(); Validate(original);
+            foreach (var account in replacement) { Accounts.Add(account); Validate(original); }
+            Loaded = true; Validate(original);
+
+            void Reset<T>(T before, T value, Action<T> publish)
+            {
+                Validate(original);
+                if (EqualityComparer<T>.Default.Equals(before, value)) return;
+                original = unchecked(original + 1);
+                publish(value); Validate(original);
+            }
         }
-        catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation && original == epoch) SetError("Ai_ScopeError"); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (OwnsPresentation && original == epoch) { Loaded = false; Validate(original); SetError("Ai_ScopeError"); }
+        }
         finally { operationActive = false; readingSource = false; IsBusy = false; Refresh(); }
     }
     /// <summary>Prepares an exact bounded aggregate review from the original selected file, without any provider request.</summary>

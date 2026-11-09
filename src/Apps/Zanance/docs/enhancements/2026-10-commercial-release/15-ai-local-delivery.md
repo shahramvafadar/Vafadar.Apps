@@ -1,5 +1,13 @@
 # Local optional analysis, consent and credits (D-298)
 
+## D-963 - Original account Load publication (9 November 2026)
+
+[Late Load/default ownership](../../quality/analysis-account-load-publication.md) fixes the actual six reentrant failures while preserving retained choices
+and real different-file defaults.11new focused host/same11Android outcomes, both
+full54table fictitious sources and strict builds pass. Review/share/provider/send/
+receipt code stays exact; no accepted financial/auth/provider replay or Main adoption.
+The finite D962Load question closes here; genuine provider/full delivery gates stay open.
+
 ## D-962 - Original review publication (9 November 2026)
 
 [Preview publication evidence](../../quality/analysis-review-preview-publication.md) corrects original late access/notification failures without changing Load,

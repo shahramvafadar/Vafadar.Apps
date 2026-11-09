@@ -1,5 +1,8 @@
 # Documentation
 
+[Original account Load D963](../src/Apps/Zanance/docs/quality/analysis-account-load-publication.md) records six actual failures,11focused host/same11Android conditions,
+retained selection, actual file reset, full54table sources and strict/retirement evidence.
+
 [Original analysis preview D962](../src/Apps/Zanance/docs/quality/analysis-review-preview-publication.md) records original notification/access failures, current-owner publication,
 same-model Retry, exact54table input and bounded Android/build/retirement evidence.
 
