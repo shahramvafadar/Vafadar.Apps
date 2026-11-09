@@ -1,5 +1,16 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-950 - Native published range correlation complete; SQLite maintenance separate
+
+Current ABI hashes and tracked source/qualification inputs bind OpenSSL3.5.9 and
+SQLCipher4.19. Complete official3.5list61ranges/6newcontrols yields0affectedmatches;
+this is finite dated applicability, not whole native security or reproduced build.
+Official4.19fix scope and newer4.20SQLite3.54.1 are recorded. Next separate question:
+underlyingSQLite change/CVE applicability and original migration call path before
+any update decision. No dependency/device/build/test/financial/frozen change. D944
+held physical attempt and broader delivery goal stay open.
+[Native source advisory evidence](../../quality/current-native-source-advisories.md).
+
 ## D-949 - Original installment startup publication complete
 
 Three actual owner-notification/Busy failures are corrected with captured-owner

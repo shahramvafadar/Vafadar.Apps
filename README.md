@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D950 native advisory correlation](src/Apps/Zanance/docs/quality/current-native-source-advisories.md) binds current cipher hashes and tracked
+source pins to fresh published ranges: zero OpenSSL3.5.9 matches among61entries.
+Newer SQLCipher/SQLite maintenance remains separately assessed; this is not whole
+security acceptance or an automatic dependency upgrade. Independent work continues.
+
 [D949 original installment startup](src/Apps/Zanance/docs/quality/loan-installment-startup-publication.md) fixes retired-owner source reads and
 leaked Busy after startup notifications. Four new contracts, strict builds and one
 original native refusal/source-preservation pass without financial acceptance.

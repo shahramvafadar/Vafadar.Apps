@@ -1,5 +1,16 @@
 # AGENTS.md – working rules for this repository
 
+## D-950 - Current native pins and fresh published advisories correlated (2026-11-09)
+
+CurrentD949cipher ABI hashes equal tracked selectedC5/qualification; sourceInputs
+hash binds SQLCipher4.19/OpenSSL3.5.9 pins. Complete official3.5list61unique ranges
+with6new numeric-boundary controls has0affectedmatches for3.5.9. This is dated
+source-pin/qualification correlation, not reproduced compiler provenance/runtime/
+whole-security proof. Official4.19fix applicability and newer4.20SQLite3.54.1 are
+recorded; underlyingSQLite/update decision remains separate, no automatic upgrade.
+Onlydocs,3official retained documents; no device/build/test/financial/frozen replay.
+D944held/goal remain protected. [Native advisory evidence](src/Apps/Zanance/docs/quality/current-native-source-advisories.md).
+
 ## D-949 - Retired installment startup cannot acquire another source (2026-11-09)
 
 Original Busy/error notification retirement and leaked Busy yield3actual failures.

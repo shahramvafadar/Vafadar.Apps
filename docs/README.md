@@ -1,5 +1,9 @@
 # Documentation
 
+[Current native source advisories D950](../src/Apps/Zanance/docs/quality/current-native-source-advisories.md) records exact current ABI/source
+lineage,61fresh known ranges and six new boundary controls, plus a separate newer
+SQLCipher/SQLite maintenance question. No product/device/financial replay.
+
 [Original installment startup D949](../src/Apps/Zanance/docs/quality/loan-installment-startup-publication.md) records three actual failures,
 four focused corrected contracts and original native page retirement before source
 revalidation, complete strict builds and owned cleanup with no financial replay.
