@@ -1,5 +1,7 @@
 # Original reconciliation writer revision on ARM64 - D-944
 
+> Continuation: [D971](reconciliation-writer-arm64-continuation.md) completes the missing ARM64 boundary after the original process is found absent on a changed boot. The record below preserves the original interruption; it is not a current owner-wait or live-process claim.
+
 ## Missing platform boundary
 
 D943 fixes a monotonic original command revision that was not retained through

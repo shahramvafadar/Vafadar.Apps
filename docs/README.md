@@ -1,5 +1,7 @@
 # Documentation
 
+[Retained ARM64 reconciliation D971](../src/Apps/Zanance/docs/quality/reconciliation-writer-arm64-continuation.md) completes the missing original writer-revision condition using the existing account after a changed-boot interruption; no financial/setup replay.
+
 [Pending-read OS notification order D970](../src/Apps/Zanance/docs/quality/original-pending-os-notification-order.md) qualifies two actual SystemUI content taps through the original warm unlocked route, full-source preservation and explicit controlled-wait/planner/permission limits.
 
 [Returned analysis results D969](../src/Apps/Zanance/docs/quality/analysis-result-publication.md) records coherent frame-owned known outcomes, exact original follow-up and18new host/native method conditions, with explicit provider/lineage/cleanup limits.

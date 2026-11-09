@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-970)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-971)
+
+[D971 retained ARM64 reconciliation](../quality/reconciliation-writer-arm64-continuation.md) completes the missing original writer-revision boundary after changed boot/old-process absence, preserving historical source digest and current20source with context1/sentinel0/ledger0. The fresh UID retires; no owner wait or financial/setup replay remains. This is not whole-project/private-Main/security/performance acceptance.
 
 [D970 actual OS reminder inputs](../quality/original-pending-os-notification-order.md) qualifies two warm/unlocked content taps behind a pending original read, ordered native goal pages and exact54typed source/restoration. No product/unit change; controlled waits/diagnostic posts and all cold/covered/timing/physical/broader limits remain explicit.
 
@@ -1278,8 +1280,8 @@ any canonical State. Counts are not effort or a project completion percentage.
 [D958 analysis startup/access ownership](../quality/analysis-startup-and-access-boundaries.md) adds32new selected host outcomes and6source-linked Android model cases with full54table
 fictitious source preservation. This is not original-page/genuine-provider/native
 authentication or whole-security acceptance. Full shipping package is prepared,
-not installed on Main. D944physical reconciliation remains held while owner away;
-no repeated unlock question, request reissue or Main upgrade follows this status.
+not installed on Main. D971subsequently completes the D944finite ARM64 boundary
+with retained source and fresh-UID retirement; no old request or financial/setup replay.
 D607and the accepted CSV/local-backup/PDF cancellation successors are terminal.
 D960above now qualifies the named original failed-read page/error/footer condition;
 its retained restoration limits remain and no successful model/financial flow repeats.

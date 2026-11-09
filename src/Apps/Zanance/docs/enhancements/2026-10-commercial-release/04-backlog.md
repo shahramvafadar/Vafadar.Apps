@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-971 - Retained physical ARM64 reconciliation completed
+
+[Physical continuation](../../quality/reconciliation-writer-arm64-continuation.md) observes old PID absent/changed boot after owner return;
+no old request or setup is replayed. One helper-only no-reset update/new process
+adopts the retained account with historical20source digest exact. One previously
+unissued original confirmation/reason edit-and-restore refuses at the keyed writer
+before save: context1/sentinel0/ledger0/current20source exact. Current public phone
+state/other packages restore and only fresh UID/2hash-clean XML retire;2own-output
+Cleans remove713files/244792348logical bytes. Strict192204804/eight compiler bindings
+pass. D944's finite ARM64 boundary is complete, not old-process continuity/private
+Main/whole-security/fault/performance/platform acceptance. No owner prompt remains;
+canonical parent States, retained/frozen resources and the active goal are preserved.
+
 ## D-970 - Actual pending-read OS notification order
 
 [OS input evidence](../../quality/original-pending-os-notification-order.md) adds two genuine

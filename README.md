@@ -122,8 +122,8 @@ completion percentage, effort estimate or whole-app acceptance.
 [Last D964 CI admission evidence](src/Apps/Zanance/docs/quality/ci-internal-service-failures.md) reports GitHub internal server errors; its available Android job completed successfully.
 No failed product-test log, full CI pass or rerun is inferred from that result.
 
-The held [D944 physical reconciliation attempt](src/Apps/Zanance/docs/quality/reconciliation-writer-arm64.md)
-waits for the owner's personal unlock. Independent approved work continues without
+[D971 physical reconciliation continuation](src/Apps/Zanance/docs/quality/reconciliation-writer-arm64-continuation.md)
+completes the missing ARM64 writer boundary with retained data after a changed boot. Independent approved work continues without
 replaying financial actions, successful tests or terminal device cohorts. Original
 native-fault/ANR and whole-performance requirements remain open; protected evidence
 and rejected candidates are not restarted or repurposed.
