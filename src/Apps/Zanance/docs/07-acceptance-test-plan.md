@@ -1,5 +1,13 @@
 # 07 – Acceptance test plan
 
+## D-964 - Loaded analysis input presentation
+
+[36new native large-text contexts](quality/analysis-input-large-text.md) qualify only the named account/date/option/error captions and targets.
+These are288caption/144target observations, zero new unit tests, with versioned
+observer/source/restoration limits. Date-part input, FromError, glyph/contrast/speech,
+whole A11Y/phone/platform/provider acceptance remain separate; do not replay the
+accepted failed-load matrix or financial/authentication operations.
+
 D-864: [current28 ARM64/full Main](quality/current-quantity-wealth-arm64-main.md)
 qualifies only current8wealth+20quantity cases in fresh SDK-only ARM64, then adopts
 existing completea214 once without reset as Main15014. First Loading51 comparison

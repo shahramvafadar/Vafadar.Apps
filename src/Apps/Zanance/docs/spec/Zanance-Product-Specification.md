@@ -1226,7 +1226,12 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-963)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-964)
+
+[D964 loaded analysis presentation](../quality/analysis-input-large-text.md) qualifies36new versioned OSfont2 native contexts/288captions/144targets with
+full54table source equal across the helper update. Original preference-key baseline
+limit remains explicit; no product/unit-test/Main change or full-A11Y acceptance.
+README badges/history are reorganized; all canonical parent states remain unchanged.
 
 [D963 account-load publication](../quality/analysis-account-load-publication.md) fixes6original late/default failures with11new host/same11native conditions,
 retained selection/actual file reset and both full54table sources exact. Genuine

@@ -1,5 +1,14 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-964 - Original analysis loaded inputs (9 November 2026)
+
+[Actual loaded form](analysis-input-large-text.md) adds36new native OSfont2 contexts/288caption/144target observations and exact
+54table source across a helper-only no-reset, not new unit tests or all-final-binary
+evidence. Original v1 preference keys are unproved; current keys/original semantics/
+OS restoration and owned retirement are explicit. No product/phone/Main/frozen or
+old-success replay. README preserves badges and historical evidence in a linked
+index. Broader gates/all49non-Done parents/full goal remain open.
+
 ## D-963 - Original analysis account Load (9 November 2026)
 
 [Account Load publication](analysis-account-load-publication.md) fixes six original late collection/default failures with11new host/same11native

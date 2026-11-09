@@ -45,7 +45,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 | ZCR-QA-07 | D607 is terminal with its original precision/intervening-process limitations. Three deadlines, consumed reboot and completed cleanup must not be recreated. Remaining notification/platform claims need a specifically missing owner/native condition; D944 is unrelated. |
 | ZCR-A11Y-01 | Owner defers further TalkBack behind every other available task; Persian speech is parked. Preserve accepted recordings and unresolved findings. |
 | ZCR-A11Y-02 | Windows commercial/platform phase is separately deferred; do not reopen it as current Android delivery. |
-| ZCR-A11Y-03 | D946 reconciliation error, D954 receipt error and the earlier D916/D918 report rows add finite native large-text evidence; their accepted contexts are not rerun. D958 changes analysis model ownership; D960qualifies36actual AiAnalysisPage error/footer large-text contexts and one original Reload. Helper restoration/source lineage limits are explicit. No loading/all-input/whole-accessibility acceptance is inferred; do not replay the accepted presentation matrix. |
+| ZCR-A11Y-03 | D946 reconciliation error, D954 receipt error and the earlier D916/D918 report rows add finite native large-text evidence; their accepted contexts are not rerun. D958 changes analysis model ownership; D960qualifies36actual AiAnalysisPage error/footer large-text contexts and one original Reload. Helper restoration/source lineage limits are explicit. D964adds36versioned actual loaded account/date/option/error contexts with288caption/144target observations, exact54table source and explicit original preference-key limitation. No loading/date-part typing/glyph/contrast/speech/whole-accessibility acceptance is inferred; do not replay the accepted presentation matrix. |
 | ZCR-A11Y-04 | Native iOS VoiceOver waits for Android completion and the actual later Mac/iOS phase. |
 | ZCR-ENT-01 | Core plan policy is implemented. Commercial activation is not currently authorized; no repeated policy suite supplies that authority. |
 | ZCR-ENT-02 | Local original enforcement boundaries are implemented but inactive; actual activation/native release requirements remain. |
@@ -96,9 +96,7 @@ production layout change or successful source/model/financial replay. Its helper
 restoration failure and original source/private-preference/root-object limits are
 retained; a no-reset continuation proves current full source equality and only
 digest equality across that update. Do not claim that all original final assertions
-passed, and do not repeat the accepted36presentation contexts. Loading/input-error/
-other changed page assertions, if selected, still need their own concrete missing
-condition; neither original markup nor an open parent proves a new defect.
+passed, and do not repeat the accepted36presentation contexts. D964subsequently qualifies its named loaded account/date/option/input-error captions and targets. Other loading/date-part/changed-page assertions still need their own concrete missing condition; neither original markup nor an open parent proves a new defect.
 
 For crash and performance, retained Q02 and terminal classification evidence stay
 protected. A fresh approved premise is needed before further diagnostics/candidates;
@@ -114,6 +112,11 @@ the separate Load question is subsequently qualified at the explicit D963boundar
 [D963 account-load publication](analysis-account-load-publication.md) corrects the six observed late/default failures with11new host/same11native
 conditions and both exact54table fictitious sources. Same-file selection and real
 file reset pass; genuine provider/security/platform/full parent acceptance stays open.
+
+[D964 actual loaded analysis inputs](analysis-input-large-text.md) completes the named loaded-form presentation condition with36new versioned
+contexts and full54table source preservation. Original preference-key baseline
+comparison is unproved, current keys/original semantics/OS restore explicitly.
+The finite layout result does not close whole A11Y/provider/platform acceptance.
 
 ## Validation and continuing goal
 

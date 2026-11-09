@@ -1,5 +1,14 @@
 # 01 – Assessment and decision log
 
+## D-964 - Native loaded analysis presentation and concise repository status
+
+[Evidence and limits](quality/analysis-input-large-text.md) record the original loaded form at OSfont2 in36new contexts, exact source
+preservation and a necessary observer-only continuation. No product layout defect
+is asserted from markup; all measured caption/target gates pass. Original private
+preference keys across update remain unproved. Preserve the accepted v1 observation
+and avoid reusing a disposed original root. README keeps its existing badges first
+and moves dated notes to a [historical index](quality/dated-engineering-updates.md), with canonical states unchanged.
+
 ## D-895 - Startup purge connection admission rejected
 
 Operation-owned purge connection passes two fixed hostSQLCipher4.5.2 cohorts/56children

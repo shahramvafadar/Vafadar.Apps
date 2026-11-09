@@ -1,5 +1,23 @@
 # AGENTS.md – working rules for this repository
 
+## D-964 - Actual loaded analysis inputs at large text (2026-11-09)
+
+36native six-language/two-theme/360412680OSfont2 contexts qualify288caption/144target
+roles with original route/page/runtime/source, one opening0metadata/ledger0. Full54
+typed/schema139494byte input exact, including complete values across necessary
+helper-only4724to5514/sameUIDboot no-reset; no metadata/financial replay. First
+48x64dp confirmed target retained fromv1, not all contexts on final binary. Initial
+NETSDK1129 and footer-scroll source premise remain; fixed observer does not issue
+known-bad scroll or change product. Original private preference-key snapshot across
+update is unproved; current keys restore exact, originalen/System/root type restored,
+not original root-object identity.17compiler docs/two strict192204804 packages pass;
+72XML2786680byte hash-retire/freshUID/AVD25file4709299676logicalbyte/2Cleans/OSexact/
+same65060. No supplemental/frozen/phone/Main/retained action or old suite replay.
+README keeps69badge/status lines above content; historical notes/73targets retain
+in dated index. Use compact current status rather than prepending dated notes above
+the technology badges. Whole goal and broader gates remain open.
+[Loaded analysis layout](src/Apps/Zanance/docs/quality/analysis-input-large-text.md).
+
 ## D-963 - Original account Load owns late publication and file defaults (2026-11-09)
 
 Six actual failures/5controls become11new selected host passes and same11Android

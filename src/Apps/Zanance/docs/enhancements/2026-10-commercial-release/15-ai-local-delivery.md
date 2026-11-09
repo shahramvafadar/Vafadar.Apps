@@ -1,5 +1,14 @@
 # Local optional analysis, consent and credits (D-298)
 
+## D-964 - Actual loaded input presentation (9 November 2026)
+
+[Loaded original form](../../quality/analysis-input-large-text.md) adds finite native large-text account/date/option/input-error conditions,
+without product changes, unnecessary old matrix/financial/provider replay or extra source reads; one necessary account read belongs to each model generation.
+36versioned contexts/288captions/144targets and complete54table values across the
+helper update pass. Original pre-update private preference keys remain unproved;
+current keys/original semantics/OS restore, fresh installation retires. Genuine
+provider/consent/platform/whole accessibility and full delivery acceptance stay open.
+
 ## D-963 - Original account Load publication (9 November 2026)
 
 [Late Load/default ownership](../../quality/analysis-account-load-publication.md) fixes the actual six reentrant failures while preserving retained choices

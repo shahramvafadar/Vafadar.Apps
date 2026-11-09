@@ -1,5 +1,8 @@
 # Documentation
 
+[Original loaded analysis form D964](../src/Apps/Zanance/docs/quality/analysis-input-large-text.md) records36new OSfont2 contexts,288native captions/144targets, full source across
+helper-only adoption and explicit preference/binary limits. [Dated engineering notes](../src/Apps/Zanance/docs/quality/dated-engineering-updates.md) retain earlier README records while its badges return to the top.
+
 [Original account Load D963](../src/Apps/Zanance/docs/quality/analysis-account-load-publication.md) records six actual failures,11focused host/same11Android conditions,
 retained selection, actual file reset, full54table sources and strict/retirement evidence.
 

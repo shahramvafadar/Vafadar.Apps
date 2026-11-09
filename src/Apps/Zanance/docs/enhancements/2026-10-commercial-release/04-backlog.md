@@ -1,5 +1,16 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-964 - Original loaded analysis form qualified within explicit scope
+
+[Loaded form evidence](../../quality/analysis-input-large-text.md) adds36new actual route/page large-text contexts:288captions/144targets,
+72XML and exact54table input across one helper-only no-reset. Metadata once/ledger0;
+old failed-load matrix/financial/suite replay0. First confirmed target remainsv1;
+not all final binary. Original pre-update private preference keys unproved, current
+key baseline exact/originalenSystem/root type restored. Two strict native packages/
+17compiler docs/owned retirement/2Cleans/OSexact pass; no product code/Main/phone/
+frozen change. README badges/history reorganized without losing73historical links;
+all canonical parent State values/broader acceptance requirements remain unchanged.
+
 ## D-963 - Original analysis account Load publication corrected
 
 [Account Load evidence](../../quality/analysis-account-load-publication.md) closes the concrete D962late-publication question:6original failures/5controls,
