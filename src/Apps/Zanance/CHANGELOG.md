@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-969: keep returned analysis outcomes coherent and frame-owned; retain known original results after missing, foreign or regressed private follow-up while permitting valid pending advancement.
+
 - D-968: preserve complete date/calendar touch targets inside the measured row at large Android text; keep numeric draft and financial behavior.
 
 - D-967: verified analysis loading captions, disabled actions and normal Back cancellation at large Android text; product layout and financial behavior are unchanged.

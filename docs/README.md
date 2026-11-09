@@ -1,5 +1,7 @@
 # Documentation
 
+[Returned analysis results D969](../src/Apps/Zanance/docs/quality/analysis-result-publication.md) records coherent frame-owned known outcomes, exact original follow-up and18new host/native method conditions, with explicit provider/lineage/cleanup limits.
+
 [Analysis date targets D968](../src/Apps/Zanance/docs/quality/analysis-date-part-targets.md) records clipped-calendar repair,36native contexts and numeric draft preservation with full-source/restoration limits.
 
 [Original analysis loading D967](../src/Apps/Zanance/docs/quality/analysis-loading-large-text.md) records36new pending contexts,72captions/72disabled targets/36spinners and one actual Back,

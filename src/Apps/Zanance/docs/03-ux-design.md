@@ -1,5 +1,7 @@
 # 03 – UX design
 
+D969 publishes a complete original result/status/balance before changed feedback; retired pages cannot continue follow-up and known results survive private-state discrepancies. [Finite result evidence](quality/analysis-result-publication.md) is not genuine provider/native-consent acceptance.
+
 D968 keeps existing date-part spacing inside flex items. [Native date targets and IME](quality/analysis-date-part-targets.md) qualifies only the specified analysis contexts.
 
 D-967: the existing analysis loading footer keeps Reload/Review disabled and its active spinner separate while the single local read is pending. Normal Back cancels that original read. [Native loading evidence](quality/analysis-loading-large-text.md) qualifies only these original controls; it is not a new layout or whole accessibility acceptance.

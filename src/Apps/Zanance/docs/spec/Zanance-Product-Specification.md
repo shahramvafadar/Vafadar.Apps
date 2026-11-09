@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-968)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-969)
+
+[D969 returned-result publication](../quality/analysis-result-publication.md) corrects frame/coherence and original-follow-up failures;18new final host/native cases/full54source preserve known results, drafts and current culture. Synthetic native ports are not genuine provider/OS consent; canonical states and broader gates remain.
 
 [D968 native date targets](../quality/analysis-date-part-targets.md) repairs43px clipping and qualifies36large-text contexts plus numeric valid/partial/blur, with full54source exact/no financial replay. Initial UI key-presence stays unproved; broader gates and parent states remain.
 

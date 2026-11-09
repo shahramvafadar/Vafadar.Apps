@@ -317,9 +317,9 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         foreach (var name in changed) { base.OnPropertyChanged(new PropertyChangedEventArgs(name)); Validate(version); }
         Validate(version);
     }
-    /// <summary>Metadata assignment publishes only after the complete staged snapshot has been installed.</summary>
+    /// <summary>Metadata and accepted-result assignment publish only after their complete snapshot has been installed.</summary>
     protected override void OnPropertyChanging(PropertyChangingEventArgs e) { if (!stagingMetadata) base.OnPropertyChanging(e); }
-    /// <summary>Ordinary input and accepted-result notifications keep their original behavior.</summary>
+    /// <summary>Ordinary input notifications remain immediate; coherent metadata/result stages publish explicitly.</summary>
     protected override void OnPropertyChanged(PropertyChangedEventArgs e) { if (!stagingMetadata) base.OnPropertyChanged(e); }
 
     /// <summary>Fetches explicit metadata-only original terms; the native Send confirmation still has not happened.</summary>
@@ -356,7 +356,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             ValidateFrame(presentation);
             // Preserve only the returned original result before fallible private-record follow-through.
             returned = true; retained = new(1, new(result.RequestId, terms, original.Payload), result); ShowRecord(retained, true); offer = null;
-            var saved = await connection.ReadAsync(CancellationToken.None); ValidateFrame(presentation); retained = saved; ShowRecord(retained, true);
+            var accepted = retained!; var saved = await connection.ReadAsync(CancellationToken.None); ValidateFrame(presentation);
+            retained = ValidateRecordFollowup(accepted, saved); ShowRecord(retained, true);
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {
@@ -394,7 +395,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             ValidateDisclosure(disclosure); Validate(version); if (!close && !await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); Validate(version);
             var result = close ? await connection.CloseAsync(CancellationToken.None) : await connection.ContinueAsync(CancellationToken.None);
             ValidateFrame(presentation); retained = record with { Result = result }; ShowRecord(retained, true);
-            var saved = await connection.ReadAsync(CancellationToken.None); ValidateFrame(presentation); retained = saved; ShowRecord(retained, true);
+            var accepted = retained!; var saved = await connection.ReadAsync(CancellationToken.None); ValidateFrame(presentation);
+            retained = ValidateRecordFollowup(accepted, saved); ShowRecord(retained, true);
         }
         catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation && version == epoch) SetError(FailureKey(error)); }
         finally { operationActive = false; readingSource = false; IsBusy = false; Refresh(); }
@@ -413,12 +415,44 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private bool CanAfford(AiOffer terms) => availability is not null && checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= terms.MaximumUnits;
     private void ShowRecord(AiClientRecord? record, bool applyBalance = false)
     {
-        ResultSnapshot = ResultText = ResultStatus = null;
-        if (record is null) return;
-        // Continuation must display the retained destination/model/max units too, never only a fresh quote or today's figures.
-        ResultSnapshot = remote?.Destination + Environment.NewLine + JsonSerializer.Serialize(record.Submission, AiJson.Default.AiSubmission); ResultText = record.Result?.Text;
-        ResultStatus = RecordStatus(record);
-        if (applyBalance && record.Result is not null) { ShowBalance(record.Result.Balance); if (availability is not null) availability = availability with { Balance = record.Result.Balance }; }
+        var frame = frameEpoch;
+        // D-969: resolve fallible destination/formatting before clearing any known outcome.
+        var destination = record is null ? null : remote?.Destination; ValidateFrame(frame);
+        var snapshot = record is null ? null : destination + Environment.NewLine + JsonSerializer.Serialize(record.Submission, AiJson.Default.AiSubmission);
+        var result = record?.Result?.Text;
+        var state = record is null ? null : RecordStatus(record);
+        var balance = applyBalance && record?.Result is not null ? BalanceCaption(record.Result.Balance) : BalanceText;
+        var fields = new (string Name, string? Before, string? After)[]
+        {
+            (nameof(ResultSnapshot), ResultSnapshot, snapshot), (nameof(ResultText), ResultText, result),
+            (nameof(ResultStatus), ResultStatus, state), (nameof(BalanceText), BalanceText, balance),
+        };
+        var changed = fields.Where(field => field.Before != field.After).Select(field => field.Name).ToArray();
+        foreach (var name in changed) { base.OnPropertyChanging(new PropertyChangingEventArgs(name)); ValidateFrame(frame); }
+        // A changing observer may switch language. Reformat the same immutable result in that
+        // current culture, without invalidating an independently newer editable date draft.
+        state = record is null ? null : RecordStatus(record);
+        balance = applyBalance && record?.Result is not null ? BalanceCaption(record.Result.Balance) : BalanceText;
+        ValidateFrame(frame); stagingMetadata = true;
+        try { ResultSnapshot = snapshot; ResultText = result; ResultStatus = state; BalanceText = balance; }
+        finally { stagingMetadata = false; }
+        if (applyBalance && record?.Result is not null && availability is not null)
+            availability = availability with { Balance = record.Result.Balance };
+        // Changed observers see the complete accepted record and matching quantities. A retired
+        // callback cannot continue into another notification or private-record read.
+        foreach (var name in changed) { base.OnPropertyChanged(new PropertyChangedEventArgs(name)); ValidateFrame(frame); }
+        ValidateFrame(frame);
+    }
+    // D-969: an already returned outcome belongs to its literal original request. A missing,
+    // foreign or regressed private read cannot erase that known receipt or permit another send.
+    private static AiClientRecord ValidateRecordFollowup(AiClientRecord original, AiClientRecord? saved)
+    {
+        if (saved is null || saved.Version != original.Version || saved.Result is null ||
+            JsonSerializer.Serialize(saved.Submission, AiJson.Default.AiSubmission) != JsonSerializer.Serialize(original.Submission, AiJson.Default.AiSubmission) ||
+            original.Result is { State: not AiRequestState.Pending } && saved.Result != original.Result)
+            throw new InvalidDataException("Original analysis follow-up differs from its returned outcome.");
+        // The same pending request may genuinely advance while its status is being persisted.
+        return saved;
     }
     private string RecordStatus(AiClientRecord record) => record.Result?.State switch
         {

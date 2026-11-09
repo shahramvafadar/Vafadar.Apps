@@ -1,5 +1,19 @@
 # Local optional analysis, consent and credits (D-298)
 
+## D-969 - Frame-owned returned analysis outcomes and original follow-up
+
+[Result publication](../../quality/analysis-result-publication.md) corrects7original and6further
+observed failures across explicit source lineages.18new final host/same18SDKmodel
+cases pass; two affected earlier Send regressions are separately versioned. Known
+results stage coherently, retired callbacks stop, newer dates/current language remain,
+and missing/foreign/regressed follow-up cannot erase the original outcome. The same
+pending request may advance. Full54typed source/no native account/ledger setup and
+strict finalWindows/fullOffline3844081608/SDK93104405 pass. No actual provider/credit/
+OSauth or phone/Main/retained command. FiveCleans/owned retirement pass;7unusedfiles/
+250554783bytes in the two D969 intermediate shipping-publish/native-publish roots are
+policy-refused before process creation and frozen against all read/retry/alternate/
+subset/move/escalation/reuse. D944held and all broader parent states/goal remain open.
+
 ## D-968 - Complete native analysis date targets and numeric input
 
 [Date-part evidence](../../quality/analysis-date-part-targets.md) records actual43px clipping,
