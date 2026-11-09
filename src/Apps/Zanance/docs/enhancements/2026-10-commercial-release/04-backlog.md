@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-954 - Original receipt native error large-text qualification complete
+
+36new en/fa/de/es/fr/it-Light/Dark-360/412/680 contexts pass at actualOSfont2,
+same3043/10216/boot/source20beforeafter/ledger0, without account setup or receipt
+source/OCR/photo/auth/financial replay. Original runtime/interaction native dialogs
+have exact source text/full UTF16/zeroellipsis/visibleXML bounds and44dptarget.
+Independent WindowManager frame corrects root-coordinate observer refusal without
+reshow;7geometrycontrols/108retainedrole audits and actualRTL/LTR/18colorpairs pass.
+No product/buildsuite replay or wholeA11Y/pixel/contrast/speech acceptance.36XML
+261608byte/freshUID/officialAVD24file4726928673logicalbyte retire;2Cleans and exact
+OS/preferences restore pass with recorded unknown-cause locale-key reappearance.
+D944held/Main/retained/frozen and broader delivery remain protected.
+[Original receipt error captions](../../quality/original-receipt-error-large-text.md).
+
 ## D-953 - Original Home receipt command lifetime complete
 
 Two actual native Task failures expose startup Busy leak and retired Home nested

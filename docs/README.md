@@ -1,5 +1,9 @@
 # Documentation
 
+[Original receipt native error captions D954](../src/Apps/Zanance/docs/quality/original-receipt-error-large-text.md) records36new OS200percent contexts,
+independent immutable translations/window coordinates and108retained caption audits.
+Presentation-only evidence does not repeat the receipt source or financial workflow.
+
 [Original Home receipt command D953](../src/Apps/Zanance/docs/quality/original-home-receipt-command.md) records actual native Task failures, same-source
 no-reset correction and a new current-owner safe-error control. No copied Shell,
 new unit-test claim, successful OCR/financial replay or held-phone action.

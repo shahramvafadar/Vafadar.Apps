@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D954 receipt-error large text](src/Apps/Zanance/docs/quality/original-receipt-error-large-text.md) qualifies36new original native dialog contexts
+at OS200percent: complete source-matched captions, native RTL/LTR, touch targets and
+independently converted window/XML bounds. No source/OCR/photo/financial replay or
+product change; owned retirement completes and broader delivery gates stay open.
+
 [D953 original Home receipt command](src/Apps/Zanance/docs/quality/original-home-receipt-command.md) fixes Busy cleanup and checks the original owner
 before nested receipt entry. Two original failures and three corrected native Task
 outcomes retain source with no OCR/photo/auth/financial replay. Complete strict

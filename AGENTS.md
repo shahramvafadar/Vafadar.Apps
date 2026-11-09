@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-954 - Original receipt native error captions at OS200percent (2026-11-09)
+
+Presentation-only originalMauiReceiptRuntime.Alert completes36new six-language/
+2theme/3width360412680 contexts in same3043/10216/boot/API36/4096. Actual3native
+caption roles match immutable resources/full UTF16/zeroellipsis/fullvisibility/
+XML, button44dp; body2to8lines, nativeRTL forfa/LTR forLatin and18nativecolorpairs
+differ. Root-vs-screen observer refusal corrected using independent own WindowManager
+frame,7privategeometrycontrols; same open firstdialog, no successfulshow/source replay.
+PublicWindowInspector ownprocess only, no protection bypass. Source20 before/after,
+notperpacketfreshclaim; noaccount/OCR/photo/auth/financial or oldmatrix replay.
+36XML261608byte/freshUID/officialAVD24file4726928673byte retire;2Cleans pass.
+Owned locale-key reappearance is recorded/restored, causeunknown. D944held/Main/
+frozen/goal preserved; wholeA11Y/othergates open. [Receipt error captions](src/Apps/Zanance/docs/quality/original-receipt-error-large-text.md).
+
 ## D-953 - Original Home receipt startup cleanup and owner guard (2026-11-09)
 
 Actual original native Home command Tasks expose Busy leak after subscriber failure
