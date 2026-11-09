@@ -1,5 +1,9 @@
 # Vafadar Apps
 
+[Current delivery frontier D959](src/Apps/Zanance/docs/quality/current-delivery-frontier.md) reconciles all65canonical parents and49non-Done boundaries,
+including protected phone work, terminal acceptances and independently executable
+Android evidence. Counts are not a completion percentage; full delivery remains open.
+
 [D958 analysis ownership](src/Apps/Zanance/docs/quality/analysis-startup-and-access-boundaries.md) corrects startup cleanup, source-access and delayed
 metadata boundaries with32new selected cases and6Android model observations.
 Current review/metadata remain; no actual provider/auth/share/credit or financial replay.

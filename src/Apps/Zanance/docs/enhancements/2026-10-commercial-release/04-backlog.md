@@ -1,5 +1,17 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-959 - Complete current parent inventory and execution frontier
+
+Current table has65unique parent rows,16Done-prefixed and49otherstates. All49
+remaining-boundary keys match with0missing/extra/duplicates; no canonical State
+changes. The historicalD76361/45narrative is superseded as a current count, not
+new acceptance or an effort/progress fraction. LatestD944held phone andD958model
+scope are explicit; D607/cancellation successors remain terminal, no repeat wait.
+Next independent missing assertion is actual original analysis error/footer at
+large OS text, not replay of six accepted SDK-model cases. No code/device/build/
+test/financial/cleanup/frozen action; full goal remains open.
+[Current complete delivery frontier](../../quality/current-delivery-frontier.md).
+
 ## D-958 - Original analysis operation ownership batch complete
 
 8operation entries now own startup cleanup and original input before effects;

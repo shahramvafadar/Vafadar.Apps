@@ -1,5 +1,18 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-959 - Current complete parent inventory (9 November 2026)
+
+[Current complete delivery frontier](current-delivery-frontier.md) audits the current65unique canonical rows:
+16Done-prefixed and49non-Done, with every49boundary key present and no extra or
+duplicate. The historicalD76361/45paragraph below is not the current count. No
+canonical State is changed or count converted to percentage/estimated effort.
+D944is the current held phone cohort, with no fresh liveness/auth/request claim;
+D607andD792/D793/D802are terminal and supply no pending owner wait. D958updates
+analysis model ownership, not original-page/provider acceptance. A named missing
+analysis error/footer large-text assertion is independent of owner presence;
+no accepted model/financial workflow is replayed. Preserve retainedQ02, frozen
+scopes and all broader requirements; this is no whole-project completion claim.
+
 ## D-922 - Verification-only page-cache budget rejected (2026-11-06)
 
 A distinct fixed8192KiB temporary verification-connection candidate preserves exact

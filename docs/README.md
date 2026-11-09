@@ -1,5 +1,9 @@
 # Documentation
 
+[Current delivery frontier D959](../src/Apps/Zanance/docs/quality/current-delivery-frontier.md) maps all65canonical parents and49non-Done boundaries,
+with current evidence, owner/external deferrals and a concrete independent Android
+page assertion. No canonical State value or acceptance changes.
+
 [Analysis startup and access D958](../src/Apps/Zanance/docs/quality/analysis-startup-and-access-boundaries.md) records29original failing cases in27+3lineages,
 32selected corrected cases and6native method/gate observations, with full54table
 fictitious input preservation. Genuine provider/auth/platform acceptance stays separate.

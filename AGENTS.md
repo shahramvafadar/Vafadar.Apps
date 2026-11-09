@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-959 - Current complete delivery frontier reconciled (2026-11-09)
+
+Current canonical table has65unique parents,16Done-prefixed/49otherstates;
+all49frontier keys match exactly. HistoricalD76361/45is superseded as a current
+count, not rewritten as historical evidence. Canonical State values are unchanged;
+counts are not effort/progress or full acceptance. D944phone remains held while
+owner away, with no repeated unlock question/Main adoption/freshliveness. D607and
+D752accepted cancellation successors are terminal; do not recreate their waits.
+D958SDK-model six cases do not qualify originalAiAnalysisPage. Its actual failed-
+read page/error/footer large-text condition is a concrete independent missing
+assertion; source layout alone proves neither defect nor pass. No device/code/build/
+test/financial/frozen/cleanup replay occurs in this inventory. Full goal stays active.
+[Current complete frontier](src/Apps/Zanance/docs/quality/current-delivery-frontier.md).
+
 ## D-958 - Original analysis startup/access/metadata ownership (2026-11-09)
 
 Original27cases26fail/1control plus3boundary failures fix8entry startup cleanup,
