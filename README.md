@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[Reconciliation writer revision D943](src/Apps/Zanance/docs/quality/reconciliation-writer-command-revision.md) refuses an edited-and-restored
+reason even after native consent inside the original writer. Four new host controls
+and one original native boundary preserve full source/ledger0, with no successful
+financial replay. Strict Windows/full offline Android pass; shippingb39a520f is
+prepared, not Main-installed. Broader delivery gates remain open.
 
 [![CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/ci.yml/badge.svg)](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/codeql.yml/badge.svg)](https://github.com/shahramvafadar/Vafadar.Apps/actions/workflows/codeql.yml)

@@ -1,5 +1,11 @@
 # Zanance – design documentation
 
+[Reconciliation writer revision D943](quality/reconciliation-writer-command-revision.md) refuses an edited-and-restored
+reason even after native consent inside the original writer. Four new host controls
+and one original native boundary preserve full source/ledger0, with no successful
+financial replay. Strict Windows/full offline Android pass; shippingb39a520f is
+prepared, not Main-installed. Broader delivery gates remain open.
+
 [D926](quality/loan-calendar-current-main-adoption.md) adopts the existing complete
 D924 build once without reset as Main23978. First Ready Home979/102landscape raw
 nodes/order and original public package/OS state match exactly, with no financial

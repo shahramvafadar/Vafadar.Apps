@@ -1,5 +1,24 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-943 - Reconciliation command revision survives the original writer (2026-11-09)
+
+Pass the captured monotonic command revision through pre/post-consent and original
+writer validation, including edit-and-restore after the native answer. Do not infer
+unchanged ownership from equal reason text or cancel a known commit retroactively.
+One new original baseline reaches the pre-save sentinel; full source stays equal,
+no financial acceptance. Four selected new host contracts pass, including a still-
+current original-save control; no old successful suite/financial fixture replay.
+Original native4044/UID10216 accepts one visible consent, edits/restores reason in
+one command-bound context, then refuses before Save: owned1/sentinel0/full20exact/
+ledger0/raw4.56 retained. Root/OS restore;2XML47352bytes hash-retire, freshUID and
+AVD24files4507907339logicalbytes retire, five standard Cleans pass. pm path1 is the
+expected absent-package result after successful uninstall; only observer continuation,
+no repeated deletion. ExistingADB50972/phone/retainedfault/frozen remain unchanged.
+StrictWindows/fullOffline384/408/1608/private192/204/804 and compiler bindings pass;
+shippingb39a520f prepared, not Main-installed. D942soleCI in_progress/CodeQLsuccess
+consumed once at due time, no secondGET/final claim. Broader delivery gates/goal open.
+[Writer revision evidence](../../quality/reconciliation-writer-command-revision.md).
+
 ## D-942 - Failed CI settlement contracts follow explicit source Retry (2026-11-09)
 
 Rejected original bill writes remain covered until explicit original-source Retry;

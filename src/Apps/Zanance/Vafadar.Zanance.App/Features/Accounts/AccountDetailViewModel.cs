@@ -555,7 +555,7 @@ public sealed partial class AccountDetailViewModel(
                 var accepted = await interaction.ConfirmAsync(translator["Reconcile_Adjust"],
                     translator["Reconcile_AdjustMessage"], translator["Reconcile_Adjust"], translator["Common_Cancel"]);
                 return accepted && AttemptCurrent();
-            }, () => Reason);
+            }, () => Reason, AttemptCurrent);
             if (!current()) return;
             if (saved is null) { CanAdjust = _reconciliation.Review is not null; return; }
             if (!saved.Succeeded)

@@ -55,8 +55,8 @@ public sealed class AccountReconciliationSession(ZananceStore store)
         finally { Volatile.Write(ref _busy, 0); }
     }
 
-    /// <summary>Confirms the exact review/reason; cancellation and changed pending drafts never write money.</summary>
-    public async Task<SaveResult?> AdjustAsync(Func<Task<bool>> confirm, Func<string> reason)
+    /// <summary>Confirms the exact review/reason; optional command revisions remain current through the original writer.</summary>
+    public async Task<SaveResult?> AdjustAsync(Func<Task<bool>> confirm, Func<string> reason, Func<bool>? isCurrent = null)
     {
         if (Interlocked.CompareExchange(ref _busy, 1, 0) != 0) return null;
         Committed = false;
@@ -64,14 +64,14 @@ public sealed class AccountReconciliationSession(ZananceStore store)
         {
             var review = Review; var revision = _revision; var originalReason = reason();
             var originalCurrent = _reviewCurrent;
-            if (review is null || string.IsNullOrWhiteSpace(originalReason) || originalCurrent?.Invoke() == false) return null;
+            if (review is null || string.IsNullOrWhiteSpace(originalReason) || originalCurrent?.Invoke() == false || isCurrent?.Invoke() == false) return null;
             if (!await confirm()) return null;
-            if (revision != _revision || !ReferenceEquals(review, Review) || originalReason != reason() || originalCurrent?.Invoke() == false)
+            if (revision != _revision || !ReferenceEquals(review, Review) || originalReason != reason() || originalCurrent?.Invoke() == false || isCurrent?.Invoke() == false)
             { Invalidate(); return null; }
             try
             {
                 var result = await store.SaveReconciliationAsync(review, originalReason,
-                    isCurrent: () => revision == _revision && ReferenceEquals(review, Review) && originalReason == reason() && originalCurrent?.Invoke() != false);
+                    isCurrent: () => revision == _revision && ReferenceEquals(review, Review) && originalReason == reason() && originalCurrent?.Invoke() != false && isCurrent?.Invoke() != false);
                 Committed = result.Succeeded;
                 return result;
             }
