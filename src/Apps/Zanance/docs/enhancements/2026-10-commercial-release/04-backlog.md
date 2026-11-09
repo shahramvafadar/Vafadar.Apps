@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-972 - Current complete offline Main adopted without reset
+
+[Current Main](../../quality/current-complete-main-adoption-d972.md) reuses the exact final D969 shipping07b0a043/99594143byte package;
+all subsequent source commits are docs-only. One install-r preserves UID10380/
+CE155299/DE154603/permissions/other public packages/OS/boot. One original launch24752
+first shows loading, whose premature Home assertion is retained; samePID later
+shows Home141nodes without reinstall/relaunch or financial/auth replay. No current
+before-Home XML/privateDB comparison is claimed. Two hash-clean XML/57879bytes
+retire; no new build/test/cleanup/frozen action. D945older preparation is superseded,
+D944finite ARM64 is complete viaD971; no owner prompt remains. D970oneGET records
+CIcancelled/CodeQLin_progress, without cause/green/rerun inference. Broader parent
+States/goal stay open; Main24752/07b0a043 is the current dated observation.
+
 ## D-971 - Retained physical ARM64 reconciliation completed
 
 [Physical continuation](../../quality/reconciliation-writer-arm64-continuation.md) observes old PID absent/changed boot after owner return;

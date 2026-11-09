@@ -1,5 +1,7 @@
 # Documentation
 
+[Current complete Main D972](../src/Apps/Zanance/docs/quality/current-complete-main-adoption-d972.md) reuses the identical prepared shipping package for one no-reset physical update and same-process original Home observation, with explicit public/private/CI limits.
+
 [Retained ARM64 reconciliation D971](../src/Apps/Zanance/docs/quality/reconciliation-writer-arm64-continuation.md) completes the missing original writer-revision condition using the existing account after a changed-boot interruption; no financial/setup replay.
 
 [Pending-read OS notification order D970](../src/Apps/Zanance/docs/quality/original-pending-os-notification-order.md) qualifies two actual SystemUI content taps through the original warm unlocked route, full-source preservation and explicit controlled-wait/planner/permission limits.

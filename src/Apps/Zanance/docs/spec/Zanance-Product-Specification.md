@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-971)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-972)
+
+[D972 current offline Main](../quality/current-complete-main-adoption-d972.md) adopts the identical D969final shipping07b0a043 package without reset, preserves public UID/CE/DE/permissions/OS and reaches original Home24752 in the same process after an initially loading frame. No build/test/financial/authentication replay or private Main equality claim.
 
 [D971 retained ARM64 reconciliation](../quality/reconciliation-writer-arm64-continuation.md) completes the missing original writer-revision boundary after changed boot/old-process absence, preserving historical source digest and current20source with context1/sentinel0/ledger0. The fresh UID retires; no owner wait or financial/setup replay remains. This is not whole-project/private-Main/security/performance acceptance.
 

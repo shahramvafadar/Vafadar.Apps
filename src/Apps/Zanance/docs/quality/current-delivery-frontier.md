@@ -82,6 +82,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 
 ## Current evidence that changes the next action
 
+- [D972 current Main adoption](current-complete-main-adoption-d972.md): one no-reset update to the existing complete offline07b0a043 package, same-process Home24752 and exact public phone state, without a new build, financial replay or private Main equality claim.
 - [D971 retained physical reconciliation](reconciliation-writer-arm64-continuation.md): old PID7552 is absent on a changed boot; one necessary helper-only no-reset continuation adopts the original source digest and completes the previously unissued writer boundary. Fresh UID is retired, current public state restored and no owner prompt remains. Main23978/f2c1835f is still historical, not current liveness.
 - [D958 analysis ownership](analysis-startup-and-access-boundaries.md):32selected corrected host cases and6source-linked SDK-model observations, full54table fictitious source preserved, no genuine provider/auth/share/primary acceptance. Its full package is prepared, not adopted on Main.
 - [D957 Home template ownership](home-template-invocation-publication.md) and [D956 conversion ownership](account-conversion-startup-publication.md): scoped corrected methods/handoffs and native source preservation, no reason to replay their successful inputs.
