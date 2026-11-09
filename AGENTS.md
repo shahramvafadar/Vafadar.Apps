@@ -1,5 +1,39 @@
 # AGENTS.md – working rules for this repository
 
+## D-944 - Physical reconciliation cohort held, independent delivery active (2026-11-09)
+
+The owner reports away from the phone. Preserve fresh7552/UID10439/data on Samsung
+boot82ccfbab-7840-402e-9a76-3f49bd423b3d and its once-issued open-account request.
+A90second client observation expires; samePID is live and public keyguard/SystemUI
+is shown/asleep. Exclusive cause and managed navigation termination are unknown.
+No consent/writer/financial action, restart/reinstall/provider reissue or auth input
+follows. Last completed Home-ready full20source/ledger0 is historical after timeout.
+Only personal normal unlock is pending; do not ask for PIN or infer SDK cancellation.
+Then inspect the same attempt before continuing. Main23978 is preflight only;
+freshUID retirement/final phone restoration are unfinished. Two local Cleans pass.
+Do not touch this held phone cohort for independent emulator work or Main adoption.
+[Physical continuation evidence](src/Apps/Zanance/docs/quality/reconciliation-writer-arm64.md).
+
+## D-946 - Original reconciliation error readable at large text (2026-11-09)
+
+All36new inner-error caption contexts en/fa/de/es/fr/it/Light/Dark/360-412-680dp at
+actual OSfont2 pass on4430/UID10216 with complete native2to6line text/ellipsis0/full
+visibility and matching XML. This presentation-only state uses the existing resource
+on original AccountDetailPage; no Compare/consent/writer/financial replay. Full20
+source/account1/ledger0 and seven portable/theme preference values/absence restore.
+First8passes retained; a client failure before French context admission, malformed
+unquoted diagnostic and one guarded failed-context retry are preserved; only28unfinished
+continue. Native CreateNew protection is never removed/bypassed. Markup PDB lookup
+refuses; six real C# documents bind, input markup scope stays explicit, no wholePE.
+36XML928388bytes hash-retire, freshUID/host7480/officialAVD25files4554175908logicalbytes
+retire, original OS/font/locale keys/geometry exact after late locale-key repopulation
+and its scoped restoration. Cause unknown; no repeated XML/package deletion or UI.
+Two standard Cleans pass; usedsigned/raw/source retained, no supplemental/frozen action.
+ADB50972 stays exact, no retained5606/phone input. Strictprivate192/204/804 passes;
+current product/Windows/fullshipping/old suites unchanged. D943soleCodeQLsuccess/
+CIin_progress consumed once at17m44.334s, no secondGET/final claim. Broader gates open.
+[Large-text reconciliation caption evidence](src/Apps/Zanance/docs/quality/reconciliation-error-large-text.md).
+
 ## D-943 - Reconciliation command revision survives the original writer (2026-11-09)
 
 Pass the captured monotonic command revision through pre/post-consent and original

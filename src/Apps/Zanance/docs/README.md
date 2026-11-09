@@ -1,5 +1,11 @@
 # Zanance – design documentation
 
+[D946 large-text reconciliation error](quality/reconciliation-error-large-text.md) completes36new native caption
+contexts at OS200% without financial replay or product changes. Original source,
+preferences and OS restore; the fresh emulator retires. [D944 physical continuation](quality/reconciliation-writer-arm64.md)
+remains preserved while the owner is away, with no consent/write or restart.
+Independent delivery continues; full-project and broader platform gates stay open.
+
 [Reconciliation writer revision D943](quality/reconciliation-writer-command-revision.md) refuses an edited-and-restored
 reason even after native consent inside the original writer. Four new host controls
 and one original native boundary preserve full source/ledger0, with no successful
