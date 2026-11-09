@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Syncfusion.Licensing" />
     <PackageReference Include="Syncfusion.Pdf.Net.Core" />
     <!-- Explicit patched dependencies also protect standalone document/report consumers. -->
     <PackageReference Include="System.Security.Cryptography.Pkcs" />
