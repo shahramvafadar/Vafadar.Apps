@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-958 - Original analysis operation ownership batch complete
+
+8operation entries now own startup cleanup and original input before effects;
+Review freezes selection/validates captured local gate before source, provider
+check revalidates between awaits.29original failing cases in27+3lineages/1control
+become32selected new passes; zero-test filter refusal is retained separately.
+Six corrected Android model/probe cases preserve full54schema/typed139202byteinput,
+1metadata account/ledger0; valid same-model review Retry works without old-success
+replay. No real HTTP/auth/share/submission/credits, original MAUI-page/provider
+acceptance or general crash repair inferred. StrictWindows/shipping/private/source
+bindings pass; fresh4956/10216/AVD25file4393940422logicalbyte retire,5Cleans/OSexact,
+current65060server unchanged. D944phone/Main/retained/frozen/full goal stay protected.
+[Analysis ownership evidence](../../quality/analysis-startup-and-access-boundaries.md).
+
 ## D-957 - Original Home template invocation batch complete
 
 Open/Choose/Reload startup, stale failure publication and parent retirement correct

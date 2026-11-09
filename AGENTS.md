@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-958 - Original analysis startup/access/metadata ownership (2026-11-09)
+
+Original27cases26fail/1control plus3boundary failures fix8entry startup cleanup,
+prevalidation draft capture, captured access before source and provider inter-await
+ownership.32new selected pass in final binary;0test filter refusal remains exit5,
+same binary then selected correctly. Current local review/metadata still work.
+No speculative private-record read before submission path; existing primary/result
+and continue/close source blocks exact, no accepted-primary replay or new acceptance.
+Native SDK original model/probes six cases4956/10216/API36/4096: denied gate0source,
+same-model valid Retry1source/2validations, sender draft0effects, retired metadata
+0next reads. Full54typed/schema139202byte input exact/archived,1metadata/ledger0.
+No genuine HTTP/auth/share/submission/credit; not real provider/native-page acceptance.
+StrictWindows/full3844081608/private93104405/compiler bindings pass. FreshUID/
+AVD25file4393940422logicalbyte retire,5Cleans/OSexact;65060same creationticks
+639298300274237044 before launch/boot/retirement, no reset/start/reconnect/pair.
+D944held/Main/retained/frozen/full goal protected. [Analysis ownership evidence](src/Apps/Zanance/docs/quality/analysis-startup-and-access-boundaries.md).
+
 ## D-957 - Home template commands own publication and parent retirement (2026-11-09)
 
 10actual host failures/3controls and one original native parent-child failure are

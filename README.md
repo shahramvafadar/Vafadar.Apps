@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D958 analysis ownership](src/Apps/Zanance/docs/quality/analysis-startup-and-access-boundaries.md) corrects startup cleanup, source-access and delayed
+metadata boundaries with32new selected cases and6Android model observations.
+Current review/metadata remain; no actual provider/auth/share/credit or financial replay.
+Strict packages/owned cleanup pass; held phone and broader delivery remain open.
+
 [D957 Home template commands](src/Apps/Zanance/docs/quality/home-template-invocation-publication.md) fixes startup, delayed feedback and parent retirement
 with16new selected cases in14+2lineages and retained-source native qualification.
 Original handoffs/Reload remain; no financial replay or phone action. Server identity

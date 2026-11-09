@@ -1,5 +1,9 @@
 # Documentation
 
+[Analysis startup and access D958](../src/Apps/Zanance/docs/quality/analysis-startup-and-access-boundaries.md) records29original failing cases in27+3lineages,
+32selected corrected cases and6native method/gate observations, with full54table
+fictitious input preservation. Genuine provider/auth/platform acceptance stays separate.
+
 [Home template invocation D957](../src/Apps/Zanance/docs/quality/home-template-invocation-publication.md) records10host failures, one native parent
 failure,16new selected cases and same-source native correction/error/Reload.
 Observer/server limitations, actual compiler lineages and retirement remain explicit.

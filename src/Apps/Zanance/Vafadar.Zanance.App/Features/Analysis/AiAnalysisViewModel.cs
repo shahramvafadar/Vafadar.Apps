@@ -109,7 +109,21 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     partial void OnToChanged(DateOnly value) => Invalidate();
     partial void OnConfirmedOnlyChanged(bool value) => Invalidate();
     partial void OnComparePreviousChanged(bool value) => Invalidate();
-    private void Invalidate() { Interlocked.Increment(ref epoch); review = null; offer = null; Summary = null; Disclosure = null; ShareStatus = null; Refresh(); }
+    private int Invalidate()
+    {
+        var original = Interlocked.Increment(ref epoch);
+        review = null; offer = null; Summary = null; Disclosure = null; ShareStatus = null; Refresh();
+        return original;
+    }
+
+    // D-958: these notifications can synchronously retire the page or change its draft.
+    // Every caller enters its original cleanup before publishing and validates before an effect.
+    private void StartOperation(int original)
+    {
+        IsBusy = true; Validate(original);
+        SetError(null); Validate(original);
+        Refresh(); Validate(original);
+    }
     /// <summary>Stops pending native/network publication into a departed profile/form while preserving private continuation.</summary>
     public void Retire() { local.Changed -= OnLanguageChanged; frameEpoch++; active = false; visible?.Cancel(); visible?.Dispose(); visible = null; Loaded = false; choiceEpoch++; Invalidate(); remote?.Dispose(); remote = null; Refresh(); }
     /// <summary>Loads actual account choices only, with no HTTP, automatic selection, settings write or model run.</summary>
@@ -117,13 +131,16 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     {
         if (HasPendingOperation || rootRetired || ownsRoot?.Invoke() == false) return;
         local.Changed -= OnLanguageChanged; local.Changed += OnLanguageChanged;
-        frameEpoch++; active = true; visible ??= new(); var ct = visible.Token; readingSource = true; operationActive = true; IsBusy = true; SetError(null); Loaded = false; var original = ++epoch; Refresh();
+        frameEpoch++; active = true; visible ??= new(); var ct = visible.Token; var original = ++epoch;
         var selected = Accounts.Where(a => a.Selected).Select(a => a.Id).ToHashSet(); var oldFile = scope?.File;
-        remote?.Dispose(); remote = null; availability = null; retained = null; offer = null; review = null;
-        Summary = Disclosure = ResultText = ResultStatus = ResultSnapshot = ShareStatus = BalanceText = null; ProviderText = text["Ai_NoProvider"];
+        readingSource = true; operationActive = true;
         try
         {
-            var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); scope = current;
+            StartOperation(original); Loaded = false; Validate(original);
+            remote?.Dispose(); remote = null; availability = null; retained = null; offer = null; review = null;
+            Summary = Disclosure = ResultText = ResultStatus = ResultSnapshot = ShareStatus = BalanceText = null; ProviderText = text["Ai_NoProvider"];
+            Validate(original);
+            var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); Validate(original); scope = current;
             if (oldFile is not null && oldFile != current.File)
             { From = FirstDay(time); To = DateOnly.FromDateTime(time.GetLocalNow().Date); ConfirmedOnly = true; ComparePrevious = false; AccountsError = FromError = ToError = null; }
             var originalChoices = ++choiceEpoch;
@@ -132,23 +149,28 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
                     { Selected = current.File == oldFile && selected.Contains(account.Id) });
             Loaded = true;
         }
-        catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation) SetError("Ai_ScopeError"); }
+        catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation && original == epoch) SetError("Ai_ScopeError"); }
         finally { operationActive = false; readingSource = false; IsBusy = false; Refresh(); }
     }
     /// <summary>Prepares an exact bounded aggregate review from the original selected file, without any provider request.</summary>
     [RelayCommand] public async Task ReviewAsync()
     {
         if (!OwnsPresentation || !Loaded || HasPendingOperation || scope is null) return;
-        AccountsError = Accounts.Any(a => a.Selected) ? null : text["Ai_ChooseAccounts"];
-        FromError = From == DateOnly.MinValue ? text["Ai_InvalidRange"] : null;
-        ToError = To < From || To.DayNumber - From.DayNumber > 365 || ComparePrevious && From.DayNumber <= To.DayNumber - From.DayNumber + 1 ? text["Ai_InvalidRange"] : null;
-        Invalidate(); if (AccountsError is not null || FromError is not null || ToError is not null) return;
-        var original = epoch; readingSource = true; operationActive = true; IsBusy = true; SetError(null); Refresh();
+        var original = epoch;
+        var selection = new AiSelection(scope.File, Accounts.Where(a => a.Selected).Select(a => a.Id).ToArray(), From, To, ConfirmedOnly, ComparePrevious,
+            local.CurrentLanguage.CultureName.Split('-')[0]);
+        readingSource = true; operationActive = true;
         try
         {
-            var access = runtime.Capture(scope.File);
-            var selection = new AiSelection(scope.File, Accounts.Where(a => a.Selected).Select(a => a.Id).ToArray(), From, To, ConfirmedOnly, ComparePrevious,
-                local.CurrentLanguage.CultureName.Split('-')[0]);
+            StartOperation(original);
+            AccountsError = selection.AccountIds.Count > 0 ? null : text["Ai_ChooseAccounts"]; Validate(original);
+            FromError = selection.From == DateOnly.MinValue ? text["Ai_InvalidRange"] : null; Validate(original);
+            ToError = selection.To < selection.From || selection.To.DayNumber - selection.From.DayNumber > 365
+                || selection.ComparePrevious && selection.From.DayNumber <= selection.To.DayNumber - selection.From.DayNumber + 1 ? text["Ai_InvalidRange"] : null;
+            Validate(original);
+            original = Invalidate(); Validate(original);
+            if (AccountsError is not null || FromError is not null || ToError is not null) return;
+            var access = runtime.Capture(selection.File); access.Validate(); Validate(original);
             using var linked = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible?.Token ?? CancellationToken.None);
             var prepared = await store.ReviewAsync(selection, linked.Token); Validate(original); access.Validate(); review = prepared;
             var payload = prepared.Payload; Summary = Period(payload.Current);
@@ -162,9 +184,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     [RelayCommand] public async Task ShareAsync()
     {
         if (!CanShare || review is not { } original) return;
-        var version = epoch; var offered = false; var disclosure = NativeDisclosure(); operationActive = true; IsBusy = true; SetError(null); Refresh();
+        var version = epoch; var offered = false; var disclosure = NativeDisclosure(); operationActive = true;
         try
         {
+            StartOperation(version); ValidateDisclosure(disclosure); ValidateReview(version, original);
             if (!await interaction.ConfirmAsync(text["Ai_Title"], text["Ai_ManualConfirm"], text["Ai_ManualShare"], text["Common_Cancel"])) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original);
             if (!await runtime.ConfirmDisclosureAsync()) return;
@@ -180,10 +203,12 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     [RelayCommand] public async Task CheckProviderAsync()
     {
         if (!CanCheckProvider || scope is null) return;
-        var version = epoch; operationActive = true; IsBusy = true; SetError(null); offer = null; Refresh(); IAiRemote? opened = null;
+        var version = epoch; var originalFile = scope.File; operationActive = true; IAiRemote? opened = null;
         try
         {
-            opened = await runtime.OpenAsync(scope.File, CancellationToken.None); var status = await opened.AvailabilityAsync(CancellationToken.None);
+            StartOperation(version); offer = null;
+            opened = await runtime.OpenAsync(originalFile, CancellationToken.None); Validate(version);
+            var status = await opened.AvailabilityAsync(CancellationToken.None); Validate(version);
             var saved = await opened.ReadAsync(CancellationToken.None); Validate(version);
             remote?.Dispose(); remote = opened; opened = null; availability = status; retained = saved;
             ProviderText = status.Configured ? remote.Destination : text["Ai_NoProvider"]; ShowBalance(status.Balance); ShowRecord(saved);
@@ -195,9 +220,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     [RelayCommand] public async Task QuoteAsync()
     {
         if (!CanQuote || remote is null || review is null) return;
-        var version = epoch; var original = review; var connection = remote; operationActive = true; IsBusy = true; SetError(null); Refresh();
+        var version = epoch; var original = review; var connection = remote; operationActive = true;
         try
         {
+            StartOperation(version); ValidateReview(version, original);
             var terms = await connection.OfferAsync(original.Payload.Purpose, CancellationToken.None); ValidateReview(version, original); offer = terms;
             ProviderText = text.Format("Ai_Offer", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits), terms.ExpiresAt.ToString("u", local.CurrentCulture));
             if (!CanAfford(terms)) SetError("Ai_Insufficient");
@@ -209,11 +235,14 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     [RelayCommand] public async Task SendAsync()
     {
         if (!CanSend || review is not { } original || offer is not { } terms || remote is not { } connection) return;
-        var version = epoch; var presentation = frameEpoch; var returned = false; var disclosure = NativeDisclosure(); operationActive = true; IsBusy = true; SetError(null); Refresh();
+        var version = epoch; var presentation = frameEpoch; var returned = false; var enteredSubmission = false;
+        var disclosure = NativeDisclosure(); operationActive = true;
         try
         {
+            StartOperation(version); ValidateDisclosure(disclosure); ValidateReview(version, original);
             if (!await interaction.ConfirmAsync(text["Ai_Title"], text.Format("Ai_SendConfirm", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits)), text["Ai_Send"], text["Common_Cancel"])) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original); if (!await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); ValidateReview(version, original);
+            enteredSubmission = true;
             var result = await connection.SubmitAsync(terms, original.Payload, async () => { ValidateDisclosure(disclosure); ValidateReview(version, original); await store.CheckAsync(original); ValidateDisclosure(disclosure); ValidateReview(version, original); }, CancellationToken.None);
             ValidateFrame(presentation);
             // Preserve only the returned original result before fallible private-record follow-through.
@@ -224,6 +253,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         {
             if (OwnsPresentation && presentation == frameEpoch)
             {
+                // A failed startup/consent has not entered the original submission client.
+                // It must not create a speculative private-record read or erase a newer draft's feedback.
+                if (!enteredSubmission)
+                { if (version == epoch) { SetError(FailureKey(error)); offer = null; } return; }
                 SetError(FailureKey(error)); offer = null;
                 if (returned) return; // Known original result needs no speculative second read or primary replay.
                 try
@@ -243,9 +276,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private async Task ContinueCoreAsync(bool close)
     {
         if (!CanContinue || remote is not { } connection || retained is not { } record) return;
-        var version = epoch; var presentation = frameEpoch; var disclosure = NativeDisclosure(); operationActive = true; IsBusy = true; SetError(null); Refresh();
+        var version = epoch; var presentation = frameEpoch; var disclosure = NativeDisclosure(); operationActive = true;
         try
         {
+            StartOperation(version); ValidateDisclosure(disclosure);
             var key = close ? "Ai_Close" : "Ai_Continue";
             if (!await interaction.ConfirmAsync(text["Ai_Title"], text[close ? "Ai_CloseConfirm" : "Ai_ContinueConfirm"], text[key], text["Common_Cancel"])) return;
             ValidateDisclosure(disclosure); Validate(version); if (!close && !await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); Validate(version);
