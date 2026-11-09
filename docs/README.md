@@ -1,5 +1,9 @@
 # Documentation
 
+[Original receipt startup D952](../src/Apps/Zanance/docs/quality/original-receipt-startup-publication.md) records four failures, captured origin before
+startup notifications, guarded native feedback and nine selected final outcomes.
+One original native Home command preserves source without camera/OCR/financial replay.
+
 [SQLite maintenance applicability D951](../src/Apps/Zanance/docs/quality/sqlite-maintenance-applicability.md) records actual bounded public version
 objects, published45row/54ID CVE dispositions and original direct migration/export
 source inspection, without native upgrade/device/financial replay.

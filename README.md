@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D952 original receipt startup](src/Apps/Zanance/docs/quality/original-receipt-startup-publication.md) fixes four actual ownership/Busy/late-alert
+failures. Five new and four affected contracts, strict complete builds and one
+original native Home command pass with source unchanged and no camera/OCR/payment.
+The fresh emulator retires; held physical continuation and broader gates remain open.
+
 [D951 SQLite applicability](src/Apps/Zanance/docs/quality/sqlite-maintenance-applicability.md) verifies public version3.53.4 in both current64bit
 cipher modules and dispositions the complete published45row CVE table. The specific
 3.54.1overflow is32bit-only; no direct cipher_migrate caller is found. This finite

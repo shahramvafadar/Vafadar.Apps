@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-952 - Original receipt startup owns its page before notifications (2026-11-09)
+
+Four actual failures reproduce replacement-page source reads, leakedBusy and stale
+alert. Five new plus4affected existing cases pass after captured-origin startup
+inside cleanup, checks after publications and before native failure alert. Strict
+Windows/fullOffline384/408/1608 and private192/204/804 pass; original/corrected test,
+5shipping/7native compiler documents bind actual sources. Same3073/10216/boot with
+one original Home tap observes actual BindingContext retirement/restoration via
+originalMauiReceiptRuntime: context0/Busyfalse/full20source exact/ledger0/nochooser.
+Oneinstall/launch continues earlyboot refusal; noOCR/photo/auth/payment replay.
+FreshUID/2hashXML95324byte/officialAVD24file4487394599byte retire,5Cleans pass.
+D944held/Main adoption/frozen scopes preserved; full goal remains active.
+[Original receipt startup evidence](src/Apps/Zanance/docs/quality/original-receipt-startup-publication.md).
+
 ## D-951 - Current SQLite version and maintenance applicability (2026-11-09)
 
 Only explicit public sqlite3_version7byte objects in actualD949cipher/selectedC5

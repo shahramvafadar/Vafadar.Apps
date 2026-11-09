@@ -1,5 +1,17 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-952 - Original receipt startup and failure publication complete
+
+Four actual failures (replacement origin/read, cleared-error read, Busy leak, stale
+alert) are corrected on the original session. Five new+4directly affected cases and
+strictWindows/fullOffline/native builds pass. Original Home tap with real runtime
+observes actual BindingContext retirement/restoration: source20exact/ledger0,
+context0 and Busy released, nochooser/camera/OCR/auth. FreshUID/2XML95324byte and
+officialAVD24file4487394599logicalbyte retire;5Cleans pass. Earlyboot/Windowsrestore/
+PDBpath refusals are preserved and same-attempt continuations do not replay successes.
+No Main adoption while D944held; broader originalfault/performance/security/platform
+and full delivery remain open. [Receipt startup evidence](../../quality/original-receipt-startup-publication.md).
+
 ## D-951 - SQLite maintenance applicability complete for the retrieved scope
 
 Actual public version3.53.4 in both selected64bitABIs matches immutable source.

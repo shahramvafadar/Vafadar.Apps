@@ -22,7 +22,6 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
     private async Task RunAsync(Guid? entryId, Guid? attachmentId, Func<bool>? isCurrent)
     {
         if (IsBusy) return;
-        IsBusy = true; Error = null;
         ReceiptReadOrigin? origin = null;
         var completed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         CancellationTokenRegistration retirement = default;
@@ -41,6 +40,10 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                 if (!Volatile.Read(ref publishing)) completed.TrySetResult();
             });
             RequireCurrent();
+            // D-952: capture the original page before startup notifications can replace it.
+            // Every publication stays inside cleanup and rechecks that captured owner before effects.
+            IsBusy = true; RequireCurrent();
+            Error = null; RequireCurrent();
             var reviewed = await reader.CaptureAsync(entryId, attachmentId);
             RequireCurrent();
             var file = reviewed.Attachment is { } original
@@ -131,6 +134,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             if (runtime.RetainPublicationIfLocked(() => GuardedAsync(() => ShowFailureAsync(exception)))) return true;
             Error = exception is ReceiptPreparationException preparation ? translator[preparation.ResourceKey]
                 : CommercialFailureMessage.OrFallback(exception, translator, "Receipt_ReadFailed");
+            if (!Current()) return false;
             await runtime.AlertAsync(translator["Receipt_Title"], Error, translator["Common_Ok"]);
             return false;
         }
