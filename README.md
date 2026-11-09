@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D957 Home template commands](src/Apps/Zanance/docs/quality/home-template-invocation-publication.md) fixes startup, delayed feedback and parent retirement
+with16new selected cases in14+2lineages and retained-source native qualification.
+Original handoffs/Reload remain; no financial replay or phone action. Server identity
+change is recorded without claiming old continuity; owned cleanup completes.
+
 [D956 conversion startup](src/Apps/Zanance/docs/quality/account-conversion-startup-publication.md) fixes six actual publication/cleanup failures
 with7new selected cases and4corrected native session outcomes. Original consent,
 writer and accepted receipt stay intact; no financial conversion or phone action.

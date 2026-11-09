@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-957 - Home template commands own publication and parent retirement (2026-11-09)
+
+10actual host failures/3controls and one original native parent-child failure are
+corrected for Open/Choose/Reload startup, delayed error/replacement and permanent
+Home retirement.14+2new selected cases pass without rerunning accepted14; current
+handoffs/read failures/explicit parent Reload remain. Same4377to5507/10216/boot/
+full20source1account1template/ledger0 survives one no-reset; native original error
+window/explicit Reload/retired invocation0context pass. SharedOKlookup refusal
+continues same59396client/retainedXML2674byte, exit0; no show/command/capture replay.
+StrictWindows/full3844081608/private192204804/compiler bindings pass. FreshUID/
+AVD25file4703794608logicalbyte retire;6Cleans/OSexact, no supplemental/frozen/phone.
+PriorADB50972gone; current existing5038/65060 creationticks639298300274237044
+verified same official path/listener and preserved afterward. Actor/cause unknown,
+no prior-server continuity or exclusion of implicit SDK behavior claimed; no explicit
+reset/start/reconnect/pair. Revalidate current65060 before owned device work. D944
+held/Main/retained/frozen/full goal remain protected. [Template invocation](src/Apps/Zanance/docs/quality/home-template-invocation-publication.md).
+
 ## D-956 - Original conversion startup owns cleanup and source (2026-11-09)
 
 6actual startup failures/1control expose Busy leak and context-factory attempts after

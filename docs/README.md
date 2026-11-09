@@ -1,5 +1,9 @@
 # Documentation
 
+[Home template invocation D957](../src/Apps/Zanance/docs/quality/home-template-invocation-publication.md) records10host failures, one native parent
+failure,16new selected cases and same-source native correction/error/Reload.
+Observer/server limitations, actual compiler lineages and retirement remain explicit.
+
 [Original conversion startup D956](../src/Apps/Zanance/docs/quality/account-conversion-startup-publication.md) records6original failures,
 7focused corrected cases and4Android session outcomes with full54table/source
 preservation, complete strict packages and owned retirement, without financial replay.

@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-957 - Original Home template invocation batch complete
+
+Open/Choose/Reload startup, stale failure publication and parent retirement correct
+10actual host failures plus one original native parent-child failure.14+2new cases
+pass; accepted14are not replayed for2new current handoffs, no old financial success.
+SameUID10216/boot4377to5507 no-reset retains full20source1account1definition/ledger0;
+original native error/explicit Reload/retired invocation0context pass. SharedOK
+observer refusal continues sameclient59396/window/XML2674byte once, exit0. Strict
+Windows/shipping/private/source bindings pass; freshUID/AVD25file4703794608logical
+byte retire,6Cleans/OSexact. PriorADB50972gone/current65060already listening; cause
+unknown, no explicit reset/start/reconnect/pair or old-server continuity claim.
+D944phone/Main/retained/frozen/full goal remain protected; broader gates open.
+[Home template invocation](../../quality/home-template-invocation-publication.md).
+
 ## D-956 - Original account-conversion startup correction complete
 
 6actual failures/1control become7selected passes after startup inside cleanup and

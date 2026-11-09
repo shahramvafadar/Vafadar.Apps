@@ -296,7 +296,11 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     private Task RetryLoadAsync() => Presentation.Failures.GuardAsync(LoadAsync);
 
     /// <summary>Invalidates only this original Home lifetime before its native controls are disconnected.</summary>
-    internal void RetirePublication() => _publicationRetired = true;
+    internal void RetirePublication()
+    {
+        _publicationRetired = true;
+        TemplateNavigation.RetirePublication();
+    }
 
     private void RequireCurrentPublication()
     {
