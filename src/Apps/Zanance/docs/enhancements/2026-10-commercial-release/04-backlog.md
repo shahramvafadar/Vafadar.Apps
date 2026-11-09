@@ -1,5 +1,16 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-965 - Original analysis translation and invalidation corrected
+
+[Publication evidence](../../quality/analysis-language-publication.md) fixes11original valid-input failures;13new+18affected host/same13native model
+contracts pass. HistoricalJSON/text never cleared for translation, obsolete feedback
+stops, newer completed local previews survive. Worker cases are not actual UI gestures;
+declared completed history is input, no primary/provider/financial replay. Full54
+source exact/23compiler checks/strictWindows/fullOffline/native/owned retirement/
+5Cleans pass. [D964 CI diagnosis](../../quality/ci-internal-service-failures.md) shows actual GitHub server errors with no failed job log available; no workflow
+rescue/rerun/status polling. D944phone/Main/retained/frozen and all canonical states/
+whole delivery gates remain unchanged.
+
 ## D-964 - Original loaded analysis form qualified within explicit scope
 
 [Loaded form evidence](../../quality/analysis-input-large-text.md) adds36new actual route/page large-text contexts:288captions/144targets,

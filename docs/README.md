@@ -1,5 +1,8 @@
 # Documentation
 
+[Original analysis language publication D965](../src/Apps/Zanance/docs/quality/analysis-language-publication.md) fixes11actual original failures with13new/18affected host and13native contracts,
+immutable historical text and full fictitious source preserved. [CI admission evidence](../src/Apps/Zanance/docs/quality/ci-internal-service-failures.md) records GitHub internal server errors without failed-code inference or reruns.
+
 [Original loaded analysis form D964](../src/Apps/Zanance/docs/quality/analysis-input-large-text.md) records36new OSfont2 contexts,288native captions/144targets, full source across
 helper-only adoption and explicit preference/binary limits. [Dated engineering notes](../src/Apps/Zanance/docs/quality/dated-engineering-updates.md) retain earlier README records while its badges return to the top.
 

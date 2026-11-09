@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-965 - Original language feedback and preview invalidation ownership (2026-11-09)
+
+13initial harness inputs refused original digest for missing totals; guard unchanged,
+canonicalEUR0 input corrects prep. Valid original13cases11fail/2controls; final13new
+plus18affected existing Review/Load pass on same binary, no unrelated/financial replay.
+Language snapshots owner/culture/error/metadata refs, removes sharing authority first,
+checks every publication, preserves historicalJSON/text and contains failed binding.
+Common clears stop after newer epoch; newer actual local previews survive. Last2
+native cases use controlled thread-pool model scheduling, not UI-thread blocking/
+gestures. Same13native contracts/full54typed139172byte source pass, one metadata/
+ledger0; declared historicalcompletedDTO is input, never primary/provider acceptance.
+StrictWindows/fullOffline3844081608/private93104405/23compiler checks pass; freshUID/
+AVD24file4302189869logicalbyte retire,5Cleans/OSexact/same65060,6userhome7732remain.
+DirectDLL filter refusal preserved; supported no-build wrapper runs affected cases.
+D964CI/CodeQL actual server-error annotations and check counts1success/0 are separately
+diagnosed, no failed test log invented/status poll/rerun/successful log read. No
+workflow/runtimeGC/frozen/phone/Main/retained action; full goal/broader gates stay open.
+[Language publication](src/Apps/Zanance/docs/quality/analysis-language-publication.md), [CI admission](src/Apps/Zanance/docs/quality/ci-internal-service-failures.md).
+
 ## D-964 - Actual loaded analysis inputs at large text (2026-11-09)
 
 36native six-language/two-theme/360412680OSfont2 contexts qualify288caption/144target

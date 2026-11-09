@@ -108,10 +108,14 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Analysis language/invalidation D965](src/Apps/Zanance/docs/quality/analysis-language-publication.md) | Current-owner feedback, immutable historical packet/text and preservation of newer local previews |
 | [Analysis loaded form D964](src/Apps/Zanance/docs/quality/analysis-input-large-text.md) | Native large-text account/date/option captions and input errors; source/observer lineage limits remain explicit |
 | [Account Load D963](src/Apps/Zanance/docs/quality/analysis-account-load-publication.md) | Late publication/file defaults, retained selection and exact fictitious source |
 | [Review preview D962](src/Apps/Zanance/docs/quality/analysis-review-preview-publication.md) | Complete current preview precedes sharing authority; failed preview is not accepted work |
 | [Entry snapshot D961](src/Apps/Zanance/docs/quality/analysis-submission-entry-snapshot.md) | Caller edits during waits cannot replace the original aggregate packet |
+
+[Last D964 CI admission evidence](src/Apps/Zanance/docs/quality/ci-internal-service-failures.md) reports GitHub internal server errors; its available Android job completed successfully.
+No failed product-test log, full CI pass or rerun is inferred from that result.
 
 The held [D944 physical reconciliation attempt](src/Apps/Zanance/docs/quality/reconciliation-writer-arm64.md)
 waits for the owner's personal unlock. Independent approved work continues without

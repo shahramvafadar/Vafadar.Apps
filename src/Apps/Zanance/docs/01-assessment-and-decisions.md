@@ -1,5 +1,14 @@
 # 01 – Assessment and decision log
 
+## D-965 - Current language feedback and original historical data
+
+[Contract evidence](quality/analysis-language-publication.md) shows11original failures and13new/18affected host plus13native model outcomes.
+Separate authority invalidation from preview clearing, guard reentrant publication
+and preserve original historicalJSON/text; do not clear/replay retained records for
+translation. A pure existing result-state expression is shared unchanged. Controlled
+worker-model cases are not native UI gestures or actual provider acceptance.
+[CI admission diagnosis](quality/ci-internal-service-failures.md) records GitHub internal errors without rerunning jobs or weakening product guards.
+
 ## D-964 - Native loaded analysis presentation and concise repository status
 
 [Evidence and limits](quality/analysis-input-large-text.md) record the original loaded form at OSfont2 in36new contexts, exact source

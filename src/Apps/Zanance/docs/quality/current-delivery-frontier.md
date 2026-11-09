@@ -68,7 +68,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 | ZCR-TAX-01 | Official-source research exists; expert approval of the selected German year/rules/examples remains. Do not silently implement official tax conclusions. |
 | ZCR-TAX-02 | Local accountant export and named physical disclosures are delivered; remaining expert/platform acceptance remains, without filing authority. |
 | ZCR-TAX-03 | Versioned tax calculations require TAX-01 expert/rule acceptance before implementation; no invented rates/rules. |
-| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. D960adds finite actual failed-read page presentation; D961corrects public-client entry snapshot timing with5host/5native synthetic contracts and unchanged later primary guards. D962corrects incomplete/stale review publication with7host/same7native cases; D963adds11host/same11native Load-publication/default conditions and both full54table inputs; its finite late-publication question is corrected. None qualifies durable private storage/native consent/genuine provider/access/pricing/credit sales or public operation. Do not rerun successful primary submissions or fabricate live-provider success. |
+| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. D960adds finite actual failed-read page presentation; D961corrects public-client entry snapshot timing with5host/5native synthetic contracts and unchanged later primary guards. D962corrects incomplete/stale review publication with7host/same7native cases; D963adds11host/same11native Load-publication/default conditions and both full54table inputs; its finite late-publication question is corrected. D965adds13new/18affected host and13native language/invalidation contracts, immutable history and preserved newer previews; worker scheduling and synthetic history are explicit. None qualifies durable private storage/native consent/genuine provider/access/pricing/credit sales or public operation. Do not rerun successful primary submissions or fabricate live-provider success. |
 | ZCR-BANK-01 | Research exists; exact consumer specimens and actual live provider/access decisions remain. Do not fabricate a bank preset. |
 | ZCR-FX-01 | Owner-approved ECB thirty-pair integration is delivered; other price sources/public/platform gates remain and are not a reason to fetch ECB again. |
 | ZCR-LANG-01 | Additional languages are explicitly outside current delivery. Existing six languages remain supported. |
@@ -117,6 +117,11 @@ file reset pass; genuine provider/security/platform/full parent acceptance stays
 contexts and full54table source preservation. Original preference-key baseline
 comparison is unproved, current keys/original semantics/OS restore explicitly.
 The finite layout result does not close whole A11Y/provider/platform acceptance.
+
+[D965 original language/invalidation](analysis-language-publication.md) corrects the named late publication/immutable-history/newer-preview failures with
+full54table source preservation. Its native worker-model subset is not actual UI
+interaction; no genuine primary/provider/financial acceptance is inferred.
+[Actual D964CI server failures](ci-internal-service-failures.md) have no failing job/test log in returned metadata; no speculative workflow fix or rerun follows.
 
 ## Validation and continuing goal
 

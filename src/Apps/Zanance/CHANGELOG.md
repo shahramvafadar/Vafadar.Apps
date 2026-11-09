@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-965: keep historical analysis results intact when switching language, stop obsolete language feedback after leaving the page, and preserve a newer preview during an older refresh.
+
 - D-863: reject quantity fractions that were rounded away during input parsing, and calculate supported weights and fine-metal masses without intermediate overflow; preserve final limits and unknown values.
 
 - D-862: keep a valid wealth-change explanation available when large positive and negative adjustments cancel; continue refusing invalid balances and unsupported final amounts.

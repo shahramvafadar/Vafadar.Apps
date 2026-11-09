@@ -1,5 +1,11 @@
 # 03 – UX design
 
+D-965: language refresh may translate analysis feedback/status, but historical request
+JSON and untrusted result text remain unchanged. Remove old sharing authority before
+fallible notifications; an obsolete refresh stops after owner/draft/language changes
+and cannot erase a newer completed preview. [Original-model contract evidence](quality/analysis-language-publication.md)
+keeps native worker scheduling, declared historical input and broader acceptance limits explicit.
+
 D-855: [retained query recovery](quality/retained-transaction-query-recovery.md)
 lets a failed read-only filter be corrected on the same owned source; financial actions
 remain covered until presentation succeeds. Six selected host cases and original Android

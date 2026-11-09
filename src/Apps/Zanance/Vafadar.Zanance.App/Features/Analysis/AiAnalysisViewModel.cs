@@ -111,9 +111,19 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     partial void OnComparePreviousChanged(bool value) => Invalidate();
     private int Invalidate()
     {
-        var original = Interlocked.Increment(ref epoch);
-        review = null; offer = null; Summary = null; Disclosure = null; ShareStatus = null; Refresh();
-        return original;
+        var original = BeginInvalidation(); ClearInvalidatedPreview(original); return original;
+    }
+    private int BeginInvalidation()
+    {
+        var original = Interlocked.Increment(ref epoch); review = null; offer = null; return original;
+    }
+    private void ClearInvalidatedPreview(int original)
+    {
+        // D-965: a notification may complete a newer local review before this older clear resumes.
+        Summary = null; if (original != Volatile.Read(ref epoch)) return;
+        Disclosure = null; if (original != Volatile.Read(ref epoch)) return;
+        ShareStatus = null; if (original != Volatile.Read(ref epoch)) return;
+        Refresh();
     }
 
     // D-958: these notifications can synchronously retire the page or change its draft.
@@ -344,13 +354,14 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         if (record is null) return;
         // Continuation must display the retained destination/model/max units too, never only a fresh quote or today's figures.
         ResultSnapshot = remote?.Destination + Environment.NewLine + JsonSerializer.Serialize(record.Submission, AiJson.Default.AiSubmission); ResultText = record.Result?.Text;
-        ResultStatus = record.Result?.State switch
+        ResultStatus = RecordStatus(record);
+        if (applyBalance && record.Result is not null) { ShowBalance(record.Result.Balance); if (availability is not null) availability = availability with { Balance = record.Result.Balance }; }
+    }
+    private string RecordStatus(AiClientRecord record) => record.Result?.State switch
         {
             AiRequestState.Completed => text.Format("Ai_ResultUnits", N(record.Result.ChargedUnits)),
             AiRequestState.Refunded => text["Ai_Refunded"], AiRequestState.NotAccepted => text["Ai_NotAccepted"], _ => text["Ai_Pending"],
         };
-        if (applyBalance && record.Result is not null) { ShowBalance(record.Result.Balance); if (availability is not null) availability = availability with { Balance = record.Result.Balance }; }
-    }
     private void ShowBalance(AiBalance balance) => BalanceText = text.Format("Ai_Balance", N(balance.PurchasedAvailable), N(balance.GiftedAvailable), N(balance.PurchasedReserved), N(balance.GiftedReserved));
     private string Period(AiPeriod period) => text.Format("Ai_Summary", dates.Format(period.From, DateFormatStyle.Long), dates.Format(period.To, DateFormatStyle.Long), N(period.AccountCount), N(period.UnreviewedCount)) +
         Environment.NewLine + string.Join(Environment.NewLine, period.Totals.Select(t => text.Format("Ai_CurrencySummary", t.CurrencyCode,
@@ -363,18 +374,41 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private void OnLanguageChanged(object? sender, EventArgs args)
     {
         if (!OwnsPresentation) return;
-        Invalidate(); SetError(errorKey);
-        if (AccountsError is not null) AccountsError = text["Ai_ChooseAccounts"];
-        if (FromError is not null) FromError = text["Ai_InvalidRange"];
-        if (ToError is not null) ToError = text["Ai_InvalidRange"];
-        ProviderText = availability?.Configured == true ? remote?.Destination : text["Ai_NoProvider"];
-        if (availability is not null) ShowBalance(availability.Balance);
-        if (retained is not null)
+        var frame = frameEpoch; var language = local.CurrentLanguage.CultureName; var culture = local.CurrentCulture.Name;
+        var key = errorKey; var connection = remote; var status = availability; var saved = retained;
+        var original = BeginInvalidation();
+        bool Current() => OwnsPresentation && frame == frameEpoch && original == Volatile.Read(ref epoch)
+            && language == local.CurrentLanguage.CultureName && culture == local.CurrentCulture.Name && key == errorKey
+            && ReferenceEquals(connection, remote) && ReferenceEquals(status, availability) && ReferenceEquals(saved, retained);
+        try
         {
-            var originalPacket = ResultSnapshot; ShowRecord(retained); ResultSnapshot = originalPacket;
+            // D-965: even a retained destination getter can retire this owner before publication.
+            var provider = status?.Configured == true ? connection?.Destination : text["Ai_NoProvider"];
+            if (!Current()) return;
+            SetError(key); if (!Current()) return;
+            if (AccountsError is not null) { AccountsError = text["Ai_ChooseAccounts"]; if (!Current()) return; }
+            if (FromError is not null) { FromError = text["Ai_InvalidRange"]; if (!Current()) return; }
+            if (ToError is not null) { ToError = text["Ai_InvalidRange"]; if (!Current()) return; }
+            ProviderText = provider; if (!Current()) return;
+            if (status is not null) { ShowBalance(status.Balance); if (!Current()) return; }
+            // Historical source JSON and untrusted result text are immutable, not translated or cleared/replayed.
+            if (saved is not null) ResultStatus = RecordStatus(saved);
         }
-        Refresh();
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            // A failed binding must not fault the global language event or resume this obsolete refresh.
+            // Sharing authority was removed before any fallible publication.
+        }
+        finally
+        {
+            if (OwnsPresentation && frame == frameEpoch && original == Volatile.Read(ref epoch))
+            {
+                try { ClearInvalidatedPreview(original); }
+                catch (Exception error) when (error is not OutOfMemoryException) { /* A failed preview notification cannot restore sharing authority. */ }
+            }
+        }
     }
+
     private string N(long value) => NativeDigits.Apply(value.ToString(local.CurrentCulture))!;
     // An accepted historical result is bound to its page/file frame, independently of a newer editable date draft.
     private void ValidateFrame(long original)

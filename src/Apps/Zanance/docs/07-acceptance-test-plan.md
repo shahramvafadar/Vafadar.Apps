@@ -1,5 +1,13 @@
 # 07 – Acceptance test plan
 
+## D-965 - Language and invalidation publication
+
+[13new and18affected selected host cases](quality/analysis-language-publication.md) and the same13native model contracts qualify only the named callbacks/history/
+preview invariants with complete fictitious source preservation. Last2native cases
+use a controlled worker scheduler; no genuine native consent/provider/primary or
+financial success is replayed. [D964CI failures](quality/ci-internal-service-failures.md) are actual GitHub server errors, not executed product-test failures. Full CI and
+broader platform/security/stability/performance acceptance remain open.
+
 ## D-964 - Loaded analysis input presentation
 
 [36new native large-text contexts](quality/analysis-input-large-text.md) qualify only the named account/date/option/error captions and targets.

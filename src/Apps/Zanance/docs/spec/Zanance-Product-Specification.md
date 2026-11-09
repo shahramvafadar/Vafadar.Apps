@@ -1226,7 +1226,11 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-964)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-965)
+
+[D965 language/invalidation](../quality/analysis-language-publication.md) corrects11original failures with13new/18affected host and13native model contracts,
+immutable historical packet/text and full54table fictitious source preserved.
+Worker scheduling and genuine-provider/platform limits remain explicit. [D964CI](../quality/ci-internal-service-failures.md) reports GitHub server errors without failed-code inference, reruns or full CI acceptance.
 
 [D964 loaded analysis presentation](../quality/analysis-input-large-text.md) qualifies36new versioned OSfont2 native contexts/288captions/144targets with
 full54table source equal across the helper update. Original preference-key baseline

@@ -1,5 +1,15 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-965 - Original language and invalidation publication (9 November 2026)
+
+[Actual correction](analysis-language-publication.md) fixes11original failures;13new+18affected host/same13native model outcomes pass.
+Historical packet/text remain immutable, obsolete callbacks stop and newer local
+previews survive. Worker model scheduling is explicit, full54table source exact,
+strict builds/owned cleanup complete; no real primary/auth/financial replay.
+[Separate CI error diagnosis](ci-internal-service-failures.md) reports actual GitHub server-error annotations and missing job admission rather
+than speculative code repair. D944held/retained/frozen/full goal and broader gates
+remain protected.
+
 ## D-964 - Original analysis loaded inputs (9 November 2026)
 
 [Actual loaded form](analysis-input-large-text.md) adds36new native OSfont2 contexts/288caption/144target observations and exact

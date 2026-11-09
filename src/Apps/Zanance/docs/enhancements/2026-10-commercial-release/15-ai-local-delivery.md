@@ -1,5 +1,14 @@
 # Local optional analysis, consent and credits (D-298)
 
+## D-965 - Original language feedback and newer preview (9 November 2026)
+
+[Language/invalidation correction](../../quality/analysis-language-publication.md) captures current ownership, guards feedback after notifications and keeps
+historical sourceJSON/untrustedtext immutable. Newer completed local review survives
+an older clear.13new/18affected host and13native model contracts pass with full54
+source exact; declared completedDTO is input, not real primary/provider success.
+Original primary control source stays exact apart from pure status-expression
+extraction. Genuine provider/native consent/platform/full delivery gates stay open.
+
 ## D-964 - Actual loaded input presentation (9 November 2026)
 
 [Loaded original form](../../quality/analysis-input-large-text.md) adds finite native large-text account/date/option/input-error conditions,
