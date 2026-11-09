@@ -1,5 +1,9 @@
 # Documentation
 
+[SQLite maintenance applicability D951](../src/Apps/Zanance/docs/quality/sqlite-maintenance-applicability.md) records actual bounded public version
+objects, published45row/54ID CVE dispositions and original direct migration/export
+source inspection, without native upgrade/device/financial replay.
+
 [Current native source advisories D950](../src/Apps/Zanance/docs/quality/current-native-source-advisories.md) records exact current ABI/source
 lineage,61fresh known ranges and six new boundary controls, plus a separate newer
 SQLCipher/SQLite maintenance question. No product/device/financial replay.

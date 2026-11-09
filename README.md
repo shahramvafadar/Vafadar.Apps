@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D951 SQLite applicability](src/Apps/Zanance/docs/quality/sqlite-maintenance-applicability.md) verifies public version3.53.4 in both current64bit
+cipher modules and dispositions the complete published45row CVE table. The specific
+3.54.1overflow is32bit-only; no direct cipher_migrate caller is found. This finite
+review does not establish whole security or justify replaying qualified workloads.
+
 [D950 native advisory correlation](src/Apps/Zanance/docs/quality/current-native-source-advisories.md) binds current cipher hashes and tracked
 source pins to fresh published ranges: zero OpenSSL3.5.9 matches among61entries.
 Newer SQLCipher/SQLite maintenance remains separately assessed; this is not whole

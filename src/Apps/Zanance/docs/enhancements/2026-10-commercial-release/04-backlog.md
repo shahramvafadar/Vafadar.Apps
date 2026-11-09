@@ -1,5 +1,16 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-951 - SQLite maintenance applicability complete for the retrieved scope
+
+Actual public version3.53.4 in both selected64bitABIs matches immutable source.
+Complete official45row/54IDCVEtable is dispositioned; numeric fixes predatecurrent
+and vendor outsidecore labels remain attributed. Specific3.54.1overflow is32bit-only.
+1492trackedC#literal scan has0cipher_migrate/hexkey and two export callers have local
+GUID N aliases. No demonstrated urgent upgrade from this evidence; keep qualified
+pin without financial/oldsuccessful workload replay. Unknown-CVE/source/portable
+input/whole-security and broader delivery gates remain separate; D944 stays held.
+[SQLite maintenance applicability](../../quality/sqlite-maintenance-applicability.md).
+
 ## D-950 - Native published range correlation complete; SQLite maintenance separate
 
 Current ABI hashes and tracked source/qualification inputs bind OpenSSL3.5.9 and

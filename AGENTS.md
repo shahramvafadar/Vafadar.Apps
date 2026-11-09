@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## D-951 - Current SQLite version and maintenance applicability (2026-11-09)
+
+Only explicit public sqlite3_version7byte objects in actualD949cipher/selectedC5
+read-only section+LOAD agree with immutable sourceVERSION3.53.4; bothELF64. Official
+3.54.1specificoverflow is32bit-only; complete45row/54IDvendorCVEtable numeric fixes
+are no later than current, others explicitly outsidecore. Not unknown-CVE/whole
+security acceptance.1492trackedC#literal scan has0cipher_migrate/hexkey; two actual
+export aliases are local GUID N, not arbitrary caller names. Parser/loadflag refusals
+retained, no successful workload replay. No demonstrated urgent upgrade from these
+facts; current qualified pin stays, broader source/input gates remain open. Docs
+only; heldD944/goal/frozen scopes preserved. [SQLite applicability](src/Apps/Zanance/docs/quality/sqlite-maintenance-applicability.md).
+
 ## D-950 - Current native pins and fresh published advisories correlated (2026-11-09)
 
 CurrentD949cipher ABI hashes equal tracked selectedC5/qualification; sourceInputs
