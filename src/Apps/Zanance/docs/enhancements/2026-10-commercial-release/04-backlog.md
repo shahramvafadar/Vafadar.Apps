@@ -1,5 +1,21 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-974 - Complete original client consent metadata before effects
+
+[Consent metadata evidence](../../quality/analysis-consent-metadata-validation.md) records44original negative failures plus one
+additional unsupported-purpose failure, two valid controls, then47new+5directly
+related host cases and same47native conditions passed. Shared offer validation
+protects returned metadata/persisted consent/new submission without changing
+expiry/pricing/snapshot/primary order; inverse source reconstructs original client.
+Native credential/journal ports are refusing fixtures, not genuine remote effects;
+no account/ledger/auth/HTTP or old successful financial/TLS replay. StrictWindows/
+fullOffline3844081608/SDK91101394/eight compiler-input checks pass. Shipping38c54808
+is prepared, not Main-installed. FreshUID/OS/AVD24file4339021073byte retirement and
+five standard Clean targets complete. Initial preflight-chain/partial NETSDK1005
+cleanup mistakes/log-relative-path refusal remain explicit; all1837logged deletes
+are current bin/obj only,806late-admitted files/465242456bytes counted separately.
+No file-list rewriting/alternate/frozen action; broader parent States/goal stay open.
+
 ## D-973 - Original native private analysis storage boundaries
 
 [Private storage evidence](../../quality/private-analysis-native-storage.md) links unmodified SecureAiStorage to actual Android

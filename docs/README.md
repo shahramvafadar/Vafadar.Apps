@@ -1,5 +1,7 @@
 # Documentation
 
+[Original consent metadata D974](../src/Apps/Zanance/docs/quality/analysis-consent-metadata-validation.md) fixes45actual original negative conditions with47new host/same47native cases and5affected host cases, preserving literal expiry and primary ordering; cleanup failures and provider limits remain explicit.
+
 [Original native private analysis storage D973](../src/Apps/Zanance/docs/quality/private-analysis-native-storage.md) qualifies9new actual backend/marker/process-persistence conditions without account/financial/authentication/provider replay; key-loss/platform limits remain explicit.
 
 [Current complete Main D972](../src/Apps/Zanance/docs/quality/current-complete-main-adoption-d972.md) reuses the identical prepared shipping package for one no-reset physical update and same-process original Home observation, with explicit public/private/CI limits.

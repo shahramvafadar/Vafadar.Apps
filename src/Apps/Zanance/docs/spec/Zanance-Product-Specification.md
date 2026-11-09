@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-973)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-974)
+
+[D974 original consent metadata](../quality/analysis-consent-metadata-validation.md) fixes45actual original negative conditions with47new/5affected host and same47native observations. Invalid retained/new offers refuse before effects; literal valid expiry and source/transport/save order remain. Strict builds and owned retirement pass with explicit retained cleanup failures; prepared38c54808is not Main-installed or genuine provider acceptance.
 
 [D973 native private analysis storage](../quality/private-analysis-native-storage.md) qualifies9new original Android backend/marker/process-persistence conditions, source-linked and without account/ledger/HTTP/authentication replay. Controlled value removal is not genuine key loss/OS restore; full journal/platform/whole-security acceptance remains open.
 

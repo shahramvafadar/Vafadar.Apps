@@ -34,11 +34,9 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
     /// <summary>Obtains metadata-only exact terms for the user's selected fixed purpose.</summary>
     public async Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct = default)
     {
+        if (!Enum.IsDefined(purpose)) throw new InvalidDataException("Original analysis purpose refused.");
         verifyAccess(); var result = await transport.AnalysisOfferAsync(expectedUser, purpose, ct); verifyAccess();
-        if (result.Id == Guid.Empty || result.Purpose != purpose || string.IsNullOrWhiteSpace(result.Provider) || result.Provider.Length > 64 ||
-            string.IsNullOrWhiteSpace(result.Model) || result.Model.Length > 64 || result.MaximumUnits is <= 0 or > 1_000_000_000_000)
-            throw new InvalidDataException("Original analysis offer refused.");
-        return result;
+        ValidateOffer(result, purpose); return result;
     }
     /// <summary>Reads the original retained intent/result without HTTP, key generation or permission renewal.</summary>
     public async Task<AiClientRecord?> ReadAsync(CancellationToken ct = default)
@@ -50,6 +48,7 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         if (state.Version != 1 || state.Submission is null || state.Submission.RequestId == Guid.Empty || state.Submission.Offer is null)
             throw new InvalidDataException("Original analysis state differs.");
         AiProtocol.Validate(state.Submission.Payload);
+        ValidateOffer(state.Submission.Offer, state.Submission.Payload.Purpose);
         if (state.Result is not null) Validate(state.Submission, state.Result);
         return state;
     }
@@ -61,6 +60,7 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         var encoded = JsonSerializer.SerializeToUtf8Bytes(payload, AiJson.Default.AiPayload);
         if (encoded.Length > AiProtocol.MaximumPayloadBytes) throw new InvalidDataException("Analysis payload bound exceeded.");
         var frozen = JsonSerializer.Deserialize(encoded, AiJson.Default.AiPayload)!; AiProtocol.Validate(frozen);
+        ValidateOffer(offer, frozen.Purpose);
         verifyAccess(); var semaphore = Operations.GetOrAdd(Scope, _ => new SemaphoreSlim(1, 1)); await semaphore.WaitAsync(ct);
         try
         {
@@ -116,6 +116,16 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         verifyAccess(); var raw = JsonSerializer.Serialize(record, AiClientJson.Default.AiClientRecord);
         if (Encoding.UTF8.GetByteCount(raw) > 65536) throw new InvalidDataException("Analysis private journal bound exceeded.");
         return storage.WriteAsync(Scope, raw, ct);
+    }
+    /// <summary>Retains the same bounded literal offer contract at service, journal and new-consent entry.</summary>
+    private static void ValidateOffer(AiOffer offer, AiPurpose purpose)
+    {
+        // D-974: a readable journal is not authority to continue malformed consent or reach credentials.
+        // Expiry remains a service decision; historical literal requests must stay readable and closable.
+        if (offer is null || !Enum.IsDefined(purpose) || !Enum.IsDefined(offer.Purpose) || offer.Id == Guid.Empty || offer.Purpose != purpose ||
+            string.IsNullOrWhiteSpace(offer.Provider) || offer.Provider.Length > 64 ||
+            string.IsNullOrWhiteSpace(offer.Model) || offer.Model.Length > 64 || offer.MaximumUnits is <= 0 or > 1_000_000_000_000)
+            throw new InvalidDataException("Original analysis offer refused.");
     }
     private static void Validate(AiSubmission original, AiRequestResult result)
     {
