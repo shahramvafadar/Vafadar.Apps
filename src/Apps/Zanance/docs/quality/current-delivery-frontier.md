@@ -1,5 +1,7 @@
 # Current complete delivery frontier (D-959)
 
+D968 adds finite [analysis date-part/IME evidence](analysis-date-part-targets.md) and repairs the clipped calendar target. Canonical State rows unchanged; whole goal and D944hold remain.
+
 ## Source and scope
 
 This 9 November 2026 reconciliation reads the current canonical backlog and its

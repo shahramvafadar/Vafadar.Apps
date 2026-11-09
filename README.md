@@ -108,6 +108,7 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Analysis date targets D968](src/Apps/Zanance/docs/quality/analysis-date-part-targets.md) | Clipped calendar repair and finite native large-text/numeric-draft evidence |
 | [Analysis loading footer D967](src/Apps/Zanance/docs/quality/analysis-loading-large-text.md) | Native large-text pending controls and one normal Back, unchanged product and source |
 | [Analysis metadata/quote D966](src/Apps/Zanance/docs/quality/analysis-metadata-publication.md) | Coherent metadata, guarded follow-up and preserved draft/resource ownership; original-model scope |
 | [Analysis language/invalidation D965](src/Apps/Zanance/docs/quality/analysis-language-publication.md) | Current-owner feedback, immutable historical packet/text and preservation of newer local previews |

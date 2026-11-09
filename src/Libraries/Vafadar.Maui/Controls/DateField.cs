@@ -107,7 +107,7 @@ public sealed class DateField : ContentView
             var separator = Separator();
             _separators[part] = separator;
             var group = new Grid { ColumnDefinitions = [new(GridLength.Auto), new(GridLength.Auto)], ColumnSpacing = 2,
-                Margin = new Thickness(0, 0, 2, 4), Children = { input, separator } };
+                Padding = new Thickness(0, 0, 2, 4), Children = { input, separator } };
             Grid.SetColumn(separator, 1);
             FlexLayout.SetShrink(group, 0);
             _partGroups[part] = group;
@@ -153,11 +153,13 @@ public sealed class DateField : ContentView
             BackgroundColor = Colors.Transparent,
         };
         _calendarButton.Clicked += (_, _) => OpenCalendar();
+        // D-968: keep spacing inside each flex item. Outer margins can be subtracted again
+        // during native arrangement, leaving an otherwise complete 44-dp calendar target clipped.
         var calendarArea = new Grid
         {
-            WidthRequest = 44,
+            WidthRequest = 50,
             HeightRequest = 44,
-            Margin = new Thickness(6, 0, 0, 0),
+            Padding = new Thickness(6, 0, 0, 0),
             VerticalOptions = LayoutOptions.Center,
             Children = { _calendar, _calendarIcon, _calendarButton },
         };

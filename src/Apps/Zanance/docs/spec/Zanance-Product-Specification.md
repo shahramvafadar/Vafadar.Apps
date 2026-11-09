@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-967)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-968)
+
+[D968 native date targets](../quality/analysis-date-part-targets.md) repairs43px clipping and qualifies36large-text contexts plus numeric valid/partial/blur, with full54source exact/no financial replay. Initial UI key-presence stays unproved; broader gates and parent states remain.
 
 [D967 loading footer/Back](../quality/analysis-loading-large-text.md) qualifies36new pending contexts with72captions/72disabled targets/36spinners and one cancelled original read. Full54source/captured preferences/OS restore; no account/financial setup, product change or new unit tests. Whole A11Y/provider/platform gates and canonical states remain unchanged.
 

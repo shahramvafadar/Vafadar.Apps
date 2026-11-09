@@ -1,5 +1,16 @@
 # 01 – Assessment and decision log
 
+## D-968 - Complete native analysis date targets and numeric input
+
+[Date-part evidence](quality/analysis-date-part-targets.md) records actual43px clipping,
+failed pixel-reserve candidates, effective runtime measurements and correction
+from outer margins to internal spacing. Final36contexts/216numeric entries/
+72calendar targets/72previews and one valid/partial/blur IME pass; full54source exact,
+no account/ledger setup. StrictWindows/fullOffline3844081608/private192204804 pass.
+Initial UI-key presence across updates stays unproved; later baseline/known original
+semantics/OS restore separately. No phone/Main/retained/frozen or successful financial
+replay; D944held, canonical parent states and broader delivery goal stay open.
+
 ## D-967 - Actual original analysis loading footer and Back
 
 [Loading evidence](quality/analysis-loading-large-text.md) qualifies36new actual route/page pending contexts:72captions/72disabled targets/

@@ -1,5 +1,7 @@
 # 08 – Release checklist (first public release)
 
+D968 [date-part/IME evidence](quality/analysis-date-part-targets.md) qualifies36contexts and valid/partial/blur. Original pre-update UI key presence remains unproved; D944/broader gates stay open.
+
 D-967: [original analysis loading/Back](quality/analysis-loading-large-text.md) qualifies the named36pending-footer contexts, not date-part typing, glyph/speech/full A11Y or Main/provider/release acceptance. No product change or prior successful workflow replay occurs; all broader gates remain.
 
 D-864: [current28 ARM64/full Main](quality/current-quantity-wealth-arm64-main.md)
