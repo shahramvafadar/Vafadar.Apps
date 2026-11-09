@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-967: verified analysis loading captions, disabled actions and normal Back cancellation at large Android text; product layout and financial behavior are unchanged.
+
 - D-966: keep provider, balance and retained analysis results consistent during reload; stop outdated quote feedback after leaving or editing, and require a complete metadata refresh before follow-up.
 
 - D-965: keep historical analysis results intact when switching language, stop obsolete language feedback after leaving the page, and preserve a newer preview during an older refresh.

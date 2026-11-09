@@ -1,5 +1,8 @@
 # Documentation
 
+[Original analysis loading D967](../src/Apps/Zanance/docs/quality/analysis-loading-large-text.md) records36new pending contexts,72captions/72disabled targets/36spinners and one actual Back,
+with full source/restoration and explicit private-root/observer/acceptance limits. Product source and unit count are unchanged.
+
 [Original metadata publication D966](../src/Apps/Zanance/docs/quality/analysis-metadata-publication.md) records14original failures,17new/31affected host and17native contracts with coherent metadata,
 resource/draft ownership, full source preservation and explicit intermediate build/observer limits.
 

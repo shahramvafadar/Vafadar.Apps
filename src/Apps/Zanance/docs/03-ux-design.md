@@ -1,5 +1,7 @@
 # 03 – UX design
 
+D-967: the existing analysis loading footer keeps Reload/Review disabled and its active spinner separate while the single local read is pending. Normal Back cancels that original read. [Native loading evidence](quality/analysis-loading-large-text.md) qualifies only these original controls; it is not a new layout or whole accessibility acceptance.
+
 D-966: analysis metadata bindings see one coherent provider/balance/history snapshot. A failed or interrupted refresh grants no follow-up authority; preserve current draft/language and allow explicit Retry. [Original-model evidence](quality/analysis-metadata-publication.md) does not replace actual page/provider/security acceptance.
 
 D-965: language refresh may translate analysis feedback/status, but historical request

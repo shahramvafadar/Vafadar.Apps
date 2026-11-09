@@ -1,5 +1,16 @@
 # 07 – Acceptance test plan
 
+## D-967 - Actual original analysis loading footer and Back
+
+[Loading evidence](quality/analysis-loading-large-text.md) qualifies36new actual route/page pending contexts:72captions/72disabled targets/
+36spinners inside actual native content, one held read/no opened analysis context,
+zero account/entry/plan setup. One Android Back cancels/ends that read once; full54
+source and captured preferences/OS/root type restore. Final private192204804 and
+13compiler checks/36hash-clean XML/owned retirement/2Cleans pass; unused initial
+observer readiness correction is predeployment, not a product failure or replay.
+Product code stays unchanged; no unit/Windows/full shipping/financial/phone/frozen replay.
+Date-part/glyph/speech/general gates and all parent states/whole goal stay open.
+
 ## D-966 - Coherent original analysis metadata and quote ownership
 
 [Metadata publication](quality/analysis-metadata-publication.md) corrects14original valid-input failures across explicit observer lineages;

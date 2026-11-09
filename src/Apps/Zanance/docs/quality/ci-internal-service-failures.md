@@ -43,3 +43,9 @@ At2026-11-09T19:31:07Z,927.004497seconds after observed push, one head-statusGET
 records [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42681635125) in_progress and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42681634859) completed-success. Raw response/exclusive consumed marker/receipt remain in the
 D965root. No second request or successful log/rerun occurs; this observation is
 not full CI acceptance or a diagnosis of an unreported failure.
+
+## D966 once-only observation
+
+At2026-11-09T20:08:21Z,925.775176seconds after observed push, the single consumed
+head-status response records [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42687511824) in_progress and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42687512128) completed-success. D966raw response/receipt/exclusive marker remain. No polling,
+second request, successful job log or rerun is performed; this is not full CI acceptance.
