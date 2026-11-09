@@ -1,5 +1,9 @@
 # Documentation
 
+[Original analysis error presentation D960](../src/Apps/Zanance/docs/quality/analysis-error-large-text.md) records36native large-text contexts/108caption roles and
+one original Retry, with retained restoration failure, one no-reset continuation,
+current source/OS preservation and explicit original comparison limitations.
+
 [Current delivery frontier D959](../src/Apps/Zanance/docs/quality/current-delivery-frontier.md) maps all65canonical parents and49non-Done boundaries,
 with current evidence, owner/external deferrals and a concrete independent Android
 page assertion. No canonical State value or acceptance changes.

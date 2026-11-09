@@ -45,7 +45,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 | ZCR-QA-07 | D607 is terminal with its original precision/intervening-process limitations. Three deadlines, consumed reboot and completed cleanup must not be recreated. Remaining notification/platform claims need a specifically missing owner/native condition; D944 is unrelated. |
 | ZCR-A11Y-01 | Owner defers further TalkBack behind every other available task; Persian speech is parked. Preserve accepted recordings and unresolved findings. |
 | ZCR-A11Y-02 | Windows commercial/platform phase is separately deferred; do not reopen it as current Android delivery. |
-| ZCR-A11Y-03 | D946 reconciliation error, D954 receipt error and the earlier D916/D918 report rows add finite native large-text evidence; their accepted contexts are not rerun. D958 changes analysis model ownership but does not qualify the actual AiAnalysisPage error/footer layout. A named missing original-page arranged-bounds assertion remains independently executable; no whole-accessibility acceptance is inferred. |
+| ZCR-A11Y-03 | D946 reconciliation error, D954 receipt error and the earlier D916/D918 report rows add finite native large-text evidence; their accepted contexts are not rerun. D958 changes analysis model ownership; D960qualifies36actual AiAnalysisPage error/footer large-text contexts and one original Reload. Helper restoration/source lineage limits are explicit. No loading/all-input/whole-accessibility acceptance is inferred; do not replay the accepted presentation matrix. |
 | ZCR-A11Y-04 | Native iOS VoiceOver waits for Android completion and the actual later Mac/iOS phase. |
 | ZCR-ENT-01 | Core plan policy is implemented. Commercial activation is not currently authorized; no repeated policy suite supplies that authority. |
 | ZCR-ENT-02 | Local original enforcement boundaries are implemented but inactive; actual activation/native release requirements remain. |
@@ -68,7 +68,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 | ZCR-TAX-01 | Official-source research exists; expert approval of the selected German year/rules/examples remains. Do not silently implement official tax conclusions. |
 | ZCR-TAX-02 | Local accountant export and named physical disclosures are delivered; remaining expert/platform acceptance remains, without filing authority. |
 | ZCR-TAX-03 | Versioned tax calculations require TAX-01 expert/rule acceptance before implementation; no invented rates/rules. |
-| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. Real AiAnalysisPage/native consent, genuine provider/access/pricing/credit sales and public operational acceptance are separate. Do not rerun successful primary submissions or fabricate live-provider success. |
+| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. D960adds finite actual failed-read page presentation only; native consent, genuine provider/access/pricing/credit sales and public operational acceptance are separate. Do not rerun successful primary submissions or fabricate live-provider success. |
 | ZCR-BANK-01 | Research exists; exact consumer specimens and actual live provider/access decisions remain. Do not fabricate a bank preset. |
 | ZCR-FX-01 | Owner-approved ECB thirty-pair integration is delivered; other price sources/public/platform gates remain and are not a reason to fetch ECB again. |
 | ZCR-LANG-01 | Additional languages are explicitly outside current delivery. Existing six languages remain supported. |
@@ -84,14 +84,15 @@ or updated from the named latest scoped evidence; no canonical State value chang
 
 ## Independent execution frontier
 
-The concrete next unqualified Android surface is the original analysis page after
-D958. [AiAnalysisPage.xaml](../../Vafadar.Zanance.App/Features/Analysis/AiAnalysisPage.xaml) places Error and Reload/Review in an Auto footer outside the scrolling
-content. Source layout alone proves neither clipping nor acceptance. Verify the
-actual original failed-read page, complete current error and reachable relevant
-action at large OS text before changing layout. Start with a genuinely new
-fictitious no-ledger input and the missing original-page condition, not the six
-already accepted D958SDK-model cases or a reconstructed page. No genuine provider,
-authentication, manual financial Save or owner presence is needed for that scope.
+[D960 original analysis failed-read presentation](analysis-error-large-text.md) now qualifies the named actual-page error/footer condition:
+36new six-language/theme/width contexts and one original Reload, without a
+production layout change or successful source/model/financial replay. Its helper
+restoration failure and original source/private-preference/root-object limits are
+retained; a no-reset continuation proves current full source equality and only
+digest equality across that update. Do not claim that all original final assertions
+passed, and do not repeat the accepted36presentation contexts. Loading/input-error/
+other changed page assertions, if selected, still need their own concrete missing
+condition; neither original markup nor an open parent proves a new defect.
 
 For crash and performance, retained Q02 and terminal classification evidence stay
 protected. A fresh approved premise is needed before further diagnostics/candidates;

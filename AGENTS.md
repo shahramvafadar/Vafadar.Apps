@@ -1,5 +1,22 @@
 # AGENTS.md – working rules for this repository
 
+## D-960 - Original analysis error page at large text (2026-11-09)
+
+Original AppShell analysis route/actual page qualifies36new six-language/two-theme/
+360412680OSfont2 contexts on3905/10216,108native caption roles/fullvisibility/RTL/
+44dpReload; source attempt1 throughout, one original Reload produces2. No product
+change/old model case/financial replay. Standalone-root predeployment refused.
+Helper restorationNRE follows36successes; original final full20comparison/private
+preference-key/root-object restoration are not proved. One necessary no-reset to
+7742 preserves UID/data; current full20before/after restoration exact, old digest
+matches only across update, explicit weaker scope retained. No36case/setup replay.
+Initialnullable/PID/install-output/focus/UTF8/date-kind refusals remain; no second
+installation or forced restart. en/Systemsemantic final/freshUID/36XML1229626byte/
+AVD25file4740953564logicalbyte retire,2Cleans/OSexact/hosthandles signalled andsame
+65060server. D944phone/Main/retained/frozen/full goal protected; whole source/security/
+A11Y/nativefault/performance/platform requirements stay open.
+[Original analysis error presentation](src/Apps/Zanance/docs/quality/analysis-error-large-text.md).
+
 ## D-959 - Current complete delivery frontier reconciled (2026-11-09)
 
 Current canonical table has65unique parents,16Done-prefixed/49otherstates;

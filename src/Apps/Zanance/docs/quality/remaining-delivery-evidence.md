@@ -1,5 +1,16 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-960 - Original analysis page large-text presentation (9 November 2026)
+
+[Actual original analysis error/footer](analysis-error-large-text.md) qualifies the named D959missing presentation assertion:
+36new actual Shell/page/native contexts and one original failed-read Retry. No
+product change, host-success/financial replay or general A11Y acceptance. Original
+helper restoration throws; its original final source/privateprefs/root claims are
+not proved. One necessary no-reset preserves UID/data, currentfull20 before/after
+restoration is exact, old digest matches acrossupdate only. All36successes and
+failure remain, freshfixture retires with exactOS, no phone/Main/retained/frozen
+action. Keep all49non-Done parent states; do not repeat this accepted page matrix.
+
 ## D-959 - Current complete parent inventory (9 November 2026)
 
 [Current complete delivery frontier](current-delivery-frontier.md) audits the current65unique canonical rows:

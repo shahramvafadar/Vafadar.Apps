@@ -1,5 +1,19 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-960 - Original analysis failed-read page presentation qualified
+
+36new actual original Shell/page contexts at OSfont2, six languages/two themes/
+360412680dp pass108caption roles/fullnativevisibility/RTL/44dpReload on3905/10216;
+source attempt1 retained, one visible original Reload produces2. No layout defect
+or product change, oldmodel/financial replay. Original helper restoreNRE prevents
+original end fullsource/privateprefs/root identity proof; retain that failure.
+One necessary sameUID/no-reset7742 restoresen/System/currentfull20exact, olddigest
+matches only acrossupdate; original fullvalue/keypresence claims remain unproved.
+OnlyfreshUID/36XML1229626byte/officialAVD25file4740953564logicalbyte retire,2Cleans/
+OSexact/hosthandles signalled/same65060. No phone/Main/retained/frozen action.
+All49non-Done states and broader gates/full goal remain open.
+[Actual page evidence and restoration limits](../../quality/analysis-error-large-text.md).
+
 ## D-959 - Complete current parent inventory and execution frontier
 
 Current table has65unique parent rows,16Done-prefixed and49otherstates. All49

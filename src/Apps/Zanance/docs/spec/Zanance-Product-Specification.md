@@ -1226,7 +1226,16 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-959)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-960)
+
+[D960 original analysis error/footer](../quality/analysis-error-large-text.md) adds36new actual original-page large-text contexts and one Retry without product
+or financial replay. The original helper restoration failure is retained, not
+converted to a pass: original final full-source/private-preference/root identity
+assertions remain unproved. A sameUID/no-reset continuation preserves currentfull20
+before/after, and only its digest matches acrossupdate; original OS/freshfixture
+retirement complete. Finite page presentation does not close whole-A11Y/security,
+originalfault/ANR/performance/platform/provider/release or the full delivery goal.
+
 
 [D959 current complete delivery frontier](../quality/current-delivery-frontier.md) reconciles all65canonical parents and49non-Done boundaries without changing
 any canonical State. Counts are not effort or a project completion percentage.
@@ -1236,8 +1245,8 @@ authentication or whole-security acceptance. Full shipping package is prepared,
 not installed on Main. D944physical reconciliation remains held while owner away;
 no repeated unlock question, request reissue or Main upgrade follows this status.
 D607and the accepted CSV/local-backup/PDF cancellation successors are terminal.
-The original analysis failed-read page/error/footer at large OS text is a distinct
-independent missing assertion; no successful model/financial flow is repeated.
+D960above now qualifies the named original failed-read page/error/footer condition;
+its retained restoration limits remain and no successful model/financial flow repeats.
 The dated D918and earlier observations below remain historical, not current device
 liveness, latest-package adoption or complete delivery acceptance.
 
