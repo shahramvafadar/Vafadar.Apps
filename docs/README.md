@@ -1,5 +1,9 @@
 # Documentation
 
+[Original Home receipt command D953](../src/Apps/Zanance/docs/quality/original-home-receipt-command.md) records actual native Task failures, same-source
+no-reset correction and a new current-owner safe-error control. No copied Shell,
+new unit-test claim, successful OCR/financial replay or held-phone action.
+
 [Original receipt startup D952](../src/Apps/Zanance/docs/quality/original-receipt-startup-publication.md) records four failures, captured origin before
 startup notifications, guarded native feedback and nine selected final outcomes.
 One original native Home command preserves source without camera/OCR/financial replay.

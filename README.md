@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D953 original Home receipt command](src/Apps/Zanance/docs/quality/original-home-receipt-command.md) fixes Busy cleanup and checks the original owner
+before nested receipt entry. Two original failures and three corrected native Task
+outcomes retain source with no OCR/photo/auth/financial replay. Complete strict
+builds and owned retirement pass; physical continuation and broader gates stay open.
+
 [D952 original receipt startup](src/Apps/Zanance/docs/quality/original-receipt-startup-publication.md) fixes four actual ownership/Busy/late-alert
 failures. Five new and four affected contracts, strict complete builds and one
 original native Home command pass with source unchanged and no camera/OCR/payment.

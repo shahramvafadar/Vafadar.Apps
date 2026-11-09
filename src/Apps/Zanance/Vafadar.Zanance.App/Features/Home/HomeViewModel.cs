@@ -871,8 +871,12 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
             return;
         }
 
-        IsBusy = true;
-        try { await _receipts.PickAsync(() => !_publicationRetired); }
+        try
+        {
+            // D-953: a Busy subscriber can retire Home or throw before the nested receipt lifetime begins.
+            IsBusy = true;
+            if (Current()) await _receipts.PickAsync(() => !_publicationRetired);
+        }
         finally { IsBusy = false; }
     }
 

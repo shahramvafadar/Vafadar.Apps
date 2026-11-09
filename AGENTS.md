@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-953 - Original Home receipt startup cleanup and owner guard (2026-11-09)
+
+Actual original native Home command Tasks expose Busy leak after subscriber failure
+and nested receipt origin1 after permanent Home retirement. Startup now stays in
+cleanup and rechecks original Home before nested entry, preserving the nested lock-
+cover predicate and original exception propagation. One current-owner safe-error
+control plus2corrected cases pass on sameUID/boot/source20 after required no-reset;
+baseline setup/control not replayed. These are native Tasks,0newhosttests, notOS taps
+or generalcrash repair. StrictWindows/full384/408/1608/private192/204/804 and actual
+7baseline/7corrected/5shipping compiler docs pass. Button1/2 observer refusal uses
+same live original client/retainedXML, no reissue. FreshUID/3XML102595byte/official
+AVD24file4691539189byte retire;4Cleans pass after actual Android asset restoration.
+D944held/Main/frozen/goal preserved. [Home receipt evidence](src/Apps/Zanance/docs/quality/original-home-receipt-command.md).
+
 ## D-952 - Original receipt startup owns its page before notifications (2026-11-09)
 
 Four actual failures reproduce replacement-page source reads, leakedBusy and stale

@@ -1,5 +1,18 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-953 - Original Home receipt command lifetime complete
+
+Two actual native Task failures expose startup Busy leak and retired Home nested
+origin acquisition. Guarded cleanup/current owner fixes both, preserving exception
+propagation and nested lock-cover behavior. One current-owner entry/safe-error
+control plus2corrected cases pass on sameUID10216/boot/source20exact/ledger0 after
+one necessary no-reset, no setup/control replay. StrictWindows/fullshipping/private
+builds and actual compiler source lineages pass. ThreeXML102595byte/freshUID/official
+AVD24file4691539189logicalbyte retire;4Cleans pass. Native cases are not newunit tests
+or all-original/final-binary observations. D944 remains held; originalfault/whole
+performance/security/platform and full delivery remain open.
+[Original Home receipt command](../../quality/original-home-receipt-command.md).
+
 ## D-952 - Original receipt startup and failure publication complete
 
 Four actual failures (replacement origin/read, cleared-error read, Busy leak, stale
