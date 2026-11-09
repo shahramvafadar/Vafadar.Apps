@@ -1,5 +1,9 @@
 # Documentation
 
+[Failed CI bill Retry D942](../src/Apps/Zanance/docs/quality/settlement-failed-ci-explicit-retry.md)
+records the exact two failed legacy contracts, preserved rollback/positive recovery,
+and one original native SQL refusal/source Retry without weakening product guards.
+
 [Accepted reconciliation draft D941](../src/Apps/Zanance/docs/quality/reconciliation-accepted-newer-draft.md)
 records one same-page data-loss failure/correction and one distinct original native
 acceptance, preserving newer input and exact expected source delta after feedback fails.

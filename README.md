@@ -102,6 +102,10 @@ controls.
 
 ## Current delivery status
 
+[Failed CI bill Retry D942](src/Apps/Zanance/docs/quality/settlement-failed-ci-explicit-retry.md)
+aligns the two failed legacy tests with explicit source re-review while preserving rollback and
+positive recovery. Original native SQL-refusal/Retry passes; product guards and broader gates remain.
+
 [Accepted reconciliation draft D941](src/Apps/Zanance/docs/quality/reconciliation-accepted-newer-draft.md)
 keeps newer same-page balance/reason/date after accepted-write notification failure. One new host
 contract and a distinct original native acceptance pass; full46ad4a00 is prepared, not Main-installed.

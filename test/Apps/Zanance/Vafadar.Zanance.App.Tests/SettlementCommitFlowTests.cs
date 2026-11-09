@@ -111,14 +111,21 @@ public sealed class SettlementCommitFlowTests
     [Fact]
     public async Task Changed_stored_advances_refuse_save_without_losing_the_draft()
     {
-        using var f = new FlowFixture(); var plan = await SeedAsync(f); var vm = Editor(f);
-        await vm.LoadAsync(plan.Id); vm.ActualText = "14";
-        var original = (await f.Store.GetEntriesAsync(cancellationToken: Ct)).Single(); original.Amount = 1100;
-        Assert.True((await f.Store.SaveEntryAsync(original, Ct)).Succeeded);
+        using var f = new FlowFixture(); var plan = await SeedRejectedBillAsync(f); var vm = Editor(f);
+        await vm.LoadAsync(plan.Id); vm.ActualText = "14"; Assert.True(vm.CanSave);
+        await using (var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+            await db.Entries.ExecuteUpdateAsync(rows => rows.SetProperty(e => e.Amount, 1100L), Ct);
+        var changedSource = await GoalChooserFlowTests.SnapshotAsync(f);
         await vm.SaveCommand.ExecuteAsync(null);
-        Assert.False(vm.HasCommitted); Assert.Equal("14", vm.ActualText); Assert.True(vm.IsDirty); Assert.True(vm.CanEdit);
+        Assert.False(vm.HasCommitted); Assert.Equal("14", vm.ActualText); Assert.True(vm.IsDirty);
+        Assert.True(vm.Loading.HasFailed); Assert.False(vm.CanEdit); Assert.False(vm.CanSave);
         Assert.NotNull(vm.Error); Assert.Empty(f.Platform.Routes);
-        Assert.Single(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+        Assert.Equal(changedSource, await GoalChooserFlowTests.SnapshotAsync(f));
+        await vm.ReloadCommand.ExecuteAsync(null);
+        Assert.True(vm.Loading.IsReady); Assert.True(vm.CanEdit); Assert.True(vm.CanSave);
+        Assert.Equal("14", vm.ActualText); Assert.True(vm.IsDirty); Assert.Null(vm.Error);
+        Assert.Equal(changedSource, await GoalChooserFlowTests.SnapshotAsync(f));
+        // Re-reviewing changed history is sufficient; never post a bill just to repeat successful money qualification.
     }
 
     [Theory]
@@ -147,16 +154,64 @@ public sealed class SettlementCommitFlowTests
     [Fact]
     public async Task Rejected_SQL_insert_keeps_the_original_draft_for_one_explicit_successful_retry()
     {
-        using var f = new FlowFixture(); var plan = await SeedAsync(f); var vm = Editor(f);
-        await vm.LoadAsync(plan.Id); vm.ActualText = "14";
+        using var f = new FlowFixture(); var plan = await SeedRejectedBillAsync(f);
+        var factory = new RejectedBillFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var store = new ZananceStore(factory, f.Time, f.Services.GetRequiredService<ICommercialWriteAccessSource>());
+        var vm = new SettlementViewModel(store, f.Translator, f.Localization, f.Time, f.Platform);
+        await vm.LoadAsync(plan.Id); vm.ActualText = "14"; Assert.True(vm.CanSave);
         await using var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
         await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER refuse_bill BEFORE INSERT ON Entries WHEN NEW.ScheduleId IS NULL BEGIN SELECT RAISE(ABORT, 'original failure'); END;", Ct);
+        var originalSource = await GoalChooserFlowTests.SnapshotAsync(f);
         await vm.SaveCommand.ExecuteAsync(null);
-        Assert.False(vm.HasCommitted); Assert.True(vm.CanEdit); Assert.True(vm.IsDirty); Assert.Equal("14", vm.ActualText);
-        Assert.NotNull(vm.Error); Assert.Empty(f.Platform.Routes); Assert.Single(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+        Assert.True(factory.OriginalSqliteRefusal); Assert.Equal(1, factory.FailureCount);
+        Assert.False(vm.HasCommitted); Assert.True(vm.Loading.HasFailed); Assert.False(vm.CanEdit); Assert.False(vm.CanSave);
+        Assert.True(vm.IsDirty); Assert.Equal("14", vm.ActualText); Assert.NotNull(vm.Error); Assert.Empty(f.Platform.Routes);
+        Assert.Equal(originalSource, await GoalChooserFlowTests.SnapshotAsync(f));
         await db.Database.ExecuteSqlRawAsync("DROP TRIGGER refuse_bill;", Ct);
+        await vm.ReloadCommand.ExecuteAsync(null);
+        Assert.True(vm.Loading.IsReady); Assert.True(vm.CanEdit); Assert.True(vm.CanSave); Assert.Equal("14", vm.ActualText);
+        Assert.Equal(originalSource, await GoalChooserFlowTests.SnapshotAsync(f));
+        // This previously unexecuted post-refusal continuation needs an explicit source Retry before its one new acceptance.
         await vm.SaveCommand.ExecuteAsync(null);
-        Assert.True(vm.HasCommitted); Assert.Single(f.Platform.Routes); Assert.Equal(2, (await f.Store.GetEntriesAsync(cancellationToken: Ct)).Count);
+        Assert.True(vm.HasCommitted); Assert.Single(f.Platform.Routes); Assert.Equal(1, factory.FailureCount);
+        var entries = await f.Store.GetEntriesAsync(cancellationToken: Ct); Assert.Equal(2, entries.Count);
+        var posted = Assert.Single(entries, e => e.ScheduleId is null);
+        Assert.Equal(400, posted.Amount); Assert.Equal(EntryKind.Expense, posted.Kind); Assert.Equal(plan.AccountId, posted.AccountId);
+        Assert.Equal(Day, posted.Date); Assert.Equal("Retain this note", Assert.Single(entries, e => e.ScheduleId is not null).Note);
+        // This accepted fixture is terminal: no second Save/Undo/Reload.
+    }
+
+    /// <summary>Prepares only the two failed cases as raw fictitious input, without replaying successful setup commands.</summary>
+    private static async Task<Schedule> SeedRejectedBillAsync(FlowFixture f)
+    {
+        await using var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct);
+        var account = new Account { Name = "Fictitious rejected bill", CurrencyCode = "EUR", Type = AccountType.Checking,
+            OpeningDate = Day.AddDays(-8), OpeningBalance = 100000 };
+        var plan = new Schedule { Name = "Fictitious retained utility bill", Kind = EntryKind.Expense, AccountId = account.Id,
+            Amount = 1000, Rule = new() { Start = Day.AddDays(-7) } };
+        db.Accounts.Add(account); db.Schedules.Add(plan);
+        db.Entries.Add(new LedgerEntry { Kind = EntryKind.Expense, AccountId = account.Id, ScheduleId = plan.Id,
+            Date = Day.AddDays(-7), Amount = 1000, Title = "Original advance", Note = "Retain this note" });
+        await db.SaveChangesAsync(Ct); return plan;
+    }
+
+    /// <summary>Observes the actual SQLite trigger refusal on original contexts; no read, writer or database is substituted.</summary>
+    private sealed class RejectedBillFactory(IDbContextFactory<ZananceDbContext> original) : IDbContextFactory<ZananceDbContext>
+    {
+        internal bool OriginalSqliteRefusal; internal int FailureCount;
+        public ZananceDbContext CreateDbContext() => Observe(original.CreateDbContext());
+        public async Task<ZananceDbContext> CreateDbContextAsync(CancellationToken ct = default) => Observe(await original.CreateDbContextAsync(ct));
+        private ZananceDbContext Observe(ZananceDbContext db)
+        {
+            db.SaveChangesFailed += (_, e) =>
+            {
+                FailureCount++;
+                for (Exception? failure = e.Exception; failure is not null; failure = failure.InnerException)
+                    if (failure is Microsoft.Data.Sqlite.SqliteException sql && sql.SqliteErrorCode == 19 && sql.Message.Contains("original failure", StringComparison.Ordinal))
+                        OriginalSqliteRefusal = true;
+            };
+            return db;
+        }
     }
 
     [Theory]

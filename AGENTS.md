@@ -1,5 +1,26 @@
 # AGENTS.md – working rules for this repository
 
+## D-942 - Failed CI settlement contracts follow explicit source Retry (2026-11-09)
+
+Rejected original bill writes remain covered until explicit original-source Retry;
+do not re-enable stale input to satisfy legacy tests. Preserve complete rollback,
+raw draft, same-file re-review and the full positive post-refusal continuation.
+D941soleCIfailure/CodeQLsuccess consumed late once; only failed job log inspected.
+Two old CanEdittrue assertions conflict with D938's cover; four product blobs equal
+the failed commit. Only those2existingfailedcases pass after contract/fixture updates,
+no new test count/old successful suite replay. One host recovery accepts400minor
+only after SQL refusal/explicit Reload; its accepted fixture is terminal.
+Original native2892/UID10216 SQLite19 rollback plus one Try again preserves raw2.34;
+controlled advance123to124 gives1.24paid/1.10difference, full20/32field expected
+source exact, no accepted native bill. Original schema structure restores, cookie
+96to98 stays literal/unreset. Root/OS restore,3XML74951bytes hash-retire and freshUID/
+officialAVD24files4558238953logicalbytes retire; existingADB50972/phone/retainedfault/
+frozen unchanged. Early cleanup cp1252 refusal has zero issued removals; only UTF8
+observer continuation follows. Strictprivate192/204/804/8compilerbindings/3Cleans
+pass. Successful Windows/fullAndroid/billing build metadata reused, no product/
+runtime/GC/model/migration/financial-guard changes. Broader gates/goal remain open.
+[Failed CI explicit Retry evidence](src/Apps/Zanance/docs/quality/settlement-failed-ci-explicit-retry.md).
+
 ## D-941 - Accepted reconciliation preserves newer same-page drafts (2026-11-07)
 
 Known acceptance must not erase newer same-page input from post-commit callbacks.
