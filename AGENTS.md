@@ -14,6 +14,24 @@ freshUID retirement/final phone restoration are unfinished. Two local Cleans pas
 Do not touch this held phone cohort for independent emulator work or Main adoption.
 [Physical continuation evidence](src/Apps/Zanance/docs/quality/reconciliation-writer-arm64.md).
 
+## D-947 - Actual current cipher contains bounded acceleration code (2026-11-09)
+
+Existing D943shipping/candidate5 native hashes and GNU BuildIDs bind both public
+cipher members.26explicit nonzero executable functions/36692bytes/9251instructions
+decode fully under section+LOAD/file agreement;16new private reader controls pass.
+ARM64AESE/AESD/SHA512 andx64AES-NI/AVX2-YMM code is present; original SHA dispatch
+has static conditional transfers and KDF direct PBKDF2 calls. No actual CPU flags/
+branch result, KDF timing, exclusive latency cause or repair inferred; no runtime/
+GC/KDF/check/pooling/crypto change or rejected-candidate rescue. Missing-ASM-code
+premise for these exact modules is refuted; runtime selection/performance still open.
+Pinned scoped BSD distribution5.0.9/selflabel5.0.7/API5.0 reviewed; official wrapper
+normalized equality only, CRLFbyte mismatch and licence-schema/syntax/version
+refusals retained before unexecuted controls/decode, no successful stage replay.
+No module execution, private memory/register/key/DB, device/build/test/financial/
+frozen/cleanup action; product test count0new. D944held physical cohort preserved,
+D945Main only prepared; D946soleCodeQLsuccess/CIin_progress consumed once, no retry.
+[Static cipher code evidence](src/Apps/Zanance/docs/quality/static-cipher-accelerated-code.md).
+
 ## D-946 - Original reconciliation error readable at large text (2026-11-09)
 
 All36new inner-error caption contexts en/fa/de/es/fr/it/Light/Dark/360-412-680dp at

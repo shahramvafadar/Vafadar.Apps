@@ -1,5 +1,10 @@
 # Zanance – design documentation
 
+[D947 current cipher code](quality/static-cipher-accelerated-code.md) proves bounded acceleration implementations
+are present in both packed public native modules. This rules out absent code;
+actual runtime selection, protected-startup speed and fault repair remain open.
+No product/build/workload/device/financial replay; held physical D944 is preserved.
+
 [D946 large-text reconciliation error](quality/reconciliation-error-large-text.md) completes36new native caption
 contexts at OS200% without financial replay or product changes. Original source,
 preferences and OS restore; the fresh emulator retires. [D944 physical continuation](quality/reconciliation-writer-arm64.md)
