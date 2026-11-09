@@ -1,5 +1,7 @@
 # 03 – UX design
 
+D970 [actual OS reminder inputs](quality/original-pending-os-notification-order.md) preserve first/second native goal navigation through one original drain. This finite warm/unlocked condition adds no UI design or timing/authentication acceptance.
+
 D969 publishes a complete original result/status/balance before changed feedback; retired pages cannot continue follow-up and known results survive private-state discrepancies. [Finite result evidence](quality/analysis-result-publication.md) is not genuine provider/native-consent acceptance.
 
 D968 keeps existing date-part spacing inside flex items. [Native date targets and IME](quality/analysis-date-part-targets.md) qualifies only the specified analysis contexts.

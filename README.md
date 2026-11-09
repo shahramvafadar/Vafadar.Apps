@@ -108,6 +108,7 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Pending OS reminder order D970](src/Apps/Zanance/docs/quality/original-pending-os-notification-order.md) | Two genuine warm notification taps preserve original destination order while the first read waits |
 | [Returned analysis results D969](src/Apps/Zanance/docs/quality/analysis-result-publication.md) | Frame-owned coherent outcomes and exact retained-request follow-up; finite host/native evidence |
 | [Analysis date targets D968](src/Apps/Zanance/docs/quality/analysis-date-part-targets.md) | Clipped calendar repair and finite native large-text/numeric-draft evidence |
 | [Analysis loading footer D967](src/Apps/Zanance/docs/quality/analysis-loading-large-text.md) | Native large-text pending controls and one normal Back, unchanged product and source |

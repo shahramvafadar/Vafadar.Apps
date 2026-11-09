@@ -1,5 +1,18 @@
 # 07 – Acceptance test plan
 
+## D-970 - Actual pending-read OS notification order
+
+[OS input evidence](quality/original-pending-os-notification-order.md) adds two genuine
+warm/unlocked SystemUI content taps through original SDK/App/router/access/store/
+GoalDetail navigation while the first validated read waits. First goal then second
+remain ordered, exact54typed139722byte source survives both taps/pages/Back/root
+restoration, and no account/ledger/allocation/PIN/auth action runs. Two new distinct
+goal metadata saves and one fresh scoped notification grant are explicit; diagnostic
+immediate notices are not planner/timing/cold/covered acceptance. Private router has
+two reversible observation waits; product code/unit count/old successes are unchanged.
+Strict192204804/12PDBchecks/5hash-clean XML/owned retirement/2Cleans pass. D944held,
+retained/frozen resources and all broader parent states/whole goal remain open.
+
 ## D-969 - Frame-owned returned analysis outcomes and original follow-up
 
 [Result publication](quality/analysis-result-publication.md) corrects7original and6further

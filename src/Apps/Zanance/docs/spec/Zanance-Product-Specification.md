@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-969)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-970)
+
+[D970 actual OS reminder inputs](../quality/original-pending-os-notification-order.md) qualifies two warm/unlocked content taps behind a pending original read, ordered native goal pages and exact54typed source/restoration. No product/unit change; controlled waits/diagnostic posts and all cold/covered/timing/physical/broader limits remain explicit.
 
 [D969 returned-result publication](../quality/analysis-result-publication.md) corrects frame/coherence and original-follow-up failures;18new final host/native cases/full54source preserve known results, drafts and current culture. Synthetic native ports are not genuine provider/OS consent; canonical states and broader gates remain.
 

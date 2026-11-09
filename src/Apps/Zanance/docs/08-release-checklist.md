@@ -1,5 +1,7 @@
 # 08 – Release checklist (first public release)
 
+D970 [pending-read OS notification order](quality/original-pending-os-notification-order.md) qualifies its exact two warm/unlocked taps and source/restoration condition only; cold/covered/profile/timing/physical/platform gates remain.
+
 D969 [returned-result evidence](quality/analysis-result-publication.md) qualifies18native model conditions and current builds; actual provider, private durability, OS consent, physical adoption and broader release gates remain. Refused intermediate roots remain frozen.
 
 D968 [date-part/IME evidence](quality/analysis-date-part-targets.md) qualifies36contexts and valid/partial/blur. Original pre-update UI key presence remains unproved; D944/broader gates stay open.
