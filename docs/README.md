@@ -1,5 +1,8 @@
 # Documentation
 
+[Original analysis preview D962](../src/Apps/Zanance/docs/quality/analysis-review-preview-publication.md) records original notification/access failures, current-owner publication,
+same-model Retry, exact54table input and bounded Android/build/retirement evidence.
+
 [Original analysis submission snapshot D961](../src/Apps/Zanance/docs/quality/analysis-submission-entry-snapshot.md) records four original temporal failures, bounded entry
 capture, five host/native contracts, actual compiled sources, explicit online-edition
 build scope and owned cleanup. It does not qualify a live provider or durable journal.

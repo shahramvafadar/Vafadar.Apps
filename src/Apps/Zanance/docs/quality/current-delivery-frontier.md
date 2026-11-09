@@ -68,7 +68,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 | ZCR-TAX-01 | Official-source research exists; expert approval of the selected German year/rules/examples remains. Do not silently implement official tax conclusions. |
 | ZCR-TAX-02 | Local accountant export and named physical disclosures are delivered; remaining expert/platform acceptance remains, without filing authority. |
 | ZCR-TAX-03 | Versioned tax calculations require TAX-01 expert/rule acceptance before implementation; no invented rates/rules. |
-| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. D960adds finite actual failed-read page presentation; D961corrects public-client entry snapshot timing with5host/5native synthetic contracts and unchanged later primary guards. Neither qualifies durable private storage/native consent/genuine provider/access/pricing/credit sales or public operation. Do not rerun successful primary submissions or fabricate live-provider success. |
+| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. D960adds finite actual failed-read page presentation; D961corrects public-client entry snapshot timing with5host/5native synthetic contracts and unchanged later primary guards. D962corrects incomplete/stale review publication with7host/same7native cases; separate Load-publication proof remains open. None qualifies durable private storage/native consent/genuine provider/access/pricing/credit sales or public operation. Do not rerun successful primary submissions or fabricate live-provider success. |
 | ZCR-BANK-01 | Research exists; exact consumer specimens and actual live provider/access decisions remain. Do not fabricate a bank preset. |
 | ZCR-FX-01 | Owner-approved ECB thirty-pair integration is delivered; other price sources/public/platform gates remain and are not a reason to fetch ECB again. |
 | ZCR-LANG-01 | Additional languages are explicitly outside current delivery. Existing six languages remain supported. |
@@ -106,6 +106,10 @@ open QA06 alone does not authorize repeating a closed one-shot operation or
 rejected optimization. Continue ordinary ready development without treating
 external gates as blanket inactivity. iOS remains behind Android completion;
 Windows commercial delivery and further TalkBack retain their separate deferrals.
+
+[D962 preview publication](analysis-review-preview-publication.md) fixes original late review authority without changing Load or provider submission.
+Seven selected host/same seven native contracts pass with exact54table source;
+separate Load reentry needs its own proof/positive controls, no old success replay.
 
 ## Validation and continuing goal
 

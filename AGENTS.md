@@ -1,5 +1,19 @@
 # AGENTS.md – working rules for this repository
 
+## D-962 - Original analysis preview commits sharing authority last (2026-11-09)
+
+Six original failures/one control become7new selected host passes and the same7
+Android original-model observations, including same-failed-model Retry without
+setup/failure replay. Stage complete preview, validate owner after callbacks, commit
+review last; failed current preview invalidates partial state, newer draft/root
+retirement retained. Full54typed/schema139186byte input exact, one metadata account/
+ledger0, no genuine auth/share/provider/financial operation.16actual compiler docs,
+strictWindows/fullOffline3844081608/private93104405 pass. FreshUID/officialAVD
+25file4281742806logicalbyte retire,5Cleans/OSexact/same65060. No supplemental/frozen/
+phone/Main/retained5606 action or old-success replay. Separate Load-publication
+question remains unproved/unfixed; whole goal and broader gates stay open.
+[Preview publication evidence](src/Apps/Zanance/docs/quality/analysis-review-preview-publication.md).
+
 ## D-961 - Original analysis client freezes entry payload (2026-11-09)
 
 4actual temporal failures/1control expose caller-list replacement while private

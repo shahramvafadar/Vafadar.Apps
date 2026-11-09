@@ -172,12 +172,25 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             if (AccountsError is not null || FromError is not null || ToError is not null) return;
             var access = runtime.Capture(selection.File); access.Validate(); Validate(original);
             using var linked = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible?.Token ?? CancellationToken.None);
-            var prepared = await store.ReviewAsync(selection, linked.Token); Validate(original); access.Validate(); review = prepared;
-            var payload = prepared.Payload; Summary = Period(payload.Current);
-            if (payload.Previous is not null) Summary += Environment.NewLine + Period(payload.Previous);
-            Disclosure = JsonSerializer.Serialize(payload, AiJson.Default.AiPayload);
+            var prepared = await store.ReviewAsync(selection, linked.Token); Validate(original); access.Validate(); Validate(original);
+            var payload = prepared.Payload; var summary = Period(payload.Current);
+            if (payload.Previous is not null) summary += Environment.NewLine + Period(payload.Previous);
+            var disclosure = JsonSerializer.Serialize(payload, AiJson.Default.AiPayload); Validate(original);
+            // D-962: native/binding notifications may fail, edit the draft or retire the original page.
+            // Sharing authority is committed only after the complete current preview was published.
+            Summary = summary; Validate(original);
+            Disclosure = disclosure; Validate(original);
+            review = prepared;
         }
-        catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation && original == epoch) SetError("Ai_ScopeError"); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (OwnsPresentation && original == epoch)
+            {
+                // A failed preview is not accepted work; preserve a newer draft or a retired owner's state.
+                var failed = Invalidate();
+                if (OwnsPresentation && failed == epoch) SetError("Ai_ScopeError");
+            }
+        }
         finally { operationActive = false; readingSource = false; IsBusy = false; Refresh(); }
     }
     /// <summary>Deliberately offers the exact local summary/prompt to another app; this never invokes a model or consumes credit.</summary>

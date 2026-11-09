@@ -1,5 +1,13 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-962 - Original review publication (9 November 2026)
+
+[Preview ownership](analysis-review-preview-publication.md) fixes six controlled original failures with7new host/same7Android model outcomes,
+exact54table fictitious source and strict builds. Sharing commits last; failed
+preview is not accepted work and same-model Retry remains valid. Separate Load
+question is unproved/unfixed; genuine provider/security/platform/whole performance
+and all49non-Done parent gates remain open. D944phone/retained/frozen are untouched.
+
 ## D-961 - Original analysis client entry snapshot (9 November 2026)
 
 [Entry snapshot correction](analysis-submission-entry-snapshot.md) fixes4actual mutable-list temporal failures with existing bounded

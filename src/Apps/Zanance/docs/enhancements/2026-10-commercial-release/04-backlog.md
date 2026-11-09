@@ -1,5 +1,16 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-962 - Original analysis preview publication corrected
+
+[Preview evidence](../../quality/analysis-review-preview-publication.md) records6original failures/1control,7new focused host passes and the same7
+actual Android model contracts, including retained failed-model Retry. Sharing
+authority commits only after complete current preview; stale/partial disclosure
+is invalidated. Full54typed/schema source exact, metadata1/ledger0;16compiler docs/
+strictWindows/fullOffline/native pass. Freshfixture retires/5Cleans/OSexact, no
+phone/Main/frozen/supplemental or successful financial replay. Separate Load question
+and genuine provider/security/platform/whole performance remain open; canonical
+parent states/full delivery objective are unchanged.
+
 ## D-961 - Original analysis client entry snapshot corrected
 
 Four real mutable-list timing failures are corrected by moving existing aggregate

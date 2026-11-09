@@ -1,5 +1,9 @@
 # Vafadar Apps
 
+[Analysis preview publication D962](src/Apps/Zanance/docs/quality/analysis-review-preview-publication.md) fixes incomplete/stale review authority with7focused host and7native observations,
+complete fictitious source preservation and strict offline builds. Genuine provider,
+security, platform and full delivery acceptance remain open.
+
 [Original analysis entry snapshot D961](src/Apps/Zanance/docs/quality/analysis-submission-entry-snapshot.md) prevents caller-list edits during asynchronous waits from
 replacing the original private packet. Five focused host and five Android contract
 outcomes pass without financial/network replay; genuine provider/release gates remain.

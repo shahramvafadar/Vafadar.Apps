@@ -1,5 +1,13 @@
 # Local optional analysis, consent and credits (D-298)
 
+## D-962 - Original review publication (9 November 2026)
+
+[Preview publication evidence](../../quality/analysis-review-preview-publication.md) corrects original late access/notification failures without changing Load,
+Share/provider submission or accepted receipt logic. Complete current preview
+precedes authority;7new host/same7native outcomes and exact54table source pass.
+Separate Load-publication question still needs original proof and positive controls.
+No genuine provider/auth/financial replay or held Main deployment occurs.
+
 ## D-961 - Original client entry capture (9 November 2026)
 
 [Actual temporal correction and limits](../../quality/analysis-submission-entry-snapshot.md) moves the original bounded aggregate capture before the

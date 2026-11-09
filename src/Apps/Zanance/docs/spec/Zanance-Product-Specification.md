@@ -1226,7 +1226,11 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-961)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-962)
+
+[D962 review preview publication](../quality/analysis-review-preview-publication.md) fixes incomplete/stale sharing authority with7new host/same7Android observations,
+exact54table source and strict offline builds. Separate Load ownership and genuine
+provider/security/platform/full delivery requirements remain open; no parent State changes.
 
 [D961 original analysis client snapshot](../quality/analysis-submission-entry-snapshot.md) fixes four controlled temporal payload replacements before private-journal
 publication. Five new selected host cases and the same five Android original-client
