@@ -1,5 +1,17 @@
 # Local optional analysis, consent and credits (D-298)
 
+## D-961 - Original client entry capture (9 November 2026)
+
+[Actual temporal correction and limits](../../quality/analysis-submission-entry-snapshot.md) moves the original bounded aggregate capture before the
+first caller callback/private-read/semaphore wait.4original failures/1control become
+5focused host passes; the same5actual Data-client conditions pass onAndroid10.0.14.
+Private journal attempts are refused before durability/credential/source recheck/HTTP;
+no old successful primary, service wallet or financial source is replayed. This is
+not proof of an exposed Main UI exploit or genuine provider/private-journal acceptance.
+StrictWindows and fullPersonalSync Android (explicit INTERNET, not offline) compile
+the correction; offline SDK host supplies native evidence. Original later submission/
+receipt/Continue/Close/validation remain exact, live activation/platform gates open.
+
 ## Approved complete batch
 
 OD-13 approves local provider-neutral consent/minimal-data/credit prerequisites. Real provider selection,

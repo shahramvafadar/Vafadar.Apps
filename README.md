@@ -1,5 +1,9 @@
 # Vafadar Apps
 
+[Original analysis entry snapshot D961](src/Apps/Zanance/docs/quality/analysis-submission-entry-snapshot.md) prevents caller-list edits during asynchronous waits from
+replacing the original private packet. Five focused host and five Android contract
+outcomes pass without financial/network replay; genuine provider/release gates remain.
+
 [Original analysis error at large text D960](src/Apps/Zanance/docs/quality/analysis-error-large-text.md) qualifies36new actual page contexts and one original Retry.
 Presentation passes; helper restoration failure and cross-update source/preference
 limits remain explicit. No product change, financial replay or whole-A11Y acceptance.

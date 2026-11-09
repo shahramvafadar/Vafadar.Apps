@@ -1226,7 +1226,16 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-960)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-09, D-961)
+
+[D961 original analysis client snapshot](../quality/analysis-submission-entry-snapshot.md) fixes four controlled temporal payload replacements before private-journal
+publication. Five new selected host cases and the same five Android original-client
+contracts pass, without durable intent/credential/HTTP/financial/sourceDB effects.
+Later original submission/receipt/Continue/Close guards are unchanged. StrictWindows
+and actual PersonalSync fullAndroid3844081608 pass; that prepared edition intentionally
+has INTERNET and is not the default offline Main. No phone upgrade, provider/account
+activation or whole security/platform/release acceptance follows this correction.
+
 
 [D960 original analysis error/footer](../quality/analysis-error-large-text.md) adds36new actual original-page large-text contexts and one Retry without product
 or financial replay. The original helper restoration failure is retained, not

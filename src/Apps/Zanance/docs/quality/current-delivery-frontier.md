@@ -68,7 +68,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 | ZCR-TAX-01 | Official-source research exists; expert approval of the selected German year/rules/examples remains. Do not silently implement official tax conclusions. |
 | ZCR-TAX-02 | Local accountant export and named physical disclosures are delivered; remaining expert/platform acceptance remains, without filing authority. |
 | ZCR-TAX-03 | Versioned tax calculations require TAX-01 expert/rule acceptance before implementation; no invented rates/rules. |
-| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. D960adds finite actual failed-read page presentation only; native consent, genuine provider/access/pricing/credit sales and public operational acceptance are separate. Do not rerun successful primary submissions or fabricate live-provider success. |
+| ZCR-AI-01 | D958 corrects original eight-entry startup/access/provider-read ownership with32new focused passes and6source-linked Android model cases. D960adds finite actual failed-read page presentation; D961corrects public-client entry snapshot timing with5host/5native synthetic contracts and unchanged later primary guards. Neither qualifies durable private storage/native consent/genuine provider/access/pricing/credit sales or public operation. Do not rerun successful primary submissions or fabricate live-provider success. |
 | ZCR-BANK-01 | Research exists; exact consumer specimens and actual live provider/access decisions remain. Do not fabricate a bank preset. |
 | ZCR-FX-01 | Owner-approved ECB thirty-pair integration is delivered; other price sources/public/platform gates remain and are not a reason to fetch ECB again. |
 | ZCR-LANG-01 | Additional languages are explicitly outside current delivery. Existing six languages remain supported. |
@@ -83,6 +83,12 @@ or updated from the named latest scoped evidence; no canonical State value chang
 - [D948 current offline advisories](fresh-current-package-advisories.md), [D950 native advisories](current-native-source-advisories.md) and [D951 SQLite applicability](sqlite-maintenance-applicability.md): existing dated range/source admission; no repeat scan or dependency update is justified solely by an open security parent.
 
 ## Independent execution frontier
+
+[D961 original client entry snapshot](analysis-submission-entry-snapshot.md) corrects a concrete new temporal defect, preserving the original
+packet before caller callbacks/private-read/queue waits. Five new host and five
+native method observations pass with no financial/HTTP replay. The network-enabled
+shipping package is prepared, not installed; original private-storage durability,
+provider/consent/platform and all49non-Done parent requirements stay separate.
 
 [D960 original analysis failed-read presentation](analysis-error-large-text.md) now qualifies the named actual-page error/footer condition:
 36new six-language/theme/width contexts and one original Reload, without a

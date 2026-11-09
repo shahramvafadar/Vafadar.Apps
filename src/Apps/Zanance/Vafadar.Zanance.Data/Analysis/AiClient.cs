@@ -56,16 +56,17 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
     /// <summary>Publishes original native consent before one financial HTTP request; a prior pending record blocks a new id.</summary>
     public async Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheckSource, CancellationToken ct = default)
     {
+        // D-961: caller-owned lists must be frozen before access callbacks or queue/private-journal waits.
+        // The later source recheck still decides whether this original disclosed packet may be sent.
+        var encoded = JsonSerializer.SerializeToUtf8Bytes(payload, AiJson.Default.AiPayload);
+        if (encoded.Length > AiProtocol.MaximumPayloadBytes) throw new InvalidDataException("Analysis payload bound exceeded.");
+        var frozen = JsonSerializer.Deserialize(encoded, AiJson.Default.AiPayload)!; AiProtocol.Validate(frozen);
         verifyAccess(); var semaphore = Operations.GetOrAdd(Scope, _ => new SemaphoreSlim(1, 1)); await semaphore.WaitAsync(ct);
         try
         {
             var prior = await ReadAsync(ct);
             if (prior is { Result: null } || prior?.Result?.State == AiRequestState.Pending)
                 throw new InvalidOperationException("Continue the original analysis status before another request.");
-            // Freeze exactly the original disclosed aggregates; no live database getter is retained over HTTP.
-            var encoded = JsonSerializer.SerializeToUtf8Bytes(payload, AiJson.Default.AiPayload);
-            if (encoded.Length > AiProtocol.MaximumPayloadBytes) throw new InvalidDataException("Analysis payload bound exceeded.");
-            var frozen = JsonSerializer.Deserialize(encoded, AiJson.Default.AiPayload)!; AiProtocol.Validate(frozen);
             var submission = new AiSubmission(Guid.NewGuid(), offer, frozen);
             verifyAccess();
             await SaveAsync(new(1, submission, null), ct); // A process cut after this point never means safe to create a new id.

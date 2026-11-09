@@ -1,5 +1,24 @@
 # AGENTS.md – working rules for this repository
 
+## D-961 - Original analysis client freezes entry payload (2026-11-09)
+
+4actual temporal failures/1control expose caller-list replacement while private
+read/queue/access callback/previous-period await precedes old snapshot capture.
+Move the existing bounded capture before callbacks/waits; later original submission/
+receipt/gate-release/Continue/Close/validation source remains exact.5new selected
+host cases pass, same5actual Data-client contracts onAPI36/x64/4096/2413/10216/
+.NET10.0.14 pass fullsyntheticDTO equality with0durableintent/credential/source-
+recheck/HTTP/financial/sourceDB/account effects. Not original32field/nativeconsent/
+realSecureStorage/provider acceptance or Main exploit proof. StrictWindows/actual
+PersonalSync full3844081608 withINTERNET (not offline) and private91101394offline
+pass;12compiler-doc bindings. InitialiOSrestoreNU1201/scopedWindows andClean
+NETSDK1005/explicit target-restore failures retained; no tests/financial replay.
+FreshUID/officialAVD24file4346623271logicalbyte retire,5Cleans/OSexact/same65060,
+6userhome7732byte remain, no supplemental/frozen/phone/Main/retained5606 action.
+Only qualified code/tests/docs are committed; network package is prepared, not
+installed on held phone. Full goal and all broader gates remain open.
+[Original entry snapshot evidence](src/Apps/Zanance/docs/quality/analysis-submission-entry-snapshot.md).
+
 ## D-960 - Original analysis error page at large text (2026-11-09)
 
 Original AppShell analysis route/actual page qualifies36new six-language/two-theme/

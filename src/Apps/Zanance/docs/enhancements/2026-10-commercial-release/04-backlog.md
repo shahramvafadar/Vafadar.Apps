@@ -1,5 +1,21 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-961 - Original analysis client entry snapshot corrected
+
+Four real mutable-list timing failures are corrected by moving existing aggregate
+capture before access callbacks/queue/private read.5new host cases and5actual
+Android Data-client contracts2413/10216/API36/4096/.NET10.0.14 pass complete synthetic
+payload equality and cancellation,0durableintent/credentials/HTTP/financial/sourceDB.
+Original submission/receipt/continuation/closure guards remain exact; no accepted
+financial/TLS/service success replay. StrictWindows/PersonalSyncshipping3844081608
+(INTERNET, not offline)/private91101394 pass,12actual compiler documents bind.
+FreshUID/AVD24file4346623271logicalbyte retire,5Cleans/OSexact/same65060;6userhome
+7732byte remain, no supplemental/frozen/phone/Main/retained action. Restore/Clean
+preparation refusals remain separately recorded, not tests or native failures.
+Liveprovider/realprivatejournal/auth/ARM64/wholegates and all49non-Done states stay
+open; full goal is unchanged.
+[Original client snapshot evidence](../../quality/analysis-submission-entry-snapshot.md).
+
 ## D-960 - Original analysis failed-read page presentation qualified
 
 36new actual original Shell/page contexts at OSfont2, six languages/two themes/

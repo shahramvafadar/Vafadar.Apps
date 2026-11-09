@@ -1,5 +1,15 @@
 # Remaining delivery evidence and execution frontier (D-738)
 
+## D-961 - Original analysis client entry snapshot (9 November 2026)
+
+[Entry snapshot correction](analysis-submission-entry-snapshot.md) fixes4actual mutable-list temporal failures with existing bounded
+capture before callbacks/waits.5new host and5actual native Data-client outcomes pass;
+synthetic DTO equality is not32ledger fields/sourceDB or liveprovider/durable journal
+acceptance. Original later primary/receipt/continuation code is exact. Network-enabled
+PersonalSync package is explicitly not offline and never installed on held Main.
+Freshfixture retires/5Cleans/OSexact, no financial/old-success/frozen/phone action;
+D944held/retainedQ02 and broader gates/full goal remain protected.
+
 ## D-960 - Original analysis page large-text presentation (9 November 2026)
 
 [Actual original analysis error/footer](analysis-error-large-text.md) qualifies the named D959missing presentation assertion:

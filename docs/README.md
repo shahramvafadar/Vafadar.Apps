@@ -1,5 +1,9 @@
 # Documentation
 
+[Original analysis submission snapshot D961](../src/Apps/Zanance/docs/quality/analysis-submission-entry-snapshot.md) records four original temporal failures, bounded entry
+capture, five host/native contracts, actual compiled sources, explicit online-edition
+build scope and owned cleanup. It does not qualify a live provider or durable journal.
+
 [Original analysis error presentation D960](../src/Apps/Zanance/docs/quality/analysis-error-large-text.md) records36native large-text contexts/108caption roles and
 one original Retry, with retained restoration failure, one no-reset continuation,
 current source/OS preservation and explicit original comparison limitations.
