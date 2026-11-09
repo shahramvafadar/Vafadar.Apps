@@ -1,5 +1,10 @@
 # Vafadar Apps
 
+[D949 original installment startup](src/Apps/Zanance/docs/quality/loan-installment-startup-publication.md) fixes retired-owner source reads and
+leaked Busy after startup notifications. Four new contracts, strict builds and one
+original native refusal/source-preservation pass without financial acceptance.
+The fresh emulator retires; physical D944 stays held and delivery continues.
+
 [D948 fresh known-advisory audit](src/Apps/Zanance/docs/quality/fresh-current-package-advisories.md) matches190current offline package
 versions against all retrieved official pages:58relevant ranges, zero affected
 matches. Source/native/runtime/other-edition and whole-security gates remain open.

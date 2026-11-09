@@ -1,5 +1,9 @@
 # Documentation
 
+[Original installment startup D949](../src/Apps/Zanance/docs/quality/loan-installment-startup-publication.md) records three actual failures,
+four focused corrected contracts and original native page retirement before source
+revalidation, complete strict builds and owned cleanup with no financial replay.
+
 [Failed CI bill Retry D942](../src/Apps/Zanance/docs/quality/settlement-failed-ci-explicit-retry.md)
 records the exact two failed legacy contracts, preserved rollback/positive recovery,
 and one original native SQL refusal/source Retry without weakening product guards.

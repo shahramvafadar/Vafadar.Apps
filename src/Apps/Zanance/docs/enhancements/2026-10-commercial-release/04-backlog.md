@@ -1,5 +1,17 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-949 - Original installment startup publication complete
+
+Three actual owner-notification/Busy failures are corrected with captured-owner
+checks after each startup publication inside the original cleanup lifetime. Four
+new contracts, strict Windows/full Android and one original native button with
+controlled page retirement pass: context0, Busyfalse, full20source exact/ledger0.
+One necessary scroll continues a pre-tap clipping refusal; successful setup/control
+is not replayed. Fresh UID/three hash XMLs/officialAVD retire and5Cleans pass.
+No payment, phone/Main adoption or frozen-scope action. D944 remains held while the
+owner is away; original fault/performance/security/platform and delivery stay open.
+[Original installment startup evidence](../../quality/loan-installment-startup-publication.md).
+
 ## D-944 - Physical reconciliation cohort held, independent delivery active (2026-11-09)
 
 The owner reports away from the phone. Preserve fresh7552/UID10439/data on Samsung

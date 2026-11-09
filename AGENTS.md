@@ -1,5 +1,17 @@
 # AGENTS.md – working rules for this repository
 
+## D-949 - Retired installment startup cannot acquire another source (2026-11-09)
+
+Original Busy/error notification retirement and leaked Busy yield3actual failures.
+Four new focused contracts pass after guarded publications inside original cleanup;
+strictWindows/fullOffline384AOT408ELF1608LOAD and private192/204/804 pass. One actual
+native button after necessary owning-scroll retires the page and ends with context0,
+Busyfalse/source20exact/ledger0; setup/control/payment successes are not replayed.
+Fresh UID/3hashXML100855byte/officialAVD24file4557714705logicalbyte retire;5Cleans pass.
+Used signed/source evidence remains; no supplemental/frozen/phone action. D944held
+physical attempt/Main adoption remain protected; whole delivery goal stays active.
+[Original installment startup evidence](src/Apps/Zanance/docs/quality/loan-installment-startup-publication.md).
+
 ## D-944 - Physical reconciliation cohort held, independent delivery active (2026-11-09)
 
 The owner reports away from the phone. Preserve fresh7552/UID10439/data on Samsung

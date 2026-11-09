@@ -48,9 +48,14 @@ public sealed partial class LoanInstallmentSession(LoanWorkStore reader, Zanance
             && display == DisplayIdentity();
         bool Current() => OwnerCurrent() && isCurrent?.Invoke() != false;
         if (IsBusy || !Current() || ReferenceEquals(reviewed, _acceptedReview) && loanId == _acceptedLoan) return;
-        IsBusy = true; Error = Result = null; var accepted = false;
+        var accepted = false;
         try
         {
+            // D-949: startup notifications can retire this owner or throw before the first original reader.
+            // Preserve the original Result-then-Error order inside the same guaranteed cleanup lifetime.
+            IsBusy = true; if (!Current()) return;
+            Result = null; if (!Current()) return;
+            Error = null; if (!Current()) return;
             await reader.ValidateAsync(reviewed); if (!Current()) return; reviewed.Demand(CommercialFeature.LoanAnalysis);
             var account = reviewed.Accounts.Single(item => item.Id == loanId);
             if (account.Installment is not > 0 || reviewed.Outstanding(account) <= 0) return;
