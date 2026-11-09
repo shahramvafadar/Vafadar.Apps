@@ -66,7 +66,10 @@ public static class SqliteSnapshotVerifier
             while (true)
             {
                 token.ThrowIfCancellationRequested();
-                var a = raw.sqlite3_step(first); var b = raw.sqlite3_step(second);
+                // D-955: native work can request cancellation before returning its first row.
+                // Refuse the next sort or mismatch classification after that same native call.
+                var a = raw.sqlite3_step(first); token.ThrowIfCancellationRequested();
+                var b = raw.sqlite3_step(second); token.ThrowIfCancellationRequested();
                 if (a == raw.SQLITE_DONE && b == raw.SQLITE_DONE) break;
                 if (a != raw.SQLITE_ROW || b != raw.SQLITE_ROW)
                     throw new InvalidDataException("Snapshot row multiplicity or read status differs.");

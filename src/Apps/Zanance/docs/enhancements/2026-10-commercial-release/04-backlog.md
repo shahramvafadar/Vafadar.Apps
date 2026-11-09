@@ -1,5 +1,17 @@
 # 04 – Canonical backlog (commercial release)
 
+## D-955 - Snapshot native-sort cancellation correction complete
+
+2actual failures are fixed by checking the original token after each native step,
+before peer sort/mismatch classification; full source/integrity/typed/multiplicity
+guards remain.2new+7affected host cases and2distinct corrected native cases pass;
+caller connections and typed rows remain exact. StrictWindows/fullshipping/private
+packages and actual compiler bindings pass, fresh4948/10216/officialAVD25files/
+4366743016logicalbytes retire and5Cleans pass. No financial setup/replay or phone
+action; D944 original physical attempt stays held while owner away. This is not
+in-call interruption, whole performance/security/crash or full delivery acceptance.
+[Snapshot cancellation evidence](../../quality/snapshot-native-sort-cancellation.md).
+
 ## D-954 - Original receipt native error large-text qualification complete
 
 36new en/fa/de/es/fr/it-Light/Dark-360/412/680 contexts pass at actualOSfont2,

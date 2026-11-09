@@ -1,5 +1,9 @@
 # Vafadar Apps
 
+[D955 snapshot cancellation](src/Apps/Zanance/docs/quality/snapshot-native-sort-cancellation.md) fixes two actual native-sort cancellation failures
+without weakening full typed comparison:2new+7affected cases and2native observations
+pass. Complete strict packages and owned cleanup pass; held phone/overall gates remain.
+
 [D954 receipt-error large text](src/Apps/Zanance/docs/quality/original-receipt-error-large-text.md) qualifies36new original native dialog contexts
 at OS200percent: complete source-matched captions, native RTL/LTR, touch targets and
 independently converted window/XML bounds. No source/OCR/photo/financial replay or

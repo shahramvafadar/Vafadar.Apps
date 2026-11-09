@@ -1,5 +1,9 @@
 # Documentation
 
+[Snapshot native-sort cancellation D955](../src/Apps/Zanance/docs/quality/snapshot-native-sort-cancellation.md) records the original failures,
+cooperative step-boundary correction, exact typed-source controls and two corrected
+native cases. It does not claim preemption, a speed percentage or whole-app acceptance.
+
 [Original receipt native error captions D954](../src/Apps/Zanance/docs/quality/original-receipt-error-large-text.md) records36new OS200percent contexts,
 independent immutable translations/window coordinates and108retained caption audits.
 Presentation-only evidence does not repeat the receipt source or financial workflow.

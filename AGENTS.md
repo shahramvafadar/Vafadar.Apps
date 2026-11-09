@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-955 - Snapshot native-sort cancellation stops before the next stage (2026-11-09)
+
+Two actual public-verifier failures expose peer sort5120callbacks after cancellation
+and wrong content-mismatch classification. Token checks after each sqlite3_step
+correct both, preserving full typed/schema/integrity/multiplicity/transaction guards.
+2new+7affected cases and2distinct corrected native512/384row cases pass, original
+token/source/callers intact; no in-call preemption or latency/crash acceptance.
+Actual compiler lineages/strictWindows/full3844081608/native7485329/offline/signature
+pass. Fresh4948/10216/AVD25file4366743016logicalbyte retire,5Cleans pass; boot
+readiness expiration continues samehost, no settings or successful financial replay.
+D944 remains held while owner away; no phone command/repeated unlock question/Main
+adoption. Frozen/retained/goal preserved. [Snapshot cancellation](src/Apps/Zanance/docs/quality/snapshot-native-sort-cancellation.md).
+
 ## D-954 - Original receipt native error captions at OS200percent (2026-11-09)
 
 Presentation-only originalMauiReceiptRuntime.Alert completes36new six-language/
