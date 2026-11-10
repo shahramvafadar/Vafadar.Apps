@@ -1,5 +1,9 @@
 # Current public System-framework managed/AOT identities — D-1013
 
+[D1014 completes the four remaining installed-runtime names per ABI](remaining-runtime-aot-identity-d1014.md)
+without decoding the138completed pairs below again. That finite inventory result
+does not extend to every APK dependency or establish the native fault's cause.
+
 All138selected public pairs agree in the current complete APK:69System-framework
 names per ABI. Each managed MVID equals its native AOT assembly GUID and an
 independent installed-SDK decoder/host metadata reader agrees on module name,
