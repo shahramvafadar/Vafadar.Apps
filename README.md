@@ -108,6 +108,7 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Manual handoff owner D975](src/Apps/Zanance/docs/quality/analysis-manual-handoff-ownership.md) | Retired root/date/language callbacks cannot reach stale confirmation or recipient handoff;10new host/native conditions |
 | [Original consent metadata D974](src/Apps/Zanance/docs/quality/analysis-consent-metadata-validation.md) | Corrupt retained/new offer metadata refuses before credentials or private publication;47new host/native conditions |
 | [Native private storage D973](src/Apps/Zanance/docs/quality/private-analysis-native-storage.md) | Nine new original Android storage/marker/persistence conditions, with explicit key-loss/platform limits |
 | [Current Android Main D972](src/Apps/Zanance/docs/quality/current-complete-main-adoption-d972.md) | Complete current offline package installed without reset; original Home ready, no financial replay |

@@ -1,5 +1,7 @@
 # Documentation
 
+[Original manual handoff D975](../src/Apps/Zanance/docs/quality/analysis-manual-handoff-ownership.md) fixes9actual last-access owner failures with10new host/same10native model cases, full54source preserved and explicit synthetic-consent/recipient/temp/platform limits.
+
 [Original consent metadata D974](../src/Apps/Zanance/docs/quality/analysis-consent-metadata-validation.md) fixes45actual original negative conditions with47new host/same47native cases and5affected host cases, preserving literal expiry and primary ordering; cleanup failures and provider limits remain explicit.
 
 [Original native private analysis storage D973](../src/Apps/Zanance/docs/quality/private-analysis-native-storage.md) qualifies9new actual backend/marker/process-persistence conditions without account/financial/authentication/provider replay; key-loss/platform limits remain explicit.

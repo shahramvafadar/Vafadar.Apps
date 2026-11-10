@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-974)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-975)
+
+[D975 original manual handoff](../quality/analysis-manual-handoff-ownership.md) fixes9actual last-access/cached-rights owner failures with10new host/same10native conditions and full54source unchanged. Retired root/date/language cannot resume stale confirmation/recipient entry. Synthetic consent/recipient and original App/platform limits remain; prepared70abac90is not Main-installed.
 
 [D974 original consent metadata](../quality/analysis-consent-metadata-validation.md) fixes45actual original negative conditions with47new/5affected host and same47native observations. Invalid retained/new offers refuse before effects; literal valid expiry and source/transport/save order remain. Strict builds and owned retirement pass with explicit retained cleanup failures; prepared38c54808is not Main-installed or genuine provider acceptance.
 

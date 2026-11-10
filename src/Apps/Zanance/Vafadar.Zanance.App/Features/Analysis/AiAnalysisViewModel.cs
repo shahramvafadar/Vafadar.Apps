@@ -250,6 +250,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             if (!await runtime.ConfirmDisclosureAsync()) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original); await store.CheckAsync(original);
             ValidateDisclosure(disclosure); ValidateReview(version, original); runtime.Capture(original.Selection.File).Validate();
+            // D-975: access validation is an external boundary; a returned callback cannot authorize a retired chooser.
+            ValidateDisclosure(disclosure); ValidateReview(version, original);
             offered = true; await runtime.ShareAsync(text["Ai_ManualPrompt"] + Environment.NewLine + JsonSerializer.Serialize(original.Payload, AiJson.Default.AiPayload));
             if (OwnsPresentation && version == epoch) ShareStatus = text["Ai_Offered"];
         }
@@ -514,7 +516,18 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         if (!OwnsPresentation || original != frameEpoch) throw new InvalidOperationException("Original analysis presentation retired.");
     }
     private void Validate(int version) { if (!OwnsPresentation || version != Volatile.Read(ref epoch)) throw new InvalidOperationException("Original analysis form retired."); }
-    private void ValidateReview(int version, AiReview original) { Validate(version); if (!ReferenceEquals(review, original) || original.Selection.Language != local.CurrentLanguage.CultureName.Split('-')[0]) throw new InvalidOperationException("Original analysis disclosure changed."); original.EnsureCurrent(); }
+    private void ValidateReview(int version, AiReview original)
+    {
+        Validate(version); RequireReview();
+        original.EnsureCurrent();
+        // D-975: cached-rights callbacks may retire this page or edit its reviewed draft before returning.
+        Validate(version); RequireReview();
+        void RequireReview()
+        {
+            if (!ReferenceEquals(review, original) || original.Selection.Language != local.CurrentLanguage.CultureName.Split('-')[0])
+                throw new InvalidOperationException("Original analysis disclosure changed.");
+        }
+    }
     private void Refresh() { OnPropertyChanged(nameof(HasPendingOperation)); OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanShare)); OnPropertyChanged(nameof(CanCheckProvider)); OnPropertyChanged(nameof(CanQuote)); OnPropertyChanged(nameof(CanSend)); OnPropertyChanged(nameof(CanContinue)); }
     private static DateOnly FirstDay(TimeProvider clock) { var date = DateOnly.FromDateTime(clock.GetLocalNow().Date); return new(date.Year, date.Month, 1); }
 }

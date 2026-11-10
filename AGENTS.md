@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-975 - Original manual handoff retains final owner
+
+[Manual handoff evidence](src/Apps/Zanance/docs/quality/analysis-manual-handoff-ownership.md) records9original negative failures and one current
+refusal-port control, then same10new host/native conditions passed. Disclosure/
+review is rechecked after final access; cached-rights validation cannot return
+into a retired/root/date/language owner. Inverse source reconstructs original model;
+payload/consent/financial policy unchanged. Synthetic confirmations/always-refusing
+recipient are explicit, not native authentication/chooser or delivery. Native one
+opening-zero metadata account, ledger/plans0 and full54typed139180byte source exact.
+StrictWindows/fullOffline3844081608/SDK93104405/nine compiler documents pass;
+shipping70abac90is prepared, not Main-installed. FreshUID/OS/four original handles/
+official25file4363859386byte AVD retirement and5Cleans1859file946819260byte pass.
+Initial framework-temp limitation, final scoped host-tmp1file1034byte and6userhome
+7732byte remain explicit. No old financial/native replay/frozen action; all parent
+States and full delivery goal remain open.
+
 ## D-974 - Complete original client consent metadata before effects
 
 [Consent metadata evidence](src/Apps/Zanance/docs/quality/analysis-consent-metadata-validation.md) records44original negative failures plus one
