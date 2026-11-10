@@ -71,6 +71,8 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     {
         if (PinUnavailable || PinEnabled) { LastDeviceUnlockOutcome = AuthenticationOutcome.Failed; return false; }
         LastDeviceUnlockOutcome = await authenticator.AuthenticateAsync(translator["Lock_Reason"]);
+        // D-1030: an awaited device-only prompt cannot bypass a newly configured/unreadable app PIN.
+        if (PinUnavailable || PinEnabled) { LastDeviceUnlockOutcome = AuthenticationOutcome.Failed; return false; }
         return LastDeviceUnlockOutcome == AuthenticationOutcome.Success;
     }
 
@@ -169,7 +171,12 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     {
         if (PinUnavailable) { return false; }
         if (!IsEnabled) { return true; }
-        if (!PinEnabled) { return await authenticator.AuthenticateAsync(reason) == AuthenticationOutcome.Success; }
+        if (!PinEnabled)
+        {
+            var outcome = await authenticator.AuthenticateAsync(reason);
+            // The original device-only decision owns no authority over a later app-PIN requirement.
+            return !PinUnavailable && !PinEnabled && outcome == AuthenticationOutcome.Success;
+        }
         return await host.ConfirmPinAsync(this, reason);
     }
 
@@ -189,7 +196,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
         if (!DeviceLockEnabled) return Current();
         var result = await authenticator.AuthenticateAsync(reason);
-        return Current() && result == AuthenticationOutcome.Success;
+        return Current() && !PinUnavailable && !PinEnabled && result == AuthenticationOutcome.Success;
     }
 
     /// <summary>Runs <paramref name="action"/> now, or after unlocking when the app is covered (REM-06).</summary>

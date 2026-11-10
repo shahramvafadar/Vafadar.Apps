@@ -1,5 +1,9 @@
 # Device-only unlock policy (D-266)
 
+Later [D1030 awaited-device policy](device-confirmation-current-pin-policy-d1030.md)
+corrects six actual late-result failures after app-PIN requirements change;
+nine new host/Android service-model conditions pass without genuine authentication.
+
 The owner approved success-only device authentication on 2026-10-14. Original LockPage calls the covered AppLockService policy; unavailable, failed, unknown and exceptional responses never release queued destinations. Existing PIN paths and authenticated return grace remain unchanged. Unavailable feedback reuses the translated device-screen-lock guidance.
 
 ## Bounded local evidence
