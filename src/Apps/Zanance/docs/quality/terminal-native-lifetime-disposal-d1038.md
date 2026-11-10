@@ -1,5 +1,9 @@
 # Terminal native lifetime disposal — D-1038
 
+[D1039 minimum-Android and ps16k qualification](terminal-lifetime-minimum-ps16k-d1039.md)
+adds four current native contracts on each of two fresh platforms with one signed
+package, exact source/restoration and no host/financial/authentication replay.
+
 ## Observed original failures
 
 PersonalSyncLifetime.Dispose originally cancels and disposes its mutable current
@@ -58,7 +62,7 @@ All4corrected native rows pass, keeping the first AggregateException observable,
 disposing the original resource, refusing fresh capture and containing late/repeated
 notifications. No stage or source setup is replayed.
 
-Every original/corrected condition preserves complete sqlite_master schema and
+Both original and corrected four-condition phases preserve complete sqlite_master schema and
 all54table typed56row source, digest
 `9ACAF48F948FD7ACABCE965B77920717B893F28920A84EF19726C078A6AEE88A`.
 Accounts, entries, plans, allocations and authenticator calls remain0. The result's
