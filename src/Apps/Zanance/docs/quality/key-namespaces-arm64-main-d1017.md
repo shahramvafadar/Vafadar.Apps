@@ -1,5 +1,8 @@
 # Key namespace refusals on ARM64 and cumulative Main — D-1017
 
+[D1018 subsequently covers these named methods in the ps16k userspace compatibility image](new-key-namespaces-ps16k-d1018.md),
+without replaying the physical conditions below or claiming hardware16KiB acceptance.
+
 The finite [D1015 migration-session](migration-key-namespace-refusal.md) and
 [D1016 retained new-profile](new-profile-key-namespace-refusal.md) boundaries now
 pass on physical Samsung ARM64. The existing complete D1016package is then adopted
