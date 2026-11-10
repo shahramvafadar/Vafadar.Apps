@@ -1,5 +1,18 @@
 # AGENTS.md – working rules for this repository
 
+## D-976 - Cumulative current Main adopted from an actual ready Home
+
+[Current cumulative Main](src/Apps/Zanance/docs/quality/current-cumulative-main-adoption-d976.md) admits actual141node selected Home/no editable
+control before one no-reset update from07b0a043to70abac90, reusing the exact complete
+D975package with both recent corrections. UID10380/CE155299/DE154603/permissions/
+other captured Zanance packages/OS/locale/boot/geometry/reverse remain exact. One
+normal launch29543reaches Home; both51932byte raw XML and all141native attribute
+maps equal before/after without normalization or extra capture. Two hash-clean
+XML/103864bytes retire; no new build/test, explicit financial/auth/photo/share or
+frozen action. Main29543/70abac90is now the current dated observation, not private
+DB/key/whole security/stability/performance/platform acceptance. Parent States,
+terminal cohorts, retained resources and the full delivery goal remain open.
+
 ## D-975 - Original manual handoff retains final owner
 
 [Manual handoff evidence](src/Apps/Zanance/docs/quality/analysis-manual-handoff-ownership.md) records9original negative failures and one current

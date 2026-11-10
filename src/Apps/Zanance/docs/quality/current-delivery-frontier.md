@@ -82,6 +82,7 @@ or updated from the named latest scoped evidence; no canonical State value chang
 
 ## Current evidence that changes the next action
 
+- [D976 cumulative Main adoption](current-cumulative-main-adoption-d976.md): current29543/70abac90contains both latest corrections; actual before/after selected Home raw XML/all141attribute maps and captured public state match. No private Main database/key or accepted-operation replay.
 - [D975 final manual handoff ownership](analysis-manual-handoff-ownership.md):9actual original failures corrected,10new host/native cases and full54source preservation. No genuine chooser/auth/recipient or financial acceptance is inferred.
 - [D974 original client consent metadata](analysis-consent-metadata-validation.md):45actual original negative failures corrected;47new/5affected host and same47native conditions pass without genuine credentials/journal/HTTP/financial effects. Current complete package is prepared, not adopted on Main.
 - [D973 original native private storage](private-analysis-native-storage.md):9new backend/marker/process-persistence conditions pass with no account/financial/provider/auth setup; real key loss/full journal/ARM64/iOS remain distinct.

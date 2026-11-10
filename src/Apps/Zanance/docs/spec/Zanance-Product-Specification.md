@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-975)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-976)
+
+[D976 cumulative current Main](../quality/current-cumulative-main-adoption-d976.md) adopts the complete70abac90package with both latest corrections in one no-reset phone update. Selected Home/no editors, before/after raw XML/all141native attribute maps and captured UID/CE/DE/permissions/OS are exact. Main29543is the current dated observation; private database/key and broader acceptance remain unproved.
 
 [D975 original manual handoff](../quality/analysis-manual-handoff-ownership.md) fixes9actual last-access/cached-rights owner failures with10new host/same10native conditions and full54source unchanged. Retired root/date/language cannot resume stale confirmation/recipient entry. Synthetic consent/recipient and original App/platform limits remain; prepared70abac90is not Main-installed.
 

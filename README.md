@@ -108,10 +108,11 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Current Android Main D976](src/Apps/Zanance/docs/quality/current-cumulative-main-adoption-d976.md) | Both recent corrections adopted without reset; before/after Home raw XML and141native attribute maps equal |
 | [Manual handoff owner D975](src/Apps/Zanance/docs/quality/analysis-manual-handoff-ownership.md) | Retired root/date/language callbacks cannot reach stale confirmation or recipient handoff;10new host/native conditions |
 | [Original consent metadata D974](src/Apps/Zanance/docs/quality/analysis-consent-metadata-validation.md) | Corrupt retained/new offer metadata refuses before credentials or private publication;47new host/native conditions |
 | [Native private storage D973](src/Apps/Zanance/docs/quality/private-analysis-native-storage.md) | Nine new original Android storage/marker/persistence conditions, with explicit key-loss/platform limits |
-| [Current Android Main D972](src/Apps/Zanance/docs/quality/current-complete-main-adoption-d972.md) | Complete current offline package installed without reset; original Home ready, no financial replay |
+| [Earlier Android Main D972](src/Apps/Zanance/docs/quality/current-complete-main-adoption-d972.md) | Complete current offline package installed without reset; original Home ready, no financial replay |
 | [Pending OS reminder order D970](src/Apps/Zanance/docs/quality/original-pending-os-notification-order.md) | Two genuine warm notification taps preserve original destination order while the first read waits |
 | [Returned analysis results D969](src/Apps/Zanance/docs/quality/analysis-result-publication.md) | Frame-owned coherent outcomes and exact retained-request follow-up; finite host/native evidence |
 | [Analysis date targets D968](src/Apps/Zanance/docs/quality/analysis-date-part-targets.md) | Clipped calendar repair and finite native large-text/numeric-draft evidence |
