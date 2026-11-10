@@ -95,3 +95,6 @@ no timely claim, second GET, job-log read, rerun or cancellation cause is inferr
 Later [D1021 ARM64 qualification and Main adoption](metadata-presence-arm64-main-d1021.md)
 complete five new physical conditions and one reused-package no-reset upgrade.
 The prepared/not-installed statement above remains the original D1020 cohort.
+
+Later [D1022 minimum Android and ps16k qualification](metadata-presence-minimum-and-ps16k-d1022.md)
+adds only five new metadata-presence conditions per platform using the original package.
