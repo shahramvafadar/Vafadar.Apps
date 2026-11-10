@@ -1,5 +1,9 @@
 # Inaccessible private analysis markers — D-1002/D-1003
 
+[D1005 later reuses this exact complete package on Main](current-private-marker-main-d1005.md)
+without rebuild/test/financial replay. The prepared/not-installed and no-phone
+statements below describe this original D1002/D1003 cohort before that continuation.
+
 Two newly reproduced original storage failures are corrected. An existing marker
 behind an inaccessible directory must not look like a fresh scope, and an entry-time
 metadata denial must stop a write before changing its backing value. The correction
