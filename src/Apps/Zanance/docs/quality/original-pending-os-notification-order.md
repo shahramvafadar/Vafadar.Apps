@@ -117,3 +117,6 @@ D969's only consumed GET at2026-11-09T22:35:16Z,951.272077seconds after observed
 records [CI in_progress](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42710829683)
 and [CodeQL completed-success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42710829671).
 This is not full CI acceptance; no second request, successful job-log read or rerun follows.
+
+The separate [D1035 covered and process-cold content taps](covered-and-cold-os-notification-d1035.md)
+qualify two new original PIN-covered routes without repeating this warm unlocked order cohort.
