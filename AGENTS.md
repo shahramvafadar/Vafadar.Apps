@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-978 - Fresh quote authority follows completed original captions
+
+[Quote authority evidence](src/Apps/Zanance/docs/quality/analysis-quote-presentation-authority.md) records2actual original failures: affordable fresh terms left CanSendtrue
+when changing/changed caption binding threw. Three new focused host/same3native
+model conditions now pass. Offer authority clears when quoting and is adopted
+only after complete metadata/final review validation; inverse source reconstructs
+original model, payload/consent/credit/financial policy unchanged. Native one zero
+metadata account/full54typed139180byte source exact; no genuine UI/auth/provider/
+primary/financial replay. StrictWindows/fullOffline3844081608/SDK93104405/nine
+compiler documents pass. Shippingb5f66914is prepared, not Main-installed. Private
+PDB-path observer refusal is preserved; freshUID/four original handles/official
+24file4345705739byte AVD retire;5Cleans5615file1201313680bytes,2882registered files
+remain; hosttmp19file3936444bytes/userhome6file7732bytes remain. No supplementary/
+frozen/phone action. All parent States and full delivery goal remain open.
+
+
 ## D-977 - Original analysis native caption contrast
 
 [Native contrast evidence](src/Apps/Zanance/docs/quality/analysis-native-caption-contrast.md) qualifies only Ai_Exact/Ai_Fallible in Light/Dark:

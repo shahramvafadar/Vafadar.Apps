@@ -331,12 +331,14 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         var version = epoch; var original = review; var connection = remote; operationActive = true;
         try
         {
-            StartOperation(version); ValidateReview(version, original);
+            StartOperation(version); offer = null; ValidateReview(version, original);
             var terms = await connection.OfferAsync(original.Payload.Purpose, CancellationToken.None); ValidateReview(version, original);
             var caption = text.Format("Ai_Offer", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits), terms.ExpiresAt.ToString("u", local.CurrentCulture));
-            ValidateReview(version, original); offer = terms;
+            ValidateReview(version, original);
             PublishMetadata(version, caption, BalanceText, ResultSnapshot, ResultText, ResultStatus, () => { });
             ValidateReview(version, original);
+            // D-978: fallible caption notifications cannot grant sending authority for unpublished terms.
+            offer = terms;
             if (!CanAfford(terms)) SetError("Ai_Insufficient");
         }
         catch (Exception error) when (error is not OutOfMemoryException) { if (OwnsPresentation && version == epoch) SetError(FailureKey(error)); }

@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-977)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-978)
+
+[D978 original quote authority](../quality/analysis-quote-presentation-authority.md) corrects two genuine failed-caption conditions that previously left fresh Send enabled. Three new host/Android model cases preserve full source without primary/provider/financial effects; complete corrected shipping is prepared, not Main-installed. Broader gates remain open.
 
 [D977 original analysis contrast](../quality/analysis-native-caption-contrast.md) qualifies four native caption/theme pairs without product changes. Source54/theme/OS restoration and finite bounds are exact; whole accessibility, security, native fault, performance and platform gates remain open.
 
