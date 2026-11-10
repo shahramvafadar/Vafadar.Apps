@@ -1,5 +1,9 @@
 # Unknown retained Android key-reference headers — D-1011
 
+[D1012 later qualifies the same inputs on physical ARM64 and adopts this package on Main](retained-alias-headers-arm64-main-d1012.md).
+The prepared/not-installed and no-phone statements below describe the original
+D1011cohort before that separate continuation.
+
 Ten further original reference-check failures are corrected without changing any
 key envelope format, key protector, decryptor or actual alias-removal authority.
 The [D1009 metadata guard](android-retained-alias-reference-metadata.md) remains.
