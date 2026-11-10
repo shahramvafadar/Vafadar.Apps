@@ -1,5 +1,9 @@
 # Current lock-page policy on minimum Android and ps16k — D-1033
 
+Later [D1034 physical ARM64 qualification](lock-page-current-policy-arm64-d1034.md)
+adds only three current original-page conditions in a fresh phone UID, with exact
+Main return and no genuine authentication or earlier platform replay.
+
 The three [D1031 original-page conditions](lock-page-current-pin-presentation-d1031.md)
 now have separate minimum-Android and userspace16KiB observations. The accepted
 API36/x64 cohort, its inputs and earlier successful host/financial/authentication
