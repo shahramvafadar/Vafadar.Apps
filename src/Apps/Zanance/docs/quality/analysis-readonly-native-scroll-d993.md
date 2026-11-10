@@ -1,5 +1,10 @@
 # Original read-only analysis text scrolling - D-993
 
+[D994 Main adoption](current-readonly-scroll-main-d994.md) subsequently reuses the
+exact final package for one no-reset phone update with raw Home/public-state
+equality. It adds no physical inner-gesture or private-source acceptance and does
+not repeat the builds or native conditions recorded below.
+
 ## Two original failures isolated without replaying the matrix
 
 [D992](analysis-metadata-historical-layout-d992.md) leaves two touch observations
