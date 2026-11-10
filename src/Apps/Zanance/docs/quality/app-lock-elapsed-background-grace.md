@@ -1,5 +1,9 @@
 # Original app-lock background grace (D-720)
 
+Later [D1029 closing-cover ownership](app-lock-close-request-ownership-d1029.md)
+corrects three actual renewed-request failures during awaited close, preserving
+the original grace policy and qualifying four host/Android service-model cases.
+
 ## Actual remaining security input
 
 SEC-04's original grace permits a brief background switch for30seconds. The original

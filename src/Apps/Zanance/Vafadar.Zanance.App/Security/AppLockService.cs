@@ -24,6 +24,7 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     private bool _coverRequested;
     private bool _started;
     private bool _drainingPending;
+    private object _coverRequest = new();
 
     /// <summary>Raised when covered access changes; optional foreground work cannot outlive successful-unlock authority.</summary>
     public event EventHandler? AccessChanged;
@@ -273,14 +274,34 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     /// <summary>Called by the lock page after a successful authentication.</summary>
     internal async Task UnlockedAsync()
     {
-        if (_page is { } page)
+        object request;
+        ILockCover? page;
+        lock (_pending) { request = _coverRequest; page = _page; }
+        if (page is not null) { await page.CloseAsync(); }
+
+        bool superseded;
+        bool keepCovered;
+        lock (_pending)
         {
-            await page.CloseAsync();
-            _page = null;
+            // D-1029: native modal removal may yield to Sleep/Resume and a new cover request.
+            // Only the request whose own modal finished closing can publish unlocked access.
+            superseded = !ReferenceEquals(request, _coverRequest) || !ReferenceEquals(page, _page);
+            keepCovered = superseded && _coverRequested;
+            if (!superseded)
+            {
+                _page = null;
+                _coverRequested = false;
+                _sleptAt = null;
+            }
+        }
+        if (superseded)
+        {
+            // A renewed request can still refer to the old modal until its native pop completes.
+            // Reconcile that now-missing cover without authentication or draining queued work.
+            if (keepCovered) { await ShowAsync(prompt: false); }
+            return;
         }
 
-        _coverRequested = false;
-        _sleptAt = null;
         await RunPendingAsync();
         AccessChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -338,7 +359,13 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     {
         validateStartup?.Invoke();
         // A missing/rebuilt window must not turn a requested lock into an unlocked application.
-        _coverRequested = true;
+        bool wasLocked;
+        lock (_pending)
+        {
+            wasLocked = IsLocked;
+            _coverRequested = true;
+            _coverRequest = new object();
+        }
         AccessChanged?.Invoke(this, EventArgs.Empty); validateStartup?.Invoke();
         if (_page is not null && !_page.IsOnScreen)
         {
@@ -357,7 +384,12 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
         }
 
         validateStartup?.Invoke(); _page = host.CreateCover(this, prompt);
-        if (_page is { } cover) { validateStartup?.Invoke(); await cover.ShowAsync(); validateStartup?.Invoke(); }
+        if (_page is { } cover)
+        {
+            // Replacing an already-requested/lost cover cannot create a fresh short-return grace.
+            if (wasLocked) { cover.WasLockedBeforeSleep = true; }
+            validateStartup?.Invoke(); await cover.ShowAsync(); validateStartup?.Invoke();
+        }
     }
 
 }
