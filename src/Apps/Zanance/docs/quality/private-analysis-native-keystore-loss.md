@@ -13,6 +13,10 @@ are unchanged.
 subsequently qualifies the named fresh-package alias-loss refusal on Samsung. The
 software-emulator scope and limitations below remain the original D1004 evidence.
 
+[D1026 minimum Android and ps16k continuation](private-keystore-loss-api24-ps16k-d1026.md)
+adds two new compatibility cohorts using the same exact SDK and five unchanged
+compiler-bound source inputs, without repeating the original API36cohort.
+
 ## Scope and original implementation
 
 One fresh offline/nondebuggable SDK package links the current SecureAiStorage and
