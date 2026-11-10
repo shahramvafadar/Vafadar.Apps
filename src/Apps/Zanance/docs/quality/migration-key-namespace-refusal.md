@@ -1,5 +1,9 @@
 # Candidate namespace refusal before migration key effects — D-1015
 
+[D1016 subsequently corrects the separate retained new-profile branch](new-profile-key-namespace-refusal.md).
+The next-source-question statement at the end below describes the D1015checkpoint
+before that independent continuation; neither cohort replays the other's success.
+
 Eight actual original failures are corrected in SqlCipherGenerationMigrationSession:
 an occupied candidate or rollback namespace now refuses before platform key
 preparation/read. No encryption format, financial data, migration, key implementation,

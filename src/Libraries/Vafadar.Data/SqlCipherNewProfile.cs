@@ -43,9 +43,7 @@ public static class SqlCipherNewProfile
             if (!File.Exists(intentPath))
             {
                 if (!initializeNewProfile) throw new IOException("Captured new-profile intent is missing.");
-                foreach (var target in new[] { candidate, rollback })
-                    foreach (var suffix in new[] { "", "-journal", "-wal", "-shm" })
-                        if (File.Exists(target + suffix) || Directory.Exists(target + suffix)) throw new IOException("Unknown ciphertext cannot authorize a fresh empty profile.");
+                RequireAbsentCandidateNamespace(candidate, rollback);
                 await journal.CreateNewAsync(durability, ct).ConfigureAwait(false);
             }
             if (!File.Exists(originalPath + ".restore-history.sqlite"))
@@ -65,7 +63,7 @@ public static class SqlCipherNewProfile
             }
             if (state.Phase == DatabaseGenerationPhase.Original)
             {
-                if (File.Exists(candidate) || File.Exists(rollback)) throw new IOException("New profile ciphertext preceded durable key preparation.");
+                RequireAbsentCandidateNamespace(candidate, rollback);
                 await keys.PrepareAsync(binding, ct).ConfigureAwait(false); Check(); await Advance().ConfigureAwait(false);
             }
             if (state.Phase == DatabaseGenerationPhase.KeyPrepared)
@@ -122,6 +120,20 @@ public static class SqlCipherNewProfile
         return await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, legacyProfile, originalPath, history,
             _ => throw new InvalidOperationException("New profile initializer cannot resolve later restored generations."),
             keys, durability, owner, validateAccess, maximumBytes, version, ct).ConfigureAwait(false);
+    }
+
+    /// <summary>Requires genuinely absent candidate objects and sidecars before new intent or key authority.</summary>
+    private static void RequireAbsentCandidateNamespace(string candidate, string rollback)
+    {
+        // D-1016: a retained Original intent has not yet authorized any ciphertext namespace or platform key.
+        foreach (var target in new[] { candidate, rollback })
+            foreach (var suffix in new[] { "", "-journal", "-wal", "-shm" })
+            {
+                try { _ = File.GetAttributes(target + suffix); }
+                catch (FileNotFoundException) { continue; }
+                catch (DirectoryNotFoundException) { continue; }
+                throw new IOException("New profile candidate namespace preceded durable key preparation.");
+            }
     }
 
     private static async Task<SqliteConnection> OpenVerifiedAsync(string path, byte[] key, string version, CancellationToken ct)
