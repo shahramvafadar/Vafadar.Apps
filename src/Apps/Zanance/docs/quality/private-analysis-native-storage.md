@@ -1,5 +1,10 @@
 # Actual Android private analysis storage - D-973
 
+[D1003 continuation](private-analysis-marker-permission-refusal.md) corrects two later
+entry-time inaccessible-marker failures with actual Android backend evidence. The
+nine original conditions below retain their own version/scope and are not rerun or
+promoted to complete current journal/platform acceptance.
+
 ## Concrete missing boundary
 
 D969qualifies model publication and original follow-up with a synthetic remote,
