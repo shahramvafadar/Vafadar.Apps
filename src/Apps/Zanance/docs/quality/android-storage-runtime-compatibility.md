@@ -1,5 +1,9 @@
 # D-521 - Original encrypted storage on minimum-API and16KiB runtimes
 
+[D1015 corrects a later pre-key candidate-namespace guard](migration-key-namespace-refusal.md)
+with eight new host/Android conditions. The historical platform results below are
+not rerun or silently extended to that later source correction.
+
 ## Purpose and actual boundaries
 
 Continue the unqualified storage/migration/recovery part of SEC-02/05/06 after D-519/D-520.

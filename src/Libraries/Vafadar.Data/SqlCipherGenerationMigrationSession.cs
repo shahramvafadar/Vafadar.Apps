@@ -61,7 +61,9 @@ public sealed class SqlCipherGenerationMigrationSession : IDatabaseGenerationMig
     {
         await RequirePhaseAsync(checkpoint, DatabaseGenerationPhase.Original, cancellationToken).ConfigureAwait(false);
         // A candidate cannot precede durable KeyPrepared. Never create a fresh key for unknown existing ciphertext.
-        if (File.Exists(candidate) || File.Exists(rollback)) throw new IOException("Candidate exists before key preparation.");
+        foreach (var target in new[] { candidate, rollback })
+            foreach (var suffix in new[] { "", "-journal", "-wal", "-shm" })
+                RequireAbsentBeforeKey(target + suffix);
         await keys.PrepareAsync(binding, cancellationToken).ConfigureAwait(false);
         ValidateContext();
         var key = await ReadKeyAsync(cancellationToken).ConfigureAwait(false);
@@ -258,5 +260,15 @@ public sealed class SqlCipherGenerationMigrationSession : IDatabaseGenerationMig
     {
         if (!File.Exists(path) || (File.GetAttributes(path) & (FileAttributes.ReparsePoint | FileAttributes.Directory)) != 0)
             throw new IOException("Owned migration file is missing or redirected.");
+    }
+
+    /// <summary>Refuses every existing or unavailable generation entry before platform key effects.</summary>
+    private static void RequireAbsentBeforeKey(string path)
+    {
+        // D-1015: Exists hides non-file entries and access failures; orphan sidecars also precede key authority.
+        try { _ = File.GetAttributes(path); }
+        catch (FileNotFoundException) { return; }
+        catch (DirectoryNotFoundException) { return; }
+        throw new IOException("Candidate namespace exists before key preparation.");
     }
 }
