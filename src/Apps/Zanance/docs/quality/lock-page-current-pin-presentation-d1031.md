@@ -1,5 +1,9 @@
 # Original lock page follows changed PIN policy — D-1031
 
+Later [D1032 cumulative physical Main adoption](cumulative-lock-main-adoption-d1032.md)
+reuses this exact complete package for one no-reset update, with first-packet raw
+XML/all141native attributes and captured public state preserved.
+
 ## Actual remaining interface failures
 
 [D1030](device-confirmation-current-pin-policy-d1030.md) refuses a device-only
