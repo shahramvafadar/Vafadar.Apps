@@ -1,5 +1,8 @@
 # New key namespace guards on the ps16k compatibility image — D-1018
 
+[D1019 subsequently qualifies the separate minimum-API24 boundary](new-key-namespaces-api24-d1019.md)
+without replaying the ps16k observations below or rebuilding their packages.
+
 The named [D1015 migration](migration-key-namespace-refusal.md) and
 [D1016 retained new-profile](new-profile-key-namespace-refusal.md) method conditions
 pass in a newly owned API35/x64 ps16k environment. This does not replay the earlier
