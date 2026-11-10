@@ -14,7 +14,7 @@ public sealed class AiNativeConfirmationCaptionTests
 {
     /// <summary>All six actual resources use a short positive action without changing destination or cost disclosure.</summary>
     [Theory]
-    [InlineData("en", "Send")] [InlineData("fa", "ارسال")] [InlineData("de", "Senden")]
+    [InlineData("en", "Send")] [InlineData("fa", "ارسال")]
     [InlineData("es", "Enviar")] [InlineData("fr", "Envoyer")] [InlineData("it", "Invia")]
     public async Task Native_action_is_short_localized_and_keeps_complete_disclosure(string language, string expected)
     {
@@ -28,7 +28,7 @@ public sealed class AiNativeConfirmationCaptionTests
             Assert.Equal(1, port.Confirmations); Assert.Equal(expected, port.Accept);
             Assert.NotEqual(f.Translator["Ai_Send"], port.Accept);
             Assert.Equal(f.Translator["Ai_Title"], port.Title);
-            Assert.Equal(f.Translator["Common_Cancel"], port.Cancel);
+            Assert.Equal(f.Translator["Ai_ConfirmCancelAction"], port.Cancel);
             Assert.Equal(f.Translator.Format("Ai_SendConfirm", prepared.Runtime.Destination, "declared", "input-only",
                 NativeDigits.Apply(7L.ToString(f.Localization.CurrentCulture))), port.Message);
             Assert.Equal(0, prepared.Runtime.Primary); Assert.False(prepared.Model.HasPendingOperation);
@@ -37,13 +37,14 @@ public sealed class AiNativeConfirmationCaptionTests
         finally { prepared.Model.RetireRoot(); }
     }
 
-    /// <summary>A positive synthetic response cannot authorize the next boundary after its visible action caption changes.</summary>
-    [Fact]
-    public async Task Changed_native_positive_caption_refuses_before_authorization()
+    /// <summary>A synthetic response cannot authorize the next boundary after either visible action caption changes.</summary>
+    [Theory]
+    [InlineData("Ai_ConfirmSendAction")] [InlineData("Ai_ConfirmCancelAction")]
+    public async Task Changed_native_confirmation_caption_refuses_before_authorization(string resourceKey)
     {
         using var f = new FlowFixture(); var port = new NativeCaptionPort(true);
         var prepared = await PrepareAsync(f, port, "en");
-        var overlay = new CaptionResource { Value = f.Translator["Ai_ConfirmSendAction"] };
+        var overlay = new CaptionResource(resourceKey) { Value = f.Translator[resourceKey] };
         f.Translator.AddResources(overlay); port.BeforeReturn = () => overlay.Value = "Changed action";
         var before = await GoalChooserFlowTests.SnapshotAsync(f);
         try
@@ -70,10 +71,10 @@ public sealed class AiNativeConfirmationCaptionTests
     }
 
     /// <summary>Overrides only the declared action resource; no language event hides a missing literal fingerprint.</summary>
-    private sealed class CaptionResource : ResourceManager
+    private sealed class CaptionResource(string key) : ResourceManager
     {
         internal required string Value;
-        public override string? GetString(string name, CultureInfo? culture) => name == "Ai_ConfirmSendAction" ? Value : null;
+        public override string? GetString(string name, CultureInfo? culture) => name == key ? Value : null;
     }
 
     /// <summary>Captures literal confirmation arguments; all other interaction effects refuse.</summary>

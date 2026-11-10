@@ -8682,4 +8682,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Ai_ConfirmCloseAction" xml:space="preserve">
     <value>Chiudi</value>
   </data>
+  <data name="Ai_ConfirmCancelAction" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
 </root>

@@ -8733,4 +8733,8 @@ Original XML SHA-256: {5}</value>
   <data name="Ai_ConfirmCloseAction" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Ai_ConfirmCancelAction" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Concise negative action for analysis native confirmations; the complete warning remains in the message and other dialogs keep their original cancel resource.</comment>
+  </data>
 </root>

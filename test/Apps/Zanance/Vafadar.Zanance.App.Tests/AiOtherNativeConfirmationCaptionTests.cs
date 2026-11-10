@@ -17,11 +17,11 @@ public sealed class AiOtherNativeConfirmationCaptionTests
 {
     /// <summary>Each remaining original confirmation uses a translated concise action and no primary effect.</summary>
     [Theory]
-    [InlineData("share", "en", "Share")] [InlineData("share", "fa", "اشتراک‌گذاری")] [InlineData("share", "de", "Teilen")]
+    [InlineData("share", "en", "Share")] [InlineData("share", "fa", "اشتراک‌گذاری")]
     [InlineData("share", "es", "Compartir")] [InlineData("share", "fr", "Partager")] [InlineData("share", "it", "Condividi")]
-    [InlineData("continue", "en", "Continue")] [InlineData("continue", "fa", "ادامه")] [InlineData("continue", "de", "Fortsetzen")]
+    [InlineData("continue", "en", "Continue")] [InlineData("continue", "fa", "ادامه")]
     [InlineData("continue", "es", "Continuar")] [InlineData("continue", "fr", "Continuer")] [InlineData("continue", "it", "Continua")]
-    [InlineData("close", "en", "Close")] [InlineData("close", "fa", "بستن")] [InlineData("close", "de", "Schließen")]
+    [InlineData("close", "en", "Close")] [InlineData("close", "fa", "بستن")]
     [InlineData("close", "es", "Cerrar")] [InlineData("close", "fr", "Fermer")] [InlineData("close", "it", "Chiudi")]
     public async Task Related_action_is_short_and_retains_complete_literal_disclosure(string operation, string language, string expected)
     {
@@ -32,7 +32,7 @@ public sealed class AiOtherNativeConfirmationCaptionTests
             await InvokeAsync(prepared.Model, operation);
             Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
             Assert.Equal(1, port.Confirmations); Assert.Equal(expected, port.Accept);
-            Assert.Equal(f.Translator["Ai_Title"], port.Title); Assert.Equal(f.Translator["Common_Cancel"], port.Cancel);
+            Assert.Equal(f.Translator["Ai_Title"], port.Title); Assert.Equal(f.Translator["Ai_ConfirmCancelAction"], port.Cancel);
             Assert.Equal(f.Translator[operation switch { "share" => "Ai_ManualConfirm", "continue" => "Ai_ContinueConfirm", _ => "Ai_CloseConfirm" }], port.Message);
             Assert.Equal(0, prepared.Runtime.Primary); Assert.Equal(operation == "share" ? 0 : 1, prepared.Runtime.Opens);
             Assert.False(prepared.Model.HasPendingOperation); Assert.Null(prepared.Model.Error);

@@ -8693,4 +8693,7 @@
   <data name="Ai_ConfirmCloseAction" xml:space="preserve">
     <value>بستن</value>
   </data>
+  <data name="Ai_ConfirmCancelAction" xml:space="preserve">
+    <value>انصراف</value>
+  </data>
 </root>
