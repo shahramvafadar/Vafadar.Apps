@@ -8681,4 +8681,16 @@
   <data name="Loan_DateLimit" xml:space="preserve">
     <value>برآورد پیش از بازپرداخت کامل، در پایان محدودهٔ تقویم پشتیبانی‌شده متوقف می‌شود.</value>
   </data>
+  <data name="Ai_ConfirmSendAction" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="Ai_ConfirmShareAction" xml:space="preserve">
+    <value>اشتراک‌گذاری</value>
+  </data>
+  <data name="Ai_ConfirmContinueAction" xml:space="preserve">
+    <value>ادامه</value>
+  </data>
+  <data name="Ai_ConfirmCloseAction" xml:space="preserve">
+    <value>بستن</value>
+  </data>
 </root>

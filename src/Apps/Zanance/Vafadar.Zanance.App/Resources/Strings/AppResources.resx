@@ -8720,4 +8720,17 @@ Original XML SHA-256: {5}</value>
   <data name="Loan_DateLimit" xml:space="preserve">
     <value>The estimate stops at the end of the supported calendar, before full repayment.</value>
   </data>
+  <data name="Ai_ConfirmSendAction" xml:space="preserve">
+    <value>Send</value>
+    <comment>Short action on the native confirmation; the page action and complete disclosure remain descriptive.</comment>
+  </data>
+  <data name="Ai_ConfirmShareAction" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="Ai_ConfirmContinueAction" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Ai_ConfirmCloseAction" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

@@ -8650,4 +8650,16 @@ SHA-256 del XML original: {5}</value>
   <data name="Loan_DateLimit" xml:space="preserve">
     <value>La estimación termina al final del calendario compatible, antes de que hayas devuelto todo el préstamo.</value>
   </data>
+  <data name="Ai_ConfirmSendAction" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="Ai_ConfirmShareAction" xml:space="preserve">
+    <value>Compartir</value>
+  </data>
+  <data name="Ai_ConfirmContinueAction" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="Ai_ConfirmCloseAction" xml:space="preserve">
+    <value>Cerrar</value>
+  </data>
 </root>

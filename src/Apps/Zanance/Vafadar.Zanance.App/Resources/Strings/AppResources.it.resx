@@ -8670,4 +8670,16 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Loan_DateLimit" xml:space="preserve">
     <value>La stima si interrompe alla fine del calendario supportato, prima del rimborso completo.</value>
   </data>
+  <data name="Ai_ConfirmSendAction" xml:space="preserve">
+    <value>Invia</value>
+  </data>
+  <data name="Ai_ConfirmShareAction" xml:space="preserve">
+    <value>Condividi</value>
+  </data>
+  <data name="Ai_ConfirmContinueAction" xml:space="preserve">
+    <value>Continua</value>
+  </data>
+  <data name="Ai_ConfirmCloseAction" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
 </root>

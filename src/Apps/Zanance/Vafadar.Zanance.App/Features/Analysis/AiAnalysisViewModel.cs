@@ -245,7 +245,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         try
         {
             StartOperation(version); ValidateDisclosure(disclosure); ValidateReview(version, original);
-            if (!await interaction.ConfirmAsync(text["Ai_Title"], text["Ai_ManualConfirm"], text["Ai_ManualShare"], text["Common_Cancel"])) return;
+            if (!await interaction.ConfirmAsync(text["Ai_Title"], text["Ai_ManualConfirm"], text["Ai_ConfirmShareAction"], text["Common_Cancel"])) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original);
             if (!await runtime.ConfirmDisclosureAsync()) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original); await store.CheckAsync(original);
@@ -354,7 +354,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         try
         {
             StartOperation(version); ValidateDisclosure(disclosure); ValidateReview(version, original);
-            if (!await interaction.ConfirmAsync(text["Ai_Title"], text.Format("Ai_SendConfirm", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits)), text["Ai_Send"], text["Common_Cancel"])) return;
+            // D-984: the native confirmation needs a short action at large text; its complete disclosure stays explicit.
+            if (!await interaction.ConfirmAsync(text["Ai_Title"], text.Format("Ai_SendConfirm", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits)), text["Ai_ConfirmSendAction"], text["Common_Cancel"])) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original); if (!await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); ValidateReview(version, original);
             enteredSubmission = true;
             var result = await connection.SubmitAsync(terms, original.Payload, async () => { ValidateDisclosure(disclosure); ValidateReview(version, original); await store.CheckAsync(original); ValidateDisclosure(disclosure); ValidateReview(version, original); }, CancellationToken.None);
@@ -395,7 +396,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         try
         {
             StartOperation(version); ValidateDisclosure(disclosure);
-            var key = close ? "Ai_Close" : "Ai_Continue";
+            // D-984: keep the full retained-request warning and use a concise native action.
+            var key = close ? "Ai_ConfirmCloseAction" : "Ai_ConfirmContinueAction";
             if (!await interaction.ConfirmAsync(text["Ai_Title"], text[close ? "Ai_CloseConfirm" : "Ai_ContinueConfirm"], text[key], text["Common_Cancel"])) return;
             ValidateDisclosure(disclosure); Validate(version); if (!close && !await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); Validate(version);
             var result = close ? await connection.CloseAsync(CancellationToken.None) : await connection.ContinueAsync(CancellationToken.None);
@@ -410,8 +412,9 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     [RelayCommand] private Task IdentityAsync() => OwnsPresentation && Loaded && !HasPendingOperation ? interaction.NavigateAsync(AppRoutes.BillingIdentityRoute) : Task.CompletedTask;
     // D-665: native acceptance belongs to the actual shown language/captions, not a translated continuation.
     private string NativeDisclosure() => string.Join("\n", new[] { local.CurrentCulture.Name, text["Ai_Title"],
-        text["Ai_ManualConfirm"], text["Ai_ManualShare"], text["Ai_ManualPrompt"], text["Ai_SendConfirm"],
-        text["Ai_Send"], text["Ai_CloseConfirm"], text["Ai_ContinueConfirm"], text["Ai_Close"], text["Ai_Continue"], text["Common_Cancel"] });
+        text["Ai_ManualConfirm"], text["Ai_ManualShare"], text["Ai_ConfirmShareAction"], text["Ai_ManualPrompt"], text["Ai_SendConfirm"],
+        text["Ai_Send"], text["Ai_ConfirmSendAction"], text["Ai_CloseConfirm"], text["Ai_ContinueConfirm"], text["Ai_Close"], text["Ai_Continue"],
+        text["Ai_ConfirmCloseAction"], text["Ai_ConfirmContinueAction"], text["Common_Cancel"] });
     private void ValidateDisclosure(string original)
     {
         if (!string.Equals(original, NativeDisclosure(), StringComparison.Ordinal))
