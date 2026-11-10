@@ -8,6 +8,10 @@ statements below describe this original D1002/D1003 cohort before that continuat
 against the unchanged current storage, with twelve refusal-entry observations and
 one legitimate backend control. It does not repeat the permission-loss workload.
 
+[D1008 adds the two affected refusals on physical ARM64](private-analysis-marker-permission-arm64.md)
+in a fresh independent Samsung package, with exact mode restoration and unchanged
+Main/public state. Its two related controls are distinct from full security acceptance.
+
 Two newly reproduced original storage failures are corrected. An existing marker
 behind an inaccessible directory must not look like a fresh scope, and an entry-time
 metadata denial must stop a write before changing its backing value. The correction
