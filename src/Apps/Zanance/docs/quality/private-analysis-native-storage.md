@@ -1,5 +1,10 @@
 # Actual Android private analysis storage - D-973
 
+[D1004 own-keystore-loss continuation](private-analysis-native-keystore-loss.md) adds
+one actual known-alias loss cohort and four original client refusals after retained
+journal persistence. This does not qualify full recovery, Main/database keys or all
+hardware/platform cases; the original nine conditions below are not replayed.
+
 [D1003 continuation](private-analysis-marker-permission-refusal.md) corrects two later
 entry-time inaccessible-marker failures with actual Android backend evidence. The
 nine original conditions below retain their own version/scope and are not rerun or
