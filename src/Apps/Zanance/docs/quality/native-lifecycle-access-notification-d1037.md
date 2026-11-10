@@ -1,5 +1,9 @@
 # Native lifecycle access notification ownership (D-1037)
 
+[D1038 terminal disposal](terminal-native-lifetime-disposal-d1038.md) subsequently
+closes four independently observed disposal/resource/late-notification conditions,
+with four new and seven directly affected host cases and four native cases.
+
 ## Original failures and correction
 
 Original App.OnSleep publishes PersonalSyncLifetime.Suspend before dispatching

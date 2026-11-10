@@ -15,6 +15,7 @@ public sealed class PersonalSyncLifetime : IDisposable
     private CancellationTokenSource current = new();
     private long epoch;
     private bool foreground;
+    private bool disposed;
     /// <summary>Raised after access changes so an opted-in foreground worker can recheck, never bypass a lock.</summary>
     public event EventHandler? Changed;
     /// <summary>Attaches only to original native access/catalogue notifications.</summary>
@@ -35,6 +36,8 @@ public sealed class PersonalSyncLifetime : IDisposable
         CancellationTokenSource previous;
         lock (state)
         {
+            // D-1038: late or reentrant native notifications cannot resurrect terminal access.
+            if (disposed) return;
             if (active is { } next) foreground = next;
             epoch++; previous = current; current = new();
         }
@@ -57,7 +60,7 @@ public sealed class PersonalSyncLifetime : IDisposable
         long captured; CancellationToken cancellation;
         lock (state)
         {
-            if (!available || !foreground || appLock.IsLocked)
+            if (disposed || !available || !foreground || appLock.IsLocked)
                 throw new OperationCanceledException("Personal sync is unavailable outside unlocked foreground access.");
             captured = epoch; cancellation = current.Token;
         }
@@ -75,7 +78,16 @@ public sealed class PersonalSyncLifetime : IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
+        CancellationTokenSource retired;
+        lock (state)
+        {
+            if (disposed) return;
+            disposed = true; foreground = false; epoch++; retired = current;
+        }
         appLock.AccessChanged -= OnAccessChanged; profiles.Changed -= OnAccessChanged;
-        lock (state) { foreground = false; epoch++; current.Cancel(); current.Dispose(); }
+        // Retire authority before invoking callbacks, outside the state lock. A callback failure
+        // remains observable but cannot prevent disposal of this exact source or reopen access.
+        try { retired.Cancel(); }
+        finally { retired.Dispose(); }
     }
 }
