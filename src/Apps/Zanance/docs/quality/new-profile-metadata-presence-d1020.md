@@ -91,3 +91,7 @@ The one D1018response reports [CI](https://github.com/shahramvafadar/Vafadar.App
 completed/cancelled and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42814487397)
 completed/success. Its observation is later than the requested15–18minute window;
 no timely claim, second GET, job-log read, rerun or cancellation cause is inferred.
+
+Later [D1021 ARM64 qualification and Main adoption](metadata-presence-arm64-main-d1021.md)
+complete five new physical conditions and one reused-package no-reset upgrade.
+The prepared/not-installed statement above remains the original D1020 cohort.
