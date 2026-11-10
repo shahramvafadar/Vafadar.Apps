@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-977 - Original analysis native caption contrast
+
+[Native contrast evidence](src/Apps/Zanance/docs/quality/analysis-native-caption-contrast.md) qualifies only Ai_Exact/Ai_Fallible in Light/Dark:
+four actual TextView/card pairs, full visible bounds, ratios7.525629/7.658595 and
+font13. Existing SecondaryText is correct; product code is unchanged. Initial
+implicit-alpha observer failure is retained and original first packet reused;
+only three unissued contexts continue, no successful input replay. One zero
+metadata account/synthetic pending result, full54typed source and original theme/
+OS exact; no genuine auth/chooser/provider/financial effect. Strictprivate192204804/
+seven compiler documents pass; freshUID/four original handles/official26file
+4533007945byte AVD retire, two Cleans4249file441448552byte;836preflight files and
+6SDKuserhome7732bytes remain. No supplementary/frozen/phone/old-suite action.
+All canonical parent States, retained cohorts and active delivery goal remain.
+
+
 ## D-976 - Cumulative current Main adopted from an actual ready Home
 
 [Current cumulative Main](src/Apps/Zanance/docs/quality/current-cumulative-main-adoption-d976.md) admits actual141node selected Home/no editable

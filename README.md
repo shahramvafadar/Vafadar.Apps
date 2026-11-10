@@ -108,6 +108,7 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Analysis native contrast D977](src/Apps/Zanance/docs/quality/analysis-native-caption-contrast.md) | Four new original caption/theme pairs pass; existing colors and product code remain unchanged |
 | [Current Android Main D976](src/Apps/Zanance/docs/quality/current-cumulative-main-adoption-d976.md) | Both recent corrections adopted without reset; before/after Home raw XML and141native attribute maps equal |
 | [Manual handoff owner D975](src/Apps/Zanance/docs/quality/analysis-manual-handoff-ownership.md) | Retired root/date/language callbacks cannot reach stale confirmation or recipient handoff;10new host/native conditions |
 | [Original consent metadata D974](src/Apps/Zanance/docs/quality/analysis-consent-metadata-validation.md) | Corrupt retained/new offer metadata refuses before credentials or private publication;47new host/native conditions |
