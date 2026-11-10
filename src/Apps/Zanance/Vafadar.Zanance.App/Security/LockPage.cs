@@ -16,6 +16,8 @@ internal sealed class LockPage : ContentPage
     private bool _promptOnAppearing;
     private bool _prompting;
     private readonly Entry _pin;
+    private readonly Button _unlock;
+    private readonly Button _forgot;
     private readonly TaskCompletionSource<bool>? _confirmation;
 #if ANDROID
     private LockKeyboardViewport? _keyboardViewport;
@@ -37,7 +39,7 @@ internal sealed class LockPage : ContentPage
             IsVisible = appLock.PinEnabled, AutomationId = "UnlockPin" };
         SemanticProperties.SetDescription(_pin, translator["Pin_Current"]);
         _pin.Completed += async (_, _) => await PromptAsync();
-        var unlock = new Button
+        var unlock = _unlock = new Button
         {
             Text = translator["Lock_Unlock"],
             CornerRadius = 24,
@@ -68,25 +70,23 @@ internal sealed class LockPage : ContentPage
                 unlock,
             },
         };
-        if (appLock.PinEnabled || appLock.PinUnavailable)
+        var forgot = _forgot = new Button { Text = translator["Pin_Forgot"], MinimumHeightRequest = 48,
+            IsVisible = appLock.PinEnabled || appLock.PinUnavailable };
+        forgot.SetDynamicResource(Button.TextColorProperty, "Primary");
+        forgot.SetDynamicResource(Button.BackgroundColorProperty, "CardBackground");
+        forgot.Clicked += async (_, _) =>
         {
-            var forgot = new Button { Text = translator["Pin_Forgot"], MinimumHeightRequest = 48 };
-            forgot.SetDynamicResource(Button.TextColorProperty, "Primary");
-            forgot.SetDynamicResource(Button.BackgroundColorProperty, "CardBackground");
-            forgot.Clicked += async (_, _) =>
+            if (_prompting) { return; }
+            _prompting = true;
+            try
             {
-                if (_prompting) { return; }
-                _prompting = true;
-                try
-                {
-                    if (await _lock.RecoverPinAsync()) { await CompleteAsync(true); }
-                    else { _message.Text = translator["Pin_NoRecovery"]; }
-                }
-                catch (Exception ex) when (ex is not OutOfMemoryException) { _message.Text = translator["Pin_Unavailable"]; }
-                finally { _prompting = false; }
-            };
-            body.Children.Add(forgot);
-        }
+                if (await _lock.RecoverPinAsync()) { await CompleteAsync(true); }
+                else { _message.Text = translator["Pin_NoRecovery"]; }
+            }
+            catch (Exception ex) when (ex is not OutOfMemoryException) { _message.Text = translator["Pin_Unavailable"]; }
+            finally { _prompting = false; }
+        };
+        body.Children.Add(forgot);
         if (confirmation is not null)
         {
             var cancel = new Button { Text = translator["Common_Cancel"], MinimumHeightRequest = 48 };
@@ -154,7 +154,13 @@ internal sealed class LockPage : ContentPage
                 return;
             }
 
-            if (await _lock.AuthenticateDeviceUnlockAsync())
+            var deviceUnlocked = await _lock.AuthenticateDeviceUnlockAsync();
+            // D-1031: the awaited device-only prompt may return after the app PIN policy changed.
+            // Keep this original cover usable under the new policy without another automatic prompt.
+            _pin.IsVisible = _lock.PinEnabled;
+            _unlock.IsEnabled = !_lock.PinUnavailable;
+            _forgot.IsVisible = _lock.PinEnabled || _lock.PinUnavailable;
+            if (deviceUnlocked)
             {
                 await CompleteAsync(true);
             }
@@ -162,8 +168,8 @@ internal sealed class LockPage : ContentPage
             {
                 // D-266: a removed/unavailable device credential is not proof of ownership.
                 // Keep the original cover and pending destinations until authentication succeeds.
-                _message.Text = _translator[_lock.LastDeviceUnlockOutcome == AuthenticationOutcome.NotAvailable
-                    ? "Lock_NotAvailableHint" : "Lock_NotUnlocked"];
+                _message.Text = _translator[_lock.PinUnavailable ? "Pin_Unavailable" : _lock.PinEnabled ? "Pin_EnterHint"
+                    : _lock.LastDeviceUnlockOutcome == AuthenticationOutcome.NotAvailable ? "Lock_NotAvailableHint" : "Lock_NotUnlocked"];
                 SemanticScreenReader.Announce(_message.Text);
             }
         }

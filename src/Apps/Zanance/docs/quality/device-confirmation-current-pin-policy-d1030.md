@@ -1,5 +1,9 @@
 # Awaited device confirmation rechecks app-PIN policy — D-1030
 
+Later [D1031 original-page continuation](lock-page-current-pin-presentation-d1031.md)
+corrects two actual stale-control/message conditions after this service refusal,
+with three new original MAUI/native UI conditions and full source preserved.
+
 ## Six actual original failures
 
 Device-only authentication is permitted when no app PIN is configured or known
