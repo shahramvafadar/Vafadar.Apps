@@ -9,6 +9,10 @@ aliases. No credential or Main data is read/exported. Product code, model, schem
 crypto policy and permanent unit-test count
 are unchanged.
 
+[D1025 physical ARM64 continuation](private-analysis-keystore-loss-arm64-d1025.md)
+subsequently qualifies the named fresh-package alias-loss refusal on Samsung. The
+software-emulator scope and limitations below remain the original D1004 evidence.
+
 ## Scope and original implementation
 
 One fresh offline/nondebuggable SDK package links the current SecureAiStorage and
