@@ -1,5 +1,9 @@
 # Terminal native lifetime disposal — D-1038
 
+Later [D1041 cumulative Main adoption](cumulative-lifecycle-main-adoption-d1041.md)
+reuses the exact qualified shipping bytes after owner unlock, without build/test
+replay; one no-reset upgrade preserves all141raw Home attributes and public state.
+
 [D1039 minimum-Android and ps16k qualification](terminal-lifetime-minimum-ps16k-d1039.md)
 adds four current native contracts on each of two fresh platforms with one signed
 package, exact source/restoration and no host/financial/authentication replay.
