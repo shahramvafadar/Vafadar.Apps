@@ -83,3 +83,7 @@ completed/cancelled and
 [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42821862556)
 in_progress with no conclusion. No second GET, job-log request, rerun or cause
 inference follows that saved response.
+
+[D1028 enrollment-continuity preparation](prepared-enrollment-continuity-d1028.md)
+is a separate unexecuted owner-decision boundary; this completed alias-loss cohort
+is not repeated and no new physical security change is authorized by it.
