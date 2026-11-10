@@ -35,11 +35,19 @@ internal static class AndroidAliasReferences
                         throw new IOException("Excluded alias reference changed before profile cleanup.");
                     continue;
                 }
-                var header = await files.ReadAsync("keys", name, 82, true, ct).ConfigureAwait(false);
+                // D-1011: one sentinel byte distinguishes an oversized slot from an exact supported envelope.
+                var header = await files.ReadAsync("keys", name, 83, true, ct).ConfigureAwait(false);
                 try
                 {
-                    if (header.Length == 82 && header.AsSpan(0, 4).SequenceEqual("ZKEY"u8)
-                        && new Guid(header.AsSpan(6, 16), bigEndian: true) == alias)
+                    // Legacy version 1 uses the installation alias and has no independent alias field.
+                    if (header.Length == 65 && header.AsSpan(0, 4).SequenceEqual("ZKEY"u8) && header[4] == 1) continue;
+                    if (header.Length != 82 || !header.AsSpan(0, 4).SequenceEqual("ZKEY"u8)
+                        || header[4] != 2 || header[5] > 1)
+                        throw new IOException("Retained key reference format is unavailable; alias absence is unproven.");
+                    var referenced = new Guid(header.AsSpan(6, 16), bigEndian: true);
+                    if (referenced == Guid.Empty)
+                        throw new IOException("Retained key reference has no independent wrapping identity.");
+                    if (referenced == alias)
                         throw new IOException("Native wrapping alias still has a retained installation reference.");
                 }
                 finally { CryptographicOperations.ZeroMemory(header); }

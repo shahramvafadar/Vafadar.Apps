@@ -4,6 +4,11 @@
 The prepared/not-installed and no-phone statements below describe the original
 D1009 cohort before that separate continuation.
 
+[D1011 subsequently validates retained key-slot formats](android-retained-alias-header-validation.md)
+after ten further original unknown/truncated-header failures. Its bounded83byte
+reader and explicit legacy compatibility belong to that later correction; the
+unchanged header-matching statement below describes D1009 itself.
+
 Three original reference-check failures are corrected before native alias retirement.
 `Directory.Exists` silently treated an inaccessible recovered installation, a file
 in place of its key directory and a dangling key-directory link as missing references.
