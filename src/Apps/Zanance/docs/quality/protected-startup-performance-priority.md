@@ -83,3 +83,7 @@ and [CodeQL42190360325](https://github.com/shahramvafadar/Vafadar.Apps/actions/r
 both completed/success. Actual observation delays remain retained, with no timely
 claim, second GET, successful job-log request or rerun. Workflow status is not
 individual-job/platform acceptance; outstanding iOS and other gates remain.
+
+[D1024 batched-command experiment](batched-integrity-command-rejection-d1024.md)
+retains all three full checks but fails its first10k native latency gate. It is
+terminal before100k/second process/product, with no retune or selective rescue.
