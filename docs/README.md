@@ -1,5 +1,7 @@
 # Documentation
 
+[Quote entry authority D979](../src/Apps/Zanance/docs/quality/analysis-quote-entry-authority.md) corrects two retained-term failures before the first busy callback, preserving source and primary policy.
+
 [Original quote authority D978](../src/Apps/Zanance/docs/quality/analysis-quote-presentation-authority.md) corrects two actual premature-Send failures; three new host/Android model conditions pass with full source preserved and no primary effect.
 
 [Original analysis contrast D977](../src/Apps/Zanance/docs/quality/analysis-native-caption-contrast.md) qualifies four new native caption/theme pairs without changing product colors or repeating accepted operations.

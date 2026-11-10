@@ -1,5 +1,21 @@
 # AGENTS.md – working rules for this repository
 
+## D-979 - Prior quote authority revoked before first callback
+
+[Entry authority evidence](src/Apps/Zanance/docs/quality/analysis-quote-entry-authority.md) proves2actual remaining failures: earlier terms stayed sendable after
+replacement IsBusy changing/changed failure. Revocation now precedes the first
+callback; original D978caption guard and payload/consent/financial policy remain.
+2new+3directly affected host cases share one final binary, same2new native model
+conditions pass with one zero metadata account/full54source exact and primary0.
+Initial zero-filter/encoding/newline refusals are retained, not acceptance. Strict
+Windows/fullOffline3844081608/SDK93104405/nine compiler bindings pass;
+shipping817f3d6fis prepared, not Main-installed. FreshUID/four original handles/
+official24file4366677231byte AVD retire;5Cleans5615file1201350332bytes.
+Residuals and evidence remain; no supplementary/frozen/phone/financial action.
+D977singleGET reports CIcancelled/CodeQLsuccess, no repeat. All parent States,
+protected resources and active full delivery goal remain unchanged.
+
+
 ## D-978 - Fresh quote authority follows completed original captions
 
 [Quote authority evidence](src/Apps/Zanance/docs/quality/analysis-quote-presentation-authority.md) records2actual original failures: affordable fresh terms left CanSendtrue

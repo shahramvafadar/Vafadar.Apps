@@ -41,6 +41,25 @@ internal static class AiQuoteAuthorityProbes
         finally { p.Model.PropertyChanging -= changing; p.Model.PropertyChanged -= changed; }
         return new(fired, p.Model.CanSend, p.Model.CanQuote, p.Model.HasPendingOperation, p.Model.CanLeave, p.Model.Error, p.Runtime.Offers, p.Runtime.Primary);
     }
+    /// <summary>A new quote attempt revokes earlier terms even if its first busy notification fails.</summary>
+    internal static async Task<AiQuoteObservation> RunEntryAsync(AiQuotePrepared p, int phase)
+    {
+        if (phase is < 0 or > 1) throw new ArgumentOutOfRangeException(nameof(phase));
+        await p.Model.QuoteAsync();
+        if (!p.Model.CanSend || p.Runtime.Offers != 1) throw new InvalidDataException();
+        bool fired = false;
+        void Refuse(string? name)
+        {
+            if (fired || name != nameof(p.Model.IsBusy)) return;
+            fired = true; throw new IOException("D979 original quote entry binding refused.");
+        }
+        PropertyChangingEventHandler changing = (_, e) => { if (phase == 0) Refuse(e.PropertyName); };
+        PropertyChangedEventHandler changed = (_, e) => { if (phase == 1) Refuse(e.PropertyName); };
+        p.Model.PropertyChanging += changing; p.Model.PropertyChanged += changed;
+        try { await p.Model.QuoteAsync(); }
+        finally { p.Model.PropertyChanging -= changing; p.Model.PropertyChanged -= changed; }
+        return new(fired, p.Model.CanSend, p.Model.CanQuote, p.Model.HasPendingOperation, p.Model.CanLeave, p.Model.Error, p.Runtime.Offers, p.Runtime.Primary);
+    }
 }
 /// <summary>Only the existing model and counted synthetic metadata port.</summary>
 internal sealed record AiQuotePrepared(AiAnalysisViewModel Model, QuoteRuntime Runtime);

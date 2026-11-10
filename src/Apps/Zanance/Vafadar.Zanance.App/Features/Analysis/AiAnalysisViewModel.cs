@@ -331,7 +331,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         var version = epoch; var original = review; var connection = remote; operationActive = true;
         try
         {
-            StartOperation(version); offer = null; ValidateReview(version, original);
+            // D-979: beginning a replacement quote revokes earlier terms before any busy/binding callback.
+            offer = null; StartOperation(version); ValidateReview(version, original);
             var terms = await connection.OfferAsync(original.Payload.Purpose, CancellationToken.None); ValidateReview(version, original);
             var caption = text.Format("Ai_Offer", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits), terms.ExpiresAt.ToString("u", local.CurrentCulture));
             ValidateReview(version, original);

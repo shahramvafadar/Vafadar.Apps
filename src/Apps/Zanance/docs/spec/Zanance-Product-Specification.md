@@ -1226,7 +1226,9 @@ https://help.monarch.com/hc/en-us/articles/32125337244052-Using-Flex-Budgeting
 
 ---
 
-## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-978)
+## 31. Implementation Status (v1.1, scoped updates through 2026-11-10, D-979)
+
+[D979 quote entry authority](../quality/analysis-quote-entry-authority.md) revokes earlier terms before fallible command-start callbacks. Two new host/Android conditions and three directly affected host cases pass with exact source and zero primary effect; broader gates remain open.
 
 [D978 original quote authority](../quality/analysis-quote-presentation-authority.md) corrects two genuine failed-caption conditions that previously left fresh Send enabled. Three new host/Android model cases preserve full source without primary/provider/financial effects; complete corrected shipping is prepared, not Main-installed. Broader gates remain open.
 

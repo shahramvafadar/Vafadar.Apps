@@ -108,6 +108,7 @@ completion percentage, effort estimate or whole-app acceptance.
 
 | Latest scoped evidence | Verified boundary |
 |---|---|
+| [Replacement quote entry D979](src/Apps/Zanance/docs/quality/analysis-quote-entry-authority.md) | Failed quote entry cannot revive earlier Send authority; two new host/native conditions pass |
 | [Quote presentation authority D978](src/Apps/Zanance/docs/quality/analysis-quote-presentation-authority.md) | Failed quote captions cannot enable fresh Send; three new host and native model conditions pass |
 | [Analysis native contrast D977](src/Apps/Zanance/docs/quality/analysis-native-caption-contrast.md) | Four new original caption/theme pairs pass; existing colors and product code remain unchanged |
 | [Current Android Main D976](src/Apps/Zanance/docs/quality/current-cumulative-main-adoption-d976.md) | Both recent corrections adopted without reset; before/after Home raw XML and141native attribute maps equal |
