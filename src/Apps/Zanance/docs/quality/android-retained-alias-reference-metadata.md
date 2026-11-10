@@ -1,5 +1,9 @@
 # Retained Android alias-reference metadata refusal — D-1009
 
+[D1010 later adopts this exact complete package on Main](current-alias-reference-main-d1010.md).
+The prepared/not-installed and no-phone statements below describe the original
+D1009 cohort before that separate continuation.
+
 Three original reference-check failures are corrected before native alias retirement.
 `Directory.Exists` silently treated an inaccessible recovered installation, a file
 in place of its key directory and a dangling key-directory link as missing references.
