@@ -10,8 +10,12 @@ The original Editors retain [D993 scrolling](analysis-readonly-native-scroll-d99
 HighQuality paragraph breaking is scoped to opted-in read-only Editors; the captured native
 policy restores on detach only while this subscription still owns that policy. Structured
 ResultSnapshot alone declares LTR reading order; localized captions and human-readable
-disclosure/result retain their direction. Payload/consent/quote/financial/model/schema rules
+result and the other existing fields retain their direction. Payload/consent/quote/financial/model/schema rules
 are unchanged.
+
+[D1001 subsequently aligns the current local-review JSON](analysis-local-review-json-reading-order-d1001.md),
+with exact original text/source and one new native field condition. The D998 statement
+above describes its historical scope; Disclosure is structured JSON, not prose.
 
 ## Original failure and bounded candidate
 

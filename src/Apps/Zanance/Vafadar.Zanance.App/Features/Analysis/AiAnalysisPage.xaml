@@ -44,7 +44,7 @@
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{Binding Summary}" />
                         <Label Text="{v:Translate Ai_Exact}" Style="{StaticResource Secondary}" />
-                        <Editor Text="{Binding Disclosure, Mode=OneWay}" IsReadOnly="True" p:ReadOnlyTextScroll.IsEnabled="True" HeightRequest="240" SemanticProperties.Description="{v:Translate Ai_Exact}" />
+                        <Editor Text="{Binding Disclosure, Mode=OneWay}" IsReadOnly="True" p:ReadOnlyTextScroll.IsEnabled="True" FlowDirection="LeftToRight" HeightRequest="240" SemanticProperties.Description="{v:Translate Ai_Exact}" />
                         <p:WrappingAction Text="{v:Translate Ai_ManualShare}" Command="{Binding ShareCommand}" IsEnabled="{Binding CanShare}" />
                         <Label Text="{Binding ShareStatus}" IsVisible="{Binding ShareStatus, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
