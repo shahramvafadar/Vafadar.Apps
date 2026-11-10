@@ -1,5 +1,9 @@
 # Original structured analysis snapshot bounds - D-995 through D-998
 
+[D999 physical continuation](current-snapshot-bounds-main-d999.md) later reuses this
+exact final package once on Main without rebuild/test/financial replay. The preparation
+and no-phone statements below describe this D995–D998 batch, not that later adoption.
+
 Three non-whitespace width failures retained by [D992](analysis-metadata-historical-layout-d992.md)
 are corrected without shortening text, changing font/padding or replaying the36context matrix.
 The original Editors retain [D993 scrolling](analysis-readonly-native-scroll-d993.md).
