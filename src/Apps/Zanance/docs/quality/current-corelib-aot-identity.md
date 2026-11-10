@@ -1,5 +1,9 @@
 # Current public CoreLib managed/AOT identity (D-786)
 
+[D1013 subsequently compares69other SDK System-framework pairs per ABI](public-system-aot-identity-d1013.md)
+in a later current APK. CoreLib is outside that new allowlist; the CoreLib results
+below remain specific to this original dated D786package and are not rerun.
+
 ## Concrete artifact-mismatch admission
 
 Continue independent Android fault investigation while only D752 awaits the owner's
