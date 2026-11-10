@@ -15,7 +15,14 @@ internal static class AndroidAliasReferences
             additionalRoot is null ? [] : new[] { additionalRoot }).Distinct(StringComparer.Ordinal).ToArray();
         foreach (var installation in installations)
         {
-            var keyRoot = Path.Combine(installation, "database-keys"); if (!Directory.Exists(keyRoot)) continue;
+            var keyRoot = Path.Combine(installation, "database-keys");
+            FileAttributes attributes;
+            // D-1009: Exists also hides denied metadata and broken links. Neither proves references absent before key retirement.
+            try { attributes = File.GetAttributes(keyRoot); }
+            catch (FileNotFoundException) { continue; }
+            catch (DirectoryNotFoundException) { continue; }
+            if ((attributes & FileAttributes.Directory) == 0 || (attributes & FileAttributes.ReparsePoint) != 0)
+                throw new IOException("Retained alias reference root is not an original directory.");
             var files = new AndroidProfileRetirementFiles(new Dictionary<string, string> { ["keys"] = keyRoot }, validate);
             foreach (var name in await files.ListNamesAsync("keys", ct).ConfigureAwait(false))
             {
