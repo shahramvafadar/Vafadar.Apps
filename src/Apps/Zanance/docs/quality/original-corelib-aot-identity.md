@@ -74,3 +74,7 @@ is registered locally once and does not block independent work. D898's historica
 CIin_progress/CodeQLsuccess response is consumed and must not be fetched again.
 Original fault origin, whole-Home performance/security/accessibility/platform/provider/
 release acceptance remain open. The overall delivery goal remains active.
+
+[D1027 original project-library identities](original-project-aot-identities-d1027.md)
+subsequently qualifies three additional original Core/Data pairs without repeating
+this CoreLib pair or D789App. All206pairs and original fault repair remain unproved.
