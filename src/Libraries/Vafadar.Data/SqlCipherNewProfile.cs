@@ -31,7 +31,7 @@ public static class SqlCipherNewProfile
         var candidate = originalPath + "." + binding.GenerationId.ToString("N") + ".cipher.db";
         var rollback = candidate + ".rollback.db";
         var history = new SqliteProfileRestoreHistory(originalPath + ".restore-history.sqlite", binding, Check);
-        if (!File.Exists(finalJournalPath))
+        if (!HasMetadataFile(finalJournalPath))
         {
             foreach (var suffix in new[] { "-journal", "-wal", "-shm" })
                 if (File.Exists(finalJournalPath + suffix) || Directory.Exists(finalJournalPath + suffix))
@@ -40,13 +40,13 @@ public static class SqlCipherNewProfile
                 if (File.Exists(originalPath + suffix) || Directory.Exists(originalPath + suffix))
                     throw new IOException("An existing original cannot be initialized as a new empty profile.");
             var journal = new SqliteDatabaseGenerationJournal(intentPath, captured);
-            if (!File.Exists(intentPath))
+            if (!HasMetadataFile(intentPath))
             {
                 if (!initializeNewProfile) throw new IOException("Captured new-profile intent is missing.");
                 RequireAbsentCandidateNamespace(candidate, rollback);
                 await journal.CreateNewAsync(durability, ct).ConfigureAwait(false);
             }
-            if (!File.Exists(originalPath + ".restore-history.sqlite"))
+            if (!HasMetadataFile(originalPath + ".restore-history.sqlite"))
                 await history.CreateInitialIntentAsync(captured, journal, durability, ct).ConfigureAwait(false);
             var ancestry = await history.ReadAsync(ct).ConfigureAwait(false);
             if (ancestry.Count != 1 || ancestry[0].Selected)
@@ -120,6 +120,19 @@ public static class SqlCipherNewProfile
         return await SqlCipherProfileGeneration.OpenCurrentAsync(location, identities, legacyProfile, originalPath, history,
             _ => throw new InvalidOperationException("New profile initializer cannot resolve later restored generations."),
             keys, durability, owner, validateAccess, maximumBytes, version, ct).ConfigureAwait(false);
+    }
+
+    /// <summary>Distinguishes missing metadata from unavailable or redirected entries before creation decisions.</summary>
+    private static bool HasMetadataFile(string path)
+    {
+        // D-1020: a directory is not a missing final journal and cannot authorize a fresh intent or key.
+        FileAttributes attributes;
+        try { attributes = File.GetAttributes(path); }
+        catch (FileNotFoundException) { return false; }
+        catch (DirectoryNotFoundException) { return false; }
+        if ((attributes & (FileAttributes.Directory | FileAttributes.ReparsePoint)) != 0)
+            throw new IOException("Profile metadata is not an original file.");
+        return true;
     }
 
     /// <summary>Requires genuinely absent candidate objects and sidecars before new intent or key authority.</summary>

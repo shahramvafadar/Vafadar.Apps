@@ -1,5 +1,9 @@
 # Retained new-profile intent refuses unknown key namespaces — D-1016
 
+[D1020 subsequently corrects the separate metadata-presence decision](new-profile-metadata-presence-d1020.md),
+after two additional original failures. Earlier platform results below do not
+silently qualify that later source correction.
+
 [D1017 later qualifies these conditions on ARM64 and adopts the cumulative package on Main](key-namespaces-arm64-main-d1017.md).
 Prepared/not-installed and no-phone statements below describe D1016itself.
 
