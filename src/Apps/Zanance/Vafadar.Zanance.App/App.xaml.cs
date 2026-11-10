@@ -467,18 +467,24 @@ public partial class App : Application
         base.OnSleep();
         _isInForeground = false;
         if (_databaseReady)
-            _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Suspend();
-        if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().SleepAsync());
+            NativeAccessLifecycle.Queue(
+                () => _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Suspend(),
+                action => Dispatcher.Dispatch(async () => await action()),
+                () => _services.GetRequiredService<AppLockService>().SleepAsync());
     }
 
     protected override void OnResume()
     {
         base.OnResume();
         _isInForeground = true;
+        var lifetimePublished = true;
         if (_databaseReady)
-            _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
-        if (_databaseReady) Dispatcher.Dispatch(async () => await _services.GetRequiredService<AppLockService>().ResumeAsync());
-        RunForegroundWork();
+            lifetimePublished = NativeAccessLifecycle.Queue(
+                () => _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume(),
+                action => Dispatcher.Dispatch(async () => await action()),
+                () => _services.GetRequiredService<AppLockService>().ResumeAsync());
+        // D-1037: a failed lifetime publication still updates the cover, without starting new foreground work.
+        if (lifetimePublished) RunForegroundWork();
     }
 
     // Due plan occurrences are recorded whenever the app comes to the foreground, then reminders are rebuilt;

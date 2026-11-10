@@ -1,5 +1,9 @@
 # Access observers cannot prevent the current native lock cover — D-1036
 
+[D1037 lifecycle continuation](native-lifecycle-access-notification-d1037.md) fixes
+observed Sleep/Resume notification failures before original access dispatch, with
+seven new host and three controlled original native-method contracts.
+
 ## Actual defect and bounded correction
 
 Original AppLockService.ShowAsync marks access locked, then invokes AccessChanged

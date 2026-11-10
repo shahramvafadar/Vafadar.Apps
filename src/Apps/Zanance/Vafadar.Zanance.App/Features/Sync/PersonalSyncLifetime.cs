@@ -39,7 +39,10 @@ public sealed class PersonalSyncLifetime : IDisposable
             epoch++; previous = current; current = new();
         }
         // Native callbacks never wait for HTTP or a database lease. Existing callers own their linked tokens.
-        previous.Cancel(); previous.Dispose(); Changed?.Invoke(this, EventArgs.Empty);
+        // D-1037: a failing registered callback still retires its native cancellation resources.
+        try { previous.Cancel(); }
+        finally { previous.Dispose(); }
+        Changed?.Invoke(this, EventArgs.Empty);
     }
     /// <summary>Captures current actual device catalogue and location without opening a financial connection.</summary>
     public PersonalSyncAccess Capture() => CaptureCore(PersonalSyncBuild.IsAvailable);

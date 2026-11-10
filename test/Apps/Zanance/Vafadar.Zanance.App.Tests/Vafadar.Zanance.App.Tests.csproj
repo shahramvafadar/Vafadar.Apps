@@ -236,4 +236,10 @@
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Reports/KpiSheetViewModel.cs" Link="Application/KpiSheetViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Reports/ReportExportSession.cs" Link="Application/ReportExportSession.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Security/NativeAccessLifecycle.cs" Link="Application/NativeAccessLifecycle.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncLifetime.cs" Link="Application/PersonalSyncLifetime.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Sync/PersonalSyncBuild.cs" Link="Application/PersonalSyncBuild.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Commerce/Billing/BillingBuild.cs" Link="Application/BillingBuild.cs" />
+  </ItemGroup>
 </Project>
