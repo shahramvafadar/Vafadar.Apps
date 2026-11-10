@@ -4,6 +4,10 @@
 without rebuild/test/financial replay. The prepared/not-installed and no-phone
 statements below describe this original D1002/D1003 cohort before that continuation.
 
+[D1006 qualifies six native path/type conditions](private-analysis-native-marker-paths.md)
+against the unchanged current storage, with twelve refusal-entry observations and
+one legitimate backend control. It does not repeat the permission-loss workload.
+
 Two newly reproduced original storage failures are corrected. An existing marker
 behind an inaccessible directory must not look like a fresh scope, and an entry-time
 metadata denial must stop a write before changing its backing value. The correction
