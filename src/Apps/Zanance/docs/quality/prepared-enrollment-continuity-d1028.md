@@ -1,6 +1,6 @@
 # Prepared owner-controlled enrollment continuity — D-1028
 
-Status: prepared only. No installation, native phase, system enrollment change,
+Historical preparation checkpoint: prepared only. No installation, native phase, system enrollment change,
 authentication, Main command or owner action has occurred in this step.
 [D1025](private-analysis-keystore-loss-arm64-d1025.md) and
 [D1026](private-keystore-loss-api24-ps16k-d1026.md) already close their named
@@ -81,3 +81,6 @@ The single D1027 response separately reports
 [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42828725582) and
 [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/42828725436)
 in_progress with no conclusion. No polling or second request follows.
+
+The later owner-approved [Samsung execution and exact handback](owner-enrollment-continuity-samsung-d1028.md)
+complete the three retained-material phases; the preparation checkpoint above remains historical.
