@@ -1,5 +1,8 @@
 # Retained new-profile intent refuses unknown key namespaces — D-1016
 
+[D1017 later qualifies these conditions on ARM64 and adopts the cumulative package on Main](key-namespaces-arm64-main-d1017.md).
+Prepared/not-installed and no-phone statements below describe D1016itself.
+
 Eight actual failures in the separate SqlCipherNewProfile Original-intent branch
 are corrected. The [D1015 migration-session correction](migration-key-namespace-refusal.md)
 remains byte-for-byte unchanged as working source; its successful cases are not

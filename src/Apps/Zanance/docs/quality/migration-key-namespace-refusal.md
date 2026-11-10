@@ -1,5 +1,8 @@
 # Candidate namespace refusal before migration key effects — D-1015
 
+[D1017 later qualifies this boundary on ARM64 and adopts the cumulative package on Main](key-namespaces-arm64-main-d1017.md).
+Prepared/not-installed statements below describe the original D1015cohort.
+
 [D1016 subsequently corrects the separate retained new-profile branch](new-profile-key-namespace-refusal.md).
 The next-source-question statement at the end below describes the D1015checkpoint
 before that independent continuation; neither cohort replays the other's success.
