@@ -98,3 +98,6 @@ The prepared/not-installed statement above remains the original D1020 cohort.
 
 Later [D1022 minimum Android and ps16k qualification](metadata-presence-minimum-and-ps16k-d1022.md)
 adds only five new metadata-presence conditions per platform using the original package.
+
+[D1023 original-absence admission](original-absence-dangling-entries-d1023.md)
+refutes the separate dangling-link hypothesis for fourteen new original Android conditions; product code stays unchanged.
