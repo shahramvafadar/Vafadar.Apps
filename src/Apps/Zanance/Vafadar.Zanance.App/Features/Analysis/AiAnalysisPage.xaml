@@ -62,7 +62,7 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ResultSnapshot, Converter={StaticResource IsNotNullConverter}}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Ai_ResultSnapshot}" />
-                        <Editor Text="{Binding ResultSnapshot, Mode=OneWay}" IsReadOnly="True" p:ReadOnlyTextScroll.IsEnabled="True" HeightRequest="200" SemanticProperties.Description="{v:Translate Ai_ResultSnapshot}" />
+                        <Editor Text="{Binding ResultSnapshot, Mode=OneWay}" IsReadOnly="True" p:ReadOnlyTextScroll.IsEnabled="True" FlowDirection="LeftToRight" HeightRequest="200" SemanticProperties.Description="{v:Translate Ai_ResultSnapshot}" />
                         <Label Text="{Binding ResultStatus}" />
                         <p:WrappingAction Text="{v:Translate Ai_Continue}" Command="{Binding ContinueCommand}" IsEnabled="{Binding CanContinue}" />
                         <p:WrappingAction Text="{v:Translate Ai_Close}" Command="{Binding CloseCommand}" IsEnabled="{Binding CanContinue}" />

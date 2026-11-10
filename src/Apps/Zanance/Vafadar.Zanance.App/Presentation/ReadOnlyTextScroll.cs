@@ -57,6 +57,14 @@ public static class ReadOnlyTextScroll
         if (ReferenceEquals(subscription.Native, current)) return;
         Detach(editor);
         subscription.Native = current;
+        subscription.OriginalBreakStrategy = current.BreakStrategy;
+        subscription.OwnsBreakStrategy = editor.IsReadOnly && current.BreakStrategy != Android.Text.BreakStrategy.HighQuality;
+        if (subscription.OwnsBreakStrategy)
+        {
+            // D-997: the retained Simple-layout snapshots exceed their content clip.
+            // Native paragraph breaking keeps their glyph bounds inside the same styled viewport.
+            current.BreakStrategy = Android.Text.BreakStrategy.HighQuality;
+        }
         Gestures.Add(current, new TouchState());
         current.Touch += OnNativeTouch;
     }
@@ -69,6 +77,9 @@ public static class ReadOnlyTextScroll
             native.Parent?.RequestDisallowInterceptTouchEvent(false);
         native.Touch -= OnNativeTouch;
         Gestures.Remove(native);
+        if (subscription.OwnsBreakStrategy && native.BreakStrategy == Android.Text.BreakStrategy.HighQuality)
+            native.BreakStrategy = subscription.OriginalBreakStrategy;
+        subscription.OwnsBreakStrategy = false;
         subscription.Native = null;
     }
 
@@ -111,6 +122,12 @@ public static class ReadOnlyTextScroll
     {
         /// <summary>Gets or sets the currently observed native view.</summary>
         internal Android.Widget.EditText? Native { get; set; }
+
+        /// <summary>Gets or sets the native policy captured before this opt-in changed it.</summary>
+        internal Android.Text.BreakStrategy OriginalBreakStrategy { get; set; }
+
+        /// <summary>Gets or sets whether this subscription still owns a policy change to restore.</summary>
+        internal bool OwnsBreakStrategy { get; set; }
     }
 
     /// <summary>Stores pointer state without retaining a view, page or model.</summary>

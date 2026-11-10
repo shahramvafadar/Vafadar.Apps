@@ -1,5 +1,11 @@
 # Original analysis metadata and historical-output layout - D-992
 
+[D995–D998 continuation](analysis-structured-snapshot-native-bounds-d998.md) closes only
+the three retained non-whitespace horizontal snapshot failures. Original full strings/font/
+content widths remain; native HighQuality breaking and structured-snapshot LTR yield92actual
+zero-origin lines and strict fitting glyph bounds. Earlier raw advances and failures remain
+historical evidence. This does not rerun or qualify the whole matrix or trailing-space cases.
+
 [D993 continuation](analysis-readonly-native-scroll-d993.md) isolates and repairs
 the two remaining inner-touch failures with the original Editor style preserved.
 It restores and retires the same retained fixture/AVD after four final native
