@@ -44,7 +44,7 @@
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{Binding Summary}" />
                         <Label Text="{v:Translate Ai_Exact}" Style="{StaticResource Secondary}" />
-                        <Editor Text="{Binding Disclosure, Mode=OneWay}" IsReadOnly="True" HeightRequest="240" SemanticProperties.Description="{v:Translate Ai_Exact}" />
+                        <Editor Text="{Binding Disclosure, Mode=OneWay}" IsReadOnly="True" p:ReadOnlyTextScroll.IsEnabled="True" HeightRequest="240" SemanticProperties.Description="{v:Translate Ai_Exact}" />
                         <p:WrappingAction Text="{v:Translate Ai_ManualShare}" Command="{Binding ShareCommand}" IsEnabled="{Binding CanShare}" />
                         <Label Text="{Binding ShareStatus}" IsVisible="{Binding ShareStatus, Converter={StaticResource IsNotNullConverter}}" />
                     </VerticalStackLayout>
@@ -62,12 +62,12 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding ResultSnapshot, Converter={StaticResource IsNotNullConverter}}">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{v:Translate Ai_ResultSnapshot}" />
-                        <Editor Text="{Binding ResultSnapshot, Mode=OneWay}" IsReadOnly="True" HeightRequest="200" SemanticProperties.Description="{v:Translate Ai_ResultSnapshot}" />
+                        <Editor Text="{Binding ResultSnapshot, Mode=OneWay}" IsReadOnly="True" p:ReadOnlyTextScroll.IsEnabled="True" HeightRequest="200" SemanticProperties.Description="{v:Translate Ai_ResultSnapshot}" />
                         <Label Text="{Binding ResultStatus}" />
                         <p:WrappingAction Text="{v:Translate Ai_Continue}" Command="{Binding ContinueCommand}" IsEnabled="{Binding CanContinue}" />
                         <p:WrappingAction Text="{v:Translate Ai_Close}" Command="{Binding CloseCommand}" IsEnabled="{Binding CanContinue}" />
                         <Label Text="{v:Translate Ai_Fallible}" Style="{StaticResource Secondary}" />
-                        <Editor Text="{Binding ResultText, Mode=OneWay}" IsReadOnly="True" HeightRequest="240" IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{v:Translate Ai_Fallible}" />
+                        <Editor Text="{Binding ResultText, Mode=OneWay}" IsReadOnly="True" p:ReadOnlyTextScroll.IsEnabled="True" HeightRequest="240" IsVisible="{Binding ResultText, Converter={StaticResource IsNotNullConverter}}" SemanticProperties.Description="{v:Translate Ai_Fallible}" />
                     </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>

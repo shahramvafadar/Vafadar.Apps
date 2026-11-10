@@ -1,5 +1,11 @@
 # Original analysis metadata and historical-output layout - D-992
 
+[D993 continuation](analysis-readonly-native-scroll-d993.md) isolates and repairs
+the two remaining inner-touch failures with the original Editor style preserved.
+It restores and retires the same retained fixture/AVD after four final native
+conditions, without repeating this36context matrix. Horizontal glyph fit below
+remains unqualified; the original failures and D992lineage are preserved.
+
 ## New finite batch and preserved original source
 
 The original AnalysisRoute had no named large-text presentation evidence for
