@@ -1,3 +1,4 @@
+﻿using System.Runtime.ExceptionServices;
 using Vafadar.Localization;
 using Vafadar.Maui.Security;
 using Vafadar.Zanance.Data;
@@ -373,7 +374,22 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
             _coverRequested = true;
             _coverRequest = new object();
         }
-        AccessChanged?.Invoke(this, EventArgs.Empty); validateStartup?.Invoke();
+        ExceptionDispatchInfo? notificationFailure = null;
+        try { AccessChanged?.Invoke(this, EventArgs.Empty); }
+        catch (Exception failure) when (failure is not OutOfMemoryException)
+        {
+            // D-1036: cancellation/binding observers cannot prevent the original native cover.
+            // Retain their failure for the caller after securing the still-owned presentation.
+            notificationFailure = ExceptionDispatchInfo.Capture(failure);
+        }
+        await ShowOwnedCoverAsync(prompt, wasLocked, validateStartup);
+        notificationFailure?.Throw();
+    }
+
+    /// <summary>Finishes the native cover only while the original startup presentation remains current.</summary>
+    private async Task ShowOwnedCoverAsync(bool prompt, bool wasLocked, Action? validateStartup)
+    {
+        validateStartup?.Invoke();
         if (_page is not null && !_page.IsOnScreen)
         {
             _page = null;

@@ -92,3 +92,6 @@ remains with the owner; no biometric enrollment is changed. Broader security/key
 recovery, original native-fault remedy, whole performance/accessibility/platform/
 provider/Store/release requirements and canonical parent States remain open. The
 full delivery goal stays active.
+
+The distinct [D1036 access-observer failure boundary](lock-cover-access-notification-failure-d1036.md)
+secures the current native cover before propagating notification faults; it preserves these request/grace guards.
