@@ -1,5 +1,9 @@
 # Original lock page follows changed PIN policy — D-1031
 
+Later [D1033 minimum Android and ps16k qualification](lock-page-minimum-ps16k-d1033.md)
+adds only three current original-page conditions per new platform, with one shared
+SDK build, complete fictitious source preservation and no API36/financial replay.
+
 Later [D1032 cumulative physical Main adoption](cumulative-lock-main-adoption-d1032.md)
 reuses this exact complete package for one no-reset update, with first-packet raw
 XML/all141native attributes and captured public state preserved.
