@@ -111,3 +111,8 @@ D607/D752/enrollment/financial checkpoints remain unchanged. Original native-fau
 cause/remedy, broader performance/security/accessibility, genuine providers/findings,
 iOS/Store/release and the complete delivery goal remain open. One post-push check
 is retained without polling or idle waiting.
+
+
+## Subsequent complete Main adoption
+
+[D1065](current-personal-catalog-main-d1065.md) adopts the identical complete signed package once from a verified unlocked ready Home, with raw XML/all141attributes and captured public state preserved; no catalog/test/financial replay or private Main equality claim.
