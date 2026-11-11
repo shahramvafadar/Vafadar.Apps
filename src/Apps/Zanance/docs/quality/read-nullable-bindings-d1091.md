@@ -1,5 +1,9 @@
 # Cleared read-only sync and goal inputs — D-1091
 
+[D1092 cumulative Main adoption](current-cleared-input-main-d1092.md) reuses the
+qualified default package once on Samsung, preserving raw Home/public state and
+all accepted-operation checkpoints without another app build or successful test.
+
 Following [portable-backup validation](backup-nullable-bindings-d1090.md), two
 original read paths still dereference native-cleared values. PersonalSync uses
 DeviceName.Length during activation and Address.Length/Fingerprint.Length during
