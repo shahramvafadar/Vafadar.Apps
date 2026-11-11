@@ -1,5 +1,9 @@
 # Signed Android Mono15 servicing inputs (D-1080)
 
+[D1081 private Android startup](mono15-private-android-startup-d1081.md) uses these
+signed inputs in an isolated strict complete candidate and one fresh original
+startup; product runtime pin and physical Main remain unchanged.
+
 ## Concrete prepared input and remaining boundary
 
 The existing project-local official SDK10.0.404 manifest10.0.115 names Android
