@@ -1,5 +1,9 @@
 # Personal sync owns failed terminal feedback — D-1040
 
+The [D1042 platform continuation](personal-sync-page-minimum-ps16k-d1042.md)
+qualifies terminal feedback/reentrant repair on the original API24 page; its ps16k
+attempt loses the original process and remains explicitly unqualified.
+
 ## Observed failures and complete correction
 
 The original personal-sync command sets its completion/ownership before publishing
