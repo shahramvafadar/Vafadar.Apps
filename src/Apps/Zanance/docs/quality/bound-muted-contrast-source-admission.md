@@ -1,5 +1,9 @@
 # Bound muted text and archived-category source admission (D-865)
 
+[D1054 native shared-form hints](account-form-native-hint-contrast-d1054.md) subsequently
+qualifies the four original enabled empty placeholders in two themes, with actual
+native hint colors/alpha and no product recolor; source/observer/platform limits remain explicit.
+
 ## Named remaining contrast question
 
 A failing numerical pair is not automatically a failing UI control. Before changing
