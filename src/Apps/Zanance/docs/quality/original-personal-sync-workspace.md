@@ -12,6 +12,10 @@ preference restoration, without replaying normal-font captions or accepted Pause
 adds36distinct pending contexts and one actual cancellation of the same held read;
 the clipped intermediate scroll observation and exact restoration remain explicit.
 
+[D1047 departure feedback ownership](personal-sync-departure-feedback-d1047.md)
+corrects the original Close latch and retiring input/preview failures, with8new
+host/Android conditions and full54table source preserved without primary replay.
+
 ## D-660 scope and current status
 
 This batch binds the original personal synchronization workspace to its original

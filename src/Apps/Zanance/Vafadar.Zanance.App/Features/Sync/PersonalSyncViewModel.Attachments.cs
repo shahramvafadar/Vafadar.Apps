@@ -93,8 +93,18 @@ public sealed partial class PersonalSyncViewModel
     private void ClearAttachmentPreview()
     {
         previewVersion++;
-        var old = AttachmentPreview; AttachmentPreview = null; previewReview = null; previewName = "";
-        old?.Dispose(); RefreshAttachmentProperties();
+        var old = AttachmentPreview; previewReview = null; previewName = "";
+        Exception? firstFailure = null;
+        void Clear(Action action)
+        {
+            try { action(); }
+            catch (Exception error) when (error is not OutOfMemoryException) { firstFailure ??= error; }
+        }
+        // D-1047: a native binding cannot retain the old frame or skip wiping it on Close.
+        Clear(ClearRetiringPreviewValue);
+        Clear(() => old?.Dispose());
+        Clear(RefreshAttachmentProperties);
+        if (firstFailure is not null) System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(firstFailure).Throw();
     }
 
     private void RefreshAttachmentProperties()

@@ -185,11 +185,26 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     public void Deactivate()
     {
         activationVersion++;
-        ClearAttachmentPreview();
-        visible?.Cancel(); visible?.Dispose(); visible = null; operation?.Cancel();
-        Password = ""; translator.PropertyChanged -= OnTranslationChanged;
+        // D-1047: revoke publication before any cancellation or native feedback can call back.
+        var retiringVisibility = visible; visible = null;
+        var retiringTransport = transport; transport = null; identity = null; device = null;
+        translator.PropertyChanged -= OnTranslationChanged;
         environment.StatusChanged -= OnStatusChanged;
-        transport?.Dispose(); transport = null; identity = null; device = null; RefreshProperties();
+        Exception? firstFailure = null;
+        void Retire(Action action)
+        {
+            try { action(); }
+            catch (Exception error) when (error is not OutOfMemoryException) { firstFailure ??= error; }
+        }
+        Retire(() => retiringVisibility?.Cancel());
+        Retire(() => retiringVisibility?.Dispose());
+        Retire(() => operation?.Cancel());
+        Retire(() => retiringTransport?.Dispose());
+        Retire(ClearRetiringPassword);
+        Retire(ClearAttachmentPreview);
+        Retire(RefreshProperties);
+        // Keep the first actual failure, after every independent retirement has been attempted.
+        if (firstFailure is not null) System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(firstFailure).Throw();
     }
     /// <summary>Cancels only this screen's pending work; already accepted server work remains durably recoverable.</summary>
     [RelayCommand] private void Cancel() => operation?.Cancel();
@@ -197,15 +212,24 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private async Task CloseOnboardingAsync()
     {
         if (!CanCloseOnboarding || !OwnsPresentation || closeOnboarding is not { } close) return;
-        closingOnboarding = true; Deactivate();
-        try { if (!rootRetired && ownsRoot()) await close(); }
+        closingOnboarding = true;
+        try { Deactivate(); if (!rootRetired && ownsRoot()) await close(); }
         catch (Exception error) when (error is not OutOfMemoryException)
         {
             // If the actual modal remains, restore a covered read opportunity rather than replaying Close.
             if (!rootRetired && ownsRoot())
-            { visible = new(); ready = false; failureKey = "Sync_ActionFailed"; }
+            {
+                visible = new(); ready = false; failureKey = "Sync_ActionFailed";
+                translator.PropertyChanged -= OnTranslationChanged; translator.PropertyChanged += OnTranslationChanged;
+                environment.StatusChanged -= OnStatusChanged; environment.StatusChanged += OnStatusChanged;
+            }
         }
-        finally { closingOnboarding = false; RefreshProperties(); }
+        finally
+        {
+            closingOnboarding = false;
+            try { RefreshProperties(); }
+            catch (Exception error) when (error is not OutOfMemoryException) { ReportFeedbackFailure(error); }
+        }
     }
     [RelayCommand]
     private Task FinishOnboardingAsync() => RunAsync(async (access, ct) =>
