@@ -130,3 +130,7 @@ occurs. Protected Brotli source, retained5606/Q02, all frozen scopes, canonical
 parent States and terminal D607/D752/enrollment/financial checkpoints remain intact.
 Original fault cause/remedy, whole-performance/security/accessibility, genuine
 providers, iOS/Store/release and the full delivery goal remain open.
+
+[Retained runtime15 adoption D1073](retained-runtime15-adoption-d1073.md) follows
+the exact original Compose authority and complete drained private snapshot; only
+API changes, with original mounts/proxy/other containers preserved.
