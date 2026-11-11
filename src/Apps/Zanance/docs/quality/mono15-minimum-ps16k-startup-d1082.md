@@ -1,5 +1,9 @@
 # Serviced startup on minimum Android and ps16k — D-1082
 
+[D1083 original codec contracts](mono15-original-codec-contracts-d1083.md) adds
+actual10.0.15 full32field/both-decode-path and buffer/guard evidence in a separate
+memory-only SDK package, without store/financial or platform-startup replay.
+
 The identical complete [D1081 candidate](mono15-private-android-startup-d1081.md)
 now reaches original onboarding on two additional actual platform boundaries.
 The99643295byte signed APK remains SHA256
