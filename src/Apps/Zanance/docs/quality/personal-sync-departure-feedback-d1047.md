@@ -1,5 +1,9 @@
 # Original personal-sync departure feedback ownership — D-1047
 
+[D1048 Main delivery](current-departure-main-d1048.md) subsequently installs the
+exact complete signed correction once without reset, preserving actual Home raw
+XML/all141native attribute maps and captured public state.
+
 ## Actual failures and correction
 
 Original Close sets closingOnboarding and calls Deactivate before entering its try.
