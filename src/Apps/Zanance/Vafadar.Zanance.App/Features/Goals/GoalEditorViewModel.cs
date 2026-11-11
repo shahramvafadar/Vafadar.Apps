@@ -338,7 +338,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     private GoalType CurrentType => IsQuantityGoal ? GoalType.HoldingQuantity : IsBalanceGoal ? GoalType.AccountBalance : GoalType.Earmark;
     /// <summary>Gets whether retained contribution values or an unavailable dirty value may be corrected/cleared.</summary>
     public bool CanEditContribution => CanInteract && (NewContribution || GoalContributionPolicy.HasWork(_existingPlan)
-        || ContributionText.Length > 0 || PercentText.Length > 0);
+        || !string.IsNullOrEmpty(ContributionText) || !string.IsNullOrEmpty(PercentText));
     /// <summary>Gets whether methods may be chosen/corrected without erasing an unavailable dirty selection.</summary>
     public bool CanChooseMethod => CanInteract && (NewContribution || GoalContributionPolicy.HasWork(_existingPlan)
         || MethodIndex != (int)(_existingPlan?.Method ?? ContributionMethod.FixedAmount));
@@ -619,7 +619,8 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     {
         if (!_loading)
         {
-            if (IsQuantityGoal || oldValue.Length == 0 || newValue.Length == 0 || _targetMoney?.MatchesCurrent(CurrencyCode) == true)
+            // Native clearing can publish null; it renews only this field's parser just like an empty string.
+            if (IsQuantityGoal || string.IsNullOrEmpty(oldValue) || string.IsNullOrEmpty(newValue) || _targetMoney?.MatchesCurrent(CurrencyCode) == true)
             { _targetCulture = _localization.CurrentCulture; _targetUnit = UnitKey(); _targetMoney = CaptureMoney(); }
             AmountError = null;
         }
@@ -629,7 +630,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     {
         if (!_loading)
         {
-            if (IsQuantityGoal || oldValue.Length == 0 || newValue.Length == 0 || _contributionMoney?.MatchesCurrent(CurrencyCode) == true)
+            if (IsQuantityGoal || string.IsNullOrEmpty(oldValue) || string.IsNullOrEmpty(newValue) || _contributionMoney?.MatchesCurrent(CurrencyCode) == true)
             { _contributionCulture = _localization.CurrentCulture; _contributionUnit = UnitKey(); _contributionMoney = CaptureMoney(); }
             ContributionError = null;
         }
@@ -726,17 +727,17 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     private static string MoneyStamp(MoneyInputContext? input) => DraftFingerprint.Create(input?.Currency.Code, input?.Unit,
         input?.Culture.NumberFormat.NumberDecimalSeparator, input?.Culture.NumberFormat.NumberGroupSeparator);
     private MoneyInputContext? CaptureMoney() => Currencies.TryGet(CurrencyCode, out _) ? MoneyInputContext.Capture(CurrencyCode, _localization.CurrentCulture) : null;
-    private bool MonetaryInputsCurrent => IsQuantityGoal || (AmountText.Length == 0 || _targetMoney?.MatchesCurrent(CurrencyCode) == true)
-        && (IsShareMethod || ContributionText.Length == 0 || _contributionMoney?.MatchesCurrent(CurrencyCode) == true);
+    private bool MonetaryInputsCurrent => IsQuantityGoal || (string.IsNullOrEmpty(AmountText) || _targetMoney?.MatchesCurrent(CurrencyCode) == true)
+        && (IsShareMethod || string.IsNullOrEmpty(ContributionText) || _contributionMoney?.MatchesCurrent(CurrencyCode) == true);
     /// <summary>Gets the target's original unit until complete monetary reentry.</summary>
-    public string? TargetUnitName => IsQuantityGoal ? null : AmountText.Length == 0 ? MoneyText.UnitName(CurrencyCode) : _targetMoney?.UnitName;
+    public string? TargetUnitName => IsQuantityGoal ? null : string.IsNullOrEmpty(AmountText) ? MoneyText.UnitName(CurrencyCode) : _targetMoney?.UnitName;
     /// <summary>Gets the contribution's independent original unit.</summary>
-    public string? ContributionUnitName => IsQuantityGoal || IsShareMethod ? null : ContributionText.Length == 0 ? MoneyText.UnitName(CurrencyCode) : _contributionMoney?.UnitName;
+    public string? ContributionUnitName => IsQuantityGoal || IsShareMethod ? null : string.IsNullOrEmpty(ContributionText) ? MoneyText.UnitName(CurrencyCode) : _contributionMoney?.UnitName;
     /// <summary>Explains the retained original target format after regional display changes.</summary>
-    public string? TargetFormatNote => !IsQuantityGoal && AmountText.Length > 0 && _targetMoney is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+    public string? TargetFormatNote => !IsQuantityGoal && !string.IsNullOrEmpty(AmountText) && _targetMoney is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
         ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
     /// <summary>Explains the contribution's independent retained input format.</summary>
-    public string? ContributionFormatNote => !IsQuantityGoal && !IsShareMethod && ContributionText.Length > 0 && _contributionMoney is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+    public string? ContributionFormatNote => !IsQuantityGoal && !IsShareMethod && !string.IsNullOrEmpty(ContributionText) && _contributionMoney is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
         ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
     /// <summary>Exposes an actionable review/reload reason even for disabled retained contribution controls.</summary>
     public string? MoneyReviewText => _targetNeedsReview || _contributionNeedsReview ? _translator["Goal_DraftUnitChanged"] : null;
@@ -764,8 +765,8 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     private void UpdateInputUnits()
     {
         if (_loading || !IsReady) return;
-        var unit = UnitKey(); _targetNeedsReview = AmountText.Length > 0 && (_targetUnit != unit || !IsQuantityGoal && _targetMoney?.MatchesCurrent(CurrencyCode) != true);
-        _contributionNeedsReview = !IsShareMethod && ContributionText.Length > 0 && (_contributionUnit != unit || !IsQuantityGoal && _contributionMoney?.MatchesCurrent(CurrencyCode) != true);
+        var unit = UnitKey(); _targetNeedsReview = !string.IsNullOrEmpty(AmountText) && (_targetUnit != unit || !IsQuantityGoal && _targetMoney?.MatchesCurrent(CurrencyCode) != true);
+        _contributionNeedsReview = !IsShareMethod && !string.IsNullOrEmpty(ContributionText) && (_contributionUnit != unit || !IsQuantityGoal && _contributionMoney?.MatchesCurrent(CurrencyCode) != true);
         if (!_targetNeedsReview && AmountError == _translator["Goal_DraftUnitChanged"]) AmountError = null;
         if (!_contributionNeedsReview && ContributionError == _translator["Goal_DraftUnitChanged"]) ContributionError = null;
         if (_targetNeedsReview) AmountError = _translator["Goal_DraftUnitChanged"];
@@ -801,7 +802,8 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
 
     private Goal BuildGoal(long target)
     {
-        var goal = (_existing ?? _newGoal).Clone(); goal.Name = Name.Trim(); goal.Type = CurrentType;
+        // Preview/validation clones may contain an incomplete name; the original required-name guard still blocks writes.
+        var goal = (_existing ?? _newGoal).Clone(); goal.Name = Name?.Trim() ?? string.Empty; goal.Type = CurrentType;
         goal.AccountId = IsBalanceGoal ? Account?.Id : null; goal.AssetTypeId = IsQuantityGoal ? HoldingType?.Id : null;
         goal.LocationId = IsQuantityGoal ? HoldingLocation?.Id : null; goal.TargetAmount = target; goal.CurrencyCode = CurrencyCode;
         goal.TargetDate = HasTargetDate ? TargetDate : null;
@@ -850,6 +852,8 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
     /// <summary>Preserves the original positive sign/grouping grammar while refusing decimal parser rounding.</summary>
     private bool TryPercent(out decimal percent)
     {
+        percent = 0;
+        if (string.IsNullOrWhiteSpace(PercentText)) return false;
         var text = Vafadar.Core.Text.Digits.ToAscii(PercentText.Trim().TrimEnd('%', '٪'));
         var format = _percentCulture.NumberFormat;
         var decimalSeparator = Vafadar.Core.Text.Digits.ToAscii(format.NumberDecimalSeparator);
@@ -937,9 +941,9 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             && ReferenceEquals(review, _review) && MonetaryInputsCurrent;
         SaveError = null; NameError = string.IsNullOrWhiteSpace(Name) ? _translator["Goal_NameRequired"] : null;
         AmountError = TryAmount(AmountText, _targetCulture, out var amount) ? null : _translator[IsQuantityGoal ? "AssetEvent_QuantityInvalid" : "Amount_Invalid"];
-        ContributionError = ContributionText.Trim().Length > 0 && !IsShareMethod && !TryAmount(ContributionText, _contributionCulture, out _, contribution: true)
+        ContributionError = !string.IsNullOrWhiteSpace(ContributionText) && !IsShareMethod && !TryAmount(ContributionText, _contributionCulture, out _, contribution: true)
             ? _translator[IsQuantityGoal ? "AssetEvent_QuantityInvalid" : "Amount_Invalid"] : null;
-        PercentError = IsShareMethod && PercentText.Trim().Length > 0 && !TryPercent(out _) ? _translator["Goal_PercentInvalid"] : null;
+        PercentError = IsShareMethod && !string.IsNullOrWhiteSpace(PercentText) && !TryPercent(out _) ? _translator["Goal_PercentInvalid"] : null;
         RuleError = Recurrence.Validate(BuildRule()) is null ? null : _translator["Plan_RuleInvalid"];
         if (IsBalanceGoal && Account is null) SaveError = _translator["Goal_ChooseAccount"];
         if (IsQuantityGoal && SelectedType is null) SaveError = _translator["Goal_ChooseHolding"];

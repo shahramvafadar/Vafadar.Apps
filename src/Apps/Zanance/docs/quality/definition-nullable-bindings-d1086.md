@@ -1,5 +1,9 @@
 # Empty definition bindings — D-1086
 
+[Original goal input continuation D1087](goal-nullable-bindings-d1087.md) covers
+four further null-binding failures across the complete target/contribution/name/
+percentage boundary, preserving the original financial and parser policies.
+
 Two actual null-input failures remained in the original definition editors:
 `DisplayUnitsViewModel.UpdatePreview` dereferenced a cleared name and
 `RulesViewModel.AddAsync` dereferenced cleared match text before required-text
