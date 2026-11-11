@@ -86,3 +86,8 @@ iOS, Store and release acceptance remain separate.
 ## Subsequent complete Main adoption
 
 [D1075](current-initialization-review-main-d1075.md) adopts this identical complete signed package once from an actual unlocked ready Home, preserving both raw Home XML/all141attributes and captured public state without private Main reads or test/financial replay.
+
+
+## Subsequent original device revocation
+
+[D1076](personal-sync-device-revocation-review-d1076.md) corrects six actual stale revocation sends through current catalog ownership and a post-session original transport check, with seven new host cases/four negative Android conditions and no financial or real-provider replay.

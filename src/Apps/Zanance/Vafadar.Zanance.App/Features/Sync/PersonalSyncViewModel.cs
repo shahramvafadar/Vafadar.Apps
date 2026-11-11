@@ -510,21 +510,35 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     });
 
     [RelayCommand]
-    private Task RevokeAsync(SyncDevice target) => RunAsync(async (access, ct) =>
+    private Task RevokeAsync(SyncDevice target)
     {
-        RequireSession(); if (target.Revoked || !Devices.Any(row => row == target)) return;
-        if (!await ConfirmAsync("Sync_RevokeConfirm", target.Name)) return;
-        access.Validate(); RequireSession();
-        if (!Devices.Contains(target)) throw new OperationCanceledException("The original device review changed.");
-        await transport!.RevokeDeviceAsync(target.Id, ct); AcceptKnownOperation(); access.Validate();
-        if (device!.Id == target.Id)
+        if (!CanInteract) return Task.CompletedTask;
+        var selectedDevice = device?.Id; var selectedPeer = transport?.Peer; var selectedIdentity = identity?.Id;
+        var awaitingRevocation = true;
+        void ValidateSelection()
         {
-            await transport.ForgetAsync(ct); await store.PauseAsync(await store.ReviewAsync(ct), ct, access.Validate);
-            identity = null; device = null; Profiles.Clear(); Devices.Clear(); DeviceItems.Clear(); environment.ConnectionChanged();
+            if (!awaitingRevocation) return;
+            RequireSession();
+            if (device!.Id != selectedDevice || transport!.Peer != selectedPeer || identity!.Id != selectedIdentity ||
+                target.Revoked || !Devices.Contains(target) || !DeviceItems.Any(item => item.Source == target && item.CanRevoke))
+                throw new OperationCanceledException("The original device review changed.");
         }
-        else await DiscoverCoreAsync(access, ct);
-        await RefreshLocalAsync(ct);
-    });
+        return RunAsync(async (access, ct) =>
+        {
+            if (!await ConfirmAsync("Sync_RevokeConfirm", target.Name)) return;
+            access.Validate();
+            await transport!.RevokeDeviceAsync(target.Id, ct);
+            // The acknowledged revocation owns its follow-up even when discovery replaces its device catalog.
+            awaitingRevocation = false; AcceptKnownOperation(); access.Validate();
+            if (selectedDevice == target.Id)
+            {
+                await transport.ForgetAsync(ct); await store.PauseAsync(await store.ReviewAsync(ct), ct, access.Validate);
+                identity = null; device = null; Profiles.Clear(); Devices.Clear(); DeviceItems.Clear(); environment.ConnectionChanged();
+            }
+            else await DiscoverCoreAsync(access, ct);
+            await RefreshLocalAsync(ct);
+        }, validateRequest: ValidateSelection);
+    }
 
     [RelayCommand] private Task KeepLocalAsync(PersonalSyncConflictReview conflict) => ChooseAsync(conflict, true);
     [RelayCommand] private Task KeepRemoteAsync(PersonalSyncConflictReview conflict) => ChooseAsync(conflict, false);

@@ -250,7 +250,10 @@ public sealed partial class PersonalSyncTransport : IProfileSynchronizationTrans
             await requests.WaitAsync(ct);
             try
             {
-                using var request = Request(method, path, content, await SessionAsync(ct));
+                var session = await SessionAsync(ct);
+                // D-1076: obtaining a retained session may outlive the original command or reviewed device.
+                ct.ThrowIfCancellationRequested(); verifyAccess?.Invoke();
+                using var request = Request(method, path, content, session);
                 using var response = await http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
                 Demand(response); ct.ThrowIfCancellationRequested(); verifyAccess?.Invoke();
             }

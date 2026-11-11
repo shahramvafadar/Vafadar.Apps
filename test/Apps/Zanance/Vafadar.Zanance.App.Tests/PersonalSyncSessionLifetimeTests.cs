@@ -69,7 +69,8 @@ public sealed partial class PersonalSyncSessionLifetimeTests
     {
         private PersonalSyncSession? session;
         internal int Reads, Writes;
-        public Task<PersonalSyncSession?> ReadAsync(string peer, CancellationToken ct) { Reads++; return Task.FromResult(session); }
+        internal Action? BeforeRead;
+        public Task<PersonalSyncSession?> ReadAsync(string peer, CancellationToken ct) { Reads++; BeforeRead?.Invoke(); return Task.FromResult(session); }
         public Task WriteAsync(string peer, PersonalSyncSession value, CancellationToken ct) { Writes++; session = value; return Task.CompletedTask; }
         public Task RemoveAsync(string peer, CancellationToken ct) { session = null; return Task.CompletedTask; }
     }
@@ -87,6 +88,8 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         internal SyncProfile[] CatalogProfiles = [];
         internal SyncDevice[] CatalogDevices = [];
         internal int ProfileCreations;
+        internal Guid? RevocableDevice;
+        internal int DeviceRevocations;
         internal SyncProfile? InitializationResponse;
         internal Action? BeforeInitializationResponse;
         internal int InitializationClaims;
@@ -161,6 +164,11 @@ public sealed partial class PersonalSyncSessionLifetimeTests
                     CatalogProfiles = [.. CatalogProfiles, created];
                     await context.Response.WriteAsJsonAsync(created, Ct); break;
                 case "/sync/profiles": await context.Response.WriteAsJsonAsync(CatalogProfiles, Ct); break;
+                case var revokePath when RevocableDevice is { } selected && context.Request.Method == "DELETE" &&
+                    revokePath == "/sync/devices/" + selected.ToString("D"):
+                    Interlocked.Increment(ref DeviceRevocations);
+                    CatalogDevices = CatalogDevices.Select(row => row.Id == selected ? row with { Revoked = true } : row).ToArray();
+                    context.Response.StatusCode = 204; break;
                 case var path when InitializationResponse is not null && context.Request.Method == "POST" &&
                     path == "/sync/profiles/" + CatalogProfiles[0].Id.ToString("D") + "/initialization":
                     Interlocked.Increment(ref InitializationClaims);
