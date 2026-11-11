@@ -1,5 +1,7 @@
 # Original personal synchronization workspace
 
+[Retired request input D1050](personal-sync-retired-request-input-d1050.md) rejects late noninteractive text while preserving original empty cleanup and active feedback; versioned host and native failures remain explicit.
+
 [D1040 terminal publication ownership](personal-sync-publication-ownership-d1040.md)
 adds seven focused final host cases, versioned native model/page/receipt/reentry
 evidence and a current-source correction without financial or provider replay.
