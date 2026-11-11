@@ -1,5 +1,9 @@
 # Original codec contracts on physical ARM64 Mono15 — D-1084
 
+[D1085 applied servicing](project-servicing-adoption-d1085.md) subsequently updates
+the actual SDK/runtime defaults, qualifies strict builds and39pure cases, and
+adopts one complete no-reset Main package with raw public Home/state preserved.
+
 The [D1083 fixed memory-only catalog](mono15-original-codec-contracts-d1083.md)
 now runs once on actual Samsung ARM64 with the serviced runtime. This is a fresh,
 independent SDK component package, not a Main update or DataStore integration.

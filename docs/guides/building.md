@@ -1,5 +1,10 @@
 # Building
 
+When using the prepared project-local SDK, replace `dotnet` in the commands below
+with `./eng/scripts/Invoke-ProjectDotNet.ps1`; the APK script already uses it.
+[Project SDK/workload selection](../../src/Apps/Zanance/docs/quality/project-servicing-adoption-d1085.md)
+explains portable SDK discovery, invocation-only state and the installed-SDK fallback.
+
 ## Common commands
 
 | Task | Command |

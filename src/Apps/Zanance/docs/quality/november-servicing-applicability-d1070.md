@@ -1,5 +1,10 @@
 # November servicing applicability - D-1070
 
+[D1085 project/app servicing](project-servicing-adoption-d1085.md) applies the
+qualified SDK404/runtime15 defaults and current no-reset Main delivery. This
+supersedes the dated preparation-only state for those exact inputs; unrelated
+global installations and broader security/provider acceptance remain separate.
+
 ## Dated conclusion and scope
 
 The 11 November 2026 review completes the finite applicability comparison for the

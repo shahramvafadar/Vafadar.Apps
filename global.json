@@ -1,6 +1,10 @@
 {
   "sdk": {
-    "version": "10.0.401",
+    "version": "10.0.404",
+    "paths": [
+      "artifacts/d1071-local-serviced-sdk/sdk",
+      "$host$"
+    ],
     "rollForward": "latestFeature",
     "allowPrerelease": false
   },

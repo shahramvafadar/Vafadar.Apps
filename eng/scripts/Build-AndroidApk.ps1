@@ -51,16 +51,17 @@ if ($Offline) {
 }
 Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..\..'))
 New-Item -ItemType Directory -Force $Output | Out-Null
+$projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
 
 # Restore for Android alone first: after a build for all platforms (e.g. Windows from Visual Studio) the assets file
 # lists other target frameworks, and publish would stop with NETSDK1005 instead of restoring again. Visual Studio with
 # the solution open restores in the background too and can overwrite it meanwhile (NETSDK1005, APT2126): then the
 # build is tried once more.
 for ($attempt = 1; $attempt -le 2; $attempt++) {
-    $log = dotnet restore $Project -p:Configuration=$Configuration -p:VafadarMauiTargetFrameworks=net10.0-android -p:ContinuousIntegrationBuild=true @cloudProperties -nologo 2>&1
+    $log = & $projectDotNet restore $Project -p:Configuration=$Configuration -p:VafadarMauiTargetFrameworks=net10.0-android -p:ContinuousIntegrationBuild=true @cloudProperties -nologo 2>&1
     if ($LASTEXITCODE -eq 0) {
         # EmbedAssembliesIntoApk makes a Debug APK complete as well; Release always embeds them.
-        $log = dotnet publish $Project -c $Configuration -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
+        $log = & $projectDotNet publish $Project -c $Configuration -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
             -p:AndroidPackageFormat=apk -p:EmbedAssembliesIntoApk=true -p:ContinuousIntegrationBuild=true @cloudProperties -o $Output -nologo --no-restore 2>&1
     }
 
