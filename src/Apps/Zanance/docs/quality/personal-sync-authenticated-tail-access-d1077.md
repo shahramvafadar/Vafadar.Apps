@@ -83,3 +83,8 @@ financial checkpoints remain unchanged. Genuine providers, full security, origin
 native-fault cause/remedy, performance, accessibility, iOS/Store/release gates and
 the full delivery goal remain open. A single post-push CI read is prepared without
 polling or idle waiting.
+
+
+## Subsequent cumulative Main adoption
+
+[D1078](current-authenticated-transport-main-d1078.md) adopts the identical complete signed package once from an actual unlocked ready Home, with raw XML/all141native attributes and captured public state preserved, without private Main reads or successful-command replay.
