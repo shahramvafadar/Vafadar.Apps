@@ -158,3 +158,7 @@ The sole D1041response reports
 completed/success. Its marker and original response are preserved; no polling,
 successful job-log read or rerun occurs. This change has its own single post-push
 check without waiting idle for CI.
+
+[D1060 sign-in entry](personal-sync-sign-in-entry-d1060.md) separately binds original
+request inputs before busy/access feedback and refuses five observed changed-input
+conditions before the new sign-in transport, preserving this command lifecycle.

@@ -259,26 +259,38 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         ? interaction.NavigateAsync(AppRoutes.HouseholdRoute) : Task.CompletedTask;
 
     [RelayCommand]
-    private Task SignInAsync() => RunAsync(async (access, ct) =>
+    private Task SignInAsync()
     {
-        RequirePersonalConnection();
-        var peer = new LocalSyncPeer(Address, Fingerprint);
-        var address = Address; var fingerprint = Fingerprint;
-        var email = Email; var name = DeviceName;
-        var password = Password; Password = "";
-        transport?.Dispose(); identity = null; device = null;
-        var client = environment.Open(peer, access.Validate); transport = client;
-        var signedIn = await client.SignInAsync(email, password, ct); access.Validate();
-        if (address != Address || fingerprint != Fingerprint || email != Email || name != DeviceName)
-            throw new OperationCanceledException("The original sign-in inputs changed.");
-        identity = signedIn;
-        var registered = await client.RegisterDeviceAsync(name, ct); access.Validate();
-        if (address != Address || fingerprint != Fingerprint || email != Email || name != DeviceName)
-            throw new OperationCanceledException("The original device-registration inputs changed.");
-        device = registered;
-        environment.RememberPeer(peer); await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
-        if (status?.Connected == true) environment.ConnectionChanged();
-    });
+        if (!CanInteract) return Task.CompletedTask;
+        // D-1060: busy/access feedback cannot replace the request that invoked this command.
+        var inputs = (Address, Fingerprint, Email, DeviceName);
+        var password = Password;
+        return RunAsync(async (access, ct) =>
+        {
+            void ValidateInputs()
+            {
+                access.Validate();
+                if (inputs != (Address, Fingerprint, Email, DeviceName))
+                    throw new OperationCanceledException("The original sign-in inputs changed.");
+            }
+            RequirePersonalConnection();
+            ValidateInputs();
+            if (password != Password) throw new OperationCanceledException("The original request input retired.");
+            var peer = new LocalSyncPeer(inputs.Address, inputs.Fingerprint);
+            Password = "";
+            ValidateInputs();
+            transport?.Dispose(); identity = null; device = null;
+            ValidateInputs();
+            var client = environment.Open(peer, access.Validate); transport = client;
+            ValidateInputs();
+            var signedIn = await client.SignInAsync(inputs.Email, password, ct); ValidateInputs();
+            identity = signedIn;
+            var registered = await client.RegisterDeviceAsync(inputs.DeviceName, ct); ValidateInputs();
+            device = registered;
+            environment.RememberPeer(peer); await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
+            if (status?.Connected == true) environment.ConnectionChanged();
+        });
+    }
 
     /// <summary>Resolves a retained secure session explicitly without submitting another password.</summary>
     [RelayCommand]
