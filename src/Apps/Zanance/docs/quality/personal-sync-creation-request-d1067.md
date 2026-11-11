@@ -99,3 +99,8 @@ checkpoints remain unchanged. Genuine service/providers, original native-fault
 cause/remedy, broader performance/security/accessibility, iOS/Store/release and the
 complete delivery goal stay open. One post-push CI read is retained without polling
 or idle waiting.
+
+
+## Subsequent complete Main adoption
+
+[D1068](current-personal-creation-main-d1068.md) adopts the identical complete signed package once on the unlocked phone, preserving raw Home/all141attributes and captured public state without private Main reads or creation/test/financial replay.
