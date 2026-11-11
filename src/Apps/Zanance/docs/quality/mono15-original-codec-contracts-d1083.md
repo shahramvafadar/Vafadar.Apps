@@ -1,5 +1,9 @@
 # Original codec contracts on Android Mono15 — D-1083
 
+[D1084 physical ARM64](mono15-original-codec-arm64-d1084.md) executes the same
+deterministic catalog once with actual ARM64/10.0.15 and matching x64 input digests,
+then retires only the private UID and returns to unchanged Main/public UI state.
+
 After [original startup and platform qualification](mono15-minimum-ps16k-startup-d1082.md),
 the actual Android10.0.15 runtime now exercises the unchanged original derived
 ledger codec and read-owned buffer with the actual Core ledger model. This is a
