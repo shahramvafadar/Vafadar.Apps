@@ -154,3 +154,8 @@ delivery goal remain open.
 [Project-local serviced SDK D1071](local-serviced-sdk-d1071.md) completes the
 checksum-bound SDK preparation and actual host probe; global installations,
 container servicing and actual product/platform compatibility remain separate.
+
+
+## Subsequent signed Android inputs
+
+[D1080](mono15-signed-servicing-inputs-d1080.md) prepares five official MIT10.0.15 Mono/runtime/AOT archives with author/repository signature and bounded static admission. Android product/workload/runtime adoption remains unperformed and requires actual execution qualification; first-use side effects and their precise cleanup are explicit.
