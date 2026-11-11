@@ -4,6 +4,10 @@ The [D1042 platform continuation](personal-sync-page-minimum-ps16k-d1042.md)
 qualifies terminal feedback/reentrant repair on the original API24 page; its ps16k
 attempt loses the original process and remains explicitly unqualified.
 
+[D1043 Main delivery](current-sync-publication-main-d1043.md) subsequently installs
+the exact complete corrected package once without reset, preserving actual Home
+raw XML/all141native attribute maps and captured public state.
+
 ## Observed failures and complete correction
 
 The original personal-sync command sets its completion/ownership before publishing
