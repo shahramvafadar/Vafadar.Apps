@@ -1,5 +1,9 @@
 # Original personal-sync retired request input - D-1050
 
+[D1056 nullable original binding](personal-sync-null-text-binding-d1056.md) subsequently
+fixes an actual active clear that retained prior request text, adapting null only at
+the original Entry boundary while preserving these model guards byte-exact.
+
 [D1053 physical ARM64 evidence](retired-sync-input-physical-arm64-d1053.md) completes
 the two new original-control conditions in a fresh zero-account package, preserving
 Main/raw Home/public state without another Main upgrade or authentication replay.

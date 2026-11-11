@@ -11,6 +11,7 @@
     Title="{Binding PageTitle}">
     <ContentPage.Resources>
         <local:PersonalSyncPreviewImageConverter x:Key="PreviewImage" />
+        <local:PersonalSyncRequestTextConverter x:Key="RequestText" />
     </ContentPage.Resources>
     <Grid RowDefinitions="*,Auto">
         <ScrollView>
@@ -71,7 +72,7 @@
                             <Label Text="{v:Translate Sync_Email}" />
                             <Entry Text="{Binding Email}" Keyboard="Email" SemanticProperties.Description="{v:Translate Sync_Email}" />
                             <Label Text="{v:Translate Sync_Password}" />
-                            <Entry Text="{Binding Password}" IsPassword="True" IsTextPredictionEnabled="False"
+                            <Entry Text="{Binding Password, Converter={StaticResource RequestText}}" IsPassword="True" IsTextPredictionEnabled="False"
                                    SemanticProperties.Description="{v:Translate Sync_Password}" />
                             <Label Text="{v:Translate Sync_DeviceName}" />
                             <Entry Text="{Binding DeviceName}" MaxLength="100" SemanticProperties.Description="{v:Translate Sync_DeviceName}" />
