@@ -101,3 +101,7 @@ all canonical parent State values remain unchanged.
 complete signed package in one no-reset upgrade after owner unlock; actual selected
 Home/raw XML/all141attributes and captured public state match exactly. Earlier
 prepared-only and dated Main observations above remain historical.
+
+[Minimum API and ps16k D1058](nullable-sync-input-minimum-ps16k-d1058.md) reuses the
+identical corrected private package for the two new nullable-binding platform
+conditions, full-source preservation and exact restoration without build replay.
