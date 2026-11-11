@@ -436,24 +436,38 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         selectedAccess.Validate(); await ConnectCoreAsync(connection, profile, selectedAccess, ct);
     });
     [RelayCommand]
-    private Task RecoverInitializationAsync(SyncProfile profile) => RunAsync(async (access, ct) =>
+    private Task RecoverInitializationAsync(SyncProfile profile)
     {
-        RequireSession();
-        if (!Profiles.Contains(profile) || !profile.Initializing || profile.Cursor != 0 || profile.BootstrapDeviceId == Guid.Empty)
-            throw new InvalidOperationException("A current unpublished initialization must be explicitly reviewed.");
-        var connection = await store.ReviewAsync(ct); var selectedDevice = device!.Id; var selectedPeer = transport!.Peer;
-        access.Validate();
-        if (!await ConfirmAsync("Sync_InitializationConfirm", profile.Name)) return;
-        access.Validate(); RequireSession();
-        if (device!.Id != selectedDevice || transport!.Peer != selectedPeer || !Profiles.Contains(profile))
-            throw new InvalidOperationException("The reviewed initialization authority changed.");
-        var claimed = await transport.ClaimInitializationAsync(profile.Id, new(selectedDevice, profile.BootstrapDeviceId), ct);
-        access.Validate();
-        await store.ConnectAsync(connection, selectedPeer, identity!.Id, selectedDevice, claimed, ct,
-            restartInitialization: true, validateOriginal: access.Validate);
-        AcceptKnownOperation();
-        access.Validate(); environment.ConnectionChanged(); await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
-    });
+        if (!CanInteract) return Task.CompletedTask;
+        var selectedDevice = device?.Id;
+        var selectedPeer = transport?.Peer;
+        var selectedIdentity = identity?.Id;
+        var awaitingConnection = true;
+        void ValidateSelection()
+        {
+            if (!awaitingConnection) return;
+            RequireSession();
+            if (device!.Id != selectedDevice || transport!.Peer != selectedPeer || identity!.Id != selectedIdentity ||
+                !Profiles.Contains(profile) || !profile.Initializing || profile.Cursor != 0 || profile.BootstrapDeviceId == Guid.Empty)
+                throw new InvalidOperationException("The reviewed initialization authority changed.");
+        }
+        return RunAsync(async (access, ct) =>
+        {
+            var connection = await store.ReviewAsync(ct); access.Validate();
+            if (!await ConfirmAsync("Sync_InitializationConfirm", profile.Name)) return;
+            access.Validate();
+            var claimed = await transport!.ClaimInitializationAsync(profile.Id, new(selectedDevice!.Value, profile.BootstrapDeviceId), ct);
+            access.Validate();
+            // D-1074: claim acknowledgement transfers only bootstrap ownership, never the reviewed space or its contents.
+            if (claimed != profile with { BootstrapDeviceId = selectedDevice.Value })
+                throw new InvalidDataException("The initialization response differs from its original review.");
+            await store.ConnectAsync(connection, selectedPeer!, selectedIdentity!, selectedDevice.Value, claimed, ct,
+                restartInitialization: true, validateOriginal: access.Validate);
+            // The original transaction accepted this connection; catalog refresh must not invalidate its known receipt.
+            awaitingConnection = false; AcceptKnownOperation();
+            access.Validate(); environment.ConnectionChanged(); await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
+        }, validateRequest: ValidateSelection);
+    }
     private async Task ConnectCoreAsync(PersonalSyncReview connection, SyncProfile profile, PersonalSyncAccess access, CancellationToken ct)
     {
         access.Validate();

@@ -109,3 +109,8 @@ or idle waiting.
 ## Subsequent ready catalog presentation
 
 [D1069](personal-sync-ready-catalog-large-text-d1069.md) qualifies36new ready-card OSfont2contexts,216native captions/108targets and one actual Connect-dialog Back, with full source and explicit controlled-root/provider/lineage limits; accepted creations and earlier error/pending matrices are not replayed.
+
+
+## Subsequent initialization recovery authority
+
+[D1074](personal-sync-initialization-review-d1074.md) binds recovery to its reviewed catalog through the original writer and validates the exact claim acknowledgement; twelve new host cases across two lineages and eight distinct negative Android conditions preserve source without financial replay.

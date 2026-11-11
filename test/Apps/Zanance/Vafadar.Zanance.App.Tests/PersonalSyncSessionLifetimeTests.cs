@@ -87,6 +87,10 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         internal SyncProfile[] CatalogProfiles = [];
         internal SyncDevice[] CatalogDevices = [];
         internal int ProfileCreations;
+        internal SyncProfile? InitializationResponse;
+        internal Action? BeforeInitializationResponse;
+        internal int InitializationClaims;
+        internal Guid CurrentDeviceId => deviceId;
         private readonly Guid deviceId = Guid.NewGuid();
         private readonly string access = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
         private readonly string refresh = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
@@ -157,6 +161,11 @@ public sealed partial class PersonalSyncSessionLifetimeTests
                     CatalogProfiles = [.. CatalogProfiles, created];
                     await context.Response.WriteAsJsonAsync(created, Ct); break;
                 case "/sync/profiles": await context.Response.WriteAsJsonAsync(CatalogProfiles, Ct); break;
+                case var path when InitializationResponse is not null && context.Request.Method == "POST" &&
+                    path == "/sync/profiles/" + CatalogProfiles[0].Id.ToString("D") + "/initialization":
+                    Interlocked.Increment(ref InitializationClaims);
+                    BeforeInitializationResponse?.Invoke();
+                    await context.Response.WriteAsJsonAsync(InitializationResponse, Ct); break;
                 default: context.Response.StatusCode = 404; break;
             }
         }
