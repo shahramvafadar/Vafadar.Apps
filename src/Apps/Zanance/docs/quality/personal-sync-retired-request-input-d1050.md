@@ -1,5 +1,9 @@
 # Original personal-sync retired request input - D-1050
 
+[D1052 minimum/ps16k evidence](retired-sync-input-minimum-ps16k-d1052.md) reuses the
+same final private signed package for only two new original-control conditions per
+missing platform, with no build/host/old-success replay.
+
 [D1051 Main delivery](current-sync-input-main-d1051.md) subsequently adopts the exact
 complete signed correction once without reset, with raw Home XML/all141attributes
 and captured public state exact; no new build/test or accepted-operation replay.
