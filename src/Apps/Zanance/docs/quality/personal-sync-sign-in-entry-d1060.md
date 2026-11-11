@@ -83,3 +83,7 @@ polling or idle waiting.
 adopts this exact complete signed package once without reset; actual selected Home/
 raw XML/all141native attribute maps and captured public state match exactly. The
 earlier prepared-only and dated Main observations remain historical.
+
+[Discovery entry D1062](personal-sync-discovery-entry-d1062.md) separately corrects
+four observed original discovery callback boundaries before new transport/session
+lookup and verifies the existing synthetic-session path without sign-in replay.

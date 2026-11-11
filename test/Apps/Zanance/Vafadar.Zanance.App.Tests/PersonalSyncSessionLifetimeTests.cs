@@ -17,7 +17,7 @@ using Vafadar.Zanance.Data.Sync;
 namespace Vafadar.Zanance.App.Tests;
 
 /// <summary>Original application session publication over its real pinned HTTPS client and an isolated protocol responder.</summary>
-public sealed class PersonalSyncSessionLifetimeTests
+public sealed partial class PersonalSyncSessionLifetimeTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 

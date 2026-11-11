@@ -294,28 +294,41 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
 
     /// <summary>Resolves a retained secure session explicitly without submitting another password.</summary>
     [RelayCommand]
-    private Task DiscoverAsync() => RunAsync(async (access, ct) =>
+    private Task DiscoverAsync()
     {
-        RequirePersonalConnection();
-        var peer = new LocalSyncPeer(Address, Fingerprint);
+        if (!CanInteract) return Task.CompletedTask;
+        // D-1062: callbacks cannot replace the peer or device label before stored-session discovery.
         var inputs = (Address, Fingerprint, DeviceName);
-        transport?.Dispose(); identity = null; device = null;
-        var client = environment.Open(peer, access.Validate); transport = client;
-        var signedIn = await client.IdentityAsync(ct); access.Validate();
-        if (inputs != (Address, Fingerprint, DeviceName)) throw new OperationCanceledException("The original discovery inputs changed.");
-        identity = signedIn;
-        SyncDevice found;
-        try { found = await client.CurrentDeviceAsync(ct); access.Validate(); }
-        catch (PersonalSyncHttpException error) when (error.Status == System.Net.HttpStatusCode.NotFound)
+        return RunAsync(async (access, ct) =>
         {
-            if (!await ConfirmAsync("Sync_RegisterDeviceConfirm", DeviceName)) return;
-            access.Validate(); found = await client.RegisterDeviceAsync(DeviceName, ct); access.Validate();
-        }
-        access.Validate();
-        if (inputs != (Address, Fingerprint, DeviceName)) throw new OperationCanceledException("The original device discovery inputs changed.");
-        device = found; DeviceName = found.Name;
-        await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
-    });
+            void ValidateInputs()
+            {
+                access.Validate();
+                if (inputs != (Address, Fingerprint, DeviceName))
+                    throw new OperationCanceledException("The original discovery inputs changed.");
+            }
+            RequirePersonalConnection();
+            ValidateInputs();
+            var peer = new LocalSyncPeer(inputs.Address, inputs.Fingerprint);
+            transport?.Dispose(); identity = null; device = null;
+            ValidateInputs();
+            var client = environment.Open(peer, access.Validate); transport = client;
+            ValidateInputs();
+            var signedIn = await client.IdentityAsync(ct); ValidateInputs();
+            identity = signedIn;
+            SyncDevice found;
+            try { found = await client.CurrentDeviceAsync(ct); ValidateInputs(); }
+            catch (PersonalSyncHttpException error) when (error.Status == System.Net.HttpStatusCode.NotFound)
+            {
+                ValidateInputs();
+                if (!await ConfirmAsync("Sync_RegisterDeviceConfirm", inputs.DeviceName)) return;
+                ValidateInputs(); found = await client.RegisterDeviceAsync(inputs.DeviceName, ct); ValidateInputs();
+            }
+            ValidateInputs();
+            device = found; DeviceName = found.Name;
+            await DiscoverCoreAsync(access, ct); await RefreshLocalAsync(ct);
+        });
+    }
 
     private async Task DiscoverCoreAsync(PersonalSyncAccess access, CancellationToken ct)
     {
