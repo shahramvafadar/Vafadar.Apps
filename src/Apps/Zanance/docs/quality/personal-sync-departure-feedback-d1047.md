@@ -4,6 +4,10 @@
 exact complete signed correction once without reset, preserving actual Home raw
 XML/all141native attribute maps and captured public state.
 
+[D1049 minimum/ps16k qualification](sync-departure-minimum-ps16k-d1049.md) reuses the
+same private signed package for the eight new departure conditions on each missing
+platform, without another build, host suite or accepted-operation replay.
+
 ## Actual failures and correction
 
 Original Close sets closingOnboarding and calls Deactivate before entering its try.
