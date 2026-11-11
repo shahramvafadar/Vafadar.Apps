@@ -386,21 +386,39 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private Task CreateProfileAsync() => RunAsync(async (access, ct) =>
+    private Task CreateProfileAsync()
     {
-        RequireSession(); var name = NewProfileName.Trim();
-        if (IsOnboardingRestore) throw new InvalidOperationException("First-run reception selects an existing personal space.");
-        if (name.Length is < 1 or > 100) throw new ArgumentException("An explicit bounded personal space name is required.");
-        var connection = await store.ReviewAsync(ct); access.Validate();
-        if (!await ConfirmAsync("Sync_CreateConfirm", name)) return;
-        access.Validate();
-        var digest = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(
-            connection.GenerationPath + "\n" + transport!.Peer.BindingKey(identity!.Id) + "\n" + device!.Id.ToString("N") + "\n" + name)));
-        var creation = environment.CreationOperation(digest);
-        var remote = await transport.CreateProfileAsync(new(device.Id, creation, name, SyncSchema.Hash), ct); access.Validate();
-        await ConnectCoreAsync(connection, remote, access, ct); environment.CompleteCreation(digest, creation);
-        NewProfileName = ""; await DiscoverCoreAsync(access, ct);
-    });
+        if (!CanInteract) return Task.CompletedTask;
+        var inputs = (Address, Fingerprint, NewProfileName);
+        var awaitingRemote = true;
+        void ValidateRequest()
+        {
+            if (!awaitingRemote) return;
+            RequireSession();
+            if (inputs != (Address, Fingerprint, NewProfileName))
+                throw new OperationCanceledException("The original personal creation inputs changed.");
+        }
+        return RunAsync(async (access, ct) =>
+        {
+            var name = inputs.NewProfileName.Trim();
+            if (IsOnboardingRestore) throw new InvalidOperationException("First-run reception selects an existing personal space.");
+            if (name.Length is < 1 or > 100) throw new ArgumentException("An explicit bounded personal space name is required.");
+            var connection = await store.ReviewAsync(ct); access.Validate();
+            if (!await ConfirmAsync("Sync_CreateConfirm", name)) return;
+            access.Validate();
+            var digest = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(
+                connection.GenerationPath + "\n" + transport!.Peer.BindingKey(identity!.Id) + "\n" + device!.Id.ToString("N") + "\n" + name)));
+            var creation = environment.CreationOperation(digest); access.Validate();
+            var remote = await transport!.CreateProfileAsync(new(device!.Id, creation, name, SyncSchema.Hash), ct);
+            // D-1067: an acknowledged remote request owns its original intent, not a newly typed name.
+            awaitingRemote = false; access.Validate();
+            void ValidateConnection() { access.Validate(); RequireSession(); }
+            var connectionAccess = access with { Validate = ValidateConnection };
+            await ConnectCoreAsync(connection, remote, connectionAccess, ct); environment.CompleteCreation(digest, creation);
+            if (NewProfileName == inputs.NewProfileName) NewProfileName = "";
+            await DiscoverCoreAsync(access, ct);
+        }, validateRequest: ValidateRequest);
+    }
 
     [RelayCommand]
     private Task ConnectAsync(SyncProfile profile) => RunAsync(async (access, ct) =>
@@ -533,7 +551,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         RefreshReviewItems();
         ready = true;
     }
-    private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCoveredRead = false)
+    private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCoveredRead = false,
+        Action? validateRequest = null)
     {
         if (publishingDeviceItems) return;
         if (!(allowCoveredRead ? CanRead : CanInteract)) return;
@@ -558,6 +577,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
                 originalAccess.Validate(); ownedOperation.Token.ThrowIfCancellationRequested();
                 if (!IsCurrent())
                     throw new OperationCanceledException("The original personal sync command or disclosure retired.");
+                validateRequest?.Invoke();
             }
             var access = new PersonalSyncAccess(ValidateOriginal, ownedOperation.Token, originalAccess.Scope);
             operationOwner = access.Validate;

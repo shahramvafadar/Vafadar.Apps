@@ -86,6 +86,7 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         internal Action? BeforeIdentityResponse;
         internal SyncProfile[] CatalogProfiles = [];
         internal SyncDevice[] CatalogDevices = [];
+        internal int ProfileCreations;
         private readonly Guid deviceId = Guid.NewGuid();
         private readonly string access = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
         private readonly string refresh = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
@@ -148,6 +149,13 @@ public sealed partial class PersonalSyncSessionLifetimeTests
                 case "/sync/current-device":
                     await context.Response.WriteAsJsonAsync(new SyncDevice(deviceId, "Fictitious original device", DateTimeOffset.UtcNow, false), Ct); break;
                 case "/sync/devices": await context.Response.WriteAsJsonAsync(CatalogDevices, Ct); break;
+                case "/sync/profiles" when context.Request.Method == "POST":
+                    var input = await context.Request.ReadFromJsonAsync<SyncCreateProfile>(Ct)
+                        ?? throw new InvalidDataException("A fictitious original creation request is required.");
+                    Interlocked.Increment(ref ProfileCreations);
+                    var created = new SyncProfile(Guid.NewGuid(), input.Name, SyncSchema.Hash, 0, false);
+                    CatalogProfiles = [.. CatalogProfiles, created];
+                    await context.Response.WriteAsJsonAsync(created, Ct); break;
                 case "/sync/profiles": await context.Response.WriteAsJsonAsync(CatalogProfiles, Ct); break;
                 default: context.Response.StatusCode = 404; break;
             }

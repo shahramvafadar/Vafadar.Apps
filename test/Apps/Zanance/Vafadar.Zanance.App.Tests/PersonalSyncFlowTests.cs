@@ -28,6 +28,8 @@ public sealed class PersonalSyncFlowTests
         internal Func<LocalSyncPeer, Action, PersonalSyncTransport>? OpenTransport;
         internal bool AllowPeerMemory;
         internal int RememberedPeers;
+        internal Func<string, Guid>? CreateOperation;
+        internal Action<string, Guid>? CompleteOperation;
         internal Func<PersonalSyncAttachmentContent, int, CancellationToken, Task<PersonalSyncRenderedPage>>? RenderPage;
         internal string Fingerprint = new('1', 64);
         internal string Scope = "fictitious-current-profile";
@@ -48,8 +50,13 @@ public sealed class PersonalSyncFlowTests
         { Opens++; return OpenTransport?.Invoke(peer, verifyAccess) ?? throw OpenError ?? new InvalidOperationException("This local flow must not open HTTP or secure credentials."); }
         public Task PublishAppliedAsync(CancellationToken ct) => throw new InvalidOperationException("No synchronization was performed.");
         public void ConnectionChanged() { ConnectionsChanged++; AfterConnectionChanged?.Invoke(); }
-        public Guid CreationOperation(string requestDigest) => throw new InvalidOperationException("No remote creation was requested.");
-        public void CompleteCreation(string requestDigest, Guid operation) => throw new InvalidOperationException("No remote creation was requested.");
+        public Guid CreationOperation(string requestDigest) => CreateOperation?.Invoke(requestDigest)
+            ?? throw new InvalidOperationException("No remote creation was requested.");
+        public void CompleteCreation(string requestDigest, Guid operation)
+        {
+            if (CompleteOperation is not { } complete) throw new InvalidOperationException("No remote creation was requested.");
+            complete(requestDigest, operation);
+        }
         public Task<PersonalSyncRenderedPage> RenderAttachmentPageAsync(PersonalSyncAttachmentContent content, int pageIndex, CancellationToken ct) =>
             RenderPage?.Invoke(content, pageIndex, ct) ?? throw new InvalidOperationException("No native attachment rendering was requested.");
         public void Dispose() => Lifetime.Dispose();

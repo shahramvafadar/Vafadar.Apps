@@ -89,3 +89,8 @@ remain unchanged. Genuine service/provider acceptance, original native-fault cau
 remedy, broader performance/security/accessibility, iOS/Store/release and the full
 delivery goal remain open. One post-push CI read is retained without polling or idle
 waiting; older consumed checks are not repeated.
+
+
+## Subsequent original creation request
+
+[D1067](personal-sync-creation-request-d1067.md) completes the separately observed creation entry/catalog/newer-draft boundary with six original failures, seven new corrected host cases and five new actual-page refusals, without accepted native creation or financial replay.
