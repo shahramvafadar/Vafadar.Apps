@@ -128,3 +128,7 @@ financial checkpoints remain unchanged. Genuine service/providers, original nati
 fault cause/remedy, broader performance/security/accessibility, iOS/Store/release
 and the full delivery goal remain open. One post-push CI read does not delay ready
 independent work.
+
+[November servicing applicability D1070](november-servicing-applicability-d1070.md)
+compares26dated advisory boundaries against current source/graphs, retaining SDK/
+Windows/container servicing requirements without replaying this native cohort.
