@@ -1,5 +1,9 @@
 # Original personal-sync retired request input - D-1050
 
+[D1053 physical ARM64 evidence](retired-sync-input-physical-arm64-d1053.md) completes
+the two new original-control conditions in a fresh zero-account package, preserving
+Main/raw Home/public state without another Main upgrade or authentication replay.
+
 [D1052 minimum/ps16k evidence](retired-sync-input-minimum-ps16k-d1052.md) reuses the
 same final private signed package for only two new original-control conditions per
 missing platform, with no build/host/old-success replay.
