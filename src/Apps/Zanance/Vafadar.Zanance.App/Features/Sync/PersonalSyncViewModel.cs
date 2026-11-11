@@ -405,11 +405,17 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     [RelayCommand]
     private Task ConnectAsync(SyncProfile profile) => RunAsync(async (access, ct) =>
     {
-        RequireSession();
-        if (!Profiles.Any(row => row == profile)) throw new InvalidOperationException("The reviewed personal space changed.");
-        var connection = await store.ReviewAsync(ct); access.Validate();
+        void ValidateSelection()
+        {
+            access.Validate(); RequireSession();
+            if (!Profiles.Any(row => row == profile)) throw new OperationCanceledException("The reviewed personal space changed.");
+        }
+        // D-1066: the reviewed catalog must still own both the consent answer and the original writer's commit.
+        var selectedAccess = access with { Validate = ValidateSelection };
+        selectedAccess.Validate();
+        var connection = await store.ReviewAsync(ct); selectedAccess.Validate();
         if (!await ConfirmAsync(IsOnboardingRestore ? "Sync_FirstRunConnectConfirm" : "Sync_ConnectConfirm", profile.Name)) return;
-        access.Validate(); await ConnectCoreAsync(connection, profile, access, ct);
+        selectedAccess.Validate(); await ConnectCoreAsync(connection, profile, selectedAccess, ct);
     });
     [RelayCommand]
     private Task RecoverInitializationAsync(SyncProfile profile) => RunAsync(async (access, ct) =>

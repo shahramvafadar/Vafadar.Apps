@@ -116,3 +116,8 @@ is retained without polling or idle waiting.
 ## Subsequent complete Main adoption
 
 [D1065](current-personal-catalog-main-d1065.md) adopts the identical complete signed package once from a verified unlocked ready Home, with raw XML/all141attributes and captured public state preserved; no catalog/test/financial replay or private Main equality claim.
+
+
+## Subsequent pending-consent boundary
+
+[D1066](personal-sync-reviewed-catalog-d1066.md) corrects three actual stale-catalog connection commits after a pending confirmation, carrying exact selected authority through the original writer; four new host contracts/three new actual-page negative conditions and full source are scoped explicitly.
