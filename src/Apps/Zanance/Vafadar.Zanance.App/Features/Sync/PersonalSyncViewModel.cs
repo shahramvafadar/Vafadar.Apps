@@ -180,7 +180,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         visible?.Dispose(); visible = new();
         translator.PropertyChanged -= OnTranslationChanged; translator.PropertyChanged += OnTranslationChanged;
         environment.StatusChanged -= OnStatusChanged; environment.StatusChanged += OnStatusChanged;
-        if (DeviceName.Length == 0) DeviceName = translator["Sync_DefaultDevice"];
+        if (string.IsNullOrEmpty(DeviceName)) DeviceName = translator["Sync_DefaultDevice"];
         ready = false;
         await ReloadAsync();
     }
@@ -256,7 +256,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     [RelayCommand]
     private Task ReloadAsync() => RunAsync(async (_, ct) =>
     {
-        if (!connectionDefaultsRead && Address.Length == 0 && Fingerprint.Length == 0)
+        // Native clearing can publish null; only a completely missing first connection borrows public defaults.
+        if (!connectionDefaultsRead && string.IsNullOrEmpty(Address) && string.IsNullOrEmpty(Fingerprint))
         { var saved = environment.ReadConnection(); Address = saved.Address; Fingerprint = saved.Fingerprint; }
         connectionDefaultsRead = true;
         await RefreshLocalAsync(ct);

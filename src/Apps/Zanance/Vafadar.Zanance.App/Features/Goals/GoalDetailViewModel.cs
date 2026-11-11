@@ -410,7 +410,8 @@ public sealed partial class GoalDetailViewModel(
             }
             if (_goal is { } loaded)
             {
-                if (AmountText.Length == 0) _amountInput.Initialize(AmountText, loaded.CurrencyCode, localization.CurrentCulture);
+                // Preserve the cleared native value while initializing its independent empty monetary context.
+                if (string.IsNullOrEmpty(AmountText)) _amountInput.Initialize(AmountText, loaded.CurrencyCode, localization.CurrentCulture);
             }
             RefreshMoneyInputs();
         }

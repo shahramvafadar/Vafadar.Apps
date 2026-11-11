@@ -1,5 +1,12 @@
 # Cleared portable-backup input — D-1090
 
+[D1091 read-only inputs](read-nullable-bindings-d1091.md) continues only newly
+reproduced sync/goal null-input failures, without replaying these backup commands.
+The sole delayed GET for this commit reports [CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43116102242)
+and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43116102246)
+in_progress with null conclusions. Its exclusive consumption marker/raw response
+are retained; no second query, job-log read or rerun follows.
+
 Following [identity input validation](identity-nullable-bindings-d1089.md), the
 shared BackupViewModel password check still dereferences a cleared native input
 before either local or cloud creation can show its original required-length
