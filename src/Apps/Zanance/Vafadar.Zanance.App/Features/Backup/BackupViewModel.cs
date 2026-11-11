@@ -290,8 +290,9 @@ public sealed partial class BackupViewModel : ViewModelBase
         finally { EndPortableCreation(); }
     }
 
+    // Native clearing can publish null; apply the original minimum without replacing the raw input.
     private string? PasswordProblem() =>
-        Password.Length < MinimumPasswordLength ? _translator.Format("Backup_PasswordTooShort", MinimumPasswordLength)
+        (Password?.Length ?? 0) < MinimumPasswordLength ? _translator.Format("Backup_PasswordTooShort", MinimumPasswordLength)
         : Password != PasswordConfirm ? _translator["Backup_PasswordMismatch"]
         : null;
 

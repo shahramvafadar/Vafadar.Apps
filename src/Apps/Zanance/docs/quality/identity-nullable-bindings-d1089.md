@@ -1,5 +1,9 @@
 # Cleared identity form inputs — D-1089
 
+[Portable-backup input continuation D1090](backup-nullable-bindings-d1090.md)
+corrects shared local/cloud null-length failure before authentication or portable
+creation, preserving original protection and writer guards.
+
 After [retained budget inputs](budget-nullable-bindings-d1088.md), four unsafe
 identity-input dereferences remain in the original BillingIdentityViewModel.
 Email, challenge and token are trimmed even when hidden in the current mode;
@@ -111,3 +115,10 @@ edition or authorizes activation/purchase/publication. Canonical parent States,
 terminal authentication/financial cohorts and the full delivery goal are
 preserved. Genuine accounts/providers, whole security, original fault, complete
 performance/accessibility, iOS/Store/release remain separate open gates.
+
+The exclusive single D1089 response reports
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43112526054)
+completed/success and
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43112525610)
+in_progress/no conclusion. Exact response, consumed marker and receipt remain;
+no second GET, successful-job log or rerun is used.
