@@ -6,6 +6,9 @@
 !Directory.Packages.props
 !eng/
 !eng/AppSecrets.targets
+!eng/AndroidArchiveFreshness.targets
+!eng/notifications/
+!eng/notifications/NotificationCore.Android.targets
 !eng/hosting/
 !eng/hosting/bootstrap-entrypoint.sh
 !eng/hosting/Bootstrap/

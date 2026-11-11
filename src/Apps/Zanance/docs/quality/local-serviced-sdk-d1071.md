@@ -91,3 +91,7 @@ Brotli source, retained5606/Q02, all frozen scopes, canonical parent States and
 terminal D607/D752/financial checkpoints are preserved. Original fault cause/remedy,
 whole-performance/security/accessibility, genuine providers, iOS/Store/release and
 the full delivery goal remain open. One post-push CI read must not delay this work.
+
+[Service runtime15 D1072](service-runtime15-fresh-qualification-d1072.md) updates
+immutable image sources and qualifies one fresh original deployment plus exact
+public-software rebase; retained deployment adoption remains separate.
