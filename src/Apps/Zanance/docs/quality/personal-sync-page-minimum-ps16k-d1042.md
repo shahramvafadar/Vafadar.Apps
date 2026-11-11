@@ -1,5 +1,9 @@
 # Personal sync terminal-feedback platform boundary — D-1042
 
+The [D1044 observed continuation](observed-sync-page-ps16k-d1044.md) later completes
+the missing ps16k page case after observing the same live startup and issuing its
+original action once. This D1042 attempt's result and historical cause stay unknown.
+
 ## New condition and unchanged product
 
 This continuation exercises the original PersonalSyncPage after a terminal IsBusy
