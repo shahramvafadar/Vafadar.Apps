@@ -4,6 +4,10 @@
 adds seven focused final host cases, versioned native model/page/receipt/reentry
 evidence and a current-source correction without financial or provider replay.
 
+[D1045 original error/footer OSfont2](personal-sync-error-large-text-d1045.md)
+adds36new native six-language/theme/width contexts, exact54table source and original
+preference restoration, without replaying normal-font captions or accepted Pause.
+
 ## D-660 scope and current status
 
 This batch binds the original personal synchronization workspace to its original
