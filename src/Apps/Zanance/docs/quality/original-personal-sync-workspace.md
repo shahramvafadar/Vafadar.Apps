@@ -1,5 +1,9 @@
 # Original personal synchronization workspace
 
+[D1040 terminal publication ownership](personal-sync-publication-ownership-d1040.md)
+adds seven focused final host cases, versioned native model/page/receipt/reentry
+evidence and a current-source correction without financial or provider replay.
+
 ## D-660 scope and current status
 
 This batch binds the original personal synchronization workspace to its original

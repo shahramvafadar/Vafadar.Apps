@@ -43,6 +43,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private Func<Task>? finishOnboarding;
     private bool onboardingEligible;
     private bool commandActive;
+    private bool idleFeedbackPending;
+    private bool restoringIdleFeedback;
     private bool readingLocal, rootRetired, closingOnboarding;
     private long disclosureVersion;
     private long activationVersion;
@@ -64,7 +66,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Gets whether this original screen can start another reviewed operation.</summary>
     public bool CanInteract => CanRead && ready;
     /// <summary>Gets whether a covered initial read or explicit retry can start.</summary>
-    public bool CanRead => Available && OwnsPresentation && !IsBusy && !commandActive && !closingOnboarding;
+    public bool CanRead => Available && OwnsPresentation && (!IsBusy || idleFeedbackPending) && !commandActive && !closingOnboarding;
     /// <summary>Gets actual operation ownership independently of shared status feedback.</summary>
     public bool HasPendingOperation => commandActive;
     /// <summary>Gets whether the complete original local connection snapshot has been published.</summary>
@@ -90,7 +92,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Gets whether manual synchronization can run for the actual opted-in original.</summary>
     public bool CanSync => CanConnect && status?.Connected == true && SessionMatchesConnection;
     /// <summary>Gets whether native Back may leave outside a running action.</summary>
-    public bool CanLeave => !closingOnboarding && (commandActive ? readingLocal : !IsBusy);
+    public bool CanLeave => !closingOnboarding && (commandActive ? readingLocal : !IsBusy || idleFeedbackPending);
     /// <summary>Gets whether this page is an optional modal over the retained first-run wizard.</summary>
     public bool IsOnboardingRestore => finishOnboarding is not null;
     /// <summary>Gets whether fully applied received accounts can finish first run without another account.</summary>
@@ -154,6 +156,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     /// <summary>Attaches only while the actual page is visible; drafts stay in memory across help dialogs.</summary>
     public async Task ActivateAsync()
     {
+        if (rootRetired || !ownsRoot()) return;
+        if (!RestoreIdleFeedback()) return;
         if (rootRetired || !ownsRoot()) return;
         if (OwnsPresentation)
         {
@@ -433,6 +437,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCoveredRead = false)
     {
         if (!(allowCoveredRead ? CanRead : CanInteract)) return;
+        if (!RestoreIdleFeedback()) return;
+        if (!(allowCoveredRead ? CanRead : CanInteract)) return;
         var originalVisibility = visible!;
         var originalDisclosure = disclosureVersion;
         CancellationTokenSource? ownedOperation = null;
@@ -440,9 +446,10 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         commandCompletion = completion; commandActive = true; readingLocal = allowCoveredRead; acceptedOperation = false;
         bool IsCurrent() => !rootRetired && ownsRoot() && ReferenceEquals(visible, originalVisibility)
             && (allowCoveredRead || originalDisclosure == disclosureVersion);
-        IsBusy = true; failureKey = null; RefreshProperties();
         try
         {
+            // D-1040: initial native binding feedback already owns a completion and must share its cleanup.
+            IsBusy = true; failureKey = null; RefreshProperties();
             var originalAccess = environment.Capture();
             ownedOperation = CancellationTokenSource.CreateLinkedTokenSource(originalAccess.Cancellation, originalVisibility.Token);
             operation = ownedOperation;
@@ -471,11 +478,60 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         { if (IsCurrent()) RetainFailure("Sync_ActionFailed"); }
         finally
         {
-            Password = ""; ownedOperation?.Dispose();
-            if (ReferenceEquals(operation, ownedOperation)) operation = null;
-            operationOwner = null; commandActive = false; readingLocal = false; IsBusy = false;
-            completion.TrySetResult(); RefreshProperties();
+            try
+            {
+                try { Password = ""; }
+                finally { ownedOperation?.Dispose(); }
+            }
+            finally
+            {
+                if (ReferenceEquals(operation, ownedOperation)) operation = null;
+                operationOwner = null;
+                try
+                {
+                    // A failed idle notification is feedback, not a still-running original command.
+                    // Keep commandActive until publication ends so its callbacks cannot start a competitor.
+                    idleFeedbackPending = true;
+                    IsBusy = false;
+                    idleFeedbackPending = false;
+                }
+                catch (Exception failure) when (failure is not OutOfMemoryException)
+                { ReportFeedbackFailure(failure); }
+                finally
+                {
+                    commandActive = false; readingLocal = false;
+                    completion.TrySetResult();
+                    try { RefreshProperties(); }
+                    catch (Exception failure) when (failure is not OutOfMemoryException)
+                    { ReportFeedbackFailure(failure); }
+                }
+            }
         }
+    }
+    /// <summary>Retries only failed idle feedback on explicit activation/action, never an accepted original operation.</summary>
+    private bool RestoreIdleFeedback()
+    {
+        // Repair publication itself can call back into a command before that command owns a completion.
+        if (restoringIdleFeedback) return false;
+        if (commandActive || !idleFeedbackPending) return true;
+        restoringIdleFeedback = true;
+        try
+        {
+            IsBusy = false;
+            idleFeedbackPending = false;
+            return true;
+        }
+        catch (Exception failure) when (failure is not OutOfMemoryException)
+        { ReportFeedbackFailure(failure); return false; }
+        finally { restoringIdleFeedback = false; }
+    }
+    /// <summary>Records only a fixed diagnostic category without connection, credential or exception payloads.</summary>
+    private void ReportFeedbackFailure(Exception failure)
+    {
+        // D-1040: a terminal binding failure is still follow-through failure after a known commit.
+        // Keep the original accepted receipt and require a source reread, never primary replay.
+        if (OwnsPresentation) RetainFailure("Sync_ActionFailed");
+        System.Diagnostics.Debug.WriteLine($"Personal sync feedback failed: {failure.GetType().Name}");
     }
     /// <summary>Retires the old editable review immediately after acknowledged original work, before fallible follow-through.</summary>
     private void AcceptKnownOperation() { acceptedOperation = true; ready = false; RefreshProperties(); }
