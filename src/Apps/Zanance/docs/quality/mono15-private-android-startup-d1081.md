@@ -1,5 +1,9 @@
 # Private serviced Android graph and original startup — D-1081
 
+[D1082 minimum/ps16k startup](mono15-minimum-ps16k-startup-d1082.md) reuses the
+same signed APK on two additional platform boundaries, with the first unready
+ps16k frame and command-discovery failures retained; product pin/Main stay unchanged.
+
 The [signed D1080 inputs](mono15-signed-servicing-inputs-d1080.md) now form one
 actual strict, complete offline Android candidate. Central
 `VafadarSecurityRuntimeVersion` remains10.0.14. Only this private command graph
