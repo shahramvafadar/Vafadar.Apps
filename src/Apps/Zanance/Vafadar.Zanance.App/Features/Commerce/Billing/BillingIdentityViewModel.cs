@@ -138,7 +138,9 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     {
         if (!CanSubmit) return;
         var revision = inputRevision; var disclosure = Disclosure();
-        var captured = epoch; var mode = ModeIndex; var email = Email.Trim(); var challengeText = Challenge.Trim(); var token = Token.Trim(); var password = Password;
+        // Native clearing can publish null even for hidden fields; normalize only local validation/request values.
+        var captured = epoch; var mode = ModeIndex; var email = (Email ?? string.Empty).Trim();
+        var challengeText = (Challenge ?? string.Empty).Trim(); var token = (Token ?? string.Empty).Trim(); var password = Password ?? string.Empty;
         EmailError = ShowEmail && (email.Length is < 4 or > 254 || !email.Contains('@', StringComparison.Ordinal)) ? translator["BillingIdentity_EmailError"] : null;
         PasswordError = ShowPassword && password.Length is < 12 or > 256 ? translator["BillingIdentity_PasswordError"] : null;
         var validChallenge = Guid.TryParseExact(challengeText, "D", out var challenge) && challenge != Guid.Empty;

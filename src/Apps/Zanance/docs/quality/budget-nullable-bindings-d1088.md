@@ -1,5 +1,9 @@
 # Retained empty budget inputs — D-1088
 
+[Original identity input continuation D1089](identity-nullable-bindings-d1089.md)
+covers null bindings across all five existing account-form modes without a
+primary identity request or genuine authentication.
+
 The [original goal input correction](goal-nullable-bindings-d1087.md) led to two
 remaining budget failures: null total text and null category-limit text throw
 before the original monetary review/validation can run. Both are reproduced in
@@ -40,6 +44,13 @@ as `initial-precision-oracle-*`. Original central money parsing correctly refuse
 that precision; only the control samples were corrected to valid currency
 precision before the authoritative baseline. Production money parsing was never
 relaxed to obtain a pass.
+
+The sole D1088 response subsequently reports
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43109594912)
+completed/success and
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43109596070)
+in_progress/no conclusion. The exact response, exclusive consumed marker and
+receipt remain; no second GET, successful-job log or rerun is used.
 
 ## Original Android page and package qualification
 
