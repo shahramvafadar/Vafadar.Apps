@@ -1,5 +1,9 @@
 # Cleared original goal inputs — D-1087
 
+[Retained budget inputs D1088](budget-nullable-bindings-d1088.md) continues with
+two original null-total/category failures, preserving independent monetary
+interpretation through original Reload and refused validation.
+
 Following [empty definition bindings](definition-nullable-bindings-d1086.md), the
 original goal editor still dereferenced null name, target, contribution and
 percentage drafts. These are independently reproduced input failures, not a
@@ -85,3 +89,10 @@ financial/authentication cohorts are preserved.
 Logs, raw XML, exact compiler inputs and signed used/prepared packages remain in
 `artifacts/d1087-goal-nullable-bindings`. Successful unrelated tests and actual
 financial/device operations are not replayed.
+
+The exclusive single D1087 response reports
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43107024968) and
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43107025077)
+in_progress/no conclusion. Raw response, consumed marker and receipt are kept;
+there is no second request, successful-job log or rerun, and development does not
+wait for CI.

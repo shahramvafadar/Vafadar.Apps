@@ -296,7 +296,8 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
                     {
                         var priorText = previousText; previousText = row.Text;
                         if (_publishing) return;
-                        if (priorText.Length == 0 || row.Text.Length == 0 || row.Input?.MatchesCurrent(_currency) == true)
+                        // Native clearing and retained null drafts renew only this row's original input context.
+                        if (string.IsNullOrEmpty(priorText) || string.IsNullOrEmpty(row.Text) || row.Input?.MatchesCurrent(_currency) == true)
                         { row.InputCulture = _localization.CurrentCulture; row.Input = MoneyInputContext.Capture(_currency, row.InputCulture); }
                         row.Error = null; DraftChanged();
                     } };
@@ -437,7 +438,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     {
         if (!_publishing)
         {
-            if (oldValue.Length == 0 || newValue.Length == 0 || _totalInput?.MatchesCurrent(_currency) == true)
+            if (string.IsNullOrEmpty(oldValue) || string.IsNullOrEmpty(newValue) || _totalInput?.MatchesCurrent(_currency) == true)
             { _totalCulture = _localization.CurrentCulture; _totalInput = MoneyInputContext.Capture(_currency, _totalCulture); }
             TotalError = null;
         }
@@ -556,12 +557,12 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     }
     private static string MoneyStamp(MoneyInputContext? input) => DraftFingerprint.Create(input?.Currency.Code, input?.Unit,
         input?.Culture.NumberFormat.NumberDecimalSeparator, input?.Culture.NumberFormat.NumberGroupSeparator);
-    private bool NeedsReview(string text, MoneyInputContext? input) => text.Length > 0 && input?.MatchesCurrent(_currency) != true;
+    private bool NeedsReview(string? text, MoneyInputContext? input) => !string.IsNullOrEmpty(text) && input?.MatchesCurrent(_currency) != true;
     private bool MonetaryInputsCurrent => !NeedsReview(TotalText, _totalInput) && Limits.All(row => !NeedsReview(row.Text, row.Input));
     /// <summary>Gets the original total unit until explicit complete reentry or authoritative suggestion.</summary>
-    public string TotalUnitName => TotalText.Length > 0 ? _totalInput?.UnitName ?? MoneyText.UnitName(_currency) : MoneyText.UnitName(_currency);
+    public string TotalUnitName => !string.IsNullOrEmpty(TotalText) ? _totalInput?.UnitName ?? MoneyText.UnitName(_currency) : MoneyText.UnitName(_currency);
     /// <summary>Explains the total's retained original number format.</summary>
-    public string? TotalFormatNote => TotalText.Length > 0 && _totalInput is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+    public string? TotalFormatNote => !string.IsNullOrEmpty(TotalText) && _totalInput is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
         ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
     /// <summary>Exposes the reason for required reentry even for formerly hidden category limits.</summary>
     public string? MoneyReviewText => !MonetaryInputsCurrent ? _translator["Goal_DraftUnitChanged"] : null;
@@ -598,8 +599,8 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             changed = !_committed && NeedsReview(row.Text, row.Input);
             if (changed) row.Error = _translator["Goal_DraftUnitChanged"];
             else if (row.UnitError) row.Error = null;
-            row.UnitError = changed; row.UnitName = row.Text.Length > 0 ? row.Input?.UnitName : MoneyText.UnitName(_currency);
-            row.FormatNote = row.Text.Length > 0 && row.Input is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
+            row.UnitError = changed; row.UnitName = !string.IsNullOrEmpty(row.Text) ? row.Input?.UnitName : MoneyText.UnitName(_currency);
+            row.FormatNote = !string.IsNullOrEmpty(row.Text) && row.Input is { } input && !input.UsesFormatOf(_localization.CurrentCulture)
                 ? _translator.Format("Plan_OriginalInputFormat", input.Example) : null;
         }
         foreach (var name in new[] { nameof(TotalUnitName), nameof(TotalFormatNote), nameof(MoneyReviewText), nameof(ShowCategoryLimits) }) OnPropertyChanged(name);
