@@ -85,3 +85,8 @@ terminal D607/D752/enrollment/financial checkpoints and full delivery goal remai
 Original native-fault cause/remedy, whole performance/security/accessibility,
 external findings/provider access, iOS/Store/release remain open. One post-push check
 is retained without polling or idle waiting.
+
+[D1063 cumulative form and Main delivery](personal-sync-nullable-draft-inputs-d1063.md)
+subsequently delivers this prepared correction together with five nullable draft
+bindings in one no-reset phone update; actual Home/public state is preserved.
+The earlier prepared-only and dated Main statements above remain historical.

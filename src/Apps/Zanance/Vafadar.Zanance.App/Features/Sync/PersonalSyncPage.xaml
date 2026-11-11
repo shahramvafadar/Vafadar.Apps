@@ -65,17 +65,17 @@
                     <Border Style="{StaticResource Card}" IsVisible="{Binding ShowPersonalConnection}">
                         <VerticalStackLayout Spacing="8">
                             <Label Text="{v:Translate Sync_Address}" />
-                            <Entry Text="{Binding Address}" Keyboard="Url" SemanticProperties.Description="{v:Translate Sync_Address}" />
+                            <Entry Text="{Binding Address, Converter={StaticResource RequestText}}" Keyboard="Url" SemanticProperties.Description="{v:Translate Sync_Address}" />
                             <Label Text="{v:Translate Sync_Fingerprint}" />
-                            <Editor Text="{Binding Fingerprint}" AutoSize="TextChanges"
+                            <Editor Text="{Binding Fingerprint, Converter={StaticResource RequestText}}" AutoSize="TextChanges"
                                     SemanticProperties.Description="{v:Translate Sync_Fingerprint}" />
                             <Label Text="{v:Translate Sync_Email}" />
-                            <Entry Text="{Binding Email}" Keyboard="Email" SemanticProperties.Description="{v:Translate Sync_Email}" />
+                            <Entry Text="{Binding Email, Converter={StaticResource RequestText}}" Keyboard="Email" SemanticProperties.Description="{v:Translate Sync_Email}" />
                             <Label Text="{v:Translate Sync_Password}" />
                             <Entry Text="{Binding Password, Converter={StaticResource RequestText}}" IsPassword="True" IsTextPredictionEnabled="False"
                                    SemanticProperties.Description="{v:Translate Sync_Password}" />
                             <Label Text="{v:Translate Sync_DeviceName}" />
-                            <Entry Text="{Binding DeviceName}" MaxLength="100" SemanticProperties.Description="{v:Translate Sync_DeviceName}" />
+                            <Entry Text="{Binding DeviceName, Converter={StaticResource RequestText}}" MaxLength="100" SemanticProperties.Description="{v:Translate Sync_DeviceName}" />
                             <p:WrappingAction Text="{v:Translate Sync_SignIn}" Command="{Binding SignInCommand}" />
                             <p:WrappingAction Text="{v:Translate Sync_Discover}" Command="{Binding DiscoverCommand}" />
                             <p:WrappingAction Text="{v:Translate Sync_SignOut}" Command="{Binding SignOutCommand}" />
@@ -85,7 +85,7 @@
                         <Border Style="{StaticResource Card}" IsVisible="{Binding IsOnboardingRestore, Converter={StaticResource InvertedBoolConverter}}">
                             <VerticalStackLayout Spacing="8">
                                 <Label Text="{v:Translate Sync_NewSpace}" />
-                                <Entry Text="{Binding NewProfileName}" MaxLength="100" SemanticProperties.Description="{v:Translate Sync_NewSpace}" />
+                                <Entry Text="{Binding NewProfileName, Converter={StaticResource RequestText}}" MaxLength="100" SemanticProperties.Description="{v:Translate Sync_NewSpace}" />
                                 <p:WrappingAction Text="{v:Translate Sync_Create}" Command="{Binding CreateProfileCommand}" />
                             </VerticalStackLayout>
                         </Border>
