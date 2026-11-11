@@ -68,11 +68,11 @@ public sealed partial class PersonalSyncSessionLifetimeTests
     private sealed class SyntheticSessions : IPersonalSyncTokenStore
     {
         private PersonalSyncSession? session;
-        internal int Reads, Writes;
+        internal int Reads, Writes, Removals;
         internal Action? BeforeRead;
         public Task<PersonalSyncSession?> ReadAsync(string peer, CancellationToken ct) { Reads++; BeforeRead?.Invoke(); return Task.FromResult(session); }
         public Task WriteAsync(string peer, PersonalSyncSession value, CancellationToken ct) { Writes++; session = value; return Task.CompletedTask; }
-        public Task RemoveAsync(string peer, CancellationToken ct) { session = null; return Task.CompletedTask; }
+        public Task RemoveAsync(string peer, CancellationToken ct) { Removals++; session = null; return Task.CompletedTask; }
     }
 
     /// <summary>A finite loopback protocol responder, not the product backend, real sign-in or identity acceptance.</summary>
@@ -90,6 +90,8 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         internal int ProfileCreations;
         internal Guid? RevocableDevice;
         internal int DeviceRevocations;
+        internal bool TailAccessFixture;
+        internal int TailRequests;
         internal SyncProfile? InitializationResponse;
         internal Action? BeforeInitializationResponse;
         internal int InitializationClaims;
@@ -145,6 +147,12 @@ public sealed partial class PersonalSyncSessionLifetimeTests
             switch (context.Request.Path.Value)
             {
                 case "/fixture-readiness": context.Response.StatusCode = 204; break;
+                case "/identity/logout" when TailAccessFixture:
+                    Interlocked.Increment(ref TailRequests); context.Response.StatusCode = 204; break;
+                case var blobPath when TailAccessFixture && context.Request.Method == "GET" && blobPath!.EndsWith("/parts/0", StringComparison.Ordinal):
+                    Interlocked.Increment(ref TailRequests);
+                    context.Response.ContentType = "application/octet-stream";
+                    await context.Response.Body.WriteAsync(new byte[] { 11, 23, 47 }, Ct); break;
                 case "/identity/login":
                     await context.Response.WriteAsJsonAsync(new { tokenType = "Bearer", accessToken = access, refreshToken = refresh, expiresIn = 3600 }, Ct); break;
                 case "/sync/identity":

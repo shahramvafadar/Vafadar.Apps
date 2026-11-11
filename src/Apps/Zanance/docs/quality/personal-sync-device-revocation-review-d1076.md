@@ -80,3 +80,8 @@ original native-fault cause/remedy, performance, accessibility, iOS/Store/releas
 acceptance remain separate. One post-push CI read is prepared without polling or
 waiting; older unconsumed one-shot checks retain their original eligibility and
 consumed responses are never queried again.
+
+
+## Remaining custom authenticated sends
+
+[D1077](personal-sync-authenticated-tail-access-d1077.md) closes the two separately observed post-session gaps in original logout/blob sends, retaining local logout cleanup; four new host cases and two negative Android conditions pass without real credentials or financial replay.

@@ -104,6 +104,8 @@ public sealed partial class PersonalSyncTransport : IProfileSynchronizationTrans
                 var current = await tokens.ReadAsync(credentialKey, ct);
                 if (current is null) return;
                 var session = await SessionAsync(ct);
+                // D-1077: session storage may finish after the original access has retired.
+                ct.ThrowIfCancellationRequested(); verifyAccess?.Invoke();
                 using var request = Request(HttpMethod.Post, "identity/logout", null, session);
                 using var response = await http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
                 Demand(response);
@@ -175,6 +177,8 @@ public sealed partial class PersonalSyncTransport : IProfileSynchronizationTrans
         try
         {
             var session = await SessionAsync(ct);
+            // D-1077: session storage may finish after the original access has retired.
+            ct.ThrowIfCancellationRequested(); verifyAccess?.Invoke();
             using var request = Request(HttpMethod.Get, Blob(profile, device, hash, "/parts/" + index.ToString(System.Globalization.CultureInfo.InvariantCulture)), null, session);
             using var response = await http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
             Demand(response); verifyAccess?.Invoke();
