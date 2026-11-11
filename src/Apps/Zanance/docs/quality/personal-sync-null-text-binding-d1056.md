@@ -96,3 +96,8 @@ dated observation. Original native-fault cause/remedy, whole performance/securit
 accessibility, external findings/provider access, iOS/Store/release and the complete
 delivery goal remain open. Terminal D607/D752/enrollment/financial checkpoints and
 all canonical parent State values remain unchanged.
+
+[Current Main delivery D1057](current-null-request-binding-main-d1057.md) reuses this
+complete signed package in one no-reset upgrade after owner unlock; actual selected
+Home/raw XML/all141attributes and captured public state match exactly. Earlier
+prepared-only and dated Main observations above remain historical.
