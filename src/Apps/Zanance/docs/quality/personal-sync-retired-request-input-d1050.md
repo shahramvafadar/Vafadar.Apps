@@ -1,5 +1,9 @@
 # Original personal-sync retired request input - D-1050
 
+[D1051 Main delivery](current-sync-input-main-d1051.md) subsequently adopts the exact
+complete signed correction once without reset, with raw Home XML/all141attributes
+and captured public state exact; no new build/test or accepted-operation replay.
+
 ## Original failures and bounded correction
 
 Five new original-source cases fail when a late request value arrives after
