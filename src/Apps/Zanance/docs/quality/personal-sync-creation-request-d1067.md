@@ -104,3 +104,8 @@ or idle waiting.
 ## Subsequent complete Main adoption
 
 [D1068](current-personal-creation-main-d1068.md) adopts the identical complete signed package once on the unlocked phone, preserving raw Home/all141attributes and captured public state without private Main reads or creation/test/financial replay.
+
+
+## Subsequent ready catalog presentation
+
+[D1069](personal-sync-ready-catalog-large-text-d1069.md) qualifies36new ready-card OSfont2contexts,216native captions/108targets and one actual Connect-dialog Back, with full source and explicit controlled-root/provider/lineage limits; accepted creations and earlier error/pending matrices are not replayed.
