@@ -81,3 +81,8 @@ terminal D607/D752/enrollment/financial checkpoints and the full delivery goal
 remain unchanged. Main adoption, genuine providers/authentication, private DB/key,
 whole security, original native-fault cause/remedy, performance, accessibility,
 iOS, Store and release acceptance remain separate.
+
+
+## Subsequent complete Main adoption
+
+[D1075](current-initialization-review-main-d1075.md) adopts this identical complete signed package once from an actual unlocked ready Home, preserving both raw Home XML/all141attributes and captured public state without private Main reads or test/financial replay.
