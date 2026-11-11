@@ -78,3 +78,8 @@ accessibility, external findings/provider access, iOS/Store/release and the comp
 delivery goal remain open. Canonical parent States and terminal D607/D752/enrollment/
 financial checkpoints stay unchanged. One post-push check is retained without
 polling or idle waiting.
+
+[Current Main delivery D1061](current-sign-in-entry-main-d1061.md) subsequently
+adopts this exact complete signed package once without reset; actual selected Home/
+raw XML/all141native attribute maps and captured public state match exactly. The
+earlier prepared-only and dated Main observations remain historical.
