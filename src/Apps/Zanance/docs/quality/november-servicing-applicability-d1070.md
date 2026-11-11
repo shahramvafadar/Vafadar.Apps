@@ -150,3 +150,7 @@ and existing D607/D752/enrollment/financial checkpoints remain unchanged.
 Broader security, actual provider/public activation, original native-fault
 cause/remedy, whole-performance/accessibility, iOS/Store/release and the full
 delivery goal remain open.
+
+[Project-local serviced SDK D1071](local-serviced-sdk-d1071.md) completes the
+checksum-bound SDK preparation and actual host probe; global installations,
+container servicing and actual product/platform compatibility remain separate.
