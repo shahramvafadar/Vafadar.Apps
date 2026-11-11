@@ -90,3 +90,8 @@ is retained without polling or idle waiting.
 subsequently delivers this prepared correction together with five nullable draft
 bindings in one no-reset phone update; actual Home/public state is preserved.
 The earlier prepared-only and dated Main statements above remain historical.
+
+[D1064 complete catalog authority](personal-sync-catalog-authority-d1064.md) separately
+corrects interrupted/reentrant remote publication, caption and terminal boundaries;
+local Retry cannot regrant an incomplete catalog. It preserves original requests
+and confirms actual page visibility without financial or genuine-auth replay.

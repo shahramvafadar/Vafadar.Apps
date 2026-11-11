@@ -84,6 +84,8 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         internal LocalSyncPeer Peer = null!;
         internal int Requests, Registrations;
         internal Action? BeforeIdentityResponse;
+        internal SyncProfile[] CatalogProfiles = [];
+        internal SyncDevice[] CatalogDevices = [];
         private readonly Guid deviceId = Guid.NewGuid();
         private readonly string access = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
         private readonly string refresh = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
@@ -145,8 +147,8 @@ public sealed partial class PersonalSyncSessionLifetimeTests
                     await context.Response.WriteAsJsonAsync(new SyncDevice(deviceId, "Fictitious original device", DateTimeOffset.UtcNow, false), Ct); break;
                 case "/sync/current-device":
                     await context.Response.WriteAsJsonAsync(new SyncDevice(deviceId, "Fictitious original device", DateTimeOffset.UtcNow, false), Ct); break;
-                case "/sync/devices": await context.Response.WriteAsJsonAsync(Array.Empty<SyncDevice>(), Ct); break;
-                case "/sync/profiles": await context.Response.WriteAsJsonAsync(Array.Empty<SyncProfile>(), Ct); break;
+                case "/sync/devices": await context.Response.WriteAsJsonAsync(CatalogDevices, Ct); break;
+                case "/sync/profiles": await context.Response.WriteAsJsonAsync(CatalogProfiles, Ct); break;
                 default: context.Response.StatusCode = 404; break;
             }
         }

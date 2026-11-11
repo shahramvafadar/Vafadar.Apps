@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization;
@@ -38,6 +39,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private PersonalSyncStatus? status;
     private string? failureKey;
     private bool ready;
+    private bool catalogReady;
+    private bool publishingDeviceItems;
     private IReadOnlyList<SyncRecord> reviewRemote = [];
     private Func<Task>? closeOnboarding;
     private Func<Task>? finishOnboarding;
@@ -60,6 +63,11 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     {
         this.store = store; this.coordinator = coordinator; this.environment = environment;
         this.interaction = interaction; this.translator = translator; this.dates = dates; this.localization = localization;
+        // Retained native row collections must not retain a retired model through its invalidation observer.
+        var owner = new WeakReference<PersonalSyncViewModel>(this);
+        NotifyCollectionChangedEventHandler changed = (_, _) =>
+        { if (owner.TryGetTarget(out var original)) original.OnCatalogChanged(); };
+        Profiles.CollectionChanged += changed; Devices.CollectionChanged += changed; DeviceItems.CollectionChanged += changed;
     }
     /// <summary>Gets whether this edition supports explicit local personal sync.</summary>
     public bool Available => environment.Available;
@@ -71,8 +79,8 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     public bool HasPendingOperation => commandActive;
     /// <summary>Gets whether the complete original local connection snapshot has been published.</summary>
     public bool IsReady => ready;
-    /// <summary>Gets whether a current actual authenticated service device was resolved.</summary>
-    public bool SignedIn => identity is not null && device is not null;
+    /// <summary>Gets whether the authenticated service device and its complete original catalog were published.</summary>
+    public bool SignedIn => catalogReady && identity is not null && device is not null;
     /// <summary>Gets whether profile connection actions can start.</summary>
     public bool CanConnect => CanInteract && SignedIn && !IsHouseholdConnection;
     /// <summary>The current actual household transport must retain its encrypted route even when this personal page is opened.</summary>
@@ -186,7 +194,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     {
         activationVersion++;
         // D-1047: revoke publication before any cancellation or native feedback can call back.
-        var retiringVisibility = visible; visible = null;
+        var retiringVisibility = visible; visible = null; catalogReady = false;
         var retiringTransport = transport; transport = null; identity = null; device = null;
         translator.PropertyChanged -= OnTranslationChanged;
         environment.StatusChanged -= OnStatusChanged;
@@ -279,6 +287,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
             var peer = new LocalSyncPeer(inputs.Address, inputs.Fingerprint);
             Password = "";
             ValidateInputs();
+            catalogReady = false;
             transport?.Dispose(); identity = null; device = null;
             ValidateInputs();
             var client = environment.Open(peer, access.Validate); transport = client;
@@ -310,6 +319,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
             RequirePersonalConnection();
             ValidateInputs();
             var peer = new LocalSyncPeer(inputs.Address, inputs.Fingerprint);
+            catalogReady = false;
             transport?.Dispose(); identity = null; device = null;
             ValidateInputs();
             var client = environment.Open(peer, access.Validate); transport = client;
@@ -332,13 +342,47 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
 
     private async Task DiscoverCoreAsync(PersonalSyncAccess access, CancellationToken ct)
     {
+        catalogReady = false; RefreshProperties();
         if (transport is null || device is null) throw new InvalidOperationException("The original personal session is unavailable.");
-        var profiles = await transport.ProfilesAsync(device.Id, ct); var devices = await transport.DevicesAsync(ct); access.Validate();
-        if (profiles.Length > 100 || devices.Length > 100 || profiles.Any(row => row.Id == Guid.Empty || row.SchemaHash != SyncSchema.Hash) ||
-            devices.Any(row => row.Id == Guid.Empty)) throw new InvalidDataException("The personal catalog is incompatible.");
-        Profiles.Clear(); foreach (var row in profiles) Profiles.Add(row);
-        Devices.Clear(); foreach (var row in devices) Devices.Add(row);
-        RefreshDeviceItems();
+        var profiles = await transport.ProfilesAsync(device.Id, ct); access.Validate();
+        var devices = await transport.DevicesAsync(ct); access.Validate();
+        PublishCatalog(profiles, devices, access.Validate);
+    }
+
+    /// <summary>Grants catalog authority only after complete original rows, captions and ownership survive publication.</summary>
+    internal void PublishCatalog(SyncProfile[] profiles, SyncDevice[] devices, Action validate)
+    {
+        // D-1064: a local-only Reload cannot authorize rows from an interrupted remote publication.
+        catalogReady = false;
+        try
+        {
+            validate();
+            if (profiles.Length > 100 || devices.Length > 100 || profiles.Any(row => row.Id == Guid.Empty || row.SchemaHash != SyncSchema.Hash) ||
+                devices.Any(row => row.Id == Guid.Empty)) throw new InvalidDataException("The personal catalog is incompatible.");
+            var items = devices.Select(CreateDeviceItem).ToArray();
+            Profiles.Clear(); validate();
+            foreach (var row in profiles) { Profiles.Add(row); validate(); }
+            Devices.Clear(); validate();
+            foreach (var row in devices) { Devices.Add(row); validate(); }
+            DeviceItems.Clear(); validate();
+            foreach (var item in items) { DeviceItems.Add(item); validate(); }
+            void ValidatePublished()
+            {
+                validate();
+                if (!Profiles.SequenceEqual(profiles) || !Devices.SequenceEqual(devices) || !DeviceItems.SequenceEqual(items))
+                    throw new InvalidDataException("The original catalog publication changed.");
+            }
+            ValidatePublished(); catalogReady = true;
+            RefreshProperties(); ValidatePublished();
+        }
+        catch { catalogReady = false; throw; }
+    }
+    /// <summary>Revokes authority before a retained binding can reuse altered published rows.</summary>
+    private void OnCatalogChanged()
+    {
+        if (!catalogReady) return;
+        catalogReady = false;
+        RefreshProperties();
     }
 
     [RelayCommand]
@@ -485,6 +529,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     }
     private async Task RunAsync(Func<PersonalSyncAccess, CancellationToken, Task> action, bool allowCoveredRead = false)
     {
+        if (publishingDeviceItems) return;
         if (!(allowCoveredRead ? CanRead : CanInteract)) return;
         if (!RestoreIdleFeedback()) return;
         if (!(allowCoveredRead ? CanRead : CanInteract)) return;
@@ -593,7 +638,7 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private void RequireSession()
     {
         RequirePersonalConnection();
-        if (transport is null || identity is null || device is null || transport.Peer.Address.AbsoluteUri != new LocalSyncPeer(Address, Fingerprint).Address.AbsoluteUri ||
+        if (!catalogReady || transport is null || identity is null || device is null || transport.Peer.Address.AbsoluteUri != new LocalSyncPeer(Address, Fingerprint).Address.AbsoluteUri ||
             transport.Peer.Fingerprint != new LocalSyncPeer(Address, Fingerprint).Fingerprint)
             throw new InvalidOperationException("The reviewed personal peer/session changed.");
     }
@@ -614,7 +659,23 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         return answer;
     }
     private void OnTranslationChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-    { disclosureVersion++; RefreshDeviceItems(); RefreshReviewItems(); RefreshProperties(); }
+    {
+        var version = ++disclosureVersion;
+        if (publishingDeviceItems) { catalogReady = false; return; }
+        publishingDeviceItems = true;
+        var authorized = catalogReady; catalogReady = false;
+        try
+        {
+            RefreshDeviceItems();
+            var devices = Devices.ToArray(); var items = DeviceItems.ToArray();
+            RefreshReviewItems(); catalogReady = authorized;
+            RefreshProperties();
+            if (version != disclosureVersion || !Devices.SequenceEqual(devices) || !DeviceItems.SequenceEqual(items))
+                throw new InvalidDataException("The original translated catalog changed.");
+        }
+        catch { catalogReady = false; throw; }
+        finally { publishingDeviceItems = false; }
+    }
     private void RefreshReviewItems()
     {
         var presenter = new PersonalSyncReviewPresenter(translator, dates, localization);
@@ -633,11 +694,16 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     }
     private void RefreshDeviceItems()
     {
-        DeviceItems.Clear();
-        foreach (var row in Devices)
-            DeviceItems.Add(new(row, row.Revoked ? translator["Sync_DeviceRevoked"] :
-                NativeDigits.Apply(translator.Format("Sync_DeviceSeen", dates.Format(row.LastSeenAt)))!));
+        var version = disclosureVersion;
+        var devices = Devices.ToArray();
+        var items = devices.Select(CreateDeviceItem).ToArray();
+        DeviceItems.Clear(); foreach (var item in items) DeviceItems.Add(item);
+        if (version != disclosureVersion || !Devices.SequenceEqual(devices) || !DeviceItems.SequenceEqual(items))
+            throw new InvalidDataException("The original device-caption publication changed.");
     }
+    /// <summary>Stages the exact original device caption before fallible collection feedback.</summary>
+    private PersonalSyncDeviceItem CreateDeviceItem(SyncDevice row) => new(row, row.Revoked ? translator["Sync_DeviceRevoked"] :
+        NativeDigits.Apply(translator.Format("Sync_DeviceSeen", dates.Format(row.LastSeenAt)))!);
     private void RefreshProperties()
     {
         RefreshAttachmentProperties();
