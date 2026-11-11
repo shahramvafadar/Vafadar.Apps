@@ -8,6 +8,10 @@ evidence and a current-source correction without financial or provider replay.
 adds36new native six-language/theme/width contexts, exact54table source and original
 preference restoration, without replaying normal-font captions or accepted Pause.
 
+[D1046 original pending footer/Cancel](personal-sync-pending-large-text-d1046.md)
+adds36distinct pending contexts and one actual cancellation of the same held read;
+the clipped intermediate scroll observation and exact restoration remain explicit.
+
 ## D-660 scope and current status
 
 This batch binds the original personal synchronization workspace to its original
