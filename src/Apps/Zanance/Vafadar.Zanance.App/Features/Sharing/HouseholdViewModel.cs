@@ -202,8 +202,11 @@ public sealed partial class HouseholdViewModel(HouseholdWorkspace workspace, Hou
     {
         if (pendingSource is not null || HasPendingSourceReceipt) throw new InvalidOperationException();
         var captured = state ?? throw new InvalidOperationException();
+        // A local label refusal must precede native consent and the unknown-primary boundary.
+        var name = Name?.Trim();
+        if (string.IsNullOrEmpty(name) || name.Length > 100) throw new ArgumentException("A complete reviewed household profile name is required.", nameof(Name));
         if (!await ConfirmAsync("Household_PublishConfirm")) return;
-        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.CompleteOwnerAsync(transport!, captured.Authority, Name.Trim(), ct));
+        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.CompleteOwnerAsync(transport!, captured.Authority, name, ct));
         _ = await coordinator.SynchronizeAsync(transport!, state.Authority, ct); access.Validate();
         environment.ConnectionChanged(); await ReadLocalAsync(ct);
     });

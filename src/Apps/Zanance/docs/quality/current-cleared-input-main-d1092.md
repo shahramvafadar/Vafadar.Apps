@@ -1,5 +1,12 @@
 # Current cumulative cleared-input Main — D-1092
 
+[D1093 original household owner validation](household-owner-local-validation-d1093.md)
+continues three newly reproduced local pre-primary failures without another Main
+command or successful operation replay. This commit's sole delayed GET reports
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43120478618) and
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43120478611)
+in_progress/null conclusions; its marker/raw response remain consumed, no second query.
+
 The existing complete [D1091 signed offline package](read-nullable-bindings-d1091.md)
 contains the six finished D1086–D1091 input corrections. It is reused for this
 delivery, without another app build, successful test suite, financial command or

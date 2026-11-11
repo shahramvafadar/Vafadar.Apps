@@ -3,6 +3,10 @@
 [D1092 cumulative Main adoption](current-cleared-input-main-d1092.md) reuses the
 qualified default package once on Samsung, preserving raw Home/public state and
 all accepted-operation checkpoints without another app build or successful test.
+The sole delayed GET for this commit reports
+[CI completed/cancelled](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43119775906)
+and [CodeQL in_progress/null](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43119775812).
+Its exclusive marker/raw response are retained; no second query or job rerun follows.
 
 Following [portable-backup validation](backup-nullable-bindings-d1090.md), two
 original read paths still dereference native-cleared values. PersonalSync uses
