@@ -195,6 +195,7 @@ public sealed partial class DisplayUnitsViewModel(ZananceStore store, Translator
         Units.ReplaceAll(rows); HasUnits = rows.Length != 0; UpdatePreview();
     }
     private void UpdatePreview()
-    { var name = Name.Trim(); PreviewText = CurrencyCode is null || name.Length == 0 ? null : translator.Format("Unit_Definition", name, Isolated(FactorNames[Math.Clamp(FactorIndex, 0, FactorNames.Count - 1)], CurrencyCode)); }
+    // Native text bindings can publish null while clearing; keep that raw draft and only normalize the preview.
+    { var name = (Name ?? string.Empty).Trim(); PreviewText = CurrencyCode is null || name.Length == 0 ? null : translator.Format("Unit_Definition", name, Isolated(FactorNames[Math.Clamp(FactorIndex, 0, FactorNames.Count - 1)], CurrencyCode)); }
     private static string Isolated(string number, string code) => $"\u2066\u200E{number}\u00A0{code}\u200E\u2069";
 }

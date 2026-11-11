@@ -150,7 +150,8 @@ public sealed partial class RulesViewModel(ZananceStore store, Translator transl
     {
         if (!CanInteract || _published is not { } source) return;
         Error = null;
-        if (MatchText.Trim().Length < CategoryRules.MinLength || SelectedCategory is null)
+        // A cleared native binding follows required-text validation without replacing the raw draft.
+        if (string.IsNullOrWhiteSpace(MatchText) || MatchText.Trim().Length < CategoryRules.MinLength || SelectedCategory is null)
         {
             Error = translator["Rule_TextRequired"];
             return;

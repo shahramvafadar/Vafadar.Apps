@@ -1,5 +1,9 @@
 # Project SDK/runtime servicing and current Main — D-1085
 
+[Empty definition bindings D1086](definition-nullable-bindings-d1086.md) follows
+with two independently reproduced application input failures; it preserves the
+serviced SDK/runtime configuration and accepted financial checkpoints.
+
 The [November servicing assessment](november-servicing-applicability-d1070.md)
 now has an applied repository SDK/runtime update. Prepared signed inputs and
 [actual x64 codec](mono15-original-codec-contracts-d1083.md),
@@ -152,6 +156,16 @@ completed/success. The sole D1084 response reports
 [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43094169032)
 in_progress/no conclusion. Raw responses/exclusive markers are retained; no second
 request, successful-job log or rerun is used, and development does not wait for CI.
+
+The exclusive D1085 single response subsequently reports
+[CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43100469915)
+in_progress/no conclusion;
+[Local identity backend](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43100469922),
+[Self-hosted service qualification](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43100470027),
+[CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43100469893) and
+[SDK update workflow](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43100662347)
+are completed/success. The consumed marker, exact response and receipt remain;
+none is queried again.
 
 Terminal D607/D752/enrollment/financial checkpoints and canonical parent States
 remain preserved. Operational repository/app servicing is applied, while separate
