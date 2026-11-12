@@ -118,3 +118,12 @@ delivery goal remains active; original fault, whole performance/security/
 accessibility/platform/provider/Store/release gates are not accepted here.
 D1094's sole delayed CI response is retained there as pending; no second GET or
 waiting on CI replaces this ready development.
+
+## Sole delayed CI observation
+
+The exclusive consumed marker precedes the sole GET for this commit. Its retained
+response records[CI43133038139](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43133038139)
+completed/cancelled and[CodeQL43133038227](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43133038227)
+in_progress/null. Cancellation is not an observed product test failure, and no
+cause is inferred from this response alone. No second query, successful-job log,
+polling or rerun occurs. Independent D1097 continues without waiting on CI.

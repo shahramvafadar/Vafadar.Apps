@@ -1,5 +1,8 @@
 # Current household input corrections on Main - D1096
 
+[D1097 recovery-name validation](household-recovery-local-label-d1097.md) is a later
+separate correction; its prepared APK is not this installed Main package.
+
 The existing complete default offline APK from
 [the D1095 admission correction](household-admission-local-validation-d1095.md)
 is installed once without reset on reserved Samsung SM-A176B/USBRZGL105RSDL.
@@ -52,3 +55,11 @@ build output, standard Clean, supplemental deletion, frozen-scope inspection or
 terminal-cohort replay. Main3233/3421a7cf is this dated observation, not ongoing
 liveness or whole security/stability/performance/accessibility/platform/provider/
 Store/release acceptance. Canonical parent States and overall delivery remain open.
+
+## Sole delayed CI observation
+
+The exclusive consumed marker precedes the only GET for this commit. Its retained
+response records[CI43133692313](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43133692313)
+and[CodeQL43133692307](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43133692307)
+both in_progress/null. These are pending, not success/failure. No second query,
+job log, rerun or polling occurs; independent D1097 continues without waiting.

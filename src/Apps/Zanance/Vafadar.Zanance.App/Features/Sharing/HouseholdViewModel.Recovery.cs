@@ -122,8 +122,12 @@ public sealed partial class HouseholdViewModel
 
     [RelayCommand] private Task CompleteRecoveryAsync() => RunAsync(async (access, ct) =>
     {
-        if (!IsOwnerRecoveryDraft || !await ConfirmAsync("HouseholdRecovery_ImportConfirm")) return;
-        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.CompleteOwnerRecoveryAsync(transport!, state!.Authority, Name.Trim(), ct));
+        if (!IsOwnerRecoveryDraft) return;
+        // A local name refusal must not retire the draft as an unknown recovery submission.
+        var name = Name?.Trim();
+        if (string.IsNullOrEmpty(name) || name.Length > 100) throw new ArgumentException("A complete reviewed household profile name is required.", nameof(Name));
+        if (!await ConfirmAsync("HouseholdRecovery_ImportConfirm")) return;
+        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.CompleteOwnerRecoveryAsync(transport!, state!.Authority, name, ct));
         access.Validate(); environment.ConnectionChanged(); await environment.PublishAppliedAsync(ct); await ReadLocalAsync(ct);
     });
 
