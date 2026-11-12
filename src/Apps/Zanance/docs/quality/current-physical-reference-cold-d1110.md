@@ -111,3 +111,11 @@ This is one finite physical reference-shape observation. Search/save distributio
 whole performance/security/accessibility, original native-fault remedy and other
 platform/provider/release gates remain separate. Canonical parent States and the
 full delivery goal stay unchanged.
+
+## Distinct phase continuation and restart boundary
+
+[D1112](current-home-phase-boundaries-d1112.md) separates original root/Home phases
+on the retained stress source. It identifies a large snapshot-read interval in
+that sample without claiming the physical10k cause, weakening a check or repeating
+this accepted phone cohort. Its completed source/OS/process checkpoint supports
+the owner-requested pause and later explicit continuation.
