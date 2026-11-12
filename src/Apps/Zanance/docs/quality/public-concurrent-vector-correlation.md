@@ -1,5 +1,10 @@
 # Public concurrent-vector fault correlation (D-911)
 
+[D1123 new Tarjan proposal](tarjan-concurrent-source-admission-d1123.md) follows
+the subsequently published upstream137047 change. Its predicate is absent from
+both admitted original and current15 source; this is finite source admission,
+not a runtime patch, repeated classification or proof of this fault's cause.
+
 ## New question after the original operand proof
 
 [D908](new-accounts-field-word-provenance.md) establishes the exact original new-PC

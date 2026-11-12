@@ -9,8 +9,11 @@ startup; product runtime pin and physical Main remain unchanged.
 The existing project-local official SDK10.0.404 manifest10.0.115 names Android
 runtime/AOT pack version10.0.15. Five official NuGet version indexes independently
 return HTTP200 and contain10.0.15. Five published nuspecs identify MIT licensing,
-Microsoft authorship and the same dotnet/runtime source commit
+Microsoft authorship and the same source commit
 `8e0f8ed2312954727f8919d7d1c2f78b483b4ee7`.
+[D1123 repository correction](tarjan-concurrent-source-admission-d1123.md) binds
+the actual ARM64/x64 nuspec repository to dotnet/dotnet VMR, rather than
+dotnet/runtime; the commit value and prior package/signature evidence remain.
 Primary metadata includes the [ARM64 version index](https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.mono.android-arm64/index.json)
 and [versioned runtime nuspec](https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.mono.android-arm64/10.0.15/microsoft.netcore.app.runtime.mono.android-arm64.nuspec).
 A primary web-page viewer was unavailable; no claim relies on that failed view.
