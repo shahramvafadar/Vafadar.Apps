@@ -103,3 +103,7 @@ separate. The full goal stays active; no earlier candidate is retuned or rescued
 [D1118](current-main-factory-authority-d1118.md) subsequently installs the exact
 prepared correction on Main once without reset. Raw141-node Home/all attributes
 and public state remain exact; private source equality is not inferred.
+
+[D1119](home-factory-subphases-d1119.md) later separates the current Home factory's
+worker and caller-continuation wall intervals on the retained fictitious source,
+without repeating the accepted negative cases or changing product code.
