@@ -103,8 +103,9 @@ public sealed partial class HouseholdViewModel
                     maxLength: ProfileService.MaxNameLength));
                 if (string.IsNullOrWhiteSpace(name)) return;
                 stage = "native-profile-create";
-                access.Validate(); primarySubmitted = true;
-                destination = await profiles.CreateReviewedAsync(catalogue, name, visible!.Token, access.Validate); RecordAcceptedOperation();
+                access.Validate();
+                destination = await profiles.CreateHouseholdSourceAsync(catalogue, name, sourceProjection, selected,
+                    () => primarySubmitted = true, visible!.Token, () => { access.Validate(); current(); }); RecordAcceptedOperation();
                 // Catalogue publication deliberately retires the previous network lifetime. Capture
                 // fresh unlocked access, but only for the same source generation before switching.
                 access = environment.Capture();

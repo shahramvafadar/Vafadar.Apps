@@ -1,8 +1,10 @@
 using System.Collections.Concurrent;
 using System.Text;
 using Vafadar.Core.Settings;
+using Vafadar.Data;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Data.Commerce;
+using Vafadar.Zanance.Data.Sharing;
 
 namespace Vafadar.Zanance.App.Profiles;
 
@@ -82,7 +84,23 @@ public sealed partial class ProfileService
     }
 
     /// <summary>Prepares a new database under drained maintenance, then rechecks the reviewed catalogue before publication.</summary>
-    public async Task<LocalProfile> CreateReviewedAsync(ProfileCatalogueReview review, string name, CancellationToken ct = default, Action? validateOriginal = null)
+    public Task<LocalProfile> CreateReviewedAsync(ProfileCatalogueReview review, string name, CancellationToken ct = default, Action? validateOriginal = null) =>
+        CreateReviewedCoreAsync(review, name, null, null, ct, validateOriginal);
+
+    /// <summary>Revalidates the selected protected source under drained ownership before marking or preparing a new destination.</summary>
+    public Task<LocalProfile> CreateHouseholdSourceAsync(ProfileCatalogueReview review, string name,
+        HouseholdProjectionStore source, HouseholdProjectionReview selected, Action primaryStarting,
+        CancellationToken ct = default, Action? validateOriginal = null)
+    {
+        ArgumentNullException.ThrowIfNull(source); ArgumentNullException.ThrowIfNull(selected); ArgumentNullException.ThrowIfNull(primaryStarting);
+        return CreateReviewedCoreAsync(review, name, owner => source.RequireCurrentForMaintenanceAsync(selected, owner, ct),
+            primaryStarting, ct, validateOriginal);
+    }
+
+    /// <summary>Keeps ordinary creation unchanged while the source-copy route adds its atomic pre-mutation validation.</summary>
+    private async Task<LocalProfile> CreateReviewedCoreAsync(ProfileCatalogueReview review, string name,
+        Func<DatabaseAccessGate.ExclusiveLease, Task>? beforePrepare, Action? primaryStarting,
+        CancellationToken ct, Action? validateOriginal)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name); ValidateWorkReview(review);
         if (!review.CanCreate) throw new CommercialWriteRejectedException(CommercialFeature.LocalProfiles, QuotaKind.LocalProfiles,
@@ -92,6 +110,13 @@ public sealed partial class ProfileService
         {
             using var owner = await location.Access.AcquireExclusiveAsync(ct);
             ValidateWorkReview(review); ct.ThrowIfCancellationRequested(); validateOriginal?.Invoke();
+            if (beforePrepare is not null)
+            {
+                // Writers remain drained through source validation and the first durable Add intent.
+                await beforePrepare(owner);
+                ValidateWorkReview(review); ct.ThrowIfCancellationRequested(); validateOriginal?.Invoke();
+            }
+            primaryStarting?.Invoke();
             if (profileCreation is not null)
             {
                 await profileCreation.CreateReviewedAsync(this, review, profile, owner, ct);

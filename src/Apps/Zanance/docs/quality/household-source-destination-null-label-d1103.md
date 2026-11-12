@@ -89,3 +89,8 @@ remains the dated D1099 observation, not fresh liveness. Canonical parent States
 terminal cohorts, retained resources and the overall goal remain open. These
 conditions do not accept actual source-copy publication, original native-fault
 cause, whole performance/security/accessibility/platform/provider/Store/release.
+
+The later sole D1103 response reports CI and CodeQL in_progress/null, with no
+second query. [D1104 atomic source freshness](household-source-creation-freshness-d1104.md)
+continues the separate creation boundary after an actual source change, retaining
+the baseline catalogue effect and avoiding accepted creation/financial replay.
