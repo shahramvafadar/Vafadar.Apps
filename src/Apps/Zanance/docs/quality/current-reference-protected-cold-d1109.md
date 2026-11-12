@@ -111,3 +111,11 @@ This single emulator observation does not establish a reference-phone distributi
 search/save latency, the two-second objective, native-fault remedy, whole security,
 accessibility, provider/platform or release acceptance. The canonical parent States
 and the full delivery goal remain unchanged.
+
+## Physical continuation and clock origin
+
+[D1110](current-physical-reference-cold-d1110.md) adds one separately bound current
+ARM64/Samsung reference-shape sample and exact public Main restoration. It is not
+a cross-platform speed comparison. In both helpers, the private bootstrap clock
+starts immediately before builder.Build and excludes earlier CreateMauiApp
+registration/process work; Android TotalTime is a separate first-frame boundary.
