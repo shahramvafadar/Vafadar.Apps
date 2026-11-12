@@ -1,5 +1,11 @@
 # Original transaction results above the actual keyboard - D1124
 
+[D1126 Samsung keyboard](samsung-transaction-ime-viewport-d1126.md) adds one
+loaded original ARM64/OEM observation using retained fictitious input. The actual
+keyboard sample is not replayed after a zero-baseline observer failure; a separate
+read-only continuation proves current full-source/hidden-viewport state, with the
+historical same-instance restoration limitation preserved.
+
 [D1125 current Main adoption](current-main-ime-viewport-d1125.md) later adopts
 this identical complete package once without reset. Actual before/entry/after
 Home XML/all141attributes and captured public state match; this does not replay
