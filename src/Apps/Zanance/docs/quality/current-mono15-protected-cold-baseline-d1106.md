@@ -1,5 +1,10 @@
 # Current protected process-cold Home observation - D1106
 
+[D1107 internal spans](current-protected-internal-spans-d1107.md) subsequently adopts
+this same sealed source without preparation replay. One distinct new diagnostic
+records39healthy events/19paired spans and retains both original key-integrity checks;
+the old coarse helper is not relaunched. Updated stopped-source manifest is in D1107.
+
 ## Requirement and distinct current question
 
 [Q-02](../spec/Zanance-Product-Specification.md) suggests a reference device and
