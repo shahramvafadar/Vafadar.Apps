@@ -1,5 +1,10 @@
 # Original transaction results above the actual keyboard - D1124
 
+[D1127 minimum API24](minimum-transaction-ime-viewport-d1127.md) qualifies one
+distinct loaded Activity keyboard case with an independent OS InputMethod oracle,
+positive stable before/after geometry and exact full source. The root did not
+resize; no already-resized-root branch or old successful case is claimed.
+
 [D1126 Samsung keyboard](samsung-transaction-ime-viewport-d1126.md) adds one
 loaded original ARM64/OEM observation using retained fictitious input. The actual
 keyboard sample is not replayed after a zero-baseline observer failure; a separate
