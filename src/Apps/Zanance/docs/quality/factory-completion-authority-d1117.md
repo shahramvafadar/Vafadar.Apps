@@ -99,3 +99,7 @@ successful job log is fetched. This earlier documentation CI does not qualify th
 new factory correction. Current Main adoption and broader original fault,
 performance, security, accessibility, platform/provider and release gates remain
 separate. The full goal stays active; no earlier candidate is retuned or rescued.
+
+[D1118](current-main-factory-authority-d1118.md) subsequently installs the exact
+prepared correction on Main once without reset. Raw141-node Home/all attributes
+and public state remain exact; private source equality is not inferred.
