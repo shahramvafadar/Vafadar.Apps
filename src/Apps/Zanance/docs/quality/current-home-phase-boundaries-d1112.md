@@ -104,3 +104,8 @@ scope, source epoch, successful checkpoints, closed candidates and frozen scopes
 The next work is the original Home snapshot-read path, preserving all original
 checks, not another unchanged protected scan. Whole goal completion is unproven;
 canonical parent States remain unchanged.
+
+The subsequent [D1113 read-subphase diagnostic](current-home-read-subphases-d1113.md)
+finishes that bounded read-path question on the same retained source. Its terminal
+manifest supersedes this historical stopped-state checkpoint; neither sample is
+repeated and the full delivery remains unfinished.
