@@ -1,5 +1,9 @@
 # Transaction activation failure retirement - D1133
 
+[D1134](current-main-activation-recovery-d1134.md) subsequently adopts the exact
+prepared package once without reset, preserving raw Home/all141native attributes
+and captured public state without replaying these error controls.
+
 ## Actual original failure and correction
 
 [D1129](transaction-keyboard-owner-retirement-d1129.md) and
