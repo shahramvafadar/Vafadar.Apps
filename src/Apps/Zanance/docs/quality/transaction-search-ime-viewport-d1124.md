@@ -1,5 +1,9 @@
 # Original transaction results above the actual keyboard - D1124
 
+[D1128 ps16k compatibility](ps16k-transaction-ime-viewport-d1128.md) reuses the
+identical D1127 APK for one actual API35/userspace16KiB keyboard/restoration case,
+with independent OS geometry and full typed source preserved; no new build.
+
 [D1127 minimum API24](minimum-transaction-ime-viewport-d1127.md) qualifies one
 distinct loaded Activity keyboard case with an independent OS InputMethod oracle,
 positive stable before/after geometry and exact full source. The root did not
