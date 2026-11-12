@@ -1,5 +1,8 @@
 # Pending household admission local label ownership - D1095
 
+[D1096 cumulative Main adoption](current-household-input-main-d1096.md) delivers the
+identical prepared default package once, without repeating these native cases.
+
 Following [the completed source-control investigation](mono15-home-session-source-control-d1094.md),
 a separate original CheckAdmission defect remains: primarySubmitted is set before
 Name.Trim and the unchanged CompleteJoinAsync RequireName check. Null, empty or
@@ -85,9 +88,10 @@ SDK10.0.404/runtime10.0.15. The default signed offline package has99643295bytes,
 identities on both ABIs. Its SHA256 is
 `3421a7cf8022379d649e67f3f6ae8b179610d38cd9b4fd36e1662e29a5053a66`.
 Actual Windows/default compiler PDB documents match the changed model checksum.
-This is finite source provenance, not whole-shipping-PE identity. The package is
-prepared, not Main-installed; Main27703/9fbebe6b remains only the dated
-[D1092 observation](current-cleared-input-main-d1092.md), not fresh liveness.
+This is finite source provenance, not whole-shipping-PE identity. The package was
+prepared without a phone action in this batch; D1096 subsequently performs its
+separate cumulative Main adoption. Main27703/9fbebe6b remains the dated
+[D1092 predecessor](current-cleared-input-main-d1092.md), not fresh liveness.
 
 The optional-sync full signed package also passes384AOT/408ELF/1608staticLOAD,
 v2/v3/ZIPCRC/nondebuggable and both Mono15payloads, with99643295bytes and SHA256
@@ -95,7 +99,9 @@ v2/v3/ZIPCRC/nondebuggable and both Mono15payloads, with99643295bytes and SHA256
 It has INTERNET/no BILLING and is not offline. The additional actual compiler
 binding makes seven logical source checks across baseline/final/Windows/default/
 sync. No unchanged managed suite, financial writer, enrollment or previous
-successful native condition is repeated. Both full packages remain prepared.
+successful native condition is repeated. The optional package remains prepared;
+the default package is subsequently adopted in D1096, without implying genuine
+sharing/provider acceptance.
 
 Seven standard Cleans pass, including the failed long private-output root. They
 retire55148files3176451645logical bytes;6570files996733756bytes remain in those
