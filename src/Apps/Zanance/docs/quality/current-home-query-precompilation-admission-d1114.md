@@ -57,3 +57,7 @@ state revalidation. All frozen scopes, protected benchmark, Main/private data,
 accepted financial operations and terminal cohorts remain untouched. Home speed,
 original native-fault remedy and the other delivery gates remain open; this is
 one completed feasibility decision, not whole delivery completion or a new wait.
+
+[D1115](complete-home-reference-readers-host-d1115.md) subsequently qualifies a
+different complete typed-reader candidate in private host checks. Its gains are
+component-only; original Android integration and whole Home acceptance remain open.
