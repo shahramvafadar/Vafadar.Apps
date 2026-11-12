@@ -55,3 +55,8 @@ Original ordinary startup/Home behavior is not private Main DB/key or financial
 equality evidence. Main7200/232137dc is this dated adoption observation, not ongoing
 liveness or whole security/stability/performance/accessibility/platform/provider/
 Store/release acceptance. Canonical parent States and overall delivery stay open.
+
+The sole CI response later reports CodeQL success and CI failure. The failed
+Windows job stops in an APK handoff fixture before its actual Windows build;
+[D1100](ci-apk-handoff-application-isolation-d1100.md) preserves that log and repairs
+the fixture's accidental real SDK invocation without repeating successful jobs.

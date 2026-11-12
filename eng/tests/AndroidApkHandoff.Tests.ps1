@@ -3,19 +3,31 @@
 $ErrorActionPreference = 'Stop'
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 $entry = Join-Path $repo 'eng/scripts/Build-AndroidApk.ps1'
-$temporaryRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath())
+$temporaryRoot = [IO.Path]::GetFullPath((Join-Path $repo 'artifacts'))
 $fixture = Join-Path $temporaryRoot ('Vafadar-AndroidApkHandoff-' + [Guid]::NewGuid().ToString('N'))
-$buildCommands = [Collections.Generic.List[string]]::new()
 $previousExitCode = $global:LASTEXITCODE
-function dotnet {
-    if ($args[0] -notin @('restore', 'publish')) { throw 'Unexpected build command in the isolated fixture.' }
-    $buildCommands.Add([string]$args[0])
-    $global:LASTEXITCODE = 0
-}
+$previousPath = $env:PATH
+$previousCommandLog = $env:VAFADAR_HANDOFF_COMMAND_LOG
 
 Push-Location
 try {
     New-Item -ItemType Directory -Path $fixture | Out-Null
+    $commandLog = Join-Path $fixture 'commands.txt'
+    # The project wrapper deliberately resolves an Application, not a PowerShell
+    # function. Put an inert executable first on PATH so the real wrapper is tested
+    # without accidentally reaching an installed SDK or restoring native packages.
+    if ($IsWindows) {
+        $fakeHost = Join-Path $fixture 'dotnet.cmd'
+        [IO.File]::WriteAllText($fakeHost, "@echo off`r`necho %1>>`"%VAFADAR_HANDOFF_COMMAND_LOG%`"`r`nexit /b 0`r`n")
+    } else {
+        $fakeHost = Join-Path $fixture 'dotnet'
+        [IO.File]::WriteAllText($fakeHost, "#!/bin/sh`nprintf '%s\n' `"`$1`" >> `"`$VAFADAR_HANDOFF_COMMAND_LOG`"`nexit 0`n")
+        [IO.File]::SetUnixFileMode($fakeHost, [IO.UnixFileMode]::UserRead -bor [IO.UnixFileMode]::UserWrite -bor [IO.UnixFileMode]::UserExecute)
+    }
+    $env:VAFADAR_HANDOFF_COMMAND_LOG = $commandLog
+    $env:PATH = $fixture + [IO.Path]::PathSeparator + $previousPath
+    $resolvedHost = Get-Command dotnet -CommandType Application | Select-Object -First 1
+    if ($resolvedHost.Source -ne $fakeHost) { throw 'The isolated SDK executable was not selected.' }
     foreach ($case in @('missing', 'empty', 'ambiguous', 'unique')) {
         $output = Join-Path $fixture $case
         New-Item -ItemType Directory -Path $output | Out-Null
@@ -43,12 +55,20 @@ try {
             throw 'The unique artifact was not reported.'
         }
     }
-    if ($buildCommands.Count -ne 8) { throw 'The isolated restore/publish boundary was not exercised exactly once per case.' }
+    $buildCommands = @([IO.File]::ReadAllLines($commandLog))
+    if (($buildCommands -join ',') -ne 'restore,publish,restore,publish,restore,publish,restore,publish') {
+        throw 'The isolated restore/publish boundary was not exercised exactly once per case.'
+    }
     'Four APK handoff entry-point cases passed; no SDK build or device work executed.'
 }
 finally {
     Pop-Location
-    Remove-Item Function:/dotnet
+    $env:PATH = $previousPath
+    if ($null -eq $previousCommandLog) {
+        Remove-Item Env:/VAFADAR_HANDOFF_COMMAND_LOG -ErrorAction SilentlyContinue
+    } else {
+        $env:VAFADAR_HANDOFF_COMMAND_LOG = $previousCommandLog
+    }
     $global:LASTEXITCODE = $previousExitCode
     # Remove only this new, fully resolved test fixture; never a caller-supplied path.
     $resolved = [IO.Path]::GetFullPath($fixture)
