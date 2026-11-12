@@ -1,5 +1,10 @@
 # Original transaction results above the actual keyboard - D1124
 
+[D1129 owner retirement](transaction-keyboard-owner-retirement-d1129.md) corrects
+two actual constructor/disposal callback failures with versioned native ownership,
+reentry and exception-preservation evidence. Geometry and financial policy stay
+unchanged; failed observer packets and historical source limits remain explicit.
+
 [D1128 ps16k compatibility](ps16k-transaction-ime-viewport-d1128.md) reuses the
 identical D1127 APK for one actual API35/userspace16KiB keyboard/restoration case,
 with independent OS geometry and full typed source preserved; no new build.

@@ -8,6 +8,7 @@ public partial class TransactionsPage : ContentPage
     private AppShell? _ownerShell;
     private bool _shellRetired;
     private bool _publicationActive;
+    private bool _retiringPublication;
     private IDisposable? _keyboardViewport = null;
 
     /// <summary>Exposes the original appearance read without racing a second native-review load.</summary>
@@ -43,8 +44,9 @@ public partial class TransactionsPage : ContentPage
     /// <summary>Restores only this page's owned padding before its navigation or native owner retires.</summary>
     private void ReleaseKeyboardViewport()
     {
-        _keyboardViewport?.Dispose();
+        var retired = _keyboardViewport;
         _keyboardViewport = null;
+        retired?.Dispose();
     }
 
     // D-108: retain room for result rows while the same complete filter form scrolls vertically when necessary.
@@ -101,7 +103,7 @@ public partial class TransactionsPage : ContentPage
     /// <summary>Shares the actual appearance and retained-tab read, without automatically retrying a failed presence.</summary>
     internal Task RefreshForNavigationAsync()
     {
-        if (_shellRetired) return Task.CompletedTask;
+        if (_shellRetired || _retiringPublication) return Task.CompletedTask;
         if (_publicationActive) return PendingPublication;
         _publicationActive = true; _viewModel.SetActive(true);
         AcquireKeyboardViewport();
@@ -113,10 +115,22 @@ public partial class TransactionsPage : ContentPage
     /// <summary>Retires complete reads, rows, original native consent and Undo commands on actual departure.</summary>
     internal void RetirePublication()
     {
-        ReleaseKeyboardViewport();
-        // Retained Android tabs/root replacement may omit native OnDisappearing; the actual owner must release this singleton event.
-        _viewModel.Undo.Changed -= OnUndoChanged;
-        _publicationActive = false; _viewModel.SetActive(false);
+        if (_retiringPublication) return;
+        _retiringPublication = true;
+        try
+        {
+            // D-1129: revoke authority before layout callbacks, including a reentrant retained-tab refresh.
+            _publicationActive = false;
+            // Retained Android tabs/root replacement may omit native OnDisappearing; release this singleton event.
+            _viewModel.Undo.Changed -= OnUndoChanged;
+            Exception? failure = null;
+            try { _viewModel.SetActive(false); }
+            catch (Exception error) { failure = error; }
+            try { ReleaseKeyboardViewport(); }
+            catch (Exception cleanup) when (failure is not null) { throw new AggregateException(failure, cleanup); }
+            if (failure is not null) System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(failure).Throw();
+        }
+        finally { _retiringPublication = false; }
     }
     /// <summary>Prevents an old Shell root from reactivating transaction commands.</summary>
     internal void RetireShellPublication() { _shellRetired = true; RetirePublication(); }

@@ -22,7 +22,14 @@ internal sealed class TransactionsKeyboardViewport : IDisposable
         _padding = container.Padding;
         _observer = root.ViewTreeObserver!;
         _observer.GlobalLayout += UpdateViewport;
-        UpdateViewport(this, EventArgs.Empty);
+        try { UpdateViewport(this, EventArgs.Empty); }
+        catch (Exception initial)
+        {
+            // D-1129: a failed first layout has no caller-owned instance to release its native listener.
+            try { Dispose(); }
+            catch (Exception cleanup) { throw new AggregateException(initial, cleanup); }
+            throw;
+        }
     }
 
     /// <summary>Observes only the attached original page's root; no global inset listener or Activity setting is replaced.</summary>
