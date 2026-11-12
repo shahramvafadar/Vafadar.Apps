@@ -119,3 +119,9 @@ mandatory. Nested wall spans cannot be summed as independent work. A single
 diagnostic cannot establish a speedup, eliminate either key verification, qualify
 historical native faults, or close security, performance or platform gates.
 All canonical parent States and the full delivery goal remain unchanged.
+
+## Reference-shape continuation
+
+[D1109](current-reference-protected-cold-d1109.md) observes the current original
+10,000-entry/20-account/100-plan workload separately. It does not rerun this
+tenfold diagnostic or convert its nested spans into a speedup claim.
