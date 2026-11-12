@@ -126,3 +126,10 @@ completed/success. Its actual delay is later than the15-18minute target; no time
 claim, second query, job log or rerun follows. Canonical parent States, original
 native-fault remedy, whole reference-device performance/security/accessibility/
 platform/provider/Store/release gates and the active full delivery goal remain.
+
+## Distinct continuation
+
+[D1108](current-first-keyed-schema-access-d1108.md) separates an added read-only
+first-schema access from each subsequent mandatory full plain-integrity traversal
+on the same retained source. It preserves its admission/arming failures and does
+not reinterpret these D1107nested wall spans as exclusive KDF or CPU costs.
