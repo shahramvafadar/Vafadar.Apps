@@ -1,5 +1,9 @@
 # Samsung ARM64 keyboard-owner retirement - D1131
 
+[D1133](transaction-activation-failure-retirement-d1133.md) later corrects a distinct
+pre-read activation callback failure and qualifies three new current-recovery/error
+conditions without replaying these constructor/departure controls.
+
 [D1129](transaction-keyboard-owner-retirement-d1129.md) corrects two actual
 viewport ownership failures. [D1130](current-main-keyboard-owner-adoption-d1130.md)
 adopts its complete package but does not execute the private failure controls on

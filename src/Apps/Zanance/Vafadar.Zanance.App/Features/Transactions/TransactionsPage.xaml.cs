@@ -105,12 +105,24 @@ public partial class TransactionsPage : ContentPage
     {
         if (_shellRetired || _retiringPublication) return Task.CompletedTask;
         if (_publicationActive) return PendingPublication;
-        _publicationActive = true; _viewModel.SetActive(true);
-        AcquireKeyboardViewport();
-        _viewModel.Undo.Changed -= OnUndoChanged;
-        _viewModel.Undo.Changed += OnUndoChanged;
-        _viewModel.UpdateUndo();
-        return PendingPublication = _viewModel.LoadAsync();
+        _publicationActive = true;
+        try
+        {
+            _viewModel.SetActive(true);
+            AcquireKeyboardViewport();
+            _viewModel.Undo.Changed -= OnUndoChanged;
+            _viewModel.Undo.Changed += OnUndoChanged;
+            _viewModel.UpdateUndo();
+            return PendingPublication = _viewModel.LoadAsync();
+        }
+        catch (Exception activation)
+        {
+            // D-1133: a binding/layout callback can fail before a new read task is assigned.
+            // Retire partial ownership so the next current appearance cannot reuse the old task.
+            try { RetirePublication(); }
+            catch (Exception cleanup) { throw new AggregateException(activation, cleanup); }
+            throw;
+        }
     }
     /// <summary>Retires complete reads, rows, original native consent and Undo commands on actual departure.</summary>
     internal void RetirePublication()
