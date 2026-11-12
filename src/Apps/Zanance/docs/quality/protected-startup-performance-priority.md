@@ -1,5 +1,10 @@
 # Protected-startup performance priority from saved evidence (D-921)
 
+[D1106 current runtime observation](current-mono15-protected-cold-baseline-d1106.md)
+adds one new.NET10.0.15stress-shape sample: protected3823.4534ms/ready-draw8892.7049ms,
+exact typed source, no candidate or reference-device acceptance. Its stopped source
+is retained for distinct subphase work; the old coarse sample must not replay.
+
 Subsequent [D922 actual native admission](verification-page-cache-budget-rejection.md)
 rejects the fixed cache budget at the first10k latency/allocation gates. Its100k/
 second-process/product stages are unexecuted; the registration below is historical,
