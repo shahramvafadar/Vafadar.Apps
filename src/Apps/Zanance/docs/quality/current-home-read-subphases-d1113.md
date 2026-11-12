@@ -88,3 +88,7 @@ only after a fresh owner instruction, inspect current Git and actual retained
 state, and never relaunch/rearm the consumed observer or repeat accepted samples.
 The next independent question is a source-preserving optimization of the admitted
 Home read path, with feasibility and fixed gates established before a new trial.
+
+The owner subsequently resumes delivery. [D1114](current-home-query-precompilation-admission-d1114.md)
+records the next finite feasibility decision and the sole successful D1113 CI
+receipt. The pause above is historical; the consumed observer remains retired.
