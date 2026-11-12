@@ -1,5 +1,10 @@
 # Original account-form native hint contrast - D-1054
 
+[D1122 transaction search](transaction-search-native-hint-states-d1122.md) adds only
+the missing original SearchBar current enabled focused/unfocused color states in
+two themes, across normal tab Shell replacement. These eight Entry observations
+remain terminal and are not rerun; product colors stay unchanged.
+
 ## Named remaining native boundary
 
 [D865 bound-source admission](bound-muted-contrast-source-admission.md) establishes

@@ -4,6 +4,11 @@
 qualifies the four original enabled empty placeholders in two themes, with actual
 native hint colors/alpha and no product recolor; source/observer/platform limits remain explicit.
 
+[D1122 native transaction search](transaction-search-native-hint-states-d1122.md)
+subsequently qualifies the original enabled SearchBar in two native focus states
+per theme. Current Editor declarations have no active placeholder to invent;
+no global palette change or replay of the accepted Entry contexts follows.
+
 ## Named remaining contrast question
 
 A failing numerical pair is not automatically a failing UI control. Before changing
