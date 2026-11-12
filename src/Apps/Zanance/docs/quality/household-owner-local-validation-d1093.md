@@ -1,5 +1,8 @@
 # Household owner label validation before primary intent — D-1093
 
+[D1094 Home session source control](mono15-home-session-source-control-d1094.md)
+is a separate current-runtime investigation; no owner-input success is repeated.
+
 After [cumulative input delivery](current-cleared-input-main-d1092.md), original
 household owner completion still marks a primary operation submitted before its
 local Name.Trim/authoritative name guard can fail. Null, empty and whitespace
@@ -96,3 +99,9 @@ the dated D1092observation, not fresh liveness/private-source equality. Canonica
 parent States, terminal cohorts and full delivery goal remain open; original fault,
 whole performance/security/accessibility/platform/provider/Store/release are not
 accepted by this bounded correction.
+
+## Sole delayed CI observation
+
+The consumed one-GET receipt records CI43123798439in_progress/null and
+CodeQL43123798453completed/success. Pending CI is not a pass or failure; no second
+query, job rerun or successful-job log is requested. D1094 does not wait on it.
