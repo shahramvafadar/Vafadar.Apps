@@ -96,8 +96,10 @@ public sealed partial class HouseholdViewModel
             if (choice == translator["Household_NewProfile"])
             {
                 stage = "destination-name";
+                // Native input bindings can supply null; keep the raw draft and let the prompt supply its normal default.
+                var initialName = Name?.Trim();
                 var name = await AwaitNativeAsync(() => interaction.PromptAsync(translator["Household_NewProfile"], translator["Profile_NamePrompt"], translator["Common_Save"],
-                    translator["Common_Cancel"], initialValue: Name.Trim() == profiles.NameOf(profiles.Current) ? null : Name.Trim(),
+                    translator["Common_Cancel"], initialValue: initialName == profiles.NameOf(profiles.Current) ? null : initialName,
                     maxLength: ProfileService.MaxNameLength));
                 if (string.IsNullOrWhiteSpace(name)) return;
                 stage = "native-profile-create";

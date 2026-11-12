@@ -123,3 +123,8 @@ is unknown and is not queried again. Parent States, terminal cohorts, retained
 resources and the overall delivery goal remain open. Original fault cause,
 whole performance/security/accessibility/platform/provider/Store/release gates
 are not accepted by these bounded negative model conditions.
+
+The sole D1102 follow-up later reports CodeQL success and CI in_progress/null;
+the dated response is retained without another query. The independent
+[D1103 source-destination label correction](household-source-destination-null-label-d1103.md)
+continues actual nullable native input without repeating these prompt conditions.
