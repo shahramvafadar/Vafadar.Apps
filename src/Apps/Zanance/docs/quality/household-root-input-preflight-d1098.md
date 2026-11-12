@@ -1,5 +1,8 @@
 # Household key-root input preflight - D1098
 
+[D1099 cumulative Main adoption](current-root-input-main-d1099.md) delivers the
+identical default package once, without repeating these native cases.
+
 Following [recovery-name correction](household-recovery-local-label-d1097.md),
 two original root-confirmation inputs still evaluate malformed fingerprints after
 AwaitPrimary has marked an unknown submission. Claim and EnrollOwnDevice then
@@ -96,7 +99,8 @@ optional-sync SHA256 is
 `c9a542fb1112c3c9f62ddeeec310615ca1a8ffb297b5d890b8cab99c9108622b`.
 The latter has INTERNET/no BILLING and is not offline. Three further actual
 compiler documents make seven logical bindings overall, not whole-PE identity.
-Both full packages remain prepared, not Main-installed.
+Both full packages were prepared at completion of this batch; D1099 subsequently
+adopts the identical default package, while the optional-sync package stays prepared.
 
 Only the fresh UID retires after same-process/source/public-state checks. Exact
 OS/key presence/locale/boot/geometry and initial reverse state are preserved;
