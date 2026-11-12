@@ -108,3 +108,7 @@ The full goal remains active. Choose a different admitted remaining task while
 preserving the sealed source, closed candidates and original key/source/owner
 boundaries. Original native-fault remedy, whole performance, security, accessibility,
 platform/provider and release gates remain open; this rejection does not close them.
+
+[D1117](factory-completion-authority-d1117.md) follows a different actual defect:
+factory construction can return an already-retired owner/publication result.
+Its correction does not reopen this rejected reader candidate or claim a speedup.

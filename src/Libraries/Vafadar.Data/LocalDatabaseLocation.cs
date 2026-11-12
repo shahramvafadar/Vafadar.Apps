@@ -247,13 +247,16 @@ internal sealed class LocalDbContextFactory<TContext>(
             if (owner is not null) options = new DbContextOptionsBuilder<TContext>(options)
                 .AddInterceptors(new ProtectedSqliteCommandInterceptor(() =>
                 { location.RequireCurrent(captured); location.Access.RequireOwner(owner); })).Options;
-            return (TContext)Create(services, [options]);
+            return RequireConstructed((TContext)Create(services, [options]), captured, owner);
         }
         location.RequireCurrent(captured);
         var connection = captured.CreateConnection();
         try
         {
             location.RequireCurrent(captured);
+            // D-1117: a native creator can retire its maintenance turn before returning.
+            // Refuse before constructing another context under that already-closed authority.
+            if (owner is not null) location.Access.RequireOwner(owner);
             var options = new SqliteConnectionStringBuilder(connection.ConnectionString);
             if (connection.State != System.Data.ConnectionState.Closed || options.Mode != SqliteOpenMode.ReadWrite || options.Pooling ||
                 string.IsNullOrEmpty(options.Password) || System.IO.Path.GetFullPath(options.DataSource) != captured.Path)
@@ -264,9 +267,23 @@ internal sealed class LocalDbContextFactory<TContext>(
             var configured = new DbContextOptionsBuilder<TContext>().UseSqlite(connection, contextOwnsConnection: true)
                 .AddInterceptors(interceptor, new ProtectedSqliteConnectionInterceptor(captured.Path, captured.CipherVersion!, validate),
                     new ProtectedSqliteCommandInterceptor(validate)).Options;
-            return (TContext)Create(services, [configured]);
+            return RequireConstructed((TContext)Create(services, [configured]), captured, owner);
         }
         catch { connection.Dispose(); throw; }
+    }
+
+    /// <summary>Disposes a newly constructed result when callbacks retired its exact publication or maintenance turn.</summary>
+    private TContext RequireConstructed(TContext context, LocalDatabaseLocation<TContext>.Endpoint captured,
+        DatabaseAccessGate.ExclusiveLease? owner)
+    {
+        try
+        {
+            // Construction can invoke application services. The entry check cannot authorize the later handoff.
+            location.RequireContextPublication(captured);
+            if (owner is not null) location.Access.RequireOwner(owner);
+            return context;
+        }
+        catch { context.Dispose(); throw; }
     }
 
     private DbContextOptions<TContext> Build(string path)
