@@ -1,5 +1,8 @@
 # Interrupted household recovery draft local name ownership - D1097
 
+[D1098 key-root preflight](household-root-input-preflight-d1098.md) separately
+qualifies two key-input routes without repeating these recovery-name cases.
+
 After [cumulative Main adoption](current-household-input-main-d1096.md), the remaining
 household recovery completion path still enters AwaitPrimary before Name.Trim and
 the unchanged authoritative RequireName. A purely local invalid name makes the
@@ -112,3 +115,11 @@ goal remain open; this negative name boundary is not genuine recovery, whole
 private security, original fault remedy, performance, accessibility, platform,
 provider/Store or release acceptance. Fingerprint-confirmation boundaries remain
 separate; no unobserved correction is claimed.
+
+## Sole delayed CI observation
+
+The exclusive consumed marker precedes the only GET for this commit. Its retained
+response records[CodeQL43136225289](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43136225289)
+and[CI43136225293](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43136225293)
+both in_progress/null. No pass/failure or job cause is inferred. No second query,
+job log, polling or rerun occurs; independent D1098 continues without waiting.

@@ -238,9 +238,11 @@ public sealed partial class HouseholdViewModel(HouseholdWorkspace workspace, Hou
     });
     [RelayCommand] private Task ClaimAsync() => RunAsync(async (access, ct) =>
     {
-        if (personalBound || Encoding.UTF8.GetByteCount(InvitationText) > 8192 || !await ConfirmAsync("Household_JoinConfirm")) return;
+        if (personalBound || Encoding.UTF8.GetByteCount(InvitationText) > 8192) return;
+        var confirmedRoot = RequireConfirmedRoot(ConfirmedRoot);
+        if (!await ConfirmAsync("Household_JoinConfirm")) return;
         var package = JsonSerializer.Deserialize(InvitationText, HouseholdMetadataJsonContext.Default.HouseholdInvitationPackage) ?? throw new InvalidDataException();
-        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.ClaimAsync(transport!, package, ConfirmedFingerprint(ConfirmedRoot), ct)); InvitationText = ""; await ReadLocalAsync(ct);
+        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.ClaimAsync(transport!, package, confirmedRoot, ct)); InvitationText = ""; await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task CheckAdmissionAsync() => RunAsync(async (access, ct) =>
     {
@@ -263,9 +265,11 @@ public sealed partial class HouseholdViewModel(HouseholdWorkspace workspace, Hou
     });
     [RelayCommand] private Task EnrollOwnDeviceAsync() => RunAsync(async (access, ct) =>
     {
-        if (identity is null || personalBound || Encoding.UTF8.GetByteCount(InvitationText) > 8192 || !await ConfirmAsync("HouseholdDeviceAccess_RequestConfirm")) return;
+        if (identity is null || personalBound || Encoding.UTF8.GetByteCount(InvitationText) > 8192) return;
+        var confirmedRoot = RequireConfirmedRoot(ConfirmedRoot);
+        if (!await ConfirmAsync("HouseholdDeviceAccess_RequestConfirm")) return;
         var package = JsonSerializer.Deserialize(InvitationText, HouseholdMetadataJsonContext.Default.HouseholdDeviceAccessPackage) ?? throw new InvalidDataException();
-        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.EnrollOwnDeviceAsync(transport!, package, ConfirmedFingerprint(ConfirmedRoot), ct));
+        access.Validate(); state = await AwaitPrimaryAsync(() => workspace.EnrollOwnDeviceAsync(transport!, package, confirmedRoot, ct));
         InvitationText = ""; await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task RefreshMembersAsync() => RunAsync(async (access, ct) =>
@@ -527,6 +531,13 @@ public sealed partial class HouseholdViewModel(HouseholdWorkspace workspace, Hou
         if (inputs != (Address, Fingerprint, Email, Name, InvitationText, ConfirmedRoot))
             throw new OperationCanceledException("The original household consent inputs changed.");
         return answer;
+    }
+    /// <summary>Captures a canonical local root input before confirmation and unknown primary ownership; the service still verifies the actual root.</summary>
+    private static string RequireConfirmedRoot(string? value)
+    {
+        var fingerprint = ConfirmedFingerprint(value ?? "");
+        if (!HouseholdProtectionContext.IsFingerprint(fingerprint)) throw new ArgumentException("A complete independently reviewed household root fingerprint is required.", nameof(ConfirmedRoot));
+        return fingerprint;
     }
     private static string ConfirmedFingerprint(string value) => Digits.ToAscii(value.Trim()).ToLowerInvariant();
     private void TranslationChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs args)
