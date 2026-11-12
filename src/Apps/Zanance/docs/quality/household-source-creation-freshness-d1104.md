@@ -1,5 +1,9 @@
 # D1104 - Selected source is current before destination creation
 
+[D1105 loaded-card native text](household-loaded-source-native-text-d1105.md) separately
+qualifies six languages/two actual themes at360dp/OS200, without another source
+copy, destination creation, financial posting or product change.
+
 Following [D1103 destination prompting](household-source-destination-null-label-d1103.md),
 OpenSourceDestination still creates a new profile before SwitchHouseholdSource
 rechecks the selected source. If the source changes while the name prompt awaits,
