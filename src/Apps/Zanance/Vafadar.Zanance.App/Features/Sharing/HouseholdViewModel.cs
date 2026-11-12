@@ -283,7 +283,9 @@ public sealed partial class HouseholdViewModel(HouseholdWorkspace workspace, Hou
             translator["Sync_Confirm"], translator["Common_Cancel"], maxLength: 64));
         if (confirmation is null) return; access.Validate();
         if (!Pending.Contains(item)) throw new OperationCanceledException("The original household pending row retired.");
-        await AwaitPrimaryAsync(() => workspace.ApproveAsync(transport!, state!.Authority, item.Source, ConfirmedFingerprint(confirmation), ct)); await ReadLocalAsync(ct);
+        // A malformed local prompt has not submitted an unknown membership operation.
+        var fingerprint = RequireConfirmedRoot(confirmation);
+        await AwaitPrimaryAsync(() => workspace.ApproveAsync(transport!, state!.Authority, item.Source, fingerprint, ct)); await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task ChangeMemberAsync(HouseholdMemberItem item) => RunAsync(async (access, ct) =>
     {
@@ -304,7 +306,8 @@ public sealed partial class HouseholdViewModel(HouseholdWorkspace workspace, Hou
             translator["Sync_Confirm"], translator["Common_Cancel"], maxLength: 64));
         if (confirmed is null) return; access.Validate();
         if (!PendingDevices.Contains(item)) throw new OperationCanceledException("The original household device row retired.");
-        await AwaitPrimaryAsync(() => workspace.ApproveDeviceAsync(transport!, state!.Authority, version, item.Source, ConfirmedFingerprint(confirmed), ct)); await ReadLocalAsync(ct);
+        var fingerprint = RequireConfirmedRoot(confirmed);
+        await AwaitPrimaryAsync(() => workspace.ApproveDeviceAsync(transport!, state!.Authority, version, item.Source, fingerprint, ct)); await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task RevokeDeviceAsync(HouseholdApprovedDeviceItem item) => RunAsync(async (access, ct) =>
     {

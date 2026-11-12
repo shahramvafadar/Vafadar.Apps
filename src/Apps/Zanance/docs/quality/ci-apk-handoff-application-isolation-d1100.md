@@ -47,3 +47,10 @@ failure. Main7200/232137dc remains the dated D1099 observation, not fresh livene
 Canonical parent States, retained cohorts and the full delivery goal remain open;
 this CI repair does not qualify original native-fault cause, whole performance,
 security, accessibility, platform, provider, Store or release acceptance.
+
+The D1100 follow-up consumes its sole GET after the retained16-minute deadline
+and returns an empty workflow list. Its receipt mistakenly uses abbreviated
+`ea5e45fc` instead of the complete commit hash. That incomplete filter cannot
+establish whether CI exists or succeeds; current CI conclusion remains unknown.
+The raw response, original consumed marker and separate filter-refusal receipt
+are preserved without rewriting the request evidence or issuing another query.

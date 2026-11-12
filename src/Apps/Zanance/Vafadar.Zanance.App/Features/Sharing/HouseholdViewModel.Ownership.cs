@@ -42,11 +42,14 @@ public sealed partial class HouseholdViewModel
         var former = disposition == leave ? HouseholdFormerOwnerRole.Leave : disposition == Role(HouseholdRole.Editor) ? HouseholdFormerOwnerRole.Editor : HouseholdFormerOwnerRole.Viewer;
         var confirmed = await AwaitNativeAsync(() => interaction.PromptAsync(translator["HouseholdOwnership_Title"], translator["Household_DeviceFingerprintPrompt"],
             translator["Sync_Confirm"], translator["Common_Cancel"], maxLength: 64));
-        if (confirmed is null || !await AwaitNativeAsync(() => interaction.ConfirmAsync(translator["HouseholdOwnership_Title"],
+        if (confirmed is null) return;
+        // Reject incomplete local review before confirmation or synchronization can start.
+        var fingerprint = RequireConfirmedRoot(confirmed);
+        if (!await AwaitNativeAsync(() => interaction.ConfirmAsync(translator["HouseholdOwnership_Title"],
             item.Caption + "\n\n" + disposition + "\n\n" + translator["HouseholdOwnership_Confirm"], translator["Sync_Confirm"], translator["Common_Cancel"]))) return;
         if (!ApprovedDevices.Contains(item)) throw new OperationCanceledException("The original household ownership target retired.");
         access.Validate(); ownership = await AwaitPrimaryAsync(() => workspace.BeginOwnershipAsync(transport!, captured.Authority, version, item.IdentityId,
-            item.Source.Id, ConfirmedFingerprint(confirmed), former, ct)); await ReadLocalAsync(ct);
+            item.Source.Id, fingerprint, former, ct)); await ReadLocalAsync(ct);
     });
     [RelayCommand] private Task ReadOwnershipAsync() => RunAsync(async (access, ct) =>
     {

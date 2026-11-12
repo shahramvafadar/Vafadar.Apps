@@ -3,6 +3,10 @@
 [D1099 cumulative Main adoption](current-root-input-main-d1099.md) delivers the
 identical default package once, without repeating these native cases.
 
+[D1102 administrative prompt preflight](household-administration-fingerprint-preflight-d1102.md)
+continues the three separate original approval/ownership prompt callers, with
+actual protected owner eligibility and no replay of these root Entry conditions.
+
 Following [recovery-name correction](household-recovery-local-label-d1097.md),
 two original root-confirmation inputs still evaluate malformed fingerprints after
 AwaitPrimary has marked an unknown submission. Claim and EnrollOwnDevice then
