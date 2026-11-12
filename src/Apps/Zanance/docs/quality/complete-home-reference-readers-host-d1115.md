@@ -87,3 +87,8 @@ inputs and package policy before using the same retained source without reset.
 Preregister original Android read and whole-ready boundaries, source equality and
 fixed non-regression gates; do not adopt a host-only gain. Shipping remains unchanged
 and the full goal remains active with original fault/performance/platform gates open.
+
+[D1116](complete-home-reference-readers-native-d1116.md) completes that fixed native
+comparison: all14 source/Home packets are exact, but the median paired Home-read
+gain is4.7036%, below the5% gate. The candidate is rejected without retuning or
+shipping adoption; favorable host component results do not override this result.
