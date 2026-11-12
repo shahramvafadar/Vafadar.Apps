@@ -1,5 +1,10 @@
 # Transaction keyboard owner retirement - D1129
 
+[D1131 Samsung ARM64 qualification](samsung-keyboard-owner-retirement-d1131.md)
+adds the four named physical error controls across declared versions, using the
+retained input without financial/authentication replay and preserving the failed
+observer/control packets. Product page/adapter source remains unchanged.
+
 [D1130 current Main adoption](current-main-keyboard-owner-adoption-d1130.md)
 later installs the exact prepared shipping package once without reset, with raw
 Home/all141native attributes and captured public state preserved. The no-phone
