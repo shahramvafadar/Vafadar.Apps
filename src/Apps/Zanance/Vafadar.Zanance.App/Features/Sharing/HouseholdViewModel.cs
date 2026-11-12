@@ -244,10 +244,13 @@ public sealed partial class HouseholdViewModel(HouseholdWorkspace workspace, Hou
     });
     [RelayCommand] private Task CheckAdmissionAsync() => RunAsync(async (access, ct) =>
     {
+        // Refuse a local label before either device resumption or the unknown-primary boundary.
+        var name = Name?.Trim();
+        if (string.IsNullOrEmpty(name) || name.Length > 100) throw new ArgumentException("A complete reviewed household profile name is required.", nameof(Name));
         if (state is { MembershipVersion: 0 } && HouseholdSetupAnchors.Kind(state.SignedInvitation) == HouseholdSetupAnchors.DeviceAccess)
             state = await AwaitPrimaryAsync(() => workspace.ResumeOwnDeviceAsync(transport!, state.Authority, ct));
         primarySubmitted = true;
-        var complete = await workspace.CompleteJoinAsync(transport!, state!.Authority, Name.Trim(), ct); access.Validate();
+        var complete = await workspace.CompleteJoinAsync(transport!, state!.Authority, name, ct); access.Validate();
         if (complete) { RecordAcceptedOperation(); environment.ConnectionChanged(); await environment.PublishAppliedAsync(ct); }
         await ReadLocalAsync(ct);
     });

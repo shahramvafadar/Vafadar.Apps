@@ -1,5 +1,8 @@
 # Mono15 original Home session source control (D1094)
 
+[The separate D1095 admission label correction](household-admission-local-validation-d1095.md)
+continues ready development without replaying this investigation.
+
 This is a bounded current-runtime Android read-session investigation, not a
 product optimization, whole-Home latency target, cold start or release acceptance.
 The actual production source opens `BeginHomeReadSessionAsync`; final validation
@@ -141,3 +144,12 @@ authentication, source export, frozen-scope inspection or supplemental deletion
 belongs to this investigation. Canonical parent States and the full delivery
 goal remain open; original fault, whole performance/security/accessibility,
 platform/provider/Store and release gates remain unaccepted.
+
+## Sole delayed CI observation
+
+The exclusive consumed marker precedes the only GET. Its saved response records
+[CodeQL43130814151](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43130814151)
+and[CI43130814232](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43130814232)
+both in_progress with null conclusion. This is pending, not a pass/failure;
+no second query, polling, successful-job log or rerun occurs. Independent D1095
+development continues without waiting for these runs.
