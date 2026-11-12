@@ -108,3 +108,7 @@ and [CodeQL in progress](https://github.com/shahramvafadar/Vafadar.Apps/actions/
 The exclusive marker/raw response/receipt are retained without another request.
 This snapshot is not acceptance of D1119. Original fault, performance, security,
 accessibility, platform/provider and release gates remain open; the full goal is active.
+
+[D1120](home-factory-caller-continuation-d1120.md) subsequently tests only the original
+factory-await capture in seven fixed native pairs, passes both gates and promotes
+the single await with five directly affected host cases and strict product builds.

@@ -49,7 +49,8 @@ public sealed partial class ZananceStore
         CancellationToken cancellationToken = default)
     {
         if (periodIndex is < 0 or > 1) throw new ArgumentOutOfRangeException(nameof(periodIndex));
-        var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        // Do not require the caller's dispatcher just to queue the original SQLite reader.
+        var db = await contextFactory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
         try
         {
             var snapshot = await ReadHomeSnapshotCoreAsync(db, today, periodIndex, cancellationToken);
