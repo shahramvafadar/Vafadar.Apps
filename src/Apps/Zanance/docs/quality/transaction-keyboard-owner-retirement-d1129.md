@@ -1,5 +1,10 @@
 # Transaction keyboard owner retirement - D1129
 
+[D1130 current Main adoption](current-main-keyboard-owner-adoption-d1130.md)
+later installs the exact prepared shipping package once without reset, with raw
+Home/all141native attributes and captured public state preserved. The no-phone
+and prepared-only statements below remain historical to D1129.
+
 ## Two actual original failures
 
 [D1124](transaction-search-ime-viewport-d1124.md) corrects keyboard occlusion;
