@@ -125,3 +125,10 @@ second query. Main7200/232137dc remains only the dated D1099 observation. Parent
 States, terminal cohorts, retained resources and the full delivery goal remain
 open. This guard does not accept actual source-copy publication, original native
 fault cause, whole performance/security/accessibility/platform/provider/Store/release.
+
+## Cumulative current Main delivery
+
+[D1111](current-source-guard-main-d1111.md) subsequently reuses this exact prepared
+default APK for one no-reset Main upgrade, with all four cumulative changed App
+compiler documents bound, exact ready Home/public state and no repeated App
+build, accepted source/destination action, financial write or successful test.
