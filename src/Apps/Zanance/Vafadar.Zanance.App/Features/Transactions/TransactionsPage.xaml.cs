@@ -8,6 +8,7 @@ public partial class TransactionsPage : ContentPage
     private AppShell? _ownerShell;
     private bool _shellRetired;
     private bool _publicationActive;
+    private IDisposable? _keyboardViewport = null;
 
     /// <summary>Exposes the original appearance read without racing a second native-review load.</summary>
     internal Task PendingPublication { get; private set; } = Task.CompletedTask;
@@ -25,6 +26,25 @@ public partial class TransactionsPage : ContentPage
         UndoNotice.SizeChanged += OnFilterLayoutChanged;
         BulkActions.PropertyChanged += OnActionVisibilityChanged;
         UndoNotice.PropertyChanged += OnActionVisibilityChanged;
+        Loaded += (_, _) => AcquireKeyboardViewport();
+        Unloaded += (_, _) => ReleaseKeyboardViewport();
+    }
+
+    /// <summary>Reacquires only this active page's native keyboard bounds after attachment or retained-tab return.</summary>
+    private void AcquireKeyboardViewport()
+    {
+#if ANDROID
+        if (_publicationActive && !_shellRetired && _keyboardViewport is null && Handler?.PlatformView is Android.Views.View native)
+            _keyboardViewport = TransactionsKeyboardViewport.TryAcquire(native, TransactionsLayout, ContentViewport,
+                () => OnFilterLayoutChanged(this, EventArgs.Empty));
+#endif
+    }
+
+    /// <summary>Restores only this page's owned padding before its navigation or native owner retires.</summary>
+    private void ReleaseKeyboardViewport()
+    {
+        _keyboardViewport?.Dispose();
+        _keyboardViewport = null;
     }
 
     // D-108: retain room for result rows while the same complete filter form scrolls vertically when necessary.
@@ -84,6 +104,7 @@ public partial class TransactionsPage : ContentPage
         if (_shellRetired) return Task.CompletedTask;
         if (_publicationActive) return PendingPublication;
         _publicationActive = true; _viewModel.SetActive(true);
+        AcquireKeyboardViewport();
         _viewModel.Undo.Changed -= OnUndoChanged;
         _viewModel.Undo.Changed += OnUndoChanged;
         _viewModel.UpdateUndo();
@@ -92,6 +113,7 @@ public partial class TransactionsPage : ContentPage
     /// <summary>Retires complete reads, rows, original native consent and Undo commands on actual departure.</summary>
     internal void RetirePublication()
     {
+        ReleaseKeyboardViewport();
         // Retained Android tabs/root replacement may omit native OnDisappearing; the actual owner must release this singleton event.
         _viewModel.Undo.Changed -= OnUndoChanged;
         _publicationActive = false; _viewModel.SetActive(false);

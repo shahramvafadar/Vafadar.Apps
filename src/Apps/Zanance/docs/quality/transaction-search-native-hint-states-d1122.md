@@ -1,5 +1,10 @@
 # Original transaction-search native hint states - D1122
 
+[D1124 actual keyboard viewport](transaction-search-ime-viewport-d1124.md) later
+finds and corrects a distinct result-area occlusion with the IME actually visible.
+These four color states remain terminal; a keyboard correction does not turn
+this earlier hidden-IME evidence into keyboard acceptance.
+
 Four current enabled hint-color contexts are qualified on the actual original
 TransactionsPage SearchBar: Light/Dark, each unfocused/focused. Product palette,
 styles, layout, messages, models, runtime/GC and permanent test count are unchanged.
