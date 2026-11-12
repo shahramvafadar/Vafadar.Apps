@@ -111,3 +111,7 @@ another request; it does not qualify this newer product change. Canonical parent
 States and terminal cohorts stay unchanged. Original fault, broader performance,
 security/accessibility, platform/provider and release gates remain open; the full
 delivery goal stays active.
+
+[D1121](current-main-home-continuation-d1121.md) subsequently adopts the exact
+prepared product on Main once without reset. The raw141-node Home/all native
+attributes and current public state remain equal; private source is not read.
