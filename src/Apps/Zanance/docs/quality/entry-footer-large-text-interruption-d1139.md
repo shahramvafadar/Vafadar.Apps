@@ -107,3 +107,9 @@ Neither result repairs or explains this OOM, nor replays any successful context.
 prepares only the20missing contexts with aggregate memory/weak-owner observations
 and17new host receipt controls. Android build/execution remains resource-gated;
 no new native pass or OOM remedy is claimed.
+
+The later [actual D1142 continuation](retained-footer-memory-native-continuation-d1142.md)
+adds only four formerly missing successes before a different signal interrupts
+case20. Its14memory samples, exact full C7 recovery/current baseline restoration
+and retained-off manifest preserve20qualified/16remaining contexts. Neither the
+old managed OOM nor the later signal is repaired or assigned an exclusive cause.

@@ -121,3 +121,9 @@ terminal qualification from all-counter availability and always leaves the origi
 OOM remedy unproved. Actual Android compilation, deployment, collection and all20
 remaining contexts are still pending the existing disk-space gate. No old successful
 input, financial write, emulator operation or frozen cleanup is repeated here.
+
+The subsequent [actual native continuation](retained-footer-memory-native-continuation-d1142.md)
+uses the prepared port after space is available. Four previously missing contexts
+pass, then a distinct signal interrupts case20. Fourteen bounded memory packets
+and exact C7 recovery are retained;20contexts total are qualified and16remain.
+The preparation controls above are not recounted as native observations or a remedy.
