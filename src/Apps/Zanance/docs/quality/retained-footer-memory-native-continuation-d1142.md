@@ -117,3 +117,9 @@ independent empty-source ARM64 registration path: the old toolbar's translator
 subscription actually detaches1to0 on original root replacement. It supplies no
 C7/x64retention or signal remedy, and does not replay or qualify another matrix
 context. The20qualified/16remaining retained-off checkpoint above is unchanged.
+
+[D1145/D1146](retained-footer-native-lifecycle-and-exit-d1146.md) subsequently
+qualifies five previously remaining contexts and actual large-source native root
+destruction. A new reason5/status11exit yields exact bridge-processing frames;
+read-only recovery preserves full C7 and the latest25qualified/11remaining checkpoint.
+The historical interrupted records above remain unchanged; no remedy is inferred.
