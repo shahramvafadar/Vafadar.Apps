@@ -92,3 +92,8 @@ replay, proves the complete old-row/derived-cache delta and retires UID10455.
 Main returns to the same15295/7b28fc99 ready Home with exact raw XML; the private
 native cache is standard-cleaned after use. D1136's sole CI and CodeQL results
 are completed-success; there is no second CI request.
+
+[D1139](entry-footer-large-text-interruption-d1139.md) adds16new large-text footer
+contexts before an actual managed OOM interruption. Its complete36context batch
+is not accepted;20contexts and the new allocation/retention question remain, with
+the exact original C7 source recovered and all successful cases preserved.
