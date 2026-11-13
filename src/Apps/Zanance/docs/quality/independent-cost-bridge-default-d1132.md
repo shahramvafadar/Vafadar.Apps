@@ -1,5 +1,10 @@
 # Independent remaining-cost and bridge-default review - D1132
 
+[D1152](bounded-forecast-effects-d1152.md) closes a distinct private small-effect
+grouping candidate: complete output/source equality passes, but historical100k
+latency regresses7.797451%. No second process/native/product rescue or successful
+financial/test replay follows; independent delivery remains active.
+
 [D1131](samsung-keyboard-owner-retirement-d1131.md) finishes the named ARM64
 callback-error controls. This separate review reads retained timing packets and
 public primary source; it does not replay those controls, a native benchmark,
