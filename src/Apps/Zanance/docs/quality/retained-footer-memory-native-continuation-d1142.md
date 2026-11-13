@@ -111,3 +111,9 @@ profile, whole performance/security/accessibility/platform/provider/Store/releas
 requirements and full delivery goal remain open. Another matrix run requires a
 concrete new premise; preserving this interruption does not authorize replaying
 the20qualified contexts or treating a smaller workload as completion.
+
+[D1144](original-toolbar-root-retirement-d1144.md) subsequently examines only one
+independent empty-source ARM64 registration path: the old toolbar's translator
+subscription actually detaches1to0 on original root replacement. It supplies no
+C7/x64retention or signal remedy, and does not replay or qualify another matrix
+context. The20qualified/16remaining retained-off checkpoint above is unchanged.
