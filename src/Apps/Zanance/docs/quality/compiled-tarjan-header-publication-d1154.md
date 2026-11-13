@@ -1,5 +1,10 @@
 # Current compiled Tarjan header publication - D1154
 
+[D1155](exact-runtime-build-inputs-d1155.md) prepares the exact mapped serviced
+source and locally pinned build tools. It keeps source-extraction failures and
+the unmatched NDK license prerequisite explicit; no runtime is built/deployed and
+no accepted native/financial case or consumed classifier repeats.
+
 [D1153](compiled-tarjan-current-predicate-d1153.md) binds the current old liveness
 guard and its position after the original fault. This follow-up tests the distinct
 earlier-object/publication premise using that already decoded public code. No
