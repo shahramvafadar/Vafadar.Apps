@@ -98,3 +98,26 @@ not authority to restart or replay. Missing counters, another interruption or a
 passing footer matrix must not be promoted to an OOM remedy or whole acceptance.
 The original fault/performance/security/accessibility/platform/external gates and
 the full delivery goal remain open.
+
+## Host archive reader prepared after the resource refusal
+
+The independent bounded archive reader now admits exactly one finite content-query
+row and a JSON object with unique fields. Each memory packet must match its exact
+sequence, original context16through35 and one of the three ordered phases. Invalid
+counter types, forced collection, unexpected fields, impossible generation availability
+and weak-owner counts beyond128 refuse. Missing counters remain null; a missing or
+refused receipt never becomes a zero measurement. No device is contacted by this reader.
+
+Sixteen new host-only boundary controls pass against an explicitly synthetic file
+catalog. They cover incomplete/complete archives, malformed/oversized/duplicate rows,
+counter/context/phase/generation refusal, missing exported receipts and unsupported
+OOM-remedy claims. They are neither product tests nor actual native memory samples.
+The reader source checksum and issued/terminal control receipts remain with the
+prepared source under `artifacts/d1142-retained-matrix-memory`.
+
+Archive completeness and native provenance remain separate: the reader cannot prove
+the live process, APK or original source binding. It distinguishes footer-matrix
+terminal qualification from all-counter availability and always leaves the original
+OOM remedy unproved. Actual Android compilation, deployment, collection and all20
+remaining contexts are still pending the existing disk-space gate. No old successful
+input, financial write, emulator operation or frozen cleanup is repeated here.
