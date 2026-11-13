@@ -114,3 +114,9 @@ replaying the25successes is not stability evidence. Native-fault remedy,11remain
 contexts and wider performance/security/accessibility/platform/external delivery
 gates remain open. Product code, test count and accepted financial operations do
 not change in this step.
+
+[D1147/D1148](current-bridge-header-operation-d1147.md) subsequently binds the
+actual fault to the exact49byte prefix and current public source line594. A
+fixed-site low-bit guard passes44new synthetic host cases only; original register
+classification still awaits the owner's separate decision. The retained25/11
+checkpoint and unproved remedy remain unchanged.
