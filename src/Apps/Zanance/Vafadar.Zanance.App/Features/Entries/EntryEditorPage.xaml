@@ -343,7 +343,7 @@
         </ScrollView>
 
         <!-- What saving does, said before Save (ZEX-S0103, S0204); Save waits for an account -->
-        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,16" Spacing="6"
+        <VerticalStackLayout x:Name="EntrySaveFooter" Grid.Row="1" Padding="16,8,16,16" Spacing="6"
                              IsVisible="{Binding HasNoAccounts, Converter={StaticResource InvertedBoolConverter}}">
             <!-- D-130: a rejected Save stays visible beside its action at every form scroll position. -->
             <Label Text="{Binding QuickActions.Feedback}" Style="{StaticResource ErrorText}" IsVisible="{Binding QuickActions.Feedback, Converter={StaticResource IsNotNullConverter}}" />

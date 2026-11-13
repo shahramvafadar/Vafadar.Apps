@@ -38,3 +38,8 @@ and D746 x64 search are retained evidence, not reasons to repeat those successes
 remaining current physical reference search/save requirements need distinct actual
 measurements. Original native-fault remedy, whole performance/security/accessibility,
 later iOS/provider/Store/release gates remain open.
+
+[D1135](physical-reference-search-save-continuation-d1135.md) retains the finite
+reference measurement interruptions without financial replay; the observed
+entry modal IME overlap is corrected and qualified in
+[D1136](entry-editor-keyboard-viewport-d1136.md), without changing parent States.

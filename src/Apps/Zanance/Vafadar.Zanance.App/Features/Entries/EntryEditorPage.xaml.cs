@@ -6,11 +6,32 @@ public partial class EntryEditorPage : ContentPage
     private bool _observingValidation;
     private int _validationVersion;
     private long _focusedEpoch = long.MinValue;
+    private IDisposable? _keyboardViewport = null;
 
     public EntryEditorPage(EntryEditorViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+        Loaded += (_, _) => AcquireKeyboardViewport();
+        Unloaded += (_, _) => ReleaseKeyboardViewport();
+    }
+
+    /// <summary>Observes keyboard occlusion only while this original modal owns the active form.</summary>
+    private void AcquireKeyboardViewport()
+    {
+#if ANDROID
+        if (_observingValidation && _keyboardViewport is null && Handler?.PlatformView is Android.Views.View native)
+            _keyboardViewport = EntryEditorKeyboardViewport.TryAcquire(native, ReadyFormSurface, EntrySaveFooter,
+                () => _observingValidation && Window?.Page is AppShell shell && ReferenceEquals(shell.CurrentPage, this));
+#endif
+    }
+
+    /// <summary>Releases native layout observation and restores only the padding this form still owns.</summary>
+    private void ReleaseKeyboardViewport()
+    {
+        var retired = _keyboardViewport;
+        _keyboardViewport = null;
+        retired?.Dispose();
     }
 
     protected override void OnAppearing()
@@ -18,6 +39,7 @@ public partial class EntryEditorPage : ContentPage
         base.OnAppearing();
         _viewModel.SetMoneyDisplayActive(true);
         _observingValidation = true;
+        AcquireKeyboardViewport();
         _viewModel.ValidationFailed -= OnValidationFailed;
         _viewModel.ValidationFailed += OnValidationFailed;
 
@@ -54,10 +76,12 @@ public partial class EntryEditorPage : ContentPage
     /// <summary>Stops scroll requests when this form leaves the visible navigation lifetime.</summary>
     protected override void OnDisappearing()
     {
-        _viewModel.ValidationFailed -= OnValidationFailed; _viewModel.PropertyChanged -= OnFormChanged;
-        _viewModel.SetMoneyDisplayActive(false); _viewModel.RetirePendingSave();
+        // D-1136: revoke the layout owner before any fallible binding or retirement callback.
         _observingValidation = false;
         _validationVersion++;
+        _viewModel.ValidationFailed -= OnValidationFailed; _viewModel.PropertyChanged -= OnFormChanged;
+        try { _viewModel.SetMoneyDisplayActive(false); _viewModel.RetirePendingSave(); }
+        finally { ReleaseKeyboardViewport(); }
         base.OnDisappearing();
     }
 
