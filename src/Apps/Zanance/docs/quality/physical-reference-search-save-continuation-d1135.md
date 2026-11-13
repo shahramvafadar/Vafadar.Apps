@@ -72,3 +72,9 @@ batch; no fixture regeneration or financial setup replay is permitted. Product
 runtime/GC, Main private data/keys, retained C7/Q02 and all frozen scopes remain
 untouched. General native-fault remedy, whole performance/security/accessibility,
 platform/provider/Store/release acceptance and the full delivery goal remain open.
+
+Subsequently, [D1137](current-reference-save-d1137.md) recovers the immutable
+result-label visibility receipt and completes one distinct Save after the actual
+footer correction. The original consumed tap and rejected draw remain unchanged.
+After full source/delta proof, UID10455 retires; its earlier retention above is
+the historical continuation checkpoint, not an active package requirement.

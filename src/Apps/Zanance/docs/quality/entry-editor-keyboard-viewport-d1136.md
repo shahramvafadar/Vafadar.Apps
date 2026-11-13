@@ -85,3 +85,10 @@ markers remain consumed; no old financial action may be replayed. Main15295 is
 the current dated observation, not a future-liveness claim. Original native-fault
 remedy, the two-second whole-performance objective, whole accessibility/security,
 iOS/provider/Store/release gates and the full delivery goal remain open.
+
+[D1137](current-reference-save-d1137.md) subsequently completes the remaining
+distinct reference Save on this corrected product source without financial
+replay, proves the complete old-row/derived-cache delta and retires UID10455.
+Main returns to the same15295/7b28fc99 ready Home with exact raw XML; the private
+native cache is standard-cleaned after use. D1136's sole CI and CodeQL results
+are completed-success; there is no second CI request.
