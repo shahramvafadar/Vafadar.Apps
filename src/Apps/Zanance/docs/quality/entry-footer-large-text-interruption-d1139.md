@@ -102,3 +102,8 @@ public MAUI compiler inputs and finds the named Shell cleanup changes already
 present. [D1141](home-root-undo-native-admission-d1141.md) qualifies actual normal
 Home Undo detachment on ARM64 without promoting an isolated-method candidate.
 Neither result repairs or explains this OOM, nor replays any successful context.
+
+[D1142](retained-footer-memory-continuation-preparation-d1142.md) subsequently
+prepares only the20missing contexts with aggregate memory/weak-owner observations
+and17new host receipt controls. Android build/execution remains resource-gated;
+no new native pass or OOM remedy is claimed.
