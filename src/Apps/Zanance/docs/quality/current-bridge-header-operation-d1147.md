@@ -135,3 +135,46 @@ The sole delayed fca391b2GET reports [CI in_progress43431456123](https://github.
 and [CodeQL success43431456109](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43431456109).
 The consumed marker precedes that one request; no polling or second check follows.
 Actual original header classification and native-fault repair remain unproved.
+
+## Approved one-shot terminal outcome (D1151)
+
+The owner explicitly approves only the proposed one-time emulator classification.
+The exact prepared APK is reused without a build or successful-test replay. The
+retained C7 AVD resumes with the same API36/x64/4096 and2048MiB/two-core settings;
+no wipe, replacement fixture, runtime/GC change or matrix input occurs.
+
+Initial package admission finds no process. Before installation, PID2923 appears;
+its cause is unknown. The absent-process precondition refuses before any install,
+Activity or SDK request. Actual revalidation finds cached/empty/adj905 and zero
+owned Activity records. The one approved normal no-reset upgrade then retires
+that cached process; no separate kill, old provider or old Activity is invoked.
+UID10216/CE352573/DE66486 and the expected old/new APK digests match.
+
+The host consumed marker precedes the sole new Activity launch, and the Activity's
+exclusive marker precedes its SDK inspection. Actual reader PID3723 returns:
+`Label=unknown`, `ErrorType=System.IO.InvalidDataException`, with actual reason,
+status and timestamp all null, zero MAUI windows and no database/financial command
+requested. The fixed wrapper therefore does not admit the original record before
+its stream-opening path. No RAX label is obtained; absence is not converted to
+header-low-000. These observations do not identify which historical selection
+condition failed, prove record deletion or establish an original header value.
+
+This question is terminal unknown. There is no second SDK inspection, relaxed
+timestamp/code/identity check, alternate record, new crash or signal. The approved
+interpretation is no longer awaiting an owner reply; it is not an accepted actual
+classification or a native-fault repair. Earlier module frames/source proofs and
+all25qualified contexts stay preserved; incomplete24/unissued25through34 remain.
+
+Captured public OS/locale/key presence/geometry/reverse state matches exactly
+without setting writes. Only the terminal reader is force-stopped; actual
+QEMU61148/wrapper23392 handles both signal after the normal owned console stop.
+Existing ADB5037/PID59860creation identity remains exact, with no reset/reconnect.
+The retained29AVD files/6,133,528,592logical bytes, C7data/keys and used APK/evidence
+remain. No userdata/key hash or fresh full typed-source comparison is performed:
+the last complete C7proof is still the dated D1146recovery, not public inode proof.
+
+Artifacts and the latest retained manifest are under
+`artifacts/d1151-original-header-tag-once`. There is no new build output, XML,
+supplementary/frozen cleanup, phone/Main/Q02 action, authentication or financial
+input. Further diagnosis needs a distinct concrete premise; this consumed question
+must not be reopened to manufacture a tag. All broader delivery gates remain open.
