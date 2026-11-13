@@ -91,3 +91,47 @@ and [CodeQL success43424980253](https://github.com/shahramvafadar/Vafadar.Apps/a
 Each exclusive consumed marker precedes its request. No polling, successful job
 log, rerun, repeat test or broader acceptance follows. Native-fault remedy and all
 remaining full-delivery gates stay open.
+
+## Prepared Android package, no deployment (D1149)
+
+The private Android guard is now prepared for the pending owner decision. It
+copies the final D1148reader exactly; the44successful host cases are not rerun.
+The copied private registration removes its former matrix Task.Run hook, and
+neither the matrix/status provider nor the previous inspection Activity is
+compiled. This is a diagnostic preparation, not completion of the11missing contexts.
+
+After the first strict build, the final wrapper strengthens selection with the
+original OS timestamp1794570836896, alongside PID5017/UID10216/reason5/status11.
+It rejects a different historical record before opening its stream. The output
+cap is also reduced to2048bytes for one bounded log message. The corresponding
+necessary rebuild passes without repeating host/native/financial successes.
+
+Final signed APK SHA256 is
+`2f8a90056f6dd589408709c7dd3c76ecd3ce2138228f3ce581b6a68632fca27f`,
+56,131,186bytes. Both strict builds have zero warnings/errors. Final package
+admission passes192AOT/204ELF/804static16KiBLOAD, offline/nondebuggable/v2v3/ZIPCRC,
+with unchanged stock15x64Mono. Its single public signer matches the previously
+retained package's signer. Five actual PDB documents bind the reader, Activity,
+private registration and original App/MainApplication; the exact current private
+project path and MAUI10.0.120 assets graph also match. This is not whole-linked-PE
+identity, Android execution of the guard or a full shipping-product qualification.
+
+The manifest contains the fixed new Activity and omits the former private status
+provider/inspection Activity. The frozen event/code/register selector, exclusive
+pre-read marker, unknown-on-refusal rule and eight-label output stay bounded.
+The prepared handoff requires the owner's explicit reply before emulator launch,
+installation or original-stream interpretation. No emulator/phone/ADB operation,
+SDK read, new native input or database/financial/authentication request occurs.
+
+One standard Clean retires13,693files/818,482,233logical bytes. The reviewed
+one-attempt supplementary removal retires five new targets/974files/
+409,423,522logical bytes: the completed short build root, never-installed initial
+publish directory and three unused final publish files. All targets are absent;
+the final APK, both versioned source/PDB proofs and preparation receipts remain
+under `artifacts/d1149-prepared-android-header-guard`. Old frozen scopes, Main,
+C7data/keys, terminal cohorts and the25qualified/11remaining checkpoint are untouched.
+
+The sole delayed fca391b2GET reports [CI in_progress43431456123](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43431456123)
+and [CodeQL success43431456109](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43431456109).
+The consumed marker precedes that one request; no polling or second check follows.
+Actual original header classification and native-fault repair remain unproved.
