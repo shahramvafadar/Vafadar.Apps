@@ -1,5 +1,10 @@
 # Current bridge header operation and prepared guard (D1147/D1148)
 
+Current continuation: D1151below is terminal unknown, with no pending owner reply
+or permitted repeat. [D1153](compiled-tarjan-current-predicate-d1153.md) separately
+binds the complete public push_object/helper code and proves that the old guard
+follows the faulting operation; no new register/runtime/device action occurs.
+
 The [actual D1146 exit](retained-footer-native-lifecycle-and-exit-d1146.md) now
 has an exact instruction/source operation. No original record, process or matrix
 case is read or executed again. The25qualified/11remaining checkpoint is unchanged.
