@@ -96,3 +96,9 @@ raise memory limits or force collection to turn the matrix green. Main remains
 D1137's last dated15295/7b28fc99 observation; no phone command is issued here.
 Original native-fault remedy, whole performance/security/accessibility,
 iOS/provider/Store/release gates and the full delivery goal remain open.
+
+[D1140](current-maui-shell-disposal-source-d1140.md) subsequently binds two exact
+public MAUI compiler inputs and finds the named Shell cleanup changes already
+present. [D1141](home-root-undo-native-admission-d1141.md) qualifies actual normal
+Home Undo detachment on ARM64 without promoting an isolated-method candidate.
+Neither result repairs or explains this OOM, nor replays any successful context.
