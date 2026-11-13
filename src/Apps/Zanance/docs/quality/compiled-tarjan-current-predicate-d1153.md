@@ -1,5 +1,10 @@
 # Exact current Tarjan predicate and fault ordering - D1153
 
+[D1154](compiled-tarjan-header-publication-d1154.md) binds the inlined writer's
+actual two-word publication sequence and rules out the marker alone changing an
+unchanged masked header base. Actual earlier writer/concurrency and remedy remain
+unproved; no register, device, runtime or successful matrix case is repeated.
+
 [D1123](tarjan-concurrent-source-admission-d1123.md) proves public source
 correspondence, explicitly leaving compiled instructions unproved. This separate
 static review closes that finite binary premise for the actual D1146module. It
