@@ -19,8 +19,9 @@ Original public module/debug hashes and BuildId
 collect_nursery, sgen_workers_join, sgen_workers_stop_all_workers,
 sgen_thread_pool_idle_wait, sgen_perform_collection, sgen_client_stop_world,
 unified_suspend_stop_world, sgen_thread_pool_is_thread_pool_thread and
-sgen_client_thread_register_worker. Their 7,417 original executable bytes and 1,712
-decoded instructions reconstruct completely. Fifteen explicit call/argument/branch
+sgen_client_thread_register_worker. Their 7,417 original executable bytes reconstruct completely across 1,712
+decoded rows, including one separately emitted lock-prefix row bound to its
+following operation. Fifteen explicit call/argument/branch
 boundaries pass, not fifteen product tests. No module is loaded or executed.
 
 Four initially named source functions have no separate exact symbol in this
