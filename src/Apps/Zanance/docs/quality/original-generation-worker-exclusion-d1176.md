@@ -63,9 +63,11 @@ Priority selection is not evidence that the old context was joined globally.
 Consequently, managed-world suspension plus a successful nursery join is
 insufficient evidence for universal old-worker quiescence. Conversely, this
 static permitted path does not establish that an old worker actually ran during
-the historical bridge operation. Actual collector generation, concurrent-phase
-state, worker participation, object/header values and earlier writer remain
-unobserved. No race, corruption cause, required runtime patch or crash repair is
+the historical bridge operation. This step alone does not identify its actual
+collector generation. The later [D1177 saved-stack correlation](original-allocation-collection-path-d1177.md)
+binds that specific invocation to the nursery/non-finishing allocation path;
+concurrent-major state, other-worker participation, object/header values and
+earlier writer remain unobserved. No race, corruption cause, required runtime patch or crash repair is
 accepted from this result.
 
 ## Preservation and remaining work
