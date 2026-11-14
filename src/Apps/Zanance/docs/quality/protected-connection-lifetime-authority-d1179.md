@@ -1,5 +1,9 @@
 # Protected native connection lifetime authority - D1179
 
+[D1180](first-keyed-page-thread-cpu-d1180.md) separately measures new controlled
+native Open/schema wall and thread CPU, without replaying these ownership cases
+or claiming a product speedup or original native fault repair.
+
 ## Four actual stale-authority failures
 
 After the [separate options-cache retention fix](protected-context-options-retention-d1178.md),
