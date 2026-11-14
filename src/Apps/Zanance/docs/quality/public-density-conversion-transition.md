@@ -61,4 +61,5 @@ acceptance and the overall goal remain open and active.
 
 Related: [versioned source and saved-width correlation](onboarding-density-transition-source.md),
 [original finite caption evidence](onboarding-visible-step-counter.md),
+[private compiled configuration-metrics qualification](private-maui-density-configuration-d1182.md),
 [remaining frontier](remaining-delivery-evidence.md).

@@ -1,0 +1,30 @@
+--- a/src/Core/src/Platform/Android/ContextExtensions.cs
++++ b/src/Core/src/Platform/Android/ContextExtensions.cs
+@@ -254,6 +254,17 @@
+ 			return (color & 0x00ffffff) | ((int)Math.Round(originalAlpha * alpha) << 24);
+ 		}
+ 
++		/// <summary>Refreshes process conversion metrics before configuration listeners request layout.</summary>
++		internal static void UpdateConfigurationMetrics(Context? context)
++		{
++			context ??= global::Android.App.Application.Context;
++			using (DisplayMetrics? metrics = context.Resources?.DisplayMetrics)
++				s_displayDensity = metrics != null ? metrics.Density : 1;
++			_actionBarHeight = null;
++			_statusBarHeight = null;
++			_navigationBarHeight = null;
++		}
++
+ 		static void EnsureMetrics(Context? context)
+ 		{
+ 			if (s_displayDensity != float.MinValue)
+--- a/src/Core/src/Platform/Android/MauiAppCompatActivity.Lifecycle.cs
++++ b/src/Core/src/Platform/Android/MauiAppCompatActivity.Lifecycle.cs
+@@ -21,6 +21,7 @@
+ 		public override void OnConfigurationChanged(Configuration newConfig)
+ 		{
+ 			base.OnConfigurationChanged(newConfig);
++			Microsoft.Maui.Platform.ContextExtensions.UpdateConfigurationMetrics(this);
+ 
+ 			IPlatformApplication.Current?.Services?.InvokeLifecycleEvents<AndroidLifecycle.OnConfigurationChanged>(del => del(this, newConfig));
+ 		}

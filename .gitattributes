@@ -53,3 +53,6 @@ src/Apps/Zanance/Vafadar.Zanance.App/Resources/Raw/ThirdPartyNotices.txt whitesp
 # D-580: exact reviewed replacement/license digests must survive every host checkout.
 eng/notifications/AndroidUtils.cs text eol=crlf whitespace=-blank-at-eol
 eng/notifications/LICENSE.upstream text eol=lf
+
+# Preserve the reviewed upstream LF patch and its blank context lines.
+eng/patches/maui-10.0.120-android-configuration-metrics.patch text eol=lf whitespace=-blank-at-eol,-space-before-tab
