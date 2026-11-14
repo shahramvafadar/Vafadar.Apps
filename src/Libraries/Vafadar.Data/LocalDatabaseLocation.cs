@@ -227,17 +227,18 @@ internal sealed class LocalDbContextFactory<TContext>(
         catch { lease.Dispose(); throw; }
     }
 
-    private TContext CreateLeased(LocalDatabaseLocation<TContext>.Endpoint captured, IDisposable lease,
+    private TContext CreateLeased(LocalDatabaseLocation<TContext>.Endpoint captured, DatabaseAccessGate.ContextLease lease,
         DatabaseAccessGate.ExclusiveLease? owner)
     {
         try
         {
-            var context = CreateCaptured(captured, owner); context.AttachAccessLease(lease); return context;
+            var context = CreateCaptured(captured, owner, lease); context.AttachAccessLease(lease); return context;
         }
         catch { lease.Dispose(); throw; }
     }
 
-    private TContext CreateCaptured(LocalDatabaseLocation<TContext>.Endpoint captured, DatabaseAccessGate.ExclusiveLease? owner)
+    private TContext CreateCaptured(LocalDatabaseLocation<TContext>.Endpoint captured, DatabaseAccessGate.ExclusiveLease? owner,
+        DatabaseAccessGate.ContextLease lease)
     {
         if (owner is not null) location.Access.RequireOwner(owner);
         location.RequireContextPublication(captured);
@@ -261,7 +262,8 @@ internal sealed class LocalDbContextFactory<TContext>(
             if (connection.State != System.Data.ConnectionState.Closed || options.Mode != SqliteOpenMode.ReadWrite || options.Pooling ||
                 string.IsNullOrEmpty(options.Password) || System.IO.Path.GetFullPath(options.DataSource) != captured.Path)
                 throw new InvalidOperationException("Protected creator returned an unsafe or foreign connection.");
-            Action validate = () => { location.RequireCurrent(captured); if (owner is not null) location.Access.RequireOwner(owner); };
+            // A retained connection cannot inherit its disposed context's drained access, even on the same publication.
+            Action validate = () => { lease.RequireActive(); location.RequireCurrent(captured); if (owner is not null) location.Access.RequireOwner(owner); };
             ProtectedSqliteAccess.Register(connection, validate);
             // D-197: never cache a key-bearing options/connection string by path across key/profile publications.
             var configured = new DbContextOptionsBuilder<TContext>().UseSqlite(connection, contextOwnsConnection: true)

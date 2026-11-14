@@ -1,5 +1,9 @@
 # Protected context options lifetime - D1178
 
+[D1179](protected-connection-lifetime-authority-d1179.md) separately binds explicit
+captured-native access to the disposed context's original gate lease. It does not
+repeat these collectibility cases or turn retention evidence into a crash repair.
+
 ## Observed defect and corrected ownership
 
 A new source-linked, cold .NET10.0.15/X64 contract created and disposed two

@@ -55,7 +55,7 @@ public sealed class DatabaseAccessGate
         }
     }
 
-    internal IDisposable EnterRead()
+    internal ContextLease EnterRead()
     {
         lock (sync)
         {
@@ -64,7 +64,7 @@ public sealed class DatabaseAccessGate
         }
     }
 
-    internal async Task<IDisposable> EnterReadAsync(CancellationToken ct)
+    internal async Task<ContextLease> EnterReadAsync(CancellationToken ct)
     {
         while (true)
         {
@@ -79,7 +79,7 @@ public sealed class DatabaseAccessGate
         }
     }
 
-    internal IDisposable EnterOwnedContext(ExclusiveLease owner)
+    internal ContextLease EnterOwnedContext(ExclusiveLease owner)
     {
         lock (sync) { RequireOwner(owner); owner.Contexts++; return new ContextLease(this, owner); }
     }
@@ -152,9 +152,15 @@ public sealed class DatabaseAccessGate
         public void Dispose() => gate.Close(this);
     }
 
-    private sealed class ContextLease(DatabaseAccessGate gate, ExclusiveLease? owner) : IDisposable
+    /// <summary>Bounds native factory authority to the lifetime that participates in draining this gate.</summary>
+    internal sealed class ContextLease(DatabaseAccessGate gate, ExclusiveLease? owner) : IDisposable
     {
         private int disposed;
+        /// <summary>Refuses a retained native connection after its original context released database access.</summary>
+        internal void RequireActive()
+        {
+            if (Volatile.Read(ref disposed) != 0) throw new InvalidOperationException("Captured database context access retired.");
+        }
         public void Dispose() { if (Interlocked.Exchange(ref disposed, 1) == 0) gate.LeaveContext(owner); }
     }
 }
