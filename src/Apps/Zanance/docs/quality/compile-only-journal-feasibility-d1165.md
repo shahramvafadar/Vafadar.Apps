@@ -1,5 +1,8 @@
 # Compile-only journal delegate feasibility - D1165 first gate
 
+[D1166](protected-journal-compiled-reader-d1166.md) subsequently passes31new actual
+protected-source contract roles; it still establishes no speed or Android acceptance.
+
 [D1164](original-journal-query-compilation-d1164.md) observes a645.0645ms read-query
 compilation event span and confirms that merely constructing a delegate does not
 remove first-use compilation. This private first gate asks whether the supported
