@@ -1,5 +1,9 @@
 # Original saved allocation-to-collection path - D1177
 
+[D1178](protected-context-options-retention-d1178.md) separately corrects an
+observed protected-context options-cache retention defect. It neither repairs
+nor establishes the cause of this original native collector fault.
+
 [D1176](original-generation-worker-exclusion-d1176.md) distinguishes a
 generation-scoped join from universal worker quiescence. This continuation binds
 that distinction to the existing admitted original PID 5017 stack. It uses only

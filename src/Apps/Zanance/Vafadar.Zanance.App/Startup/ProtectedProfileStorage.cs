@@ -124,7 +124,7 @@ public sealed class ProtectedProfileStorage
             using var input = new MemoryStream(owned, writable: false);
             await using var snapshot = await SqliteMemorySnapshot.OpenAsync(input, maximumBytes, ct).ConfigureAwait(false); Check();
             await using var db = new ZananceDbContext(new DbContextOptionsBuilder<ZananceDbContext>()
-                .UseSqlite(snapshot.Connection, contextOwnsConnection: false).UseModel(ZananceDbContextModel.Instance).Options);
+                .UseSqlite(snapshot.Connection, contextOwnsConnection: false).UseProtectedSqliteServices().UseModel(ZananceDbContextModel.Instance).Options);
             var recorded = (await db.Database.GetAppliedMigrationsAsync(ct).ConfigureAwait(false)).ToArray();
             var known = db.Database.GetMigrations().ToArray();
             if (recorded.Length == 0 || recorded.Length > known.Length || !recorded.SequenceEqual(known.Take(recorded.Length), StringComparer.Ordinal))
@@ -231,6 +231,7 @@ public sealed class ProtectedProfileStorage
         {
             ct.ThrowIfCancellationRequested();
             var options = new DbContextOptionsBuilder<ZananceDbContext>().UseSqlite(connection, contextOwnsConnection: false)
+                .UseProtectedSqliteServices()
                 .UseModel(ZananceDbContextModel.Instance).Options;
             await using var db = new ZananceDbContext(options);
             // D-309: EF's history-existence, history-read and optional migration calls would otherwise

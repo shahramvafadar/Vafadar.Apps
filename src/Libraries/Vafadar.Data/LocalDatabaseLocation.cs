@@ -265,6 +265,7 @@ internal sealed class LocalDbContextFactory<TContext>(
             ProtectedSqliteAccess.Register(connection, validate);
             // D-197: never cache a key-bearing options/connection string by path across key/profile publications.
             var configured = new DbContextOptionsBuilder<TContext>().UseSqlite(connection, contextOwnsConnection: true)
+                .UseProtectedSqliteServices()
                 .AddInterceptors(interceptor, new ProtectedSqliteConnectionInterceptor(captured.Path, captured.CipherVersion!, validate),
                     new ProtectedSqliteCommandInterceptor(validate)).Options;
             return RequireConstructed((TContext)Create(services, [configured]), captured, owner);
