@@ -1,5 +1,10 @@
 # Isolated Android runtime build - D1156
 
+[D1157](strict-private-runtime-module-d1157.md) subsequently completes scoped
+packaging and a changed-toolchain strict build with zero warnings. Module bytes
+remain exact, static16KiB/all1322export names match; execution, complete ABI and
+fault-remedy acceptance remain unproved. The historical failures below stay intact.
+
 The owner explicitly accepts the official NDKr27c terms and authorizes local
 download/isolated build, with phone/Main preserved and no closed classifier,
 successful test or financial replay. The full goal is active. This supersedes
