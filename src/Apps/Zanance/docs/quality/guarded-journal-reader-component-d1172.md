@@ -1,5 +1,11 @@
 # Guarded complete journal reader component (D-1172)
 
+[D1173](guarded-journal-source-lifetime-d1173.md) subsequently passes14additional
+source-lifetime/transaction roles without replaying these host cohorts.
+[D1174](guarded-journal-complete-startup-d1174.md) rejects this fixed candidate at
+the actual complete Android cold/window latency gates. The component results below
+remain historical; do not resume, retune or rescue the closed native candidate.
+
 ## Measured premise and independent candidate
 
 [D1164](original-journal-query-compilation-d1164.md) records645.0645ms in the
