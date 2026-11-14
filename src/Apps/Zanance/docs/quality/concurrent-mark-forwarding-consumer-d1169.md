@@ -97,6 +97,10 @@ benchmark, product test, runtime/GC/configuration, account, authentication, fina
 operation or cleanup occurs. The denied D1168 report/backlink/message targets are
 neither read, rewritten nor retried by this separate consumer investigation.
 
+[D1176](original-generation-worker-exclusion-d1176.md) subsequently distinguishes
+the original generation-scoped join and managed-world worker exclusion, without
+observing actual historical worker participation or repeating a consumed diagnostic.
+
 The next causal claim requires evidence for the actual source object and collector
 phase; broad forwarding, callback or tag assumptions are insufficient. Original fault
 remedy, whole performance/security/platform/external requirements and the active full
