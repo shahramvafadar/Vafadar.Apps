@@ -1,5 +1,10 @@
 # Retained private-runtime remaining-context trial - D1162
 
+[D1163](original-purge-subphases-d1163.md) subsequently performs one distinct
+stock-runtime startup-purge timing question with exact full source preserved and
+no matrix replay. Its stopped retained manifest is now the latest C7 authority;
+the36qualified contexts and this bounded private-runtime result remain historical.
+
 [D1161](private-vmr-runtime-pair-d1161.md) prepares an exact stock/private-runtime
 APK pair. This continuation performs its finite retained-data trial, preserving
 all previously qualified contexts, the consumed unknown one-shot, phone and Main.
