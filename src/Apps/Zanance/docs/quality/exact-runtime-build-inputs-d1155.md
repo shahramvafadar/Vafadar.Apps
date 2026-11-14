@@ -1,5 +1,10 @@
 # Exact serviced runtime source and local build prerequisites - D1155
 
+Continuation: the owner accepts NDKr27c terms; [D1156](isolated-runtime-build-d1156.md)
+downloads/qualifies the local prerequisite and produces a private native module.
+Overall build still fails at packaging and retains toolchain warnings; nothing is
+deployed and no old classifier, successful test or financial input repeats.
+
 [D1154](compiled-tarjan-header-publication-d1154.md) narrows the original
 earlier-object/publication hypothesis. This step prepares a concrete private
 source input; it does not repeat a closed classifier, matrix case or benchmark,
