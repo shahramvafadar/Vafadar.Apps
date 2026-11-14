@@ -1,5 +1,9 @@
 # Original inline manual-price large text (D-1171)
 
+[D1175](price-original-format-latin-large-text-d1175.md) subsequently adds only
+the18missing es/fr/it original-format guide contexts with one retained English
+raw draft. These36original price regions are not repeated or expanded by that result.
+
 ## Actual missing condition
 
 [D644](original-holding-price-draft-ownership.md) preserves the accepted price,
