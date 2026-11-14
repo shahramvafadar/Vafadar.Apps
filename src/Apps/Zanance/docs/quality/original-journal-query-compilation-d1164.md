@@ -1,5 +1,10 @@
 # Original journal-query compilation boundary - D1164
 
+[D1165](compile-only-journal-feasibility-d1165.md) subsequently passes only its
+registered first host gate: actual same-model metadata contexts initialize/reuse
+the full-entity delegate with zero opens/commands/enumeration, without touching C7.
+Real protected-source correctness and complete-startup performance remain unqualified.
+
 [D1163](original-purge-subphases-d1163.md) locates an expensive validated-journal
 read, without attributing it to SQL, crypto or compilation. This continuation
 examines the actual framework origin and adds one distinct nested-event question.
