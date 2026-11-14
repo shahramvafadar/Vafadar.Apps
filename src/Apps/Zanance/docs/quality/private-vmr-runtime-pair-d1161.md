@@ -1,5 +1,10 @@
 # VMR native build profile and exact runtime-only APK pair - D1160/D1161
 
+[D1162](retained-private-runtime-remaining-d1162.md) subsequently admits the actual
+stock full-source baseline and completes only the eleven remaining native contexts
+on the private module. Its full-source/public restoration and retained36-context
+lineage are bounded evidence, not original-cause or shipping/runtime acceptance.
+
 [D1159](private-runtime-remaining-candidate-d1159.md) prepared a private APK,
 but its generated runtime version was 10.0.13-ci. This continuation resolves
 the actual pinned VMR native build inputs before any deployment. The earlier
