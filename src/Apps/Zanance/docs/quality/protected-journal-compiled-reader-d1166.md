@@ -1,5 +1,8 @@
 # Protected original journal reader contracts - D1166
 
+[D1167](compiled-journal-complete-startup-d1167.md) subsequently retains an incomplete
+whole-startup observation cohort without speed admission, then restores the prior APK.
+
 [D1165](compile-only-journal-feasibility-d1165.md) qualified only zero-open delegate
 initialization. D1166 now executes the actual private candidate through the original
 protected factory with encrypted fictitious sources. This is correctness evidence,
@@ -9,7 +12,7 @@ not a speed result, Android acceptance or a product change.
 
 Only the original full-entity AsNoTracking materialization statement is branched in
 a private copy of ImportAggregateStore. Reversing that one replacement reconstructs
-the entire canonical file exactly. All original JSON parsing, version/digest validation
+the entire canonical source text exactly. All original JSON parsing, version/digest validation
 and purge logic remain. The candidate uses supported EF.CompileAsyncQuery, enumerates
 all four mapped fields and keeps the original no-tracking/conversion behavior.
 It retains no context, source connection, rows, key, rights or file identity.
@@ -93,3 +96,11 @@ source/Home equality, latency, allocation and high-water memory gates. A warmed
 query-only result cannot qualify cold startup. Original fault cause/supported-runtime
 remedy, whole performance/security/platform/external requirements and full delivery
 remain open; the goal is active.
+
+## Sole CI snapshots
+
+The one due read for8adb95a0reports CIin_progress43606960352 and CodeQLsuccess43606960275.
+That response is consumed; no poll, rerun or successful-job log follows. The due
+829bbc99and02d98e4dsnapshots each report CIcancelled/CodeQLsuccess; their raw responses
+and exclusive receipts are retained under this cohort without retrying either
+D1165denied bookkeeping target or creating a replacement plan/checkpoint.
