@@ -78,3 +78,18 @@ memory gate. Warmed query-only timing cannot qualify cold startup, and private m
 context construction is not authority to bypass real context creation or early-open
 source before protection completes. Original fault cause/supported-runtime remedy,
 whole performance/security/platform/external requirements and full delivery remain open.
+
+## Post-push bookkeeping refusal
+
+After829bbc99is pushed, an attempt to write the following two local bookkeeping
+files is rejected before process creation with blocked by policy:
+
+- D:\_Projects\Vafadar.Apps\artifacts\d1165-compile-only-journal-warmup\one-ci-plan.json
+- D:\_Projects\Vafadar.Apps\artifacts\d1165-compile-only-journal-warmup\continuation-checkpoint.json
+
+Neither file is created by that attempt. Both exact targets are frozen: no probe,
+read/write retry, subset, alternate, move, escalation or reuse. No equivalent
+replacement bookkeeping file is created. This refusal does not invalidate or rerun
+the consumed successful host gate; its actual packet, compiler inputs and original
+feasibility plan remain authoritative. No CI GET or automation is issued by the
+rejected command. Protected-source correctness and the full delivery goal remain open.
