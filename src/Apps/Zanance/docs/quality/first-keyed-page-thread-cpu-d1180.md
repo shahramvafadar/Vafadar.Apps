@@ -1,5 +1,9 @@
 # First keyed-page component wall and thread CPU - D1180
 
+[D1181](factory-creation-cancellation-handoff-d1181.md) subsequently corrects four
+actual async factory cancellation handoff failures, without repeating this fixed
+component measurement or changing cryptographic/runtime policy.
+
 ## Distinct remaining measurement
 
 [D1108](current-first-keyed-schema-access-d1108.md) explicitly leaves KDF CPU

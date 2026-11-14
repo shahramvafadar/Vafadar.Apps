@@ -206,8 +206,8 @@ internal sealed class LocalDbContextFactory<TContext>(
         var captured = location.Capture();
         try
         {
-            return captured.CreateConnection is null ? CreateLeased(captured, lease, null)
-                : await Task.Run(() => CreateLeased(captured, lease, null), cancellationToken).ConfigureAwait(false);
+            return captured.CreateConnection is null ? CreateLeased(captured, lease, null, cancellationToken)
+                : await Task.Run(() => CreateLeased(captured, lease, null, cancellationToken), cancellationToken).ConfigureAwait(false);
         }
         catch { lease.Dispose(); throw; }
     }
@@ -223,38 +223,41 @@ internal sealed class LocalDbContextFactory<TContext>(
     {
         cancellationToken.ThrowIfCancellationRequested();
         var lease = location.Access.EnterOwnedContext(owner); var captured = location.Capture();
-        try { return await Task.Run(() => CreateLeased(captured, lease, owner), cancellationToken).ConfigureAwait(false); }
+        try { return await Task.Run(() => CreateLeased(captured, lease, owner, cancellationToken), cancellationToken).ConfigureAwait(false); }
         catch { lease.Dispose(); throw; }
     }
 
     private TContext CreateLeased(LocalDatabaseLocation<TContext>.Endpoint captured, DatabaseAccessGate.ContextLease lease,
-        DatabaseAccessGate.ExclusiveLease? owner)
+        DatabaseAccessGate.ExclusiveLease? owner, CancellationToken cancellationToken = default)
     {
         try
         {
-            var context = CreateCaptured(captured, owner, lease); context.AttachAccessLease(lease); return context;
+            var context = CreateCaptured(captured, owner, lease, cancellationToken); context.AttachAccessLease(lease); return context;
         }
         catch { lease.Dispose(); throw; }
     }
 
     private TContext CreateCaptured(LocalDatabaseLocation<TContext>.Endpoint captured, DatabaseAccessGate.ExclusiveLease? owner,
-        DatabaseAccessGate.ContextLease lease)
+        DatabaseAccessGate.ContextLease lease, CancellationToken cancellationToken)
     {
         if (owner is not null) location.Access.RequireOwner(owner);
         location.RequireContextPublication(captured);
+        cancellationToken.ThrowIfCancellationRequested();
         if (captured.CreateConnection is null)
         {
             var options = _options.GetOrAdd(captured.Path, Build);
             if (owner is not null) options = new DbContextOptionsBuilder<TContext>(options)
                 .AddInterceptors(new ProtectedSqliteCommandInterceptor(() =>
                 { location.RequireCurrent(captured); location.Access.RequireOwner(owner); })).Options;
-            return RequireConstructed((TContext)Create(services, [options]), captured, owner);
+            return RequireConstructed((TContext)Create(services, [options]), captured, owner, cancellationToken);
         }
         location.RequireCurrent(captured);
         var connection = captured.CreateConnection();
         try
         {
             location.RequireCurrent(captured);
+            // A running worker is not cancelled automatically when its native creator returns.
+            cancellationToken.ThrowIfCancellationRequested();
             // D-1117: a native creator can retire its maintenance turn before returning.
             // Refuse before constructing another context under that already-closed authority.
             if (owner is not null) location.Access.RequireOwner(owner);
@@ -270,20 +273,22 @@ internal sealed class LocalDbContextFactory<TContext>(
                 .UseProtectedSqliteServices()
                 .AddInterceptors(interceptor, new ProtectedSqliteConnectionInterceptor(captured.Path, captured.CipherVersion!, validate),
                     new ProtectedSqliteCommandInterceptor(validate)).Options;
-            return RequireConstructed((TContext)Create(services, [configured]), captured, owner);
+            return RequireConstructed((TContext)Create(services, [configured]), captured, owner, cancellationToken);
         }
         catch { connection.Dispose(); throw; }
     }
 
-    /// <summary>Disposes a newly constructed result when callbacks retired its exact publication or maintenance turn.</summary>
+    /// <summary>Disposes an unaccepted result after publication/owner retirement or creation cancellation.</summary>
     private TContext RequireConstructed(TContext context, LocalDatabaseLocation<TContext>.Endpoint captured,
-        DatabaseAccessGate.ExclusiveLease? owner)
+        DatabaseAccessGate.ExclusiveLease? owner, CancellationToken cancellationToken)
     {
         try
         {
             // Construction can invoke application services. The entry check cannot authorize the later handoff.
             location.RequireContextPublication(captured);
             if (owner is not null) location.Access.RequireOwner(owner);
+            // Constructor callbacks can cancel this creation too. Do not hand back their unaccepted result.
+            cancellationToken.ThrowIfCancellationRequested();
             return context;
         }
         catch { context.Dispose(); throw; }
