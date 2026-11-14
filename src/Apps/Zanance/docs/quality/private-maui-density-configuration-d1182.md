@@ -134,3 +134,7 @@ See [the CI run](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/436
 Official inputs: [bound MAUI source](https://github.com/dotnet/maui/tree/6aca5366139ed0e1cd05cca3e32b6a887d5a8dd0),
 [Android runtime configuration handling](https://developer.android.com/guide/topics/resources/runtime-changes),
 [Microsoft Java archive](https://learn.microsoft.com/en-us/java/openjdk/older-releases).
+
+[Product-asset admission](private-maui-product-asset-admission-d1183.md) subsequently
+exposes and corrects missing AAR resources and silent official-Core fallback in
+the isolated real product graph; persistent adoption/APK acceptance remain open.
