@@ -1,5 +1,10 @@
 # Compiled private predicate and remaining-only APK - D1158/D1159
 
+[D1160/D1161](private-vmr-runtime-pair-d1161.md) supersedes this prepared APK for
+trial selection: actual VMR patch15 inputs replace the standalone patch13 build
+profile and an exact runtime-only stock/candidate pair is admitted. This original
+APK remains unused historical evidence; no deployment or crash remedy is implied.
+
 [D1157](strict-private-runtime-module-d1157.md) admits a strict private module,
 not a running repair. This continuation binds its actual code and prepares the
 complete remaining-context Android package. No emulator or phone command occurs.
