@@ -1,5 +1,10 @@
 # Strict private runtime module - D1157
 
+[D1158/D1159](private-runtime-remaining-candidate-d1159.md) bind the actually
+compiled new predicate and prepare a signed remaining11-only APK with the exact
+module, original source guard and13compiler bindings. No runtime is deployed and
+no qualified context, closed classifier or financial action repeats.
+
 [D1156](isolated-runtime-build-d1156.md) produces the native module but retains
 an overall packaging failure and CMake warnings. This continuation resolves those
 actual build concerns without repeating native qualification, a classifier, a
