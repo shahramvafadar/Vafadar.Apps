@@ -1,5 +1,10 @@
 # Original startup purge wall-clock subphases - D1163
 
+[D1164](original-journal-query-compilation-d1164.md) subsequently separates actual
+EF compilation/open/command event spans in one distinct scoped observation, with
+the same full source/Home digests. It does not reinterpret this sample as a paired
+improvement; its stopped retained manifest is the latest C7 authority.
+
 [D1162](retained-private-runtime-remaining-d1162.md) completes the remaining C7
 matrix contexts. None is replayed here. The separate retained D1120 clocks,
 reviewed in [D1132](independent-cost-bridge-default-d1132.md), locate a934.5791ms
