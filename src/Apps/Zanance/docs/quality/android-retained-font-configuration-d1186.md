@@ -148,4 +148,5 @@ open. The full delivery goal remains active.
 
 Related: [original conversion failure](public-density-conversion-transition.md),
 [private source correction](private-maui-density-configuration-d1182.md),
-[subsequent default integration and Linux producer](default-android-core-linux-producer-d1187.md).
+[subsequent default integration and Linux producer](default-android-core-linux-producer-d1187.md),
+[subsequent explicit minimum-dimension correction](android-retained-minimum-dimensions-d1188.md).
