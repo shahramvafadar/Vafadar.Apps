@@ -1,5 +1,10 @@
 # Original Home payload/stamp preparation and host interruption (D1202)
 
+Later outcome: [D1209](home-payload-stamp-cpu-completion-d1209.md) completes the
+previously unissued observer once on the same retained complete source after the
+qualified host workaround. The interruption/preparation narrative below remains
+historical evidence; the observer is now consumed and must not be rearmed.
+
 ## Remaining measured-premise question
 
 [D1201](independent-home-quick-read-cpu-d1201.md) observed the original payload

@@ -1,5 +1,10 @@
 # Independent Windows emulator crash-reporting control (D1203/D1207/D1208)
 
+Later outcome: [D1209](home-payload-stamp-cpu-completion-d1209.md) reuses the
+qualified local workaround for the retained D1202 measurement, with normal host
+shutdown/exit0 afterward. Its completed source equality supersedes the historical
+retention authority below; the original diagnostic pair is not repeated.
+
 ## Exact question and one-shot observer
 
 The owner asks to continue the host diagnosis after safe cleanup, keeping the
