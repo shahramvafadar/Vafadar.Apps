@@ -150,3 +150,7 @@ This work does not qualify every editor/control/theme, arbitrary process death,
 activity restoration, glyph/contrast/speech, whole database equality or complete
 accessibility/security/performance/platform/provider/release acceptance. Original
 native fault cause/remedy and the full delivery goal remain open.
+
+[D1193](android-background-font-return-d1193.md) separately corrects the observed
+focused-target failure after changing font size in actual background Settings.
+The accepted foreground contexts here are not replayed.

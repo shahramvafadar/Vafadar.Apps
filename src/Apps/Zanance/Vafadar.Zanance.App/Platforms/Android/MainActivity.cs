@@ -62,6 +62,16 @@ public class MainActivity : MauiAppCompatActivity
         Security.ScreenProtection.SetBackground(false);
     }
 
+    /// <inheritdoc />
+    public override void OnWindowFocusChanged(bool hasFocus)
+    {
+        base.OnWindowFocusChanged(hasFocus);
+        if (hasFocus)
+        {
+            AndroidConfigurationFonts.ResumePendingReveal(this);
+        }
+    }
+
     // Google's consent dialog and Microsoft's browser sign-in return here (cloud backup, D-35), and so does the camera
     // app with a receipt photo (D-38).
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)

@@ -1,12 +1,33 @@
 using Android.App;
 using Microsoft.Maui;
 using Microsoft.Maui.Platform;
+using System.Runtime.CompilerServices;
 
 namespace Vafadar.Zanance.App;
 
 /// <summary>Refreshes retained native fonts on text-scale changes and dimensions on density changes.</summary>
 internal static class AndroidConfigurationFonts
 {
+    // Activity callbacks run on the UI thread. Allocate no pending-owner table on ordinary startup.
+    private static ConditionalWeakTable<Activity, PendingFocusReveal>? _pendingReveals;
+
+    /// <summary>Consumes a deferred reveal only when its same window, root and native focus regain ownership.</summary>
+    internal static void ResumePendingReveal(Activity activity)
+    {
+        if (_pendingReveals is not { } pending || !pending.TryGetValue(activity, out var reveal))
+        {
+            return;
+        }
+
+        pending.Remove(activity);
+        if (reveal.Window.TryGetTarget(out var window) && reveal.Root.TryGetTarget(out var root) &&
+            reveal.Focus.TryGetTarget(out var focused) && focused.Handle != IntPtr.Zero &&
+            ReferenceEquals(activity.CurrentFocus, focused) && IsCurrent(activity, window, root))
+        {
+            RevealFocusedAfterLayout(activity, window, root);
+        }
+    }
+
     /// <summary>Reapplies density-dependent bindings without replacing controls, text, focus or the page.</summary>
     internal static void Refresh(Activity activity, bool densityChanged = true, bool revealFocused = false)
     {
@@ -113,11 +134,23 @@ internal static class AndroidConfigurationFonts
     private static void RevealFocusedAfterLayout(Activity activity, IWindow window, IVisualTreeElement root)
     {
         if (!IsCurrent(activity, window, root) || activity.CurrentFocus is not { IsAttachedToWindow: true } focused ||
-            activity.Window?.DecorView is not { IsAttachedToWindow: true, HasWindowFocus: true } decor ||
+            activity.Window?.DecorView is not { IsAttachedToWindow: true } decor ||
             !decor.Equals(focused.RootView))
         {
             return;
         }
+
+        if (!decor.HasWindowFocus)
+        {
+            // D1193: Settings can change fonts while this window is covered. Do not discard the same
+            // focused target, or scroll a replacement page on return. Remember only these weak owners.
+            var pending = _pendingReveals ??= new();
+            pending.Remove(activity);
+            pending.Add(activity, new PendingFocusReveal(window, root, focused));
+            return;
+        }
+
+        _pendingReveals?.Remove(activity);
 
         // D1192: retained ScrollView offsets can clip the focused field after text grows. A pre-draw callback
         // sees its new native dimensions. The listener removes itself on draw/detach; keep only weak owners.
@@ -146,4 +179,17 @@ internal static class AndroidConfigurationFonts
     /// <summary>Rejects a departed window or root after any handler callback.</summary>
     private static bool IsCurrent(Activity activity, IWindow window, IVisualTreeElement root) =>
         ReferenceEquals(activity.GetWindow(), window) && ReferenceEquals(window.Content, root);
+
+    /// <summary>Stores no strong Activity, page, window, handler or native-control owner across background time.</summary>
+    private sealed class PendingFocusReveal(IWindow window, IVisualTreeElement root, Android.Views.View focused)
+    {
+        /// <summary>Identifies the original window without extending its lifetime.</summary>
+        internal WeakReference<IWindow> Window { get; } = new(window);
+
+        /// <summary>Refuses a later root rather than applying a departed form's request.</summary>
+        internal WeakReference<IVisualTreeElement> Root { get; } = new(root);
+
+        /// <summary>Requires the same original native focus after normal return.</summary>
+        internal WeakReference<Android.Views.View> Focus { get; } = new(focused);
+    }
 }
