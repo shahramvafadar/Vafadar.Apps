@@ -98,3 +98,5 @@ The sole [D1200 CI](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/
 and [CodeQL](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43702684592)
 responses both report completed-success; exclusive marker/raw response are retained
 without a second status request or successful job-log read.
+
+[Payload/stamp continuation D1202](home-payload-stamp-preparation-d1202.md) prepares a producer-free observer, but host interruption before Android admission leaves its sample unissued; the independent data and provenance remain retained.
