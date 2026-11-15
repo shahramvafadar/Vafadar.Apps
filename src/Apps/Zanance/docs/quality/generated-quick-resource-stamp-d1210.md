@@ -1,5 +1,9 @@
 # Generated complete quick-resource stamp (D1210)
 
+[D1211](current-protected-startup-phases-d1211.md) subsequently attributes current
+protected startup on the same retained source. Its unchanged-product timings do
+not extend this constructor result into a whole startup improvement.
+
 The complete stamp now uses generated serialization. One changed Android
 constructor observation is174.21 ms versus the retained693.8262 ms reference,
 with exact original JSON/source and unchanged guards. Whole startup remains open.
