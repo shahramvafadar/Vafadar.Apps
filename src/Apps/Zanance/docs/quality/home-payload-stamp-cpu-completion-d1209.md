@@ -1,5 +1,10 @@
 # Retained Home payload/stamp measurement completion (D1209)
 
+Next bounded change: [D1210](generated-quick-resource-stamp-d1210.md) replaces only
+complete stamp reflection discovery with generated serialization, retains exact
+original JSON and validates the changed constructor once on this retained source.
+This D1209 measurement remains consumed and is not rerun.
+
 ## Completed finite question
 
 On 2026-11-15, the owner requested completion of the emulator execution blocker

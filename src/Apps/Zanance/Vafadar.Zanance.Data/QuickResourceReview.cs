@@ -73,5 +73,6 @@ public sealed class QuickResourceReview
     internal string InputStamp { get; }
     internal static string Capture(IReadOnlyList<EntryTemplate> templates, IReadOnlyList<SavedFilter> filters,
         IReadOnlyList<Account> accounts, IReadOnlyList<Category> categories, ZananceSettings? settings, LedgerEntry? source) =>
-        JsonSerializer.Serialize(new { Templates = templates, Filters = filters, Accounts = accounts, Categories = categories, Settings = settings, Source = source });
+        JsonSerializer.Serialize(new QuickResourceStamp(templates, filters, accounts, categories, settings, source),
+            QuickResourceStampContext.Default.QuickResourceStamp);
 }
