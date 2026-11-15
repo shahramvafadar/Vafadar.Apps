@@ -115,3 +115,7 @@ delivery goal stays active.
 [D1121](current-main-home-continuation-d1121.md) subsequently adopts the exact
 prepared product on Main once without reset. The raw141-node Home/all native
 attributes and current public state remain equal; private source is not read.
+
+The later [D1200 input-admission refusal](home-quick-cpu-input-admission-d1200.md)
+reconciles this historical retention note with the newer protected C7 authority.
+This older note alone must not authorize resuming that source or its observer.
