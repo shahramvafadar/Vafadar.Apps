@@ -62,3 +62,5 @@ The single due D1201 response records [CI in progress](https://github.com/shahra
 and [CodeQL completed-success](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43706001966).
 The exclusive marker/raw response are retained, with no second status request,
 successful job-log read or rerun.
+
+[Host termination classification D1203](host-crash-report-exit-code-d1203.md) identifies the saved no-dump termination code and prepares a bounded original-exception observer; execution remains unissued for insufficient free space, with no original fault cause inferred.
