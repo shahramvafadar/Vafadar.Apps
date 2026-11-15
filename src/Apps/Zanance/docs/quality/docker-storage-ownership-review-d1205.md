@@ -77,3 +77,5 @@ is claimed freed. The earlier refused file targets remain frozen, their manual
 lists remain separate, and phone/Main/AVD/accepted financial operations are
 untouched. The host's original exception remains unobserved pending sufficient
 D space; its no-dump termination classification is unchanged.
+
+[Exact retention review D1206](exact-docker-retention-d1206.md) subsequently proves all four image candidates are required by complete retained snapshots. It removes only one unused directory-only volume, preserving all other original resources and recording the full volume disposition.

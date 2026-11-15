@@ -57,3 +57,5 @@ not retried. The original host fault remains unresolved pending that bounded
 execution; `0xffff7001` is now classified, not treated as the original fault code.
 The broad delivery goal remains paused as requested; only this owner-requested
 host-diagnosis task is in progress.
+
+[Executed host control D1208](host-crash-reporting-control-d1208.md) later consumes the one prepared observer, reproduces the normal reporting-path failure and qualifies one normal reporting-disabled startup/shutdown. The original initiating exception remains unknown and no app workload is replayed.
