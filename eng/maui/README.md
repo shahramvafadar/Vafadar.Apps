@@ -55,6 +55,15 @@ Version4 reuses unchanged successful source-build/API witnesses; its new package
 identity does not imply another framework compilation or runtime qualification.
 See [SDK selection evidence](../../src/Apps/Zanance/docs/quality/source-sdk-selection-d1191.md).
 
+Version5 corrects the exact official `Microsoft.Maui.Core.nuspec` archive-entry
+case. A Windows bind-mounted directory can mask this failure even inside Linux;
+the corrected packaging phase also passed with the original archive extracted
+on a case-sensitive Linux tmpfs. Existing source-build, source-proof and strict
+API witnesses were reused unchanged. All library entries and dependencies remain
+exact to each host's version4 package; Windows/Linux assembly equality is not claimed.
+See [hosted packaging correction](../../src/Apps/Zanance/docs/quality/official-core-manifest-case-d1194.md)
+and [current release-input advisory scope](../../src/Apps/Zanance/docs/quality/current-release-input-advisories-d1194.md).
+
 ## Evidence and refusal behavior
 
 The producer retains input hashes, source-archive inventory, exact patch

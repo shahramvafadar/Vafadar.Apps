@@ -543,7 +543,8 @@ def main():
     ET.SubElement(metadata, tag("license"), {"type": "expression"}).text = "MIT"
     group = ET.SubElement(ET.SubElement(metadata, tag("dependencies")), tag("group"), {"targetFramework": "net10.0-android36.0"})
     ET.SubElement(group, tag("dependency"), {"id": "Microsoft.Maui.Core", "version": "[" + PROFILE["upstream_version"] + "]"})
-    original_nuspec = ET.parse(official / "microsoft.maui.core.nuspec")
+    # Preserve the pinned archive's exact casing; Linux hosted filesystems distinguish it.
+    original_nuspec = ET.parse(official / "Microsoft.Maui.Core.nuspec")
     original_group = next(x for x in original_nuspec.getroot().iter() if x.tag.endswith("group") and x.get("targetFramework") == "net10.0-android36.0")
     for item in original_group:
         ET.SubElement(group, tag("dependency"), dict(item.attrib))
