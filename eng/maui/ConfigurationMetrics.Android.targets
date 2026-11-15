@@ -33,8 +33,28 @@
   </Target>
   <Target Name="VafadarVerifyPrivateCoreUntrimmed" BeforeTargets="_LinkAssembliesNoShrink"
           Condition="'$(_VafadarPrivateCoreConsumer)' == 'true' and '$(PublishTrimmed)' != 'true'">
-    <ItemGroup><_VafadarCoreUntrimmedInput Include="@(ResolvedAssemblies)" Condition="'%(ResolvedAssemblies.Filename)' == 'Microsoft.Maui'" /></ItemGroup>
-    <Error Condition="'@(_VafadarCoreUntrimmedInput->Count())' != '1' or '$(VafadarMauiCoreExpectedSHA256)' == ''" Text="Exactly one reviewed private Core untrimmed input is required." />
+    <!-- Android's untrimmed pipeline preserves one assembly item per RID, even when paths match.
+         Validate that complete per-RID set before hashing every item; deduplicating paths would hide omissions. -->
+    <ItemGroup>
+      <_VafadarCoreUntrimmedInput Remove="@(_VafadarCoreUntrimmedInput)" />
+      <_VafadarCoreUntrimmedHash Remove="@(_VafadarCoreUntrimmedHash)" />
+      <_VafadarCoreUntrimmedRid Remove="@(_VafadarCoreUntrimmedRid)" />
+      <_VafadarCoreUntrimmedInput Include="@(ResolvedAssemblies)" Condition="'%(ResolvedAssemblies.Filename)' == 'Microsoft.Maui'" />
+      <_VafadarCoreUntrimmedRid Include="@(_VafadarCoreUntrimmedInput->'%(RuntimeIdentifier)')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <_VafadarCoreDeclaredRids>;@(_RIDs);</_VafadarCoreDeclaredRids>
+    </PropertyGroup>
+    <Error Condition="'@(_RIDs->Count())' == '0' or '@(_RIDs->Count())' != '@(_RIDs->Distinct()->Count())'"
+           Text="A nonempty unique Android runtime identifier set is required for private Core verification." />
+    <Error Condition="'@(_VafadarCoreUntrimmedInput->Count())' != '@(_RIDs->Count())' or '$(VafadarMauiCoreExpectedSHA256)' == ''"
+           Text="Exactly one reviewed private Core untrimmed input per declared runtime identifier is required." />
+    <Error Condition="'%(_VafadarCoreUntrimmedInput.RuntimeIdentifier)' == ''"
+           Text="A private Core untrimmed input has no runtime identifier." />
+    <Error Condition="'@(_VafadarCoreUntrimmedRid->Distinct()->Count())' != '@(_VafadarCoreUntrimmedInput->Count())'"
+           Text="Duplicate private Core untrimmed inputs for a runtime identifier are not allowed." />
+    <Error Condition="!$([System.String]::Copy('$(_VafadarCoreDeclaredRids)').Contains(';%(_VafadarCoreUntrimmedInput.RuntimeIdentifier);'))"
+           Text="A private Core untrimmed input has an undeclared runtime identifier." />
     <GetFileHash Files="@(_VafadarCoreUntrimmedInput)" Algorithm="SHA256"><Output TaskParameter="Items" ItemName="_VafadarCoreUntrimmedHash" /></GetFileHash>
     <Error Condition="'%(_VafadarCoreUntrimmedHash.FileHash)' != '$(VafadarMauiCoreExpectedSHA256)'" Text="Private Core untrimmed input does not match the prepared source proof." />
   </Target>

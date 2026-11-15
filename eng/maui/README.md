@@ -102,11 +102,18 @@ not successful phase logs, partial downloads or compiled Core output.
 
 The consumer excludes the original Core compile/runtime assets, retains its
 official dependency graph and resources, and adds the private Core package.
-Before compilation and before trimmed/untrimmed Android linking, exactly one
-actual Core assembly input must match the prepared SHA256. The compiler input
-must also originate from the private package. An old cached original, missing
+Before compilation and trimmed Android linking, exactly one actual Core assembly
+input must match the prepared SHA256. Untrimmed linking preserves one assembly
+item per Android runtime identifier, including identical paths: exactly one Core
+input is required for every SDK-declared RID, and every input must match that
+SHA256. Missing, duplicate, empty or undeclared RID inputs are refused rather
+than hidden by path deduplication. The compiler input must also originate from
+the private package. An old cached original, missing
 selection or mismatched assembly is an error, not a successful fallback.
 
 See [D1184 evidence](../../src/Apps/Zanance/docs/quality/private-maui-reproducible-producer-d1184.md)
 and [D1187 default integration evidence](../../src/Apps/Zanance/docs/quality/default-android-core-linux-producer-d1187.md)
 for actual results, failed attempts and remaining product adoption boundaries.
+
+See [per-RID untrimmed input correction](../../src/Apps/Zanance/docs/quality/android-untrimmed-core-rids-d1198.md)
+for the observed Debug billing build failure and bounded guard controls.

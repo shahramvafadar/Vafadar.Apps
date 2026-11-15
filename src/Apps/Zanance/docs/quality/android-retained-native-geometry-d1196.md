@@ -105,3 +105,7 @@ and CodeQL success; its exclusive marker and full response remain without anothe
 query. No final CI outcome is inferred. Original native-fault cause/remedy, whole
 performance/security/accessibility/platform/provider/release gates remain open.
 Canonical parent States are unchanged and the full delivery goal remains active.
+
+The subsequent sole D1196 response and failed Debug per-RID Core guard are
+recorded in [D1198](android-untrimmed-core-rids-d1198.md); this does not revise
+the retained native geometry observations above.
