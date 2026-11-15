@@ -3,8 +3,10 @@
   <PropertyGroup>
     <_VafadarPrivateCoreConsumer Condition="'$(UseMaui)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">true</_VafadarPrivateCoreConsumer>
     <VafadarMauiCoreStateRoot Condition="'$(VafadarMauiCoreStateRoot)' == ''">$(RepoRoot)artifacts/maui-core</VafadarMauiCoreStateRoot>
+    <!-- Central PackageVersion items are imported later; selection must be available during this import. -->
+    <_VafadarCorePackageVersion>1.0.0-source10.0.120.3</_VafadarCorePackageVersion>
   </PropertyGroup>
-  <Import Project="$(VafadarMauiCoreStateRoot)/selection.props" Condition="'$(_VafadarPrivateCoreConsumer)' == 'true' and Exists('$(VafadarMauiCoreStateRoot)/selection.props')" />
+  <Import Project="$(VafadarMauiCoreStateRoot)/selection.$(_VafadarCorePackageVersion).props" Condition="'$(_VafadarPrivateCoreConsumer)' == 'true' and Exists('$(VafadarMauiCoreStateRoot)/selection.$(_VafadarCorePackageVersion).props')" />
   <ItemGroup Condition="'$(_VafadarPrivateCoreConsumer)' == 'true'">
     <PackageReference Include="Microsoft.Maui.Core" Condition="'@(PackageReference->WithMetadataValue('Identity', 'Microsoft.Maui.Core'))' == ''" />
     <PackageReference Update="Microsoft.Maui.Core" ExcludeAssets="compile;runtime" />

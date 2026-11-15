@@ -53,6 +53,10 @@ Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..\..'))
 New-Item -ItemType Directory -Force $Output | Out-Null
 $projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
 
+# Restore must not silently fall back to the original Core assembly when its density correction is required.
+# Preparation verifies a completed package or builds its pinned source in repository-owned state.
+& (Join-Path $PSScriptRoot '../maui/Ensure-ConfigurationMetrics.ps1')
+
 # Restore for Android alone first: after a build for all platforms (e.g. Windows from Visual Studio) the assets file
 # lists other target frameworks, and publish would stop with NETSDK1005 instead of restoring again. Visual Studio with
 # the solution open restores in the background too and can overwrite it meanwhile (NETSDK1005, APT2126): then the

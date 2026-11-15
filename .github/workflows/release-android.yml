@@ -90,9 +90,20 @@ jobs:
       # Same as CI: the runner image may lack the Android platform the app targets.
       - name: Install Android SDK dependencies
         run: >
-          dotnet build "$APP_PROJECT" -t:InstallAndroidDependencies -f net10.0-android
-          -p:VafadarMauiTargetFrameworks=net10.0-android
+          dotnet build eng/maui/AndroidDependencies.csproj -t:InstallAndroidDependencies -f net10.0-android
           -p:AndroidSdkDirectory="$ANDROID_HOME" -p:AcceptAndroidSDKLicenses=True
+
+      - name: Cache reviewed Android Core inputs
+        uses: actions/cache@v4
+        with:
+          path: |
+            artifacts/maui-core/inputs/*.zip
+            artifacts/maui-core/inputs/*.tar.gz
+          key: maui-core-inputs-${{ runner.os }}-${{ hashFiles('eng/maui/configuration-metrics.inputs.json') }}
+
+      - name: Prepare reviewed Android Core source package
+        shell: pwsh
+        run: ./eng/maui/Ensure-ConfigurationMetrics.ps1
 
       - name: Restore upload keystore
         run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/upload.keystore"

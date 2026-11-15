@@ -9,6 +9,7 @@ from pathlib import Path, PurePosixPath
 import platform
 import shutil
 import stat
+import struct
 import subprocess
 import sys
 import tarfile
@@ -139,6 +140,55 @@ def unpack_java(archive, root):
             os.link(linked, target)
 
 
+def restore_linux_sdk_executables(sdk, receipt):
+    """Restore workload installer execute permissions omitted from the pinned Linux NuGet archive."""
+    if not sys.platform.startswith("linux"):
+        return
+    host = (sdk / "tools/Linux").resolve()
+    require(host.is_relative_to(REPO / "artifacts") and host.is_dir(), "Owned Linux SDK host-tools root required.")
+    if receipt.exists():
+        previous = json.loads(receipt.read_text())
+        require(all((host / item["Path"]).is_file() and
+                    digest(host / item["Path"]) == item["SHA256"] and
+                    (host / item["Path"]).stat().st_mode & 0o111 == 0o111
+                    for item in previous["Executables"]), "Installed Linux SDK tool bytes or modes changed.")
+        return
+    installed = []
+    for path in sorted(host.rglob("*")):
+        require(not path.is_symlink(), "Unreviewed SDK tool link refused.")
+        if not path.is_file():
+            continue
+        require(path.resolve().is_relative_to(host), "SDK tool escaped its owned root.")
+        with path.open("rb") as stream:
+            header = stream.read(64)
+            executable = header.startswith(b"#!")
+            if header.startswith(b"\x7fELF"):
+                require(len(header) == 64 and header[4:6] == b"\x02\x01", "Unexpected Linux host ELF encoding.")
+                kind, machine = struct.unpack_from("<HH", header, 16)
+                require(machine == 62, "Unexpected Linux host-tool architecture.")
+                executable = kind == 2
+                if kind == 3:
+                    offset = struct.unpack_from("<Q", header, 32)[0]
+                    size, count = struct.unpack_from("<HH", header, 54)
+                    require(size >= 56 and count <= 256 and offset + size * count <= path.stat().st_size,
+                            "Linux SDK program-header bounds refused.")
+                    for index in range(count):
+                        stream.seek(offset + index * size)
+                        if struct.unpack("<I", stream.read(4))[0] == 3:  # PT_INTERP identifies executable PIEs.
+                            executable = True
+                            break
+        if executable:
+            before = path.stat().st_mode & 0o777
+            expected = digest(path)
+            path.chmod(before | 0o111)
+            require(digest(path) == expected, "SDK tool bytes changed while installing execute mode.")
+            installed.append({"Path": path.relative_to(host).as_posix(), "SHA256": expected,
+                              "BeforeMode": oct(before), "InstalledMode": oct(before | 0o111)})
+    require(any(item["Path"] == "aapt2" for item in installed), "Pinned Linux AAPT2 executable was not installed.")
+    write_json(receipt, {"Executables": installed, "NoToolBytesChanged": True,
+                         "NoSharedLibrariesMarkedExecutable": True})
+
+
 def extract_source(archive, source, receipt):
     """Extract the complete three-project build closure, not unrelated tests/image corpora."""
     if receipt.exists():
@@ -167,6 +217,30 @@ def extract_source(archive, source, receipt):
             "src/Graphics/src/Graphics/Graphics.csproj" in files, "Source closure misses a real project.")
     write_json(receipt, files)
     return files
+
+
+def restore_source_executables(archive, source, original, receipt):
+    """Preserve executable source scripts from the verified archive, including Gradle's Linux wrapper."""
+    if not sys.platform.startswith("linux"):
+        return
+    if receipt.exists():
+        entries = json.loads(receipt.read_text())
+    else:
+        entries = []
+        with tarfile.open(archive, "r:gz") as members:
+            for item in members:
+                relative = "/".join(PurePosixPath(item.name).parts[1:])
+                if item.isfile() and relative in original and item.mode & 0o111:
+                    entries.append({"Path": relative, "Mode": item.mode & 0o777,
+                                    "SHA256": original[relative]})
+        require(any(item["Path"] == "src/Core/AndroidNative/gradlew" for item in entries),
+                "Original executable Gradle wrapper metadata missing.")
+        write_json(receipt, entries)
+    for item in entries:
+        target = bounded_target(source, item["Path"])
+        require(target.is_file() and digest(target) == item["SHA256"], "Executable source script bytes changed.")
+        target.chmod(item["Mode"])
+        require(target.stat().st_mode & 0o777 == item["Mode"], "Source executable mode installation failed.")
 
 
 def isolated_environment(root, dotnet, java, android, workload_root):
@@ -268,7 +342,7 @@ def main():
     inputs = [PROFILE_PATH, Path(__file__), ENG / "PrivateCoreVersion.targets", ENG / "CoreBuildProof/Program.cs",
               ENG / "CoreBuildProof/CoreBuildProof.csproj", REPO / PROFILE["patch"]]
     fingerprint = hashlib.sha256("\n".join(digest(p) for p in inputs).encode()).hexdigest()
-    receipt = root / "package-proof.json"
+    receipt = root / ("package-proof." + PROFILE["private_version"] + ".json")
     output = root / "feed" / (PROFILE["private_package"] + "." + PROFILE["private_version"] + ".nupkg")
     if receipt.exists():
         prior = json.loads(receipt.read_text())
@@ -284,6 +358,7 @@ def main():
     archives = {name: download(root, name, spec, seeds) for name, spec in specs.items()}
     source = root / "source"
     original = extract_source(archives["source"], source, root / "source-archive-files.json")
+    restore_source_executables(archives["source"], source, original, root / "source-executable-modes.json")
     require(digest(REPO / PROFILE["patch"]) == PROFILE["patch_sha256"], "Reviewed source patch changed.")
     patched = root / "source-patched.json"
     if not patched.exists():
@@ -309,6 +384,8 @@ def main():
                 require(b"The MIT License" in archive.read("LICENSE.TXT"), "SDK license differs from the reviewed MIT notice.")
             unpack_zip(archives[name], target)
             write_json(done, {"ArchiveSHA256": specs[name]["sha256"]})
+    restore_linux_sdk_executables(workload / "packs/Microsoft.Android.Sdk.Linux/36.1.115",
+                                 root / "linux-sdk-executable-modes.json")
     for band in ["10.0.100", "10.0.400"]:
         target = workload / "sdk-manifests" / band / "microsoft.net.sdk.android" / "36.1.115"
         if not target.exists():
@@ -364,12 +441,24 @@ def main():
     official = root / "official-core"
     if not official.exists():
         unpack_zip(archives["official_core"], official)
-    # Every AAR entry must retain its official contents; container timestamps are not normalized evidence.
+    # Linux generates LF for these two text entries; all packaged entries still use exact official bytes.
+    # Refuse any other difference, including XML whitespace, ordering, values or additional resources.
+    aar_proof = []
     for name in ["Microsoft.Maui.aar", "maui.aar"]:
         with zipfile.ZipFile(out / name) as left, zipfile.ZipFile(official / "lib/net10.0-android36.0" / name) as right:
             lh = {n: hashlib.sha256(left.read(n)).hexdigest() for n in left.namelist() if not n.endswith("/")}
             rh = {n: hashlib.sha256(right.read(n)).hexdigest() for n in right.namelist() if not n.endswith("/")}
-            require(lh == rh, "Private AAR contents differ from the reviewed official resources.")
+            require(lh.keys() == rh.keys(), "Private AAR entry inventory differs from the reviewed official resources.")
+            text_entry = ".net/__res_name_case_map.txt" if name == "Microsoft.Maui.aar" else "AndroidManifest.xml"
+            differences = [n for n in lh if lh[n] != rh[n]]
+            for entry in differences:
+                require(system == "linux" and entry == text_entry and
+                        left.read(entry).replace(b"\r\n", b"\n") == right.read(entry).replace(b"\r\n", b"\n"),
+                        "Private AAR contents differ beyond the two reviewed Linux text line endings.")
+            aar_proof.append({"Archive": name, "BuiltSHA256": digest(out / name),
+                              "PackagedOfficialSHA256": digest(official / "lib/net10.0-android36.0" / name),
+                              "LineEndingOnlyEntries": differences, "AllOtherEntryBytesExact": True})
+    write_json(root / "aar-proof.json", aar_proof)
     references = root / "api-references"
     references.mkdir(exist_ok=True)
     assets = json.loads((build / "obj/Core/project.assets.json").read_text())
@@ -426,13 +515,15 @@ def main():
                    "HostSDK": PROFILE["host_sdk"], "CoreSHA256": proof["CoreSHA256"],
                    "SourceCommit": PROFILE["upstream_commit"], "PatchSHA256": PROFILE["patch_sha256"]}, indent=2).encode()}
     for name in ["Microsoft.Maui.dll", "Microsoft.Maui.pdb", "Microsoft.Maui.aar", "maui.aar"]:
-        entries["lib/net10.0-android36.0/" + name] = (out / name).read_bytes()
+        file = official / "lib/net10.0-android36.0" / name if name.endswith(".aar") else out / name
+        entries["lib/net10.0-android36.0/" + name] = file.read_bytes()
     # No activation is hidden here: consuming projects must explicitly exclude original Core assets.
     output.parent.mkdir(parents=True, exist_ok=True)
     package_file(output, entries)
     write_json(receipt, {"RecipeSHA256": fingerprint, "PackageSHA256": digest(output), "CoreSHA256": proof["CoreSHA256"],
                         "Platform": system, "HostSDK": PROFILE["host_sdk"], "HostRuntime": PROFILE["host_runtime"],
-                        "SourceProof": proof, "StrictApiCompatibility": True, "AarEntryContentsExact": True,
+                        "SourceProof": proof, "StrictApiCompatibility": True, "PackagedAarsOfficialBytesExact": True,
+                        "BuiltAarEntryAdmission": aar_proof,
                         "NoProductRuntimeAcceptanceClaim": True})
     print("Pinned private Android Core package prepared; product activation/runtime qualification remains separate.")
 

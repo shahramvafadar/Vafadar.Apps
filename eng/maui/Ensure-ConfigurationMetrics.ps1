@@ -26,6 +26,15 @@ if (-not $AndroidSdk) {
     if (-not $AndroidSdk -and $IsWindows) { $AndroidSdk = Join-Path ${env:ProgramFiles(x86)} 'Android/android-sdk' }
 }
 if (-not $AndroidSdk) { throw 'Supply an existing Android36 SDK; this preparation never installs SDKs or accepts terms.' }
+$adbName = if ($IsWindows) { 'adb.exe' } else { 'adb' }
+foreach ($relative in @('platforms/android-36/android.jar', ('platform-tools/' + $adbName))) {
+    if (-not (Test-Path -LiteralPath (Join-Path $AndroidSdk $relative) -PathType Leaf)) {
+        throw ('A complete existing Android36 SDK is required; missing ' + $relative + '. No SDK component is installed implicitly.')
+    }
+}
+if (-not (Test-Path -LiteralPath (Join-Path $AndroidSdk 'build-tools/36.0.0') -PathType Container)) {
+    throw 'Existing Android build-tools36.0.0 is required; no SDK component is installed implicitly.'
+}
 $python = (Get-Command python -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
 [IO.Directory]::CreateDirectory($ownedRoot) | Out-Null
 $lockPath = Join-Path $ownedRoot 'producer.lock'
@@ -47,8 +56,8 @@ try {
     foreach ($folder in $NuGetFallback) { $arguments += @('--nuget-fallback', $folder) }
     & $python @arguments
     if ($LASTEXITCODE -ne 0) { throw 'Private Core source/package preparation refused; retain the original attempt.' }
-    $receipt = Get-Content -LiteralPath (Join-Path $ownedRoot 'package-proof.json') -Raw | ConvertFrom-Json
     $profile = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'configuration-metrics.inputs.json') -Raw | ConvertFrom-Json
+    $receipt = Get-Content -LiteralPath (Join-Path $ownedRoot ('package-proof.' + $profile.private_version + '.json')) -Raw | ConvertFrom-Json
     if ($receipt.CoreSHA256 -notmatch '^[A-Fa-f0-9]{64}$' -or $receipt.RecipeSHA256 -notmatch '^[A-Fa-f0-9]{64}$') {
         throw 'Prepared Core digest receipt is invalid.'
     }
@@ -60,7 +69,7 @@ try {
   <VafadarMauiCorePreparedVersion>$($profile.private_version)</VafadarMauiCorePreparedVersion>
 </PropertyGroup></Project>
 "@
-    $selection = Join-Path $ownedRoot 'selection.props'
+    $selection = Join-Path $ownedRoot ('selection.' + $profile.private_version + '.props')
     if ((Test-Path -LiteralPath $selection) -and [IO.File]::ReadAllText($selection) -ne $text) {
         throw 'Existing private Core selection state differs; no implicit repair is permitted.'
     }
