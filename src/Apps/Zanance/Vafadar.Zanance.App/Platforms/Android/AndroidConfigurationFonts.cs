@@ -91,6 +91,18 @@ internal static class AndroidConfigurationFonts
                     }
                 }
 
+                if (densityChanged && element is IButton && ReferenceEquals(element.Handler, handler) &&
+                    ReferenceEquals(handler.VirtualView, element))
+                {
+                    // D1195: native Button padding retains old pixels. Remap its original DIP value/default,
+                    // rather than scaling rounded pixels or replacing the managed padding/style.
+                    handler.UpdateValue(nameof(IButton.Padding));
+                    if (!IsCurrent(activity, window, root))
+                    {
+                        return;
+                    }
+                }
+
                 if (densityChanged && AndroidEntryConfigurationPadding.NeedsRefresh(element, handler))
                 {
                     // Refresh the owned drawable too; its density-dependent insets otherwise remain stale.

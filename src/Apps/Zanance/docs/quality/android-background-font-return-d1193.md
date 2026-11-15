@@ -1,5 +1,9 @@
 # Original Settings font-size return - D1193
 
+[D1195](android-retained-button-padding-d1195.md) separately corrects native Button
+padding retained across density changes. It does not repeat this font-scale or
+focused-field cohort or extend its finite acceptance to every control.
+
 Date: 2026-11-15. [D1192](android-retained-os-font-scale-d1192.md) qualifies its
 foreground configuration transition. It does not qualify changing text size
 while another window owns focus. This new actual Settings route does not replay
