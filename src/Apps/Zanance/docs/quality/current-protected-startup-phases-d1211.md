@@ -1,5 +1,9 @@
 # Current retained protected-startup attribution (D1211)
 
+[D1212/D1213](post-preparation-home-plan-stamp-d1213.md) later attributes only the
+post-preparation interval and rejects the measured plan-stamp candidate on warm
+latency. This protected-phase probe is not repeated and product code stays unchanged.
+
 ## Result and execution boundary
 
 The current serviced independent100k/200/1000 input completes one new protected
