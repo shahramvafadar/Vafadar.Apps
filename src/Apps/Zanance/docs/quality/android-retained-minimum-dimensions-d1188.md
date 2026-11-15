@@ -114,5 +114,5 @@ job logs were read. Windows' mock SDK reaches the newly added real preparation
 step; Android's inner source-proof reason is not emitted, so that reason remains
 unknown. No second status request, successful-job log read or rerun occurs.
 This local minimum correction does not claim hosted CI acceptance; the separate
-build/harness failures continue in D1189. See the
+build/harness failures continue in [D1189](hosted-core-failure-diagnosis-d1189.md). See the
 [actual failed run](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43671266347).

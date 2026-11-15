@@ -54,8 +54,27 @@ try {
         '--dotnet', $DotNet, '--android-sdk', $AndroidSdk)
     if ($InputSeeds) { $arguments += @('--input-seeds', $InputSeeds) }
     foreach ($folder in $NuGetFallback) { $arguments += @('--nuget-fallback', $folder) }
+    $preparationStarted = [DateTime]::UtcNow
     & $python @arguments
-    if ($LASTEXITCODE -ne 0) { throw 'Private Core source/package preparation refused; retain the original attempt.' }
+    if ($LASTEXITCODE -ne 0) {
+        # The proof reads only the newly built public framework. Preserve its strict refusal,
+        # but expose the bounded current diagnostic instead of hiding the actual reason in CI.
+        $proofState = Join-Path $ownedRoot 'source-proof.terminal.json'
+        if ((Test-Path -LiteralPath $proofState -PathType Leaf) -and
+            (Get-Item -LiteralPath $proofState).LastWriteTimeUtc -ge $preparationStarted) {
+            $failedProof = Get-Content -LiteralPath $proofState -Raw | ConvertFrom-Json
+            if ($failedProof.ExitCode -ne 0) {
+                $proofLog = Get-ChildItem -LiteralPath $ownedRoot -Filter 'source-proof*.log' -File |
+                    Where-Object LastWriteTimeUtc -ge $preparationStarted |
+                    Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1
+                if ($proofLog -and $proofLog.Length -le 8192) {
+                    Write-Host 'Current public Core source-proof refusal (retained original log):'
+                    Get-Content -LiteralPath $proofLog.FullName -Tail 16 | ForEach-Object { Write-Host $_ }
+                }
+            }
+        }
+        throw 'Private Core source/package preparation refused; retain the original attempt.'
+    }
     $profile = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'configuration-metrics.inputs.json') -Raw | ConvertFrom-Json
     $receipt = Get-Content -LiteralPath (Join-Path $ownedRoot ('package-proof.' + $profile.private_version + '.json')) -Raw | ConvertFrom-Json
     if ($receipt.CoreSHA256 -notmatch '^[A-Fa-f0-9]{64}$' -or $receipt.RecipeSHA256 -notmatch '^[A-Fa-f0-9]{64}$') {

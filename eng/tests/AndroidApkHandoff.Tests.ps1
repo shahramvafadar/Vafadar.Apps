@@ -2,7 +2,7 @@
 # These tiny file fixtures qualify artifact selection, not APK contents or signatures.
 $ErrorActionPreference = 'Stop'
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
-$entry = Join-Path $repo 'eng/scripts/Build-AndroidApk.ps1'
+$sourceEntry = Join-Path $repo 'eng/scripts/Build-AndroidApk.ps1'
 $temporaryRoot = [IO.Path]::GetFullPath((Join-Path $repo 'artifacts'))
 $fixture = Join-Path $temporaryRoot ('Vafadar-AndroidApkHandoff-' + [Guid]::NewGuid().ToString('N'))
 $previousExitCode = $global:LASTEXITCODE
@@ -13,6 +13,19 @@ Push-Location
 try {
     New-Item -ItemType Directory -Path $fixture | Out-Null
     $commandLog = Join-Path $fixture 'commands.txt'
+    # Copy the actual entry/wrapper bytes into the owned fixture so their relative preparation
+    # dependency can be inert too. Production has no flag that bypasses Core preparation.
+    $scripts = Join-Path $fixture 'eng/scripts'
+    $maui = Join-Path $fixture 'eng/maui'
+    New-Item -ItemType Directory -Path $scripts, $maui | Out-Null
+    $entry = Join-Path $scripts 'Build-AndroidApk.ps1'
+    Copy-Item -LiteralPath $sourceEntry -Destination $entry
+    Copy-Item -LiteralPath (Join-Path $repo 'eng/scripts/Invoke-ProjectDotNet.ps1') -Destination $scripts
+    if ((Get-FileHash -LiteralPath $sourceEntry).Hash -ne (Get-FileHash -LiteralPath $entry).Hash) {
+        throw 'The isolated entry-point bytes differ from the actual script.'
+    }
+    $preparation = Join-Path $maui 'Ensure-ConfigurationMetrics.ps1'
+    [IO.File]::WriteAllText($preparation, 'Add-Content -LiteralPath $env:VAFADAR_HANDOFF_COMMAND_LOG -Value prepare')
     # The project wrapper deliberately resolves an Application, not a PowerShell
     # function. Put an inert executable first on PATH so the real wrapper is tested
     # without accidentally reaching an installed SDK or restoring native packages.
@@ -55,11 +68,23 @@ try {
             throw 'The unique artifact was not reported.'
         }
     }
-    $buildCommands = @([IO.File]::ReadAllLines($commandLog))
-    if (($buildCommands -join ',') -ne 'restore,publish,restore,publish,restore,publish,restore,publish') {
-        throw 'The isolated restore/publish boundary was not exercised exactly once per case.'
+    # A preparation refusal must stop before restore/publish, even when an inert SDK would succeed.
+    [IO.File]::WriteAllText($preparation, @'
+Add-Content -LiteralPath $env:VAFADAR_HANDOFF_COMMAND_LOG -Value prepare-refused
+throw 'Private Core preparation fixture refusal.'
+'@)
+    $preparationRefused = $false
+    try { & $entry -Offline -Output (Join-Path $fixture 'preparation-refused') | Out-Null }
+    catch {
+        if ($_.Exception.Message -ne 'Private Core preparation fixture refusal.') { throw }
+        $preparationRefused = $true
     }
-    'Four APK handoff entry-point cases passed; no SDK build or device work executed.'
+    if (-not $preparationRefused) { throw 'The entry point accepted a refused Core preparation.' }
+    $buildCommands = @([IO.File]::ReadAllLines($commandLog))
+    if (($buildCommands -join ',') -ne 'prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,prepare-refused') {
+        throw 'The isolated preparation/restore/publish boundary was not exercised exactly once per case.'
+    }
+    'Four APK handoff cases and one preparation refusal passed; no real preparation, SDK build or device work executed.'
 }
 finally {
     Pop-Location

@@ -138,3 +138,8 @@ This does not qualify a full hosted Linux app run, hardware16KiB, the broader
 native dimension/typography boundary, whole accessibility/security/platforms,
 original fault remedy or whole performance. No successful managed suite or
 financial write is repeated. The full delivery goal remains active.
+
+[The sole hosted CI response and failed-job diagnosis](hosted-core-failure-diagnosis-d1189.md)
+subsequently record a Windows artifact-harness failure and an Android source-proof
+failure whose inner reason was not emitted. Local source/API/package qualification
+above is not recast as hosted CI acceptance; all failures and guard refusals remain.
