@@ -62,3 +62,7 @@ inner proof reason await new evidence. Original native fault, whole performance,
 security/accessibility/platform/provider/release gates and the full delivery goal
 remain open. [D1188](android-retained-minimum-dimensions-d1188.md) independently
 records the completed minimum-dimension source/runtime correction.
+
+[D1191](source-sdk-selection-d1191.md) independently reproduces and corrects
+source-directory SDK drift. It does not establish that drift as the exclusive
+cause of the historical hosted source-proof refusal.

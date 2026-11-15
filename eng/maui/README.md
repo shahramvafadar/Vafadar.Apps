@@ -42,6 +42,19 @@ The package includes the complete original official AAR bytes on both hosts,
 and retains the built AARs and their exact difference receipt. This does not
 claim byte-identical assemblies or Android runtime acceptance on Linux.
 
+Version4 pins the direct CLI SDK inside the verified source directory to
+`10.0.404`, with roll-forward disabled and the selected installation's explicit
+SDK search path. Upstream `tools` and `msbuild-sdks` declarations remain intact.
+Checking the repository directory alone is insufficient: the upstream source
+has its own `global.json`, whose `tools.dotnet` value is not a CLI SDK pin.
+Preparation first refuses an executable installation missing the pinned SDK,
+before any archive download, extraction or build. It then verifies actual SDK
+selection from the source directory and retains original/prepared configuration
+hashes. An existing policy whose bytes drifted is refused without implicit repair.
+Version4 reuses unchanged successful source-build/API witnesses; its new package
+identity does not imply another framework compilation or runtime qualification.
+See [SDK selection evidence](../../src/Apps/Zanance/docs/quality/source-sdk-selection-d1191.md).
+
 ## Evidence and refusal behavior
 
 The producer retains input hashes, source-archive inventory, exact patch

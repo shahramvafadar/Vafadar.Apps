@@ -325,6 +325,37 @@ def package_file(path, entries):
             package.writestr(info, data)
 
 
+def pin_source_sdk(source, dotnet, original, receipt):
+    """Pin the direct source CLI SDK while preserving upstream tool and MSBuild SDK declarations."""
+    config = source / "global.json"
+    selection = {"version": PROFILE["host_sdk"], "rollForward": "disable", "allowPrerelease": False,
+                 "paths": [dotnet.parent.as_posix()]}
+    if receipt.exists():
+        prior = json.loads(receipt.read_text())
+        require(prior["SDK"] == selection and digest(config) == prior["PreparedGlobalSHA256"],
+                "Prepared source SDK policy changed; no implicit repair.")
+        return prior
+    require(digest(config) == original["global.json"], "Original source SDK configuration bytes changed.")
+    before = config.read_bytes()
+    upstream = json.loads(before)
+    prepared = dict(upstream)
+    prepared["sdk"] = selection
+    # The upstream tools.dotnet value is not a direct CLI SDK pin. Keep it and msbuild-sdks intact.
+    backup = receipt.with_name("source-sdk-original.json")
+    with backup.open("xb") as output:
+        output.write(before)
+    temporary = config.with_suffix(".json.host-writing")
+    with temporary.open("x", encoding="utf-8", newline="\n") as output:
+        json.dump(prepared, output, indent=2)
+        output.write("\n")
+    temporary.replace(config)
+    result = {"OriginalGlobalSHA256": original["global.json"], "PreparedGlobalSHA256": digest(config),
+              "SDK": selection, "UpstreamOtherSectionsPreserved": all(
+                  prepared[key] == value for key, value in upstream.items() if key != "sdk")}
+    write_json(receipt, result)
+    return result
+
+
 def main():
     """Prepare one immutable package, with public-source/API and selected-asset witnesses."""
     parser = argparse.ArgumentParser()
@@ -339,6 +370,11 @@ def main():
     root = (REPO / args.work_root).resolve()
     require(root.is_relative_to(REPO / "artifacts"), "Preparation root must remain under repository artifacts.")
     root.mkdir(parents=True, exist_ok=True)
+    dotnet = Path(args.dotnet).resolve()
+    # Repository global.json may resolve an SDK outside this executable's installation. Refuse
+    # that misleading preflight before downloading archives or preparing the verified source.
+    require(dotnet.is_file() and (dotnet.parent / "sdk" / PROFILE["host_sdk"] / "dotnet.dll").is_file(),
+            "The selected executable installation lacks the pinned source-build SDK.")
     inputs = [PROFILE_PATH, Path(__file__), ENG / "PrivateCoreVersion.targets", ENG / "CoreBuildProof/Program.cs",
               ENG / "CoreBuildProof/CoreBuildProof.csproj", REPO / PROFILE["patch"]]
     fingerprint = hashlib.sha256("\n".join(digest(p) for p in inputs).encode()).hexdigest()
@@ -358,6 +394,7 @@ def main():
     archives = {name: download(root, name, spec, seeds) for name, spec in specs.items()}
     source = root / "source"
     original = extract_source(archives["source"], source, root / "source-archive-files.json")
+    sdk_policy = pin_source_sdk(source, dotnet, original, root / "source-sdk-selection.json")
     restore_source_executables(archives["source"], source, original, root / "source-executable-modes.json")
     require(digest(REPO / PROFILE["patch"]) == PROFILE["patch_sha256"], "Reviewed source patch changed.")
     patched = root / "source-patched.json"
@@ -395,13 +432,17 @@ def main():
         unpack_java(archives["java"], java_root)
         write_json(root / "java-extracted.json", {"ArchiveSHA256": specs["java"]["sha256"]})
     java = next(p for p in java_root.iterdir() if (p / "bin" / ("java.exe" if system == "windows" else "java")).is_file())
-    dotnet = Path(args.dotnet).resolve()
     android = Path(args.android_sdk).resolve()
     require((android / "platforms/android-36/android.jar").is_file() and (android / "build-tools/36.0.0").is_dir(),
             "Existing Android36/build-tools36.0.0 required; no implicit SDK installation/license acceptance.")
     env = isolated_environment(root, dotnet, java, android, workload)
     version = subprocess.run([str(dotnet), "--version"], cwd=REPO, env=env, capture_output=True, text=True)
     require(version.returncode == 0 and version.stdout.strip() == PROFILE["host_sdk"], "Repository source-build SDK version changed.")
+    source_version = subprocess.run([str(dotnet), "--version"], cwd=source, env=env, capture_output=True, text=True)
+    require(source_version.returncode == 0 and source_version.stdout.strip() == PROFILE["host_sdk"],
+            "Actual source-directory SDK selection differs from the pinned host.")
+    write_json(root / "source-sdk-observation.json", {"Version": source_version.stdout.strip(),
+               "GlobalSHA256": sdk_policy["PreparedGlobalSHA256"], "Executable": str(dotnet)})
     make_nuget_config(source / "NuGet.config")
     (source / "Directory.Packages.props").write_text('<Project><PropertyGroup><ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally></PropertyGroup></Project>\n')
     build = source / "artifacts-private"
@@ -522,7 +563,8 @@ def main():
     package_file(output, entries)
     write_json(receipt, {"RecipeSHA256": fingerprint, "PackageSHA256": digest(output), "CoreSHA256": proof["CoreSHA256"],
                         "Platform": system, "HostSDK": PROFILE["host_sdk"], "HostRuntime": PROFILE["host_runtime"],
-                        "SourceProof": proof, "StrictApiCompatibility": True, "PackagedAarsOfficialBytesExact": True,
+                        "SourceProof": proof, "SourceSDKSelection": sdk_policy,
+                        "StrictApiCompatibility": True, "PackagedAarsOfficialBytesExact": True,
                         "BuiltAarEntryAdmission": aar_proof,
                         "NoProductRuntimeAcceptanceClaim": True})
     print("Pinned private Android Core package prepared; product activation/runtime qualification remains separate.")
