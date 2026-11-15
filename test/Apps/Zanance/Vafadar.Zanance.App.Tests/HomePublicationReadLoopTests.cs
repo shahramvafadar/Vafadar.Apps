@@ -12,6 +12,37 @@ namespace Vafadar.Zanance.App.Tests;
 public sealed class HomePublicationReadLoopTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
+
+    /// <summary>A retired page cannot begin another full read after period or projection supersession.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    public async Task Retired_publication_never_starts_another_period_read(bool duringProjection)
+    {
+        using var f = new FlowFixture();
+        var gate = f.Services.GetRequiredService<LocalDatabaseLocation<ZananceDbContext>>().Access;
+        var source = new ObservedSource(f.Store, gate);
+        var retired = false; var period = 0; var projections = 0;
+        void RequireCurrent()
+        {
+            if (retired) throw new OperationCanceledException("Original Home owner retired.");
+        }
+        source.AfterBegin = count =>
+        {
+            if (count == 1 && !duringProjection) { retired = true; period = 1; }
+        };
+        var cover = new SnapshotLoadState();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => cover.RunAsync(() =>
+            HomeRefreshSession.RunAsync(refresh => HomePublicationReadLoop.RunAsync(source, Day, () => period,
+                refresh.RequireOriginalFile, operation =>
+                {
+                    RequireCurrent(); projections++;
+                    if (duringProjection) { retired = true; period = 1; return Task.FromResult(false); }
+                    return Task.FromResult(true);
+                }, RequireCurrent), RequireCurrent), RequireCurrent));
+        Assert.Equal(1, source.Begun);
+        Assert.Equal(duringProjection ? 1 : 0, projections);
+        Assert.False(cover.IsReady); Assert.True(cover.HasFailed);
+        using var owner = gate.AcquireExclusive(); gate.RequireDrainedOwner(owner);
+    }
     private static readonly DateOnly Day = new(2026, 10, 9);
 
     /// <summary>Both pre-projection and final-period changes release the old lease before a new factory read.</summary>
@@ -30,7 +61,7 @@ public sealed class HomePublicationReadLoopTests
                 await operation.ValidateAsync(Ct);
                 if (afterProjection && projections == 1) { period = 1; return false; }
                 Assert.Equal(1, operation.Snapshot.PeriodIndex); return true;
-            }), () => Ct.ThrowIfCancellationRequested());
+            }, () => Ct.ThrowIfCancellationRequested()), () => Ct.ThrowIfCancellationRequested());
         Assert.True(cover.IsReady); Assert.Equal(2, source.Begun);
         Assert.Equal(afterProjection ? 2 : 1, projections);
         using var owner = gate.AcquireExclusive(); gate.RequireDrainedOwner(owner);
@@ -47,7 +78,7 @@ public sealed class HomePublicationReadLoopTests
         var cover = new SnapshotLoadState();
         await Assert.ThrowsAsync<InvalidOperationException>(() => cover.RunAsync(() =>
             HomePublicationReadLoop.RunAsync(source, Day, () => 0, refresh.RequireOriginalFile,
-                _ => { projected = true; return Task.FromResult(true); }), () => Ct.ThrowIfCancellationRequested()));
+                _ => { projected = true; return Task.FromResult(true); }, () => Ct.ThrowIfCancellationRequested()), () => Ct.ThrowIfCancellationRequested()));
         Assert.False(projected); Assert.False(cover.IsReady); Assert.True(cover.HasFailed);
         using var owner = gate.AcquireExclusive(); gate.RequireDrainedOwner(owner);
     }
@@ -72,7 +103,7 @@ public sealed class HomePublicationReadLoopTests
                 await operation.ValidateAsync(Ct);
                 Assert.Equal("Committed once", Assert.Single(operation.Snapshot.QuickResources.Accounts).Name);
                 return true;
-            }), () => Ct.ThrowIfCancellationRequested()), () => Ct.ThrowIfCancellationRequested());
+            }, () => Ct.ThrowIfCancellationRequested()), () => Ct.ThrowIfCancellationRequested()), () => Ct.ThrowIfCancellationRequested());
         Assert.True(cover.IsReady); Assert.Equal(2, source.Begun); Assert.Equal(1, writes);
         Assert.Equal(1234, Assert.Single(await f.Store.GetAccountsAsync(cancellationToken: Ct)).OpeningBalance);
         Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));

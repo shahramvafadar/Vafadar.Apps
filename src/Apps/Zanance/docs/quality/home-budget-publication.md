@@ -102,3 +102,7 @@ and are not additional application tests or native acceptance.
 
 Prior D-511, D-512 and D-514 exact-head CI and CodeQL runs succeed and their one-shot monitors
 are consumed/deleted. D-513's own exact-head check is pending when this batch is committed.
+
+[Later Home read-loop owner evidence](home-read-loop-owner-d1197.md) records the
+separate retired-page retry correction with empty fixtures; the accepted financial
+operations and historical observations above are not replayed.

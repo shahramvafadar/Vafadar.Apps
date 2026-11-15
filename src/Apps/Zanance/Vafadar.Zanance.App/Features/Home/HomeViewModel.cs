@@ -329,7 +329,7 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         var today = Today;
         var culture = _localization.CurrentCulture;
         await HomePublicationReadLoop.RunAsync(_homeReads, today, () => PeriodIndex,
-            refresh.RequireOriginalFile, operation => ProjectHomeAsync(operation, today, culture));
+            refresh.RequireOriginalFile, operation => ProjectHomeAsync(operation, today, culture), RequireCurrentPublication);
     }
 
     /// <summary>Projects one complete packet while covered; the owning loop drains its connection before any retry.</summary>

@@ -41,16 +41,25 @@ public sealed class HomeReadOperationSource(ZananceStore store) : IHomeReadOpera
 /// <summary>Disposes each superseded read before retrying, so pending maintenance cannot deadlock on the old lease.</summary>
 internal static class HomePublicationReadLoop
 {
-    /// <summary>Preserves one original file and day while period changes retire only the current projection.</summary>
+    /// <summary>Preserves the current page, original file and day while period changes retire only its projection.</summary>
     internal static async Task RunAsync(IHomeReadOperationSource source, DateOnly today, Func<int> period,
-        Action<string> requireOriginalFile, Func<IHomeReadOperation, Task<bool>> project)
+        Action<string> requireOriginalFile, Func<IHomeReadOperation, Task<bool>> project, Action requireCurrent)
     {
         while (true)
         {
-            await using var operation = await source.BeginAsync(today, period());
+            requireCurrent();
+            var requestedPeriod = period();
+            requireCurrent();
+            await using var operation = await source.BeginAsync(today, requestedPeriod);
+            // A retired page must drain this operation before inspecting it or beginning another full read.
+            requireCurrent();
             requireOriginalFile(operation.Snapshot.DatabasePath);
+            requireCurrent();
             if (operation.Snapshot.PeriodIndex != period()) continue;
-            if (await project(operation)) return;
+            requireCurrent();
+            var complete = await project(operation);
+            requireCurrent();
+            if (complete) return;
         }
     }
 }
