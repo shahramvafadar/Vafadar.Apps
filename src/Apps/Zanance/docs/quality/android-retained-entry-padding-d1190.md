@@ -122,3 +122,7 @@ has a new read-only reproduction of source-directory SDK selection differing fro
 the repository-directory SDK; that does not yet establish the previous CI's inner
 reason. Original fault remedy, whole performance/security/accessibility/platform/
 provider/release gates and the full delivery goal remain open.
+
+[D1192](android-retained-os-font-scale-d1192.md) separately corrects an actual
+font-scale reset of an unsaved original form and its focused-target visibility.
+The accepted density/padding cases here are not replayed.

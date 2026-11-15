@@ -12,10 +12,11 @@ namespace Vafadar.Zanance.App;
     LaunchMode = LaunchMode.SingleTop,
     ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode
         | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.Locale
-        | ConfigChanges.LayoutDirection)]
+        | ConfigChanges.LayoutDirection | ConfigChanges.FontScale)]
 public class MainActivity : MauiAppCompatActivity
 {
     private int _configurationDensityDpi;
+    private float _configurationFontScale;
 
     // Start protected before the first frame, then apply the saved foreground choice (D-63).
     protected override void OnCreate(Bundle? savedInstanceState)
@@ -35,6 +36,7 @@ public class MainActivity : MauiAppCompatActivity
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
         _configurationDensityDpi = Resources?.Configuration?.DensityDpi ?? 0;
+        _configurationFontScale = Resources?.Configuration?.FontScale ?? 0;
         if (OperatingSystem.IsAndroidVersionAtLeast(33)) { SetRecentsScreenshotEnabled(false); }
         Security.ScreenProtection.SetBackground(false);
         UpdateSystemBarIcons();
@@ -93,9 +95,16 @@ public class MainActivity : MauiAppCompatActivity
     {
         var densityChanged = _configurationDensityDpi > 0 && newConfig.DensityDpi > 0 &&
             _configurationDensityDpi != newConfig.DensityDpi;
+        var fontScaleChanged = _configurationFontScale > 0 && newConfig.FontScale > 0 &&
+            _configurationFontScale != newConfig.FontScale;
         if (newConfig.DensityDpi > 0)
         {
             _configurationDensityDpi = newConfig.DensityDpi;
+        }
+
+        if (newConfig.FontScale > 0)
+        {
+            _configurationFontScale = newConfig.FontScale;
         }
 
         base.OnConfigurationChanged(newConfig);
@@ -106,9 +115,11 @@ public class MainActivity : MauiAppCompatActivity
 
         QuickAddWidget.Refresh(this);
         UpdateSystemBarIcons();
-        if (densityChanged)
+        // D1192: Android otherwise recreates the window on a font-scale change, losing an unsaved form.
+        // Retain the original root and use native SP mapping so Android's nonlinear scaling remains authoritative.
+        if (densityChanged || fontScaleChanged)
         {
-            AndroidConfigurationFonts.Refresh(this);
+            AndroidConfigurationFonts.Refresh(this, densityChanged, fontScaleChanged);
         }
     }
 
