@@ -126,3 +126,7 @@ provider/release gates and the full delivery goal remain open.
 [D1192](android-retained-os-font-scale-d1192.md) separately corrects an actual
 font-scale reset of an unsaved original form and its focused-target visibility.
 The accepted density/padding cases here are not replayed.
+
+[The separate Editor continuation](android-retained-editor-padding-d1199.md)
+corrects two newly observed multiline-input default-padding failures. Original
+accepted Entry, input and financial operations above are not replayed.

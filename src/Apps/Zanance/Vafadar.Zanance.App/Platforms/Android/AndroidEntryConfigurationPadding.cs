@@ -5,7 +5,7 @@ using Microsoft.Maui.Platform;
 
 namespace Vafadar.Zanance.App;
 
-/// <summary>Refreshes only unchanged stock Entry padding after a retained density change.</summary>
+/// <summary>Refreshes only unchanged stock Entry and Editor padding after a retained density change.</summary>
 internal static class AndroidEntryConfigurationPadding
 {
     // The pinned Core keeps this layer type internal. Compare public type identity only; never access its members.
@@ -16,14 +16,16 @@ internal static class AndroidEntryConfigurationPadding
     /// <summary>Captures stock defaults after the original background mapping without retaining a view or handler.</summary>
     internal static void Register()
     {
-        // Controls installs its own mappings from Entry's type initializer; attach only after those are ready.
+        // Controls installs its own mappings from these type initializers; attach only after those are ready.
         RuntimeHelpers.RunClassConstructor(typeof(Microsoft.Maui.Controls.Entry).TypeHandle);
+        RuntimeHelpers.RunClassConstructor(typeof(Microsoft.Maui.Controls.Editor).TypeHandle);
         if (Interlocked.Exchange(ref _registered, 1) != 0)
         {
             return;
         }
 
-        EntryHandler.Mapper.AppendToMapping(nameof(IView.Background), Capture);
+        EntryHandler.Mapper.AppendToMapping(nameof(IView.Background), static (handler, entry) => Capture(handler, entry));
+        EditorHandler.Mapper.AppendToMapping(nameof(IView.Background), static (handler, editor) => Capture(handler, editor));
     }
 
     /// <summary>Checks whether the same stock handler still owns its previously captured default padding.</summary>
@@ -38,14 +40,14 @@ internal static class AndroidEntryConfigurationPadding
             return;
         }
 
-        // D1190: background remapping intentionally preserves old pixel padding. Obtain current defaults
+        // D1190/D1199: background remapping preserves Entry/Editor pixels. Obtain current defaults
         // from the exact native constructor; scaling rounded old pixels cannot reconstruct resource dimensions.
         view.SetPadding(padding.Left, padding.Top, padding.Right, padding.Bottom);
         state.Padding = padding;
     }
 
     /// <summary>Records only the exact stock handler/native class and its original default absolute padding.</summary>
-    private static void Capture(IEntryHandler handler, IEntry entry)
+    private static void Capture(IElementHandler handler, IElement entry)
     {
         if (States.TryGetValue(handler, out var existing) && existing.Owner.TryGetTarget(out var owner) &&
             ReferenceEquals(owner, entry))
@@ -54,7 +56,7 @@ internal static class AndroidEntryConfigurationPadding
         }
 
         States.Remove(handler);
-        if (handler.GetType() != typeof(EntryHandler) || handler.PlatformView is not MauiAppCompatEditText view ||
+        if (!IsStockHandler(entry, handler) || handler.PlatformView is not MauiAppCompatEditText view ||
             view.GetType() != typeof(MauiAppCompatEditText) || !IsStockBackground(view) ||
             !ReferenceEquals(handler.VirtualView, entry) || ReadDefault(view) is not { } defaults || Read(view) != defaults)
         {
@@ -76,7 +78,7 @@ internal static class AndroidEntryConfigurationPadding
 
         if (!ReferenceEquals(element.Handler, handler) || !ReferenceEquals(handler.VirtualView, element) ||
             !captured.Owner.TryGetTarget(out var owner) || !ReferenceEquals(owner, element) ||
-            handler.GetType() != typeof(EntryHandler) || handler.PlatformView is not MauiAppCompatEditText current ||
+            !IsStockHandler(element, handler) || handler.PlatformView is not MauiAppCompatEditText current ||
             current.GetType() != typeof(MauiAppCompatEditText) || !IsStockBackground(current) || Read(current) != captured.Padding)
         {
             States.Remove(handler);
@@ -87,6 +89,11 @@ internal static class AndroidEntryConfigurationPadding
         state = captured;
         return true;
     }
+
+    /// <summary>Accepts only the exact stock text-input handler paired with its corresponding virtual contract.</summary>
+    private static bool IsStockHandler(IElement element, IElementHandler handler) =>
+        (element is IEntry && handler.GetType() == typeof(EntryHandler)) ||
+        (element is IEditor && handler.GetType() == typeof(EditorHandler));
 
     /// <summary>Limits this repair to the original MAUI-managed background and absolute padding path.</summary>
     private static bool IsStockBackground(MauiAppCompatEditText view) =>
