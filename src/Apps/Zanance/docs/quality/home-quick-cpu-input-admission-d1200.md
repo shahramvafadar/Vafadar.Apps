@@ -70,3 +70,7 @@ both report completed-success. The exclusive marker preceded the one GET; no
 successful job log or second status request occurs. Native-fault cause/remedy,
 whole performance/security/accessibility/platform/provider/release gates remain
 open, canonical parent States unchanged, and the full delivery goal stays active.
+
+[D1201](independent-home-quick-read-cpu-d1201.md) subsequently completes one
+original Home CPU observation on an independently generated full-size input;
+protected C7 is not resumed and no speed improvement or posting acceptance follows.
