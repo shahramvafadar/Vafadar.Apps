@@ -1,0 +1,9 @@
+<Project>
+  <!-- Keep the public assembly identity but identify this source modification without an official-build claim. -->
+  <Target Name="StampPrivateConfigurationMetricsVersion" AfterTargets="_InitializeAssemblyVersion">
+    <PropertyGroup>
+      <FileVersion>10.0.120.1183</FileVersion>
+      <InformationalVersion>10.0.120-vafadar.configurationmetrics.1+6aca5366139ed0e1cd05cca3e32b6a887d5a8dd0</InformationalVersion>
+    </PropertyGroup>
+  </Target>
+</Project>

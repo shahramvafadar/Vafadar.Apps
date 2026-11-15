@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "upstream_version": "10.0.120",
+  "upstream_commit": "6aca5366139ed0e1cd05cca3e32b6a887d5a8dd0",
+  "upstream_tools_sdk": "10.0.113-servicing.26454.107",
+  "host_sdk": "10.0.404",
+  "host_runtime": "10.0.15",
+  "host_compiler": "5.9.0-1.26529.119+2ab2854867733112c84ac12c4273d7970ac3afdf",
+  "language_version": "14.0",
+  "private_package": "Vafadar.Maui.Core.Android",
+  "private_version": "1.0.0-source10.0.120.1",
+  "assembly_version": "10.0.0.0",
+  "file_version": "10.0.120.1183",
+  "informational_version": "10.0.120-vafadar.configurationmetrics.1+6aca5366139ed0e1cd05cca3e32b6a887d5a8dd0",
+  "patch": "eng/patches/maui-10.0.120-android-configuration-metrics.patch",
+  "patch_sha256": "efafdc324aa116263c04e16fedd3b577eb9f7ee669297f2a04c16d03de9d4595",
+  "patch_files": [
+    {
+      "path": "src/Core/src/Platform/Android/ContextExtensions.cs",
+      "before": "f6f40cd55e7ad8908fae52c48f0a9695693f95dc7adb2e35c802853e0ef75e08",
+      "after": "af9251a40076d859a52ae8a5cd268ddb5a7b25759ae8aef745f85db252b81cd0"
+    },
+    {
+      "path": "src/Core/src/Platform/Android/MauiAppCompatActivity.Lifecycle.cs",
+      "before": "845a956350d34aa60e4632e87cfef88bffe206e0ccd97a30079244231a4fe91d",
+      "after": "a38fdaf964e024e5e3fe6c85e82902a6272dbb4ef70b4a84b6b956da136702e1"
+    }
+  ],
+  "source": {
+    "url": "https://codeload.github.com/dotnet/maui/tar.gz/6aca5366139ed0e1cd05cca3e32b6a887d5a8dd0",
+    "sha256": "87ad2013288a6a51e10bd33cd538a575ab3450bca987986ed361393eb1097067"
+  },
+  "official_core": {
+    "url": "https://api.nuget.org/v3-flatcontainer/microsoft.maui.core/10.0.120/microsoft.maui.core.10.0.120.nupkg",
+    "sha256": "2f5d3e39af6e7e59653ff1c43df733e19864864e927ef5401f8a2757b4fc657f"
+  },
+  "android_manifest": {
+    "url": "https://pkgs.dev.azure.com/dnceng/9ee6d478-d288-47f7-aacc-f6e6d082ae6d/_packaging/a5c47f6f-ac32-4162-94a1-1b53565704fd/nuget/v3/flat2/microsoft.net.sdk.android.manifest-10.0.100/36.1.115/microsoft.net.sdk.android.manifest-10.0.100.36.1.115.nupkg",
+    "sha256": "a6d2aa4798ec2c726eec36da14136e3e1c0d53103b57fe543bb1394276e95d44"
+  },
+  "android_reference": {
+    "url": "https://pkgs.dev.azure.com/dnceng/9ee6d478-d288-47f7-aacc-f6e6d082ae6d/_packaging/a5c47f6f-ac32-4162-94a1-1b53565704fd/nuget/v3/flat2/microsoft.android.ref.36/36.1.115/microsoft.android.ref.36.36.1.115.nupkg",
+    "sha256": "91f907fb55974c9ffb909287cf0f373c1f08109a46c3bcf03dc7d9cef9d151e5"
+  },
+  "android_sdk": {
+    "windows": {
+      "url": "https://pkgs.dev.azure.com/dnceng/9ee6d478-d288-47f7-aacc-f6e6d082ae6d/_packaging/a5c47f6f-ac32-4162-94a1-1b53565704fd/nuget/v3/flat2/microsoft.android.sdk.windows/36.1.115/microsoft.android.sdk.windows.36.1.115.nupkg",
+      "sha256": "af6dc5e2d386cc917e099f803e48e96edf78f67926683ae1795c43bef916e820"
+    },
+    "linux": {
+      "url": "https://pkgs.dev.azure.com/dnceng/9ee6d478-d288-47f7-aacc-f6e6d082ae6d/_packaging/a5c47f6f-ac32-4162-94a1-1b53565704fd/nuget/v3/flat2/microsoft.android.sdk.linux/36.1.115/microsoft.android.sdk.linux.36.1.115.nupkg",
+      "sha256": "978d8f8fd3b97b89f754a7492f0ab2c73dfad8a24144153dae154df2838ed521"
+    }
+  },
+  "java": {
+    "windows": {
+      "url": "https://aka.ms/download-jdk/microsoft-jdk-17.0.12-windows-x64.zip",
+      "sha256": "9461104ea16be22b42c90740bbb8d1a42660ca4e4299694b098b63274c2027be"
+    },
+    "linux": {
+      "url": "https://aka.ms/download-jdk/microsoft-jdk-17.0.12-linux-x64.tar.gz",
+      "sha256": "243930f67f431d01b278ab62739db07763d612837894879471a8940d2512f761"
+    }
+  },
+  "api_tool": {
+    "url": "https://api.nuget.org/v3-flatcontainer/microsoft.dotnet.apicompat.tool/10.0.404/microsoft.dotnet.apicompat.tool.10.0.404.nupkg",
+    "sha256": "41cac2f03e95d1423a40332df037fdccfeb22710cb362744210a359f3e064724",
+    "version": "10.0.404"
+  },
+  "anonymous_feeds": [
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-android-ee72c6ff/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-dotnet-11741c82/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-aspnetcore-58518050/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-runtime-db534f81/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-windowsdesktop-0bd7f472/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-public/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/benchmark-dotnet-prerelease/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-libraries/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-libraries-transport/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-eng/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet10/nuget/v3/index.json",
+    "https://api.nuget.org/v3/index.json"
+  ],
+  "source_closure_prefixes": [
+    "eng/",
+    "src/Core/src/",
+    "src/Core/AndroidNative/",
+    "src/Essentials/src/",
+    "src/Graphics/src/Graphics/",
+    "src/Workload/Shared/"
+  ],
+  "expected_handwritten_core_documents": 672,
+  "expected_core_documents": 706,
+  "expected_compile_options": {
+    "compiler-version": "5.9.0-1.26529.119+2ab2854867733112c84ac12c4273d7970ac3afdf",
+    "define": "_MAUIXAML_SOURCEGEN_BACKCOMPAT,TRACE,MONOANDROID,PLATFORM,RELEASE,__XAMARIN_ANDROID_v1_0__,__MOBILE__,__ANDROID__,__ANDROID_1__,__ANDROID_2__,__ANDROID_3__,__ANDROID_4__,__ANDROID_5__,__ANDROID_6__,__ANDROID_7__,__ANDROID_8__,__ANDROID_9__,__ANDROID_10__,__ANDROID_11__,__ANDROID_12__,__ANDROID_13__,__ANDROID_14__,__ANDROID_15__,__ANDROID_16__,__ANDROID_17__,__ANDROID_18__,__ANDROID_19__,__ANDROID_20__,__ANDROID_21__,__ANDROID_22__,__ANDROID_23__,__ANDROID_24__,__ANDROID_25__,__ANDROID_26__,__ANDROID_27__,__ANDROID_28__,__ANDROID_29__,__ANDROID_30__,__ANDROID_31__,__ANDROID_32__,__ANDROID_33__,__ANDROID_34__,__ANDROID_35__,__ANDROID_36__,NET,NET10_0,NETCOREAPP,ANDROID,ANDROID36_0,NET5_0_OR_GREATER,NET6_0_OR_GREATER,NET7_0_OR_GREATER,NET8_0_OR_GREATER,NET9_0_OR_GREATER,NET10_0_OR_GREATER,NETCOREAPP1_0_OR_GREATER,NETCOREAPP1_1_OR_GREATER,NETCOREAPP2_0_OR_GREATER,NETCOREAPP2_1_OR_GREATER,NETCOREAPP2_2_OR_GREATER,NETCOREAPP3_0_OR_GREATER,NETCOREAPP3_1_OR_GREATER,ANDROID21_0_OR_GREATER,ANDROID22_0_OR_GREATER,ANDROID23_0_OR_GREATER,ANDROID24_0_OR_GREATER,ANDROID25_0_OR_GREATER,ANDROID26_0_OR_GREATER,ANDROID27_0_OR_GREATER,ANDROID28_0_OR_GREATER,ANDROID29_0_OR_GREATER,ANDROID30_0_OR_GREATER,ANDROID31_0_OR_GREATER,ANDROID32_0_OR_GREATER,ANDROID33_0_OR_GREATER,ANDROID34_0_OR_GREATER,ANDROID35_0_OR_GREATER,ANDROID36_0_OR_GREATER",
+    "language": "C#",
+    "language-version": "14.0",
+    "nullable": "Enable",
+    "optimization": "release-debug-plus",
+    "output-kind": "DynamicallyLinkedLibrary",
+    "platform": "AnyCpu",
+    "source-file-count": "706",
+    "unsafe": "True",
+    "version": "2"
+  },
+  "official_build_compatibility_scope": "Source-text and strict public API admission; not vendor PE identity or all runtime behavior. Serviced repository host differs from upstream build host."
+}

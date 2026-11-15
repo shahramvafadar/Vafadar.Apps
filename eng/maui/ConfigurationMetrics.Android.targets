@@ -1,0 +1,39 @@
+<Project>
+  <!-- Only MAUI Android consumers change. The upstream source producer and plain SDK controls remain independent. -->
+  <PropertyGroup>
+    <_VafadarPrivateCoreConsumer Condition="'$(UseMaui)' == 'true' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">true</_VafadarPrivateCoreConsumer>
+    <VafadarMauiCoreStateRoot Condition="'$(VafadarMauiCoreStateRoot)' == ''">$(RepoRoot)artifacts/maui-core</VafadarMauiCoreStateRoot>
+  </PropertyGroup>
+  <Import Project="$(VafadarMauiCoreStateRoot)/selection.props" Condition="'$(_VafadarPrivateCoreConsumer)' == 'true' and Exists('$(VafadarMauiCoreStateRoot)/selection.props')" />
+  <ItemGroup Condition="'$(_VafadarPrivateCoreConsumer)' == 'true'">
+    <PackageReference Include="Microsoft.Maui.Core" Condition="'@(PackageReference->WithMetadataValue('Identity', 'Microsoft.Maui.Core'))' == ''" />
+    <PackageReference Update="Microsoft.Maui.Core" ExcludeAssets="compile;runtime" />
+    <PackageReference Include="Vafadar.Maui.Core.Android" Condition="'@(PackageReference->WithMetadataValue('Identity', 'Vafadar.Maui.Core.Android'))' == ''" />
+  </ItemGroup>
+  <Target Name="VafadarVerifyPrivateCoreCompiler" BeforeTargets="CoreCompile" Condition="'$(_VafadarPrivateCoreConsumer)' == 'true'">
+    <Error Condition="'$(VafadarMauiCoreExpectedSHA256)' == ''" Text="Prepare the reviewed Android Core package with eng/maui/Ensure-ConfigurationMetrics.ps1 before building." />
+    <ItemGroup>
+      <_VafadarCoreCompiler Remove="@(_VafadarCoreCompiler)" />
+      <_VafadarCoreCompiler Include="@(ReferencePathWithRefAssemblies)" Condition="'%(ReferencePathWithRefAssemblies.Filename)' == 'Microsoft.Maui'" />
+      <_VafadarCoreCompiler Include="@(ReferencePath)" Condition="'@(_VafadarCoreCompiler->Count())' == '0' and '%(ReferencePath.Filename)' == 'Microsoft.Maui'" />
+    </ItemGroup>
+    <Error Condition="'@(_VafadarCoreCompiler->Count())' != '1'" Text="Exactly one reviewed private Core compiler input is required." />
+    <Error Condition="'%(_VafadarCoreCompiler.NuGetPackageId)' != 'Vafadar.Maui.Core.Android'" Text="An original or unbound Core compiler asset was selected." />
+    <GetFileHash Files="@(_VafadarCoreCompiler)" Algorithm="SHA256"><Output TaskParameter="Items" ItemName="_VafadarCoreCompilerHash" /></GetFileHash>
+    <Error Condition="'%(_VafadarCoreCompilerHash.FileHash)' != '$(VafadarMauiCoreExpectedSHA256)'" Text="Private Core compiler input does not match the prepared source proof." />
+  </Target>
+  <Target Name="VafadarVerifyPrivateCoreLinker" BeforeTargets="_RunILLink" DependsOnTargets="_ComputeManagedAssemblyToLink;PrepareForILLink"
+          Condition="'$(_VafadarPrivateCoreConsumer)' == 'true' and '$(PublishTrimmed)' == 'true'">
+    <ItemGroup><_VafadarCoreLinkInput Include="@(ManagedAssemblyToLink)" Condition="'%(ManagedAssemblyToLink.Filename)' == 'Microsoft.Maui'" /></ItemGroup>
+    <Error Condition="'@(_VafadarCoreLinkInput->Count())' != '1' or '$(VafadarMauiCoreExpectedSHA256)' == ''" Text="Exactly one reviewed private Core trimmer input is required." />
+    <GetFileHash Files="@(_VafadarCoreLinkInput)" Algorithm="SHA256"><Output TaskParameter="Items" ItemName="_VafadarCoreLinkHash" /></GetFileHash>
+    <Error Condition="'%(_VafadarCoreLinkHash.FileHash)' != '$(VafadarMauiCoreExpectedSHA256)'" Text="Private Core trimmer input does not match the prepared source proof." />
+  </Target>
+  <Target Name="VafadarVerifyPrivateCoreUntrimmed" BeforeTargets="_LinkAssembliesNoShrink"
+          Condition="'$(_VafadarPrivateCoreConsumer)' == 'true' and '$(PublishTrimmed)' != 'true'">
+    <ItemGroup><_VafadarCoreUntrimmedInput Include="@(ResolvedAssemblies)" Condition="'%(ResolvedAssemblies.Filename)' == 'Microsoft.Maui'" /></ItemGroup>
+    <Error Condition="'@(_VafadarCoreUntrimmedInput->Count())' != '1' or '$(VafadarMauiCoreExpectedSHA256)' == ''" Text="Exactly one reviewed private Core untrimmed input is required." />
+    <GetFileHash Files="@(_VafadarCoreUntrimmedInput)" Algorithm="SHA256"><Output TaskParameter="Items" ItemName="_VafadarCoreUntrimmedHash" /></GetFileHash>
+    <Error Condition="'%(_VafadarCoreUntrimmedHash.FileHash)' != '$(VafadarMauiCoreExpectedSHA256)'" Text="Private Core untrimmed input does not match the prepared source proof." />
+  </Target>
+</Project>

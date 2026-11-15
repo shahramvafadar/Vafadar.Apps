@@ -56,3 +56,8 @@ eng/notifications/LICENSE.upstream text eol=lf
 
 # Preserve the reviewed upstream LF patch and its blank context lines.
 eng/patches/maui-10.0.120-android-configuration-metrics.patch text eol=lf whitespace=-blank-at-eol,-space-before-tab
+
+# Keep source-producer recipe fingerprints stable across the Windows and Linux build lanes.
+eng/maui/** text eol=lf
+# The already qualified input profile uses CRLF; retain those recipe bytes on both hosts.
+eng/maui/configuration-metrics.inputs.json text eol=crlf

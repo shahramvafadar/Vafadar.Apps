@@ -109,3 +109,8 @@ The sole D-1182 CI response records CI and CodeQL in_progress at response time;
 their eventual conclusions are unknown here. No second request/job-log/rerun occurs.
 
 Related: [original public conversion failure](public-density-conversion-transition.md).
+
+[D1184](private-maui-reproducible-producer-d1184.md) adds the pinned source producer,
+strict public-source/API boundary, actual compiler/linker digest refusal and a
+complete isolated product APK with a bounded original configuration flow. Default
+integration and broader density qualification remain open.
