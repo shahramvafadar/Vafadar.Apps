@@ -156,3 +156,8 @@ remain separate. The overall delivery goal stays active.
 The sole D1183 CI response records CI and CodeQL completed-success. No job log,
 rerun or second request is made. D1182's already consumed in-progress response
 remains historically unchanged.
+
+[D1185–D1186](android-retained-font-configuration-d1186.md) subsequently measures
+the separate retained-font failure, corrects current-root font remapping and
+qualifies real MAUI handlers plus the original product screen. Broader native
+dimensions and default source-package integration remain open.

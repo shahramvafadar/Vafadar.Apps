@@ -15,6 +15,8 @@ namespace Vafadar.Zanance.App;
         | ConfigChanges.LayoutDirection)]
 public class MainActivity : MauiAppCompatActivity
 {
+    private int _configurationDensityDpi;
+
     // Start protected before the first frame, then apply the saved foreground choice (D-63).
     protected override void OnCreate(Bundle? savedInstanceState)
     {
@@ -32,6 +34,7 @@ public class MainActivity : MauiAppCompatActivity
 #endif
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
+        _configurationDensityDpi = Resources?.Configuration?.DensityDpi ?? 0;
         if (OperatingSystem.IsAndroidVersionAtLeast(33)) { SetRecentsScreenshotEnabled(false); }
         Security.ScreenProtection.SetBackground(false);
         UpdateSystemBarIcons();
@@ -88,6 +91,13 @@ public class MainActivity : MauiAppCompatActivity
     // screens itself, so the activity is not recreated.
     public override void OnConfigurationChanged(Android.Content.Res.Configuration newConfig)
     {
+        var densityChanged = _configurationDensityDpi > 0 && newConfig.DensityDpi > 0 &&
+            _configurationDensityDpi != newConfig.DensityDpi;
+        if (newConfig.DensityDpi > 0)
+        {
+            _configurationDensityDpi = newConfig.DensityDpi;
+        }
+
         base.OnConfigurationChanged(newConfig);
         if (IPlatformApplication.Current?.Services.GetService<Vafadar.Localization.ILocalizationService>() is { } localization)
         {
@@ -96,6 +106,10 @@ public class MainActivity : MauiAppCompatActivity
 
         QuickAddWidget.Refresh(this);
         UpdateSystemBarIcons();
+        if (densityChanged)
+        {
+            AndroidConfigurationFonts.Refresh(this);
+        }
     }
 
     // The status and navigation bars show the page background (Resources/values/styles.xml), so their icons are dark
