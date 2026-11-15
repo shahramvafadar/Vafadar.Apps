@@ -310,6 +310,9 @@ public static class MauiProgram
         });
 #endif
 
+#if ANDROID
+        AndroidEntryConfigurationPadding.Register();
+#endif
         return builder.Build();
     }
 

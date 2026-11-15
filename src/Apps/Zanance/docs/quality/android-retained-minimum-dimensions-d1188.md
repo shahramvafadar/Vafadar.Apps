@@ -116,3 +116,7 @@ unknown. No second status request, successful-job log read or rerun occurs.
 This local minimum correction does not claim hosted CI acceptance; the separate
 build/harness failures continue in [D1189](hosted-core-failure-diagnosis-d1189.md). See the
 [actual failed run](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/43671266347).
+
+[D1190](android-retained-entry-padding-d1190.md) subsequently identifies the named
+stock-padding/drawable remainder and qualifies its correction; it does not recast
+this historical74pixel row as44pixels or repeat these accepted minimum assertions.

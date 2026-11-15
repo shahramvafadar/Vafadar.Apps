@@ -4,7 +4,7 @@ using Microsoft.Maui.Platform;
 
 namespace Vafadar.Zanance.App;
 
-/// <summary>Refreshes retained native fonts and explicit minimum dimensions after Android changes density.</summary>
+/// <summary>Refreshes retained native fonts, explicit minimums and owned stock Entry padding after density changes.</summary>
 internal static class AndroidConfigurationFonts
 {
     /// <summary>Reapplies density-dependent bindings without replacing controls, text, focus or the page.</summary>
@@ -67,6 +67,22 @@ internal static class AndroidConfigurationFonts
                         {
                             return;
                         }
+                    }
+                }
+
+                if (AndroidEntryConfigurationPadding.NeedsRefresh(element, handler))
+                {
+                    // Refresh the owned drawable too; its density-dependent insets otherwise remain stale.
+                    handler.UpdateValue(nameof(IView.Background));
+                    if (!IsCurrent(activity, window, root))
+                    {
+                        return;
+                    }
+
+                    AndroidEntryConfigurationPadding.Refresh(element, handler);
+                    if (!IsCurrent(activity, window, root))
+                    {
+                        return;
                     }
                 }
             }
