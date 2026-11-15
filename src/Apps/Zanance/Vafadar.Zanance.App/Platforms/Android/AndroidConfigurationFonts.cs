@@ -103,6 +103,29 @@ internal static class AndroidConfigurationFonts
                     }
                 }
 
+                if (densityChanged && element is ILabel && ReferenceEquals(element.Handler, handler) &&
+                    ReferenceEquals(handler.VirtualView, element))
+                {
+                    // D1196: native labels also retain their converted padding across density changes.
+                    handler.UpdateValue(nameof(ILabel.Padding));
+                    if (!IsCurrent(activity, window, root))
+                    {
+                        return;
+                    }
+                }
+
+                if (densityChanged && element is IButtonStroke && ReferenceEquals(element.Handler, handler) &&
+                    ReferenceEquals(handler.VirtualView, element))
+                {
+                    // A size-triggered background update replaces only one gradient layer. The original
+                    // stroke mapper updates the border, background and ripple mask with current DIP geometry.
+                    handler.UpdateValue(nameof(IButtonStroke.CornerRadius));
+                    if (!IsCurrent(activity, window, root))
+                    {
+                        return;
+                    }
+                }
+
                 if (densityChanged && AndroidEntryConfigurationPadding.NeedsRefresh(element, handler))
                 {
                     // Refresh the owned drawable too; its density-dependent insets otherwise remain stale.

@@ -1,5 +1,9 @@
 # Retained Android Button padding across density changes (D1195)
 
+[D1196](android-retained-native-geometry-d1196.md) separately corrects Label padding
+and the retained stroke/ripple-mask radii of Button/ImageButton. Its distinct
+geometry cases do not replay this Button-padding cohort.
+
 ## Actual failure and correction
 
 The existing refresh reapplied text, explicit minimum dimensions and separately
