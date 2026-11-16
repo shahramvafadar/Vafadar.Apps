@@ -82,7 +82,9 @@ Syncfusion Diagram and Cytoscape.js is then made by a hands-on comparison with t
 * **Limits.** With several relations of different direction between the same two entities the arrowheads say
   that both directions occur, not which label has which; the list below the graph does. Rows keep the order of
   the collection; nothing minimises crossings because a tree has none.
-* **The family** is laid out by `FamilyLayout`: a row per generation, at most three boxes beside each other on a
+* **The family** – this is the layout of M0; since step 8.5 the family is a tree laid out by `FamilyTreeLayout`
+  and drawn in a stage, see the addendum of [ADR 0008](0008-charts.md). In M0 it was laid out by `FamilyLayout`:
+  a row per generation, at most three boxes beside each other on a
   line, a line with an arrow from each parent to the child and a dashed line between partners. The order inside a
   generation is the order of the collection; nothing is rearranged to shorten lines, so they can cross in a large
   family.

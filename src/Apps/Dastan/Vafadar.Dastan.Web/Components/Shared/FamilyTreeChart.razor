@@ -12,9 +12,9 @@
         </marker>
     </defs>
 
-    @foreach (var edge in Tree.Parentage)
+    @foreach (var route in Tree.Parentage)
     {
-        var corners = Corners(Tree.Node(edge.From.Id), Tree.Node(edge.To.Id));
+        var corners = Corners(route);
         <g class="tree-link">
             @for (var index = 1; index < corners.Count; index++)
             {
@@ -91,20 +91,22 @@
 
     private double Across(double start, double width) => RightToLeft ? Width - start - width : start;
 
-    // The line from a parent to a child: out of the parent, along the middle of the room between two generations,
-    // into the child. Lines of two parents to one child share their last part.
-    private List<(double X, double Y)> Corners(TreeNode parent, TreeNode child)
+    // The line from a parent to a child: out of the parent at the port of the child's family, across the room
+    // between two generations on the track of that family, into the child. Children of the same parents share
+    // the track; a child of other parents has another one, so a line never says more than its relation.
+    private List<(double X, double Y)> Corners(TreeRoute route)
     {
+        var (parent, child) = (Tree.Node(route.Relation.From.Id), Tree.Node(route.Relation.To.Id));
         if (GenerationsAcross)
         {
-            var (from, to) = (Top(parent) + (BoxHeight / 2), Top(child) + (BoxHeight / 2));
-            var turn = Left(child) - (GenerationGap / 2);
+            var (from, to) = (Top(parent) + (BoxHeight * route.Port), Top(child) + (BoxHeight / 2));
+            var turn = Left(child) - (GenerationGap * route.Track);
             return Straight([(Left(parent) + BoxWidth, from), (turn, from), (turn, to), (Left(child) - ArrowGap, to)]);
         }
         else
         {
-            var (from, to) = (Left(parent) + (BoxWidth / 2), Left(child) + (BoxWidth / 2));
-            var turn = Top(child) - (GenerationGap / 2);
+            var (from, to) = (Left(parent) + (BoxWidth * route.Port), Left(child) + (BoxWidth / 2));
+            var turn = Top(child) - (GenerationGap * route.Track);
             return Straight([(from, Top(parent) + BoxHeight), (from, turn), (to, turn), (to, Top(child) - ArrowGap)]);
         }
     }

@@ -227,7 +227,7 @@ public sealed class FamilyTreeTests
 
         Assert.Equal(4, tree.Layers);
         Assert.Equal(11, tree.Nodes.Length);
-        Assert.All(tree.Parentage, edge => Assert.True(Node(tree, edge.To.Id.Value).Layer > Node(tree, edge.From.Id.Value).Layer));
+        Assert.All(tree.Parentage, route => Assert.True(Node(tree, route.Relation.To.Id.Value).Layer > Node(tree, route.Relation.From.Id.Value).Layer));
         Assert.Equal(0, Node(tree, "grandfather").Layer);
         Assert.Equal(3, Node(tree, "grandchild").Layer);
 
@@ -354,6 +354,51 @@ public sealed class FamilyTreeTests
 
         Assert.Equal(1, Node(tree, "hero").Place);
         Assert.Equal([0, 2], new[] { Node(tree, "first-partner").Place, Node(tree, "second-partner").Place }.Order());
+    }
+
+    [Fact]
+    public void Children_of_the_same_parents_share_a_line_and_a_child_of_other_parents_has_its_own()
+    {
+        // The hero has two children alone and one with the mother.
+        var story = new SmallStory();
+        foreach (var name in new[] { "mother", "first", "second", "third" })
+        {
+            story.Entities.Add(SmallStory.Entity(name, EntityTypes.Character));
+        }
+
+        Partners(story, "hero", "mother");
+        Parent(story, "hero", "first");
+        Parent(story, "hero", "second");
+        Parent(story, "hero", "third");
+        Parent(story, "mother", "third");
+
+        var tree = Tree(At(story).Family());
+        TreeRoute Route(string parent, string child) => tree.Parentage.Single(route => route.Relation.Relation.Id.Value == $"{parent}-of-{child}");
+
+        // The two children of the hero alone share a track; the child of both has another one – otherwise the
+        // drawing would say that the mother is the mother of all three.
+        Assert.Equal(Route("hero", "first").Track, Route("hero", "second").Track);
+        Assert.Equal(Route("hero", "third").Track, Route("mother", "third").Track);
+        Assert.NotEqual(Route("hero", "first").Track, Route("hero", "third").Track);
+        Assert.All(tree.Parentage, route => Assert.InRange(route.Track, 0.2, 0.8));
+
+        // The hero lets a line out for each of the two families, on the side where its children stand; the mother
+        // has one family and lets her line out in the middle.
+        Assert.Equal(Route("hero", "first").Port, Route("hero", "second").Port);
+        Assert.NotEqual(Route("hero", "first").Port, Route("hero", "third").Port);
+        Assert.Equal(
+            Node(tree, "first").Place < Node(tree, "third").Place,
+            Route("hero", "first").Port < Route("hero", "third").Port);
+        Assert.Equal(0.5, Route("mother", "third").Port);
+    }
+
+    [Fact]
+    public void One_family_has_its_line_in_the_middle()
+    {
+        var tree = Tree(Around("son", 0, 1));
+
+        Assert.Equal(["son-of-grandchild", "wife-of-grandchild"], tree.Parentage.Select(route => route.Relation.Relation.Id.Value));
+        Assert.All(tree.Parentage, route => Assert.Equal((0.5, 0.5), (route.Port, route.Track)));
     }
 
     [Fact]

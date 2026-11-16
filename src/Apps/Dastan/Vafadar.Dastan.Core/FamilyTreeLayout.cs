@@ -12,11 +12,21 @@ namespace Vafadar.Dastan.Core;
 public sealed record TreeNode(Entity Entity, int Layer, double Place);
 
 /// <summary>
+/// How the line from a parent to a child runs, so that the drawing says whose child somebody is. Children of the
+/// same parents share one line across the room between two generations; children of other parents – a half-brother,
+/// a cousin – get a line of their own there, and a parent of two such families lets a line out for each.
+/// </summary>
+/// <param name="Relation">The relation from the parent to the child.</param>
+/// <param name="Port">Where the line leaves the box of the parent, as a share of the side of the box (0 to 1).</param>
+/// <param name="Track">Where the line crosses over to the child, as a share of the room between two generations, counted from the child (0 to 1).</param>
+public sealed record TreeRoute(Edge Relation, double Port, double Track);
+
+/// <summary>
 /// A family laid out as a tree. Places are counts, not lengths: the layout says who stands in which generation and
 /// where in it, the page decides how large a box is and whether generations run down the page or across it.
 /// </summary>
 /// <param name="Nodes">The members, generation by generation and inside one from its beginning.</param>
-/// <param name="Parentage">The relations from a parent to a child.</param>
+/// <param name="Parentage">The relations from a parent to a child, each with the way its line runs.</param>
 /// <param name="Partnerships">The relations between partners.</param>
 /// <param name="Layers">The number of generations.</param>
 /// <param name="Breadth">The room the widest generation needs, in boxes.</param>
@@ -24,7 +34,7 @@ public sealed record TreeNode(Entity Entity, int Layer, double Place);
 /// <param name="Crossings">How many pairs of lines from parents to children cross.</param>
 public sealed record FamilyTree(
     ImmutableArray<TreeNode> Nodes,
-    ImmutableArray<Edge> Parentage,
+    ImmutableArray<TreeRoute> Parentage,
     ImmutableArray<Edge> Partnerships,
     int Layers,
     double Breadth,
@@ -58,7 +68,7 @@ public static class FamilyTreeLayout
 
         if (view.Members.IsEmpty)
         {
-            return new FamilyTree([], view.Parentage, view.Partnerships, 0, 0, 0, 0);
+            return new FamilyTree([], [], view.Partnerships, 0, 0, 0, 0);
         }
 
         // Generations become layers without gaps, in the order of the view.
@@ -104,12 +114,61 @@ public static class FamilyTreeLayout
                 .. best.SelectMany((units, layer) => units.SelectMany(unit => unit))
                     .Select(id => new TreeNode(view.Members.First(member => member.Entity.Id == id).Entity, layerOf[id], places[id])),
             ],
-            view.Parentage,
+            Routes(view, layerOf, places, parents),
             view.Partnerships,
             rows.Count,
             places.Values.Max() + 1,
             view.Members.Max(member => TextEstimate.Lines(text(member.Entity.Label), charactersPerLine)),
             fewest);
+    }
+
+    // The way of every line from a parent to a child. A family is the children of one set of parents in one
+    // generation. In the room above a generation every family has a track of its own, and a parent of several
+    // families a port for each – both in the order in which the children stand, so that the lines of two families
+    // lie beside each other and not on each other.
+    private static ImmutableArray<TreeRoute> Routes(
+        FamilyView view,
+        Dictionary<EntityId, int> layerOf,
+        Dictionary<EntityId, double> places,
+        Dictionary<EntityId, List<EntityId>> parents)
+    {
+        var families = view.Parentage
+            .Select(edge => edge.To.Id)
+            .Distinct()
+            .GroupBy(child => (Layer: layerOf[child], Parents: string.Join('\n', parents[child].Select(parent => parent.Value).Order(StringComparer.Ordinal))))
+            .Select(family => (family.Key.Layer, family.Key.Parents, Children: family.ToList(), Middle: family.Average(child => places[child])))
+            .OrderBy(family => family.Middle)
+            .ThenBy(family => family.Parents, StringComparer.Ordinal)
+            .ToList();
+
+        var track = new Dictionary<EntityId, double>();
+        foreach (var layer in families.GroupBy(family => family.Layer))
+        {
+            var above = layer.ToList();
+            for (var index = 0; index < above.Count; index++)
+            {
+                foreach (var child in above[index].Children)
+                {
+                    track[child] = (index + 1.0) / (above.Count + 1);
+                }
+            }
+        }
+
+        // The families of a parent, in the order of where their children stand.
+        var port = new Dictionary<(EntityId Parent, EntityId Child), double>();
+        foreach (var parent in view.Parentage.Select(edge => edge.From.Id).Distinct())
+        {
+            var own = families.Where(family => family.Children.Any(child => parents[child].Contains(parent))).ToList();
+            for (var index = 0; index < own.Count; index++)
+            {
+                foreach (var child in own[index].Children)
+                {
+                    port[(parent, child)] = (index + 1.0) / (own.Count + 1);
+                }
+            }
+        }
+
+        return [.. view.Parentage.Select(edge => new TreeRoute(edge, port[(edge.From.Id, edge.To.Id)], track[edge.To.Id]))];
     }
 
     // The members of a generation as units that stay together: partners stand beside each other, somebody with

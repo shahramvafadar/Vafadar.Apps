@@ -38,9 +38,9 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         var bar = page.Locator(".tl-across a.tl-bar[href$='#item-achaemenid']");
         var before = (await bar.BoundingBoxAsync())!.X;
 
-        await frame.EvaluateAsync("frame => frame.scrollLeft = 200");
+        await frame.EvaluateAsync("frame => frame.scrollLeft = 100");
 
-        Assert.Equal(before - 200, (await bar.BoundingBoxAsync())!.X, precision: 0);
+        Assert.Equal(before - 100, (await bar.BoundingBoxAsync())!.X, precision: 0);
         Assert.Equal(names, await page.EvaluateAsync<double>("document.querySelector('.tl-names').getBoundingClientRect().left"));
         Assert.False(await ScrollsSideways(page), "The page scrolls sideways after the frame was scrolled.");
     }
@@ -210,7 +210,7 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
                 return ['top', 'left', 'right', 'bottom'].map(side => {
                     const edge = document.querySelector('.stage-' + side);
                     const box = edge.getBoundingClientRect();
-                    const steps = [...edge.querySelectorAll('.step')].map(step => step.getBoundingClientRect());
+                    const steps = [...edge.querySelectorAll('.stage-step')].map(step => step.getBoundingClientRect());
                     return [box.left - frame.left, box.right - frame.right, box.top - frame.top, box.bottom - frame.bottom, steps.length, Math.min(...steps.map(step => Math.min(step.width, step.height)))];
                 });
             }

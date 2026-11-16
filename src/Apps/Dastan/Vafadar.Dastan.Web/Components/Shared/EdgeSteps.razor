@@ -26,7 +26,7 @@
     {
         var unavailable = string.Format(CultureInfo.CurrentCulture, T["Stage_NotAvailable"], words);
         return address is null
-            ? @<span class="step" aria-disabled="true" title="@unavailable"><span aria-hidden="true">@sign</span><span class="visually-hidden">@unavailable</span></span>
-            : @<a class="step" href="@address" title="@words"><span aria-hidden="true">@sign</span><span class="visually-hidden">@words</span></a>;
+            ? @<span class="stage-step" aria-disabled="true" title="@unavailable"><span aria-hidden="true">@sign</span><span class="visually-hidden">@unavailable</span></span>
+            : @<a class="stage-step" href="@address" title="@words"><span aria-hidden="true">@sign</span><span class="visually-hidden">@words</span></a>;
     }
 }

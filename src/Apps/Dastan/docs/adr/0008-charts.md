@@ -1,8 +1,8 @@
 # 0008. Charts: who draws the timeline, the family tree and the graph
 
-- Status: **Accepted for the comparative timeline** (points 1, 4 and 5: built and verified on 2026-11-16, see
-  "What was built"). The family tree (point 2) still has its first layout only; that part stays Proposed until
-  step 8.5 of the delivery plan is built
+- Status: **Accepted** – the comparative timeline (points 1, 4 and 5), the family tree (point 2) and the stage of
+  a chart (addendum, D-040) are built and verified on 2026-11-16, see "What was built" and the addendum. Point 6
+  (a script for pinching) is not built and still needs its own decision
 - Date: 2026-11-16
 - Deciders: Shahram Vafadar (requirement D-039: charts with many capabilities that look good; for each chart a
   suitable Syncfusion control, a control of our own or a trustworthy open-source one)
@@ -137,10 +137,11 @@ The comparative timeline, steps 8.1 to 8.4 of the delivery plan.
   only known to lie between two years fades and carries no year on the bar; a period that reaches out of the time
   shown is cut to a point; what cannot be placed on the axis is not drawn and is named under the chart. The table
   below the chart states every time in full.
-* **Scrolling and opening further** as decided: the frame of the time scrolls by touch, wheel and keyboard, the
-  names of the lanes stand still; direction, scale (seven steps) and the stretch of time are in the address and
-  changed by links. A year zero, a stretch that ends before it begins and a scale that does not exist are not
-  choices – the chart then shows what its comparison is about.
+* **Scrolling and opening further** as decided: the chart scrolls in its stage by touch, wheel and keyboard, the
+  names of the lanes stand still; direction, scale (seven steps), the stretch of time, the single events and the
+  number of lanes are in the address and changed by links – since D-040 at the sides of the stage (see the
+  addendum). A year zero, a stretch that ends before it begins and a scale that does not exist are not choices –
+  the chart then shows what its comparison is about.
 * **No style of its own.** Places and sizes are attributes of the SVG in em, bars and callouts are HTML inside it,
   colours are the tokens of six lanes for both appearances. The security policy of the site did not change.
 
@@ -183,3 +184,72 @@ the check fails on the faulty version.
 Not checked: a phone (narrow windows of a desktop browser were used), a screen reader, another browser than
 Chromium, a comparison with hundreds of periods. The years of the first comparison were not checked against
 sources – that is editorial work and the reason it is a draft.
+
+## Addendum of 2026-11-16 – the stage, and the family tree (D-040, step 8.5)
+
+After the first pictures the owner asked for two things (D-040): a chart is made larger **from each of its four
+sides** – a "+" at a side opens it a step further in that direction, a "−" closes it again – and the application
+uses **the whole width and height of the page** for a chart.
+
+**The stage.** A chart stands in a stage (`ChartStage`): as wide as the window, as high as the window, with the
+chart scrolling inside it in both directions. A page with a stage is no longer a column in the middle; what is read
+– heading, notes, the table – keeps the width of a column of text. Each of the four sides of the stage carries two
+steps (`EdgeSteps`). A step is a link to the address of the chart as it will be, so the rule of this decision
+holds: every state can be sent, reloaded and left with Back, and no script is needed. A step that cannot be taken
+is no link and says so. The sides are the sides of the screen in every language.
+
+| Chart | Side where it begins | Side where it ends | The two other sides |
+|---|---|---|---|
+| Timeline across the page | left: earlier years | right: later years | top: the single events (where their callouts stand); bottom: the lanes, closed from the last one |
+| Timeline down the page | top: earlier years | bottom: later years | left: the lanes; right: the single events |
+| Family tree, generations down the page | top: ancestors, a generation at a time | bottom: descendants | left and right: the relatives beside the line – brothers and sisters, uncles and aunts, then their children |
+| Family tree, generations across the page | the side where reading begins: ancestors | the other side: descendants | top and bottom: the relatives beside the line |
+
+A step of the time is the distance between two years of the axis at the scale shown. What is closed in the chart –
+events, lanes – stays in the table.
+
+**The family tree** (point 2 of the decision). The projection answers the tree around somebody – ancestors up to a
+number of generations, descendants down to a number, relatives beside the line up to a number of steps, and the
+partners of all of them – and says for each of the three directions whether the tree goes on there
+(`Projection.Family(around, up, down, beside)`). The whole family is the other question and stays. The layout
+(`FamilyTreeLayout`) puts generations into layers, partners beside each other, looks for an order inside a
+generation with fewer crossing lines, moves parents above the middle of their children, and gives every line its
+way: children of the same parents share one line across the room between two generations, a child of other parents
+has its own, and a parent of two such families lets a line out for each. It replaces the layout of M0, which
+filled the width of the page (ADR 0005). The tree opens with two generations above and below; on a Persian page it
+begins at the right.
+
+What is not there, and what was seen:
+
+* On a narrow screen the two sides beside the frame take about a quarter of the width. The steps keep the size a
+  finger needs; the chart has less room and scrolls sooner.
+* A line of a parent who stands two generations above the child runs down through the generation between them and
+  may run behind a box there. It did not happen in the families tried.
+* Two parents who each have a child with the other count as a crossing although their lines are drawn as one; the
+  count is the same for every order, so it does not mislead the search.
+* A tree larger than the five people of the sample was looked at in a browser with a copy of the sample outside
+  the repository that had sixteen people (down and across the page, both languages, a phone width); it is not part
+  of the tests of the pages, because the repository has no larger family. The layout itself is tested with larger
+  families.
+
+Verification, 2026-11-16, as above; `dotnet test --solution Vafadar.Dastan.slnf` with the browser: 1230 passed,
+none failed, none skipped.
+
+* `FamilyTreeTests` (`Vafadar.Dastan.Core.Tests`, 185 tests in the project): the tree around somebody in the three
+  directions and what it announces, nothing of a later reading stage, layers, partners, places, crossings, the way
+  of a line.
+* `FamilyAndStoryPageTests`, `ComparisonPageTests` (`Vafadar.Dastan.Web.Tests`, 257): the sides of the stage and
+  their steps for both charts and both directions, in English and Persian, what an address may ask for, drawing and
+  list with the same relations for every member.
+* `ChartTests` (62 cases) and `FamilyTreeBrowserTests` (51 cases) in a browser at 360, 390, 412 and 1280 px: the
+  stage reaches the edges of the page and is as high as the window; each side has its two steps of at least 44 px
+  where the chart grows, on a Persian page as well; a "+" opens and a "−" closes, and Back undoes both; the chart
+  scrolls inside the stage and the page never sideways; no box of a tree is cut, lies on another or under a line;
+  a tree smaller than its stage stands in its middle; no finding of axe-core 4.14 in both appearances.
+
+Three faults were found on the way and corrected. The steps of a side had a class name that the steps of the story
+already used, and the pages of the story and of an entity lost their layout – the browser tests of M0 found it. A
+test of the page had been changed by the same renaming and failed for that reason. And in the picture of the
+larger family the lines of a father with children by two mothers ran together, so that the drawing said that one
+mother was the mother of all of them; no test saw that. Every family now has a line of its own, and the tests of
+the layout check it.

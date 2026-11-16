@@ -279,7 +279,8 @@ it is visible, checked in a browser in both languages.
 | 8.2 | The layout of a comparative timeline in `Vafadar.Dastan.Core`: lanes, periods packed into rows, single events with callouts, the marks of the axis, a stretch of time and a scale – for both directions | Done |
 | 8.3 | Comparisons as content: a read model and a strict reader for a comparison of lanes with periods and events, each with its stated time, its sources and the state of its review; a first one, Iran, China and Rome from 600 BCE to 700 CE, as a draft | Done – [the format](comparison-format.md); the first comparison has no sources yet and is shown in the local demonstration only |
 | 8.4 | The page of a comparison: the chart across the page and down it, scrolling in its frame, the stretch of time and the scale changed by links, the same facts as a table; reached from the start page | Done – `/compare/<id>`; evidence in [ADR 0008](adr/0008-charts.md) and in [the acceptance page](acceptance.md) |
-| 8.5 | The family tree, second version: ordering inside a generation that reduces crossings, ancestors and descendants opened in steps, scrolling | Not started |
+| 8.5 | The family tree, second version: ordering inside a generation that reduces crossings, ancestors and descendants opened in steps, scrolling | Done – also the relatives beside the line, and a line of its own for every family; [ADR 0008](adr/0008-charts.md), addendum |
 | 8.6 | Periods and dated events of the entities of a collection, so that a collection can offer its own timeline | Not started |
+| 8.7 | The stage of a chart (D-040): the whole width of the page and the height of the window for a chart, and at each of its four sides a "+" that opens it further there and a "−" that closes it – for the timeline and for the family tree | Done – [ADR 0008](adr/0008-charts.md), addendum |
 
 Not decided here: a script for pinching and dragging (ADR 0008, point 6), charts of numbers, a map.

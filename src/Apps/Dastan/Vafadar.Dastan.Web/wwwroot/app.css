@@ -1346,7 +1346,7 @@ main:has(> .stage) > :not(.stage) {
   flex-direction: column;
 }
 
-.step {
+.stage-step {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1362,7 +1362,7 @@ main:has(> .stage) > :not(.stage) {
   text-decoration: none;
 }
 
-.step[aria-disabled="true"] {
+.stage-step[aria-disabled="true"] {
   border-style: dashed;
   background: transparent;
   color: var(--text-muted);

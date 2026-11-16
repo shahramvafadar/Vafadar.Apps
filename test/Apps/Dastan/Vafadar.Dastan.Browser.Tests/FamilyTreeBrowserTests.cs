@@ -153,7 +153,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
                 const stage = document.querySelector('.stage').getBoundingClientRect();
                 const frame = document.querySelector('.stage-frame').getBoundingClientRect();
                 const tree = document.querySelector('.tree').getBoundingClientRect();
-                const steps = ['top', 'left', 'right', 'bottom'].map(side => document.querySelectorAll('.stage-' + side + ' .step').length);
+                const steps = ['top', 'left', 'right', 'bottom'].map(side => document.querySelectorAll('.stage-' + side + ' .stage-step').length);
                 return [stage.left, innerWidth - stage.right, stage.height, innerHeight,
                     (tree.left + tree.right) / 2 - (frame.left + frame.right) / 2, (tree.top + tree.bottom) / 2 - (frame.top + frame.bottom) / 2,
                     tree.width - frame.width, ...steps];
@@ -187,7 +187,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(5);
 
         // Nobody stands above the two grandfathers: the "+" is no link any more, and it says so.
-        await Assertions.Expect(page.Locator(".stage-top .step[aria-disabled='true']")).ToHaveTextAsync(new Regex("not possible here"));
+        await Assertions.Expect(page.Locator(".stage-top .stage-step[aria-disabled='true']")).ToHaveTextAsync(new Regex("not possible here"));
 
         await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Ancestors: close a step" }).ClickAsync();
         await Arrived(page, new Regex("up=1$"));
