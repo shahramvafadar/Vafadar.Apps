@@ -59,6 +59,20 @@ public sealed class StatesTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.DoesNotMatch("\\b(1[0-9]{3}|20[0-9]{2})\\b", english.Main);
     }
 
+    [Theory]
+    [InlineData("/en/")]
+    [InlineData("/fa/story-rostam-sohrab")]
+    [InlineData("/en/story-rostam-sohrab/entity/character-rostam/connections")]
+    [InlineData("/en/story-rostam-sohrab/gallery")]
+    [InlineData("/en/story-rostam-sohrab/search?q=rostam")]
+    [InlineData("/en/story-rostam-sohrab/entity/character-nobody")]
+    public async Task A_page_is_not_kept_by_the_browser_so_that_going_back_asks_for_it_again(string address)
+    {
+        var page = await site.Visitor().Get(address);
+
+        Assert.True(page.Response.Headers.CacheControl is { NoStore: true });
+    }
+
     [Fact]
     public async Task The_page_for_a_failure_opened_by_itself_offers_the_start_and_no_address_to_try_again()
     {
