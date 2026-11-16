@@ -98,6 +98,7 @@ controls.
 | App | Description | Platforms | Status |
 |---|---|---|---|
 | [Zanance](src/Apps/Zanance/README.md) | Personal finance manager: income, expenses, plans, budgets and reports | Android first · iOS target · Windows development | Active implementation and qualification; not released |
+| [Dastan](src/Apps/Dastan/README.md) | Visual discovery of connected stories: people, characters, places and events, their relationships, order and media | Web (installable) | Foundations in progress; no application yet |
 
 ## Current delivery status
 
@@ -149,6 +150,7 @@ technology overview at the top of this file.
 | Library | Purpose |
 |---|---|
 | [Vafadar.Core](src/Libraries/Vafadar.Core/README.md) | Entity base, app environment and settings abstractions |
+| [Vafadar.Temporal](src/Libraries/Vafadar.Temporal/README.md) | Stated time: partial and approximate dates, uncertain periods, BCE, deep time and story order, compared without invented precision |
 | [Vafadar.Localization](src/Libraries/Vafadar.Localization/README.md) | Runtime language switching, right-to-left, Gregorian, Persian and lunar Hijri calendars, shared strings |
 | [Vafadar.Cryptography](src/Libraries/Vafadar.Cryptography) | Shared cryptographic primitives for protected app/service data |
 | [Vafadar.Data](src/Libraries/Vafadar.Data/README.md) | EF Core SQLite databases, audit timestamps, database backups |

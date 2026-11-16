@@ -1,0 +1,65 @@
+# Dastan
+
+A visual discovery site for connected stories: people, characters, places, works and events, their relationships,
+their order in a story or in time, and the images and videos that belong to them. Public, for ordinary curious
+visitors, delivered as a website that can be installed (PWA). The first collection is a bounded arc of the
+Shahnameh, Rostam and Sohrab.
+
+| | |
+|---|---|
+| Status | **Phases 1 and 2 of the [delivery plan](docs/delivery-plan.md) are done** (foundations, the time library); phase 3 is the domain model. There is no application to run yet. |
+| First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
+| Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
+| Interface languages | English and Persian first (right to left); German and others later |
+| App id | `pro.vafadar.dastan` (web address and final identity are open) |
+
+## Documentation
+
+| Document | Content |
+|---|---|
+| [Product specification](docs/product/README.md) | What Dastan is and how it must behave: 21 documents, with the decision register in document 12 |
+| [Delivery plan](docs/delivery-plan.md) | Projects, accepted decisions, the phases to M0, risks |
+| [Acceptance](docs/acceptance.md) | The twelve conditions of M0 and their current status |
+| [Changelog](CHANGELOG.md) | What changed, in plain words |
+
+Technical decisions of the app are recorded as ADRs in `docs/adr/` when they are made and verified; decisions that
+concern the whole repository are in [`docs/adr`](../../../docs/adr/README.md).
+
+## Projects
+
+None of these exists yet; each is created in the phase that fills it.
+
+| Project | Purpose | Phase |
+|---|---|---|
+| `Vafadar.Dastan.Core` | Domain model, catalogue, the projection that decides what a visitor may see, views, search | 3 |
+| `Vafadar.Dastan.Data` | Reads and validates the editorial sample; later the relational store | 3 |
+| `Vafadar.Dastan.Web` | The website: pages, components, texts in English and Persian, media delivery | 4 |
+
+Shared libraries written for Dastan and usable by other apps:
+[`Vafadar.Temporal`](../../Libraries/Vafadar.Temporal/README.md) (done: stated time, compared without invented
+precision) and `Vafadar.Web` (phase 4). [`Vafadar.Core`](../../Libraries/Vafadar.Core/README.md) supplies the search
+key for names (`SearchText.Fold`).
+
+## Build and test
+
+.NET SDK 10.0.404 or a newer 10.0 feature band (`global.json`). From the repository root:
+
+```powershell
+dotnet build Vafadar.Dastan.slnf -p:ContinuousIntegrationBuild=true    # warnings are errors, as in CI
+dotnet test --solution Vafadar.Dastan.slnf
+dotnet clean Vafadar.Dastan.slnf                                       # afterwards: free the disk
+```
+
+`Vafadar.Dastan.slnf` holds Dastan and the libraries it uses, with their tests. It needs none of the private
+package feeds of the MAUI projects.
+
+## Content
+
+[`content/`](content) holds the editorial sample and the original media. It is input for the app, not a public
+folder: the sample contains the whole story including its ending, and the app serves only what its projection allows
+for the visitor's reading position. Nothing in `content/` may be copied under a web root.
+
+## Services
+
+A database and every other service that can run in a container runs in Docker Desktop on the development machine,
+in one Compose project named `test`. M0 needs no database.

@@ -1,0 +1,81 @@
+# AGENTS.md – working rules for Dastan
+
+The rules of the root [`AGENTS.md`](../../../AGENTS.md) apply here in full: Persian conversation with the owner,
+an English repository, no attribution, the owner's Git identity, secrets, honest reporting, tests with every feature
+and documentation in the same commit. Its rules about money, the ledger, MAUI, Android devices and Zanance's
+documents concern Zanance and do not apply to Dastan. This file adds what the owner decided for Dastan; a new rule
+for Dastan is added here in the same commit as the work it came with.
+
+## 1. The app
+
+* **Dastan** is a public visual discovery site, delivered as an installable website (PWA): ASP.NET Core Blazor Web
+  App on .NET 10. First collection: a bounded arc of the Shahnameh, Rostam and Sohrab. The product name is shown
+  untranslated; its Persian spelling is an open brand question.
+* What it is: [`docs/product`](docs/product/README.md) (21 documents). The owner's decisions:
+  [document 12](docs/product/12-decisions-questions-and-change-log.md). How and in which order it is built:
+  [`docs/delivery-plan.md`](docs/delivery-plan.md). What is done and checked: [`docs/acceptance.md`](docs/acceptance.md).
+* The first milestone is M0, a runnable local slice. Nothing is deployed, no account is created and no service is
+  bought for M0.
+
+## 2. The owner's rules for the work
+
+* **No rework, no technical debt** – this has priority over an early demonstrable result (D-030). Read the governing
+  specification documents of a phase in full before starting it. Record a decision that later work builds on as an
+  ADR before code depends on it. Do not leave a shortcut behind with a note to fix it later; do it properly or record
+  it as an open item in the plan.
+* **Reuse, then extract, then extend** (D-029). Use a shared library where it fits as it is. Write a part that other
+  apps can use as its own shared library, without texts and without Dastan's vocabulary. Extend an existing library
+  only by adding to it; behaviour another app relies on changes only with that app's decision
+  ([shared libraries backlog](../../../docs/libraries-backlog.md)).
+* **Zanance is developed at the same time.** Touch shared files – the solution, package versions, root documents,
+  shared tests – as little as possible and by adding lines. Work on `feature/dastan-<topic>` branches; one pull
+  request into `main` per phase.
+* **Services run in containers** (D-034): a database and every other service that can run in a container uses
+  Docker Desktop on the development machine, in one Compose project named `test`. Never start, stop, remove or prune
+  anything of another project.
+
+## 3. Architecture
+
+* Projects: `Vafadar.Dastan.Core` (domain, no infrastructure), `Vafadar.Dastan.Data` (reading and validating
+  content), `Vafadar.Dastan.Web` (the site). Shared: `Vafadar.Core`, `Vafadar.Temporal`, `Vafadar.Web`. Dastan does
+  not reference `Vafadar.Localization`, Zanance or MAUI.
+* **One projection decides what a visitor sees.** Publication state and demo eligibility, then the reading boundary,
+  are applied on the server before anything is counted, searched, laid out, suggested or serialized. Hiding in the
+  browser is never the protection.
+* The files in [`content/`](content) are editorial input with the whole story. They are never copied under a web
+  root, never served as files and never cached by a service worker. Media reach the browser only through a route
+  that checks the projection. The fixtures in `test/Apps/Dastan/Fixtures` are test data and never public.
+* Time is never a `DateTime` unless it is an operational timestamp: story and historical time use `Vafadar.Temporal`.
+  No date, precision or order is invented; unknown stays unknown.
+* A relationship keeps its type, direction, scope and source. Nothing is derived from proximity in a picture, a
+  shared event or a similar name. Someone mentioned in an event is not present in it.
+
+## 4. Languages
+
+* Interface texts exist in **English and Persian** (D-031); the list is `VafadarLanguages` in
+  [`Directory.Build.props`](Directory.Build.props) ([ADR 0011](../../../docs/adr/0011-languages-per-app.md)). Every
+  text exists in each declared language as a real translation – never the English text in a Persian file.
+* Dastan's texts are its own (D-032); they are not taken from another app or a shared library.
+* Direction comes from the language, never from a test for Persian: Kurdish and Arabic must need translations only.
+  Use logical CSS properties. Do not mirror a time axis, the direction of a relationship, Latin identifiers or
+  numbers just because the page is right to left.
+* The language of the interface and the language of the content are different things. A text shown in another
+  language than the interface says so; a translation that is not reviewed is marked as such.
+
+## 5. Checking the running app
+
+Check every visible change before reporting it: English and Persian; light and dark; 360 px, 412 px and a wide
+window; keyboard only. Report what was checked and how, what was not, and what failed. A simulated width is not a
+phone, and a valid manifest is not an installation.
+
+## 6. Documentation duties
+
+Update in the same commit as the change:
+
+* [`docs/product/12-…`](docs/product/12-decisions-questions-and-change-log.md) – every decision of the owner as the
+  next `D-…`, and the owning topic document when a behaviour changes;
+* `docs/adr/` – every technical decision of the app (repository-wide ones in the root `docs/adr`);
+* [`docs/acceptance.md`](docs/acceptance.md) – the status and evidence of M0-01 … M0-12;
+* [`docs/delivery-plan.md`](docs/delivery-plan.md) – the phase reached and any change of the plan, with its reason;
+* [`CHANGELOG.md`](CHANGELOG.md) – what a visitor or the owner can notice, in plain words;
+* [`README.md`](README.md) – the status and the exact commands to build, run and test.

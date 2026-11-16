@@ -72,7 +72,8 @@ The repository has two kinds of code:
 | [Vafadar.Authentication.Maui](../../src/Libraries/Vafadar.Authentication.Maui/README.md) | Microsoft sign-in with MSAL and Google sign-in (Play services on Android, system browser + PKCE on iOS and Windows) on Android, iOS and Windows | Authentication | ✅ (device check with real clients pending) |
 | Vafadar.Maui.Backup | Backup settings page, automatic backup scheduling, restore flow UI | Maui, Backup | 🔜 planned (Zanance has its own backup screen; extract when a second app needs it) |
 | Vafadar.Monetization | Planned store billing/entitlement infrastructure; Zanance follows Free/Plus/Pro and Plus Lifetime (D-61) | – | 🔜 planned ([details](monetization.md)) |
-| Vafadar.Web | Shared Blazor components, layout, localization for web apps | Localization | 🔜 when the first web app starts |
+| Vafadar.Web | What every web app needs: language from the address, `lang`/`dir`, light and dark theme, installable-app shell, Syncfusion Blazor license. No texts ([ADR 0011](../adr/0011-languages-per-app.md)) | – | 🔜 with Dastan, phase 4 |
+| [Vafadar.Temporal](../../src/Libraries/Vafadar.Temporal/README.md) | Stated time: partial and approximate dates, uncertain occurrences and periods, years before the common era, ages of thousands to billions of years, places in a story; compared without invented precision ([ADR 0012](../adr/0012-temporal-model.md)). No texts | – | ✅ |
 
 A library is created when a second app needs the same thing, or when the concern is clearly generic from the start
 (backup, localization, authentication). App-specific code stays in the app until it is needed elsewhere.
@@ -82,6 +83,7 @@ A library is created when a second app needs the same thing, or when the concern
 | App | Folder | Platforms | Status |
 |---|---|---|---|
 | Zanance – personal finance manager | [`src/Apps/Zanance`](../../src/Apps/Zanance/README.md) | Android, iOS, Windows | 🚧 phase 1 feature-complete except cloud backup; device tests and store release pending |
+| Dastan – visual discovery of connected stories | [`src/Apps/Dastan`](../../src/Apps/Dastan/README.md) | Web (installable) | 🚧 foundations ([delivery plan](../../src/Apps/Dastan/docs/delivery-plan.md)); no application yet |
 
 Every app uses the same project structure ([ADR 0004](../adr/0004-project-structure-per-app.md)):
 

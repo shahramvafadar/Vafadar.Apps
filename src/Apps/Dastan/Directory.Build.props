@@ -1,0 +1,14 @@
+<Project>
+
+  <!--
+    Dastan's interface texts exist in English and Persian (ADR 0011, decision D-031 of the app). German and other
+    languages are added here together with their translation files. Set before the import, so the settings above
+    derive from it.
+  -->
+  <PropertyGroup>
+    <VafadarLanguages>en;fa</VafadarLanguages>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+</Project>
