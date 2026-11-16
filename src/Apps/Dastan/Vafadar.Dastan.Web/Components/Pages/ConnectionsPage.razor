@@ -21,8 +21,17 @@
     }
     else
     {
-        <p class="note">@T["Connections_Lead"]</p>
-        <ConnectionsGraph Drawing="_drawing" Open="_open" />
+        <p class="note">@T["Connections_Lead"] @T["Stage_Lead"]</p>
+
+        @* The chart is opened and closed at its sides (D-040) as a family tree is: what leads to the name lies
+           above it, what the name leads to below it, and what is the same from both sides beside it. A step
+           further opens the nearest boxes of a side that can be opened, a step back closes the farthest ones. *@
+        var above = Steps(string.Format(CultureInfo.CurrentCulture, T["Flow_Above"], name), ChartWing.Above);
+        var below = Steps(string.Format(CultureInfo.CurrentCulture, T["Flow_Below"], name), ChartWing.Below);
+        var beside = Steps(T["Flow_Beside"], ChartWing.BesideStart, ChartWing.BesideEnd);
+        <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Connections_Graph"], name)" Top="above" Bottom="below" Left="beside" Right="beside">
+            <ConnectionsGraph Chart="_chart" Open="_open" Address="Address" />
+        </ChartStage>
 
         @* The list says what the drawing says: both are the same answer of the projection (ADR 0002). *@
         <section aria-labelledby="as-list">
@@ -39,7 +48,7 @@
 
 @code {
     private ConnectionsView? _view;
-    private ConnectionsDrawing _drawing = null!;
+    private ConnectionsChart _chart = null!;
     private IReadOnlyList<EntityId> _open = [];
     private string _here = string.Empty;
 
@@ -74,7 +83,23 @@
         _open = [.. _view.Expanded.Select(entity => entity.Id)];
 
         // Where this page stands, with what is open on it: the sources of a relation return here.
-        _here = $"{Site.Collection}/entity/{_view.Focus.Id}/connections" + (_open.Count > 0 ? "?open=" + string.Join(',', _open) : string.Empty);
-        _drawing = ConnectionsLayout.Of(_view, text => Visitor.Text(text).Value, Visitor.Language.IsRightToLeft ? 1.9 : 1.6);
+        _here = Address(_view.Focus.Id, _open);
+        _chart = ConnectionsLayout.Of(_view, text => Visitor.Text(text).Value, Visitor.Language.IsRightToLeft ? 1.9 : 1.6);
+    }
+
+    private string Address(EntityId focus, IEnumerable<EntityId> open)
+    {
+        var boxes = string.Join(',', open.Select(id => id.Value).Distinct());
+        return $"{Site.Collection}/entity/{focus}/connections{(boxes.Length > 0 ? $"?open={boxes}" : null)}";
+    }
+
+    // The steps of a side: one further opens what the chart says can be opened there, one back closes it again.
+    private RenderFragment Steps(string name, params ChartWing[] wings)
+    {
+        var further = _chart.Further(wings);
+        var nearer = _chart.Nearer(wings);
+        return @<EdgeSteps Name="@name"
+                           Fewer="@(nearer.IsEmpty ? null : Address(_chart.Focus.Id, _open.Except(nearer)) + "#chart")"
+                           More="@(further.IsEmpty ? null : Address(_chart.Focus.Id, _open.Concat(further)) + "#chart")" />;
     }
 }

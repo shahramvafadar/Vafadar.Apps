@@ -1,13 +1,14 @@
-@* The neighbourhood of an entity as a drawing: SVG written by the server (ADR 0005). Connectors are lines in
-   percent and em, so the drawing follows the width of the page and the size of the text; the nodes are HTML inside
-   the SVG, so names wrap, links are real links and every script is set by the page's own styles. Nothing here needs
-   a script: choosing a name, opening and closing a row are links. *@
+@* The neighbourhood of an entity as a chart: SVG written by the server (ADR 0005, ADR 0008). The focus stands in
+   the middle; what a relation leads from stands above it, what it leads to below it, and names whose relations
+   are the same from both sides beside it. The boxes are HTML inside the SVG, so names wrap, links are real links
+   and every script is set by the page's own styles. Nothing here needs a script: choosing a name, opening and
+   closing a box are links. A chart that is larger than its stage scrolls there. On a page that is read from
+   right to left the chart begins at the right. *@
 @inject Visitor Visitor
 @inject DastanSite Site
 @inject IStringLocalizer<Ui> T
 
-<svg class="graph" width="100%" height="@Em(Drawing.Height)" role="group"
-     aria-label="@string.Format(CultureInfo.CurrentCulture, T["Connections_Graph"], Name(Drawing.Focus))">
+<svg class="graph flow" width="@Em(Chart.Width)" height="@Em(Chart.Height)">
     <defs>
         <marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path class="graph-arrow" d="M0 0L10 5L0 10z" />
@@ -15,91 +16,79 @@
     </defs>
 
     @* The lines first, the boxes over them. *@
-    @if (!Drawing.Rows.IsEmpty)
+    @foreach (var line in Chart.Lines)
     {
-        <line class="graph-line" x1="@X(FocusWidth)" x2="@X(Trunk(1))" y1="@Em(Drawing.FocusTop + ConnectionsDrawing.Anchor)" y2="@Em(Drawing.FocusTop + ConnectionsDrawing.Anchor)" />
-    }
-    @foreach (var trunk in Drawing.Trunks)
-    {
-        <line class="graph-line" x1="@X(Trunk(trunk.Depth))" x2="@X(Trunk(trunk.Depth))" y1="@Em(trunk.Top)" y2="@Em(trunk.Bottom)" />
-    }
-    @foreach (var row in Drawing.Rows)
-    {
-        var y = Em(row.Top + ConnectionsDrawing.Anchor);
-        <line class="graph-line" x1="@X(Trunk(row.Depth))" x2="@X(Box(row.Depth) - 0.8)" y1="@y" y2="@y"
-              marker-start="@(row.TowardParent ? "url(#graph-arrow)" : null)" marker-end="@(row.TowardRow ? "url(#graph-arrow)" : null)" />
+        <line class="graph-line" x1="@Em(Across(line.X1))" y1="@Em(line.Y1)" x2="@Em(Across(line.X2))" y2="@Em(line.Y2)"
+              marker-start="@(line.ArrowAtStart ? "url(#graph-arrow)" : null)" marker-end="@(line.ArrowAtEnd ? "url(#graph-arrow)" : null)" />
     }
 
-    <foreignObject x="@X(0, FocusWidth)" y="@Em(Drawing.FocusTop)" width="@Percent(FocusWidth)" height="@Em(Drawing.FocusHeight)">
+    @foreach (var box in Chart.Boxes.Where(box => box.Wing == ChartWing.Above))
+    {
+        @Box(box)
+    }
+
+    <foreignObject x="@Em(Across(Chart.FocusLeft, Chart.FocusWidth))" y="@Em(Chart.FocusTop)" width="@Em(Chart.FocusWidth)" height="@Em(Chart.FocusHeight)">
         <div class="graph-node graph-focus">
-            <a class="graph-name" href="@($"{Site.Collection}/entity/{Drawing.Focus.Id}")"
-               title="@string.Format(CultureInfo.CurrentCulture, T["Graph_ToEntity"], Name(Drawing.Focus))"><Loc Text="Drawing.Focus.Label" /></a>
+            <a class="graph-name" href="@($"{Site.Collection}/entity/{Chart.Focus.Id}")"
+               title="@string.Format(CultureInfo.CurrentCulture, T["Graph_ToEntity"], Name(Chart.Focus))"><Loc Text="Chart.Focus.Label" /></a>
         </div>
     </foreignObject>
 
-    @foreach (var row in Drawing.Rows)
+    @foreach (var box in Chart.Boxes.Where(box => box.Wing != ChartWing.Above))
     {
-        var width = 100 - Box(row.Depth);
-        <foreignObject x="@X(Box(row.Depth), width)" y="@Em(row.Top)" width="@Percent(width)" height="@Em(row.Height)">
-            <div class="graph-node @(row.IsReference ? "graph-reference" : null)">
-                @foreach (var relation in row.Relations)
-                {
-                    <span class="graph-relation"><Loc Text="relation.Label" /></span>
-                }
-                <span class="graph-entity">
-                    <a class="graph-name" href="@Address(row.Entity.Id, [])"><Loc Text="row.Entity.Label" /></a>
-                    @if (row.IsReference)
-                    {
-                        <small class="note">(@T["Graph_Reference"])</small>
-                    }
-                    else if (row.IsExpanded)
-                    {
-                        <a class="graph-toggle" href="@Address(Drawing.Focus.Id, Open.Where(id => id != row.Entity.Id))" aria-expanded="true"
-                           aria-label="@string.Format(CultureInfo.CurrentCulture, T["Graph_Collapse"], Name(row.Entity))">−</a>
-                    }
-                    else if (row.CanExpand)
-                    {
-                        <a class="graph-toggle" href="@Address(Drawing.Focus.Id, Open.Append(row.Entity.Id))" aria-expanded="false"
-                           aria-label="@string.Format(CultureInfo.CurrentCulture, T["Graph_Expand"], Name(row.Entity))">+</a>
-                    }
-                </span>
-            </div>
-        </foreignObject>
+        @Box(box)
     }
 </svg>
 
 @code {
-    private const double FocusWidth = ConnectionsDrawing.FocusWidth;
-
-    /// <summary>Gets or sets the drawing.</summary>
+    /// <summary>Gets or sets the chart.</summary>
     [Parameter, EditorRequired]
-    public ConnectionsDrawing Drawing { get; set; } = null!;
+    public ConnectionsChart Chart { get; set; } = null!;
 
-    /// <summary>Gets or sets the rows that are open, as the address names them.</summary>
+    /// <summary>Gets or sets the boxes that are open, as the address names them.</summary>
     [Parameter, EditorRequired]
     public IReadOnlyList<EntityId> Open { get; set; } = [];
 
+    /// <summary>Gets or sets what turns a focus and the boxes that are open into the address of the chart.</summary>
+    [Parameter, EditorRequired]
+    public Func<EntityId, IEnumerable<EntityId>, string> Address { get; set; } = null!;
+
     private bool RightToLeft => Visitor.Language.IsRightToLeft;
-
-    private static double Trunk(int depth) => ConnectionsDrawing.TrunkAt(depth);
-
-    private static double Box(int depth) => ConnectionsDrawing.BoxAt(depth);
 
     // Numbers in markup are written the same in every language of the page.
     private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
 
-    private static string Percent(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "%";
+    // A place across the chart as the SVG counts it: from the left.
+    private double Across(double position) => RightToLeft ? Chart.Width - position : position;
 
-    // A place across the drawing, counted from the side where reading starts.
-    private string X(double position) => Percent(RightToLeft ? 100 - position : position);
-
-    private string X(double start, double width) => Percent(RightToLeft ? 100 - start - width : start);
+    private double Across(double start, double width) => RightToLeft ? Chart.Width - start - width : start;
 
     private string Name(Entity entity) => Visitor.Text(entity.Label).Value;
 
-    private string Address(EntityId focus, IEnumerable<EntityId> open)
-    {
-        var rows = string.Join(',', open.Select(id => id.Value).Distinct());
-        return $"{Site.Collection}/entity/{focus}/connections{(rows.Length > 0 ? $"?open={rows}" : null)}";
-    }
+    private RenderFragment Box(ConnectionBox box) =>
+        @<foreignObject x="@Em(Across(box.Left, box.Width))" y="@Em(box.Top)" width="@Em(box.Width)" height="@Em(box.Height)">
+            <div class="graph-node @(box.IsReference ? "graph-reference" : null)">
+                @foreach (var relation in box.Relations)
+                {
+                    <span class="graph-relation"><Loc Text="relation.Label" /></span>
+                }
+                <span class="graph-entity">
+                    <a class="graph-name" href="@Address(box.Entity.Id, [])"><Loc Text="box.Entity.Label" /></a>
+                    @if (box.IsReference)
+                    {
+                        <small class="note">(@T["Graph_Reference"])</small>
+                    }
+                    else if (box.IsExpanded)
+                    {
+                        <a class="graph-toggle" href="@(Address(Chart.Focus.Id, Open.Where(id => id != box.Entity.Id)) + "#chart")" aria-expanded="true"
+                           aria-label="@string.Format(CultureInfo.CurrentCulture, T["Graph_Collapse"], Name(box.Entity))">−</a>
+                    }
+                    else if (box.CanExpand)
+                    {
+                        <a class="graph-toggle" href="@(Address(Chart.Focus.Id, Open.Append(box.Entity.Id)) + "#chart")" aria-expanded="false"
+                           aria-label="@string.Format(CultureInfo.CurrentCulture, T["Graph_Expand"], Name(box.Entity))">+</a>
+                    }
+                </span>
+            </div>
+        </foreignObject>;
 }

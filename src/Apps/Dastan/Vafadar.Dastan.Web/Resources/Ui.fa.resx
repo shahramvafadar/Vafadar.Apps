@@ -190,7 +190,7 @@
     <value>پیوندهای {0}</value>
   </data>
   <data name="Connections_Lead" xml:space="preserve">
-    <value>نامی را انتخاب کنید تا در مرکز قرار بگیرد. با باز کردنِ یک نام، پیوندهای خودِ آن را هم می‌بینید.</value>
+    <value>آن‌که رابطه‌ای از او به نامِ میانی می‌رسد بالای آن و آن‌که رابطه به او می‌رسد پایینِ آن ایستاده است؛ نام‌هایی که رابطه‌شان از هر دو سو یکی است کنارِ آن‌اند. نامی را انتخاب کنید تا در میانه قرار بگیرد. با باز کردنِ یک نام، پیوندهای خودِ آن را هم می‌بینید.</value>
   </data>
   <data name="Connections_Graph" xml:space="preserve">
     <value>پیوندهای {0} به شکل نمودار</value>
@@ -842,5 +842,14 @@
   </data>
   <data name="Story_Edge_Lanes" xml:space="preserve">
     <value>نام‌ها</value>
+  </data>
+  <data name="Flow_Above" xml:space="preserve">
+    <value>به سوی {0}</value>
+  </data>
+  <data name="Flow_Below" xml:space="preserve">
+    <value>از {0}</value>
+  </data>
+  <data name="Flow_Beside" xml:space="preserve">
+    <value>دوسویه</value>
   </data>
 </root>

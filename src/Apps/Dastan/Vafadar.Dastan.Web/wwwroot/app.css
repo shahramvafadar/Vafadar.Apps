@@ -1244,6 +1244,22 @@ a.tl-bar:focus-visible,
   align-self: stretch;
 }
 
+/* --- The connections chart (ADR 0008): the focus in the middle, its neighbours at its four sides --- */
+
+/* Like the tree, the chart is as large as what it shows and stands in the middle of a stage that is larger. */
+.graph.flow {
+  flex: none;
+  max-inline-size: none;
+  margin: auto;
+}
+
+/* The name in the middle is a target as high as a finger needs. */
+.flow .graph-focus .graph-name {
+  display: flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
 /* --- The stage of a chart (D-040, ADR 0008): the whole page for the chart, steps at its four sides --- */
 
 /* A page with a stage is as wide as the window; what is to be read keeps the width of a column of text. */
