@@ -1,0 +1,76 @@
+@page "/{Collection}/entity/{Id}/connections"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_view is { } view)
+{
+    var name = Visitor.Text(view.Focus.Label).Value;
+    <PageTitle>@string.Format(CultureInfo.CurrentCulture, T["Connections_Title"], name) – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><TypeName Type="view.Focus.Type" /></p>
+        <h1>@string.Format(CultureInfo.CurrentCulture, T["Connections_Title"], name)</h1>
+        <p class="meta"><a href="@($"{Site.Collection}/entity/{view.Focus.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Graph_ToEntity"], name)</a></p>
+    </header>
+
+    @if (view.Edges.IsEmpty)
+    {
+        <p class="note">@T["Entity_NoConnections"]</p>
+    }
+    else
+    {
+        <p class="note">@T["Connections_Lead"]</p>
+        <ConnectionsGraph Drawing="_drawing" Open="_open" />
+
+        @* The list says what the drawing says: both are the same answer of the projection (ADR 0002). *@
+        <section aria-labelledby="as-list">
+            <h2 id="as-list">@T["Connections_List"]</h2>
+            <ul class="statements" role="list">
+                @foreach (var edge in view.Edges)
+                {
+                    <li><Statement Relation="edge" Self="view.Focus.Id" /></li>
+                }
+            </ul>
+        </section>
+    }
+}
+
+@code {
+    private ConnectionsView? _view;
+    private ConnectionsDrawing _drawing = null!;
+    private IReadOnlyList<EntityId> _open = [];
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the entity in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the rows that are open: identifiers separated by commas.</summary>
+    [SupplyParameterFromQuery]
+    public string? Open { get; set; }
+
+    protected override void OnInitialized()
+    {
+        static bool IsIdentifier(string text) => text.Length > 0 && !text.Any(char.IsWhiteSpace);
+
+        // The address is written by anybody: what is not an identifier is dropped, and what the visitor may not
+        // see or what is not connected is ignored by the projection.
+        _open = [.. (Open ?? string.Empty).Split(',', StringSplitOptions.TrimEntries).Where(IsIdentifier).Select(id => new EntityId(id)).Distinct()];
+        var known = Collection == Site.Collection && IsIdentifier(Id);
+        _view = known ? Visitor.Projection?.Connections(new EntityId(Id), _open) : null;
+        if (_view is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        // Only what is really open stays in the links of the page.
+        _open = [.. _view.Expanded.Select(entity => entity.Id)];
+        _drawing = ConnectionsLayout.Of(_view, text => Visitor.Text(text).Value, Visitor.Language.IsRightToLeft ? 1.9 : 1.6);
+    }
+}

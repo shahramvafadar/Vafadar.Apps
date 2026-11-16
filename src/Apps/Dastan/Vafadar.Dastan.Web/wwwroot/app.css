@@ -403,3 +403,101 @@ main:focus {
   align-items: center;
   min-block-size: 2.75rem;
 }
+
+/* An action that is offered next to the main one. */
+.action.secondary {
+  background: transparent;
+  color: var(--accent);
+  margin-block-start: var(--space-3);
+}
+
+/* --- The connections drawing (ADR 0005): lines of the SVG, boxes of HTML inside it --- */
+
+.graph {
+  display: block;
+  margin-block: var(--space-4);
+  font-size: 1rem;
+  overflow: visible;
+}
+
+.graph-line {
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+}
+
+.graph-arrow {
+  fill: var(--text-muted);
+}
+
+.graph-node {
+  block-size: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.graph-focus {
+  border: 2px solid var(--accent);
+  font-weight: 700;
+}
+
+/* A row that points to an entity drawn elsewhere. */
+.graph-reference {
+  border-style: dashed;
+}
+
+.graph-relation {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.graph-entity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+}
+
+.graph-name {
+  flex: 1 1 auto;
+  font-weight: 600;
+}
+
+.graph-toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: var(--step-1);
+  text-decoration: none;
+}
+
+/* A long word breaks instead of leaving its box; the note of a referring row stands on a line of its own. */
+.graph-node {
+  overflow-wrap: anywhere;
+}
+
+.graph-focus {
+  padding-inline: var(--space-2);
+}
+
+.graph-entity {
+  flex-wrap: wrap;
+}
+
+.graph-entity .note {
+  flex: 0 0 100%;
+}
+
+/* The name gives way and wraps; the control that opens a row stays on its line. */
+.graph-name {
+  flex: 1 1 0;
+  min-inline-size: 0;
+}

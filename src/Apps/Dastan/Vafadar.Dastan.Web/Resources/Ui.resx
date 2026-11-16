@@ -186,4 +186,31 @@
   <data name="External_Note" xml:space="preserve">
     <value>opens another site</value>
   </data>
+  <data name="Connections_Title" xml:space="preserve">
+    <value>Connections of {0}</value>
+  </data>
+  <data name="Connections_Lead" xml:space="preserve">
+    <value>Choose a name to put it in the centre. Open a name to see its own connections as well.</value>
+  </data>
+  <data name="Connections_Graph" xml:space="preserve">
+    <value>The connections of {0} as a diagram</value>
+  </data>
+  <data name="Connections_List" xml:space="preserve">
+    <value>The same connections as a list</value>
+  </data>
+  <data name="Graph_Expand" xml:space="preserve">
+    <value>Show the connections of {0}</value>
+  </data>
+  <data name="Graph_Collapse" xml:space="preserve">
+    <value>Hide the connections of {0}</value>
+  </data>
+  <data name="Graph_Reference" xml:space="preserve">
+    <value>already shown</value>
+  </data>
+  <data name="Entity_ToGraph" xml:space="preserve">
+    <value>Show the connections as a diagram</value>
+  </data>
+  <data name="Graph_ToEntity" xml:space="preserve">
+    <value>About {0}</value>
+  </data>
 </root>

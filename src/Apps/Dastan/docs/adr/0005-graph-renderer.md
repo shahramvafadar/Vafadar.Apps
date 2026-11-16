@@ -1,7 +1,7 @@
 # 0005. The renderer of the connections graph
 
-- Status: **Proposed – needs the owner's decision.** It recommends a third candidate next to the two the delivery
-  plan named (decision 7). Nothing is built on it yet; the graph is part of phase 5.
+- Status: **Accepted by the owner on 2026-11-16** (decision D-035): the graphs of M0 are drawn by the server as
+  SVG. The comparison below is kept as it was written before the decision.
 - Date: 2026-11-16
 - Deciders: Shahram Vafadar
 - Governing documents: 09 (presentation and rendering), 18 (SCREEN-04), 20 (step B, step C); M0-03
@@ -63,3 +63,22 @@ Syncfusion Diagram and Cytoscape.js is then made by a hands-on comparison with t
   component that needs it.
 * The layout of small graphs is our code and is tested like the rest.
 * The graph does not pan or zoom in M0.
+
+
+## What was built (2026-11-16)
+
+* **Layout.** `ConnectionsLayout` (in `Vafadar.Dastan.Core`, no markup) turns a `ConnectionsView` into a tidy
+  tree: the focus on the starting side, one row per neighbour, the neighbours of an expanded row indented below
+  it. A ring around the focus was not used: on a phone of 360 px the labels of eight edges do not fit around a
+  centre, and a drawing that only works on a wide screen would make the list the real interface. Heights are
+  estimated from the length of the texts for the narrowest screen, because the server cannot measure text.
+* **Every relation is drawn exactly once.** A relation to an entity that is already in the drawing is a row that
+  refers to it instead of a second node; the tests compare the relations of the drawing with those of the list.
+* **Direction** is an arrowhead on the connector, from the first entity of the relation to the second; a relation
+  that is the same from both sides has none. The label stands at the row it leads to.
+* **Markup.** An `<svg>` whose connectors are lines in percent and `em`, and whose nodes are HTML inside
+  `foreignObject`, so that names wrap, links are real links and Persian is set by the page's own CSS. Expanding
+  and collapsing are links that change the `open` part of the address.
+* **Limits.** With several relations of different direction between the same two entities the arrowheads say
+  that both directions occur, not which label has which; the list below the graph does. Rows keep the order of
+  the collection; nothing minimises crossings because a tree has none.

@@ -186,4 +186,31 @@
   <data name="External_Note" xml:space="preserve">
     <value>سایت دیگری را باز می‌کند</value>
   </data>
+  <data name="Connections_Title" xml:space="preserve">
+    <value>پیوندهای {0}</value>
+  </data>
+  <data name="Connections_Lead" xml:space="preserve">
+    <value>نامی را انتخاب کنید تا در مرکز قرار بگیرد. با باز کردنِ یک نام، پیوندهای خودِ آن را هم می‌بینید.</value>
+  </data>
+  <data name="Connections_Graph" xml:space="preserve">
+    <value>پیوندهای {0} به شکل نمودار</value>
+  </data>
+  <data name="Connections_List" xml:space="preserve">
+    <value>همین پیوندها به شکل فهرست</value>
+  </data>
+  <data name="Graph_Expand" xml:space="preserve">
+    <value>نمایش پیوندهای {0}</value>
+  </data>
+  <data name="Graph_Collapse" xml:space="preserve">
+    <value>پنهان کردن پیوندهای {0}</value>
+  </data>
+  <data name="Graph_Reference" xml:space="preserve">
+    <value>پیش‌تر نشان داده شده</value>
+  </data>
+  <data name="Entity_ToGraph" xml:space="preserve">
+    <value>نمایش پیوندها به شکل نمودار</value>
+  </data>
+  <data name="Graph_ToEntity" xml:space="preserve">
+    <value>دربارهٔ {0}</value>
+  </data>
 </root>
