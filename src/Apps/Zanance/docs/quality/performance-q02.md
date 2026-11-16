@@ -221,3 +221,15 @@ complete original100k model and visible native rows with full source equality. T
 uses a forced delay, not the original D75 binary or natural timing; its old root cause
 and the overall performance target remain unproved. Accepted ready queries/financial
 operations are not repeated and no product/runtime workaround is introduced.
+
+
+## Current physical reference acceptance and remaining cold target (2026-11-16)
+
+[Current original-source acceptance](current-performance-acceptance-d1219.md)
+records Samsung warm Home median750.934576ms and actual native search results
+483.823730/568.835038ms with complete source preservation, without financial replay.
+The owner selected cold6000ms after the actual7434.370118ms observation; that target
+remains open. The100k stress warm median is1756.190000ms, while its new search is
+interrupted by an [existing native exit](current-search-native-exit-d1220.md).
+The rejected [D1217/D1218 strategies](performance-delivery-acceptance-d1217.md) are
+not promoted. These scoped results do not complete all QA06/ANR/release gates.
