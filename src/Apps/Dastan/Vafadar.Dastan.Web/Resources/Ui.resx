@@ -495,4 +495,136 @@
   <data name="Month_12" xml:space="preserve">
     <value>December</value>
   </data>
+  <data name="Evidence_Link" xml:space="preserve">
+    <value>Sources</value>
+  </data>
+  <data name="Evidence_Title" xml:space="preserve">
+    <value>What supports this</value>
+  </data>
+  <data name="Evidence_Subject_Entity" xml:space="preserve">
+    <value>What is said about {0}</value>
+  </data>
+  <data name="Evidence_Subject_Relation" xml:space="preserve">
+    <value>A relation</value>
+  </data>
+  <data name="Evidence_Subject_Event" xml:space="preserve">
+    <value>A step of the story</value>
+  </data>
+  <data name="Evidence_Subject_Association" xml:space="preserve">
+    <value>A part in a step of the story</value>
+  </data>
+  <data name="Evidence_Subject_Media" xml:space="preserve">
+    <value>The description of an image or a video</value>
+  </data>
+  <data name="Evidence_Editors" xml:space="preserve">
+    <value>The wording on Dastan is the editors'. The sources below are what it rests on; they are other people's texts.</value>
+  </data>
+  <data name="Evidence_Review" xml:space="preserve">
+    <value>State of the review</value>
+  </data>
+  <data name="Review_Proposed" xml:space="preserve">
+    <value>Suggested by the editors, not checked yet</value>
+  </data>
+  <data name="Review_SourcedReviewPending" xml:space="preserve">
+    <value>Supported by a source; the editors' review is still open</value>
+  </data>
+  <data name="Review_Reviewed" xml:space="preserve">
+    <value>Reviewed by the editors</value>
+  </data>
+  <data name="Review_Disputed" xml:space="preserve">
+    <value>The sources disagree; the disagreement is kept</value>
+  </data>
+  <data name="Review_Withdrawn" xml:space="preserve">
+    <value>Withdrawn</value>
+  </data>
+  <data name="Evidence_Where" xml:space="preserve">
+    <value>Where to look</value>
+  </data>
+  <data name="Evidence_Edition" xml:space="preserve">
+    <value>The text the editors worked from</value>
+  </data>
+  <data name="Evidence_EditionNote" xml:space="preserve">
+    <value>About the edition</value>
+  </data>
+  <data name="Evidence_Sources" xml:space="preserve">
+    <value>Sources of this statement</value>
+  </data>
+  <data name="Evidence_NoSources" xml:space="preserve">
+    <value>No source is recorded for this.</value>
+  </data>
+  <data name="Evidence_Warning" xml:space="preserve">
+    <value>These sources are pages of other sites. They tell the whole story and can reveal what you have not read yet. Dastan asks once more before it opens one.</value>
+  </data>
+  <data name="Evidence_External" xml:space="preserve">
+    <value>These sources are pages of other sites.</value>
+  </data>
+  <data name="Evidence_Back" xml:space="preserve">
+    <value>Back to where you were</value>
+  </data>
+  <data name="Source_Kind_PrimaryText" xml:space="preserve">
+    <value>The text of the work</value>
+  </data>
+  <data name="Source_Kind_ScholarlyReference" xml:space="preserve">
+    <value>Scholarly reference work</value>
+  </data>
+  <data name="Source_Kind_MuseumRecord" xml:space="preserve">
+    <value>Record of a museum</value>
+  </data>
+  <data name="Source_Kind_RightsPolicy" xml:space="preserve">
+    <value>Terms of an institution</value>
+  </data>
+  <data name="Source_Authors" xml:space="preserve">
+    <value>By {0}</value>
+  </data>
+  <data name="Source_Published" xml:space="preserve">
+    <value>Published {0}</value>
+  </data>
+  <data name="Source_Updated" xml:space="preserve">
+    <value>Revised {0}</value>
+  </data>
+  <data name="Source_Accessed" xml:space="preserve">
+    <value>Looked up by the editors on {0}</value>
+  </data>
+  <data name="Source_Open" xml:space="preserve">
+    <value>Open the source</value>
+  </data>
+  <data name="Source_LeaveTitle" xml:space="preserve">
+    <value>You are leaving Dastan</value>
+  </data>
+  <data name="Source_LeaveWarning" xml:space="preserve">
+    <value>This page of another site tells the whole story. It can reveal what you have not read yet, and Dastan cannot hide anything there.</value>
+  </data>
+  <data name="Source_LeavePlain" xml:space="preserve">
+    <value>This is a page of another site. Dastan has no say over what it shows.</value>
+  </data>
+  <data name="Source_Continue" xml:space="preserve">
+    <value>Continue to the source</value>
+  </data>
+  <data name="Source_Stay" xml:space="preserve">
+    <value>Stay on Dastan</value>
+  </data>
+  <data name="Story_StepEvidence" xml:space="preserve">
+    <value>Sources of this step</value>
+  </data>
+  <data name="Media_Evidence" xml:space="preserve">
+    <value>Sources of this description</value>
+  </data>
+  <data name="Search_Title" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Search_Label" xml:space="preserve">
+    <value>Search for a name in this story</value>
+  </data>
+  <data name="Search_Hint" xml:space="preserve">
+    <value>Names of people, places and things, as far as you have read.</value>
+  </data>
+  <data name="Search_Results" xml:space="preserve">
+    <value>Found for “{0}”: {1}</value>
+  </data>
+  <data name="Search_None" xml:space="preserve">
+    <value>Nothing found for “{0}” in what you have read so far.</value>
+  </data>
+  <data name="Search_MatchedName" xml:space="preserve">
+    <value>found by the name “{0}”</value>
+  </data>
 </root>

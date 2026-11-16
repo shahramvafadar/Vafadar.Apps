@@ -93,3 +93,12 @@ level. That guarantee makes a simpler rule possible.
 * Events that are dated instead of told (a company's history) are not steps of a story. A timeline for them is a
   later view and not part of M0.
 * The eligibility of media for a public release is not modelled yet. It has to be before R0.
+
+
+## Addendum of 2026-11-16 – where a visitor came from
+
+Pages that can be reached from several places – the evidence of a statement, the page before a source, the page of
+a media item – return to where they were opened. The address says where that was (`from`, `entity`, `event`). It
+is a claim of the visitor, not a permission: a page follows it only when it names a page of the collection, and a
+gallery only when the projection has that gallery and it holds the item. A page that says where it stands writes
+the address it has checked itself (`EvidenceAddress`), never what its own address carried.

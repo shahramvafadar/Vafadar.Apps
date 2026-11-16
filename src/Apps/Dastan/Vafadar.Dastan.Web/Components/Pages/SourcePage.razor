@@ -1,0 +1,70 @@
+@page "/{Collection}/source/{Id}"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_source is { } source)
+{
+    <PageTitle>@T["Source_LeaveTitle"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta">@T[$"Source_Kind_{source.Kind}"]</p>
+        <h1>@T["Source_LeaveTitle"]</h1>
+    </header>
+
+    @* The page between Dastan and another site (document 18, FLOW-05): the visitor reads what leaving means and
+       then decides. A source tells the whole story; while the visitor has not read all of it, the page says so. *@
+    <p class="lead warning" role="note">@(_revealsMore ? T["Source_LeaveWarning"] : T["Source_LeavePlain"])</p>
+
+    <section class="card" aria-labelledby="the-source">
+        <h2 id="the-source"><Foreign Text="@source.Title" /></h2>
+        @if (!source.Authors.IsEmpty)
+        {
+            <p>@string.Format(CultureInfo.CurrentCulture, T["Source_Authors"], string.Join(", ", source.Authors))</p>
+        }
+        <p class="meta"><bdi dir="ltr">@source.Url.Host</bdi></p>
+    </section>
+
+    <p class="actions">
+        <a class="action" href="@_back">@T["Source_Stay"]</a>
+        <a class="action secondary" href="@source.Url" rel="external noopener noreferrer">@T["Source_Continue"]</a>
+    </p>
+    <p class="note">(@T["External_Note"])</p>
+}
+
+@code {
+    private Source? _source;
+    private bool _revealsMore;
+    private string _back = string.Empty;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the source in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the page the visitor came from, as that page said it.</summary>
+    [SupplyParameterFromQuery(Name = "from")]
+    public string? From { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // The address names a source of the collection, never the address of another site: this page cannot be
+        // used to send somebody anywhere. A source that no visible statement cites is not found.
+        var projection = Collection == Site.Collection ? Visitor.Projection : null;
+        _source = projection is not null && Id.Length > 0 && !Id.Any(char.IsWhiteSpace)
+            ? projection.Sources.FirstOrDefault(source => source.Id.Value == Id)
+            : null;
+        if (_source is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _revealsMore = projection!.StoryContinues;
+        _back = EvidenceAddress.Checked(From, Site.Collection) ?? Site.Collection;
+    }
+}

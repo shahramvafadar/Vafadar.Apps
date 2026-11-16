@@ -235,7 +235,8 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
             Assert.Contains($"{Story}/gallery#{Diagram}", page.Links);
             Assert.Contains($"{Story}/media/{Video}", page.Links);
             // The page names its own address (the link that skips to the content); no link to another page carries the claim on.
-            Assert.DoesNotContain(page.Links, link => link.Contains('?', StringComparison.Ordinal) && !link.EndsWith("#content", StringComparison.Ordinal) && !link.StartsWith('/'));
+            Assert.DoesNotContain(page.Links, link => link.StartsWith($"{Story}/media/", StringComparison.Ordinal) && link.Contains('?', StringComparison.Ordinal) && !link.EndsWith("#content", StringComparison.Ordinal));
+            Assert.DoesNotContain(page.Links, link => link.Contains("rakhsh", StringComparison.Ordinal) && !link.EndsWith("#content", StringComparison.Ordinal) && !link.StartsWith('/'));
         }
     }
 

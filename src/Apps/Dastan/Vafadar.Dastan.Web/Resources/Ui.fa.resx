@@ -495,4 +495,136 @@
   <data name="Month_12" xml:space="preserve">
     <value>دسامبر</value>
   </data>
+  <data name="Evidence_Link" xml:space="preserve">
+    <value>منبع‌ها</value>
+  </data>
+  <data name="Evidence_Title" xml:space="preserve">
+    <value>پشتوانهٔ این گفته</value>
+  </data>
+  <data name="Evidence_Subject_Entity" xml:space="preserve">
+    <value>آنچه دربارهٔ {0} گفته شده</value>
+  </data>
+  <data name="Evidence_Subject_Relation" xml:space="preserve">
+    <value>یک رابطه</value>
+  </data>
+  <data name="Evidence_Subject_Event" xml:space="preserve">
+    <value>گامی از قصه</value>
+  </data>
+  <data name="Evidence_Subject_Association" xml:space="preserve">
+    <value>نقشی در گامی از قصه</value>
+  </data>
+  <data name="Evidence_Subject_Media" xml:space="preserve">
+    <value>شرح یک تصویر یا ویدیو</value>
+  </data>
+  <data name="Evidence_Editors" xml:space="preserve">
+    <value>جمله‌بندی در Dastan از ویراستاران است. منبع‌های زیر پشتوانهٔ آن‌اند و متنِ دیگران هستند.</value>
+  </data>
+  <data name="Evidence_Review" xml:space="preserve">
+    <value>وضعیت بازبینی</value>
+  </data>
+  <data name="Review_Proposed" xml:space="preserve">
+    <value>پیشنهاد ویراستاران؛ هنوز بررسی نشده</value>
+  </data>
+  <data name="Review_SourcedReviewPending" xml:space="preserve">
+    <value>منبع دارد؛ بازبینی ویراستاران هنوز باز است</value>
+  </data>
+  <data name="Review_Reviewed" xml:space="preserve">
+    <value>بازبینی‌شده به دست ویراستاران</value>
+  </data>
+  <data name="Review_Disputed" xml:space="preserve">
+    <value>منبع‌ها هم‌نظر نیستند؛ این اختلاف نگه داشته شده</value>
+  </data>
+  <data name="Review_Withdrawn" xml:space="preserve">
+    <value>پس گرفته شده</value>
+  </data>
+  <data name="Evidence_Where" xml:space="preserve">
+    <value>کجا را باید دید</value>
+  </data>
+  <data name="Evidence_Edition" xml:space="preserve">
+    <value>متنی که ویراستاران از آن کار کرده‌اند</value>
+  </data>
+  <data name="Evidence_EditionNote" xml:space="preserve">
+    <value>دربارهٔ ویرایش</value>
+  </data>
+  <data name="Evidence_Sources" xml:space="preserve">
+    <value>منبع‌های این گفته</value>
+  </data>
+  <data name="Evidence_NoSources" xml:space="preserve">
+    <value>برای این مورد منبعی ثبت نشده است.</value>
+  </data>
+  <data name="Evidence_Warning" xml:space="preserve">
+    <value>این منبع‌ها صفحه‌های سایت‌های دیگرند. همهٔ قصه را می‌گویند و ممکن است چیزی را که هنوز نخوانده‌اید فاش کنند. Dastan پیش از باز کردن هر کدام یک بار دیگر می‌پرسد.</value>
+  </data>
+  <data name="Evidence_External" xml:space="preserve">
+    <value>این منبع‌ها صفحه‌های سایت‌های دیگرند.</value>
+  </data>
+  <data name="Evidence_Back" xml:space="preserve">
+    <value>بازگشت به جایی که بودید</value>
+  </data>
+  <data name="Source_Kind_PrimaryText" xml:space="preserve">
+    <value>متن خودِ اثر</value>
+  </data>
+  <data name="Source_Kind_ScholarlyReference" xml:space="preserve">
+    <value>مرجع پژوهشی</value>
+  </data>
+  <data name="Source_Kind_MuseumRecord" xml:space="preserve">
+    <value>برگهٔ یک موزه</value>
+  </data>
+  <data name="Source_Kind_RightsPolicy" xml:space="preserve">
+    <value>شرایط یک نهاد</value>
+  </data>
+  <data name="Source_Authors" xml:space="preserve">
+    <value>از {0}</value>
+  </data>
+  <data name="Source_Published" xml:space="preserve">
+    <value>انتشار: {0}</value>
+  </data>
+  <data name="Source_Updated" xml:space="preserve">
+    <value>بازنگری: {0}</value>
+  </data>
+  <data name="Source_Accessed" xml:space="preserve">
+    <value>ویراستاران در {0} به آن مراجعه کرده‌اند</value>
+  </data>
+  <data name="Source_Open" xml:space="preserve">
+    <value>باز کردن منبع</value>
+  </data>
+  <data name="Source_LeaveTitle" xml:space="preserve">
+    <value>از Dastan بیرون می‌روید</value>
+  </data>
+  <data name="Source_LeaveWarning" xml:space="preserve">
+    <value>این صفحه از سایتی دیگر همهٔ قصه را می‌گوید. ممکن است چیزی را که هنوز نخوانده‌اید فاش کند و Dastan نمی‌تواند آن‌جا چیزی را پنهان کند.</value>
+  </data>
+  <data name="Source_LeavePlain" xml:space="preserve">
+    <value>این صفحه‌ای از سایتی دیگر است. Dastan بر آنچه نشان می‌دهد اختیاری ندارد.</value>
+  </data>
+  <data name="Source_Continue" xml:space="preserve">
+    <value>ادامه و رفتن به منبع</value>
+  </data>
+  <data name="Source_Stay" xml:space="preserve">
+    <value>ماندن در Dastan</value>
+  </data>
+  <data name="Story_StepEvidence" xml:space="preserve">
+    <value>منبع‌های این گام</value>
+  </data>
+  <data name="Media_Evidence" xml:space="preserve">
+    <value>منبع‌های این شرح</value>
+  </data>
+  <data name="Search_Title" xml:space="preserve">
+    <value>جست‌وجو</value>
+  </data>
+  <data name="Search_Label" xml:space="preserve">
+    <value>جست‌وجوی یک نام در این قصه</value>
+  </data>
+  <data name="Search_Hint" xml:space="preserve">
+    <value>نام کسان، جاها و چیزها، تا جایی که خوانده‌اید.</value>
+  </data>
+  <data name="Search_Results" xml:space="preserve">
+    <value>یافته‌ها برای «{0}»: {1}</value>
+  </data>
+  <data name="Search_None" xml:space="preserve">
+    <value>برای «{0}» در آنچه تاکنون خوانده‌اید چیزی یافت نشد.</value>
+  </data>
+  <data name="Search_MatchedName" xml:space="preserve">
+    <value>با نام «{0}» یافت شد</value>
+  </data>
 </root>

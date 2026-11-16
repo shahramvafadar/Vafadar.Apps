@@ -1,0 +1,82 @@
+@page "/{Collection}/search"
+@using System.Collections.Immutable
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_known)
+{
+    <PageTitle>@T["Search_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _story)</a></p>
+        <h1>@T["Search_Title"]</h1>
+    </header>
+
+    <SearchForm Query="@_query" />
+
+    @if (_query.Length > 0)
+    {
+        @if (_hits.IsEmpty)
+        {
+            @* The same sentence for a name that does not exist and for one that has not been reached. *@
+            <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_None"], _query)</p>
+        }
+        else
+        {
+            <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_Results"], _query, Visitor.Number(_hits.Length))</p>
+            <ul class="cards" role="list">
+                @foreach (var hit in _hits)
+                {
+                    <li class="card">
+                        <h2><a href="@($"{Site.Collection}/entity/{hit.Entity.Id}")"><Loc Text="hit.Entity.Label" /></a></h2>
+                        <p class="meta"><TypeName Type="hit.Entity.Type" /></p>
+                        @* A hit says why it is one: the name that matched, when it is not the name shown above. *@
+                        @if (hit.Name != Visitor.Text(hit.Entity.Label).Value)
+                        {
+                            <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Search_MatchedName"], hit.Name)</p>
+                        }
+                        <p><Loc Text="hit.Entity.Summary" /></p>
+                    </li>
+                }
+            </ul>
+        }
+    }
+}
+
+@code {
+    // What a visitor types is a name. Longer text is cut; more hits than these are not a list anybody reads.
+    private const int LongestQuery = 80;
+    private const int MostHits = 20;
+
+    private bool _known;
+    private string _query = string.Empty;
+    private string _story = string.Empty;
+    private ImmutableArray<SearchHit> _hits = [];
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets what the visitor typed.</summary>
+    [SupplyParameterFromQuery(Name = "q")]
+    public string? Q { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Collection != Site.Collection || Visitor.Projection is not { } projection)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _known = true;
+        _story = Visitor.Text(projection.Overview().Story.Label).Value;
+        var typed = new string([.. (Q ?? string.Empty).Where(character => !char.IsControl(character))]).Trim();
+        _query = typed.Length > LongestQuery ? typed[..LongestQuery] : typed;
+
+        // The projection searches what this visitor may see and nothing else (ADR 0002).
+        _hits = projection.Search(_query, MostHits);
+    }
+}

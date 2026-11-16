@@ -281,7 +281,7 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.Contains($"/{language}/{Story}", pages.Keys);
         Assert.Equal(
             Reachable(projection).Order(StringComparer.Ordinal),
-            pages.Keys.Where(address => Regex.IsMatch(address, "/entity/[^/]+$")).Select(address => address.Split('/')[^1]).Order(StringComparer.Ordinal));
+            pages.Keys.Where(address => Regex.IsMatch(address, $"^/{language}/{Story}/entity/[^/]+$")).Select(address => address.Split('/')[^1]).Order(StringComparer.Ordinal));
 
         // A secret is a text that belongs only to hidden records. One that also stands inside a visible text – the
         // name Sohrab in the title "Rostam and Sohrab" – is the editors' wording and cannot be searched for.

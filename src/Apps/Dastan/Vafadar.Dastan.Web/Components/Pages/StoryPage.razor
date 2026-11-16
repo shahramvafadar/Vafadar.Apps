@@ -44,6 +44,7 @@
                             </li>
                         }
                     </ul>
+                    <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, step.Event.Id, $"{Site.Collection}/story#step-{step.Number}")">@T["Story_StepEvidence"]<span class="visually-hidden"> – @Visitor.Text(step.Event.Label).Value</span></a></p>
                     @if (!Visitor.Projection!.Gallery(step.Event.Id)!.Items.IsEmpty)
                     {
                         <p><a href="@($"{Site.Collection}/event/{step.Event.Id}/gallery")">@T["Gallery_StepLink"]</a></p>

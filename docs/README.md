@@ -680,6 +680,7 @@ and adopts current Main1069/27d8070b with its explicitly retained raw drawing-or
 
 * [Roadmap](roadmap.md)
 * [Shared libraries backlog](libraries-backlog.md)
+* [Open dependency updates](dependency-updates.md)
 
 App-specific documentation lives with each app, e.g. [`src/Apps/Zanance`](../src/Apps/Zanance/README.md).
 

@@ -30,7 +30,7 @@
             <ul class="statements" role="list">
                 @foreach (var edge in family.Parentage.Concat(family.Partnerships))
                 {
-                    <li><Statement Relation="edge" Self="_entity.Id" /></li>
+                    <li><Statement Relation="edge" Self="_entity.Id" Evidence="true" From="@($"{Site.Collection}/entity/{_entity.Id}/family")" /></li>
                 }
             </ul>
         </section>

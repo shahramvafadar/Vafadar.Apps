@@ -16,6 +16,7 @@
         <p class="meta">
             <a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Entity_Collection"], Visitor.Text(story.Label).Value)</a>
         </p>
+        <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
     </header>
 
     <section aria-labelledby="connections">
@@ -32,7 +33,7 @@
                     var edge = connection.Direction == ConnectionDirection.Incoming
                         ? new Edge(connection.Relation, connection.Other, overview.Entity)
                         : new Edge(connection.Relation, overview.Entity, connection.Other);
-                    <li><Statement Relation="edge" Self="overview.Entity.Id" /></li>
+                    <li><Statement Relation="edge" Self="overview.Entity.Id" Evidence="true" From="@_here" /></li>
                 }
             </ul>
             <p class="actions">
@@ -61,6 +62,7 @@
                         <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(appearance.Step.Number))</p>
                         <h3><a href="@($"{Site.Collection}/story#step-{appearance.Step.Number}")"><Loc Text="appearance.Step.Event.Label" /></a></h3>
                         <p><Loc Text="appearance.Association.Role" /> <span class="presence">@T[$"Presence_{appearance.Association.Presence}"]</span></p>
+                        <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, appearance.Step.Event.Id, overview.Entity.Id, _here)">@T["Evidence_Link"]<span class="visually-hidden"> – @Visitor.Text(appearance.Step.Event.Label).Value</span></a></p>
                     </li>
                 }
             </ol>
@@ -72,6 +74,7 @@
     private EntityOverview? _entity;
     private bool _hasFamily;
     private bool _hasMedia;
+    private string _here = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -92,6 +95,7 @@
             return;
         }
 
+        _here = $"{Site.Collection}/entity/{_entity.Entity.Id}";
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
         _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.Items.IsEmpty;
     }

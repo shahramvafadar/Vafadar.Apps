@@ -149,6 +149,7 @@
                 }
             }
         </dl>
+        <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, item.Id, _here)">@T["Media_Evidence"]</a></p>
     </section>
 
     @if (!media.Depicted.IsEmpty)
@@ -187,7 +188,7 @@
             <ul class="statements" role="list">
                 @foreach (var edge in media.Relations)
                 {
-                    <li><Statement Relation="edge" /></li>
+                    <li><Statement Relation="edge" Evidence="true" From="@_here" /></li>
                 }
             </ul>
         </section>
@@ -238,6 +239,7 @@
     private string _galleryAddress = string.Empty;
     private string _galleryName = string.Empty;
     private string _context = string.Empty;
+    private string _here = string.Empty;
     private MediaItem? _previous;
     private MediaItem? _next;
 
@@ -316,6 +318,7 @@
             _context = $"?event={Uri.EscapeDataString(step.Event.Id.Value)}";
         }
 
+        _here = $"{Site.Collection}/media/{item.Id}{_context}";
         var at = gallery.Items.IndexOf(item);
         _previous = at > 0 ? gallery.Items[at - 1] : null;
         _next = at >= 0 && at < gallery.Items.Length - 1 ? gallery.Items[at + 1] : null;

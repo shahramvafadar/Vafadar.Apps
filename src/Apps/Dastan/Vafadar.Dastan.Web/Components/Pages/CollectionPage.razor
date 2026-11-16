@@ -12,6 +12,7 @@
         <p class="meta">@T["Type_storyArc"]</p>
         <h1><Loc Text="overview.Story.Label" /></h1>
         <p class="lead"><Loc Text="overview.Story.Summary" /></p>
+        <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Story.Id, Site.Collection)">@T["Evidence_Title"]</a></p>
     </header>
 
     <dl class="facts">
@@ -40,6 +41,8 @@
 
     @* The gallery is always offered: what it holds depends on the reading position, that it exists does not. *@
     <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/gallery")">@T["Gallery_Title"]</a></p>
+
+    <SearchForm />
 
     <section aria-labelledby="subjects">
         <h2 id="subjects">@T["Collection_Subjects"]</h2>
