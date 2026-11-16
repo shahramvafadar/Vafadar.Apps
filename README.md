@@ -98,7 +98,7 @@ controls.
 | App | Description | Platforms | Status |
 |---|---|---|---|
 | [Zanance](src/Apps/Zanance/README.md) | Personal finance manager: income, expenses, plans, budgets and reports | Android first · iOS target · Windows development | Active implementation and qualification; not released |
-| [Dastan](src/Apps/Dastan/README.md) | Visual discovery of connected stories: people, characters, places and events, their relationships, order and media | Web (installable) | Foundations in progress; no application yet |
+| [Dastan](src/Apps/Dastan/README.md) | Visual discovery of connected stories: people, characters, places and events, their relationships, order and media | Web (installable) | First milestone built: a local demonstration with one story, in English and Persian; nothing is published |
 
 ## Current delivery status
 
