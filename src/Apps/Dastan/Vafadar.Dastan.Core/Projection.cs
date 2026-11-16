@@ -140,7 +140,7 @@ public sealed class Projection
         ImmutableArray<Entity> subjects =
         [
             .. Entities
-                .Where(entity => entity.Type.Nature == EntityNature.Being)
+                .Where(entity => entity.Type.Nature is EntityNature.Being or EntityNature.Group)
                 .OrderBy(entity => first.GetValueOrDefault(entity.Id, int.MaxValue)),
         ];
         return new CollectionOverview(
@@ -404,7 +404,8 @@ public sealed class Projection
         {
             foreach (var association in step.Event.Associations)
             {
-                first.TryAdd(association.Entity, step.Number);
+                // The count so far is the place in the order of first appearances, within an event too.
+                first.TryAdd(association.Entity, first.Count);
             }
         }
 

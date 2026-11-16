@@ -140,7 +140,8 @@ internal sealed class SmallStory
         ImmutableArray<CaptionTrack>? captions = null,
         string? transcript = null,
         decimal? seconds = null,
-        string[]? depicted = null) => new()
+        string[]? depicted = null,
+        string[]? relations = null) => new()
     {
         Id = new MediaId(id),
         Kind = kind,
@@ -154,7 +155,7 @@ internal sealed class SmallStory
         Representation = MediaRepresentation.PresentDayExplanatoryDiagram,
         Created = new Occurrence(CalendarPosition.OfDay(CalendarSystem.Gregorian, Era.CommonEra, 2026, 11, 15)),
         DepictedEntities = [.. (depicted ?? ["hero", "child"]).Select(e => new EntityId(e))],
-        RelatedRelations = [new RelationId("parent")],
+        RelatedRelations = [.. (relations ?? ["parent"]).Select(relation => new RelationId(relation))],
         Sources = [new SourceId("passage-2")],
         Level = new ReadingLevel(level),
         DemoRenderAllowed = allowed,

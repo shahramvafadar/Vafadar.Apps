@@ -1,6 +1,6 @@
 # 0001. A typed, immutable read model of one collection
 
-- Status: Proposed – becomes Accepted when phase 3 of the [delivery plan](../delivery-plan.md) is built and verified
+- Status: Accepted (implemented and verified on 2026-11-16)
 - Date: 2026-11-16
 
 ## Context
@@ -75,8 +75,9 @@ Phase 3 builds this model and the reader for the sample. The screens come later 
   endpoint, parentage moved to the opening, a year on a story event, an uncleared image made showable, a reviewer
   document as the page of an image, a working document as a transcript). "Era as calendar" is refused by the reader
   for the sample and cannot be expressed in `Vafadar.Temporal`. "The mentioned father attends" is a fact of the
-  sample and is a test on it. "Reversed period" and "revoked viewer keeps media" concern the cross-domain fixtures
-  and are handled with them.
+  sample and is a test on it. "Reversed period" is refused by `Vafadar.Temporal` and tested on the fixture
+  (`FixtureTimeTests`). "A revoked viewer keeps media" tests access policies of private spaces; those are not part
+  of M0 and the case is not ported.
 * **Told time stays told time.** A calendar mapping, a calendar period, a duration, a year or a date next to a place
   in the story are problems. The creation date of an artwork keeps what the catalogue states: the year, "circa" as
   approximate, an unnamed calendar as unnamed.

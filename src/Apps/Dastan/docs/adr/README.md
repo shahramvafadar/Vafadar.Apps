@@ -7,7 +7,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 
 | # | Decision | Status |
 |---|---|---|
-| [0001](0001-domain-read-model.md) | A typed, immutable read model of one collection | Proposed |
+| [0001](0001-domain-read-model.md) | A typed, immutable read model of one collection | Accepted |
 | [0002](0002-one-projection.md) | One projection decides what a visitor sees | Proposed |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),

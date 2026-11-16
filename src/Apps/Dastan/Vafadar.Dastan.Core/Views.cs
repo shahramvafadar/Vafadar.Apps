@@ -18,7 +18,7 @@ public sealed record StoryStep(int Number, StoryEvent Event);
 /// <param name="Stages">The reading stages a visitor can choose from. Their labels are written for readers.</param>
 /// <param name="Boundary">The stage the visitor has read to.</param>
 /// <param name="StoryContinues">Whether a later stage exists. It says nothing about what or how much follows.</param>
-/// <param name="Subjects">The beings a visitor can start from, in the order they appear in the story.</param>
+/// <param name="Subjects">Who a visitor can start from – beings and groups – in the order they appear in the story.</param>
 /// <param name="FirstStep">The first event of the story, if one is visible.</param>
 public sealed record CollectionOverview(
     Entity Story,
