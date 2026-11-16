@@ -7,6 +7,8 @@
 !eng/
 !eng/AppSecrets.targets
 !eng/AndroidArchiveFreshness.targets
+!eng/maui/
+!eng/maui/ConfigurationMetrics.Android.targets
 !eng/notifications/
 !eng/notifications/NotificationCore.Android.targets
 !eng/hosting/

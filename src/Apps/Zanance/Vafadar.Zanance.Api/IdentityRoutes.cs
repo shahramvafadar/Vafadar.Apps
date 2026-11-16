@@ -16,7 +16,7 @@ public sealed record ChallengeInput(Guid Id, string Token, string? Password);
 /// <summary>Framework refresh token submitted once.</summary>
 public sealed record RefreshInput(string RefreshToken);
 /// <summary>Protected outbox payload, delivered only by a configured private operator port.</summary>
-public sealed record PrivateMail(string Recipient, string Token);
+public sealed record PrivateMail(string Recipient, string Token, string? DeliveryAuthority = null);
 
 /// <summary>Maintained Identity credential operations with durable one-use grants.</summary>
 public static class IdentityRoutes
@@ -25,7 +25,7 @@ public static class IdentityRoutes
     public static void Map(WebApplication app)
     {
         app.MapPost("/identity/register", async (IdentityInput input, UserManager<ServiceUser> users, ServiceDbContext db,
-            IDataProtectionProvider protection, TimeProvider time, CancellationToken ct) =>
+            IDataProtectionProvider protection, TimeProvider time, IServiceProvider services, CancellationToken ct) =>
         {
             if (!Valid(input)) return Results.BadRequest();
             // Uniform response avoids declaring whether a recipient already has an identity.
@@ -35,18 +35,18 @@ public static class IdentityRoutes
             var created = await users.CreateAsync(user, input.Password);
             if (!created.Succeeded) return Results.Accepted();
             var token = await users.GenerateEmailConfirmationTokenAsync(user);
-            AddChallenge(db, protection, time, user, "confirm", token);
+            AddChallenge(db, protection, time, user, "confirm", token, services.GetService<IIdentityMailSender>()?.Authority);
             await db.SaveChangesAsync(ct); await tx.CommitAsync(ct);
             return Results.Accepted();
         });
         app.MapPost("/identity/recover", async (IdentityInput input, UserManager<ServiceUser> users, ServiceDbContext db,
-            IDataProtectionProvider protection, TimeProvider time, CancellationToken ct) =>
+            IDataProtectionProvider protection, TimeProvider time, IServiceProvider services, CancellationToken ct) =>
         {
             if (input.Email is null || input.Email.Length > 254) return Results.BadRequest();
             var user = await users.FindByEmailAsync(input.Email);
             if (user is null || !user.EmailConfirmed) return Results.Accepted();
             var token = await users.GeneratePasswordResetTokenAsync(user);
-            AddChallenge(db, protection, time, user, "reset", token);
+            AddChallenge(db, protection, time, user, "reset", token, services.GetService<IIdentityMailSender>()?.Authority);
             await db.SaveChangesAsync(ct);
             return Results.Accepted();
         });
@@ -126,9 +126,9 @@ public static class IdentityRoutes
 
     private static bool Valid(IdentityInput input) => input.Email is { Length: > 3 and <= 254 } && input.Email.Contains('@', StringComparison.Ordinal) && input.Password is { Length: >= 12 and <= 256 };
 
-    private static void AddChallenge(ServiceDbContext db, IDataProtectionProvider protection, TimeProvider time, ServiceUser user, string purpose, string token) =>
+    private static void AddChallenge(ServiceDbContext db, IDataProtectionProvider protection, TimeProvider time, ServiceUser user, string purpose, string token, string? deliveryAuthority) =>
         db.Challenges.Add(new IdentityChallenge { Id = Guid.NewGuid(), UserId = user.Id, Purpose = purpose, ExpiresAt = time.GetUtcNow().AddMinutes(15),
-            ProtectedMail = protection.CreateProtector("identity-mail-v1").Protect(JsonSerializer.Serialize(new PrivateMail(user.Email ?? throw new InvalidOperationException("Recipient required."), token))) });
+            ProtectedMail = protection.CreateProtector("identity-mail-v1").Protect(JsonSerializer.Serialize(new PrivateMail(user.Email ?? throw new InvalidOperationException("Recipient required."), token, deliveryAuthority))) });
 
     private static async Task<IResult> GrantAsync(SignInManager<ServiceUser> signIn, ServiceUser user, DeviceSession session)
     {

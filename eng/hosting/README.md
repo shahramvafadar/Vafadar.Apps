@@ -1,5 +1,13 @@
 # Isolated current-machine service deployment
 
+## Owner-selected Brevo identity sender (D1226)
+
+Brevo is selected for transactional identity confirmation/recovery. See
+[the dedicated preparation and operational boundary](BREVO.md). The original
+protected outbox, sender-bound envelopes, optional API-only secret/egress overlay
+and public-startup refusal are implemented. No real key, mail, DNS/account change
+or public deployment has been performed; all earlier acceptance remains scoped.
+
 D-293 delivers a locally qualified complete deployment batch following D-292. Compose parsing or image
 construction alone is not runtime acceptance. The owner approved this machine's Docker
 Desktop and vafadar.pro; no paid host, account login, router/firewall change or unrelated project is authorized.

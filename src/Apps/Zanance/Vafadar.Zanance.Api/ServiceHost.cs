@@ -46,9 +46,10 @@ public static class ServiceHost
     public const string GenerationClaim = "zanance:generation";
 
     /// <summary>Registers the maintained authentication and independent service database.</summary>
-    public static void AddZananceService(this WebApplicationBuilder builder)
+    public static void AddZananceService(this WebApplicationBuilder builder, bool migrationOnly = false)
     {
         var selfHosted = SelfHostedService.Configure(builder);
+        IdentityMailModule.Add(builder, !migrationOnly && selfHosted?.Origin.DnsSafeHost == "api.zanance.vafadar.pro");
         if (!builder.Environment.IsDevelopment() && !builder.Environment.IsEnvironment("Integration") && selfHosted is null)
             throw new InvalidOperationException("Hosted activation is not approved for this local delivery.");
         if (builder.Environment.IsDevelopment())

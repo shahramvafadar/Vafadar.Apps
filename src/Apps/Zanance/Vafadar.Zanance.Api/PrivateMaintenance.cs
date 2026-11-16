@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.DataProtection;
+using System.Security.Cryptography;
+using System.Text.Json;
 
 namespace Vafadar.Zanance.Api;
 
-/// <summary>Durable local outbox and private deletion; no external mail is sent by this delivery.</summary>
+/// <summary>Durable selected identity outbox and private deletion; external mail requires explicit independent configuration.</summary>
 public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStorage storage, TimeProvider time, IHostApplicationLifetime lifetime) : BackgroundService
 {
     private readonly Sync.SyncPieceMaintenance syncPieces = new(storage, time);
@@ -47,20 +50,40 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
             File.Delete(Path.Combine(storage.Root, "mailbox", id.ToString("N")));
             await db.Challenges.Where(c => c.Id == id && c.ExpiresAt < now.AddDays(-1)).ExecuteDeleteAsync(ct);
         }
-        if (!storage.LocalMailbox) return;
+        var sender = scope.ServiceProvider.GetService<IIdentityMailSender>();
+        if (!storage.LocalMailbox && sender is null) return;
         var lease = Guid.NewGuid();
         var ids = await db.Challenges.Where(c => !c.Delivered && !c.Consumed && c.ExpiresAt > now && (c.LeaseUntil == null || c.LeaseUntil < now))
             .OrderBy(c => c.ExpiresAt).Select(c => c.Id).Take(20).ToListAsync(ct);
         foreach (var id in ids)
         {
+            now = time.GetUtcNow();
             var claimed = await db.Challenges.Where(c => c.Id == id && !c.Delivered && !c.Consumed && c.ExpiresAt > now && (c.LeaseUntil == null || c.LeaseUntil < now))
                 .ExecuteUpdateAsync(u => u.SetProperty(c => c.LeaseOwner, lease).SetProperty(c => c.LeaseUntil, now.AddMinutes(1)), ct);
             if (claimed != 1) continue;
             var row = await db.Challenges.AsNoTracking().SingleAsync(c => c.Id == id, ct);
-            var path = Path.Combine(storage.Root, "mailbox", id.ToString("N"));
-            var temporary = path + "." + lease.ToString("N") + ".pending";
-            await File.WriteAllTextAsync(temporary, row.ProtectedMail, ct);
-            File.Move(temporary, path, overwrite: true);
+            if (row.Consumed || row.ExpiresAt <= time.GetUtcNow()) continue;
+            if (sender is not null)
+            {
+                try
+                {
+                    var mail = IdentityMailEnvelope.Read(row, scope.ServiceProvider.GetRequiredService<IDataProtectionProvider>(), sender.Authority);
+                    await sender.SubmitAsync(mail, ct);
+                }
+                catch (Exception error) when (error is IdentityMailUnavailable or CryptographicException or JsonException)
+                {
+                    // Retain the claim for its bounded lease. The same challenge/key retries, never another token,
+                    // recipient or financial action. Do not log protected payloads or remote exception text.
+                    continue;
+                }
+            }
+            else
+            {
+                var path = Path.Combine(storage.Root, "mailbox", id.ToString("N"));
+                var temporary = path + "." + lease.ToString("N") + ".pending";
+                await File.WriteAllTextAsync(temporary, row.ProtectedMail, ct);
+                File.Move(temporary, path, overwrite: true);
+            }
             await db.Challenges.Where(c => c.Id == id && c.LeaseOwner == lease).ExecuteUpdateAsync(u => u.SetProperty(c => c.Delivered, true), ct);
         }
     }

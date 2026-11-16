@@ -90,7 +90,7 @@ def _pipe(left, right):
                            + '; ' + ', '.join(categories) + '); original and partial target preserved.')
 
 
-def _compose(project, port, subnet, action, images=None, public=False, household=None, gateway="direct"):
+def _compose(project, port, subnet, action, images=None, public=False, household=None, gateway="direct", mail=None):
     network = ipaddress.ip_network(subnet, strict=True)
     if network.version != 4 or network.prefixlen != 24 or not network.is_private or not str(network).startswith('172.'):
         raise RuntimeError('Explicit private /24 service subnet required.')
@@ -108,6 +108,11 @@ def _compose(project, port, subnet, action, images=None, public=False, household
         env.update(ZANANCE_SERVICE_IMAGE=images['api'], ZANANCE_PROXY_IMAGE=images['proxy'], ZANANCE_BOOTSTRAP_IMAGE=images['provision'], ZANANCE_DATABASE_IMAGE=images['database'])
     files = ['-f', str(BASE / 'compose.yml')]
     if public: files += ['-f', str(BASE / ('compose.tunnel-origin.yml' if gateway == 'tunnel' else 'compose.public.yml'))]
+    if mail not in (None, 'brevo') or mail and not public:
+        raise RuntimeError('External mail requires an explicit production origin.')
+    # Stopping/inspecting existing containers must remain possible after an external key file is lost.
+    if mail == 'brevo' and action[0] not in ('stop', 'ps'):
+        files += ['-f', str(BASE / 'compose.brevo.yml')]
     return _run(['docker', 'compose', '-p', project, *files, *action], env=env)
 
 
@@ -132,6 +137,7 @@ def _require_gateway(args):
     authority = 'https://api.zanance.vafadar.pro' if args.public else 'https://localhost:' + str(args.port)
     if original != authority:
         raise RuntimeError('Original API origin differs; preserve existing authority without mutation.')
+    if args.public: _require_mail(args, _mail_mode(args.project))
 
 
 def _household_mode(project):
@@ -142,6 +148,31 @@ def _household_mode(project):
     if value not in (b'', b'true', b'false'):
         raise RuntimeError('Original household opt-in is not a supported boolean; preserve source configuration.')
     return value == b'true'
+
+
+def _mail_mode(project):
+    """Read only original nonsecret provider/sender metadata, never an API key or the container environment."""
+    name, _ = _container(project, 'api')
+    values = []
+    for key in ('Service__Mail__Provider', 'Service__Mail__SenderEmail'):
+        expression = '{{range .Config.Env}}{{if eq (index (split . "=") 0) "' + key + '"}}{{join (slice (split . "=") 1) "="}}{{end}}{{end}}'
+        values.append(_run(['docker', 'inspect', name, '--format', expression]).decode().strip())
+    if values == ['', '']: return None
+    if values[0] != 'brevo' or not re.fullmatch(r'[^\s<>@]+@[^\s<>@]+', values[1]):
+        raise RuntimeError('Unknown original mail authority; preserve configuration.')
+    return {'Provider': 'brevo', 'SenderEmail': values[1]}
+
+
+def _require_mail(args, original):
+    """Preserve original sender across restarts/restore; missing historical mail metadata cannot activate it."""
+    provider = getattr(args, 'mail_provider', None)
+    if original is None:
+        if provider: raise RuntimeError('Original deployment has no external mail authority; explicit activation review required.')
+        return
+    if not args.public or provider != original['Provider']:
+        raise RuntimeError('Original external mail mode differs.')
+    if getattr(args, 'action', None) not in ('stop', 'status', 'backup') and os.environ.get('ZANANCE_BREVO_SENDER_EMAIL') != original['SenderEmail']:
+        raise RuntimeError('Original external sender differs; preserve queued challenges.')
 
 
 def _manifest(snapshot, helper):
@@ -162,6 +193,9 @@ def _manifest(snapshot, helper):
         raise RuntimeError('Household qualification cannot activate public hosting.')
     if value.get('Gateway', 'direct') not in ('direct', 'tunnel') or value.get('Gateway') == 'tunnel' and not value.get('Public', False):
         raise RuntimeError('Snapshot gateway authority is invalid.')
+    mail = value.get('IdentityMail')
+    if mail is not None and (not value.get('Public', False) or not isinstance(mail, dict) or set(mail) != {'Provider', 'SenderEmail'} or mail['Provider'] != 'brevo' or not isinstance(mail['SenderEmail'], str) or not re.fullmatch(r'[^\s<>@]+@[^\s<>@]+', mail['SenderEmail'])):
+        raise RuntimeError('Snapshot external mail authority is invalid.')
     if set(value.get('Images', {})) != {'api', 'proxy', 'provision', 'database'}:
         raise RuntimeError('Snapshot image authority is incomplete.')
     for image in value.get('Images', {}).values():
@@ -197,7 +231,7 @@ def _backup(args, helper):
                    '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
     if any(service not in ('api', 'proxy', 'database') for service in active):
         raise RuntimeError('An owned migration/qualification is still live; snapshot refused.')
-    _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'api', 'proxy'], public=args.public, gateway=args.gateway)
+    _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'api', 'proxy'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
     _, api = _container(args.project, 'api')
     _, proxy = _container(args.project, 'proxy')
     if api['state'] != 'exited' or proxy['state'] != 'exited':
@@ -221,7 +255,7 @@ def _backup(args, helper):
         filename = 'database.dump' if logical == 'database' else 'volumes/' + logical + '.tar'
         archives[logical] = _run(_helper(helper, target, 'sha256sum /snapshot/' + filename)).decode().split()[0]
     manifest = {'Schema': 1, 'DeploymentFormat': 'immutable-config-v1', 'SourceProject': args.project, 'CreatedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                'Quiesced': True, 'Public': args.public, 'Gateway': args.gateway, 'HouseholdLocalQualification': household, 'Images': images, 'Archives': archives}
+                'Quiesced': True, 'Public': args.public, 'Gateway': args.gateway, 'HouseholdLocalQualification': household, 'IdentityMail': _mail_mode(args.project) if args.public else None, 'Images': images, 'Archives': archives}
     _run(_helper(helper, target, 'umask 077; cat >/snapshot/complete.pending; sync -f /snapshot/complete.pending; mv /snapshot/complete.pending /snapshot/complete.json; sync -f /snapshot'), data=json.dumps(manifest).encode())
     _manifest(args.snapshot, helper)
     print('Complete private snapshot: ' + args.snapshot + '; original workers remain stopped.')
@@ -233,6 +267,7 @@ def _restore(args, helper):
         raise RuntimeError('Snapshot deployment mode differs; explicit trust/routing migration required.')
     if args.project == manifest['SourceProject'] or not manifest.get('Quiesced'):
         raise RuntimeError('Only a separate fresh or explicitly continued target is allowed.')
+    _require_mail(args, manifest.get('IdentityMail'))
     privacy_source = manifest['SourceProject']
     if not PROJECT.fullmatch(privacy_source) or privacy_source == args.project:
         raise RuntimeError('Explicit distinct original privacy project required.')
@@ -286,7 +321,7 @@ def _restore(args, helper):
         _run(_helper(helper, [(args.snapshot, '/snapshot', True), (target, '/target', False)],
                      'tar -C /target --numeric-owner -xpf /snapshot/volumes/' + logical + '.tar; sync -f /target'))
         state['Copied'].append(logical); _receipt(helper, state_name, state)
-    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait', 'database'], manifest['Images'], public=args.public, gateway=args.gateway)
+    _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait', 'database'], manifest['Images'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
     database, restored_database = _container(args.project, 'database')
     if restored_database['image'] != manifest['Images']['database']:
         raise RuntimeError('Database image differs from the snapshot authority; explicit upgrade qualification required.')
@@ -313,7 +348,7 @@ def _restore(args, helper):
         if _container(privacy_source, service)[1]['state'] != 'exited':
             raise RuntimeError('Original privacy workers restarted during restore; target remains stopped.')
     _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], manifest['Images'], public=args.public, gateway=args.gateway,
-             household=manifest.get('HouseholdLocalQualification', False))
+             household=manifest.get('HouseholdLocalQualification', False), mail=getattr(args, 'mail_provider', None))
     state['Complete'] = True; _receipt(helper, state_name, state)
     print('Isolated restore complete; original source and snapshot preserved: ' + args.project)
 
@@ -327,8 +362,10 @@ def main():
     parser.add_argument('--subnet', default='172.29.83.0/24')
     parser.add_argument('--snapshot')
     parser.add_argument('--public', action='store_true', help='Preserve an already approved public deployment.')
+    parser.add_argument('--mail-provider', choices=('brevo',), help='Preserve an explicitly configured production sender; key contents remain runtime-only.')
     parser.add_argument('--gateway', choices=('direct', 'tunnel'), default='direct', help='Preserve original public ingress; direct mode requires port 443.')
     args = parser.parse_args()
+    if args.mail_provider and not args.public: parser.error('External mail requires an explicit production deployment.')
     if not PROJECT.fullmatch(args.project):
         raise RuntimeError('Explicit Zanance project ownership required.')
     helper = _run(['docker', 'image', 'inspect', 'zanance-bootstrap:d293', '--format', '{{.Id}}']).decode().strip()
@@ -342,18 +379,18 @@ def main():
             raise RuntimeError('A fresh pre-maintenance snapshot name is required.')
         household = _household_mode(args.project)
         _backup(args, helper)
-        _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'database'], public=args.public, gateway=args.gateway)
+        _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'database'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
         _compose(args.project, args.port, args.subnet,
-                 ['run', '--no-deps', '-e', 'ZANANCE_CERTIFICATE_OPERATION=renew-transport', 'provision'], public=args.public, gateway=args.gateway)
-        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], public=args.public, gateway=args.gateway, household=household)
+                 ['run', '--no-deps', '-e', 'ZANANCE_CERTIFICATE_OPERATION=renew-transport', 'provision'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
+        _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], public=args.public, gateway=args.gateway, household=household, mail=getattr(args, 'mail_provider', None))
         print('Transport renewal complete; retained identities and snapshot were preserved.')
-    elif args.action == 'status': print(_compose(args.project, args.port, args.subnet, ['ps', '-a', '--format', '{{.Service}} {{.State}} {{.Health}}'], public=args.public, gateway=args.gateway).decode(), end='')
+    elif args.action == 'status': print(_compose(args.project, args.port, args.subnet, ['ps', '-a', '--format', '{{.Service}} {{.State}} {{.Health}}'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None)).decode(), end='')
     else:
         _require_gateway(args)
         for service in ('api', 'proxy', 'database', 'provision', 'migrate'): _container(args.project, service)
         action = ['up', '-d', '--wait'] if args.action == 'start' else ['stop', '--timeout', '45', 'api', 'proxy']
         _compose(args.project, args.port, args.subnet, action, public=args.public, gateway=args.gateway,
-                 household=_household_mode(args.project) if args.action == 'start' else None)
+                 household=_household_mode(args.project) if args.action == 'start' else None, mail=getattr(args, 'mail_provider', None))
         print('Owned operation complete: ' + args.action)
 
 

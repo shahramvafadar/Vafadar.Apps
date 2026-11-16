@@ -12,7 +12,7 @@ if (args.Length > 0 && args[0] == "--merge-household-deletions")
 
 // The operator switch is not a key/value configuration option; do not pass it to the host parser.
 var builder = WebApplication.CreateBuilder(args.Where(arg => arg != "--migrate").ToArray());
-builder.AddZananceService();
+builder.AddZananceService(migrationOnly: args.Contains("--migrate", StringComparer.Ordinal));
 var app = builder.Build();
 if (args.Contains("--migrate", StringComparer.Ordinal))
 {

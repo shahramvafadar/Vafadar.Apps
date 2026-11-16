@@ -1,0 +1,17 @@
+# Explicit owner-selected transactional sender. The owner supplies this project's private key file.
+# Only API gets the read-only key and egress; migration, proxy and database never receive it.
+services:
+  api:
+    environment:
+      Service__Mail__Provider: brevo
+      Service__Mail__SenderEmail: ${ZANANCE_BREVO_SENDER_EMAIL:?Verified Zanance sender required}
+      Service__Mail__ApiKeyFile: /run/secrets/zanance_brevo_api_key
+    secrets: [zanance_brevo_api_key]
+    networks:
+      database: {}
+      service: {}
+      edge:
+        gw_priority: 1
+secrets:
+  zanance_brevo_api_key:
+    file: ${ZANANCE_BREVO_API_KEY_FILE:?Absolute owner-managed dedicated API-key file required}
