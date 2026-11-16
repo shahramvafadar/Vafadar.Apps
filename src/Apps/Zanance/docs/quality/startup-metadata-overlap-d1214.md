@@ -108,3 +108,7 @@ Its exclusive marker/raw response remain; no second GET or successful-job rerun.
 This is not CI acceptance of the new documentation commit. Overall goal stays
 paused; whole startup/two-second performance, native-fault remedy, security,
 accessibility, platform, provider, Store and release gates remain open.
+
+The independent [D1215 complete Home plan-row reader](complete-home-plan-rows-d1215.md)
+passes its actual host component gates but fails the first complete native pair;
+this metadata-overlap rejection remains closed and unchanged.
