@@ -8,21 +8,32 @@ namespace Vafadar.Localization.Tests;
 /// Checks every translated resource file in src/ against its neutral (English) file: same keys, same placeholders.
 /// This covers all apps and libraries, including MAUI projects that cannot be referenced from tests.
 /// </summary>
+/// <remarks>
+/// Which translations a resource file needs is declared by its project (ADR 0011, <see cref="ProjectLanguages"/>): an
+/// app with two languages is complete with two files, and a missing file of a declared language is reported.
+/// </remarks>
 public sealed partial class ResourceCompletenessTests
 {
     public static TheoryData<string, string> TranslatedResourceFiles()
     {
         var data = new TheoryData<string, string>();
-        foreach (var neutral in NeutralResourceFiles())
+        foreach (var (neutralFile, culture) in ExpectedTranslations(RepositoryPaths.Root))
         {
-            foreach (var language in AppLanguages.All.Where(l => l != AppLanguages.English))
-            {
-                data.Add(Relative(neutral), language.CultureName);
-            }
+            data.Add(neutralFile, culture);
         }
 
         return data;
     }
+
+    /// <summary>
+    /// Returns every translation that must exist below <c>src</c> of <paramref name="root"/>: each neutral resource
+    /// file, relative to the root, with each language its project declares besides English.
+    /// </summary>
+    internal static IEnumerable<(string NeutralFile, string Culture)> ExpectedTranslations(string root) =>
+        from neutral in NeutralResourceFiles(root)
+        from culture in ProjectLanguages.Of(neutral, root)
+        where culture != ProjectLanguages.Neutral
+        select (Path.GetRelativePath(root, neutral), culture);
 
     [Theory]
     [MemberData(nameof(TranslatedResourceFiles))]
@@ -53,11 +64,20 @@ public sealed partial class ResourceCompletenessTests
     [Fact]
     public void Resource_files_were_found()
     {
-        Assert.NotEmpty(NeutralResourceFiles());
+        Assert.NotEmpty(NeutralResourceFiles(RepositoryPaths.Root));
     }
 
-    private static IEnumerable<string> NeutralResourceFiles() =>
-        Directory.EnumerateFiles(RepositoryPaths.Combine("src"), "*.resx", SearchOption.AllDirectories)
+    [Fact]
+    public void The_default_languages_are_those_of_the_shared_language_list()
+    {
+        // Projects without their own declaration (the shared libraries, Zanance) are translated into AppLanguages.All.
+        var declared = ProjectLanguages.Of(RepositoryPaths.Combine("src", "Libraries", "Vafadar.Localization"));
+
+        Assert.Equal(AppLanguages.All.Select(language => language.CultureName), declared);
+    }
+
+    private static IEnumerable<string> NeutralResourceFiles(string root) =>
+        Directory.EnumerateFiles(Path.Combine(root, "src"), "*.resx", SearchOption.AllDirectories)
             .Where(path => !path.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}", StringComparison.Ordinal))
             .Where(path => Path.GetFileNameWithoutExtension(path).IndexOf('.') < 0)
             .Order(StringComparer.Ordinal);

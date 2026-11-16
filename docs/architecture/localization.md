@@ -176,7 +176,8 @@ snapshots), the PDF's Vazirmatn has it.
 
 1. Add it to `AppLanguages` (Vafadar.Localization) and to `AppLanguages.All`.
 2. Add `*.{culture}.resx` next to every neutral `.resx` in `src/` (the completeness test lists what is missing).
-3. Add the culture to `SatelliteResourceLanguages` in `Directory.Build.props`, to `CFBundleLocalizations` in each
+3. Add the culture to `VafadarLanguages` in `Directory.Build.props` ([ADR 0011](../adr/0011-languages-per-app.md): the
+   root file for Zanance and the shared texts, the app folder for an app with its own list), to `CFBundleLocalizations` in each
    iOS `Info.plist` and to the Android `locales_config.xml`; add the widget and permission texts of the platforms.
 4. Add the language to `eng/scripts/Add-Strings.ps1`, so every new string asks for it.
 5. Add store listing texts for the language.

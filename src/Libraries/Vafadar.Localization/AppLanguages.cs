@@ -5,7 +5,8 @@ namespace Vafadar.Localization;
 /// </summary>
 /// <remarks>
 /// Adding a language means: add it here and to <see cref="All"/>, add <c>*.{culture}.resx</c> files to every app and
-/// library that has resources, and add the culture to <c>SatelliteResourceLanguages</c> in Directory.Build.props.
+/// library that has resources, and add the culture to <c>VafadarLanguages</c> in the root Directory.Build.props.
+/// An app with its own texts and languages declares its list in its own folder instead (ADR 0011).
 /// </remarks>
 public static class AppLanguages
 {
