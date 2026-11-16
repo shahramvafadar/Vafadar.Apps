@@ -56,3 +56,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   part a name has in a step. It can be closed from the first and from the last step, to the numbers of the steps
   and to fewer names, and opened again. After a "+" or a "−" the chart stays on the screen – for the comparison and
   the family tree too.
+- The connections of a name are a chart on the whole page: the name stands in the middle, who or what leads to it
+  above, who or what it leads to below, and a partner or an opponent beside it – as in the family tree. A "+" at a
+  side of the chart opens the names there a step further, a "−" closes them again; a single name can still be
+  opened and closed by itself.

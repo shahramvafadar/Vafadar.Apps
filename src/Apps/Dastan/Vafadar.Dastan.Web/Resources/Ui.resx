@@ -190,7 +190,7 @@
     <value>Connections of {0}</value>
   </data>
   <data name="Connections_Lead" xml:space="preserve">
-    <value>Choose a name to put it in the centre. Open a name to see its own connections as well.</value>
+    <value>Who or what a relation leads from stands above the name in the middle, who or what it leads to below it; names whose relation is the same from both sides stand beside it. Choose a name to put it in the middle. Open a name to see its own connections as well.</value>
   </data>
   <data name="Connections_Graph" xml:space="preserve">
     <value>The connections of {0} as a diagram</value>
@@ -842,5 +842,14 @@
   </data>
   <data name="Story_Edge_Lanes" xml:space="preserve">
     <value>Names</value>
+  </data>
+  <data name="Flow_Above" xml:space="preserve">
+    <value>Towards {0}</value>
+  </data>
+  <data name="Flow_Below" xml:space="preserve">
+    <value>From {0}</value>
+  </data>
+  <data name="Flow_Beside" xml:space="preserve">
+    <value>Mutual</value>
   </data>
 </root>

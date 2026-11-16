@@ -79,7 +79,7 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
 
         await TabTo(page, "graph-toggle");
         await page.Keyboard.PressAsync("Enter");
-        await Arrived(page, new Regex("/connections$"));
+        await Arrived(page, new Regex("/connections#chart$"));
         Assert.Equal(boxes, await page.Locator("svg.graph foreignObject").CountAsync());
     }
 

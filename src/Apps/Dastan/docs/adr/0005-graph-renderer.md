@@ -88,3 +88,6 @@ Syncfusion Diagram and Cytoscape.js is then made by a hands-on comparison with t
   line, a line with an arrow from each parent to the child and a dashed line between partners. The order inside a
   generation is the order of the collection; nothing is rearranged to shorten lines, so they can cross in a large
   family.
+* **The connections after M0** – since step 9.3 the neighbourhood is a chart in a stage, with the focus in the
+  middle instead of at the top; see the third addendum of [ADR 0008](0008-charts.md). The markup described here –
+  lines of an SVG, boxes of HTML inside it, links that change `open` – is the same; the measures are in em.
