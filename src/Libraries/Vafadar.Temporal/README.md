@@ -71,6 +71,23 @@ Rules worth knowing:
   than three years apart they are not ordered. Dates of different eras are not compared (no conversion yet).
 * Within one statement, what is left unsaid is shared: two ages without a reference have the same one.
 
+## An axis of years, for drawing
+
+`YearAxis` gives a calendar position its place on one line of years that runs through the change of the era: the
+year 1 of the common era begins at 1, the year 1 before it at 0, the year 2 before it at −1. There is no year zero,
+so from 100 BCE to 100 CE are 199 years. A position stated to the year covers the whole year (`YearSpan`); a chart
+draws it at the middle of that stretch.
+
+```csharp
+YearAxis.Of(CalendarPosition.OfYear(CalendarSystem.Unspecified, Era.BeforeCommonEra, 550));   // −549 … −548
+YearAxis.StartOf(Era.CommonEra, 224);                                                         // 224
+YearAxis.YearAt(-599.0m);                                                                     // (BeforeCommonEra, 600)
+```
+
+The axis counts years, not days, and takes a year as stated whatever calendar it is in – right for centuries side by
+side, wrong for deciding which of two days came first (that is the comparer). A position of another era, an age or a
+place in a story has no place on it: `Of` returns `null` rather than a guess.
+
 ## JSON
 
 `TemporalJson.Serialize` / `Deserialize`, or `TemporalJson.Converters` in an app's `JsonSerializerOptions`
