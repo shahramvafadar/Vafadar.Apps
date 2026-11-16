@@ -49,8 +49,14 @@
     <Deterministic>true</Deterministic>
     <!-- Nothing in this repository is published as a NuGet package. -->
     <IsPackable>false</IsPackable>
-    <!-- Only ship satellite (translation) assemblies of referenced packages for the languages the apps support. -->
-    <SatelliteResourceLanguages>en;fa;de;es;fr;it</SatelliteResourceLanguages>
+    <!--
+      The languages of a project's texts (ADR 0011). English comes first: it is the neutral language of every resource
+      file. An app with its own languages sets VafadarLanguages in its Directory.Build.props before it imports this
+      file. ResourceCompletenessTests reads the same declaration, so every text exists in each declared language.
+    -->
+    <VafadarLanguages Condition="'$(VafadarLanguages)' == ''">en;fa;de;es;fr;it</VafadarLanguages>
+    <!-- Only ship satellite (translation) assemblies of referenced packages for these languages. -->
+    <SatelliteResourceLanguages>$(VafadarLanguages)</SatelliteResourceLanguages>
   </PropertyGroup>
 
 </Project>

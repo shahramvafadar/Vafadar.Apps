@@ -3521,6 +3521,12 @@ live in the linked guides. When the owner sets a new rule, add it here in the sa
   The product name "Zanance" is shown untranslated in every language.
 * Requirements: `src/Apps/Zanance/docs/spec/Zanance-Product-Specification.md` (the owner's specification; Section 31
   records the implementation status) and the design documents `src/Apps/Zanance/docs/01…08`.
+* Second app: **Dastan** – a public visual discovery website (ASP.NET Core Blazor Web App, installable; English and
+  Persian first), started on 2026-11-15 in `src/Apps/Dastan`. Its own rules are in
+  [`src/Apps/Dastan/AGENTS.md`](src/Apps/Dastan/AGENTS.md) and take the place of the Zanance-specific rules of this
+  file (money, ledger, MAUI, devices, Zanance documents); the general rules here apply to it unchanged. Each app
+  declares the languages of its texts ([ADR 0011](docs/adr/0011-languages-per-app.md)); known gaps of the shared
+  libraries are in [`docs/libraries-backlog.md`](docs/libraries-backlog.md).
 
 ## 2. Communication with the owner
 

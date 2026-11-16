@@ -1,0 +1,966 @@
+{
+  "fixtureFormat": "dastan-review-fixtures",
+  "formatVersion": "0.2",
+  "documentVersion": "0.6",
+  "date": "2026-11-15",
+  "product": "Dastan",
+  "synthetic": true,
+  "purpose": "Self-contained conceptual review inputs for common-core identity, time, media, and access behavior. Field names are illustrative and do not select a production API, database schema, or technology.",
+  "validationStatus": "prospective_expected_outcomes_not_executed_product_tests",
+  "productionPublicationAllowed": false,
+  "evidenceNotice": "Every entity, relationship, event, date, account, and caption in these fixtures is invented and asserted only for the example. No real personal data or sourced history is included.",
+  "mediaNotice": "Metadata only. No actual photo, video, thumbnail, poster, caption track, transcript, or download is attached.",
+  "accessNotice": "This file intentionally contains full synthetic review data. Reading it does not exercise authorization; client-side filtering over a downloadable dataset cannot protect real private content.",
+  "timeConventions": [
+    "Year-only calendar dates preserve partial precision and are not expanded into asserted January 1 dates.",
+    "A year-only event is an occurrence known only at year precision, not evidence that the event lasted the full year or that the asserted year itself is doubtful.",
+    "A positioned period can have partially known boundaries; boundary uncertainty is not itself a duration. Period continuity is an explicit fixture assertion.",
+    "An unknown end is not an assertion that a relationship or entity is ongoing.",
+    "A dated observation supports what was confirmed at that context and is not automatically extrapolated to the present.",
+    "Season labels, media capture time, depicted-event time, and share time have different meanings."
+  ],
+  "fixtures": [
+    {
+      "id": "FIX-COMPANY-01",
+      "title": "One company, a rename, a share acquisition, and historical roles",
+      "description": "All names and events below are invented. A renamed company retains its identity. A later share acquisition changes ownership without merging the acquired company into its owner.",
+      "synthetic": true,
+      "relatedScenarios": [
+        "SC-01"
+      ],
+      "relatedRequirements": [
+        "R-PUB-02",
+        "R-PUB-03",
+        "R-DOM-03",
+        "R-DOM-05",
+        "R-DOM-06",
+        "R-DOM-08",
+        "R-TIME-01",
+        "R-TIME-03"
+      ],
+      "entities": [
+        {
+          "id": "fx-co-cedar",
+          "type": "company",
+          "label": "Fixture Cedar Novo",
+          "names": [
+            {
+              "value": "Fixture Cedar Works",
+              "role": "official_name",
+              "validFromEventId": "fx-co-founded",
+              "validUntilEventId": "fx-co-renamed"
+            },
+            {
+              "value": "Fixture Cedar Novo",
+              "role": "official_name",
+              "validFromEventId": "fx-co-renamed",
+              "lastConfirmedAt": {
+                "kind": "partial_calendar_date",
+                "calendar": "Gregorian",
+                "era": "CE",
+                "year": 2014,
+                "precision": "year",
+                "meaning": "A date known only to its calendar year; not a full-year duration."
+              }
+            }
+          ],
+          "currentStatus": {
+            "state": "unknown",
+            "lastConfirmedActive": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2014,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "note": "The fixture does not establish whether the company still operates in 2026."
+          },
+          "identityBasis": {
+            "kind": "synthetic_fixture_declaration",
+            "note": "The company retains one identity across the rename and acquisition; this is a fact of this fixture, not a universal acquisition rule."
+          }
+        },
+        {
+          "id": "fx-co-meridian",
+          "type": "company",
+          "label": "Fixture Meridian Group"
+        },
+        {
+          "id": "fx-co-manager-a",
+          "type": "person",
+          "label": "Fixture Manager A",
+          "accountId": null,
+          "note": "A synthetic person record can hold a public organizational role without an account or friendship consent."
+        }
+      ],
+      "relationships": [
+        {
+          "id": "fx-co-manager-role",
+          "type": "held_role",
+          "subjectId": "fx-co-manager-a",
+          "objectId": "fx-co-cedar",
+          "role": "operations_manager",
+          "time": {
+            "kind": "period",
+            "start": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2004,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "end": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2010,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "boundaryMeaning": "The start and end each occurred somewhere in their stated years; neither is a fabricated January 1 date.",
+            "continuity": "continuous_within_asserted_period"
+          },
+          "basis": {
+            "kind": "synthetic_fixture_declaration",
+            "note": "This management tenure ended in 2010; it is a former role at the 2014 review context."
+          }
+        },
+        {
+          "id": "fx-co-ownership",
+          "type": "controlling_share_owner",
+          "subjectId": "fx-co-meridian",
+          "objectId": "fx-co-cedar",
+          "time": {
+            "kind": "period",
+            "start": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2012,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "end": {
+              "state": "unknown"
+            },
+            "lastConfirmedAt": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2014,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "continuity": "continuous_within_asserted_period"
+          },
+          "startEventId": "fx-co-acquired",
+          "confirmationEventId": "fx-co-ownership-confirmed",
+          "basis": {
+            "kind": "synthetic_fixture_declaration",
+            "note": "Controlling share ownership began with the acquisition and is explicitly confirmed at the 2014 checkpoint. Its later continuation is unknown."
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "fx-co-founded",
+          "type": "formation",
+          "label": "Fixture Cedar Works is formed",
+          "entityIds": [
+            "fx-co-cedar"
+          ],
+          "time": {
+            "kind": "partial_calendar_date",
+            "calendar": "Gregorian",
+            "era": "CE",
+            "year": 2000,
+            "precision": "year",
+            "meaning": "A date known only to its calendar year; not a full-year duration."
+          }
+        },
+        {
+          "id": "fx-co-renamed",
+          "type": "name_change",
+          "label": "Fixture Cedar Works becomes Fixture Cedar Novo",
+          "entityIds": [
+            "fx-co-cedar"
+          ],
+          "oldName": "Fixture Cedar Works",
+          "newName": "Fixture Cedar Novo",
+          "time": {
+            "kind": "partial_calendar_date",
+            "calendar": "Gregorian",
+            "era": "CE",
+            "year": 2009,
+            "precision": "year",
+            "meaning": "A date known only to its calendar year; not a full-year duration."
+          },
+          "identityEffect": "same_entity"
+        },
+        {
+          "id": "fx-co-acquired",
+          "type": "share_acquisition",
+          "label": "Fixture Meridian Group acquires controlling shares",
+          "acquirerId": "fx-co-meridian",
+          "acquiredId": "fx-co-cedar",
+          "time": {
+            "kind": "partial_calendar_date",
+            "calendar": "Gregorian",
+            "era": "CE",
+            "year": 2012,
+            "precision": "year",
+            "meaning": "A date known only to its calendar year; not a full-year duration."
+          },
+          "identityEffect": "distinct_entities_retained",
+          "mergerAsserted": false
+        },
+        {
+          "id": "fx-co-ownership-confirmed",
+          "type": "state_observation",
+          "label": "Ownership and operating status are confirmed at the fixture checkpoint",
+          "entityIds": [
+            "fx-co-meridian",
+            "fx-co-cedar"
+          ],
+          "time": {
+            "kind": "partial_calendar_date",
+            "calendar": "Gregorian",
+            "era": "CE",
+            "year": 2014,
+            "precision": "year",
+            "meaning": "A date known only to its calendar year; not a full-year duration."
+          },
+          "note": "This checkpoint supports the stated 2014 condition, not every later year."
+        }
+      ],
+      "media": [],
+      "reviewQueries": [
+        {
+          "id": "fx-co-query-old-name",
+          "question": "What entity does the old name identify?",
+          "searchText": "Fixture Cedar Works",
+          "expectedEntityIds": [
+            "fx-co-cedar"
+          ],
+          "expectedOutcomes": [
+            "Resolve to the same company identity, with the old name labeled as a historical name.",
+            "Do not create a second company or imply that the company was dissolved at rename."
+          ]
+        },
+        {
+          "id": "fx-co-query-2008",
+          "question": "What is appropriate in the 2008 context?",
+          "contextYear": 2008,
+          "focusId": "fx-co-cedar",
+          "expectedOutcomes": [
+            "Use Fixture Cedar Works as the name appropriate to that context.",
+            "Show Fixture Manager A in the management role.",
+            "Do not project the 2012 acquisition or its owner back into 2008."
+          ]
+        },
+        {
+          "id": "fx-co-query-2014",
+          "question": "What is known at the 2014 checkpoint?",
+          "contextYear": 2014,
+          "focusId": "fx-co-cedar",
+          "expectedOutcomes": [
+            "Use Fixture Cedar Novo and show Fixture Meridian Group as the confirmed controlling shareholder.",
+            "Keep two company identities.",
+            "Treat Fixture Manager A as a former manager, not a current one."
+          ]
+        },
+        {
+          "id": "fx-co-query-current",
+          "question": "What can a current view in 2026 safely claim?",
+          "contextYear": 2026,
+          "focusId": "fx-co-cedar",
+          "expectedOutcomes": [
+            "Show the last confirmed name and operating/ownership context with the 2014 qualification where relevant.",
+            "Do not convert an unknown end into ongoing operation, current ownership, or a 2026 confirmation.",
+            "Do not infer dissolution from missing later records."
+          ]
+        }
+      ],
+      "expectedOutcomes": [
+        "A name change, acquisition, legal identity, and time-bounded role remain different concepts.",
+        "Organizations do not require a birth date, family tree, person account, or social acceptance to be represented.",
+        "Year precision remains visible; the fixture does not claim exact days or a probability distribution within a year.",
+        "The acquisition is not rendered as a merger, and a merger must not be inferred merely because ownership changes."
+      ]
+    },
+    {
+      "id": "FIX-TEAM-01",
+      "title": "Club, senior and youth teams, season context, and changing roles",
+      "description": "Invented sporting organizations and people exercise typed identities, seasonal membership, and team-specific honors without real player data.",
+      "synthetic": true,
+      "relatedScenarios": [
+        "SC-02"
+      ],
+      "relatedRequirements": [
+        "R-PUB-02",
+        "R-PUB-03",
+        "R-DOM-04",
+        "R-DOM-05",
+        "R-DOM-06",
+        "R-DOM-07"
+      ],
+      "entities": [
+        {
+          "id": "fx-team-club",
+          "type": "sports_club",
+          "label": "Fixture Harbor Club"
+        },
+        {
+          "id": "fx-team-senior",
+          "type": "sports_team",
+          "label": "Fixture Harbor Senior Team",
+          "sport": "association_football"
+        },
+        {
+          "id": "fx-team-youth",
+          "type": "sports_team",
+          "label": "Fixture Harbor Youth Team",
+          "sport": "association_football"
+        },
+        {
+          "id": "fx-team-league",
+          "type": "competition",
+          "label": "Fixture League"
+        },
+        {
+          "id": "fx-team-season-2020",
+          "type": "competition_season",
+          "label": "Fixture League 2020-2021",
+          "competitionId": "fx-team-league",
+          "calendarLabel": "2020-2021",
+          "exactStart": null,
+          "exactEnd": null,
+          "note": "A season label identifies a competition edition. It does not establish exact calendar boundaries."
+        },
+        {
+          "id": "fx-team-player-b",
+          "type": "person",
+          "label": "Fixture Player B",
+          "accountId": null
+        },
+        {
+          "id": "fx-team-person-c",
+          "type": "person",
+          "label": "Fixture Person C",
+          "accountId": null
+        },
+        {
+          "id": "fx-team-player-d",
+          "type": "person",
+          "label": "Fixture Player D",
+          "accountId": null
+        }
+      ],
+      "relationships": [
+        {
+          "id": "fx-team-club-senior",
+          "type": "has_team",
+          "subjectId": "fx-team-club",
+          "objectId": "fx-team-senior",
+          "contextSeasonId": "fx-team-season-2020"
+        },
+        {
+          "id": "fx-team-club-youth",
+          "type": "has_team",
+          "subjectId": "fx-team-club",
+          "objectId": "fx-team-youth",
+          "contextSeasonId": "fx-team-season-2020"
+        },
+        {
+          "id": "fx-team-b-player",
+          "type": "squad_membership",
+          "subjectId": "fx-team-player-b",
+          "objectId": "fx-team-senior",
+          "role": "player",
+          "contextSeasonId": "fx-team-season-2020",
+          "basis": {
+            "kind": "synthetic_fixture_declaration",
+            "note": "This is season squad membership. No match appearances are asserted."
+          }
+        },
+        {
+          "id": "fx-team-d-player",
+          "type": "squad_membership",
+          "subjectId": "fx-team-player-d",
+          "objectId": "fx-team-youth",
+          "role": "player",
+          "contextSeasonId": "fx-team-season-2020"
+        },
+        {
+          "id": "fx-team-c-former-player",
+          "type": "held_role",
+          "subjectId": "fx-team-person-c",
+          "objectId": "fx-team-senior",
+          "role": "player",
+          "time": {
+            "kind": "period",
+            "start": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2012,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "end": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2014,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "continuity": "continuous_within_asserted_period"
+          }
+        },
+        {
+          "id": "fx-team-c-coach",
+          "type": "held_role",
+          "subjectId": "fx-team-person-c",
+          "objectId": "fx-team-senior",
+          "role": "coach",
+          "time": {
+            "kind": "period",
+            "start": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2020,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "end": {
+              "kind": "partial_calendar_date",
+              "calendar": "Gregorian",
+              "era": "CE",
+              "year": 2022,
+              "precision": "year",
+              "meaning": "A date known only to its calendar year; not a full-year duration."
+            },
+            "continuity": "continuous_within_asserted_period"
+          },
+          "confirmedSeasonIds": [
+            "fx-team-season-2020"
+          ]
+        },
+        {
+          "id": "fx-team-season-entry",
+          "type": "competed_in",
+          "subjectId": "fx-team-senior",
+          "objectId": "fx-team-season-2020"
+        }
+      ],
+      "events": [
+        {
+          "id": "fx-team-title-2021",
+          "type": "competition_title",
+          "label": "Fixture Harbor Senior Team wins its season title",
+          "winnerId": "fx-team-senior",
+          "competitionId": "fx-team-league",
+          "seasonId": "fx-team-season-2020",
+          "time": {
+            "kind": "partial_calendar_date",
+            "calendar": "Gregorian",
+            "era": "CE",
+            "year": 2021,
+            "precision": "year",
+            "meaning": "A date known only to its calendar year; not a full-year duration."
+          },
+          "individualRecipientIds": [],
+          "note": "A team title is asserted. Individual medal eligibility and appearances are not supplied."
+        }
+      ],
+      "media": [],
+      "reviewQueries": [
+        {
+          "id": "fx-team-query-senior",
+          "question": "Who belongs in the senior-team view for the selected season?",
+          "focusId": "fx-team-senior",
+          "seasonId": "fx-team-season-2020",
+          "expectedPersonIds": [
+            "fx-team-player-b",
+            "fx-team-person-c"
+          ],
+          "excludedPersonIds": [
+            "fx-team-player-d"
+          ],
+          "expectedOutcomes": [
+            "Fixture Player B is a senior-team player.",
+            "Fixture Person C is the coach in this context, with an earlier playing role available as history.",
+            "Fixture Player D belongs to the separate youth-team view."
+          ]
+        },
+        {
+          "id": "fx-team-query-person-history",
+          "question": "How does Person C change role?",
+          "focusId": "fx-team-person-c",
+          "expectedOutcomes": [
+            "Preserve the 2012-2014 playing role and the 2020-2022 coaching role as separate assertions.",
+            "Do not rewrite the historical player role into coach, or show both as current in the 2020-2021 season."
+          ]
+        },
+        {
+          "id": "fx-team-query-title",
+          "question": "Who won the title?",
+          "eventId": "fx-team-title-2021",
+          "expectedOutcomes": [
+            "Attribute the title to the senior team in the named competition season.",
+            "A club overview may link to its senior team's honor while preserving the actual winner.",
+            "Do not attribute the title to the youth team, every club member, or every person ever associated with the club."
+          ]
+        }
+      ],
+      "expectedOutcomes": [
+        "Club, specific team, competition, season, squad membership, role tenure, and honor remain distinct.",
+        "Season membership does not establish participation in every match.",
+        "A season name supplies context; it is not converted to exact start and end dates without evidence.",
+        "Historical organizational roles use evidence/context rules and do not require mutual social-friendship acceptance."
+      ]
+    },
+    {
+      "id": "FIX-FAMILY-MEDIA-01",
+      "title": "Old capture, new share, approved tag, and later access revocation",
+      "description": "All people, accounts, dates, and media descriptions are synthetic. The JSON is reviewer material containing the full fixture; it is not a private-data API or an access-control implementation.",
+      "synthetic": true,
+      "relatedScenarios": [
+        "SC-10",
+        "SC-11",
+        "SC-13",
+        "SC-17",
+        "SC-19"
+      ],
+      "relatedRequirements": [
+        "R-DOM-01",
+        "R-PER-03",
+        "R-PER-05",
+        "R-PER-08",
+        "R-PER-09",
+        "R-MED-01",
+        "R-MED-03",
+        "R-MED-04",
+        "R-MED-05",
+        "R-MED-06",
+        "R-MED-07",
+        "R-MED-08"
+      ],
+      "entities": [
+        {
+          "id": "fx-family-person-a",
+          "type": "person",
+          "label": "Fixture Person A",
+          "profileVisibility": "visible_to_all_fixture_accounts",
+          "note": "Profile visibility does not determine media access."
+        },
+        {
+          "id": "fx-family-person-b",
+          "type": "person",
+          "label": "Fixture Person B",
+          "profileVisibility": "visible_to_all_fixture_accounts",
+          "note": "Profile visibility does not determine media access."
+        },
+        {
+          "id": "fx-family-person-c",
+          "type": "person",
+          "label": "Fixture Person C",
+          "profileVisibility": "visible_to_all_fixture_accounts",
+          "note": "Profile visibility does not determine media access."
+        },
+        {
+          "id": "fx-family-person-d",
+          "type": "person",
+          "label": "Fixture Person D",
+          "profileVisibility": "visible_to_all_fixture_accounts",
+          "note": "Profile visibility does not determine media access."
+        }
+      ],
+      "accounts": [
+        {
+          "id": "fx-account-a",
+          "personId": "fx-family-person-a",
+          "label": "Fixture Account A"
+        },
+        {
+          "id": "fx-account-b",
+          "personId": "fx-family-person-b",
+          "label": "Fixture Account B"
+        },
+        {
+          "id": "fx-account-c",
+          "personId": "fx-family-person-c",
+          "label": "Fixture Account C"
+        },
+        {
+          "id": "fx-account-d",
+          "personId": "fx-family-person-d",
+          "label": "Fixture Account D"
+        }
+      ],
+      "relationships": [
+        {
+          "id": "fx-family-bc-friendship",
+          "type": "close_friend",
+          "subjectId": "fx-family-person-b",
+          "objectId": "fx-family-person-c",
+          "socialConsent": {
+            "state": "accepted",
+            "requestedByAccountId": "fx-account-b",
+            "acceptedByAccountId": "fx-account-c",
+            "bothAccountsExist": true
+          },
+          "publicationAudienceAccountIds": [
+            "fx-account-b",
+            "fx-account-c"
+          ],
+          "basis": {
+            "kind": "synthetic_fixture_declaration",
+            "note": "The relationship is mutually accepted and visible to its stated audience. It grants no access to the owner's separate photo or video."
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "fx-family-school-1970",
+          "type": "personal_life_event",
+          "label": "Synthetic school occasion",
+          "participantIds": [
+            "fx-family-person-a",
+            "fx-family-person-b"
+          ],
+          "time": {
+            "kind": "partial_calendar_date",
+            "calendar": "Gregorian",
+            "era": "CE",
+            "year": 1970,
+            "precision": "year",
+            "meaning": "A date known only to its calendar year; not a full-year duration."
+          },
+          "accessPolicyId": "fx-family-selected-audience"
+        }
+      ],
+      "media": [
+        {
+          "id": "fx-family-photo-1970",
+          "kind": "image",
+          "label": "Synthetic school photograph",
+          "ownerAccountId": "fx-account-a",
+          "accessPolicyId": "fx-family-selected-audience",
+          "availability": "metadata_only_no_file_attached",
+          "fileUrl": null,
+          "thumbnailUrl": null,
+          "representationType": "synthetic_fixture_description_of_a_photograph",
+          "captureTime": {
+            "kind": "partial_calendar_date",
+            "calendar": "Gregorian",
+            "era": "CE",
+            "year": 1970,
+            "precision": "year",
+            "meaning": "A date known only to its calendar year; not a full-year duration."
+          },
+          "creationTime": {
+            "state": "unknown"
+          },
+          "depictedTime": {
+            "kind": "event_reference",
+            "eventId": "fx-family-school-1970"
+          },
+          "uploadTime": {
+            "kind": "exact_instant",
+            "value": "2026-11-14T10:00:00Z"
+          },
+          "importTime": {
+            "state": "not_applicable"
+          },
+          "originalPublicationTime": {
+            "state": "unknown"
+          },
+          "shareActivityIds": [
+            "fx-family-photo-share"
+          ],
+          "creator": {
+            "state": "unknown"
+          },
+          "caption": "A synthetic school occasion from 1970, newly shared in this review fixture.",
+          "alternativeText": "Metadata-only fixture for an old school photograph; no actual image is supplied.",
+          "rights": {
+            "status": "no_actual_media_supplied",
+            "note": "No reuse right is asserted for any real image."
+          },
+          "contextLinks": [
+            {
+              "type": "depicts_event",
+              "targetId": "fx-family-school-1970",
+              "accessPolicyId": "fx-family-selected-audience"
+            }
+          ],
+          "tags": [
+            {
+              "id": "fx-family-approved-tag-b",
+              "personId": "fx-family-person-b",
+              "proposedByAccountId": "fx-account-a",
+              "approvedByAccountId": "fx-account-b",
+              "state": "approved",
+              "approvedAt": "2026-11-15T09:10:00Z",
+              "profilePlacementRequested": true,
+              "effect": "Permits this association to appear only where asset, tag, profile, and contextual permissions all allow it; grants no new media audience.",
+              "accessPolicyId": "fx-family-selected-audience"
+            }
+          ]
+        },
+        {
+          "id": "fx-family-video-2026",
+          "kind": "video",
+          "label": "Synthetic family video",
+          "ownerAccountId": "fx-account-a",
+          "accessPolicyId": "fx-family-selected-audience",
+          "availability": "metadata_only_no_file_attached",
+          "fileUrl": null,
+          "posterUrl": null,
+          "captionFileUrl": null,
+          "transcriptFileUrl": null,
+          "representationType": "synthetic_fixture_description_of_a_video",
+          "captureTime": {
+            "kind": "calendar_date",
+            "calendar": "Gregorian",
+            "date": "2026-11-01",
+            "precision": "day",
+            "era": "CE"
+          },
+          "creationTime": {
+            "state": "unknown"
+          },
+          "depictedTime": {
+            "kind": "calendar_date",
+            "calendar": "Gregorian",
+            "date": "2026-11-01",
+            "precision": "day",
+            "era": "CE"
+          },
+          "uploadTime": {
+            "kind": "exact_instant",
+            "value": "2026-11-14T10:30:00Z"
+          },
+          "importTime": {
+            "state": "not_applicable"
+          },
+          "originalPublicationTime": {
+            "state": "unknown"
+          },
+          "shareActivityIds": [
+            "fx-family-video-share"
+          ],
+          "creator": {
+            "state": "synthetic_assertion",
+            "personId": "fx-family-person-a"
+          },
+          "caption": "A newer synthetic recording, shared after the old photograph.",
+          "alternativeText": "Metadata-only fixture for a family video; no actual video, poster, captions, or transcript is supplied.",
+          "rights": {
+            "status": "no_actual_media_supplied",
+            "note": "These fields check access requirements, not playback or licensing."
+          },
+          "contextLinks": [
+            {
+              "type": "created_by",
+              "targetId": "fx-family-person-a",
+              "accessPolicyId": "fx-family-selected-audience"
+            }
+          ],
+          "tags": []
+        }
+      ],
+      "shareActivities": [
+        {
+          "id": "fx-family-photo-share",
+          "type": "share",
+          "mediaId": "fx-family-photo-1970",
+          "actorAccountId": "fx-account-a",
+          "time": {
+            "kind": "exact_instant",
+            "value": "2026-11-15T09:00:00Z"
+          },
+          "accessPolicyId": "fx-family-selected-audience",
+          "note": "Share activity is new; the photograph's capture year remains 1970. Sharing to this selected audience is not public publication."
+        },
+        {
+          "id": "fx-family-video-share",
+          "type": "share",
+          "mediaId": "fx-family-video-2026",
+          "actorAccountId": "fx-account-a",
+          "time": {
+            "kind": "exact_instant",
+            "value": "2026-11-15T09:05:00Z"
+          },
+          "accessPolicyId": "fx-family-selected-audience"
+        }
+      ],
+      "accessPolicies": [
+        {
+          "id": "fx-family-selected-audience",
+          "label": "Selected family audience",
+          "audienceMeaning": "An explicitly selected fixture audience; the label itself does not assert kinship.",
+          "snapshots": [
+            {
+              "effectiveAt": "2026-11-15T09:00:00Z",
+              "allowedAccountIds": [
+                "fx-account-a",
+                "fx-account-b",
+                "fx-account-d"
+              ]
+            },
+            {
+              "effectiveAt": "2026-11-15T09:30:00Z",
+              "allowedAccountIds": [
+                "fx-account-a",
+                "fx-account-b"
+              ],
+              "change": "Fixture Account D loses access to both assets and their protected contextual associations."
+            }
+          ],
+          "deniedResponse": "Generic unavailable state without private title, caption, count, or reason revealing identity.",
+          "derivativeRule": "The same current access decision governs asset bytes, thumbnails, video posters, segments, captions, transcripts, downloads, search, suggestions, gallery counts, profile placements, and protected contextual links.",
+          "evaluationRule": "Use the most recent snapshot effective at or before the request time. If none exists, deny. Evaluate media, association/tag and relevant profile permissions independently."
+        }
+      ],
+      "galleryViews": [
+        {
+          "id": "fx-family-album",
+          "type": "curated_album",
+          "label": "Synthetic memories",
+          "mediaIds": [
+            "fx-family-photo-1970",
+            "fx-family-video-2026"
+          ],
+          "rule": "References the existing assets; membership in the album never grants access."
+        },
+        {
+          "id": "fx-family-recent",
+          "type": "dynamic_gallery",
+          "label": "Recent authorized shares",
+          "selection": "Authorized share activities, newest share first",
+          "sortBasis": "share_time",
+          "rule": "One occurrence of a share activity stays one card when reachable through several albums or associations; a genuinely separate share is a separate activity."
+        },
+        {
+          "id": "fx-family-school-gallery",
+          "type": "dynamic_gallery",
+          "label": "Media depicting the 1970 school context",
+          "contextEventId": "fx-family-school-1970",
+          "timeBasis": "depicted_event_time",
+          "rule": "Filter permissions before returning media, event associations, or counts."
+        }
+      ],
+      "reviewQueries": [
+        {
+          "id": "fx-family-query-recent",
+          "question": "What does the allowed viewer see before revocation?",
+          "viewerAccountId": "fx-account-d",
+          "evaluatedAt": "2026-11-15T09:20:00Z",
+          "viewId": "fx-family-recent",
+          "expectedMediaIdsInOrder": [
+            "fx-family-video-2026",
+            "fx-family-photo-1970"
+          ],
+          "expectedOutcomes": [
+            "The recent gallery orders these items by the two share activities.",
+            "The photograph remains a 1970 memory, not a newly captured 2026 image.",
+            "The approved tag can place the photo in Person B's profile for this allowed viewer without copying the asset."
+          ]
+        },
+        {
+          "id": "fx-family-query-friend",
+          "question": "Does an accepted friend of the tagged person gain access?",
+          "viewerAccountId": "fx-account-c",
+          "evaluatedAt": "2026-11-15T09:20:00Z",
+          "focusId": "fx-family-person-b",
+          "expectedMediaIds": [],
+          "expectedOutcomes": [
+            "Person B's profile and the accepted B-C friendship may be visible as separately permitted, but the photo, video, and protected context are not.",
+            "The approved tag does not broaden the asset audience.",
+            "Hidden item counts, thumbnails, captions, and suggestions do not reveal the private assets."
+          ]
+        },
+        {
+          "id": "fx-family-query-revoked",
+          "question": "What happens after D loses access?",
+          "viewerAccountId": "fx-account-d",
+          "evaluatedAt": "2026-11-15T09:35:00Z",
+          "expectedMediaIds": [],
+          "routesToInspect": [
+            "recent-share gallery",
+            "curated album",
+            "1970 context query",
+            "tagged profile",
+            "saved gallery state",
+            "media deep link",
+            "thumbnail/poster request",
+            "video segment request",
+            "caption/transcript request",
+            "download request",
+            "suggestion/count response"
+          ],
+          "expectedOutcomes": [
+            "New requests use the current policy and return no protected media or derivative metadata.",
+            "Returning through a saved view does not restore permission.",
+            "Generic unavailability does not reveal private item names, protected associations, or the reason for withdrawal.",
+            "This fixture makes no claim to recall bytes already downloaded, buffered, exported, or available offline; that limitation needs a separate implementation policy."
+          ]
+        },
+        {
+          "id": "fx-family-query-owner",
+          "question": "Does targeted revocation remove everybody's access?",
+          "viewerAccountId": "fx-account-a",
+          "evaluatedAt": "2026-11-15T09:35:00Z",
+          "expectedMediaIds": [
+            "fx-family-photo-1970",
+            "fx-family-video-2026"
+          ],
+          "expectedOutcomes": [
+            "The owner and Account B retain their stated access; D's withdrawal is not deletion of the media or tag.",
+            "Every permitted route still references the same asset identities."
+          ]
+        },
+        {
+          "id": "fx-family-query-public",
+          "question": "Can a public historical search expose the private school photo?",
+          "viewerAccountId": null,
+          "contextYear": 1970,
+          "timeBasis": "depicted_event_time",
+          "evaluatedAt": "2026-11-15T09:20:00Z",
+          "expectedMediaIds": [],
+          "expectedOutcomes": [
+            "No private asset, occasion, count, or association is returned merely because it matches the year.",
+            "A common temporal/search core does not create a common publishing audience."
+          ]
+        }
+      ],
+      "prospectiveMutations": [
+        {
+          "id": "fx-family-withdraw-tag",
+          "action": "Withdraw the approved Person B tag",
+          "actorAccountId": "fx-account-b",
+          "tagId": "fx-family-approved-tag-b",
+          "status": "not_applied_in_base_fixture",
+          "expectedOutcomes": [
+            "Remove the profile/tag association wherever it is no longer authorized.",
+            "Do not assume tag withdrawal deletes the owner's asset or revokes the separately granted sharing policy.",
+            "Do not retain the withdrawn association in suggestions or derived profile counts."
+          ]
+        }
+      ],
+      "expectedOutcomes": [
+        "Person identity, account, social consent, relationship publication, tag approval, asset audience, and view filters stay separate.",
+        "The capture/creation, depicted, upload/import, original publication, and share fields do not overwrite one another.",
+        "Albums and dynamic galleries select shared assets and do not create new permission grants or duplicate files.",
+        "Revocation checks cover first-class video derivatives as well as image routes.",
+        "A metadata-only file cannot establish delivery security, real playback, caption quality, or successful device behavior."
+      ]
+    }
+  ]
+}

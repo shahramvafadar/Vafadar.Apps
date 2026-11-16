@@ -43,6 +43,7 @@ Vafadar.Apps/
 ├── nuget.config                   Package sources
 ├── Vafadar.Apps.slnx              The solution (all projects)
 ├── Vafadar.Zanance.slnf           Solution filter: Zanance app + libraries + tests
+├── Vafadar.Dastan.slnf            Solution filter: Dastan and the libraries it uses, with their tests
 ├── Vafadar.Libraries.slnf         Solution filter: shared libraries + tests
 ├── Vafadar.Tests.slnf             Solution filter: everything except MAUI projects (used by CI)
 ├── README.md, LICENSE, SECURITY.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md
