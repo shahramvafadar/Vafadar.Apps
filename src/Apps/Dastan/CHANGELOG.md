@@ -60,3 +60,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   above, who or what it leads to below, and a partner or an opponent beside it – as in the family tree. A "+" at a
   side of the chart opens the names there a step further, a "−" closes them again; a single name can still be
   opened and closed by itself.
+- Content can be written by anybody who follows the guide – a person or an assistant: one guide for writers, a
+  page for each format, and a command that says whether the site can use a file, with every problem and the record
+  it belongs to, that lists the values a field may have and that writes the smallest file to start from.

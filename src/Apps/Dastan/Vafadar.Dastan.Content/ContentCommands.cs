@@ -1,0 +1,286 @@
+using System.Collections.Immutable;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using Vafadar.Dastan.Data;
+
+namespace Vafadar.Dastan.Content;
+
+/// <summary>
+/// The commands of the writers of content (D-042). A person reads the plain answers; an assistant asks for
+/// <c>--json</c> and gets the same answer as data. The answer of a command is also its exit code: 0 when all is
+/// well, 1 when a content file cannot be used, 2 when the command itself was not understood.
+/// </summary>
+public static class ContentCommands
+{
+    /// <summary>The exit code when everything asked for is in order.</summary>
+    public const int Done = 0;
+
+    /// <summary>The exit code when a content file cannot be used.</summary>
+    public const int NotUsable = 1;
+
+    /// <summary>The exit code when the command was not understood.</summary>
+    public const int NotUnderstood = 2;
+
+    private const string Usage = """
+        The command of the writers of Dastan's content. The guide is src/Apps/Dastan/docs/content-guide.md.
+
+          check <file or folder>… [--json]
+              Reads each file exactly as the site reads it and says whether the site can use it. A folder
+              stands for every content file in it; a translation is checked with the file it translates.
+
+          vocabulary [collection|comparison] [--json]
+              Lists every field that takes one of a fixed set of values, with the values.
+
+          template collection|comparison <id> [--out <file>]
+              Writes the smallest file of that kind the site accepts, to start from. Never over a file.
+
+        Exit code: 0 in order, 1 a content file cannot be used, 2 the command was not understood.
+        """;
+
+    private static readonly JsonWriterOptions Json = new() { Indented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+
+    /// <summary>Runs a command.</summary>
+    /// <param name="arguments">The words of the command.</param>
+    /// <param name="output">Where the answer is written.</param>
+    /// <param name="today">The day a template is written on.</param>
+    /// <returns>The exit code.</returns>
+    public static int Run(IReadOnlyList<string> arguments, TextWriter output, DateOnly today)
+    {
+        ArgumentNullException.ThrowIfNull(arguments);
+        ArgumentNullException.ThrowIfNull(output);
+
+        var json = arguments.Contains("--json", StringComparer.Ordinal);
+        var words = arguments.Where(argument => argument != "--json").ToList();
+        return words switch
+        {
+            ["check", _, ..] => Check(words[1..], output, json),
+            ["vocabulary"] => Vocabulary(null, output, json),
+            ["vocabulary", "collection" or "comparison"] => Vocabulary(words[1], output, json),
+            ["template", "collection" or "comparison", _] => Template(words[1], words[2], null, output, today),
+            ["template", "collection" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
+            _ => NotAsked(output),
+        };
+    }
+
+    private static int NotAsked(TextWriter output)
+    {
+        output.WriteLine(Usage);
+        return NotUnderstood;
+    }
+
+    private static int Check(IReadOnlyList<string> paths, TextWriter output, bool json)
+    {
+        var reports = new List<ContentReport>();
+        foreach (var path in paths)
+        {
+            if (Directory.Exists(path))
+            {
+                var files = ContentCheck.FilesOf(path);
+                if (files.IsEmpty)
+                {
+                    reports.Add(new ContentReport(Path.GetFullPath(path), null, [$"{path}: the folder holds no content file."], []));
+                }
+
+                reports.AddRange(files.Select(ContentCheck.File));
+            }
+            else
+            {
+                reports.Add(ContentCheck.File(path));
+            }
+        }
+
+        // A translation and the file it translates are one check.
+        reports = [.. reports.DistinctBy(report => (report.File, string.Join('\n', report.Problems)))];
+        if (json)
+        {
+            Write(output, writer =>
+            {
+                writer.WriteStartObject();
+                writer.WriteBoolean("usable", reports.TrueForAll(report => report.IsUsable));
+                writer.WriteStartArray("files");
+                foreach (var report in reports)
+                {
+                    writer.WriteStartObject();
+                    writer.WriteString("file", report.File);
+                    writer.WriteString("format", report.Format);
+                    writer.WriteBoolean("usable", report.IsUsable);
+                    writer.WriteStartArray("problems");
+                    foreach (var problem in report.Problems)
+                    {
+                        writer.WriteStringValue(problem);
+                    }
+
+                    writer.WriteEndArray();
+                    writer.WriteStartArray("notices");
+                    foreach (var notice in report.Notices)
+                    {
+                        writer.WriteStringValue(notice);
+                    }
+
+                    writer.WriteEndArray();
+                    writer.WriteStartObject("summary");
+                    foreach (var (name, value) in report.Summary)
+                    {
+                        writer.WriteString(name, value);
+                    }
+
+                    writer.WriteEndObject();
+                    writer.WriteEndObject();
+                }
+
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+            });
+        }
+        else
+        {
+            foreach (var report in reports)
+            {
+                output.WriteLine($"{report.File}{(report.Format is null ? null : $"  ({report.Format})")}");
+                if (report.IsUsable)
+                {
+                    output.WriteLine("  In order: the site can use this file.");
+                    foreach (var (name, value) in report.Summary)
+                    {
+                        output.WriteLine($"    {name}: {value}");
+                    }
+
+                    foreach (var notice in report.Notices)
+                    {
+                        output.WriteLine($"  Notice: {notice}");
+                    }
+                }
+                else
+                {
+                    output.WriteLine($"  Not usable: {report.Problems.Length} {(report.Problems.Length == 1 ? "problem" : "problems")}.");
+                    for (var index = 0; index < report.Problems.Length; index++)
+                    {
+                        output.WriteLine($"    {index + 1}. {report.Problems[index]}");
+                    }
+                }
+
+                output.WriteLine();
+            }
+        }
+
+        return reports.TrueForAll(report => report.IsUsable) ? Done : NotUsable;
+    }
+
+    private static int Vocabulary(string? kind, TextWriter output, bool json)
+    {
+        var kinds = new List<(string Name, string Format, ImmutableArray<ContentChoices> Fields)>();
+        if (kind is null or "collection")
+        {
+            kinds.Add(("collection", PilotSample.SchemaVersion, ContentVocabulary.Collection));
+        }
+
+        if (kind is null or "comparison")
+        {
+            kinds.Add(("comparison", ComparisonSample.FormatVersion, ContentVocabulary.Comparison));
+        }
+
+        if (json)
+        {
+            Write(output, writer =>
+            {
+                writer.WriteStartObject();
+                foreach (var (name, format, fields) in kinds)
+                {
+                    writer.WriteStartObject(name);
+                    writer.WriteString("format", format);
+                    writer.WriteStartArray("fields");
+                    foreach (var field in fields)
+                    {
+                        writer.WriteStartObject();
+                        writer.WriteString("field", field.Field);
+                        writer.WriteString("meaning", field.Meaning);
+                        writer.WriteStartArray("values");
+                        foreach (var value in field.Values)
+                        {
+                            writer.WriteStartObject();
+                            writer.WriteString("name", value.Name);
+                            if (value.Note is not null)
+                            {
+                                writer.WriteString("note", value.Note);
+                            }
+
+                            writer.WriteEndObject();
+                        }
+
+                        writer.WriteEndArray();
+                        writer.WriteEndObject();
+                    }
+
+                    writer.WriteEndArray();
+                    writer.WriteEndObject();
+                }
+
+                writer.WriteEndObject();
+            });
+        }
+        else
+        {
+            foreach (var (name, format, fields) in kinds)
+            {
+                output.WriteLine($"The file of a {name} ({format})");
+                output.WriteLine();
+                foreach (var field in fields)
+                {
+                    output.WriteLine($"  {field.Field}");
+                    output.WriteLine($"    {field.Meaning}");
+                    foreach (var value in field.Values)
+                    {
+                        output.WriteLine($"      {value.Name}{(value.Note is null ? null : $"  – {value.Note}")}");
+                    }
+
+                    output.WriteLine();
+                }
+            }
+        }
+
+        return Done;
+    }
+
+    private static int Template(string kind, string id, string? file, TextWriter output, DateOnly today)
+    {
+        string text;
+        try
+        {
+            text = kind == "collection" ? ContentTemplates.Collection(id, today) : ContentTemplates.Comparison(id, today);
+        }
+        catch (ArgumentException refused)
+        {
+            output.WriteLine(refused.Message);
+            return NotUnderstood;
+        }
+
+        if (file is null)
+        {
+            output.WriteLine(text);
+            return Done;
+        }
+
+        if (File.Exists(file))
+        {
+            output.WriteLine($"{file} exists; a template is never written over a file.");
+            return NotUnderstood;
+        }
+
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(file))!);
+        File.WriteAllText(file, text + Environment.NewLine);
+        output.WriteLine($"Written: {Path.GetFullPath(file)}");
+        output.WriteLine("Every text that begins with REPLACE is a place for content. Check the file when it is filled.");
+        return Done;
+    }
+
+    private static void Write(TextWriter output, Action<Utf8JsonWriter> write)
+    {
+        using var stream = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(stream, Json))
+        {
+            write(writer);
+        }
+
+        output.WriteLine(System.Text.Encoding.UTF8.GetString(stream.ToArray()));
+    }
+}

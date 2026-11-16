@@ -24,6 +24,7 @@
   <Folder Name="/src/" />
   <Folder Name="/src/Apps/" />
   <Folder Name="/src/Apps/Dastan/">
+    <Project Path="src/Apps/Dastan/Vafadar.Dastan.Content/Vafadar.Dastan.Content.csproj" />
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Core/Vafadar.Dastan.Core.csproj" />
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Data/Vafadar.Dastan.Data.csproj" />
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Web/Vafadar.Dastan.Web.csproj" />

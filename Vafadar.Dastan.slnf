@@ -2,6 +2,7 @@
   "solution": {
     "path": "Vafadar.Apps.slnx",
     "projects": [
+      "src\\Apps\\Dastan\\Vafadar.Dastan.Content\\Vafadar.Dastan.Content.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Core\\Vafadar.Dastan.Core.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Data\\Vafadar.Dastan.Data.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Web\\Vafadar.Dastan.Web.csproj",

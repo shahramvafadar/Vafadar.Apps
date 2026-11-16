@@ -129,6 +129,22 @@ public static partial class ComparisonSample
         }
     }
 
+    /// <summary>Returns the fields that take one of a fixed set of values, with the values this reader understands.</summary>
+    internal static ImmutableArray<ContentChoices> Choices()
+    {
+        // The readers compare without regard to case; the files write the names with a small first letter.
+        static ImmutableArray<ContentChoice> Of(IEnumerable<string> names) => [.. names.Select(name => new ContentChoice(char.ToLowerInvariant(name[0]) + name[1..]))];
+
+        return
+        [
+            new("status", "The state of the file as a whole, for editors.", Of(["draft", "reviewed"])),
+            new("frame", "The kind of time all lanes share. Years of the common era and before it are years of the Gregorian calendar (D-043).", Of(Enum.GetNames<ComparisonFrame>())),
+            new("sources[].kind", "What kind of source it is.", Of(Enum.GetNames<SourceKind>())),
+            new("lanes[].periods[].reviewStatus, lanes[].events[].reviewStatus", "How far a statement has been checked.", Of(Enum.GetNames<ReviewStatus>())),
+            new("translation: review", "The state of a translation document as a whole.", Of(["draft", "reviewed"])),
+        ];
+    }
+
     [GeneratedRegex("^[a-z0-9]+(-[a-z0-9]+)*$", RegexOptions.CultureInvariant)]
     private static partial Regex AddressName();
 

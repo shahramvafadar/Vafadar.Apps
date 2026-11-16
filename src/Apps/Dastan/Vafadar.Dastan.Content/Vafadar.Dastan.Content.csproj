@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>The command of the writers of Dastan's content (D-042): checks a content file with the readers of the site, lists the values a field may have and writes the smallest file of each kind to start from.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vafadar.Dastan.Data\Vafadar.Dastan.Data.csproj" />
+  </ItemGroup>
+
+</Project>

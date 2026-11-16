@@ -98,6 +98,17 @@ has started, the first page of a run can take longer than the tests wait; a seco
 
 ## Content
 
+Content is written apart from the software, by people and by assistants (D-042). [The guide for
+writers](docs/content-guide.md) says how; [the file of a collection](docs/collection-format.md) and [the file of a
+comparison](docs/comparison-format.md) say what every field means; and one command checks a file exactly as the
+site reads it, lists the values a field may have and writes a file to start from:
+
+```powershell
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Content -- check src/Apps/Dastan/content
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Content -- vocabulary
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Content -- template collection my-story
+```
+
 [`content/`](content) holds the editorial sample and the original media. It is input for the app, not a public
 folder: the sample contains the whole story including its ending, and the app serves only what its projection allows
 for the visitor's reading position. Nothing in `content/` may be copied under a web root.

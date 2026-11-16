@@ -299,7 +299,7 @@ something half done.
 | 9.2 | The browser tests run in Firefox and WebKit as well as in Chromium | Done – README, "Tests in a browser"; the record is in `docs/acceptance.md` |
 | 9.3 | The connections of an entity as a chart on the stage, in place of the drawing of M0 (ADR 0005) | Done – [ADR 0008](adr/0008-charts.md), third addendum |
 | 9.4 | The timeline of a collection from its own dated records – step 8.6. Dates are stored in the Gregorian calendar (D-043) | Not started |
-| 9.5 | The official guide and tools for writing content (D-042): one guide to the formats that a person or an assistant can follow, and a command that checks a file against them and says what is wrong | Not started |
+| 9.5 | The official guide and tools for writing content (D-042): one guide to the formats that a person or an assistant can follow, and a command that checks a file against them and says what is wrong | Done – `docs/content-guide.md`, `docs/collection-format.md`, the command `Vafadar.Dastan.Content` (`check`, `vocabulary`, `template`); `ContentToolTests` |
 
 When the goal is reached, the drawings that are left without a stage are none; what is left for a public pilot is
 section 8, which needs the owner.

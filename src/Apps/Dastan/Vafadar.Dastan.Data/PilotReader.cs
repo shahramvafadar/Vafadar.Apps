@@ -190,6 +190,53 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
     }
 
+    /// <summary>Returns the name a file gives a type of entity.</summary>
+    internal static string NameOf(EntityType type) => EntityTypeNames.First(name => name.Value == type).Key;
+
+    /// <summary>Returns the fields that take one of a fixed set of values, with the values this reader understands.</summary>
+    internal static ImmutableArray<ContentChoices> Choices()
+    {
+        static ImmutableArray<ContentChoice> Of(IEnumerable<string> names) => [.. names.Order(StringComparer.Ordinal).Select(name => new ContentChoice(name))];
+
+        return
+        [
+            new("spoilerPolicy.kind", "How the reading stages are meant.", Of(["minimum_reader_progress_level"])),
+            new("publication.state", "What kind of file this is.", Of(["editorial_sample"])),
+            new("editionContext.summaryLanguage", "The language the texts of the file are written in.", Of(LanguageNames.Keys)),
+            new("sources[].kind", "What kind of source it is.", Of(SourceKindNames.Keys)),
+            new("entities[].type", "What kind of thing an entity is.", Of(EntityTypeNames.Keys)),
+            new(
+                "relations[].type",
+                "What a relation says. A type has one meaning; similar wordings are not merged into it.",
+                [
+                    .. RelationTypes.All.OrderBy(type => type.Key, StringComparer.Ordinal).Select(type => new ContentChoice(
+                        type.Key,
+                        (type.Directionality == Directionality.Symmetric ? "symmetric" : "directed, from → to")
+                            + type.Kinship switch
+                            {
+                                Kinship.Parentage => "; a parent and a child in a family tree",
+                                Kinship.Partnership => "; partners in a family tree",
+                                _ => string.Empty,
+                            })),
+                ]),
+            new("relations[].directionality", "Whether the relation reads from one entity to the other; it has to agree with the type.", Of(DirectionNames.Keys)),
+            new("relations[].scope.kind", "What the relation is a statement about.", Of(ScopeKindNames.Keys)),
+            new("relations[].reviewStatus, events[].reviewStatus", "How far a statement has been checked.", Of(ReviewNames.Keys)),
+            new("events[].orderBasis", "What the order of the events follows.", Of(["narrative"])),
+            new("events[].temporalExpression.kind", "The time of a story event: its place in the telling, never a date.", Of(["narrative_position"])),
+            new("events[].grouping", "Optional: the event stands for several scenes.", Of(["editorial_beat_may_condense_multiple_scenes"])),
+            new("events[].entityAssociations[].presence", "What an entity has to do with an event.", Of(PresenceNames.Keys)),
+            new("media[].type", "An image or a video.", Of(MediaKindNames.Keys)),
+            new("media[].rights.status", "Whether the item may be shown.", Of(RightsNames.Keys)),
+            new("media[].depictedContext.kind", "What kind of picture of the story the item is.", Of(RepresentationNames.Keys)),
+            new("media[].altTextStatus", "Optional: the state of the text alternative.", Of(AltTextNames.Keys)),
+            new("media[].creationDate.precision", "How exactly the date an item was made is known.", Of(["year", "day"])),
+            new("media[].creationDate.era", "The era of that date.", Of(EraNames.Keys)),
+            new("media[].creationDate.calendar", "The calendar of that date. Dates are stored in the Gregorian calendar (D-043); a year whose calendar the catalogue does not name leaves the field out.", Of(CalendarNames.Keys)),
+            new("translation: review", "The state of a translation document as a whole.", Of(TextReviewNames.Keys)),
+        ];
+    }
+
     /// <summary>Builds the collection from the records. Only called when reading found no problem.</summary>
     public Catalogue Build() => new(_info!, _entities, _relations, _events, _sources, _media);
 
