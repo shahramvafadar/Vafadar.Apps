@@ -45,6 +45,11 @@
         }
     </section>
 
+    @if (_hasMedia)
+    {
+        <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/gallery")">@T["Gallery_Title"]</a></p>
+    }
+
     @if (!overview.Appearances.IsEmpty)
     {
         <section aria-labelledby="appearances">
@@ -66,6 +71,7 @@
 @code {
     private EntityOverview? _entity;
     private bool _hasFamily;
+    private bool _hasMedia;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -87,5 +93,6 @@
         }
 
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
+        _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.Items.IsEmpty;
     }
 }

@@ -13,7 +13,11 @@ builder.Services.AddAntiforgery();
 
 // English and Persian (Directory.Build.props: VafadarLanguages). The first language is used when nothing else decides.
 builder.Services.AddSiteLanguages("en", "fa");
-builder.Services.Configure<SiteLanguageOptions>(options => options.UnlocalizedPaths.Add("/preferences"));
+builder.Services.Configure<SiteLanguageOptions>(options =>
+{
+    options.UnlocalizedPaths.Add("/preferences");
+    options.UnlocalizedPaths.Add(MediaAddress.Root);
+});
 
 builder.Services.Configure<DastanOptions>(builder.Configuration.GetSection("Dastan"));
 builder.Services.AddSingleton<DastanSite>();
@@ -53,6 +57,7 @@ app.UseAntiforgery();
 app.MapStaticAssets();
 app.MapThemePreference();
 app.MapReadingPreference();
+app.MapMediaFiles();
 app.MapRazorComponents<App>();
 
 app.Run();

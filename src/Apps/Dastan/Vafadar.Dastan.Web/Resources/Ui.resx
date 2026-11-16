@@ -264,4 +264,235 @@
   <data name="Story_Back" xml:space="preserve">
     <value>Back to {0}</value>
   </data>
+  <data name="Gallery_Title" xml:space="preserve">
+    <value>Images and videos</value>
+  </data>
+  <data name="Gallery_TitleEntity" xml:space="preserve">
+    <value>Images and videos of {0}</value>
+  </data>
+  <data name="Gallery_TitleStep" xml:space="preserve">
+    <value>Images and videos of the step “{0}”</value>
+  </data>
+  <data name="Gallery_LeadCollection" xml:space="preserve">
+    <value>Everything of this collection that can be shown at your reading position.</value>
+  </data>
+  <data name="Gallery_LeadEntity" xml:space="preserve">
+    <value>Images and videos that show {0}, as far as you have read.</value>
+  </data>
+  <data name="Gallery_LeadStep" xml:space="preserve">
+    <value>Images and videos that show this step of the story.</value>
+  </data>
+  <data name="Gallery_Order" xml:space="preserve">
+    <value>In the order the editors chose. The order says nothing about dates.</value>
+  </data>
+  <data name="Gallery_Count" xml:space="preserve">
+    <value>Shown here: {0}</value>
+  </data>
+  <data name="Gallery_Empty" xml:space="preserve">
+    <value>There is nothing to show here.</value>
+  </data>
+  <data name="Gallery_EmptyHint" xml:space="preserve">
+    <value>Images and videos are shown only as far as the story has been read.</value>
+  </data>
+  <data name="Gallery_All" xml:space="preserve">
+    <value>All images and videos of the collection</value>
+  </data>
+  <data name="Gallery_StepLink" xml:space="preserve">
+    <value>Images and videos of this step</value>
+  </data>
+  <data name="Gallery_Open" xml:space="preserve">
+    <value>Open “{0}”</value>
+  </data>
+  <data name="Media_Kind_Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="Media_Kind_Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="Media_Representation_LaterArtwork" xml:space="preserve">
+    <value>Artwork made long after the story</value>
+  </data>
+  <data name="Media_Representation_PresentDayExplanatoryDiagram" xml:space="preserve">
+    <value>Explanatory diagram made today</value>
+  </data>
+  <data name="Media_RepresentationNote_LaterArtwork" xml:space="preserve">
+    <value>An artist's picture of the story, made long after it. It is not a picture from the time of the story.</value>
+  </data>
+  <data name="Media_RepresentationNote_PresentDayExplanatoryDiagram" xml:space="preserve">
+    <value>Made for Dastan to explain the story. It is not a historical record and not evidence.</value>
+  </data>
+  <data name="Media_AboutImage" xml:space="preserve">
+    <value>About this image</value>
+  </data>
+  <data name="Media_AboutVideo" xml:space="preserve">
+    <value>About this video</value>
+  </data>
+  <data name="Media_What" xml:space="preserve">
+    <value>What it is</value>
+  </data>
+  <data name="Media_Made" xml:space="preserve">
+    <value>Made</value>
+  </data>
+  <data name="Media_MadeNote" xml:space="preserve">
+    <value>When this was made – not a time in the story.</value>
+  </data>
+  <data name="Media_Creator" xml:space="preserve">
+    <value>Made by</value>
+  </data>
+  <data name="Media_Rights" xml:space="preserve">
+    <value>Rights</value>
+  </data>
+  <data name="Media_License" xml:space="preserve">
+    <value>License: {0}</value>
+  </data>
+  <data name="Media_RightsChecked" xml:space="preserve">
+    <value>Checked on {0}</value>
+  </data>
+  <data name="Media_RightsPage" xml:space="preserve">
+    <value>Terms of the holder</value>
+  </data>
+  <data name="Media_Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Media_CatalogueTitle" xml:space="preserve">
+    <value>Title in the catalogue</value>
+  </data>
+  <data name="Media_Accession" xml:space="preserve">
+    <value>Catalogue number</value>
+  </data>
+  <data name="Media_CataloguePage" xml:space="preserve">
+    <value>Page of the holding institution</value>
+  </data>
+  <data name="Media_Length" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="Media_Seconds" xml:space="preserve">
+    <value>{0} seconds</value>
+  </data>
+  <data name="Media_Sound" xml:space="preserve">
+    <value>Sound</value>
+  </data>
+  <data name="Media_NoSound" xml:space="preserve">
+    <value>No sound</value>
+  </data>
+  <data name="Media_HasSound" xml:space="preserve">
+    <value>With sound</value>
+  </data>
+  <data name="Media_Captions" xml:space="preserve">
+    <value>Captions</value>
+  </data>
+  <data name="Media_Transcript" xml:space="preserve">
+    <value>Transcript</value>
+  </data>
+  <data name="Media_Shows" xml:space="preserve">
+    <value>Who and what it shows</value>
+  </data>
+  <data name="Media_ShowsSteps" xml:space="preserve">
+    <value>Steps of the story it shows</value>
+  </data>
+  <data name="Media_Relations" xml:space="preserve">
+    <value>Relations it explains</value>
+  </data>
+  <data name="Media_Unavailable" xml:space="preserve">
+    <value>This file cannot be shown right now. What is known about it stands below.</value>
+  </data>
+  <data name="Media_AltDraft" xml:space="preserve">
+    <value>The description of this image for screen readers is a draft that has not been checked against the image.</value>
+  </data>
+  <data name="Media_AltMissing" xml:space="preserve">
+    <value>No description of this image has been prepared yet.</value>
+  </data>
+  <data name="Media_VideoFallback" xml:space="preserve">
+    <value>Open the video file</value>
+  </data>
+  <data name="Media_OpenImage" xml:space="preserve">
+    <value>Open the image in full size</value>
+  </data>
+  <data name="Media_Previous" xml:space="preserve">
+    <value>Previous: {0}</value>
+  </data>
+  <data name="Media_Next" xml:space="preserve">
+    <value>Next: {0}</value>
+  </data>
+  <data name="Media_Neighbours" xml:space="preserve">
+    <value>More in this gallery</value>
+  </data>
+  <data name="Rights_OriginalProjectContent" xml:space="preserve">
+    <value>Original content of this project</value>
+  </data>
+  <data name="Rights_OpenAccessVerified" xml:space="preserve">
+    <value>Open access, checked by the editors</value>
+  </data>
+  <data name="Rights_PermissionNotVerified" xml:space="preserve">
+    <value>Permission not verified</value>
+  </data>
+  <data name="Date_NotStated" xml:space="preserve">
+    <value>not stated</value>
+  </data>
+  <data name="Date_Day" xml:space="preserve">
+    <value>{0} {1} {2}</value>
+  </data>
+  <data name="Date_Month" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Date_WithEra" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Date_About" xml:space="preserve">
+    <value>about {0}</value>
+  </data>
+  <data name="Era_CommonEra" xml:space="preserve">
+    <value>CE</value>
+  </data>
+  <data name="Era_BeforeCommonEra" xml:space="preserve">
+    <value>BCE</value>
+  </data>
+  <data name="Era_SolarHijri" xml:space="preserve">
+    <value>SH</value>
+  </data>
+  <data name="Era_BeforeSolarHijri" xml:space="preserve">
+    <value>before SH</value>
+  </data>
+  <data name="Era_LunarHijri" xml:space="preserve">
+    <value>AH</value>
+  </data>
+  <data name="Era_BeforeLunarHijri" xml:space="preserve">
+    <value>before AH</value>
+  </data>
+  <data name="Month_1" xml:space="preserve">
+    <value>January</value>
+  </data>
+  <data name="Month_2" xml:space="preserve">
+    <value>February</value>
+  </data>
+  <data name="Month_3" xml:space="preserve">
+    <value>March</value>
+  </data>
+  <data name="Month_4" xml:space="preserve">
+    <value>April</value>
+  </data>
+  <data name="Month_5" xml:space="preserve">
+    <value>May</value>
+  </data>
+  <data name="Month_6" xml:space="preserve">
+    <value>June</value>
+  </data>
+  <data name="Month_7" xml:space="preserve">
+    <value>July</value>
+  </data>
+  <data name="Month_8" xml:space="preserve">
+    <value>August</value>
+  </data>
+  <data name="Month_9" xml:space="preserve">
+    <value>September</value>
+  </data>
+  <data name="Month_10" xml:space="preserve">
+    <value>October</value>
+  </data>
+  <data name="Month_11" xml:space="preserve">
+    <value>November</value>
+  </data>
+  <data name="Month_12" xml:space="preserve">
+    <value>December</value>
+  </data>
 </root>

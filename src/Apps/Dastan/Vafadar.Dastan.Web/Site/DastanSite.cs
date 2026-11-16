@@ -26,8 +26,12 @@ public sealed class DastanOptions
 /// </summary>
 public sealed class DastanSite
 {
+    // A transcript is a page of text; a file that is larger is not one and is not read into a page.
+    private const int LargestText = 256 * 1024;
+
     private readonly Catalogue _catalogue;
     private readonly Lazy<Projection?>[] _projections;
+    private readonly string _content;
 
     /// <summary>Initializes a new instance of the <see cref="DastanSite"/> class and reads the collection.</summary>
     /// <exception cref="SampleFormatException">The collection cannot be used; the app does not start.</exception>
@@ -35,7 +39,8 @@ public sealed class DastanSite
     {
         var settings = options.Value;
         Audience = settings.Audience;
-        _catalogue = PilotSample.Load(Path.Combine(environment.ContentRootPath, settings.Content, "samples", settings.Sample));
+        _content = Path.GetFullPath(Path.Combine(environment.ContentRootPath, settings.Content));
+        _catalogue = PilotSample.Load(Path.Combine(_content, "samples", settings.Sample));
 
         // One projection per reading stage; the catalogue never changes, so a projection is built once.
         _projections =
@@ -63,4 +68,28 @@ public sealed class DastanSite
     /// </summary>
     public Projection? At(ReadingLevel boundary) =>
         _projections[boundary.Value < _projections.Length ? boundary.Value : DefaultLevel.Value].Value;
+
+    /// <summary>
+    /// Returns where a file of the collection lies on this machine, or <see langword="null"/> when it does not exist
+    /// or would lie outside the folder of the collection. The caller has asked the projection first: this method
+    /// knows nothing about who may see the file.
+    /// </summary>
+    /// <param name="relative">The path as the model states it, relative to the folder of the collection.</param>
+    public string? ContentFile(string? relative)
+    {
+        if (string.IsNullOrWhiteSpace(relative))
+        {
+            return null;
+        }
+
+        var full = Path.GetFullPath(Path.Combine(_content, relative));
+        return full.StartsWith(_content + Path.DirectorySeparatorChar, StringComparison.Ordinal) && File.Exists(full) ? full : null;
+    }
+
+    /// <summary>Returns the text of a small text file of the collection, or <see langword="null"/> when there is none to show.</summary>
+    /// <param name="relative">The path as the model states it, relative to the folder of the collection.</param>
+    public string? ContentText(string? relative) =>
+        ContentFile(relative) is { } path && new FileInfo(path).Length <= LargestText
+            ? File.ReadAllText(path).ReplaceLineEndings("\n").Trim()
+            : null;
 }
