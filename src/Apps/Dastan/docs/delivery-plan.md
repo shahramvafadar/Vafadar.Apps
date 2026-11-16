@@ -264,5 +264,5 @@ work of its own; the order is not a plan.
 | Accessibility with people | A tool found no broken rule. Nobody has used the site with a screen reader, and no visitor has been watched using it |
 | Identity | Palette, wordmark, icons and the Latin font are provisional (ADR 0004); the Persian spelling of the name is open |
 | Hosting | No host, no domain, no certificate, no monitoring. The headers are set, but nothing was tested from outside this machine; the privacy matrix has to be read again against the host |
-| Dependencies | Eight automatic update proposals are open for the repository ([note](../../../../docs/dependency-updates.md)); the container of the browser tests and its package move together |
+| Dependencies | Six automatic update proposals are open for the repository ([note](../../../../docs/dependency-updates.md)); the container of the browser tests and its package move together |
 | Reading without a connection | Decided against for M0 ([ADR 0007](adr/0007-installable-app.md)); offering it needs its own decision on what may be kept |
