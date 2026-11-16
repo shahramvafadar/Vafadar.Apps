@@ -13,6 +13,7 @@ using Vafadar.Zanance.Api.Sharing;
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Original PostgreSQL outbox and actual sender under concurrent workers, without authentication or financial effects.</summary>
+[Trait("Qualification", "IdentityMailLocal")]
 public sealed class IdentityMailOutboxTests
 {
     /// <summary>Unknown sender return keeps the original lease; another worker cannot duplicate it, and restart reuses its exact batch.</summary>

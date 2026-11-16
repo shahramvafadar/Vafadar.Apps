@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="Confirm" xml:space="preserve">
+    <value>Conferma il tuo account Zanance</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Recupera il tuo account Zanance</value>
+  </data>
+  <data name="Instruction" xml:space="preserve">
+    <value>Apri Zanance e completa la richiesta corrispondente con questi dati.</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Richiesta</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Codice</value>
+  </data>
+  <data name="Expiry" xml:space="preserve">
+    <value>Questo codice monouso scade 15 minuti dopo la richiesta. Se non hai effettuato la richiesta, ignora questa email.</value>
+  </data>
+</root>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="Confirm" xml:space="preserve">
+    <value>Bestätigen Sie Ihr Zanance-Konto</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Stellen Sie Ihr Zanance-Konto wieder her</value>
+  </data>
+  <data name="Instruction" xml:space="preserve">
+    <value>Öffnen Sie Zanance und schließen Sie die zugehörige Anfrage mit diesen Angaben ab.</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>Anfrage</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Expiry" xml:space="preserve">
+    <value>Dieser Einmalcode läuft 15 Minuten nach der Anfrage ab. Wenn Sie diese Anfrage nicht gestellt haben, ignorieren Sie diese E-Mail.</value>
+  </data>
+</root>

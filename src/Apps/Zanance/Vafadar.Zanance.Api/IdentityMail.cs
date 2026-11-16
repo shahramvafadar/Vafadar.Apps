@@ -8,7 +8,11 @@ using Microsoft.AspNetCore.DataProtection;
 namespace Vafadar.Zanance.Api;
 
 /// <summary>Original one-use identity envelope, never financial content or a marketing contact.</summary>
-internal sealed record IdentityMail(Guid Id, string Purpose, string Recipient, string Token);
+internal sealed record IdentityMail(Guid Id, string Purpose, string Recipient, string Token, int Format = 1, string? Language = null)
+{
+    /// <inheritdoc />
+    public override string ToString() => "Protected identity delivery";
+}
 
 /// <summary>Acceptance by the selected sender; it does not claim delivery to the recipient's inbox.</summary>
 internal interface IIdentityMailSender
@@ -75,7 +79,7 @@ internal sealed class BrevoIdentityMailSender : IIdentityMailSender, IDisposable
         ct.ThrowIfCancellationRequested();
         if (mail.Id == Guid.Empty || mail.Purpose is not ("confirm" or "reset") ||
             mail.Recipient is null || mail.Recipient.Length > 254 || !MailAddress.TryCreate(mail.Recipient, out var address) || address.Address != mail.Recipient ||
-            string.IsNullOrEmpty(mail.Token) || mail.Token.Length > 16384)
+            string.IsNullOrEmpty(mail.Token) || mail.Token.Length > 16384 || mail.Format is not (1 or 2))
             throw new IdentityMailUnavailable();
         var caller = ct;
         using var deadline = CancellationTokenSource.CreateLinkedTokenSource(ct);
@@ -92,16 +96,16 @@ internal sealed class BrevoIdentityMailSender : IIdentityMailSender, IDisposable
             try
             {
                 await secret.ReadExactlyAsync(bytes, ct);
-                key = new UTF8Encoding(false, true).GetString(bytes).TrimEnd('\r', '\n');
+                var start = bytes.AsSpan().StartsWith(Encoding.UTF8.Preamble) ? Encoding.UTF8.Preamble.Length : 0;
+                key = new UTF8Encoding(false, true).GetString(bytes, start, bytes.Length - start).TrimEnd('\r', '\n');
                 if (key.Length is < 1 or > 256 || key.Any(c => c < 33 || c > 126)) throw new IdentityMailUnavailable();
             }
             finally { CryptographicOperations.ZeroMemory(bytes); }
-            var subject = mail.Purpose == "confirm" ? "Confirm your Zanance account" : "Recover your Zanance account";
-            var text = $"{subject}\n\nOpen Zanance and complete the matching request using these values.\nRequest: {mail.Id:D}\nCode: {mail.Token}\n\nThis one-use code expires 15 minutes after the request. If you did not request this, ignore this email.";
+            var content = IdentityMailText.Render(mail);
             body = JsonSerializer.SerializeToUtf8Bytes(new
             {
-                sender = new { email = sender, name = "Zanance" }, subject,
-                textContent = text, htmlContent = "<pre>" + WebUtility.HtmlEncode(text) + "</pre>",
+                sender = new { email = sender, name = "Zanance" }, subject = content.Subject,
+                textContent = content.Text, htmlContent = content.Html,
                 // The documented batch contract applies to one version/one recipient too. The key is never rotated
                 // after an unknown transport outcome. Its 30-minute TTL exceeds the original 15-minute challenge.
                 headers = new Dictionary<string, string> { ["idempotencyKey"] = mail.Id.ToString("D") },
@@ -156,6 +160,6 @@ internal static class IdentityMailEnvelope
             ?? throw new IdentityMailUnavailable();
         // Enabling a real sender must never drain historical local qualification mail or borrow a replacement sender.
         if (original.DeliveryAuthority != expectedAuthority) throw new IdentityMailUnavailable();
-        return new(row.Id, row.Purpose, original.Recipient, original.Token);
+        return new(row.Id, row.Purpose, original.Recipient, original.Token, original.Format, original.Language);
     }
 }

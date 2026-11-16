@@ -11,6 +11,7 @@ using Vafadar.Zanance.Api;
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Original anonymous recovery entry captures the actual sender in its protected one-use outbox.</summary>
+[Trait("Qualification", "IdentityMailLocal")]
 public sealed class IdentityMailRouteTests
 {
     /// <summary>One genuine original service route queues the selected sender without mail, login, sessions or financial effects.</summary>

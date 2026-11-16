@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data name="Confirm" xml:space="preserve">
+    <value>تأیید حساب Zanance</value>
+  </data>
+  <data name="Recover" xml:space="preserve">
+    <value>بازیابی حساب Zanance</value>
+  </data>
+  <data name="Instruction" xml:space="preserve">
+    <value>برنامهٔ Zanance را باز کنید و درخواست مربوط را با این مقادیر تکمیل کنید.</value>
+  </data>
+  <data name="Request" xml:space="preserve">
+    <value>شناسهٔ درخواست</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>کد</value>
+  </data>
+  <data name="Expiry" xml:space="preserve">
+    <value>این کد یک‌بارمصرف، ۱۵ دقیقه پس از ثبت درخواست منقضی می‌شود. اگر شما این درخواست را ثبت نکرده‌اید، این ایمیل را نادیده بگیرید.</value>
+  </data>
+</root>

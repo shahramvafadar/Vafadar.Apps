@@ -247,14 +247,16 @@ public sealed partial class BillingClientContinuationTests
         // Integration's unrelated HTTP installation key is ephemeral. Another explicit worker may
         // continue the same persisted billing authority/client, without recreating a missing installation key.
         var worker = "http-retired-cache-" + Guid.NewGuid().ToString("N");
-        await using var host = new BillingHttpHost(connection, parent, protection, provider, worker, peerName: "http-retired-cache");
+        // Keep the original fixed provider term and service clock coherent after the real calendar passes it.
+        // Production must still reject genuinely expired grants; this fixture never extends its signed dates.
+        await using var host = new BillingHttpHost(connection, parent, protection, provider, worker, fixtureClock: new Clock(), peerName: "http-retired-cache");
         using var http = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
         var transport = new HttpTransport(http); var native = new NativeAccess();
         var storage = new Storage(root, protection.CreateProtector("fictional-http-retired-cache-v1"));
         BillingClient Open() => new(transport, storage, BillingIssuer.GooglePlay, BillingEnvironment.Sandbox);
         var client = Open(); var fresh = await client.ObserveAsync(native, ct);
         provider.Binding = BillingAccountBinding.Google(fresh.Snapshot!.AccountToken, false);
-        // Server time is current; this fictional provider's October term remains inside its actual verification window.
+        // Original service time and fictional October terms share the same explicit fixture clock.
         try
         {
             // A prior rate refusal may have left the original unaccepted command private. Resolve those same

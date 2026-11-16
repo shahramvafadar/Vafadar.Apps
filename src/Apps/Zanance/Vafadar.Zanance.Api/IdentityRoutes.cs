@@ -10,13 +10,29 @@ using Microsoft.Extensions.Options;
 namespace Vafadar.Zanance.Api;
 
 /// <summary>Bounded identity input; machine responses contain no credentials or recipient details.</summary>
-public sealed record IdentityInput(string Email, string Password);
+public sealed record IdentityInput(string Email, string Password, string? Language = null)
+{
+    /// <inheritdoc />
+    public override string ToString() => "Unretained identity input";
+}
 /// <summary>Explicit challenge completion, always sent in a body rather than a logged URL.</summary>
-public sealed record ChallengeInput(Guid Id, string Token, string? Password);
+public sealed record ChallengeInput(Guid Id, string Token, string? Password)
+{
+    /// <inheritdoc />
+    public override string ToString() => "Unretained identity completion";
+}
 /// <summary>Framework refresh token submitted once.</summary>
-public sealed record RefreshInput(string RefreshToken);
+public sealed record RefreshInput(string RefreshToken)
+{
+    /// <inheritdoc />
+    public override string ToString() => "Unretained identity refresh";
+}
 /// <summary>Protected outbox payload, delivered only by a configured private operator port.</summary>
-public sealed record PrivateMail(string Recipient, string Token, string? DeliveryAuthority = null);
+public sealed record PrivateMail(string Recipient, string Token, string? DeliveryAuthority = null, int Format = 1, string? Language = null)
+{
+    /// <inheritdoc />
+    public override string ToString() => "Protected identity envelope";
+}
 
 /// <summary>Maintained Identity credential operations with durable one-use grants.</summary>
 public static class IdentityRoutes
@@ -28,14 +44,35 @@ public static class IdentityRoutes
             IDataProtectionProvider protection, TimeProvider time, IServiceProvider services, CancellationToken ct) =>
         {
             if (!Valid(input)) return Results.BadRequest();
-            // Uniform response avoids declaring whether a recipient already has an identity.
-            if (await users.FindByEmailAsync(input.Email) is not null) return Results.Accepted();
+            // Uniform responses never disclose an existing account. A proven original unconfirmed owner may
+            // recover an expired confirmation without replacing their password or replaying a live mail request.
+            var existing = await users.FindByEmailAsync(input.Email);
+            if (existing is not null)
+            {
+                await using var retry = await db.Database.BeginTransactionAsync(ct);
+                await Sync.SyncRequestScope.LockOwnerAsync(db, existing.Id, ct);
+                await db.Entry(existing).ReloadAsync(ct);
+                if (db.Entry(existing).State != EntityState.Detached && !existing.EmailConfirmed &&
+                    await users.CheckPasswordAsync(existing, input.Password))
+                {
+                    var now = time.GetUtcNow();
+                    if (!await db.Challenges.AnyAsync(c => c.UserId == existing.Id && c.Purpose == "confirm" && !c.Consumed && c.ExpiresAt > now, ct))
+                    {
+                        var next = await users.GenerateEmailConfirmationTokenAsync(existing);
+                        AddChallenge(db, protection, time, existing, "confirm", next,
+                            services.GetService<IIdentityMailSender>()?.Authority, input.Language);
+                        await db.SaveChangesAsync(ct);
+                    }
+                }
+                await retry.CommitAsync(ct);
+                return Results.Accepted();
+            }
             var user = new ServiceUser { UserName = input.Email, Email = input.Email };
             await using var tx = await db.Database.BeginTransactionAsync(ct);
             var created = await users.CreateAsync(user, input.Password);
             if (!created.Succeeded) return Results.Accepted();
             var token = await users.GenerateEmailConfirmationTokenAsync(user);
-            AddChallenge(db, protection, time, user, "confirm", token, services.GetService<IIdentityMailSender>()?.Authority);
+            AddChallenge(db, protection, time, user, "confirm", token, services.GetService<IIdentityMailSender>()?.Authority, input.Language);
             await db.SaveChangesAsync(ct); await tx.CommitAsync(ct);
             return Results.Accepted();
         });
@@ -46,7 +83,7 @@ public static class IdentityRoutes
             var user = await users.FindByEmailAsync(input.Email);
             if (user is null || !user.EmailConfirmed) return Results.Accepted();
             var token = await users.GeneratePasswordResetTokenAsync(user);
-            AddChallenge(db, protection, time, user, "reset", token, services.GetService<IIdentityMailSender>()?.Authority);
+            AddChallenge(db, protection, time, user, "reset", token, services.GetService<IIdentityMailSender>()?.Authority, input.Language);
             await db.SaveChangesAsync(ct);
             return Results.Accepted();
         });
@@ -126,9 +163,9 @@ public static class IdentityRoutes
 
     private static bool Valid(IdentityInput input) => input.Email is { Length: > 3 and <= 254 } && input.Email.Contains('@', StringComparison.Ordinal) && input.Password is { Length: >= 12 and <= 256 };
 
-    private static void AddChallenge(ServiceDbContext db, IDataProtectionProvider protection, TimeProvider time, ServiceUser user, string purpose, string token, string? deliveryAuthority) =>
+    private static void AddChallenge(ServiceDbContext db, IDataProtectionProvider protection, TimeProvider time, ServiceUser user, string purpose, string token, string? deliveryAuthority, string? language) =>
         db.Challenges.Add(new IdentityChallenge { Id = Guid.NewGuid(), UserId = user.Id, Purpose = purpose, ExpiresAt = time.GetUtcNow().AddMinutes(15),
-            ProtectedMail = protection.CreateProtector("identity-mail-v1").Protect(JsonSerializer.Serialize(new PrivateMail(user.Email ?? throw new InvalidOperationException("Recipient required."), token, deliveryAuthority))) });
+            ProtectedMail = protection.CreateProtector("identity-mail-v1").Protect(JsonSerializer.Serialize(new PrivateMail(user.Email ?? throw new InvalidOperationException("Recipient required."), token, deliveryAuthority, 2, IdentityMailText.Language(language)))) });
 
     private static async Task<IResult> GrantAsync(SignInManager<ServiceUser> signIn, ServiceUser user, DeviceSession session)
     {

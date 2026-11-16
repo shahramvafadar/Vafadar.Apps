@@ -1,4 +1,5 @@
 using System.Net;
+using System.Globalization;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text.Json.Serialization.Metadata;
@@ -88,6 +89,8 @@ public sealed class BillingHttpTransport : IBillingServiceTransport, IDisposable
 /// <summary>Ephemeral native identity request only; credentials must not enter diagnostic record formatting.</summary>
 internal sealed record BillingIdentityInput(string Email, string Password)
 {
+    /// <summary>Capture once at request entry; later UI changes cannot relabel queued identity instructions.</summary>
+    public string Language { get; init; } = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
     /// <inheritdoc />
     public override string ToString() => "Unretained identity request";
 }

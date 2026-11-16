@@ -59,11 +59,11 @@ jobs:
           docker exec zanance-backend-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_ci
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE ROLE zanance_runtime LOGIN'
       - name: Publish security-patched independent test runtime
-        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/identity-test-runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.15 -p:ContinuousIntegrationBuild=true --output artifacts/identity-test-runtime
       - name: Verify actual identity, private storage and isolated restore
         run: |
           mkdir -p TestResults
-          ./artifacts/identity-test-runtime/Vafadar.Zanance.Api.Tests -trait- "Qualification=BillingLocal" -trait- "Qualification=AiLocal" -failSkips -result-xml TestResults/identity.xml
+          ./artifacts/identity-test-runtime/Vafadar.Zanance.Api.Tests -trait- "Qualification=BillingLocal" -trait- "Qualification=AiLocal" -trait- "Qualification=IdentityMailLocal" -failSkips -result-xml TestResults/identity.xml
       - name: Upload bounded test results
         if: always()
         uses: actions/upload-artifact@v7
@@ -74,6 +74,51 @@ jobs:
       - name: Remove only the test container
         if: always()
         run: docker rm -f zanance-backend-ci
+
+  identity-mail:
+    name: Isolated identity mail delivery
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+      ZANANCE_MAIL_TEST_DB: Host=127.0.0.1;Port=55477;Database=zanance_identity_mail_d1226;Username=postgres
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+      - name: Prepare fresh mail-only fictional databases
+        run: |
+          docker run -d --name zanance-identity-mail-ci -p 127.0.0.1:55477:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_identity_mail_d1226 postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+          for attempt in $(seq 1 30); do
+            if docker exec zanance-identity-mail-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_mail_d1226; then break; fi
+            sleep 1
+          done
+          docker exec zanance-identity-mail-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_mail_d1226
+          docker exec zanance-identity-mail-ci createdb -h 127.0.0.1 -U postgres zanance_identity_mail_http_d1226
+          docker exec zanance-identity-mail-ci createdb -h 127.0.0.1 -U postgres zanance_identity_mail_d1227
+          docker exec zanance-identity-mail-ci createdb -h 127.0.0.1 -U postgres zanance_identity_mail_retry_d1227
+      - name: Publish independent mail test runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.15 -p:ContinuousIntegrationBuild=true --output artifacts/identity-mail-test-runtime
+      - name: Verify original envelope and concurrent worker boundaries
+        run: |
+          mkdir -p TestResults
+          ./artifacts/identity-mail-test-runtime/Vafadar.Zanance.Api.Tests -class '*IdentityMailOutboxTests' -class '*IdentityMailRouteTests' -failSkips -result-xml TestResults/identity-mail-outbox.xml
+      - name: Verify complete original localized identity flow
+        env:
+          ZANANCE_MAIL_TEST_DB: Host=127.0.0.1;Port=55477;Database=zanance_identity_mail_d1227;Username=postgres
+        run: ./artifacts/identity-mail-test-runtime/Vafadar.Zanance.Api.Tests -class '*IdentityMailEndToEndTests' -class '*IdentityMailRetryTests' -failSkips -result-xml TestResults/identity-mail-complete.xml
+      - name: Upload only bounded fictional test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: identity-mail-test-results
+          path: TestResults/identity-mail-*.xml
+          retention-days: 14
+      - name: Remove only the fresh identity-mail test container
+        if: always()
+        run: docker rm -f zanance-identity-mail-ci
 
   billing:
     name: Isolated purchase authority
@@ -100,7 +145,7 @@ jobs:
           mkdir -p "$ZANANCE_BILLING_QA_ROOT" TestResults
           printf '%s' 'Zanance fictional billing d295' > "$ZANANCE_BILLING_QA_ROOT/fixture.marker"
       - name: Publish security-patched purchase test runtime
-        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/billing-test-runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.15 -p:ContinuousIntegrationBuild=true --output artifacts/billing-test-runtime
       - name: Establish original durable service stages
         run: ./artifacts/billing-test-runtime/Vafadar.Zanance.Api.Tests -class '*BillingPersistenceTests' -failSkips -result-xml TestResults/billing-service.xml
       - name: Continue protected original clients and identity sessions
@@ -146,7 +191,7 @@ jobs:
           docker exec zanance-personal-sync-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_sync_ci
           docker exec zanance-personal-sync-ci psql -U postgres -d zanance_identity_sync_ci -v ON_ERROR_STOP=1 -c 'CREATE ROLE zanance_runtime LOGIN'
       - name: Publish patched independent sync qualification runtime
-        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Sync.Tests/Vafadar.Zanance.Sync.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/sync-test-runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Sync.Tests/Vafadar.Zanance.Sync.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.15 -p:ContinuousIntegrationBuild=true --output artifacts/sync-test-runtime
       - name: Qualify actual service and original clients
         env:
           ZANANCE_SYNC_TEST_PRIVATE: ${{ runner.temp }}/zanance-sync-private-${{ matrix.scenario }}
@@ -196,7 +241,7 @@ jobs:
           mkdir -p "$ZANANCE_AI_QA_ROOT" TestResults
           printf '%s' 'Zanance fictional analysis d298' > "$ZANANCE_AI_QA_ROOT/fixture.marker"
       - name: Publish patched independent analysis test runtime
-        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.13 -p:ContinuousIntegrationBuild=true --output artifacts/analysis-test-runtime
+        run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.15 -p:ContinuousIntegrationBuild=true --output artifacts/analysis-test-runtime
       - name: Verify durable original reservations and outcomes
         run: ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -class '*AiCreditPersistenceTests' -failSkips -result-xml TestResults/analysis-store.xml
       - name: Verify pinned HTTPS and private original continuation
