@@ -1269,6 +1269,7 @@ main:has(> .stage) > :not(.stage) {
   block-size: calc(100dvh - 2 * var(--space-4));
   min-block-size: 22rem;
   margin-block: var(--space-4);
+  scroll-margin-block-start: var(--space-4);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface-raised);
@@ -1366,4 +1367,116 @@ main:has(> .stage) > :not(.stage) {
   border-style: dashed;
   background: transparent;
   color: var(--text-muted);
+}
+
+/* --- The story as a chart (ADR 0008): names in rows, the steps of the telling in columns --- */
+
+/* A row and a column are as large as a finger needs, so the measures are em of the size of the page. */
+.sc {
+  display: flex;
+  align-items: flex-start;
+  inline-size: max-content;
+  margin: auto;
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.sc svg {
+  display: block;
+  flex: none;
+  max-inline-size: none;
+}
+
+/* The names stay in sight while the steps scroll. */
+.sc-names {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  background: var(--surface-raised);
+  border-inline-end: 1px solid var(--border);
+}
+
+.sc-band,
+.sc-name.sc-odd {
+  fill: var(--surface);
+  background: var(--surface);
+}
+
+.sc-rule {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.sc-name,
+.sc-head,
+.sc-mark {
+  display: flex;
+  block-size: 100%;
+  text-decoration: none;
+}
+
+.sc-name {
+  align-items: center;
+  padding-inline: var(--space-2);
+  font-size: 0.9em;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.sc-name:hover,
+.sc-head:hover .sc-title {
+  text-decoration: underline;
+}
+
+.sc-head {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.2em;
+  padding: 0.5em 0.4em;
+  border-block-end: 1px solid var(--border);
+  color: var(--text);
+  text-align: center;
+}
+
+.sc-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 1.7em;
+  block-size: 1.7em;
+  border-radius: 1em;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 0.85em;
+  font-weight: 700;
+}
+
+.sc-title {
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+}
+
+.sc-mark {
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: var(--step-1);
+  line-height: 1;
+}
+
+/* Who is only spoken of in a step: a hollow mark in the colour of the text beside it. */
+.sc-mark.sc-absent {
+  color: var(--text-muted);
+}
+
+.sc-mark:hover {
+  background: var(--surface);
+}
+
+.sc-name:focus-visible,
+.sc-head:focus-visible,
+.sc-mark:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
 }

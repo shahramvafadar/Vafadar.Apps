@@ -1,0 +1,113 @@
+@* The story as a chart: one row per name, one column per step of the telling (ADR 0008). The steps stand in the
+   order they are told, one beside the other – an order, not a calendar: the distance between two steps says
+   nothing about time. A mark says what part a name has in a step; there are no bars from a first to a last
+   appearance, because the story does not say that somebody is there in between. The chart begins where reading
+   begins – at the right on a page that is read from the right – and the names stay at that side while it scrolls. *@
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject IStringLocalizer<Ui> T
+
+<div class="sc" dir="@Visitor.Language.Direction">
+    <svg class="sc-names" width="@Em(NameWidth)" height="@Em(Height)">
+        @foreach (var (lane, row) in Chart.Lanes.Select((lane, row) => (lane, row)))
+        {
+            <foreignObject x="0" y="@Em(HeadHeight + (row * RowHeight))" width="@Em(NameWidth)" height="@Em(RowHeight)">
+                <a class="sc-name @(row % 2 == 1 ? "sc-odd" : null)" href="@($"{Site.Collection}/entity/{lane.Entity.Id}")"><Loc Text="lane.Entity.Label" /></a>
+            </foreignObject>
+        }
+    </svg>
+    <svg class="sc-plot" width="@Em(Chart.Steps.Length * ColumnWidth)" height="@Em(Height)">
+        @for (var row = 1; row < Chart.Lanes.Length; row += 2)
+        {
+            <rect class="sc-band" x="0" y="@Em(HeadHeight + (row * RowHeight))" width="100%" height="@Em(RowHeight)" />
+        }
+
+        @foreach (var (step, column) in Chart.Steps.Select((step, column) => (step, column)))
+        {
+            var title = Visitor.Text(step.Event.Label).Value;
+            <line class="sc-rule" x1="@Em(Across(column * ColumnWidth, 0))" y1="@Em(HeadHeight)" x2="@Em(Across(column * ColumnWidth, 0))" y2="@Em(Height)" />
+            <foreignObject x="@Em(Across(column * ColumnWidth, ColumnWidth))" y="0" width="@Em(ColumnWidth)" height="@Em(HeadHeight)">
+                <a class="sc-head" href="@($"{Here}#step-{step.Number}")" title="@(Titles ? null : title)">
+                    <span class="sc-number"><span class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], string.Empty)</span>@Visitor.Number(step.Number)</span>
+                    @if (Titles)
+                    {
+                        <bdi class="sc-title">@title</bdi>
+                    }
+                    else
+                    {
+                        <span class="visually-hidden">@title</span>
+                    }
+                </a>
+            </foreignObject>
+
+            @foreach (var (lane, row) in Chart.Lanes.Select((lane, row) => (lane, row)))
+            {
+                if (lane.Cells[column] is { } cell)
+                {
+                    var words = string.Format(CultureInfo.CurrentCulture, T["Story_MarkTitle"], Visitor.Text(lane.Entity.Label).Value, T[$"Presence_{cell.Presence}"], Visitor.Number(step.Number), title);
+                    <foreignObject x="@Em(Across(column * ColumnWidth, ColumnWidth))" y="@Em(HeadHeight + (row * RowHeight))" width="@Em(ColumnWidth)" height="@Em(RowHeight)">
+                        <a class="sc-mark @(Present(cell.Presence) ? null : "sc-absent")" href="@($"{Here}#step-{step.Number}")" title="@words">
+                            <span aria-hidden="true">@Mark(cell.Presence)</span><span class="visually-hidden">@words</span>
+                        </a>
+                    </foreignObject>
+                }
+            }
+        }
+    </svg>
+</div>
+
+@code {
+    // Measures of the drawing in em. A row and a column without a name are what a finger needs (44 px).
+    private const double NameWidth = 9;
+    private const double RowHeight = 2.75;
+    private const double WideColumn = 8.5;
+    private const double NarrowColumn = 3.2;
+
+    // A name of a step is set smaller than the page; this many of its characters fit on a line of a wide column.
+    private const int PerLine = 13;
+
+    /// <summary>Gets or sets the part of the story the chart shows.</summary>
+    [Parameter, EditorRequired]
+    public StoryChart Chart { get; set; } = null!;
+
+    /// <summary>Gets or sets a value indicating whether the steps carry their names; otherwise their numbers alone.</summary>
+    [Parameter]
+    public bool Titles { get; set; } = true;
+
+    /// <summary>Gets or sets the address of the page of the story, for the links to its steps.</summary>
+    [Parameter, EditorRequired]
+    public string Here { get; set; } = string.Empty;
+
+    private double ColumnWidth => Titles ? WideColumn : NarrowColumn;
+
+    // The head of a column is as high as the longest name of a step needs under its number.
+    private double HeadHeight => Titles
+        ? 2.6 + (Chart.Steps.Max(step => Math.Max(1, (int)Math.Ceiling(Visitor.Text(step.Event.Label).Value.Length / (double)PerLine))) * (Visitor.Language.IsRightToLeft ? 1.45 : 1.2))
+        : RowHeight;
+
+    private double Height => HeadHeight + (Chart.Lanes.Length * RowHeight);
+
+    // Numbers in markup are written the same in every language of the page.
+    private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+
+    // A place across the plot as the SVG counts it – from the left – for something that begins a distance from
+    // the side where reading starts.
+    private double Across(double start, double width) =>
+        Visitor.Language.IsRightToLeft ? (Chart.Steps.Length * ColumnWidth) - start - width : start;
+
+    // Who or what is there in the step; the other marks are for who is only spoken of.
+    private static bool Present(Presence presence) => presence is Presence.Acts or Presence.Involved or Presence.Setting or Presence.Object;
+
+    /// <summary>Returns the mark of a presence: full ones for who or what is there, hollow ones for who is only spoken of.</summary>
+    public static string Mark(Presence presence) => presence switch
+    {
+        Presence.Acts => "●",
+        Presence.Involved => "◐",
+        Presence.Setting => "■",
+        Presence.Object => "◆",
+        Presence.MentionedOnly => "○",
+        Presence.SubjectOfReport => "◌",
+        Presence.DeceasedSubject => "▽",
+        _ => "·",
+    };
+}

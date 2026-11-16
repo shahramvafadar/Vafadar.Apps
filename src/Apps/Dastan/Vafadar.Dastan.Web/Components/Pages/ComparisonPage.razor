@@ -49,26 +49,28 @@
 
     @* The chart is opened and closed at its sides (D-040): the time at the two sides it runs between, the single
        events where their callouts stand, the lanes where the last lane ends. *@
-    var earlier = Steps(T["Chart_Edge_Earlier"], Stretch(_from + _step, _to), Stretch(_from - _step, _to));
-    var later = Steps(T["Chart_Edge_Later"], Stretch(_from, _to - _step), Stretch(_from, _to + _step));
-    var events = Steps(
+    RenderFragment Earlier(string stage) => Steps(stage, T["Chart_Edge_Earlier"], Stretch(_from + _step, _to), Stretch(_from - _step, _to));
+    RenderFragment Later(string stage) => Steps(stage, T["Chart_Edge_Later"], Stretch(_from, _to - _step), Stretch(_from, _to + _step));
+    RenderFragment Events(string stage) => Steps(
+        stage,
         T["Chart_Events"],
         _state.Events && _hasEvents ? _state with { Events = false } : null,
         _state.Events ? null : _state with { Events = true });
-    var lanes = Steps(
+    RenderFragment Lanes(string stage) => Steps(
+        stage,
         T["Chart_Edge_Lanes"],
         _shown > 1 ? _state with { Lanes = _shown - 1 } : null,
         _shown < _chart.Lanes.Length ? _state with { Lanes = _shown + 1 == _chart.Lanes.Length ? null : _shown + 1 } : null);
     if (_across is not null)
     {
-        <ChartStage Label="@label" FrameDirection="ltr" Left="earlier" Right="later" Top="events" Bottom="lanes" Class="@(_down is null ? null : "only-wide")">
+        <ChartStage Id="chart-across" Label="@label" FrameDirection="ltr" Left="@Earlier("chart-across")" Right="@Later("chart-across")" Top="@Events("chart-across")" Bottom="@Lanes("chart-across")" Class="@(_down is null ? null : "only-wide")">
             <TimelineChart Drawing="_across" Texts="Words" Here="@_here" />
         </ChartStage>
     }
 
     if (_down is not null)
     {
-        <ChartStage Label="@label" FrameDirection="ltr" Top="earlier" Bottom="later" Left="lanes" Right="events" Class="@(_across is null ? null : "only-narrow")">
+        <ChartStage Id="chart-down" Label="@label" FrameDirection="ltr" Top="@Earlier("chart-down")" Bottom="@Later("chart-down")" Left="@Lanes("chart-down")" Right="@Events("chart-down")" Class="@(_across is null ? null : "only-narrow")">
             <TimelineChartDown Drawing="_down" Texts="Words" Here="@_here" />
         </ChartStage>
     }
@@ -251,8 +253,9 @@
     }
 
     // The steps of a side of the stage.
-    private RenderFragment Steps(string name, ChartState? fewer, ChartState? more) =>
-        @<EdgeSteps Name="@name" Fewer="@(fewer is null ? null : Address(fewer))" More="@(more is null ? null : Address(more))" />;
+    // The steps of a side of a stage; they lead back to that stage, so that the chart stays on the screen.
+    private RenderFragment Steps(string stage, string name, ChartState? fewer, ChartState? more) =>
+        @<EdgeSteps Name="@name" Fewer="@(fewer is null ? null : $"{Address(fewer)}#{stage}")" More="@(more is null ? null : $"{Address(more)}#{stage}")" />;
 
     // The stretch from the first beginning to the last end of what the comparison holds, when that is more than
     // the stretch it is about.

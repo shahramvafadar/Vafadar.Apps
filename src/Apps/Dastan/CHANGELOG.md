@@ -52,3 +52,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   generation at a time, to brothers, sisters, uncles and aunts and their children, or to the whole family; its
   generations run down the page or across it. Partners stand beside each other, children below their parents, and
   the lines show whose child somebody is.
+- The story is a chart as well: every name has a row and every step of the telling a column, and a mark shows what
+  part a name has in a step. It can be closed from the first and from the last step, to the numbers of the steps
+  and to fewer names, and opened again. After a "+" or a "−" the chart stays on the screen – for the comparison and
+  the family tree too.

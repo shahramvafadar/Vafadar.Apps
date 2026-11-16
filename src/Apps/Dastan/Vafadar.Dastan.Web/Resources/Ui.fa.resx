@@ -244,7 +244,7 @@
     <value>این گام چند صحنه از متن را فشرده کرده است.</value>
   </data>
   <data name="Story_Lanes" xml:space="preserve">
-    <value>هر کس کجای قصه است</value>
+    <value>همین به صورت جدول</value>
   </data>
   <data name="Story_LanesLead" xml:space="preserve">
     <value>هر نام یک ردیف و هر گام یک ستون دارد. خانهٔ خالی یعنی آن نام در آن گام نقشی ندارد. کسی که فقط از او نام برده می‌شود با نشانهٔ «نام‌برده» آمده است، نه «حاضر».</value>
@@ -815,5 +815,32 @@
   </data>
   <data name="Tree_Beside" xml:space="preserve">
     <value>خویشان کناری</value>
+  </data>
+  <data name="Story_Chart" xml:space="preserve">
+    <value>قصه به‌صورت چارت</value>
+  </data>
+  <data name="Story_ChartLead" xml:space="preserve">
+    <value>هر نام یک ردیف و هر گامِ روایت یک ستون دارد؛ این ترتیبِ گفتن است، نه تقویم: فاصلهٔ دو گام چیزی دربارهٔ زمان نمی‌گوید. هر نشانه می‌گوید آن نام در آن گام چه سهمی دارد؛ جای خالی یعنی هیچ.</value>
+  </data>
+  <data name="Story_ChartShown" xml:space="preserve">
+    <value>نمایش: گام {0} تا {1} از {2}، و {3} نام از {4}.</value>
+  </data>
+  <data name="Story_ChartRegion" xml:space="preserve">
+    <value>قصه به‌صورت چارت: {0}</value>
+  </data>
+  <data name="Story_MarkTitle" xml:space="preserve">
+    <value>{0}: {1} – گام {2}، {3}</value>
+  </data>
+  <data name="Story_Edge_Earlier" xml:space="preserve">
+    <value>گام‌های پیش‌تر</value>
+  </data>
+  <data name="Story_Edge_Later" xml:space="preserve">
+    <value>گام‌های پس‌تر</value>
+  </data>
+  <data name="Story_Edge_Heads" xml:space="preserve">
+    <value>نام گام‌ها</value>
+  </data>
+  <data name="Story_Edge_Lanes" xml:space="preserve">
+    <value>نام‌ها</value>
   </data>
 </root>

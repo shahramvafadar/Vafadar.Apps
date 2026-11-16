@@ -253,3 +253,34 @@ test of the page had been changed by the same renaming and failed for that reaso
 larger family the lines of a father with children by two mothers ran together, so that the drawing said that one
 mother was the mother of all of them; no test saw that. Every family now has a line of its own, and the tests of
 the layout check it.
+
+## Second addendum of 2026-11-16 – the story as a chart (step 9.1)
+
+The lanes of a story were a table. They are a chart in a stage now (`StoryLanesChart`, cut out of the lanes of the
+projection by `StoryCharts`); the table stays below it as the same facts without a drawing.
+
+| Chart | Side where it begins | Side where it ends | Above | Below |
+|---|---|---|---|---|
+| The story | the earlier steps: "−" closes the first step shown, "+" opens the one before it | the later steps, the same way | the names of the steps: closed, a column carries its number alone | the rows, closed from the last one |
+
+* **An order, not a calendar.** The steps stand one beside the other at equal distances, and the page says that the
+  distance says nothing about time. There are no bars from a first to a last appearance. A mark keeps the presence:
+  who is only spoken of has a hollow mark and another colour, and every mark says in words who has which part in
+  which step.
+* **It begins where reading begins.** Unlike a chart of years, the order of a telling is read like text: on a
+  Persian page the first step stands at the right, beside the names, and the two sides of the stage change places.
+* **Never beyond the reading position.** The chart is cut out of what the projection gives; an address that asks
+  for a later step gets the last one the visitor has read, and the "+" at that side is no link – without saying
+  whether the story goes on, which the page says in general.
+* **A step leads back to the stage.** The links of the sides of every stage now end in the name of the stage
+  (`#chart`), so that after a step the chart is on the screen again and not the top of the page. This holds for the
+  comparison and the family tree as well.
+
+Verification, 2026-11-16: `StoryChartTests` (Core, 196 tests in the project), `StoryChartPageTests` (Web, 272),
+`StoryChartBrowserTests` (33 cases at 360, 390, 412 and 1280 px, English and Persian: the stage and its sides, the
+names staying in sight while the steps scroll, no name or head cut, every mark, name and head at least 44 px and
+every mark in the column of its step, a step at a side and Back, a mark leading to its step, without a script, no
+finding of axe-core 4.14 in both appearances). All tests without a browser: 1008 passed. The browser tests: 281
+passed in a run of their own. A run of all projects together did not end – Docker Desktop stopped on this machine
+while it ran, and the browser of the tests with it; that says nothing about the site, and it is the reason the two
+numbers come from two runs.

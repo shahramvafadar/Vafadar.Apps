@@ -64,11 +64,11 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
         var across = await Open("?view=across");
         var down = await Open("?view=down");
 
-        Assert.Matches("<div class=\"stage only-wide\" dir=\"ltr\">.*?<div class=\"tl tl-across\" dir=\"ltr\">", fit.Html.ReplaceLineEndings(" "));
-        Assert.Matches("<div class=\"stage only-narrow\" dir=\"ltr\">.*?<div class=\"tl tl-down\" dir=\"ltr\">", fit.Html.ReplaceLineEndings(" "));
+        Assert.Matches("<div class=\"stage only-wide\" id=\"chart-across\" dir=\"ltr\">.*?<div class=\"tl tl-across\" dir=\"ltr\">", fit.Html.ReplaceLineEndings(" "));
+        Assert.Matches("<div class=\"stage only-narrow\" id=\"chart-down\" dir=\"ltr\">.*?<div class=\"tl tl-down\" dir=\"ltr\">", fit.Html.ReplaceLineEndings(" "));
 
         // A visitor who chose gets the one they chose, on every screen.
-        Assert.Contains("<div class=\"stage \" dir=\"ltr\">", across.Html, StringComparison.Ordinal);
+        Assert.Contains("<div class=\"stage \" id=\"chart-across\" dir=\"ltr\">", across.Html, StringComparison.Ordinal);
         Assert.Contains("<div class=\"tl tl-across\" dir=\"ltr\">", across.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("tl-down", across.Html, StringComparison.Ordinal);
         Assert.Contains("<div class=\"tl tl-down\" dir=\"ltr\">", down.Html, StringComparison.Ordinal);
@@ -266,10 +266,10 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.Matches("<div class=\"stage-edge stage-right\" dir=\"ltr\">\\s*<span class=\"stage-label\">Later years</span>", start.Html);
 
         // A step is the distance between two years of the axis: a century at this scale.
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-700&amp;to=700\" title=\"Earlier years: open a step further\">", Side(start, "Earlier years"), StringComparison.Ordinal);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-500&amp;to=700\" title=\"Earlier years: close a step\">", Side(start, "Earlier years"), StringComparison.Ordinal);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-600&amp;to=800\" title=\"Later years: open a step further\">", Side(start, "Later years"), StringComparison.Ordinal);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-600&amp;to=600\" title=\"Later years: close a step\">", Side(start, "Later years"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-700&amp;to=700#chart-across\" title=\"Earlier years: open a step further\">", Side(start, "Earlier years"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-500&amp;to=700#chart-across\" title=\"Earlier years: close a step\">", Side(start, "Earlier years"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-600&amp;to=800#chart-across\" title=\"Later years: open a step further\">", Side(start, "Later years"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;from=-600&amp;to=600#chart-across\" title=\"Later years: close a step\">", Side(start, "Later years"), StringComparison.Ordinal);
 
         // From the beginning of 700 BCE to the end of 700 CE are 1400 years; the sign is what is seen, the words
         // are read out.
@@ -279,7 +279,7 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.DoesNotContain("aria-current", Choice(opened, "The comparison's own time"), StringComparison.Ordinal);
 
         // Closing the step again leads back to the address of the comparison's own time.
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across\" title=\"Earlier years: close a step\">", Side(opened, "Earlier years"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across#chart-across\" title=\"Earlier years: close a step\">", Side(opened, "Earlier years"), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -306,14 +306,14 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
 
         Assert.Matches("<div class=\"stage-edge stage-top\" dir=\"ltr\">\\s*<span class=\"stage-label\">Events</span>", with.Html);
         Assert.Equal(6, Regex.Matches(with.Html, "<a class=\"tl-callout ").Count);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;events=off\" title=\"Events: close a step\">", Side(with, "Events"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;events=off#chart-across\" title=\"Events: close a step\">", Side(with, "Events"), StringComparison.Ordinal);
         Assert.Contains("<span class=\"stage-step\" aria-disabled=\"true\" title=\"Events: open a step further (not possible here)\">", Side(with, "Events"), StringComparison.Ordinal);
 
         // Without its events the chart has no callout and no line to one; the table keeps them.
         Assert.Empty(Regex.Matches(without.Html, "<a class=\"tl-callout "));
         Assert.Empty(Regex.Matches(without.Html, "class=\"tl-leader "));
         Assert.Contains("<tr id=\"item-gaugamela\"", without.Html, StringComparison.Ordinal);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across\" title=\"Events: open a step further\">", Side(without, "Events"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across#chart-across\" title=\"Events: open a step further\">", Side(without, "Events"), StringComparison.Ordinal);
         Assert.True(double.Parse(Regex.Match(without.Html, "<svg class=\"tl-plot\" width=\"[0-9.]+em\" height=\"([0-9.]+)em\"").Groups[1].Value, CultureInfo.InvariantCulture)
             < double.Parse(Regex.Match(with.Html, "<svg class=\"tl-plot\" width=\"[0-9.]+em\" height=\"([0-9.]+)em\"").Groups[1].Value, CultureInfo.InvariantCulture));
     }
@@ -327,7 +327,7 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
 
         Assert.Matches("<div class=\"stage-edge stage-bottom\" dir=\"ltr\">\\s*<span class=\"stage-label\">Subjects</span>", all.Html);
         Assert.Equal(3, Regex.Matches(all.Html, "<div class=\"tl-lane-name ").Count);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;lanes=2\" title=\"Subjects: close a step\">", Side(all, "Subjects"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;lanes=2#chart-across\" title=\"Subjects: close a step\">", Side(all, "Subjects"), StringComparison.Ordinal);
         Assert.Contains("<span class=\"stage-step\" aria-disabled=\"true\" title=\"Subjects: open a step further (not possible here)\">", Side(all, "Subjects"), StringComparison.Ordinal);
 
         // China and Iran; Rome is closed, with its bars and its event. The table keeps all three.
@@ -335,8 +335,8 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.DoesNotContain("#item-roman-republic\"", two.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("#item-trajan\"", two.Html, StringComparison.Ordinal);
         Assert.Contains("<tr id=\"item-roman-republic\"", two.Html, StringComparison.Ordinal);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across\" title=\"Subjects: open a step further\">", Side(two, "Subjects"), StringComparison.Ordinal);
-        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;lanes=1\" title=\"Subjects: close a step\">", Side(two, "Subjects"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across#chart-across\" title=\"Subjects: open a step further\">", Side(two, "Subjects"), StringComparison.Ordinal);
+        Assert.Contains("<a class=\"stage-step\" href=\"compare/iran-china-rome?view=across&amp;lanes=1#chart-across\" title=\"Subjects: close a step\">", Side(two, "Subjects"), StringComparison.Ordinal);
 
         // The last lane stays: a comparison shows at least one subject.
         Assert.Single(Regex.Matches(one.Html, "<div class=\"tl-lane-name "));

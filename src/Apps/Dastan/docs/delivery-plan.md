@@ -284,3 +284,21 @@ it is visible, checked in a browser in both languages.
 | 8.7 | The stage of a chart (D-040): the whole width of the page and the height of the window for a chart, and at each of its four sides a "+" that opens it further there and a "−" that closes it – for the timeline and for the family tree | Done – [ADR 0008](adr/0008-charts.md), addendum |
 
 Not decided here: a script for pinching and dragging (ADR 0008, point 6), charts of numbers, a map.
+
+## 10. The goal after the charts: every drawing is a chart on the stage (phase 9)
+
+The owner asked on 2026-11-16 for one large goal that is worked through to its end (D-041). The goal: **every
+drawing of the site is a chart on the stage – the whole page, opened and closed at its four sides (D-040) – and
+the charts are tried in three browser engines.** Each step is built, tested, looked at in a browser in both
+languages, documented and merged into `main` on its own, so that the work can stop after any step without leaving
+something half done.
+
+| Step | What | Status |
+|---|---|---|
+| 9.1 | The story as a chart: names in rows, the steps of the telling in columns, in a stage; the table stays beside it | Done – [ADR 0008](adr/0008-charts.md), second addendum |
+| 9.2 | The browser tests run in Firefox and WebKit as well as in Chromium | Not started |
+| 9.3 | The connections of an entity as a chart on the stage, in place of the drawing of M0 (ADR 0005) | Not started |
+| 9.4 | The timeline of a collection from its own dated records – step 8.6 | Not started |
+
+When the goal is reached, the drawings that are left without a stage are none; what is left for a public pilot is
+section 8, which needs the owner.

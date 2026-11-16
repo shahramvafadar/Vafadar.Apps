@@ -122,12 +122,12 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
 
         // Two rows have the same steps; each is named with its row.
         await page.GetByRole(AriaRole.Link, new() { Name = "Descendants: close a step" }).ClickAsync();
-        await Arrived(page, new Regex("down=1$"));
+        await Arrived(page, new Regex("down=1#chart$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(3);
         await Assertions.Expect(page.Locator(".stage-bottom").GetByRole(AriaRole.Link, new() { Name = "Descendants: open a step further" })).ToBeVisibleAsync();
 
         await page.GetByRole(AriaRole.Link, new() { Name = "Descendants: open a step further" }).ClickAsync();
-        await Arrived(page, new Regex("/family$"));
+        await Arrived(page, new Regex("/family#chart$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(4);
 
         await page.GetByRole(AriaRole.Link, new() { Name = "The whole family" }).ClickAsync();
@@ -135,7 +135,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(5);
 
         await page.GoBackAsync();
-        await Arrived(page, new Regex("/family$"));
+        await Arrived(page, new Regex("/family#chart$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(4);
     }
 
@@ -183,14 +183,14 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(3);
 
         await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Ancestors: open a step further" }).ClickAsync();
-        await Arrived(page, new Regex("/family$"));
+        await Arrived(page, new Regex("/family#chart$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(5);
 
         // Nobody stands above the two grandfathers: the "+" is no link any more, and it says so.
         await Assertions.Expect(page.Locator(".stage-top .stage-step[aria-disabled='true']")).ToHaveTextAsync(new Regex("not possible here"));
 
         await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Ancestors: close a step" }).ClickAsync();
-        await Arrived(page, new Regex("up=1$"));
+        await Arrived(page, new Regex("up=1#chart$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(3);
     }
 

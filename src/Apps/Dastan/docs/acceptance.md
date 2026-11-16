@@ -126,7 +126,8 @@ server in one answer (ADR 0003), so there is no state in which a page waits for 
 Not one of the twelve conditions of M0. The owner's requirement D-039 and [ADR 0008](adr/0008-charts.md) say what
 the chart has to do; this is what was observed. 2026-11-16, .NET SDK 10.0.404, Windows 11 x64, Chromium 1.64.1 in
 the Playwright container; `dotnet test --solution Vafadar.Dastan.slnf` with `DASTAN_BROWSER` set: 1230 passed, none
-failed, none skipped (state after the stage and the family tree, D-040 and step 8.5).
+failed, none skipped (state after the stage and the family tree, D-040 and step 8.5). After the story as a chart
+(step 9.1): 1008 passed without a browser and 281 in the browser, in two runs – see the second addendum of ADR 0008.
 
 | What | Status | Evidence |
 |---|---|---|
@@ -139,6 +140,7 @@ failed, none skipped (state after the stage and the family tree, D-040 and step 
 | A family as a tree (step 8.5) | **Implemented and checked** | Ancestors, descendants and relatives beside the line are opened a step at a time, or the whole family is shown; generations run down the page or across it; partners stand beside each other, a child below the middle of its parents, and every family has a line of its own; never more than the reading position allows (`FamilyTreeTests`, `FamilyAndStoryPageTests`, `FamilyTreeBrowserTests`). Seen in a browser with a family of sixteen in a copy of the sample outside the repository; the sample itself has five |
 | Time as it is stated | **Implemented and checked** | No year zero on the axis; "about" and "between two years" are drawn as such and worded in the table; what cannot be placed is named and not drawn (`YearAxisTests`, `ComparisonTests`, `ComparisonPageTests.The_table_states_a_time_…`, `…A_bar_carries_what_it_has_room_for_…`) |
 | English and Persian, light and dark | **Implemented and checked** | Persian texts and digits, the Persian font, the time still from left to right; no name and no callout cut and nothing overlapping at the three widths in both languages; no finding of axe-core 4.14 in both appearances (`ChartTests.A_chart_fits_the_window_…`, 30 cases; `…A_chart_breaks_no_rule_…`, 16 cases) |
+| The story as a chart (step 9.1) | **Implemented and checked** | On the page of the story the names stand in rows and the steps of the telling in columns, in a stage with its four sides: the first and the last step shown, the names of the steps, the rows. Marks, steps and names are those of the projection at every reading stage tried; never a step beyond the reading position, whatever the address asks for; on a Persian page the chart begins at the right (`StoryChartTests`, `StoryChartPageTests`, `StoryChartBrowserTests`) |
 | The same facts without the drawing | **Implemented and checked** | A table per lane with every period and event, its time in full, the state of its review and its sources; a bar and a callout lead to their rows (`ComparisonPageTests.Every_period_and_event_…`, `ChartTests.A_bar_and_a_callout_…`) |
 | Only what is released is shown | **Implemented and checked** | The first comparison is released to the local demonstration only: the public site has no link to it and answers its address as not found (`PublicComparisonTests`) |
 | The content of the first comparison is right | **Not verified** | Its periods and years are the commonly given ones, written down without sources; every statement is "proposed" and the page says so. Checking them against sources is editorial work that was not done |
