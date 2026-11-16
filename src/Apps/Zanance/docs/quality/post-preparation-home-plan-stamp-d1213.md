@@ -116,3 +116,6 @@ and [CodeQL completed-success](https://github.com/shahramvafadar/Vafadar.Apps/ac
 Actual delay exceeds15–18minutes; marker/response remain with no second GET/job-log
 read/rerun. No broader performance, stability, security, accessibility, platform,
 provider, Store or release gate is closed.
+
+The independent [D1214 original metadata-overlap trial](startup-metadata-overlap-d1214.md)
+retains this generated-serializer rejection and separately fails both final time gates.
