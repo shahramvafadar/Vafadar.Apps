@@ -184,6 +184,12 @@ public sealed class Source
     /// <summary>Gets the authors, when the source names them.</summary>
     public ImmutableArray<string> Authors { get; init; } = [];
 
+    /// <summary>Gets the day the source was published, when it states one.</summary>
+    public DateOnly? PublishedOn { get; init; }
+
+    /// <summary>Gets the day the source was last revised, when it states one.</summary>
+    public DateOnly? UpdatedOn { get; init; }
+
     /// <summary>
     /// Gets the reading level from which the source may be named: its title and locator can give the story away.
     /// </summary>

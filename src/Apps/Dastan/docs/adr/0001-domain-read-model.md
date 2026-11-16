@@ -61,6 +61,34 @@ Phase 3 builds this model and the reader for the sample. The screens come later 
    boundary, then every derived view). That projection and its tests are the second step of this phase and get their
    own ADR.
 
+## How the reader applies it (2026-11-16)
+
+* **Unknown is refused, not ignored.** `PilotSample` reports a format version it does not know (and then reads
+  nothing else), a field it does not know, a value outside the managed lists and a field given twice. Editors' notes
+  that the read model does not need are named in the reader, so a new field is noticed the day it appears.
+* **Where the checks of the handoff's validator live.** What one record states (versions, known values, https
+  addresses without credentials, files inside the content folder, dates) is checked by the reader. Whether the
+  records fit together (references, reading levels, places and objects in events, media that may be shown) is checked
+  by `Catalogue`, for every source of data. What is true of this particular sample (five stages, the opening as the
+  start, Rostam only mentioned in event 3) is asserted by tests on the sample.
+* **The validator's ten negative cases.** Six are refusals of the reader or the catalogue with a test each (dangling
+  endpoint, parentage moved to the opening, a year on a story event, an uncleared image made showable, a reviewer
+  document as the page of an image, a working document as a transcript). "Era as calendar" is refused by the reader
+  for the sample and cannot be expressed in `Vafadar.Temporal`. "The mentioned father attends" is a fact of the
+  sample and is a test on it. "Reversed period" and "revoked viewer keeps media" concern the cross-domain fixtures
+  and are handled with them.
+* **Told time stays told time.** A calendar mapping, a calendar period, a duration, a year or a date next to a place
+  in the story are problems. The creation date of an artwork keeps what the catalogue states: the year, "circa" as
+  approximate, an unnamed calendar as unnamed.
+* **Translations** are documents of their own (`dastan-translation-0.1`, `<sample>.<language>.json` next to the
+  sample) with one review state for the language. The Persian names inside the sample (`labelFa`) follow that state
+  and are drafts without it. A translation of something the sample does not have is a problem; a text without a
+  translation is a fallback that says so. Evidence metadata (source titles, locators, rights statements, credit
+  lines) stays in the language of the source.
+* **Files.** A local path is resolved against the sample's folder, has to stay inside the content folder and is kept
+  relative to it (`media/…`). A document for reviewers has to stay inside the app folder, has to exist, and is not
+  part of the model.
+
 ## Consequences
 
 * The reader is strict: the sample either loads completely or the app does not start, with a list of what is wrong.

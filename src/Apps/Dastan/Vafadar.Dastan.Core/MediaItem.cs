@@ -34,7 +34,11 @@ public enum AltTextStatus
 /// <param name="License">The license, when one is named.</param>
 /// <param name="Statement">The editors' note on the rights.</param>
 /// <param name="CheckedOn">The day the rights were looked up.</param>
-public sealed record MediaRights(RightsStatus Status, string? License, string Statement, DateOnly CheckedOn);
+public sealed record MediaRights(RightsStatus Status, string? License, string Statement, DateOnly CheckedOn)
+{
+    /// <summary>Gets the page of the holder that states the terms, when the editors recorded one.</summary>
+    public Uri? PolicyPage { get; init; }
+}
 
 /// <summary>A captions file of a video in one language.</summary>
 /// <param name="Language">The language of the captions.</param>

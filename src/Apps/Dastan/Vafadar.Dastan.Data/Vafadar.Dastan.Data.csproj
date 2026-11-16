@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Reads Dastan's editorial input into the read model of Vafadar.Dastan.Core and refuses input it does not understand. The place of the later relational store.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vafadar.Dastan.Core\Vafadar.Dastan.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -27,7 +27,7 @@ concern the whole repository are in [`docs/adr`](../../../docs/adr/README.md).
 
 ## Projects
 
-`Vafadar.Dastan.Core` exists; the others are created in the phase that fills them.
+`Vafadar.Dastan.Core` and `Vafadar.Dastan.Data` exist; the website is created in phase 4.
 
 | Project | Purpose | Phase |
 |---|---|---|
@@ -58,6 +58,10 @@ package feeds of the MAUI projects.
 [`content/`](content) holds the editorial sample and the original media. It is input for the app, not a public
 folder: the sample contains the whole story including its ending, and the app serves only what its projection allows
 for the visitor's reading position. Nothing in `content/` may be copied under a web root.
+
+The sample is read by `PilotSample` (`Vafadar.Dastan.Data`), which refuses a file it does not fully understand. A
+translation of the sample is a file next to it, `<sample>.<language>.json`; `shahnameh-pilot.fa.json` is the Persian
+text, a **draft that nobody has reviewed yet** (`"review": "draft"`). Pages will mark such text as unreviewed (phase 4).
 
 ## Services
 

@@ -25,6 +25,7 @@
   <Folder Name="/src/Apps/" />
   <Folder Name="/src/Apps/Dastan/">
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Core/Vafadar.Dastan.Core.csproj" />
+    <Project Path="src/Apps/Dastan/Vafadar.Dastan.Data/Vafadar.Dastan.Data.csproj" />
   </Folder>
   <Folder Name="/src/Apps/Zanance/">
     <Project Path="src/Apps/Zanance/Vafadar.Zanance.Api/Vafadar.Zanance.Api.csproj" />
@@ -52,6 +53,7 @@
   <Folder Name="/test/Apps/" />
   <Folder Name="/test/Apps/Dastan/">
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Core.Tests/Vafadar.Dastan.Core.Tests.csproj" />
+    <Project Path="test/Apps/Dastan/Vafadar.Dastan.Data.Tests/Vafadar.Dastan.Data.Tests.csproj" />
   </Folder>
   <Folder Name="/test/Apps/Zanance/">
     <Project Path="test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj" />
