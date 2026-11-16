@@ -245,3 +245,14 @@ admission](current-startup-profile-admission-d1222.md) identifies real unmatched
 Home generated type names and now records one actual current Home method capture,
 with extra CoreLib/recorder roots excluded and original source restored. Ordinary
 AOT/native comparative speed remains unproved. SDK defaults/security/source stay intact.
+
+
+## Current profile ordinary native trial (D1223)
+
+The [actual current-profile trial](current-profile-cold-trial-d1223.md) binds all
+three default MAUI profiles and the new method profile, but its first Samsung
+pair is 7102.519578 to 6968.370912 ms: 1.8887% against the 5% gate. The candidate is
+rejected before the remaining twelve roles; no profile is promoted. Both complete
+source/Home guards and terminal original package/settings restoration pass.
+Cold 6,000 ms and the original stress-search native fault remain open; previous
+warm/search/financial acceptance is preserved without replay.

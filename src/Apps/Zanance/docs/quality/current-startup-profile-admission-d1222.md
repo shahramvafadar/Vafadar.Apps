@@ -126,3 +126,9 @@ ordinary recorder-free Release/native source preservation and the predeclared
 comparative Samsung cold gate remain necessary. There is no product promotion,
 6,000-ms acceptance, original fault remedy, whole-performance/security/platform or
 release claim from this completed capture.
+
+
+The subsequent [ordinary native trial](current-profile-cold-trial-d1223.md) confirms
+actual candidate/default input selection and complete original 100k native source/
+Home admission, but rejects the profile at its first reference startup pair.
+The tracked profile remains unchanged and no selective rescue or recapture occurs.
