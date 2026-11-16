@@ -156,3 +156,7 @@ Its exclusive marker/raw response remain, without another GET/job log/rerun. Thi
 is not CI acceptance of this new documentation commit. Full delivery remains paused;
 whole performance/two-second startup, native-fault remedy, security, accessibility,
 platform, provider, Store and release gates remain open.
+
+The independent [D1216 native cipher ThinLTO trial](cipher-thinlto-component-d1216.md)
+binds its rebuilt reference to the current engine, passes10k and rejects100k before
+application packaging. This complete-plan-reader rejection remains closed.
