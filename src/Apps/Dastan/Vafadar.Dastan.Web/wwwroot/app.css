@@ -501,3 +501,123 @@ main:focus {
   flex: 1 1 0;
   min-inline-size: 0;
 }
+
+/* Actions next to each other, wrapping on a narrow screen. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+
+.actions .action.secondary {
+  margin-block-start: 0;
+}
+
+/* The line between partners in a family drawing. */
+.graph-partner {
+  stroke-dasharray: 6 4;
+}
+
+/* --- The story step by step --- */
+
+.step h2 {
+  margin-block: 0 var(--space-1);
+  font-size: var(--step-1);
+}
+
+.participants {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-3) 0 0;
+}
+
+.participants li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+}
+
+.participants a {
+  font-weight: 600;
+}
+
+.participants .role {
+  color: var(--text-muted);
+}
+
+/* The lanes: a table that scrolls sideways inside its own frame, so the page itself never does. */
+.lanes {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.lanes table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.lanes th,
+.lanes td {
+  padding: var(--space-2);
+  border-block-end: 1px solid var(--border);
+  text-align: center;
+}
+
+.lanes thead th {
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.lanes thead a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+}
+
+/* The names stay in sight while the steps scroll. */
+.lanes tbody th,
+.lanes thead th:first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  min-inline-size: 7rem;
+  background: var(--surface-raised);
+  text-align: start;
+  font-weight: 600;
+}
+
+.lanes tbody tr:last-child th,
+.lanes tbody tr:last-child td {
+  border-block-end: 0;
+}
+
+.mark {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--accent);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+}
+
+/* The box the page is about is marked around its border, so that it has the size of every other box. */
+.graph-focus {
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* The texts for screen readers inside the cells are positioned; the frame has to be their container, otherwise
+   they lie outside it and make the whole page scroll sideways on a phone. */
+.lanes {
+  position: relative;
+}

@@ -213,4 +213,55 @@
   <data name="Graph_ToEntity" xml:space="preserve">
     <value>About {0}</value>
   </data>
+  <data name="Family_Title" xml:space="preserve">
+    <value>Family of {0}</value>
+  </data>
+  <data name="Family_Graph" xml:space="preserve">
+    <value>The family of {0} as a diagram</value>
+  </data>
+  <data name="Family_Lead" xml:space="preserve">
+    <value>Parents stand above their children; partners are joined by a dashed line. Only what the story has told up to your reading position is shown.</value>
+  </data>
+  <data name="Family_List" xml:space="preserve">
+    <value>The same family as a list</value>
+  </data>
+  <data name="Family_None" xml:space="preserve">
+    <value>No family relations to show.</value>
+  </data>
+  <data name="Entity_ToFamily" xml:space="preserve">
+    <value>Show the family as a diagram</value>
+  </data>
+  <data name="Story_Title" xml:space="preserve">
+    <value>The story step by step</value>
+  </data>
+  <data name="Story_Frame" xml:space="preserve">
+    <value>The steps stand in the order in which the story tells them. This is not a calendar: the story gives no dates, and a step can take a moment or years.</value>
+  </data>
+  <data name="Story_Participants" xml:space="preserve">
+    <value>Who and what is part of it</value>
+  </data>
+  <data name="Story_Condensed" xml:space="preserve">
+    <value>This step condenses several scenes of the text.</value>
+  </data>
+  <data name="Story_Lanes" xml:space="preserve">
+    <value>Who is where in the story</value>
+  </data>
+  <data name="Story_LanesLead" xml:space="preserve">
+    <value>One row per name, one column per step. An empty cell means that the name has no part in that step. Somebody who is only mentioned is marked as mentioned, not as present.</value>
+  </data>
+  <data name="Story_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Story_Legend" xml:space="preserve">
+    <value>What the marks mean</value>
+  </data>
+  <data name="Story_None" xml:space="preserve">
+    <value>No step of the story to show.</value>
+  </data>
+  <data name="Collection_ToStory" xml:space="preserve">
+    <value>Read the story step by step</value>
+  </data>
+  <data name="Story_Back" xml:space="preserve">
+    <value>Back to {0}</value>
+  </data>
 </root>

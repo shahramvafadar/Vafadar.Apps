@@ -440,6 +440,9 @@ public sealed class PublicSiteTests(PublicSite site) : IClassFixture<PublicSite>
     [InlineData("/en/story-rostam-sohrab")]
     [InlineData("/en/story-rostam-sohrab/entity/character-rostam")]
     [InlineData("/fa/story-rostam-sohrab/entity/work-shahnameh")]
+    [InlineData("/en/story-rostam-sohrab/story")]
+    [InlineData("/en/story-rostam-sohrab/entity/character-rostam/connections")]
+    [InlineData("/fa/story-rostam-sohrab/entity/character-rostam/family")]
     public async Task The_public_cannot_open_a_page_of_the_sample(string address)
     {
         var page = await site.Visitor().Get(address);

@@ -1,0 +1,67 @@
+@page "/{Collection}/entity/{Id}/family"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_family is { } family)
+{
+    var name = Visitor.Text(_entity.Label).Value;
+    <PageTitle>@string.Format(CultureInfo.CurrentCulture, T["Family_Title"], name) – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><TypeName Type="_entity.Type" /></p>
+        <h1>@string.Format(CultureInfo.CurrentCulture, T["Family_Title"], name)</h1>
+        <p class="meta"><a href="@($"{Site.Collection}/entity/{_entity.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Graph_ToEntity"], name)</a></p>
+    </header>
+
+    @if (family.Members.IsEmpty)
+    {
+        <p class="note">@T["Family_None"]</p>
+    }
+    else
+    {
+        <p class="note">@T["Family_Lead"]</p>
+        <FamilyGraph Drawing="_drawing" Focus="_entity.Id" Label="@string.Format(CultureInfo.CurrentCulture, T["Family_Graph"], name)" />
+
+        @* The list says what the drawing says: both are the same answer of the projection (ADR 0002). *@
+        <section aria-labelledby="as-list">
+            <h2 id="as-list">@T["Family_List"]</h2>
+            <ul class="statements" role="list">
+                @foreach (var edge in family.Parentage.Concat(family.Partnerships))
+                {
+                    <li><Statement Relation="edge" Self="_entity.Id" /></li>
+                }
+            </ul>
+        </section>
+    }
+}
+
+@code {
+    private FamilyView? _family;
+    private Entity _entity = null!;
+    private FamilyDrawing _drawing = null!;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the entity in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        var known = Collection == Site.Collection && Id.Length > 0 && !Id.Any(char.IsWhiteSpace);
+        var id = known ? new EntityId(Id) : default(EntityId?);
+        _family = id is null ? null : Visitor.Projection?.Family(id.Value);
+        if (_family is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _entity = Visitor.Projection!.Find(id!.Value)!;
+        _drawing = FamilyLayout.Of(_family, text => Visitor.Text(text).Value, Visitor.Language.IsRightToLeft ? 1.9 : 1.6);
+    }
+}

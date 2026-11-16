@@ -35,7 +35,13 @@
                     <li><Statement Relation="edge" Self="overview.Entity.Id" /></li>
                 }
             </ul>
-            <p><a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/connections")">@T["Entity_ToGraph"]</a></p>
+            <p class="actions">
+                <a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/connections")">@T["Entity_ToGraph"]</a>
+                @if (_hasFamily)
+                {
+                    <a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/family")">@T["Entity_ToFamily"]</a>
+                }
+            </p>
         }
     </section>
 
@@ -48,7 +54,7 @@
                 {
                     <li class="step">
                         <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(appearance.Step.Number))</p>
-                        <h3><Loc Text="appearance.Step.Event.Label" /></h3>
+                        <h3><a href="@($"{Site.Collection}/story#step-{appearance.Step.Number}")"><Loc Text="appearance.Step.Event.Label" /></a></h3>
                         <p><Loc Text="appearance.Association.Role" /> <span class="presence">@T[$"Presence_{appearance.Association.Presence}"]</span></p>
                     </li>
                 }
@@ -59,6 +65,7 @@
 
 @code {
     private EntityOverview? _entity;
+    private bool _hasFamily;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -76,6 +83,9 @@
         if (_entity is null)
         {
             Navigation.NotFound();
+            return;
         }
+
+        _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
     }
 }

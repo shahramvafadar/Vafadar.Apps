@@ -67,14 +67,6 @@ public sealed record ConnectionsDrawing(
 public static class ConnectionsLayout
 {
     private const double Gap = 0.75;
-    // Padding and border of a box, in em.
-    private const double Padding = 1.15;
-
-    // The width of the drawing on the narrowest screen: 360 px without the margins of the page.
-    private const double Narrowest = 328;
-
-    // A name is a link, and a link that stands alone is at least as high as a finger needs (44 px at the base size).
-    private const double Target = 2.75;
 
     /// <summary>
     /// Returns the drawing of a neighbourhood. Every relation of the view is drawn exactly once: where it leads to
@@ -106,7 +98,7 @@ public static class ConnectionsLayout
         // of sight as soon as a few rows are open and the drawing is longer than the screen.
         const double focusTop = 0;
         // The focus has a heavier border and heavier letters than a row.
-        var focusHeight = Padding + 0.25 + (Lines(text(view.Focus.Label), PerLine(ConnectionsDrawing.FocusWidth, 10, 0)) * lineHeight);
+        var focusHeight = TextEstimate.Padding + 0.25 + (TextEstimate.Lines(text(view.Focus.Label), TextEstimate.PerLine(ConnectionsDrawing.FocusWidth, 10, 0)) * lineHeight);
         return new ConnectionsDrawing(
             view.Focus,
             focusTop,
@@ -143,9 +135,9 @@ public static class ConnectionsLayout
 
                 // The name shares its line with the control that opens or closes the row; a row that refers to
                 // another one says so on a line of its own.
-                var height = Padding
-                    + Math.Max(Target, Lines(text(other.Label), PerLine(width, 9.6, isExpanded || canExpand ? 52 : 0)) * lineHeight)
-                    + (relations.Sum(relation => Lines(text(relation.Label), PerLine(width, 7.5, 0))) * lineHeight * 0.875)
+                var height = TextEstimate.Padding
+                    + Math.Max(TextEstimate.Target, TextEstimate.Lines(text(other.Label), TextEstimate.PerLine(width, 9.6, isExpanded || canExpand ? 52 : 0)) * lineHeight)
+                    + (relations.Sum(relation => TextEstimate.Lines(text(relation.Label), TextEstimate.PerLine(width, 7.5, 0))) * lineHeight * 0.875)
                     + (isReference ? (lineHeight * 0.875) + 0.5 : 0);
                 var row = new GraphRow(
                     other,
@@ -174,11 +166,4 @@ public static class ConnectionsLayout
             }
         }
     }
-
-    // How many characters fit on a line of a box that takes a share of the width, for an average character width
-    // in px. Words do not break where a line ends, so a part of the line is assumed to stay empty.
-    private static int PerLine(double widthPercent, double characterWidth, double taken) =>
-        Math.Max(4, (int)((((Narrowest * widthPercent / 100) - 26 - taken) / characterWidth) * 0.8));
-
-    private static int Lines(string text, int perLine) => Math.Max(1, (int)Math.Ceiling(text.Length / (double)perLine));
 }

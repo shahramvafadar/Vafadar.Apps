@@ -213,4 +213,55 @@
   <data name="Graph_ToEntity" xml:space="preserve">
     <value>دربارهٔ {0}</value>
   </data>
+  <data name="Family_Title" xml:space="preserve">
+    <value>خانوادهٔ {0}</value>
+  </data>
+  <data name="Family_Graph" xml:space="preserve">
+    <value>خانوادهٔ {0} به شکل نمودار</value>
+  </data>
+  <data name="Family_Lead" xml:space="preserve">
+    <value>پدر و مادر بالای فرزندان می‌آیند و همسران با خط‌چین به هم وصل‌اند. فقط آنچه قصه تا جایگاه خواندن شما گفته است نشان داده می‌شود.</value>
+  </data>
+  <data name="Family_List" xml:space="preserve">
+    <value>همین خانواده به شکل فهرست</value>
+  </data>
+  <data name="Family_None" xml:space="preserve">
+    <value>رابطهٔ خانوادگی برای نمایش نیست.</value>
+  </data>
+  <data name="Entity_ToFamily" xml:space="preserve">
+    <value>نمایش خانواده به شکل نمودار</value>
+  </data>
+  <data name="Story_Title" xml:space="preserve">
+    <value>قصه گام‌به‌گام</value>
+  </data>
+  <data name="Story_Frame" xml:space="preserve">
+    <value>گام‌ها به ترتیبی آمده‌اند که قصه بازگو می‌کند. این یک تقویم نیست: قصه تاریخی نمی‌دهد و یک گام می‌تواند لحظه‌ای یا سال‌ها باشد.</value>
+  </data>
+  <data name="Story_Participants" xml:space="preserve">
+    <value>چه کسانی و چه چیزهایی در آن هستند</value>
+  </data>
+  <data name="Story_Condensed" xml:space="preserve">
+    <value>این گام چند صحنه از متن را فشرده کرده است.</value>
+  </data>
+  <data name="Story_Lanes" xml:space="preserve">
+    <value>هر کس کجای قصه است</value>
+  </data>
+  <data name="Story_LanesLead" xml:space="preserve">
+    <value>هر نام یک ردیف و هر گام یک ستون دارد. خانهٔ خالی یعنی آن نام در آن گام نقشی ندارد. کسی که فقط از او نام برده می‌شود با نشانهٔ «نام‌برده» آمده است، نه «حاضر».</value>
+  </data>
+  <data name="Story_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Story_Legend" xml:space="preserve">
+    <value>معنای نشانه‌ها</value>
+  </data>
+  <data name="Story_None" xml:space="preserve">
+    <value>گامی از قصه برای نمایش نیست.</value>
+  </data>
+  <data name="Collection_ToStory" xml:space="preserve">
+    <value>خواندن گام‌به‌گام قصه</value>
+  </data>
+  <data name="Story_Back" xml:space="preserve">
+    <value>بازگشت به {0}</value>
+  </data>
 </root>

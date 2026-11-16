@@ -1,0 +1,56 @@
+@* A family as a drawing: SVG written by the server (ADR 0005). Generations are rows; a line with an arrow leads
+   from a parent down to a child, a dashed line joins partners. The boxes are HTML inside the SVG. *@
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject IStringLocalizer<Ui> T
+
+<svg class="graph" width="100%" height="@Em(Drawing.Height)" role="group" aria-label="@Label">
+    <defs>
+        <marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="graph-arrow" d="M0 0L10 5L0 10z" />
+        </marker>
+    </defs>
+
+    @foreach (var link in Drawing.Links)
+    {
+        <line class="graph-line @(link.IsParentage ? null : "graph-partner")" x1="@X(link.X1)" y1="@Em(link.Y1)" x2="@X(link.X2)" y2="@Em(link.Y2)"
+              marker-end="@(link.IsParentage ? "url(#graph-arrow)" : null)" />
+    }
+
+    @foreach (var box in Drawing.Boxes)
+    {
+        <foreignObject x="@X(box.X, box.Width)" y="@Em(box.Top)" width="@Percent(box.Width)" height="@Em(box.Height)">
+            <div class="graph-node @(box.Entity.Id == Focus ? "graph-focus" : null)">
+                <span class="graph-entity">
+                    <a class="graph-name" href="@($"{Site.Collection}/entity/{box.Entity.Id}")"><Loc Text="box.Entity.Label" /></a>
+                </span>
+            </div>
+        </foreignObject>
+    }
+</svg>
+
+@code {
+    /// <summary>Gets or sets the drawing.</summary>
+    [Parameter, EditorRequired]
+    public FamilyDrawing Drawing { get; set; } = null!;
+
+    /// <summary>Gets or sets the member the page is about.</summary>
+    [Parameter, EditorRequired]
+    public EntityId Focus { get; set; }
+
+    /// <summary>Gets or sets the name of the drawing for screen readers.</summary>
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    private bool RightToLeft => Visitor.Language.IsRightToLeft;
+
+    // Numbers in markup are written the same in every language of the page.
+    private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+
+    private static string Percent(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "%";
+
+    // A place across the drawing, counted from the side where reading starts.
+    private string X(double position) => Percent(RightToLeft ? 100 - position : position);
+
+    private string X(double start, double width) => Percent(RightToLeft ? 100 - start - width : start);
+}
