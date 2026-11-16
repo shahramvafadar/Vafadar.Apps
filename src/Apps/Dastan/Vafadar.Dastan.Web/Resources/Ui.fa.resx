@@ -220,7 +220,7 @@
     <value>خانوادهٔ {0} به شکل نمودار</value>
   </data>
   <data name="Family_Lead" xml:space="preserve">
-    <value>پدر و مادر بالای فرزندان می‌آیند و همسران با خط‌چین به هم وصل‌اند. فقط آنچه قصه تا جایگاه خواندن شما گفته است نشان داده می‌شود.</value>
+    <value>خطِ پیکان‌دار از پدر یا مادر به فرزند می‌رود؛ همسران با خط‌چین به هم پیوسته‌اند. فقط آنچه قصه تا جایگاه خواندن شما گفته نشان داده می‌شود.</value>
   </data>
   <data name="Family_List" xml:space="preserve">
     <value>همین خانواده به شکل فهرست</value>
@@ -761,5 +761,53 @@
   </data>
   <data name="Date_EndedUnknown" xml:space="preserve">
     <value>پایان‌یافته در زمانی که گفته نشده</value>
+  </data>
+  <data name="Tree_Tools" xml:space="preserve">
+    <value>شیوهٔ نمایش خانواده</value>
+  </data>
+  <data name="Tree_Reach" xml:space="preserve">
+    <value>چه کسانی</value>
+  </data>
+  <data name="Tree_Line" xml:space="preserve">
+    <value>تبار {0}</value>
+  </data>
+  <data name="Tree_Whole" xml:space="preserve">
+    <value>همهٔ خانواده</value>
+  </data>
+  <data name="Tree_Ancestors" xml:space="preserve">
+    <value>نیاکان</value>
+  </data>
+  <data name="Tree_Descendants" xml:space="preserve">
+    <value>فرزندان و نوادگان</value>
+  </data>
+  <data name="Tree_Fewer" xml:space="preserve">
+    <value>یک نسل کمتر</value>
+  </data>
+  <data name="Tree_More" xml:space="preserve">
+    <value>یک نسل بیشتر</value>
+  </data>
+  <data name="Tree_View" xml:space="preserve">
+    <value>نسل‌ها</value>
+  </data>
+  <data name="Tree_View_Down" xml:space="preserve">
+    <value>از بالا به پایین</value>
+  </data>
+  <data name="Tree_View_Across" xml:space="preserve">
+    <value>در پهنای صفحه</value>
+  </data>
+  <data name="Tree_Shown" xml:space="preserve">
+    <value>نمایش: {0} نسل از نیاکان و {1} نسل از فرزندان، همراه با همسرانشان.</value>
+  </data>
+  <data name="Tree_ShownWhole" xml:space="preserve">
+    <value>نمایش: هر کسی که از راه پدر و مادر، فرزند یا همسر به {0} می‌رسد.</value>
+  </data>
+  <data name="Tree_MoreAbove" xml:space="preserve">
+    <value>نیاکان دورتری هم هستند.</value>
+  </data>
+  <data name="Tree_MoreBelow" xml:space="preserve">
+    <value>فرزندان دورتری هم هستند.</value>
+  </data>
+  <data name="Tree_NoRelations" xml:space="preserve">
+    <value>هیچ پیوندی در محدودهٔ نمایش نیست. یک نسل بالاتر یا پایین‌تر را باز کنید.</value>
   </data>
 </root>

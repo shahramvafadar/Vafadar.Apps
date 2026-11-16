@@ -220,7 +220,7 @@
     <value>The family of {0} as a diagram</value>
   </data>
   <data name="Family_Lead" xml:space="preserve">
-    <value>Parents stand above their children; partners are joined by a dashed line. Only what the story has told up to your reading position is shown.</value>
+    <value>A line with an arrow leads from a parent to a child; partners are joined by a dashed line. Only what the story has told up to your reading position is shown.</value>
   </data>
   <data name="Family_List" xml:space="preserve">
     <value>The same family as a list</value>
@@ -761,5 +761,53 @@
   </data>
   <data name="Date_EndedUnknown" xml:space="preserve">
     <value>ended at a time that is not stated</value>
+  </data>
+  <data name="Tree_Tools" xml:space="preserve">
+    <value>How the family is shown</value>
+  </data>
+  <data name="Tree_Reach" xml:space="preserve">
+    <value>Who is shown</value>
+  </data>
+  <data name="Tree_Line" xml:space="preserve">
+    <value>The line of {0}</value>
+  </data>
+  <data name="Tree_Whole" xml:space="preserve">
+    <value>The whole family</value>
+  </data>
+  <data name="Tree_Ancestors" xml:space="preserve">
+    <value>Ancestors</value>
+  </data>
+  <data name="Tree_Descendants" xml:space="preserve">
+    <value>Descendants</value>
+  </data>
+  <data name="Tree_Fewer" xml:space="preserve">
+    <value>One generation fewer</value>
+  </data>
+  <data name="Tree_More" xml:space="preserve">
+    <value>One generation more</value>
+  </data>
+  <data name="Tree_View" xml:space="preserve">
+    <value>Generations</value>
+  </data>
+  <data name="Tree_View_Down" xml:space="preserve">
+    <value>Down the page</value>
+  </data>
+  <data name="Tree_View_Across" xml:space="preserve">
+    <value>Across the page</value>
+  </data>
+  <data name="Tree_Shown" xml:space="preserve">
+    <value>Shown: {0} generations of ancestors and {1} of descendants, with their partners.</value>
+  </data>
+  <data name="Tree_ShownWhole" xml:space="preserve">
+    <value>Shown: everybody who is connected to {0} by parents, children or partners.</value>
+  </data>
+  <data name="Tree_MoreAbove" xml:space="preserve">
+    <value>There are ancestors further up.</value>
+  </data>
+  <data name="Tree_MoreBelow" xml:space="preserve">
+    <value>There are descendants further down.</value>
+  </data>
+  <data name="Tree_NoRelations" xml:space="preserve">
+    <value>No relation lies inside what is shown. Open a generation above or below.</value>
   </data>
 </root>

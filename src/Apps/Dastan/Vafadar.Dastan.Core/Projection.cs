@@ -223,6 +223,70 @@ public sealed class Projection
     /// </summary>
     public FamilyView? Family(EntityId around) => Find(around) is null ? null : Family((EntityId?)around);
 
+    /// <summary>
+    /// Returns the family tree around an entity, or <see langword="null"/>: its ancestors up to a number of
+    /// generations, its descendants down to a number of generations, and the partners of all of them. Whether the
+    /// tree goes on beyond what was asked for is part of the answer, so that a page can offer to open it further.
+    /// </summary>
+    /// <param name="around">The entity the tree is about.</param>
+    /// <param name="up">How many generations of ancestors; zero for none.</param>
+    /// <param name="down">How many generations of descendants; zero for none.</param>
+    public FamilyView? Family(EntityId around, int up, int down)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(up);
+        ArgumentOutOfRangeException.ThrowIfNegative(down);
+        if (Find(around) is null)
+        {
+            return null;
+        }
+
+        var parentage = Relations.Where(relation => relation.Type.Kinship == Kinship.Parentage).ToList();
+        var partnerships = Relations.Where(relation => relation.Type.Kinship == Kinship.Partnership).ToList();
+
+        // The line of the entity: how many generations above it (negative) or below it somebody stands. Whoever
+        // is reached twice keeps the first place, so relations that run in a circle end the walk.
+        var line = new Dictionary<EntityId, int> { [around] = 0 };
+        Walk(up, -1, relation => (relation.To, relation.From));
+        Walk(down, 1, relation => (relation.From, relation.To));
+
+        var moreAbove = parentage.Any(relation => !line.ContainsKey(relation.From) && line.TryGetValue(relation.To, out var place) && place == -up);
+        var moreBelow = parentage.Any(relation => !line.ContainsKey(relation.To) && line.TryGetValue(relation.From, out var place) && place == down);
+
+        // Partners of the line belong to the tree; their own parents and other children do not.
+        var members = line.Keys.ToHashSet();
+        foreach (var relation in partnerships)
+        {
+            if (line.ContainsKey(relation.From) || line.ContainsKey(relation.To))
+            {
+                members.Add(relation.From);
+                members.Add(relation.To);
+            }
+        }
+
+        parentage.RemoveAll(relation => !members.Contains(relation.From) || !members.Contains(relation.To));
+        partnerships.RemoveAll(relation => !members.Contains(relation.From) || !members.Contains(relation.To));
+        return Generations(parentage, partnerships, moreAbove, moreBelow, around);
+
+        void Walk(int generations, int step, Func<Relation, (EntityId Near, EntityId Far)> ends)
+        {
+            var edge = new List<EntityId> { around };
+            for (var generation = 1; generation <= generations && edge.Count > 0; generation++)
+            {
+                var next = new List<EntityId>();
+                foreach (var relation in parentage)
+                {
+                    var (near, far) = ends(relation);
+                    if (edge.Contains(near) && line.TryAdd(far, generation * step))
+                    {
+                        next.Add(far);
+                    }
+                }
+
+                edge = next;
+            }
+        }
+    }
+
     /// <summary>Returns the events of the story in the order of the telling.</summary>
     public StoryView Story() => new(_entities[_info.Story], Steps, StoryContinues);
 
@@ -439,12 +503,24 @@ public sealed class Projection
             partnerships.RemoveAll(relation => !family.Contains(relation.From));
         }
 
+        return Generations(parentage, partnerships);
+    }
+
+    private FamilyView Generations(List<Relation> parentage, List<Relation> partnerships, bool moreAbove = false, bool moreBelow = false, EntityId? alone = null)
+    {
         // A child stands one row below its lowest parent, partners stand in one row. The number of rounds is
         // bounded, so relations that contradict each other (a child as the parent of its parent) end the loop too.
         var generation = parentage.Concat(partnerships)
             .SelectMany(relation => new[] { relation.From, relation.To })
             .Distinct()
             .ToDictionary(id => id, _ => 0);
+
+        // Somebody whose family lies wholly outside what was asked for is still the one the tree is about.
+        if (alone is { } only && (moreAbove || moreBelow))
+        {
+            generation.TryAdd(only, 0);
+        }
+
         for (var round = 0; round <= generation.Count; round++)
         {
             var changed = false;
@@ -482,6 +558,8 @@ public sealed class Projection
                     .OrderBy(member => member.Generation),
             ],
             [.. parentage.Select(ToEdge)],
-            [.. partnerships.Select(ToEdge)]);
+            [.. partnerships.Select(ToEdge)],
+            moreAbove,
+            moreBelow);
     }
 }

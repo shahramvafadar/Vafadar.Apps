@@ -96,10 +96,14 @@ public sealed record FamilyMember(Entity Entity, int Generation);
 /// <param name="Members">The members, by generation and then in the order of the collection.</param>
 /// <param name="Parentage">The relations from a parent to a child.</param>
 /// <param name="Partnerships">The relations between partners.</param>
+/// <param name="MoreAbove">Whether the view ends above at somebody whose parents the visitor may see but the view leaves out.</param>
+/// <param name="MoreBelow">Whether the view ends below at somebody whose children the visitor may see but the view leaves out.</param>
 public sealed record FamilyView(
     ImmutableArray<FamilyMember> Members,
     ImmutableArray<Edge> Parentage,
-    ImmutableArray<Edge> Partnerships);
+    ImmutableArray<Edge> Partnerships,
+    bool MoreAbove = false,
+    bool MoreBelow = false);
 
 /// <summary>The events of the story in the order of the telling.</summary>
 /// <param name="Story">The story.</param>
