@@ -32,7 +32,7 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");
 
         // The time is longer than the frame; the names of the lanes stand still while it moves.
-        var frame = page.Locator(".tl-scroll");
+        var frame = page.Locator(".stage-frame:visible");
         Assert.True(await frame.EvaluateAsync<bool>("frame => frame.scrollWidth > frame.clientWidth + 100"));
         var names = await page.EvaluateAsync<double>("document.querySelector('.tl-names').getBoundingClientRect().left");
         var bar = page.Locator(".tl-across a.tl-bar[href$='#item-achaemenid']");
@@ -50,7 +50,7 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
     {
         var page = await site.Visitor(width: 1280);
         await page.GotoAsync($"/en/{Address}?view=across");
-        var frame = page.Locator(".tl-scroll");
+        var frame = page.Locator(".stage-frame:visible");
 
         for (var stops = 0; stops < 40 && !await frame.EvaluateAsync<bool>("frame => document.activeElement === frame"); stops++)
         {
@@ -80,11 +80,15 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         Assert.Equal(5, heights.Length);
         Assert.Single(heights.Distinct());
 
-        await page.EvaluateAsync("window.scrollTo(0, document.querySelector('.tl-body').getBoundingClientRect().top + window.scrollY + 500)");
+        // The time scrolls inside the stage; the names of the lanes stay at the top of its frame.
+        var frame = page.Locator(".stage-frame:visible");
+        Assert.True(await frame.EvaluateAsync<bool>("frame => frame.scrollHeight > frame.clientHeight + 100"));
+        await frame.EvaluateAsync("frame => frame.scrollTop = 500");
 
-        var head = await page.EvaluateAsync<double>("document.querySelector('.tl-head').getBoundingClientRect().top");
+        var head = await page.EvaluateAsync<double>("document.querySelector('.tl-head').getBoundingClientRect().top - document.querySelector('.stage.only-narrow .stage-frame').getBoundingClientRect().top");
         Assert.Equal(0, head, precision: 0);
         await Assertions.Expect(page.Locator(".tl-head")).ToContainTextAsync("Events");
+        Assert.False(await ScrollsSideways(page), "The page scrolls sideways after the frame was scrolled.");
     }
 
     [Fact]
@@ -164,6 +168,114 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         await Assertions.Expect(page.Locator(".tl-across a.tl-bar[href$='#item-eastern-rome'] .tl-year").Last).ToHaveTextAsync("1453 CE");
     }
 
+    [Theory]
+    [InlineData(1280, "en")]
+    [InlineData(1280, "fa")]
+    [InlineData(390, "en")]
+    public async Task The_stage_takes_the_width_of_the_page_and_the_height_of_the_window(int width, string language)
+    {
+        var page = await site.Visitor(width);
+        await page.GotoAsync($"/{language}/{Address}");
+
+        var sizes = await page.EvaluateAsync<double[]>(
+            """
+            () => {
+                const stage = [...document.querySelectorAll('.stage')].find(candidate => candidate.getClientRects().length > 0).getBoundingClientRect();
+                const text = document.querySelector('main h1').getBoundingClientRect();
+                return [stage.left, innerWidth - stage.right, stage.height, innerHeight, text.width];
+            }
+            """);
+
+        // Not a column in the middle of the page: at most the margin of the page is left at each side, and the
+        // stage is as high as the window is, less that margin. What is read keeps the width of a column of text.
+        Assert.InRange(sizes[0], 0, 17);
+        Assert.InRange(sizes[1], 0, 17);
+        Assert.InRange(sizes[2], sizes[3] - 33, sizes[3]);
+        Assert.True(sizes[4] <= 704.5, $"The heading is {sizes[4]} px wide.");
+        Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");
+    }
+
+    [Theory]
+    [InlineData("en")]
+    [InlineData("fa")]
+    public async Task Each_of_the_four_sides_of_the_stage_has_its_two_steps_where_the_chart_grows(string language)
+    {
+        var page = await site.Visitor(width: 1280);
+        await page.GotoAsync($"/{language}/{Address}?view=across");
+
+        var sides = await page.EvaluateAsync<double[][]>(
+            """
+            () => {
+                const frame = document.querySelector('.stage-frame').getBoundingClientRect();
+                return ['top', 'left', 'right', 'bottom'].map(side => {
+                    const edge = document.querySelector('.stage-' + side);
+                    const box = edge.getBoundingClientRect();
+                    const steps = [...edge.querySelectorAll('.step')].map(step => step.getBoundingClientRect());
+                    return [box.left - frame.left, box.right - frame.right, box.top - frame.top, box.bottom - frame.bottom, steps.length, Math.min(...steps.map(step => Math.min(step.width, step.height)))];
+                });
+            }
+            """);
+
+        // Above, left of, right of and below the frame – on a Persian page as well – each with a "−" and a "+" that
+        // a finger can hit.
+        Assert.True(sides[0][2] < 0);
+        Assert.True(sides[1][1] < 0 && sides[1][0] < 0);
+        Assert.True(sides[2][0] > 0 && sides[2][1] > 0);
+        Assert.True(sides[3][3] > 0);
+        Assert.All(sides, side => Assert.Equal(2, side[4]));
+        Assert.All(sides, side => Assert.True(side[5] >= 43.5, $"A step is {side[5]} px."));
+
+        // The time begins at the left in both languages: the earlier years are opened at the left side.
+        var earlier = language == "fa" ? "سال‌های پیش‌تر" : "Earlier years";
+        await Assertions.Expect(page.Locator(".stage-left .stage-label")).ToHaveTextAsync(earlier);
+    }
+
+    [Fact]
+    public async Task A_plus_at_a_side_opens_the_time_there_and_a_minus_closes_it_and_Back_undoes_it()
+    {
+        var page = await site.Visitor(width: 1280);
+        await page.GotoAsync($"/en/{Address}?view=across");
+        var before = await PlotWidth(page);
+
+        await page.Locator(".stage-left").GetByRole(AriaRole.Link, new() { Name = "Earlier years: open a step further" }).ClickAsync();
+        await Arrived(page, new Regex("from=-700&to=700$"));
+        await Assertions.Expect(page.GetByText("Shown: 700 BCE to 700 CE")).ToBeVisibleAsync();
+        var opened = await PlotWidth(page);
+        Assert.Equal(before + (100 * 0.06 * 15), opened, precision: 0);
+
+        await page.Locator(".stage-right").GetByRole(AriaRole.Link, new() { Name = "Later years: close a step" }).ClickAsync();
+        await Arrived(page, new Regex("from=-700&to=600$"));
+        Assert.Equal(before, await PlotWidth(page), precision: 0);
+
+        await page.GoBackAsync();
+        await page.GoBackAsync();
+        await Arrived(page, new Regex("view=across$"));
+        Assert.Equal(before, await PlotWidth(page), precision: 0);
+        await Assertions.Expect(page.GetByText("Shown: 600 BCE to 700 CE")).ToBeVisibleAsync();
+    }
+
+    [Fact]
+    public async Task The_events_and_the_lanes_are_closed_and_opened_at_their_sides()
+    {
+        var page = await site.Visitor(width: 1280);
+        await page.GotoAsync($"/en/{Address}?view=across");
+        await Assertions.Expect(page.Locator(".tl-callout")).ToHaveCountAsync(6);
+
+        await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Events: close a step" }).ClickAsync();
+        await Arrived(page, new Regex("events=off$"));
+        await Assertions.Expect(page.Locator(".tl-callout")).ToHaveCountAsync(0);
+
+        await page.Locator(".stage-bottom").GetByRole(AriaRole.Link, new() { Name = "Subjects: close a step" }).ClickAsync();
+        await Arrived(page, new Regex("events=off&lanes=2$"));
+        await Assertions.Expect(page.Locator(".tl-names .tl-lane-name")).ToHaveTextAsync(["China", "Iran"]);
+
+        await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Events: open a step further" }).ClickAsync();
+        await Arrived(page, new Regex("view=across&lanes=2$"));
+
+        // The event of Rome is closed with its lane.
+        await Assertions.Expect(page.Locator(".tl-callout")).ToHaveCountAsync(5);
+    }
+
     public static TheoryData<int, string, string> Views()
     {
         var views = new TheoryData<int, string, string>();
@@ -196,7 +308,7 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         var outside = await page.EvaluateAsync<string[]>(
             """
             () => [...document.querySelectorAll('main *')]
-                .filter(element => !element.closest('.tl-scroll') && element.getClientRects().length > 0)
+                .filter(element => !element.closest('.stage-frame') && element.getClientRects().length > 0)
                 .filter(element => { const box = element.getBoundingClientRect(); return box.width > 0 && (box.right > innerWidth + 1 || box.left < -1); })
                 .map(element => element.tagName + '.' + element.getAttribute('class'))
             """);

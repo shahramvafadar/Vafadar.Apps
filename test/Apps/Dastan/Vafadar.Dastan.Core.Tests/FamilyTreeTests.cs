@@ -50,8 +50,8 @@ public sealed class FamilyTreeTests
     private static Projection At(SmallStory story, int level = 0) =>
         Projection.Of(story.Build(), new ReadingLevel(level), Audience.LocalDemonstration)!;
 
-    private static FamilyView Around(string id, int up, int down, SmallStory? story = null) =>
-        At(story ?? House()).Family(new EntityId(id), up, down)!;
+    private static FamilyView Around(string id, int up, int down, SmallStory? story = null, int beside = 0) =>
+        At(story ?? House()).Family(new EntityId(id), up, down, beside)!;
 
     private static IEnumerable<string> Names(FamilyView view) => view.Members.Select(member => member.Entity.Id.Value).Order(StringComparer.Ordinal);
 
@@ -168,6 +168,40 @@ public sealed class FamilyTreeTests
         var after = At(story, level: 1).Family(new EntityId("father"), 1, 0)!;
         Assert.True(after.MoreAbove);
         Assert.Contains("forefather", Names(At(story, level: 1).Family(new EntityId("father"), 2, 0)!));
+    }
+
+    [Fact]
+    public void Beside_the_line_stand_the_other_children_of_the_ancestors_shown_step_by_step()
+    {
+        // With the parents shown, the sister is one step beside the line.
+        var line = Around("son", 1, 0);
+        Assert.DoesNotContain("daughter", Names(line));
+        Assert.True(line.MoreBeside);
+
+        var sister = Around("son", 1, 0, beside: 1);
+        Assert.Equal(["daughter", "father", "mother", "son", "wife"], Names(sister));
+        Assert.False(sister.MoreBeside);
+
+        // With the grandparents shown, the aunt is one step beside the line and her child two.
+        var aunt = Around("son", 2, 0, beside: 1);
+        Assert.Equal(["aunt", "daughter", "elder", "father", "grandfather", "grandmother", "mother", "son", "wife"], Names(aunt));
+        Assert.True(aunt.MoreBeside);
+
+        var cousin = Around("son", 2, 0, beside: 2);
+        Assert.Contains("cousin", Names(cousin));
+        Assert.Contains(cousin.Parentage, edge => edge.Relation.Id.Value == "aunt-of-cousin");
+        Assert.False(cousin.MoreBeside);
+        Assert.Equal(Names(cousin), Names(Around("son", 2, 0, beside: 9)));
+    }
+
+    [Fact]
+    public void Without_an_ancestor_shown_nobody_stands_beside_the_line()
+    {
+        var view = Around("son", 0, 1, beside: 3);
+
+        Assert.Equal(["grandchild", "son", "wife"], Names(view));
+        Assert.False(view.MoreBeside);
+        Assert.Throws<ArgumentOutOfRangeException>(() => At(House()).Family(new EntityId("son"), 1, 1, -1));
     }
 
     [Fact]

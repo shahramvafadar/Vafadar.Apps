@@ -3,8 +3,8 @@ using System.Globalization;
 namespace Vafadar.Dastan.Web.Site;
 
 /// <summary>
-/// How a visitor looks at a family tree: how many generations above and below the one it is about, or the whole
-/// family, and whether generations run down the page or across it. Like the state of a chart it lives in the
+/// How a visitor looks at a family tree: how many generations above and below the one it is about and how far
+/// beside its line, or the whole family, and whether generations run down the page or across it. Like the state of a chart it lives in the
 /// address (ADR 0008): a link changes it and Back undoes it. It never decides what may be seen – the projection
 /// answers for the reading position of the visitor, whatever the address asks for.
 /// </summary>
@@ -22,6 +22,9 @@ public sealed record TreeState
     /// <summary>Gets the number of generations of descendants.</summary>
     public int Down { get; init; } = DefaultReach;
 
+    /// <summary>Gets how far the tree is opened beside the line: brothers and sisters, then their children, and so on.</summary>
+    public int Beside { get; init; }
+
     /// <summary>Gets a value indicating whether everybody connected by family relations is shown instead of a line.</summary>
     public bool Whole { get; init; }
 
@@ -29,10 +32,11 @@ public sealed record TreeState
     public bool Across { get; init; }
 
     /// <summary>Reads the state from the values of a query. A value that is not one of the choices is not a choice.</summary>
-    public static TreeState Read(string? up, string? down, string? family, string? view) => new()
+    public static TreeState Read(string? up, string? down, string? beside, string? family, string? view) => new()
     {
-        Up = Reach(up),
-        Down = Reach(down),
+        Up = Reach(up, DefaultReach),
+        Down = Reach(down, DefaultReach),
+        Beside = Reach(beside, 0),
         Whole = family == "whole",
         Across = view == "across",
     };
@@ -56,6 +60,11 @@ public sealed record TreeState
             {
                 parts.Add("down=" + Down.ToString(CultureInfo.InvariantCulture));
             }
+
+            if (Beside != 0)
+            {
+                parts.Add("beside=" + Beside.ToString(CultureInfo.InvariantCulture));
+            }
         }
 
         if (Across)
@@ -66,6 +75,6 @@ public sealed record TreeState
         return parts.Count == 0 ? string.Empty : "?" + string.Join('&', parts);
     }
 
-    private static int Reach(string? value) =>
-        int.TryParse(value, NumberStyles.None, CultureInfo.InvariantCulture, out var reach) && reach <= FurthestReach ? reach : DefaultReach;
+    private static int Reach(string? value, int otherwise) =>
+        int.TryParse(value, NumberStyles.None, CultureInfo.InvariantCulture, out var reach) && reach <= FurthestReach ? reach : otherwise;
 }

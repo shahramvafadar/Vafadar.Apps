@@ -33,6 +33,8 @@ internal static class Disclosure
                 projection.Family(entity.Id, 0, 0),
                 projection.Family(entity.Id, 1, 1),
                 projection.Family(entity.Id, 9, 9),
+                projection.Family(entity.Id, 9, 9, 9),
+                projection.Family(entity.Id, 1, 0, 1),
                 projection.Gallery(entity.Id),
                 projection.Evidence(entity.Id));
             foreach (var language in entity.Label.Languages)

@@ -1,0 +1,32 @@
+@* The two steps of one side of a stage: "−" closes the chart a step in that direction, "+" opens it a step further.
+   Each is a link to the address of the chart as it will be; a step that cannot be taken is no link and says so.
+   The sign is what is seen, the words are what is read out and shown on hovering. *@
+@inject IStringLocalizer<Ui> T
+
+<span class="stage-label">@Name</span>
+<span class="stage-steps">
+    @Step(Fewer, "−", string.Format(CultureInfo.CurrentCulture, T["Stage_Fewer"], Name))
+    @Step(More, "+", string.Format(CultureInfo.CurrentCulture, T["Stage_More"], Name))
+</span>
+
+@code {
+    /// <summary>Gets or sets what the side opens: "Ancestors", "Earlier years".</summary>
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the address of the chart closed by a step, or <see langword="null"/> when it cannot be closed further.</summary>
+    [Parameter]
+    public string? Fewer { get; set; }
+
+    /// <summary>Gets or sets the address of the chart opened by a step, or <see langword="null"/> when there is nothing further.</summary>
+    [Parameter]
+    public string? More { get; set; }
+
+    private RenderFragment Step(string? address, string sign, string words)
+    {
+        var unavailable = string.Format(CultureInfo.CurrentCulture, T["Stage_NotAvailable"], words);
+        return address is null
+            ? @<span class="step" aria-disabled="true" title="@unavailable"><span aria-hidden="true">@sign</span><span class="visually-hidden">@unavailable</span></span>
+            : @<a class="step" href="@address" title="@words"><span aria-hidden="true">@sign</span><span class="visually-hidden">@words</span></a>;
+    }
+}

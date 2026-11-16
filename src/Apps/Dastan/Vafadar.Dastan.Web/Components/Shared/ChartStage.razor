@@ -1,0 +1,55 @@
+@* The stage of a chart (D-040, ADR 0008): the chart gets the whole width of the page and the height of the window,
+   and scrolls inside its frame in both directions. Each of the four sides of the stage carries the steps that
+   open the chart further in that direction and close it again. The sides are the sides of the screen – left is
+   left in every language; the page decides what a side means for its chart. *@
+
+@inject Visitor Visitor
+
+@* The stage itself is laid out from left to right, so that its left side is the left side of the screen on a
+   page of any language; what stands at a side and in the frame keeps the direction of its text. *@
+<div class="stage @Class" dir="ltr">
+    <div class="stage-edge stage-top" dir="@Visitor.Language.Direction">@Top</div>
+    <div class="stage-edge stage-left" dir="@Visitor.Language.Direction">@Left</div>
+    <div class="stage-frame" tabindex="0" role="region" aria-label="@Label" dir="@(FrameDirection ?? Visitor.Language.Direction)">
+        @ChildContent
+    </div>
+    <div class="stage-edge stage-right" dir="@Visitor.Language.Direction">@Right</div>
+    <div class="stage-edge stage-bottom" dir="@Visitor.Language.Direction">@Bottom</div>
+</div>
+
+@code {
+    /// <summary>Gets or sets the chart.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = null!;
+
+    /// <summary>Gets or sets the name of the scrolling frame for screen readers.</summary>
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the steps at the upper side.</summary>
+    [Parameter]
+    public RenderFragment? Top { get; set; }
+
+    /// <summary>Gets or sets the steps at the lower side.</summary>
+    [Parameter]
+    public RenderFragment? Bottom { get; set; }
+
+    /// <summary>Gets or sets the steps at the left side of the screen.</summary>
+    [Parameter]
+    public RenderFragment? Left { get; set; }
+
+    /// <summary>Gets or sets the steps at the right side of the screen.</summary>
+    [Parameter]
+    public RenderFragment? Right { get; set; }
+
+    /// <summary>
+    /// Gets or sets the direction the frame scrolls from, when it is not the direction of the page: a chart of
+    /// time begins at the left in every language.
+    /// </summary>
+    [Parameter]
+    public string? FrameDirection { get; set; }
+
+    /// <summary>Gets or sets a class of the page, which shows the stage on some screens only.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+}

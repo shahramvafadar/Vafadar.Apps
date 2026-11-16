@@ -301,7 +301,7 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
         var outside = await page.EvaluateAsync<string[]>(
             """
             () => [...document.querySelectorAll('main *')]
-                .filter(element => !element.closest('.lanes') && !element.closest('.tree-scroll') && !element.closest('.visually-hidden') && !element.classList.contains('visually-hidden'))
+                .filter(element => !element.closest('.lanes') && !element.closest('.stage-frame') && !element.closest('.visually-hidden') && !element.classList.contains('visually-hidden'))
                 .filter(element => { const box = element.getBoundingClientRect(); return box.width > 0 && (box.right > innerWidth + 1 || box.left < -1); })
                 .map(element => element.tagName + '.' + element.className)
             """);

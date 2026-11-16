@@ -23,24 +23,14 @@
     }
     else
     {
-        <p class="note">@T["Family_Lead"]</p>
+        <p class="note">@T["Family_Lead"] @T["Stage_Lead"]</p>
 
-        @* How far the tree is opened lives in the address: every choice is a link, and Back undoes it (ADR 0008). *@
+        @* What does not belong to a side of the tree: whose tree it is and which way its generations run. *@
         <nav class="chart-tools" aria-label="@T["Tree_Tools"]">
             <p class="chart-tool">
                 <span class="chart-tool-name">@T["Tree_Reach"]</span>
                 @Choice(_state with { Whole = false }, string.Format(CultureInfo.CurrentCulture, T["Tree_Line"], name))
                 @Choice(_state with { Whole = true }, T["Tree_Whole"])
-            </p>
-            <p class="chart-tool">
-                <span class="chart-tool-name">@T["Tree_Ancestors"]</span>
-                @Step(!_state.Whole && _state.Up > 0 ? _state with { Up = _state.Up - 1 } : null, T["Tree_Fewer"], T["Tree_Ancestors"])
-                @Step(!_state.Whole && family.MoreAbove && _state.Up < TreeState.FurthestReach ? _state with { Up = _state.Up + 1 } : null, T["Tree_More"], T["Tree_Ancestors"])
-            </p>
-            <p class="chart-tool">
-                <span class="chart-tool-name">@T["Tree_Descendants"]</span>
-                @Step(!_state.Whole && _state.Down > 0 ? _state with { Down = _state.Down - 1 } : null, T["Tree_Fewer"], T["Tree_Descendants"])
-                @Step(!_state.Whole && family.MoreBelow && _state.Down < TreeState.FurthestReach ? _state with { Down = _state.Down + 1 } : null, T["Tree_More"], T["Tree_Descendants"])
             </p>
             <p class="chart-tool">
                 <span class="chart-tool-name">@T["Tree_View"]</span>
@@ -56,19 +46,34 @@
             }
             else
             {
-                @string.Format(CultureInfo.CurrentCulture, T["Tree_Shown"], Visitor.Number(_state.Up), Visitor.Number(_state.Down))
-                @if (family.MoreAbove)
-                {
-                    @(" ")@T["Tree_MoreAbove"]
-                }
-                @if (family.MoreBelow)
-                {
-                    @(" ")@T["Tree_MoreBelow"]
-                }
+                @string.Format(CultureInfo.CurrentCulture, T["Tree_Shown"], Visitor.Number(_state.Up), Visitor.Number(_state.Down), Visitor.Number(_state.Beside))
             }
         </p>
 
-        <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="_state.Across" Label="@string.Format(CultureInfo.CurrentCulture, T["Family_Graph"], name)" />
+        @* The tree is opened and closed at its sides (D-040): older generations lie where the tree begins, younger
+           ones where it ends, and the relatives beside the line on both of the other sides. *@
+        var older = Steps(T["Tree_Ancestors"], _state.Up > 0 ? _state with { Up = _state.Up - 1 } : null, family.MoreAbove ? _state with { Up = _state.Up + 1 } : null, TreeState.FurthestReach >= _state.Up + 1);
+        var younger = Steps(T["Tree_Descendants"], _state.Down > 0 ? _state with { Down = _state.Down - 1 } : null, family.MoreBelow ? _state with { Down = _state.Down + 1 } : null, TreeState.FurthestReach >= _state.Down + 1);
+        var beside = Steps(T["Tree_Beside"], _state.Beside > 0 ? _state with { Beside = _state.Beside - 1 } : null, family.MoreBeside ? _state with { Beside = _state.Beside + 1 } : null, TreeState.FurthestReach >= _state.Beside + 1);
+        var label = string.Format(CultureInfo.CurrentCulture, T["Family_Graph"], name);
+        if (!_state.Across)
+        {
+            <ChartStage Label="@label" Top="older" Bottom="younger" Left="beside" Right="beside">
+                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" />
+            </ChartStage>
+        }
+        else if (Visitor.Language.IsRightToLeft)
+        {
+            <ChartStage Label="@label" Right="older" Left="younger" Top="beside" Bottom="beside">
+                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+            </ChartStage>
+        }
+        else
+        {
+            <ChartStage Label="@label" Left="older" Right="younger" Top="beside" Bottom="beside">
+                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+            </ChartStage>
+        }
 
         @* The list says what the drawing says: both are the same answer of the projection (ADR 0002). *@
         <section aria-labelledby="as-list">
@@ -113,6 +118,10 @@
     [SupplyParameterFromQuery(Name = "down")]
     public string? Down { get; set; }
 
+    /// <summary>Gets or sets how far the tree is opened beside the line, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "beside")]
+    public string? Beside { get; set; }
+
     /// <summary>Gets or sets whether the whole family is shown, in the address.</summary>
     [SupplyParameterFromQuery(Name = "family")]
     public string? Family { get; set; }
@@ -125,13 +134,13 @@
     {
         var known = Collection == Site.Collection && Id.Length > 0 && !Id.Any(char.IsWhiteSpace);
         var id = known ? new EntityId(Id) : default(EntityId?);
-        _state = TreeState.Read(Up, Down, Family, View);
+        _state = TreeState.Read(Up, Down, Beside, Family, View);
 
         // What may be seen is the projection's answer for the reading position; the address only says how much
         // of that is asked for.
         _family = id is null || Visitor.Projection is not { } projection
             ? null
-            : _state.Whole ? projection.Family(id.Value) : projection.Family(id.Value, _state.Up, _state.Down);
+            : _state.Whole ? projection.Family(id.Value) : projection.Family(id.Value, _state.Up, _state.Down, _state.Beside);
         if (_family is null)
         {
             Navigation.NotFound();
@@ -150,8 +159,9 @@
         ? @<a class="choice" href="@Address(state)" aria-current="true">@name</a>
         : @<a class="choice" href="@Address(state)">@name</a>;
 
-    // A step that may have reached its end. Two rows have the same steps, so a step is named with its row.
-    private RenderFragment Step(TreeState? state, string name, string row) => state is null
-        ? @<span class="choice" aria-disabled="true">@name</span>
-        : @<a class="choice" href="@Address(state)" aria-label="@($"{row}: {name}")">@name</a>;
+    // The steps of a side. The whole family has no sides to open: it is everybody already.
+    private RenderFragment Steps(string name, TreeState? fewer, TreeState? more, bool inReach) =>
+        @<EdgeSteps Name="@name"
+                    Fewer="@(_state.Whole || fewer is null ? null : Address(fewer))"
+                    More="@(_state.Whole || more is null || !inReach ? null : Address(more))" />;
 }

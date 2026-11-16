@@ -1,10 +1,10 @@
 @* The same timeline down the page (ADR 0008): time runs from top to bottom, every lane is a column, and the single
-   events stand in a column of their own beside them. The page scrolls; the names of the lanes stay at its top.
+   events stand in a column of their own beside them. The chart scrolls in its stage; the names of the lanes stay at its top.
    Each column is an SVG of its own with the same height, so that a line at one time meets the line beside it. *@
 @inject Visitor Visitor
 @inject IStringLocalizer<Ui> T
 
-<div class="tl tl-down @Class" dir="ltr">
+<div class="tl tl-down" dir="ltr">
     <div class="tl-head" aria-hidden="true">
         <span class="tl-head-axis"></span>
         @foreach (var lane in Drawing.Lanes)
@@ -17,7 +17,7 @@
         }
         <span class="tl-head-events" dir="@Visitor.Language.Direction">@T["Chart_Events"]</span>
     </div>
-    <div class="tl-body" role="group" aria-label="@Label">
+    <div class="tl-body">
         <svg class="tl-axis" width="@Em(AxisWidth)" height="@Em(Height)">
             @foreach (var tick in Drawing.Ticks)
             {
@@ -106,17 +106,9 @@
     [Parameter, EditorRequired]
     public Func<string, BarText> Texts { get; set; } = null!;
 
-    /// <summary>Gets or sets the name of the chart for screen readers.</summary>
-    [Parameter, EditorRequired]
-    public string Label { get; set; } = string.Empty;
-
     /// <summary>Gets or sets the address of the page with its state, for the links to the rows of its table.</summary>
     [Parameter, EditorRequired]
     public string Here { get; set; } = string.Empty;
-
-    /// <summary>Gets or sets a class of the page, which shows the chart on some screens only.</summary>
-    [Parameter]
-    public string? Class { get; set; }
 
     // A callout that was moved along the time may end below the last year.
     private double Height => Math.Max(Drawing.Length, Drawing.Marks.Select(mark => mark.Start + mark.Length).DefaultIfEmpty(0).Max()) + (2 * Pad);

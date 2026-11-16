@@ -681,12 +681,6 @@
   <data name="Chart_Stretch" xml:space="preserve">
     <value>بازهٔ زمانی</value>
   </data>
-  <data name="Chart_Earlier" xml:space="preserve">
-    <value>پیش‌تر</value>
-  </data>
-  <data name="Chart_Later" xml:space="preserve">
-    <value>پس‌تر</value>
-  </data>
   <data name="Chart_Own" xml:space="preserve">
     <value>بازهٔ خودِ مقایسه</value>
   </data>
@@ -780,12 +774,6 @@
   <data name="Tree_Descendants" xml:space="preserve">
     <value>فرزندان و نوادگان</value>
   </data>
-  <data name="Tree_Fewer" xml:space="preserve">
-    <value>یک نسل کمتر</value>
-  </data>
-  <data name="Tree_More" xml:space="preserve">
-    <value>یک نسل بیشتر</value>
-  </data>
   <data name="Tree_View" xml:space="preserve">
     <value>نسل‌ها</value>
   </data>
@@ -796,18 +784,36 @@
     <value>در پهنای صفحه</value>
   </data>
   <data name="Tree_Shown" xml:space="preserve">
-    <value>نمایش: {0} نسل از نیاکان و {1} نسل از فرزندان، همراه با همسرانشان.</value>
+    <value>نمایش: {0} نسل از نیاکان، {1} نسل از فرزندان و {2} گام از خویشان کناری، همراه با همسرانشان.</value>
   </data>
   <data name="Tree_ShownWhole" xml:space="preserve">
     <value>نمایش: هر کسی که از راه پدر و مادر، فرزند یا همسر به {0} می‌رسد.</value>
   </data>
-  <data name="Tree_MoreAbove" xml:space="preserve">
-    <value>نیاکان دورتری هم هستند.</value>
-  </data>
-  <data name="Tree_MoreBelow" xml:space="preserve">
-    <value>فرزندان دورتری هم هستند.</value>
-  </data>
   <data name="Tree_NoRelations" xml:space="preserve">
     <value>هیچ پیوندی در محدودهٔ نمایش نیست. یک نسل بالاتر یا پایین‌تر را باز کنید.</value>
+  </data>
+  <data name="Stage_Lead" xml:space="preserve">
+    <value>چارت از هر سمت با «+» بازتر و با «−» دوباره بسته می‌شود.</value>
+  </data>
+  <data name="Stage_More" xml:space="preserve">
+    <value>{0}: یک گام بازتر</value>
+  </data>
+  <data name="Stage_Fewer" xml:space="preserve">
+    <value>{0}: یک گام بسته‌تر</value>
+  </data>
+  <data name="Stage_NotAvailable" xml:space="preserve">
+    <value>{0} (این‌جا ممکن نیست)</value>
+  </data>
+  <data name="Chart_Edge_Earlier" xml:space="preserve">
+    <value>سال‌های پیش‌تر</value>
+  </data>
+  <data name="Chart_Edge_Later" xml:space="preserve">
+    <value>سال‌های پس‌تر</value>
+  </data>
+  <data name="Chart_Edge_Lanes" xml:space="preserve">
+    <value>ردیف‌ها</value>
+  </data>
+  <data name="Tree_Beside" xml:space="preserve">
+    <value>خویشان کناری</value>
   </data>
 </root>

@@ -909,25 +909,25 @@ main:focus {
 
 /* The chart. Its measures are em of its own font size, so one rule makes all of it smaller on a small screen. */
 .tl {
-  margin-block: var(--space-4);
+  margin: auto;
   font-size: 0.9375rem;
   line-height: 1.25;
 }
 
 /* Without a choice of the visitor both directions are in the page, and the screen decides which one is shown. */
 @media (max-width: 40rem) {
-  .tl.tl-wide-only {
+  .stage.only-wide {
     display: none;
   }
 }
 
 @media (min-width: 40.0625rem) {
-  .tl.tl-narrow-only {
+  .stage.only-narrow {
     display: none;
   }
 }
 
-/* A drawing of a chart is as large as its time: it is never fitted into the page, its frame scrolls. */
+/* A drawing of a chart is as large as its time: it is never fitted into the page, its stage scrolls. */
 .tl svg {
   display: block;
   flex: none;
@@ -1038,32 +1038,20 @@ a.tl-bar:focus-visible,
   overflow: hidden;
 }
 
-/* Across the page: the names of the lanes stand still, the time scrolls. */
+/* Across the page: the time scrolls in the stage, the names of the lanes stay at its left side. */
 .tl-across {
   display: flex;
   align-items: flex-start;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface-raised);
-  overflow: hidden;
+  inline-size: max-content;
 }
 
 .tl-across .tl-names {
+  position: sticky;
+  left: 0;
+  z-index: 1;
   inline-size: 5.5em;
   border-right: 1px solid var(--border);
-}
-
-.tl-scroll {
-  flex: 1 1 auto;
-  min-inline-size: 0;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-gutter: stable;
-}
-
-.tl-scroll:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: -2px;
+  background: var(--surface-raised);
 }
 
 .tl-across .tl-callout {
@@ -1102,8 +1090,11 @@ a.tl-bar:focus-visible,
   clip-path: polygon(0.6em 0, calc(100% - 0.6em) 0, 100% 50%, calc(100% - 0.6em) 100%, 0.6em 100%, 0 50%);
 }
 
-/* Down the page: every lane is a column, the page scrolls and the names of the lanes stay at its top. */
+/* Down the page: every lane is a column, the time scrolls in the stage and the names of the lanes stay at its top. */
 .tl-down {
+  inline-size: 100%;
+  min-inline-size: max-content;
+  margin-block: 0 auto;
   font-size: 0.8125rem;
 }
 
@@ -1117,7 +1108,7 @@ a.tl-bar:focus-visible,
   position: sticky;
   inset-block-start: 0;
   z-index: 1;
-  background: var(--surface);
+  background: var(--surface-raised);
   border-block-end: 1px solid var(--border);
 }
 
@@ -1146,7 +1137,7 @@ a.tl-bar:focus-visible,
 .tl .tl-events {
   flex: 1 1 0;
   inline-size: 0;
-  min-inline-size: 7em;
+  min-inline-size: 9.5em;
 }
 
 .tl-down .tl-bar {
@@ -1237,26 +1228,13 @@ a.tl-bar:focus-visible,
   margin-inline-start: var(--space-2);
 }
 
-/* --- The family tree (ADR 0008): a drawing as large as its family, in a frame that scrolls --- */
+/* --- The family tree (ADR 0008): a drawing as large as its family, in the middle of its stage --- */
 
-.tree-scroll {
-  margin-block: var(--space-4);
-  padding: var(--space-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: auto;
-  overscroll-behavior-x: contain;
-}
-
-.tree-scroll:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: -2px;
-}
-
-/* The tree is never fitted into the page, and it is not centred: it begins where reading begins. */
+/* The tree is never fitted into the page; a tree that is smaller than its stage stands in its middle. */
 .graph.tree {
+  flex: none;
   max-inline-size: none;
-  margin-block: 0;
+  margin: auto;
 }
 
 /* A name of the tree is a target as high as its box: the whole height of the box leads to the page of the member. */
@@ -1264,4 +1242,128 @@ a.tl-bar:focus-visible,
   display: flex;
   align-items: center;
   align-self: stretch;
+}
+
+/* --- The stage of a chart (D-040, ADR 0008): the whole page for the chart, steps at its four sides --- */
+
+/* A page with a stage is as wide as the window; what is to be read keeps the width of a column of text. */
+main:has(> .stage) {
+  max-inline-size: none;
+}
+
+main:has(> .stage) > :not(.stage) {
+  max-inline-size: var(--measure);
+  margin-inline: auto;
+}
+
+/* The stage is as high as the window: scrolled to, the chart and its four sides fill the screen. */
+.stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "top top top"
+    "left frame right"
+    "bottom bottom bottom";
+  block-size: calc(100vh - 2 * var(--space-4));
+  block-size: calc(100dvh - 2 * var(--space-4));
+  min-block-size: 22rem;
+  margin-block: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+
+/* On a narrow screen the stage reaches the edges of the window. */
+@media (max-width: 40rem) {
+  .stage {
+    margin-inline: calc(-1 * var(--space-4));
+    border-inline: 0;
+    border-radius: 0;
+  }
+}
+
+.stage-frame {
+  grid-area: frame;
+  display: flex;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.stage-frame:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+/* A side of the stage: what it opens, and the two steps. */
+.stage-edge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  background: var(--surface);
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.stage-top {
+  grid-area: top;
+  border-bottom: 1px solid var(--border);
+}
+
+.stage-bottom {
+  grid-area: bottom;
+  border-top: 1px solid var(--border);
+}
+
+.stage-left {
+  grid-area: left;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+}
+
+.stage-right {
+  grid-area: right;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+}
+
+.stage-steps {
+  display: flex;
+  gap: var(--space-1);
+}
+
+/* At the left and the right side the words run along the side and the steps stand above each other. */
+.stage-left .stage-label,
+.stage-right .stage-label {
+  writing-mode: vertical-rl;
+}
+
+.stage-left .stage-steps,
+.stage-right .stage-steps {
+  flex-direction: column;
+}
+
+.step {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.step[aria-disabled="true"] {
+  border-style: dashed;
+  background: transparent;
+  color: var(--text-muted);
 }

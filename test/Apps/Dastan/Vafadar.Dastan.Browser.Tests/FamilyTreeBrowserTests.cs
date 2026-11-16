@@ -33,7 +33,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
     {
         var page = await site.Visitor(width: 360, readTo: 4);
         await page.GotoAsync($"/en/{Sohrab}");
-        var frame = page.Locator(".tree-scroll");
+        var frame = page.Locator(".stage-frame");
 
         // Two boxes beside each other are wider than a phone: the tree is as large as its family, the frame scrolls.
         Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");
@@ -48,7 +48,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         await page.Keyboard.PressAsync("ArrowRight");
         await page.Keyboard.PressAsync("ArrowRight");
         // The browser moves the frame after the key; the test waits until it has.
-        await page.WaitForFunctionAsync("() => document.querySelector('.tree-scroll').scrollLeft > 0");
+        await page.WaitForFunctionAsync("() => document.querySelector('.stage-frame').scrollLeft > 0");
         Assert.False(await ScrollsSideways(page), "The page scrolls sideways after the frame was scrolled.");
     }
 
@@ -104,7 +104,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         var shown = await phone.EvaluateAsync<bool>(
             """
             () => {
-                const frame = document.querySelector('.tree-scroll').getBoundingClientRect();
+                const frame = document.querySelector('.stage-frame').getBoundingClientRect();
                 const first = document.querySelector(".tree a.graph-name[href$='/entity/character-zal']").closest('foreignObject').getBoundingClientRect();
                 return first.left >= frame.left - 1 && first.right <= frame.right + 1 && first.right > frame.right - 40;
             }
@@ -121,12 +121,12 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(4);
 
         // Two rows have the same steps; each is named with its row.
-        await page.GetByRole(AriaRole.Link, new() { Name = "Descendants: One generation fewer" }).ClickAsync();
+        await page.GetByRole(AriaRole.Link, new() { Name = "Descendants: close a step" }).ClickAsync();
         await Arrived(page, new Regex("down=1$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(3);
-        await Assertions.Expect(page.GetByText("There are descendants further down.")).ToBeVisibleAsync();
+        await Assertions.Expect(page.Locator(".stage-bottom").GetByRole(AriaRole.Link, new() { Name = "Descendants: open a step further" })).ToBeVisibleAsync();
 
-        await page.GetByRole(AriaRole.Link, new() { Name = "Descendants: One generation more" }).ClickAsync();
+        await page.GetByRole(AriaRole.Link, new() { Name = "Descendants: open a step further" }).ClickAsync();
         await Arrived(page, new Regex("/family$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(4);
 
@@ -137,6 +137,61 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         await page.GoBackAsync();
         await Arrived(page, new Regex("/family$"));
         await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(4);
+    }
+
+    [Theory]
+    [InlineData(1280, "en")]
+    [InlineData(390, "fa")]
+    public async Task The_tree_has_the_page_and_stands_in_the_middle_of_its_stage_with_steps_at_its_four_sides(int width, string language)
+    {
+        var page = await site.Visitor(width, readTo: 4);
+        await page.GotoAsync($"/{language}/{Zal}");
+
+        var sizes = await page.EvaluateAsync<double[]>(
+            """
+            () => {
+                const stage = document.querySelector('.stage').getBoundingClientRect();
+                const frame = document.querySelector('.stage-frame').getBoundingClientRect();
+                const tree = document.querySelector('.tree').getBoundingClientRect();
+                const steps = ['top', 'left', 'right', 'bottom'].map(side => document.querySelectorAll('.stage-' + side + ' .step').length);
+                return [stage.left, innerWidth - stage.right, stage.height, innerHeight,
+                    (tree.left + tree.right) / 2 - (frame.left + frame.right) / 2, (tree.top + tree.bottom) / 2 - (frame.top + frame.bottom) / 2,
+                    tree.width - frame.width, ...steps];
+            }
+            """);
+
+        Assert.InRange(sizes[0], 0, 17);
+        Assert.InRange(sizes[1], 0, 17);
+        Assert.InRange(sizes[2], sizes[3] - 33, sizes[3]);
+        Assert.Equal([2, 2, 2, 2], sizes[7..]);
+
+        // A tree that is smaller than its stage stands in its middle; a larger one begins at its edge and scrolls.
+        Assert.InRange(sizes[5], -2, 2);
+        if (sizes[6] < 0)
+        {
+            Assert.InRange(sizes[4], -9, 9);
+        }
+
+        Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");
+    }
+
+    [Fact]
+    public async Task A_plus_above_the_tree_opens_a_generation_of_ancestors_and_a_minus_closes_it()
+    {
+        var page = await site.Visitor(width: 1280, readTo: 4);
+        await page.GotoAsync($"/en/{Sohrab}?up=1");
+        await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(3);
+
+        await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Ancestors: open a step further" }).ClickAsync();
+        await Arrived(page, new Regex("/family$"));
+        await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(5);
+
+        // Nobody stands above the two grandfathers: the "+" is no link any more, and it says so.
+        await Assertions.Expect(page.Locator(".stage-top .step[aria-disabled='true']")).ToHaveTextAsync(new Regex("not possible here"));
+
+        await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Ancestors: close a step" }).ClickAsync();
+        await Arrived(page, new Regex("up=1$"));
+        await Assertions.Expect(page.Locator(".tree a.graph-name")).ToHaveCountAsync(3);
     }
 
     [Fact]
@@ -190,7 +245,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
             () => {
                 const problems = [];
                 const outside = [...document.querySelectorAll('main *')]
-                    .filter(element => !element.closest('.tree-scroll') && element.getClientRects().length > 0)
+                    .filter(element => !element.closest('.stage-frame') && element.getClientRects().length > 0)
                     .filter(element => { const box = element.getBoundingClientRect(); return box.width > 0 && (box.right > innerWidth + 1 || box.left < -1); });
                 for (const element of outside) problems.push('outside the window: ' + element.tagName + '.' + element.getAttribute('class'));
 
