@@ -1,10 +1,35 @@
 @page "/error"
 @inject IStringLocalizer<Ui> T
+@inject IHttpContextAccessor Accessor
 
 <PageTitle>@T["Error_Title"] – @T["Site_Name"]</PageTitle>
 
+@* A failure is said to be one: it is not an empty result and not a missing page. The visitor keeps where they
+   were – the address they asked for is offered again – and nothing about the failure itself is shown. *@
 <section class="page-header">
     <h1>@T["Error_Title"]</h1>
     <p class="lead">@T["Error_Text"]</p>
-    <p><a class="action" href="./">@T["NotFound_Home"]</a></p>
+    <p class="actions">
+        @if (_again is not null)
+        {
+            <a class="action" href="@_again">@T["Error_Retry"]</a>
+        }
+        <a class="action secondary" href="./">@T["NotFound_Home"]</a>
+    </p>
 </section>
+
+@code {
+    private string? _again;
+
+    protected override void OnInitialized()
+    {
+        // The address that failed, as the pages of this language write it. Only a page that was asked for is
+        // offered again; a form is not sent a second time by a link.
+        if (Accessor.HttpContext is { } context
+            && context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>() is { Path: { Length: > 1 } path }
+            && HttpMethods.IsGet(context.Request.Method))
+        {
+            _again = path.TrimStart('/') + context.Request.QueryString.Value;
+        }
+    }
+}

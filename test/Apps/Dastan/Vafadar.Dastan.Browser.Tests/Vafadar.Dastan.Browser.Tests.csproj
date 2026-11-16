@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Tests of the journey in a real browser (decision 11 of the delivery plan). The browser runs in the official
+    Playwright container of the Compose project "test" (src/Apps/Dastan/compose.yaml); the tests start the site on
+    this machine and tell the browser where it is. Without the address of that browser in DASTAN_BROWSER every
+    test is skipped and says so – the project still builds everywhere.
+  -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.Playwright" />
+    <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Web\Vafadar.Dastan.Web.csproj" />
+  </ItemGroup>
+
+</Project>

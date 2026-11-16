@@ -30,6 +30,7 @@ var app = builder.Build();
 app.Services.GetRequiredService<DastanSite>();
 
 app.UseSecurityHeaders();
+app.UseFreshPages();
 if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();

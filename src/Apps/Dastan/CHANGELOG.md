@@ -32,3 +32,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   editors' review, and back to where the visitor was. A source of another site is opened from a page that says
   first that it tells the whole story.
 - Names can be searched inside the story, in English and Persian, as far as the story has been read.
+- A page that fails says so and offers the same address again; an address that leads nowhere offers the start, the
+  story and the reading position; a family drawing without members points to the drawing of all connections.

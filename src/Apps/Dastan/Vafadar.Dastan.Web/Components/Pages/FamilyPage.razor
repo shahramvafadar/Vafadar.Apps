@@ -17,7 +17,9 @@
 
     @if (family.Members.IsEmpty)
     {
-        <p class="note">@T["Family_None"]</p>
+        @* A view that has nothing to show for this entity says why and offers the one that has. *@
+        <p class="note" role="status">@T["Family_None"] @T["Family_Instead"]</p>
+        <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/entity/{_entity.Id}/connections")">@T["Entity_ToGraph"]</a></p>
     }
     else
     {

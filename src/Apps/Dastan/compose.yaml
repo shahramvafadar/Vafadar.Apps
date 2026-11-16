@@ -1,0 +1,24 @@
+# The services Dastan uses on a development machine. Everything belongs to one Compose project named "test"
+# (decision D-034); nothing here is started in production and nothing of another project is touched.
+#
+#   docker compose -f src/Apps/Dastan/compose.yaml up -d      start
+#   docker compose -f src/Apps/Dastan/compose.yaml down       stop and remove
+name: test
+
+services:
+  # The browser of the browser tests (decision 11 of the delivery plan): the official Playwright image, run as a
+  # server the tests connect to. Its version is the version of the Microsoft.Playwright package in
+  # Directory.Packages.props; a client and a server of different versions refuse each other.
+  browser:
+    image: mcr.microsoft.com/playwright:v1.64.1-noble
+    init: true
+    ipc: host
+    user: pwuser
+    working_dir: /home/pwuser
+    command: ["/bin/sh", "-c", "npx -y playwright@1.64.1 run-server --port 3000 --host 0.0.0.0"]
+    ports:
+      # Reachable from this machine only.
+      - "127.0.0.1:53333:3000"
+    extra_hosts:
+      # The site under test runs on the machine, outside the container.
+      - "host.docker.internal:host-gateway"

@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 to 4 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, and the first pages of the website (start, story, entity) in English and Persian. **Phase 5 is in progress**: the connections page, the family drawing, the story step by step with its lanes, and the galleries with the pages of images and videos exist, and so do the evidence of every statement and the search for names. The states of document 18 and the browser tests of the journey follow. |
+| Status | **Phases 1 to 5 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, the website in English and Persian, and the connected journey – connections, family, story and lanes, galleries with images and video, the evidence of every statement, search – checked by tests in a real browser. Next: phase 6, the installable app, failures and accessibility. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -64,6 +64,23 @@ dotnet clean Vafadar.Dastan.slnf                                       # afterwa
 
 `Vafadar.Dastan.slnf` holds Dastan and the libraries it uses, with their tests. It needs none of the private
 package feeds of the MAUI projects.
+
+### Tests in a browser
+
+The journey of M0 runs as tests in a real browser (`test/Apps/Dastan/Vafadar.Dastan.Browser.Tests`). The browser is
+Chromium in the official Playwright container of the Compose project `test`; the tests start the site on this
+machine, on `localhost` only, and tell the browser where it is.
+
+```powershell
+docker compose -f src/Apps/Dastan/compose.yaml up -d
+$env:DASTAN_BROWSER = "ws://127.0.0.1:53333/"
+dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Browser.Tests
+docker compose -f src/Apps/Dastan/compose.yaml down
+```
+
+Without `DASTAN_BROWSER` the tests are skipped and say so; that is what happens in CI, which has no container. The
+version of the container and the version of the package `Microsoft.Playwright` in `Directory.Packages.props` have
+to be the same.
 
 ## Content
 
