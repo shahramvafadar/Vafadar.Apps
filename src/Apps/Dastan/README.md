@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 to 6 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, the website in English and Persian, the connected journey – connections, family, story and lanes, galleries with images and video, the evidence of every statement, search – and the installable app with its page for "no connection", checked by tests in a real browser. Next: phase 7, the final verification and the handoff. |
+| Status | **The first milestone, M0, is built**: all seven phases of the [delivery plan](docs/delivery-plan.md) are done. What each acceptance condition was checked with, and what was not checked, is in the [acceptance record](docs/acceptance.md). It is a local demonstration; nothing is published, and what a public pilot still needs is listed in the delivery plan. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -49,7 +49,7 @@ dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Web      # then open http://
 
 This starts the local demonstration (the Development settings): the site reads the sample from `content/` and
 shows it as a demonstration. Started with any other settings the site is for the public and shows that nothing
-is published, because the sample is not approved for publication. The pages need no script; the reading position
+is published, because the sample is not approved for publication. No page needs a script to be read; the reading position
 is chosen at the bottom of the page of the story.
 
 ## Build and test
@@ -57,6 +57,7 @@ is chosen at the bottom of the page of the story.
 .NET SDK 10.0.404 or a newer 10.0 feature band (`global.json`). From the repository root:
 
 ```powershell
+dotnet restore Vafadar.Dastan.slnf                                     # packages; no private feed is needed
 dotnet build Vafadar.Dastan.slnf -p:ContinuousIntegrationBuild=true    # warnings are errors, as in CI
 dotnet test --solution Vafadar.Dastan.slnf
 dotnet clean Vafadar.Dastan.slnf                                       # afterwards: free the disk
