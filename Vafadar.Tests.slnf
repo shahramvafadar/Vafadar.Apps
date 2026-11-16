@@ -6,6 +6,7 @@
       "test\\Apps\\Zanance\\Vafadar.Zanance.BillingAdapter.Tests\\Vafadar.Zanance.BillingAdapter.Tests.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Core\\Vafadar.Dastan.Core.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Data\\Vafadar.Dastan.Data.csproj",
+      "src\\Apps\\Dastan\\Vafadar.Dastan.Web\\Vafadar.Dastan.Web.csproj",
       "src\\Apps\\Zanance\\Vafadar.Zanance.Core\\Vafadar.Zanance.Core.csproj",
       "src\\Apps\\Zanance\\Vafadar.Zanance.Data\\Vafadar.Zanance.Data.csproj",
       "src\\Apps\\Zanance\\Vafadar.Zanance.Reports\\Vafadar.Zanance.Reports.csproj",
@@ -19,8 +20,10 @@
       "src\\Libraries\\Vafadar.Documents\\Vafadar.Documents.csproj",
       "src\\Libraries\\Vafadar.Localization\\Vafadar.Localization.csproj",
       "src\\Libraries\\Vafadar.Temporal\\Vafadar.Temporal.csproj",
+      "src\\Libraries\\Vafadar.Web\\Vafadar.Web.csproj",
       "test\\Apps\\Dastan\\Vafadar.Dastan.Core.Tests\\Vafadar.Dastan.Core.Tests.csproj",
       "test\\Apps\\Dastan\\Vafadar.Dastan.Data.Tests\\Vafadar.Dastan.Data.Tests.csproj",
+      "test\\Apps\\Dastan\\Vafadar.Dastan.Web.Tests\\Vafadar.Dastan.Web.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Core.Tests\\Vafadar.Zanance.Core.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Data.Tests\\Vafadar.Zanance.Data.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Reports.Tests\\Vafadar.Zanance.Reports.Tests.csproj",
@@ -33,6 +36,7 @@
       "test\\Libraries\\Vafadar.Documents.Tests\\Vafadar.Documents.Tests.csproj",
       "test\\Libraries\\Vafadar.Localization.Tests\\Vafadar.Localization.Tests.csproj",
       "test\\Libraries\\Vafadar.Temporal.Tests\\Vafadar.Temporal.Tests.csproj",
+      "test\\Libraries\\Vafadar.Web.Tests\\Vafadar.Web.Tests.csproj",
       "test\\Libraries\\Vafadar.SyncfusionLicense.Tests\\Vafadar.SyncfusionLicense.Tests.csproj",
       "test\\Shared\\Vafadar.Testing\\Vafadar.Testing.csproj"
     ]

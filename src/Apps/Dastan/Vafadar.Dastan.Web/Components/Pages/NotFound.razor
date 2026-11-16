@@ -1,0 +1,26 @@
+@page "/not-found"
+@inject IStringLocalizer<Ui> T
+@inject IHttpContextAccessor Accessor
+
+<PageTitle>@T["NotFound_Title"] – @T["Site_Name"]</PageTitle>
+
+@* The same page for an address that does not exist and for something the visitor has not read to yet: it must
+   not tell which of the two it is. *@
+<section class="page-header">
+    <h1>@T["NotFound_Title"]</h1>
+    <p class="lead">@T["NotFound_Text"]</p>
+    <p><a class="action" href="./">@T["NotFound_Home"]</a></p>
+</section>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Opened by its own address the page is still an answer for something that is not there. When it stands in
+        // for another answer, that answer keeps its status.
+        if (Accessor.HttpContext is { Response.HasStarted: false } context
+            && context.Features.Get<Microsoft.AspNetCore.Diagnostics.IStatusCodeReExecuteFeature>() is null)
+        {
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+    }
+}

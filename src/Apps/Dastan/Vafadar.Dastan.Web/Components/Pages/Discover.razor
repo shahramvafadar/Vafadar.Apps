@@ -1,0 +1,30 @@
+@page "/"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject IStringLocalizer<Ui> T
+
+<PageTitle>@T["Site_Name"] – @T["Site_Tagline"]</PageTitle>
+
+<section class="hero">
+    <h1>@T["Site_Name"]</h1>
+    <p class="tagline">@T["Site_Tagline"]</p>
+    <p>@T["Discover_Lead"]</p>
+</section>
+
+@if (Visitor.Projection is { } projection)
+{
+    var overview = projection.Overview();
+    <section aria-labelledby="first-story">
+        <h2 id="first-story">@T["Discover_First"]</h2>
+        <article class="card">
+            <h3><a href="@Site.Collection"><Loc Text="overview.Story.Label" /></a></h3>
+            <p class="meta"><Loc Text="overview.Work.Label" /></p>
+            <p><Loc Text="overview.Story.Summary" /></p>
+            <p><a class="action" href="@Site.Collection">@T["Discover_Open"]</a></p>
+        </article>
+    </section>
+}
+else
+{
+    <p class="note">@T["Discover_Nothing"]</p>
+}

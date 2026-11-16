@@ -1,0 +1,10 @@
+@page "/error"
+@inject IStringLocalizer<Ui> T
+
+<PageTitle>@T["Error_Title"] – @T["Site_Name"]</PageTitle>
+
+<section class="page-header">
+    <h1>@T["Error_Title"]</h1>
+    <p class="lead">@T["Error_Text"]</p>
+    <p><a class="action" href="./">@T["NotFound_Home"]</a></p>
+</section>

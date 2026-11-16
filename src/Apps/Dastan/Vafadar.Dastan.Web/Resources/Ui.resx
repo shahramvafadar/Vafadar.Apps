@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Site_Name" xml:space="preserve">
+    <value>Dastan</value>
+  </data>
+  <data name="Site_Tagline" xml:space="preserve">
+    <value>Discover how stories connect.</value>
+  </data>
+  <data name="Skip_ToContent" xml:space="preserve">
+    <value>Skip to content</value>
+  </data>
+  <data name="Nav_Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="Nav_Discover" xml:space="preserve">
+    <value>Discover</value>
+  </data>
+  <data name="Language_Label" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Theme_Label" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="Theme_Auto" xml:space="preserve">
+    <value>Like my device</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Theme_Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="Reading_Title" xml:space="preserve">
+    <value>Reading position</value>
+  </data>
+  <data name="Reading_Explanation" xml:space="preserve">
+    <value>Dastan shows only what belongs to the part of the story you have reached. What comes later stays hidden – in names, connections and images too. You can move forward or back at any time.</value>
+  </data>
+  <data name="Reading_Choose" xml:space="preserve">
+    <value>I have read up to</value>
+  </data>
+  <data name="Reading_Apply" xml:space="preserve">
+    <value>Set reading position</value>
+  </data>
+  <data name="Reading_Current" xml:space="preserve">
+    <value>You are at: {0}</value>
+  </data>
+  <data name="Reading_Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Reading_Continues" xml:space="preserve">
+    <value>The story continues beyond this point.</value>
+  </data>
+  <data name="Reading_Complete" xml:space="preserve">
+    <value>You have reached the end of this collection.</value>
+  </data>
+  <data name="Reading_Stage" xml:space="preserve">
+    <value>Stage {0}: {1}</value>
+  </data>
+  <data name="Discover_Lead" xml:space="preserve">
+    <value>Start with something that interests you. See its story, follow its connections, and discover what comes next.</value>
+  </data>
+  <data name="Discover_First" xml:space="preserve">
+    <value>A first story</value>
+  </data>
+  <data name="Discover_Open" xml:space="preserve">
+    <value>Open the story</value>
+  </data>
+  <data name="Discover_Nothing" xml:space="preserve">
+    <value>Nothing is published here yet.</value>
+  </data>
+  <data name="Demo_Notice" xml:space="preserve">
+    <value>Local demonstration. This collection is an editorial sample and is not approved for publication.</value>
+  </data>
+  <data name="Draft_Notice" xml:space="preserve">
+    <value>The Persian text of this collection is a draft that has not been reviewed yet.</value>
+  </data>
+  <data name="Foreign_Note" xml:space="preserve">
+    <value>in English</value>
+  </data>
+  <data name="Collection_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="Collection_Text" xml:space="preserve">
+    <value>Text used</value>
+  </data>
+  <data name="Collection_Scope" xml:space="preserve">
+    <value>What this collection covers</value>
+  </data>
+  <data name="Collection_SourceNotice" xml:space="preserve">
+    <value>This source is outside Dastan and tells the whole story.</value>
+  </data>
+  <data name="Collection_Subjects" xml:space="preserve">
+    <value>Start with</value>
+  </data>
+  <data name="Collection_Begins" xml:space="preserve">
+    <value>How it begins</value>
+  </data>
+  <data name="Entity_Connections" xml:space="preserve">
+    <value>Connections</value>
+  </data>
+  <data name="Entity_NoConnections" xml:space="preserve">
+    <value>No connections to show.</value>
+  </data>
+  <data name="Entity_Appearances" xml:space="preserve">
+    <value>In the story</value>
+  </data>
+  <data name="Entity_Collection" xml:space="preserve">
+    <value>Part of the collection {0}</value>
+  </data>
+  <data name="Step_Number" xml:space="preserve">
+    <value>Step {0}</value>
+  </data>
+  <data name="Type_work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="Type_storyArc" xml:space="preserve">
+    <value>Story</value>
+  </data>
+  <data name="Type_character" xml:space="preserve">
+    <value>Character</value>
+  </data>
+  <data name="Type_animalCharacter" xml:space="preserve">
+    <value>Animal character</value>
+  </data>
+  <data name="Type_narrativePlace" xml:space="preserve">
+    <value>Place in the story</value>
+  </data>
+  <data name="Type_narrativeRegion" xml:space="preserve">
+    <value>Region in the story</value>
+  </data>
+  <data name="Type_narrativeObject" xml:space="preserve">
+    <value>Object in the story</value>
+  </data>
+  <data name="Presence_Acts" xml:space="preserve">
+    <value>takes part</value>
+  </data>
+  <data name="Presence_Involved" xml:space="preserve">
+    <value>is involved</value>
+  </data>
+  <data name="Presence_Setting" xml:space="preserve">
+    <value>is where it happens</value>
+  </data>
+  <data name="Presence_Object" xml:space="preserve">
+    <value>is an object in it</value>
+  </data>
+  <data name="Presence_MentionedOnly" xml:space="preserve">
+    <value>is only mentioned, not present</value>
+  </data>
+  <data name="Presence_SubjectOfReport" xml:space="preserve">
+    <value>is spoken about, not present</value>
+  </data>
+  <data name="Presence_DeceasedSubject" xml:space="preserve">
+    <value>has died and is mourned</value>
+  </data>
+  <data name="NotFound_Title" xml:space="preserve">
+    <value>Not here</value>
+  </data>
+  <data name="NotFound_Text" xml:space="preserve">
+    <value>This page does not exist, or it is not part of the story at your reading position.</value>
+  </data>
+  <data name="NotFound_Home" xml:space="preserve">
+    <value>Go to the start</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
+  <data name="Error_Text" xml:space="preserve">
+    <value>The page could not be shown. Nothing was changed. Please try again.</value>
+  </data>
+  <data name="External_Note" xml:space="preserve">
+    <value>opens another site</value>
+  </data>
+</root>

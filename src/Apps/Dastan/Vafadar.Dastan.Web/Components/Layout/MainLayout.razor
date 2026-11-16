@@ -1,0 +1,72 @@
+@inherits LayoutComponentBase
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IOptions<SiteLanguageOptions> Languages
+@inject IStringLocalizer<Ui> T
+
+<a class="skip-link" href="@($"{Here}#content")">@T["Skip_ToContent"]</a>
+
+<header class="site-header">
+    <a class="wordmark" href="./">@T["Site_Name"]</a>
+    <nav class="site-nav" aria-label="@T["Nav_Main"]">
+        <a href="./">@T["Nav_Discover"]</a>
+    </nav>
+    <div class="site-tools">
+        <ul class="languages" role="list" aria-label="@T["Language_Label"]">
+            @foreach (var tag in Languages.Value.Languages)
+            {
+                var name = CultureInfo.GetCultureInfo(tag).NativeName;
+                <li>
+                    @if (tag == Visitor.Language.Tag)
+                    {
+                        <span aria-current="true" lang="@tag">@name</span>
+                    }
+                    else
+                    {
+                        <a href="@($"/{tag}/{Here}")" lang="@tag" hreflang="@tag">@name</a>
+                    }
+                </li>
+            }
+        </ul>
+        <form method="post" action="/preferences/theme" class="theme" role="group" aria-label="@T["Theme_Label"]">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@ReturnUrl" />
+            <button type="submit" name="theme" value="auto" aria-pressed="@Pressed(ThemeChoice.Auto)">@T["Theme_Auto"]</button>
+            <button type="submit" name="theme" value="light" aria-pressed="@Pressed(ThemeChoice.Light)">@T["Theme_Light"]</button>
+            <button type="submit" name="theme" value="dark" aria-pressed="@Pressed(ThemeChoice.Dark)">@T["Theme_Dark"]</button>
+        </form>
+    </div>
+</header>
+
+<main id="content" tabindex="-1">
+    @Body
+</main>
+
+<footer class="site-footer">
+    @if (Visitor.Projection is { } projection)
+    {
+        var stage = projection.Overview().Stages.First(candidate => candidate.Level == projection.Boundary);
+        <p>
+            @string.Format(CultureInfo.CurrentCulture, T["Reading_Current"], Visitor.Text(stage.Label).Value)
+            <a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
+        </p>
+        @if (Visitor.Language.Tag == "fa")
+        {
+            <p class="note">@T["Draft_Notice"]</p>
+        }
+    }
+    @if (Site.Audience == Audience.LocalDemonstration)
+    {
+        <p class="note">@T["Demo_Notice"]</p>
+    }
+</footer>
+
+@code {
+    // The address of this page inside its language ("story-x/entity/y"), for the links to the other languages.
+    private string Here => Navigation.ToBaseRelativePath(Navigation.Uri);
+
+    private string ReturnUrl => $"/{Visitor.Language.Tag}/{Here}";
+
+    private string Pressed(ThemeChoice choice) => Visitor.Theme == choice ? "true" : "false";
+}

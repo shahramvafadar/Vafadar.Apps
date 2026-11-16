@@ -1,0 +1,80 @@
+@page "/{Collection}/entity/{Id}"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_entity is { } overview)
+{
+    var story = Visitor.Projection!.Overview().Story;
+    <PageTitle>@Visitor.Text(overview.Entity.Label).Value – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><TypeName Type="overview.Entity.Type" /></p>
+        <h1><Loc Text="overview.Entity.Label" /></h1>
+        <p class="lead"><Loc Text="overview.Entity.Summary" /></p>
+        <p class="meta">
+            <a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Entity_Collection"], Visitor.Text(story.Label).Value)</a>
+        </p>
+    </header>
+
+    <section aria-labelledby="connections">
+        <h2 id="connections">@T["Entity_Connections"]</h2>
+        @if (overview.Connections.IsEmpty)
+        {
+            <p class="note">@T["Entity_NoConnections"]</p>
+        }
+        else
+        {
+            <ul class="statements" role="list">
+                @foreach (var connection in overview.Connections)
+                {
+                    var edge = connection.Direction == ConnectionDirection.Incoming
+                        ? new Edge(connection.Relation, connection.Other, overview.Entity)
+                        : new Edge(connection.Relation, overview.Entity, connection.Other);
+                    <li><Statement Relation="edge" Self="overview.Entity.Id" /></li>
+                }
+            </ul>
+        }
+    </section>
+
+    @if (!overview.Appearances.IsEmpty)
+    {
+        <section aria-labelledby="appearances">
+            <h2 id="appearances">@T["Entity_Appearances"]</h2>
+            <ol class="steps" role="list">
+                @foreach (var appearance in overview.Appearances)
+                {
+                    <li class="step">
+                        <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(appearance.Step.Number))</p>
+                        <h3><Loc Text="appearance.Step.Event.Label" /></h3>
+                        <p><Loc Text="appearance.Association.Role" /> <span class="presence">@T[$"Presence_{appearance.Association.Presence}"]</span></p>
+                    </li>
+                }
+            </ol>
+        </section>
+    }
+}
+
+@code {
+    private EntityOverview? _entity;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the entity in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        // An entity the visitor has not read to yet and one that does not exist are the same page: not found.
+        var known = Collection == Site.Collection && Id.Length > 0 && !Id.Any(char.IsWhiteSpace);
+        _entity = known ? Visitor.Projection?.Entity(new EntityId(Id)) : null;
+        if (_entity is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}

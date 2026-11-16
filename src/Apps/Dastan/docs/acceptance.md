@@ -9,7 +9,7 @@ Status values: **Not started**, **Partly** (the named part is implemented and ch
 
 | Id | Observable condition | Phase | Status | Evidence |
 |---|---|---|---|---|
-| M0-01 | A fresh checkout starts the app locally from documented commands with the validated sample | 4, 7 | Not started | – |
+| M0-01 | A fresh checkout starts the app locally from documented commands with the validated sample | 4, 7 | **Partly** | 2026-11-16: `dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Web` starts the site on this machine and reads the sample (README, section Run). A fresh checkout on another machine is phase 7 |
 | M0-02 | Discover → collection → entity → labelled relation → another entity → back works | 5 | Not started | – |
 | M0-03 | The focused graph and the list show the same allowed relationships; keyboard selection and expansion on a phone work | 3, 5 | **Partly** | 2026-11-16, model part: one answer feeds graph and list; equal for every entity at every stage; expansion (`dotnet test --solution Vafadar.Dastan.slnf`, see below). The pages are phase 5 |
 | M0-04 | Story and participant lanes agree on the narrative order and on what an association means | 3, 5 | **Partly** | 2026-11-16, model part: story and lanes share their steps; a lane cell is the stated association with its presence (`dotnet test --solution Vafadar.Dastan.slnf`, see below). The pages are phase 5 |
@@ -17,8 +17,8 @@ Status values: **Not started**, **Partly** (the named part is implemented and ch
 | M0-06 | Level 0 and lowering the boundary remove later details from current, back and deep-linked views | 3, 5 | **Partly** | 2026-11-16, model part: no answer of any view discloses a later stage, for the stages 0 to 4; a hidden record answers like an unknown one (`dotnet test --solution Vafadar.Dastan.slnf`, see below). The pages are phase 5 |
 | M0-07 | The evidence shown supports the selected statement and closes back to where it was opened | 3, 5 | **Partly** | 2026-11-16, model part: every visible statement returns its own sources, locator and review state (`dotnet test --solution Vafadar.Dastan.slnf`, see below). The pages are phase 5 |
 | M0-08 | Time examples round-trip with uncertainty, duration, unit, reference, era, calendar and frame preserved | 2 | **Implemented and checked** | 2026-11-16, .NET SDK 10.0.404, Windows 11 x64: `dotnet test --project test/Libraries/Vafadar.Temporal.Tests -p:ContinuousIntegrationBuild=true` – 165 of 165 passed, no warnings. See below |
-| M0-09 | Independent visitors keep independent language and reading state | 4 | Not started | – |
-| M0-10 | The core routes work at 360 px, 412 px and a wide window; keyboard and focus, light and dark, right to left | 4, 6 | Not started | – |
+| M0-09 | Independent visitors keep independent language and reading state | 4 | **Implemented and checked** | 2026-11-16: two visitors with their own cookies, Persian at stage 3 with the dark theme and English at the opening, ask at the same time in 25 rounds; neither gets the other's language, page or theme (`SiteTests.Two_visitors_keep_their_own_…`, see below) |
+| M0-10 | The core routes work at 360 px, 412 px and a wide window; keyboard and focus, light and dark, right to left | 4, 6 | **Partly** | 2026-11-16, the three pages of phase 4 in a browser: no horizontal overflow at 360 and 412 px, a centred column at 1280 px, light and dark, Persian right to left, stand-alone links and controls at least 44 px high. Keyboard order, focus and the later routes are phase 5 and 6 |
 | M0-11 | Manifest, scope, start from a deep link and the behaviour on connection loss and update work | 6 | Not started | – |
 | M0-12 | Only the demonstration projection is served; fixtures and the editorial input are not web assets | 3, 6 | **Partly** | 2026-11-16, model part: the public audience gets no projection of the sample; items that are not eligible are absent; reviewer documents are not in the model (`dotnet test --solution Vafadar.Dastan.slnf`, see below). The pages are phase 5. Serving is phase 4 to 6 |
 
@@ -65,11 +65,29 @@ Limits: a browser, the Back button, a deep link, the keyboard and a phone are no
 are checked with the pages in phase 5. The check compares whole texts; it does not judge the wording the editors
 chose for a visible text ([ADR 0002](adr/0002-one-projection.md)).
 
+### M0-09, and the website part of M0-06 and M0-12 (phase 4)
+
+Checked on 2026-11-16 with `dotnet test --solution Vafadar.Dastan.slnf`. `Vafadar.Dastan.Web.Tests` starts the
+site in memory with the Development settings and asks it over HTTP. Each visitor of a test keeps its own cookies
+and sends a cookie only to the paths it was set for, as a browser does.
+
+| Condition | What is checked | Tests |
+|---|---|---|
+| M0-09 | Two visitors, different language, reading position and theme, 25 rounds of requests at the same time; the start address of each goes to their own language | `SiteTests.Two_visitors_keep_their_own_language_reading_position_and_appearance`; for the culture alone `Vafadar.Web.Tests…Requests_in_different_languages_at_the_same_time_…` |
+| M0-06 | From the start page every link is followed, for the stages 0 to 4 in both languages; no page contains a text that belongs only to hidden records. An address cannot raise the reading position; moving back removes the later part; a hidden entity and an unknown one are the same page | `SiteTests.No_page_a_visitor_can_reach_…`, `…An_address_cannot_move_a_visitor_forward`, `…Moving_back_…`, `…Something_not_read_yet_and_something_that_does_not_exist_…` |
+| M0-12 | The sample, its translation, its media and the fixtures cannot be downloaded under any address tried; started for the public the site shows nothing of the sample and no reading position changes that | `SiteTests.The_collection_its_media_and_the_fixtures_cannot_be_downloaded`, `PublicSiteTests` |
+
+In a browser (the built-in preview, 2026-11-16): the reading form was sent from the Persian page, the page of
+Sohrab was "not found" before and readable after. This check found a defect the HTTP tests had missed – the
+cookie of the form token was scoped to `/fa` and the form was refused – which is fixed in `Vafadar.Web` and now
+covered by a test. Limits: no automated browser test exists yet (phase 5); the Back button and a phone were not
+tried; of the screenshots planned only two could be taken, the other layouts were measured in the page.
+
 ## Deviations from the wording of document 20
 
 | Condition | Document 20 | Here | Decision |
 |---|---|---|---|
-| M0-10 | English, Persian and German layouts; resource parity for six languages | English and Persian layouts; every text exists in each language the app declares | D-031, D-032 |
+| M0-10 | The core routes work at 360 px, 412 px and a wide window; keyboard and focus, light and dark, right to left | 4, 6 | **Partly** | 2026-11-16, the three pages of phase 4 in a browser: no horizontal overflow at 360 and 412 px, a centred column at 1280 px, light and dark, Persian right to left, stand-alone links and controls at least 44 px high. Keyboard order, focus and the later routes are phase 5 and 6 |
 
 No other condition is changed. A condition that cannot be checked on the available machine – for example the
 installation on a phone – stays **Not verified** with the exact remaining step; it is never reported as passed.

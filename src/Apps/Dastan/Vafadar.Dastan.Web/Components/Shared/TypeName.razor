@@ -1,0 +1,13 @@
+@* The name of an entity type in the language of the page; the key of the type when the interface has no name for it. *@
+@inject IStringLocalizer<Ui> T
+@(_name.ResourceNotFound ? Type.Key : _name.Value)
+
+@code {
+    private LocalizedString _name = null!;
+
+    /// <summary>Gets or sets the type.</summary>
+    [Parameter, EditorRequired]
+    public EntityType Type { get; set; } = null!;
+
+    protected override void OnParametersSet() => _name = T[$"Type_{Type.Key}"];
+}
