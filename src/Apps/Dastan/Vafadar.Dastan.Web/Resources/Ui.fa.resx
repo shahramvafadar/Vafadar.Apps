@@ -627,4 +627,13 @@
   <data name="Search_MatchedName" xml:space="preserve">
     <value>با نام «{0}» یافت شد</value>
   </data>
+  <data name="NotFound_Story" xml:space="preserve">
+    <value>رفتن به قصه</value>
+  </data>
+  <data name="Error_Retry" xml:space="preserve">
+    <value>تلاش دوباره</value>
+  </data>
+  <data name="Family_Instead" xml:space="preserve">
+    <value>ترسیم خانواده فقط پدر و مادر، فرزندان و همسران را نشان می‌دهد. پیوندهای دیگر در ترسیم همهٔ پیوندها آمده‌اند.</value>
+  </data>
 </root>

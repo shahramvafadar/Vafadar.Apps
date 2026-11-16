@@ -1,15 +1,25 @@
 @page "/not-found"
 @inject IStringLocalizer<Ui> T
 @inject IHttpContextAccessor Accessor
+@inject Visitor Visitor
+@inject DastanSite Site
 
 <PageTitle>@T["NotFound_Title"] – @T["Site_Name"]</PageTitle>
 
 @* The same page for an address that does not exist and for something the visitor has not read to yet: it must
-   not tell which of the two it is. *@
+   not tell which of the two it is. What it offers is the same for both as well – the start, the story, and the
+   reading position in general, never a hint at what a later part holds (document 18, section 5). *@
 <section class="page-header">
     <h1>@T["NotFound_Title"]</h1>
     <p class="lead">@T["NotFound_Text"]</p>
-    <p><a class="action" href="./">@T["NotFound_Home"]</a></p>
+    <p class="actions">
+        <a class="action" href="./">@T["NotFound_Home"]</a>
+        @if (Visitor.Projection is not null)
+        {
+            <a class="action secondary" href="@Site.Collection">@T["NotFound_Story"]</a>
+            <a class="action secondary" href="@($"{Site.Collection}#reading")">@T["Reading_Title"]</a>
+        }
+    </p>
 </section>
 
 @code {

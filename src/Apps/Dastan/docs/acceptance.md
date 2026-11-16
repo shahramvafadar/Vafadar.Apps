@@ -91,3 +91,20 @@ tried; of the screenshots planned only two could be taken, the other layouts wer
 
 No other condition is changed. A condition that cannot be checked on the available machine – for example the
 installation on a phone – stays **Not verified** with the exact remaining step; it is never reported as passed.
+
+### The states of document 18 (section 5)
+
+Checked on 2026-11-16 with `dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Web.Tests`. Pages are written by the
+server in one answer (ADR 0003), so there is no state in which a page waits for its content.
+
+| State | What the site does | Tests |
+|---|---|---|
+| Empty permitted selection | A gallery, a family, the connections, the appearances, the search and the story say that there is nothing to show here and offer the way back or another view; no count and no name of what is hidden | `GalleryAndMediaTests.Before_the_media_are_reached_…`, `…The_gallery_of_an_entity_…`, `StatesTests.A_view_that_has_nothing_to_show_…`, `EvidenceAndSearchTests.A_name_that_is_not_read_yet_…` |
+| Unknown or uncertain time | A date is written as the record states it – "about", the era, the calendar it is in; a time the pages cannot word is "not stated"; the time of an image is labelled as the time it was made | `GalleryAndMediaTests.The_page_of_the_diagram_…`, `…A_Persian_page_of_an_item_…` |
+| Incompatible view or frame | The story names its frame – the order of telling, not a calendar – instead of offering a calendar; a gallery says that its order says nothing about dates; a family without members points to the connections | `StatesTests.The_story_says_that_it_is_not_a_calendar_…`, `…A_view_that_has_nothing_to_show_…`, `GalleryAndMediaTests.From_the_third_stage_…` |
+| Unavailable media or source | A missing file leaves the page of the item with everything else and the sentence that it cannot be shown; no player, no placeholder. A source of another site is announced as one the site has no say over | `MissingFilesTests`, `EvidenceAndSearchTests.The_page_before_a_source_…` |
+| Access denied or revoked | Not part of M0 (private spaces). What the public site may not show answers as not found | `PublicSiteTests` |
+| Spoiler-limited content | Every view shows what the reading position allows and says in general that the story continues; what is hidden answers exactly like what does not exist – pages, files, evidence, search | `SiteTests` (the crawl for the stages 0 to 4), `StatesTests.What_is_not_read_yet_and_what_does_not_exist_…`, `GalleryAndMediaTests.Before_the_media_are_reached_none_of_their_files_…` |
+| Loading or processing | Does not occur: a page arrives complete. Images below the first screen are loaded when they are reached; a video loads only what shows its length | – |
+| Recoverable failure | A failure has its own page in the language of the address, with the failed address to try again and the start; it is neither an empty result nor a missing page and shows nothing of the failure | `FailureTests` |
+| Invalid link | One page for an address that leads nowhere, with the start, the story and the reading position | `StatesTests.What_is_not_read_yet_and_what_does_not_exist_…` |
