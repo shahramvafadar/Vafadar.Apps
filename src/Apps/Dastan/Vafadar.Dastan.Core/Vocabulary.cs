@@ -98,10 +98,24 @@ public enum Directionality
     Symmetric = 1,
 }
 
+/// <summary>What a relation type means for a family view.</summary>
+public enum Kinship
+{
+    /// <summary>The type says nothing about family.</summary>
+    None = 0,
+
+    /// <summary>The first entity is a parent of the second.</summary>
+    Parentage = 1,
+
+    /// <summary>The two entities are partners (marriage and the like).</summary>
+    Partnership = 2,
+}
+
 /// <summary>A type of relation from the managed list <see cref="RelationTypes"/>.</summary>
 /// <param name="Key">The stable name of the type.</param>
 /// <param name="Directionality">Whether relations of the type have a direction.</param>
-public sealed record RelationType(string Key, Directionality Directionality);
+/// <param name="Kinship">What the type means for a family view; a view never guesses that from the name.</param>
+public sealed record RelationType(string Key, Directionality Directionality, Kinship Kinship = Kinship.None);
 
 /// <summary>The relation types Dastan knows. A relation type has one meaning; similar wordings are not merged.</summary>
 public static class RelationTypes
@@ -110,8 +124,8 @@ public static class RelationTypes
     public static ImmutableArray<RelationType> All { get; } =
     [
         new("partOf", Directionality.Directed),
-        new("parentOf", Directionality.Directed),
-        new("spouseOf", Directionality.Symmetric),
+        new("parentOf", Directionality.Directed, Kinship.Parentage),
+        new("spouseOf", Directionality.Symmetric, Kinship.Partnership),
         new("rules", Directionality.Directed),
         new("rides", Directionality.Directed),
         new("visits", Directionality.Directed),

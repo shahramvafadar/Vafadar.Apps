@@ -42,6 +42,8 @@ internal sealed class SmallStory
 
     public int DefaultLevel { get; set; }
 
+    public PublicationState Publication { get; set; } = new(LocalDemoAllowed: true, PublicReleaseApproved: false);
+
     public Catalogue Build() => new(
         new CatalogueInfo
         {
@@ -60,7 +62,7 @@ internal sealed class SmallStory
             },
             ReadingStages = [.. Enumerable.Range(0, Stages).Select(level => new ReadingStage(new ReadingLevel(level), Text($"Stage {level}")))],
             DefaultLevel = new ReadingLevel(DefaultLevel),
-            Publication = new PublicationState(LocalDemoAllowed: true, PublicReleaseApproved: false),
+            Publication = Publication,
         },
         Entities,
         Relations,

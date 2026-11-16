@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 and 2 of the [delivery plan](docs/delivery-plan.md) are done** (foundations, the time library); phase 3 (domain model and data) is in progress. There is no application to run yet. |
+| Status | **Phases 1 and 2 of the [delivery plan](docs/delivery-plan.md) are done** (foundations, the time library). Phase 3 is nearly done: the read model, the reader of the sample, its Persian text and the projection that decides what a visitor sees exist and are tested. There is no application to run yet. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
