@@ -15,7 +15,7 @@ public sealed class ConnectionsChartBrowserTests(BrowserSite site) : IClassFixtu
     private static Task<bool> ScrollsSideways(IPage page) =>
         page.EvaluateAsync<bool>("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1");
 
-    private static Task Arrived(IPage page, Regex address) => Assertions.Expect(page).ToHaveURLAsync(address);
+    private static Task Arrived(IPage page, Regex address) => BrowserSite.Arrived(page, address);
 
     // The first box of an entity inside the chart – the focus has a link of its own kind – as the window shows it.
     private static async Task<(double Left, double Top, double Right, double Bottom)> Box(IPage page, string entity)

@@ -16,7 +16,7 @@ public sealed class StoryChartBrowserTests(BrowserSite site) : IClassFixture<Bro
     private static Task<bool> ScrollsSideways(IPage page) =>
         page.EvaluateAsync<bool>("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1");
 
-    private static Task Arrived(IPage page, Regex address) => Assertions.Expect(page).ToHaveURLAsync(address);
+    private static Task Arrived(IPage page, Regex address) => BrowserSite.Arrived(page, address);
 
     [Theory]
     [InlineData(1280, "en")]

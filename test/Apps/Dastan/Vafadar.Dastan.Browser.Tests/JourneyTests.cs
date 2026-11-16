@@ -146,14 +146,21 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
                 await video.play();
                 await new Promise(done => setTimeout(done, 1500));
                 const track = video.textTracks[0];
-                return [video.currentTime, video.duration, video.videoWidth, track.mode === 'showing' ? 1 : 0, track.cues ? track.cues.length : 0, video.error ? video.error.code : 0];
+                const shown = track.mode === 'showing' ? 1 : 0;
+                if (!shown) {
+                    track.mode = 'showing';
+                    await new Promise(done => setTimeout(done, 500));
+                }
+                return [video.currentTime, video.duration, video.videoWidth, shown, track.cues ? track.cues.length : 0, video.error ? video.error.code : 0];
             }
             """);
         Assert.Equal(0, played[5]);
         Assert.True(played[0] > 0.5, $"The video stands at {played[0]} seconds.");
         Assert.InRange(played[1], 19.5, 20.5);
         Assert.Equal(1280, played[2]);
-        Assert.Equal(1, played[3]);
+        // Whether captions marked as the default are shown without being asked for is the visitor's setting in
+        // WebKit, and the WebKit of the tests has it off; turned on, they are there.
+        Assert.Equal(BrowserSite.Engine == "webkit" ? 0 : 1, played[3]);
         Assert.Equal(4, played[4]);
         Assert.Contains("Zal, also called Dastan, is Rostam's father.", await page.Locator(".transcript").InnerTextAsync(), StringComparison.Ordinal);
 
@@ -333,10 +340,7 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
         }
     }
 
-    // Waits until the window shows the address. The address is asked for until it is the expected one; whether the
-    // browser has announced the end of loading by then is not part of the question – the next step waits for what
-    // it needs itself.
-    private static Task Arrived(IPage page, Regex address) => Assertions.Expect(page).ToHaveURLAsync(address);
+    private static Task Arrived(IPage page, Regex address) => BrowserSite.Arrived(page, address);
 
     private static async Task TabTo(IPage page, string className)
     {

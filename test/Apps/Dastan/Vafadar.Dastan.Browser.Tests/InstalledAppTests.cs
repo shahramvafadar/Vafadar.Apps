@@ -50,6 +50,9 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
             ],
             kept);
 
+        // Without a connection: what Playwright turns on in Firefox is Firefox's own "work offline", which answers
+        // from the cache of the browser and does not stop what a service worker asks for.
+        Assert.SkipWhen(BrowserSite.Engine == "firefox", "Firefox cannot be put offline for a service worker by the tests; the page for no connection is tried in Chromium and WebKit.");
         await page.Context.SetOfflineAsync(true);
 
         // The image the browser showed a moment ago is not answered from anywhere.

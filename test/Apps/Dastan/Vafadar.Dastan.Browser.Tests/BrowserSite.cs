@@ -22,6 +22,10 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// <summary>The name of the story in addresses.</summary>
     public const string Story = "story-rostam-sohrab";
 
+    // More windows than any one test opens.
+    private const int WindowsKept = 4;
+
+    private readonly System.Collections.Concurrent.ConcurrentQueue<IBrowserContext> _windows = new();
     private IPlaywright? _playwright;
     private IBrowser? _browser;
     private string _address = string.Empty;
@@ -85,6 +89,14 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     {
         Assert.SkipWhen(_browser is null, "No browser: start the container of src/Apps/Dastan/compose.yaml and set DASTAN_BROWSER=ws://127.0.0.1:53333/.");
 
+        // The tests of a class run one after the other and none has more than a few visitors at a time: the
+        // windows of earlier tests are closed. Left open, each keeps processes of its own in Firefox and WebKit,
+        // and a class of sixty tests takes gigabytes.
+        while (_windows.Count >= WindowsKept && _windows.TryDequeue(out var earlier))
+        {
+            await earlier.CloseAsync();
+        }
+
         var context = await _browser!.NewContextAsync(new BrowserNewContextOptions
         {
             BaseURL = _address,
@@ -93,6 +105,7 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
             ColorScheme = dark ? ColorScheme.Dark : ColorScheme.Light,
             JavaScriptEnabled = script,
         });
+        _windows.Enqueue(context);
         if (readTo is { } level)
         {
             await context.AddCookiesAsync(
@@ -101,7 +114,27 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
             ]);
         }
 
-        return await context.NewPageAsync();
+        var page = await context.NewPageAsync();
+        if (dark && Engine == "firefox")
+        {
+            // Firefox, driven from here, forgets the appearance of the device when a window opens its first
+            // page. The window opens a file of the site first and is told the appearance again; from then on
+            // it keeps it.
+            await page.GotoAsync("/icon.svg");
+            await page.EmulateMediaAsync(new PageEmulateMediaOptions { ColorScheme = ColorScheme.Dark });
+        }
+
+        return page;
+    }
+
+    /// <summary>
+    /// Waits until the window shows an address and the page there has been loaded. A link that is chosen while
+    /// its page is still loading is not always followed in WebKit; a visitor is slower than a test.
+    /// </summary>
+    public static async Task Arrived(IPage page, System.Text.RegularExpressions.Regex address)
+    {
+        await Assertions.Expect(page).ToHaveURLAsync(address);
+        await page.WaitForLoadStateAsync(LoadState.Load);
     }
 
     // Stands in front of everything the site maps and answers the address of the worker when a test asks for it.

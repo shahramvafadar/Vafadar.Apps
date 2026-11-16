@@ -30,7 +30,7 @@ State on 2026-11-16, for all conditions together:
 * **No installation.** Chromium reads the manifest and names no obstacle but its private window; nobody installed
   the app, in any browser. That is why M0-11 stays "Partly".
 * **No screen reader and no visitor.** The accessibility check is the part a tool can decide.
-* **One browser.** The browser tests run in Chromium 1.64.1 only; Firefox and Safari were not used.
+* **Three engines, no Safari.** At M0 the browser tests ran in Chromium only. Since step 9.2 they run in Firefox and WebKit as well – see "Three browser engines" below. Safari itself, on a Mac or a phone, was not used.
 * **One machine.** Everything ran on the development machine; the browser tests are skipped in CI, which has no
   container for them.
 
@@ -147,5 +147,30 @@ After the connections as a chart (step 9.3): 1012 without a browser and 308 in t
 | Only what is released is shown | **Implemented and checked** | The first comparison is released to the local demonstration only: the public site has no link to it and answers its address as not found (`PublicComparisonTests`) |
 | The content of the first comparison is right | **Not verified** | Its periods and years are the commonly given ones, written down without sources; every statement is "proposed" and the page says so. Checking them against sources is editorial work that was not done |
 
-Not checked for the charts: a phone, a screen reader, a browser other than Chromium, and how a drawing behaves
+Not checked for the charts: a phone, a screen reader, Safari itself, and how a drawing behaves
 with hundreds of periods or of people. Timelines of a collection's own records (step 8.6) are not built.
+
+## Three browser engines (step 9.2)
+
+2026-11-16, the Playwright container 1.64.1 of the Compose project `test`: Chromium 156, Firefox 157, WebKit 27.2.
+The same 308 browser tests in each engine, each in a run of its own.
+
+| Engine | Passed | Not asked | Why |
+|---|---|---|---|
+| Chromium | 308 | 0 | |
+| WebKit | 307 | 1 | Whether the app can be installed is a question only Chromium answers |
+| Firefox | 305 | 3 | The same; and the two tests of the page for "no connection": what Playwright turns off in Firefox is Firefox's own "work offline", which answers from the cache of the browser and does not stop what a service worker asks for |
+
+What the other engines showed, and what was done:
+
+* **Nothing in the site had to be changed.** Every chart, every page at 360, 412 and 1280 px, both languages and
+  both appearances pass the same checks in the three engines, the automatic accessibility check included.
+* **The tests were wrong in four places**, not the site: they expected Chromium's 40 px for a press of an arrow
+  key in a frame; they followed a link while its page was still loading, which WebKit does not always take; they
+  expected captions marked as the default to be shown unasked, which is a setting of the visitor in WebKit; and
+  Firefox, driven by the tests, forgot the dark appearance of the device on the first page of a window – so the
+  dark checks would have run on light pages there. All four are in `BrowserSite` and the tests now.
+* **The windows of earlier tests are closed.** Left open they took more than 6 GB in WebKit and stopped Docker on
+  the development machine, with every other container on it. The container has a limit of memory now.
+
+Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "no connection" in Firefox.
