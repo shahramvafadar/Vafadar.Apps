@@ -68,9 +68,9 @@ package feeds of the MAUI projects.
 
 ### Tests in a browser
 
-The journey of M0, the installable app, the chart of a comparison and the automatic part of the accessibility check run as tests in a real browser (`test/Apps/Dastan/Vafadar.Dastan.Browser.Tests`). The browser is
-Chromium in the official Playwright container of the Compose project `test`; the tests start the site on this
-machine, on `localhost` only, and tell the browser where it is.
+The journey of M0, the installable app, the chart of a comparison and the automatic part of the accessibility check run as tests in a real browser (`test/Apps/Dastan/Vafadar.Dastan.Browser.Tests`). The browser
+lives in the official Playwright container of the Compose project `test` – Chromium, or Firefox or WebKit when
+asked for; the tests start the site on this machine, on `localhost` only, and tell the browser where it is.
 
 ```powershell
 docker compose -f src/Apps/Dastan/compose.yaml up -d
@@ -82,6 +82,19 @@ docker compose -f src/Apps/Dastan/compose.yaml down
 Without `DASTAN_BROWSER` the tests are skipped and say so; that is what happens in CI, which has no container. The
 version of the container and the version of the package `Microsoft.Playwright` in `Directory.Packages.props` have
 to be the same.
+
+The other two engines are named by `DASTAN_BROWSER_ENGINE` and run two classes of tests at a time: a window of
+Firefox or WebKit takes far more memory than one of Chromium, and the container may take 6 GB.
+
+```powershell
+$env:DASTAN_BROWSER_ENGINE = "firefox"   # or "webkit"; unset or "chromium" for Chromium
+dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Browser.Tests --max-threads 2
+```
+
+What the other engines are not asked: whether the app can be installed (a question only Chromium answers), and,
+in Firefox, the page for "no connection" – what the tests can turn off there is not what a service worker uses.
+The WebKit of the container is the engine of Safari, not Safari on a phone or a Mac. Right after the container
+has started, the first page of a run can take longer than the tests wait; a second run shows whether that was it.
 
 ## Content
 

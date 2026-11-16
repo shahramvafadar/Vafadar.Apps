@@ -40,6 +40,9 @@ public sealed class WorkerUpdateTests(BrowserSite site) : IClassFixture<BrowserS
         Assert.Equal("Dastan", await page.Locator("h1").InnerTextAsync());
 
         // What the worker is there for still works, from the new store.
+        // Without a connection: what Playwright turns on in Firefox is Firefox's own "work offline", which answers
+        // from the cache of the browser and does not stop what a service worker asks for.
+        Assert.SkipWhen(BrowserSite.Engine == "firefox", "Firefox cannot be put offline for a service worker by the tests; the page for no connection is tried in Chromium and WebKit.");
         await page.Context.SetOfflineAsync(true);
         await page.GotoAsync($"/fa/{BrowserSite.Story}");
         Assert.Equal("No connection", await page.Locator("h1").InnerTextAsync());

@@ -17,7 +17,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
     private static Task<bool> ScrollsSideways(IPage page) =>
         page.EvaluateAsync<bool>("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1");
 
-    private static Task Arrived(IPage page, Regex address) => Assertions.Expect(page).ToHaveURLAsync(address);
+    private static Task Arrived(IPage page, Regex address) => BrowserSite.Arrived(page, address);
 
     // The box of a member inside the drawing, as the window shows it.
     private static async Task<(double Left, double Top, double Right, double Bottom)> Box(IPage page, string member)

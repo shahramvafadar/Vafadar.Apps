@@ -19,7 +19,7 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
     private static Task<double> PlotWidth(IPage page) =>
         page.EvaluateAsync<double>("document.querySelector('.tl-plot').getBoundingClientRect().width");
 
-    private static Task Arrived(IPage page, Regex address) => Assertions.Expect(page).ToHaveURLAsync(address);
+    private static Task Arrived(IPage page, Regex address) => BrowserSite.Arrived(page, address);
 
     [Fact]
     public async Task On_a_wide_screen_the_time_runs_across_the_page_and_scrolls_in_a_frame_of_its_own()
@@ -60,7 +60,8 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         Assert.True(await frame.EvaluateAsync<bool>("frame => document.activeElement === frame"), "The keyboard does not reach the frame of the time.");
         await page.Keyboard.PressAsync("ArrowRight");
         await page.Keyboard.PressAsync("ArrowRight");
-        await Assertions.Expect(frame).ToHaveJSPropertyAsync("scrollLeft", 80);
+        // How far an arrow key moves a frame is the browser's own matter: 40 px in Chromium, more in the others.
+        await page.WaitForFunctionAsync("() => document.querySelector('.stage-frame:not([hidden])') && [...document.querySelectorAll('.stage-frame')].some(frame => frame.scrollLeft >= 80)");
     }
 
     [Theory]

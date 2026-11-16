@@ -88,7 +88,9 @@ phone, and a valid manifest is not an installation.
 
 The journey is also checked by tests in a browser (`Vafadar.Dastan.Browser.Tests`, see the README): run them after a
 change of a page, of the styles or of the headers of an answer. They are skipped without the browser container, so
-a run in which they were skipped has checked nothing in a browser – say so.
+a run in which they were skipped has checked nothing in a browser – say so. `DASTAN_BROWSER_ENGINE` names `firefox`
+or `webkit` instead of Chromium; run those with `--max-threads 2`. A test opens its windows with
+`BrowserSite.Visitor` and waits for a page with `BrowserSite.Arrived`: both hold what the three engines need.
 
 ## 6. Documentation duties
 

@@ -50,6 +50,9 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
             ],
             kept);
 
+        // Without a connection: what Playwright turns on in Firefox is Firefox's own "work offline", which answers
+        // from the cache of the browser and does not stop what a service worker asks for.
+        Assert.SkipWhen(BrowserSite.Engine == "firefox", "Firefox cannot be put offline for a service worker by the tests; the page for no connection is tried in Chromium and WebKit.");
         await page.Context.SetOfflineAsync(true);
 
         // The image the browser showed a moment ago is not answered from anywhere.
@@ -113,6 +116,9 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
     [Fact]
     public async Task The_browser_reads_the_manifest_without_complaint_and_names_no_obstacle_to_installing_but_its_own_window()
     {
+        // The question is put to the browser in its own language, and only Chromium has one for it.
+        Assert.SkipUnless(BrowserSite.Engine == "chromium", "Only Chromium answers what it has against installing; Firefox and WebKit are not asked.");
+
         var page = await site.Visitor(width: 1280);
         await page.GotoAsync("/en/");
         await page.EvaluateAsync("navigator.serviceWorker.ready.then(() => true)");
