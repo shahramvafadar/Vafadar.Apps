@@ -74,6 +74,7 @@ The repository has two kinds of code:
 | Vafadar.Monetization | Planned store billing/entitlement infrastructure; Zanance follows Free/Plus/Pro and Plus Lifetime (D-61) | – | 🔜 planned ([details](monetization.md)) |
 | Vafadar.Web | What every web app needs: language from the address, `lang`/`dir`, light and dark theme, installable-app shell, Syncfusion Blazor license. No texts ([ADR 0011](../adr/0011-languages-per-app.md)) | – | 🔜 with Dastan, phase 4 |
 | [Vafadar.Temporal](../../src/Libraries/Vafadar.Temporal/README.md) | Stated time: partial and approximate dates, uncertain occurrences and periods, years before the common era, ages of thousands to billions of years, places in a story; compared without invented precision ([ADR 0012](../adr/0012-temporal-model.md)). No texts | – | ✅ |
+| [Vafadar.Web](../../src/Libraries/Vafadar.Web/README.md) | For web apps (ASP.NET Core): the language of a page from its address, text direction, theme and other remembered choices, safe response headers, a base style sheet. No texts. |
 
 A library is created when a second app needs the same thing, or when the concern is clearly generic from the start
 (backup, localization, authentication). App-specific code stays in the app until it is needed elsewhere.

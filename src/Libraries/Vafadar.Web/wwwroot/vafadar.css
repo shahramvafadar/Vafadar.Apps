@@ -1,0 +1,132 @@
+/*
+  Base style sheet of the Vafadar web apps (served as _content/Vafadar.Web/vafadar.css).
+
+  It contains no colours and no brand: an app defines the tokens below for light and dark and builds on them.
+
+    --surface         page background             --text            body text
+    --surface-raised  cards, panels               --text-muted      secondary text
+    --border          lines and outlines          --accent          links and primary actions
+    --focus           the focus ring              --accent-text     text on the accent colour
+
+  Appearance: an app sets its light tokens on :root, its dark tokens on :root[data-theme="dark"] and, for visitors
+  who made no choice, inside @media (prefers-color-scheme: dark) on :root:not([data-theme="light"]).
+
+  Direction: only logical properties are used (inline/block, start/end), so right-to-left needs no second sheet.
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-block-size: 100vh;
+  background: var(--surface);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.15em;
+}
+
+/* Every interactive element shows where the keyboard is. */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Text for screen readers that takes no space on screen. */
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The first link of a page: jumps over the navigation; visible only while it has the focus. */
+.skip-link {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--accent);
+  color: var(--accent-text);
+  transform: translateY(-120%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

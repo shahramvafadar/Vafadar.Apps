@@ -151,6 +151,7 @@ technology overview at the top of this file.
 |---|---|
 | [Vafadar.Core](src/Libraries/Vafadar.Core/README.md) | Entity base, app environment and settings abstractions |
 | [Vafadar.Temporal](src/Libraries/Vafadar.Temporal/README.md) | Stated time: partial and approximate dates, uncertain periods, BCE, deep time and story order, compared without invented precision |
+| [Vafadar.Web](src/Libraries/Vafadar.Web/README.md) | For web apps: the language of a page from its address, text direction, theme and other remembered choices, safe response headers, a base style sheet |
 | [Vafadar.Localization](src/Libraries/Vafadar.Localization/README.md) | Runtime language switching, right-to-left, Gregorian, Persian and lunar Hijri calendars, shared strings |
 | [Vafadar.Cryptography](src/Libraries/Vafadar.Cryptography) | Shared cryptographic primitives for protected app/service data |
 | [Vafadar.Data](src/Libraries/Vafadar.Data/README.md) | EF Core SQLite databases, audit timestamps, database backups |
