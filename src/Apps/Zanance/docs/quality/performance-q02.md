@@ -233,3 +233,14 @@ remains open. The100k stress warm median is1756.190000ms, while its new search i
 interrupted by an [existing native exit](current-search-native-exit-d1220.md).
 The rejected [D1217/D1218 strategies](performance-delivery-acceptance-d1217.md) are
 not promoted. These scoped results do not complete all QA06/ANR/release gates.
+
+
+## Cold target follow-through: fixed orphan DELETE and profile admission
+
+The [D1221 fixed orphan DELETE trial](fixed-orphan-delete-cold-d1221.md) passes new
+host gates but fails the complete Samsung startup gate: 7110.673385 to 7014.439445 ms,
+only 1.3534%improvement against 5%; target 6,000 ms remains open. The candidate is
+retired without promotion or successful-check replay. The [D1222 current profile
+admission](current-startup-profile-admission-d1222.md) identifies real unmatched
+Home generated type names, while actual compilation/capture/native speed remain
+unproved. It is a distinct remaining path; SDK defaults/security/source stay intact.
