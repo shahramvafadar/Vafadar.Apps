@@ -256,3 +256,13 @@ rejected before the remaining twelve roles; no profile is promoted. Both complet
 source/Home guards and terminal original package/settings restoration pass.
 Cold 6,000 ms and the original stress-search native fault remain open; previous
 warm/search/financial acceptance is preserved without replay.
+
+
+## Current original wall-span diagnosis (D1224)
+
+[One bounded component observation](current-startup-home-spans-d1224.md) shows one
+Home load/projection, approximately 1,329 ms before projection, 693 ms projection,
+and only 3.55 ms aggregate visibility updates. Async wall spans overlap; they are
+not CPU attribution or new speed acceptance. The actual original source and phone
+settings/packages are restored. The owner reactivates the overall goal; cold 6,000 ms
+and the original native fault remain unresolved. No financial or old success replay.
