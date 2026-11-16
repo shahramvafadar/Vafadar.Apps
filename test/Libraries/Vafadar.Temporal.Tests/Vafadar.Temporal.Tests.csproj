@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Temporal\Vafadar.Temporal.csproj" />
+  </ItemGroup>
+
+</Project>

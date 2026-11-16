@@ -43,6 +43,7 @@
     <Project Path="src/Libraries/Vafadar.Documents/Vafadar.Documents.csproj" />
     <Project Path="src/Libraries/Vafadar.Localization/Vafadar.Localization.csproj" />
     <Project Path="src/Libraries/Vafadar.Maui/Vafadar.Maui.csproj" />
+    <Project Path="src/Libraries/Vafadar.Temporal/Vafadar.Temporal.csproj" />
   </Folder>
   <Folder Name="/test/" />
   <Folder Name="/test/Apps/" />
@@ -64,6 +65,7 @@
     <Project Path="test/Libraries/Vafadar.Documents.Tests/Vafadar.Documents.Tests.csproj" />
     <Project Path="test/Libraries/Vafadar.Localization.Tests/Vafadar.Localization.Tests.csproj" />
     <Project Path="test/Libraries/Vafadar.SyncfusionLicense.Tests/Vafadar.SyncfusionLicense.Tests.csproj" />
+    <Project Path="test/Libraries/Vafadar.Temporal.Tests/Vafadar.Temporal.Tests.csproj" />
   </Folder>
   <Folder Name="/test/Shared/">
     <Project Path="test/Shared/Vafadar.Testing/Vafadar.Testing.csproj" />

@@ -1,0 +1,11 @@
+{
+  "solution": {
+    "path": "Vafadar.Apps.slnx",
+    "projects": [
+      "src\\Libraries\\Vafadar.Core\\Vafadar.Core.csproj",
+      "src\\Libraries\\Vafadar.Temporal\\Vafadar.Temporal.csproj",
+      "test\\Libraries\\Vafadar.Core.Tests\\Vafadar.Core.Tests.csproj",
+      "test\\Libraries\\Vafadar.Temporal.Tests\\Vafadar.Temporal.Tests.csproj"
+    ]
+  }
+}

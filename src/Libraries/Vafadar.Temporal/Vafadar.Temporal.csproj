@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Time as people state it: partial and approximate dates, uncertain occurrences and periods, years before the common era, ages of thousands to billions of years and positions in a story – compared without inventing precision.</Description>
+  </PropertyGroup>
+
+</Project>

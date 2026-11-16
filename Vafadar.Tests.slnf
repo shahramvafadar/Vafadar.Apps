@@ -16,6 +16,7 @@
       "src\\Libraries\\Vafadar.Data\\Vafadar.Data.csproj",
       "src\\Libraries\\Vafadar.Documents\\Vafadar.Documents.csproj",
       "src\\Libraries\\Vafadar.Localization\\Vafadar.Localization.csproj",
+      "src\\Libraries\\Vafadar.Temporal\\Vafadar.Temporal.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Core.Tests\\Vafadar.Zanance.Core.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Data.Tests\\Vafadar.Zanance.Data.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.Reports.Tests\\Vafadar.Zanance.Reports.Tests.csproj",
@@ -27,6 +28,7 @@
       "test\\Libraries\\Vafadar.Data.Tests\\Vafadar.Data.Tests.csproj",
       "test\\Libraries\\Vafadar.Documents.Tests\\Vafadar.Documents.Tests.csproj",
       "test\\Libraries\\Vafadar.Localization.Tests\\Vafadar.Localization.Tests.csproj",
+      "test\\Libraries\\Vafadar.Temporal.Tests\\Vafadar.Temporal.Tests.csproj",
       "test\\Libraries\\Vafadar.SyncfusionLicense.Tests\\Vafadar.SyncfusionLicense.Tests.csproj",
       "test\\Shared\\Vafadar.Testing\\Vafadar.Testing.csproj"
     ]
