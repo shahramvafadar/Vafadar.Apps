@@ -55,9 +55,52 @@
 
         <p class="note" role="status">@(story.Continues ? T["Reading_Continues"] : T["Reading_Complete"]) <a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a></p>
 
-        @* The lanes show the same steps and the same associations as the list above (ADR 0002): a cell is what the
-           event states about the name, and somebody who is only mentioned has the mark for "mentioned". There are no
-           bars from a first to a last appearance: the story does not say that somebody is there in between. *@
+        @* The chart shows the same steps and the same associations as the list above (ADR 0002): a mark is what
+           the event states about the name, and somebody who is only mentioned has the mark for "mentioned". It
+           stands in a stage (D-040) and is closed and opened at its sides: the steps where the telling begins and
+           ends, the names of the steps above, the rows below. *@
+        var earlier = Steps(
+            T["Story_Edge_Earlier"],
+            _chart.First < _chart.Last ? _state with { From = _chart.First + 1 } : null,
+            _chart.First > 1 ? _state with { From = _chart.First == 2 ? null : _chart.First - 1 } : null);
+        var later = Steps(
+            T["Story_Edge_Later"],
+            _chart.Last > _chart.First ? _state with { To = _chart.Last - 1 } : null,
+            _chart.Last < _chart.StepCount ? _state with { To = _chart.Last + 1 == _chart.StepCount ? null : _chart.Last + 1 } : null);
+        var heads = Steps(
+            T["Story_Edge_Heads"],
+            _state.Titles ? _state with { Titles = false } : null,
+            _state.Titles ? null : _state with { Titles = true });
+        var rows = Steps(
+            T["Story_Edge_Lanes"],
+            _chart.Lanes.Length > 1 ? _state with { Lanes = _chart.Lanes.Length - 1 } : null,
+            _chart.Lanes.Length < _chart.LaneCount ? _state with { Lanes = _chart.Lanes.Length + 1 == _chart.LaneCount ? null : _chart.Lanes.Length + 1 } : null);
+
+        <h2>@T["Story_Chart"]</h2>
+        <p class="note">@T["Story_ChartLead"] @T["Stage_Lead"]</p>
+        <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Story_ChartShown"], Visitor.Number(_chart.First), Visitor.Number(_chart.Last), Visitor.Number(_chart.StepCount), Visitor.Number(_chart.Lanes.Length), Visitor.Number(_chart.LaneCount))</p>
+        if (Visitor.Language.IsRightToLeft)
+        {
+            <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Story_ChartRegion"], title)" Right="earlier" Left="later" Top="heads" Bottom="rows">
+                <StoryLanesChart Chart="_chart" Titles="_state.Titles" Here="@_here" />
+            </ChartStage>
+        }
+        else
+        {
+            <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Story_ChartRegion"], title)" Left="earlier" Right="later" Top="heads" Bottom="rows">
+                <StoryLanesChart Chart="_chart" Titles="_state.Titles" Here="@_here" />
+            </ChartStage>
+        }
+
+        <h3>@T["Story_Legend"]</h3>
+        <ul class="legend" role="list">
+            @foreach (var presence in _lanes.Lanes.SelectMany(lane => lane.Cells).OfType<EventAssociation>().Select(cell => cell.Presence).Distinct().Order())
+            {
+                <li><span class="mark" aria-hidden="true">@StoryLanesChart.Mark(presence)</span> @T[$"Presence_{presence}"]</li>
+            }
+        </ul>
+
+        @* The table says what the chart says, for every step and every name the visitor may see. *@
         <section>
             <h2 id="lanes">@T["Story_Lanes"]</h2>
             <p class="note">@T["Story_LanesLead"]</p>
@@ -86,7 +129,7 @@
                                     <td>
                                         @if (cell is not null)
                                         {
-                                            <span class="mark" aria-hidden="true">@Mark(cell.Presence)</span>
+                                            <span class="mark" aria-hidden="true">@StoryLanesChart.Mark(cell.Presence)</span>
                                             <span class="visually-hidden">@T[$"Presence_{cell.Presence}"]</span>
                                         }
                                     </td>
@@ -96,13 +139,6 @@
                     </tbody>
                 </table>
             </div>
-            <h3>@T["Story_Legend"]</h3>
-            <ul class="legend" role="list">
-                @foreach (var presence in _lanes.Lanes.SelectMany(lane => lane.Cells).OfType<EventAssociation>().Select(cell => cell.Presence).Distinct().Order())
-                {
-                    <li><span class="mark" aria-hidden="true">@Mark(presence)</span> @T[$"Presence_{presence}"]</li>
-                }
-            </ul>
         </section>
     }
 }
@@ -110,10 +146,29 @@
 @code {
     private StoryView? _story;
     private LanesView _lanes = null!;
+    private StoryChart _chart = null!;
+    private StoryChartState _state = new();
+    private string _here = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
     public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the place of the first step the chart shows, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "from")]
+    public string? From { get; set; }
+
+    /// <summary>Gets or sets the place of the last step the chart shows, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "to")]
+    public string? To { get; set; }
+
+    /// <summary>Gets or sets the number of rows the chart shows, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "lanes")]
+    public string? Lanes { get; set; }
+
+    /// <summary>Gets or sets whether the steps of the chart carry their names, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "heads")]
+    public string? Heads { get; set; }
 
     protected override void OnInitialized()
     {
@@ -125,18 +180,23 @@
         }
 
         _lanes = Visitor.Projection!.Lanes();
+
+        // The chart is cut out of the lanes the visitor may see; the address only says how much of them. What the
+        // chart then shows is written back into the state, so that its links never name a step that is not there.
+        var asked = StoryChartState.Read(From, To, Lanes, Heads);
+        _chart = StoryCharts.Of(_lanes, asked.From, asked.To, asked.Lanes);
+        _state = asked with
+        {
+            From = _chart.First > 1 ? _chart.First : null,
+            To = _chart.Last < _chart.StepCount ? _chart.Last : null,
+            Lanes = _chart.Lanes.Length < _chart.LaneCount ? _chart.Lanes.Length : null,
+        };
+        _here = $"{Site.Collection}/story{_state.Query()}";
     }
 
-    // Full marks for who or what is there, hollow ones for who is only spoken of.
-    private static string Mark(Presence presence) => presence switch
-    {
-        Presence.Acts => "●",
-        Presence.Involved => "◐",
-        Presence.Setting => "■",
-        Presence.Object => "◆",
-        Presence.MentionedOnly => "○",
-        Presence.SubjectOfReport => "◌",
-        Presence.DeceasedSubject => "▽",
-        _ => "·",
-    };
+    // The steps of a side of the stage.
+    private RenderFragment Steps(string name, StoryChartState? fewer, StoryChartState? more) =>
+        @<EdgeSteps Name="@name"
+                    Fewer="@(fewer is null ? null : $"{Site.Collection}/story{fewer.Query()}#chart")"
+                    More="@(more is null ? null : $"{Site.Collection}/story{more.Query()}#chart")" />;
 }

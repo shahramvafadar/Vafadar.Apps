@@ -128,13 +128,13 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         Assert.Equal(["character-rostam", "character-tahmineh", "character-sohrab"], Boxes(narrow));
         Assert.Matches("<div class=\"stage-edge stage-top\" dir=\"ltr\">\\s*<span class=\"stage-label\">Ancestors</span>", narrow.Html);
         Assert.Matches("<div class=\"stage-edge stage-bottom\" dir=\"ltr\">\\s*<span class=\"stage-label\">Descendants</span>", narrow.Html);
-        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}\" title=\"Ancestors: open a step further\">", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
-        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=0\" title=\"Ancestors: close a step\">", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}#chart\" title=\"Ancestors: open a step further\">", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=0#chart\" title=\"Ancestors: close a step\">", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
         Assert.Contains("<span aria-hidden=\"true\">&#x2B;</span><span class=\"visually-hidden\">Ancestors: open a step further</span>", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
 
         // Nobody has a child of Sohrab to show, and nobody stands beside this line: those steps are no links.
         Assert.Contains("<span class=\"stage-step\" aria-disabled=\"true\" title=\"Descendants: open a step further (not possible here)\">", Steps(narrow, "Descendants"), StringComparison.Ordinal);
-        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=1&amp;down=1\" title=\"Descendants: close a step\">", Steps(narrow, "Descendants"), StringComparison.Ordinal);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=1&amp;down=1#chart\" title=\"Descendants: close a step\">", Steps(narrow, "Descendants"), StringComparison.Ordinal);
         Assert.DoesNotContain("href=", Steps(narrow, "Relatives beside the line"), StringComparison.Ordinal);
         Assert.Equal(2, Regex.Matches(narrow.Html, "<span class=\"stage-label\">Relatives beside the line</span>").Count);
 
@@ -144,7 +144,7 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         Assert.Equal(0, Lines(none));
         Assert.Contains("No relation lies inside what is shown.", none.Main, StringComparison.Ordinal);
         Assert.Contains("<span class=\"stage-step\" aria-disabled=\"true\" title=\"Ancestors: close a step (not possible here)\">", Steps(none, "Ancestors"), StringComparison.Ordinal);
-        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=1&amp;down=0\" title=\"Ancestors: open a step further\">", Steps(none, "Ancestors"), StringComparison.Ordinal);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=1&amp;down=0#chart\" title=\"Ancestors: open a step further\">", Steps(none, "Ancestors"), StringComparison.Ordinal);
     }
 
     [Theory]

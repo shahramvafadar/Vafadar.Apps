@@ -7,7 +7,7 @@
 
 @* The stage itself is laid out from left to right, so that its left side is the left side of the screen on a
    page of any language; what stands at a side and in the frame keeps the direction of its text. *@
-<div class="stage @Class" dir="ltr">
+<div class="stage @Class" id="@Id" dir="ltr">
     <div class="stage-edge stage-top" dir="@Visitor.Language.Direction">@Top</div>
     <div class="stage-edge stage-left" dir="@Visitor.Language.Direction">@Left</div>
     <div class="stage-frame" tabindex="0" role="region" aria-label="@Label" dir="@(FrameDirection ?? Visitor.Language.Direction)">
@@ -48,6 +48,13 @@
     /// </summary>
     [Parameter]
     public string? FrameDirection { get; set; }
+
+    /// <summary>
+    /// Gets or sets the name of the stage in the address of the page. The steps of its sides lead to it, so that
+    /// the chart is on the screen again after a step and not the top of the page.
+    /// </summary>
+    [Parameter]
+    public string? Id { get; set; }
 
     /// <summary>Gets or sets a class of the page, which shows the stage on some screens only.</summary>
     [Parameter]

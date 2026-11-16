@@ -58,19 +58,19 @@
         var label = string.Format(CultureInfo.CurrentCulture, T["Family_Graph"], name);
         if (!_state.Across)
         {
-            <ChartStage Label="@label" Top="older" Bottom="younger" Left="beside" Right="beside">
+            <ChartStage Id="chart" Label="@label" Top="older" Bottom="younger" Left="beside" Right="beside">
                 <FamilyTreeChart Tree="_tree" Focus="_entity.Id" />
             </ChartStage>
         }
         else if (Visitor.Language.IsRightToLeft)
         {
-            <ChartStage Label="@label" Right="older" Left="younger" Top="beside" Bottom="beside">
+            <ChartStage Id="chart" Label="@label" Right="older" Left="younger" Top="beside" Bottom="beside">
                 <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
             </ChartStage>
         }
         else
         {
-            <ChartStage Label="@label" Left="older" Right="younger" Top="beside" Bottom="beside">
+            <ChartStage Id="chart" Label="@label" Left="older" Right="younger" Top="beside" Bottom="beside">
                 <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
             </ChartStage>
         }
@@ -162,6 +162,6 @@
     // The steps of a side. The whole family has no sides to open: it is everybody already.
     private RenderFragment Steps(string name, TreeState? fewer, TreeState? more, bool inReach) =>
         @<EdgeSteps Name="@name"
-                    Fewer="@(_state.Whole || fewer is null ? null : Address(fewer))"
-                    More="@(_state.Whole || more is null || !inReach ? null : Address(more))" />;
+                    Fewer="@(_state.Whole || fewer is null ? null : Address(fewer) + "#chart")"
+                    More="@(_state.Whole || more is null || !inReach ? null : Address(more) + "#chart")" />;
 }

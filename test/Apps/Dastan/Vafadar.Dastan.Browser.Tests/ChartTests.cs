@@ -238,13 +238,13 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         var before = await PlotWidth(page);
 
         await page.Locator(".stage-left").GetByRole(AriaRole.Link, new() { Name = "Earlier years: open a step further" }).ClickAsync();
-        await Arrived(page, new Regex("from=-700&to=700$"));
+        await Arrived(page, new Regex("from=-700&to=700#chart-across$"));
         await Assertions.Expect(page.GetByText("Shown: 700 BCE to 700 CE")).ToBeVisibleAsync();
         var opened = await PlotWidth(page);
         Assert.Equal(before + (100 * 0.06 * 15), opened, precision: 0);
 
         await page.Locator(".stage-right").GetByRole(AriaRole.Link, new() { Name = "Later years: close a step" }).ClickAsync();
-        await Arrived(page, new Regex("from=-700&to=600$"));
+        await Arrived(page, new Regex("from=-700&to=600#chart-across$"));
         Assert.Equal(before, await PlotWidth(page), precision: 0);
 
         await page.GoBackAsync();
@@ -262,15 +262,15 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         await Assertions.Expect(page.Locator(".tl-callout")).ToHaveCountAsync(6);
 
         await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Events: close a step" }).ClickAsync();
-        await Arrived(page, new Regex("events=off$"));
+        await Arrived(page, new Regex("events=off#chart-across$"));
         await Assertions.Expect(page.Locator(".tl-callout")).ToHaveCountAsync(0);
 
         await page.Locator(".stage-bottom").GetByRole(AriaRole.Link, new() { Name = "Subjects: close a step" }).ClickAsync();
-        await Arrived(page, new Regex("events=off&lanes=2$"));
+        await Arrived(page, new Regex("events=off&lanes=2#chart-across$"));
         await Assertions.Expect(page.Locator(".tl-names .tl-lane-name")).ToHaveTextAsync(["China", "Iran"]);
 
         await page.Locator(".stage-top").GetByRole(AriaRole.Link, new() { Name = "Events: open a step further" }).ClickAsync();
-        await Arrived(page, new Regex("view=across&lanes=2$"));
+        await Arrived(page, new Regex("view=across&lanes=2#chart-across$"));
 
         // The event of Rome is closed with its lane.
         await Assertions.Expect(page.Locator(".tl-callout")).ToHaveCountAsync(5);

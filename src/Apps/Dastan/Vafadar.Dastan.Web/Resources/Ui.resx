@@ -244,7 +244,7 @@
     <value>This step condenses several scenes of the text.</value>
   </data>
   <data name="Story_Lanes" xml:space="preserve">
-    <value>Who is where in the story</value>
+    <value>The same as a table</value>
   </data>
   <data name="Story_LanesLead" xml:space="preserve">
     <value>One row per name, one column per step. An empty cell means that the name has no part in that step. Somebody who is only mentioned is marked as mentioned, not as present.</value>
@@ -815,5 +815,32 @@
   </data>
   <data name="Tree_Beside" xml:space="preserve">
     <value>Relatives beside the line</value>
+  </data>
+  <data name="Story_Chart" xml:space="preserve">
+    <value>The story as a chart</value>
+  </data>
+  <data name="Story_ChartLead" xml:space="preserve">
+    <value>One row per name, one column per step of the telling – an order, not a calendar: the distance between two steps says nothing about time. A mark says what part a name has in a step; an empty place means none.</value>
+  </data>
+  <data name="Story_ChartShown" xml:space="preserve">
+    <value>Shown: steps {0} to {1} of {2}, and {3} of {4} names.</value>
+  </data>
+  <data name="Story_ChartRegion" xml:space="preserve">
+    <value>The story as a chart: {0}</value>
+  </data>
+  <data name="Story_MarkTitle" xml:space="preserve">
+    <value>{0}: {1} – step {2}, {3}</value>
+  </data>
+  <data name="Story_Edge_Earlier" xml:space="preserve">
+    <value>Earlier steps</value>
+  </data>
+  <data name="Story_Edge_Later" xml:space="preserve">
+    <value>Later steps</value>
+  </data>
+  <data name="Story_Edge_Heads" xml:space="preserve">
+    <value>Names of the steps</value>
+  </data>
+  <data name="Story_Edge_Lanes" xml:space="preserve">
+    <value>Names</value>
   </data>
 </root>
