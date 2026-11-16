@@ -69,9 +69,10 @@ browser keeps is a risk: a kept page or file would outlive the reading position 
   position and the search work; Chromium reads the manifest without an error and names no obstacle to installing
   except that a window of the tests is a private one; thirteen views in both languages and both appearances break
   no rule of WCAG 2.1 A and AA and no best practice that axe-core 4.14 can decide.
+* `WorkerUpdateTests` (the same browser): when the site answers with a newer worker, it takes over a page that
+  stays open, removes the store of the old one and still shows the page for "no connection" from its own.
 * `StatesTests`, `FailureTests`: a refused form, while developing and outside it.
 
 **Not verified.** An installation was not carried out: the browser of the tests is a private window, which cannot
-install, and no other browser was driven. The replacement of a worker by a newer one was not exercised. No phone,
-no iOS or Android, no screen reader. What a tool cannot decide about accessibility – whether a text alternative is
+install, and no other browser was driven. No phone, no iOS or Android, no screen reader. What a tool cannot decide about accessibility – whether a text alternative is
 a good one, whether the order of reading makes sense when spoken – was not judged by a person with a screen reader.

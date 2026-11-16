@@ -1,7 +1,10 @@
 using System.Globalization;
 using System.Net;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Playwright;
@@ -25,6 +28,16 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
 
     /// <summary>Gets the address of the browser the tests connect to, or <see langword="null"/> when none is named.</summary>
     public static string? Endpoint => Environment.GetEnvironmentVariable("DASTAN_BROWSER") is { Length: > 0 } endpoint ? endpoint : null;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the site answers with a newer service worker than the one in its
+    /// files: the same worker, keeping its files under another name. It stands for a later release of the site.
+    /// </summary>
+    public bool NewerWorker { get; set; }
+
+    /// <inheritdoc />
+    protected override void ConfigureWebHost(IWebHostBuilder builder) =>
+        builder.ConfigureServices(services => services.AddSingleton<IStartupFilter>(new LaterRelease(this)));
 
     /// <inheritdoc />
     public async ValueTask InitializeAsync()
@@ -76,6 +89,29 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
         }
 
         return await context.NewPageAsync();
+    }
+
+    // Stands in front of everything the site maps and answers the address of the worker when a test asks for it.
+    private sealed class LaterRelease(BrowserSite site) : IStartupFilter
+    {
+        public Action<IApplicationBuilder> Configure(Action<IApplicationBuilder> next) => app =>
+        {
+            app.Use(async (context, following) =>
+            {
+                if (!site.NewerWorker || context.Request.Path != "/service-worker.js")
+                {
+                    await following(context);
+                    return;
+                }
+
+                var files = context.RequestServices.GetRequiredService<IWebHostEnvironment>().WebRootPath;
+                var worker = await File.ReadAllTextAsync(Path.Combine(files, "service-worker.js"), context.RequestAborted);
+                context.Response.ContentType = "text/javascript";
+                context.Response.Headers.CacheControl = "no-cache";
+                await context.Response.WriteAsync(worker.Replace("'dastan-shell-1'", "'dastan-shell-2'", StringComparison.Ordinal), context.RequestAborted);
+            });
+            next(app);
+        };
     }
 
     /// <inheritdoc />
