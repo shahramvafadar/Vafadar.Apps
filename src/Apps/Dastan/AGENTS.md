@@ -61,7 +61,10 @@ for Dastan is added here in the same commit as the work it came with.
   begin with `stage-` – a short name like `step` belongs to the story already.
 * Dates are stored in the Gregorian calendar (D-043); another calendar is a matter of display. Content is written
   apart from the software, by people and assistants who follow the official guide and tools (D-042): a format
-  that changes is changed in its guide and its checks in the same commit.
+  that changes is changed in its guide and its checks in the same commit. The guide is `docs/content-guide.md`, the
+  formats `docs/collection-format.md` and `docs/comparison-format.md`, the command `Vafadar.Dastan.Content`
+  (`check`, `vocabulary`, `template`). The command reads with the readers of the site and lists what they
+  accept – a value is added in a reader, never in the command; a template is a file the readers accept.
 * A comparison (`content/comparisons`, [format](docs/comparison-format.md)) has no reading stages and does not pass
   through a projection; the site keeps only the comparisons released to its audience. A year is written on a chart
   only when one year is stated – "about" and "between" stay what they are.

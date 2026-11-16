@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Data\Vafadar.Dastan.Data.csproj" />
+    <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Content\Vafadar.Dastan.Content.csproj" />
   </ItemGroup>
 
   <ItemGroup>

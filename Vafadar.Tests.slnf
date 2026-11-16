@@ -4,6 +4,7 @@
     "projects": [
       "test\\Apps\\Zanance\\Vafadar.Zanance.App.Tests\\Vafadar.Zanance.App.Tests.csproj",
       "test\\Apps\\Zanance\\Vafadar.Zanance.BillingAdapter.Tests\\Vafadar.Zanance.BillingAdapter.Tests.csproj",
+      "src\\Apps\\Dastan\\Vafadar.Dastan.Content\\Vafadar.Dastan.Content.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Core\\Vafadar.Dastan.Core.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Data\\Vafadar.Dastan.Data.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Web\\Vafadar.Dastan.Web.csproj",
