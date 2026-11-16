@@ -196,7 +196,7 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         Assert.Contains($"{Story}/story#step-1", rostam.Links);
         Assert.Contains($"{Story}/entity/character-rostam", story.Links);
         Assert.Contains(Story, story.Links);
-        Assert.DoesNotContain("<script", story.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("<script", story.Own, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotMatch("\\sstyle=\"", story.Html);
     }
 }

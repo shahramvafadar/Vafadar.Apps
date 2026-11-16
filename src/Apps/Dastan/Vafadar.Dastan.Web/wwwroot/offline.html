@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- The page a visitor sees when the site cannot be reached (ADR 0007). It is kept by the service worker, so it
+     holds nothing of a collection and nothing of a visitor: the same words for everybody, in both languages of the
+     site, because the worker does not know which one the visitor reads. The link asks for the same address again. -->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>No connection – Dastan</title>
+    <link rel="stylesheet" href="/_content/Vafadar.Web/vafadar.css" />
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+</head>
+
+<body>
+    <header class="site-header">
+        <span class="wordmark">Dastan</span>
+    </header>
+    <main id="content">
+        <section class="page-header" lang="en" dir="ltr">
+            <h1>No connection</h1>
+            <p class="lead">Dastan cannot be reached right now. Nothing is lost: where you were in the story is remembered.</p>
+            <p><a class="action" href="">Try again</a></p>
+        </section>
+        <section class="page-header" lang="fa" dir="rtl">
+            <h2>اتصال برقرار نیست</h2>
+            <p class="lead">اکنون نمی‌توان به Dastan رسید. چیزی از دست نرفته است: جایی که در قصه بودید به یاد می‌ماند.</p>
+            <p><a class="action" href="">تلاش دوباره</a></p>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -19,6 +19,3 @@ services:
     ports:
       # Reachable from this machine only.
       - "127.0.0.1:53333:3000"
-    extra_hosts:
-      # The site under test runs on the machine, outside the container.
-      - "host.docker.internal:host-gateway"

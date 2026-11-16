@@ -34,3 +34,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Names can be searched inside the story, in English and Persian, as far as the story has been read.
 - A page that fails says so and offers the same address again; an address that leads nowhere offers the start, the
   story and the reading position; a family drawing without members points to the drawing of all connections.
+- Dastan can be installed from the browser: it has a name, icons and a start of its own. Without a connection a
+  page says so, in English and Persian, and offers the same address again; nothing of a story is kept in the
+  browser. A form that is sent from a page that was open too long leads to a page that explains it.
+- A local demonstration asks search engines not to index it.

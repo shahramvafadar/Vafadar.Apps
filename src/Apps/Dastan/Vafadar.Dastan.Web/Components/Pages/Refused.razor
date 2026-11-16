@@ -1,0 +1,20 @@
+@page "/refused"
+@inject IStringLocalizer<Ui> T
+@inject Visitor Visitor
+@inject DastanSite Site
+
+<PageTitle>@T["Refused_Title"] – @T["Site_Name"]</PageTitle>
+
+@* Where a refused form leads (RefusedForms). It says what a visitor can do about it and that nothing was changed;
+   it does not say which form it was, because the answer is the same for all of them. *@
+<section class="page-header">
+    <h1>@T["Refused_Title"]</h1>
+    <p class="lead">@T["Refused_Text"]</p>
+    <p class="actions">
+        <a class="action" href="./">@T["NotFound_Home"]</a>
+        @if (Visitor.Projection is not null)
+        {
+            <a class="action secondary" href="@Site.Collection">@T["NotFound_Story"]</a>
+        }
+    </p>
+</section>

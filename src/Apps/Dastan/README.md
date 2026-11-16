@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 to 5 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, the website in English and Persian, and the connected journey – connections, family, story and lanes, galleries with images and video, the evidence of every statement, search – checked by tests in a real browser. Next: phase 6, the installable app, failures and accessibility. |
+| Status | **Phases 1 to 6 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, the website in English and Persian, the connected journey – connections, family, story and lanes, galleries with images and video, the evidence of every statement, search – and the installable app with its page for "no connection", checked by tests in a real browser. Next: phase 7, the final verification and the handoff. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -67,7 +67,7 @@ package feeds of the MAUI projects.
 
 ### Tests in a browser
 
-The journey of M0 runs as tests in a real browser (`test/Apps/Dastan/Vafadar.Dastan.Browser.Tests`). The browser is
+The journey of M0, the installable app and the automatic part of the accessibility check run as tests in a real browser (`test/Apps/Dastan/Vafadar.Dastan.Browser.Tests`). The browser is
 Chromium in the official Playwright container of the Compose project `test`; the tests start the site on this
 machine, on `localhost` only, and tell the browser where it is.
 

@@ -172,7 +172,7 @@ public sealed class ConnectionsPageTests(DemoSite site) : IClassFixture<DemoSite
 
         Assert.Contains(Connections("character-rostam"), entity.Links);
         Assert.Contains($"{Story}/entity/character-rostam", drawing.Links);
-        Assert.DoesNotContain("<script", drawing.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("<script", drawing.Own, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotMatch("\\sstyle=\"", drawing.Html);
     }
 }

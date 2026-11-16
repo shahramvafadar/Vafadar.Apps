@@ -163,7 +163,7 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
         Assert.Contains($"{Story}/gallery#{Diagram}", page.Links);
         Assert.Contains($"{Story}/media/{Video}", page.Links);
 
-        Assert.DoesNotContain("<script", page.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("<script", page.Own, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotMatch("\\sstyle=\"", page.Html);
     }
 

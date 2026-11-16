@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Dastan">
+  <!-- Provisional icon for platforms that cut their own shape out of it: the same drawing as icon.svg on a full
+       square, kept inside the middle of the square so that no shape cuts into it. -->
+  <rect width="64" height="64" fill="#2f2e7a"/>
+  <g transform="translate(32 32) scale(0.72) translate(-32 -32)">
+    <path d="M14 18c14 0 14 28 28 28" fill="none" stroke="#fbfaf7" stroke-width="5" stroke-linecap="round"/>
+    <path d="M14 46c10 0 12-10 20-14s10-14 16-14" fill="none" stroke="#f4b860" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="50" cy="18" r="4.5" fill="#f4b860"/>
+  </g>
+</svg>

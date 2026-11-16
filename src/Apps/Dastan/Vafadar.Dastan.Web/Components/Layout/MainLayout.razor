@@ -29,7 +29,7 @@
                 </li>
             }
         </ul>
-        <form method="post" action="/preferences/theme" class="theme" role="group" aria-label="@T["Theme_Label"]">
+        <form method="post" action="/preferences/theme" class="theme" aria-label="@T["Theme_Label"]">
             <AntiforgeryToken />
             <input type="hidden" name="returnUrl" value="@ReturnUrl" />
             <button type="submit" name="theme" value="auto" aria-pressed="@Pressed(ThemeChoice.Auto)">@T["Theme_Auto"]</button>

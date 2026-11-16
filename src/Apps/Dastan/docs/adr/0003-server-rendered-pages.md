@@ -64,3 +64,12 @@ pages of M0 show text, links, a few forms, two media files and small graphs.
 * A refused form answers with a bare status 400 today. A friendly page for an expired form belongs to the failure
   states of phase 6.
 * Every page carries a form token, so pages are not cached between visitors.
+
+
+## Addendum of 2026-11-16 – one script since phase 6
+
+Since [ADR 0007](0007-installable-app.md) every page loads one script, a file of the site: it registers the service
+worker that shows a page for "no connection". What this record decided stands: a page is complete in the first
+answer, needs no script to show its content or to be used, and has no script written into it. The two candidates
+of point 7 – a notice for a lost connection and an install prompt – were not built. A refused form now leads to a
+page that says so.

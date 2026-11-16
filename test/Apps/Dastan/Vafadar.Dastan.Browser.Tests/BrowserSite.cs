@@ -34,15 +34,17 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
             return;
         }
 
-        // The site listens on this machine only, on a port the system chooses. The browser lives in a container
-        // and reaches the machine by the name Docker gives it.
+        // The site listens on this machine only, on a port the system chooses. The browser lives in a container;
+        // the connection to it carries the addresses of this machine with it, so the browser opens the site as
+        // "localhost" – which is also what a browser needs to treat a site without a certificate as safe enough
+        // for a service worker.
         UseKestrel(options => options.Listen(IPAddress.Loopback, 0));
         StartServer();
         var port = new Uri(Services.GetRequiredService<IServer>().Features.Get<IServerAddressesFeature>()!.Addresses.First()).Port;
-        _address = $"http://host.docker.internal:{port.ToString(CultureInfo.InvariantCulture)}";
+        _address = $"http://localhost:{port.ToString(CultureInfo.InvariantCulture)}";
 
         _playwright = await Playwright.CreateAsync();
-        _browser = await _playwright.Chromium.ConnectAsync(endpoint);
+        _browser = await _playwright.Chromium.ConnectAsync(endpoint, new BrowserTypeConnectOptions { ExposeNetwork = "<loopback>" });
     }
 
     /// <summary>
@@ -52,7 +54,8 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// <param name="width">The width of the window in CSS pixels.</param>
     /// <param name="readTo">The reading stage the visitor has already chosen, if any (0 is the first).</param>
     /// <param name="dark">Whether the device of the visitor asks for the dark appearance.</param>
-    public async Task<IPage> Visitor(int width = 360, int? readTo = null, bool dark = false)
+    /// <param name="script">Whether the browser of the visitor runs scripts.</param>
+    public async Task<IPage> Visitor(int width = 360, int? readTo = null, bool dark = false, bool script = true)
     {
         Assert.SkipWhen(_browser is null, "No browser: start the container of src/Apps/Dastan/compose.yaml and set DASTAN_BROWSER=ws://127.0.0.1:53333/.");
 
@@ -62,6 +65,7 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
             ViewportSize = new ViewportSize { Width = width, Height = 800 },
             Locale = "en-US",
             ColorScheme = dark ? ColorScheme.Dark : ColorScheme.Light,
+            JavaScriptEnabled = script,
         });
         if (readTo is { } level)
         {
