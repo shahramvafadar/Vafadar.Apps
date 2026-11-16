@@ -1,0 +1,209 @@
+@page "/{Collection}/evidence/entity/{EntityKey}"
+@page "/{Collection}/evidence/relation/{RelationKey}"
+@page "/{Collection}/evidence/event/{EventKey}"
+@page "/{Collection}/evidence/event/{EventKey}/entity/{EntityKey}"
+@page "/{Collection}/evidence/media/{MediaKey}"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_evidence is { } evidence)
+{
+    <PageTitle>@T["Evidence_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@_back">@_backName</a></p>
+        <h1>@T["Evidence_Title"]</h1>
+    </header>
+
+    @* The statement stands here once more, word for word as on the page the visitor came from: the sources below
+       are the sources of this statement and of nothing around it (ADR 0002). *@
+    <section class="card evidence-statement" aria-labelledby="statement">
+        <h2 id="statement">@_subject</h2>
+        @switch (evidence.Subject)
+        {
+            case EvidenceSubject.Entity:
+                <p class="meta"><TypeName Type="evidence.Entity!.Type" /></p>
+                <p><Loc Text="evidence.Entity!.Summary" /></p>
+                break;
+
+            case EvidenceSubject.Relation:
+                <p><Statement Relation="evidence.Relation!" /></p>
+                break;
+
+            case EvidenceSubject.Event:
+                <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(evidence.Step!.Number))</p>
+                <p><strong><Loc Text="evidence.Step!.Event.Label" /></strong></p>
+                <p><Loc Text="evidence.Step!.Event.Summary" /></p>
+                break;
+
+            case EvidenceSubject.Association:
+                <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(evidence.Step!.Number)) – <Loc Text="evidence.Step!.Event.Label" /></p>
+                <p>
+                    <strong><Loc Text="evidence.Entity!.Label" /></strong>
+                    <span class="role"><Loc Text="evidence.Association!.Role" /></span>
+                    <span class="presence">@T[$"Presence_{evidence.Association!.Presence}"]</span>
+                </p>
+                break;
+
+            case EvidenceSubject.Media:
+                <p class="meta">@T[$"Media_Kind_{evidence.Media!.Kind}"] – @T[$"Media_Representation_{evidence.Media!.Representation}"]</p>
+                <p><strong><Loc Text="evidence.Media!.Label" /></strong></p>
+                <p><Loc Text="evidence.Media!.Caption" /></p>
+                break;
+        }
+    </section>
+
+    <p class="note">@T["Evidence_Editors"]</p>
+
+    <dl class="facts">
+        @if (evidence.Review is { } review)
+        {
+            <dt>@T["Evidence_Review"]</dt>
+            <dd>@T[$"Review_{review}"]</dd>
+        }
+
+        @if (evidence.PassageLocator is { } locator)
+        {
+            <dt>@T["Evidence_Where"]</dt>
+            <dd><Foreign Text="@locator" /></dd>
+        }
+
+        <dt>@T["Evidence_Edition"]</dt>
+        <dd><Foreign Text="@evidence.Edition.BaseText" /></dd>
+        <dt>@T["Evidence_EditionNote"]</dt>
+        <dd><Foreign Text="@evidence.Edition.CriticalEditionNote" /></dd>
+    </dl>
+
+    <section aria-labelledby="sources">
+        <h2 id="sources">@T["Evidence_Sources"]</h2>
+        @if (evidence.Sources.IsEmpty)
+        {
+            <p class="note">@T["Evidence_NoSources"]</p>
+        }
+        else
+        {
+            @* The warning stands before the first link, not after the visitor has followed one. *@
+            <p class="note warning" role="note">@(evidence.SourcesMayRevealMore ? T["Evidence_Warning"] : T["Evidence_External"])</p>
+            <ul class="sources" role="list">
+                @foreach (var source in evidence.Sources)
+                {
+                    <li class="card">
+                        <p class="meta">@T[$"Source_Kind_{source.Kind}"]</p>
+                        <h3><Foreign Text="@source.Title" /></h3>
+                        @if (!source.Authors.IsEmpty)
+                        {
+                            <p>@string.Format(CultureInfo.CurrentCulture, T["Source_Authors"], string.Join(", ", source.Authors))</p>
+                        }
+                        @if (source.PassageLocator is { } passage)
+                        {
+                            <p><span class="meta">@T["Evidence_Where"]:</span> <Foreign Text="@passage" /></p>
+                        }
+                        <p class="meta">
+                            @if (source.PublishedOn is { } published)
+                            {
+                                <text>@string.Format(CultureInfo.CurrentCulture, T["Source_Published"], TimeText.Of(published, Visitor, T)) – </text>
+                            }
+                            @if (source.UpdatedOn is { } updated)
+                            {
+                                <text>@string.Format(CultureInfo.CurrentCulture, T["Source_Updated"], TimeText.Of(updated, Visitor, T)) – </text>
+                            }
+                            @string.Format(CultureInfo.CurrentCulture, T["Source_Accessed"], TimeText.Of(source.AccessedOn, Visitor, T))
+                        </p>
+                        <p>
+                            @* A source is opened from a page that says what leaving means. *@
+                            <a class="action secondary" href="@EvidenceAddress.Source(Site.Collection, source.Id, _here)">@T["Source_Open"]<span class="visually-hidden"> – @source.Title</span></a>
+                        </p>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
+    <p class="actions"><a class="action" href="@_back">@_backName</a></p>
+}
+
+@code {
+    private EvidenceView? _evidence;
+    private string _subject = string.Empty;
+    private string _back = string.Empty;
+    private string _backName = string.Empty;
+    private string _here = string.Empty;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the entity, for an entity and for its part in an event.</summary>
+    [Parameter]
+    public string? EntityKey { get; set; }
+
+    /// <summary>Gets or sets the identifier of the relation.</summary>
+    [Parameter]
+    public string? RelationKey { get; set; }
+
+    /// <summary>Gets or sets the identifier of the event, for an event and for the part of an entity in it.</summary>
+    [Parameter]
+    public string? EventKey { get; set; }
+
+    /// <summary>Gets or sets the identifier of the media item.</summary>
+    [Parameter]
+    public string? MediaKey { get; set; }
+
+    /// <summary>Gets or sets the page the visitor came from, as that page said it.</summary>
+    [SupplyParameterFromQuery(Name = "from")]
+    public string? From { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // A statement the visitor has not read to and one that does not exist are the same page: not found.
+        var projection = Collection == Site.Collection ? Visitor.Projection : null;
+        var keys = new[] { EntityKey, RelationKey, EventKey, MediaKey };
+        if (projection is not null && keys.All(key => key is null || (key.Length > 0 && !key.Any(char.IsWhiteSpace))))
+        {
+            _evidence = (EventKey, EntityKey, RelationKey, MediaKey) switch
+            {
+                ({ } storyEvent, { } entity, _, _) => projection.Evidence(new EventId(storyEvent), new EntityId(entity)),
+                ({ } storyEvent, _, _, _) => projection.Evidence(new EventId(storyEvent)),
+                (_, { } entity, _, _) => projection.Evidence(new EntityId(entity)),
+                (_, _, { } relation, _) => projection.Evidence(new RelationId(relation)),
+                (_, _, _, { } media) => projection.Evidence(new MediaId(media)),
+                _ => null,
+            };
+        }
+
+        if (_evidence is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        // Without a claim that can be believed, the way back is the page of what the statement is about.
+        var (home, name) = _evidence switch
+        {
+            { Subject: EvidenceSubject.Relation, Relation: { } edge } => ($"{Site.Collection}/entity/{edge.From.Id}", Visitor.Text(edge.From.Label).Value),
+            { Subject: EvidenceSubject.Media, Media: { } item } => ($"{Site.Collection}/media/{item.Id}", Visitor.Text(item.Label).Value),
+            { Subject: EvidenceSubject.Entity, Entity: { } entity } when entity.Id.Value == Site.Collection => (Site.Collection, Visitor.Text(entity.Label).Value),
+            { Subject: EvidenceSubject.Entity, Entity: { } entity } => ($"{Site.Collection}/entity/{entity.Id}", Visitor.Text(entity.Label).Value),
+            { Step: { } step } => ($"{Site.Collection}/story#step-{step.Number}", Visitor.Text(step.Event.Label).Value),
+            _ => (Site.Collection, T["Site_Name"].Value),
+        };
+        _here = EvidenceAddress.Path(Navigation);
+        if (EvidenceAddress.Checked(From, Site.Collection) is { } from)
+        {
+            _back = from;
+            _backName = T["Evidence_Back"];
+            _here += $"?from={Uri.EscapeDataString(from)}";
+        }
+        else
+        {
+            _back = home;
+            _backName = string.Format(CultureInfo.CurrentCulture, T["Story_Back"], name);
+        }
+
+        _subject = _evidence.Subject == EvidenceSubject.Entity
+            ? string.Format(CultureInfo.CurrentCulture, T["Evidence_Subject_Entity"], Visitor.Text(_evidence.Entity!.Label).Value)
+            : T[$"Evidence_Subject_{_evidence.Subject}"];
+    }
+}

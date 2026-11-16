@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 to 4 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, and the first pages of the website (start, story, entity) in English and Persian. **Phase 5 is in progress**: the connections page, the family drawing, the story step by step with its lanes, and the galleries with the pages of images and videos exist; evidence and search follow. |
+| Status | **Phases 1 to 4 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, and the first pages of the website (start, story, entity) in English and Persian. **Phase 5 is in progress**: the connections page, the family drawing, the story step by step with its lanes, and the galleries with the pages of images and videos exist, and so do the evidence of every statement and the search for names. The states of document 18 and the browser tests of the journey follow. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |

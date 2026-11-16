@@ -1,12 +1,19 @@
 @* One relation as a sentence: first entity, label, second entity – in the direction the relation states, whoever
    is looked at. The entity of the page is plain text, the other one is the link to follow. *@
 @inject DastanSite Site
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
 
 <span class="statement">
     @End(Relation.From)
     <span class="relation"><Loc Text="Relation.Relation.Label" /></span>
     @End(Relation.To)
 </span>
+@if (Evidence)
+{
+    @* The link is named for a screen reader by the relation it belongs to; ten links called "Sources" say nothing. *@
+    <a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, Relation.Relation.Id, From)">@T["Evidence_Link"]<span class="visually-hidden"> – @Visitor.Text(Relation.From.Label).Value, @Visitor.Text(Relation.Relation.Label).Value, @Visitor.Text(Relation.To.Label).Value</span></a>
+}
 
 @code {
     /// <summary>Gets or sets the relation with its two entities.</summary>
@@ -16,6 +23,14 @@
     /// <summary>Gets or sets the entity the page is about.</summary>
     [Parameter]
     public EntityId? Self { get; set; }
+
+    /// <summary>Gets or sets whether the sentence is followed by a link to what supports it.</summary>
+    [Parameter]
+    public bool Evidence { get; set; }
+
+    /// <summary>Gets or sets the address of the page the sentence stands on, to return to from its sources.</summary>
+    [Parameter]
+    public string? From { get; set; }
 
     private RenderFragment End(Entity entity) => entity.Id == Self
         ? @<strong class="self"><Loc Text="entity.Label" /></strong>

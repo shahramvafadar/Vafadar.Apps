@@ -27,3 +27,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   cannot be opened by an address either.
 - Persian text is set in the font Vazirmatn on every device. The font comes with the site; no page asks another
   site for anything.
+- Every statement can be asked for what supports it: the page of an entity, each relation, each step of the story,
+  each part somebody has in a step and each image or video lead to their own sources, with the state of the
+  editors' review, and back to where the visitor was. A source of another site is opened from a page that says
+  first that it tells the whole story.
+- Names can be searched inside the story, in English and Persian, as far as the story has been read.

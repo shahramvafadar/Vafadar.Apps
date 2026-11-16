@@ -30,7 +30,7 @@
             <ul class="statements" role="list">
                 @foreach (var edge in view.Edges)
                 {
-                    <li><Statement Relation="edge" Self="view.Focus.Id" /></li>
+                    <li><Statement Relation="edge" Self="view.Focus.Id" Evidence="true" From="@_here" /></li>
                 }
             </ul>
         </section>
@@ -41,6 +41,7 @@
     private ConnectionsView? _view;
     private ConnectionsDrawing _drawing = null!;
     private IReadOnlyList<EntityId> _open = [];
+    private string _here = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -71,6 +72,9 @@
 
         // Only what is really open stays in the links of the page.
         _open = [.. _view.Expanded.Select(entity => entity.Id)];
+
+        // Where this page stands, with what is open on it: the sources of a relation return here.
+        _here = $"{Site.Collection}/entity/{_view.Focus.Id}/connections" + (_open.Count > 0 ? "?open=" + string.Join(',', _open) : string.Empty);
         _drawing = ConnectionsLayout.Of(_view, text => Visitor.Text(text).Value, Visitor.Language.IsRightToLeft ? 1.9 : 1.6);
     }
 }
