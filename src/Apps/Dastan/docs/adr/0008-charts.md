@@ -284,3 +284,36 @@ finding of axe-core 4.14 in both appearances). All tests without a browser: 1008
 passed in a run of their own. A run of all projects together did not end – Docker Desktop stopped on this machine
 while it ran, and the browser of the tests with it; that says nothing about the site, and it is the reason the two
 numbers come from two runs.
+
+## Third addendum of 2026-11-16 – the connections of a name as a chart (step 9.3)
+
+The connections of an entity were the drawing of M0 ([ADR 0005](0005-graph-renderer.md)): the focus at the
+top, one row per neighbour. They are a chart in a stage now (`ConnectionsLayout` gives a `ConnectionsChart`,
+`ConnectionsGraph` writes it). What the projection answers – the view, and what an address may open – is unchanged.
+
+| Chart | Above | Below | Both sides beside |
+|---|---|---|---|
+| The connections of a name | who or what a relation leads **from** to the name in the middle | who or what a relation of the name leads **to** | names whose relations with it are the same from both sides, the first where reading goes on, the next where it begins |
+
+* **Like the family tree.** A parent stands above a child and a partner beside – for every relation with a
+  direction, not only for parentage. A neighbour with relations of both kinds stands where its relation with a
+  direction puts it; with relations in both directions it stands below.
+* **A step at a side.** "+" opens the boxes of that side that can be opened and are nearest to the middle, "−"
+  closes the opened ones that are farthest from it. Both are links that change the `open` part of the address,
+  the same part the "+" and "−" of a single box change; a side with nothing to open or close has no link and says
+  so. A side cannot be closed below the neighbours of the name: the page shows all of its connections.
+* **What hangs on an opened box stays at its side**, a step further from the middle, whatever the direction of
+  the relation – the arrow says the direction, the place says the way the visitor went.
+* **Every relation once, every name once.** As in M0, a name that already stands in the chart is referred to by
+  a box with a dashed border.
+* **Measures in em.** A box is 12 em wide and as high as its text is estimated to need; the chart is as large as
+  what it shows and scrolls in its stage. Lines run across or down, never at a slant.
+* **Limit.** A stage begins at the top of its chart. When much is opened above the name, the name in the middle
+  is below what the window shows first and is reached by scrolling the stage; nothing without a script moves a
+  frame to a place inside it without moving the page as well.
+
+Verification, 2026-11-16: `ConnectionsLayoutTests` (Core, 197 tests in the project), `ConnectionsPageTests` (Web,
+275), `ConnectionsChartBrowserTests` (27 cases at 360, 412 and 1280 px, English and Persian: where the neighbours
+stand, a step at a side and Back with the stage staying on the screen, no box cut or on another one with boxes
+opened at every side, every control of a box at least 44 px). All tests without a browser: 1012 passed. The
+browser tests: 308 passed in Chromium, in a run of their own.
