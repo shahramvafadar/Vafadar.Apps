@@ -26,6 +26,12 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     private IBrowser? _browser;
     private string _address = string.Empty;
 
+    /// <summary>
+    /// Gets the engine of the browser the tests run in: <c>chromium</c> unless the environment variable
+    /// <c>DASTAN_BROWSER_ENGINE</c> names <c>firefox</c> or <c>webkit</c>. The container has all three.
+    /// </summary>
+    public static string Engine => Environment.GetEnvironmentVariable("DASTAN_BROWSER_ENGINE") is { Length: > 0 } engine ? engine.ToLowerInvariant() : "chromium";
+
     /// <summary>Gets the address of the browser the tests connect to, or <see langword="null"/> when none is named.</summary>
     public static string? Endpoint => Environment.GetEnvironmentVariable("DASTAN_BROWSER") is { Length: > 0 } endpoint ? endpoint : null;
 
@@ -57,7 +63,14 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
         _address = $"http://localhost:{port.ToString(CultureInfo.InvariantCulture)}";
 
         _playwright = await Playwright.CreateAsync();
-        _browser = await _playwright.Chromium.ConnectAsync(endpoint, new BrowserTypeConnectOptions { ExposeNetwork = "<loopback>" });
+        var type = Engine switch
+        {
+            "chromium" => _playwright.Chromium,
+            "firefox" => _playwright.Firefox,
+            "webkit" => _playwright.Webkit,
+            _ => throw new InvalidOperationException($"DASTAN_BROWSER_ENGINE is \"{Engine}\"; the engines are chromium, firefox and webkit."),
+        };
+        _browser = await type.ConnectAsync(endpoint, new BrowserTypeConnectOptions { ExposeNetwork = "<loopback>" });
     }
 
     /// <summary>

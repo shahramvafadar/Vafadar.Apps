@@ -113,6 +113,9 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
     [Fact]
     public async Task The_browser_reads_the_manifest_without_complaint_and_names_no_obstacle_to_installing_but_its_own_window()
     {
+        // The question is put to the browser in its own language, and only Chromium has one for it.
+        Assert.SkipUnless(BrowserSite.Engine == "chromium", "Only Chromium answers what it has against installing; Firefox and WebKit are not asked.");
+
         var page = await site.Visitor(width: 1280);
         await page.GotoAsync("/en/");
         await page.EvaluateAsync("navigator.serviceWorker.ready.then(() => true)");
