@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 and 2 of the [delivery plan](docs/delivery-plan.md) are done** (foundations, the time library); phase 3 is the domain model. There is no application to run yet. |
+| Status | **Phases 1 and 2 of the [delivery plan](docs/delivery-plan.md) are done** (foundations, the time library); phase 3 (domain model and data) is in progress. There is no application to run yet. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -22,12 +22,12 @@ Shahnameh, Rostam and Sohrab.
 | [Acceptance](docs/acceptance.md) | The twelve conditions of M0 and their current status |
 | [Changelog](CHANGELOG.md) | What changed, in plain words |
 
-Technical decisions of the app are recorded as ADRs in `docs/adr/` when they are made and verified; decisions that
+Technical decisions of the app are recorded as ADRs in [`docs/adr/`](docs/adr/README.md) when they are made and verified; decisions that
 concern the whole repository are in [`docs/adr`](../../../docs/adr/README.md).
 
 ## Projects
 
-None of these exists yet; each is created in the phase that fills it.
+`Vafadar.Dastan.Core` exists; the others are created in the phase that fills them.
 
 | Project | Purpose | Phase |
 |---|---|---|

@@ -92,10 +92,11 @@ tool files outside Git.
 
 | Phase | State on 2026-11-16 |
 |---|---|
-| 0 – Repository ready | **Done.** The working copy is a complete clone on .NET SDK 10.0.404; the work of phases 1 and 2 is on the branch `feature/dastan-foundations`. |
+| 0 – Repository ready | **Done.** The working copy is a complete clone on .NET SDK 10.0.404; the work of phases 1 and 2 is on the branch `feature/dastan-foundations` (pushed on 2026-11-16). |
 | 1 – Foundations of the repository | **Done:** app folder with README, changelog, working rules, specification, sample and media; decisions D-029 to D-034; ADR 0011 with its tests; the repository tables. |
 | 2 – `Vafadar.Temporal` | **Done:** the library, 165 tests, [ADR 0012](../../../../docs/adr/0012-temporal-model.md), its README, the solution filter `Vafadar.Dastan.slnf`. M0-08 is checked ([acceptance](acceptance.md)). Changed against this plan: formatting for display is not built yet – it comes with its first screen (phase 4 or 5), because a formatter without a screen would be designed by guessing. |
-| 3 – 7 | Not started |
+| 3 – `Vafadar.Dastan.Core` and `Vafadar.Dastan.Data` | **In progress** on the branch `feature/dastan-domain`. Done: the read model of one collection in `Vafadar.Dastan.Core` with its consistency rules and 59 tests ([ADR 0001](adr/0001-domain-read-model.md)). Open: the reader of the sample, the Persian text, the projection and its views. |
+| 4 – 7 | Not started |
 
 Every phase ends with: build without warnings (`-p:ContinuousIntegrationBuild=true`), its tests green, documentation
 updated, one commit per finished step, pushed. A phase is not started while the previous one has an open defect.

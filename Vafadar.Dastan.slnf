@@ -2,8 +2,10 @@
   "solution": {
     "path": "Vafadar.Apps.slnx",
     "projects": [
+      "src\\Apps\\Dastan\\Vafadar.Dastan.Core\\Vafadar.Dastan.Core.csproj",
       "src\\Libraries\\Vafadar.Core\\Vafadar.Core.csproj",
       "src\\Libraries\\Vafadar.Temporal\\Vafadar.Temporal.csproj",
+      "test\\Apps\\Dastan\\Vafadar.Dastan.Core.Tests\\Vafadar.Dastan.Core.Tests.csproj",
       "test\\Libraries\\Vafadar.Core.Tests\\Vafadar.Core.Tests.csproj",
       "test\\Libraries\\Vafadar.Temporal.Tests\\Vafadar.Temporal.Tests.csproj"
     ]
