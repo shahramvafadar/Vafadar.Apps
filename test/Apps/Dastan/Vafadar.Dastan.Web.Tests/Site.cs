@@ -42,6 +42,9 @@ public sealed class PublicSite : DemoSite
 /// <summary>A page as the server answered it.</summary>
 public sealed record Page(HttpStatusCode Status, string Html, HttpResponseMessage Response)
 {
+    /// <summary>Gets what the server sent, as bytes: the content of a file.</summary>
+    public Task<byte[]> Bytes() => Response.Content.ReadAsByteArrayAsync(TestContext.Current.CancellationToken);
+
     /// <summary>Gets the text of the page as a visitor reads it: without markup, entities decoded.</summary>
     public string Text => WebUtility.HtmlDecode(Regex.Replace(Html, "<[^>]+>", " "));
 
@@ -69,6 +72,14 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
 
     /// <summary>Opens an address without following a redirect.</summary>
     public Task<Page> Get(string address) => Send(new HttpRequestMessage(HttpMethod.Get, address));
+
+    /// <summary>Asks for a part of a file, as a player does for a video.</summary>
+    public Task<Page> GetRange(string address, string range)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, address);
+        request.Headers.TryAddWithoutValidation("Range", range);
+        return Send(request);
+    }
 
     /// <summary>Opens an address and follows redirects of the site.</summary>
     public async Task<Page> Open(string address)

@@ -20,3 +20,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   parent to the child, a dashed line between partners – only as far as the story has been read.
 - The story can be read step by step, with everybody and everything that is part of a step and how: taking part,
   only mentioned, the place, an object. Below the steps a table shows every name against every step.
+- Images and videos: a gallery of the collection, of an entity and of a step of the story, and a page for each
+  image or video with what kind of picture it is, when and by whom it was made, the rights, and links to whom and
+  what it shows. The video has captions and its transcript on the page and starts only when asked. The two original
+  items of the sample appear from the third reading stage on; before that the gallery is empty and their files
+  cannot be opened by an address either.
+- Persian text is set in the font Vazirmatn on every device. The font comes with the site; no page asks another
+  site for anything.

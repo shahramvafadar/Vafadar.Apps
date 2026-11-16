@@ -44,6 +44,10 @@
                             </li>
                         }
                     </ul>
+                    @if (!Visitor.Projection!.Gallery(step.Event.Id)!.Items.IsEmpty)
+                    {
+                        <p><a href="@($"{Site.Collection}/event/{step.Event.Id}/gallery")">@T["Gallery_StepLink"]</a></p>
+                    }
                 </li>
             }
         </ol>

@@ -66,6 +66,18 @@
   }
 }
 
+/* Arabic-script text is set in Vazirmatn everywhere (ADR 0004, D-036). The file holds no Latin letters: a Latin
+   word inside Persian text takes the next font of the stack. It is one file for every weight, it lies on this
+   site, and a page without Arabic script does not ask for it. License: fonts/vazirmatn-OFL.txt. */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("fonts/vazirmatn-nl-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F;
+}
+
 /* The font follows the language of the text, not of the page: an English name on a Persian page is set in Latin. */
 html {
   font-family: var(--font-latin);
@@ -620,4 +632,89 @@ main:focus {
    they lie outside it and make the whole page scroll sideways on a phone. */
 .lanes {
   position: relative;
+}
+
+/* --- Gallery and viewer --- */
+
+/* A card of the gallery: the picture fills the width of the card and keeps its shape; a tall and a wide picture
+   stand in frames of the same size, so that the titles below them line up. */
+.media-card .thumb {
+  display: block;
+  margin: calc(-1 * var(--space-4));
+  margin-block-end: var(--space-3);
+  border-start-start-radius: var(--radius);
+  border-start-end-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  border-block-end: 1px solid var(--border);
+}
+
+.media-card .thumb img {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+.media-card h2 {
+  font-size: var(--step-1);
+}
+
+.media-figure {
+  margin: 0;
+  margin-block: var(--space-4);
+}
+
+/* A picture or a video is never wider than the page and keeps its shape. */
+.media-figure img,
+.media-figure video {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+  margin-inline: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #ffffff;
+}
+
+.media-figure video {
+  inline-size: 100%;
+  background: #000000;
+}
+
+.media-figure figcaption {
+  margin-block-start: var(--space-2);
+  color: var(--text-muted);
+}
+
+.unavailable {
+  padding: var(--space-4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+.subjects {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subjects li {
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--border);
+}
+
+.subjects a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+/* The transcript keeps its lines: a heading with its time, then what is said. */
+.transcript {
+  white-space: pre-line;
+  padding: var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }

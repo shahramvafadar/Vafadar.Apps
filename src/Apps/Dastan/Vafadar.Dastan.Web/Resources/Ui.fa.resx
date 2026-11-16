@@ -264,4 +264,235 @@
   <data name="Story_Back" xml:space="preserve">
     <value>بازگشت به {0}</value>
   </data>
+  <data name="Gallery_Title" xml:space="preserve">
+    <value>تصویرها و ویدیوها</value>
+  </data>
+  <data name="Gallery_TitleEntity" xml:space="preserve">
+    <value>تصویرها و ویدیوهای {0}</value>
+  </data>
+  <data name="Gallery_TitleStep" xml:space="preserve">
+    <value>تصویرها و ویدیوهای گام «{0}»</value>
+  </data>
+  <data name="Gallery_LeadCollection" xml:space="preserve">
+    <value>هر آنچه از این مجموعه در جایگاه خواندن شما قابل نمایش است.</value>
+  </data>
+  <data name="Gallery_LeadEntity" xml:space="preserve">
+    <value>تصویرها و ویدیوهایی که {0} را نشان می‌دهند، تا جایی که خوانده‌اید.</value>
+  </data>
+  <data name="Gallery_LeadStep" xml:space="preserve">
+    <value>تصویرها و ویدیوهایی که این گام قصه را نشان می‌دهند.</value>
+  </data>
+  <data name="Gallery_Order" xml:space="preserve">
+    <value>به ترتیبی که ویراستاران برگزیده‌اند. این ترتیب چیزی دربارهٔ تاریخ‌ها نمی‌گوید.</value>
+  </data>
+  <data name="Gallery_Count" xml:space="preserve">
+    <value>نمایش‌داده‌شده در این‌جا: {0}</value>
+  </data>
+  <data name="Gallery_Empty" xml:space="preserve">
+    <value>این‌جا چیزی برای نمایش نیست.</value>
+  </data>
+  <data name="Gallery_EmptyHint" xml:space="preserve">
+    <value>تصویرها و ویدیوها فقط تا جایی که قصه خوانده شده نشان داده می‌شوند.</value>
+  </data>
+  <data name="Gallery_All" xml:space="preserve">
+    <value>همهٔ تصویرها و ویدیوهای مجموعه</value>
+  </data>
+  <data name="Gallery_StepLink" xml:space="preserve">
+    <value>تصویرها و ویدیوهای این گام</value>
+  </data>
+  <data name="Gallery_Open" xml:space="preserve">
+    <value>باز کردن «{0}»</value>
+  </data>
+  <data name="Media_Kind_Image" xml:space="preserve">
+    <value>تصویر</value>
+  </data>
+  <data name="Media_Kind_Video" xml:space="preserve">
+    <value>ویدیو</value>
+  </data>
+  <data name="Media_Representation_LaterArtwork" xml:space="preserve">
+    <value>اثری هنری که مدت‌ها پس از قصه ساخته شده</value>
+  </data>
+  <data name="Media_Representation_PresentDayExplanatoryDiagram" xml:space="preserve">
+    <value>نمودار توضیحی امروزی</value>
+  </data>
+  <data name="Media_RepresentationNote_LaterArtwork" xml:space="preserve">
+    <value>تصویری که هنرمندی مدت‌ها پس از قصه از آن ساخته است؛ تصویری از زمان خودِ قصه نیست.</value>
+  </data>
+  <data name="Media_RepresentationNote_PresentDayExplanatoryDiagram" xml:space="preserve">
+    <value>برای Dastan ساخته شده تا قصه را توضیح دهد؛ سند تاریخی یا مدرک نیست.</value>
+  </data>
+  <data name="Media_AboutImage" xml:space="preserve">
+    <value>دربارهٔ این تصویر</value>
+  </data>
+  <data name="Media_AboutVideo" xml:space="preserve">
+    <value>دربارهٔ این ویدیو</value>
+  </data>
+  <data name="Media_What" xml:space="preserve">
+    <value>چیستی</value>
+  </data>
+  <data name="Media_Made" xml:space="preserve">
+    <value>زمان ساخت</value>
+  </data>
+  <data name="Media_MadeNote" xml:space="preserve">
+    <value>این زمانِ ساخت است، نه زمانی در قصه.</value>
+  </data>
+  <data name="Media_Creator" xml:space="preserve">
+    <value>سازنده</value>
+  </data>
+  <data name="Media_Rights" xml:space="preserve">
+    <value>حقوق</value>
+  </data>
+  <data name="Media_License" xml:space="preserve">
+    <value>پروانه: {0}</value>
+  </data>
+  <data name="Media_RightsChecked" xml:space="preserve">
+    <value>بررسی‌شده در {0}</value>
+  </data>
+  <data name="Media_RightsPage" xml:space="preserve">
+    <value>شرایط نهاد نگه‌دارنده</value>
+  </data>
+  <data name="Media_Credit" xml:space="preserve">
+    <value>اعتبار</value>
+  </data>
+  <data name="Media_CatalogueTitle" xml:space="preserve">
+    <value>عنوان در فهرست</value>
+  </data>
+  <data name="Media_Accession" xml:space="preserve">
+    <value>شمارهٔ فهرست</value>
+  </data>
+  <data name="Media_CataloguePage" xml:space="preserve">
+    <value>صفحهٔ نهاد نگه‌دارنده</value>
+  </data>
+  <data name="Media_Length" xml:space="preserve">
+    <value>مدت</value>
+  </data>
+  <data name="Media_Seconds" xml:space="preserve">
+    <value>{0} ثانیه</value>
+  </data>
+  <data name="Media_Sound" xml:space="preserve">
+    <value>صدا</value>
+  </data>
+  <data name="Media_NoSound" xml:space="preserve">
+    <value>بدون صدا</value>
+  </data>
+  <data name="Media_HasSound" xml:space="preserve">
+    <value>با صدا</value>
+  </data>
+  <data name="Media_Captions" xml:space="preserve">
+    <value>زیرنویس</value>
+  </data>
+  <data name="Media_Transcript" xml:space="preserve">
+    <value>متن ویدیو</value>
+  </data>
+  <data name="Media_Shows" xml:space="preserve">
+    <value>چه کسان و چیزهایی را نشان می‌دهد</value>
+  </data>
+  <data name="Media_ShowsSteps" xml:space="preserve">
+    <value>گام‌هایی از قصه که نشان می‌دهد</value>
+  </data>
+  <data name="Media_Relations" xml:space="preserve">
+    <value>رابطه‌هایی که توضیح می‌دهد</value>
+  </data>
+  <data name="Media_Unavailable" xml:space="preserve">
+    <value>این فایل اکنون قابل نمایش نیست. آنچه دربارهٔ آن می‌دانیم در ادامه آمده است.</value>
+  </data>
+  <data name="Media_AltDraft" xml:space="preserve">
+    <value>شرح این تصویر برای صفحه‌خوان‌ها پیش‌نویسی است که هنوز با خود تصویر سنجیده نشده.</value>
+  </data>
+  <data name="Media_AltMissing" xml:space="preserve">
+    <value>هنوز شرحی برای این تصویر آماده نشده است.</value>
+  </data>
+  <data name="Media_VideoFallback" xml:space="preserve">
+    <value>باز کردن فایل ویدیو</value>
+  </data>
+  <data name="Media_OpenImage" xml:space="preserve">
+    <value>باز کردن تصویر در اندازهٔ کامل</value>
+  </data>
+  <data name="Media_Previous" xml:space="preserve">
+    <value>قبلی: {0}</value>
+  </data>
+  <data name="Media_Next" xml:space="preserve">
+    <value>بعدی: {0}</value>
+  </data>
+  <data name="Media_Neighbours" xml:space="preserve">
+    <value>بیشتر در همین گالری</value>
+  </data>
+  <data name="Rights_OriginalProjectContent" xml:space="preserve">
+    <value>محتوای اصلی همین پروژه</value>
+  </data>
+  <data name="Rights_OpenAccessVerified" xml:space="preserve">
+    <value>دسترسی آزاد، بررسی‌شده به دست ویراستاران</value>
+  </data>
+  <data name="Rights_PermissionNotVerified" xml:space="preserve">
+    <value>اجازهٔ استفاده تأیید نشده</value>
+  </data>
+  <data name="Date_NotStated" xml:space="preserve">
+    <value>بیان نشده</value>
+  </data>
+  <data name="Date_Day" xml:space="preserve">
+    <value>{0} {1} {2}</value>
+  </data>
+  <data name="Date_Month" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Date_WithEra" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Date_About" xml:space="preserve">
+    <value>حدود {0}</value>
+  </data>
+  <data name="Era_CommonEra" xml:space="preserve">
+    <value>میلادی</value>
+  </data>
+  <data name="Era_BeforeCommonEra" xml:space="preserve">
+    <value>پیش از میلاد</value>
+  </data>
+  <data name="Era_SolarHijri" xml:space="preserve">
+    <value>هجری خورشیدی</value>
+  </data>
+  <data name="Era_BeforeSolarHijri" xml:space="preserve">
+    <value>پیش از هجری خورشیدی</value>
+  </data>
+  <data name="Era_LunarHijri" xml:space="preserve">
+    <value>هجری قمری</value>
+  </data>
+  <data name="Era_BeforeLunarHijri" xml:space="preserve">
+    <value>پیش از هجری قمری</value>
+  </data>
+  <data name="Month_1" xml:space="preserve">
+    <value>ژانویه</value>
+  </data>
+  <data name="Month_2" xml:space="preserve">
+    <value>فوریه</value>
+  </data>
+  <data name="Month_3" xml:space="preserve">
+    <value>مارس</value>
+  </data>
+  <data name="Month_4" xml:space="preserve">
+    <value>آوریل</value>
+  </data>
+  <data name="Month_5" xml:space="preserve">
+    <value>مه</value>
+  </data>
+  <data name="Month_6" xml:space="preserve">
+    <value>ژوئن</value>
+  </data>
+  <data name="Month_7" xml:space="preserve">
+    <value>ژوئیه</value>
+  </data>
+  <data name="Month_8" xml:space="preserve">
+    <value>اوت</value>
+  </data>
+  <data name="Month_9" xml:space="preserve">
+    <value>سپتامبر</value>
+  </data>
+  <data name="Month_10" xml:space="preserve">
+    <value>اکتبر</value>
+  </data>
+  <data name="Month_11" xml:space="preserve">
+    <value>نوامبر</value>
+  </data>
+  <data name="Month_12" xml:space="preserve">
+    <value>دسامبر</value>
+  </data>
 </root>

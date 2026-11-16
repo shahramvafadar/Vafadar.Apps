@@ -1,0 +1,346 @@
+@page "/{Collection}/media/{Id}"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_media is { } media)
+{
+    var item = media.Item;
+    var title = Visitor.Text(item.Label).Value;
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@($"{_galleryAddress}#{item.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _galleryName)</a></p>
+        <h1><Loc Text="item.Label" /></h1>
+        @* What kind of picture this is stands above the picture: nobody takes a diagram of today for an old painting. *@
+        <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+    </header>
+
+    <figure class="media-figure">
+        @if (_file is null)
+        {
+            @* The file is missing on this machine. The page stays useful and does not pretend to play anything. *@
+            <p class="note unavailable" role="status">@T["Media_Unavailable"]</p>
+        }
+        else if (item.Kind == MediaKind.Image)
+        {
+            <img src="@_file" alt="@_alt" />
+        }
+        else
+        {
+            @* Nothing starts by itself and nothing is loaded before the visitor asks for it, except what the player
+               needs to show its length. *@
+            <video controls preload="metadata" playsinline poster="@_poster" width="@item.Width" height="@item.Height">
+                <source src="@_file" type="@_fileType" />
+                @foreach (var (track, index) in _tracks.Select((track, index) => (track, index)))
+                {
+                    <track kind="captions" src="@MediaAddress.Captions(Site.Collection, item.Id, track.Language)" srclang="@track.Language"
+                           label="@LanguageName(track.Language)" default="@(index == _defaultTrack)" />
+                }
+                <a href="@_file">@T["Media_VideoFallback"]</a>
+            </video>
+        }
+        <figcaption><Loc Text="item.Caption" /></figcaption>
+    </figure>
+
+    @if (_file is not null && item.Kind == MediaKind.Image)
+    {
+        <p class="meta">
+            <a href="@_file">@T["Media_OpenImage"]</a>
+            @foreach (var (format, address) in _renditions)
+            {
+                <text> – </text><a href="@address" type="@format"><bdi dir="ltr">@FormatName(format)</bdi></a>
+            }
+        </p>
+        @if (item.AltTextStatus == AltTextStatus.DraftPendingReview)
+        {
+            <p class="note">@T["Media_AltDraft"]</p>
+        }
+        else if (item.AltText is null)
+        {
+            <p class="note">@T["Media_AltMissing"]</p>
+        }
+    }
+
+    <section aria-labelledby="about">
+        <h2 id="about">@(item.Kind == MediaKind.Video ? T["Media_AboutVideo"] : T["Media_AboutImage"])</h2>
+        <dl class="facts">
+            <dt>@T["Media_What"]</dt>
+            <dd>@T[$"Media_RepresentationNote_{item.Representation}"]</dd>
+
+            @* The time of the item is not a time of the story (document 15); the label says which one it is. *@
+            <dt>@T["Media_Made"]</dt>
+            <dd>
+                @TimeText.Of(item.Created, Visitor, T)
+                <p class="note">@T["Media_MadeNote"]</p>
+            </dd>
+
+            <dt>@T["Media_Creator"]</dt>
+            <dd><Foreign Text="@item.Creator" /></dd>
+
+            @if (item.CreditLine is { } credit)
+            {
+                <dt>@T["Media_Credit"]</dt>
+                <dd><Foreign Text="@credit" /></dd>
+            }
+
+            @if (item.CatalogueTitle is { } catalogueTitle)
+            {
+                <dt>@T["Media_CatalogueTitle"]</dt>
+                <dd><Foreign Text="@catalogueTitle" /></dd>
+            }
+
+            @if (item.AccessionNumber is { } accession)
+            {
+                <dt>@T["Media_Accession"]</dt>
+                <dd><bdi dir="ltr">@accession</bdi></dd>
+            }
+
+            @if (item.CataloguePage is { } cataloguePage)
+            {
+                <dt>@T["Media_CataloguePage"]</dt>
+                <dd>
+                    <a href="@cataloguePage" rel="external noopener"><bdi dir="ltr">@cataloguePage.Host</bdi></a>
+                    <small class="note">(@T["External_Note"])</small>
+                </dd>
+            }
+
+            <dt>@T["Media_Rights"]</dt>
+            <dd>
+                @T[$"Rights_{item.Rights.Status}"]
+                @if (item.Rights.License is { } license)
+                {
+                    <text> – @string.Format(CultureInfo.CurrentCulture, T["Media_License"], license)</text>
+                }
+                <p><Foreign Text="@item.Rights.Statement" /></p>
+                <p class="note">
+                    @string.Format(CultureInfo.CurrentCulture, T["Media_RightsChecked"], TimeText.Of(item.Rights.CheckedOn, Visitor, T))
+                    @if (item.Rights.PolicyPage is { } policy)
+                    {
+                        <text> – </text><a href="@policy" rel="external noopener">@T["Media_RightsPage"]</a><text> (@T["External_Note"])</text>
+                    }
+                </p>
+            </dd>
+
+            @if (item.Kind == MediaKind.Video)
+            {
+                @if (item.DurationSeconds is { } seconds)
+                {
+                    <dt>@T["Media_Length"]</dt>
+                    <dd>@string.Format(CultureInfo.CurrentCulture, T["Media_Seconds"], Visitor.Number((int)Math.Round(seconds)))</dd>
+                }
+
+                @if (item.HasAudio is { } audio)
+                {
+                    <dt>@T["Media_Sound"]</dt>
+                    <dd>@(audio ? T["Media_HasSound"] : T["Media_NoSound"])</dd>
+                }
+
+                @if (_tracks.Count > 0)
+                {
+                    <dt>@T["Media_Captions"]</dt>
+                    <dd>
+                        @foreach (var (track, index) in _tracks.Select((track, index) => (track, index)))
+                        {
+                            @(index > 0 ? ", " : null)<bdi lang="@track.Language">@LanguageName(track.Language)</bdi>
+                        }
+                    </dd>
+                }
+            }
+        </dl>
+    </section>
+
+    @if (!media.Depicted.IsEmpty)
+    {
+        <section aria-labelledby="shows">
+            <h2 id="shows">@T["Media_Shows"]</h2>
+            <ul class="subjects" role="list">
+                @foreach (var entity in media.Depicted)
+                {
+                    <li><a href="@($"{Site.Collection}/entity/{entity.Id}")"><Loc Text="entity.Label" /></a> <span class="meta"><TypeName Type="entity.Type" /></span></li>
+                }
+            </ul>
+        </section>
+    }
+
+    @if (!media.Steps.IsEmpty)
+    {
+        <section aria-labelledby="shows-steps">
+            <h2 id="shows-steps">@T["Media_ShowsSteps"]</h2>
+            <ul class="subjects" role="list">
+                @foreach (var step in media.Steps)
+                {
+                    <li>
+                        <span class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(step.Number))</span>
+                        <a href="@($"{Site.Collection}/story#step-{step.Number}")"><Loc Text="step.Event.Label" /></a>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
+    @if (!media.Relations.IsEmpty)
+    {
+        <section aria-labelledby="explains">
+            <h2 id="explains">@T["Media_Relations"]</h2>
+            <ul class="statements" role="list">
+                @foreach (var edge in media.Relations)
+                {
+                    <li><Statement Relation="edge" /></li>
+                }
+            </ul>
+        </section>
+    }
+
+    @if (_transcript is not null)
+    {
+        @* The transcript says what the video says, for whoever cannot or does not want to play it. It is part of
+           the item and is shown under the same conditions. *@
+        <section aria-labelledby="transcript">
+            <h2 id="transcript">@T["Media_Transcript"]</h2>
+            @if (Visitor.Language.Tag != "en")
+            {
+                <p class="note">(@T["Foreign_Note"])</p>
+            }
+            <div class="transcript" lang="en" dir="ltr">@_transcript</div>
+        </section>
+    }
+
+    @if (_previous is not null || _next is not null)
+    {
+        <nav class="neighbours" aria-labelledby="neighbours">
+            <h2 id="neighbours">@T["Media_Neighbours"]</h2>
+            <p class="actions">
+                @if (_previous is { } previous)
+                {
+                    <a class="action secondary" rel="prev" href="@($"{Site.Collection}/media/{previous.Id}{_context}")">@string.Format(CultureInfo.CurrentCulture, T["Media_Previous"], Visitor.Text(previous.Label).Value)</a>
+                }
+                @if (_next is { } next)
+                {
+                    <a class="action secondary" rel="next" href="@($"{Site.Collection}/media/{next.Id}{_context}")">@string.Format(CultureInfo.CurrentCulture, T["Media_Next"], Visitor.Text(next.Label).Value)</a>
+                }
+            </p>
+        </nav>
+    }
+}
+
+@code {
+    private MediaView? _media;
+    private string? _file;
+    private string? _fileType;
+    private string? _poster;
+    private string _alt = string.Empty;
+    private string? _transcript;
+    private List<CaptionTrack> _tracks = [];
+    private int _defaultTrack;
+    private List<(string Format, string Address)> _renditions = [];
+    private string _galleryAddress = string.Empty;
+    private string _galleryName = string.Empty;
+    private string _context = string.Empty;
+    private MediaItem? _previous;
+    private MediaItem? _next;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the media item in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the entity whose gallery the visitor came from, if the address says so.</summary>
+    [SupplyParameterFromQuery(Name = "entity")]
+    public string? FromEntity { get; set; }
+
+    /// <summary>Gets or sets the event whose gallery the visitor came from, if the address says so.</summary>
+    [SupplyParameterFromQuery(Name = "event")]
+    public string? FromEvent { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // An item the visitor has not read to, one that is not released and one that does not exist are the same
+        // page: not found. An address is never a permission.
+        var projection = Collection == Site.Collection ? Visitor.Projection : null;
+        _media = projection is not null && Id.Length > 0 && !Id.Any(char.IsWhiteSpace) ? projection.MediaItem(new MediaId(Id)) : null;
+        if (_media is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        var item = _media.Item;
+        if (Site.ContentFile(item.File) is { } path)
+        {
+            _file = MediaAddress.File(Site.Collection, item.Id);
+            _fileType = MediaFiles.TypeOf(path);
+        }
+
+        if (Site.ContentFile(item.Poster) is not null)
+        {
+            _poster = MediaAddress.Poster(Site.Collection, item.Id);
+        }
+
+        _alt = Visitor.Text(item.AltText ?? item.Label).Value;
+        _transcript = Site.ContentText(item.Transcript);
+        _tracks = [.. item.Captions.Where(track => Site.ContentFile(track.File) is not null)];
+
+        // The video has no words of its own without its captions: they are on unless the visitor turns them off,
+        // in the language of the page when there are captions in it.
+        _defaultTrack = Math.Max(0, _tracks.FindIndex(track => track.Language == Visitor.Language.Tag));
+        _renditions =
+        [
+            .. item.Renditions
+                .Select((rendition, index) => (rendition.Format, rendition.File, Index: index))
+                .Where(rendition => Site.ContentFile(rendition.File) is not null)
+                .Select(rendition => (rendition.Format, MediaAddress.Rendition(Site.Collection, item.Id, rendition.Index))),
+        ];
+
+        // The gallery the visitor came from, as far as the address says and the projection confirms it. Anything
+        // else – nothing, something hidden, something that does not show this item – is the gallery of the collection.
+        var gallery = projection!.Gallery();
+        _galleryAddress = $"{Site.Collection}/gallery";
+        _galleryName = T["Gallery_Title"];
+        if (Named(FromEntity) is { } entity && projection.Gallery(new EntityId(entity)) is { Entity: { } subject } ofEntity && ofEntity.Items.Contains(item))
+        {
+            gallery = ofEntity;
+            _galleryAddress = $"{Site.Collection}/entity/{subject.Id}/gallery";
+            _galleryName = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleEntity"], Visitor.Text(subject.Label).Value);
+            _context = $"?entity={Uri.EscapeDataString(subject.Id.Value)}";
+        }
+        else if (Named(FromEvent) is { } storyEvent && projection.Gallery(new EventId(storyEvent)) is { Step: { } step } ofEvent && ofEvent.Items.Contains(item))
+        {
+            gallery = ofEvent;
+            _galleryAddress = $"{Site.Collection}/event/{step.Event.Id}/gallery";
+            _galleryName = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleStep"], Visitor.Text(step.Event.Label).Value);
+            _context = $"?event={Uri.EscapeDataString(step.Event.Id.Value)}";
+        }
+
+        var at = gallery.Items.IndexOf(item);
+        _previous = at > 0 ? gallery.Items[at - 1] : null;
+        _next = at >= 0 && at < gallery.Items.Length - 1 ? gallery.Items[at + 1] : null;
+    }
+
+    private static string? Named(string? id) => string.IsNullOrEmpty(id) || id.Any(char.IsWhiteSpace) ? null : id;
+
+    // The name a language gives itself: a list of captions is read by whoever understands them.
+    private static string LanguageName(string tag)
+    {
+        try
+        {
+            return CultureInfo.GetCultureInfo(tag, predefinedOnly: true).NativeName;
+        }
+        catch (CultureNotFoundException)
+        {
+            return tag;
+        }
+    }
+
+    // "image/svg+xml" is shown as "SVG".
+    private static string FormatName(string format)
+    {
+        var name = format[(format.IndexOf('/', StringComparison.Ordinal) + 1)..];
+        var plus = name.IndexOf('+', StringComparison.Ordinal);
+        return (plus < 0 ? name : name[..plus]).ToUpperInvariant();
+    }
+}

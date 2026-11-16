@@ -1,6 +1,7 @@
 # 0004. Design tokens, type scale and fonts
 
-- Status: Accepted for the structure (tokens, scale, direction); the palette and the fonts are **provisional**
+- Status: Accepted for the structure (tokens, scale, direction) and, since 2026-11-16, for the Persian font
+  (decision D-036); the palette and the Latin font are **provisional**
 - Date: 2026-11-16
 - Deciders: Shahram Vafadar
 - Governing documents: 11 (visual identity direction: no palette, logo or font is selected), 18; M0-10
@@ -27,18 +28,17 @@ pages have to work in two scripts, two directions and two themes from the first 
    at least 2.75 rem (44 px) high. Text runs in a column of at most 44 rem.
 6. **The font follows the language of the text, not of the page** (`:lang()`): an English title on a Persian
    page is set in the Latin stack. Arabic-script text has a taller line (1.9).
-7. **Fonts are the system's for now**: no font file is downloaded or bundled. Latin: Segoe UI Variable, system-ui
-   and common fallbacks. Arabic script: the stack starts with Vazirmatn, so a device that has it uses it, and
-   continues with Segoe UI, Noto Sans Arabic, Geeza Pro, Tahoma.
+7. **Fonts.** Latin: the system's – Segoe UI Variable, system-ui and common fallbacks; no Latin font is bundled.
+   Arabic script: **Vazirmatn**, bundled (D-036): the variable file of version 33.003 without Latin letters
+   (`wwwroot/fonts/vazirmatn-nl-wght.woff2`, 48 KB, every weight in one file), from the release of the font's
+   own repository, under the SIL Open Font License 1.1, whose text lies beside it. It is served by the site
+   itself – no page asks another site for anything – and only a page that has Arabic-script text asks for it.
+   The stack continues with Segoe UI, Noto Sans Arabic, Geeza Pro, Tahoma for a browser that cannot use it.
 8. **Direction:** only logical properties (`inline`, `block`, `start`, `end`). The one physical thing, the arrow
    of a relation, has a rule per direction.
 
 ## Open – for the owner
 
-* **A bundled Persian font.** With system fonts Persian text looks different on every device (Segoe UI on Windows,
-  Noto on Android). Bundling Vazirmatn (SIL Open Font License 1.1, self-hosted, no request to another site) would
-  make it the same everywhere. It adds font files to the repository and to every first visit. Recommended, not
-  done: it is a design decision and a third-party file.
 * The palette, the wordmark and the icon are placeholders until the identity work of document 11 is done. The
   icon (`wwwroot/icon.svg`) is an original provisional drawing.
 

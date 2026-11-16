@@ -443,6 +443,12 @@ public sealed class PublicSiteTests(PublicSite site) : IClassFixture<PublicSite>
     [InlineData("/en/story-rostam-sohrab/story")]
     [InlineData("/en/story-rostam-sohrab/entity/character-rostam/connections")]
     [InlineData("/fa/story-rostam-sohrab/entity/character-rostam/family")]
+    [InlineData("/en/story-rostam-sohrab/gallery")]
+    [InlineData("/en/story-rostam-sohrab/entity/character-rostam/gallery")]
+    [InlineData("/en/story-rostam-sohrab/event/event-01/gallery")]
+    [InlineData("/fa/story-rostam-sohrab/media/media-dastan-family-illustration")]
+    [InlineData("/media/story-rostam-sohrab/media-dastan-family-illustration/file")]
+    [InlineData("/media/story-rostam-sohrab/media-dastan-parentage-video/poster")]
     public async Task The_public_cannot_open_a_page_of_the_sample(string address)
     {
         var page = await site.Visitor().Get(address);

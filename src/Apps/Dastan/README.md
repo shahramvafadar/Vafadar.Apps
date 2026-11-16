@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 to 4 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, and the first pages of the website (start, story, entity) in English and Persian. **Phase 5 is in progress**: the connections page, the family drawing and the story step by step with its lanes exist; gallery, evidence and search follow. |
+| Status | **Phases 1 to 4 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, and the first pages of the website (start, story, entity) in English and Persian. **Phase 5 is in progress**: the connections page, the family drawing, the story step by step with its lanes, and the galleries with the pages of images and videos exist; evidence and search follow. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -74,6 +74,12 @@ for the visitor's reading position. Nothing in `content/` may be copied under a 
 The sample is read by `PilotSample` (`Vafadar.Dastan.Data`), which refuses a file it does not fully understand. A
 translation of the sample is a file next to it, `<sample>.<language>.json`; `shahnameh-pilot.fa.json` is the Persian
 text, a **draft that nobody has reviewed yet** (`"review": "draft"`). Pages will mark such text as unreviewed (phase 4).
+
+## Third-party files
+
+| File | What | License | From |
+|---|---|---|---|
+| `Vafadar.Dastan.Web/wwwroot/fonts/vazirmatn-nl-wght.woff2` | The font Vazirmatn 33.003, variable weight, without Latin letters – unchanged (`Vazirmatn-NL[wght].woff2`, SHA-256 `cdef5578…bbf5`) | SIL Open Font License 1.1, `wwwroot/fonts/vazirmatn-OFL.txt` | Release v33.003 of <https://github.com/rastikerdar/vazirmatn> |
 
 ## Services
 

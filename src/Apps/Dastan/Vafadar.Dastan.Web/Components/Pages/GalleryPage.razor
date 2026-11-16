@@ -1,0 +1,133 @@
+@page "/{Collection}/gallery"
+@page "/{Collection}/entity/{Subject}/gallery"
+@page "/{Collection}/event/{Step}/gallery"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_gallery is { } gallery)
+{
+    <PageTitle>@_title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@_back">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _backName)</a></p>
+        <h1>@_title</h1>
+        @* The page says why its items are here (document 15): the rule, not a search the visitor cannot see. *@
+        <p class="lead">@_lead</p>
+    </header>
+
+    @if (gallery.Items.IsEmpty)
+    {
+        @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
+        <p class="note" role="status">
+            @T["Gallery_Empty"]
+            @if (_continues)
+            {
+                <text> @T["Gallery_EmptyHint"] </text><a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
+            }
+        </p>
+    }
+    else
+    {
+        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Gallery_Count"], Visitor.Number(gallery.Items.Length)) – @T["Gallery_Order"]</p>
+        <ul class="cards gallery" role="list">
+            @foreach (var item in gallery.Items)
+            {
+                var viewer = $"{Site.Collection}/media/{item.Id}{_context}";
+                var picture = Site.ContentFile(item.Kind == MediaKind.Video ? item.Poster : item.File) is null
+                    ? null
+                    : item.Kind == MediaKind.Video ? MediaAddress.Poster(Site.Collection, item.Id) : MediaAddress.File(Site.Collection, item.Id);
+                <li class="card media-card" id="@item.Id">
+                    @if (picture is not null)
+                    {
+                        @* The picture leads where the title leads; for a screen reader and the keyboard the title is the link. *@
+                        <a class="thumb" href="@viewer" tabindex="-1" aria-hidden="true"><img src="@picture" alt="" loading="lazy" /></a>
+                    }
+                    <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+                    <h2><a href="@viewer"><Loc Text="item.Label" /></a></h2>
+                    <p><Loc Text="item.Caption" /></p>
+                    <p class="meta">@T["Media_Made"]: @TimeText.Of(item.Created, Visitor, T)</p>
+                </li>
+            }
+        </ul>
+    }
+
+    @if (gallery.Rule != GalleryRule.WholeCollection)
+    {
+        <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/gallery")">@T["Gallery_All"]</a></p>
+    }
+}
+
+@code {
+    private GalleryView? _gallery;
+    private string _title = string.Empty;
+    private string _lead = string.Empty;
+    private string _back = string.Empty;
+    private string _backName = string.Empty;
+    private string _context = string.Empty;
+    private bool _continues;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the entity whose media are asked for, if the address names one.</summary>
+    [Parameter]
+    public string? Subject { get; set; }
+
+    /// <summary>Gets or sets the identifier of the event whose media are asked for, if the address names one.</summary>
+    [Parameter]
+    public string? Step { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var projection = Collection == Site.Collection ? Visitor.Projection : null;
+        var named = Subject ?? Step;
+        if (projection is null || (named is not null && (named.Length == 0 || named.Any(char.IsWhiteSpace))))
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        // An entity or a step the visitor has not read to and one that does not exist are the same page: not found.
+        _gallery = Subject is not null ? projection.Gallery(new EntityId(Subject))
+            : Step is not null ? projection.Gallery(new EventId(Step))
+            : projection.Gallery();
+        if (_gallery is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        var overview = projection.Overview();
+        _continues = overview.StoryContinues;
+        switch (_gallery)
+        {
+            case { Entity: { } entity }:
+                var name = Visitor.Text(entity.Label).Value;
+                _title = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleEntity"], name);
+                _lead = string.Format(CultureInfo.CurrentCulture, T["Gallery_LeadEntity"], name);
+                _back = $"{Site.Collection}/entity/{entity.Id}";
+                _backName = name;
+                _context = $"?entity={Uri.EscapeDataString(entity.Id.Value)}";
+                break;
+
+            case { Step: { } step }:
+                var label = Visitor.Text(step.Event.Label).Value;
+                _title = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleStep"], label);
+                _lead = T["Gallery_LeadStep"];
+                _back = $"{Site.Collection}/story#step-{step.Number}";
+                _backName = label;
+                _context = $"?event={Uri.EscapeDataString(step.Event.Id.Value)}";
+                break;
+
+            default:
+                _title = T["Gallery_Title"];
+                _lead = T["Gallery_LeadCollection"];
+                _back = Site.Collection;
+                _backName = Visitor.Text(overview.Story.Label).Value;
+                break;
+        }
+    }
+}

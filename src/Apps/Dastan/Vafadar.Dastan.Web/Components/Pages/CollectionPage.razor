@@ -38,6 +38,9 @@
         </section>
     }
 
+    @* The gallery is always offered: what it holds depends on the reading position, that it exists does not. *@
+    <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/gallery")">@T["Gallery_Title"]</a></p>
+
     <section aria-labelledby="subjects">
         <h2 id="subjects">@T["Collection_Subjects"]</h2>
         <ul class="cards" role="list">
