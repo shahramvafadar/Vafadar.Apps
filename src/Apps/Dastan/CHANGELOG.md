@@ -25,3 +25,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   what it shows. The video has captions and its transcript on the page and starts only when asked. The two original
   items of the sample appear from the third reading stage on; before that the gallery is empty and their files
   cannot be opened by an address either.
+- Persian text is set in the font Vazirmatn on every device. The font comes with the site; no page asks another
+  site for anything.

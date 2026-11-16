@@ -28,8 +28,12 @@ for Dastan is added here in the same commit as the work it came with.
   only by adding to it; behaviour another app relies on changes only with that app's decision
   ([shared libraries backlog](../../../docs/libraries-backlog.md)).
 * **Zanance is developed at the same time.** Touch shared files – the solution, package versions, root documents,
-  shared tests – as little as possible and by adding lines. Work on `feature/dastan-<topic>` branches; one pull
-  request into `main` per phase.
+  shared tests – as little as possible and by adding lines. Work on `feature/dastan-<topic>` branches.
+* **Merging does not wait for the owner** (D-038). Finished work whose build and tests pass is brought into `main`
+  – by a pull request where one can be opened, otherwise by a merge commit of the branch, pushed after the merged
+  state was built and tested; CI on `main` is checked once afterwards. Open pull requests are dealt with in the same
+  way: merged when they are verified and change nothing another app was verified on, otherwise left with the
+  reason written down. Everything is done under the owner's identity; nothing names a tool or an assistant.
 * **Services run in containers** (D-034): a database and every other service that can run in a container uses
   Docker Desktop on the development machine, in one Compose project named `test`. Never start, stop, remove or prune
   anything of another project.

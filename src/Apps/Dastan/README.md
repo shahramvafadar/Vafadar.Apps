@@ -75,6 +75,12 @@ The sample is read by `PilotSample` (`Vafadar.Dastan.Data`), which refuses a fil
 translation of the sample is a file next to it, `<sample>.<language>.json`; `shahnameh-pilot.fa.json` is the Persian
 text, a **draft that nobody has reviewed yet** (`"review": "draft"`). Pages will mark such text as unreviewed (phase 4).
 
+## Third-party files
+
+| File | What | License | From |
+|---|---|---|---|
+| `Vafadar.Dastan.Web/wwwroot/fonts/vazirmatn-nl-wght.woff2` | The font Vazirmatn 33.003, variable weight, without Latin letters – unchanged (`Vazirmatn-NL[wght].woff2`, SHA-256 `cdef5578…bbf5`) | SIL Open Font License 1.1, `wwwroot/fonts/vazirmatn-OFL.txt` | Release v33.003 of <https://github.com/rastikerdar/vazirmatn> |
+
 ## Services
 
 A database and every other service that can run in a container runs in Docker Desktop on the development machine,

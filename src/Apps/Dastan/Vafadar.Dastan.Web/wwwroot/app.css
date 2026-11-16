@@ -66,6 +66,18 @@
   }
 }
 
+/* Arabic-script text is set in Vazirmatn everywhere (ADR 0004, D-036). The file holds no Latin letters: a Latin
+   word inside Persian text takes the next font of the stack. It is one file for every weight, it lies on this
+   site, and a page without Arabic script does not ask for it. License: fonts/vazirmatn-OFL.txt. */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("fonts/vazirmatn-nl-wght.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F;
+}
+
 /* The font follows the language of the text, not of the page: an English name on a Persian page is set in Latin. */
 html {
   font-family: var(--font-latin);
