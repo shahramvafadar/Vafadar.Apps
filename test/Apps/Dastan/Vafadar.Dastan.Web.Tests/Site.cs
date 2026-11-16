@@ -45,6 +45,12 @@ public sealed record Page(HttpStatusCode Status, string Html, HttpResponseMessag
     /// <summary>Gets what the server sent, as bytes: the content of a file.</summary>
     public Task<byte[]> Bytes() => Response.Content.ReadAsByteArrayAsync(TestContext.Current.CancellationToken);
 
+    /// <summary>
+    /// Gets the markup of the page without the one script the site adds to every page – the file that registers the
+    /// service worker. What is left must not contain a script.
+    /// </summary>
+    public string Own => Regex.Replace(Html, "<script src=\"app[^\"]*\\.js\" defer></script>", string.Empty);
+
     /// <summary>Gets the text of the page as a visitor reads it: without markup, entities decoded.</summary>
     public string Text => WebUtility.HtmlDecode(Regex.Replace(Html, "<[^>]+>", " "));
 

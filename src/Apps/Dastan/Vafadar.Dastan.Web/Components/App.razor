@@ -1,4 +1,5 @@
 @inject Visitor Visitor
+@inject DastanSite Site
 <!DOCTYPE html>
 <html lang="@Visitor.Language.Tag" dir="@Visitor.Language.Direction" data-theme="@ThemePreference.Attribute(Visitor.Theme)">
 
@@ -10,11 +11,32 @@
     <link rel="stylesheet" href="@Assets["_content/Vafadar.Web/vafadar.css"]" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="icon" href="@Assets["icon.svg"]" type="image/svg+xml" />
+
+    @* The installable app (ADR 0007). These addresses carry no language: there is one app, not one per language. *@
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    @* The colour around the page is the colour of the page – the one the visitor chose, or the one of the device. *@
+    @if (Visitor.Theme == ThemeChoice.Auto)
+    {
+        <meta name="theme-color" content="@Light" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="@Dark" media="(prefers-color-scheme: dark)" />
+    }
+    else
+    {
+        <meta name="theme-color" content="@(Visitor.Theme == ThemeChoice.Dark ? Dark : Light)" />
+    }
+    @if (Site.Audience != Audience.Public)
+    {
+        @* A demonstration is not for search engines. *@
+        <meta name="robots" content="noindex, nofollow" />
+    }
     <HeadOutlet />
 </head>
 
 <body>
     <Routes />
+    @* The one script of the site: it registers the service worker. No page needs it to show its content. *@
+    <script src="@Assets["app.js"]" defer></script>
 </body>
 
 </html>
@@ -22,6 +44,10 @@
 @code {
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
+
+    // The colour of the surface in the light and in the dark appearance (app.css: --surface).
+    private const string Light = "#fbfaf7";
+    private const string Dark = "#14132a";
 
     private string Base => $"{Context.Request.PathBase}/";
 }

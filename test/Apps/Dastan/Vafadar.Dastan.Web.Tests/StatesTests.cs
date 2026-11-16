@@ -73,6 +73,30 @@ public sealed class StatesTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.True(page.Response.Headers.CacheControl is { NoStore: true });
     }
 
+    [Theory]
+    [InlineData("en", "That did not work", "Nothing was changed.")]
+    [InlineData("fa", "انجام نشد", "چیزی تغییر نکرد.")]
+    public async Task A_form_that_is_refused_leads_to_a_page_that_says_so_in_the_language_of_the_visitor(string language, string title, string nothing)
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(1, language);
+
+        // A form without the token of its page – what an expired page sends.
+        var refused = await visitor.Post("/preferences/reading", "/offline.html", ("collection", Story), ("level", "4"), ("returnUrl", $"/{language}/"));
+        var page = await visitor.Open(refused.Response.Headers.Location!.OriginalString);
+
+        Assert.Equal(HttpStatusCode.SeeOther, refused.Status);
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Equal(language, page.Root("lang"));
+        Assert.Contains(title, page.Main, StringComparison.Ordinal);
+        Assert.Contains(nothing, page.Main, StringComparison.Ordinal);
+        Assert.Contains("./", page.Links);
+        Assert.Contains(Story, page.Links);
+
+        // And nothing was changed: the visitor is where they were.
+        Assert.Equal("1", visitor.Cookies[$"dastan.reading.{Story}"]);
+    }
+
     [Fact]
     public async Task The_page_for_a_failure_opened_by_itself_offers_the_start_and_no_address_to_try_again()
     {
@@ -130,6 +154,21 @@ public sealed class FailureTests(FailingSite site) : IClassFixture<FailingSite>
         Assert.DoesNotContain("InvalidOperationException", page.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("Not here", page.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("There is nothing to show", page.Main, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Outside_development_a_form_without_the_token_of_its_page_leads_to_the_page_that_says_so()
+    {
+        var visitor = site.Visitor();
+        await visitor.Get("/en/");
+
+        var refused = await visitor.Post("/preferences/reading", "/offline.html", ("collection", "story-rostam-sohrab"), ("level", "1"), ("returnUrl", "/en/"));
+        var page = await visitor.Open(refused.Response.Headers.Location!.OriginalString);
+
+        Assert.Equal(HttpStatusCode.SeeOther, refused.Status);
+        Assert.Equal("/refused", refused.Response.Headers.Location!.OriginalString);
+        Assert.Contains("That did not work", page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain(visitor.Cookies.Keys, name => name.StartsWith("dastan.reading", StringComparison.Ordinal));
     }
 
     [Fact]

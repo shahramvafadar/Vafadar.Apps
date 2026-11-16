@@ -10,6 +10,8 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <PackageReference Include="Microsoft.Playwright" />
+    <!-- axe-core: the rules of accessibility a tool can decide. Used by the tests only. -->
+    <PackageReference Include="Deque.AxeCore.Playwright" />
     <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Web\Vafadar.Dastan.Web.csproj" />
   </ItemGroup>
 

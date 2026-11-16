@@ -288,7 +288,7 @@ public sealed class EvidenceAndSearchTests(DemoSite site) : IClassFixture<DemoSi
         var nothing = await visitor.Get($"/en/{Story}/search");
 
         Assert.Equal(HttpStatusCode.OK, markup.Status);
-        Assert.DoesNotContain("<script", markup.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("<script", markup.Own, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotMatch("value=\"[^\"]*\"\\s*onfocus", markup.Html);
         Assert.Contains("Nothing found for “<script>alert(1)</script>\"onfocus=\"x”", markup.Main, StringComparison.Ordinal);
 
@@ -310,6 +310,6 @@ public sealed class EvidenceAndSearchTests(DemoSite site) : IClassFixture<DemoSi
 
         Assert.Matches($"<form class=\"search\" method=\"get\" action=\"{Story}/search\" role=\"search\">", page.Html);
         Assert.Matches("<label for=\"search-q\">", page.Html);
-        Assert.DoesNotContain("<script", page.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("<script", page.Own, StringComparison.OrdinalIgnoreCase);
     }
 }

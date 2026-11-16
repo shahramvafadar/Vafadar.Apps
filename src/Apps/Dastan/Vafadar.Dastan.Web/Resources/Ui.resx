@@ -636,4 +636,10 @@
   <data name="Family_Instead" xml:space="preserve">
     <value>The family drawing shows parents, children and partners only. Other connections are in the drawing of all connections.</value>
   </data>
+  <data name="Refused_Title" xml:space="preserve">
+    <value>That did not work</value>
+  </data>
+  <data name="Refused_Text" xml:space="preserve">
+    <value>The page you sent this from was open for too long, or something on it had changed. Nothing was changed. Go back to the page, load it again and repeat what you wanted to do.</value>
+  </data>
 </root>

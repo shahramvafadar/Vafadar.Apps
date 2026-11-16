@@ -1,3 +1,4 @@
+using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Web.Components;
 using Vafadar.Dastan.Web.Site;
 using Vafadar.Web;
@@ -27,10 +28,19 @@ var app = builder.Build();
 
 // The collection is read now: a collection that cannot be used stops the app with the list of what is wrong,
 // instead of failing for the first visitor.
-app.Services.GetRequiredService<DastanSite>();
+var site = app.Services.GetRequiredService<DastanSite>();
 
 app.UseSecurityHeaders();
 app.UseFreshPages();
+if (site.Audience != Audience.Public)
+{
+    // A demonstration is not for search engines: no answer of it is to be indexed or followed.
+    app.Use((context, next) =>
+    {
+        context.Response.Headers["X-Robots-Tag"] = "noindex, nofollow";
+        return next(context);
+    });
+}
 if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
@@ -50,6 +60,9 @@ if (!app.Environment.IsDevelopment())
 app.UseWhen(
     context => HttpMethods.IsGet(context.Request.Method) || HttpMethods.IsHead(context.Request.Method),
     pages => pages.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true));
+
+// A form that is refused leads to a page that says so.
+app.UseRefusedFormPage();
 
 // Routes are matched after the language was taken out of the path.
 app.UseRouting();

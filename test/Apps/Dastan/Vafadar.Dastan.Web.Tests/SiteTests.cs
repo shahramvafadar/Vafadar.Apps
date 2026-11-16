@@ -194,7 +194,9 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
 
         var answer = await visitor.Post("/preferences/reading", $"/en/{Story}", ("collection", collection), ("level", level), ("returnUrl", "/en/"));
 
-        Assert.Equal(HttpStatusCode.BadRequest, answer.Status);
+        // Refused, and the visitor is sent to the page that says so.
+        Assert.Equal(HttpStatusCode.SeeOther, answer.Status);
+        Assert.Equal("/refused", answer.Response.Headers.Location!.OriginalString);
         Assert.DoesNotContain(visitor.Cookies.Keys, name => name.StartsWith("dastan.reading", StringComparison.Ordinal));
     }
 
@@ -311,7 +313,7 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
     {
         var page = await site.Visitor().Get(address);
 
-        Assert.DoesNotContain("<script", page.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("<script", page.Own, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotMatch("\\sstyle=\"", page.Html);
         Assert.Contains("default-src 'self'", Assert.Single(page.Response.Headers.GetValues("Content-Security-Policy")), StringComparison.Ordinal);
         Assert.Equal("nosniff", Assert.Single(page.Response.Headers.GetValues("X-Content-Type-Options")));
@@ -328,10 +330,12 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
 
         var files = Regex.Matches(page.Html, "<link[^>]*href=\"([^\"]+)\"").Select(match => match.Groups[1].Value).ToList();
 
-        Assert.Equal(3, files.Count);
+        // Two style sheets and the icon, addressed from the page; the manifest and the icon for a home screen,
+        // addressed from the root of the site.
+        Assert.Equal(5, files.Count);
         foreach (var file in files)
         {
-            Assert.Equal(HttpStatusCode.OK, (await visitor.Get($"/fa/{file}")).Status);
+            Assert.Equal(HttpStatusCode.OK, (await visitor.Get(new Uri(new Uri("http://localhost/fa/"), file).AbsolutePath)).Status);
         }
     }
 
