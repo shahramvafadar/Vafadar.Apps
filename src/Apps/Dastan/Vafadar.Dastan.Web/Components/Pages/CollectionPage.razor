@@ -1,0 +1,73 @@
+@page "/{Collection}"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_overview is { } overview)
+{
+    <PageTitle>@Visitor.Text(overview.Story.Label).Value – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta">@T["Type_storyArc"]</p>
+        <h1><Loc Text="overview.Story.Label" /></h1>
+        <p class="lead"><Loc Text="overview.Story.Summary" /></p>
+    </header>
+
+    <dl class="facts">
+        <dt>@T["Collection_Work"]</dt>
+        <dd><a href="@($"{Site.Collection}/entity/{overview.Work.Id}")"><Loc Text="overview.Work.Label" /></a></dd>
+        <dt>@T["Collection_Text"]</dt>
+        <dd>
+            <Foreign Text="@overview.Edition.BaseText" Href="overview.Edition.BaseUrl" />
+            <p class="note">@T["Collection_SourceNotice"] (@T["External_Note"])</p>
+        </dd>
+        <dt>@T["Collection_Scope"]</dt>
+        <dd><Foreign Text="@overview.Edition.Scope" /></dd>
+    </dl>
+
+    @if (overview.FirstStep is { } first)
+    {
+        <section aria-labelledby="begins">
+            <h2 id="begins">@T["Collection_Begins"]</h2>
+            <article class="card">
+                <h3><Loc Text="first.Event.Label" /></h3>
+                <p><Loc Text="first.Event.Summary" /></p>
+                <p><a class="action" href="@($"{Site.Collection}/story")">@T["Collection_ToStory"]</a></p>
+            </article>
+        </section>
+    }
+
+    <section aria-labelledby="subjects">
+        <h2 id="subjects">@T["Collection_Subjects"]</h2>
+        <ul class="cards" role="list">
+            @foreach (var subject in overview.Subjects)
+            {
+                <li class="card">
+                    <h3><a href="@($"{Site.Collection}/entity/{subject.Id}")"><Loc Text="subject.Label" /></a></h3>
+                    <p class="meta"><TypeName Type="subject.Type" /></p>
+                    <p><Loc Text="subject.Summary" /></p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <ReadingControl Overview="overview" ReturnUrl="@($"/{Visitor.Language.Tag}/{Site.Collection}#reading")" />
+}
+
+@code {
+    private CollectionOverview? _overview;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _overview = Collection == Site.Collection ? Visitor.Projection?.Overview() : null;
+        if (_overview is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}

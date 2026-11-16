@@ -1,0 +1,21 @@
+@* A text of the collection in the language of the page. When the collection has no text in that language, the
+   text is shown in the language it has and says so to the browser and to screen readers (lang and dir). *@
+@inject Visitor Visitor
+@if (_text.Language == Visitor.Language.Tag)
+{
+    <bdi>@_text.Value</bdi>
+}
+else
+{
+    <bdi lang="@_text.Language" dir="@TextDirection.Of(_text.Language)">@_text.Value</bdi>
+}
+
+@code {
+    private ResolvedText _text;
+
+    /// <summary>Gets or sets the text.</summary>
+    [Parameter, EditorRequired]
+    public LocalizedText Text { get; set; } = null!;
+
+    protected override void OnParametersSet() => _text = Visitor.Text(Text);
+}

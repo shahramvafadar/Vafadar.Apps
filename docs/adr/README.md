@@ -17,6 +17,7 @@ they are accepted; a later decision that changes one **supersedes** it with a ne
 | [0010](0010-database-encryption.md) | Profile database encryption, device-bound key envelopes and safe migration | Proposed; SEC-01 runtime/review gates open |
 | [0011](0011-languages-per-app.md) | Each app declares the languages of its texts | Accepted |
 | [0012](0012-temporal-model.md) | A shared model of stated time, compared without invented precision | Accepted |
+| [0013](0013-web-library.md) | A shared library for web apps: language in the address, choices in cookies, no script | Accepted |
 
 ## Template
 

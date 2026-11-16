@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 to 3 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the reader of the sample, its Persian text and the projection that decides what a visitor sees. Phase 4 builds the website. There is no application to run yet. |
+| Status | **Phases 1 to 4 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the projection, and the first pages of the website (start, story, entity) in English and Persian. **Phase 5 is in progress**: the connections page, the family drawing and the story step by step with its lanes exist; gallery, evidence and search follow. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -27,7 +27,7 @@ concern the whole repository are in [`docs/adr`](../../../docs/adr/README.md).
 
 ## Projects
 
-`Vafadar.Dastan.Core` and `Vafadar.Dastan.Data` exist; the website is created in phase 4.
+All three exist.
 
 | Project | Purpose | Phase |
 |---|---|---|
@@ -37,8 +37,20 @@ concern the whole repository are in [`docs/adr`](../../../docs/adr/README.md).
 
 Shared libraries written for Dastan and usable by other apps:
 [`Vafadar.Temporal`](../../Libraries/Vafadar.Temporal/README.md) (done: stated time, compared without invented
-precision) and `Vafadar.Web` (phase 4). [`Vafadar.Core`](../../Libraries/Vafadar.Core/README.md) supplies the search
+precision) and [`Vafadar.Web`](../../Libraries/Vafadar.Web/README.md) (done: language in the address, direction,
+theme, safe headers). [`Vafadar.Core`](../../Libraries/Vafadar.Core/README.md) supplies the search
 key for names (`SearchText.Fold`).
+
+## Run
+
+```powershell
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Web      # then open http://localhost:5210
+```
+
+This starts the local demonstration (the Development settings): the site reads the sample from `content/` and
+shows it as a demonstration. Started with any other settings the site is for the public and shows that nothing
+is published, because the sample is not approved for publication. The pages need no script; the reading position
+is chosen at the bottom of the page of the story.
 
 ## Build and test
 

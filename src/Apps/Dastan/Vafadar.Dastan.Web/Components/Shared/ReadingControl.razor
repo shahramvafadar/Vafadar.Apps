@@ -1,0 +1,38 @@
+@* The reading position: the only place where a visitor moves forward in the story, and always by their own act.
+   The stages are named for readers; the control says that the story continues, never what follows. *@
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject IStringLocalizer<Ui> T
+
+<section class="reading" id="reading" aria-labelledby="reading-title">
+    <h2 id="reading-title">@T["Reading_Title"]</h2>
+    <p>@T["Reading_Explanation"]</p>
+    <form method="post" action="/preferences/reading" class="reading-form">
+        <AntiforgeryToken />
+        <input type="hidden" name="collection" value="@Site.Collection" />
+        <input type="hidden" name="returnUrl" value="@ReturnUrl" />
+        <fieldset>
+            <legend>@T["Reading_Choose"]</legend>
+            @foreach (var stage in Overview.Stages)
+            {
+                var id = $"stage-{stage.Level.Value}";
+                <div class="choice">
+                    <input type="radio" name="level" id="@id" value="@stage.Level.Value" checked="@(stage.Level == Overview.Boundary)" />
+                    <label for="@id">@string.Format(CultureInfo.CurrentCulture, T["Reading_Stage"], Visitor.Number(stage.Level.Value + 1), Visitor.Text(stage.Label).Value)</label>
+                </div>
+            }
+        </fieldset>
+        <button type="submit" class="action">@T["Reading_Apply"]</button>
+    </form>
+    <p class="note" role="status">@(Overview.StoryContinues ? T["Reading_Continues"] : T["Reading_Complete"])</p>
+</section>
+
+@code {
+    /// <summary>Gets or sets the entry of the collection.</summary>
+    [Parameter, EditorRequired]
+    public CollectionOverview Overview { get; set; } = null!;
+
+    /// <summary>Gets or sets the address to come back to.</summary>
+    [Parameter, EditorRequired]
+    public string ReturnUrl { get; set; } = "/";
+}

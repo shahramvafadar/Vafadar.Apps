@@ -4,12 +4,16 @@
     "projects": [
       "src\\Apps\\Dastan\\Vafadar.Dastan.Core\\Vafadar.Dastan.Core.csproj",
       "src\\Apps\\Dastan\\Vafadar.Dastan.Data\\Vafadar.Dastan.Data.csproj",
+      "src\\Apps\\Dastan\\Vafadar.Dastan.Web\\Vafadar.Dastan.Web.csproj",
       "src\\Libraries\\Vafadar.Core\\Vafadar.Core.csproj",
       "src\\Libraries\\Vafadar.Temporal\\Vafadar.Temporal.csproj",
+      "src\\Libraries\\Vafadar.Web\\Vafadar.Web.csproj",
       "test\\Apps\\Dastan\\Vafadar.Dastan.Core.Tests\\Vafadar.Dastan.Core.Tests.csproj",
       "test\\Apps\\Dastan\\Vafadar.Dastan.Data.Tests\\Vafadar.Dastan.Data.Tests.csproj",
+      "test\\Apps\\Dastan\\Vafadar.Dastan.Web.Tests\\Vafadar.Dastan.Web.Tests.csproj",
       "test\\Libraries\\Vafadar.Core.Tests\\Vafadar.Core.Tests.csproj",
-      "test\\Libraries\\Vafadar.Temporal.Tests\\Vafadar.Temporal.Tests.csproj"
+      "test\\Libraries\\Vafadar.Temporal.Tests\\Vafadar.Temporal.Tests.csproj",
+      "test\\Libraries\\Vafadar.Web.Tests\\Vafadar.Web.Tests.csproj"
     ]
   }
 }

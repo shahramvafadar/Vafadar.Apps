@@ -210,6 +210,7 @@ public sealed class Projection
             entity,
             nodes,
             edges,
+            [.. nodes.Where(node => node.Id != focus && open.Contains(node.Id))],
             [.. nodes.Where(node => !open.Contains(node.Id) && _relationsOf[node.Id].Any(relation => !Shown(relation)))]);
     }
 

@@ -1,0 +1,623 @@
+/*
+  Dastan – the style sheet of the site. It builds on _content/Vafadar.Web/vafadar.css (reset, focus ring, helpers)
+  and defines the tokens that sheet expects. Values are provisional: the palette and the fonts are not the final
+  identity (ADR 0004). Only logical properties are used, so the same rules serve left-to-right and right-to-left.
+*/
+
+:root {
+  /* Colour – light. Indigo on warm paper, amber for what needs attention. */
+  --surface: #fbfaf7;
+  --surface-raised: #ffffff;
+  --text: #1c1b2e;
+  --text-muted: #56556b;
+  --border: #d9d6e3;
+  --accent: #3b3a8f;
+  --accent-text: #ffffff;
+  --focus: #b45309;
+  --mark: #92400e;
+
+  /* Type. A step is 1.2 times the one below; the page title grows with the window. */
+  --font-latin: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Roboto", "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-arabic: "Vazirmatn", "Segoe UI", "Noto Sans Arabic", "Geeza Pro", Tahoma, system-ui, sans-serif;
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.44rem;
+  --step-3: clamp(1.75rem, 1.4rem + 1.6vw, 2.4rem);
+
+  /* Space, in steps of a quarter of the base size. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  --radius: 0.5rem;
+  --measure: 44rem;
+}
+
+/* Colour – dark, for a visitor who chose it … */
+:root[data-theme="dark"] {
+  --surface: #14132a;
+  --surface-raised: #1f1e3d;
+  --text: #ecebf5;
+  --text-muted: #b6b4cc;
+  --border: #3a3960;
+  --accent: #b1b0ff;
+  --accent-text: #14132a;
+  --focus: #fbbf24;
+  --mark: #fcd34d;
+}
+
+/* … and for a visitor who made no choice and whose device is dark. Keep the two blocks the same. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #14132a;
+    --surface-raised: #1f1e3d;
+    --text: #ecebf5;
+    --text-muted: #b6b4cc;
+    --border: #3a3960;
+    --accent: #b1b0ff;
+    --accent-text: #14132a;
+    --focus: #fbbf24;
+    --mark: #fcd34d;
+  }
+}
+
+/* The font follows the language of the text, not of the page: an English name on a Persian page is set in Latin. */
+html {
+  font-family: var(--font-latin);
+  font-size: 100%;
+}
+
+:lang(fa),
+:lang(ar),
+:lang(ckb),
+:lang(ur) {
+  font-family: var(--font-arabic);
+  line-height: 1.9;
+}
+
+:lang(en),
+:lang(de) {
+  font-family: var(--font-latin);
+  line-height: 1.6;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-size: var(--step-0);
+}
+
+h1 {
+  font-size: var(--step-3);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--step-2);
+  line-height: 1.3;
+  margin-block: var(--space-8) var(--space-3);
+}
+
+h3 {
+  font-size: var(--step-1);
+  line-height: 1.35;
+}
+
+p + p {
+  margin-block-start: var(--space-3);
+}
+
+/* --- Frame of every page --- */
+
+.site-header,
+main,
+.site-footer {
+  inline-size: 100%;
+  max-inline-size: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding-block: var(--space-3);
+  border-block-end: 1px solid var(--border);
+}
+
+.wordmark {
+  font-family: var(--font-latin);
+  font-size: var(--step-1);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.site-nav {
+  flex: 1 1 auto;
+}
+
+.site-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  font-size: var(--step--1);
+}
+
+.languages {
+  display: flex;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.languages [aria-current] {
+  font-weight: 700;
+}
+
+.theme {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.theme button {
+  min-block-size: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.theme button + button {
+  border-inline-start: 1px solid var(--border);
+}
+
+.theme button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+main {
+  flex: 1 0 auto;
+  padding-block: var(--space-6) var(--space-12);
+}
+
+main:focus {
+  outline: none;
+}
+
+.site-footer {
+  padding-block: var(--space-4) var(--space-8);
+  border-block-start: 1px solid var(--border);
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+/* --- Parts --- */
+
+.hero .tagline,
+.lead {
+  font-size: var(--step-1);
+  margin-block: var(--space-2) var(--space-3);
+}
+
+.meta,
+.note {
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.page-header .meta {
+  margin-block-end: var(--space-1);
+}
+
+.card {
+  padding: var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.card > * + * {
+  margin-block-start: var(--space-2);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+/* A link that is the main thing to do next: at least 44 px high. */
+.action {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: minmax(6rem, max-content) 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin-block: var(--space-6);
+}
+
+.facts dt {
+  color: var(--text-muted);
+}
+
+@media (max-width: 30rem) {
+  .facts {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .facts dd {
+    margin-block-end: var(--space-3);
+  }
+}
+
+/* A relation as a sentence: first entity, what connects them, second entity. */
+.statements {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.statement {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.statement .relation {
+  color: var(--text-muted);
+}
+
+/* The arrow points from the first entity to the second in the direction of reading. */
+.statement .relation::after {
+  content: "→";
+  margin-inline-start: var(--space-2);
+}
+
+[dir="rtl"] .statement .relation::after {
+  content: "←";
+}
+
+.statement a {
+  font-weight: 600;
+}
+
+.steps {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.step {
+  padding-inline-start: var(--space-4);
+  border-inline-start: 3px solid var(--border);
+}
+
+.presence {
+  display: inline-block;
+  padding-inline: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: var(--step--1);
+  color: var(--mark);
+}
+
+/* --- Reading position --- */
+
+.reading {
+  margin-block-start: var(--space-12);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.reading h2 {
+  margin-block-start: 0;
+}
+
+.reading fieldset {
+  margin: var(--space-4) 0;
+  padding: 0;
+  border: 0;
+}
+
+.reading legend {
+  padding: 0;
+  font-weight: 600;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+}
+
+.choice input {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  accent-color: var(--accent);
+}
+
+.choice label {
+  flex: 1;
+  padding-block: var(--space-2);
+}
+
+/* English text on a page in another language: a box of its own, so that its lines read from the left. */
+.foreign {
+  display: inline-block;
+  text-align: start;
+}
+
+/* Links that stand alone are at least 44 px high, so that a finger finds them. */
+.wordmark,
+.site-nav a,
+.languages a,
+.languages span,
+.statement a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.statement {
+  padding-block: 0;
+}
+
+.choice label,
+.page-header .meta a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+/* An action that is offered next to the main one. */
+.action.secondary {
+  background: transparent;
+  color: var(--accent);
+  margin-block-start: var(--space-3);
+}
+
+/* --- The connections drawing (ADR 0005): lines of the SVG, boxes of HTML inside it --- */
+
+.graph {
+  display: block;
+  margin-block: var(--space-4);
+  font-size: 1rem;
+  overflow: visible;
+}
+
+.graph-line {
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
+}
+
+.graph-arrow {
+  fill: var(--text-muted);
+}
+
+.graph-node {
+  block-size: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.graph-focus {
+  border: 2px solid var(--accent);
+  font-weight: 700;
+}
+
+/* A row that points to an entity drawn elsewhere. */
+.graph-reference {
+  border-style: dashed;
+}
+
+.graph-relation {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.graph-entity {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+}
+
+.graph-name {
+  flex: 1 1 auto;
+  font-weight: 600;
+}
+
+.graph-toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: var(--step-1);
+  text-decoration: none;
+}
+
+/* A long word breaks instead of leaving its box; the note of a referring row stands on a line of its own. */
+.graph-node {
+  overflow-wrap: anywhere;
+}
+
+.graph-focus {
+  padding-inline: var(--space-2);
+}
+
+.graph-entity {
+  flex-wrap: wrap;
+}
+
+.graph-entity .note {
+  flex: 0 0 100%;
+}
+
+/* The name gives way and wraps; the control that opens a row stays on its line. */
+.graph-name {
+  flex: 1 1 0;
+  min-inline-size: 0;
+}
+
+/* Actions next to each other, wrapping on a narrow screen. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+}
+
+.actions .action.secondary {
+  margin-block-start: 0;
+}
+
+/* The line between partners in a family drawing. */
+.graph-partner {
+  stroke-dasharray: 6 4;
+}
+
+/* --- The story step by step --- */
+
+.step h2 {
+  margin-block: 0 var(--space-1);
+  font-size: var(--step-1);
+}
+
+.participants {
+  display: grid;
+  gap: var(--space-1);
+  margin: var(--space-3) 0 0;
+}
+
+.participants li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+}
+
+.participants a {
+  font-weight: 600;
+}
+
+.participants .role {
+  color: var(--text-muted);
+}
+
+/* The lanes: a table that scrolls sideways inside its own frame, so the page itself never does. */
+.lanes {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.lanes table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.lanes th,
+.lanes td {
+  padding: var(--space-2);
+  border-block-end: 1px solid var(--border);
+  text-align: center;
+}
+
+.lanes thead th {
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.lanes thead a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+}
+
+/* The names stay in sight while the steps scroll. */
+.lanes tbody th,
+.lanes thead th:first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  min-inline-size: 7rem;
+  background: var(--surface-raised);
+  text-align: start;
+  font-weight: 600;
+}
+
+.lanes tbody tr:last-child th,
+.lanes tbody tr:last-child td {
+  border-block-end: 0;
+}
+
+.mark {
+  font-size: var(--step-1);
+  line-height: 1;
+  color: var(--accent);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin: var(--space-2) 0 0;
+  font-size: var(--step--1);
+}
+
+/* The box the page is about is marked around its border, so that it has the size of every other box. */
+.graph-focus {
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* The texts for screen readers inside the cells are positioned; the frame has to be their container, otherwise
+   they lie outside it and make the whole page scroll sideways on a phone. */
+.lanes {
+  position: relative;
+}

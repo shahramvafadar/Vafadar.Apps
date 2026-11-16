@@ -6,7 +6,11 @@ Update it in the same pull request as any change that affects data, permissions 
 Detailed, code-verified profiles per app: [Zanance](../../src/Apps/Zanance/docs/06-privacy-matrix.md).
 
 Dastan is a public website without accounts and runs only locally in its first milestone. Its profile – cookies for
-language, theme and reading position, and server logs – is recorded here before anything is hosted.
+language, theme and reading position, and server logs – is recorded here before anything is hosted. As built on
+2026-11-16 the site sets four cookies, all HttpOnly and SameSite, none identifying a person: `vafadar.language` (the
+language of the last page opened), `vafadar.theme` (light or dark, only after a choice),
+`dastan.reading.<collection>` (the reading stage, only after a choice) and the framework's antiforgery cookie for
+its forms. It loads no script, no font and no other file from another site, has no analytics and no accounts.
 
 Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · – not applicable
 

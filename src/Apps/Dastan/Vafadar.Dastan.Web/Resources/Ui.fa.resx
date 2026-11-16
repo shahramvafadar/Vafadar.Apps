@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Site_Name" xml:space="preserve">
+    <value>Dastan</value>
+  </data>
+  <data name="Site_Tagline" xml:space="preserve">
+    <value>ببینید قصه‌ها چگونه به هم می‌پیوندند.</value>
+  </data>
+  <data name="Skip_ToContent" xml:space="preserve">
+    <value>پرش به محتوا</value>
+  </data>
+  <data name="Nav_Main" xml:space="preserve">
+    <value>اصلی</value>
+  </data>
+  <data name="Nav_Discover" xml:space="preserve">
+    <value>کاوش</value>
+  </data>
+  <data name="Language_Label" xml:space="preserve">
+    <value>زبان</value>
+  </data>
+  <data name="Theme_Label" xml:space="preserve">
+    <value>ظاهر</value>
+  </data>
+  <data name="Theme_Auto" xml:space="preserve">
+    <value>مانند دستگاه من</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>روشن</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>تیره</value>
+  </data>
+  <data name="Theme_Apply" xml:space="preserve">
+    <value>اعمال</value>
+  </data>
+  <data name="Reading_Title" xml:space="preserve">
+    <value>جایگاه خواندن</value>
+  </data>
+  <data name="Reading_Explanation" xml:space="preserve">
+    <value>Dastan فقط چیزهایی را نشان می‌دهد که به بخشی از قصه که به آن رسیده‌اید تعلق دارد. آنچه بعدتر می‌آید پنهان می‌ماند؛ در نام‌ها، پیوندها و تصویرها هم. هر زمان بخواهید می‌توانید جلوتر بروید یا برگردید.</value>
+  </data>
+  <data name="Reading_Choose" xml:space="preserve">
+    <value>تا این‌جا خوانده‌ام</value>
+  </data>
+  <data name="Reading_Apply" xml:space="preserve">
+    <value>ثبت جایگاه خواندن</value>
+  </data>
+  <data name="Reading_Current" xml:space="preserve">
+    <value>جایگاه شما: {0}</value>
+  </data>
+  <data name="Reading_Change" xml:space="preserve">
+    <value>تغییر</value>
+  </data>
+  <data name="Reading_Continues" xml:space="preserve">
+    <value>قصه پس از این نقطه ادامه دارد.</value>
+  </data>
+  <data name="Reading_Complete" xml:space="preserve">
+    <value>به پایان این مجموعه رسیده‌اید.</value>
+  </data>
+  <data name="Reading_Stage" xml:space="preserve">
+    <value>بخش {0}: {1}</value>
+  </data>
+  <data name="Discover_Lead" xml:space="preserve">
+    <value>از چیزی شروع کنید که برایتان جالب است. قصه‌اش را ببینید، پیوندهایش را دنبال کنید و ببینید بعد چه می‌آید.</value>
+  </data>
+  <data name="Discover_First" xml:space="preserve">
+    <value>نخستین قصه</value>
+  </data>
+  <data name="Discover_Open" xml:space="preserve">
+    <value>باز کردن قصه</value>
+  </data>
+  <data name="Discover_Nothing" xml:space="preserve">
+    <value>هنوز چیزی این‌جا منتشر نشده است.</value>
+  </data>
+  <data name="Demo_Notice" xml:space="preserve">
+    <value>نمایش محلی. این مجموعه یک نمونهٔ ویرایشی است و برای انتشار تأیید نشده است.</value>
+  </data>
+  <data name="Draft_Notice" xml:space="preserve">
+    <value>متن فارسی این مجموعه پیش‌نویس است و هنوز بازبینی نشده است.</value>
+  </data>
+  <data name="Foreign_Note" xml:space="preserve">
+    <value>به انگلیسی</value>
+  </data>
+  <data name="Collection_Work" xml:space="preserve">
+    <value>اثر</value>
+  </data>
+  <data name="Collection_Text" xml:space="preserve">
+    <value>متن مبنا</value>
+  </data>
+  <data name="Collection_Scope" xml:space="preserve">
+    <value>دامنهٔ این مجموعه</value>
+  </data>
+  <data name="Collection_SourceNotice" xml:space="preserve">
+    <value>این منبع بیرون از Dastan است و تمام قصه را بازگو می‌کند.</value>
+  </data>
+  <data name="Collection_Subjects" xml:space="preserve">
+    <value>از این‌ها شروع کنید</value>
+  </data>
+  <data name="Collection_Begins" xml:space="preserve">
+    <value>آغاز قصه</value>
+  </data>
+  <data name="Entity_Connections" xml:space="preserve">
+    <value>پیوندها</value>
+  </data>
+  <data name="Entity_NoConnections" xml:space="preserve">
+    <value>پیوندی برای نمایش نیست.</value>
+  </data>
+  <data name="Entity_Appearances" xml:space="preserve">
+    <value>در قصه</value>
+  </data>
+  <data name="Entity_Collection" xml:space="preserve">
+    <value>بخشی از مجموعهٔ {0}</value>
+  </data>
+  <data name="Step_Number" xml:space="preserve">
+    <value>گام {0}</value>
+  </data>
+  <data name="Type_work" xml:space="preserve">
+    <value>اثر</value>
+  </data>
+  <data name="Type_storyArc" xml:space="preserve">
+    <value>قصه</value>
+  </data>
+  <data name="Type_character" xml:space="preserve">
+    <value>شخصیت</value>
+  </data>
+  <data name="Type_animalCharacter" xml:space="preserve">
+    <value>شخصیت جانوری</value>
+  </data>
+  <data name="Type_narrativePlace" xml:space="preserve">
+    <value>مکان قصه</value>
+  </data>
+  <data name="Type_narrativeRegion" xml:space="preserve">
+    <value>سرزمین قصه</value>
+  </data>
+  <data name="Type_narrativeObject" xml:space="preserve">
+    <value>شیء قصه</value>
+  </data>
+  <data name="Presence_Acts" xml:space="preserve">
+    <value>حضور دارد</value>
+  </data>
+  <data name="Presence_Involved" xml:space="preserve">
+    <value>درگیر ماجراست</value>
+  </data>
+  <data name="Presence_Setting" xml:space="preserve">
+    <value>جای رویداد است</value>
+  </data>
+  <data name="Presence_Object" xml:space="preserve">
+    <value>شیئی در رویداد است</value>
+  </data>
+  <data name="Presence_MentionedOnly" xml:space="preserve">
+    <value>فقط از او نام برده می‌شود و حاضر نیست</value>
+  </data>
+  <data name="Presence_SubjectOfReport" xml:space="preserve">
+    <value>درباره‌اش خبر می‌رسد و حاضر نیست</value>
+  </data>
+  <data name="Presence_DeceasedSubject" xml:space="preserve">
+    <value>درگذشته است و برایش سوگواری می‌شود</value>
+  </data>
+  <data name="NotFound_Title" xml:space="preserve">
+    <value>این‌جا نیست</value>
+  </data>
+  <data name="NotFound_Text" xml:space="preserve">
+    <value>این صفحه وجود ندارد، یا در جایگاه خواندن شما بخشی از قصه نیست.</value>
+  </data>
+  <data name="NotFound_Home" xml:space="preserve">
+    <value>رفتن به آغاز</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>مشکلی پیش آمد</value>
+  </data>
+  <data name="Error_Text" xml:space="preserve">
+    <value>صفحه نمایش داده نشد. چیزی تغییر نکرد. لطفاً دوباره تلاش کنید.</value>
+  </data>
+  <data name="External_Note" xml:space="preserve">
+    <value>سایت دیگری را باز می‌کند</value>
+  </data>
+  <data name="Connections_Title" xml:space="preserve">
+    <value>پیوندهای {0}</value>
+  </data>
+  <data name="Connections_Lead" xml:space="preserve">
+    <value>نامی را انتخاب کنید تا در مرکز قرار بگیرد. با باز کردنِ یک نام، پیوندهای خودِ آن را هم می‌بینید.</value>
+  </data>
+  <data name="Connections_Graph" xml:space="preserve">
+    <value>پیوندهای {0} به شکل نمودار</value>
+  </data>
+  <data name="Connections_List" xml:space="preserve">
+    <value>همین پیوندها به شکل فهرست</value>
+  </data>
+  <data name="Graph_Expand" xml:space="preserve">
+    <value>نمایش پیوندهای {0}</value>
+  </data>
+  <data name="Graph_Collapse" xml:space="preserve">
+    <value>پنهان کردن پیوندهای {0}</value>
+  </data>
+  <data name="Graph_Reference" xml:space="preserve">
+    <value>پیش‌تر نشان داده شده</value>
+  </data>
+  <data name="Entity_ToGraph" xml:space="preserve">
+    <value>نمایش پیوندها به شکل نمودار</value>
+  </data>
+  <data name="Graph_ToEntity" xml:space="preserve">
+    <value>دربارهٔ {0}</value>
+  </data>
+  <data name="Family_Title" xml:space="preserve">
+    <value>خانوادهٔ {0}</value>
+  </data>
+  <data name="Family_Graph" xml:space="preserve">
+    <value>خانوادهٔ {0} به شکل نمودار</value>
+  </data>
+  <data name="Family_Lead" xml:space="preserve">
+    <value>پدر و مادر بالای فرزندان می‌آیند و همسران با خط‌چین به هم وصل‌اند. فقط آنچه قصه تا جایگاه خواندن شما گفته است نشان داده می‌شود.</value>
+  </data>
+  <data name="Family_List" xml:space="preserve">
+    <value>همین خانواده به شکل فهرست</value>
+  </data>
+  <data name="Family_None" xml:space="preserve">
+    <value>رابطهٔ خانوادگی برای نمایش نیست.</value>
+  </data>
+  <data name="Entity_ToFamily" xml:space="preserve">
+    <value>نمایش خانواده به شکل نمودار</value>
+  </data>
+  <data name="Story_Title" xml:space="preserve">
+    <value>قصه گام‌به‌گام</value>
+  </data>
+  <data name="Story_Frame" xml:space="preserve">
+    <value>گام‌ها به ترتیبی آمده‌اند که قصه بازگو می‌کند. این یک تقویم نیست: قصه تاریخی نمی‌دهد و یک گام می‌تواند لحظه‌ای یا سال‌ها باشد.</value>
+  </data>
+  <data name="Story_Participants" xml:space="preserve">
+    <value>چه کسانی و چه چیزهایی در آن هستند</value>
+  </data>
+  <data name="Story_Condensed" xml:space="preserve">
+    <value>این گام چند صحنه از متن را فشرده کرده است.</value>
+  </data>
+  <data name="Story_Lanes" xml:space="preserve">
+    <value>هر کس کجای قصه است</value>
+  </data>
+  <data name="Story_LanesLead" xml:space="preserve">
+    <value>هر نام یک ردیف و هر گام یک ستون دارد. خانهٔ خالی یعنی آن نام در آن گام نقشی ندارد. کسی که فقط از او نام برده می‌شود با نشانهٔ «نام‌برده» آمده است، نه «حاضر».</value>
+  </data>
+  <data name="Story_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Story_Legend" xml:space="preserve">
+    <value>معنای نشانه‌ها</value>
+  </data>
+  <data name="Story_None" xml:space="preserve">
+    <value>گامی از قصه برای نمایش نیست.</value>
+  </data>
+  <data name="Collection_ToStory" xml:space="preserve">
+    <value>خواندن گام‌به‌گام قصه</value>
+  </data>
+  <data name="Story_Back" xml:space="preserve">
+    <value>بازگشت به {0}</value>
+  </data>
+</root>

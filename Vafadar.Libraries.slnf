@@ -14,6 +14,7 @@
       "src\\Libraries\\Vafadar.Documents.Maui\\Vafadar.Documents.Maui.csproj",
       "src\\Libraries\\Vafadar.Localization\\Vafadar.Localization.csproj",
       "src\\Libraries\\Vafadar.Temporal\\Vafadar.Temporal.csproj",
+      "src\\Libraries\\Vafadar.Web\\Vafadar.Web.csproj",
       "src\\Libraries\\Vafadar.Maui\\Vafadar.Maui.csproj",
       "test\\Libraries\\Vafadar.Backup.GoogleDrive.Tests\\Vafadar.Backup.GoogleDrive.Tests.csproj",
       "test\\Libraries\\Vafadar.Backup.OneDrive.Tests\\Vafadar.Backup.OneDrive.Tests.csproj",
@@ -23,6 +24,7 @@
       "test\\Libraries\\Vafadar.Documents.Tests\\Vafadar.Documents.Tests.csproj",
       "test\\Libraries\\Vafadar.Localization.Tests\\Vafadar.Localization.Tests.csproj",
       "test\\Libraries\\Vafadar.Temporal.Tests\\Vafadar.Temporal.Tests.csproj",
+      "test\\Libraries\\Vafadar.Web.Tests\\Vafadar.Web.Tests.csproj",
       "test\\Shared\\Vafadar.Testing\\Vafadar.Testing.csproj"
     ]
   }

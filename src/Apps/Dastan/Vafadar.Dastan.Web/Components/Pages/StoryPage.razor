@@ -1,0 +1,137 @@
+@page "/{Collection}/story"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_story is { } story)
+{
+    var title = Visitor.Text(story.Story.Label).Value;
+    <PageTitle>@T["Story_Title"] – @title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], title)</a></p>
+        <h1>@T["Story_Title"]</h1>
+        @* The frame is named: an order of telling, not a calendar and not a duration. *@
+        <p class="lead">@T["Story_Frame"]</p>
+    </header>
+
+    @if (story.Steps.IsEmpty)
+    {
+        <p class="note">@T["Story_None"]</p>
+    }
+    else
+    {
+        <ol class="steps" role="list">
+            @foreach (var step in story.Steps)
+            {
+                <li class="step" id="@($"step-{step.Number}")">
+                    <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(step.Number))</p>
+                    <h2><Loc Text="step.Event.Label" /></h2>
+                    <p><Loc Text="step.Event.Summary" /></p>
+                    @if (step.Event.CondensesSeveralScenes)
+                    {
+                        <p class="note">@T["Story_Condensed"]</p>
+                    }
+                    <h3 class="visually-hidden">@T["Story_Participants"]</h3>
+                    <ul class="participants" role="list">
+                        @foreach (var association in step.Event.Associations)
+                        {
+                            <li>
+                                <a href="@($"{Site.Collection}/entity/{association.Entity}")"><Loc Text="Visitor.Projection!.Find(association.Entity)!.Label" /></a>
+                                <span class="role"><Loc Text="association.Role" /></span>
+                                <span class="presence">@T[$"Presence_{association.Presence}"]</span>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ol>
+
+        <p class="note" role="status">@(story.Continues ? T["Reading_Continues"] : T["Reading_Complete"]) <a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a></p>
+
+        @* The lanes show the same steps and the same associations as the list above (ADR 0002): a cell is what the
+           event states about the name, and somebody who is only mentioned has the mark for "mentioned". There are no
+           bars from a first to a last appearance: the story does not say that somebody is there in between. *@
+        <section aria-labelledby="lanes">
+            <h2 id="lanes">@T["Story_Lanes"]</h2>
+            <p class="note">@T["Story_LanesLead"]</p>
+            <div class="lanes" role="region" aria-labelledby="lanes" tabindex="0">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">@T["Story_Name"]</th>
+                            @foreach (var step in _lanes.Steps)
+                            {
+                                <th scope="col">
+                                    <a href="@($"{Site.Collection}/story#step-{step.Number}")" title="@Visitor.Text(step.Event.Label).Value">
+                                        <span class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], string.Empty)</span>@Visitor.Number(step.Number)
+                                    </a>
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lane in _lanes.Lanes)
+                        {
+                            <tr>
+                                <th scope="row"><a href="@($"{Site.Collection}/entity/{lane.Entity.Id}")"><Loc Text="lane.Entity.Label" /></a></th>
+                                @foreach (var cell in lane.Cells)
+                                {
+                                    <td>
+                                        @if (cell is not null)
+                                        {
+                                            <span class="mark" aria-hidden="true">@Mark(cell.Presence)</span>
+                                            <span class="visually-hidden">@T[$"Presence_{cell.Presence}"]</span>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <h3>@T["Story_Legend"]</h3>
+            <ul class="legend" role="list">
+                @foreach (var presence in _lanes.Lanes.SelectMany(lane => lane.Cells).OfType<EventAssociation>().Select(cell => cell.Presence).Distinct().Order())
+                {
+                    <li><span class="mark" aria-hidden="true">@Mark(presence)</span> @T[$"Presence_{presence}"]</li>
+                }
+            </ul>
+        </section>
+    }
+}
+
+@code {
+    private StoryView? _story;
+    private LanesView _lanes = null!;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _story = Collection == Site.Collection ? Visitor.Projection?.Story() : null;
+        if (_story is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _lanes = Visitor.Projection!.Lanes();
+    }
+
+    // Full marks for who or what is there, hollow ones for who is only spoken of.
+    private static string Mark(Presence presence) => presence switch
+    {
+        Presence.Acts => "●",
+        Presence.Involved => "◐",
+        Presence.Setting => "■",
+        Presence.Object => "◆",
+        Presence.MentionedOnly => "○",
+        Presence.SubjectOfReport => "◌",
+        Presence.DeceasedSubject => "▽",
+        _ => "·",
+    };
+}

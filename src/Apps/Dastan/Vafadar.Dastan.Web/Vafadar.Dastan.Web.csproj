@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>The Dastan website: pages rendered on the server, texts in English and Persian, and the only place that turns a visitor's request into a projection of the collection.</Description>
+    <!-- A page answers "not found" by setting the status, not by throwing (static server rendering). -->
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vafadar.Dastan.Core\Vafadar.Dastan.Core.csproj" />
+    <ProjectReference Include="..\Vafadar.Dastan.Data\Vafadar.Dastan.Data.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Web\Vafadar.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      The collection is input of the app, not a web asset: it is copied next to the program (content/), never under
+      wwwroot. Only the app reads it; a visitor gets what the projection allows (ADR 0002).
+    -->
+    <Content Include="..\content\**\*" LinkBase="content" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="Never" />
+    <InternalsVisibleTo Include="Vafadar.Dastan.Web.Tests" />
+  </ItemGroup>
+
+</Project>

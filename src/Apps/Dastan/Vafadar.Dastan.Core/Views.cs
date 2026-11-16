@@ -78,11 +78,13 @@ public sealed record Edge(Relation Relation, Entity From, Entity To);
 /// <param name="Focus">The entity in the middle.</param>
 /// <param name="Nodes">The focus first, then every entity an edge leads to, in the order of the collection.</param>
 /// <param name="Edges">The relations of the focus and of the expanded entities.</param>
+/// <param name="Expanded">The nodes other than the focus whose relations are shown.</param>
 /// <param name="Expandable">The nodes that have relations which are not among the edges yet.</param>
 public sealed record ConnectionsView(
     Entity Focus,
     ImmutableArray<Entity> Nodes,
     ImmutableArray<Edge> Edges,
+    ImmutableArray<Entity> Expanded,
     ImmutableArray<Entity> Expandable);
 
 /// <summary>A member of a family view.</summary>

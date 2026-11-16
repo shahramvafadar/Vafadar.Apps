@@ -1,0 +1,105 @@
+@* The neighbourhood of an entity as a drawing: SVG written by the server (ADR 0005). Connectors are lines in
+   percent and em, so the drawing follows the width of the page and the size of the text; the nodes are HTML inside
+   the SVG, so names wrap, links are real links and every script is set by the page's own styles. Nothing here needs
+   a script: choosing a name, opening and closing a row are links. *@
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject IStringLocalizer<Ui> T
+
+<svg class="graph" width="100%" height="@Em(Drawing.Height)" role="group"
+     aria-label="@string.Format(CultureInfo.CurrentCulture, T["Connections_Graph"], Name(Drawing.Focus))">
+    <defs>
+        <marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="graph-arrow" d="M0 0L10 5L0 10z" />
+        </marker>
+    </defs>
+
+    @* The lines first, the boxes over them. *@
+    @if (!Drawing.Rows.IsEmpty)
+    {
+        <line class="graph-line" x1="@X(FocusWidth)" x2="@X(Trunk(1))" y1="@Em(Drawing.FocusTop + ConnectionsDrawing.Anchor)" y2="@Em(Drawing.FocusTop + ConnectionsDrawing.Anchor)" />
+    }
+    @foreach (var trunk in Drawing.Trunks)
+    {
+        <line class="graph-line" x1="@X(Trunk(trunk.Depth))" x2="@X(Trunk(trunk.Depth))" y1="@Em(trunk.Top)" y2="@Em(trunk.Bottom)" />
+    }
+    @foreach (var row in Drawing.Rows)
+    {
+        var y = Em(row.Top + ConnectionsDrawing.Anchor);
+        <line class="graph-line" x1="@X(Trunk(row.Depth))" x2="@X(Box(row.Depth) - 0.8)" y1="@y" y2="@y"
+              marker-start="@(row.TowardParent ? "url(#graph-arrow)" : null)" marker-end="@(row.TowardRow ? "url(#graph-arrow)" : null)" />
+    }
+
+    <foreignObject x="@X(0, FocusWidth)" y="@Em(Drawing.FocusTop)" width="@Percent(FocusWidth)" height="@Em(Drawing.FocusHeight)">
+        <div class="graph-node graph-focus">
+            <a class="graph-name" href="@($"{Site.Collection}/entity/{Drawing.Focus.Id}")"
+               title="@string.Format(CultureInfo.CurrentCulture, T["Graph_ToEntity"], Name(Drawing.Focus))"><Loc Text="Drawing.Focus.Label" /></a>
+        </div>
+    </foreignObject>
+
+    @foreach (var row in Drawing.Rows)
+    {
+        var width = 100 - Box(row.Depth);
+        <foreignObject x="@X(Box(row.Depth), width)" y="@Em(row.Top)" width="@Percent(width)" height="@Em(row.Height)">
+            <div class="graph-node @(row.IsReference ? "graph-reference" : null)">
+                @foreach (var relation in row.Relations)
+                {
+                    <span class="graph-relation"><Loc Text="relation.Label" /></span>
+                }
+                <span class="graph-entity">
+                    <a class="graph-name" href="@Address(row.Entity.Id, [])"><Loc Text="row.Entity.Label" /></a>
+                    @if (row.IsReference)
+                    {
+                        <small class="note">(@T["Graph_Reference"])</small>
+                    }
+                    else if (row.IsExpanded)
+                    {
+                        <a class="graph-toggle" href="@Address(Drawing.Focus.Id, Open.Where(id => id != row.Entity.Id))" aria-expanded="true"
+                           aria-label="@string.Format(CultureInfo.CurrentCulture, T["Graph_Collapse"], Name(row.Entity))">−</a>
+                    }
+                    else if (row.CanExpand)
+                    {
+                        <a class="graph-toggle" href="@Address(Drawing.Focus.Id, Open.Append(row.Entity.Id))" aria-expanded="false"
+                           aria-label="@string.Format(CultureInfo.CurrentCulture, T["Graph_Expand"], Name(row.Entity))">+</a>
+                    }
+                </span>
+            </div>
+        </foreignObject>
+    }
+</svg>
+
+@code {
+    private const double FocusWidth = ConnectionsDrawing.FocusWidth;
+
+    /// <summary>Gets or sets the drawing.</summary>
+    [Parameter, EditorRequired]
+    public ConnectionsDrawing Drawing { get; set; } = null!;
+
+    /// <summary>Gets or sets the rows that are open, as the address names them.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<EntityId> Open { get; set; } = [];
+
+    private bool RightToLeft => Visitor.Language.IsRightToLeft;
+
+    private static double Trunk(int depth) => ConnectionsDrawing.TrunkAt(depth);
+
+    private static double Box(int depth) => ConnectionsDrawing.BoxAt(depth);
+
+    // Numbers in markup are written the same in every language of the page.
+    private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+
+    private static string Percent(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "%";
+
+    // A place across the drawing, counted from the side where reading starts.
+    private string X(double position) => Percent(RightToLeft ? 100 - position : position);
+
+    private string X(double start, double width) => Percent(RightToLeft ? 100 - start - width : start);
+
+    private string Name(Entity entity) => Visitor.Text(entity.Label).Value;
+
+    private string Address(EntityId focus, IEnumerable<EntityId> open)
+    {
+        var rows = string.Join(',', open.Select(id => id.Value).Distinct());
+        return $"{Site.Collection}/entity/{focus}/connections{(rows.Length > 0 ? $"?open={rows}" : null)}";
+    }
+}

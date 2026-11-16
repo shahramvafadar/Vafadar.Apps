@@ -1,0 +1,26 @@
+@* A text the editors keep in English only (the name of the edition, the scope of the collection). On a page in
+   another language it is marked as English and a short note says so. With an address it is a link to another site. *@
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
+@if (Href is null)
+{
+    <span class="foreign" lang="en" dir="ltr">@Text</span>
+}
+else
+{
+    <a class="foreign" lang="en" dir="ltr" href="@Href" rel="external noopener">@Text</a>
+}
+@if (Visitor.Language.Tag != "en")
+{
+    <small class="note">(@T["Foreign_Note"])</small>
+}
+
+@code {
+    /// <summary>Gets or sets the English text.</summary>
+    [Parameter, EditorRequired]
+    public string Text { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the address the text links to, if it is a link.</summary>
+    [Parameter]
+    public Uri? Href { get; set; }
+}
