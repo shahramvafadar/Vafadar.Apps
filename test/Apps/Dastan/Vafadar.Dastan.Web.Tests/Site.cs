@@ -73,6 +73,9 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
 {
     private readonly Dictionary<string, string> _paths = new(StringComparer.Ordinal);
 
+    // A visitor may ask for several pages at the same time; their cookies are kept and sent one request at a time.
+    private readonly Lock _jar = new();
+
     /// <summary>Gets the cookies of this visitor.</summary>
     public Dictionary<string, string> Cookies { get; } = new(StringComparer.Ordinal);
 
@@ -128,7 +131,12 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
 
         // Like a browser, the visitor sends a cookie only to the part of the site the cookie was set for.
         var address = request.RequestUri!.OriginalString;
-        var sent = Cookies.Where(cookie => address.StartsWith(_paths[cookie.Key], StringComparison.Ordinal)).ToList();
+        List<KeyValuePair<string, string>> sent;
+        lock (_jar)
+        {
+            sent = [.. Cookies.Where(cookie => address.StartsWith(_paths[cookie.Key], StringComparison.Ordinal))];
+        }
+
         if (sent.Count > 0)
         {
             request.Headers.TryAddWithoutValidation("Cookie", string.Join("; ", sent.Select(cookie => $"{cookie.Key}={cookie.Value}")));
@@ -137,17 +145,20 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
         var response = await client.SendAsync(request, TestContext.Current.CancellationToken);
         if (response.Headers.TryGetValues("Set-Cookie", out var cookies))
         {
-            foreach (var cookie in cookies)
+            lock (_jar)
             {
-                var pair = cookie.Split(';')[0].Split('=', 2);
-                if (pair[1].Length == 0 || cookie.Contains("expires=Thu, 01 Jan 1970", StringComparison.OrdinalIgnoreCase))
+                foreach (var cookie in cookies)
                 {
-                    Cookies.Remove(pair[0]);
-                }
-                else
-                {
-                    Cookies[pair[0]] = pair[1];
-                    _paths[pair[0]] = Regex.Match(cookie, "path=([^;]+)", RegexOptions.IgnoreCase) is { Success: true } path ? path.Groups[1].Value : "/";
+                    var pair = cookie.Split(';')[0].Split('=', 2);
+                    if (pair[1].Length == 0 || cookie.Contains("expires=Thu, 01 Jan 1970", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Cookies.Remove(pair[0]);
+                    }
+                    else
+                    {
+                        _paths[pair[0]] = Regex.Match(cookie, "path=([^;]+)", RegexOptions.IgnoreCase) is { Success: true } path ? path.Groups[1].Value : "/";
+                        Cookies[pair[0]] = pair[1];
+                    }
                 }
             }
         }

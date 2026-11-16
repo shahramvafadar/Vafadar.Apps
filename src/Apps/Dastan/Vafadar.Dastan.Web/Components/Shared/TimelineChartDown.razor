@@ -1,0 +1,139 @@
+@* The same timeline down the page (ADR 0008): time runs from top to bottom, every lane is a column, and the single
+   events stand in a column of their own beside them. The page scrolls; the names of the lanes stay at its top.
+   Each column is an SVG of its own with the same height, so that a line at one time meets the line beside it. *@
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
+
+<div class="tl tl-down @Class" dir="ltr">
+    <div class="tl-head" aria-hidden="true">
+        <span class="tl-head-axis"></span>
+        @foreach (var lane in Drawing.Lanes)
+        {
+            <svg class="tl-head-lane" width="@Em(LaneWidth(lane))" height="@Em(HeadHeight)">
+                <foreignObject x="0" y="0" width="100%" height="100%">
+                    <div class="tl-lane-name @Colour(lane)" dir="@Visitor.Language.Direction"><bdi>@lane.Lane.Label</bdi></div>
+                </foreignObject>
+            </svg>
+        }
+        <span class="tl-head-events" dir="@Visitor.Language.Direction">@T["Chart_Events"]</span>
+    </div>
+    <div class="tl-body" role="group" aria-label="@Label">
+        <svg class="tl-axis" width="@Em(AxisWidth)" height="@Em(Height)">
+            @foreach (var tick in Drawing.Ticks)
+            {
+                <g>
+                    <line class="tl-grid @(tick.IsEraStart ? "tl-era" : null)" x1="@Em(AxisWidth - 0.5)" y1="@Em(Pad + tick.At)" x2="@Em(AxisWidth)" y2="@Em(Pad + tick.At)" />
+                    @* The place is measured in the font of the chart; only the letters are smaller, so the size is on the span. *@
+                    <text x="@Em(AxisWidth - 0.7)" y="@Em(Pad + tick.At + 0.3)" text-anchor="@(Visitor.Language.IsRightToLeft ? "start" : "end")" direction="@Visitor.Language.Direction"><tspan class="tl-tick">@TimeText.Year(tick.Era, tick.Year, Visitor, T)</tspan></text>
+                </g>
+            }
+        </svg>
+        @foreach (var lane in Drawing.Lanes)
+        {
+            var index = Drawing.Lanes.IndexOf(lane);
+            <svg class="tl-lane" width="@Em(LaneWidth(lane))" height="@Em(Height)">
+                <rect class="tl-lane-bg @Colour(lane)" x="0" y="0" width="100%" height="100%" />
+                @foreach (var tick in Drawing.Ticks)
+                {
+                    <line class="tl-grid @(tick.IsEraStart ? "tl-era" : null)" x1="0" y1="@Em(Pad + tick.At)" x2="100%" y2="@Em(Pad + tick.At)" />
+                }
+
+                @foreach (var bar in Drawing.Bands.Where(bar => bar.Lane == index))
+                {
+                    var words = Texts(bar.Band.Key);
+                    <foreignObject x="@Em(LanePad + ((bar.Row - lane.FirstRow) * RowWidth) + 0.1)" y="@Em(Pad + bar.Start + 0.05)" width="@Em(RowWidth - 0.2)" height="@Em(Math.Max(0.1, bar.End - bar.Start - 0.1))">
+                        @if (bar.Text == BandText.Nothing)
+                        {
+                            <span class="tl-bar @Shape(bar) @Colour(lane)" title="@words.Title"></span>
+                        }
+                        else
+                        {
+                            <a class="tl-bar @Shape(bar) @Colour(lane)" href="@($"{Here}#item-{bar.Band.Key}")" title="@words.Title">
+                                @if (bar.Text == BandText.NameAndYears && words.Start is not null)
+                                {
+                                    <bdi class="tl-year">@words.Start</bdi>
+                                }
+                                <bdi class="tl-name">@bar.Band.Label</bdi>
+                                @if (bar.Text == BandText.NameAndYears && words.End is not null)
+                                {
+                                    <bdi class="tl-year">@words.End</bdi>
+                                }
+                            </a>
+                        }
+                    </foreignObject>
+                }
+
+                @* The line of an event leaves its lane at its edge and crosses the lanes between it and the events. *@
+                @foreach (var mark in Drawing.Marks.Where(mark => mark.Lane <= index))
+                {
+                    if (mark.Lane == index)
+                    {
+                        <line class="tl-leader @Colour(mark.Lane)" x1="@Em(LaneWidth(lane) - 0.35)" y1="@Em(Pad + mark.At)" x2="100%" y2="@Em(Pad + mark.At)" />
+                        <circle class="tl-dot @Colour(mark.Lane)" cx="@Em(LaneWidth(lane) - 0.35)" cy="@Em(Pad + mark.At)" r="0.3em" />
+                    }
+                    else
+                    {
+                        <line class="tl-leader @Colour(mark.Lane)" x1="0" y1="@Em(Pad + mark.At)" x2="100%" y2="@Em(Pad + mark.At)" />
+                    }
+                }
+            </svg>
+        }
+        <svg class="tl-events" height="@Em(Height)">
+            @foreach (var mark in Drawing.Marks)
+            {
+                <line class="tl-leader @Colour(mark.Lane)" x1="0" y1="@Em(Pad + mark.At)" x2="6%" y2="@Em(Pad + mark.Start + 0.9)" />
+                <foreignObject x="0" y="@Em(Pad + mark.Start)" width="100%" height="@Em(mark.Length)">
+                    <a class="tl-callout @Colour(mark.Lane)" href="@($"{Here}#item-{mark.Mark.Key}")" title="@($"{Drawing.Lanes[mark.Lane].Lane.Label}: {mark.Mark.Label}")" dir="@Visitor.Language.Direction">@mark.Mark.Label</a>
+                </foreignObject>
+            }
+        </svg>
+    </div>
+</div>
+
+@code {
+    // Measures of the drawing in em. The layout gives places along the time; these are the places across it.
+    private const double Pad = 0.9;
+    private const double AxisWidth = 4.2;
+    private const double RowWidth = 1.9;
+    private const double LanePad = 0.25;
+    private const double HeadHeight = 2.4;
+
+    /// <summary>Gets or sets the timeline, laid out with callouts that move along the time.</summary>
+    [Parameter, EditorRequired]
+    public TimelineDrawing Drawing { get; set; } = null!;
+
+    /// <summary>Gets or sets the words of a bar, by the key of its period.</summary>
+    [Parameter, EditorRequired]
+    public Func<string, BarText> Texts { get; set; } = null!;
+
+    /// <summary>Gets or sets the name of the chart for screen readers.</summary>
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the address of the page with its state, for the links to the rows of its table.</summary>
+    [Parameter, EditorRequired]
+    public string Here { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets a class of the page, which shows the chart on some screens only.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    // A callout that was moved along the time may end below the last year.
+    private double Height => Math.Max(Drawing.Length, Drawing.Marks.Select(mark => mark.Start + mark.Length).DefaultIfEmpty(0).Max()) + (2 * Pad);
+
+    // Numbers in markup are written the same in every language of the page.
+    private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+
+    private static double LaneWidth(PlacedLane lane) => (lane.Rows * RowWidth) + (2 * LanePad);
+
+    private string Colour(PlacedLane lane) => Colour(Drawing.Lanes.IndexOf(lane));
+
+    private static string Colour(int lane) => "lane-" + ((lane % 6) + 1).ToString(CultureInfo.InvariantCulture);
+
+    // An end that is stated as "about" fades; an end that lies outside the time shown is cut to a point.
+    private static string Shape(PlacedBand bar) => string.Join(' ', new[]
+    {
+        bar.BeginsBefore ? "tl-cut-start" : bar.Band.StartIsApproximate ? "tl-soft-start" : null,
+        bar.EndsAfter ? "tl-cut-end" : bar.Band.EndIsApproximate ? "tl-soft-end" : null,
+    }.OfType<string>());
+}

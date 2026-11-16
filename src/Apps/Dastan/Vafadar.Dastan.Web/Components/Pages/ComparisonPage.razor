@@ -1,0 +1,256 @@
+@page "/compare/{Id}"
+@using Vafadar.Temporal
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_comparison is { } comparison)
+{
+    var title = Visitor.Text(comparison.Title).Value;
+    var label = string.Format(CultureInfo.CurrentCulture, T["Chart_Region"], title);
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta">@T["Compare_Kind"]</p>
+        <h1><Loc Text="comparison.Title" /></h1>
+        <p><Loc Text="comparison.Summary" /></p>
+    </header>
+
+    @if (!comparison.Publication.PublicReleaseApproved)
+    {
+        <p class="note">@T["Compare_Draft"]</p>
+    }
+
+    @* How the chart is looked at lives in the address: every choice is a link, and Back undoes it (ADR 0008). *@
+    <nav class="chart-tools" aria-label="@T["Chart_Tools"]">
+        <p class="chart-tool">
+            <span class="chart-tool-name">@T["Chart_View"]</span>
+            @Choice(_state with { Direction = ChartDirection.Fit }, T["Chart_View_Fit"])
+            @Choice(_state with { Direction = ChartDirection.Across }, T["Chart_View_Across"])
+            @Choice(_state with { Direction = ChartDirection.Down }, T["Chart_View_Down"])
+        </p>
+        <p class="chart-tool">
+            <span class="chart-tool-name">@T["Chart_Zoom"]</span>
+            @Step(_state.Scale > 0 ? _state with { Scale = _state.Scale - 1 } : null, T["Chart_ZoomOut"])
+            @Step(_state.Scale < ChartState.Scales.Length - 1 ? _state with { Scale = _state.Scale + 1 } : null, T["Chart_ZoomIn"])
+        </p>
+        <p class="chart-tool">
+            <span class="chart-tool-name">@T["Chart_Stretch"]</span>
+            @Step(Moved(-1), T["Chart_Earlier"])
+            @Step(Moved(1), T["Chart_Later"])
+            @Choice(_state with { From = null, To = null }, T["Chart_Own"])
+            @if (Everything() is { } everything)
+            {
+                @Choice(everything, T["Chart_Everything"])
+            }
+        </p>
+    </nav>
+
+    <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Chart_Shown"], YearAt(_from), YearAt(_to - 1))</p>
+
+    @if (_across is not null)
+    {
+        <TimelineChart Drawing="_across" Texts="Words" Label="@label" Here="@_here" Class="@(_down is null ? null : "tl-wide-only")" />
+    }
+
+    @if (_down is not null)
+    {
+        <TimelineChartDown Drawing="_down" Texts="Words" Label="@label" Here="@_here" Class="@(_across is null ? null : "tl-narrow-only")" />
+    }
+
+    <p class="note">@T["Chart_Legend"]</p>
+
+    @if (!_chart.Unplaced.IsEmpty)
+    {
+        <p class="note">
+            @T["Chart_Unplaced"]
+            @foreach (var item in _chart.Unplaced)
+            {
+                <a class="chart-unplaced" href="@($"{_here}#item-{item.Key}")"><Loc Text="item.Label" /></a>
+            }
+        </p>
+    }
+
+    @* The table says what the chart says, with what a bar has no room for: the same lanes, read from the same model. *@
+    <section aria-labelledby="as-table">
+        <h2 id="as-table">@T["Chart_Table"]</h2>
+        @foreach (var lane in comparison.Lanes)
+        {
+            <table class="chart-table">
+                <caption><Loc Text="lane.Label" /></caption>
+                <thead>
+                    <tr>
+                        <th scope="col">@T["Chart_Col_What"]</th>
+                        <th scope="col">@T["Chart_Col_When"]</th>
+                        <th scope="col">@T["Chart_Col_State"]</th>
+                    </tr>
+                </thead>
+                @if (!lane.Periods.IsEmpty)
+                {
+                    <tbody>
+                        <tr><th class="chart-group" colspan="3" scope="rowgroup">@T["Chart_Periods"]</th></tr>
+                        @foreach (var period in lane.Periods)
+                        {
+                            <tr id="@($"item-{period.Key}")">
+                                @Row(period.Label, period.Summary, period.Time, period.Review, period.Sources)
+                            </tr>
+                        }
+                    </tbody>
+                }
+                @if (!lane.Events.IsEmpty)
+                {
+                    <tbody>
+                        <tr><th class="chart-group" colspan="3" scope="rowgroup">@T["Chart_Events"]</th></tr>
+                        @foreach (var single in lane.Events)
+                        {
+                            <tr id="@($"item-{single.Key}")">
+                                @Row(single.Label, single.Summary, single.Time, single.Review, single.Sources)
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+        }
+    </section>
+}
+
+@code {
+    private Comparison? _comparison;
+    private ChartState _state = new();
+    private ComparisonChart _chart = null!;
+    private TimelineDrawing? _across;
+    private TimelineDrawing? _down;
+    private Dictionary<string, ComparisonPeriod> _periods = [];
+    private decimal _from;
+    private decimal _to;
+    private string _here = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the comparison in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the direction of the chart in the address.</summary>
+    [SupplyParameterFromQuery(Name = "view")]
+    public string? View { get; set; }
+
+    /// <summary>Gets or sets the scale of the chart in the address.</summary>
+    [SupplyParameterFromQuery(Name = "scale")]
+    public string? Scale { get; set; }
+
+    /// <summary>Gets or sets the first year shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "from")]
+    public string? From { get; set; }
+
+    /// <summary>Gets or sets the last year shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "to")]
+    public string? To { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _comparison = Site.Comparison(Id);
+        if (_comparison is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _state = ChartState.Read(View, Scale, From, To);
+        _here = $"compare/{_comparison.Id}{_state.Query()}";
+        _periods = _comparison.Lanes.SelectMany(lane => lane.Periods).ToDictionary(period => period.Key, StringComparer.Ordinal);
+        _chart = ComparisonCharts.Of(_comparison, text => Visitor.Text(text).Value, Callout);
+
+        // The stretch the visitor chose, or the one the comparison is about. A year is shown to its end.
+        _from = _state.From is { } first ? ChartState.Place(first) : _chart.From;
+        _to = _state.To is { } last ? ChartState.Place(last) + 1 : _chart.To;
+
+        // Across the page a callout is as long as its words and stands on a level; down the page its words run
+        // across the time, so every callout takes the same room and moves along the time instead.
+        var frame = new TimelineFrame { From = _from, To = _to, UnitsPerYear = _state.UnitsPerYear };
+        _across = _state.Direction == ChartDirection.Down ? null : TimelineLayout.Of(_chart.Lanes, frame);
+        _down = _state.Direction == ChartDirection.Across ? null : TimelineLayout.Of(_chart.Lanes, frame with { Stacking = MarkStacking.Push, MarkLength = 6.6 });
+    }
+
+    // The words of a callout: the year of the event, when one year is stated for it, and what happened.
+    private string Callout(ComparisonEvent single)
+    {
+        var name = Visitor.Text(single.Label).Value;
+        return single.Time is Occurrence { At: CalendarPosition at }
+            ? string.Format(CultureInfo.CurrentCulture, T["Chart_Callout"], TimeText.Year(at.Era, at.Year, Visitor, T, at.IsApproximate), name)
+            : name;
+    }
+
+    // The words of a bar. A year is written on it only when one year is stated; "between two years" is in the table.
+    private BarText Words(string key)
+    {
+        var period = _periods[key];
+        return new BarText(
+            period.Time.Start is { State: PeriodStartState.Known, Earliest: CalendarPosition start } ? TimeText.Year(start.Era, start.Year, Visitor, T, start.IsApproximate) : null,
+            period.Time.End is { State: PeriodEndState.Known, Earliest: CalendarPosition end } ? TimeText.Year(end.Era, end.Year, Visitor, T, end.IsApproximate) : null,
+            string.Format(CultureInfo.CurrentCulture, T["Chart_BarTitle"], Visitor.Text(period.Label).Value, TimeText.Of(period.Time, Visitor, T)));
+    }
+
+    private string YearAt(decimal place)
+    {
+        var (era, year) = YearAxis.YearAt(place);
+        return TimeText.Year(era, year, Visitor, T);
+    }
+
+    private string Address(ChartState state) => $"compare/{_comparison!.Id}{state.Query()}";
+
+    // The stretch shown, moved by half its length; nothing when it would leave what an address can name.
+    private ChartState? Moved(int direction)
+    {
+        var shift = Math.Max(1, Math.Floor((_to - _from) / 2)) * direction;
+        var moved = _state with { From = ChartState.YearOf(_from + shift), To = ChartState.YearOf(_to - 1 + shift) };
+        return ChartState.Place(moved.From!.Value) == _from + shift && ChartState.Place(moved.To!.Value) == _to - 1 + shift ? moved : null;
+    }
+
+    // The stretch from the first beginning to the last end of what the comparison holds, when that is more than
+    // the stretch it is about.
+    private ChartState? Everything()
+    {
+        var places = _chart.Lanes.SelectMany(lane => lane.Bands.SelectMany(band => new[] { band.From, band.To }).Concat(lane.Marks.Select(mark => mark.At))).ToList();
+        return places.Count > 0 && (places.Min() < _chart.From || places.Max() > _chart.To)
+            ? _state with { From = ChartState.YearOf(places.Min()), To = ChartState.YearOf(places.Max()) }
+            : null;
+    }
+
+    // A choice of several: the one that is on says so and leads nowhere else.
+    private RenderFragment Choice(ChartState state, string name) => state == _state
+        ? @<a class="choice" href="@Address(state)" aria-current="true">@name</a>
+        : @<a class="choice" href="@Address(state)">@name</a>;
+
+    // A step that may have reached its end.
+    private RenderFragment Step(ChartState? state, string name) => state is null
+        ? @<span class="choice" aria-disabled="true">@name</span>
+        : @<a class="choice" href="@Address(state)">@name</a>;
+
+    private RenderFragment Row(LocalizedText label, LocalizedText? summary, TemporalExpression time, ReviewStatus review, System.Collections.Immutable.ImmutableArray<SourceId> sources) =>
+        @<text>
+            <th scope="row">
+                <Loc Text="label" />
+                @if (summary is not null)
+                {
+                    <span class="chart-summary"><Loc Text="summary" /></span>
+                }
+            </th>
+            <td>@TimeText.Of(time, Visitor, T)</td>
+            <td>
+                @T[$"Review_{review}"]
+                <span class="chart-summary">
+                    @if (sources.IsDefaultOrEmpty)
+                    {
+                        @T["Chart_NoSource"]
+                    }
+                    else
+                    {
+                        foreach (var source in _comparison!.Sources.Where(source => sources.Contains(source.Id)))
+                        {
+                            <a href="@source.Url" rel="noopener noreferrer">@source.Title</a>
+                        }
+                    }
+                </span>
+            </td>
+        </text>;
+}

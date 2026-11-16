@@ -19,10 +19,52 @@ public static class TimeText
         ArgumentNullException.ThrowIfNull(visitor);
         ArgumentNullException.ThrowIfNull(text);
 
-        // Media carry the day or the year they were made. Other shapes of time are not written by a page yet;
-        // saying that the time is not stated here is true, guessing a wording for them would not be.
-        return time is Occurrence { At: CalendarPosition position } ? Of(position, visitor, text) : text["Date_NotStated"];
+        // A day or a year, a time that is only known to lie between two, and something that lasted. Other shapes
+        // of time are not written by a page yet; saying that the time is not stated here is true, guessing a
+        // wording for them would not be.
+        return time switch
+        {
+            Occurrence { At: CalendarPosition position } => Of(position, visitor, text),
+            OccurrenceWindow { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(earliest, latest, visitor, text),
+            Period period when Start(period, visitor, text) is { } start && End(period, visitor, text) is { } end =>
+                string.Format(CultureInfo.CurrentCulture, text["Date_Range"], start, end),
+            _ => text["Date_NotStated"],
+        };
     }
+
+    /// <summary>
+    /// Returns a year as a chart writes it on its axis and its bars: the number and the short name of its era.
+    /// The era is named here too – a bare number on an axis that crosses the era would be read as the wrong year.
+    /// </summary>
+    public static string Year(Era era, int year, Visitor visitor, IStringLocalizer<Ui> text, bool approximate = false)
+    {
+        ArgumentNullException.ThrowIfNull(visitor);
+        ArgumentNullException.ThrowIfNull(text);
+        var written = string.Format(CultureInfo.CurrentCulture, text["Year_Short"], visitor.Number(year), text[$"Era_Short_{era}"]);
+        return approximate ? string.Format(CultureInfo.CurrentCulture, text["Year_About"], written) : written;
+    }
+
+    private static string? Start(Period period, Visitor visitor, IStringLocalizer<Ui> text) => period.Start switch
+    {
+        { State: PeriodStartState.Unknown } => text["Date_StartUnknown"],
+        { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(earliest, latest, visitor, text),
+        _ => null,
+    };
+
+    private static string? End(Period period, Visitor visitor, IStringLocalizer<Ui> text) => period.End switch
+    {
+        { State: PeriodEndState.Ongoing } => text["Date_Ongoing"],
+        { State: PeriodEndState.EndedAtUnknownTime } => text["Date_EndedUnknown"],
+        { State: PeriodEndState.Unknown } => text["Date_EndUnknown"],
+        { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(earliest, latest, visitor, text),
+        _ => null,
+    };
+
+    // One position when both ends of what is known are the same, "between" otherwise.
+    private static string Between(CalendarPosition earliest, CalendarPosition latest, Visitor visitor, IStringLocalizer<Ui> text) =>
+        earliest == latest
+            ? Of(earliest, visitor, text)
+            : string.Format(CultureInfo.CurrentCulture, text["Date_Between"], Of(earliest, visitor, text), Of(latest, visitor, text));
 
     /// <summary>Returns the words for a day on which the editors did something, which is a Gregorian day.</summary>
     public static string Of(DateOnly day, Visitor visitor, IStringLocalizer<Ui> text) =>

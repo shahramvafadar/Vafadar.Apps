@@ -1,7 +1,8 @@
 # 0008. Charts: who draws the timeline, the family tree and the graph
 
-- Status: **Proposed** – the decision is taken on the comparison below; it becomes Accepted when the first chart
-  built on it, the comparative timeline, is implemented and verified
+- Status: **Accepted for the comparative timeline** (points 1, 4 and 5: built and verified on 2026-11-16, see
+  "What was built"). The family tree (point 2) still has its first layout only; that part stays Proposed until
+  step 8.5 of the delivery plan is built
 - Date: 2026-11-16
 - Deciders: Shahram Vafadar (requirement D-039: charts with many capabilities that look good; for each chart a
   suitable Syncfusion control, a control of our own or a trustworthy open-source one)
@@ -114,7 +115,71 @@ Jünger and Leipert 2002) for single parents.
 * A chart with thousands of items is a large page. The first collections are far from that; when one comes near, the
   stretch of time shown bounds what is drawn.
 
+## What was built (2026-11-16)
+
+The comparative timeline, steps 8.1 to 8.4 of the delivery plan.
+
+* **Model and file.** A comparison is lanes of periods and single events over one kind of time, each statement with
+  its stated time, its sources and the state of its review (`Comparison`, `ComparisonCharts` in
+  `Vafadar.Dastan.Core`). It is read from an editorial file by a strict reader
+  ([the format](../comparison-format.md), `ComparisonSample`). The first one – Iran, China and Rome from 600 BCE to
+  700 CE – is a draft without sources and is released to the local demonstration only.
+* **A comparison is not a story.** It has no reading stages, so it does not pass through a `Projection`
+  (ADR 0002). Whether it is shown is decided once, when the site reads it: a comparison that is not released to the
+  audience of the site is not kept at all (`DastanSite.Comparisons`), and every page and every link to it starts
+  from that list.
+* **One layout, two drawings.** `TimelineLayout` places bars and callouts along the time; `TimelineChart` draws
+  them across the page, `TimelineChartDown` down it. Without a choice of the visitor both are in the page and the
+  style sheet shows the one that fits the screen (down below 40 rem); with a choice only that one is written.
+* **Left to right in every language.** The chart is laid out the same on a Persian page – the time runs from left
+  to right and from top to bottom – and only its texts follow the language.
+* **Nothing is made more exact.** An end stated as "about" fades and its year is written as "c."; an end that is
+  only known to lie between two years fades and carries no year on the bar; a period that reaches out of the time
+  shown is cut to a point; what cannot be placed on the axis is not drawn and is named under the chart. The table
+  below the chart states every time in full.
+* **Scrolling and opening further** as decided: the frame of the time scrolls by touch, wheel and keyboard, the
+  names of the lanes stand still; direction, scale (seven steps) and the stretch of time are in the address and
+  changed by links. A year zero, a stretch that ends before it begins and a scale that does not exist are not
+  choices – the chart then shows what its comparison is about.
+* **No style of its own.** Places and sizes are attributes of the SVG in em, bars and callouts are HTML inside it,
+  colours are the tokens of six lanes for both appearances. The security policy of the site did not change.
+
+What differs from the plan of this ADR, and what is not there:
+
+* Down the page the names of the bars are written along the time (turned by a quarter), because a column of a lane
+  is too narrow for a line of text on a phone. The callouts keep their direction and take the room the lanes leave.
+* The name of a long bar does not stay in view while the time is scrolled; it stands in the middle of its bar.
+* A bar that is too short for its name is not a link: it has a title, and its row is in the table.
+* A lane is told by its name and its colour; the names of the lanes are not repeated to a screen reader inside the
+  drawing. The table is the alternative that needs no drawing.
+
 ## Verification
 
-Open until the comparative timeline is built: its layout tests, the answers of the site, the browser tests at 360,
-412 and 1280 px in both languages and both appearances, and the automatic accessibility check.
+2026-11-16, .NET SDK 10.0.404, Windows 11 x64, Chromium 1.64.1 in the Playwright container:
+
+* Layout and model: `TimelineLayoutTests`, `ComparisonTests` (`Vafadar.Dastan.Core.Tests`, 169 tests);
+  `YearAxisTests` (`Vafadar.Temporal.Tests`).
+* File: `ComparisonSampleTests` (`Vafadar.Dastan.Data.Tests`, 201 tests) – the comparison of the repository as it
+  is, and one refusal per rule of the reader.
+* Site: `ComparisonPageTests` (`Vafadar.Dastan.Web.Tests`, 239 tests) – both drawings, the table, the wording of
+  time in English and Persian, every choice of the address and its limits, no script and no style in the page, not
+  found for the public.
+* Browser: `ChartTests` (`Vafadar.Dastan.Browser.Tests`, 55 cases) – at 360, 412 and 1280 px, English and Persian:
+  the page never scrolls sideways, the frame of the time does, by the keyboard too; on a phone the time runs down
+  the page and the names of the lanes stay at its top; no name of a bar and no callout is cut, no two bars and no
+  two callouts lie on each other, every year of the axis stands at its line and no callout lies on one; a bar leads
+  to its row and Back returns; opening further doubles the length and
+  Back undoes it; the same without a script; no finding of axe-core 4.14 for WCAG 2.1 A and AA and its best
+  practices in both appearances.
+
+Two faults were found on the way and corrected. Without a choice of the visitor both drawings were shown on a
+phone, because a later rule of the style sheet outweighed the one that hides the drawing for wide screens – a
+browser test found it. And the years of the axis did not stand at their lines: their places are written in em, and
+an em of a text with a smaller font is smaller, so a year stood up to a hundred pixels away from its line and under
+a callout. No test saw that; it was seen in a picture of the page. The size is now on a span inside the text, and
+the browser tests check for every drawing that each year stands at its line and that no callout lies on a year –
+the check fails on the faulty version.
+
+Not checked: a phone (narrow windows of a desktop browser were used), a screen reader, another browser than
+Chromium, a comparison with hundreds of periods. The years of the first comparison were not checked against
+sources – that is editorial work and the reason it is a draft.

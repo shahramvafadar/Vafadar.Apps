@@ -1,0 +1,615 @@
+{
+  "formatVersion": "dastan-comparison-0.1",
+  "id": "iran-china-rome",
+  "status": "draft",
+  "note": "A first comparison for building and trying the chart. The periods and years are the commonly given ones, written down without sources: every one of them is proposed, none is reviewed, and the comparison is not approved for the public. Before a release each period and event needs its source and an editorial check – in particular where a period is drawn with one year for what was a transition.",
+  "frame": "commonEraYears",
+  "title": "Iran, China and Rome side by side",
+  "summary": "What ruled in Iran, in China and in Rome between 600 BCE and 700 CE, and a few moments at which they met.",
+  "show": {
+    "from": {
+      "frame": "calendar",
+      "era": "beforeCommonEra",
+      "year": 600
+    },
+    "to": {
+      "frame": "calendar",
+      "era": "commonEra",
+      "year": 700
+    }
+  },
+  "publication": {
+    "localDemoAllowed": true,
+    "publicReleaseApproved": false
+  },
+  "sources": [],
+  "lanes": [
+    {
+      "key": "china",
+      "label": "China",
+      "periods": [
+        {
+          "key": "eastern-zhou",
+          "label": "Eastern Zhou",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 770
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 256
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "qin",
+          "label": "Qin",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 221
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 206
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "han",
+          "label": "Han",
+          "summary": "With the years of the Xin (9–23) between its two halves.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 206
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 220
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "division",
+          "label": "Time of division",
+          "summary": "From the Three Kingdoms to the Northern and Southern dynasties.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 220
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 589
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sui",
+          "label": "Sui",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 581
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 618
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "tang",
+          "label": "Tang",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 618
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 907
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "gan-ying",
+          "label": "Gan Ying reaches the Persian Gulf",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 97
+            }
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "daqin-envoys",
+          "label": "Envoys said to come from Rome reach the Han court",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 166
+            }
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "iran",
+      "label": "Iran",
+      "periods": [
+        {
+          "key": "medes",
+          "label": "Median kingdom",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 678,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 550
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "achaemenid",
+          "label": "Achaemenid empire",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 550
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 330
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "seleucid",
+          "label": "Alexander and the Seleucids",
+          "summary": "Seleucid rule in Iran ended step by step as the Arsacids advanced.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 330
+              }
+            },
+            "end": {
+              "state": "between",
+              "earliest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 247
+              },
+              "latest": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 141
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "parthian",
+          "label": "Parthian (Arsacid) empire",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 247
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 224
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "sasanian",
+          "label": "Sasanian empire",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 224
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 651
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "rashidun",
+          "label": "Rashidun caliphate",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 651
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 661
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "umayyad",
+          "label": "Umayyad caliphate",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 661
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 750
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "gaugamela",
+          "label": "Battle of Gaugamela",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 331
+            }
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "carrhae",
+          "label": "Battle of Carrhae",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "beforeCommonEra",
+              "year": 53
+            }
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "valerian",
+          "label": "Shapur I takes the emperor Valerian captive",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 260
+            }
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        }
+      ]
+    },
+    {
+      "key": "rome",
+      "label": "Rome",
+      "periods": [
+        {
+          "key": "roman-kingdom",
+          "label": "Roman kingdom",
+          "summary": "The year of the founding is the traditional one.",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 753,
+                "approximate": true
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 509
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "roman-republic",
+          "label": "Roman republic",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 509
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 27
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "roman-empire",
+          "label": "Roman empire",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "beforeCommonEra",
+                "year": 27
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 395
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "western-rome",
+          "label": "Western Roman empire",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 395
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 476
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        },
+        {
+          "key": "eastern-rome",
+          "label": "Eastern Roman empire",
+          "time": {
+            "kind": "period",
+            "start": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 395
+              }
+            },
+            "end": {
+              "state": "known",
+              "at": {
+                "frame": "calendar",
+                "era": "commonEra",
+                "year": 1453
+              }
+            },
+            "continuity": "notAsserted"
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        }
+      ],
+      "events": [
+        {
+          "key": "trajan",
+          "label": "Trajan reaches the Persian Gulf",
+          "time": {
+            "kind": "occurrence",
+            "at": {
+              "frame": "calendar",
+              "era": "commonEra",
+              "year": 116
+            }
+          },
+          "sourceIds": [],
+          "reviewStatus": "proposed"
+        }
+      ]
+    }
+  ]
+}

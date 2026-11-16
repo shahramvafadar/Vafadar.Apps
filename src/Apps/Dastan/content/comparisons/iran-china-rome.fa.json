@@ -1,0 +1,92 @@
+{
+  "formatVersion": "dastan-comparison-translation-0.1",
+  "id": "iran-china-rome",
+  "language": "fa",
+  "review": "draft",
+  "note": "A draft translation; names follow common Persian usage and are not reviewed.",
+  "title": "ایران، چین و روم در کنار هم",
+  "summary": "از ۶۰۰ پیش از میلاد تا ۷۰۰ میلادی در ایران، چین و روم چه کسانی فرمان می‌راندند، و چند لحظه که به هم رسیدند.",
+  "lanes": {
+    "china": "چین",
+    "iran": "ایران",
+    "rome": "روم"
+  },
+  "items": {
+    "eastern-zhou": {
+      "label": "ژوئوی شرقی"
+    },
+    "qin": {
+      "label": "دودمان چین (Qin)"
+    },
+    "han": {
+      "label": "هان",
+      "summary": "با سال‌های شین (۹ تا ۲۳) میان دو نیمه‌اش."
+    },
+    "division": {
+      "label": "روزگار چندپارگی",
+      "summary": "از سه پادشاهی تا دودمان‌های شمالی و جنوبی."
+    },
+    "sui": {
+      "label": "سوئی"
+    },
+    "tang": {
+      "label": "تانگ"
+    },
+    "gan-ying": {
+      "label": "رسیدن گان‌ینگ به خلیج فارس"
+    },
+    "daqin-envoys": {
+      "label": "رسیدن فرستادگانی به دربار هان که از روم دانسته شدند"
+    },
+    "medes": {
+      "label": "پادشاهی ماد"
+    },
+    "achaemenid": {
+      "label": "شاهنشاهی هخامنشی"
+    },
+    "seleucid": {
+      "label": "اسکندر و سلوکیان",
+      "summary": "فرمانروایی سلوکیان در ایران با پیشروی اشکانیان گام‌به‌گام پایان یافت."
+    },
+    "parthian": {
+      "label": "شاهنشاهی اشکانی"
+    },
+    "sasanian": {
+      "label": "شاهنشاهی ساسانی"
+    },
+    "rashidun": {
+      "label": "خلافت راشدین"
+    },
+    "umayyad": {
+      "label": "خلافت اموی"
+    },
+    "gaugamela": {
+      "label": "نبرد گوگمل"
+    },
+    "carrhae": {
+      "label": "نبرد حرّان (کاره)"
+    },
+    "valerian": {
+      "label": "اسیر شدن امپراتور والرین به دست شاپور یکم"
+    },
+    "roman-kingdom": {
+      "label": "پادشاهی روم",
+      "summary": "سال بنیان‌گذاری همان سال سنتی است."
+    },
+    "roman-republic": {
+      "label": "جمهوری روم"
+    },
+    "roman-empire": {
+      "label": "امپراتوری روم"
+    },
+    "western-rome": {
+      "label": "امپراتوری روم غربی"
+    },
+    "eastern-rome": {
+      "label": "امپراتوری روم شرقی"
+    },
+    "trajan": {
+      "label": "رسیدن تراژان به خلیج فارس"
+    }
+  }
+}

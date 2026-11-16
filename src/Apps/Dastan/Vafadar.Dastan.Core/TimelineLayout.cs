@@ -57,8 +57,12 @@ public sealed record TimelineFrame
     /// <summary>Gets the space a bar keeps free around its text, along the timeline.</summary>
     public double BandPadding { get; init; } = 1.4;
 
-    /// <summary>Gets the length a callout takes along the timeline when its text runs across it (<see cref="CharacterLength"/> is zero).</summary>
-    public double MarkLength { get; init; } = 3.2;
+    /// <summary>
+    /// Gets the length a callout takes along the timeline when its words run across it. When it is not set, a
+    /// callout is as long as its words – or 3.2 when texts have no length along the timeline
+    /// (<see cref="CharacterLength"/> is zero).
+    /// </summary>
+    public double? MarkLength { get; init; }
 
     /// <summary>Gets the space between two callouts along the timeline.</summary>
     public double MarkGap { get; init; } = 0.6;
@@ -239,7 +243,7 @@ public static class TimelineLayout
             .ThenBy(entry => entry.Lane))
         {
             var at = Place(mark.At, frame);
-            var extent = frame.CharacterLength > 0 ? (mark.Label.Length * frame.CharacterLength) + frame.BandPadding : frame.MarkLength;
+            var extent = frame.MarkLength ?? (frame.CharacterLength > 0 ? (mark.Label.Length * frame.CharacterLength) + frame.BandPadding : 3.2);
 
             // A callout begins at its event and never leaves the timeline.
             var start = Math.Max(0, Math.Min(at, length - extent));

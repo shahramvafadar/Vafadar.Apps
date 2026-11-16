@@ -642,4 +642,124 @@
   <data name="Refused_Text" xml:space="preserve">
     <value>The page you sent this from was open for too long, or something on it had changed. Nothing was changed. Go back to the page, load it again and repeat what you wanted to do.</value>
   </data>
+  <data name="Discover_Comparisons" xml:space="preserve">
+    <value>Side by side</value>
+  </data>
+  <data name="Discover_OpenComparison" xml:space="preserve">
+    <value>Open the comparison</value>
+  </data>
+  <data name="Compare_Kind" xml:space="preserve">
+    <value>Comparison</value>
+  </data>
+  <data name="Compare_Draft" xml:space="preserve">
+    <value>Draft. The periods and years of this comparison are proposed: they have not been reviewed, and where no source is named, none is recorded yet.</value>
+  </data>
+  <data name="Chart_Tools" xml:space="preserve">
+    <value>How the chart is shown</value>
+  </data>
+  <data name="Chart_View" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Chart_View_Fit" xml:space="preserve">
+    <value>Fit my screen</value>
+  </data>
+  <data name="Chart_View_Across" xml:space="preserve">
+    <value>Across the page</value>
+  </data>
+  <data name="Chart_View_Down" xml:space="preserve">
+    <value>Down the page</value>
+  </data>
+  <data name="Chart_Zoom" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="Chart_ZoomOut" xml:space="preserve">
+    <value>Closer together</value>
+  </data>
+  <data name="Chart_ZoomIn" xml:space="preserve">
+    <value>Open further</value>
+  </data>
+  <data name="Chart_Stretch" xml:space="preserve">
+    <value>Time shown</value>
+  </data>
+  <data name="Chart_Earlier" xml:space="preserve">
+    <value>Earlier</value>
+  </data>
+  <data name="Chart_Later" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="Chart_Own" xml:space="preserve">
+    <value>The comparison's own time</value>
+  </data>
+  <data name="Chart_Everything" xml:space="preserve">
+    <value>Everything in it</value>
+  </data>
+  <data name="Chart_Shown" xml:space="preserve">
+    <value>Shown: {0} to {1}</value>
+  </data>
+  <data name="Chart_Region" xml:space="preserve">
+    <value>Timeline: {0}</value>
+  </data>
+  <data name="Chart_Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="Chart_Periods" xml:space="preserve">
+    <value>Periods</value>
+  </data>
+  <data name="Chart_Legend" xml:space="preserve">
+    <value>An end of a bar that fades is stated as “about”. An end that is cut to a point lies outside the time shown. A bar or an event leads to its row in the table below.</value>
+  </data>
+  <data name="Chart_Unplaced" xml:space="preserve">
+    <value>Not drawn, because their time has no place on this axis:</value>
+  </data>
+  <data name="Chart_Table" xml:space="preserve">
+    <value>The same as a table</value>
+  </data>
+  <data name="Chart_Col_What" xml:space="preserve">
+    <value>Period or event</value>
+  </data>
+  <data name="Chart_Col_When" xml:space="preserve">
+    <value>When</value>
+  </data>
+  <data name="Chart_Col_State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Chart_NoSource" xml:space="preserve">
+    <value>No source recorded</value>
+  </data>
+  <data name="Chart_BarTitle" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Chart_Callout" xml:space="preserve">
+    <value>{0} – {1}</value>
+  </data>
+  <data name="Year_Short" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Year_About" xml:space="preserve">
+    <value>c. {0}</value>
+  </data>
+  <data name="Era_Short_CommonEra" xml:space="preserve">
+    <value>CE</value>
+  </data>
+  <data name="Era_Short_BeforeCommonEra" xml:space="preserve">
+    <value>BCE</value>
+  </data>
+  <data name="Date_Range" xml:space="preserve">
+    <value>{0} – {1}</value>
+  </data>
+  <data name="Date_Between" xml:space="preserve">
+    <value>between {0} and {1}</value>
+  </data>
+  <data name="Date_StartUnknown" xml:space="preserve">
+    <value>beginning not stated</value>
+  </data>
+  <data name="Date_EndUnknown" xml:space="preserve">
+    <value>end not stated</value>
+  </data>
+  <data name="Date_Ongoing" xml:space="preserve">
+    <value>still going on</value>
+  </data>
+  <data name="Date_EndedUnknown" xml:space="preserve">
+    <value>ended at a time that is not stated</value>
+  </data>
 </root>

@@ -102,3 +102,11 @@ a media item – return to where they were opened. The address says where that w
 is a claim of the visitor, not a permission: a page follows it only when it names a page of the collection, and a
 gallery only when the projection has that gallery and it holds the item. A page that says where it stands writes
 the address it has checked itself (`EvidenceAddress`), never what its own address carried.
+
+## Addendum of 2026-11-16 – what has no reading stages
+
+A comparison ([ADR 0008](0008-charts.md)) is not part of a story: it has no stages a visitor reads through, so
+there is nothing a projection could bound. The rule of this decision still holds for it in its simpler form: what
+may be shown is decided once, on the server, before anything is laid out or linked – a comparison that is not
+released to the audience of the site is not kept by it (`DastanSite.Comparisons`), and no page gets it another way.
+The day a comparison draws on the records of a collection, it gets them from that collection's projection.
