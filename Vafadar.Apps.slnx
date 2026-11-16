@@ -54,6 +54,7 @@
   <Folder Name="/test/" />
   <Folder Name="/test/Apps/" />
   <Folder Name="/test/Apps/Dastan/">
+    <Project Path="test/Apps/Dastan/Vafadar.Dastan.Browser.Tests/Vafadar.Dastan.Browser.Tests.csproj" />
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Core.Tests/Vafadar.Dastan.Core.Tests.csproj" />
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Data.Tests/Vafadar.Dastan.Data.Tests.csproj" />
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Web.Tests/Vafadar.Dastan.Web.Tests.csproj" />

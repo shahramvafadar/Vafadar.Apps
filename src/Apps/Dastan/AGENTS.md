@@ -72,6 +72,10 @@ Check every visible change before reporting it: English and Persian; light and d
 window; keyboard only. Report what was checked and how, what was not, and what failed. A simulated width is not a
 phone, and a valid manifest is not an installation.
 
+The journey is also checked by tests in a browser (`Vafadar.Dastan.Browser.Tests`, see the README): run them after a
+change of a page, of the styles or of the headers of an answer. They are skipped without the browser container, so
+a run in which they were skipped has checked nothing in a browser – say so.
+
 ## 6. Documentation duties
 
 Update in the same commit as the change:
