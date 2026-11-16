@@ -55,6 +55,10 @@ for Dastan is added here in the same commit as the work it came with.
   `Vafadar.Dastan.Core` with tests, the page writes it as SVG with places and sizes as attributes (no inline style,
   no script). How a chart is looked at – direction, scale, stretch of time – lives in the address and is changed by
   links. Time runs from left to right and from top to bottom in every language; only texts follow the language.
+* A chart stands in a stage (`ChartStage`, D-040): the whole width of the page and the height of the window, with a
+  "−" and a "+" at each of its four sides (`EdgeSteps`) that close and open the chart in that direction. Every
+  step is a link to an address; a new chart says in ADR 0008 what its four sides mean. Class names of the stage
+  begin with `stage-` – a short name like `step` belongs to the story already.
 * A comparison (`content/comparisons`, [format](docs/comparison-format.md)) has no reading stages and does not pass
   through a projection; the site keeps only the comparisons released to its audience. A year is written on a chart
   only when one year is stated – "about" and "between" stay what they are.

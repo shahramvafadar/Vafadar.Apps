@@ -220,7 +220,7 @@
     <value>The family of {0} as a diagram</value>
   </data>
   <data name="Family_Lead" xml:space="preserve">
-    <value>Parents stand above their children; partners are joined by a dashed line. Only what the story has told up to your reading position is shown.</value>
+    <value>A line with an arrow leads from a parent to a child; partners are joined by a dashed line. Only what the story has told up to your reading position is shown.</value>
   </data>
   <data name="Family_List" xml:space="preserve">
     <value>The same family as a list</value>
@@ -681,12 +681,6 @@
   <data name="Chart_Stretch" xml:space="preserve">
     <value>Time shown</value>
   </data>
-  <data name="Chart_Earlier" xml:space="preserve">
-    <value>Earlier</value>
-  </data>
-  <data name="Chart_Later" xml:space="preserve">
-    <value>Later</value>
-  </data>
   <data name="Chart_Own" xml:space="preserve">
     <value>The comparison's own time</value>
   </data>
@@ -761,5 +755,65 @@
   </data>
   <data name="Date_EndedUnknown" xml:space="preserve">
     <value>ended at a time that is not stated</value>
+  </data>
+  <data name="Tree_Tools" xml:space="preserve">
+    <value>How the family is shown</value>
+  </data>
+  <data name="Tree_Reach" xml:space="preserve">
+    <value>Who is shown</value>
+  </data>
+  <data name="Tree_Line" xml:space="preserve">
+    <value>The line of {0}</value>
+  </data>
+  <data name="Tree_Whole" xml:space="preserve">
+    <value>The whole family</value>
+  </data>
+  <data name="Tree_Ancestors" xml:space="preserve">
+    <value>Ancestors</value>
+  </data>
+  <data name="Tree_Descendants" xml:space="preserve">
+    <value>Descendants</value>
+  </data>
+  <data name="Tree_View" xml:space="preserve">
+    <value>Generations</value>
+  </data>
+  <data name="Tree_View_Down" xml:space="preserve">
+    <value>Down the page</value>
+  </data>
+  <data name="Tree_View_Across" xml:space="preserve">
+    <value>Across the page</value>
+  </data>
+  <data name="Tree_Shown" xml:space="preserve">
+    <value>Shown: {0} generations of ancestors, {1} of descendants and {2} steps beside the line, with their partners.</value>
+  </data>
+  <data name="Tree_ShownWhole" xml:space="preserve">
+    <value>Shown: everybody who is connected to {0} by parents, children or partners.</value>
+  </data>
+  <data name="Tree_NoRelations" xml:space="preserve">
+    <value>No relation lies inside what is shown. Open a generation above or below.</value>
+  </data>
+  <data name="Stage_Lead" xml:space="preserve">
+    <value>The chart is opened further with “+” at each of its sides and closed again with “−”.</value>
+  </data>
+  <data name="Stage_More" xml:space="preserve">
+    <value>{0}: open a step further</value>
+  </data>
+  <data name="Stage_Fewer" xml:space="preserve">
+    <value>{0}: close a step</value>
+  </data>
+  <data name="Stage_NotAvailable" xml:space="preserve">
+    <value>{0} (not possible here)</value>
+  </data>
+  <data name="Chart_Edge_Earlier" xml:space="preserve">
+    <value>Earlier years</value>
+  </data>
+  <data name="Chart_Edge_Later" xml:space="preserve">
+    <value>Later years</value>
+  </data>
+  <data name="Chart_Edge_Lanes" xml:space="preserve">
+    <value>Subjects</value>
+  </data>
+  <data name="Tree_Beside" xml:space="preserve">
+    <value>Relatives beside the line</value>
   </data>
 </root>

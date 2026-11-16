@@ -40,8 +40,15 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A local demonstration asks search engines not to index it.
 - Comparisons: several subjects side by side over one axis of years. The first one shows what ruled in Iran, in
   China and in Rome between 600 BCE and 700 CE as three rows of bars, with single events marked above them. On a
-  wide screen the time runs across the page and scrolls in its frame; on a phone it runs down the page. The chart
-  can be opened further and drawn closer together, moved to earlier and later years and turned – every such choice
-  is a link, so a chart can be sent as it is seen. Below it the same periods and events stand as a table, with the
+  wide screen the time runs across the page; on a phone it runs down the page. The chart can be opened further and
+  drawn closer together and turned – every such choice is a link, so a chart can be sent as it is seen. Below it the same periods and events stand as a table, with the
   state of the editors' review. This first comparison is a **draft**: its years are not checked against sources
   yet, and it is shown in the local demonstration only.
+- A chart has the whole page: it is as wide as the window and as high as the window, and scrolls inside. At each of
+  its four sides stand a "+" and a "−": the "+" opens the chart a step further in that direction, the "−" closes it
+  again. For the comparison these are the earlier years, the later years, the single events and the subjects; for a
+  family the ancestors, the descendants and the relatives beside the line.
+- The family of somebody is a tree now. It opens with two generations above and below and can be opened further a
+  generation at a time, to brothers, sisters, uncles and aunts and their children, or to the whole family; its
+  generations run down the page or across it. Partners stand beside each other, children below their parents, and
+  the lines show whose child somebody is.

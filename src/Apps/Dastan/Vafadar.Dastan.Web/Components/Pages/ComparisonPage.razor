@@ -37,8 +37,6 @@
         </p>
         <p class="chart-tool">
             <span class="chart-tool-name">@T["Chart_Stretch"]</span>
-            @Step(Moved(-1), T["Chart_Earlier"])
-            @Step(Moved(1), T["Chart_Later"])
             @Choice(_state with { From = null, To = null }, T["Chart_Own"])
             @if (Everything() is { } everything)
             {
@@ -49,17 +47,33 @@
 
     <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Chart_Shown"], YearAt(_from), YearAt(_to - 1))</p>
 
-    @if (_across is not null)
+    @* The chart is opened and closed at its sides (D-040): the time at the two sides it runs between, the single
+       events where their callouts stand, the lanes where the last lane ends. *@
+    var earlier = Steps(T["Chart_Edge_Earlier"], Stretch(_from + _step, _to), Stretch(_from - _step, _to));
+    var later = Steps(T["Chart_Edge_Later"], Stretch(_from, _to - _step), Stretch(_from, _to + _step));
+    var events = Steps(
+        T["Chart_Events"],
+        _state.Events && _hasEvents ? _state with { Events = false } : null,
+        _state.Events ? null : _state with { Events = true });
+    var lanes = Steps(
+        T["Chart_Edge_Lanes"],
+        _shown > 1 ? _state with { Lanes = _shown - 1 } : null,
+        _shown < _chart.Lanes.Length ? _state with { Lanes = _shown + 1 == _chart.Lanes.Length ? null : _shown + 1 } : null);
+    if (_across is not null)
     {
-        <TimelineChart Drawing="_across" Texts="Words" Label="@label" Here="@_here" Class="@(_down is null ? null : "tl-wide-only")" />
+        <ChartStage Label="@label" FrameDirection="ltr" Left="earlier" Right="later" Top="events" Bottom="lanes" Class="@(_down is null ? null : "only-wide")">
+            <TimelineChart Drawing="_across" Texts="Words" Here="@_here" />
+        </ChartStage>
     }
 
-    @if (_down is not null)
+    if (_down is not null)
     {
-        <TimelineChartDown Drawing="_down" Texts="Words" Label="@label" Here="@_here" Class="@(_across is null ? null : "tl-narrow-only")" />
+        <ChartStage Label="@label" FrameDirection="ltr" Top="earlier" Bottom="later" Left="lanes" Right="events" Class="@(_across is null ? null : "only-narrow")">
+            <TimelineChartDown Drawing="_down" Texts="Words" Here="@_here" />
+        </ChartStage>
     }
 
-    <p class="note">@T["Chart_Legend"]</p>
+    <p class="note">@T["Chart_Legend"] @T["Stage_Lead"]</p>
 
     @if (!_chart.Unplaced.IsEmpty)
     {
@@ -124,6 +138,9 @@
     private Dictionary<string, ComparisonPeriod> _periods = [];
     private decimal _from;
     private decimal _to;
+    private decimal _step;
+    private int _shown;
+    private bool _hasEvents;
     private string _here = string.Empty;
 
     /// <summary>Gets or sets the identifier of the comparison in the address.</summary>
@@ -146,6 +163,14 @@
     [SupplyParameterFromQuery(Name = "to")]
     public string? To { get; set; }
 
+    /// <summary>Gets or sets whether the single events are shown, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "events")]
+    public string? Events { get; set; }
+
+    /// <summary>Gets or sets the number of lanes shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "lanes")]
+    public string? Lanes { get; set; }
+
     protected override void OnInitialized()
     {
         _comparison = Site.Comparison(Id);
@@ -155,7 +180,7 @@
             return;
         }
 
-        _state = ChartState.Read(View, Scale, From, To);
+        _state = ChartState.Read(View, Scale, From, To, Events, Lanes);
         _here = $"compare/{_comparison.Id}{_state.Query()}";
         _periods = _comparison.Lanes.SelectMany(lane => lane.Periods).ToDictionary(period => period.Key, StringComparer.Ordinal);
         _chart = ComparisonCharts.Of(_comparison, text => Visitor.Text(text).Value, Callout);
@@ -167,8 +192,17 @@
         // Across the page a callout is as long as its words and stands on a level; down the page its words run
         // across the time, so every callout takes the same room and moves along the time instead.
         var frame = new TimelineFrame { From = _from, To = _to, UnitsPerYear = _state.UnitsPerYear };
-        _across = _state.Direction == ChartDirection.Down ? null : TimelineLayout.Of(_chart.Lanes, frame);
-        _down = _state.Direction == ChartDirection.Across ? null : TimelineLayout.Of(_chart.Lanes, frame with { Stacking = MarkStacking.Push, MarkLength = 6.6 });
+
+        // The time is opened and closed by the distance between two years of the axis.
+        _step = TimelineLayout.Step(frame.UnitsPerYear, frame.TickGap);
+
+        // The lanes the visitor left open, counted from the first, with or without their single events. The table
+        // of the page keeps all of them.
+        _shown = Math.Clamp(_state.Lanes ?? _chart.Lanes.Length, 1, _chart.Lanes.Length);
+        _hasEvents = _chart.Lanes.Any(lane => !lane.Marks.IsEmpty);
+        var lanes = _chart.Lanes.Take(_shown).Select(lane => _state.Events ? lane : lane with { Marks = [] }).ToList();
+        _across = _state.Direction == ChartDirection.Down ? null : TimelineLayout.Of(lanes, frame);
+        _down = _state.Direction == ChartDirection.Across ? null : TimelineLayout.Of(lanes, frame with { Stacking = MarkStacking.Push, MarkLength = 6.6 });
     }
 
     // The words of a callout: the year of the event, when one year is stated for it, and what happened.
@@ -198,13 +232,27 @@
 
     private string Address(ChartState state) => $"compare/{_comparison!.Id}{state.Query()}";
 
-    // The stretch shown, moved by half its length; nothing when it would leave what an address can name.
-    private ChartState? Moved(int direction)
+    // The chart with another stretch of time; nothing when less than a step would be left of it or when it would
+    // leave what an address can name. The stretch the comparison is about is not written into an address.
+    private ChartState? Stretch(decimal from, decimal to)
     {
-        var shift = Math.Max(1, Math.Floor((_to - _from) / 2)) * direction;
-        var moved = _state with { From = ChartState.YearOf(_from + shift), To = ChartState.YearOf(_to - 1 + shift) };
-        return ChartState.Place(moved.From!.Value) == _from + shift && ChartState.Place(moved.To!.Value) == _to - 1 + shift ? moved : null;
+        if (to - from < _step)
+        {
+            return null;
+        }
+
+        if (from == _chart.From && to == _chart.To)
+        {
+            return _state with { From = null, To = null };
+        }
+
+        var changed = _state with { From = ChartState.YearOf(from), To = ChartState.YearOf(to - 1) };
+        return ChartState.Place(changed.From!.Value) == from && ChartState.Place(changed.To!.Value) == to - 1 ? changed : null;
     }
+
+    // The steps of a side of the stage.
+    private RenderFragment Steps(string name, ChartState? fewer, ChartState? more) =>
+        @<EdgeSteps Name="@name" Fewer="@(fewer is null ? null : Address(fewer))" More="@(more is null ? null : Address(more))" />;
 
     // The stretch from the first beginning to the last end of what the comparison holds, when that is more than
     // the stretch it is about.

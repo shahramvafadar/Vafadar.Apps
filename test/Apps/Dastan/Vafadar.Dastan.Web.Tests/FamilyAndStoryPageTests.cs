@@ -11,7 +11,17 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
 
     private static string Family(string entity) => $"{Story}/entity/{entity}/family";
 
-    private static string Graph(Page page) => Regex.Match(page.Html, "<svg class=\"graph\".*?</svg>", RegexOptions.Singleline).Value;
+    private static string Graph(Page page) => Regex.Match(page.Html, "<svg class=\"graph tree\".*?</svg>", RegexOptions.Singleline).Value;
+
+    // The lines of the drawing: one group per relation, however many bends its line has.
+    private static int Lines(Page page) => Regex.Matches(Graph(page), "<g class=\"tree-link\">").Count;
+
+    private static string Choice(Page page, string name) =>
+        Regex.Match(page.Html, $"<(a|span) class=\"choice\"[^>]*>{Regex.Escape(name)}</(a|span)>").Value;
+
+    // The steps at a side of the stage: what stands after the name of the side, up to the end of the side.
+    private static string Steps(Page page, string side) =>
+        Regex.Match(page.Html, $"<span class=\"stage-label\">{side}</span>(.*?)</div>", RegexOptions.Singleline).Groups[1].Value;
 
     private static List<string> Boxes(Page page) =>
         [.. Regex.Matches(Graph(page), "<a class=\"graph-name\" href=\"[^\"]*/entity/([^/\"]+)\"").Select(match => match.Groups[1].Value)];
@@ -32,7 +42,8 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         Assert.Equal(HttpStatusCode.OK, page.Status);
         Assert.Contains("<h1>Family of Sohrab</h1>", page.Html, StringComparison.Ordinal);
         Assert.Equal(["character-zal", "character-king-samangan", "character-rostam", "character-tahmineh", "character-sohrab"], Boxes(page));
-        Assert.Equal(4, Regex.Matches(graph, "<line class=\"graph-line \"[^>]*marker-end=\"url\\(#graph-arrow\\)\"").Count);
+        Assert.Equal(5, Lines(page));
+        Assert.Equal(4, Regex.Matches(graph, "marker-end=\"url\\(#graph-arrow\\)\"").Count);
         Assert.Single(Regex.Matches(graph, "<line class=\"graph-line graph-partner\""));
         Assert.Matches("class=\"graph-node graph-focus\">\\s*<span class=\"graph-entity\">\\s*<a class=\"graph-name\" href=\"[^\"]*character-sohrab\"", graph);
         Assert.Equal(5, Regex.Matches(page.Html, "<li><span class=\"statement\">").Count);
@@ -59,13 +70,150 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
 
         foreach (var member in projection.Family().Members)
         {
-            var page = await visitor.Get($"/{language}/{Family(member.Entity.Id.Value)}");
-            var family = projection.Family(member.Entity.Id)!;
+            // The line of the member as the page opens it, and the whole family it belongs to.
+            foreach (var (query, family) in new[]
+            {
+                (string.Empty, projection.Family(member.Entity.Id, 2, 2)!),
+                ("?up=1&down=0", projection.Family(member.Entity.Id, 1, 0)!),
+                ("?family=whole", projection.Family(member.Entity.Id)!),
+                ("?family=whole&view=across", projection.Family(member.Entity.Id)!),
+            })
+            {
+                var page = await visitor.Get($"/{language}/{Family(member.Entity.Id.Value)}{query}");
 
-            Assert.Equal(family.Members.Select(entry => entry.Entity.Id.Value), Boxes(page));
-            Assert.Equal(family.Parentage.Length + family.Partnerships.Length, Regex.Matches(Graph(page), "<line ").Count);
-            Assert.Equal(family.Parentage.Length + family.Partnerships.Length, Regex.Matches(page.Html, "<li><span class=\"statement\">").Count);
+                Assert.Equal(family.Members.Select(entry => entry.Entity.Id.Value).Order(StringComparer.Ordinal), Boxes(page).Order(StringComparer.Ordinal));
+                Assert.Equal(family.Parentage.Length + family.Partnerships.Length, Lines(page));
+                Assert.Equal(family.Parentage.Length + family.Partnerships.Length, Regex.Matches(page.Html, "<li><span class=\"statement\">").Count);
+            }
         }
+    }
+
+    [Fact]
+    public async Task The_tree_opens_with_the_line_of_somebody_and_offers_the_whole_family()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+
+        var line = await visitor.Get($"/en/{Family("character-zal")}");
+        var whole = await visitor.Get($"/en/{Family("character-zal")}?family=whole");
+
+        // The father of Tahmineh is no ancestor and no descendant of Zal: he is in the family, not in the line.
+        Assert.Equal(["character-zal", "character-rostam", "character-tahmineh", "character-sohrab"], Boxes(line));
+        Assert.Contains("Shown: 2 generations of ancestors, 2 of descendants and 0 steps beside the line, with their partners.", line.Main, StringComparison.Ordinal);
+        Assert.Contains("aria-current=\"true\"", Choice(line, "The line of Zal"), StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Family("character-zal")}?family=whole\"", Choice(line, "The whole family"), StringComparison.Ordinal);
+
+        Assert.Contains("character-king-samangan", Boxes(whole));
+        Assert.Equal(5, Boxes(whole).Count);
+        Assert.Contains("Shown: everybody who is connected to Zal by parents, children or partners.", whole.Main, StringComparison.Ordinal);
+        Assert.Contains("aria-current=\"true\"", Choice(whole, "The whole family"), StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Family("character-zal")}\"", Choice(whole, "The line of Zal"), StringComparison.Ordinal);
+
+        // The whole family has no side to open: it is everybody already, and no step is a link there.
+        Assert.DoesNotContain("href=", Steps(whole, "Ancestors"), StringComparison.Ordinal);
+        Assert.DoesNotContain("href=", Steps(whole, "Descendants"), StringComparison.Ordinal);
+        Assert.DoesNotContain("href=", Steps(whole, "Relatives beside the line"), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Generations_are_opened_and_closed_one_at_a_time_by_links()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+
+        var narrow = await visitor.Get($"/en/{Family("character-sohrab")}?up=1");
+        var none = await visitor.Get($"/en/{Family("character-sohrab")}?up=0&down=0");
+
+        // One generation up: the parents. Their fathers are there to be opened: the "+" above the tree is a link.
+        Assert.Equal(["character-rostam", "character-tahmineh", "character-sohrab"], Boxes(narrow));
+        Assert.Matches("<div class=\"stage-edge stage-top\" dir=\"ltr\">\\s*<span class=\"stage-label\">Ancestors</span>", narrow.Html);
+        Assert.Matches("<div class=\"stage-edge stage-bottom\" dir=\"ltr\">\\s*<span class=\"stage-label\">Descendants</span>", narrow.Html);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}\" title=\"Ancestors: open a step further\">", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=0\" title=\"Ancestors: close a step\">", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
+        Assert.Contains("<span aria-hidden=\"true\">&#x2B;</span><span class=\"visually-hidden\">Ancestors: open a step further</span>", Steps(narrow, "Ancestors"), StringComparison.Ordinal);
+
+        // Nobody has a child of Sohrab to show, and nobody stands beside this line: those steps are no links.
+        Assert.Contains("<span class=\"stage-step\" aria-disabled=\"true\" title=\"Descendants: open a step further (not possible here)\">", Steps(narrow, "Descendants"), StringComparison.Ordinal);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=1&amp;down=1\" title=\"Descendants: close a step\">", Steps(narrow, "Descendants"), StringComparison.Ordinal);
+        Assert.DoesNotContain("href=", Steps(narrow, "Relatives beside the line"), StringComparison.Ordinal);
+        Assert.Equal(2, Regex.Matches(narrow.Html, "<span class=\"stage-label\">Relatives beside the line</span>").Count);
+
+        // Without a generation above or below, somebody without a partner stands alone – and the page says why
+        // its list is empty.
+        Assert.Equal(["character-sohrab"], Boxes(none));
+        Assert.Equal(0, Lines(none));
+        Assert.Contains("No relation lies inside what is shown.", none.Main, StringComparison.Ordinal);
+        Assert.Contains("<span class=\"stage-step\" aria-disabled=\"true\" title=\"Ancestors: close a step (not possible here)\">", Steps(none, "Ancestors"), StringComparison.Ordinal);
+        Assert.Contains($"<a class=\"stage-step\" href=\"{Family("character-sohrab")}?up=1&amp;down=0\" title=\"Ancestors: open a step further\">", Steps(none, "Ancestors"), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("?up=13")]
+    [InlineData("?up=-1")]
+    [InlineData("?up=two&down=two")]
+    [InlineData("?beside=13")]
+    [InlineData("?beside=wide")]
+    [InlineData("?family=all")]
+    [InlineData("?view=sideways")]
+    public async Task What_an_address_asks_for_and_is_no_choice_is_not_one(string query)
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+
+        var page = await visitor.Get($"/en/{Family("character-sohrab")}{query}");
+        var plain = await visitor.Get($"/en/{Family("character-sohrab")}");
+
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Equal(Graph(plain), Graph(page));
+    }
+
+    [Fact]
+    public async Task The_address_never_shows_more_than_the_reading_position_allows()
+    {
+        // At the opening Sohrab and Tahmineh are not told yet – however many generations and whatever family an
+        // address asks for.
+        foreach (var query in new[] { "?down=12", "?family=whole", "?up=12&down=12&beside=12&view=across" })
+        {
+            var page = await site.Visitor().Get($"/en/{Family("character-rostam")}{query}");
+
+            Assert.Equal(["character-zal", "character-rostam"], Boxes(page));
+            Assert.DoesNotContain("title=\"Descendants: open a step further\"", page.Html, StringComparison.Ordinal);
+            Assert.DoesNotContain("Tahmineh", page.Main, StringComparison.Ordinal);
+        }
+
+        Assert.Equal(HttpStatusCode.NotFound, (await site.Visitor().Get($"/en/{Family("character-sohrab")}?family=whole")).Status);
+    }
+
+    [Fact]
+    public async Task Generations_run_down_the_page_or_across_it_and_the_tree_scrolls_in_a_frame()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+
+        var down = await visitor.Get($"/en/{Family("character-sohrab")}");
+        var across = await visitor.Get($"/en/{Family("character-sohrab")}?view=across");
+
+        Assert.Contains("<div class=\"stage-frame\" tabindex=\"0\" role=\"region\" aria-label=\"The family of Sohrab as a diagram\" dir=\"ltr\">", down.Html, StringComparison.Ordinal);
+
+        // Down the page the older generations are opened above the tree; across it, at the side where it begins.
+        Assert.Matches("<div class=\"stage-edge stage-top\" dir=\"ltr\">\\s*<span class=\"stage-label\">Ancestors</span>", down.Html);
+        Assert.Matches("<div class=\"stage-edge stage-left\" dir=\"ltr\">\\s*<span class=\"stage-label\">Relatives beside the line</span>", down.Html);
+        Assert.Matches("<div class=\"stage-edge stage-left\" dir=\"ltr\">\\s*<span class=\"stage-label\">Ancestors</span>", across.Html);
+        Assert.Matches("<div class=\"stage-edge stage-right\" dir=\"ltr\">\\s*<span class=\"stage-label\">Descendants</span>", across.Html);
+        Assert.Matches("<div class=\"stage-edge stage-top\" dir=\"ltr\">\\s*<span class=\"stage-label\">Relatives beside the line</span>", across.Html);
+        Assert.Contains("aria-current=\"true\"", Choice(down, "Down the page"), StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Family("character-sohrab")}?view=across\"", Choice(down, "Across the page"), StringComparison.Ordinal);
+        Assert.Contains("aria-current=\"true\"", Choice(across, "Across the page"), StringComparison.Ordinal);
+
+        // Three generations of two, two and one: two boxes wide and three high, or three wide and two high.
+        Assert.Matches("<svg class=\"graph tree\" width=\"22.4em\" height=\"20.25em\">", down.Html);
+        Assert.Matches("<svg class=\"graph tree\" width=\"37.2em\" height=\"[0-9.]+em\">", across.Html);
+        Assert.Equal(Boxes(down).Order(StringComparer.Ordinal), Boxes(across).Order(StringComparer.Ordinal));
+        Assert.Equal(Lines(down), Lines(across));
+
+        // No script and no style of its own: places and sizes are attributes of the SVG.
+        Assert.DoesNotContain("<script", across.Own, StringComparison.Ordinal);
+        Assert.DoesNotContain("style=", across.Html, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -101,10 +249,18 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         var english = Graph(await visitor.Get($"/en/{Family("character-rostam")}"));
         var persian = Graph(await visitor.Get($"/fa/{Family("character-rostam")}"));
 
-        // Two members in a row: the first stands at the start of the row, which is the right on a Persian page.
-        Assert.Matches("<foreignObject x=\"2%\"[^>]*width=\"46%\"", english);
-        Assert.Matches("<foreignObject x=\"52%\"[^>]*width=\"46%\"", persian);
+        // Zal above Rostam, Tahmineh beside Rostam: the tree is two boxes wide. Its first box stands at the start
+        // of the tree, which is the right on a Persian page.
+        Assert.Matches("^<svg class=\"graph tree\" width=\"22.4em\"", english);
+        Assert.Matches("^<svg class=\"graph tree\" width=\"22.4em\"", persian);
+        Assert.Matches("<foreignObject x=\"0.6em\"[^>]*width=\"10em\"[^>]*>\\s*<div class=\"graph-node \">\\s*<span class=\"graph-entity\">\\s*<a class=\"graph-name\" href=\"[^\"]*character-zal\"", english);
+        Assert.Matches("<foreignObject x=\"11.8em\"[^>]*width=\"10em\"[^>]*>\\s*<div class=\"graph-node \">\\s*<span class=\"graph-entity\">\\s*<a class=\"graph-name\" href=\"[^\"]*character-zal\"", persian);
         Assert.DoesNotMatch("(x|y|x1|x2|y1|y2|width|height)=\"[^\"]*[\u06F0-\u06F9\u066B]", WebUtility.HtmlDecode(persian));
+
+        // Across the page a Persian tree begins at the right: there its older generations are opened.
+        var across = await visitor.Get($"/fa/{Family("character-rostam")}?view=across");
+        Assert.Matches("<div class=\"stage-edge stage-right\" dir=\"rtl\">\\s*<span class=\"stage-label\">نیاکان</span>", WebUtility.HtmlDecode(across.Html));
+        Assert.Matches("<div class=\"stage-edge stage-left\" dir=\"rtl\">\\s*<span class=\"stage-label\">فرزندان و نوادگان</span>", WebUtility.HtmlDecode(across.Html));
     }
 
     // --- The story ---

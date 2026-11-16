@@ -23,18 +23,74 @@
     }
     else
     {
-        <p class="note">@T["Family_Lead"]</p>
-        <FamilyGraph Drawing="_drawing" Focus="_entity.Id" Label="@string.Format(CultureInfo.CurrentCulture, T["Family_Graph"], name)" />
+        <p class="note">@T["Family_Lead"] @T["Stage_Lead"]</p>
+
+        @* What does not belong to a side of the tree: whose tree it is and which way its generations run. *@
+        <nav class="chart-tools" aria-label="@T["Tree_Tools"]">
+            <p class="chart-tool">
+                <span class="chart-tool-name">@T["Tree_Reach"]</span>
+                @Choice(_state with { Whole = false }, string.Format(CultureInfo.CurrentCulture, T["Tree_Line"], name))
+                @Choice(_state with { Whole = true }, T["Tree_Whole"])
+            </p>
+            <p class="chart-tool">
+                <span class="chart-tool-name">@T["Tree_View"]</span>
+                @Choice(_state with { Across = false }, T["Tree_View_Down"])
+                @Choice(_state with { Across = true }, T["Tree_View_Across"])
+            </p>
+        </nav>
+
+        <p class="meta">
+            @if (_state.Whole)
+            {
+                @string.Format(CultureInfo.CurrentCulture, T["Tree_ShownWhole"], name)
+            }
+            else
+            {
+                @string.Format(CultureInfo.CurrentCulture, T["Tree_Shown"], Visitor.Number(_state.Up), Visitor.Number(_state.Down), Visitor.Number(_state.Beside))
+            }
+        </p>
+
+        @* The tree is opened and closed at its sides (D-040): older generations lie where the tree begins, younger
+           ones where it ends, and the relatives beside the line on both of the other sides. *@
+        var older = Steps(T["Tree_Ancestors"], _state.Up > 0 ? _state with { Up = _state.Up - 1 } : null, family.MoreAbove ? _state with { Up = _state.Up + 1 } : null, TreeState.FurthestReach >= _state.Up + 1);
+        var younger = Steps(T["Tree_Descendants"], _state.Down > 0 ? _state with { Down = _state.Down - 1 } : null, family.MoreBelow ? _state with { Down = _state.Down + 1 } : null, TreeState.FurthestReach >= _state.Down + 1);
+        var beside = Steps(T["Tree_Beside"], _state.Beside > 0 ? _state with { Beside = _state.Beside - 1 } : null, family.MoreBeside ? _state with { Beside = _state.Beside + 1 } : null, TreeState.FurthestReach >= _state.Beside + 1);
+        var label = string.Format(CultureInfo.CurrentCulture, T["Family_Graph"], name);
+        if (!_state.Across)
+        {
+            <ChartStage Label="@label" Top="older" Bottom="younger" Left="beside" Right="beside">
+                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" />
+            </ChartStage>
+        }
+        else if (Visitor.Language.IsRightToLeft)
+        {
+            <ChartStage Label="@label" Right="older" Left="younger" Top="beside" Bottom="beside">
+                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+            </ChartStage>
+        }
+        else
+        {
+            <ChartStage Label="@label" Left="older" Right="younger" Top="beside" Bottom="beside">
+                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+            </ChartStage>
+        }
 
         @* The list says what the drawing says: both are the same answer of the projection (ADR 0002). *@
         <section aria-labelledby="as-list">
             <h2 id="as-list">@T["Family_List"]</h2>
-            <ul class="statements" role="list">
-                @foreach (var edge in family.Parentage.Concat(family.Partnerships))
-                {
-                    <li><Statement Relation="edge" Self="_entity.Id" Evidence="true" From="@($"{Site.Collection}/entity/{_entity.Id}/family")" /></li>
-                }
-            </ul>
+            @if (family.Parentage.IsEmpty && family.Partnerships.IsEmpty)
+            {
+                <p class="note">@T["Tree_NoRelations"]</p>
+            }
+            else
+            {
+                <ul class="statements" role="list">
+                    @foreach (var edge in family.Parentage.Concat(family.Partnerships))
+                    {
+                        <li><Statement Relation="edge" Self="_entity.Id" Evidence="true" From="@_here" /></li>
+                    }
+                </ul>
+            }
         </section>
     }
 }
@@ -42,7 +98,9 @@
 @code {
     private FamilyView? _family;
     private Entity _entity = null!;
-    private FamilyDrawing _drawing = null!;
+    private FamilyTree _tree = null!;
+    private TreeState _state = new();
+    private string _here = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -52,11 +110,37 @@
     [Parameter]
     public string Id { get; set; } = string.Empty;
 
+    /// <summary>Gets or sets the number of generations of ancestors in the address.</summary>
+    [SupplyParameterFromQuery(Name = "up")]
+    public string? Up { get; set; }
+
+    /// <summary>Gets or sets the number of generations of descendants in the address.</summary>
+    [SupplyParameterFromQuery(Name = "down")]
+    public string? Down { get; set; }
+
+    /// <summary>Gets or sets how far the tree is opened beside the line, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "beside")]
+    public string? Beside { get; set; }
+
+    /// <summary>Gets or sets whether the whole family is shown, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "family")]
+    public string? Family { get; set; }
+
+    /// <summary>Gets or sets the direction of the generations in the address.</summary>
+    [SupplyParameterFromQuery(Name = "view")]
+    public string? View { get; set; }
+
     protected override void OnInitialized()
     {
         var known = Collection == Site.Collection && Id.Length > 0 && !Id.Any(char.IsWhiteSpace);
         var id = known ? new EntityId(Id) : default(EntityId?);
-        _family = id is null ? null : Visitor.Projection?.Family(id.Value);
+        _state = TreeState.Read(Up, Down, Beside, Family, View);
+
+        // What may be seen is the projection's answer for the reading position; the address only says how much
+        // of that is asked for.
+        _family = id is null || Visitor.Projection is not { } projection
+            ? null
+            : _state.Whole ? projection.Family(id.Value) : projection.Family(id.Value, _state.Up, _state.Down, _state.Beside);
         if (_family is null)
         {
             Navigation.NotFound();
@@ -64,6 +148,20 @@
         }
 
         _entity = Visitor.Projection!.Find(id!.Value)!;
-        _drawing = FamilyLayout.Of(_family, text => Visitor.Text(text).Value, Visitor.Language.IsRightToLeft ? 1.9 : 1.6);
+        _here = Address(_state);
+        _tree = FamilyTreeLayout.Of(_family, text => Visitor.Text(text).Value);
     }
+
+    private string Address(TreeState state) => $"{Site.Collection}/entity/{_entity.Id}/family{state.Query()}";
+
+    // A choice of several: the one that is on says so and leads nowhere else.
+    private RenderFragment Choice(TreeState state, string name) => state == _state
+        ? @<a class="choice" href="@Address(state)" aria-current="true">@name</a>
+        : @<a class="choice" href="@Address(state)">@name</a>;
+
+    // The steps of a side. The whole family has no sides to open: it is everybody already.
+    private RenderFragment Steps(string name, TreeState? fewer, TreeState? more, bool inReach) =>
+        @<EdgeSteps Name="@name"
+                    Fewer="@(_state.Whole || fewer is null ? null : Address(fewer))"
+                    More="@(_state.Whole || more is null || !inReach ? null : Address(more))" />;
 }
