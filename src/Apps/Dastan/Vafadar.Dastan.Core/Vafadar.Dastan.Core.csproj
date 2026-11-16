@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>Dastan's domain: the typed read model of a collection, the projection that decides what a visitor may see, and the views built from it. No infrastructure.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Core\Vafadar.Core.csproj" />
+    <ProjectReference Include="..\..\..\Libraries\Vafadar.Temporal\Vafadar.Temporal.csproj" />
+  </ItemGroup>
+
+</Project>

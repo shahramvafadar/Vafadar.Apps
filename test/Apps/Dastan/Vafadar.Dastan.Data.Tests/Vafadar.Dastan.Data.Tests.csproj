@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Data\Vafadar.Dastan.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Test helpers that the Dastan test projects share (the check of what a projection discloses). -->
+    <Compile Include="..\Shared\*.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+</Project>

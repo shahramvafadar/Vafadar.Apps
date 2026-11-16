@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **Phases 1 and 2 of the [delivery plan](docs/delivery-plan.md) are done** (foundations, the time library); phase 3 is the domain model. There is no application to run yet. |
+| Status | **Phases 1 to 3 of the [delivery plan](docs/delivery-plan.md) are done**: the foundations, the time library, the read model with the reader of the sample, its Persian text and the projection that decides what a visitor sees. Phase 4 builds the website. There is no application to run yet. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -22,12 +22,12 @@ Shahnameh, Rostam and Sohrab.
 | [Acceptance](docs/acceptance.md) | The twelve conditions of M0 and their current status |
 | [Changelog](CHANGELOG.md) | What changed, in plain words |
 
-Technical decisions of the app are recorded as ADRs in `docs/adr/` when they are made and verified; decisions that
+Technical decisions of the app are recorded as ADRs in [`docs/adr/`](docs/adr/README.md) when they are made and verified; decisions that
 concern the whole repository are in [`docs/adr`](../../../docs/adr/README.md).
 
 ## Projects
 
-None of these exists yet; each is created in the phase that fills it.
+`Vafadar.Dastan.Core` and `Vafadar.Dastan.Data` exist; the website is created in phase 4.
 
 | Project | Purpose | Phase |
 |---|---|---|
@@ -58,6 +58,10 @@ package feeds of the MAUI projects.
 [`content/`](content) holds the editorial sample and the original media. It is input for the app, not a public
 folder: the sample contains the whole story including its ending, and the app serves only what its projection allows
 for the visitor's reading position. Nothing in `content/` may be copied under a web root.
+
+The sample is read by `PilotSample` (`Vafadar.Dastan.Data`), which refuses a file it does not fully understand. A
+translation of the sample is a file next to it, `<sample>.<language>.json`; `shahnameh-pilot.fa.json` is the Persian
+text, a **draft that nobody has reviewed yet** (`"review": "draft"`). Pages will mark such text as unreviewed (phase 4).
 
 ## Services
 
