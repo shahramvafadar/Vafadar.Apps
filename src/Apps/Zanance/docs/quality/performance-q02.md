@@ -242,5 +242,6 @@ host gates but fails the complete Samsung startup gate: 7110.673385 to 7014.4394
 only 1.3534%improvement against 5%; target 6,000 ms remains open. The candidate is
 retired without promotion or successful-check replay. The [D1222 current profile
 admission](current-startup-profile-admission-d1222.md) identifies real unmatched
-Home generated type names, while actual compilation/capture/native speed remain
-unproved. It is a distinct remaining path; SDK defaults/security/source stay intact.
+Home generated type names and now records one actual current Home method capture,
+with extra CoreLib/recorder roots excluded and original source restored. Ordinary
+AOT/native comparative speed remains unproved. SDK defaults/security/source stay intact.
