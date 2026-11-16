@@ -51,6 +51,13 @@ for Dastan is added here in the same commit as the work it came with.
   that checks the projection. The fixtures in `test/Apps/Dastan/Fixtures` are test data and never public.
 * Time is never a `DateTime` unless it is an operational timestamp: story and historical time use `Vafadar.Temporal`.
   No date, precision or order is invented; unknown stays unknown.
+* Charts are drawn by Dastan itself ([ADR 0008](docs/adr/0008-charts.md)): the layout is plain code in
+  `Vafadar.Dastan.Core` with tests, the page writes it as SVG with places and sizes as attributes (no inline style,
+  no script). How a chart is looked at – direction, scale, stretch of time – lives in the address and is changed by
+  links. Time runs from left to right and from top to bottom in every language; only texts follow the language.
+* A comparison (`content/comparisons`, [format](docs/comparison-format.md)) has no reading stages and does not pass
+  through a projection; the site keeps only the comparisons released to its audience. A year is written on a chart
+  only when one year is stated – "about" and "between" stay what they are.
 * A relationship keeps its type, direction, scope and source. Nothing is derived from proximity in a picture, a
   shared event or a similar name. Someone mentioned in an event is not present in it.
 

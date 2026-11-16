@@ -68,7 +68,7 @@ package feeds of the MAUI projects.
 
 ### Tests in a browser
 
-The journey of M0, the installable app and the automatic part of the accessibility check run as tests in a real browser (`test/Apps/Dastan/Vafadar.Dastan.Browser.Tests`). The browser is
+The journey of M0, the installable app, the chart of a comparison and the automatic part of the accessibility check run as tests in a real browser (`test/Apps/Dastan/Vafadar.Dastan.Browser.Tests`). The browser is
 Chromium in the official Playwright container of the Compose project `test`; the tests start the site on this
 machine, on `localhost` only, and tell the browser where it is.
 
@@ -92,6 +92,12 @@ for the visitor's reading position. Nothing in `content/` may be copied under a 
 The sample is read by `PilotSample` (`Vafadar.Dastan.Data`), which refuses a file it does not fully understand. A
 translation of the sample is a file next to it, `<sample>.<language>.json`; `shahnameh-pilot.fa.json` is the Persian
 text, a **draft that nobody has reviewed yet** (`"review": "draft"`). Pages will mark such text as unreviewed (phase 4).
+
+[`content/comparisons`](content/comparisons) holds comparisons: several subjects side by side over one axis of
+years, shown at `/compare/<id>` as a timeline and a table ([ADR 0008](docs/adr/0008-charts.md)). They are read by
+`ComparisonSample`, as strictly as the sample; [the format](docs/comparison-format.md) is described on a page of its
+own. The first one, `iran-china-rome.json`, is a **draft without sources** and is shown in the local demonstration
+only.
 
 ## Third-party files
 

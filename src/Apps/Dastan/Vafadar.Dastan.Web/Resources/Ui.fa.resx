@@ -642,4 +642,124 @@
   <data name="Refused_Text" xml:space="preserve">
     <value>صفحه‌ای که این را از آن فرستادید مدت زیادی باز مانده بود، یا چیزی در آن تغییر کرده بود. چیزی تغییر نکرد. به آن صفحه برگردید، دوباره بازش کنید و کارتان را تکرار کنید.</value>
   </data>
+  <data name="Discover_Comparisons" xml:space="preserve">
+    <value>در کنار هم</value>
+  </data>
+  <data name="Discover_OpenComparison" xml:space="preserve">
+    <value>باز کردن مقایسه</value>
+  </data>
+  <data name="Compare_Kind" xml:space="preserve">
+    <value>مقایسه</value>
+  </data>
+  <data name="Compare_Draft" xml:space="preserve">
+    <value>پیش‌نویس. دوره‌ها و سال‌های این مقایسه پیشنهادی‌اند: بازبینی نشده‌اند و هر جا منبعی نام برده نشده، هنوز منبعی ثبت نشده است.</value>
+  </data>
+  <data name="Chart_Tools" xml:space="preserve">
+    <value>شیوهٔ نمایش چارت</value>
+  </data>
+  <data name="Chart_View" xml:space="preserve">
+    <value>جهت</value>
+  </data>
+  <data name="Chart_View_Fit" xml:space="preserve">
+    <value>متناسب با صفحهٔ من</value>
+  </data>
+  <data name="Chart_View_Across" xml:space="preserve">
+    <value>افقی</value>
+  </data>
+  <data name="Chart_View_Down" xml:space="preserve">
+    <value>عمودی</value>
+  </data>
+  <data name="Chart_Zoom" xml:space="preserve">
+    <value>مقیاس</value>
+  </data>
+  <data name="Chart_ZoomOut" xml:space="preserve">
+    <value>فشرده‌تر</value>
+  </data>
+  <data name="Chart_ZoomIn" xml:space="preserve">
+    <value>بازتر</value>
+  </data>
+  <data name="Chart_Stretch" xml:space="preserve">
+    <value>بازهٔ زمانی</value>
+  </data>
+  <data name="Chart_Earlier" xml:space="preserve">
+    <value>پیش‌تر</value>
+  </data>
+  <data name="Chart_Later" xml:space="preserve">
+    <value>پس‌تر</value>
+  </data>
+  <data name="Chart_Own" xml:space="preserve">
+    <value>بازهٔ خودِ مقایسه</value>
+  </data>
+  <data name="Chart_Everything" xml:space="preserve">
+    <value>همهٔ آنچه دارد</value>
+  </data>
+  <data name="Chart_Shown" xml:space="preserve">
+    <value>نمایش از {0} تا {1}</value>
+  </data>
+  <data name="Chart_Region" xml:space="preserve">
+    <value>خط زمان: {0}</value>
+  </data>
+  <data name="Chart_Events" xml:space="preserve">
+    <value>رویدادها</value>
+  </data>
+  <data name="Chart_Periods" xml:space="preserve">
+    <value>دوره‌ها</value>
+  </data>
+  <data name="Chart_Legend" xml:space="preserve">
+    <value>سرِ محوشوندهٔ یک نوار یعنی زمانِ آن «حدودی» گفته شده است. سرِ نوک‌تیز یعنی ادامه‌اش بیرون از بازهٔ نمایش است. هر نوار یا رویداد به سطر خودش در جدول پایین می‌رود.</value>
+  </data>
+  <data name="Chart_Unplaced" xml:space="preserve">
+    <value>رسم نشده‌اند، چون زمانشان روی این محور جایی ندارد:</value>
+  </data>
+  <data name="Chart_Table" xml:space="preserve">
+    <value>همین به صورت جدول</value>
+  </data>
+  <data name="Chart_Col_What" xml:space="preserve">
+    <value>دوره یا رویداد</value>
+  </data>
+  <data name="Chart_Col_When" xml:space="preserve">
+    <value>زمان</value>
+  </data>
+  <data name="Chart_Col_State" xml:space="preserve">
+    <value>وضعیت</value>
+  </data>
+  <data name="Chart_NoSource" xml:space="preserve">
+    <value>منبعی ثبت نشده</value>
+  </data>
+  <data name="Chart_BarTitle" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Chart_Callout" xml:space="preserve">
+    <value>{0} – {1}</value>
+  </data>
+  <data name="Year_Short" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="Year_About" xml:space="preserve">
+    <value>ح. {0}</value>
+  </data>
+  <data name="Era_Short_CommonEra" xml:space="preserve">
+    <value>م</value>
+  </data>
+  <data name="Era_Short_BeforeCommonEra" xml:space="preserve">
+    <value>پ.م</value>
+  </data>
+  <data name="Date_Range" xml:space="preserve">
+    <value>{0} تا {1}</value>
+  </data>
+  <data name="Date_Between" xml:space="preserve">
+    <value>میان {0} و {1}</value>
+  </data>
+  <data name="Date_StartUnknown" xml:space="preserve">
+    <value>آغاز گفته نشده</value>
+  </data>
+  <data name="Date_EndUnknown" xml:space="preserve">
+    <value>پایان گفته نشده</value>
+  </data>
+  <data name="Date_Ongoing" xml:space="preserve">
+    <value>هنوز ادامه دارد</value>
+  </data>
+  <data name="Date_EndedUnknown" xml:space="preserve">
+    <value>پایان‌یافته در زمانی که گفته نشده</value>
+  </data>
 </root>

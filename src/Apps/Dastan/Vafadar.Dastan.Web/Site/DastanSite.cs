@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Microsoft.Extensions.Options;
 using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Data;
@@ -42,6 +43,12 @@ public sealed class DastanSite
         _content = Path.GetFullPath(Path.Combine(environment.ContentRootPath, settings.Content));
         _catalogue = PilotSample.Load(Path.Combine(_content, "samples", settings.Sample));
 
+        // A comparison that is not released to the audience of the site does not exist for it.
+        Comparisons =
+        [
+            .. ComparisonSample.LoadAll(Path.Combine(_content, "comparisons")).Where(comparison => comparison.MayBeShownTo(Audience)),
+        ];
+
         // One projection per reading stage; the catalogue never changes, so a projection is built once.
         _projections =
         [
@@ -52,6 +59,12 @@ public sealed class DastanSite
 
     /// <summary>Gets who the site shows the collection to.</summary>
     public Audience Audience { get; }
+
+    /// <summary>Gets the comparisons the audience of the site may see, in the order of their files.</summary>
+    public ImmutableArray<Comparison> Comparisons { get; }
+
+    /// <summary>Returns the comparison with an identifier, or <see langword="null"/> when the site has none it may show.</summary>
+    public Comparison? Comparison(string id) => Comparisons.FirstOrDefault(comparison => comparison.Id.Value == id);
 
     /// <summary>Gets the name of the collection in addresses and cookies: the identifier of its story.</summary>
     public string Collection => _catalogue.Info.Story.Value;

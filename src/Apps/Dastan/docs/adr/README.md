@@ -14,6 +14,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0005](0005-graph-renderer.md) | The renderer of the connections graph: SVG drawn by the server | Accepted (D-035) |
 | [0006](0006-media-delivery.md) | A media file reaches a browser through one route that asks the projection | Accepted |
 | [0007](0007-installable-app.md) | The installable app, a service worker that only shows "no connection", one script | Accepted; installation not observed |
+| [0008](0008-charts.md) | Charts: the timeline and the family tree are drawn by Dastan itself; Syncfusion for the tools of editors | Accepted for the timeline; the family tree part Proposed |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),
 [0012](../../../../../docs/adr/0012-temporal-model.md) (stated time), [0013](../../../../../docs/adr/0013-web-library.md) (the web library).

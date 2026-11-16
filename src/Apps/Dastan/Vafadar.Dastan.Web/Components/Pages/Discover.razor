@@ -26,7 +26,22 @@
 
     <SearchForm />
 }
-else
+else if (Site.Comparisons.IsEmpty)
 {
     <p class="note">@T["Discover_Nothing"]</p>
+}
+
+@if (!Site.Comparisons.IsEmpty)
+{
+    <section aria-labelledby="side-by-side">
+        <h2 id="side-by-side">@T["Discover_Comparisons"]</h2>
+        @foreach (var comparison in Site.Comparisons)
+        {
+            <article class="card">
+                <h3><a href="@($"compare/{comparison.Id}")"><Loc Text="comparison.Title" /></a></h3>
+                <p><Loc Text="comparison.Summary" /></p>
+                <p><a class="action" href="@($"compare/{comparison.Id}")">@T["Discover_OpenComparison"]</a></p>
+            </article>
+        }
+    </section>
 }

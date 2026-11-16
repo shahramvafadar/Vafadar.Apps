@@ -38,3 +38,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   page says so, in English and Persian, and offers the same address again; nothing of a story is kept in the
   browser. A form that is sent from a page that was open too long leads to a page that explains it.
 - A local demonstration asks search engines not to index it.
+- Comparisons: several subjects side by side over one axis of years. The first one shows what ruled in Iran, in
+  China and in Rome between 600 BCE and 700 CE as three rows of bars, with single events marked above them. On a
+  wide screen the time runs across the page and scrolls in its frame; on a phone it runs down the page. The chart
+  can be opened further and drawn closer together, moved to earlier and later years and turned – every such choice
+  is a link, so a chart can be sent as it is seen. Below it the same periods and events stand as a table, with the
+  state of the editors' review. This first comparison is a **draft**: its years are not checked against sources
+  yet, and it is shown in the local demonstration only.

@@ -120,3 +120,26 @@ server in one answer (ADR 0003), so there is no state in which a page waits for 
 | Loading or processing | Does not occur: a page arrives complete. Images below the first screen are loaded when they are reached; a video loads only what shows its length | – |
 | Recoverable failure | A failure has its own page in the language of the address, with the failed address to try again and the start; it is neither an empty result nor a missing page and shows nothing of the failure. A form that is refused leads to a page that says that nothing was changed. Without a connection the visitor gets a page that says so, with the same address to try again | `FailureTests`, `StatesTests.A_form_that_is_refused_…`, `InstalledAppTests.Without_a_connection_…` |
 | Invalid link | One page for an address that leads nowhere, with the start, the story and the reading position | `StatesTests.What_is_not_read_yet_and_what_does_not_exist_…` |
+
+## After M0 – the comparative timeline (phase 8)
+
+Not one of the twelve conditions of M0. The owner's requirement D-039 and [ADR 0008](adr/0008-charts.md) say what
+the chart has to do; this is what was observed. 2026-11-16, .NET SDK 10.0.404, Windows 11 x64, Chromium 1.64.1 in
+the Playwright container; `dotnet test --solution Vafadar.Dastan.slnf` with `DASTAN_BROWSER` set: 1138 passed, none
+failed, none skipped.
+
+| What | Status | Evidence |
+|---|---|---|
+| Several subjects stand side by side over one axis of years, with single events marked | **Implemented and checked** | The comparison "Iran, China and Rome side by side": three lanes, 18 periods and 6 events from 600 BCE to 700 CE; periods of one lane that overlap get rows of their own; every event has a callout with its year and a line to its lane (`TimelineLayoutTests`, `ComparisonTests`, `ComparisonPageTests`) |
+| Across the page and down it | **Implemented and checked** | Both drawings come from one layout. Without a choice the screen decides (down below 40 rem), a choice of the visitor holds on every screen (`ChartTests.On_a_wide_screen_…`, `…On_a_phone_…`, `…A_choice_of_the_visitor_…`) |
+| Easy to scroll | **Implemented and checked** | Across: the time scrolls inside its frame by touch, wheel and keyboard, the names of the lanes stand still, the page does not scroll sideways at 360, 412 and 1280 px. Down: the page scrolls and the names of the lanes stay at its top (`ChartTests`) |
+| Easy to open further | **Implemented and checked** | Seven scales, the stretch of time moved earlier and later, back to the comparison's own time and out to everything it holds – all by links, each state an address that can be sent and that Back undoes (`ComparisonPageTests`, `ChartTests.Opening_further_…`, `…Moving_to_an_earlier_time_…`) |
+| Time as it is stated | **Implemented and checked** | No year zero on the axis; "about" and "between two years" are drawn as such and worded in the table; what cannot be placed is named and not drawn (`YearAxisTests`, `ComparisonTests`, `ComparisonPageTests.The_table_states_a_time_…`, `…A_bar_carries_what_it_has_room_for_…`) |
+| English and Persian, light and dark | **Implemented and checked** | Persian texts and digits, the Persian font, the time still from left to right; no name and no callout cut and nothing overlapping at the three widths in both languages; no finding of axe-core 4.14 in both appearances (`ChartTests.A_chart_fits_the_window_…`, 30 cases; `…A_chart_breaks_no_rule_…`, 16 cases) |
+| The same facts without the drawing | **Implemented and checked** | A table per lane with every period and event, its time in full, the state of its review and its sources; a bar and a callout lead to their rows (`ComparisonPageTests.Every_period_and_event_…`, `ChartTests.A_bar_and_a_callout_…`) |
+| Only what is released is shown | **Implemented and checked** | The first comparison is released to the local demonstration only: the public site has no link to it and answers its address as not found (`PublicComparisonTests`) |
+| The content of the first comparison is right | **Not verified** | Its periods and years are the commonly given ones, written down without sources; every statement is "proposed" and the page says so. Checking them against sources is editorial work that was not done |
+
+Not checked for the chart: a phone, a screen reader, a browser other than Chromium, and how the drawing behaves
+with hundreds of periods. The family tree (step 8.5) and timelines of a collection's own records (step 8.6) are
+not built.
