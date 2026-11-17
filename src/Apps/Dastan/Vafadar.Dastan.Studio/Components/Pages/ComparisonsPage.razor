@@ -1,0 +1,121 @@
+@page "/comparisons"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The comparisons the store holds (step 12.6), and a form that brings a new one in as it is written in its file. *@
+<PageTitle>@T["Nav_Comparisons"] – @T["Site_Name"]</PageTitle>
+
+<header class="page-header">
+    <h1>@T["Nav_Comparisons"]</h1>
+    <p class="lead">@T["Comparisons_Lead"]</p>
+</header>
+
+@if (Done == "removed")
+{
+    <p class="done" role="status">@T["Done_removed"]</p>
+}
+
+@if (_comparisons.Count == 0)
+{
+    <p class="note" role="status">@T["Comparisons_None"]</p>
+}
+else
+{
+    <ul class="cards" role="list">
+        @foreach (var comparison in _comparisons)
+        {
+            <li class="card">
+                <h2><a href="@($"comparisons/{comparison.Id}")"><bdi>@comparison.Title</bdi></a></h2>
+                <p class="meta"><bdi dir="ltr">@comparison.Id</bdi></p>
+                <p class="note">
+                    @(comparison.Languages.IsEmpty
+                        ? T["Collection_NoTranslation"]
+                        : string.Format(CultureInfo.CurrentCulture, T["Collection_Languages"], string.Join(", ", comparison.Languages)))
+                    – @string.Format(CultureInfo.CurrentCulture, T["Collection_Changed"], Editor.Moment(comparison.UpdatedAt))
+                </p>
+            </li>
+        }
+    </ul>
+}
+
+<section aria-labelledby="add">
+    <h2 id="add">@T["Comparison_Add"]</h2>
+    <p class="note">@T["Comparison_AddLead"]</p>
+    <ActOutcome Problems="_problems" />
+    <form method="post" @formname="add" @onsubmit="Add" class="act" action="comparisons">
+        <AntiforgeryToken />
+        <p class="field">
+            <label for="add-json">@T["Comparison_File"]</label>
+            <textarea id="add-json" class="code" name="Adding.Json" rows="14" spellcheck="false" dir="ltr" required>@Adding?.Json</textarea>
+        </p>
+        <WhoAndWhy Form="add" Model="Adding" By="@(Adding?.By ?? Editor.Name)" Reason="@(Adding?.Reason ?? string.Empty)" />
+        <p><button type="submit" class="action">@T["Comparison_Add"]</button></p>
+    </form>
+</section>
+
+@code {
+    private IReadOnlyList<ComparisonSummary> _comparisons = [];
+    private List<string>? _problems;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets what the form for a new comparison was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "add")]
+    public ChangeInput? Adding { get; set; }
+
+    protected override void OnInitialized() => _comparisons = Store.Comparisons();
+
+    private void Add()
+    {
+        var input = Adding ?? new ChangeInput();
+        var problems = new List<string>();
+        var by = Editor.By(input.By);
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        var reason = ActInput.Text(input.Reason);
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        string? id = null;
+        try
+        {
+            id = (string?)(JsonNode.Parse(input.Json ?? string.Empty) as JsonObject)?["id"];
+        }
+        catch (Exception refused) when (refused is System.Text.Json.JsonException or InvalidOperationException)
+        {
+            problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_NotJson"], refused.Message));
+        }
+
+        if (problems.Count == 0 && id is not null && _comparisons.Any(comparison => comparison.Id == id))
+        {
+            problems.Add(string.Format(CultureInfo.CurrentCulture, T["Comparison_Exists"], id));
+        }
+
+        if (problems.Count == 0)
+        {
+            var result = Store.PutComparison(input.Json!, new Dictionary<string, string>(), by!, reason);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"comparisons/{id}?done=added");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _problems = problems;
+    }
+}

@@ -1,0 +1,263 @@
+@page "/comparisons/{Id}"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* One comparison (step 12.6): its file and its translations as they are written, changed in one act that the
+   readers of the site try first; taking it out; and what was changed of it. *@
+@if (_history.Count > 0)
+{
+    <PageTitle>@(_title ?? Id) – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="comparisons">@T["Nav_Comparisons"]</a></p>
+        <h1><bdi>@(_title ?? Id)</bdi></h1>
+        <p class="lead"><bdi dir="ltr">@Id</bdi></p>
+    </header>
+
+    @if (Done is "changed" or "unchanged" or "added")
+    {
+        <p class="done" role="status">@T[$"Done_{Done}"]</p>
+    }
+
+    @if (_comparison is { } comparison)
+    {
+        <section aria-labelledby="change">
+            <h2 id="change">@T["Change_TextTitle"]</h2>
+            <p class="note">@T["Comparison_ChangeLead"]</p>
+            <ActOutcome Problems="_changeProblems" />
+            <form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
+                <AntiforgeryToken />
+                <p class="field">
+                    <label for="change-json">@T["Comparison_File"]</label>
+                    <textarea id="change-json" class="code" name="json" rows="@Rows(File(comparison))" spellcheck="false" dir="ltr" required>@File(comparison)</textarea>
+                </p>
+                @foreach (var (language, text) in comparison.Translations)
+                {
+                    <p class="field translated">
+                        <label for="@($"change-{language}")">@string.Format(CultureInfo.CurrentCulture, T["Comparison_Translation"], language)</label>
+                        <textarea id="@($"change-{language}")" class="code" name="@($"t.{language}")" rows="@Rows(Translation(language, text))" spellcheck="false" dir="ltr" lang="@language" aria-describedby="translation-hint">@Translation(language, text)</textarea>
+                    </p>
+                }
+                <p class="field translated">
+                    <label for="change-new">@T["Comparison_NewTranslation"]</label>
+                    <textarea id="change-new" class="code" name="t" rows="4" spellcheck="false" dir="ltr" aria-describedby="translation-hint">@(_sent ? Sent("t") : string.Empty)</textarea>
+                    <span class="hint" id="translation-hint">@T["Comparison_TranslationHint"]</span>
+                </p>
+                <WhoAndWhy Form="change" Model="Changing" By="@(Changing?.By ?? Editor.Name)" Reason="@(Changing?.Reason ?? string.Empty)" />
+                <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
+            </form>
+        </section>
+
+        <section aria-labelledby="remove">
+            <h2 id="remove">@T["Remove_Title"]</h2>
+            <p class="note">@T["Comparison_RemoveLead"]</p>
+            <ActOutcome Problems="_removeProblems" />
+            <form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
+                <AntiforgeryToken />
+                <WhoAndWhy Form="remove" Model="Removing" By="@(Removing?.By ?? Editor.Name)" Reason="@(Removing?.Reason ?? string.Empty)" />
+                <p><button type="submit" class="action danger">@T["Remove_Submit"]</button></p>
+            </form>
+        </section>
+    }
+    else
+    {
+        <p class="note" role="status">@T["Record_Gone"]</p>
+    }
+
+    <section aria-labelledby="history">
+        <h2 id="history">@T["Record_History"]</h2>
+        <ol class="changes" role="list">
+            @foreach (var change in _history)
+            {
+                <li>
+                    <article class="change">
+                        <p class="change-head">
+                            <strong>@T[$"Change_{change.Change}"]</strong>
+                            <span>@(change.Language.Length == 0 ? T["Comparison_File"] : string.Format(CultureInfo.CurrentCulture, T["Comparison_Translation"], change.Language))</span>
+                            <span class="meta">
+                                @string.Format(CultureInfo.CurrentCulture, T["Change_Version"], Editor.Number(change.Version)) –
+                                @string.Format(CultureInfo.CurrentCulture, T["Change_By"], change.By) –
+                                <bdi dir="ltr">@Editor.Moment(change.At)</bdi>
+                            </span>
+                        </p>
+                        <p class="change-reason">
+                            @if (change.Reason is { } reason)
+                            {
+                                <span class="meta">@T["Change_Reason"]:</span> <bdi>@reason</bdi>
+                            }
+                            else
+                            {
+                                <span class="meta">@T["Change_NoReason"]</span>
+                            }
+                        </p>
+                    </article>
+                </li>
+            }
+        </ol>
+    </section>
+}
+
+@code {
+    private ExportedCollection? _comparison;
+    private string? _title;
+    private List<DocumentChange> _history = [];
+    private List<string>? _changeProblems;
+    private List<string>? _removeProblems;
+    private bool _sent;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets the identifier of the comparison in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets who changes the comparison, and why.</summary>
+    [SupplyParameterFromForm(FormName = "change")]
+    public FieldsInput? Changing { get; set; }
+
+    /// <summary>Gets or sets what the form for taking the comparison out was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "remove")]
+    public RemoveInput? Removing { get; set; }
+
+    private string Here => $"comparisons/{Id}";
+
+    protected override void OnInitialized()
+    {
+        // The newest change first. A comparison that never was in the store has no history and no page.
+        _history = [.. Store.ComparisonHistory(Id).Reverse()];
+        if (_history.Count == 0)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _comparison = Store.Comparison(Id);
+        _title = Store.Comparisons().FirstOrDefault(comparison => comparison.Id == Id)?.Title;
+    }
+
+    // What a text area starts with: what was sent when the form comes back refused, else what the store holds.
+    private string File(ExportedCollection comparison) => _sent ? Sent("json") : comparison.Json;
+
+    private string Translation(string language, string text) => _sent ? Sent($"t.{language}") : text;
+
+    private string Sent(string name) => Context.Request.Form[name].ToString().Replace("\r\n", "\n", StringComparison.Ordinal);
+
+    private static int Rows(string text) => Math.Clamp(text.Count(character => character == '\n') + 2, 6, 40);
+
+    private void Change()
+    {
+        _sent = true;
+        var input = Changing ?? new FieldsInput();
+        var problems = new List<string>();
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+
+        // Every translation as it was sent; one that was emptied is a translation the comparison no longer has.
+        var translations = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var language in _comparison!.Translations.Keys)
+        {
+            if (Sent($"t.{language}").Trim() is { Length: > 0 } text)
+            {
+                translations[language] = text;
+            }
+        }
+
+        if (Sent("t").Trim() is { Length: > 0 } further)
+        {
+            try
+            {
+                if ((string?)(JsonNode.Parse(further) as JsonObject)?["language"] is { Length: > 0 } language && !translations.ContainsKey(language))
+                {
+                    translations[language] = further;
+                }
+                else
+                {
+                    problems.Add(T["Comparison_NeedsLanguage"]);
+                }
+            }
+            catch (Exception refused) when (refused is System.Text.Json.JsonException or InvalidOperationException)
+            {
+                problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_NotJson"], refused.Message));
+            }
+        }
+
+        var json = Sent("json");
+        try
+        {
+            if ((string?)(JsonNode.Parse(json) as JsonObject)?["id"] != Id)
+            {
+                problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_OtherId"], Id));
+            }
+        }
+        catch (Exception refused) when (refused is System.Text.Json.JsonException or InvalidOperationException)
+        {
+            problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_NotJson"], refused.Message));
+        }
+
+        if (problems.Count == 0)
+        {
+            var result = Store.PutComparison(json, translations, by!, reason);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Here}?done={(result.Changed == 0 ? "unchanged" : "changed")}");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _changeProblems = problems;
+    }
+
+    private void Remove()
+    {
+        var input = Removing ?? new RemoveInput();
+        var problems = new List<string>();
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        if (problems.Count == 0)
+        {
+            var result = Store.RemoveComparison(Id, by!, reason!);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo("comparisons?done=removed");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _removeProblems = problems;
+    }
+
+    private string? Name(string? given, List<string> problems)
+    {
+        var name = Editor.By(given);
+        if (name is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        return name;
+    }
+
+    private string? Reason(string? given, List<string> problems)
+    {
+        var reason = ActInput.Text(given);
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        return reason;
+    }
+}

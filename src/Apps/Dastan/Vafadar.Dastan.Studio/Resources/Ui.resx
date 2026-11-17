@@ -456,4 +456,43 @@
   <data name="Stages_NeedsNames" xml:space="preserve">
     <value>Every stage has a name; only the last ones can be left empty.</value>
   </data>
+  <data name="Nav_Comparisons" xml:space="preserve">
+    <value>Comparisons</value>
+  </data>
+  <data name="Comparisons_Lead" xml:space="preserve">
+    <value>Subjects side by side over one kind of time. A comparison is kept as a whole, with every change.</value>
+  </data>
+  <data name="Comparisons_None" xml:space="preserve">
+    <value>The store holds no comparison.</value>
+  </data>
+  <data name="Comparison_Add" xml:space="preserve">
+    <value>Bring a comparison in</value>
+  </data>
+  <data name="Comparison_AddLead" xml:space="preserve">
+    <value>The file of a comparison as it is written. It is read as the site reads it; what the site could not use is refused with the reasons.</value>
+  </data>
+  <data name="Comparison_File" xml:space="preserve">
+    <value>The file of the comparison</value>
+  </data>
+  <data name="Comparison_Translation" xml:space="preserve">
+    <value>Translation – {0}</value>
+  </data>
+  <data name="Comparison_NewTranslation" xml:space="preserve">
+    <value>A further translation</value>
+  </data>
+  <data name="Comparison_TranslationHint" xml:space="preserve">
+    <value>A translation that is emptied is taken out. A further one names its language in its document.</value>
+  </data>
+  <data name="Comparison_ChangeLead" xml:space="preserve">
+    <value>The file and its translations are kept in one act and tried together first.</value>
+  </data>
+  <data name="Comparison_RemoveLead" xml:space="preserve">
+    <value>Takes the comparison and its translations out of the store. What was changed of it stays.</value>
+  </data>
+  <data name="Comparison_Exists" xml:space="preserve">
+    <value>The store already holds the comparison {0}; change it on its page.</value>
+  </data>
+  <data name="Comparison_NeedsLanguage" xml:space="preserve">
+    <value>A further translation names a language the comparison is not translated into yet.</value>
+  </data>
 </root>

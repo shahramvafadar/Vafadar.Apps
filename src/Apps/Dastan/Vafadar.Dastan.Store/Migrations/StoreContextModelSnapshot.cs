@@ -17,6 +17,59 @@ namespace Vafadar.Dastan.Store.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.DocumentChange", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("After")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Before")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("By")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Change")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DocumentId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("Kind", "DocumentId", "Number");
+
+                    b.ToTable("DocumentChanges");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.RecordChange", b =>
                 {
                     b.Property<long>("Id")
@@ -88,6 +141,40 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Collections");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredDocument", b =>
+                {
+                    b.Property<string>("Kind")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DocumentId")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Language")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Kind", "DocumentId", "Language");
+
+                    b.ToTable("Documents");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredEditor", b =>
