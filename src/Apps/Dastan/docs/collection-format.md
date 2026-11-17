@@ -118,7 +118,7 @@ stages. A record never points to a record of a later stage – its sources inclu
 | Field | Meaning |
 |---|---|
 | `id` | The identifier; it is the name of the entity in addresses |
-| `type` | `Work`, `NarrativeArc`, `Character`, `AnimalCharacter`, `NarrativePlace`, `NarrativeRegion` or `NarrativeObject`. A collection has exactly one `NarrativeArc` – its story |
+| `type` | What kind of thing it is – see "The types of entities". A collection has exactly one `NarrativeArc` – its story |
 | `label` | The name |
 | `labelFa` | Optional: the Persian name, when no translation file gives it. Stating it in both places is a problem |
 | `summary` | One or two sentences, as far as the stage of the entity tells |
@@ -155,13 +155,33 @@ event, a media item that depicts it). The `revision` command leaves it out of th
 statement was in the revision before, the history names it as `withdrawn` with the reason. A published revision
 that holds a withdrawn statement is refused.
 
+### The types of entities
+
+| `type` | What it is | Kind of thing |
+|---|---|---|
+| `Work` | A work, such as a poem | a work |
+| `NarrativeArc` | The story the collection tells; exactly one | a work |
+| `Character` | A character of the story | somebody |
+| `AnimalCharacter` | An animal that is a character of the story | somebody |
+| `NarrativePlace` | A place of the story; not a place on a modern map | a place |
+| `NarrativeRegion` | A region of the story; it has no modern border | a place |
+| `NarrativeObject` | An object of the story | a thing |
+| `Person` | A real person, living or historical: a poet, a ruler, a scholar – not a character | somebody |
+| `Organisation` | People who act under one name: a court, a dynasty, a school, an institution | a group |
+| `Place` | A real place: a city, a village, a building | a place |
+| `Region` | A real region: a country, a province, a historical land | a place |
+
+A thing of the story and a thing of the world are different entities, also when they share a name: the Turan
+of the poem is a `NarrativeRegion`; a land of history is a `Region`. Do not make one stand for the other.
+A place – of the story or real – takes part in a step of the story only as its setting.
+
 ## A relation
 
 | Field | Meaning |
 |---|---|
 | `id` | The identifier |
 | `from`, `to` | The two entities. A relation with a direction reads from the first to the second |
-| `type` | One of the relation types: `partOf`, `parentOf`, `spouseOf`, `rules`, `rides`, `visits`, `givesKeepsake`, `entrustedTo`, `carries`, `supportsExpeditionOf`, `opponentOf`, `summonedBy`, `returnsTo`, `mourns`, `huntsNear`, `appearsAt`, `withholdsRemedyFor`. `spouseOf` and `opponentOf` are the same from both sides; the others read from the first entity to the second |
+| `type` | One of the relation types of the story: `partOf`, `parentOf`, `spouseOf`, `rules`, `rides`, `visits`, `givesKeepsake`, `entrustedTo`, `carries`, `supportsExpeditionOf`, `opponentOf`, `summonedBy`, `returnsTo`, `mourns`, `huntsNear`, `appearsAt`, `withholdsRemedyFor` – or of the world outside it, see "The relations of the world outside the story". `spouseOf`, `opponentOf` and `siblingOf` are the same from both sides; the others read from the first entity to the second |
 | `directionality` | `directed` or `symmetric`; it has to agree with the type |
 | `label` | The relation in words, read from the first entity: "Father of" |
 | `sourceIds` | At least one source |
@@ -172,9 +192,30 @@ that holds a withdrawn statement is refused.
 
 `scope`: `kind` – `work_structure` (a story is part of a work), `background_lineage` (who descends from whom,
 before the story), `relationship_revealed_in_beat`, `observed_narrative_context`, `selected_beat_action` or
-`reported_in_selected_beat`; `storyId` – the story; `eventIds` – the events that tell or reveal it, possibly
+`reported_in_selected_beat`, or `outside_the_story` (a statement about the world the story was told in: who
+wrote the work, where a poet was born); `storyId` – the story; `eventIds` – the events that tell or reveal it, possibly
 empty; optional `interpretation`; `calendarPeriod` is `null` or left out. A family tree is drawn from the types
 `parentOf` and `spouseOf` only.
+
+### The relations of the world outside the story
+
+These types say what they mean and between what kinds of thing they hold; a relation between other kinds is
+refused. "Somebody" is a `Person`, a `Character` or an `AnimalCharacter` – the type says what kind of thing,
+not whether it is of the story.
+
+| `type` | Meaning | From | To |
+|---|---|---|---|
+| `authorOf` | The first wrote or composed the work | somebody or a group | a work |
+| `bornIn` | The place or region of birth | somebody | a place |
+| `diedIn` | The place or region of death | somebody | a place |
+| `teacherOf` | The first taught the second | somebody | somebody |
+| `siblingOf` | Brothers or sisters; the same from both sides. A family tree is drawn from parents, not from this | somebody | somebody |
+| `memberOf` | The first belonged to the group | somebody | a group |
+| `founderOf` | The first founded the group or the place | somebody | a group or a place |
+| `locatedIn` | The first lies in, or has its seat in, the second | a place or a group | a place |
+
+When something happened – a birth, a death, a reign – is not said by a relation: it is a statement with a date
+of the entity (`dated`).
 
 ## An event – a step of the telling
 

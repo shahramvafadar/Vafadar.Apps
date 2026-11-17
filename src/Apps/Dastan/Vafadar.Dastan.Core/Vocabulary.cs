@@ -59,8 +59,17 @@ public static class EntityTypes
     /// <summary>An object of a story.</summary>
     public static EntityType NarrativeObject { get; } = new("narrativeObject", EntityNature.Object);
 
-    /// <summary>A real person.</summary>
+    /// <summary>A real person, living or historical: a poet, a ruler, a scholar. Not a character of a story.</summary>
     public static EntityType Person { get; } = new("person", EntityNature.Being);
+
+    /// <summary>People who act under one name: a court, a dynasty, a school, an institution.</summary>
+    public static EntityType Organisation { get; } = new("organisation", EntityNature.Group);
+
+    /// <summary>A real place: a city, a village, a building. It is, or was, somewhere on a map.</summary>
+    public static EntityType Place { get; } = new("place", EntityNature.Place);
+
+    /// <summary>A real region: a country, a province, a historical land.</summary>
+    public static EntityType Region { get; } = new("region", EntityNature.Place);
 
     /// <summary>A company.</summary>
     public static EntityType Company { get; } = new("company", EntityNature.Group);
@@ -81,7 +90,7 @@ public static class EntityTypes
     public static ImmutableArray<EntityType> All { get; } =
     [
         Work, StoryArc, Character, AnimalCharacter, NarrativePlace, NarrativeRegion, NarrativeObject,
-        Person, Company, SportsClub, SportsTeam, Competition, CompetitionSeason,
+        Person, Organisation, Place, Region, Company, SportsClub, SportsTeam, Competition, CompetitionSeason,
     ];
 
     /// <summary>Returns the type named <paramref name="key"/>, or <see langword="null"/> when the list has none.</summary>
@@ -115,7 +124,24 @@ public enum Kinship
 /// <param name="Key">The stable name of the type.</param>
 /// <param name="Directionality">Whether relations of the type have a direction.</param>
 /// <param name="Kinship">What the type means for a family view; a view never guesses that from the name.</param>
-public sealed record RelationType(string Key, Directionality Directionality, Kinship Kinship = Kinship.None);
+/// <param name="Meaning">What a relation of the type says, where the name alone could be read in more than one way.</param>
+/// <param name="From">What kinds of thing the first entity may be; empty when the type does not say.</param>
+/// <param name="To">What kinds of thing the second entity may be; empty when the type does not say.</param>
+public sealed record RelationType(
+    string Key,
+    Directionality Directionality,
+    Kinship Kinship = Kinship.None,
+    string? Meaning = null,
+    ImmutableArray<EntityNature> From = default,
+    ImmutableArray<EntityNature> To = default)
+{
+    /// <summary>Returns whether an entity of that nature may stand at that end of a relation of the type.</summary>
+    public bool Fits(EntityNature nature, bool first)
+    {
+        var allowed = first ? From : To;
+        return allowed.IsDefaultOrEmpty || allowed.Contains(nature);
+    }
+}
 
 /// <summary>The relation types Dastan knows. A relation type has one meaning; similar wordings are not merged.</summary>
 public static class RelationTypes
@@ -140,7 +166,32 @@ public static class RelationTypes
         new("huntsNear", Directionality.Directed),
         new("appearsAt", Directionality.Directed),
         new("withholdsRemedyFor", Directionality.Directed),
+
+        // Relations of the world outside a story (step 10.6). Each says what it means and between what it holds;
+        // a relation between the wrong kinds of thing is refused.
+        new("siblingOf", Directionality.Symmetric, Kinship.None,
+            "brothers or sisters; a family tree is drawn from parents, not from this", Beings, Beings),
+        new("teacherOf", Directionality.Directed, Kinship.None,
+            "the first taught the second", Beings, Beings),
+        new("authorOf", Directionality.Directed, Kinship.None,
+            "the first wrote or composed the work", [EntityNature.Being, EntityNature.Group], [EntityNature.Work]),
+        new("bornIn", Directionality.Directed, Kinship.None,
+            "the place or region of birth", Beings, Places),
+        new("diedIn", Directionality.Directed, Kinship.None,
+            "the place or region of death", Beings, Places),
+        new("memberOf", Directionality.Directed, Kinship.None,
+            "the first belonged to the group", Beings, Groups),
+        new("founderOf", Directionality.Directed, Kinship.None,
+            "the first founded the group or the place", Beings, [EntityNature.Group, EntityNature.Place]),
+        new("locatedIn", Directionality.Directed, Kinship.None,
+            "the first lies in, or has its seat in, the second", [EntityNature.Place, EntityNature.Group], Places),
     ];
+
+    private static ImmutableArray<EntityNature> Beings => [EntityNature.Being];
+
+    private static ImmutableArray<EntityNature> Groups => [EntityNature.Group];
+
+    private static ImmutableArray<EntityNature> Places => [EntityNature.Place];
 
     /// <summary>Returns the type named <paramref name="key"/>, or <see langword="null"/> when the list has none.</summary>
     public static RelationType? Find(string key) => All.FirstOrDefault(type => string.Equals(type.Key, key, StringComparison.Ordinal));
@@ -166,6 +217,9 @@ public enum RelationScopeKind
 
     /// <summary>Something a character reports inside the events of the scope.</summary>
     ReportedInEvent = 5,
+
+    /// <summary>A statement about the world outside the story: who wrote the work, where a poet was born.</summary>
+    OutsideTheStory = 6,
 }
 
 /// <summary>
