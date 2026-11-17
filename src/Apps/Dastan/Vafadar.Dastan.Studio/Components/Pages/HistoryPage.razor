@@ -1,0 +1,50 @@
+@page "/{Collection}/history"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_known)
+{
+    <PageTitle>@T["History_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Collection"><bdi dir="ltr">@Collection</bdi></a></p>
+        <h1>@T["History_Title"]</h1>
+        <p class="lead">@string.Format(CultureInfo.CurrentCulture, T["History_Lead"], Editor.Number(_changes.Count), Editor.Number(_total))</p>
+    </header>
+
+    <ol class="changes" role="list">
+        @foreach (var change in _changes)
+        {
+            <li><ChangeView Change="change" Collection="@Collection" /></li>
+        }
+    </ol>
+}
+
+@code {
+    // A page of history shows the latest changes; the history of one record is on the page of the record.
+    private const int Shown = 100;
+
+    private bool _known;
+    private int _total;
+    private List<RecordChange> _changes = [];
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _known = Store.Collections.Contains(Collection);
+        if (!_known)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        var all = Store.History(Collection);
+        _total = all.Length;
+        _changes = [.. all.Reverse().Take(Shown)];
+    }
+}

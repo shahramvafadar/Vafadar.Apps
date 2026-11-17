@@ -96,3 +96,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   the site could not use afterwards is refused with the reasons.
 - The editors publish a revision out of their store: it numbers the revision itself, refuses a collection with a
   statement nobody reviewed, keeps every revision as it was published and can write one out again.
+- The editors have a tool in the browser, Dastan Studio: it shows the collections of their store, every record
+  as it is written, what still waits for a review, and the history of each record with what it said before and
+  after. It runs on the editors' machine only and does not change anything yet; the commands do.

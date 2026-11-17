@@ -78,6 +78,10 @@ for Dastan is added here in the same commit as the work it came with.
   rule to the store that the readers do not have, and never write to the store without reading the resulting
   collection with them. A change of the schema is a migration (`dotnet ef migrations add`); the file of a store
   is never committed.
+* The tool of the editors (`Vafadar.Dastan.Studio`) is built by the rules of the site – server-rendered pages, no
+  script, no style in a page, both languages – and shows a record as it is written, never an interpretation of
+  it. It answers the machine it runs on only; do not loosen that before editors can sign in (step 11.7), and do
+  not make the public site reference it or the store.
 * The site runs outside a developer's machine as one container without content
   ([ADR 0010](docs/adr/0010-running-the-site.md), [operations](docs/operations.md)). A change of a header, a
   cookie, a setting or of what the site serves is checked with `eng/Check-Site.ps1` against the container of

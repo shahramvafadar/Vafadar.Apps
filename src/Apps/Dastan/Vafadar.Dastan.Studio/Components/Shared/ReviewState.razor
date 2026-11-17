@@ -1,0 +1,13 @@
+@* The state of the review of a statement, in words. The states of the file format that mean "not reviewed yet"
+   are one state for an editor: the statement waits. *@
+@inject IStringLocalizer<Ui> T
+
+<span class="review review-@Kind">@T[$"Review_{Kind}"]</span>
+
+@code {
+    /// <summary>Gets or sets the state as the record says it.</summary>
+    [Parameter, EditorRequired]
+    public string Status { get; set; } = string.Empty;
+
+    private string Kind => Status is "reviewed" or "disputed" or "withdrawn" ? Status : "waiting";
+}

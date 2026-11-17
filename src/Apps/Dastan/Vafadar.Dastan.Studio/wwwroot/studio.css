@@ -1,0 +1,435 @@
+/*
+  The style of the tool of the editors. It builds on the base sheet of the Vafadar web apps and uses the colours
+  of the site (ADR 0004), so that the tool reads as part of Dastan. It is a working tool: tables and lists, no
+  drawing. Only logical properties are used, so right-to-left needs no second sheet.
+*/
+
+:root {
+  --surface: #fbfaf7;
+  --surface-raised: #ffffff;
+  --text: #1c1b2e;
+  --text-muted: #56556b;
+  --border: #d9d6e3;
+  --accent: #3b3a8f;
+  --accent-text: #ffffff;
+  --focus: #b45309;
+  --mark: #92400e;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --radius: 0.5rem;
+  --measure: 64rem;
+
+  font-family: "Segoe UI Variable Text", "Segoe UI", "Vazirmatn", "Noto Sans Arabic", system-ui, -apple-system, "Roboto", Tahoma, sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --surface: #14132a;
+  --surface-raised: #1f1e3d;
+  --text: #ecebf5;
+  --text-muted: #b6b4cc;
+  --border: #3a3960;
+  --accent: #b1b0ff;
+  --accent-text: #14132a;
+  --focus: #fbbf24;
+  --mark: #fcd34d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --surface: #14132a;
+    --surface-raised: #1f1e3d;
+    --text: #ecebf5;
+    --text-muted: #b6b4cc;
+    --border: #3a3960;
+    --accent: #b1b0ff;
+    --accent-text: #14132a;
+    --focus: #fbbf24;
+    --mark: #fcd34d;
+  }
+}
+
+a {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--space-2);
+  inset-block-start: -10rem;
+  padding: var(--space-2) var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.skip-link:focus {
+  inset-block-start: var(--space-2);
+}
+
+.site-header,
+.site-footer,
+main {
+  max-inline-size: var(--measure);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-6);
+  padding-block: var(--space-3);
+  border-block-end: 1px solid var(--border);
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.site-nav a,
+.languages a,
+.languages span,
+.theme button {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding-inline: var(--space-2);
+}
+
+.site-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-inline-start: auto;
+}
+
+.languages {
+  display: flex;
+  gap: var(--space-1);
+  padding: 0;
+  list-style: none;
+}
+
+.languages [aria-current] {
+  font-weight: 700;
+}
+
+.theme {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.theme button {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.theme button[aria-pressed="true"] {
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+main {
+  padding-block: var(--space-6);
+}
+
+main > *,
+section > * {
+  min-inline-size: 0;
+}
+
+main > * + * {
+  margin-block-start: var(--space-6);
+}
+
+section > * + * {
+  margin-block-start: var(--space-3);
+}
+
+.page-header > * + * {
+  margin-block-start: var(--space-2);
+}
+
+/* The way back to the collection and its group: links as large as a finger needs. */
+.page-header .meta a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+}
+
+.meta,
+.note {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.site-footer {
+  padding-block: var(--space-4);
+  border-block-start: 1px solid var(--border);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding-inline: var(--space-4);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+  gap: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.card a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.figure {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.plain {
+  display: grid;
+  gap: var(--space-1);
+  padding: 0;
+  list-style: none;
+}
+
+.plain a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+/* A table is as wide as what it says; on a narrow screen its frame scrolls, the page does not. */
+.table-frame {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.list {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.list th,
+.list td {
+  padding: var(--space-2) var(--space-3);
+  border-block-end: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.list thead th {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.list tbody tr:last-child th,
+.list tbody tr:last-child td {
+  border-block-end: 0;
+}
+
+.list tbody th {
+  font-weight: 400;
+}
+
+.list tbody th a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  font-weight: 600;
+}
+
+.list tbody th .meta {
+  display: block;
+}
+
+/* The state of a review is said in words; the border only helps the eye. */
+.review {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.review-waiting {
+  border-style: dashed;
+  border-color: var(--mark);
+}
+
+.review-disputed,
+.review-withdrawn {
+  border-style: dashed;
+}
+
+/* A record: its fields, nested as the record nests them. */
+.fields {
+  display: grid;
+  grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr);
+  gap: var(--space-1) var(--space-4);
+  margin: 0;
+}
+
+.fields dt {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.fields dd {
+  margin: 0;
+  min-inline-size: 0;
+}
+
+.fields .fields {
+  padding-inline-start: var(--space-3);
+  border-inline-start: 2px solid var(--border);
+}
+
+@media (max-width: 40rem) {
+  .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fields dd {
+    margin-block-end: var(--space-2);
+  }
+}
+
+.items {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding-inline-start: var(--space-6);
+}
+
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+}
+
+.values .value {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.value {
+  overflow-wrap: anywhere;
+}
+
+.empty {
+  color: var(--text-muted);
+}
+
+/* The history: one change after the other, the newest first. */
+/* A change is never wider than the page: what is wider in it – a table of fields – scrolls in its own frame. */
+.changes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.change {
+  min-inline-size: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.change > * + * {
+  margin-block-start: var(--space-2);
+}
+
+.change-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+}
+
+.change-head a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.change-removed {
+  border-style: dashed;
+}
+
+.diff td {
+  min-inline-size: 12rem;
+}

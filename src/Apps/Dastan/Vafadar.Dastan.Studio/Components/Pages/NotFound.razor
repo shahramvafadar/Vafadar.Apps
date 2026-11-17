@@ -1,0 +1,22 @@
+@page "/not-found"
+@inject IStringLocalizer<Ui> T
+@inject IHttpContextAccessor Accessor
+
+<PageTitle>@T["NotFound_Title"] – @T["Site_Name"]</PageTitle>
+
+<section class="page-header">
+    <h1>@T["NotFound_Title"]</h1>
+    <p class="lead">@T["NotFound_Text"]</p>
+    <p class="actions"><a class="action" href="./">@T["Nav_Collections"]</a></p>
+</section>
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Opened by its own address the page is still an answer for something that is not there.
+        if (Accessor.HttpContext is { Response.HasStarted: false } context && context.Response.StatusCode == StatusCodes.Status200OK)
+        {
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+@page "/error"
+@inject IStringLocalizer<Ui> T
+
+<PageTitle>@T["Error_Title"] – @T["Site_Name"]</PageTitle>
+
+@* The page shows nothing of the failure itself: what failed is in the log of the tool. *@
+<section class="page-header">
+    <h1>@T["Error_Title"]</h1>
+    <p class="lead">@T["Error_Text"]</p>
+    <p class="actions"><a class="action" href="./">@T["Nav_Collections"]</a></p>
+</section>

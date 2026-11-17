@@ -1,0 +1,51 @@
+@page "/"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject IStringLocalizer<Ui> T
+
+<PageTitle>@T["Home_Title"] – @T["Site_Name"]</PageTitle>
+
+<header class="page-header">
+    <h1>@T["Home_Title"]</h1>
+    <p class="lead">@T["Home_Lead"]</p>
+</header>
+
+@if (_collections.Count == 0)
+{
+    <p class="note" role="status">@T["Home_None"]</p>
+}
+else
+{
+    <div class="table-frame" tabindex="0" role="region" aria-label="@T["Home_Title"]">
+        <table class="list">
+            <thead>
+                <tr>
+                    <th scope="col">@T["Col_Collection"]</th>
+                    <th scope="col">@T["Col_Records"]</th>
+                    <th scope="col">@T["Col_Waiting"]</th>
+                    <th scope="col">@T["Col_Revisions"]</th>
+                    <th scope="col">@T["Col_Changed"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var collection in _collections)
+                {
+                    <tr>
+                        <th scope="row"><a href="@collection.Id"><bdi dir="ltr">@collection.Id</bdi></a></th>
+                        <td>@Editor.Number(collection.Records.Sum(group => group.Count))</td>
+                        <td>@string.Format(CultureInfo.CurrentCulture, T["Waiting_Of"], Editor.Number(collection.Waiting), Editor.Number(collection.Statements))</td>
+                        <td>@Editor.Number(collection.Revisions)</td>
+                        <td><bdi dir="ltr">@Editor.Moment(collection.UpdatedAt)</bdi></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    private List<CollectionSummary> _collections = [];
+
+    protected override void OnInitialized() =>
+        _collections = [.. Store.Collections.Select(id => Store.Summary(id)!)];
+}

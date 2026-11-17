@@ -1,0 +1,69 @@
+@page "/{Collection}/revisions"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_known)
+{
+    <PageTitle>@T["Revisions_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Collection"><bdi dir="ltr">@Collection</bdi></a></p>
+        <h1>@T["Revisions_Title"]</h1>
+        <p class="lead">@T["Revisions_Lead"]</p>
+    </header>
+
+    @if (_revisions.Count == 0)
+    {
+        <p class="note" role="status">@T["Revisions_None"]</p>
+    }
+    else
+    {
+        <div class="table-frame" tabindex="0" role="region" aria-label="@T["Revisions_Title"]">
+            <table class="list">
+                <thead>
+                    <tr>
+                        <th scope="col">@T["Col_Number"]</th>
+                        <th scope="col">@T["Col_Published"]</th>
+                        <th scope="col">@T["Col_By"]</th>
+                        <th scope="col">@T["Col_Note"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var revision in _revisions)
+                    {
+                        <tr>
+                            <th scope="row">@Editor.Number(revision.Number)</th>
+                            <td><bdi dir="ltr">@revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)</bdi></td>
+                            <td><bdi>@revision.By</bdi></td>
+                            <td><bdi>@revision.Note</bdi></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+@code {
+    private bool _known;
+    private List<RevisionInfo> _revisions = [];
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _known = Store.Collections.Contains(Collection);
+        if (!_known)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        // The newest revision first.
+        _revisions = [.. Store.Revisions(Collection).Reverse()];
+    }
+}

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Site_Name" xml:space="preserve">
+    <value>Dastan Studio</value>
+  </data>
+  <data name="Skip_ToContent" xml:space="preserve">
+    <value>Skip to the content</value>
+  </data>
+  <data name="Nav_Main" xml:space="preserve">
+    <value>Main</value>
+  </data>
+  <data name="Nav_Collections" xml:space="preserve">
+    <value>Collections</value>
+  </data>
+  <data name="Language_Label" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Theme_Label" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="Theme_Auto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Local_Notice" xml:space="preserve">
+    <value>The tool of the editors. It answers this machine only and shows what is not published.</value>
+  </data>
+  <data name="Home_Title" xml:space="preserve">
+    <value>Collections</value>
+  </data>
+  <data name="Home_Lead" xml:space="preserve">
+    <value>What the store of the editors holds.</value>
+  </data>
+  <data name="Home_None" xml:space="preserve">
+    <value>The store holds no collection yet. Bring one in with the command “store import”.</value>
+  </data>
+  <data name="Col_Collection" xml:space="preserve">
+    <value>Collection</value>
+  </data>
+  <data name="Col_Records" xml:space="preserve">
+    <value>Records</value>
+  </data>
+  <data name="Col_Waiting" xml:space="preserve">
+    <value>Waiting for a review</value>
+  </data>
+  <data name="Col_Revisions" xml:space="preserve">
+    <value>Revisions</value>
+  </data>
+  <data name="Col_Changed" xml:space="preserve">
+    <value>Last changed</value>
+  </data>
+  <data name="Col_Label" xml:space="preserve">
+    <value>Record</value>
+  </data>
+  <data name="Col_Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="Col_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Col_By" xml:space="preserve">
+    <value>By</value>
+  </data>
+  <data name="Col_Statement" xml:space="preserve">
+    <value>Statement</value>
+  </data>
+  <data name="Col_Kind" xml:space="preserve">
+    <value>Kind</value>
+  </data>
+  <data name="Col_Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="Col_Published" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="Col_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Waiting_Of" xml:space="preserve">
+    <value>{0} of {1}</value>
+  </data>
+  <data name="Collection_Lead" xml:space="preserve">
+    <value>The working state of the editors – not what the public sees.</value>
+  </data>
+  <data name="Collection_Records" xml:space="preserve">
+    <value>Records</value>
+  </data>
+  <data name="Collection_Work" xml:space="preserve">
+    <value>Work</value>
+  </data>
+  <data name="Collection_Waiting" xml:space="preserve">
+    <value>{0} of {1} statements wait for a review</value>
+  </data>
+  <data name="Collection_Revisions" xml:space="preserve">
+    <value>Published revisions: {0}</value>
+  </data>
+  <data name="Collection_Languages" xml:space="preserve">
+    <value>Translated into: {0}</value>
+  </data>
+  <data name="Collection_NoTranslation" xml:space="preserve">
+    <value>Not translated.</value>
+  </data>
+  <data name="Collection_Changed" xml:space="preserve">
+    <value>last changed {0}</value>
+  </data>
+  <data name="Group_sources" xml:space="preserve">
+    <value>Sources</value>
+  </data>
+  <data name="Group_entities" xml:space="preserve">
+    <value>Names</value>
+  </data>
+  <data name="Group_relations" xml:space="preserve">
+    <value>Relations</value>
+  </data>
+  <data name="Group_events" xml:space="preserve">
+    <value>Steps of the story</value>
+  </data>
+  <data name="Group_media" xml:space="preserve">
+    <value>Images and videos</value>
+  </data>
+  <data name="Group_translation" xml:space="preserve">
+    <value>Translation</value>
+  </data>
+  <data name="Kind_Dated" xml:space="preserve">
+    <value>Statement with a date</value>
+  </data>
+  <data name="Records_Title" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Records_Lead" xml:space="preserve">
+    <value>In the order of the editors. A record leads to what it says and to the history of its changes.</value>
+  </data>
+  <data name="Records_None" xml:space="preserve">
+    <value>This group has no record.</value>
+  </data>
+  <data name="Review_reviewed" xml:space="preserve">
+    <value>Reviewed</value>
+  </data>
+  <data name="Review_disputed" xml:space="preserve">
+    <value>Disputed</value>
+  </data>
+  <data name="Review_withdrawn" xml:space="preserve">
+    <value>Withdrawn</value>
+  </data>
+  <data name="Review_waiting" xml:space="preserve">
+    <value>Waits for a review</value>
+  </data>
+  <data name="Record_Now" xml:space="preserve">
+    <value>The record as it is now</value>
+  </data>
+  <data name="Record_State" xml:space="preserve">
+    <value>Version {0}, last changed by {1} on {2}</value>
+  </data>
+  <data name="Record_Gone" xml:space="preserve">
+    <value>This record was taken out of the collection. Its history is kept.</value>
+  </data>
+  <data name="Record_History" xml:space="preserve">
+    <value>History of the record</value>
+  </data>
+  <data name="Change_Added" xml:space="preserve">
+    <value>Came in</value>
+  </data>
+  <data name="Change_Changed" xml:space="preserve">
+    <value>Changed</value>
+  </data>
+  <data name="Change_Removed" xml:space="preserve">
+    <value>Taken out</value>
+  </data>
+  <data name="Change_Version" xml:space="preserve">
+    <value>version {0}</value>
+  </data>
+  <data name="Change_By" xml:space="preserve">
+    <value>by {0}</value>
+  </data>
+  <data name="Change_Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Change_NoReason" xml:space="preserve">
+    <value>No reason was given.</value>
+  </data>
+  <data name="Change_Fields" xml:space="preserve">
+    <value>What was changed</value>
+  </data>
+  <data name="Change_Field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="Change_Before" xml:space="preserve">
+    <value>Before</value>
+  </data>
+  <data name="Change_After" xml:space="preserve">
+    <value>After</value>
+  </data>
+  <data name="Change_Absent" xml:space="preserve">
+    <value>(not there)</value>
+  </data>
+  <data name="Waiting_Title" xml:space="preserve">
+    <value>Waiting for a review</value>
+  </data>
+  <data name="Waiting_None" xml:space="preserve">
+    <value>Every statement has been reviewed.</value>
+  </data>
+  <data name="History_Title" xml:space="preserve">
+    <value>History of changes</value>
+  </data>
+  <data name="History_Lead" xml:space="preserve">
+    <value>The latest {0} of {1} changes, the newest first.</value>
+  </data>
+  <data name="Revisions_Title" xml:space="preserve">
+    <value>Published revisions</value>
+  </data>
+  <data name="Revisions_Lead" xml:space="preserve">
+    <value>What the store published, each kept as it was published.</value>
+  </data>
+  <data name="Revisions_None" xml:space="preserve">
+    <value>No revision has been published from the store.</value>
+  </data>
+  <data name="NotFound_Title" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="NotFound_Text" xml:space="preserve">
+    <value>The store holds nothing at this address.</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
+  <data name="Error_Text" xml:space="preserve">
+    <value>The page could not be shown. Nothing was changed. What failed is in the log of the tool.</value>
+  </data>
+</root>
