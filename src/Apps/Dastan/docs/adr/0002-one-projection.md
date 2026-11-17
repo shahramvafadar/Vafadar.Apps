@@ -110,3 +110,31 @@ there is nothing a projection could bound. The rule of this decision still holds
 may be shown is decided once, on the server, before anything is laid out or linked – a comparison that is not
 released to the audience of the site is not kept by it (`DastanSite.Comparisons`), and no page gets it another way.
 The day a comparison draws on the records of a collection, it gets them from that collection's projection.
+
+## Addendum of 2026-11-18 – finding by kind, place and time; a gallery in another order (step 14.5)
+
+* **`Projection.Search(text, filter, limit)`** with a `SearchFilter`: a nature (a being, a group, a place, a
+  work …), a place, a year. A hit has to fit all that is asked. A place lets through the place itself and
+  whatever a relation connects with it, in either direction; a year lets through who takes part in a relation
+  that held or may have held then, and what something is stated of for that year (`Projection.At`, step 14.2).
+  Without a name everything the filter lets through is found, in the order of the collection; without a name
+  and without a filter nothing is. The filter is applied to the projection, so nothing of a later reading
+  stage is found by any choice.
+* **The form** asks for the choices on the page of the search only – the form on the page of a collection
+  stays one field. A choice is offered when there is something to choose: the natures the visitor may see,
+  the real places, a year when something states one. What the address says and is no choice of the form – a
+  kind that is none, a place that is no place the visitor may see, a year that is no year – is not asked for
+  and not written back.
+* **`GalleryView.Arranged(order, kind)`**: the order of the editors, or by when each item was made – oldest
+  or newest first; an item whose time cannot be placed among the years stands last. The page says which time
+  it is: the time of the making, never the time of what an item shows (document 15 – a miniature of 1330
+  shows a story that has no date). Images or videos only is offered when a gallery has both.
+
+Not done: a gallery of a period or a theme; the viewer of an item (previous, next) still follows the order of
+the editors; the search by year takes years of the common era only (the page of a year takes both).
+
+Verification: `FindingTests` (19 cases) – a filter alone, a place, a year, a name with a filter; the form in
+both languages; the choices kept; four addresses that are no choice; a story alone; the order of a gallery
+with its time basis in both languages; the oldest first and what has no year last; one kind only; an order
+that is none. The gallery of the repository shows a visitor at the opening no image, so its page was checked
+for the tools and the list by the read model. Not looked at in a browser.

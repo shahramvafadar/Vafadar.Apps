@@ -16,18 +16,18 @@
         <h1>@T["Search_Title"]</h1>
     </header>
 
-    <SearchForm Query="@_query" />
+    <SearchForm Query="@_query" Filters="true" Filter="_filter" />
 
-    @if (_query.Length > 0)
+    @if (_query.Length > 0 || !_filter.IsEmpty)
     {
         @if (_hits.IsEmpty)
         {
             @* The same sentence for a name that does not exist and for one that has not been reached. *@
-            <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_None"], _query)</p>
+            <p class="note" role="status">@(_query.Length > 0 ? string.Format(CultureInfo.CurrentCulture, T["Search_None"], _query) : T["Search_NoneFiltered"])</p>
         }
         else
         {
-            <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_Results"], _query, Visitor.Number(_hits.Length))</p>
+            <p class="note" role="status">@(_query.Length > 0 ? string.Format(CultureInfo.CurrentCulture, T["Search_Results"], _query, Visitor.Number(_hits.Length)) : string.Format(CultureInfo.CurrentCulture, T["Search_ResultsFiltered"], Visitor.Number(_hits.Length)))</p>
             <ul class="cards" role="list">
                 @foreach (var hit in _hits)
                 {
@@ -35,7 +35,7 @@
                         <h2><a href="@($"{Site.Collection}/entity/{hit.Entity.Id}")"><Loc Text="hit.Entity.Label" /></a></h2>
                         <p class="meta"><TypeName Type="hit.Entity.Type" /></p>
                         @* A hit says why it is one: the name that matched, when it is not the name shown above. *@
-                        @if (hit.Name != Visitor.Text(hit.Entity.Label).Value)
+                        @if (hit.Name.Length > 0 && hit.Name != Visitor.Text(hit.Entity.Label).Value)
                         {
                             <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Search_MatchedName"], hit.Name)</p>
                         }
@@ -56,6 +56,7 @@
     private string _query = string.Empty;
     private string _story = string.Empty;
     private ImmutableArray<SearchHit> _hits = [];
+    private SearchFilter _filter = new();
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -64,6 +65,18 @@
     /// <summary>Gets or sets what the visitor typed.</summary>
     [SupplyParameterFromQuery(Name = "q")]
     public string? Q { get; set; }
+
+    /// <summary>Gets or sets the kind of thing looked for: the name of a nature in small letters.</summary>
+    [SupplyParameterFromQuery(Name = "kind")]
+    public string? Kind { get; set; }
+
+    /// <summary>Gets or sets the identifier of the place the hits are connected to.</summary>
+    [SupplyParameterFromQuery(Name = "place")]
+    public string? Place { get; set; }
+
+    /// <summary>Gets or sets the year of the common era the hits take part in something.</summary>
+    [SupplyParameterFromQuery(Name = "year")]
+    public string? Year { get; set; }
 
     protected override void OnInitialized()
     {
@@ -79,6 +92,12 @@
         _query = typed.Length > LongestQuery ? typed[..LongestQuery] : typed;
 
         // The projection searches what this visitor may see and nothing else (ADR 0002).
-        _hits = projection.Search(_query, MostHits);
+        // What the address says beside the name is a choice of the form or nothing: a kind that is none, a place
+        // the visitor may not see and a year that is no year are not asked for.
+        _filter = new SearchFilter(
+            Enum.GetValues<EntityNature>().Cast<EntityNature?>().FirstOrDefault(nature => string.Equals(nature.ToString(), Kind, StringComparison.OrdinalIgnoreCase) && Kind!.All(char.IsAsciiLetter)),
+            Place is { Length: > 0 } place && !place.Any(char.IsWhiteSpace) && projection.Find(new EntityId(place)) is { Type.Nature: EntityNature.Place } found ? found.Id : null,
+            int.TryParse(Year, NumberStyles.None, CultureInfo.InvariantCulture, out var number) && number is >= 1 and <= 9999 ? new YearOfEra(Vafadar.Temporal.Era.CommonEra, number) : null);
+        _hits = projection.Search(_query, _filter, MostHits);
     }
 }

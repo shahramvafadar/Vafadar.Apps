@@ -153,6 +153,12 @@ public enum GalleryOrder
 {
     /// <summary>The order the editors gave the items. No date is involved.</summary>
     Editorial = 0,
+
+    /// <summary>By when each item was made, the oldest first. It is the time of the making – never the time of what an item shows.</summary>
+    OldestFirst = 1,
+
+    /// <summary>By when each item was made, the newest first.</summary>
+    NewestFirst = 2,
 }
 
 /// <summary>
@@ -212,6 +218,28 @@ public sealed record GalleryView(
     /// gallery names them with their catalogue record and the way to that page, and shows nothing of them.
     /// </summary>
     public ImmutableArray<MediaReference> References { get; init; } = [];
+
+    /// <summary>
+    /// Returns the gallery with the items of one kind only, or in another order. An item whose time of making
+    /// cannot be placed among the years stands after the others, in the order of the editors.
+    /// </summary>
+    public GalleryView Arranged(GalleryOrder order, MediaKind? kind)
+    {
+        var items = Items.Where(item => kind is null || item.Kind == kind);
+        var references = References.Where(item => kind is null || item.Kind == kind);
+        if (order != GalleryOrder.Editorial)
+        {
+            decimal? Made(Vafadar.Temporal.TemporalExpression time) => YearCover.Reach(time)?.Middle;
+            items = order == GalleryOrder.OldestFirst
+                ? items.OrderBy(item => Made(item.Created) is null).ThenBy(item => Made(item.Created))
+                : items.OrderBy(item => Made(item.Created) is null).ThenByDescending(item => Made(item.Created));
+            references = order == GalleryOrder.OldestFirst
+                ? references.OrderBy(item => Made(item.Created) is null).ThenBy(item => Made(item.Created))
+                : references.OrderBy(item => Made(item.Created) is null).ThenByDescending(item => Made(item.Created));
+        }
+
+        return this with { Order = order, Items = [.. items], References = [.. references] };
+    }
 
     /// <summary>Gets whether the gallery has nothing to show and nothing to refer to.</summary>
     public bool IsEmpty => Items.IsEmpty && References.IsEmpty;
@@ -291,6 +319,16 @@ public sealed record EvidenceView(
 /// <param name="Name">The name that matched.</param>
 /// <param name="Language">The language of that name.</param>
 public sealed record SearchHit(Entity Entity, string Name, string Language);
+
+/// <summary>What the hits of a search have to be, beside having the name.</summary>
+/// <param name="Nature">What kind of thing: a being, a group, a place, a work.</param>
+/// <param name="Place">A place the hit is connected to by a relation, or is itself.</param>
+/// <param name="Year">A year in which the hit takes part in a relation that held or may have held, or for which something is stated of it.</param>
+public sealed record SearchFilter(EntityNature? Nature = null, EntityId? Place = null, YearOfEra? Year = null)
+{
+    /// <summary>Gets a value indicating whether the filter lets everything through.</summary>
+    public bool IsEmpty => Nature is null && Place is null && Year is null;
+}
 
 /// <summary>What a collection has with a time of the calendar, as far as the visitor may see it.</summary>
 /// <param name="Subjects">The entities something dated is stated about, in the order of the collection.</param>
