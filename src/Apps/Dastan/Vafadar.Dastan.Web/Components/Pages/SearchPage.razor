@@ -8,6 +8,8 @@
 @if (_known)
 {
     <PageTitle>@T["Search_Title"] – @T["Site_Name"]</PageTitle>
+    @* The answer to a search is no page of its own: an engine follows its links and keeps none of it. *@
+    <HeadContent><meta name="robots" content="noindex, follow" /></HeadContent>
 
     <header class="page-header">
         <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _story)</a></p>

@@ -1727,3 +1727,67 @@ main:has(> .stage) > :not(.stage) {
   stroke: var(--focus);
   stroke-width: 3px;
 }
+
+/* On paper (step 14.4): the content of the page, without what only a screen can use. A chart is printed as far
+   as it fits; the list under it says the same. */
+@media print {
+  :root {
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --text: #000000;
+    --text-muted: #333333;
+    --border: #999999;
+    --accent: #000000;
+    --accent-text: #ffffff;
+  }
+
+  .skip-link,
+  .site-nav,
+  .site-tools,
+  .search,
+  .actions,
+  .chart-tools,
+  .stage-edge,
+  .evidence-link,
+  form {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  main {
+    max-inline-size: none;
+  }
+
+  .stage,
+  .stage-frame,
+  .series-frame {
+    display: block;
+    overflow: visible;
+    block-size: auto;
+    max-block-size: none;
+    border: 0;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  li,
+  figure,
+  .card {
+    break-inside: avoid;
+  }
+
+  /* Where a link leads is printed after it, when it leads out of the site. */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+}

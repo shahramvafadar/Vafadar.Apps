@@ -332,7 +332,8 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
 
         // Two style sheets and the icon, addressed from the page; the font of the Persian text, the manifest and
         // the icon for a home screen, addressed from the root of the site.
-        Assert.Equal(6, files.Count);
+        // Beside them the page names its own address and its address in each language (step 14.4).
+        Assert.Equal(9, files.Count);
         Assert.Contains("<link rel=\"preload\" href=\"/fonts/vazirmatn-nl-wght.woff2\" as=\"font\" type=\"font/woff2\" crossorigin", page.Html, StringComparison.Ordinal);
         foreach (var file in files)
         {

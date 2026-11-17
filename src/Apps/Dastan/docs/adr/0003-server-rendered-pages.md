@@ -79,3 +79,39 @@ page that says so.
 The one script also brings the name a chart is drawn around into sight
 ([ADR 0008](0008-charts.md), fifth addendum). The rule is unchanged: a page shows its content and can be used
 without the script, and no script is written into a page.
+
+## Third addendum of 2026-11-18 – pages that can be found and passed on (step 14.4, R-PLAT-04)
+
+The pages are text written by the server, so an engine can read them. What was missing is what tells an
+engine, or a messenger that previews a link, where a page is and what it is about.
+
+* **Every page names its address** (`PageAddress`, in the layout): `rel="canonical"`, the same page in each
+  language of the site (`hreflang`), and `og:url`, `og:type`, `og:site_name`, `og:locale`. The address is
+  the one the page was asked by – scheme and host as the site was reached, which behind a proxy is what the
+  trusted proxy says (docs/operations.md). The pages "not found", "refused" and "an error" take it back:
+  they have no address of their own. It stands in the head through a section, because a page decides that it
+  is not found after the head was begun.
+* **A page of content says what it is about** (`PageDescription`): the start page, a collection, an entity
+  and a comparison carry `description`, `og:title` and `og:description` – the summary the page shows to this
+  visitor, cut at a word after 200 characters. A description never says more than the page: it is made from
+  what the projection gave for the reading position.
+* **`/robots.txt`**: a public site lets every engine in, keeps it out of `/preferences/` and names the list
+  of its pages; a demonstration sends every engine away, as its header and its `meta` already do.
+* **`/sitemap.xml`** (public sites only; a demonstration answers "not found"): the start page, the collection,
+  its stories, gallery, timeline, places, the page of a year, its revisions, every entity and every image or
+  video, and the comparisons – each in every language, naming the others. **Only what a visitor sees who has
+  read nothing yet**: a page of a later reading stage is in no list, so an engine cannot show what a reader
+  has not reached.
+* **The answer to a search** carries `noindex, follow`: it is no page of its own.
+* **Paper**: the style sheet has rules for printing – no navigation, no forms, no steps of a chart; a chart is
+  printed as far as it fits and the list under it says the same; a link that leads out of the site is followed
+  by its address.
+
+Not done: a picture for the preview of a link (`og:image`) – the site has no picture that stands for a page,
+and one of a collection would have to be allowed for the public first; a feed of what changed; structured
+data (schema.org).
+
+Verification: `FindablePagesTests` (10 cases) – the address of a page in both languages on four pages; the
+description in the words of the page; no address on a page that is not there; `robots.txt` and the list of a
+demonstration and of a public site; nothing of a later reading stage in the list; rules for paper in the
+style sheet. Not looked at in a browser and not printed.

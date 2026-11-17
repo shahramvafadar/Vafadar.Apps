@@ -1,0 +1,39 @@
+@* Where a page is, for whoever keeps or passes on its address (step 14.4): the address of the page itself and
+   of the same page in each language of the site. It is written into the head of the page. A page that has no
+   address of its own – "not found", "refused", "an error" – says so with <c>None</c>. *@
+@using Microsoft.AspNetCore.Components.Sections
+@inject Visitor Visitor
+@inject NavigationManager Navigation
+@inject IOptions<SiteLanguageOptions> Languages
+@inject IStringLocalizer<Ui> T
+
+<SectionContent SectionName="@Section">
+    @if (!None)
+    {
+        <link rel="canonical" href="@Address(Visitor.Language.Tag)" />
+        @foreach (var tag in Languages.Value.Languages)
+        {
+            <link rel="alternate" hreflang="@tag" href="@Address(tag)" />
+        }
+        <meta property="og:url" content="@Address(Visitor.Language.Tag)" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="@T["Site_Name"]" />
+        <meta property="og:locale" content="@Visitor.Language.Tag" />
+    }
+</SectionContent>
+
+@code {
+    /// <summary>The name of the place in the head of a page.</summary>
+    public const string Section = "page-address";
+
+    /// <summary>Gets or sets whether the page has no address of its own.</summary>
+    [Parameter]
+    public bool None { get; set; }
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    // The whole address of this page in a language of the site. The language stands first in every address of a
+    // page; the site is not run below a folder of a host.
+    private string Address(string language) => $"{Context.Request.Scheme}://{Context.Request.Host}/{language}/{Navigation.ToBaseRelativePath(Navigation.Uri)}";
+}

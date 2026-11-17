@@ -48,6 +48,6 @@ public sealed class FontTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.Matches("@font-face\\s*\\{\\s*font-family: \"Vazirmatn\";\\s*src: url\\(\"fonts/vazirmatn-nl-wght\\.woff2\"\\) format\\(\"woff2\"\\);", styles);
         Assert.DoesNotMatch("url\\(\\s*[\"']?(https?:)?//", styles);
         Assert.DoesNotContain("@import", styles, StringComparison.Ordinal);
-        Assert.DoesNotMatch("(src|href)=\"(https?:)?//", Regex.Replace(page.Html, "<a\\s[^>]*>", string.Empty));
+        Assert.DoesNotMatch("(src|href)=\"(https?:)?//", Regex.Replace(page.Html, "<a\\s[^>]*>|<link rel=\"(canonical|alternate)\"[^>]*>|<meta property=\"og:url\"[^>]*>", string.Empty));
     }
 }

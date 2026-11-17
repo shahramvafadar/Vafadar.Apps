@@ -7,6 +7,7 @@
 @if (_overview is { } overview)
 {
     <PageTitle>@Visitor.Text(overview.Subject.Label).Value – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@Visitor.Text(overview.Subject.Label).Value" Text="@Visitor.Text(overview.Subject.Summary).Value" />
 
     <header class="page-header">
         <p class="meta"><TypeName Type="overview.Subject.Type" /></p>

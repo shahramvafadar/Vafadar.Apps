@@ -8,6 +8,7 @@
 {
     var story = Visitor.Projection!.Overview().Subject;
     <PageTitle>@Visitor.Text(overview.Entity.Label).Value – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@Visitor.Text(overview.Entity.Label).Value" Text="@Visitor.Text(overview.Entity.Summary).Value" />
 
     <header class="page-header">
         <p class="meta"><TypeName Type="overview.Entity.Type" /></p>
