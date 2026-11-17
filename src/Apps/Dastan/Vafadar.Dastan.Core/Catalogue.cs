@@ -436,6 +436,8 @@ public sealed class Catalogue
                 EntityNature.Place => "a place",
                 EntityNature.Work => "a work",
                 EntityNature.Object => "a thing",
+                EntityNature.Role => "an office or honour",
+                EntityNature.Subject => "a subject",
                 _ => "an occasion",
             };
         }

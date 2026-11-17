@@ -169,7 +169,32 @@ that holds a withdrawn statement is refused.
 | `Person` | A real person, living or historical: a poet, a ruler, a scholar – not a character | somebody |
 | `Organisation` | People who act under one name: a court, a dynasty, a school, an institution | a group |
 | `Place` | A real place: a city, a village, a building | a place |
-| `Region` | A real region: a country, a province, a historical land | a place |
+| `Region` | A real region: a province, a historical land | a place |
+| `Company` | A company: a legal body that does business; not its brands | a group |
+| `Brand` | A brand: a name under which things are sold; not the company that owns it | a thing |
+| `Product` | A product or a line of products | a thing |
+| `University` | A university or another institution of learning; not the place of its campus | a group |
+| `Government` | A government or a state as an institution; not the land it rules | a group |
+| `Dynasty` | A dynasty: a ruling house over generations | a group |
+| `Family` | A family or a house, as a group with a name | a group |
+| `Community` | A people or a community; not the land it lives in | a group |
+| `Country` | A country as a land with a name; its borders depend on the time | a place |
+| `SportsClub` | A sports club | a group |
+| `SportsTeam` | One team of a club: the first team, a youth team, the women's team | a group |
+| `Competition` | A competition: a league, a cup, a tournament | an occasion |
+| `CompetitionSeason` | One season or edition of a competition | an occasion |
+| `Event` | Something that happened in the world: a battle, a founding, a match – not a step of the story | an occasion |
+| `Period` | A period of history: an era, a reign as a span of time | an occasion |
+| `Office` | An office or a title somebody holds: king, vizier, president | an office or honour |
+| `Honour` | An honour or a prize that is given | an office or honour |
+| `Object` | A real thing: a manuscript, a sword, a coin | a thing |
+| `NaturalSubject` | A subject of nature: a species, a river system, an element | a subject |
+| `Concept` | An idea, a field of knowledge, a technique | a subject |
+
+Things that share a name stay apart by their type: a `Brand` is not the `Company` that owns it, a `SportsTeam`
+is not its `SportsClub`, a `Government` or `Dynasty` is not the `Country` it rules, a `CompetitionSeason` is
+not its `Competition`, and an `Event` – something that happened in the world – is not a step of the telling
+(the records of `events`).
 
 A thing of the story and a thing of the world are different entities, also when they share a name: the Turan
 of the poem is a `NarrativeRegion`; a land of history is a `Region`. Do not make one stand for the other.
@@ -201,7 +226,9 @@ empty; optional `interpretation`; `calendarPeriod` is `null` or left out. A fami
 
 These types say what they mean and between what kinds of thing they hold; a relation between other kinds is
 refused. "Somebody" is a `Person`, a `Character` or an `AnimalCharacter` – the type says what kind of thing,
-not whether it is of the story.
+not whether it is of the story. "Anything" means the type does not say. What reads the other way round is no
+type of its own: "student of" is `teacherOf` from the other entity, and the `label` says it in words. A new
+name of the same thing is no relation either.
 
 | `type` | Meaning | From | To |
 |---|---|---|---|
@@ -213,6 +240,53 @@ not whether it is of the story.
 | `memberOf` | The first belonged to the group | somebody | a group |
 | `founderOf` | The first founded the group or the place | somebody | a group or a place |
 | `locatedIn` | The first lies in, or has its seat in, the second | a place or a group | a place |
+| `adoptiveParentOf` | The first adopted or raised the second; a family tree is drawn from parents by birth | somebody | somebody |
+| `patronOf` | The first supported the second with money, protection or a commission | somebody or a group | somebody or a group or a work |
+| `successorOf` | The first followed the second, in an office or as an organisation | somebody or a group | somebody or a group |
+| `holderOf` | The first held the office, bore the title or received the honour | somebody or a group | an office or honour |
+| `employedBy` | The first worked for the group | somebody | a group |
+| `leaderOf` | The first led, managed or governed the second | somebody | a group or a place |
+| `ownerOf` | The first owned the second, wholly or in part | somebody or a group | a group or a place or a thing or a work |
+| `studiedAt` | The first studied at the institution or in the place | somebody | a group or a place |
+| `alliedWith` | Allies; the same from both sides | somebody or a group | somebody or a group |
+| `supporterOf` | The first is known as a supporter of the group | somebody | a group |
+| `livedIn` | The first lived or worked in the place | somebody or a group | a place |
+| `translatorOf` | The first translated the work | somebody or a group | a work |
+| `illustratorOf` | The first illustrated or painted the work | somebody or a group | a work |
+| `publisherOf` | The first published the work | somebody or a group | a work |
+| `commissionerOf` | The first ordered the work to be made | somebody or a group | a work |
+| `dedicatedTo` | The work is dedicated to the second | a work | somebody or a group |
+| `adaptationOf` | The first work retells or adapts the second | a work | a work |
+| `translationOf` | The first work is a translation of the second | a work | a work |
+| `editionOf` | The first is an edition, a manuscript or a copy of the second work | a work or a thing | a work |
+| `about` | The work is about the second | a work | anything |
+| `keptAt` | The first is kept in the place or by the group | a work or a thing | a place or a group |
+| `portrayalOf` | The first portrays the second – a character drawn from a person, a role in an adaptation; they stay two entities | somebody | somebody |
+| `possiblySameAs` | Possibly the same; it is not established, and the two stay two entities; the same from both sides | anything | anything |
+| `confusedWith` | Commonly taken for one another; they are not the same; the same from both sides | anything | anything |
+| `acquired` | The first took over ownership or control of the second; the second need not cease to exist | somebody or a group | a group or a thing |
+| `mergedInto` | The first merged into the second, which followed it | a group | a group |
+| `spunOffFrom` | The first was split off from the second | a group | a group |
+| `subsidiaryOf` | The first belongs to the second as a part with a name of its own | a group | a group |
+| `brandOf` | The first is a brand of the second | a thing | a group |
+| `productOf` | The first is made or sold by the second | a thing | somebody or a group |
+| `governs` | The government or dynasty held power over the land or the people | a group | a place or a group |
+| `capitalOf` | The first is the seat of government of the second | a place | a place or a group |
+| `teamOf` | The first is a team of the club | a group | a group |
+| `playsFor` | The first played for the team or club | somebody | a group |
+| `coachOf` | The first coached the team or club | somebody | a group |
+| `captainOf` | The first was captain of the team | somebody | a group |
+| `loanedTo` | The first played for the group on loan | somebody | a group |
+| `transferredTo` | The first moved to the group | somebody | a group |
+| `competesIn` | The first took part in the competition or season | somebody or a group | an occasion |
+| `winnerOf` | The first won the competition, the season or the event | somebody or a group | an occasion |
+| `organiserOf` | The first organised the competition or the event | somebody or a group | an occasion |
+| `seasonOf` | The first is a season or an edition of the second | an occasion | an occasion |
+| `participantIn` | The first took part in the event | somebody or a group | an occasion |
+| `tookPlaceIn` | The event took place there | an occasion | a place |
+| `during` | The first happened in, or is part of, the period | an occasion | an occasion |
+| `worksIn` | The first worked in the field or on the subject | somebody or a group | a subject |
+| `foundIn` | The subject is found in the place | a subject | a place |
 
 When something happened – a birth, a death, a reign – is not said by a relation: it is a statement with a date
 of the entity (`dated`).

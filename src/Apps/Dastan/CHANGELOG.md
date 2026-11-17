@@ -116,3 +116,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   what is said of them – who wrote a work, who taught whom, where somebody was born or died, who belonged to or
   founded what, what lies where. Their pages name their kind in English and Persian. The first collection does
   not use this yet.
+- The vocabulary of a collection is complete against the product documents: companies, brands and products,
+  universities, governments, dynasties, families, peoples and countries, clubs, teams, competitions and seasons,
+  events and periods, offices and honours, real objects and subjects of knowledge – and 47 more things that can
+  be said between them, from "held the office" and "translation of" to "merged into", "plays for" and "possibly
+  the same". Each has its meaning and its name in English and Persian.

@@ -365,3 +365,20 @@ looked at in a browser in both languages.
 
 Not part of the phase: a tool for visitors, uploading and converting media (document 9: needs an intake design),
 comparisons in the store (they stay files until the store holds collections well), accounts of visitors.
+
+## 13. Everything the model can say (phase 12)
+
+Asked for by the owner on 2026-11-17 together with D-047: what the product documents name as possible is built
+before content needs it, and the work goes on through the phases below without waiting. Phase 12 completes the
+model and the formats; phase 13 the tool of the editors; phase 14 the public site; phase 15 accounts of
+visitors and private spaces. A step is done when it is built, tested, documented and merged; a step with pages
+is looked at in a browser in both languages where that can be done on this machine.
+
+| Step | What | Status |
+|---|---|---|
+| 12.1 | **The whole vocabulary of things and relations** (DOM-002, DOM-003, DOM-004, DOM-007 to DOM-012): companies, brands and products; universities, governments, dynasties, families and peoples; countries; clubs, teams, competitions and seasons; events and periods of history; offices and honours; real objects; subjects of nature and of knowledge – and what is said between them: offices held, works translated, adapted and kept, identity that is not established, acquisitions, mergers and splits, governments and capitals, sport, events. Every type says what it means, has a name in English and Persian, and a relation type says between what kinds of thing it holds | **Done** 2026-11-17 – 31 entity types, 72 relation types; two more kinds of thing (an office or honour, a subject); the list for writers says what each type is ([ADR 0001](adr/0001-domain-read-model.md), second addendum) |
+| 12.2 | **A relation in time** (DOM-007, TIME): a relation may say when it held – a period, a year, a season – as stated; two tenures are two relations and are never drawn as one; shown where the relation is shown and on the timeline | Planned |
+| 12.3 | **Names** (DOM-003): other names, earlier names with the time they were used, names in other scripts, abbreviations, and identifiers of other catalogues with who issued them; the search finds a thing by any of them | Planned |
+| 12.4 | **More than one story in a collection, and a file written in another language than English** | Planned |
+| 12.5 | **The Persian texts of dated statements and reading stages in the tool of the editors** | Planned |
+| 12.6 | **Comparisons in the store and in the tool** | Planned |

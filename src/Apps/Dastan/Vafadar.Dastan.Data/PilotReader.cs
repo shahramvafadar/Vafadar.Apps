@@ -17,7 +17,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private const string ContentRootName = "the folder of the collection";
     private const string ReviewRootName = "the folder of the editors' documents";
 
-    private static readonly FrozenDictionary<string, EntityType> EntityTypeNames = Names(
+    private static readonly FrozenDictionary<string, EntityType> EntityTypeNames = Named(
         ("Work", EntityTypes.Work),
         ("NarrativeArc", EntityTypes.StoryArc),
         ("Character", EntityTypes.Character),
@@ -214,15 +214,29 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     }
 
     // The kinds of thing a relation type holds between, in the words of the list for writers.
-    private static string Natures(ImmutableArray<EntityNature> natures) => string.Join(" or ", natures.Select(nature => nature switch
+    private static string Natures(ImmutableArray<EntityNature> natures) => natures.IsDefaultOrEmpty ? "anything" : string.Join(" or ", natures.Select(nature => nature switch
     {
         EntityNature.Being => "a person, character or animal",
         EntityNature.Group => "an organisation",
         EntityNature.Place => "a place or region",
         EntityNature.Work => "a work",
         EntityNature.Object => "an object",
-        _ => "an occasion",
+        EntityNature.Role => "an office or honour",
+        EntityNature.Subject => "a subject of knowledge",
+        _ => "a competition, season, event or period",
     }));
+
+    // The types the first files named in words of their own; every other type is written as its key with a capital.
+    private static FrozenDictionary<string, EntityType> Named(params (string Name, EntityType Value)[] names)
+    {
+        var all = names.ToDictionary(name => name.Name, name => name.Value, StringComparer.Ordinal);
+        foreach (var type in EntityTypes.All.Except(all.Values))
+        {
+            all.Add(char.ToUpperInvariant(type.Key[0]) + type.Key[1..], type);
+        }
+
+        return all.ToFrozenDictionary(StringComparer.Ordinal);
+    }
 
     /// <summary>Returns the name a file gives a type of entity.</summary>
     internal static string NameOf(EntityType type) => EntityTypeNames.First(name => name.Value == type).Key;
@@ -240,7 +254,10 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             new("publication.history[].changes[].recordKind", "What kind of record a change is about.", Of(RecordKinds)),
             new("editionContext.summaryLanguage", "The language the texts of the file are written in.", Of(LanguageNames.Keys)),
             new("sources[].kind", "What kind of source it is.", Of(SourceKindNames.Keys)),
-            new("entities[].type", "What kind of thing an entity is.", Of(EntityTypeNames.Keys)),
+            new(
+                "entities[].type",
+                "What kind of thing an entity is.",
+                [.. EntityTypeNames.OrderBy(name => name.Key, StringComparer.Ordinal).Select(name => new ContentChoice(name.Key, name.Value.Meaning))]),
             new(
                 "relations[].type",
                 "What a relation says. A type has one meaning; similar wordings are not merged into it.",
@@ -255,7 +272,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                                 _ => string.Empty,
                             }
                             + (type.Meaning is null ? string.Empty : "; " + type.Meaning)
-                            + (type.From.IsDefaultOrEmpty ? string.Empty : $"; from {Natures(type.From)} to {Natures(type.To)}"))),
+                            + (type.From.IsDefaultOrEmpty && type.To.IsDefaultOrEmpty ? string.Empty : $"; from {Natures(type.From)} to {Natures(type.To)}"))),
                 ]),
             new("relations[].directionality", "Whether the relation reads from one entity to the other; it has to agree with the type.", Of(DirectionNames.Keys)),
             new("relations[].scope.kind", "What the relation is a statement about.", Of(ScopeKindNames.Keys)),
