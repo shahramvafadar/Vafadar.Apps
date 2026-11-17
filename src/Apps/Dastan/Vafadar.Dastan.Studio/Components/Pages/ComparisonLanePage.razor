@@ -1,0 +1,207 @@
+@page "/comparisons/{Id}/lanes/{Key}"
+@page "/comparisons/{Id}/new-lane"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* One lane of a comparison as a form (step 13.6b): its name, its periods and its events as rows, each with the
+   inputs of its time. What was filled in goes back into the comparison, which the readers try as a whole. *@
+@if (_lane is not null)
+{
+    var title = Key is null ? T["Comparison_AddLane"].Value : (string?)_lane["label"] ?? Key;
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta">
+            <a href="comparisons">@T["Nav_Comparisons"]</a> –
+            <a href="@($"comparisons/{Id}")"><bdi dir="ltr">@Id</bdi></a>
+        </p>
+        <h1><bdi>@title</bdi></h1>
+        <p class="lead">@T["Comparison_LaneLead"]</p>
+    </header>
+
+    @if (Done is "changed" or "unchanged" or "added")
+    {
+        <p class="done" role="status">@T[$"Done_{Done}"]</p>
+    }
+
+    <ActOutcome Problems="_problems" />
+    <Allowed Role="EditorRoles.Writer">
+        <form method="post" @formname="lane" @onsubmit="Keep" class="act" action="@Here">
+            <AntiforgeryToken />
+            <input type="hidden" name="@Seen.Input" value="@_seen" />
+            @if (Key is null)
+            {
+                <p class="field">
+                    <label for="lane-key"><code>key</code></label>
+                    <input id="lane-key" name="key" value="@_key" required maxlength="100" dir="ltr" aria-describedby="lane-key-hint" />
+                    <span class="hint" id="lane-key-hint">@T["Comparison_LaneKeyHint"]</span>
+                </p>
+            }
+            @foreach (var field in RecordForm.Of(ComparisonForm.Lanes, _filled ?? _lane, _form!))
+            {
+                <FieldInput Field="field" />
+            }
+            <WhoAndWhy Form="lane" Model="Keeping" By="@(Keeping?.By ?? Editor.Name)" Reason="@(Keeping?.Reason ?? string.Empty)" />
+            <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
+        </form>
+    </Allowed>
+
+    @if (Key is not null)
+    {
+        <section aria-labelledby="remove">
+            <h2 id="remove">@T["Remove_Title"]</h2>
+            <p class="note">@T["Comparison_LaneRemoveLead"]</p>
+            <ActOutcome Problems="_removeProblems" />
+            <Allowed Role="EditorRoles.Writer">
+                <form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="@Seen.Input" value="@_seen" />
+                    <WhoAndWhy Form="remove" Model="Removing" By="@(Removing?.By ?? Editor.Name)" Reason="@(Removing?.Reason ?? string.Empty)" />
+                    <p><button type="submit" class="action danger">@T["Remove_Submit"]</button></p>
+                </form>
+            </Allowed>
+        </section>
+    }
+}
+
+@code {
+    private ExportedCollection? _comparison;
+    private JsonObject? _file;
+    private JsonObject? _lane;
+    private JsonObject? _filled;
+    private FormContext? _form;
+    private string _key = string.Empty;
+    private string _seen = string.Empty;
+    private List<string>? _problems;
+    private List<string>? _removeProblems;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets the identifier of the comparison in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the key of the lane in the address; nothing for a lane that is added.</summary>
+    [Parameter]
+    public string? Key { get; set; }
+
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets who filled in the lane, and why.</summary>
+    [SupplyParameterFromForm(FormName = "lane")]
+    public FieldsInput? Keeping { get; set; }
+
+    /// <summary>Gets or sets what the form for taking the lane out was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "remove")]
+    public RemoveInput? Removing { get; set; }
+
+    private string Here => Key is null ? $"comparisons/{Id}/new-lane" : $"comparisons/{Id}/lanes/{Key}";
+
+    protected override void OnInitialized()
+    {
+        _comparison = Store.Comparison(Id);
+        _file = _comparison is null ? null : JsonNode.Parse(_comparison.Json)!.AsObject();
+        _lane = _file is null ? null : Key is null ? ComparisonForm.NewLane() : ComparisonForm.Lane(_file, Key);
+        if (_lane is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _form = ComparisonForm.Context(_file!, Editor.Today);
+        _seen = Seen.Of([_comparison!.Json, .. _comparison.Translations.SelectMany(translation => new[] { translation.Key, translation.Value })]);
+    }
+
+    private void Keep()
+    {
+        var input = Keeping ?? new FieldsInput();
+        var problems = Opened();
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        var key = Key;
+        if (key is null)
+        {
+            _key = Context.Request.Form["key"].ToString().Trim();
+            key = _key;
+            if (key.Length == 0 || key.Any(char.IsWhiteSpace))
+            {
+                problems.Add(T["Comparison_LaneNeedsKey"]);
+            }
+            else if (ComparisonForm.Lane(_file!, key) is not null)
+            {
+                problems.Add(string.Format(CultureInfo.CurrentCulture, T["Add_Exists"], key));
+            }
+        }
+
+        var filled = RecordForm.Read(ComparisonForm.Lanes, _lane!, Context.Request.Form, _form!, problems);
+        if (problems.Count == 0)
+        {
+            var changed = ComparisonForm.WithLane(_file!, key!, filled);
+            var result = Store.PutComparison(changed.ToJsonString(), ComparisonForm.Tidy(changed, _comparison!.Translations), by!, reason);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"comparisons/{Id}/lanes/{key}?done={(Key is null ? "added" : result.Changed == 0 ? "unchanged" : "changed")}");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _filled = RecordForm.Shown(_lane!, filled);
+        _problems = problems;
+    }
+
+    private void Remove()
+    {
+        var input = Removing ?? new RemoveInput();
+        var problems = Opened();
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        if (problems.Count == 0)
+        {
+            var changed = ComparisonForm.WithoutLane(_file!, Key!);
+            var result = Store.PutComparison(changed.ToJsonString(), ComparisonForm.Tidy(changed, _comparison!.Translations), by!, reason);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"comparisons/{Id}?done=changed");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _removeProblems = problems;
+    }
+
+    // The problems a form begins with: one, when somebody changed the comparison after the form was opened.
+    private List<string> Opened() => Seen.Holds(Context, _seen) ? [] : [T["Act_Stale"]];
+
+    private string? Name(string? given, List<string> problems)
+    {
+        var name = Editor.By(given);
+        if (name is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        return name;
+    }
+
+    private string? Reason(string? given, List<string> problems)
+    {
+        var reason = ActInput.Text(given);
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        return reason;
+    }
+}

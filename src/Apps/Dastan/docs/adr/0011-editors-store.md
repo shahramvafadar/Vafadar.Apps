@@ -578,3 +578,30 @@ record before, an untouched one without a change; six refusals that change nothi
 role follow the kept entity. `StudioMergeTests` (4 tests) – the form on the page of an entity only, in both
 languages; a merge that leads to the entity that stays; two refusals with the reason. Not looked at in a
 browser.
+
+## Sixteenth addendum of 2026-11-18 – a comparison as a form, and lists that begin (step 13.6b)
+
+A comparison could be changed in the tool only as text (step 12.6).
+
+* **The form of a record is used for the parts of a comparison** (`ComparisonForm`): what the comparison says
+  as a whole – status, note, frame, title, summary, what it shows, whether it may be shown, its sources – on
+  its page; and each lane on a page of its own (`comparisons/<id>/lanes/<key>`) with its name and its periods
+  and events as rows, each with the inputs of its time (step 13.1), its sources to tick and its review state.
+  What was filled in is put back into the file of the comparison and kept by `PutComparison` – the readers
+  try the whole. A lane is added (`new-lane`, with its key) and taken out.
+* **What is taken out goes with its texts**: a lane, a period or an event that is no longer in the comparison
+  loses the texts that translated it in the same act (`Tidy`) – as a record does.
+* The translations of a comparison stay text on its page; the form for them is not built.
+* **A list that has no row yet begins with one** (`FormContext.Shapes`): until now a form had rows only for a
+  list that had some. This also gives every entity the inputs for its first other name, its first identifier
+  and its first statement with a date (steps 12.3 and 12.7) – without them these could only be added as text.
+* **A row that is added starts empty.** Found while testing: the row for a new part copied what the first row
+  had beside its texts – its time, the sources it pointed to, the record of its review – so a new period got
+  the time of the first one unless the editor changed it. A new row now has no text, no time, nothing ticked
+  and no part with parts of its own; only its choices stand at what is usual.
+
+Verification: `StudioComparisonFormTests` (7 tests): the whole as a form, unchanged when sent as it stands;
+a title changed and a first source added and then pointed to; a lane with the inputs of the times of its rows;
+a year corrected, a period added and one taken out with its Persian text; a period without a time and a key
+that is taken, refused with the form kept; a lane added and taken out with what translates it; an entity
+given its first other name, identifier and dated statement. Not looked at in a browser.
