@@ -249,25 +249,19 @@ public sealed partial class EditorialStore
 
     // What the readers of the site say about a collection. The files a media item names are looked for where the
     // store was told the files of its collections lie; told nothing, the store does not look for files.
-    private ImmutableArray<string> Problems(JsonObject root, Dictionary<string, JsonObject> translations)
+    private ImmutableArray<string> Problems(JsonObject root, Dictionary<string, JsonObject> translations) => Problems(root.ToJsonString(), translations);
+
+    private ImmutableArray<string> Problems(string json, Dictionary<string, JsonObject> translations)
     {
         var samples = _samplesFolder ?? Directory.GetCurrentDirectory();
         var content = Path.GetDirectoryName(samples) ?? samples;
-        try
+        return ContentRevision.Problems(json, new PilotSampleOptions
         {
-            PilotSample.Read(root.ToJsonString(), new PilotSampleOptions
-            {
-                SampleDirectory = samples,
-                ContentRoot = content,
-                ReviewRoot = Path.GetDirectoryName(content) ?? content,
-                CheckFiles = _samplesFolder is not null,
-                Translations = [.. translations.OrderBy(translation => translation.Key, StringComparer.Ordinal).Select(translation => translation.Value.ToJsonString())],
-            });
-            return [];
-        }
-        catch (SampleFormatException refused)
-        {
-            return [.. refused.Problems];
-        }
+            SampleDirectory = samples,
+            ContentRoot = content,
+            ReviewRoot = Path.GetDirectoryName(content) ?? content,
+            CheckFiles = _samplesFolder is not null,
+            Translations = [.. translations.OrderBy(translation => translation.Key, StringComparer.Ordinal).Select(translation => translation.Value.ToJsonString())],
+        });
     }
 }

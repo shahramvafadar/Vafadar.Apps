@@ -39,6 +39,18 @@ internal static class StoreCommands
 
               review, put and remove are tried on the whole collection first: what the site could not use
               afterwards is refused with the reasons, and nothing is changed.
+
+          store publish <collection> --store <database> --by <name> --date <yyyy-MM-dd> --out <file>
+                        [--note <text>] [--files <samples folder>]
+              Makes the next published revision out of the store – numbered after the last one, with what
+              it changes – keeps it, and writes it with its translations beside it. Refuses a collection in
+              which a statement is not reviewed. Never over a file.
+
+          store revisions <collection> --store <database>
+              Lists the revisions the store published.
+
+          store revision <collection> <number> --store <database> --out <file>
+              Writes a published revision again, as it was published. Never over a file.
         """;
 
     /// <summary>Runs a command of the store; <see langword="null"/> when it was not understood.</summary>
@@ -54,6 +66,14 @@ internal static class StoreCommands
             return Acts(words, time, output);
         }
 
+        if (words[0] == "revision")
+        {
+            return words.Count >= 3 && int.TryParse(words[2], NumberStyles.None, CultureInfo.InvariantCulture, out var number)
+                && Options(words.Skip(3).ToList()) is { } asked && asked.TryGetValue("--store", out var held) && asked.TryGetValue("--out", out var file) && Only(asked, "--store", "--out")
+                ? Published(words[1], number, held, file, output, time)
+                : null;
+        }
+
         if (Options(words.Skip(2).ToList()) is not { } given || !given.TryGetValue("--store", out var database))
         {
             return null;
@@ -65,6 +85,11 @@ internal static class StoreCommands
             "export" when given.TryGetValue("--out", out var target) && Only(given, "--store", "--out") => Export(words[1], database, target, output, time),
             "history" when Only(given, "--store", "--record") => History(words[1], database, given.GetValueOrDefault("--record"), output, time),
             "waiting" when Only(given, "--store") => Waiting(words[1], database, output, time),
+            "revisions" when Only(given, "--store") => Revisions(words[1], database, output, time),
+            "publish" when given.TryGetValue("--by", out var publisher) && given.TryGetValue("--out", out var revision) && given.TryGetValue("--date", out var dated)
+                && DateOnly.TryParseExact(dated, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var day)
+                && Only(given, "--store", "--by", "--date", "--out", "--note", "--files")
+                => Publish(words[1], database, publisher, day, revision, given.GetValueOrDefault("--note"), given.GetValueOrDefault("--files"), output, time),
             _ => null,
         };
     }
@@ -204,6 +229,78 @@ internal static class StoreCommands
             return ContentCommands.NotUsable;
         }
 
+        return WriteOut(exported, target, output);
+    }
+
+    private static int Publish(string collection, string database, string by, DateOnly day, string target, string? note, string? files, TextWriter output, TimeProvider time)
+    {
+        if (Existing(target) is { } existing)
+        {
+            output.WriteLine($"{existing} exists; the store never writes over a file.");
+            return ContentCommands.NotUnderstood;
+        }
+
+        using var store = EditorialStore.Open(database, time, files);
+        var result = store.Publish(collection, day, by, note);
+        if (result.Revision is null)
+        {
+            output.WriteLine($"No revision: {result.Problems.Length} {(result.Problems.Length == 1 ? "reason" : "reasons")}. Nothing was published.");
+            for (var index = 0; index < result.Problems.Length; index++)
+            {
+                output.WriteLine($"  {index + 1}. {result.Problems[index]}");
+            }
+
+            return ContentCommands.NotUsable;
+        }
+
+        output.WriteLine($"Revision {result.Number} of {day:yyyy-MM-dd}: {result.Changes.Added} added, {result.Changes.Changed} changed, {result.Changes.Removed} removed against the revision before. The store keeps it.");
+        return WriteOut(result.Revision, target, output);
+    }
+
+    private static int Revisions(string collection, string database, TextWriter output, TimeProvider time)
+    {
+        using var store = EditorialStore.Open(database, time);
+        if (!store.Collections.Contains(collection))
+        {
+            output.WriteLine($"{collection}: the store holds no collection of that name.");
+            return ContentCommands.NotUsable;
+        }
+
+        var revisions = store.Revisions(collection);
+        output.WriteLine($"{collection}: {revisions.Length} {(revisions.Length == 1 ? "revision" : "revisions")} published.");
+        foreach (var revision in revisions)
+        {
+            output.WriteLine($"  {revision.Number}  {revision.PublishedOn:yyyy-MM-dd}  by {revision.By}{(revision.Note is null ? null : $"  – {revision.Note}")}");
+        }
+
+        return ContentCommands.Done;
+    }
+
+    private static int Published(string collection, int number, string database, string target, TextWriter output, TimeProvider time)
+    {
+        using var store = EditorialStore.Open(database, time);
+        if (store.Revision(collection, number) is not { } revision)
+        {
+            output.WriteLine($"{collection}: the store did not publish a revision {number}.");
+            return ContentCommands.NotUsable;
+        }
+
+        return WriteOut(revision, target, output);
+    }
+
+    // The file a collection would be written to, or one of its translations beside it, when it is there already.
+    private static string? Existing(string target)
+    {
+        var path = Path.GetFullPath(target);
+        var folder = Path.GetDirectoryName(path)!;
+        return File.Exists(path) ? path
+            : Directory.Exists(folder) ? Directory.EnumerateFiles(folder, Path.GetFileNameWithoutExtension(path) + ".*.json").FirstOrDefault()
+            : null;
+    }
+
+    // Writes a collection and its translations beside it – never over a file – and checks it where it lies.
+    private static int WriteOut(ExportedCollection exported, string target, TextWriter output)
+    {
         var path = Path.GetFullPath(target);
         var beside = exported.Translations.ToDictionary(
             translation => Path.Combine(Path.GetDirectoryName(path)!, $"{Path.GetFileNameWithoutExtension(path)}.{translation.Key}.json"),

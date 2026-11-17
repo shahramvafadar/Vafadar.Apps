@@ -58,28 +58,8 @@ public static class ContentRevision
         }
 
         var sample = JsonNode.Parse(File.ReadAllText(checkedSample.File))!.AsObject();
-        var publication = sample["publication"]!.AsObject();
-        if ((string?)publication["state"] != "editorial_sample")
-        {
-            return Refused($"{Path.GetFileName(request.SampleFile)}: a revision is made from the working file of the editors, an editorial_sample; this file is a revision already.");
-        }
-
-        if (request.Number < 1)
-        {
-            return Refused("the number of a revision starts at 1.");
-        }
-
-        // The revisions before this one, and the records of the last of them.
-        var history = new JsonArray();
         JsonObject? previous = null;
-        if (request.PreviousFile is null)
-        {
-            if (request.Number != 1)
-            {
-                return Refused($"revision {Number(request.Number)} follows revision {Number(request.Number - 1)}: name the file of that revision.");
-            }
-        }
-        else
+        if (request.PreviousFile is not null)
         {
             var checkedPrevious = ContentCheck.File(request.PreviousFile);
             if (!checkedPrevious.IsUsable)
@@ -88,21 +68,108 @@ public static class ContentRevision
             }
 
             previous = JsonNode.Parse(File.ReadAllText(checkedPrevious.File))!.AsObject();
+        }
+
+        // The revision is read as the site will read it: with the translations beside the working file and its files.
+        var directory = Path.GetDirectoryName(checkedSample.File)!;
+        var content = Path.GetDirectoryName(directory) ?? directory;
+        return Make(
+            sample,
+            Path.GetFileName(request.SampleFile),
+            previous,
+            request.PreviousFile is null ? null : Path.GetFileName(request.PreviousFile),
+            request.Number,
+            request.PublishedOn,
+            request.Note,
+            json => Problems(json, new PilotSampleOptions
+            {
+                SampleDirectory = directory,
+                ContentRoot = content,
+                ReviewRoot = Path.GetDirectoryName(content) ?? content,
+                Translations =
+                [
+                    .. Directory.EnumerateFiles(directory, Path.GetFileNameWithoutExtension(checkedSample.File) + ".*.json").Order(StringComparer.Ordinal).Select(File.ReadAllText),
+                ],
+            }));
+    }
+
+    /// <summary>Returns what the readers of the site say about a collection; empty when they accept it.</summary>
+    public static ImmutableArray<string> Problems(string json, PilotSampleOptions options)
+    {
+        try
+        {
+            PilotSample.Read(json, options);
+            return [];
+        }
+        catch (SampleFormatException refused)
+        {
+            return [.. refused.Problems];
+        }
+    }
+
+    /// <summary>
+    /// Makes the revision out of a working collection that is not a file – the store of the editors holds it as
+    /// records. The rules are those of <see cref="Make(RevisionRequest)"/>; nothing is read from a disk here.
+    /// </summary>
+    /// <param name="working">The working collection; it is not changed.</param>
+    /// <param name="workingName">What to call it when it is refused.</param>
+    /// <param name="previous">The revision before; nothing for the first revision.</param>
+    /// <param name="previousName">What to call the revision before when it is refused.</param>
+    /// <param name="number">The number of the revision.</param>
+    /// <param name="publishedOn">The day it is published.</param>
+    /// <param name="note">What the editors say about it, if anything.</param>
+    /// <param name="problemsOf">Reads the revision as the site will read it and returns what is wrong with it.</param>
+    public static RevisionResult Make(
+        JsonObject working,
+        string workingName,
+        JsonObject? previous,
+        string? previousName,
+        int number,
+        DateOnly publishedOn,
+        string? note,
+        Func<string, ImmutableArray<string>> problemsOf)
+    {
+        ArgumentNullException.ThrowIfNull(working);
+        ArgumentNullException.ThrowIfNull(problemsOf);
+
+        var sample = (JsonObject)working.DeepClone();
+        var publication = sample["publication"]!.AsObject();
+        if ((string?)publication["state"] != "editorial_sample")
+        {
+            return Refused($"{workingName}: a revision is made from the working file of the editors, an editorial_sample; this file is a revision already.");
+        }
+
+        if (number < 1)
+        {
+            return Refused("the number of a revision starts at 1.");
+        }
+
+        // The revisions before this one, and the records of the last of them.
+        var history = new JsonArray();
+        if (previous is null)
+        {
+            if (number != 1)
+            {
+                return Refused($"revision {Number(number)} follows revision {Number(number - 1)}: name the file of that revision.");
+            }
+        }
+        else
+        {
             var before = previous["publication"]!.AsObject();
             if ((string?)before["state"] != "published_revision")
             {
-                return Refused($"{Path.GetFileName(request.PreviousFile)}: the file before is not a published revision.");
+                return Refused($"{previousName}: the file before is not a published revision.");
             }
 
             if ((string?)previous["datasetId"] != (string?)sample["datasetId"])
             {
-                return Refused($"{Path.GetFileName(request.PreviousFile)}: it is a revision of {(string?)previous["datasetId"]}, not of {(string?)sample["datasetId"]}.");
+                return Refused($"{previousName}: it is a revision of {(string?)previous["datasetId"]}, not of {(string?)sample["datasetId"]}.");
             }
 
             var last = before["revision"]!.AsObject();
-            if ((int)last["number"]! != request.Number - 1)
+            if ((int)last["number"]! != number - 1)
             {
-                return Refused($"revision {Number(request.Number)} does not follow revision {Number((int)last["number"]!)} of {Path.GetFileName(request.PreviousFile)}.");
+                return Refused($"revision {Number(number)} does not follow revision {Number((int)last["number"]!)} of {previousName}.");
             }
 
             // A revision written before histories were kept has none: its own entry is all that is known of it.
@@ -122,11 +189,11 @@ public static class ContentRevision
         LeaveOutReviewerDocuments(sample);
         var withdrawn = Withdraw(sample);
         var changes = previous is null ? [] : Compare(previous, sample, withdrawn);
-        var day = request.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-        var entered = new JsonObject { ["number"] = request.Number, ["publishedAt"] = day };
-        if (!string.IsNullOrWhiteSpace(request.Note))
+        var day = publishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        var entered = new JsonObject { ["number"] = number, ["publishedAt"] = day };
+        if (!string.IsNullOrWhiteSpace(note))
         {
-            entered["note"] = request.Note.Trim();
+            entered["note"] = note.Trim();
         }
 
         entered["changes"] = new JsonArray([.. changes.Select(change => (JsonNode)change)]);
@@ -134,34 +201,50 @@ public static class ContentRevision
 
         publication["state"] = "published_revision";
         publication["publicReleaseApproved"] = true;
-        publication["revision"] = new JsonObject { ["number"] = request.Number, ["publishedAt"] = day };
+        publication["revision"] = new JsonObject { ["number"] = number, ["publishedAt"] = day };
         publication["history"] = history;
         var json = sample.ToJsonString(Written);
 
-        // The revision is read as the site will read it: with its translations, its files and the rule of what
-        // everybody may see. What is not ready is named here, not found out by a public site.
-        try
+        // The rule of what everybody may see is asked here: what is not ready is named now, not found out by a
+        // public site.
+        var problems = problemsOf(json);
+        if (!problems.IsEmpty)
         {
-            var directory = Path.GetDirectoryName(checkedSample.File)!;
-            var content = Path.GetDirectoryName(directory) ?? directory;
-            PilotSample.Read(json, new PilotSampleOptions
-            {
-                SampleDirectory = directory,
-                ContentRoot = content,
-                ReviewRoot = Path.GetDirectoryName(content) ?? content,
-                Translations =
-                [
-                    .. Directory.EnumerateFiles(directory, Path.GetFileNameWithoutExtension(checkedSample.File) + ".*.json").Order(StringComparer.Ordinal).Select(File.ReadAllText),
-                ],
-            });
-        }
-        catch (SampleFormatException refused)
-        {
-            return new RevisionResult(null, [.. refused.Problems]);
+            return new RevisionResult(null, problems);
         }
 
         int Count(string kind) => changes.Count(change => (string?)change["kind"] == kind);
         return new RevisionResult(json, [], (Count("added"), Count("changed"), Count("removed") + Count("withdrawn")));
+    }
+
+    /// <summary>
+    /// Returns the texts of a translation without those of statements the editors withdrew: a revision does not
+    /// hold a withdrawn statement, and a translation names only what its collection has.
+    /// </summary>
+    /// <param name="working">The working collection the translation belongs to.</param>
+    /// <param name="translation">The translation document; it is not changed.</param>
+    public static JsonObject WithoutWithdrawn(JsonObject working, JsonObject translation)
+    {
+        ArgumentNullException.ThrowIfNull(working);
+        ArgumentNullException.ThrowIfNull(translation);
+
+        static bool IsWithdrawn(JsonNode? record) => (string?)record!["reviewStatus"] == "withdrawn";
+
+        var kept = (JsonObject)translation.DeepClone();
+        foreach (var group in new[] { "relations", "events" })
+        {
+            foreach (var record in working[group]!.AsArray().Where(IsWithdrawn))
+            {
+                (kept[group] as JsonObject)?.Remove((string)record!["id"]!);
+            }
+        }
+
+        foreach (var dated in working["entities"]!.AsArray().SelectMany(entity => entity!["dated"] as JsonArray ?? []).Where(IsWithdrawn))
+        {
+            (kept["dated"] as JsonObject)?.Remove((string)dated!["key"]!);
+        }
+
+        return kept;
     }
 
     private static RevisionResult Refused(string problem) => new(null, [problem]);

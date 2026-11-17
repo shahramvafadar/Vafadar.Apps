@@ -140,6 +140,9 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     /// <summary>Gets the history of every record.</summary>
     public DbSet<RecordChange> Changes => Set<RecordChange>();
 
+    /// <summary>Gets the published revisions, each as it was published.</summary>
+    public DbSet<StoredRevision> Revisions => Set<StoredRevision>();
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -169,6 +172,13 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             translation.Property(item => item.Language).HasMaxLength(40);
             translation.Property(item => item.UpdatedBy).HasMaxLength(200);
             translation.HasOne<StoredCollection>().WithMany().HasForeignKey(item => item.CollectionId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<StoredRevision>(revision =>
+        {
+            revision.HasKey(item => new { item.CollectionId, item.Number });
+            revision.Property(item => item.By).HasMaxLength(200);
+            revision.HasOne<StoredCollection>().WithMany().HasForeignKey(item => item.CollectionId).OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<RecordChange>(change =>

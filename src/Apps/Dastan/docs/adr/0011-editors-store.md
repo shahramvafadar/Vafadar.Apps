@@ -104,3 +104,33 @@ with a note, by the words of the readers; a withdrawn statement stays in the sto
 reads; a statement something points to is not withdrawn; a dated statement by its key; put and remove, and what
 they are refused for, with the collection unchanged afterwards; the commands `store waiting`, `store review`,
 `store put`, `store remove`.
+
+## Addendum of 2026-11-17 – publishing from the store (step 11.3)
+
+* **The store makes the next revision.** `Publish` takes what the store holds and makes revision *n* by the rule
+  of [ADR 0009](0009-published-revision.md) – with the same code that makes a revision from a file; the file
+  command and the store share one maker, which now works on a collection in memory. The number follows the last
+  revision the store published; the editors do not name it and cannot skip one. The revision before, for the
+  history and for what changed, is the one the store kept.
+* **A revision is kept as it was published** – its file and the translations published with it – and is never
+  changed: a row per collection and number. It can be written out again, which is how a site is taken back to a
+  revision ([operations](../operations.md)).
+* **Publishing changes no record.** The working state stays the working state; the history of a record is the
+  history of its changes, not of what was published.
+* **A translation published with a revision leaves out the texts of withdrawn statements**, since a revision does
+  not hold a withdrawn statement and a translation names only what its collection has. The working translation
+  keeps them.
+* **Nothing is kept when a revision cannot be made**: every statement that is not reviewed, or reviewed without a
+  record, is named, as by the file command.
+
+Not done here: a first revision of the store that follows revisions made from files before the store existed (the
+store starts at 1); copying the media files into the content folder of a revision (the editors copy `media/`);
+the revisions of comparisons.
+
+Verification: `EditorialPublishingTests` (14 tests): an unreviewed collection is not published and each
+statement is named; revision 1 and its record in the store; a site in the public settings reads a revision of
+the store from a content folder with nothing of the editors beside it; revision 2 with a changed record and a
+withdrawn statement – its history, its translation, the store's working state, and revision 1 unchanged; a
+statement changed after its review stops the next revision until it is reviewed again; the commands
+`store publish`, `store revisions`, `store revision`. `ContentRevisionTests` (Data) still pass with the
+shared maker.

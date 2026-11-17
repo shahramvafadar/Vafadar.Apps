@@ -40,8 +40,9 @@ Settings are environment variables (two underscores for a level).
 
 The content folder of a **published revision** ([ADR 0009](adr/0009-published-revision.md)): `samples/` with the
 file of the revision and its reviewed translations, `media/` with the files of its media, `comparisons/` if any.
-The editors make the file of the revision with the `revision` command ([guide](content-guide.md)); it is a new
-file in a new folder and is never changed afterwards. A revision needs nothing beside its content folder – the
+The editors make the file of the revision with `store publish` out of their store, or with the `revision`
+command from a working file ([guide](content-guide.md)); it is a new file in a new folder and is never changed
+afterwards. The store keeps every revision it published and writes one again with `store revision`. A revision needs nothing beside its content folder – the
 command leaves out the pointers to the working documents of reviewers.
 
 The working files of the repository (`content/`) are not such a folder. Mounted, the site either shows nothing

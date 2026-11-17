@@ -134,6 +134,41 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.ToTable("Records");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredRevision", b =>
+                {
+                    b.Property<string>("CollectionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("By")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Json")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("PublishedOn")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Translations")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CollectionId", "Number");
+
+                    b.ToTable("Revisions");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredTranslation", b =>
                 {
                     b.Property<string>("CollectionId")
@@ -170,6 +205,15 @@ namespace Vafadar.Dastan.Store.Migrations
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredRecord", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.Store.StoredCollection", null)
+                        .WithMany()
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredRevision", b =>
                 {
                     b.HasOne("Vafadar.Dastan.Store.StoredCollection", null)
                         .WithMany()
