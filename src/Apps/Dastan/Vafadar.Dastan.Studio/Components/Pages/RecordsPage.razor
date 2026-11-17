@@ -19,7 +19,7 @@
 
     <section aria-labelledby="add">
         <h2 id="add">@T["Add_Title"]</h2>
-        @if (NewRecord.Groups.Contains(Group) && Editor.May(EditorRoles.Writer))
+        @if ((NewRecord.Groups.Contains(Group) || Group == "media") && Editor.May(EditorRoles.Writer))
         {
             <p><a class="action" href="@($"{Collection}/records/{Group}/new")">@T["New_Link"]</a></p>
         }

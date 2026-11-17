@@ -1,3 +1,4 @@
+using Vafadar.Dastan.Data;
 using Vafadar.Dastan.Store;
 using Vafadar.Dastan.Studio.Components;
 using Vafadar.Dastan.Studio.Site;
@@ -30,6 +31,11 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
 });
 
 builder.Services.Configure<StudioOptions>(builder.Configuration.GetSection("Studio"));
+
+// A file an editor brings in (step 13.7) is as long as the longest video, and a little more for its form.
+const long LongestRequest = MediaIntake.VideoLimit + (1024 * 1024);
+builder.WebHost.ConfigureKestrel(server => server.Limits.MaxRequestBodySize = LongestRequest);
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(form => form.MultipartBodyLengthLimit = LongestRequest);
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<StudioStore>();
 

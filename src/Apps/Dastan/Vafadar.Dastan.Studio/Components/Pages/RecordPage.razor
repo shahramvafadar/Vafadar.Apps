@@ -122,6 +122,40 @@
 </Allowed>
         </section>
 
+        @if (Group == "media")
+        {
+            <section aria-labelledby="files">
+                <h2 id="files">@T["Files_Title"]</h2>
+                <p class="note">@T["Files_Lead"]</p>
+                <ActOutcome Problems="_uploadProblems" />
+                <Allowed Role="EditorRoles.Writer">
+                    <form method="post" enctype="multipart/form-data" @formname="upload" @onsubmit="Upload" class="act" action="@Here">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="@Seen.Input" value="@_seen" />
+                        <p class="field">
+                            <label for="upload-part">@T["Files_Part"]</label>
+                            <select id="upload-part" name="part">
+                                @foreach (var part in MediaIntake.Parts)
+                                {
+                                    <option value="@part">@T[$"Files_Part_{part}"]</option>
+                                }
+                            </select>
+                        </p>
+                        <p class="field">
+                            <label for="upload-language">@T["Files_Language"]</label>
+                            <input id="upload-language" name="language" maxlength="40" dir="ltr" />
+                        </p>
+                        <p class="field">
+                            <label for="upload-file">@T["Files_File"]</label>
+                            <input id="upload-file" type="file" name="file" required accept=".png,.jpg,.jpeg,.webp,.mp4,.webm,.vtt,.txt" />
+                        </p>
+                        <WhoAndWhy Form="upload" Model="Uploading" By="@(Uploading?.By ?? Editor.Name)" Reason="@(Uploading?.Reason ?? string.Empty)" />
+                        <p><button type="submit" class="action">@T["Files_Submit"]</button></p>
+                    </form>
+                </Allowed>
+            </section>
+        }
+
         @if (Group == "entities" && _form!.Records.TryGetValue("entities", out var others) && others.Count > 1)
         {
             <section aria-labelledby="merge">
@@ -198,6 +232,7 @@
     private string _seen = string.Empty;
     private List<string>? _removeProblems;
     private List<string>? _mergeProblems;
+    private List<string>? _uploadProblems;
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
@@ -229,6 +264,10 @@
     /// <summary>Gets or sets what the form of a change was filled with.</summary>
     [SupplyParameterFromForm(FormName = "change")]
     public ChangeInput? Changing { get; set; }
+
+    /// <summary>Gets or sets who brings a file in, and why.</summary>
+    [SupplyParameterFromForm(FormName = "upload")]
+    public FieldsInput? Uploading { get; set; }
 
     /// <summary>Gets or sets what the form that says the entity is the same as another one was filled with.</summary>
     [SupplyParameterFromForm(FormName = "merge")]
@@ -369,6 +408,53 @@
         }
 
         _changeProblems = problems;
+    }
+
+    private void Upload()
+    {
+        var input = Uploading ?? new FieldsInput();
+        var problems = new List<string>();
+        Fresh(problems);
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        var sent = Context.Request.Form.Files["file"];
+        if (sent is null || sent.Length == 0)
+        {
+            problems.Add(T["Files_NeedsFile"]);
+        }
+
+        if (Store.FilesFolder is not { } folder)
+        {
+            problems.Add(T["Files_NoFolder"]);
+        }
+        else if (problems.Count == 0)
+        {
+            var part = Context.Request.Form["part"].ToString();
+            var language = ActInput.Text(Context.Request.Form["language"]);
+            using var content = sent!.OpenReadStream();
+            var (file, refused) = MediaIntake.Take(folder, Record, part, language, content);
+            if (file is null)
+            {
+                problems.Add(refused!);
+            }
+            else
+            {
+                var record = MediaForm.With(_record!.Body, part, language, file);
+                var result = record is null
+                    ? new ActResult([T["Files_OtherKind"]])
+                    : Store.Put(Collection, Group, record, by!, reason!);
+                if (Finished(result, by!, "changed"))
+                {
+                    return;
+                }
+
+                // The record was not kept: the file that was brought in for it is not kept either.
+                MediaIntake.Discard(file);
+                problems.AddRange(result.Problems);
+            }
+        }
+
+        _uploadProblems = problems;
     }
 
     private void Merge()

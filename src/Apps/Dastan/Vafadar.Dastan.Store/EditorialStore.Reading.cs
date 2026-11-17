@@ -128,6 +128,19 @@ public sealed partial class EditorialStore
         ];
     }
 
+    /// <summary>
+    /// Gets the folder in which the files of the collections lie, when the store was opened with one: the files a
+    /// media item names are looked for from there, and a file that is brought in is kept beside it.
+    /// </summary>
+    public string? FilesFolder => _samplesFolder;
+
+    /// <summary>Returns the identifier of the world of a collection, which a media item names; nothing for a collection the store does not hold.</summary>
+    public string? WorldId(string collectionId)
+    {
+        var collection = _context.Collections.AsNoTracking().SingleOrDefault(item => item.Id == collectionId);
+        return collection is null ? null : (string?)JsonNode.Parse(collection.Header)!["worldId"];
+    }
+
     /// <summary>Returns the reading stages of a collection, in their order; empty for a collection the store does not hold.</summary>
     public ImmutableArray<(int Level, string Label)> Stages(string collectionId)
     {
