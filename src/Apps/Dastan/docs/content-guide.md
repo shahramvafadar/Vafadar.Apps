@@ -222,6 +222,19 @@ dotnet run --project $content -- store put <datasetId> entities --from <file wit
 dotnet run --project $content -- store remove <datasetId> relation-18 --store $store --by "<name>" --reason "<why>"
 ```
 
+```powershell
+# Publish the next revision out of the store, into a content folder of its own beside a copy of media/.
+dotnet run --project $content -- store publish <datasetId> --store $store --by "<name>" --date 2026-11-17 --out <revisions>/1/content/samples/my-story.json --note "The first publication." --files src/Apps/Dastan/content/samples
+
+# Which revisions were published, and one of them written again as it was published.
+dotnet run --project $content -- store revisions <datasetId> --store $store
+dotnet run --project $content -- store revision <datasetId> 1 --store $store --out <folder>/samples/my-story.json
+```
+
+* `publish` numbers the revision itself, after the last one the store published, and refuses a collection in
+  which a statement is not reviewed – each is named. The store keeps the revision as it was published.
+* The revision is written with its translations beside it; copy `media/` beside `samples/` to make the content
+  folder a site is given ([operations](operations.md)).
 * `review`, `put` and `remove` are tried on the whole collection first. What the site could not use afterwards
   is refused with the reasons – the same words the check uses – and nothing is changed.
 * With `--files` the store looks for the files of media from the folder of the collections; without it, a missing

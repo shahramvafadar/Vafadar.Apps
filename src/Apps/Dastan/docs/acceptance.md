@@ -218,6 +218,6 @@ Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "n
 | Every change of a record is kept with who, when, why, before and after | **Implemented and checked** | `EditorialStoreTests`: a changed record, a review, a removed record, a changed translation |
 | What the site cannot use does not get into the store | **Implemented and checked** | `EditorialStoreTests`: an unusable file and a published revision are refused and change nothing |
 | Editors change a record and record a review in the store without a file in between; what the site could not use is refused and changes nothing | **Implemented and checked** | `EditorialActsTests` |
-| Editors publish from the store | **Not done** | Step 11.3 |
+| Editors publish from the store: the next revision by the rule of ADR 0009, kept as it was published, read by a public site from its content folder | **Implemented and checked** | `EditorialPublishingTests` |
 | Editors have a tool with pages | **Not done** | Steps 11.4 to 11.6 |
 | The store knows who an editor is | **Not done** | Step 11.7, the owner's decision |

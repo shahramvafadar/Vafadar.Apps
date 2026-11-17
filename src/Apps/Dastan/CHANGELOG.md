@@ -94,3 +94,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - In the store the editors can record the review of a statement – reviewed, disputed or withdrawn –, change one
   record and take one out, without a file in between. Each change is tried on the whole collection first; what
   the site could not use afterwards is refused with the reasons.
+- The editors publish a revision out of their store: it numbers the revision itself, refuses a collection with a
+  statement nobody reviewed, keeps every revision as it was published and can write one out again.
