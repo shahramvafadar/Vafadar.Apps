@@ -28,7 +28,7 @@ public static class StudioAccess
 
     // What is answered to somebody who has not signed in: the page that signs in, what a page is drawn with, and
     // the pages that say something went wrong.
-    private static readonly string[] Open = [SignInPath, "/preferences/theme", "/error", "/not-found"];
+    private static readonly string[] Open = [SignInPath, "/preferences/theme", "/error", "/not-found", StudioHealth.Address];
     private static readonly string[] Drawn = [".css", ".js", ".svg", ".png", ".ico", ".woff2", ".webmanifest"];
 
     /// <summary>Adds what signing in needs: the sign-in kept in a cookie, its keys, and the proxies that are believed.</summary>

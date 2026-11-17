@@ -3,6 +3,13 @@ using Vafadar.Dastan.Studio.Components;
 using Vafadar.Dastan.Studio.Site;
 using Vafadar.Web;
 
+// Started with "--probe" the program is not the tool: it asks the tool of this machine whether it is alive and
+// ends with the answer. A container has no other tool to ask with (docs/operations.md).
+if (args is ["--probe"])
+{
+    return await StudioHealth.Probe();
+}
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Pages are rendered on the server for every request, without a connection that stays open and without a script,
@@ -10,13 +17,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents();
 builder.Services.AddLocalization();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddAntiforgery();
+
+// The cookie of the forms is Secure when the editor came by https, as the other cookies of the tool are.
+builder.Services.AddAntiforgery(options => options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest);
 
 builder.Services.AddSiteLanguages("en", "fa");
 builder.Services.Configure<SiteLanguageOptions>(options =>
 {
     options.UnlocalizedPaths.Add("/preferences");
     options.UnlocalizedPaths.Add(StudioAccess.SignOutPath);
+    options.UnlocalizedPaths.Add(StudioHealth.Address);
 });
 
 builder.Services.Configure<StudioOptions>(builder.Configuration.GetSection("Studio"));
@@ -91,6 +101,7 @@ app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapThemePreference();
+app.MapStudioHealth();
 if (accounts)
 {
     app.MapSignOut();
@@ -99,6 +110,7 @@ if (accounts)
 app.MapRazorComponents<App>();
 
 app.Run();
+return 0;
 
 /// <summary>The entry point of the tool of the editors; public so that tests can start it.</summary>
 public partial class Program;

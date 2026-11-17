@@ -75,6 +75,26 @@ public sealed partial class EditorialStore : IDisposable
         return new EditorialStore(context, time ?? TimeProvider.System, samplesFolder is null ? null : Path.GetFullPath(samplesFolder));
     }
 
+    /// <summary>
+    /// Writes a copy of the whole store – collections, history, revisions and accounts – into a file, as the store
+    /// is at this moment. The store can be in use meanwhile: the copy is made by the database itself and is
+    /// complete. Never over a file.
+    /// </summary>
+    /// <returns>Nothing when the copy was written; else why it was not.</returns>
+    public string? CopyTo(string file)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(file);
+        var path = Path.GetFullPath(file);
+        if (File.Exists(path) || Directory.Exists(path))
+        {
+            return $"{path}: there already is a file of that name; a copy is never written over a file.";
+        }
+
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        _context.Database.ExecuteSql($"VACUUM INTO {path}");
+        return null;
+    }
+
     /// <summary>Gets the identifiers of the collections in the store.</summary>
     public ImmutableArray<string> Collections => [.. _context.Collections.AsNoTracking().OrderBy(collection => collection.Id).Select(collection => collection.Id)];
 

@@ -75,7 +75,10 @@ $env:AllowedHosts = "<the name the tool is reached by>"
 # behind a proxy that holds the certificate: $env:Studio__TrustedProxies__0 = "<its address or network>"
 ```
 
-Running it outside a developer's machine – the container image, what it is told, how it is checked, updated and
+The tool on a server – its container, the accounts, copies of the store – is in
+[operations of the tool](docs/operations-studio.md).
+
+Running the site outside a developer's machine – the container image, what it is told, how it is checked, updated and
 taken back – is in [operations](docs/operations.md).
 
 ## Build and test

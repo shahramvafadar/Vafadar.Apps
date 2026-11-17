@@ -1,3 +1,5 @@
 # The files of the container image are read by Linux tools: always LF, whatever the machine that checks them out.
 Dockerfile text eol=lf
 Dockerfile.dockerignore text eol=lf
+Dockerfile.studio text eol=lf
+Dockerfile.studio.dockerignore text eol=lf

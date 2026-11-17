@@ -110,3 +110,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Dastan Studio can run for several editors: each has an account and signs in, every change is kept under the name
   of the account, and nothing is shown to somebody who has not signed in. Accounts are made by a command where the
   store lies.
+- Dastan Studio can run on a server as a container, with its store on a volume. A copy of the whole store can be
+  written while the editors work (`store copy`) and put back when the store is lost.
