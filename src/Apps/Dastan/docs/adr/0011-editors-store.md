@@ -429,10 +429,42 @@ Comparisons stayed files while the store learned to hold collections. They are n
 * **The tool**: `comparisons` lists them and brings a new one in as its file; `comparisons/<id>` changes the
   file and every translation as text in one form – an emptied translation is taken out, a further one names
   its language in its document –, takes the comparison out, and shows what was changed of it. Forms for the
-  lanes and periods of a comparison are step 13.2.
+  lanes and periods of a comparison are step 13.6.
 
 Verification: `ComparisonStoreTests` (6 tests) – in and out as it went in, read by the site again; unchanged
 twice; a change with who and why; four refusals that change nothing; a translation and a comparison taken
 out with the history kept; beside a collection in one store; the commands. `StudioComparisonsTests`
 (6 tests) – the list in both languages, bringing in, changing, refusing with what was written kept, taking
 out. Not looked at in a browser.
+
+## Eleventh addendum of 2026-11-17 – a time as a form (step 13.1)
+
+The time of a statement was the one part of a record that an editor still had to write as JSON.
+
+* A field named `time` that the form can say with its inputs is a `FieldKind.Time`: the kind (`occurrence`,
+  `between`, `period`, or none), up to four positions (`at`, `latest`, `until`, `untilLatest` – each an
+  era, a year, optionally a month and a day, and "about"), how a period begins (`known`, `between`,
+  `unknown`) and ends (`known`, `between`, `ongoing`, `endedAtUnknownTime`, `unknown`), and whether it
+  is stated as continuous. These are the shapes of `Vafadar.Temporal` (document 04); the form adds none.
+* **Read through the library, written by the library**: the inputs are filled from
+  `TemporalJson.Deserialize` and what was filled in is built as a `TemporalExpression` – so a period that
+  ends before it begins, a day without a month or the 31st of February are refused by the same code the site
+  reads with – and written with `TemporalJson.Serialize`.
+* **A time that was not changed stays as the file wrote it**: what the inputs give is compared with what
+  stood there; when it is equal, the field is kept untouched. Sending a form as it stands changes nothing.
+* **The calendar of a position stays what the file says** – named or not (D-043). The form does not turn a
+  year without a calendar into a Gregorian year.
+* A time the inputs cannot say – a place in a story, a time with a "last confirmed", another calendar – stays
+  a part written as it stands.
+* A relation with the scope `outside_the_story` that states no time shows the inputs with the kind "–";
+  filled in, the relation gets its time, set back to "–" it loses it. A relation of a story has no such
+  inputs: it cannot have a time.
+
+No script: every input is always there; the hint above them says which the chosen kind uses. That costs
+room on the page and is the price of a form that works without scripts (ADR 0003).
+
+Verification: `StudioTimeFormTests` (11 tests) – the inputs of a time and unchanged when sent as it stands;
+a corrected year with a day and "about"; once → lasting with an unknown end; between two years before the
+common era; four inputs that are no time and a period that ends before it begins, refused with the form
+kept; a relation of the world given a time and losing it; no inputs on a relation of the story. Not looked at
+in a browser.

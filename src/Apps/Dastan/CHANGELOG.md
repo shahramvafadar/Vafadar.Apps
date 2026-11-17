@@ -139,5 +139,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- In the tool of the editors a time is filled in with inputs – a year, a month, a day, "about", from and until,
+  an unknown beginning or end – instead of being written as text.
 - Comparisons are kept in the store of the editors like collections: brought in, changed with their
   translations in the tool, with every change recorded, and written out for the site.

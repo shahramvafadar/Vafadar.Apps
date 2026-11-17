@@ -495,4 +495,7 @@
   <data name="Comparison_NeedsLanguage" xml:space="preserve">
     <value>ترجمهٔ تازه باید زبانی را بگوید که مقایسه هنوز به آن ترجمه نشده است.</value>
   </data>
+  <data name="Fields_TimeHint" xml:space="preserve">
+    <value>kind: «occurrence» یک زمان است (at)؛ «between» میان دو زمان است (at و latest)؛ «period» از at – یا میان at و latest، یا از آغازی ناشناخته (start) – تا until – یا میان until و untilLatest، یا ادامه‌دار یا ناشناخته (end) – طول کشیده است. هر زمان یک سال است، با ماه و روز اگر گفته شده باشد؛ «about» جایی که منبع می‌گوید «حدود». «–» یعنی زمانی گفته نشده است.</value>
+  </data>
 </root>

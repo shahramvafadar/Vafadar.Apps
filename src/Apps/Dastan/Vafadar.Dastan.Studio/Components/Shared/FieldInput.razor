@@ -73,6 +73,17 @@
         </fieldset>
         break;
 
+    case FieldKind.Time:
+        <fieldset class="field part time">
+            <legend><code>@Field.Name</code></legend>
+            <span class="hint">@T["Fields_TimeHint"]</span>
+            @foreach (var part in Field.Parts)
+            {
+                <FieldInput Field="part" />
+            }
+        </fieldset>
+        break;
+
     case FieldKind.Rows:
         <fieldset class="field part">
             <legend><code>@Field.Name</code></legend>
