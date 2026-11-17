@@ -74,6 +74,17 @@ public sealed partial class EditorialStore
         return record is null ? null : new RecordView(Info(record), JsonNode.Parse(record.Body)!.AsObject());
     }
 
+    /// <summary>
+    /// Returns the texts of a record in the other languages of its collection, as each translation writes them
+    /// for the record; a language that says nothing about the record has no texts.
+    /// </summary>
+    public ImmutableArray<(string Language, JsonObject Texts)> Texts(string collectionId, string group, string recordId) =>
+    [
+        .. _context.Translations.AsNoTracking().Where(translation => translation.CollectionId == collectionId).ToList()
+            .OrderBy(translation => translation.Language, StringComparer.Ordinal)
+            .Select(translation => (translation.Language, (JsonNode.Parse(translation.Body)![group]?[recordId]?.DeepClone() as JsonObject) ?? [])),
+    ];
+
     /// <summary>Returns the reading stages of a collection, in their order; empty for a collection the store does not hold.</summary>
     public ImmutableArray<(int Level, string Label)> Stages(string collectionId)
     {

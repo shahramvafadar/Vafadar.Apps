@@ -105,3 +105,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Dastan Studio shows the fields of a record as a form: texts, numbers, choices of the allowed values, the reading
   stage, the sources and records a field points to as boxes to tick, and rows for a list of parts – a row is added
   by filling in the last one. The record as text stays below it, for a field the record does not have yet.
+- In Dastan Studio the Persian text of a field stands below the field and is changed with it. A row that is taken
+  out takes its Persian role with it; a row that is added can be given one.

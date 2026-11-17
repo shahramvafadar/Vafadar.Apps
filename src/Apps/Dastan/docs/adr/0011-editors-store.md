@@ -241,9 +241,8 @@ as text stays below it.
 * **The form does not add a field.** It changes the fields a record has. A field the record does not have yet is
   written in the record as text.
 
-Not done, and named as step 11.8: the texts of the other languages. A row of an event whose role is translated
-cannot be taken out in the tool – the readers refuse a translation of something that is not there, and the tool
-has no form for the translation. The reasons of the form itself ("is not a number") are English, as the reasons of
+Not done in this step, and done in step 11.8 (next addendum): the texts of the other languages. Until then a row
+of an event whose role was translated could not be taken out in the tool. The reasons of the form itself ("is not a number") are English, as the reasons of
 the readers are.
 
 Verification: `StudioFormTests` (15 tests): every record of the sample through its form and back; the inputs of
@@ -252,3 +251,38 @@ source; a text, a stage and the sources filled in; a row added; a row taken out;
 the reason; an emptied text; a refusal that keeps the form; a number that is none; Persian. Measured in a browser
 on the published tool at 375 px, right to left: no overflow, every input with a label, every target at least
 44 px, and one change sent from the browser and kept.
+
+## Addendum of 2026-11-17 – the texts of the other languages in the tool (step 11.8)
+
+A record and the texts that translate it are read together by the readers: a translation of something the
+collection does not have is refused. So the tool could not take out a part that was translated, and an editor had
+no way to change a Persian text but a file. Now:
+
+* **The readers list what a translation may translate** (`ContentVocabulary.Translated`): for each group the
+  fields, and whether the roles of what takes part are translated. The reader reads its translations by this same
+  list, so the list cannot differ from what is accepted, and the tool makes its inputs from it.
+* **The store keeps the texts with the record, in one act.** `Put` takes the texts of the record by the language
+  (`texts`); the record and the translations are changed together and tried together. A language that is not
+  named keeps its texts, a language named with no texts loses those of the record, a language the collection does
+  not have is refused – a language is added by importing its file. `Texts` reads the texts of a record by the
+  language. There is no act that changes a translation alone: it could only do what `Put` with the record as it
+  is does.
+* **In the form the text of a field in another language stands below the field** – for every text of the record
+  the list names, and for the role of every row of what takes part, also in the row that is added. The label
+  names the language. A text left empty is a text the language does not have. **The role goes with its row**: a
+  row that is taken out takes its role in the other languages with it, and a row that names somebody else keeps
+  its role under the new name.
+* The record as text does not carry the texts of the other languages; it keeps the rule it had.
+
+Not in the tool: the texts of a statement with a date (`dated`) and of the reading stages, the review state of a
+translation, and a new language – `store import` of the file of the translation does all of these. The history
+shows a change of a translation as before: as a change of the document of its language, not of the record.
+
+Verification: `EditorialTextsTests` (6 tests): the texts of a record read; a text changed with who and why,
+the record and the other records untouched; a part refused alone and taken out together with its text; a language
+named with no texts and one not named; an unknown text and an absent language refused; the list of the readers.
+`StudioFormTests` (19 tests now): the Persian text below its field, with its language; a text changed and one
+emptied while the record stays; a row taken out with its Persian role; a row added with one; a refused form that
+keeps the Persian texts; and the form sent as it stands still changes nothing. Measured in a browser on the
+published tool at 375 px, right to left: no overflow, every input labelled, every target at least 44 px, and a
+row taken out with its Persian role from the browser.

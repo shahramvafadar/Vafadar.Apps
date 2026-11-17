@@ -491,6 +491,17 @@ h3 {
   font-size: 0.95rem;
 }
 
+/* The text of a field in another language: set in below the field it translates. */
+.field.translated {
+  padding-inline-start: var(--space-3);
+  border-inline-start: 3px solid var(--border);
+}
+
+.field .language {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 /* A part of a record with fields of its own, and the rows of a list: set in from the fields around them. */
 .field.part {
   gap: var(--space-3);

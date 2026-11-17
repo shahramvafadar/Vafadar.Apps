@@ -385,7 +385,7 @@
     <value>Change the fields of the record</value>
   </data>
   <data name="Fields_Lead" xml:space="preserve">
-    <value>Every field the record has, with what it can hold. A text left empty takes its field out of the record. To give the record a field it does not have yet, change the record as text below.</value>
+    <value>Every field the record has, with what it can hold; the text of a field in another language stands below it. A text left empty takes its field out of the record. To give the record a field it does not have yet, change the record as text below.</value>
   </data>
   <data name="Fields_LinesHint" xml:space="preserve">
     <value>One in a line.</value>

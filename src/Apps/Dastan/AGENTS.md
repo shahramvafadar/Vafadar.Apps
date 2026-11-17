@@ -84,7 +84,10 @@ for Dastan is added here in the same commit as the work it came with.
   with the page, the reasons of the readers and the form as it was filled in; the tool checks only what a form
   needs to be understood and leaves every rule to the store. The form of the fields of a record (`RecordForm`) is
   made from the record as it is written and from `ContentVocabulary`; do not give the tool a description of a
-  record of its own – a new field or value belongs to the readers and their vocabulary, and the form follows. It answers the machine it runs on only; do not loosen that before editors can sign in (step 11.7), and do
+  record of its own – a new field or value belongs to the readers and their vocabulary, and the form follows.
+  What a translation may translate is listed by the readers (`ContentVocabulary.Translated`); the texts of a record
+  in the other languages are kept with the record in one act (`Put` with texts), never in an act of their own
+  that could leave a record and its translation disagreeing. It answers the machine it runs on only; do not loosen that before editors can sign in (step 11.7), and do
   not make the public site reference it or the store.
 * The site runs outside a developer's machine as one container without content
   ([ADR 0010](docs/adr/0010-running-the-site.md), [operations](docs/operations.md)). A change of a header, a
