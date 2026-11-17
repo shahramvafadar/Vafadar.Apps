@@ -72,6 +72,12 @@ for Dastan is added here in the same commit as the work it came with.
 * An item that may not be shown is told to a page only as a `MediaReference` (`Projection.References`, the
   galleries): the catalogue record and the link to the holder. Never pass its `MediaItem` to a page, never load
   anything from the holder's server, and add a field to the reference only if a visitor may see it.
+* The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
+  records as they are written in the file of a collection, each change kept with who, when, why, before and
+  after. The website never references the store. What a record may say is decided by the readers – never add a
+  rule to the store that the readers do not have, and never write to the store without reading the resulting
+  collection with them. A change of the schema is a migration (`dotnet ef migrations add`); the file of a store
+  is never committed.
 * The site runs outside a developer's machine as one container without content
   ([ADR 0010](docs/adr/0010-running-the-site.md), [operations](docs/operations.md)). A change of a header, a
   cookie, a setting or of what the site serves is checked with `eng/Check-Site.ps1` against the container of

@@ -322,7 +322,7 @@ both languages where it is visible, documented and merged.
 | 10.4 | **The connections chart keeps the name in the middle in sight** when much is opened above it; and the side edges of a stage take less of a phone's width | The two limits recorded for the charts (ADR 0008) | **Done** 2026-11-17: the script of the site brings the name into sight once; up to 40 rem the steps of the left and right side stand in a row above the chart ([ADR 0008](adr/0008-charts.md), fifth addendum) |
 | 10.5 | **Running outside a developer's machine**: a container image of the site, a page that says the site is alive, the headers checked from outside the process, a written procedure for an update and for taking a revision back; the privacy matrix read against it | Needed for any host, independent of which one the owner chooses | **Done** 2026-11-17: `Dockerfile`, `compose.site.yaml`, `/health` and `--probe`, trusted proxies, keys of the forms, `eng/Check-Site.ps1`, [operations](operations.md), the privacy matrix ([ADR 0010](adr/0010-running-the-site.md)). No host was used |
 | 10.6 | **More than narrative things in a collection**: types for historical persons, organisations and real places, and relation types for them, each with its meaning – only as far as the first content asks for it | The guide names it as what the formats cannot say yet; it follows the content, not the other way round | Waits for the first content that needs it |
-| 10.7 | **A store and the tools of the editors**: relational storage in place of the files, with review, correction and publication as work in an interface (document 20, after R0) | The files are enough for one collection written by hand; they are not enough for editors | Later – a phase of its own |
+| 10.7 | **A store and the tools of the editors**: relational storage in place of the files, with review, correction and publication as work in an interface (document 20, after R0) | The files are enough for one collection written by hand; they are not enough for editors | **Started** 2026-11-17 on the owner's word – section 12 |
 
 ### The owner's
 
@@ -343,3 +343,23 @@ German texts (the owner asked for English and Persian), accounts and private spa
 without a connection (ADR 0007), charts of numbers and maps, a script for pinching and dragging (ADR 0008, point 6).
 Each needs a decision of its own before it becomes a step.
 
+## 12. The store and the tools of the editors (phase 11)
+
+Step 10.7, started on 2026-11-17 when the owner asked for it. The decision is
+[ADR 0011](adr/0011-editors-store.md) (D-045): the store is the working place of the editors – the records of a
+collection with the history of their changes, in a SQLite file – and the public site keeps reading a published
+revision from a folder. A step is done when it is built, tested, documented and merged; a step with pages is
+looked at in a browser in both languages.
+
+| Step | What | Status |
+|---|---|---|
+| 11.1 | **The store, and the file in and out.** The project `Vafadar.Dastan.Store`: collections, records, translations and the history of every change; `store import`, `store export`, `store history` in the command of the writers. What comes out reads as what went in | **Done** 2026-11-17 – [ADR 0011](adr/0011-editors-store.md) |
+| 11.2 | **Changing one record in the store**, without a file in between: a record is replaced, added or taken out with who, when and why, and the whole collection is read by the readers before the change is kept – a change that makes the collection unusable is refused. Reviewing a statement, disputing it and withdrawing it as acts of their own, each with its record | Not started |
+| 11.3 | **Publishing from the store**: revision *n* made from the store by the rule of ADR 0009, kept in the store as it was published, and written out as the content folder a site is given; the history of revisions comes from the store | Not started |
+| 11.4 | **The tool of the editors, to read**: a second web app (`Vafadar.Dastan.Studio`) that runs on the editors' machine only – the collections, their records, what waits for a review, the history of a record with before and after | Not started |
+| 11.5 | **The tool of the editors, to work**: reviewing, disputing and withdrawing a statement, changing the texts of a record, publishing a revision – each a form that says what it will do and what it did | Not started |
+| 11.6 | **Forms for the parts of a record** (sources, associations of an event, a dated statement, a media item) in place of writing the record as text | Not started |
+| 11.7 | **Who an editor is**: signing in, and a store that several editors reach | Waits for the owner: how editors sign in, and where the tool runs |
+
+Not part of the phase: a tool for visitors, uploading and converting media (document 9: needs an intake design),
+comparisons in the store (they stay files until the store holds collections well), accounts of visitors.

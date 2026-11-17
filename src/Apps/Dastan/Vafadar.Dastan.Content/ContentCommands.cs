@@ -39,6 +39,8 @@ public static class ContentCommands
               history of the revisions before and what this one changes. Refuses a file in which a statement
               is not reviewed or a review is not recorded. Never over a file.
 
+        """ + StoreCommands.Usage + """
+
         Exit code: 0 in order, 1 a content file cannot be used, 2 the command was not understood.
         """;
 
@@ -49,7 +51,8 @@ public static class ContentCommands
     /// <param name="output">Where the answer is written.</param>
     /// <param name="today">The day a template is written on.</param>
     /// <returns>The exit code.</returns>
-    public static int Run(IReadOnlyList<string> arguments, TextWriter output, DateOnly today)
+    /// <param name="time">The clock of the store; the system's when nothing is given.</param>
+    public static int Run(IReadOnlyList<string> arguments, TextWriter output, DateOnly today, TimeProvider? time = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(output);
@@ -64,6 +67,7 @@ public static class ContentCommands
             ["template", "collection" or "comparison", _] => Template(words[1], words[2], null, output, today),
             ["template", "collection" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
             ["revision", _, ..] => Revision(words[1], words[2..], output),
+            ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
             _ => NotAsked(output),
         };
     }
