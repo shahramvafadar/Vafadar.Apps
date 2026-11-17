@@ -40,6 +40,9 @@ public enum FieldKind
 
     /// <summary>A part the form has no inputs for; it is written as it stands in the file.</summary>
     Json = 9,
+
+    /// <summary>A time of the calendar: what happened once or between two times, or what lasted.</summary>
+    Time = 10,
 }
 
 /// <summary>A value a field can be given, with what the editor is shown for it.</summary>
@@ -149,6 +152,9 @@ public static class RecordForm
     private const string Who = "entityId";
     private const string Role = "role";
 
+    // The time of a relation: a relation of the world that states none has the inputs to state one.
+    private const string Time = "time";
+
     // The statements with a date of an entity: the list, the key a row names itself by, and the texts of a row
     // a translation translates – the place "dated" of a translation document, by the key.
     private const string Dated = "dated";
@@ -172,6 +178,11 @@ public static class RecordForm
         ArgumentNullException.ThrowIfNull(record);
         ArgumentNullException.ThrowIfNull(context);
         var fields = record.Where(field => !Kept.Contains(field.Key)).Select(field => Field($"{group}[]", "f", field.Key, field.Value, context, nested: false)).ToList();
+        if (StatesNoTime(group, record))
+        {
+            fields.Add(new FormField { Path = $"f.{Time}", Name = Time, Kind = FieldKind.Time, Parts = TimeForm.Parts($"f.{Time}", null) });
+        }
+
         if (texts is not { Count: > 0 } || !Translated.TryGetValue(group, out var translated))
         {
             return fields;
@@ -396,8 +407,17 @@ public static class RecordForm
             }
         }
 
+        if (StatesNoTime(group, record) && fields.TryGetValue(Time, out var added) && Filled(added, form, problems) is { Node: not null } time)
+        {
+            filled[Time] = time.Node;
+        }
+
         return filled;
     }
+
+    // A relation of the world outside a story that does not say when it held.
+    private static bool StatesNoTime(string group, JsonObject record) =>
+        group == "relations" && !record.ContainsKey(Time) && (string?)record["scope"]?["kind"] == "outside_the_story";
 
     /// <summary>
     /// Returns a record as a form shows it again after it was refused: what was filled in, with the fields that
@@ -465,6 +485,9 @@ public static class RecordForm
                 rows.Add(Row($"{here}[]", $"{input}[{items.Count}]", Empty(shape), context));
                 return new FormField { Path = input, Name = name, Kind = FieldKind.Rows, Value = value, Rows = rows };
 
+            case JsonObject stated when name == Time && TimeForm.Parse(stated) is { } time:
+                return new FormField { Path = input, Name = name, Kind = FieldKind.Time, Value = value, Parts = TimeForm.Parts(input, time) };
+
             case JsonObject parts when !nested && parts.Count > 0:
                 return new FormField
                 {
@@ -529,6 +552,9 @@ public static class RecordForm
 
             case FieldKind.Lines:
                 return (new JsonArray([.. text.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(line => (JsonNode?)JsonValue.Create(line))]), true);
+
+            case FieldKind.Time:
+                return TimeForm.Read(field, form, problems);
 
             case FieldKind.Group:
                 var group = new JsonObject();

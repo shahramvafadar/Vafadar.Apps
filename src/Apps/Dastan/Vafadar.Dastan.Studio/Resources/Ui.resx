@@ -495,4 +495,7 @@
   <data name="Comparison_NeedsLanguage" xml:space="preserve">
     <value>A further translation names a language the comparison is not translated into yet.</value>
   </data>
+  <data name="Fields_TimeHint" xml:space="preserve">
+    <value>kind: “occurrence” is one time (at); “between” lies between two (at, latest); “period” lasted from at – or between at and latest, or from an unknown beginning (start) – until – or between until and untilLatest, or ongoing or unknown (end). A position is a year, with a month and a day where they are stated; “about” where the source says so. “–” states no time.</value>
+  </data>
 </root>
