@@ -1,0 +1,51 @@
+@* A record as it is written in the file of a collection, shown as what it is: fields with their values, lists as
+   lists. Nothing is interpreted – an editor sees exactly what the store holds. *@
+
+@switch (Node)
+{
+    case JsonObject fields:
+        <dl class="fields">
+            @foreach (var (name, value) in fields)
+            {
+                <dt><bdi dir="ltr">@name</bdi></dt>
+                <dd><JsonView Node="value" /></dd>
+            }
+        </dl>
+        break;
+
+    case JsonArray items when items.Count == 0:
+        <span class="empty">[ ]</span>
+        break;
+
+    case JsonArray items when items.All(item => item is JsonValue):
+        <span class="values">
+            @foreach (var item in items)
+            {
+                <bdi class="value">@item!.ToString()</bdi>
+            }
+        </span>
+        break;
+
+    case JsonArray items:
+        <ol class="items">
+            @foreach (var item in items)
+            {
+                <li><JsonView Node="item" /></li>
+            }
+        </ol>
+        break;
+
+    case null:
+        <span class="empty">null</span>
+        break;
+
+    default:
+        <bdi class="value">@Node.ToString()</bdi>
+        break;
+}
+
+@code {
+    /// <summary>Gets or sets the value to show.</summary>
+    [Parameter, EditorRequired]
+    public JsonNode? Node { get; set; }
+}

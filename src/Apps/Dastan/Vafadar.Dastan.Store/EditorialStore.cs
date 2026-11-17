@@ -54,7 +54,11 @@ public sealed partial class EditorialStore : IDisposable
     /// The folder in which the files of the collections lie (<c>content/samples</c>): the files a media item names
     /// are looked for from there when an act of an editor is tried. Not given, files are not looked for.
     /// </param>
-    public static EditorialStore Open(string file, TimeProvider? time = null, string? samplesFolder = null)
+    /// <param name="migrate">
+    /// Whether the database is brought to the form this program knows. A tool that opens the store for every
+    /// request does it once, when it starts.
+    /// </param>
+    public static EditorialStore Open(string file, TimeProvider? time = null, string? samplesFolder = null, bool migrate = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(file);
         var path = Path.GetFullPath(file);
@@ -63,7 +67,11 @@ public sealed partial class EditorialStore : IDisposable
         // Pooling is off: the file of a store is released when the store is closed, not when the process ends.
         var options = new DbContextOptionsBuilder<StoreContext>().UseSqlite($"Data Source={path};Pooling=False").Options;
         var context = new StoreContext(options);
-        context.Database.Migrate();
+        if (migrate)
+        {
+            context.Database.Migrate();
+        }
+
         return new EditorialStore(context, time ?? TimeProvider.System, samplesFolder is null ? null : Path.GetFullPath(samplesFolder));
     }
 

@@ -76,3 +76,12 @@ Created on 2026-11-16 ([ADR 0012](adr/0012-temporal-model.md)). What it delibera
 | LIB-TEMP-07 | Day numbers are checked exactly for the Gregorian and Julian calendars only; for the Hijri calendars and unnamed calendars the upper limit of the month is used. | Input validation | Open – with LIB-TEMP-01 |
 | LIB-TEMP-08 | No reading or writing of EDTF, the Library of Congress date format. The JSON format is the library's own. | Imports | Not planned until an import needs it |
 | LIB-TEMP-09 | A partial order ("A before B", nothing else known) is not a position. It is a relation between events and belongs to the app's model. | – | Not planned here |
+
+## Vafadar.Web – found while building Dastan Studio (2026-11-17)
+
+* **"A page is not kept" is written twice.** The rule that a page rendered for one request is answered with
+  `Cache-Control: no-store` is `UseFreshPages` in the Dastan website and a few lines in the program of Dastan
+  Studio. It belongs to `Vafadar.Web` beside the security headers.
+* **The colours of an app are repeated by its second web app.** The base style sheet leaves the tokens to the
+  app; Dastan and Dastan Studio each define the same nine colours for light and dark. A shared token file per
+  app family would remove the copy.

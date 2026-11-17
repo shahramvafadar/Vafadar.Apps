@@ -1,0 +1,110 @@
+@* One change of one record (GOV-005): what happened, who, when, why – and for a record that reads differently,
+   every field that differs, before and after. *@
+@inject Editor Editor
+@inject IStringLocalizer<Ui> T
+
+<article class="change change-@Change.Kind.ToString().ToLowerInvariant()">
+    <p class="change-head">
+        <strong>@T[$"Change_{Change.Kind}"]</strong>
+        @if (Collection is not null)
+        {
+            @* On the page of a collection the change names its record; on the page of a record it need not. *@
+            <span>
+                @T[$"Group_{Change.Group}"]:
+                @if (Change.Group == EditorialStore.TranslationGroup)
+                {
+                    <bdi dir="ltr">@Change.RecordId</bdi>
+                }
+                else
+                {
+                    <a href="@($"{Collection}/record/{Change.Group}/{Change.RecordId}")"><bdi dir="ltr">@Change.RecordId</bdi></a>
+                }
+            </span>
+        }
+        <span class="meta">
+            @string.Format(CultureInfo.CurrentCulture, T["Change_Version"], Editor.Number(Change.Version)) –
+            @string.Format(CultureInfo.CurrentCulture, T["Change_By"], Change.By) –
+            <bdi dir="ltr">@Editor.Moment(Change.At)</bdi>
+        </span>
+    </p>
+    <p class="change-reason">
+        @if (Change.Reason is { } reason)
+        {
+            <span class="meta">@T["Change_Reason"]:</span> <bdi>@reason</bdi>
+        }
+        else
+        {
+            <span class="meta">@T["Change_NoReason"]</span>
+        }
+    </p>
+
+    @if (Change.Kind == RecordChangeKind.Changed && _fields.Count > 0)
+    {
+        <div class="table-frame" tabindex="0" role="region" aria-label="@T["Change_Fields"]">
+            <table class="list diff">
+                <thead>
+                    <tr>
+                        <th scope="col">@T["Change_Field"]</th>
+                        <th scope="col">@T["Change_Before"]</th>
+                        <th scope="col">@T["Change_After"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (name, before, after) in _fields)
+                    {
+                        <tr>
+                            <th scope="row"><bdi dir="ltr">@name</bdi></th>
+                            <td>@Value(before)</td>
+                            <td>@Value(after)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</article>
+
+@code {
+    private List<(string Name, JsonNode? Before, JsonNode? After)> _fields = [];
+
+    /// <summary>Gets or sets the change.</summary>
+    [Parameter, EditorRequired]
+    public RecordChange Change { get; set; } = null!;
+
+    /// <summary>Gets or sets the collection, on a page that lists changes of many records.</summary>
+    [Parameter]
+    public string? Collection { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _fields = [];
+        if (Change.Kind != RecordChangeKind.Changed || Change.Before is null || Change.After is null)
+        {
+            return;
+        }
+
+        // The fields that differ, in the order of the record after the change, then those that are gone.
+        var before = JsonNode.Parse(Change.Before)!.AsObject();
+        var after = JsonNode.Parse(Change.After)!.AsObject();
+        foreach (var (name, value) in after)
+        {
+            var had = before.TryGetPropertyValue(name, out var was);
+            if (!had || !JsonNode.DeepEquals(was, value))
+            {
+                _fields.Add((name, had ? was : Absent, value));
+            }
+        }
+
+        foreach (var (name, was) in before.Where(field => !after.ContainsKey(field.Key)))
+        {
+            _fields.Add((name, was, Absent));
+        }
+    }
+
+    // A field a record does not have, as distinct from one that is null.
+    private static readonly JsonNode Absent = JsonValue.Create("\u0000absent")!;
+
+    private RenderFragment Value(JsonNode? value) => ReferenceEquals(value, Absent)
+        ? @<span class="empty">@T["Change_Absent"]</span>
+        : @<JsonView Node="value" />;
+}

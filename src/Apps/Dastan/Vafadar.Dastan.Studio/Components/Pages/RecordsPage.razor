@@ -1,0 +1,44 @@
+@page "/{Collection}/records/{Group}"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_known)
+{
+    var title = string.Format(CultureInfo.CurrentCulture, T["Records_Title"], T[$"Group_{Group}"], Editor.Number(_records.Count));
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Collection"><bdi dir="ltr">@Collection</bdi></a></p>
+        <h1>@title</h1>
+        <p class="lead">@T["Records_Lead"]</p>
+    </header>
+
+    <RecordList Collection="@Collection" Records="_records" />
+}
+
+@code {
+    private bool _known;
+    private List<RecordInfo> _records = [];
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the group of records in the address.</summary>
+    [Parameter]
+    public string Group { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _known = EditorialStore.Groups.Contains(Group) && Store.Collections.Contains(Collection);
+        if (!_known)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _records = [.. Store.Records(Collection, Group)];
+    }
+}

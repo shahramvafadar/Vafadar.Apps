@@ -1,0 +1,80 @@
+@page "/{Collection}/record/{Group}/{Record}"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_history.Count > 0)
+{
+    var name = _record?.Info.Label ?? Record;
+    <PageTitle>@name – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta">
+            <a href="@Collection"><bdi dir="ltr">@Collection</bdi></a> –
+            <a href="@($"{Collection}/records/{Group}")">@T[$"Group_{Group}"]</a>
+        </p>
+        <h1><bdi>@name</bdi></h1>
+        <p class="lead"><bdi dir="ltr">@Record</bdi></p>
+    </header>
+
+    @if (_record is { } record)
+    {
+        <section aria-labelledby="now">
+            <h2 id="now">@T["Record_Now"]</h2>
+            <p class="note">
+                @string.Format(CultureInfo.CurrentCulture, T["Record_State"], Editor.Number(record.Info.Version), record.Info.UpdatedBy, Editor.Moment(record.Info.UpdatedAt))
+                @if (record.Info.ReviewStatus is { } review)
+                {
+                    <text> – </text><ReviewState Status="@review" />
+                }
+            </p>
+            <JsonView Node="record.Body" />
+        </section>
+    }
+    else
+    {
+        @* The record was taken out; its history is still here. *@
+        <p class="note" role="status">@T["Record_Gone"]</p>
+    }
+
+    <section aria-labelledby="history">
+        <h2 id="history">@T["Record_History"]</h2>
+        <ol class="changes" role="list">
+            @foreach (var change in _history)
+            {
+                <li><ChangeView Change="change" /></li>
+            }
+        </ol>
+    </section>
+}
+
+@code {
+    private RecordView? _record;
+    private List<RecordChange> _history = [];
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the group of the record in the address.</summary>
+    [Parameter]
+    public string Group { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the record in the address.</summary>
+    [Parameter]
+    public string Record { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        // The newest change first. A record that never was in the store has no history and no page.
+        _history = [.. Store.History(Collection, Group, Record).Reverse()];
+        if (_history.Count == 0)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _record = Store.Record(Collection, Group, Record);
+    }
+}

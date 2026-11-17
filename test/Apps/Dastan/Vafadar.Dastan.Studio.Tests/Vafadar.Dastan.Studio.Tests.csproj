@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Studio\Vafadar.Dastan.Studio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The working copy of the collection that the tests of the store use: one way to get a filled store. -->
+    <Compile Include="..\Vafadar.Dastan.Store.Tests\WorkingCopy.cs" Link="Shared\WorkingCopy.cs" />
+  </ItemGroup>
+
+</Project>

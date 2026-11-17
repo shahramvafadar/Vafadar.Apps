@@ -134,3 +134,33 @@ withdrawn statement – its history, its translation, the store's working state,
 statement changed after its review stops the next revision until it is reviewed again; the commands
 `store publish`, `store revisions`, `store revision`. `ContentRevisionTests` (Data) still pass with the
 shared maker.
+
+## Addendum of 2026-11-17 – the tool of the editors, to read (step 11.4)
+
+* **A second web app, `Vafadar.Dastan.Studio`**, shows what the store holds: the collections; a collection with
+  its groups, what waits for a review and what was published; the records of a group with the state of their
+  review; a record as it is written, with every change of it – who, when, why, and each field that differs before
+  and after; the statements that wait; the latest changes of a collection; the revisions. A record that was taken
+  out keeps the page of its history.
+* **It is built like the site**: pages rendered on the server for every request, no script, no style in a page,
+  English and Persian from the address, light and dark, the base style sheet and the headers of `Vafadar.Web`
+  (ADR 0003, repository ADR 0013). Its own style sheet repeats the colours of the site (ADR 0004).
+* **It answers the machine it runs on and nobody else.** The tool shows what is not published and has no
+  accounts; until it knows who an editor is (step 11.7), where it runs is its only guard. A request from another
+  address is refused before anything else happens, and the allowed host names are those of the machine itself.
+  No page is kept by a browser or indexed.
+* **It only reads.** No page has a form that changes the store; acting is step 11.5. The store is opened for a
+  request and closed with it, and brought to the form the program knows once, when the tool starts – a tool that
+  is not told its store, or cannot open it, does not start.
+* **A record is shown as it is written** – fields and values, nested as the record nests them. Nothing is
+  interpreted, so the page cannot show a record differently from what the store holds and the readers read.
+
+Known limits: a change of a translation shows the whole group of texts that differs, not the single text; the
+tool has no search; the Persian font of the site is not part of the tool, which uses the fonts of the machine.
+
+Verification: `StudioTests` (24 tests) over a store with the collection of the repository after some work:
+every page and what it lists; what the store does not hold is not found; Persian, right to left, Persian digits;
+no page kept, indexed or with a script or an inline style; no form but the choice of the appearance; a request
+from another address is refused; the tool does not start without its store. In a browser, on a published build
+at the width of a phone, English and Persian: no page scrolls sideways – a table wider than the page scrolls in
+its frame –, every link and button is at least 44 px high. Measured, not seen: no picture could be taken.

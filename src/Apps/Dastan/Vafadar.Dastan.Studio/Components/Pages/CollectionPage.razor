@@ -1,0 +1,61 @@
+@page "/{Collection}"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_summary is { } summary)
+{
+    <PageTitle>@summary.Id – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="./">@T["Nav_Collections"]</a></p>
+        <h1><bdi dir="ltr">@summary.Id</bdi></h1>
+        <p class="lead">@T["Collection_Lead"]</p>
+    </header>
+
+    <section aria-labelledby="records">
+        <h2 id="records">@T["Collection_Records"]</h2>
+        <ul class="cards" role="list">
+            @foreach (var (group, count) in summary.Records)
+            {
+                <li class="card">
+                    <h3><a href="@($"{summary.Id}/records/{group}")">@T[$"Group_{group}"]</a></h3>
+                    <p class="figure">@Editor.Number(count)</p>
+                </li>
+            }
+        </ul>
+    </section>
+
+    <section aria-labelledby="work">
+        <h2 id="work">@T["Collection_Work"]</h2>
+        <ul class="plain" role="list">
+            <li><a href="@($"{summary.Id}/waiting")">@string.Format(CultureInfo.CurrentCulture, T["Collection_Waiting"], Editor.Number(summary.Waiting), Editor.Number(summary.Statements))</a></li>
+            <li><a href="@($"{summary.Id}/history")">@T["History_Title"]</a></li>
+            <li><a href="@($"{summary.Id}/revisions")">@string.Format(CultureInfo.CurrentCulture, T["Collection_Revisions"], Editor.Number(summary.Revisions))</a></li>
+        </ul>
+        <p class="note">
+            @(summary.Languages.IsEmpty
+                ? T["Collection_NoTranslation"]
+                : string.Format(CultureInfo.CurrentCulture, T["Collection_Languages"], string.Join(", ", summary.Languages)))
+            – @string.Format(CultureInfo.CurrentCulture, T["Collection_Changed"], Editor.Moment(summary.UpdatedAt))
+        </p>
+    </section>
+}
+
+@code {
+    private CollectionSummary? _summary;
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _summary = Store.Summary(Collection);
+        if (_summary is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}

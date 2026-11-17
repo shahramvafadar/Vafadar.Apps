@@ -1,0 +1,71 @@
+@page "/{Collection}/waiting"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (_known)
+{
+    <PageTitle>@T["Waiting_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Collection"><bdi dir="ltr">@Collection</bdi></a></p>
+        <h1>@T["Waiting_Title"]</h1>
+        <p class="lead">@string.Format(CultureInfo.CurrentCulture, T["Collection_Waiting"], Editor.Number(_waiting.Count), Editor.Number(_all))</p>
+    </header>
+
+    @if (_waiting.Count == 0)
+    {
+        <p class="note" role="status">@T["Waiting_None"]</p>
+    }
+    else
+    {
+        <div class="table-frame" tabindex="0" role="region" aria-label="@T["Waiting_Title"]">
+            <table class="list">
+                <thead>
+                    <tr>
+                        <th scope="col">@T["Col_Statement"]</th>
+                        <th scope="col">@T["Col_Kind"]</th>
+                        <th scope="col">@T["Col_Review"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var statement in _waiting)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <a href="@($"{Collection}/record/{statement.Group}/{statement.Record}")"><bdi>@statement.Label</bdi></a>
+                                <span class="meta"><bdi dir="ltr">@statement.Statement</bdi></span>
+                            </th>
+                            <td>@T[statement.Statement == statement.Record ? $"Group_{statement.Group}" : "Kind_Dated"]</td>
+                            <td><ReviewState Status="@statement.ReviewStatus" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+@code {
+    private bool _known;
+    private int _all;
+    private List<StatementState> _waiting = [];
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _known = Store.Collections.Contains(Collection);
+        if (!_known)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _all = Store.Statements(Collection).Length;
+        _waiting = [.. Store.Statements(Collection, waitingOnly: true)];
+    }
+}

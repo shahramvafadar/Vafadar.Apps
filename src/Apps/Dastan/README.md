@@ -35,6 +35,7 @@ All exist.
 | `Vafadar.Dastan.Data` | Reads and validates the editorial sample; later the relational store | 3 |
 | `Vafadar.Dastan.Web` | The website: pages, components, texts in English and Persian, media delivery | 4 |
 | `Vafadar.Dastan.Content` | The command of the writers and the editors: check, vocabulary, template, revision, store | 9 |
+| `Vafadar.Dastan.Studio` | The tool of the editors: pages that show what the store holds. Runs on the editors' machine only | 11 |
 | `Vafadar.Dastan.Store` | The store of the editors: the records of a collection with the history of their changes ([ADR 0011](docs/adr/0011-editors-store.md)). The website does not use it | 11 |
 
 Shared libraries written for Dastan and usable by other apps:
@@ -53,6 +54,14 @@ This starts the local demonstration (the Development settings): the site reads t
 shows it as a demonstration. Started with any other settings the site is for the public and shows that nothing
 is published, because the sample is not approved for publication. No page needs a script to be read; the reading position
 is chosen at the bottom of the page of the story.
+
+The tool of the editors shows what their store holds ([ADR 0011](docs/adr/0011-editors-store.md)). It needs the
+file of the store and answers this machine only:
+
+```powershell
+$env:Studio__Store = "<the file of the store>"
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Studio      # then open http://localhost:5211
+```
 
 Running it outside a developer's machine – the container image, what it is told, how it is checked, updated and
 taken back – is in [operations](docs/operations.md).

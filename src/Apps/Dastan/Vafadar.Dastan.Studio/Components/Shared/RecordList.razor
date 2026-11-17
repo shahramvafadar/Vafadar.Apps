@@ -1,0 +1,54 @@
+@* The records of a group as a table: what each is called, the state of its review, and who changed it last. *@
+@inject Editor Editor
+@inject IStringLocalizer<Ui> T
+
+@if (Records.Count == 0)
+{
+    <p class="note" role="status">@T["Records_None"]</p>
+}
+else
+{
+    <div class="table-frame" tabindex="0" role="region" aria-label="@T["Collection_Records"]">
+        <table class="list">
+            <thead>
+                <tr>
+                    <th scope="col">@T["Col_Label"]</th>
+                    <th scope="col">@T["Col_Review"]</th>
+                    <th scope="col">@T["Col_Version"]</th>
+                    <th scope="col">@T["Col_By"]</th>
+                    <th scope="col">@T["Col_Changed"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var record in Records)
+                {
+                    <tr>
+                        <th scope="row">
+                            <a href="@($"{Collection}/record/{record.Group}/{record.Id}")"><bdi>@record.Label</bdi></a>
+                            <span class="meta"><bdi dir="ltr">@record.Id</bdi></span>
+                        </th>
+                        <td>
+                            @if (record.ReviewStatus is { } review)
+                            {
+                                <ReviewState Status="@review" />
+                            }
+                        </td>
+                        <td>@Editor.Number(record.Version)</td>
+                        <td><bdi>@record.UpdatedBy</bdi></td>
+                        <td><bdi dir="ltr">@Editor.Moment(record.UpdatedAt)</bdi></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    /// <summary>Gets or sets the collection of the records.</summary>
+    [Parameter, EditorRequired]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the records.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<RecordInfo> Records { get; set; } = [];
+}

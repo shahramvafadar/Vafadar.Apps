@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Site_Name" xml:space="preserve">
+    <value>استودیوی داستان</value>
+  </data>
+  <data name="Skip_ToContent" xml:space="preserve">
+    <value>پرش به محتوا</value>
+  </data>
+  <data name="Nav_Main" xml:space="preserve">
+    <value>اصلی</value>
+  </data>
+  <data name="Nav_Collections" xml:space="preserve">
+    <value>مجموعه‌ها</value>
+  </data>
+  <data name="Language_Label" xml:space="preserve">
+    <value>زبان</value>
+  </data>
+  <data name="Theme_Label" xml:space="preserve">
+    <value>ظاهر</value>
+  </data>
+  <data name="Theme_Auto" xml:space="preserve">
+    <value>خودکار</value>
+  </data>
+  <data name="Theme_Light" xml:space="preserve">
+    <value>روشن</value>
+  </data>
+  <data name="Theme_Dark" xml:space="preserve">
+    <value>تیره</value>
+  </data>
+  <data name="Local_Notice" xml:space="preserve">
+    <value>ابزار ویراستاران. فقط به همین دستگاه پاسخ می‌دهد و چیزهایی را نشان می‌دهد که منتشر نشده‌اند.</value>
+  </data>
+  <data name="Home_Title" xml:space="preserve">
+    <value>مجموعه‌ها</value>
+  </data>
+  <data name="Home_Lead" xml:space="preserve">
+    <value>آنچه در ذخیره‌گاه ویراستاران هست.</value>
+  </data>
+  <data name="Home_None" xml:space="preserve">
+    <value>ذخیره‌گاه هنوز مجموعه‌ای ندارد. با فرمان «store import» یکی را وارد کنید.</value>
+  </data>
+  <data name="Col_Collection" xml:space="preserve">
+    <value>مجموعه</value>
+  </data>
+  <data name="Col_Records" xml:space="preserve">
+    <value>رکوردها</value>
+  </data>
+  <data name="Col_Waiting" xml:space="preserve">
+    <value>در انتظار بازبینی</value>
+  </data>
+  <data name="Col_Revisions" xml:space="preserve">
+    <value>نسخه‌ها</value>
+  </data>
+  <data name="Col_Changed" xml:space="preserve">
+    <value>آخرین تغییر</value>
+  </data>
+  <data name="Col_Label" xml:space="preserve">
+    <value>رکورد</value>
+  </data>
+  <data name="Col_Review" xml:space="preserve">
+    <value>بازبینی</value>
+  </data>
+  <data name="Col_Version" xml:space="preserve">
+    <value>نگارش</value>
+  </data>
+  <data name="Col_By" xml:space="preserve">
+    <value>توسط</value>
+  </data>
+  <data name="Col_Statement" xml:space="preserve">
+    <value>گزاره</value>
+  </data>
+  <data name="Col_Kind" xml:space="preserve">
+    <value>نوع</value>
+  </data>
+  <data name="Col_Number" xml:space="preserve">
+    <value>شماره</value>
+  </data>
+  <data name="Col_Published" xml:space="preserve">
+    <value>تاریخ انتشار</value>
+  </data>
+  <data name="Col_Note" xml:space="preserve">
+    <value>یادداشت</value>
+  </data>
+  <data name="Waiting_Of" xml:space="preserve">
+    <value>{0} از {1}</value>
+  </data>
+  <data name="Collection_Lead" xml:space="preserve">
+    <value>وضعیت کاری ویراستاران – نه آنچه عموم می‌بینند.</value>
+  </data>
+  <data name="Collection_Records" xml:space="preserve">
+    <value>رکوردها</value>
+  </data>
+  <data name="Collection_Work" xml:space="preserve">
+    <value>کار</value>
+  </data>
+  <data name="Collection_Waiting" xml:space="preserve">
+    <value>{0} گزاره از {1} در انتظار بازبینی است</value>
+  </data>
+  <data name="Collection_Revisions" xml:space="preserve">
+    <value>نسخه‌های منتشرشده: {0}</value>
+  </data>
+  <data name="Collection_Languages" xml:space="preserve">
+    <value>ترجمه‌شده به: {0}</value>
+  </data>
+  <data name="Collection_NoTranslation" xml:space="preserve">
+    <value>ترجمه نشده است.</value>
+  </data>
+  <data name="Collection_Changed" xml:space="preserve">
+    <value>آخرین تغییر {0}</value>
+  </data>
+  <data name="Group_sources" xml:space="preserve">
+    <value>منابع</value>
+  </data>
+  <data name="Group_entities" xml:space="preserve">
+    <value>نام‌ها</value>
+  </data>
+  <data name="Group_relations" xml:space="preserve">
+    <value>رابطه‌ها</value>
+  </data>
+  <data name="Group_events" xml:space="preserve">
+    <value>گام‌های قصه</value>
+  </data>
+  <data name="Group_media" xml:space="preserve">
+    <value>تصویرها و ویدیوها</value>
+  </data>
+  <data name="Group_translation" xml:space="preserve">
+    <value>ترجمه</value>
+  </data>
+  <data name="Kind_Dated" xml:space="preserve">
+    <value>گزارهٔ تاریخ‌دار</value>
+  </data>
+  <data name="Records_Title" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Records_Lead" xml:space="preserve">
+    <value>به ترتیبِ ویراستاران. هر رکورد به محتوای خود و تاریخچهٔ تغییرهایش راه دارد.</value>
+  </data>
+  <data name="Records_None" xml:space="preserve">
+    <value>این گروه رکوردی ندارد.</value>
+  </data>
+  <data name="Review_reviewed" xml:space="preserve">
+    <value>بازبینی‌شده</value>
+  </data>
+  <data name="Review_disputed" xml:space="preserve">
+    <value>مورد اختلاف</value>
+  </data>
+  <data name="Review_withdrawn" xml:space="preserve">
+    <value>پس‌گرفته‌شده</value>
+  </data>
+  <data name="Review_waiting" xml:space="preserve">
+    <value>در انتظار بازبینی</value>
+  </data>
+  <data name="Record_Now" xml:space="preserve">
+    <value>رکورد، آن‌گونه که اکنون هست</value>
+  </data>
+  <data name="Record_State" xml:space="preserve">
+    <value>نگارش {0}، آخرین تغییر توسط {1} در {2}</value>
+  </data>
+  <data name="Record_Gone" xml:space="preserve">
+    <value>این رکورد از مجموعه برداشته شده است. تاریخچهٔ آن نگه داشته می‌شود.</value>
+  </data>
+  <data name="Record_History" xml:space="preserve">
+    <value>تاریخچهٔ رکورد</value>
+  </data>
+  <data name="Change_Added" xml:space="preserve">
+    <value>وارد شد</value>
+  </data>
+  <data name="Change_Changed" xml:space="preserve">
+    <value>تغییر کرد</value>
+  </data>
+  <data name="Change_Removed" xml:space="preserve">
+    <value>برداشته شد</value>
+  </data>
+  <data name="Change_Version" xml:space="preserve">
+    <value>نگارش {0}</value>
+  </data>
+  <data name="Change_By" xml:space="preserve">
+    <value>توسط {0}</value>
+  </data>
+  <data name="Change_Reason" xml:space="preserve">
+    <value>دلیل</value>
+  </data>
+  <data name="Change_NoReason" xml:space="preserve">
+    <value>دلیلی داده نشده است.</value>
+  </data>
+  <data name="Change_Fields" xml:space="preserve">
+    <value>آنچه تغییر کرد</value>
+  </data>
+  <data name="Change_Field" xml:space="preserve">
+    <value>فیلد</value>
+  </data>
+  <data name="Change_Before" xml:space="preserve">
+    <value>پیش از تغییر</value>
+  </data>
+  <data name="Change_After" xml:space="preserve">
+    <value>پس از تغییر</value>
+  </data>
+  <data name="Change_Absent" xml:space="preserve">
+    <value>(وجود ندارد)</value>
+  </data>
+  <data name="Waiting_Title" xml:space="preserve">
+    <value>در انتظار بازبینی</value>
+  </data>
+  <data name="Waiting_None" xml:space="preserve">
+    <value>همهٔ گزاره‌ها بازبینی شده‌اند.</value>
+  </data>
+  <data name="History_Title" xml:space="preserve">
+    <value>تاریخچهٔ تغییرها</value>
+  </data>
+  <data name="History_Lead" xml:space="preserve">
+    <value>تازه‌ترین {0} تغییر از {1} تغییر، از تازه به کهنه.</value>
+  </data>
+  <data name="Revisions_Title" xml:space="preserve">
+    <value>نسخه‌های منتشرشده</value>
+  </data>
+  <data name="Revisions_Lead" xml:space="preserve">
+    <value>آنچه ذخیره‌گاه منتشر کرده است؛ هر نسخه همان‌گونه که منتشر شد نگه داشته می‌شود.</value>
+  </data>
+  <data name="Revisions_None" xml:space="preserve">
+    <value>هنوز نسخه‌ای از ذخیره‌گاه منتشر نشده است.</value>
+  </data>
+  <data name="NotFound_Title" xml:space="preserve">
+    <value>پیدا نشد</value>
+  </data>
+  <data name="NotFound_Text" xml:space="preserve">
+    <value>ذخیره‌گاه در این نشانی چیزی ندارد.</value>
+  </data>
+  <data name="Error_Title" xml:space="preserve">
+    <value>مشکلی پیش آمد</value>
+  </data>
+  <data name="Error_Text" xml:space="preserve">
+    <value>صفحه نمایش داده نشد. چیزی تغییر نکرد. علت در گزارش ابزار ثبت شده است.</value>
+  </data>
+</root>
