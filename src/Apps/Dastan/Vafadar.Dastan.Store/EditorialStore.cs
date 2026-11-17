@@ -26,7 +26,7 @@ public sealed record ExportedCollection(string Json, ImmutableSortedDictionary<s
 /// and after. The file of a collection is what goes in and what comes out; the readers of the site decide what a
 /// usable collection is, here as everywhere. The store reviews nothing and publishes nothing.
 /// </summary>
-public sealed class EditorialStore : IDisposable
+public sealed partial class EditorialStore : IDisposable
 {
     /// <summary>The groups of records of a collection, in the order of its file.</summary>
     public static readonly ImmutableArray<string> Groups = ["sources", "entities", "relations", "events", "media"];
@@ -38,17 +38,23 @@ public sealed class EditorialStore : IDisposable
 
     private readonly StoreContext _context;
     private readonly TimeProvider _time;
+    private readonly string? _samplesFolder;
 
-    private EditorialStore(StoreContext context, TimeProvider time)
+    private EditorialStore(StoreContext context, TimeProvider time, string? samplesFolder)
     {
         _context = context;
         _time = time;
+        _samplesFolder = samplesFolder;
     }
 
     /// <summary>Opens the store in a file, and brings its database to the form this program knows.</summary>
     /// <param name="file">The file of the store; it is made when it does not exist.</param>
     /// <param name="time">The clock; the system's when nothing is given.</param>
-    public static EditorialStore Open(string file, TimeProvider? time = null)
+    /// <param name="samplesFolder">
+    /// The folder in which the files of the collections lie (<c>content/samples</c>): the files a media item names
+    /// are looked for from there when an act of an editor is tried. Not given, files are not looked for.
+    /// </param>
+    public static EditorialStore Open(string file, TimeProvider? time = null, string? samplesFolder = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(file);
         var path = Path.GetFullPath(file);
@@ -58,7 +64,7 @@ public sealed class EditorialStore : IDisposable
         var options = new DbContextOptionsBuilder<StoreContext>().UseSqlite($"Data Source={path};Pooling=False").Options;
         var context = new StoreContext(options);
         context.Database.Migrate();
-        return new EditorialStore(context, time ?? TimeProvider.System);
+        return new EditorialStore(context, time ?? TimeProvider.System, samplesFolder is null ? null : Path.GetFullPath(samplesFolder));
     }
 
     /// <summary>Gets the identifiers of the collections in the store.</summary>
@@ -96,6 +102,17 @@ public sealed class EditorialStore : IDisposable
             return new ImportResult(null, [$"{name}: the store holds the working state of the editors; a published revision is made from it, not brought into it."]);
         }
 
+        var translations = TranslationFiles(report.File)
+            .Select(file => JsonNode.Parse(File.ReadAllText(file))!.AsObject())
+            .ToDictionary(document => (string)document["language"]!, StringComparer.Ordinal);
+        var (added, changed, removed) = Keep(root, translations, by, reason);
+        return new ImportResult((string)root["datasetId"]!, [], added, changed, removed);
+    }
+
+    // Keeps a collection as it is given: every record and translation that differs from what the store holds
+    // becomes a change. The collection was read by the readers before it gets here.
+    private (int Added, int Changed, int Removed) Keep(JsonObject root, Dictionary<string, JsonObject> documents, string by, string? reason)
+    {
         var id = (string)root["datasetId"]!;
         var now = _time.GetUtcNow().UtcDateTime;
         var (added, changed, removed) = (0, 0, 0);
@@ -142,7 +159,7 @@ public sealed class EditorialStore : IDisposable
             }
         }
 
-        // What the file no longer has.
+        // What the collection no longer has.
         foreach (var gone in held.Values)
         {
             Record(id, gone.Group, gone.RecordId, RecordChangeKind.Removed, gone.Version + 1, by, now, reason, gone.Body, null);
@@ -150,12 +167,10 @@ public sealed class EditorialStore : IDisposable
             removed++;
         }
 
-        // The translations beside the file, by their language.
+        // The translations, by their language.
         var translations = _context.Translations.Where(translation => translation.CollectionId == id).ToDictionary(translation => translation.Language);
-        foreach (var file in TranslationFiles(report.File))
+        foreach (var (language, document) in documents)
         {
-            var document = JsonNode.Parse(File.ReadAllText(file))!.AsObject();
-            var language = (string)document["language"]!;
             var body = document.ToJsonString();
             if (!translations.Remove(language, out var stored))
             {
@@ -182,7 +197,7 @@ public sealed class EditorialStore : IDisposable
             removed++;
         }
 
-        // Everything of the file that is not a record: the groups stay in it as empty lists and keep their place.
+        // Everything of the collection that is not a record: the groups stay in it as empty lists and keep their place.
         var header = (JsonObject)root.DeepClone();
         foreach (var group in Groups)
         {
@@ -202,7 +217,7 @@ public sealed class EditorialStore : IDisposable
 
         _context.SaveChanges();
         transaction.Commit();
-        return new ImportResult(id, [], added, changed, removed);
+        return (added, changed, removed);
     }
 
     /// <summary>

@@ -208,6 +208,24 @@ dotnet run --project $content -- store export <datasetId> --store $store --out <
 dotnet run --project $content -- store history <datasetId> --store $store --record relation-02
 ```
 
+```powershell
+# What still waits for a review.
+dotnet run --project $content -- store waiting <datasetId> --store $store
+
+# Record a review: reviewed, disputed (the note says what the sources disagree about) or withdrawn (why).
+dotnet run --project $content -- store review <datasetId> relation-02 --store $store --by "<name>" --as reviewed --note "Read against the text." --files src/Apps/Dastan/content/samples
+
+# Put one record – the JSON object of the file – in place of the one with its id, or as a new one.
+dotnet run --project $content -- store put <datasetId> entities --from <file with the record> --store $store --by "<name>" --reason "<why>"
+
+# Take a record out, with the texts that translate it.
+dotnet run --project $content -- store remove <datasetId> relation-18 --store $store --by "<name>" --reason "<why>"
+```
+
+* `review`, `put` and `remove` are tried on the whole collection first. What the site could not use afterwards
+  is refused with the reasons – the same words the check uses – and nothing is changed.
+* With `--files` the store looks for the files of media from the folder of the collections; without it, a missing
+  file is found when the collection is written out and checked.
 * The first import brings everything in. Afterwards a record that reads differently is a change with the record
   before and after; a record the file no longer has is taken out, and its history stays.
 * A file the site cannot use is refused and changes nothing; so is a published revision – the store holds the
