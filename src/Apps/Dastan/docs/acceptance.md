@@ -205,5 +205,7 @@ Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "n
 | A withdrawn statement is shown nowhere and is told by the history with its reason, by reading stage | **Implemented and checked** | `DisputedAndWithdrawnTests`, `ContentRevisionTests`, `DisputedStatementTests.A_withdrawal_is_told_by_the_history_…` |
 | A work that may not be shown stands in the galleries as a reference: its catalogue record and the way to its holder, nothing of the image | **Implemented and checked** | `MediaReferenceTests`, `GalleryAndMediaTests` (works held elsewhere), `PublishedSiteTests`; `Disclosure` keeps what a reference leaves out a secret |
 | A chart drawn around a name shows the name however much is opened; on a phone the chart has the whole width of its stage | **Implemented and checked** | `StageBrowserTests`, in Chromium, Firefox and WebKit |
+| The site runs as a container without content, says that it is alive and passes the checks of a host from outside its process | **Implemented and checked** on this machine | `eng/Check-Site.ps1` against the container of `compose.site.yaml` with a revision of the tests; `SiteHealthTests`; [ADR 0010](adr/0010-running-the-site.md) |
+| The site is hosted | **Not done** | No host, no address, no certificate |
 | A collection is published | **Not done** | The collection of the repository is an editorial sample; nothing of it is reviewed |
 | A public site was looked at in a browser | **Not done** | The tests ask the site in memory; no browser and no host were used |

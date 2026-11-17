@@ -119,6 +119,7 @@ public static class ContentRevision
             }
         }
 
+        LeaveOutReviewerDocuments(sample);
         var withdrawn = Withdraw(sample);
         var changes = previous is null ? [] : Compare(previous, sample, withdrawn);
         var day = request.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
@@ -203,6 +204,18 @@ public static class ContentRevision
         }
 
         return changes;
+    }
+
+    // A revision is what a site is given: the folder of content and nothing beside it. The working documents of
+    // reviewers a media item points to stay with the editors – the readers never show them, and a site should
+    // not need them to start.
+    private static void LeaveOutReviewerDocuments(JsonObject sample)
+    {
+        foreach (var item in sample["media"]!.AsArray())
+        {
+            item!.AsObject().Remove("reviewerProvenancePath");
+            item.AsObject().Remove("reviewerProvenanceAudience");
+        }
     }
 
     // Takes the statements the editors withdrew out of the file that becomes the revision, and returns why each

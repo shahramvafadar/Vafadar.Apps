@@ -19,6 +19,19 @@ public sealed class DastanOptions
     /// approved for the public is then not shown at all. A local demonstration has to be asked for.
     /// </summary>
     public Audience Audience { get; set; } = Audience.Public;
+
+    /// <summary>
+    /// Gets or sets a folder in which the keys that protect the forms of the site are kept, so that a form a
+    /// visitor opened before the site was started again is still accepted afterwards. Without it the keys live as
+    /// long as the process: enough for a development machine, not for a site that is updated while it is visited.
+    /// </summary>
+    public string? Keys { get; set; }
+
+    /// <summary>
+    /// Gets or sets the proxies the site believes when they say how a visitor came – by https, from which
+    /// address: single addresses or networks (<c>10.0.0.0/8</c>). Empty, the site believes nobody.
+    /// </summary>
+    public IList<string> TrustedProxies { get; } = [];
 }
 
 /// <summary>

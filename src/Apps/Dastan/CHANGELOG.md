@@ -84,3 +84,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The charts of connections and of a family open with the name they are about in sight, however much is opened
   above it. On a phone the chart is as wide as the screen: the steps of its left and right side stand in a row
   above it instead of beside it.
+- The site can run outside a developer's machine: as a container that holds the program and is given a published
+  revision to show. It says whether it is alive, and a script checks from outside what a host has to be sure of.
+  How to update it and how to take a revision back is written down. It is not hosted anywhere yet.

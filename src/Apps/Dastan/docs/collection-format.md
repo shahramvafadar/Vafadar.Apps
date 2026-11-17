@@ -217,7 +217,7 @@ not say what each has to do with the step.
 | `depictedEntityIds`, `depictedEventIds`, `relatedRelationIds` | Optional lists: whom and what the item shows |
 | `posterUrl`, `captions` (`language`, `url`), `transcriptUrl` with `transcriptFormat` `text/plain` (a `.txt` file), `renditions` (`format`, `url`), `durationSeconds`, `audioTrack`, `dimensions` (`width`, `height`) | Optional; local paths like `url` |
 | `catalogTitle`, `accessionNumber`, `creditLine` | Optional: the record of a museum |
-| `reviewerProvenancePath` with `reviewerProvenanceAudience` `reviewer_only` | Optional: a working document for reviewers, outside `content/`. It is checked and never shown |
+| `reviewerProvenancePath` with `reviewerProvenanceAudience` `reviewer_only` | Optional: a working document for reviewers, outside `content/`. It is checked and never shown; the `revision` command leaves it out of a revision |
 | `status`, `deliveryStatus` | Optional notes |
 
 What may be shown: only an item of `original_project_content` that is allowed for the demonstration and has its
