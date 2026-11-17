@@ -293,11 +293,12 @@ public sealed class PilotSampleRefusalTests
     }
 
     [Fact]
-    public void A_sample_tells_exactly_one_story_arc()
+    public void A_sample_with_two_story_arcs_says_what_it_is_about_and_which_story_a_step_belongs_to()
     {
         var problems = SampleFiles.Problems(sample => sample.Record("entities", "character-zal")["type"] = "NarrativeArc");
 
-        Assert.Contains("sample: a sample tells one story arc; this one has 2.", problems);
+        Assert.Contains("sample: a collection that tells 2 stories says in subjectId what it is about.", problems);
+        Assert.Contains("event-01: storyId is missing: the collection tells several stories.", problems);
     }
 
     [Fact]

@@ -161,8 +161,8 @@ public sealed class RelationScope
     /// <summary>Gets the kind of statement.</summary>
     public required RelationScopeKind Kind { get; init; }
 
-    /// <summary>Gets the story the statement belongs to.</summary>
-    public required EntityId Story { get; init; }
+    /// <summary>Gets the story the statement belongs to; a statement about the world outside a story may name none.</summary>
+    public EntityId? Story { get; init; }
 
     /// <summary>Gets the events the statement is tied to; empty for a statement about the whole story.</summary>
     public required ImmutableArray<EventId> Events { get; init; }

@@ -1,6 +1,8 @@
 # The file of a collection (`dastan-pilot-0.2`)
 
-A collection is one story of a work with everybody and everything in it: the names (entities), what connects them
+A collection is about one subject. Most often that is one story of a work; it can as well be several stories,
+or something that is no story – a company, a club, a person, a period (see "What a collection is about").
+A collection of a story is that story with everybody and everything in it: the names (entities), what connects them
 (relations), the steps of the telling (events), the images and videos (media) and the sources all of this rests
 on. The site shows it as pages, lists and charts, never further than a reader has read. This page describes the
 editorial file a collection is read from. How to work with it – the rules, the command that checks it – is in the
@@ -23,9 +25,11 @@ the Gregorian calendar (D-043). An address is an `https` address without a user 
 |---|---|
 | `schemaVersion` | `dastan-pilot-0.2`. Of a file with another value nothing else is read |
 | `datasetId` | The identifier of the collection |
-| `worldId` | The identifier of the world of the story; a media item that names a world names this one |
+| `worldId` | The identifier of the world of the story; a media item that names a world names this one. A collection about the real world names it too, with a word of its own |
+| `subjectId` | Optional for a collection with exactly one `NarrativeArc` (that story is its subject); otherwise the entity the collection is about – see "What a collection is about" |
+| `language` | Only without `editionContext`: the language the texts of the file are written in, as a language tag; `en` when left out |
 | `documentVersion`, `preparedAt`, `status`, `reviewNotes` | Optional notes of the editors about the state of the file; kept in the file, not shown |
-| `editionContext` | The text the collection follows – see below |
+| `editionContext` | The text the collection follows – see below. Needed when the collection tells a story; a collection that tells none may leave it out |
 | `spoilerPolicy` | The reading stages – see below |
 | `publication` | What may be done with the file – see below |
 | `inputContract` | `rawDatasetPubliclyServable` and `reviewerFilesPubliclyServable`, both `false`: the file and the documents of reviewers are never served. Optional notes for whoever builds a reader: `datasetIdentityNote`, `narrativeContext`, `eventAssociations`, `publicationAndSpoilers`, `mediaEligibility`, `sourceLinks`, `reviewerProvenance` |
@@ -85,7 +89,7 @@ revision has to have the record on every statement.
 | `baseText`, `baseUrl` | The text the collection follows, in words, and its address |
 | `criticalPrintEdition` | The printed edition it was checked against, or that none was |
 | `scope` | What of the work the collection covers and what it leaves out |
-| `summaryLanguage` | `English` (or `en`) – the language the texts of the file are written in |
+| `summaryLanguage` | The language the texts of the file are written in: `English` (or `en`), `Persian` (or `fa`), or any other language tag such as `de` or `ar`. A translation document then translates into another language; `labelFa` is not used in a file written in Persian |
 | `calendarMapping` | `null` or left out: the order of a telling is never turned into dates |
 | `upstreamAttributedByHost`, `evidencePolicy`, `translationPolicy`, `editorialReview` | Optional notes |
 
@@ -100,6 +104,20 @@ revision has to have the record on every statement.
 
 Every record below has a `spoilerLevel`: the earliest stage at which a reader may see it. It has to be one of the
 stages. A record never points to a record of a later stage – its sources included.
+
+## What a collection is about
+
+* **One story** – the usual case: one `NarrativeArc`, and nothing more to say. The address of the collection
+  is the identifier of that story.
+* **Several stories**: several `NarrativeArc` entities. `subjectId` names what a visitor enters – one of the
+  stories, or the work they belong to; every event says in `storyId` which story it is a step of. The story
+  named by `subjectId` – or else the first in the file – is the one at `story`; the others have a page each.
+  The reading stages are those of the collection: one ladder for all its stories.
+* **No story**: a collection about a company, a club, a person, a period. `subjectId` names that entity;
+  there are no events (`"events": []`), `editionContext` may be left out, and relations have the scope
+  `outside_the_story`. What happened and when is said by statements with a date and by relations with a
+  `time`. One reading stage is enough: nothing has to be kept back. The command `template subject` writes
+  such a file.
 
 ## A source
 
@@ -118,7 +136,7 @@ stages. A record never points to a record of a later stage – its sources inclu
 | Field | Meaning |
 |---|---|
 | `id` | The identifier; it is the name of the entity in addresses |
-| `type` | What kind of thing it is – see "The types of entities". A collection has exactly one `NarrativeArc` – its story |
+| `type` | What kind of thing it is – see "The types of entities". A `NarrativeArc` is a story the collection tells |
 | `label` | The name |
 | `labelFa` | Optional: the Persian name, when no translation file gives it. Stating it in both places is a problem |
 | `summary` | One or two sentences, as far as the stage of the entity tells |
@@ -186,7 +204,7 @@ A new name of the same thing is a `former` name of one entity, not a second enti
 | `type` | What it is | Kind of thing |
 |---|---|---|
 | `Work` | A work, such as a poem | a work |
-| `NarrativeArc` | The story the collection tells; exactly one | a work |
+| `NarrativeArc` | A story the collection tells – one, several or none | a work |
 | `Character` | A character of the story | somebody |
 | `AnimalCharacter` | An animal that is a character of the story | somebody |
 | `NarrativePlace` | A place of the story; not a place on a modern map | a place |
@@ -245,7 +263,7 @@ A place – of the story or real – takes part in a step of the story only as i
 `scope`: `kind` – `work_structure` (a story is part of a work), `background_lineage` (who descends from whom,
 before the story), `relationship_revealed_in_beat`, `observed_narrative_context`, `selected_beat_action` or
 `reported_in_selected_beat`, or `outside_the_story` (a statement about the world the story was told in: who
-wrote the work, where a poet was born); `storyId` – the story; `eventIds` – the events that tell or reveal it, possibly
+wrote the work, where a poet was born); `storyId` – the story (may be left out with `outside_the_story`); `eventIds` – the events that tell or reveal it, possibly
 empty; optional `interpretation`; `calendarPeriod` is `null` or left out. A family tree is drawn from the types
 `parentOf` and `spouseOf` only.
 
@@ -324,6 +342,7 @@ that entity (`dated`). A relation of the story has no `time`: what a story tells
 | Field | Meaning |
 |---|---|
 | `id` | The identifier |
+| `storyId` | The story the event is a step of. Left out when the collection tells one story; needed when it tells several. Every story counts its steps from 1 |
 | `label`, `summary` | The name of the step and what is told in it |
 | `order` | The place in the telling: 1, 2, 3, … No two events share a place |
 | `orderBasis` | `narrative` |

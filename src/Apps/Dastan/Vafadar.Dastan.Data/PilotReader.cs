@@ -114,9 +114,12 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
 
     private static readonly FrozenSet<string> ErasMistakenForCalendars = FrozenSet.ToFrozenSet(["CE", "BCE", "AD", "BC"], StringComparer.Ordinal);
 
+    // The names of languages the first files used; any language tag is understood beside them.
     private static readonly FrozenDictionary<string, string> LanguageNames = Names(
         ("English", "en"),
-        ("en", "en"));
+        ("en", "en"),
+        ("Persian", "fa"),
+        ("fa", "fa"));
 
     private static readonly FrozenDictionary<string, TextReview> TextReviewNames = Names(
         ("draft", TextReview.Draft),
@@ -133,7 +136,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private bool _published;
     private string _language = "en";
     private string? _worldId;
-    private EntityId? _story;
+    private EntityId? _subject;
+    private ImmutableArray<EntityId> _stories = [];
 
     /// <summary>Reads the whole sample. Problems go to the list; the records are complete only when it stays empty.</summary>
     public void Read(JsonElement root)
@@ -155,7 +159,26 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         _worldId = sample.Identifier("worldId");
         sample.Notes("documentVersion", "preparedAt", "status", "reviewNotes");
 
-        var edition = ReadEdition(sample.Child("editionContext"));
+        // A collection that follows a text says which; one that tells no story may say its language alone.
+        var editionRecord = sample.Child("editionContext", required: false);
+        var edition = ReadEdition(editionRecord);
+        if (sample.Text("language", required: false) is { } written)
+        {
+            if (editionRecord is not null)
+            {
+                sample.Problem("language is said by editionContext.summaryLanguage; it is said once.");
+            }
+            else if (Language(written) is { } tag)
+            {
+                _language = tag;
+            }
+            else
+            {
+                sample.Problem($"language {written} is no language tag; write en, fa, ar or the like.");
+            }
+        }
+
+        var subject = sample.Identifier("subjectId", required: false);
         ReadTranslations(datasetId);
         var stages = ReadReadingPolicy(sample.Child("spoilerPolicy"), out var defaultLevel);
         var publication = ReadPublication(sample.Child("publication"));
@@ -171,14 +194,28 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Add(_entities, ReadEntity(record));
         }
 
-        var arcs = _entities.Where(entity => entity.Type == EntityTypes.StoryArc).ToList();
-        if (arcs.Count == 1)
+        // What the collection is about: the one story it tells, or what subjectId names – a company, a club,
+        // a person, or one of several stories. The stories begin with the one a visitor enters first.
+        var arcs = _entities.Where(entity => entity.Type == EntityTypes.StoryArc).Select(entity => entity.Id).ToList();
+        if (subject is not null)
         {
-            _story = arcs[0].Id;
+            _subject = new EntityId(subject);
+        }
+        else if (arcs.Count == 1)
+        {
+            _subject = arcs[0];
         }
         else
         {
-            sample.Problem($"a sample tells one story arc; this one has {arcs.Count}.");
+            sample.Problem(arcs.Count == 0
+                ? "a collection that tells no story says in subjectId what it is about."
+                : $"a collection that tells {arcs.Count} stories says in subjectId what it is about.");
+        }
+
+        _stories = [.. arcs.OrderBy(arc => arc == _subject ? 0 : 1)];
+        if (arcs.Count > 0 && editionRecord is null)
+        {
+            sample.Problem("editionContext is missing: a collection that tells a story says which text it follows.");
         }
 
         foreach (var record in sample.Children("relations"))
@@ -209,13 +246,15 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             }
         }
 
-        if (datasetId is not null && _worldId is not null && _story is not null && edition is not null && defaultLevel is not null && publication is not null)
+        if (datasetId is not null && _worldId is not null && _subject is not null && (edition is not null || editionRecord is null) && defaultLevel is not null && publication is not null)
         {
             _info = new CatalogueInfo
             {
                 Id = datasetId,
                 WorldId = _worldId,
-                Story = _story.Value,
+                Subject = _subject.Value,
+                Stories = _stories,
+                Language = _language,
                 Edition = edition,
                 ReadingStages = stages,
                 DefaultLevel = defaultLevel.Value,
@@ -359,6 +398,10 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         return ids;
     }
 
+    // The tag of a language as a file may name it: a name the first files used, or a language tag.
+    private static string? Language(string stated) =>
+        LanguageNames.TryGetValue(stated, out var tag) ? tag : LanguagePattern().IsMatch(stated) ? stated : null;
+
     private EditionContext? ReadEdition(JsonRecord? record)
     {
         if (record is null)
@@ -372,7 +415,13 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var baseUrl = Address(record, "baseUrl");
         var critical = record.Text("criticalPrintEdition");
         var scope = record.Text("scope");
-        var languageKnown = record.Choice("summaryLanguage", LanguageNames, out var language);
+        var stated = record.Text("summaryLanguage");
+        var language = stated is null ? null : Language(stated);
+        var languageKnown = language is not null;
+        if (stated is not null && !languageKnown)
+        {
+            record.Problem($"summaryLanguage {stated} is no language tag; write en, fa, ar or the like.");
+        }
         record.Nothing("calendarMapping", "calendarMapping would give the story a calendar; told order is never turned into dates.");
         record.Notes("upstreamAttributedByHost", "evidencePolicy", "translationPolicy", "editorialReview");
         record.Finish();
@@ -604,7 +653,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var name = Localized(label, $"entities/{id}/label");
         if (persianLabel is not null)
         {
-            if (name.In("fa") is not null)
+            if (_language == "fa")
+            {
+                record.Problem("labelFa repeats the language the file is written in; label is the Persian name.");
+            }
+            else if (name.In("fa") is not null)
             {
                 record.Problem("the Persian name is given twice, as labelFa and by the translation.");
             }
@@ -898,12 +951,14 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
 
         var kindKnown = record.Choice("kind", ScopeKindNames, out var kind);
-        var story = record.Identifier("storyId");
+
+        // What is said of the world outside a story need not name a story.
+        var story = record.Identifier("storyId", required: !kindKnown || kind != RelationScopeKind.OutsideTheStory);
         var events = Ids(record, "eventIds");
         var interpretation = record.Text("interpretation", required: false);
         record.Nothing("calendarPeriod", "calendarPeriod would date a relation of the story; told order is never turned into dates.");
         record.Finish();
-        if (!kindKnown || story is null)
+        if (!kindKnown || (story is null && kind != RelationScopeKind.OutsideTheStory))
         {
             return null;
         }
@@ -911,7 +966,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         return new RelationScope
         {
             Kind = kind,
-            Story = new EntityId(story),
+            Story = story is null ? null : new EntityId(story),
             Events = [.. events.Select(id => new EventId(id))],
             Interpretation = interpretation,
         };
@@ -943,6 +998,33 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         CheckWithdrawn(record, review, reviewed);
         var timeIsPlaceInStory = ReadStoryTime(record.Child("temporalExpression"));
 
+        // The story the event is a step of: the one story of the collection, or the one storyId names.
+        EntityId? story = null;
+        var storyId = record.Identifier("storyId", required: false);
+        if (_stories.IsEmpty)
+        {
+            record.Problem("the collection tells no story; an event is a step of the telling of one.");
+        }
+        else if (storyId is null)
+        {
+            if (_stories.Length == 1)
+            {
+                story = _stories[0];
+            }
+            else
+            {
+                record.Problem("storyId is missing: the collection tells several stories.");
+            }
+        }
+        else if (_stories.Contains(new EntityId(storyId)))
+        {
+            story = new EntityId(storyId);
+        }
+        else
+        {
+            record.Problem($"storyId {storyId} is no story of the collection.");
+        }
+
         var associations = ImmutableArray.CreateBuilder<EventAssociation>();
         var associationsComplete = true;
         foreach (var association in record.Children("entityAssociations"))
@@ -972,7 +1054,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
 
         record.Finish();
-        if (id is null || label is null || summary is null || order is null || level is null || !reviewKnown || !timeIsPlaceInStory || !associationsComplete || _story is null)
+        if (id is null || label is null || summary is null || order is null || level is null || !reviewKnown || !timeIsPlaceInStory || !associationsComplete || story is null)
         {
             return null;
         }
@@ -982,7 +1064,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Id = new EventId(id),
             Label = Localized(label, $"events/{id}/label"),
             Summary = Localized(summary, $"events/{id}/summary"),
-            Time = new Occurrence(NarrativePosition.Of(_story.Value.Value, NarrativeOrder.Presentation, order.Value)),
+            Time = new Occurrence(NarrativePosition.Of(story.Value.Value, NarrativeOrder.Presentation, order.Value)),
             Associations = associations.ToImmutable(),
             CondensesSeveralScenes = condenses,
             Sources = [.. sources.Select(source => new SourceId(source))],

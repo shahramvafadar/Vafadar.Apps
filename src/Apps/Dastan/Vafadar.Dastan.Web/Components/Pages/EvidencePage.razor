@@ -75,10 +75,13 @@
             <dd><Foreign Text="@locator" /></dd>
         }
 
-        <dt>@T["Evidence_Edition"]</dt>
-        <dd><Foreign Text="@evidence.Edition.BaseText" /></dd>
-        <dt>@T["Evidence_EditionNote"]</dt>
-        <dd><Foreign Text="@evidence.Edition.CriticalEditionNote" /></dd>
+        @if (evidence.Edition is { } edition)
+        {
+            <dt>@T["Evidence_Edition"]</dt>
+            <dd><Foreign Text="@edition.BaseText" /></dd>
+            <dt>@T["Evidence_EditionNote"]</dt>
+            <dd><Foreign Text="@edition.CriticalEditionNote" /></dd>
+        }
     </dl>
 
     <section aria-labelledby="sources">
@@ -191,7 +194,7 @@
             { Subject: EvidenceSubject.Media, Media: { } item } => ($"{Site.Collection}/media/{item.Id}", Visitor.Text(item.Label).Value),
             { Subject: EvidenceSubject.Entity, Entity: { } entity } when entity.Id.Value == Site.Collection => (Site.Collection, Visitor.Text(entity.Label).Value),
             { Subject: EvidenceSubject.Entity, Entity: { } entity } => ($"{Site.Collection}/entity/{entity.Id}", Visitor.Text(entity.Label).Value),
-            { Step: { } step } => ($"{Site.Collection}/story#step-{step.Number}", Visitor.Text(step.Event.Label).Value),
+            { Step: { } step } => (StoryAddress.Of(Site, Visitor, step), Visitor.Text(step.Event.Label).Value),
             _ => (Site.Collection, T["Site_Name"].Value),
         };
         _here = EvidenceAddress.Path(Navigation);

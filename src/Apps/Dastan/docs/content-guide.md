@@ -54,6 +54,7 @@ dotnet run --project $content -- vocabulary collection --json
 
 # 2. The smallest file the site accepts, to start a new collection or comparison from. Never over a file.
 dotnet run --project $content -- template collection my-story --out src/Apps/Dastan/content/samples/my-story.json
+dotnet run --project $content -- template subject a-company --out src/Apps/Dastan/content/samples/a-company.json
 dotnet run --project $content -- template comparison two-lands --out src/Apps/Dastan/content/comparisons/two-lands.json
 
 # 3. The check: reads a file exactly as the site reads it. A folder stands for every content file in it.
@@ -136,24 +137,30 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
 * Do not change `reviewStatus`, `review`, `status` or `publication` of what exists: they record decisions of the
   editors.
 
-## What the formats cannot say yet
+## What the formats can say, and what they cannot say yet
 
-The formats are those of the first collection and the first comparison. They are strict on purpose, and some
-things have no place in them yet. Do not press content into a field that means something else – name the gap in
-your hand-over note, so that the format is extended with its meaning.
+The formats are strict on purpose. Do not press content into a field that means something else – name the gap
+in your hand-over note, so that the format is extended with its meaning.
 
-* A collection tells **one story** of one work (`NarrativeArc`). Beside the things of the story it can name
-  real persons, organisations, places and regions (`Person`, `Organisation`, `Place`, `Region`) and say of
-  them who wrote a work, who taught whom, who was born or died where, who belonged to or founded what, and what
-  lies where ([format](collection-format.md), "The relations of the world outside the story"). Other kinds of
-  things – a battle, a book of another author, a title or an office – have no types yet.
-* The **types of relations** are a fixed list (`vocabulary` shows it). A type has one meaning; "patron of",
-  "successor of" or "ruled from … to …" are not in it.
+What a collection can say ([format](collection-format.md)):
+
+* It is about **one story, several stories, or something that is no story** – a company, a club, a person, a
+  period ("What a collection is about"; `-- template subject` starts a collection without a story).
+* Beside the things of a story it names **things of the world**: persons, organisations, companies and brands,
+  governments and dynasties, countries, clubs, teams and seasons, events and periods, offices and honours,
+  objects and subjects of knowledge ("The types of entities"), and says between them what the list of relation
+  types holds ("The relations of the world outside the story"; `-- vocabulary` prints every type with its
+  meaning). A type has one meaning: do not use one for something it does not say.
+* A relation of the world says **when it held** (`time`); somebody who came back is two relations.
+* An entity has **other names** – earlier names, titles, short forms – and **identifiers** of other catalogues.
+* A file is written in **any language** and says which; a translation document adds another language.
+
+What has no place yet:
+
 * What a collection states with a date (`dated`) belongs to one entity. Time across several subjects that is
   no part of a collection is written as a comparison.
-* A statement of a collection has one review state (`source_backed_editorial_review_pending`); a comparison has
-  the full list.
-* The language a file is written in is English.
+* A quantity with a unit – a population, a price, a number of goals – as a statement of its own.
+* Coordinates of a place, and borders that change with time.
 
 ## For the editors: publishing a revision
 

@@ -146,10 +146,16 @@ public sealed class ContentToolTests : IDisposable
 
     [Theory]
     [InlineData("collection", "samples")]
+    [InlineData("subject", "samples")]
     [InlineData("comparison", "comparisons")]
     public void A_template_is_a_file_the_site_can_read_and_the_check_says_what_is_left_to_fill(string kind, string folder)
     {
-        var text = kind == "collection" ? ContentTemplates.Collection("my-story", Today) : ContentTemplates.Comparison("my-story", Today);
+        var text = kind switch
+        {
+            "collection" => ContentTemplates.Collection("my-story", Today),
+            "subject" => ContentTemplates.Subject("my-story", Today),
+            _ => ContentTemplates.Comparison("my-story", Today),
+        };
         var report = ContentCheck.File(Write($"{folder}/my-story.json", text));
 
         Assert.True(report.IsUsable, string.Join('\n', report.Problems));
@@ -162,7 +168,7 @@ public sealed class ContentToolTests : IDisposable
     [Fact]
     public void A_template_never_approves_itself_for_everybody()
     {
-        foreach (var text in new[] { ContentTemplates.Collection("x", Today), ContentTemplates.Comparison("x", Today) })
+        foreach (var text in new[] { ContentTemplates.Collection("x", Today), ContentTemplates.Subject("x", Today), ContentTemplates.Comparison("x", Today) })
         {
             Assert.False(JsonNode.Parse(text)!["publication"]!["publicReleaseApproved"]!.GetValue<bool>());
         }
@@ -236,7 +242,7 @@ public sealed class ContentToolTests : IDisposable
 
         Assert.All(ContentVocabulary.Collection.SelectMany(choices => choices.Values), value => Assert.Contains($"`{value.Name}`", collection, StringComparison.Ordinal));
         Assert.All(ContentVocabulary.Comparison.SelectMany(choices => choices.Values), value => Assert.Contains($"`{value.Name}`", comparison, StringComparison.Ordinal));
-        Assert.All(new[] { "-- vocabulary", "-- template collection", "-- template comparison", "-- check" }, command => Assert.Contains(command, guide, StringComparison.Ordinal));
+        Assert.All(new[] { "-- vocabulary", "-- template collection", "-- template subject", "-- template comparison", "-- check" }, command => Assert.Contains(command, guide, StringComparison.Ordinal));
         Assert.Contains(PilotSample.SchemaVersion, guide, StringComparison.Ordinal);
         Assert.Contains(ComparisonSample.FormatVersion, guide, StringComparison.Ordinal);
     }

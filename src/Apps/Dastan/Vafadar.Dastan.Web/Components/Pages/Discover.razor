@@ -17,9 +17,12 @@
     <section aria-labelledby="first-story">
         <h2 id="first-story">@T["Discover_First"]</h2>
         <article class="card">
-            <h3><a href="@Site.Collection"><Loc Text="overview.Story.Label" /></a></h3>
-            <p class="meta"><Loc Text="overview.Work.Label" /></p>
-            <p><Loc Text="overview.Story.Summary" /></p>
+            <h3><a href="@Site.Collection"><Loc Text="overview.Subject.Label" /></a></h3>
+            @if (overview.Work is { } work)
+            {
+                <p class="meta"><Loc Text="work.Label" /></p>
+            }
+            <p><Loc Text="overview.Subject.Summary" /></p>
             <p><a class="action" href="@Site.Collection">@T["Discover_Open"]</a></p>
         </article>
     </section>

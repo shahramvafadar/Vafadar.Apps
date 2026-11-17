@@ -12,12 +12,14 @@ namespace Vafadar.Dastan.Web.Site;
 /// </summary>
 public sealed class Visitor
 {
-    private const string SourceLanguage = "en";
+    private readonly string _source;
 
     /// <summary>Initializes a new instance of the <see cref="Visitor"/> class from the current request.</summary>
     public Visitor(IHttpContextAccessor accessor, DastanSite site)
     {
         var context = accessor.HttpContext ?? throw new InvalidOperationException("A visitor exists during a request only.");
+        ArgumentNullException.ThrowIfNull(site);
+        _source = site.Language;
         Language = context.GetSiteLanguage();
         Theme = ThemePreference.Read(context);
         Boundary = ReadingPreference.Read(context, site);
@@ -37,7 +39,7 @@ public sealed class Visitor
     public Projection? Projection { get; }
 
     /// <summary>Returns a text in the language of the page, or in the language of the collection when it has no translation.</summary>
-    public ResolvedText Text(LocalizedText text) => text.Resolve(Language.Tag, SourceLanguage);
+    public ResolvedText Text(LocalizedText text) => text.Resolve(Language.Tag, _source);
 
     /// <summary>Returns a number as the page shows it: with Persian digits on a Persian page.</summary>
     public string Number(int value)

@@ -174,7 +174,7 @@
                 {
                     <li>
                         <span class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(step.Number))</span>
-                        <a href="@($"{Site.Collection}/story#step-{step.Number}")"><Loc Text="step.Event.Label" /></a>
+                        <a href="@(StoryAddress.Of(Site, Visitor, step))"><Loc Text="step.Event.Label" /></a>
                     </li>
                 }
             </ul>
@@ -200,11 +200,11 @@
            the item and is shown under the same conditions. *@
         <section aria-labelledby="transcript">
             <h2 id="transcript">@T["Media_Transcript"]</h2>
-            @if (Visitor.Language.Tag != "en")
+            @if (Visitor.Language.Tag != Site.Language)
             {
-                <p class="note">(@T["Foreign_Note"])</p>
+                <p class="note">(@T[ForeignText.Note(Site.Language)])</p>
             }
-            <div class="transcript" lang="en" dir="ltr">@_transcript</div>
+            <div class="transcript" lang="@Site.Language" dir="@ForeignText.Direction(Site.Language)">@_transcript</div>
         </section>
     }
 

@@ -84,8 +84,11 @@ public sealed class DastanSite
     /// <summary>Gets the published revision the collection is, or <see langword="null"/> for an editorial sample.</summary>
     public PublicationRevision? Revision => _catalogue.Info.Publication.Revision;
 
-    /// <summary>Gets the name of the collection in addresses and cookies: the identifier of its story.</summary>
-    public string Collection => _catalogue.Info.Story.Value;
+    /// <summary>Gets the language the texts of the collection are written in.</summary>
+    public string Language => _catalogue.Info.Language;
+
+    /// <summary>Gets the name of the collection in addresses and cookies: the identifier of what it is about.</summary>
+    public string Collection => _catalogue.Info.Subject.Value;
 
     /// <summary>Gets the stage a visitor starts at.</summary>
     public ReadingLevel DefaultLevel => _catalogue.Info.DefaultLevel;

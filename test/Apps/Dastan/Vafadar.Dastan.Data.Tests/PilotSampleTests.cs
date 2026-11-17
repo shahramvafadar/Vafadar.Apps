@@ -27,8 +27,8 @@ public sealed class PilotSampleTests
 
         Assert.Equal("dastan-shahnameh-rostam-sohrab-pilot-v0.5", info.Id);
         Assert.Equal("world-shahnameh", info.WorldId);
-        Assert.Equal(new EntityId("story-rostam-sohrab"), info.Story);
-        Assert.Equal(new EntityId("work-shahnameh"), info.Edition.Work);
+        Assert.Equal(new EntityId("story-rostam-sohrab"), info.Subject);
+        Assert.Equal(new EntityId("work-shahnameh"), info.Edition!.Work);
         Assert.Equal(new Uri("https://ganjoor.net/ferdousi/shahname/sohrab"), info.Edition.BaseUrl);
         Assert.Equal("en", info.Edition.SummaryLanguage);
     }

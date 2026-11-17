@@ -72,7 +72,7 @@
         }
 
         _known = true;
-        _story = Visitor.Text(projection.Overview().Story.Label).Value;
+        _story = Visitor.Text(projection.Overview().Subject.Label).Value;
         var typed = new string([.. (Q ?? string.Empty).Where(character => !char.IsControl(character))]).Trim();
         _query = typed.Length > LongestQuery ? typed[..LongestQuery] : typed;
 

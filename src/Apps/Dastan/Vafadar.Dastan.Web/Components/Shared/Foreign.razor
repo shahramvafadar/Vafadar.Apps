@@ -1,22 +1,24 @@
-@* A text the editors keep in English only (the name of the edition, the scope of the collection). On a page in
-   another language it is marked as English and a short note says so. With an address it is a link to another site. *@
+@* A text the editors keep in the language of the collection only (the name of the edition, the scope of the
+   collection). On a page in another language it is marked as that language and a short note says so. With an
+   address it is a link to another site. *@
 @inject Visitor Visitor
+@inject DastanSite Site
 @inject IStringLocalizer<Ui> T
 @if (Href is null)
 {
-    <span class="foreign" lang="en" dir="ltr">@Text</span>
+    <span class="foreign" lang="@Site.Language" dir="@ForeignText.Direction(Site.Language)">@Text</span>
 }
 else
 {
-    <a class="foreign" lang="en" dir="ltr" href="@Href" rel="external noopener">@Text</a>
+    <a class="foreign" lang="@Site.Language" dir="@ForeignText.Direction(Site.Language)" href="@Href" rel="external noopener">@Text</a>
 }
-@if (Visitor.Language.Tag != "en")
+@if (Visitor.Language.Tag != Site.Language)
 {
-    <small class="note">(@T["Foreign_Note"])</small>
+    <small class="note">(@T[ForeignText.Note(Site.Language)])</small>
 }
 
 @code {
-    /// <summary>Gets or sets the English text.</summary>
+    /// <summary>Gets or sets the text, in the language of the collection.</summary>
     [Parameter, EditorRequired]
     public string Text { get; set; } = string.Empty;
 

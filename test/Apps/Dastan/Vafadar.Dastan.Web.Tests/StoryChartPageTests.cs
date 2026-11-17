@@ -52,7 +52,7 @@ public sealed class StoryChartPageTests(DemoSite site) : IClassFixture<DemoSite>
     public async Task The_chart_has_the_steps_the_names_and_the_marks_of_the_projection(int level, string language)
     {
         var page = await Open(level, language: language);
-        var lanes = At(level).Lanes();
+        var lanes = At(level).Lanes()!;
 
         Assert.Equal(HttpStatusCode.OK, page.Status);
         Assert.Equal(lanes.Steps.Select(step => step.Number), Columns(page));
@@ -177,7 +177,7 @@ public sealed class StoryChartPageTests(DemoSite site) : IClassFixture<DemoSite>
             var page = await Open(0, query);
 
             Assert.Equal([1], Columns(page));
-            Assert.Equal(At(0).Lanes().Lanes.Length, Rows(page).Count);
+            Assert.Equal(At(0).Lanes()!.Lanes.Length, Rows(page).Count);
             Assert.DoesNotContain("Sohrab", Chart(page), StringComparison.Ordinal);
             Assert.DoesNotContain("href=", Side(page, "Later steps"), StringComparison.Ordinal);
             Assert.DoesNotContain("href=", Side(page, "Earlier steps"), StringComparison.Ordinal);

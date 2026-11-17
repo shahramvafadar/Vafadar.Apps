@@ -6,7 +6,7 @@
 
 @if (_entity is { } overview)
 {
-    var story = Visitor.Projection!.Overview().Story;
+    var story = Visitor.Projection!.Overview().Subject;
     <PageTitle>@Visitor.Text(overview.Entity.Label).Value – @T["Site_Name"]</PageTitle>
 
     <header class="page-header">
@@ -103,7 +103,7 @@
                 {
                     <li class="step">
                         <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(appearance.Step.Number))</p>
-                        <h3><a href="@($"{Site.Collection}/story#step-{appearance.Step.Number}")"><Loc Text="appearance.Step.Event.Label" /></a></h3>
+                        <h3><a href="@(StoryAddress.Of(Site, Visitor, appearance.Step))"><Loc Text="appearance.Step.Event.Label" /></a></h3>
                         <p><Loc Text="appearance.Association.Role" /> <span class="presence">@T[$"Presence_{appearance.Association.Presence}"]</span></p>
                         <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, appearance.Step.Event.Id, overview.Entity.Id, _here)">@T["Evidence_Link"]<span class="visually-hidden"> – @Visitor.Text(appearance.Step.Event.Label).Value</span></a></p>
                     </li>
