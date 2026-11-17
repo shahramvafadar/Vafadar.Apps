@@ -5,11 +5,11 @@
 @inject IStringLocalizer<Ui> T
 
 <div class="tl tl-down" dir="ltr">
-    <div class="tl-head" aria-hidden="true">
+    <div class="tl-head @(LongNames ? "tl-head-long" : null)" aria-hidden="true">
         <span class="tl-head-axis"></span>
         @foreach (var lane in Drawing.Lanes)
         {
-            <svg class="tl-head-lane" width="@Em(LaneWidth(lane))" height="@Em(HeadHeight)">
+            <svg class="tl-head-lane" width="@Em(LaneWidth(lane))" height="@Em(LongNames ? LongHeadHeight : HeadHeight)">
                 <foreignObject x="0" y="0" width="100%" height="100%">
                     <div class="tl-lane-name @Colour(lane)" dir="@Visitor.Language.Direction"><bdi>@lane.Lane.Label</bdi></div>
                 </foreignObject>
@@ -91,12 +91,22 @@
 </div>
 
 @code {
+    /// <summary>
+    /// Gets or sets a value indicating whether the lanes carry long names – the names of entities instead of the
+    /// short names of a comparison – and get more room for them.
+    /// </summary>
+    [Parameter]
+    public bool LongNames { get; set; }
+
     // Measures of the drawing in em. The layout gives places along the time; these are the places across it.
     private const double Pad = 0.9;
     private const double AxisWidth = 4.2;
     private const double RowWidth = 1.9;
     private const double LanePad = 0.25;
     private const double HeadHeight = 2.4;
+
+    // A long name is written down its lane, and the head is as high as such a name is long.
+    private const double LongHeadHeight = 7.5;
 
     /// <summary>Gets or sets the timeline, laid out with callouts that move along the time.</summary>
     [Parameter, EditorRequired]

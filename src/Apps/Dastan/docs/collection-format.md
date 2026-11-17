@@ -79,6 +79,23 @@ stages. A record never points to a record of a later stage – its sources inclu
 | `summary` | One or two sentences, as far as the stage of the entity tells |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage |
+| `dated` | Optional: what is stated about the entity with a time of the calendar – see below |
+
+### `dated` – what has a date
+
+A story has an order and no dates. What really has a date is stated here: when a work was written, when a
+manuscript was made, when a place was founded. The collection shows these statements as its timeline
+(`/<collection>/timeline`), beside the times its images and videos were made.
+
+| Field | Meaning |
+|---|---|
+| `key` | The identifier of the statement, unique in the whole file like every identifier |
+| `label` | What lasted or happened, in a few words |
+| `summary` | Optional: a sentence about it |
+| `time` | The time as it is stated, in the form a comparison uses ([the file of a comparison](comparison-format.md), "Time"): `kind` `period` for what lasted, `occurrence` for what happened; years of the common era or before it, in the Gregorian calendar (D-043); "about" and "between two years" as they are stated. A place in the story is not a time of the calendar and is refused |
+| `sourceIds` | At least one source |
+| `spoilerLevel` | The stage from which the statement is shown – not before its entity |
+| `reviewStatus` | `proposed`, `sourcedReviewPending`, `reviewed`, `disputed` or `withdrawn` |
 
 ## A relation
 
@@ -167,6 +184,7 @@ names it. Optional notes: `refersTo`, `calendarStatus`.
 | `relations` | Identifier → `label` |
 | `events` | Identifier → `label`, `summary`, and `roles`: entity identifier → the role of that entity in the event |
 | `media` | Identifier → `label`, `caption`, `altText` |
+| `dated` | Key of a dated statement → `label`, `summary` |
 
 Every part is optional. A text that is left out is shown in the language of the collection and marked as such. A
 translation that names something the collection does not have is a problem.
@@ -176,7 +194,7 @@ translation that names something the collection does not have is a problem.
 Beyond a single field: an identifier used twice; a record that cites no source, a source that does not exist or
 belongs to a later stage; a relation, an association or a media item that points to a record that does not exist
 or belongs to a later stage; a stage that is not one of the stages; stages that do not start at 0 or have a gap;
-none or several stories; two events at the same place of the telling; an event without an association, or an
+a dated statement before its entity, or with a time that is not one of the calendar; none or several stories; two events at the same place of the telling; an event without an association, or an
 entity associated twice; a place that is not the setting, an object that is not an object; a media item that is
 shown without what showing it needs; a local path that leaves its folder or names a file that does not exist; a
 translation into the language of the collection, a second one into the same language, or one for another

@@ -63,3 +63,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Content can be written by anybody who follows the guide – a person or an assistant: one guide for writers, a
   page for each format, and a command that says whether the site can use a file, with every problem and the record
   it belongs to, that lists the values a field may have and that writes the smallest file to start from.
+- A collection has a page "in time": what is stated about its names with a year or a day, and when its images and
+  videos were made, on the same chart as a comparison – opened and closed at its four sides, with the same facts
+  as a table. The story itself is not on it: a story has an order, not dates. Writers state such dates in the
+  file of the collection; the first collection has none yet.
+- The Persian font is asked for together with the page, so the text of a page does not move when the font arrives.

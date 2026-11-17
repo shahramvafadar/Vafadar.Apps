@@ -1,0 +1,191 @@
+@page "/{Collection}/timeline"
+@using System.Collections.Immutable
+@using Vafadar.Temporal
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The timeline of a collection (step 9.4): what of it has a time of the calendar – what is stated about its
+   entities with a date, and when its images and videos were made – as the chart and the table of a comparison.
+   The story itself is not on it: it has an order and no dates. Only what the visitor may see at the reading
+   position is asked of the projection; a later statement does not exist for this page. *@
+@if (_story is { } story)
+{
+    var title = string.Format(CultureInfo.CurrentCulture, T["Timeline_Title"], Visitor.Text(story.Label).Value);
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], Visitor.Text(story.Label).Value)</a></p>
+        <h1>@title</h1>
+        <p class="lead">@T["Timeline_Lead"]</p>
+    </header>
+
+    @if (_timeline is { } timeline)
+    {
+        <ComparisonView Comparison="timeline" Address="@($"{Site.Collection}/timeline")" State="_state" LongNames="true"
+                        SourceAddress="@(source => EvidenceAddress.Source(Site.Collection, source.Id, _here))" />
+    }
+    else
+    {
+        @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
+        <p class="note" role="status">
+            @T["Timeline_Empty"]
+            @if (_continues)
+            {
+                <text> @T["Gallery_EmptyHint"] </text><a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
+            }
+        </p>
+    }
+}
+
+@code {
+    // The name of the lane of the images and videos among the keys of the chart; no record of a collection has it.
+    private const string MadeLane = "timeline-made";
+
+    private Entity? _story;
+    private Comparison? _timeline;
+    private ChartState _state = new();
+    private string _here = string.Empty;
+    private bool _continues;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the direction of the chart in the address.</summary>
+    [SupplyParameterFromQuery(Name = "view")]
+    public string? View { get; set; }
+
+    /// <summary>Gets or sets the scale of the chart in the address.</summary>
+    [SupplyParameterFromQuery(Name = "scale")]
+    public string? Scale { get; set; }
+
+    /// <summary>Gets or sets the first year shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "from")]
+    public string? From { get; set; }
+
+    /// <summary>Gets or sets the last year shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "to")]
+    public string? To { get; set; }
+
+    /// <summary>Gets or sets whether the single events are shown, in the address.</summary>
+    [SupplyParameterFromQuery(Name = "events")]
+    public string? Events { get; set; }
+
+    /// <summary>Gets or sets the number of lanes shown in the address.</summary>
+    [SupplyParameterFromQuery(Name = "lanes")]
+    public string? Lanes { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Collection != Site.Collection || Visitor.Projection is not { } projection)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        var overview = projection.Overview();
+        _story = overview.Story;
+        _continues = projection.Story().Continues;
+        _state = ChartState.Read(View, Scale, From, To, Events, Lanes);
+        _here = $"{Site.Collection}/timeline{_state.Query()}";
+        _timeline = Build(projection);
+    }
+
+    // The lanes of the chart: one for every entity something dated is stated about, and one for the images and
+    // videos. Nothing is added to what the projection gives, and nothing is dated that states no date.
+    private Comparison? Build(Projection projection)
+    {
+        var view = projection.Timeline();
+        var lanes = ImmutableArray.CreateBuilder<ComparisonLane>();
+        foreach (var subject in view.Subjects)
+        {
+            lanes.Add(new ComparisonLane
+            {
+                Key = subject.Id.Value,
+                Label = subject.Label,
+                Periods =
+                [
+                    .. subject.Dated.Where(dated => dated.Time is Period).Select(dated => new ComparisonPeriod
+                    {
+                        Key = dated.Key,
+                        Label = dated.Label,
+                        Summary = dated.Summary,
+                        Time = (Period)dated.Time,
+                        Sources = dated.Sources,
+                        Review = dated.Review,
+                    }),
+                ],
+                Events =
+                [
+                    .. subject.Dated.Where(dated => dated.Time is not Period).Select(dated => new ComparisonEvent
+                    {
+                        Key = dated.Key,
+                        Label = dated.Label,
+                        Summary = dated.Summary,
+                        Time = dated.Time,
+                        Sources = dated.Sources,
+                        Review = dated.Review,
+                    }),
+                ],
+            });
+        }
+
+        if (!view.Made.IsEmpty)
+        {
+            lanes.Add(new ComparisonLane
+            {
+                Key = MadeLane,
+                Label = LocalizedText.Of(Visitor.Language.Tag, T["Timeline_Made"]),
+                Periods = [],
+                Events =
+                [
+                    .. view.Made.Select(item => new ComparisonEvent
+                    {
+                        Key = item.Id.Value,
+                        Label = item.Label,
+                        Time = item.Created,
+                        Sources = item.Sources,
+                        Review = ReviewStatus.SourcedReviewPending,
+                    }),
+                ],
+            });
+        }
+
+        if (lanes.Count == 0)
+        {
+            return null;
+        }
+
+        // The stretch of time the chart begins with: from the first to the last of what can be placed, with a
+        // little room at both ends. It is found by laying the lanes out once over any stretch.
+        Comparison Over(decimal from, decimal to) => Comparison.Create(
+            new ComparisonId(Site.Collection),
+            LocalizedText.Of(Visitor.Language.Tag, string.Format(CultureInfo.CurrentCulture, T["Timeline_Title"], Visitor.Text(_story!.Label).Value)),
+            LocalizedText.Of(Visitor.Language.Tag, T["Timeline_Lead"]),
+            ComparisonFrame.CommonEraYears,
+            YearOf(from),
+            YearOf(to),
+            lanes.ToImmutable(),
+            projection.Sources,
+            new PublicationState(true, false));
+
+        var chart = ComparisonCharts.Of(Over(1, 2), text => Visitor.Text(text).Value);
+        var places = chart.Lanes.SelectMany(lane => lane.Bands.SelectMany(band => new[] { band.From, band.To }).Concat(lane.Marks.Select(mark => mark.At))).ToList();
+        if (places.Count == 0)
+        {
+            // Nothing of it can be placed among years; the table still says what is stated.
+            return Over(1, 2);
+        }
+
+        var room = Math.Max(10, Math.Ceiling((places.Max() - places.Min()) / 20));
+        return Over(Math.Floor(places.Min()) - room, Math.Ceiling(places.Max()) + room);
+    }
+
+    private static TimePosition YearOf(decimal place)
+    {
+        var (era, year) = YearAxis.YearAt(place);
+        return CalendarPosition.OfYear(CalendarSystem.Unspecified, era, year);
+    }
+}

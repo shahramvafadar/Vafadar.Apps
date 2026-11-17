@@ -157,6 +157,7 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
                     $"{Story}/entity/character-sohrab/family",
                     $"{Story}/story",
                     $"{Story}/gallery",
+                    $"{Story}/timeline",
                     $"{Story}/media/media-dastan-parentage-video",
                     $"{Story}/media/media-dastan-family-illustration",
                     $"{Story}/evidence/relation/relation-02",

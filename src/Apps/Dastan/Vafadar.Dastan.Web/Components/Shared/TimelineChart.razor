@@ -6,7 +6,7 @@
 @inject IStringLocalizer<Ui> T
 
 <div class="tl tl-across" dir="ltr">
-    <svg class="tl-names" height="@Em(Height)" aria-hidden="true">
+    <svg class="tl-names @(LongNames ? "tl-names-long" : null)" height="@Em(Height)" aria-hidden="true">
         @foreach (var lane in Drawing.Lanes)
         {
             <foreignObject x="0" y="@Em(LaneTop(lane))" width="100%" height="@Em(LaneHeight(lane))">
@@ -70,6 +70,13 @@
 </div>
 
 @code {
+    /// <summary>
+    /// Gets or sets a value indicating whether the lanes carry long names – the names of entities instead of the
+    /// short names of a comparison – and get more room for them.
+    /// </summary>
+    [Parameter]
+    public bool LongNames { get; set; }
+
     // Measures of the drawing in em. The layout gives places along the time; these are the places across it.
     private const double Pad = 2.4;
     private const double CalloutHeight = 2.1;

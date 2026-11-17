@@ -57,6 +57,38 @@ public sealed class Entity
 
     /// <summary>Gets the reading level from which the entity may be shown at all.</summary>
     public required ReadingLevel Level { get; init; }
+
+    /// <summary>
+    /// Gets what is stated about the entity with a time of the calendar: a period it lasted, a day or a year
+    /// something happened to it. A story has an order and no dates; this is for what really has one – when a
+    /// work was written, when a manuscript was made.
+    /// </summary>
+    public ImmutableArray<DatedStatement> Dated { get; init; } = [];
+}
+
+/// <summary>A statement about an entity with a time of the calendar: something that lasted or something that happened.</summary>
+public sealed class DatedStatement
+{
+    /// <summary>Gets the identifier, unique in the collection; it names the row of the statement on a page.</summary>
+    public required string Key { get; init; }
+
+    /// <summary>Gets what lasted or happened, in a few words.</summary>
+    public required LocalizedText Label { get; init; }
+
+    /// <summary>Gets a sentence about it, when the editors wrote one.</summary>
+    public LocalizedText? Summary { get; init; }
+
+    /// <summary>Gets the time, as it is stated: a period for what lasted, anything else for what happened.</summary>
+    public required Vafadar.Temporal.TemporalExpression Time { get; init; }
+
+    /// <summary>Gets the sources that support the statement and its time.</summary>
+    public required ImmutableArray<SourceId> Sources { get; init; }
+
+    /// <summary>Gets how far the editors have come with the statement.</summary>
+    public required ReviewStatus Review { get; init; }
+
+    /// <summary>Gets the reading level from which the statement may be shown; never before its entity.</summary>
+    public required ReadingLevel Level { get; init; }
 }
 
 /// <summary>What a <see cref="Relation"/> is a statement about, and where in the story it holds.</summary>

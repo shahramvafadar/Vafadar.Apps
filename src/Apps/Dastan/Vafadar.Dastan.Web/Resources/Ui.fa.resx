@@ -852,4 +852,19 @@
   <data name="Flow_Beside" xml:space="preserve">
     <value>دوسویه</value>
   </data>
+  <data name="Timeline_Title" xml:space="preserve">
+    <value>{0} در گذر زمان</value>
+  </data>
+  <data name="Timeline_Lead" xml:space="preserve">
+    <value>آنچه از این مجموعه تاریخ دارد: آنچه دربارهٔ نام‌های آن با سال یا روز گفته شده، و زمانِ ساختِ تصویرها و ویدئوهایش. خودِ قصه روی این چارت نیست؛ قصه ترتیب دارد، نه تاریخ.</value>
+  </data>
+  <data name="Timeline_Made" xml:space="preserve">
+    <value>تصویرها و ویدئوها</value>
+  </data>
+  <data name="Timeline_Empty" xml:space="preserve">
+    <value>این‌جا چیزی که تاریخ داشته باشد برای نمایش نیست.</value>
+  </data>
+  <data name="Timeline_Link" xml:space="preserve">
+    <value>در گذر زمان</value>
+  </data>
 </root>

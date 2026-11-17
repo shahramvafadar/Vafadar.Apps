@@ -277,6 +277,7 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
                     $"{Story}/entity/character-sohrab/family",
                     $"{Story}/story",
                     $"{Story}/gallery",
+                    $"{Story}/timeline",
                     $"{Story}/media/media-dastan-parentage-video",
                     $"{Story}/evidence/relation/relation-02",
                     $"{Story}/source/src-iranica-zal",

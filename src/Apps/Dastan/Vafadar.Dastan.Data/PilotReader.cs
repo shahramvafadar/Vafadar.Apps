@@ -53,6 +53,10 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private static readonly FrozenDictionary<string, ReviewStatus> ReviewNames = Names(
         ("source_backed_editorial_review_pending", ReviewStatus.SourcedReviewPending));
 
+    // A dated statement is written like a statement of a comparison, with the same states of review.
+    private static readonly FrozenDictionary<string, ReviewStatus> DatedReviewNames =
+        ComparisonSample.ReviewNames.ToFrozenDictionary(name => name, name => Enum.Parse<ReviewStatus>(name, ignoreCase: true), StringComparer.Ordinal);
+
     private static readonly FrozenDictionary<string, SourceKind> SourceKindNames = Names(
         ("primary_literary_text_transcription", SourceKind.PrimaryText),
         ("scholarly_reference", SourceKind.ScholarlyReference),
@@ -222,6 +226,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             new("relations[].directionality", "Whether the relation reads from one entity to the other; it has to agree with the type.", Of(DirectionNames.Keys)),
             new("relations[].scope.kind", "What the relation is a statement about.", Of(ScopeKindNames.Keys)),
             new("relations[].reviewStatus, events[].reviewStatus", "How far a statement has been checked.", Of(ReviewNames.Keys)),
+            new("entities[].dated[].reviewStatus", "How far a statement with a date has been checked.", [.. ComparisonSample.ReviewNames.Select(name => new ContentChoice(name))]),
             new("events[].orderBasis", "What the order of the events follows.", Of(["narrative"])),
             new("events[].temporalExpression.kind", "The time of a story event: its place in the telling, never a date.", Of(["narrative_position"])),
             new("events[].grouping", "Optional: the event stands for several scenes.", Of(["editorial_beat_may_condense_multiple_scenes"])),
@@ -453,8 +458,22 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var summary = record.Text("summary");
         var sources = Ids(record, "sourceIds");
         var level = Level(record);
+        var dated = ImmutableArray.CreateBuilder<DatedStatement>();
+        var datedComplete = true;
+        foreach (var statement in record.Children("dated", required: false))
+        {
+            if (ReadDated(statement) is { } read)
+            {
+                dated.Add(read);
+            }
+            else
+            {
+                datedComplete = false;
+            }
+        }
+
         record.Finish();
-        if (id is null || !typeKnown || label is null || summary is null || level is null)
+        if (id is null || !typeKnown || label is null || summary is null || level is null || !datedComplete)
         {
             return null;
         }
@@ -481,6 +500,61 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Label = name,
             Summary = Localized(summary, $"entities/{id}/summary"),
             Sources = [.. sources.Select(source => new SourceId(source))],
+            Level = level.Value,
+            Dated = dated.ToImmutable(),
+        };
+    }
+
+    /// <summary>
+    /// Reads a statement about an entity with a time of the calendar. The time is written as in a comparison and
+    /// is never the place of a step in the story: what the story tells has an order, not a date.
+    /// </summary>
+    private DatedStatement? ReadDated(JsonRecord record)
+    {
+        var key = record.Identifier("key");
+        if (key is not null)
+        {
+            record.Name = key;
+        }
+
+        var label = record.Text("label");
+        var summary = record.Text("summary", required: false);
+        var sources = Ids(record, "sourceIds");
+        var level = Level(record);
+        var reviewKnown = record.Choice("reviewStatus", DatedReviewNames, out var review);
+        TemporalExpression? time = null;
+        if (record.Raw("time") is { } stated)
+        {
+            try
+            {
+                time = stated.Deserialize<TemporalExpression>(ComparisonSample.TimeOptions);
+            }
+            catch (Exception refused) when (refused is JsonException or ArgumentException or NotSupportedException)
+            {
+                record.Problem($"time cannot be read: {refused.Message}");
+            }
+
+            if (time is Occurrence { At: not CalendarPosition })
+            {
+                record.Problem("time is not a time of the calendar: a statement with a date is not a step of the story.");
+                time = null;
+            }
+        }
+
+        record.Finish();
+        if (key is null || label is null || level is null || !reviewKnown || time is null)
+        {
+            return null;
+        }
+
+        return new DatedStatement
+        {
+            Key = key,
+            Label = Localized(label, $"dated/{key}/label"),
+            Summary = summary is null ? null : Localized(summary, $"dated/{key}/summary"),
+            Time = time,
+            Sources = [.. sources.Select(source => new SourceId(source))],
+            Review = review,
             Level = level.Value,
         };
     }
@@ -1119,6 +1193,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             ReadTranslated(record, translation, "relations", "label");
             ReadTranslated(record, translation, "events", "label", "summary");
             ReadTranslated(record, translation, "media", "label", "caption", "altText");
+            ReadTranslated(record, translation, "dated", "label", "summary");
             record.Finish();
             if (language is not null && reviewKnown)
             {

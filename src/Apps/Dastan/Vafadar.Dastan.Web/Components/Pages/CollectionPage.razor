@@ -40,7 +40,10 @@
     }
 
     @* The gallery is always offered: what it holds depends on the reading position, that it exists does not. *@
-    <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/gallery")">@T["Gallery_Title"]</a></p>
+    <p class="actions">
+        <a class="action secondary" href="@($"{Site.Collection}/gallery")">@T["Gallery_Title"]</a>
+        <a class="action secondary" href="@($"{Site.Collection}/timeline")">@T["Timeline_Link"]</a>
+    </p>
 
     <SearchForm />
 

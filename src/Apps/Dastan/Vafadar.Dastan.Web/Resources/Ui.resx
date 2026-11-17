@@ -852,4 +852,19 @@
   <data name="Flow_Beside" xml:space="preserve">
     <value>Mutual</value>
   </data>
+  <data name="Timeline_Title" xml:space="preserve">
+    <value>{0} in time</value>
+  </data>
+  <data name="Timeline_Lead" xml:space="preserve">
+    <value>What of this collection has a date: what is stated about its names with a year or a day, and when its images and videos were made. The story itself is not on this chart – it has an order, and no dates.</value>
+  </data>
+  <data name="Timeline_Made" xml:space="preserve">
+    <value>Images and videos</value>
+  </data>
+  <data name="Timeline_Empty" xml:space="preserve">
+    <value>Nothing with a date can be shown here.</value>
+  </data>
+  <data name="Timeline_Link" xml:space="preserve">
+    <value>In time</value>
+  </data>
 </root>

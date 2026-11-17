@@ -1054,6 +1054,28 @@ a.tl-bar:focus-visible,
   background: var(--surface-raised);
 }
 
+/* Lanes with long names – the names of entities – get a wider column, and smaller letters on two lines. */
+.tl-across .tl-names.tl-names-long {
+  inline-size: 10em;
+}
+
+.tl-names-long .tl-lane-name {
+  font-size: 0.85em;
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+
+/* Down the page a long name runs down its lane. */
+.tl-head-long .tl-lane-name {
+  writing-mode: vertical-rl;
+  justify-content: flex-start;
+  padding-block: 0.3em;
+  font-size: 0.8em;
+  line-height: 1.15;
+  text-align: start;
+  overflow-wrap: normal;
+}
+
 .tl-across .tl-callout {
   white-space: nowrap;
   text-overflow: ellipsis;

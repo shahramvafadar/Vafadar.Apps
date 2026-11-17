@@ -183,6 +183,15 @@ public sealed class Catalogue
             {
                 CheckSources(entity.Id.Value, entity.Sources, entity.Level);
                 CheckStage(entity.Id.Value, entity.Level);
+                foreach (var dated in entity.Dated)
+                {
+                    CheckSources(dated.Key, dated.Sources, dated.Level);
+                    CheckStage(dated.Key, dated.Level);
+                    if (!entity.Level.IsWithin(dated.Level))
+                    {
+                        problems.Add($"{dated.Key}: a statement about {entity.Id} cannot be shown before {entity.Id} itself.");
+                    }
+                }
             }
 
             foreach (var relation in catalogue.Relations)
@@ -211,6 +220,7 @@ public sealed class Catalogue
         private void CheckIdentifiersAcrossKinds()
         {
             var all = catalogue.Entities.Select(entity => entity.Id.Value)
+                .Concat(catalogue.Entities.SelectMany(entity => entity.Dated).Select(dated => dated.Key))
                 .Concat(catalogue.Relations.Select(relation => relation.Id.Value))
                 .Concat(catalogue.Events.Select(storyEvent => storyEvent.Id.Value))
                 .Concat(catalogue.Sources.Select(source => source.Id.Value))

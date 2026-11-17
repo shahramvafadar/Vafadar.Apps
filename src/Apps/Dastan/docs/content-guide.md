@@ -110,8 +110,9 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
   as the `label` of a media date.
 * There is no year zero: the year before 1 CE is 1 BCE.
 * A **story has an order, not dates.** A step of a telling has `order` and the time `narrative_position`; a year,
-  a date or a duration there is refused. Only what really has a date – when an artwork was made, a period of
-  history in a comparison – gets one.
+  a date or a duration there is refused. Only what really has a date gets one: when an artwork was made, what is
+  stated about an entity of a collection in its list `dated` (when a work was written, when a manuscript was
+  made), a period of history in a comparison.
 * Say how exact a time is: `approximate: true` for "about"; in a comparison an end `between` two years, or
   `unknown`, `ongoing`, `endedAtUnknownTime`.
 
@@ -142,8 +143,8 @@ your hand-over note, so that the format is extended with its meaning.
   places have no types yet.
 * The **types of relations** are a fixed list (`vocabulary` shows it). A type has one meaning; "sibling of",
   "teacher of" or "born in" are not in it.
-* The entities of a collection have **no periods or dated events** of their own yet; time across subjects is
-  written as a comparison.
+* What a collection states with a date (`dated`) belongs to one entity. Time across several subjects that is
+  no part of a collection is written as a comparison.
 * A statement of a collection has one review state (`source_backed_editorial_review_pending`); a comparison has
   the full list.
 * The language a file is written in is English.
