@@ -567,4 +567,28 @@
   <data name="Account_WrongPassword" xml:space="preserve">
     <value>گذرواژهٔ نادرست</value>
   </data>
+  <data name="New_Title" xml:space="preserve">
+    <value>رکورد تازه – {0}</value>
+  </data>
+  <data name="New_Lead" xml:space="preserve">
+    <value>فیلدهایی که رکوردی از این گونه دارد. متنی که خالی بماند فیلدی است که رکورد ندارد. سایت پیش از نگه‌داشتن، مجموعه را با رکورد تازه می‌خواند.</value>
+  </data>
+  <data name="New_IdHint" xml:space="preserve">
+    <value>شناسه برای همیشه نام رکورد است: واژه‌های کوچک لاتین با خط تیره، مانند person-ferdowsi. هیچ رکوردی از مجموعه نباید آن را داشته باشد.</value>
+  </data>
+  <data name="New_Link" xml:space="preserve">
+    <value>افزودن رکورد با فرم</value>
+  </data>
+  <data name="Language_Add" xml:space="preserve">
+    <value>افزودن یک زبان</value>
+  </data>
+  <data name="Language_AddLead" xml:space="preserve">
+    <value>زبانی که مجموعه هنوز به آن ترجمه نشده است، به شکل برچسب زبان مانند de یا ar. خالی و پیش‌نویس آغاز می‌شود؛ متن‌هایش سپس کنار فیلدهای هر رکورد پر می‌شوند.</value>
+  </data>
+  <data name="Language_Tag" xml:space="preserve">
+    <value>برچسب زبان</value>
+  </data>
+  <data name="Language_Added" xml:space="preserve">
+    <value>زبان افزوده شد. متن‌هایش در صفحهٔ رکوردها پر می‌شوند.</value>
+  </data>
 </root>

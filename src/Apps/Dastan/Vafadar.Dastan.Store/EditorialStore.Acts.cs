@@ -268,6 +268,38 @@ public sealed partial class EditorialStore
     }
 
     /// <summary>
+    /// Adds a language to a collection: an empty translation document, to which the texts of the records are
+    /// then added one by one. It begins as a draft – nobody has reviewed a text of it.
+    /// </summary>
+    /// <param name="collectionId">The collection.</param>
+    /// <param name="language">The language, as a language tag such as <c>de</c>.</param>
+    /// <param name="by">Who adds it.</param>
+    /// <param name="reason">Why.</param>
+    public ActResult AddLanguage(string collectionId, string language, string by, string reason)
+    {
+        ArgumentNullException.ThrowIfNull(language);
+        ArgumentException.ThrowIfNullOrWhiteSpace(by);
+        ArgumentException.ThrowIfNullOrWhiteSpace(reason);
+        var tag = language.Trim();
+        return Act(collectionId, by, reason, (root, translations) =>
+        {
+            if (translations.ContainsKey(tag))
+            {
+                return $"{tag}: the collection already has texts in that language.";
+            }
+
+            translations[tag] = new JsonObject
+            {
+                ["formatVersion"] = PilotSample.TranslationVersion,
+                ["datasetId"] = (string)root["datasetId"]!,
+                ["language"] = tag,
+                ["review"] = "draft",
+            };
+            return null;
+        });
+    }
+
+    /// <summary>
     /// Changes the reading stages of a collection: their names in the language of the file and in the other
     /// languages. A stage is added at the end; the last one is taken out by leaving it away – which the readers
     /// refuse while a record is still told at it.

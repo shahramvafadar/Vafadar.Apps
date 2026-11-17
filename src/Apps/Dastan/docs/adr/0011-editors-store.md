@@ -523,3 +523,27 @@ roles, changed and listed by command; what is no role; a closed account; a form 
 account; a form sent after the role was taken away does nothing; the page of the account in both languages;
 another password with a wrong present one, with two different new ones, and done – after which the old one
 signs in nowhere; tries remembered, the last 50 only, none for an unknown name. Not looked at in a browser.
+
+## Fourteenth addendum of 2026-11-18 – a new record and a new language without a file (step 13.5)
+
+A record could be changed with a form but only be added as text; a language came into a collection only with
+an imported file.
+
+* **A new record starts as a form.** `NewRecord` gives, for a source, an entity, a relation and an event, the
+  record a form starts with: the fields a record of that kind has, empty or with the usual value – a relation
+  begins as one of the world outside a story (with the inputs of its time), an event at the place after the
+  last step. The form is the form of step 11.6, made from that record; what is filled in is read by the same
+  code and tried by the readers before it is kept. The starting records are no content and no templates of
+  the format: they exist so that a form has fields.
+* **The identifier is asked for** – it names the record for good – and adding never replaces: an identifier
+  that any record of the collection has is refused, and the editor is sent to that record's page instead.
+* An image or a video has no such form: its record is of use only with its file (step 13.7). The text form
+  for adding stays for every group.
+* **`EditorialStore.AddLanguage`** adds an empty translation document of a language tag to a collection, as a
+  draft. From then on the forms of the records have an input for that language below every text. What is no
+  language tag, and the language the file is written in, are refused by the readers.
+
+Verification: `StudioNewRecordTests` (11 tests): the form in both languages; an entity, a relation of the
+world with its time and a step of the story added and kept with who and why; no identifier, a taken one and a
+record the site cannot read refused with the form kept; no form for media or an unknown group; a language
+added and its first text filled in; three languages that are refused. Not looked at in a browser.

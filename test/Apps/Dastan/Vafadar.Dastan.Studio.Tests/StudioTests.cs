@@ -301,7 +301,10 @@ public sealed class StudioTests(Studio studio) : IClassFixture<Studio>
 
     [Theory]
     [InlineData("/en/", new string[0])]
-    [InlineData($"/en/{Collection}", new string[0])]
+    [InlineData($"/en/{Collection}", new[] { "language" })]
+    [InlineData($"/en/{Collection}/records/entities/new", new[] { "new" })]
+    [InlineData($"/en/{Collection}/stages", new[] { "stages" })]
+    [InlineData("/en/comparisons", new[] { "add" })]
     [InlineData($"/en/{Collection}/waiting", new string[0])]
     [InlineData($"/en/{Collection}/history", new string[0])]
     [InlineData($"/en/{Collection}/records/relations", new[] { "add" })]

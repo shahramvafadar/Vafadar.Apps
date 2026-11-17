@@ -567,4 +567,28 @@
   <data name="Account_WrongPassword" xml:space="preserve">
     <value>a wrong password</value>
   </data>
+  <data name="New_Title" xml:space="preserve">
+    <value>A new record – {0}</value>
+  </data>
+  <data name="New_Lead" xml:space="preserve">
+    <value>The fields a record of this kind has. A text left empty is a field the record does not have. The site reads the collection with the new record before it is kept.</value>
+  </data>
+  <data name="New_IdHint" xml:space="preserve">
+    <value>The identifier names the record for good: lower-case words with hyphens, such as person-ferdowsi. No record of the collection has it yet.</value>
+  </data>
+  <data name="New_Link" xml:space="preserve">
+    <value>Add a record with a form</value>
+  </data>
+  <data name="Language_Add" xml:space="preserve">
+    <value>Add a language</value>
+  </data>
+  <data name="Language_AddLead" xml:space="preserve">
+    <value>A language the collection is not translated into yet, as a language tag such as de or ar. It begins empty and as a draft; its texts are then filled in beside the fields of each record.</value>
+  </data>
+  <data name="Language_Tag" xml:space="preserve">
+    <value>Language tag</value>
+  </data>
+  <data name="Language_Added" xml:space="preserve">
+    <value>The language was added. Its texts are filled in on the pages of the records.</value>
+  </data>
 </root>

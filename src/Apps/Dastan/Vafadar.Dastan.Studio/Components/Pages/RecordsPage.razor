@@ -19,6 +19,10 @@
 
     <section aria-labelledby="add">
         <h2 id="add">@T["Add_Title"]</h2>
+        @if (NewRecord.Groups.Contains(Group) && Editor.May(EditorRoles.Writer))
+        {
+            <p><a class="action" href="@($"{Collection}/records/{Group}/new")">@T["New_Link"]</a></p>
+        }
         <p class="note">@T["Add_Lead"]</p>
         <ActOutcome Problems="_problems" />
         <Allowed Role="EditorRoles.Writer">
