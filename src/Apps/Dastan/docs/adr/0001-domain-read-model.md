@@ -270,7 +270,7 @@ DOM-005 names "a quantity with unit and precision" among the values a statement 
 * **The page of an entity lists what is stated about it** – until now such statements were visible on the
   timeline only, and a statement without a time would have been visible nowhere.
 
-Not done: a series of quantities as a chart (phase 14); ranges ("between 40,000 and 60,000"); units of
+Not done: a series of quantities as a chart (phase 14 – built as step 14.3: ADR 0008, seventh addendum); ranges ("between 40,000 and 60,000"); units of
 other systems.
 
 Verification: `QuantityTests` (6 tests) and `RealWorldPagesTests` (the page of an entity in English and

@@ -69,6 +69,11 @@
                     </dd>
                 }
             </dl>
+            @* The same quantity stated for several times is drawn as well: the list above has every digit. *@
+            @foreach (var series in QuantitySeries.Of(overview.Entity, Site.Language))
+            {
+                <SeriesFigure Series="series" Here="@_here" />
+            }
         </section>
     }
 

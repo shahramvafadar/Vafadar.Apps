@@ -1663,3 +1663,67 @@ main:has(> .stage) > :not(.stage) {
 .places-list > li {
   margin-block-end: var(--space-4);
 }
+
+/* A series of quantities as a drawing (step 14.3): time across, the value upwards. */
+.series {
+  margin: var(--space-6) 0;
+}
+
+.series figcaption {
+  color: var(--text-muted);
+  margin-block-end: var(--space-2);
+}
+
+.series-frame {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.series-frame:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.series-plot {
+  display: block;
+  font-size: 1rem;
+}
+
+.series-grid {
+  stroke: var(--border);
+  stroke-width: 1px;
+}
+
+.series-grid.series-zero,
+.series-tick {
+  stroke: var(--text-muted);
+}
+
+.series-scale {
+  fill: var(--text-muted);
+  font-size: 0.75em;
+}
+
+.series-line {
+  stroke: var(--accent);
+  stroke-width: 2px;
+}
+
+.series-mark circle {
+  fill: var(--accent);
+  stroke: var(--surface-raised);
+  stroke-width: 2px;
+}
+
+/* A number the source calls "about" is drawn open. */
+.series-mark.series-about circle {
+  fill: var(--surface-raised);
+  stroke: var(--accent);
+}
+
+.series-mark:focus-visible circle {
+  stroke: var(--focus);
+  stroke-width: 3px;
+}

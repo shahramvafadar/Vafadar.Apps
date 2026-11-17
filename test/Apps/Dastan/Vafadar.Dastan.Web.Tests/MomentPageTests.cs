@@ -21,8 +21,8 @@ public sealed class MomentPageTests(WorldSite world, DemoSite demo) : IClassFixt
         var projection = world.Services.GetRequiredService<DastanSite>().At(ReadingLevel.Opening)!;
         var years = projection.Years()!;
 
-        Assert.Equal((994, 1010), (years.First.Number, years.Last.Number));
-        Assert.Equal([994, 999, 1000, 1004, 1010], years.Turns.Select(turn => turn.Number));
+        Assert.Equal((994, 1100), (years.First.Number, years.Last.Number));
+        Assert.Equal([994, 999, 1000, 1004, 1010, 1100], years.Turns.Select(turn => turn.Number));
 
         var moment = projection.At(new YearOfEra(Era.CommonEra, 1000));
         Assert.Empty(moment.Relations);
