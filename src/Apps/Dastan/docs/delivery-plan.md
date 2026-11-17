@@ -393,7 +393,7 @@ of the editors (`Vafadar.Dastan.Studio`) so that nothing of the daily work needs
 | Step | What | Status |
 |---|---|---|
 | 13.1 | **A time as a form**: the time of a statement with a date and of a relation of the world filled in with inputs – once, between two times, lasting, with "about" and an unknown beginning or end – in place of writing it as it stands in the file | **Done** 2026-11-17 – `TimeForm`; a relation of the world that states no time has the inputs to state one ([ADR 0011](adr/0011-editors-store.md), eleventh addendum) |
-| 13.2 | **Two editors at one record**: a change made from a form that was opened before somebody else changed the record is not kept silently; the editor is told and sees what changed | Planned |
+| 13.2 | **Two editors at one record**: a change made from a form that was opened before somebody else changed the record is not kept silently; the editor is told and sees what changed | **Done** 2026-11-17 – every form that changes something carries a mark of what it was made from; when the store holds something else by the time the form comes back, nothing is kept, the editor is told and keeps the inputs ([ADR 0011](adr/0011-editors-store.md), twelfth addendum) |
 | 13.3 | **Who may do what**: writers, reviewers, publishers and who looks after the accounts – an act is refused to who has not its role | Planned |
 | 13.4 | **An editor changes the own password in the tool; who signed in when** | Planned |
 | 13.5 | **A new record and a new language without a file**: a record added from a form that starts with the fields of its kind; a language a collection is not translated into yet is added in the tool | Planned |

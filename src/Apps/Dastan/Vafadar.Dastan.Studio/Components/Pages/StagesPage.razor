@@ -25,6 +25,7 @@
     <ActOutcome Problems="_problems" />
     <form method="post" @formname="stages" @onsubmit="Keep" class="act" action="@Here">
         <AntiforgeryToken />
+        <input type="hidden" name="@Seen.Input" value="@_seen" />
         @for (var level = 0; level <= _stages.Count; level++)
         {
             var index = level;
@@ -53,6 +54,7 @@
     private IReadOnlyList<(string Language, ImmutableArray<string?> Labels)> _texts = [];
     private List<string>? _problems;
     private bool _sent;
+    private string _seen = string.Empty;
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
@@ -81,6 +83,7 @@
         }
 
         _texts = Store.StageTexts(Collection);
+        _seen = Seen.Of([.. _stages.Select(stage => stage.Label), .. _texts.SelectMany(text => text.Labels.Prepend(text.Language))]);
     }
 
     // What an input starts with: what was sent when the form comes back refused, else what the store holds.
@@ -97,6 +100,11 @@
         _sent = true;
         var input = Keeping ?? new FieldsInput();
         var problems = new List<string>();
+        if (!Seen.Holds(Context, _seen))
+        {
+            // Somebody changed the stages after the form was opened: it is not kept over that change.
+            problems.Add(T["Act_Stale"]);
+        }
         var by = Editor.By(input.By);
         if (by is null)
         {

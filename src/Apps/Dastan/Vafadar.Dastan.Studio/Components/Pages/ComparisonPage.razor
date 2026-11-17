@@ -29,6 +29,7 @@
             <ActOutcome Problems="_changeProblems" />
             <form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
                 <AntiforgeryToken />
+                <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <p class="field">
                     <label for="change-json">@T["Comparison_File"]</label>
                     <textarea id="change-json" class="code" name="json" rows="@Rows(File(comparison))" spellcheck="false" dir="ltr" required>@File(comparison)</textarea>
@@ -56,6 +57,7 @@
             <ActOutcome Problems="_removeProblems" />
             <form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
                 <AntiforgeryToken />
+                <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <WhoAndWhy Form="remove" Model="Removing" By="@(Removing?.By ?? Editor.Name)" Reason="@(Removing?.Reason ?? string.Empty)" />
                 <p><button type="submit" class="action danger">@T["Remove_Submit"]</button></p>
             </form>
@@ -106,6 +108,7 @@
     private List<string>? _changeProblems;
     private List<string>? _removeProblems;
     private bool _sent;
+    private string _seen = string.Empty;
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
@@ -139,6 +142,7 @@
         }
 
         _comparison = Store.Comparison(Id);
+        _seen = Seen.Of(_comparison is null ? [] : [_comparison.Json, .. _comparison.Translations.SelectMany(translation => new[] { translation.Key, translation.Value })]);
         _title = Store.Comparisons().FirstOrDefault(comparison => comparison.Id == Id)?.Title;
     }
 
@@ -156,6 +160,11 @@
         _sent = true;
         var input = Changing ?? new FieldsInput();
         var problems = new List<string>();
+        if (!Seen.Holds(Context, _seen))
+        {
+            // Somebody changed the comparison after the form was opened: it is not kept over that change.
+            problems.Add(T["Act_Stale"]);
+        }
         var by = Name(input.By, problems);
         var reason = Reason(input.Reason, problems);
 
@@ -221,6 +230,11 @@
     {
         var input = Removing ?? new RemoveInput();
         var problems = new List<string>();
+        if (!Seen.Holds(Context, _seen))
+        {
+            // Somebody changed the comparison after the form was opened: it is not kept over that change.
+            problems.Add(T["Act_Stale"]);
+        }
         var by = Name(input.By, problems);
         var reason = Reason(input.Reason, problems);
         if (problems.Count == 0)

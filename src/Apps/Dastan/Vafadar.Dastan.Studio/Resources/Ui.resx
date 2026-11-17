@@ -498,4 +498,7 @@
   <data name="Fields_TimeHint" xml:space="preserve">
     <value>kind: “occurrence” is one time (at); “between” lies between two (at, latest); “period” lasted from at – or between at and latest, or from an unknown beginning (start) – until – or between until and untilLatest, or ongoing or unknown (end). A position is a year, with a month and a day where they are stated; “about” where the source says so. “–” states no time.</value>
   </data>
+  <data name="Act_Stale" xml:space="preserve">
+    <value>This was changed by somebody else after you opened the form, so nothing of what you filled in was kept. The form still has what you filled in, on top of what the store holds now; the history at the end of the page says what was changed. Send the form again if your change still holds.</value>
+  </data>
 </root>
