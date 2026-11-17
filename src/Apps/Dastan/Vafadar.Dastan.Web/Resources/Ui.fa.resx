@@ -1182,4 +1182,73 @@
   <data name="Places_Degrees" xml:space="preserve">
     <value>{0}° {1}</value>
   </data>
+  <data name="Moment_Link" xml:space="preserve">
+    <value>در یک سال</value>
+  </data>
+  <data name="Moment_Title" xml:space="preserve">
+    <value>یک سال از {0}</value>
+  </data>
+  <data name="Moment_TitleYear" xml:space="preserve">
+    <value>{0} در سال {1}</value>
+  </data>
+  <data name="Moment_Lead" xml:space="preserve">
+    <value>سالی را برگزینید تا صفحه بگوید مجموعه دربارهٔ آن چه می‌گوید: در آن سال چه کسی کجا بود، چه سمتی یا پیوندی داشت، و دربارهٔ آن سال چه گفته شده است.</value>
+  </data>
+  <data name="Moment_Year" xml:space="preserve">
+    <value>سال</value>
+  </data>
+  <data name="Moment_Era" xml:space="preserve">
+    <value>مبدأ</value>
+  </data>
+  <data name="Moment_Era_CommonEra" xml:space="preserve">
+    <value>میلادی</value>
+  </data>
+  <data name="Moment_Era_BeforeCommonEra" xml:space="preserve">
+    <value>پیش از میلاد</value>
+  </data>
+  <data name="Moment_Show" xml:space="preserve">
+    <value>نشان‌دادن سال</value>
+  </data>
+  <data name="Moment_Range" xml:space="preserve">
+    <value>این مجموعه از سال {0} تا {1} را می‌گوید.</value>
+  </data>
+  <data name="Moment_Choose" xml:space="preserve">
+    <value>هنوز سالی برگزیده نشده است.</value>
+  </data>
+  <data name="Moment_First" xml:space="preserve">
+    <value>آغاز از {0}</value>
+  </data>
+  <data name="Moment_Invalid" xml:space="preserve">
+    <value>این یک سال نیست: سال عددی صحیح از ۱ است، میلادی یا پیش از میلاد.</value>
+  </data>
+  <data name="Moment_Nothing" xml:space="preserve">
+    <value>برای این سال چیزی گفته نشده است.</value>
+  </data>
+  <data name="Moment_NoYears" xml:space="preserve">
+    <value>چیزی که سال داشته باشد این‌جا نمی‌توان نشان داد.</value>
+  </data>
+  <data name="Moment_Where" xml:space="preserve">
+    <value>چه کسی و چه چیزی کجا بود</value>
+  </data>
+  <data name="Moment_Held" xml:space="preserve">
+    <value>آنچه برقرار بود</value>
+  </data>
+  <data name="Moment_Stated" xml:space="preserve">
+    <value>آنچه برای این سال گفته شده</value>
+  </data>
+  <data name="Moment_Possibly" xml:space="preserve">
+    <value>شاید برقرار بوده – منابع برای این سال با قطعیت نمی‌گویند</value>
+  </data>
+  <data name="Moment_Earlier" xml:space="preserve">
+    <value>پیش‌تر: {0}</value>
+  </data>
+  <data name="Moment_Later" xml:space="preserve">
+    <value>پس‌تر: {0}</value>
+  </data>
+  <data name="Moment_Steps" xml:space="preserve">
+    <value>به سال‌هایی که در آن‌ها چیزی دگرگون می‌شود</value>
+  </data>
+  <data name="Moment_Rule" xml:space="preserve">
+    <value>پرسش دربارهٔ یک سال است، نه یک روز: آنچه در این سال پایان یافته هنوز آمده است و آنچه در آن آغاز شده نیز.</value>
+  </data>
 </root>

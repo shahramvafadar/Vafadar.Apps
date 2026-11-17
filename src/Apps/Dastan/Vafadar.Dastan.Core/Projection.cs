@@ -430,6 +430,44 @@ public sealed class Projection
     }
 
     /// <summary>
+    /// Returns the years the collection says something about – through a relation that states when it held, or a
+    /// statement about an entity with a time – or <see langword="null"/> when nothing the visitor may see can be
+    /// placed among the years.
+    /// </summary>
+    public YearsCovered? Years()
+    {
+        var reaches = Relations.Select(relation => relation.Time)
+            .Concat(Entities.SelectMany(entity => entity.Dated.Select(dated => dated.Time)))
+            .Select(YearCover.Reach).OfType<YearSpan>().ToList();
+        if (reaches.Count == 0)
+        {
+            return null;
+        }
+
+        // The year a stretch ends in is the one just before its end: the end is the beginning of what follows.
+        const decimal Just = 0.0001m;
+        var turns = reaches.SelectMany(reach => new[] { YearOfEra.At(reach.From), YearOfEra.At(reach.To - Just) }).Distinct().OrderBy(year => year.Place).ToImmutableArray();
+        return new(turns[0], turns[^1], turns);
+    }
+
+    /// <summary>
+    /// Returns what the collection says of one year: the relations of the world that held or may have held then,
+    /// and what is stated of its entities for that year.
+    /// </summary>
+    public MomentView At(YearOfEra year)
+    {
+        var turns = Years()?.Turns ?? [];
+        return new(
+            year,
+            [.. Relations.Select(relation => (Relation: relation, Holding: YearCover.Of(relation.Time, year)))
+                .Where(held => held.Holding != Holding.No).Select(held => new HeldThen(ToEdge(held.Relation), held.Holding))],
+            [.. Entities.SelectMany(entity => entity.Dated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, year))))
+                .Where(stated => stated.Holding != Holding.No)],
+            turns.Where(turn => turn.Place < year.Place).Select(turn => (YearOfEra?)turn).LastOrDefault(),
+            turns.Where(turn => turn.Place > year.Place).Select(turn => (YearOfEra?)turn).FirstOrDefault());
+    }
+
+    /// <summary>
     /// Returns the real places of the collection: those that say where they are, each with what is stated to be
     /// there, and those that do not. A place of a story is not among them – it is no place on a map.
     /// </summary>

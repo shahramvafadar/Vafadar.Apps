@@ -139,6 +139,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- A collection that states years has a page "In a year": choose a year, and it says who was where and what
+  held then – and says "may have held" where the sources leave it open.
 - A collection that names real places has a page "On the map": the places drawn where they lie to each
   other on a grid of degrees, and listed with what is said to be there. The site still loads no map from
   anybody.

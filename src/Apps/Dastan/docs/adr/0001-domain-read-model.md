@@ -194,7 +194,7 @@ DOM-007 asks that a role has its time and that "separate tenures must not become
 * A relation the visitor may not see yet gives nothing of its time (the projection drops the relation).
 
 Not done here: a form for a time in the tool of the editors (step 13.1; until then the record is changed as
-text); a "who was where at this date" view over relations (phase 14).
+text); a "who was where at this date" view over relations (phase 14 – built as step 14.2, eighth addendum).
 
 Verification: `RelationTimeTests` (5 tests) – read as stated; two tenures stay two; a relation of the story, a
 place in the story and an unreadable time are refused; hidden before its stage; the collection of the repository
@@ -292,3 +292,37 @@ looked at in a browser.
 
 Verification: `PlacePositionTests` (9 tests) and `RealWorldPagesTests` (the page in English and Persian).
 Test data only; not looked at in a browser.
+
+## Eighth addendum of 2026-11-18 – what held in a year (step 14.2, R-PUB-03)
+
+The relations of the world state when they held (step 12.2) and statements about an entity state their time.
+The read model now answers the question the other way round: what does the collection say of one year.
+
+* **`YearCover.Of(time, year)`** says whether a time reaches a year, with three answers (`Holding`):
+  * **Yes** – the year lies inside what is stated: the year of an occurrence; a year from the latest possible
+    beginning to the earliest possible end of a period; any year after the beginning of what still lasts.
+  * **Possibly** – the records leave it open: a year between the two times a beginning or an end is known
+    between; any year after a beginning whose end nobody states; any year before an end whose beginning nobody
+    knows; the year of a time that is said to be about; one of several alternative times.
+  * **No** – the time does not reach the year, or cannot be placed among the years of the common era (another
+    era, an order of a story, an unknown time). A period of which neither end is known reaches no year.
+* **A year is asked for, not a day.** What is stated to the year holds in that whole year; what ended in a
+  year still held in it and what began in it already. The axis is the one of the charts (`YearAxis`): it
+  counts years, so a Julian and a Gregorian date of one year are the same year.
+* **`Projection.Years()`** names the first and the last year anything the visitor may see is stated for, and
+  the years in which something begins, ends or happens; `null` when nothing can be placed.
+* **`Projection.At(year)`** answers a `MomentView`: the relations that held or may have held, what is stated
+  of entities for the year, and the nearest earlier and later year in which something changes.
+* **The page** `<collection>/at` asks for the year with a form that asks for a page (no script). A year is a
+  whole number from 1 to 9999 with `era=bce` for the time before the era; anything else is said to be no year
+  and is not written back into the page. The relations that end at a place stand apart: who and what was
+  where. The page is offered on the page of a collection that states a year.
+
+Not done: a day or a month as the question; a slider; the year on the map of the places (14.1) and in the
+family tree; the former names of an entity for the year.
+
+Verification: `YearCoverTests` (31 cases) – occurrences, windows, periods with known, uncertain, unknown and
+ongoing ends, times that are about, the change of the era, alternatives, what has no place among the years.
+`MomentPageTests` (23 cases) – the years of the projection, the page in both languages, what held, what may
+have, what is stated with its quantity, an empty year, a year before the era, six addresses that are no year,
+a story alone, another collection. Not looked at in a browser.
