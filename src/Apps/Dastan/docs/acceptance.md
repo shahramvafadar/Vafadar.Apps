@@ -221,5 +221,6 @@ Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "n
 | Editors publish from the store: the next revision by the rule of ADR 0009, kept as it was published, read by a public site from its content folder | **Implemented and checked** | `EditorialPublishingTests` |
 | Editors see in a browser what the store holds: records, what waits, the history of every change, the revisions | **Implemented and checked** | `StudioTests`; measured in a browser at phone width in both languages |
 | Editors act in the tool: review, change a record as text, take out, add, publish – done says so, refused says why and changes nothing | **Implemented and checked** | `StudioActsTests`; the forms measured in a browser at phone width |
-| Editors change the parts of a record in forms instead of as text | **Not done** | Step 11.6 |
+| Editors change the fields of a record in a form: each field with the input that fits it, choices from the vocabulary of the readers, records to point to, rows to add and take out | **Implemented and checked** | `StudioFormTests`: every record of the sample comes back from its form as it was; measured in a browser at phone width, right to left, and one change sent from the browser |
+| Editors change the texts of the other languages of a record in the tool | **Not done** | Step 11.8; until then a row whose role is translated cannot be taken out in the tool |
 | The store knows who an editor is | **Not done** | Step 11.7, the owner's decision |

@@ -102,3 +102,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Dastan Studio now does the work as well: the editors record a review, change a record, take one out, add one
   and publish a revision on its pages. What was done is said; what cannot be done is said with the reasons, and
   nothing is changed.
+- Dastan Studio shows the fields of a record as a form: texts, numbers, choices of the allowed values, the reading
+  stage, the sources and records a field points to as boxes to tick, and rows for a list of parts – a row is added
+  by filling in the last one. The record as text stays below it, for a field the record does not have yet.

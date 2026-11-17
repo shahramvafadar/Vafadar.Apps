@@ -381,4 +381,28 @@
   <data name="Done_published" xml:space="preserve">
     <value>The revision was published and is kept in the store.</value>
   </data>
+  <data name="Fields_Title" xml:space="preserve">
+    <value>Change the fields of the record</value>
+  </data>
+  <data name="Fields_Lead" xml:space="preserve">
+    <value>Every field the record has, with what it can hold. A text left empty takes its field out of the record. To give the record a field it does not have yet, change the record as text below.</value>
+  </data>
+  <data name="Fields_LinesHint" xml:space="preserve">
+    <value>One in a line.</value>
+  </data>
+  <data name="Fields_RowsHint" xml:space="preserve">
+    <value>A row whose texts are all empty is taken out; the last row is for a new one.</value>
+  </data>
+  <data name="Fields_Row" xml:space="preserve">
+    <value>Row {0}</value>
+  </data>
+  <data name="Fields_NewRow" xml:space="preserve">
+    <value>A new row</value>
+  </data>
+  <data name="Fields_JsonHint" xml:space="preserve">
+    <value>As it is written in the file of a collection.</value>
+  </data>
+  <data name="Change_TextTitle" xml:space="preserve">
+    <value>Change the record as text</value>
+  </data>
 </root>

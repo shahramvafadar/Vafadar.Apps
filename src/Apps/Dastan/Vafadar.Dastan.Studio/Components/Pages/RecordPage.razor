@@ -83,8 +83,23 @@
             </section>
         }
 
+        <section aria-labelledby="fields">
+            <h2 id="fields">@T["Fields_Title"]</h2>
+            <p class="note">@T["Fields_Lead"]</p>
+            <ActOutcome Problems="_fieldsProblems" />
+            <form method="post" @formname="fields" @onsubmit="Fill" class="act" action="@Here">
+                <AntiforgeryToken />
+                @foreach (var field in RecordForm.Of(Group, _filled ?? record.Body, _form!))
+                {
+                    <FieldInput Field="field" />
+                }
+                <WhoAndWhy Form="fields" Model="Filling" By="@(Filling?.By ?? Editor.Name)" Reason="@(Filling?.Reason ?? string.Empty)" />
+                <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
+            </form>
+        </section>
+
         <section aria-labelledby="change">
-            <h2 id="change">@T["Change_Title"]</h2>
+            <h2 id="change">@T["Change_TextTitle"]</h2>
             <p class="note">@T["Change_Lead"]</p>
             <ActOutcome Problems="_changeProblems" />
             <form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
@@ -134,6 +149,9 @@
     private List<StatementState> _statements = [];
     private List<string>? _reviewProblems;
     private List<string>? _changeProblems;
+    private List<string>? _fieldsProblems;
+    private FormContext? _form;
+    private JsonObject? _filled;
     private List<string>? _removeProblems;
 
     [CascadingParameter]
@@ -159,6 +177,10 @@
     [SupplyParameterFromForm(FormName = "review")]
     public ReviewInput? Reviewing { get; set; }
 
+    /// <summary>Gets or sets who filled in the fields of the record, and why.</summary>
+    [SupplyParameterFromForm(FormName = "fields")]
+    public FieldsInput? Filling { get; set; }
+
     /// <summary>Gets or sets what the form of a change was filled with.</summary>
     [SupplyParameterFromForm(FormName = "change")]
     public ChangeInput? Changing { get; set; }
@@ -181,6 +203,7 @@
         }
 
         _record = Store.Record(Collection, Group, Record);
+        _form = _record is null ? null : FormContext.Of(Store, Collection);
 
         // The statements of the record: itself when it is a relation or an event, its dated statements when it is an entity.
         _statements = [.. Store.Statements(Collection).Where(statement => statement.Group == Group && statement.Record == Record)];
@@ -220,6 +243,34 @@
         }
 
         _reviewProblems = problems;
+    }
+
+    private void Fill()
+    {
+        if (_record is null)
+        {
+            return;
+        }
+
+        var input = Filling ?? new FieldsInput();
+        var problems = new List<string>();
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        var record = RecordForm.Read(Group, _record.Body, Context.Request.Form, _form!, problems);
+        if (problems.Count == 0)
+        {
+            var result = Store.Put(Collection, Group, record, by!, reason!);
+            if (Finished(result, by!, result.Changed == 0 ? "unchanged" : "changed"))
+            {
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        // The form again, with what was filled in.
+        _filled = RecordForm.Shown(_record.Body, record);
+        _fieldsProblems = problems;
     }
 
     private void Change()
