@@ -468,3 +468,28 @@ a corrected year with a day and "about"; once → lasting with an unknown end; b
 common era; four inputs that are no time and a period that ends before it begins, refused with the form
 kept; a relation of the world given a time and losing it; no inputs on a relation of the story. Not looked at
 in a browser.
+
+## Twelfth addendum of 2026-11-17 – two editors at one record (step 13.2)
+
+With accounts and a server (D-046) two editors can have the same record open. The second one to send a form
+overwrote the first without either knowing.
+
+* Every form of the tool that changes what it shows carries a hidden mark (`Seen`): a hash of exactly what
+  the form was made from – for a record its body, its texts in the other languages and the texts of its dated
+  statements; for the stages their names in every language; for a comparison its file and its translations.
+* When a form comes back, the mark is made again from what the store holds now. If it differs, **nothing is
+  kept**: the page says that somebody changed this in between, shows the form with the editor's inputs on top
+  of what the store holds now, and the history on the page says what was changed. The form that comes back
+  carries the new mark – sent again, it is kept, knowingly.
+* The mark covers what the form shows, not the whole collection: a change of another record does not make a
+  form stale.
+* The check is made by the page and the change is kept by the store a moment later; two forms sent within
+  that moment can still follow each other unnoticed. A store-wide lock would close that gap and was not built:
+  the history keeps both changes with who and when, nothing is lost without a trace.
+* Publishing a revision and bringing a new record in show nothing that somebody else could have changed and
+  carry no mark.
+
+Verification: `StudioStaleFormTests` (7 tests) – the form of fields, the form of the text and the form for
+taking out, each opened before somebody else changed the record: refused, nothing kept; the form that comes
+back has the inputs and is kept when sent again; a change of the Persian text makes it stale; a change of
+another record does not; the stages and a comparison are guarded in the same way. Not looked at in a browser.

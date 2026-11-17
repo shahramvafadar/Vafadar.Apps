@@ -34,7 +34,9 @@ public sealed partial class Desk(Studio studio) : IDisposable
         var markup = Forms().Matches(page.Html).Select(match => match.Value).Single(candidate => candidate.Contains($"name=\"_handler\" value=\"{form}\"", StringComparison.Ordinal));
         var token = WebUtility.HtmlDecode(Token().Match(markup).Groups[1].Value);
         var action = WebUtility.HtmlDecode(Action().Match(markup).Groups[1].Value);
-        return await Post($"/en/{action}", [("_handler", form), ("__RequestVerificationToken", token), .. fields]);
+        // What a browser sends unseen with every form: the mark of what the form was made from (step 13.2).
+        var seen = Regex.Match(markup, "name=\"seen\" value=\"([^\"]*)\"") is { Success: true } mark ? [("seen", mark.Groups[1].Value)] : Array.Empty<(string, string)>();
+        return await Post($"/en/{action}", [("_handler", form), ("__RequestVerificationToken", token), .. seen, .. fields]);
     }
 
     /// <summary>Sends a form as it is given, and follows the way back when the act was done.</summary>

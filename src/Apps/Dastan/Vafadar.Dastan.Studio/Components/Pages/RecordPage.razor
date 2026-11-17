@@ -45,6 +45,7 @@
                 <ActOutcome Problems="_reviewProblems" />
                 <form method="post" @formname="review" @onsubmit="Review" class="act" action="@Here">
                     <AntiforgeryToken />
+                <input type="hidden" name="@Seen.Input" value="@_seen" />
                     @if (_statements.Count == 1)
                     {
                         <input type="hidden" name="Reviewing.Statement" value="@_statements[0].Statement" />
@@ -89,6 +90,7 @@
             <ActOutcome Problems="_fieldsProblems" />
             <form method="post" @formname="fields" @onsubmit="Fill" class="act" action="@Here">
                 <AntiforgeryToken />
+                <input type="hidden" name="@Seen.Input" value="@_seen" />
                 @foreach (var field in RecordForm.Of(Group, _filled ?? record.Body, _form!, _filledTexts ?? _texts, _filledDated ?? _dated))
                 {
                     <FieldInput Field="field" />
@@ -104,6 +106,7 @@
             <ActOutcome Problems="_changeProblems" />
             <form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
                 <AntiforgeryToken />
+                <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <p class="field">
                     <label for="change-json">@T["Change_Json"]</label>
                     <textarea id="change-json" class="code" name="Changing.Json" rows="@Rows(Changing?.Json ?? Written(record.Body))" spellcheck="false" dir="ltr" required>@(Changing?.Json ?? Written(record.Body))</textarea>
@@ -119,6 +122,7 @@
             <ActOutcome Problems="_removeProblems" />
             <form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
                 <AntiforgeryToken />
+                <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <WhoAndWhy Form="remove" Model="Removing" By="@(Removing?.By ?? Editor.Name)" Reason="@(Removing?.Reason ?? string.Empty)" />
                 <p><button type="submit" class="action danger">@T["Remove_Submit"]</button></p>
             </form>
@@ -156,6 +160,7 @@
     private IReadOnlyList<(string Language, JsonObject Texts)>? _filledTexts;
     private IReadOnlyList<(string Language, JsonObject Texts)> _dated = [];
     private IReadOnlyList<(string Language, JsonObject Texts)>? _filledDated;
+    private string _seen = string.Empty;
     private List<string>? _removeProblems;
 
     [CascadingParameter]
@@ -210,6 +215,7 @@
         _form = _record is null ? null : FormContext.Of(Store, Collection);
         _texts = _record is null ? [] : Store.Texts(Collection, Group, Record);
         _dated = _record is null || Group != "entities" ? [] : Store.DatedTexts(Collection, Record);
+        _seen = Seen.Of([_record?.Body.ToJsonString(), .. _texts.Select(text => text.Texts.ToJsonString()), .. _dated.Select(text => text.Texts.ToJsonString())]);
 
         // The statements of the record: itself when it is a relation or an event, its dated statements when it is an entity.
         _statements = [.. Store.Statements(Collection).Where(statement => statement.Group == Group && statement.Record == Record)];
@@ -219,6 +225,7 @@
     {
         var input = Reviewing ?? new ReviewInput();
         var problems = new List<string>();
+        Fresh(problems);
         var by = Name(input.By, problems);
         var day = ActInput.Day(input.On);
         if (day is null)
@@ -260,6 +267,7 @@
 
         var input = Filling ?? new FieldsInput();
         var problems = new List<string>();
+        Fresh(problems);
         var by = Name(input.By, problems);
         var reason = Reason(input.Reason, problems);
         var record = RecordForm.Read(Group, _record.Body, Context.Request.Form, _form!, problems);
@@ -288,6 +296,7 @@
     {
         var input = Changing ?? new ChangeInput();
         var problems = new List<string>();
+        Fresh(problems);
         var by = Name(input.By, problems);
         var reason = Reason(input.Reason, problems);
         JsonObject? record = null;
@@ -326,6 +335,7 @@
     {
         var input = Removing ?? new RemoveInput();
         var problems = new List<string>();
+        Fresh(problems);
         var by = Name(input.By, problems);
         var reason = Reason(input.Reason, problems);
         if (problems.Count == 0)
@@ -340,6 +350,15 @@
         }
 
         _removeProblems = problems;
+    }
+
+    // A form that was opened before somebody else changed what it shows is not kept over that change.
+    private void Fresh(List<string> problems)
+    {
+        if (!Seen.Holds(Context, _seen))
+        {
+            problems.Add(T["Act_Stale"]);
+        }
     }
 
     private string? Name(string? given, List<string> problems)
