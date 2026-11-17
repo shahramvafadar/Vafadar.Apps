@@ -55,3 +55,7 @@ The old-Main hypothesis for these independent helper results is resolved, the do
 Production XML explicitly directs new-device financial recovery to a Zanance portable backup rather than automatic device-key/storage migration. An actual financial-data migration into Main on the personal S24 would be a separate operation with version/schema/backup preservation requirements. It was not substituted for this exclusion review, and upgrading the older Main was unnecessary for interpreting the independent probes.
 
 Evidence root: local `artifacts/d1234-transfer-control-diagnosis`. See [the unchanged OEM result](samsung-oem-transfer-result-d1233.md), [original preparation](prepared-samsung-oem-transfer-d1233.md) and [prior framework eligibility](android-live-backup-eligibility.md). Canonical parent states, retained crash cohorts, one-shot interpretations and financial checkpoints remain unchanged.
+
+## Subsequent remaining interpretation and S24 delivery
+
+[D1235](empty-policy-and-current-s24-d1235.md) correlates the original empty-extraction rejection with bounded public transport bytecode without repeating a backup or restore, and adopts the current complete APK once on S24 without reset. The earlier Main-version facts above describe D1233/D1234; the S24 is current after D1235. This does not relabel the original OEM result or invent a successful candidate restore.
