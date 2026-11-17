@@ -303,3 +303,43 @@ something half done.
 
 When the goal is reached, the drawings that are left without a stage are none; what is left for a public pilot is
 section 8, which needs the owner.
+
+## 11. Towards a public pilot (phase 10)
+
+Asked for by the owner on 2026-11-17: what is left, and a plan for it. Phase 9 is done; the rule of what everybody
+may see exists ([ADR 0009](adr/0009-published-revision.md)). What is left before a first collection can be shown
+to the public falls into two lists: work on the software, which can be done in the order below without waiting,
+and decisions and work that are the owner's. A step is done when it is built, tested, looked at in a browser in
+both languages where it is visible, documented and merged.
+
+### The software, in this order
+
+| Step | What | Why now | Status |
+|---|---|---|---|
+| 10.1 | **The record of a review and the history of revisions.** Who reviewed a statement and when, as part of the file; a command of the writers that makes a published revision out of a sample (`revision`: checks the rule, stamps number and day, refuses what is not ready); a public page "what changed" between two revisions (GOV-005) | ADR 0009 left it open, and without it "reviewed" is a word in a file | Not started |
+| 10.2 | **Disputed and withdrawn statements for the public** (GOV-004): a disputed statement is shown as disputed wherever it appears – list, chart, evidence page; a withdrawn one is named in the history of revisions with its reason | The rule lets disputed statements be published; the pages do not say so yet | Not started |
+| 10.3 | **An image that may not be shown, as a reference.** A museum item without established rights appears as a card with its catalogue record and a link to the museum instead of nothing (section 8, "Media may be shown") | Three of the five items of the collection are such references and are invisible today | Not started |
+| 10.4 | **The connections chart keeps the name in the middle in sight** when much is opened above it; and the side edges of a stage take less of a phone's width | The two limits recorded for the charts (ADR 0008) | Not started |
+| 10.5 | **Running outside a developer's machine**: a container image of the site, a page that says the site is alive, the headers checked from outside the process, a written procedure for an update and for taking a revision back; the privacy matrix read against it | Needed for any host, independent of which one the owner chooses | Not started |
+| 10.6 | **More than narrative things in a collection**: types for historical persons, organisations and real places, and relation types for them, each with its meaning – only as far as the first content asks for it | The guide names it as what the formats cannot say yet; it follows the content, not the other way round | Waits for the first content that needs it |
+| 10.7 | **A store and the tools of the editors**: relational storage in place of the files, with review, correction and publication as work in an interface (document 20, after R0) | The files are enough for one collection written by hand; they are not enough for editors | Later – a phase of its own |
+
+### The owner's
+
+| What | What it needs | What it unblocks |
+|---|---|---|
+| **Review of the first collection** – 20 relations, 8 steps of the story, the sources and locators | A reader who knows the text; the result is written into the file as `reviewed` or `disputed` | A published revision at all |
+| **The Persian text** (D-037) | A review of the draft translation, or the decision to publish in English first | Persian pages with Persian content for the public |
+| **Rights of the media** | A decision per item: original content is clear; the three museum items need their rights established or stay references | Images on public pages |
+| **Content with dates** – what is stated about the work with a date; sources for the comparison of Iran, China and Rome | Sources, then writing with the guide and the command (D-042) | A timeline that shows more than two diagrams; a comparison that can be published |
+| **Identity** – palette, wordmark, icons, the Persian spelling of the name (ADR 0004) | A decision | The final look; the icons of the installable app |
+| **Host, domain, certificate** | A choice and an account; nobody signs in on the owner's behalf | The site reachable from outside, and step 10.5 tried there |
+| **Devices and people** – a phone (Android, iOS), installing the app, a screen reader, a first-time visitor | The devices and an hour with each | The claims the acceptance page marks as not checked |
+| **The development machine** | Memory and room on drive C: for the browser tests (they stop Docker when both run out) | Reliable runs of the three browser engines |
+
+### What is not planned
+
+German texts (the owner asked for English and Persian), accounts and private spaces, public editing, reading
+without a connection (ADR 0007), charts of numbers and maps, a script for pinching and dragging (ADR 0008, point 6).
+Each needs a decision of its own before it becomes a step.
+
