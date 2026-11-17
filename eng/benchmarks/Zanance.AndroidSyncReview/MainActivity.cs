@@ -16,11 +16,11 @@ public sealed class MainActivity : MauiAppCompatActivity
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
     {
         base.OnActivityResult(requestCode, resultCode, data);
-        if (!Interaction.AndroidHouseholdRecoverySave.OnActivityResult(this, requestCode, resultCode, data) && !CameraCapture.OnActivityResult(requestCode, resultCode))
+        if (!Interaction.AndroidHouseholdRecoverySave.OnActivityResult(this, requestCode, resultCode, data) && !CameraCapture.OnActivityResult(this, requestCode, resultCode))
             Vafadar.Authentication.Maui.SignInActivityResults.OnActivityResult(requestCode, resultCode, data);
     }
     /// <inheritdoc />
-    protected override void OnDestroy() { Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this); base.OnDestroy(); }
+    protected override void OnDestroy() { CameraCapture.OnDestroyed(this); Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this); base.OnDestroy(); }
     /// <inheritdoc />
     protected override void OnCreate(Bundle? savedInstanceState)
     {

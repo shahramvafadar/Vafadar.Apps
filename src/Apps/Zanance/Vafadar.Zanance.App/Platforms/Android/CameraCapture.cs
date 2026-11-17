@@ -12,9 +12,15 @@ namespace Vafadar.Zanance.App;
 /// </summary>
 internal static class CameraCapture
 {
-    private const int RequestCode = 0x5A43;
-    private static TaskCompletionSource<bool>? _result;
+    // D1230: never recycle a code during this process: Android can deliver the old result to a recreated Activity.
+    // This camera-only range ends before the household document-picker range and excludes sign-in codes.
+    private const int FirstRequestCode = 0x4000, LastRequestCode = 0x5AFF;
+    private static int _requestCode = FirstRequestCode - 1;
+    private static Pending? _pending;
     private static readonly SemaphoreSlim CaptureOwner = new(1, 1);
+
+    /// <summary>Retains the exact native owner and result identity until original output cleanup finishes.</summary>
+    private sealed record Pending(Activity Owner, int Code, TaskCompletionSource<bool> Completion);
 
     /// <summary>Gets a value indicating whether the device has a camera.</summary>
     public static bool IsAvailable => Platform.AppContext.PackageManager?.HasSystemFeature(PackageManager.FeatureCameraAny) == true;
@@ -31,6 +37,9 @@ internal static class CameraCapture
         try
         {
             var activity = Platform.CurrentActivity ?? throw new InvalidOperationException("No activity to start the camera from.");
+            if (_requestCode >= LastRequestCode)
+                throw new InvalidOperationException("The camera request identity range is exhausted.");
+            var own = new Pending(activity, ++_requestCode, new(TaskCreationOptions.RunContinuationsAsynchronously));
             var folder = new Java.IO.File(activity.CacheDir, Presentation.AttachmentCache.CameraDirectoryName);
             folder.Mkdirs();
             var file = new Java.IO.File(folder, $"{Guid.NewGuid():N}.jpg");
@@ -41,10 +50,9 @@ internal static class CameraCapture
                 intent.PutExtra(MediaStore.ExtraOutput, uri);
                 intent.AddFlags(ActivityFlags.GrantWriteUriPermission | ActivityFlags.GrantReadUriPermission);
 
-                var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                _result = completion;
-                activity.StartActivityForResult(intent, RequestCode);
-                if (!await completion.Task || !file.Exists() || file.Length() == 0)
+                Volatile.Write(ref _pending, own);
+                activity.StartActivityForResult(intent, own.Code);
+                if (!await own.Completion.Task || !file.Exists() || file.Length() == 0)
                 {
                     return null;
                 }
@@ -58,7 +66,7 @@ internal static class CameraCapture
             }
             finally
             {
-                _result = null;
+                Interlocked.CompareExchange(ref _pending, null, own);
                 file.Delete();
             }
         }
@@ -69,15 +77,24 @@ internal static class CameraCapture
     }
 
     /// <summary>Completes a pending capture; returns whether the result belonged to it.</summary>
-    public static bool OnActivityResult(int requestCode, Result resultCode)
+    public static bool OnActivityResult(Activity activity, int requestCode, Result resultCode)
     {
-        if (requestCode != RequestCode)
+        if (requestCode < FirstRequestCode || requestCode > Volatile.Read(ref _requestCode))
         {
             return false;
         }
 
-        _result?.TrySetResult(resultCode == Result.Ok);
+        // Consume late camera results without sending them to OAuth or a replacement capture.
+        if (Volatile.Read(ref _pending) is { } own && own.Code == requestCode && ReferenceEquals(own.Owner, activity))
+            own.Completion.TrySetResult(resultCode == Result.Ok);
         return true;
+    }
+
+    /// <summary>Ends only the destroyed Activity's native wait, retaining the gate until its file cleanup completes.</summary>
+    public static void OnDestroyed(Activity activity)
+    {
+        if (Volatile.Read(ref _pending) is { } own && ReferenceEquals(own.Owner, activity))
+            own.Completion.TrySetCanceled();
     }
 }
 

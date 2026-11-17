@@ -142,11 +142,15 @@ public sealed class MainActivity : MauiAppCompatActivity
 #endif
 #if CAMERA_CAPTURE_REVIEW
     /// <inheritdoc />
+    protected override void OnDestroy()
+    { CameraCapture.OnDestroyed(this); base.OnDestroy(); }
+
+    /// <inheritdoc />
     protected override void OnActivityResult(int requestCode, Result resultCode, Android.Content.Intent? data)
     {
         base.OnActivityResult(requestCode, resultCode, data);
         // Forward the real external Activity result to the original production camera adapter.
-        if (CameraCapture.OnActivityResult(requestCode, resultCode))
+        if (CameraCapture.OnActivityResult(this, requestCode, resultCode))
             CameraCaptureReview.RecordNativeResult(requestCode, resultCode);
     }
 #endif

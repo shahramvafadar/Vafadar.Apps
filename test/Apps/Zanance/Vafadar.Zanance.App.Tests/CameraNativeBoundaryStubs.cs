@@ -2,6 +2,8 @@
 namespace Android.App
 {
     /// <summary>Values returned at the original Android activity boundary.</summary>
+    internal class Activity { }
+    /// <summary>Values returned at the original Android activity boundary.</summary>
     internal enum Result { Canceled = 0, Ok = -1 }
 }
 namespace Android.Content
@@ -100,7 +102,7 @@ namespace Vafadar.Zanance.App
         internal Android.Content.PM.PackageManager PackageManager { get; } = new();
     }
     /// <summary>Records native launches and holds their callbacks while real original file logic runs.</summary>
-    internal sealed class CameraBoundaryActivity(string root)
+    internal sealed class CameraBoundaryActivity(string root) : Android.App.Activity
     {
         /// <summary>Gets the unique real cache directory owned by this test.</summary>
         internal Java.IO.File CacheDir { get; } = new(root);
