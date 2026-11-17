@@ -438,4 +438,22 @@
   <data name="Accounts_Notice" xml:space="preserve">
     <value>ابزار ویراستاران. چیزهای منتشرنشده را نشان می‌دهد و ذخیره‌گاه را تغییر می‌دهد؛ هر تغییر با نام کسی که وارد شده نگه داشته می‌شود.</value>
   </data>
+  <data name="Group_collection" xml:space="preserve">
+    <value>مجموعه</value>
+  </data>
+  <data name="Stages_Title" xml:space="preserve">
+    <value>مرحله‌های خواندن</value>
+  </data>
+  <data name="Stages_Lead" xml:space="preserve">
+    <value>خواننده تا کجا خوانده است. نام هر مرحله چیزی از رویدادهای آن را لو نمی‌دهد. مرحلهٔ تازه در ردیف آخر افزوده می‌شود؛ مرحلهٔ آخر با خالی‌کردن نامش برداشته می‌شود، و این فقط وقتی شدنی است که هیچ رکوردی در آن مرحله گفته نشود.</value>
+  </data>
+  <data name="Stages_Level" xml:space="preserve">
+    <value>مرحلهٔ {0}</value>
+  </data>
+  <data name="Stages_Add" xml:space="preserve">
+    <value>مرحله‌ای دیگر</value>
+  </data>
+  <data name="Stages_NeedsNames" xml:space="preserve">
+    <value>هر مرحله نامی دارد؛ فقط مرحله‌های آخر می‌توانند خالی بمانند.</value>
+  </data>
 </root>

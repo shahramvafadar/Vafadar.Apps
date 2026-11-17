@@ -149,6 +149,12 @@ public static class RecordForm
     private const string Who = "entityId";
     private const string Role = "role";
 
+    // The statements with a date of an entity: the list, the key a row names itself by, and the texts of a row
+    // a translation translates – the place "dated" of a translation document, by the key.
+    private const string Dated = "dated";
+    private const string Key = "key";
+    private static readonly string[] DatedTexts = ["label", "summary"];
+
     /// <summary>Returns the fields of a record a form shows, in the order of the record.</summary>
     /// <param name="group">The group of the record.</param>
     /// <param name="record">The record.</param>
@@ -157,7 +163,11 @@ public static class RecordForm
     /// The texts of the record in the other languages (step 11.8). Each stands below the field it translates: a
     /// text of the record, or the role of a row of what takes part.
     /// </param>
-    public static IReadOnlyList<FormField> Of(string group, JsonObject record, FormContext context, IReadOnlyList<(string Language, JsonObject Texts)>? texts = null)
+    /// <param name="dated">
+    /// For an entity: the texts of its statements with a date in the other languages, by the key of the
+    /// statement (step 12.5). Each stands below the text of its row.
+    /// </param>
+    public static IReadOnlyList<FormField> Of(string group, JsonObject record, FormContext context, IReadOnlyList<(string Language, JsonObject Texts)>? texts = null, IReadOnlyList<(string Language, JsonObject Texts)>? dated = null)
     {
         ArgumentNullException.ThrowIfNull(record);
         ArgumentNullException.ThrowIfNull(context);
@@ -170,6 +180,27 @@ public static class RecordForm
         var shown = new List<FormField>();
         foreach (var field in fields)
         {
+            if (dated is { Count: > 0 } && group == "entities" && field is { Name: Dated, Kind: FieldKind.Rows })
+            {
+                // The texts of a statement with a date in another language go with its row.
+                shown.Add(new FormField
+                {
+                    Path = field.Path, Name = field.Name, Kind = field.Kind, Value = field.Value,
+                    Rows =
+                    [
+                        .. field.Rows.Select((row, index) => (IReadOnlyList<FormField>)
+                        [
+                            .. row.SelectMany(part => !DatedTexts.Contains(part.Name) || part.Kind is not (FieldKind.Text or FieldKind.LongText)
+                                ? [part]
+                                : dated.Select(text => Translation(
+                                    $"t.{text.Language}.{Dated}[{index}].{part.Name}", part.Name, text.Language,
+                                    TextOf((text.Texts[row.FirstOrDefault(named => named.Name == Key)?.Text ?? string.Empty] as JsonObject)?[part.Name]), part.Kind)).Prepend(part)),
+                        ]),
+                    ],
+                });
+                continue;
+            }
+
             if (translated.Roles && field is { Name: Taking, Kind: FieldKind.Rows })
             {
                 // The role of a row in another language goes with its row – also into the row that is added.
@@ -273,6 +304,65 @@ public static class RecordForm
 
     private static string TextOf(JsonNode? node) => node is JsonValue value && value.TryGetValue<string>(out var text) ? text : string.Empty;
 
+    /// <summary>
+    /// Returns the texts of the statements with a date of an entity in the other languages as a form was filled
+    /// in: by the language, the texts by the key of the statement. A text left empty is one the language does
+    /// not have; the texts of a row that was taken out go with it.
+    /// </summary>
+    /// <param name="record">The entity as the form was made from it.</param>
+    /// <param name="form">What was sent.</param>
+    /// <param name="dated">The texts the form was made from.</param>
+    public static Dictionary<string, JsonObject> ReadDated(JsonObject record, IFormCollection form, IReadOnlyList<(string Language, JsonObject Texts)> dated)
+    {
+        ArgumentNullException.ThrowIfNull(record);
+        ArgumentNullException.ThrowIfNull(form);
+        ArgumentNullException.ThrowIfNull(dated);
+        var read = new Dictionary<string, JsonObject>(StringComparer.Ordinal);
+        if (record[Dated] is not JsonArray rows)
+        {
+            return read;
+        }
+
+        foreach (var (language, before) in dated)
+        {
+            var now = new JsonObject();
+            for (var index = 0; index <= rows.Count; index++)
+            {
+                var key = Sent(form[$"f.{Dated}[{index}].{Key}"]);
+                if (key.Length == 0)
+                {
+                    continue;
+                }
+
+                var texts = new JsonObject();
+                foreach (var name in DatedTexts)
+                {
+                    if (form.TryGetValue($"t.{language}.{Dated}[{index}].{name}", out var sent))
+                    {
+                        if (Sent(sent) is { Length: > 0 } text)
+                        {
+                            texts[name] = text;
+                        }
+                    }
+                    else if ((before[key] as JsonObject)?[name] is { } kept)
+                    {
+                        // The form had no input for the text: it stays as it is.
+                        texts[name] = kept.DeepClone();
+                    }
+                }
+
+                if (texts.Count > 0)
+                {
+                    now[key] = texts;
+                }
+            }
+
+            read[language] = now;
+        }
+
+        return read;
+    }
+
     // The role a language gives the row of what takes part, by whom the row names.
     private static string RoleOf(JsonObject texts, IReadOnlyList<FormField> row) =>
         row.FirstOrDefault(part => part.Name == Who) is { } who && who.Text.Length > 0 ? TextOf((texts["roles"] as JsonObject)?[who.Text]) : string.Empty;
@@ -366,8 +456,10 @@ public static class RecordForm
             case JsonArray { Count: > 0 } items when items.All(IsText):
                 return Of(FieldKind.Lines);
 
-            case JsonArray { Count: > 0 } items when !nested && items.All(item => item is JsonObject row && row.All(part => part.Value is JsonValue)):
-                // The rows of the list, and one more that is empty: filled in, it is a part that is added.
+            case JsonArray { Count: > 0 } items when !nested && items.All(item => item is JsonObject { Count: > 0 }):
+                // The rows of the list, and one more that is empty: filled in, it is a part that is added. A part
+                // of a row that has parts of its own – the time of a statement with a date – is written as it
+                // stands in the file.
                 var shape = items[0]!.AsObject();
                 var rows = items.Select((item, index) => Row($"{here}[]", $"{input}[{index}]", item!.AsObject(), context)).ToList();
                 rows.Add(Row($"{here}[]", $"{input}[{items.Count}]", Empty(shape), context));

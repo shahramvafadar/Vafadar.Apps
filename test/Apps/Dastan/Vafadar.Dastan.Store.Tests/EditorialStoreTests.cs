@@ -217,7 +217,7 @@ public sealed class EditorialStoreTests : IDisposable
         var exported = store.Export(Collection)!;
 
         Assert.Empty(result.Problems);
-        Assert.Equal((0, 1, 0), (result.Added, result.Changed, result.Removed));
+        Assert.Equal((0, 2, 0), (result.Added, result.Changed, result.Removed));
         Assert.Equal([RecordChangeKind.Added, RecordChangeKind.Changed], store.History(Collection, EditorialStore.TranslationGroup, "fa").Select(change => change.Kind));
         Assert.Equal("پدرِ او", (string?)JsonNode.Parse(exported.Translations["fa"])!["relations"]!["relation-02"]!["label"]);
         Assert.Equal("A note of the editors.", (string?)JsonNode.Parse(exported.Json)!["publication"]!["note"]);

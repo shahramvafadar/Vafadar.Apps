@@ -31,6 +31,7 @@
         <h2 id="work">@T["Collection_Work"]</h2>
         <ul class="plain" role="list">
             <li><a href="@($"{summary.Id}/waiting")">@string.Format(CultureInfo.CurrentCulture, T["Collection_Waiting"], Editor.Number(summary.Waiting), Editor.Number(summary.Statements))</a></li>
+            <li><a href="@($"{summary.Id}/stages")">@T["Stages_Title"]</a></li>
             <li><a href="@($"{summary.Id}/history")">@T["History_Title"]</a></li>
             <li><a href="@($"{summary.Id}/revisions")">@string.Format(CultureInfo.CurrentCulture, T["Collection_Revisions"], Editor.Number(summary.Revisions))</a></li>
         </ul>

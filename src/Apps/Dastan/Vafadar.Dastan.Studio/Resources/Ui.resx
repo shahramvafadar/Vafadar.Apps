@@ -438,4 +438,22 @@
   <data name="Accounts_Notice" xml:space="preserve">
     <value>The tool of the editors. It shows what is not published and changes the store; every change is kept under the name of who signed in.</value>
   </data>
+  <data name="Group_collection" xml:space="preserve">
+    <value>The collection</value>
+  </data>
+  <data name="Stages_Title" xml:space="preserve">
+    <value>Reading stages</value>
+  </data>
+  <data name="Stages_Lead" xml:space="preserve">
+    <value>How far a reader has read. A stage is named without giving away what happens in it. A stage is added in the last row; the last stage is taken out by emptying its name, which works only when no record is told at it.</value>
+  </data>
+  <data name="Stages_Level" xml:space="preserve">
+    <value>Stage {0}</value>
+  </data>
+  <data name="Stages_Add" xml:space="preserve">
+    <value>A further stage</value>
+  </data>
+  <data name="Stages_NeedsNames" xml:space="preserve">
+    <value>Every stage has a name; only the last ones can be left empty.</value>
+  </data>
 </root>
