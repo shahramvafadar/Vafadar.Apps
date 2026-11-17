@@ -141,6 +141,14 @@ public sealed class Relation
     /// <summary>Gets where in the sources the statement is found.</summary>
     public string? PassageLocator { get; init; }
 
+    /// <summary>
+    /// Gets when the relation held, as it is stated: a period for what lasted – a membership, a reign, a season –
+    /// or a time for what happened once. Only a statement about the world outside a story has one; what a story
+    /// tells has an order and no dates. Somebody who came back is two relations, each with its time: nothing
+    /// joins two tenures into one.
+    /// </summary>
+    public TemporalExpression? Time { get; init; }
+
     /// <summary>Gets how far the editors have come with the statement.</summary>
     public required ReviewStatus Review { get; init; }
 

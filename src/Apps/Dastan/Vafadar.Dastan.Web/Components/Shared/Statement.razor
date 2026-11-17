@@ -8,6 +8,10 @@
     @End(Relation.From)
     <span class="relation"><Loc Text="Relation.Relation.Label" /></span>
     @End(Relation.To)
+    @if (Relation.Relation.Time is { } time)
+    {
+        <span class="when">(@TimeText.Of(time, Visitor, T))</span>
+    }
     <DisputedMark Review="Relation.Relation.Review" />
 </span>
 @if (Evidence)

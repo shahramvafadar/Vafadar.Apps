@@ -287,7 +287,8 @@ public sealed record SearchHit(Entity Entity, string Name, string Language);
 /// <summary>What a collection has with a time of the calendar, as far as the visitor may see it.</summary>
 /// <param name="Subjects">The entities something dated is stated about, in the order of the collection.</param>
 /// <param name="Made">The media that may be shown; each has the time it was made.</param>
-public sealed record TimelineView(ImmutableArray<Entity> Subjects, ImmutableArray<MediaItem> Made)
+/// <param name="Held">The relations that say when they held, each with its two entities.</param>
+public sealed record TimelineView(ImmutableArray<Entity> Subjects, ImmutableArray<MediaItem> Made, ImmutableArray<Edge> Held)
 {
     /// <summary>Gets a value indicating whether there is nothing with a time to show.</summary>
     public bool IsEmpty => Subjects.IsEmpty && Made.IsEmpty;

@@ -95,12 +95,18 @@
 
     // The lanes of the chart: one for every entity something dated is stated about, and one for the images and
     // videos. Nothing is added to what the projection gives, and nothing is dated that states no date.
+    // A relation in the lane of its first entity: what it says and of whom – "Played for" and the club.
+    private LocalizedText Said(Edge edge) =>
+        LocalizedText.Of(Visitor.Language.Tag, $"{Visitor.Text(edge.Relation.Label).Value} {Visitor.Text(edge.To.Label).Value}");
+
     private Comparison? Build(Projection projection)
     {
         var view = projection.Timeline();
         var lanes = ImmutableArray.CreateBuilder<ComparisonLane>();
         foreach (var subject in view.Subjects)
         {
+            // What is said between this entity and another with a time: every relation its own bar or mark.
+            var held = view.Held.Where(edge => edge.From.Id == subject.Id).ToList();
             lanes.Add(new ComparisonLane
             {
                 Key = subject.Id.Value,
@@ -116,6 +122,14 @@
                         Sources = dated.Sources,
                         Review = dated.Review,
                     }),
+                    .. held.Where(edge => edge.Relation.Time is Period).Select(edge => new ComparisonPeriod
+                    {
+                        Key = edge.Relation.Id.Value,
+                        Label = Said(edge),
+                        Time = (Period)edge.Relation.Time!,
+                        Sources = edge.Relation.Sources,
+                        Review = edge.Relation.Review,
+                    }),
                 ],
                 Events =
                 [
@@ -127,6 +141,14 @@
                         Time = dated.Time,
                         Sources = dated.Sources,
                         Review = dated.Review,
+                    }),
+                    .. held.Where(edge => edge.Relation.Time is not Period).Select(edge => new ComparisonEvent
+                    {
+                        Key = edge.Relation.Id.Value,
+                        Label = Said(edge),
+                        Time = edge.Relation.Time!,
+                        Sources = edge.Relation.Sources,
+                        Review = edge.Relation.Review,
                     }),
                 ],
             });

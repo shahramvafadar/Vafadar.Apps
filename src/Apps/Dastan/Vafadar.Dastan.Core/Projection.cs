@@ -385,7 +385,13 @@ public sealed class Projection
     /// Returns what the collection has with a time of the calendar: the entities something dated is stated about,
     /// and the media, each of which was made at some time. The story itself is not in it – it has an order, no dates.
     /// </summary>
-    public TimelineView Timeline() => new([.. Entities.Where(entity => !entity.Dated.IsEmpty)], Media);
+    public TimelineView Timeline()
+    {
+        // A relation with a time stands in the lane of the entity it reads from: "played for" in the lane of the player.
+        ImmutableArray<Edge> held = [.. Relations.Where(relation => relation.Time is not null).Select(ToEdge)];
+        var holders = held.Select(edge => edge.From.Id).ToHashSet();
+        return new([.. Entities.Where(entity => !entity.Dated.IsEmpty || holders.Contains(entity.Id))], Media, held);
+    }
 
     /// <summary>
     /// Returns the published revisions of the collection, the newest first, each with the changes the visitor may

@@ -594,6 +594,32 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     /// Reads a statement about an entity with a time of the calendar. The time is written as in a comparison and
     /// is never the place of a step in the story: what the story tells has an order, not a date.
     /// </summary>
+    private static TemporalExpression? ReadTime(JsonRecord record, string refusal)
+    {
+        if (record.Raw("time") is not { } stated)
+        {
+            return null;
+        }
+
+        TemporalExpression? time = null;
+        try
+        {
+            time = stated.Deserialize<TemporalExpression>(ComparisonSample.TimeOptions);
+        }
+        catch (Exception refused) when (refused is JsonException or ArgumentException or NotSupportedException)
+        {
+            record.Problem($"time cannot be read: {refused.Message}");
+        }
+
+        if (time is Occurrence { At: not CalendarPosition })
+        {
+            record.Problem(refusal);
+            time = null;
+        }
+
+        return time;
+    }
+
     private DatedStatement? ReadDated(JsonRecord record)
     {
         var key = record.Identifier("key");
@@ -609,25 +635,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var reviewKnown = record.Choice("reviewStatus", DatedReviewNames, out var review);
         var reviewed = ReadReview(record);
         CheckWithdrawn(record, review, reviewed);
-        TemporalExpression? time = null;
-        if (record.Raw("time") is { } stated)
-        {
-            try
-            {
-                time = stated.Deserialize<TemporalExpression>(ComparisonSample.TimeOptions);
-            }
-            catch (Exception refused) when (refused is JsonException or ArgumentException or NotSupportedException)
-            {
-                record.Problem($"time cannot be read: {refused.Message}");
-            }
-
-            if (time is Occurrence { At: not CalendarPosition })
-            {
-                record.Problem("time is not a time of the calendar: a statement with a date is not a step of the story.");
-                time = null;
-            }
-        }
-
+        var time = ReadTime(record, "time is not a time of the calendar: a statement with a date is not a step of the story.");
         record.Finish();
         if (key is null || label is null || level is null || !reviewKnown || time is null)
         {
@@ -668,7 +676,23 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
 
         var scope = ReadScope(record.Child("scope"));
+
+        // When a relation held: only for what is said of the world outside the story, and as a time of the calendar.
+        var timed = record.IsStated("time");
+        var time = timed ? ReadTime(record, "time is not a time of the calendar: a relation is not dated by a place in the story.") : null;
+        if (timed && scope is not null && scope.Kind != RelationScopeKind.OutsideTheStory)
+        {
+            record.Problem("time dates a relation of the story; only a relation with the scope outside_the_story says when it held.");
+            time = null;
+            timed = true;
+        }
+
         record.Finish();
+        if (timed && time is null)
+        {
+            return null;
+        }
+
         if (id is null || from is null || to is null || !typeKnown || label is null || level is null || !reviewKnown || !directionKnown || scope is null)
         {
             return null;
@@ -684,6 +708,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Scope = scope,
             Sources = [.. sources.Select(source => new SourceId(source))],
             PassageLocator = locator,
+            Time = time,
             Review = review,
             Reviewed = reviewed,
             Level = level.Value,
