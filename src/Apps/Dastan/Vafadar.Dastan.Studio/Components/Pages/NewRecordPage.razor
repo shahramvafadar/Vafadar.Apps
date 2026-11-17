@@ -1,0 +1,124 @@
+@page "/{Collection}/records/{Group}/new"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* A new record as a form (step 13.5): its identifier and the fields a record of its kind has. What the readers
+   of the site refuse is refused here, with the form kept. *@
+@if (_start is not null)
+{
+    var title = string.Format(CultureInfo.CurrentCulture, T["New_Title"], T[$"Group_{Group}"]);
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta">
+            <a href="@Collection"><bdi dir="ltr">@Collection</bdi></a> –
+            <a href="@($"{Collection}/records/{Group}")">@T[$"Group_{Group}"]</a>
+        </p>
+        <h1>@title</h1>
+        <p class="lead">@T["New_Lead"]</p>
+    </header>
+
+    <ActOutcome Problems="_problems" />
+    <Allowed Role="EditorRoles.Writer">
+        <form method="post" @formname="new" @onsubmit="Add" class="act" action="@Here">
+            <AntiforgeryToken />
+            <p class="field">
+                <label for="new-id"><code>id</code></label>
+                <input id="new-id" name="id" value="@_id" required maxlength="200" dir="ltr" aria-describedby="new-id-hint" />
+                <span class="hint" id="new-id-hint">@T["New_IdHint"]</span>
+            </p>
+            @foreach (var field in RecordForm.Of(Group, _filled ?? _start, _form!))
+            {
+                <FieldInput Field="field" />
+            }
+            <WhoAndWhy Form="new" Model="Adding" By="@(Adding?.By ?? Editor.Name)" Reason="@(Adding?.Reason ?? string.Empty)" />
+            <p><button type="submit" class="action">@T["Add_Submit"]</button></p>
+        </form>
+    </Allowed>
+}
+
+@code {
+    private JsonObject? _start;
+    private JsonObject? _filled;
+    private FormContext? _form;
+    private string _id = string.Empty;
+    private List<string>? _problems;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the group of the new record in the address.</summary>
+    [Parameter]
+    public string Group { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets who adds the record, and why.</summary>
+    [SupplyParameterFromForm(FormName = "new")]
+    public FieldsInput? Adding { get; set; }
+
+    private string Here => $"{Collection}/records/{Group}/new";
+
+    protected override void OnInitialized()
+    {
+        _start = Store.Collections.Contains(Collection) ? NewRecord.Of(Group, Store, Collection, Editor.Today) : null;
+        if (_start is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _form = FormContext.Of(Store, Collection);
+    }
+
+    private void Add()
+    {
+        var input = Adding ?? new FieldsInput();
+        var problems = new List<string>();
+        var by = Editor.By(input.By);
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        var reason = ActInput.Text(input.Reason);
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        _id = Context.Request.Form["id"].ToString().Trim();
+        if (_id.Length == 0 || _id.Any(char.IsWhiteSpace))
+        {
+            problems.Add(T["Add_NeedsId"]);
+        }
+        else if (EditorialStore.Groups.Any(group => Store.Record(Collection, group, _id) is not null))
+        {
+            // Adding never replaces: a record that is there is changed on its own page, where its history is.
+            problems.Add(string.Format(CultureInfo.CurrentCulture, T["Add_Exists"], _id));
+        }
+
+        var record = RecordForm.Read(Group, _start!, Context.Request.Form, _form!, problems);
+        record["id"] = _id;
+        if (problems.Count == 0)
+        {
+            var result = Store.Put(Collection, Group, record, by!, reason!);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Collection}/record/{Group}/{_id}?done=added");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        // The form again, with what was filled in.
+        _filled = RecordForm.Shown(_start!, record);
+        _problems = problems;
+    }
+}

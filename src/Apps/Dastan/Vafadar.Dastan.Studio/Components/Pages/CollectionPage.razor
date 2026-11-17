@@ -35,6 +35,10 @@
             <li><a href="@($"{summary.Id}/history")">@T["History_Title"]</a></li>
             <li><a href="@($"{summary.Id}/revisions")">@string.Format(CultureInfo.CurrentCulture, T["Collection_Revisions"], Editor.Number(summary.Revisions))</a></li>
         </ul>
+        @if (Done == "language")
+        {
+            <p class="done" role="status">@T["Language_Added"]</p>
+        }
         <p class="note">
             @(summary.Languages.IsEmpty
                 ? T["Collection_NoTranslation"]
@@ -42,10 +46,73 @@
             – @string.Format(CultureInfo.CurrentCulture, T["Collection_Changed"], Editor.Moment(summary.UpdatedAt))
         </p>
     </section>
+
+    <section aria-labelledby="language">
+        <h2 id="language">@T["Language_Add"]</h2>
+        <p class="note">@T["Language_AddLead"]</p>
+        <ActOutcome Problems="_problems" />
+        <Allowed Role="EditorRoles.Writer">
+            <form method="post" @formname="language" @onsubmit="AddLanguage" class="act" action="@Collection">
+                <AntiforgeryToken />
+                <p class="field">
+                    <label for="language-tag">@T["Language_Tag"]</label>
+                    <input id="language-tag" name="language" value="@(_sent ? Context.Request.Form["language"].ToString() : string.Empty)" required maxlength="40" dir="ltr" />
+                </p>
+                <WhoAndWhy Form="language" Model="Adding" By="@(Adding?.By ?? Editor.Name)" Reason="@(Adding?.Reason ?? string.Empty)" />
+                <p><button type="submit" class="action">@T["Language_Add"]</button></p>
+            </form>
+        </Allowed>
+    </section>
 }
 
 @code {
     private CollectionSummary? _summary;
+    private List<string>? _problems;
+    private bool _sent;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets who adds a language, and why.</summary>
+    [SupplyParameterFromForm(FormName = "language")]
+    public FieldsInput? Adding { get; set; }
+
+    private void AddLanguage()
+    {
+        _sent = true;
+        var input = Adding ?? new FieldsInput();
+        var problems = new List<string>();
+        var by = Editor.By(input.By);
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        var reason = ActInput.Text(input.Reason);
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        if (problems.Count == 0)
+        {
+            var result = Store.AddLanguage(Collection, Context.Request.Form["language"].ToString(), by!, reason!);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Collection}?done=language");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _problems = problems;
+    }
 
     /// <summary>Gets or sets the identifier of the collection in the address.</summary>
     [Parameter]
