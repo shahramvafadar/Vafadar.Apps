@@ -12,6 +12,15 @@
         <a href="./">@T["Nav_Collections"]</a>
     </nav>
     <div class="site-tools">
+        @if (Editor.Account is { } account)
+        {
+            <form method="post" action="/sign-out" class="account" aria-label="@T["Account_Label"]">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@($"/{Editor.Language.Tag}/")" />
+                <span class="account-name"><bdi>@account</bdi></span>
+                <button type="submit">@T["Account_SignOut"]</button>
+            </form>
+        }
         <ul class="languages" role="list" aria-label="@T["Language_Label"]">
             @foreach (var tag in Languages.Value.Languages)
             {
@@ -43,7 +52,7 @@
 </main>
 
 <footer class="site-footer">
-    <p class="note">@T["Local_Notice"]</p>
+    <p class="note">@T[Editor.Accounts ? "Accounts_Notice" : "Local_Notice"]</p>
 </footer>
 
 @code {

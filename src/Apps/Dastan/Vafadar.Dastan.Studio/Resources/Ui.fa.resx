@@ -405,4 +405,37 @@
   <data name="Change_TextTitle" xml:space="preserve">
     <value>تغییر رکورد به‌صورت متن</value>
   </data>
+  <data name="SignIn_Title" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="SignIn_Lead" xml:space="preserve">
+    <value>ابزار ویراستاران چیزهایی را نشان می‌دهد که منتشر نشده‌اند. با حساب خود وارد شوید.</value>
+  </data>
+  <data name="SignIn_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="SignIn_Password" xml:space="preserve">
+    <value>گذرواژه</value>
+  </data>
+  <data name="SignIn_Submit" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="SignIn_Refused" xml:space="preserve">
+    <value>وارد نشدید. نام یا گذرواژه درست نیست، یا این حساب اکنون گذرواژه نمی‌پذیرد.</value>
+  </data>
+  <data name="SignIn_Already" xml:space="preserve">
+    <value>شما با نام {0} وارد شده‌اید.</value>
+  </data>
+  <data name="Account_Label" xml:space="preserve">
+    <value>حساب شما</value>
+  </data>
+  <data name="Account_SignOut" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="Act_BySignedIn" xml:space="preserve">
+    <value>با نام شما نگه داشته می‌شود: {0}.</value>
+  </data>
+  <data name="Accounts_Notice" xml:space="preserve">
+    <value>ابزار ویراستاران. چیزهای منتشرنشده را نشان می‌دهد و ذخیره‌گاه را تغییر می‌دهد؛ هر تغییر با نام کسی که وارد شده نگه داشته می‌شود.</value>
+  </data>
 </root>

@@ -90,6 +90,44 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.ToTable("Collections");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredEditor", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ClosedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Failures")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("LockedUntil")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Stamp")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Editors");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredRecord", b =>
                 {
                     b.Property<string>("CollectionId")

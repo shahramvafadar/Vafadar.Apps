@@ -63,6 +63,18 @@ $env:Studio__Store = "<the file of the store>"
 dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Studio      # then open http://localhost:5211
 ```
 
+For several editors the tool has accounts ([ADR 0011](docs/adr/0011-editors-store.md), seventh addendum): an
+account is made where the store lies – the password is asked for, never written into the command – and the tool
+is started with `Studio:Accounts`. It then answers other machines over https only, and only who signed in:
+
+```powershell
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Content -- store editor add "<name>" --store "<the file of the store>"
+$env:Studio__Accounts = "true"
+$env:Studio__Keys = "<a folder for the keys of the sign-in>"       # without it everybody signs in again after a restart
+$env:AllowedHosts = "<the name the tool is reached by>"
+# behind a proxy that holds the certificate: $env:Studio__TrustedProxies__0 = "<its address or network>"
+```
+
 Running it outside a developer's machine – the container image, what it is told, how it is checked, updated and
 taken back – is in [operations](docs/operations.md).
 

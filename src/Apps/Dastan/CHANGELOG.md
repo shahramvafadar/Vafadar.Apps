@@ -107,3 +107,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   by filling in the last one. The record as text stays below it, for a field the record does not have yet.
 - In Dastan Studio the Persian text of a field stands below the field and is changed with it. A row that is taken
   out takes its Persian role with it; a row that is added can be given one.
+- Dastan Studio can run for several editors: each has an account and signs in, every change is kept under the name
+  of the account, and nothing is shown to somebody who has not signed in. Accounts are made by a command where the
+  store lies.

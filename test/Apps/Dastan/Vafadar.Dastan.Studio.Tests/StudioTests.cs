@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Dastan.Store;
 using Vafadar.Dastan.Store.Tests;
 
@@ -20,8 +21,20 @@ public sealed class Studio : WebApplicationFactory<Program>
 
     public const string Collection = WorkingCopy.Collection;
 
+    /// <summary>The password of the editors of a tool with accounts.</summary>
+    public const string Password = "a long pass phrase";
+
+    private readonly bool _accounts;
+
     public Studio()
+        : this(accounts: false)
     {
+    }
+
+    /// <summary>Starts the tool; with accounts, the store knows the editors Mina and Omid.</summary>
+    internal Studio(bool accounts)
+    {
+        _accounts = accounts;
         var day = new DateOnly(2026, 11, 17);
         using var store = _copy.Filled(files: true);
         foreach (var statement in store.Statements(Collection))
@@ -43,13 +56,31 @@ public sealed class Studio : WebApplicationFactory<Program>
         Assert.True(store.Put(Collection, "relations", relation, "a writer", "The passage says more.").Done);
 
         Assert.True(store.Remove(Collection, "relation-18", "an editor", "Not told in the selected part.").Done);
+        if (accounts)
+        {
+            Assert.True(store.AddEditor("Mina", Password).Done);
+            Assert.True(store.AddEditor("Omid", Password).Done);
+        }
     }
+
+    /// <summary>Opens the store of the tool, beside the tool.</summary>
+    internal EditorialStore Store() => _copy.Open(files: true);
+
+    /// <summary>Gets the clock of the tool.</summary>
+    internal TestClock Clock => _copy.Clock;
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Production");
         builder.UseSetting("Studio:Store", _copy.Database);
         builder.UseSetting("Studio:Files", _copy.Samples);
+        if (_accounts)
+        {
+            builder.UseSetting("Studio:Accounts", "true");
+        }
+
+        // The tool runs by the clock of the test, as its store does.
+        builder.ConfigureTestServices(services => services.AddSingleton<TimeProvider>(_copy.Clock));
     }
 
     /// <summary>Asks the tool for a page.</summary>

@@ -18,6 +18,19 @@ public sealed class StudioOptions
     /// store looks for the files a media item names. Empty, the store does not look for files.
     /// </summary>
     public string Files { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets whether the tool has accounts (step 11.7). Without them it answers the machine it runs on
+    /// only and takes the name an editor types; with them it answers other machines, shows nothing to somebody
+    /// who has not signed in, and keeps every act under the name of the account.
+    /// </summary>
+    public bool Accounts { get; set; }
+
+    /// <summary>Gets or sets the folder of the keys of the sign-in, so that a sign-in outlives the process.</summary>
+    public string Keys { get; set; } = string.Empty;
+
+    /// <summary>Gets the proxies in front of the tool that are believed about how an editor came.</summary>
+    public IList<string> TrustedProxies { get; } = [];
 }
 
 /// <summary>
@@ -54,19 +67,34 @@ public sealed class StudioStore
 public sealed class Editor
 {
     /// <summary>Reads the language and the appearance of the request.</summary>
-    public Editor(IHttpContextAccessor accessor, TimeProvider time)
+    public Editor(IHttpContextAccessor accessor, TimeProvider time, IOptions<StudioOptions> options)
     {
         ArgumentNullException.ThrowIfNull(time);
+        ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(accessor);
         var context = accessor.HttpContext ?? throw new InvalidOperationException("An editor exists during a request only.");
         Language = context.GetSiteLanguage();
         Theme = ThemePreference.Read(context);
-        Name = EditorName.Read(context);
+        Accounts = options.Value.Accounts;
+        Account = Accounts ? StudioAccess.Session(context.User)?.Name : null;
+        Name = Account ?? EditorName.Read(context);
         Today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
     }
 
-    /// <summary>Gets the name the editor gave with their last act, to start a form with.</summary>
+    /// <summary>Gets whether the tool has accounts.</summary>
+    public bool Accounts { get; }
+
+    /// <summary>Gets the name of the account the editor signed in with; nothing in a tool without accounts.</summary>
+    public string? Account { get; }
+
+    /// <summary>Gets the name a form starts with: the account, or the name the editor gave with their last act.</summary>
     public string? Name { get; }
+
+    /// <summary>
+    /// Returns the name an act is kept with: the account of the editor – whatever a form says – or, in a tool
+    /// without accounts, the name the form was given.
+    /// </summary>
+    public string? By(string? given) => Account ?? ActInput.Text(given);
 
     /// <summary>Gets the day on the machine of the tool, to start a form with.</summary>
     public DateOnly Today { get; }

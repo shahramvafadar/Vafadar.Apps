@@ -1,0 +1,85 @@
+@page "/sign-in"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@if (Editor.Accounts)
+{
+    <PageTitle>@T["SignIn_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <h1>@T["SignIn_Title"]</h1>
+        <p class="lead">@T["SignIn_Lead"]</p>
+    </header>
+
+    @if (Editor.Account is { } account)
+    {
+        <p class="done" role="status">@string.Format(CultureInfo.CurrentCulture, T["SignIn_Already"], account)</p>
+    }
+    else
+    {
+        @if (_refused)
+        {
+            <div class="problems" role="alert">
+                <p><strong>@T["SignIn_Refused"]</strong></p>
+            </div>
+        }
+
+        <form method="post" @formname="signin" @onsubmit="SignIn" class="act" action="@($"sign-in?to={Uri.EscapeDataString(To ?? string.Empty)}")">
+            <AntiforgeryToken />
+            <p class="field">
+                <label for="signin-name">@T["SignIn_Name"]</label>
+                <input id="signin-name" name="Signing.Name" value="@Signing?.Name" required maxlength="200" autocomplete="username" dir="auto" />
+            </p>
+            <p class="field">
+                <label for="signin-password">@T["SignIn_Password"]</label>
+                <input id="signin-password" type="password" name="Signing.Password" required maxlength="1000" autocomplete="current-password" dir="ltr" />
+            </p>
+            <p><button type="submit" class="action">@T["SignIn_Submit"]</button></p>
+        </form>
+    }
+}
+
+@code {
+    private bool _refused;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets where the editor wanted to go.</summary>
+    [SupplyParameterFromQuery]
+    public string? To { get; set; }
+
+    /// <summary>Gets or sets what the form was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "signin")]
+    public SignInInput? Signing { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // A tool without accounts has no page that signs in.
+        if (!Editor.Accounts)
+        {
+            Navigation.NotFound();
+        }
+    }
+
+    private async Task SignIn()
+    {
+        if (!Editor.Accounts)
+        {
+            return;
+        }
+
+        // Why a sign-in was refused is not said: a wrong name, a wrong password and a closed account answer alike.
+        if (Store.SignIn(Signing?.Name ?? string.Empty, Signing?.Password ?? string.Empty) is not { } session)
+        {
+            _refused = true;
+            return;
+        }
+
+        await StudioAccess.SignIn(Context, session);
+        var to = ReturnAddress.Safe(To);
+        Navigation.NavigateTo(to == "/" ? "./" : to);
+    }
+}

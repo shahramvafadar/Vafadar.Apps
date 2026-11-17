@@ -87,8 +87,12 @@ for Dastan is added here in the same commit as the work it came with.
   record of its own – a new field or value belongs to the readers and their vocabulary, and the form follows.
   What a translation may translate is listed by the readers (`ContentVocabulary.Translated`); the texts of a record
   in the other languages are kept with the record in one act (`Put` with texts), never in an act of their own
-  that could leave a record and its translation disagreeing. It answers the machine it runs on only; do not loosen that before editors can sign in (step 11.7), and do
-  not make the public site reference it or the store.
+  that could leave a record and its translation disagreeing. Without accounts it answers the machine it runs on only. With accounts (`Studio:Accounts`, step 11.7) it
+  answers other machines: then every address but the page that signs in needs a sign-in, a request from another
+  machine has to come encrypted, and an act is kept under the account – never under a name a form gives. A new
+  page or address is behind the sign-in unless it is added to the short list in `StudioAccess`; do not add what
+  shows anything of the store. A password is typed where a command asks for it and is never a word of a command,
+  a setting or a file. Do not make the public site reference the tool or the store.
 * The site runs outside a developer's machine as one container without content
   ([ADR 0010](docs/adr/0010-running-the-site.md), [operations](docs/operations.md)). A change of a header, a
   cookie, a setting or of what the site serves is checked with `eng/Check-Site.ps1` against the container of

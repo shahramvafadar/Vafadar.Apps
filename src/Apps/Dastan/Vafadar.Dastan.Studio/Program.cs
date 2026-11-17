@@ -13,7 +13,11 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAntiforgery();
 
 builder.Services.AddSiteLanguages("en", "fa");
-builder.Services.Configure<SiteLanguageOptions>(options => options.UnlocalizedPaths.Add("/preferences"));
+builder.Services.Configure<SiteLanguageOptions>(options =>
+{
+    options.UnlocalizedPaths.Add("/preferences");
+    options.UnlocalizedPaths.Add(StudioAccess.SignOutPath);
+});
 
 builder.Services.Configure<StudioOptions>(builder.Configuration.GetSection("Studio"));
 builder.Services.AddSingleton(TimeProvider.System);
@@ -24,14 +28,31 @@ builder.Services.AddSingleton<StudioStore>();
 builder.Services.AddScoped<EditorialStore>(services => services.GetRequiredService<StudioStore>().Open());
 builder.Services.AddScoped<Editor>();
 
+// With accounts the tool answers other machines and knows who an editor is (step 11.7); without them it stays
+// on the machine it runs on.
+var accounts = builder.Configuration.GetValue<bool>("Studio:Accounts");
+if (accounts)
+{
+    builder.AddStudioAccounts();
+}
+
 var app = builder.Build();
 
 // The store is opened now, and brought to the form this program knows: a tool that cannot open its store stops
 // with the reason instead of failing for the first page.
 app.Services.GetRequiredService<StudioStore>();
 
-// The tool shows what is not published and does not know who asks: it answers this machine and nobody else.
-app.UseOnlyThisMachine();
+if (accounts)
+{
+    // The tool knows who asks: it answers who signed in, and only over an encrypted connection.
+    app.UseEncryptedOnly();
+}
+else
+{
+    // The tool shows what is not published and does not know who asks: it answers this machine and nobody else.
+    app.UseOnlyThisMachine();
+}
+
 app.UseSecurityHeaders();
 app.Use((context, next) =>
 {
@@ -61,10 +82,20 @@ app.UseWhen(
     pages => pages.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true));
 
 app.UseRouting();
+if (accounts)
+{
+    app.UseSignedInOnly();
+}
+
 app.UseAntiforgery();
 
 app.MapStaticAssets();
 app.MapThemePreference();
+if (accounts)
+{
+    app.MapSignOut();
+}
+
 app.MapRazorComponents<App>();
 
 app.Run();

@@ -1,5 +1,6 @@
 @* The two things every act is kept with: who, and why. The name is what the editor says it is. *@
 @inject IStringLocalizer<Ui> T
+@inject Editor Editor
 
 @if (Reason is not null)
 {
@@ -8,11 +9,19 @@
         <input id="@($"{Form}-reason")" name="@($"{Model}.Reason")" value="@ReasonValue" required maxlength="500" dir="auto" />
     </p>
 }
-<p class="field">
-    <label for="@($"{Form}-by")">@T["Act_By"]</label>
-    <input id="@($"{Form}-by")" name="@($"{Model}.By")" value="@By" required maxlength="200" autocomplete="name" dir="auto" aria-describedby="@($"{Form}-by-hint")" />
-    <span class="hint" id="@($"{Form}-by-hint")">@T["Act_ByHint"]</span>
-</p>
+@if (Editor.Account is { } account)
+{
+    @* Who signed in is not asked for a name: the act is kept under the account. *@
+    <p class="hint signed">@string.Format(CultureInfo.CurrentCulture, T["Act_BySignedIn"], account)</p>
+}
+else
+{
+    <p class="field">
+        <label for="@($"{Form}-by")">@T["Act_By"]</label>
+        <input id="@($"{Form}-by")" name="@($"{Model}.By")" value="@By" required maxlength="200" autocomplete="name" dir="auto" aria-describedby="@($"{Form}-by-hint")" />
+        <span class="hint" id="@($"{Form}-by-hint")">@T["Act_ByHint"]</span>
+    </p>
+}
 
 @code {
     /// <summary>Gets or sets the name of the form, for the identifiers of its fields.</summary>

@@ -286,3 +286,69 @@ emptied while the record stays; a row taken out with its Persian role; a row add
 keeps the Persian texts; and the form sent as it stands still changes nothing. Measured in a browser on the
 published tool at 375 px, right to left: no overflow, every input labelled, every target at least 44 px, and a
 row taken out with its Persian role from the browser.
+
+## Addendum of 2026-11-17 – who an editor is (step 11.7, D-046)
+
+The owner decided that the tool runs on a server and that editors sign in. Until now the tool took the name an
+editor typed and was guarded by where it ran. Now it can know who an editor is.
+
+**An editor is an account of the store.** A name – compared without case – and a password, of which the store
+keeps only a derived value (PBKDF2 with SHA-256, 600,000 rounds, a salt of its own for every account; the rounds
+are written into the value, so that they can be raised later). A password has at least 12 characters. Considered
+and not chosen: signing in with a provider (Microsoft, Google) – it needs an app registered with the provider
+and an account of every editor there, which nobody asked for; it can replace the accounts later, because the
+acts take a name and do not care where it comes from. The identity framework of the platform – a second database
+model and pages for what the tool does not offer (registering, mail, recovery); the store needs a name, a derived
+password and a stamp.
+
+| The store | Does |
+|---|---|
+| `AddEditor`, `SetPassword`, `CloseEditor` | Make an account, give it another password, close it or open it again |
+| `SignIn` | The name and the password of an open account give a sign-in; nothing else does, and why not is not said |
+| `Holds` | Whether a sign-in still holds: the account is open and has the password it was signed in with |
+| `Editors` | The accounts, without anything of their passwords |
+
+* **Wrong passwords are counted.** After five in a row the account takes no password for fifteen minutes – not
+  the right one either. An unknown name takes as long to refuse as a known one.
+* **Another password and a closed account end every sign-in at once**: the account has a stamp that a sign-in
+  carries, and both change it. What a closed account did stays in the history under its name.
+* **An account is made where the store lies**, by the commands `store editor add|password|close|open` and
+  `store editors`. The tool has no page that makes an account or changes a password: who can run a command on
+  the machine of the store is who administers it. The password is asked for and typed twice without being shown;
+  it is never a word of the command, and where nobody can be asked – input from a file or a pipe – no account is
+  made.
+* An account is not content: it has no history in the store and is in no file the store writes out.
+
+**The tool with accounts** (`Studio:Accounts`). Without the setting the tool is what it was: on its machine
+only, with the name an editor types. With it:
+
+* It answers other machines – and a request from another machine **only over an encrypted connection**. The
+  certificate is held by a proxy in front of the tool; the tool believes what a proxy says about how an editor
+  came only from the proxies it was told (`Studio:TrustedProxies`), as the site does (ADR 0010).
+* **Nothing of the store is shown to who has not signed in.** Every address leads to the page that signs in,
+  except that page, what a page is drawn with, the choice of the appearance and the pages that say something
+  went wrong; a form sent without a sign-in is refused. After signing in the editor arrives where they wanted to
+  go – inside the tool only.
+* **The sign-in is a cookie** of the tool (HttpOnly, SameSite, `Secure` over https, twelve hours, renewed
+  while it is used), for the whole tool in every language. Every request asks the store whether it still holds.
+  Its keys outlive the process where a folder for them is named (`Studio:Keys`).
+* **Every act is kept under the account.** No form asks for a name, and a name a form gives all the same is not
+  heard. Signing out is a form with the token of the tool.
+
+Not done: the tool on a server – its container, the store and the keys on a volume, copies of the store
+(step 11.9); roles – every editor may do every act, also publish; a page for an editor to change their own
+password; a record of who signed in when. Two editors who change the same record at the same moment: the later
+act is tried on the collection as the earlier one left it and replaces the record – the history shows both, and
+nothing warns the later editor.
+
+Verification: `EditorAccountsTests` (17 tests): signing in without case; a wrong name or password; the password
+not in the file of the store; a salt for every account; what an account needs; the count of wrong passwords and
+its end; another password; a closed account; the commands, with a password typed twice and never a word; no
+account where nobody can be asked; a store from before the accounts. `StudioAccountsTests` (22 tests): every
+kind of page sent to the sign-in without saying anything of the store; a form without a sign-in refused; the
+page that signs in drawn; arriving where one wanted to go, in both languages; a refusal that does not say what
+was wrong; no way out of the tool by the address to arrive at; the lock after wrong passwords; an act under the
+account whatever a form says; two editors in one store; signing out with the token only; another password and a
+closed account ending a sign-in; another machine answered over an encrypted connection only, and a stranger's
+word about it not heard; the tool without accounts as before. In a browser on the published tool at 375 px,
+right to left: sent to the sign-in, signed in, arrived at the record, no input for a name, signed out.

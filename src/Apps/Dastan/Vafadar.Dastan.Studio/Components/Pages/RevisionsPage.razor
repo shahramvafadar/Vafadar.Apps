@@ -108,7 +108,7 @@
     {
         var input = Publishing ?? new PublishInput();
         var problems = new List<string>();
-        var by = ActInput.Text(input.By);
+        var by = Editor.By(input.By);
         var day = ActInput.Day(input.On);
         if (by is null)
         {
