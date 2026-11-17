@@ -364,6 +364,16 @@ public sealed class Projection
     /// </summary>
     public TimelineView Timeline() => new([.. Entities.Where(entity => !entity.Dated.IsEmpty)], Media);
 
+    /// <summary>
+    /// Returns the published revisions of the collection, the newest first, each with the changes the visitor may
+    /// know of: a change of a record of a later reading stage is not named, and not counted either. Empty for a
+    /// collection that is no published revision.
+    /// </summary>
+    public ImmutableArray<RevisionEntry> Revisions() =>
+    [
+        .. _info.History.Reverse().Select(entry => entry with { Changes = [.. entry.Changes.Where(change => change.Level.IsWithin(Boundary))] }),
+    ];
+
     /// <summary>Returns every media item that may be shown.</summary>
     public GalleryView Gallery() => new(GalleryRule.WholeCollection, null, null, GalleryOrder.Editorial, Media);
 

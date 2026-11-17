@@ -44,11 +44,26 @@ public sealed class PublishedSite : DemoSite
         publication["state"] = "published_revision";
         publication["publicReleaseApproved"] = true;
         publication["revision"] = new JsonObject { ["number"] = 3, ["publishedAt"] = "2026-11-17" };
+
+        // What the three revisions changed: something of the opening, and something of a later part.
+        publication["history"] = JsonNode.Parse(
+            """
+            [
+              { "number": 1, "publishedAt": "2026-11-03", "changes": [] },
+              { "number": 2, "publishedAt": "2026-11-10", "note": "A correction of the later part.", "changes": [
+                { "kind": "changed", "record": "character-sohrab", "recordKind": "entity", "label": "Sohrab", "spoilerLevel": 2 } ] },
+              { "number": 3, "publishedAt": "2026-11-17", "note": "The summary of Rostam was corrected.", "changes": [
+                { "kind": "changed", "record": "character-rostam", "recordKind": "entity", "label": "Rostam", "spoilerLevel": 0 },
+                { "kind": "added", "record": "character-sohrab-new-detail", "recordKind": "relation", "label": "Father of", "spoilerLevel": 2 },
+                { "kind": "removed", "record": "character-earlier", "recordKind": "entity", "label": "An earlier name", "spoilerLevel": 0 } ] }
+            ]
+            """);
         foreach (var group in new[] { "relations", "events" })
         {
             foreach (var record in sample[group]!.AsArray())
             {
                 record!["reviewStatus"] = "reviewed";
+                record["review"] = new JsonObject { ["by"] = "an editor", ["on"] = "2026-11-16" };
             }
         }
 

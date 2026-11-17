@@ -109,6 +109,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private readonly List<StoryEvent> _events = [];
     private readonly List<MediaItem> _media = [];
     private CatalogueInfo? _info;
+    private ImmutableArray<RevisionEntry> _history = [];
     private string _language = "en";
     private string? _worldId;
     private EntityId? _story;
@@ -194,6 +195,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 ReadingStages = stages,
                 DefaultLevel = defaultLevel.Value,
                 Publication = publication,
+                History = _history,
             };
         }
     }
@@ -210,6 +212,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         [
             new("spoilerPolicy.kind", "How the reading stages are meant.", Of(["minimum_reader_progress_level"])),
             new("publication.state", "What kind of file this is: the working file of the editors, or a revision that is published.", Of(PublicationStates)),
+            new("publication.history[].changes[].kind", "What a published revision did to a record.", Of(ChangeKindNames.Keys)),
+            new("publication.history[].changes[].recordKind", "What kind of record a change is about.", Of(RecordKinds)),
             new("editionContext.summaryLanguage", "The language the texts of the file are written in.", Of(LanguageNames.Keys)),
             new("sources[].kind", "What kind of source it is.", Of(SourceKindNames.Keys)),
             new("entities[].type", "What kind of thing an entity is.", Of(EntityTypeNames.Keys)),
@@ -365,7 +369,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         return stages.ToImmutable();
     }
 
-    private static PublicationState? ReadPublication(JsonRecord? record)
+    private PublicationState? ReadPublication(JsonRecord? record)
     {
         if (record is null)
         {
@@ -399,9 +403,12 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             {
                 revisionComplete = false;
             }
+
+            _history = ReadHistory(record);
         }
         else
         {
+            record.Absent("history", "history belongs to a published revision; an editorial sample has none.");
             record.Absent("revision", "revision belongs to a published revision; an editorial sample is none.");
             if (approved == true)
             {
@@ -553,6 +560,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var sources = Ids(record, "sourceIds");
         var level = Level(record);
         var reviewKnown = record.Choice("reviewStatus", DatedReviewNames, out var review);
+        var reviewed = ReadReview(record);
         TemporalExpression? time = null;
         if (record.Raw("time") is { } stated)
         {
@@ -586,6 +594,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Time = time,
             Sources = [.. sources.Select(source => new SourceId(source))],
             Review = review,
+            Reviewed = reviewed,
             Level = level.Value,
         };
     }
@@ -601,6 +610,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var level = Level(record);
         var locator = record.Text("passageLocator", required: false);
         var reviewKnown = record.Choice("reviewStatus", ReviewNames, out var review);
+        var reviewed = ReadReview(record);
         var directionKnown = record.Choice("directionality", DirectionNames, out var direction);
         if (typeKnown && directionKnown && type!.Directionality != direction)
         {
@@ -626,8 +636,71 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Sources = [.. sources.Select(source => new SourceId(source))],
             PassageLocator = locator,
             Review = review,
+            Reviewed = reviewed,
             Level = level.Value,
         };
+    }
+
+    /// <summary>Reads who reviewed a statement and when, where the file says so.</summary>
+    private static ReviewRecord? ReadReview(JsonRecord record)
+    {
+        if (record.Child("review", required: false) is not { } review)
+        {
+            return null;
+        }
+
+        var by = review.Text("by");
+        var on = review.Day("on");
+        var note = review.Text("note", required: false);
+        review.Finish();
+        return by is null || on is null ? null : new ReviewRecord(by, on.Value, note);
+    }
+
+    private static readonly FrozenDictionary<string, RevisionChangeKind> ChangeKindNames = Names(
+        ("added", RevisionChangeKind.Added),
+        ("changed", RevisionChangeKind.Changed),
+        ("removed", RevisionChangeKind.Removed));
+
+    private static readonly string[] RecordKinds = ["source", "entity", "relation", "event", "media"];
+
+    /// <summary>Reads the history of a published revision: every revision up to this one with what it changed.</summary>
+    private ImmutableArray<RevisionEntry> ReadHistory(JsonRecord publication)
+    {
+        var history = ImmutableArray.CreateBuilder<RevisionEntry>();
+        foreach (var entry in publication.Children("history", required: false))
+        {
+            var number = entry.Integer("number");
+            var published = entry.Day("publishedAt");
+            var note = entry.Text("note", required: false);
+            var changes = ImmutableArray.CreateBuilder<RevisionChange>();
+            foreach (var change in entry.Children("changes"))
+            {
+                var kindKnown = change.Choice("kind", ChangeKindNames, out var kind);
+                var id = change.Identifier("record");
+                var recordKind = change.Text("recordKind");
+                if (recordKind is not null && !RecordKinds.Contains(recordKind, StringComparer.Ordinal))
+                {
+                    change.Problem($"recordKind has the unknown value \"{recordKind}\".");
+                    recordKind = null;
+                }
+
+                var label = change.Text("label");
+                var level = Level(change);
+                change.Finish();
+                if (kindKnown && id is not null && recordKind is not null && label is not null && level is not null)
+                {
+                    changes.Add(new RevisionChange(kind, id, recordKind, LocalizedText.Of(_language, label), level.Value));
+                }
+            }
+
+            entry.Finish();
+            if (number is not null && published is not null)
+            {
+                history.Add(new RevisionEntry(number.Value, published.Value, note, changes.ToImmutable()));
+            }
+        }
+
+        return history.ToImmutable();
     }
 
     private static RelationScope? ReadScope(JsonRecord? record)
@@ -679,6 +752,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var sources = Ids(record, "sourceIds");
         var level = Level(record);
         var reviewKnown = record.Choice("reviewStatus", ReviewNames, out var review);
+        var reviewed = ReadReview(record);
         var timeIsPlaceInStory = ReadStoryTime(record.Child("temporalExpression"));
 
         var associations = ImmutableArray.CreateBuilder<EventAssociation>();
@@ -725,6 +799,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             CondensesSeveralScenes = condenses,
             Sources = [.. sources.Select(source => new SourceId(source))],
             Review = review,
+            Reviewed = reviewed,
             Level = level.Value,
         };
     }

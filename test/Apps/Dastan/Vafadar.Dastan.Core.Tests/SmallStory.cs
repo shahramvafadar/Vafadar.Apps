@@ -44,6 +44,8 @@ internal sealed class SmallStory
 
     public PublicationState Publication { get; set; } = new(LocalDemoAllowed: true, PublicReleaseApproved: false);
 
+    public ImmutableArray<RevisionEntry> History { get; set; } = [];
+
     public Catalogue Build() => new(
         new CatalogueInfo
         {
@@ -63,6 +65,7 @@ internal sealed class SmallStory
             ReadingStages = [.. Enumerable.Range(0, Stages).Select(level => new ReadingStage(new ReadingLevel(level), Text($"Stage {level}")))],
             DefaultLevel = new ReadingLevel(DefaultLevel),
             Publication = Publication,
+            History = History,
         },
         Entities,
         Relations,
@@ -91,6 +94,7 @@ internal sealed class SmallStory
                 Sources = relation.Sources,
                 PassageLocator = relation.PassageLocator,
                 Review = ReviewStatus.Reviewed,
+                Reviewed = new ReviewRecord("an editor", new DateOnly(2026, 11, 16)),
                 Level = relation.Level,
             };
         }
@@ -108,6 +112,7 @@ internal sealed class SmallStory
                 CondensesSeveralScenes = storyEvent.CondensesSeveralScenes,
                 Sources = storyEvent.Sources,
                 Review = ReviewStatus.Reviewed,
+                Reviewed = new ReviewRecord("an editor", new DateOnly(2026, 11, 16)),
                 Level = storyEvent.Level,
             };
         }

@@ -87,6 +87,9 @@ public sealed class DatedStatement
     /// <summary>Gets how far the editors have come with the statement.</summary>
     public required ReviewStatus Review { get; init; }
 
+    /// <summary>Gets who reviewed the statement and when, once the editors have; a published revision needs it.</summary>
+    public ReviewRecord? Reviewed { get; init; }
+
     /// <summary>Gets the reading level from which the statement may be shown; never before its entity.</summary>
     public required ReadingLevel Level { get; init; }
 }
@@ -141,6 +144,9 @@ public sealed class Relation
     /// <summary>Gets how far the editors have come with the statement.</summary>
     public required ReviewStatus Review { get; init; }
 
+    /// <summary>Gets who reviewed the statement and when, once the editors have; a published revision needs it.</summary>
+    public ReviewRecord? Reviewed { get; init; }
+
     /// <summary>Gets the reading level from which the relation may be shown.</summary>
     public required ReadingLevel Level { get; init; }
 }
@@ -185,6 +191,9 @@ public sealed class StoryEvent
     /// <summary>Gets how far the editors have come with the event.</summary>
     public required ReviewStatus Review { get; init; }
 
+    /// <summary>Gets who reviewed the statement and when, once the editors have; a published revision needs it.</summary>
+    public ReviewRecord? Reviewed { get; init; }
+
     /// <summary>Gets the reading level from which the event may be shown.</summary>
     public required ReadingLevel Level { get; init; }
 }
@@ -227,3 +236,9 @@ public sealed class Source
     /// </summary>
     public required ReadingLevel Level { get; init; }
 }
+
+/// <summary>The record of a review: who of the editors looked at a statement, and on which day.</summary>
+/// <param name="By">Who reviewed, as the editors name themselves. It is kept with the content and not shown on a page.</param>
+/// <param name="On">The day of the review.</param>
+/// <param name="Note">What the reviewer noted, if anything.</param>
+public sealed record ReviewRecord(string By, DateOnly On, string? Note = null);

@@ -870,4 +870,49 @@
   <data name="Published_Notice" xml:space="preserve">
     <value>نسخهٔ منتشرشدهٔ {0}، به تاریخ {1}. هر اصلاح، نسخه‌ای تازه است.</value>
   </data>
+  <data name="Revisions_Title" xml:space="preserve">
+    <value>نسخه‌های {0}</value>
+  </data>
+  <data name="Revisions_Lead" xml:space="preserve">
+    <value>همهٔ نسخه‌های منتشرشدهٔ این مجموعه، از تازه‌ترین، با آنچه هر یک تغییر داده است. هیچ اصلاحی بی‌صدا انجام نمی‌شود؛ هر اصلاح، نسخه‌ای تازه است.</value>
+  </data>
+  <data name="Revisions_None" xml:space="preserve">
+    <value>این مجموعه هنوز به‌صورت نسخه منتشر نشده است.</value>
+  </data>
+  <data name="Revisions_Link" xml:space="preserve">
+    <value>نسخه‌ها و تغییرهایشان</value>
+  </data>
+  <data name="Revision_Heading" xml:space="preserve">
+    <value>نسخهٔ {0}، {1}</value>
+  </data>
+  <data name="Revision_First" xml:space="preserve">
+    <value>نخستین انتشار.</value>
+  </data>
+  <data name="Revision_NoChanges" xml:space="preserve">
+    <value>چیزی که در جایگاه خواندن شما دیده شود تغییر نکرده است.</value>
+  </data>
+  <data name="Change_Added" xml:space="preserve">
+    <value>افزوده شد</value>
+  </data>
+  <data name="Change_Changed" xml:space="preserve">
+    <value>تغییر کرد</value>
+  </data>
+  <data name="Change_Removed" xml:space="preserve">
+    <value>برداشته شد</value>
+  </data>
+  <data name="RecordKind_source" xml:space="preserve">
+    <value>منبع</value>
+  </data>
+  <data name="RecordKind_entity" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="RecordKind_relation" xml:space="preserve">
+    <value>رابطه</value>
+  </data>
+  <data name="RecordKind_event" xml:space="preserve">
+    <value>گام قصه</value>
+  </data>
+  <data name="RecordKind_media" xml:space="preserve">
+    <value>تصویر یا ویدئو</value>
+  </data>
 </root>

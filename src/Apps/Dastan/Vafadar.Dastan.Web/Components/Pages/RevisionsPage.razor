@@ -1,0 +1,103 @@
+@page "/{Collection}/revisions"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The published revisions of a collection and what each changed (ADR 0009, GOV-005): a correction is a new
+   revision, and this page is where it is said. A change of a record that the visitor may not see yet is not
+   named and not counted – the page of a reader at the opening tells nothing of a later part. *@
+@if (_story is { } story)
+{
+    var name = Visitor.Text(story.Label).Value;
+    var title = string.Format(CultureInfo.CurrentCulture, T["Revisions_Title"], name);
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], name)</a></p>
+        <h1>@title</h1>
+        <p class="lead">@T["Revisions_Lead"]</p>
+    </header>
+
+    @if (_revisions.IsEmpty)
+    {
+        <p class="note" role="status">@T["Revisions_None"]</p>
+    }
+
+    @foreach (var revision in _revisions)
+    {
+        <section class="revision" aria-labelledby="@($"revision-{revision.Number}")">
+            <h2 id="@($"revision-{revision.Number}")">@string.Format(CultureInfo.CurrentCulture, T["Revision_Heading"], Visitor.Number(revision.Number), TimeText.Of(revision.PublishedOn, Visitor, T))</h2>
+            @if (revision.Note is not null)
+            {
+                <p><bdi>@revision.Note</bdi></p>
+            }
+
+            @if (revision.Number == 1)
+            {
+                <p class="note">@T["Revision_First"]</p>
+            }
+            else if (revision.Changes.IsEmpty)
+            {
+                @* The same words whether nothing changed or nothing the visitor may see. *@
+                <p class="note">@T["Revision_NoChanges"]</p>
+            }
+            else
+            {
+                <ul class="statements" role="list">
+                    @foreach (var change in revision.Changes)
+                    {
+                        <li>
+                            <span class="statement">
+                                <strong>@T[$"Change_{change.Kind}"]</strong>
+                                <span class="meta">@T[$"RecordKind_{change.RecordKind}"]</span>@(": ")
+                                @if (Address(change) is { } address)
+                                {
+                                    <a href="@address"><Loc Text="change.Label" /></a>
+                                }
+                                else
+                                {
+                                    <Loc Text="change.Label" />
+                                }
+                            </span>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+    }
+}
+
+@code {
+    private Entity? _story;
+    private System.Collections.Immutable.ImmutableArray<RevisionEntry> _revisions = [];
+    private Projection _projection = null!;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        if (Collection != Site.Collection || Visitor.Projection is not { } projection)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _projection = projection;
+        _story = projection.Overview().Story;
+        _revisions = projection.Revisions();
+    }
+
+    // Where a record of a change can be looked at now: a name and an image have a page of their own. A record
+    // that was removed has none any more.
+    private string? Address(RevisionChange change) => change.Kind == RevisionChangeKind.Removed
+        ? null
+        : change.RecordKind switch
+        {
+            "entity" when _projection.Find(new EntityId(change.Record)) is not null => $"{Site.Collection}/entity/{change.Record}",
+            "media" when _projection.Media.Any(item => item.Id.Value == change.Record) => $"{Site.Collection}/media/{change.Record}",
+            _ => null,
+        };
+}
