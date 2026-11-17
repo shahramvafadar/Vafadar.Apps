@@ -1553,3 +1553,16 @@ main:has(> .stage) > :not(.stage) {
   font-size: var(--step--1);
   color: var(--text-muted);
 }
+
+/* A reference to an image held elsewhere: a card without a picture, marked as what it is by a broken border. */
+.media-reference {
+  border-style: dashed;
+}
+
+.media-reference h3 {
+  font-size: var(--step-1);
+}
+
+.media-reference .facts {
+  margin-block: var(--space-2);
+}

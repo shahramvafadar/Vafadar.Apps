@@ -145,6 +145,12 @@ public sealed class PublishedSiteTests(PublishedSite published, PublicSite unpub
         var file = await visitor.Get($"/media/{Story}/media-dastan-parentage-video/file");
 
         Assert.Contains($"{Story}/media/{PublishedSite.PublicDiagram}", gallery.Links);
+
+        // The museum works stand in the public gallery as references – their record and the way to the museum,
+        // no picture; the video that is for a demonstration only has no page elsewhere and is not named at all.
+        Assert.Contains("https://www.metmuseum.org/art/collection/search/452419", gallery.Links);
+        Assert.DoesNotContain("collectionapi.metmuseum.org", gallery.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("A connected family in the Shahnameh", gallery.Html, StringComparison.Ordinal);
         Assert.DoesNotContain($"{Story}/media/media-dastan-parentage-video", gallery.Links);
         Assert.Equal(HttpStatusCode.OK, allowed.Status);
         Assert.Equal(HttpStatusCode.NotFound, demonstrationOnly.Status);

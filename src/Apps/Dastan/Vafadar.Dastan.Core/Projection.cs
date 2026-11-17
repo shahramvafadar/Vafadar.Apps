@@ -58,6 +58,23 @@ public sealed class Projection
         Relations = [.. catalogue.Relations.Where(relation => relation.Level.IsWithin(boundary))];
         Media = [.. catalogue.Media.Where(item => item.Level.IsWithin(boundary) && MayBeShown(item, audience))];
 
+        // An item that may not be shown and has a public page at the institution that holds it is a reference:
+        // its catalogue record and the way to that page, by the same reading boundary. It is no media item of
+        // the visitor – it has no page, no file and no place in a chart – and nothing of the image is delivered.
+        References =
+        [
+            .. catalogue.Media
+                .Where(item => item.Level.IsWithin(boundary) && !MayBeShown(item, audience) && item.CataloguePage is not null)
+                .Select(item => new MediaReference(
+                    item.Id, item.Kind, item.Label, item.Caption, item.Representation, item.Created, item.Creator, item.Rights.Status,
+                    item.CataloguePage!, item.DepictedEntities, item.DepictedEvents)
+                {
+                    CatalogueTitle = item.CatalogueTitle,
+                    AccessionNumber = item.AccessionNumber,
+                    CreditLine = item.CreditLine,
+                }),
+        ];
+
         // The steps of the story: the visible events that have a place in the telling of this story, in that order.
         var story = _info.Story.Value;
         Steps =
@@ -111,6 +128,12 @@ public sealed class Projection
 
     /// <summary>Gets the media that may be shown, in the order of the collection.</summary>
     public ImmutableArray<MediaItem> Media { get; }
+
+    /// <summary>
+    /// Gets the items the visitor may know of and may not be shown: references to the page of the institution
+    /// that holds them. They are found by a gallery only – never by <see cref="Find(MediaId)"/>.
+    /// </summary>
+    public ImmutableArray<MediaReference> References { get; }
 
     /// <summary>
     /// Returns what a visitor of the audience may see at a reading boundary, or <see langword="null"/> when the
@@ -375,7 +398,7 @@ public sealed class Projection
     ];
 
     /// <summary>Returns every media item that may be shown.</summary>
-    public GalleryView Gallery() => new(GalleryRule.WholeCollection, null, null, GalleryOrder.Editorial, Media);
+    public GalleryView Gallery() => new(GalleryRule.WholeCollection, null, null, GalleryOrder.Editorial, Media) { References = References };
 
     /// <summary>Returns the media that depict an entity, or <see langword="null"/>.</summary>
     public GalleryView? Gallery(EntityId entity) => Find(entity) is not { } found
@@ -385,7 +408,10 @@ public sealed class Projection
             found,
             null,
             GalleryOrder.Editorial,
-            [.. Media.Where(item => item.DepictedEntities.Contains(entity))]);
+            [.. Media.Where(item => item.DepictedEntities.Contains(entity))])
+        {
+            References = [.. References.Where(item => item.DepictedEntities.Contains(entity))],
+        };
 
     /// <summary>Returns the media that depict an event, or <see langword="null"/>.</summary>
     public GalleryView? Gallery(EventId storyEvent) => Find(storyEvent) is not { } step
@@ -395,7 +421,10 @@ public sealed class Projection
             null,
             step,
             GalleryOrder.Editorial,
-            [.. Media.Where(item => item.DepictedEvents.Contains(storyEvent))]);
+            [.. Media.Where(item => item.DepictedEvents.Contains(storyEvent))])
+        {
+            References = [.. References.Where(item => item.DepictedEvents.Contains(storyEvent))],
+        };
 
     /// <summary>Returns a media item with what it shows, or <see langword="null"/>.</summary>
     public MediaView? MediaItem(MediaId id) => Find(id) is not { } item

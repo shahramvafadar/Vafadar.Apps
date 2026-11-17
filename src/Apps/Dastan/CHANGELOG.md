@@ -78,3 +78,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A statement the sources disagree about is marked as disputed wherever it appears – in lists, in the charts of
   connections, family, story and time, and in tables – and the page of its sources says what the disagreement is.
   A statement the editors take back is no longer shown anywhere; the page "what changed" names it with the reason.
+- A work whose image may not be shown is no longer missing from the galleries: it stands there as a reference,
+  with its title, who made it and when, its catalogue number and credit line, and a link to the museum that holds
+  it. The three museum works of the first collection appear this way, each from the part of the story it belongs to.

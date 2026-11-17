@@ -71,7 +71,8 @@ placeholder picture.
   the note says for a reviewer.
 * **Not shown at all: items that are only references to a museum's page.** They are not released for showing in the
   demonstration, so the projection does not return them and no gallery counts them. Showing them as cards without a
-  picture is a decision about content and rights for the public release, not for M0.
+  picture is a decision about content and rights for the public release, not for M0. *(Decided on 2026-11-17 – see
+  the addendum below.)*
 
 ## Verification
 
@@ -82,3 +83,34 @@ answered as a range; nothing but the named files of released items is delivered 
 name, not a path that climbs out; after moving back, page and files are gone for that visitor and stay for another;
 with files missing, the pages stay and say so. In a browser at 360 px, English and Persian: the image is shown at
 the width of the page, the video plays and its captions are shown.
+
+## Addendum of 2026-11-17 – a work that may not be shown, as a reference (step 10.3)
+
+An item that may not be shown to the audience and has a public page at the institution that holds it
+(`sourceUrl`) is no longer left out as if it did not exist. It is a **reference**:
+
+* **What a reference is.** `Projection.References` holds a `MediaReference` for each such item within the
+  reading boundary: the editors' title and caption, the kind of work, when and by whom it was made, the title,
+  number and credit line of the catalogue, the state of the rights, what it depicts, and the address of the page
+  of the holder. The record is a type of its own and leaves out everything of the image – the address of the
+  image file, the text alternative, the sources, the editors' notes – so a page can show all of a reference and
+  shows nothing it may not.
+* **Where it is shown.** In a gallery – of the collection, of a name, of a step – below the items that are shown,
+  under a heading that says the works are held elsewhere, as a card with a broken border, without a picture, with
+  a link that names the host it leads to. A gallery that holds only references is not empty, and the link to a
+  gallery is offered for a name or a step that only a reference shows.
+* **What it is not.** A reference has no page of its own, no file, no place in the chart of time, and is not found
+  by `Projection.Find`; the route of the files answers "not found" for it as before. Nothing is asked of the
+  holder's server: the page links to it and loads nothing from it (the content security policy would not allow it).
+* **For whom.** For every audience by the same rule: in a demonstration an item that is not released for showing,
+  for the public an item that is not allowed for the public. An item that is shown is never also a reference; an
+  item that may not be shown and has no page elsewhere – the project's own video in a public revision – is not
+  named at all.
+
+The reading boundary holds for a reference as for an item: the work of the ending is not named before the ending.
+The page of the holder can tell more than the visitor has read; the link says that it leaves the site.
+
+Verification: `MediaReferenceTests` (Data, on the sample: its three museum works by stage), `Disclosure` (what a
+reference leaves out stays a secret at every stage), `GalleryAndMediaTests` (the card and its record, no address
+of the image, no page and no file; the galleries of a name and a step; Persian), `PublishedSiteTests` (the public
+gallery).

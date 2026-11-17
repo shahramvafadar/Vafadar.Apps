@@ -94,7 +94,7 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
         await Assertions.Expect(page).ToHaveURLAsync(new Regex("#reading$"));
 
         await page.Locator("main a").GetByText("Images and videos", new LocatorGetByTextOptions { Exact = true }).ClickAsync();
-        await Assertions.Expect(page.Locator(".media-card")).ToHaveCountAsync(2);
+        await Assertions.Expect(page.Locator(".media-card:not(.media-reference)")).ToHaveCountAsync(2);
         await page.Locator("#media-dastan-family-illustration h2 a").ClickAsync();
         await Assertions.Expect(page.Locator(".media-figure img")).ToBeVisibleAsync();
 
