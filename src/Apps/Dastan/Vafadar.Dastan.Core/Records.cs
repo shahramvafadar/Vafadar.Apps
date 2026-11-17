@@ -127,7 +127,54 @@ public enum IdentifierMatch
 /// <param name="Match">How sure the editors are that the record is about this entity.</param>
 public sealed record ExternalIdentifier(string Issuer, string Value, Uri? Url, IdentifierMatch Match);
 
-/// <summary>A statement about an entity with a time of the calendar: something that lasted or something that happened.</summary>
+/// <summary>The units a quantity can be stated in. A unit has one meaning; a new one is a new entry here.</summary>
+public static class QuantityUnits
+{
+    /// <summary>The unit of an amount of money, which names its currency beside it.</summary>
+    public const string Money = "money";
+
+    /// <summary>Gets every unit with what it measures.</summary>
+    public static ImmutableArray<(string Key, string Meaning)> All { get; } =
+    [
+        ("count", "A bare number: how many, where the label says of what"),
+        ("people", "Persons: a population, an army, an audience"),
+        ("members", "Members of a group"),
+        ("employees", "People a company employs"),
+        ("verses", "Verses or couplets of a poem"),
+        ("pages", "Pages or folios"),
+        ("volumes", "Volumes of a work"),
+        ("copies", "Copies printed or sold"),
+        ("manuscripts", "Manuscripts that are known"),
+        ("goals", "Goals scored"),
+        ("matches", "Matches played"),
+        ("points", "Points in a competition"),
+        ("titles", "Titles won"),
+        ("seats", "Seats of a hall or of a parliament"),
+        ("years", "A length of time in years – not a date"),
+        ("days", "A length of time in days"),
+        ("metres", "A length or a height"),
+        ("kilometres", "A distance"),
+        ("square_kilometres", "An area"),
+        ("kilograms", "A weight"),
+        ("percent", "A share of a hundred"),
+        ("money", "An amount of money; currency names it with three letters (ISO 4217)"),
+    ];
+
+    /// <summary>Returns whether the list has the unit.</summary>
+    public static bool Has(string key) => All.Any(unit => string.Equals(unit.Key, key, StringComparison.Ordinal));
+}
+
+/// <summary>A quantity as it is stated: a number with its unit, and whether the source says "about".</summary>
+/// <param name="Value">The number.</param>
+/// <param name="Unit">The unit, from <see cref="QuantityUnits"/>.</param>
+/// <param name="IsApproximate">Whether the source states the number as approximate. A page then says "about".</param>
+/// <param name="Currency">For an amount of money: the currency, as three letters (ISO 4217).</param>
+public sealed record Quantity(decimal Value, string Unit, bool IsApproximate = false, string? Currency = null);
+
+/// <summary>
+/// A statement about one entity: something that lasted or happened at a time of the calendar, a quantity –
+/// a population, a number of verses, a price – or both: a quantity at a time.
+/// </summary>
 public sealed class DatedStatement
 {
     /// <summary>Gets the identifier, unique in the collection; it names the row of the statement on a page.</summary>
@@ -139,8 +186,14 @@ public sealed class DatedStatement
     /// <summary>Gets a sentence about it, when the editors wrote one.</summary>
     public LocalizedText? Summary { get; init; }
 
-    /// <summary>Gets the time, as it is stated: a period for what lasted, anything else for what happened.</summary>
-    public required Vafadar.Temporal.TemporalExpression Time { get; init; }
+    /// <summary>
+    /// Gets the time, as it is stated: a period for what lasted, anything else for what happened. A statement
+    /// of a quantity may have none: how many verses a poem has is not said for a year.
+    /// </summary>
+    public Vafadar.Temporal.TemporalExpression? Time { get; init; }
+
+    /// <summary>Gets the quantity the statement states, when it states one.</summary>
+    public Quantity? Quantity { get; init; }
 
     /// <summary>Gets the sources that support the statement and its time.</summary>
     public required ImmutableArray<SourceId> Sources { get; init; }

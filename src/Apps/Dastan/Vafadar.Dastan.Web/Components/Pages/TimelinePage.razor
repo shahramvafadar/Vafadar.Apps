@@ -118,7 +118,7 @@
                         Key = dated.Key,
                         Label = dated.Label,
                         Summary = dated.Summary,
-                        Time = (Period)dated.Time,
+                        Time = (Period)dated.Time!,
                         Sources = dated.Sources,
                         Review = dated.Review,
                     }),
@@ -133,12 +133,12 @@
                 ],
                 Events =
                 [
-                    .. subject.Dated.Where(dated => dated.Time is not Period).Select(dated => new ComparisonEvent
+                    .. subject.Dated.Where(dated => dated.Time is not null and not Period).Select(dated => new ComparisonEvent
                     {
                         Key = dated.Key,
                         Label = dated.Label,
                         Summary = dated.Summary,
-                        Time = dated.Time,
+                        Time = dated.Time!,
                         Sources = dated.Sources,
                         Review = dated.Review,
                     }),

@@ -252,3 +252,27 @@ stories – order, steps from 1, pages, the way from an entity to a step of the 
 language as a tag, said once, never repeated by a translation; a story written in Persian and translated into
 English. The template `subject` is read by the readers in `ContentToolTests`. Test data only; not looked at in
 a browser.
+
+## Sixth addendum of 2026-11-17 – a quantity as a statement (step 12.7)
+
+DOM-005 names "a quantity with unit and precision" among the values a statement can have.
+
+* A statement about an entity (`dated`) may state a `Quantity`: a number, a unit and whether the source says
+  "about" – and for money its currency. It keeps everything a statement has: sources, review, reading stage,
+  translation of its label. So a quantity is reviewed, disputed, withdrawn and published like any statement,
+  and no second kind of statement had to be taught to the store, the revisions and the tool.
+* **The time became optional**: a statement says when, how much, or both. A population in a year has both;
+  the number of verses of a poem has a quantity alone. Only what has a time is on the timeline.
+* **The units are a managed list** (`QuantityUnits`, 22 entries) with a meaning for writers and words for the
+  pages in both languages. A free text as unit would make "verses", "couplets" and "lines" three units.
+* **Nothing is rounded or converted.** A page writes every digit that was stated, grouped by thousands, with
+  the digits and marks of its language (`QuantityText`). Precision is what the digits say and "about".
+* **The page of an entity lists what is stated about it** – until now such statements were visible on the
+  timeline only, and a statement without a time would have been visible nowhere.
+
+Not done: a series of quantities as a chart (phase 14); ranges ("between 40,000 and 60,000"); units of
+other systems.
+
+Verification: `QuantityTests` (6 tests) and `RealWorldPagesTests` (the page of an entity in English and
+Persian with a quantity at a time, a disputed one without a time and an amount of money). Test data only; not
+looked at in a browser.

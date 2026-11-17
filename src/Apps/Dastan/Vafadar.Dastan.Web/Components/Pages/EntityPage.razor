@@ -33,6 +33,34 @@
         <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
     </header>
 
+    @if (!overview.Entity.Dated.IsEmpty)
+    {
+        @* What is stated about the entity itself: when something lasted or happened, how much of something. *@
+        <section aria-labelledby="stated">
+            <h2 id="stated">@T["Entity_Stated"]</h2>
+            <dl class="facts stated">
+                @foreach (var statement in overview.Entity.Dated)
+                {
+                    <dt id="@($"stated-{statement.Key}")"><Loc Text="statement.Label" /> <DisputedMark Review="statement.Review" /></dt>
+                    <dd>
+                        @if (statement.Quantity is { } quantity)
+                        {
+                            <strong class="quantity">@QuantityText.Of(quantity, Visitor, T)</strong>
+                        }
+                        @if (statement.Time is { } time)
+                        {
+                            <span class="when">@TimeText.Of(time, Visitor, T)</span>
+                        }
+                        @if (statement.Summary is { } summary)
+                        {
+                            <p><Loc Text="summary" /></p>
+                        }
+                    </dd>
+                }
+            </dl>
+        </section>
+    }
+
     <section aria-labelledby="connections">
         <h2 id="connections">@T["Entity_Connections"]</h2>
         @if (overview.Connections.IsEmpty)

@@ -52,6 +52,21 @@ public sealed class WorldSite : DemoSite
             ]
             """);
         entities.Add(Entity("place-city", "Place", "A city of the tests"));
+
+        // What is stated of the city: how many lived there in a year, and how far it reaches, said for no year (step 12.7).
+        entities[^1]!["dated"] = JsonNode.Parse("""
+            [
+              { "key": "city-people", "label": "People of the city", "summary": "Test data of the tests.",
+                "quantity": { "value": 1234567, "unit": "people", "approximate": true },
+                "time": { "kind": "occurrence", "at": { "frame": "calendar", "era": "commonEra", "year": 1000 } },
+                "sourceIds": ["src-ganjoor-index"], "spoilerLevel": 0, "reviewStatus": "proposed" },
+              { "key": "city-area", "label": "Area of the city", "quantity": { "value": 12.5, "unit": "square_kilometres" },
+                "sourceIds": ["src-ganjoor-index"], "spoilerLevel": 0, "reviewStatus": "disputed",
+                "review": { "by": "an editor", "on": "2026-11-17", "note": "Two sources, two numbers." } },
+              { "key": "city-tax", "label": "Tax of the city", "quantity": { "value": 5000, "unit": "money", "currency": "EUR" },
+                "sourceIds": ["src-ganjoor-index"], "spoilerLevel": 0, "reviewStatus": "proposed" }
+            ]
+            """);
         entities.Add(Entity("region-land", "Region", "A land of the tests"));
         entities.Add(Entity("organisation-court", "Organisation", "A court of the tests"));
         var relations = sample["relations"]!.AsArray();
@@ -200,6 +215,28 @@ public sealed class RealWorldPagesTests(WorldSite site) : IClassFixture<WorldSit
 
         Assert.Contains("A poet of the tests", search.Text, StringComparison.Ordinal);
         Assert.Contains(name, search.Text, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("en", "What is stated", "about 1,234,567 people", "1000 CE", "12.5 km²", "5,000 EUR")]
+    [InlineData("fa", "آنچه گفته شده است", "حدود ۱٬۲۳۴٬۵۶۷ نفر", "۱۰۰۰", "۱۲٫۵ کیلومتر مربع", "۵٬۰۰۰ EUR")]
+    public async Task The_page_of_an_entity_says_what_is_stated_about_it_with_every_digit(string language, string heading, string people, string year, string area, string tax)
+    {
+        var city = await site.Visitor().Get($"/{language}/{Story}/entity/place-city");
+        var poet = await site.Visitor().Get($"/{language}/{Story}/entity/person-poet");
+        var timeline = await site.Visitor().Get($"/{language}/{Story}/timeline");
+
+        Assert.Contains(heading, city.Main, StringComparison.Ordinal);
+        Assert.Contains("People of the city", city.Main, StringComparison.Ordinal);
+        Assert.Contains(people, city.Main, StringComparison.Ordinal);
+        Assert.Contains(year, city.Main, StringComparison.Ordinal);
+        Assert.Contains(area, city.Main, StringComparison.Ordinal);
+        Assert.Contains(tax, city.Main, StringComparison.Ordinal);
+
+        // Somebody nothing is stated about has no such section; what has no time is not on the timeline.
+        Assert.DoesNotContain(heading, poet.Main, StringComparison.Ordinal);
+        Assert.Contains("People of the city", timeline.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("Area of the city", timeline.Text, StringComparison.Ordinal);
     }
 
     [Fact]

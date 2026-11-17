@@ -250,6 +250,16 @@ public sealed class Catalogue
                     {
                         problems.Add($"{dated.Key}: a statement about {entity.Id} cannot be shown before {entity.Id} itself.");
                     }
+
+                    if (dated.Time is null && dated.Quantity is null)
+                    {
+                        problems.Add($"{dated.Key}: a statement about an entity says when, how much, or both.");
+                    }
+
+                    if (dated.Quantity is { } quantity && (!QuantityUnits.Has(quantity.Unit) || (quantity.Unit == QuantityUnits.Money) != (quantity.Currency is not null)))
+                    {
+                        problems.Add($"{dated.Key}: its quantity has a unit of the list, and a currency when and only when it is money.");
+                    }
                 }
 
                 foreach (var name in entity.Names)

@@ -155,6 +155,7 @@ manuscript was made, when a place was founded. The collection shows these statem
 | `key` | The identifier of the statement, unique in the whole file like every identifier |
 | `label` | What lasted or happened, in a few words |
 | `summary` | Optional: a sentence about it |
+| `quantity` | Optional: a quantity the statement states – see "A quantity". With a quantity, `time` may be left out |
 | `time` | The time as it is stated, in the form a comparison uses ([the file of a comparison](comparison-format.md), "Time"): `kind` `period` for what lasted, `occurrence` for what happened; years of the common era or before it, in the Gregorian calendar (D-043); "about" and "between two years" as they are stated. A place in the story is not a time of the calendar and is refused |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage from which the statement is shown – not before its entity |
@@ -172,6 +173,45 @@ page shows it, and a record that still points to it is a problem (a relation who
 event, a media item that depicts it). The `revision` command leaves it out of the revision it writes; when the
 statement was in the revision before, the history names it as `withdrawn` with the reason. A published revision
 that holds a withdrawn statement is refused.
+
+### A quantity
+
+A statement about an entity can state a quantity: `"quantity": { "value": 50000, "unit": "verses", "approximate": true }`.
+The number is written as the source states it and is shown with every digit – nothing is rounded or converted.
+A quantity at a time (a population in a year) has `quantity` and `time`; a quantity that is not said for a
+time (the number of verses of a poem) has `quantity` alone.
+
+| Field | Meaning |
+|---|---|
+| `value` | The number |
+| `unit` | One of the units below |
+| `approximate` | Optional: `true` when the source says "about" |
+| `currency` | With the unit `money` only: the currency as three capital letters (ISO 4217), such as `EUR` |
+
+| `unit` | What it measures |
+|---|---|
+| `count` | A bare number: how many, where the label says of what |
+| `people` | Persons: a population, an army, an audience |
+| `members` | Members of a group |
+| `employees` | People a company employs |
+| `verses` | Verses or couplets of a poem |
+| `pages` | Pages or folios |
+| `volumes` | Volumes of a work |
+| `copies` | Copies printed or sold |
+| `manuscripts` | Manuscripts that are known |
+| `goals` | Goals scored |
+| `matches` | Matches played |
+| `points` | Points in a competition |
+| `titles` | Titles won |
+| `seats` | Seats of a hall or of a parliament |
+| `years` | A length of time in years – not a date |
+| `days` | A length of time in days |
+| `metres` | A length or a height |
+| `kilometres` | A distance |
+| `square_kilometres` | An area |
+| `kilograms` | A weight |
+| `percent` | A share of a hundred |
+| `money` | An amount of money; currency names it with three letters (ISO 4217) |
 
 ### Other names and identifiers of an entity
 
