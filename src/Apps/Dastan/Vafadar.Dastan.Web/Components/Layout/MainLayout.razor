@@ -63,7 +63,10 @@
     else if (Site.Revision is { } revision && Visitor.Projection is not null)
     {
         @* A public page says which revision it shows: a correction is a new revision, not a silent change. *@
-        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Published_Notice"], Visitor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))</p>
+        <p class="note">
+            @string.Format(CultureInfo.CurrentCulture, T["Published_Notice"], Visitor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))
+            <a href="@($"{Site.Collection}/revisions")">@T["Revisions_Link"]</a>
+        </p>
     }
 </footer>
 

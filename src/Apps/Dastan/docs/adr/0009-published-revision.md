@@ -70,3 +70,29 @@ site in the Production settings with a copy of the collection made into revision
 the revision and no demonstration; the reading position holds; of the media only the item allowed for the public is
 shown or delivered; the draft Persian text and the draft comparison do not reach a public page; an editorial sample
 is still answered with "not found". The revisions of the tests are test data.
+
+## Addendum of 2026-11-17 – the record of a review and the history of revisions (step 10.1)
+
+The first open point above is decided as far as a file can carry it:
+
+* **The record of a review is part of the statement.** A relation, an event and a dated statement carry
+  `review`: who reviewed it, on which day, optionally against what. A published revision that is approved has the
+  record on every statement, dated not after the revision; a record on a statement that is not reviewed is a
+  problem. The name of the reviewer is the editors' record and is not shown on a public page.
+* **A revision is made by a command, not by hand** (`revision` of `Vafadar.Dastan.Content`,
+  `ContentRevision` in Data): it takes the working file – an editorial sample – checks it by this rule, refuses
+  with every statement that is not ready, and writes the revision to a new file. It does not review.
+* **A revision carries its history** (`publication.history`): one entry per revision, with the records it added,
+  changed and removed compared with the revision before, each with its name and its reading stage.
+* **The public page "what changed"** (`/<collection>/revisions`, linked from the note that names the revision)
+  lists the revisions, newest first. A change is told to a visitor only from the reading stage of its record on
+  (`Projection.Revisions`); a revision of which the visitor may see no change says the same words as one that
+  changed nothing – the page gives away neither a later part nor that there is one.
+
+Still open: an account of the reviewer and a store of the editors (the record is a text in a file and is as
+trustworthy as whoever may write the file); what exactly changed inside a record (the page names the record, not
+the difference of its texts); the history of a comparison.
+
+Verification: `RevisionHistoryTests` (Core), `ContentRevisionTests` (Data: the template of the writers reviewed,
+made into revision 1 and 2, read back by the site; what is refused; the command), `RevisionsPageTests` (Web).
+The revisions of the tests are test data; nothing is published.

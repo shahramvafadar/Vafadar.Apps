@@ -71,3 +71,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The rule for publishing exists: everybody sees a collection only as a published revision – numbered, with every
   statement reviewed – and of it only reviewed texts and the images and videos allowed for the public. A public
   page names the revision it shows. Nothing is published yet; the first collection is still an editorial sample.
+- A published revision says who reviewed each statement and when, and what it changed: a page "what changed"
+  lists the revisions of a collection, newest first, with the names, relations, steps and images each added,
+  changed or removed – only as far as the visitor has read. The editors make a revision with one command that
+  refuses a file with a statement nobody reviewed. Nothing is published yet.

@@ -34,6 +34,11 @@ public static class ContentCommands
           template collection|comparison <id> [--out <file>]
               Writes the smallest file of that kind the site accepts, to start from. Never over a file.
 
+          revision <file> --number <n> --date <yyyy-MM-dd> --out <file> [--previous <file>] [--note <text>]
+              For the editors: makes a published revision out of their working file – numbered, with the
+              history of the revisions before and what this one changes. Refuses a file in which a statement
+              is not reviewed or a review is not recorded. Never over a file.
+
         Exit code: 0 in order, 1 a content file cannot be used, 2 the command was not understood.
         """;
 
@@ -58,6 +63,7 @@ public static class ContentCommands
             ["vocabulary", "collection" or "comparison"] => Vocabulary(words[1], output, json),
             ["template", "collection" or "comparison", _] => Template(words[1], words[2], null, output, today),
             ["template", "collection" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
+            ["revision", _, ..] => Revision(words[1], words[2..], output),
             _ => NotAsked(output),
         };
     }
@@ -270,6 +276,51 @@ public static class ContentCommands
         File.WriteAllText(file, text + Environment.NewLine);
         output.WriteLine($"Written: {Path.GetFullPath(file)}");
         output.WriteLine("Every text that begins with REPLACE is a place for content. Check the file when it is filled.");
+        return Done;
+    }
+
+    private static int Revision(string file, IReadOnlyList<string> options, TextWriter output)
+    {
+        // Every option is a name and a value; each is given once.
+        var given = new Dictionary<string, string>(StringComparer.Ordinal);
+        for (var index = 0; index < options.Count; index += 2)
+        {
+            if (index + 1 >= options.Count || options[index] is not ("--number" or "--date" or "--out" or "--previous" or "--note") || !given.TryAdd(options[index], options[index + 1]))
+            {
+                return NotAsked(output);
+            }
+        }
+
+        if (!given.TryGetValue("--number", out var numbered) || !int.TryParse(numbered, System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var number)
+            || !given.TryGetValue("--date", out var dated) || !DateOnly.TryParseExact(dated, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var day)
+            || !given.TryGetValue("--out", out var target))
+        {
+            return NotAsked(output);
+        }
+
+        if (File.Exists(target))
+        {
+            output.WriteLine($"{target} exists; a revision is never written over a file.");
+            return NotUnderstood;
+        }
+
+        var result = ContentRevision.Make(new RevisionRequest(file, number, day, given.GetValueOrDefault("--previous"), given.GetValueOrDefault("--note")));
+        if (result.Json is null)
+        {
+            output.WriteLine($"No revision: {result.Problems.Length} {(result.Problems.Length == 1 ? "reason" : "reasons")}.");
+            for (var index = 0; index < result.Problems.Length; index++)
+            {
+                output.WriteLine($"  {index + 1}. {result.Problems[index]}");
+            }
+
+            return NotUsable;
+        }
+
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(target))!);
+        File.WriteAllText(target, result.Json + Environment.NewLine);
+        output.WriteLine($"Written: {Path.GetFullPath(target)}");
+        output.WriteLine($"Revision {number} of {dated}: {result.Changes.Added} added, {result.Changes.Changed} changed, {result.Changes.Removed} removed against the revision before.");
+        output.WriteLine("A translation is a file of its own: put the reviewed ones beside the revision, under its name. Check the revision where it will lie.");
         return Done;
     }
 

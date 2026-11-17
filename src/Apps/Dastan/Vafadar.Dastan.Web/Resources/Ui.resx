@@ -870,4 +870,49 @@
   <data name="Published_Notice" xml:space="preserve">
     <value>Published revision {0} of {1}. A correction is published as a new revision.</value>
   </data>
+  <data name="Revisions_Title" xml:space="preserve">
+    <value>Revisions of {0}</value>
+  </data>
+  <data name="Revisions_Lead" xml:space="preserve">
+    <value>Every published revision of this collection, the newest first, with what it changed. Nothing is corrected silently: a correction is a new revision.</value>
+  </data>
+  <data name="Revisions_None" xml:space="preserve">
+    <value>This collection is not published as a revision yet.</value>
+  </data>
+  <data name="Revisions_Link" xml:space="preserve">
+    <value>Revisions and what they changed</value>
+  </data>
+  <data name="Revision_Heading" xml:space="preserve">
+    <value>Revision {0}, {1}</value>
+  </data>
+  <data name="Revision_First" xml:space="preserve">
+    <value>The first publication.</value>
+  </data>
+  <data name="Revision_NoChanges" xml:space="preserve">
+    <value>Nothing that can be seen at your reading position was changed.</value>
+  </data>
+  <data name="Change_Added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="Change_Changed" xml:space="preserve">
+    <value>Changed</value>
+  </data>
+  <data name="Change_Removed" xml:space="preserve">
+    <value>Removed</value>
+  </data>
+  <data name="RecordKind_source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="RecordKind_entity" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="RecordKind_relation" xml:space="preserve">
+    <value>Relation</value>
+  </data>
+  <data name="RecordKind_event" xml:space="preserve">
+    <value>Step of the story</value>
+  </data>
+  <data name="RecordKind_media" xml:space="preserve">
+    <value>Image or video</value>
+  </data>
 </root>

@@ -150,6 +150,34 @@ your hand-over note, so that the format is extended with its meaning.
   the full list.
 * The language a file is written in is English.
 
+## For the editors: publishing a revision
+
+A writer hands a file over; the editors review it. For every relation, event and dated statement they accept,
+they set `reviewStatus` to `reviewed` (or `disputed`) and add the record of the review –
+`"review": { "by": "…", "on": "2026-11-16", "note": "…" }` ([format](collection-format.md)). When every statement
+has it, one command makes the revision:
+
+```powershell
+# The first revision.
+dotnet run --project $content -- revision src/Apps/Dastan/content/samples/my-story.json `
+    --number 1 --date 2026-11-17 --out src/Apps/Dastan/content/published/my-story.json --note "The first publication."
+
+# A correction: the next number, and the file of the revision before.
+dotnet run --project $content -- revision src/Apps/Dastan/content/samples/my-story.json `
+    --number 2 --date 2026-12-01 --previous <the file of revision 1> --out <a new file> --note "What was corrected."
+```
+
+* The command checks the working file as the site reads it and by the rule of [ADR 0009](adr/0009-published-revision.md).
+  It names **every** statement that is not reviewed or has no record of its review, and writes nothing then
+  (exit code `1`).
+* It writes a new file – never over a file – that is the working file marked as the revision: state, number, day,
+  and the history of the revisions with what this one adds, changes and removes, compared record by record with
+  the revision before. The working file is not touched; work goes on in it.
+* The revision is written into a folder beside the folder of the working file (`samples` → `published`), so that
+  the paths of media and translations stay right. A translation is published by copying it beside the revision.
+* The command does not review. It cannot know whether a statement was read against its source; it only refuses a
+  file in which nobody says so. A writer or an assistant never runs it to make something visible.
+
 ## What the check does not check
 
 That a source says what a record claims; that an address still answers; that a summary is fair, a translation

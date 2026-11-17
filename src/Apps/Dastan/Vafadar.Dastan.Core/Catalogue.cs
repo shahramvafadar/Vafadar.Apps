@@ -34,6 +34,34 @@ public sealed class EditionContext
 /// <param name="PublishedOn">The day the revision was published.</param>
 public sealed record PublicationRevision(int Number, DateOnly PublishedOn);
 
+/// <summary>What happened to a record from one published revision to the next.</summary>
+public enum RevisionChangeKind
+{
+    /// <summary>The record is new in the revision.</summary>
+    Added = 0,
+
+    /// <summary>The record was in the revision before and reads differently now.</summary>
+    Changed = 1,
+
+    /// <summary>The record was in the revision before and is not in this one.</summary>
+    Removed = 2,
+}
+
+/// <summary>One change of a published revision: a record that was added, changed or removed.</summary>
+/// <param name="Kind">What happened to the record.</param>
+/// <param name="Record">The identifier of the record.</param>
+/// <param name="RecordKind">What the record is: <c>source</c>, <c>entity</c>, <c>relation</c>, <c>event</c> or <c>media</c>.</param>
+/// <param name="Label">The name of the record when the revision was made.</param>
+/// <param name="Level">The reading level of the record; a change is shown to nobody who may not see its record.</param>
+public sealed record RevisionChange(RevisionChangeKind Kind, string Record, string RecordKind, LocalizedText Label, ReadingLevel Level);
+
+/// <summary>A published revision in the history of a collection, with what it changed.</summary>
+/// <param name="Number">The number of the revision.</param>
+/// <param name="PublishedOn">The day it was published.</param>
+/// <param name="Note">What the editors say about the revision, if anything.</param>
+/// <param name="Changes">What it changed against the revision before; empty for the first one.</param>
+public sealed record RevisionEntry(int Number, DateOnly PublishedOn, string? Note, ImmutableArray<RevisionChange> Changes);
+
 /// <summary>What the editors allow to be done with a collection. Each permission is its own decision.</summary>
 /// <param name="LocalDemoAllowed">Whether the collection may be shown in a local demonstration.</param>
 /// <param name="PublicReleaseApproved">Whether the collection is approved for publication.</param>
@@ -66,6 +94,12 @@ public sealed class CatalogueInfo
 
     /// <summary>Gets what the editors allow to be done with the collection.</summary>
     public required PublicationState Publication { get; init; }
+
+    /// <summary>
+    /// Gets the published revisions of the collection up to this one, from the first on, each with what it
+    /// changed. Empty for an editorial sample.
+    /// </summary>
+    public ImmutableArray<RevisionEntry> History { get; init; } = [];
 }
 
 /// <summary>A collection that contradicts itself. <see cref="Problems"/> names every contradiction with its record.</summary>
@@ -254,6 +288,7 @@ public sealed class Catalogue
 
             CheckStage("collection", info.DefaultLevel);
             CheckPublication(info.Publication);
+            CheckReviewsAndHistory(info);
             Known("collection", info.Story, ReadingLevel.Opening, "story");
             Known("collection", info.Edition.Work, ReadingLevel.Opening, "work of the edition");
         }
@@ -277,15 +312,72 @@ public sealed class Catalogue
                 problems.Add("collection: only a published revision is approved for the public; it states its number and the day it was published.");
             }
 
-            var statements = catalogue.Relations.Select(relation => (Name: relation.Id.Value, relation.Review))
-                .Concat(catalogue.Events.Select(storyEvent => (Name: storyEvent.Id.Value, storyEvent.Review)))
-                .Concat(catalogue.Entities.SelectMany(entity => entity.Dated).Select(dated => (Name: dated.Key, dated.Review)));
-            foreach (var (name, review) in statements)
+            foreach (var (name, review, record) in Statements())
             {
                 if (review is not (ReviewStatus.Reviewed or ReviewStatus.Disputed))
                 {
                     problems.Add($"{name}: a published revision holds only reviewed statements; this one is {review}.");
                 }
+                else if (record is null)
+                {
+                    problems.Add($"{name}: a published revision says who reviewed a statement and when.");
+                }
+                else if (publication.Revision is { } revision && record.On > revision.PublishedOn)
+                {
+                    problems.Add($"{name}: the review is dated after the revision was published.");
+                }
+            }
+        }
+
+        private IEnumerable<(string Name, ReviewStatus Review, ReviewRecord? Record)> Statements() =>
+            catalogue.Relations.Select(relation => (relation.Id.Value, relation.Review, relation.Reviewed))
+                .Concat(catalogue.Events.Select(storyEvent => (storyEvent.Id.Value, storyEvent.Review, storyEvent.Reviewed)))
+                .Concat(catalogue.Entities.SelectMany(entity => entity.Dated).Select(dated => (dated.Key, dated.Review, dated.Reviewed)));
+
+        // A review is recorded for what was reviewed; the history is the history of this revision.
+        private void CheckReviewsAndHistory(CatalogueInfo info)
+        {
+            foreach (var (name, review, record) in Statements())
+            {
+                if (record is not null && review is not (ReviewStatus.Reviewed or ReviewStatus.Disputed))
+                {
+                    problems.Add($"{name}: a review is recorded for a statement that is {review}.");
+                }
+            }
+
+            var history = info.History;
+            if (history.IsEmpty)
+            {
+                return;
+            }
+
+            if (info.Publication.Revision is not { } current)
+            {
+                problems.Add("collection: a history of revisions belongs to a published revision.");
+                return;
+            }
+
+            if (!history.Select(entry => entry.Number).SequenceEqual(Enumerable.Range(1, history.Length)))
+            {
+                problems.Add("collection: the history names the revisions from 1 on, in their order and without a gap.");
+            }
+
+            if (history[^1].Number != current.Number || history[^1].PublishedOn != current.PublishedOn)
+            {
+                problems.Add("collection: the last entry of the history is the revision the collection is.");
+            }
+
+            for (var index = 1; index < history.Length; index++)
+            {
+                if (history[index].PublishedOn < history[index - 1].PublishedOn)
+                {
+                    problems.Add($"collection: revision {history[index].Number} is dated before the revision it follows.");
+                }
+            }
+
+            foreach (var change in history.SelectMany(entry => entry.Changes))
+            {
+                CheckStage($"history of {change.Record}", change.Level);
             }
         }
 

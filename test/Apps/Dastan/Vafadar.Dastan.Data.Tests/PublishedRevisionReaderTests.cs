@@ -24,6 +24,7 @@ public sealed class PublishedRevisionReaderTests
             foreach (var record in sample[group]!.AsArray())
             {
                 record!["reviewStatus"] = "reviewed";
+                record["review"] = new JsonObject { ["by"] = "an editor", ["on"] = "2026-11-16" };
             }
         }
     }
@@ -81,8 +82,11 @@ public sealed class PublishedRevisionReaderTests
     {
         var problems = SampleFiles.Problems(Published(sample =>
         {
-            sample.Record("relations", "relation-02")["reviewStatus"] = "source_backed_editorial_review_pending";
-            sample.Record("events", "event-01")["reviewStatus"] = "source_backed_editorial_review_pending";
+            foreach (var record in new[] { sample.Record("relations", "relation-02"), sample.Record("events", "event-01") })
+            {
+                record["reviewStatus"] = "source_backed_editorial_review_pending";
+                record.Remove("review");
+            }
         }));
 
         Assert.Equal(

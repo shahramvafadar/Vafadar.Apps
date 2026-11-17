@@ -39,11 +39,41 @@ the Gregorian calendar (D-043). An address is an `https` address without a user 
 | `localDemoAllowed` | Whether a local demonstration may show the collection |
 | `publicReleaseApproved` | Whether everybody may see the collection. An editorial sample cannot be approved; only a published revision can |
 | `revision` | Only in a published revision, and required there: `number` (from 1) and `publishedAt` (a day); optional `note`. A correction is published as the next number |
+| `history` | Only in a published revision: what each revision changed – see below. Written by the `revision` command, not by hand |
 | `note` | Optional |
 
 A published revision that is approved holds only reviewed statements: every relation, every event and every dated
-statement has the review status `reviewed` or `disputed`. The rule and its reasons are in
-[ADR 0009](adr/0009-published-revision.md). Reviewing and publishing are decisions of the editors, not of a writer.
+statement has the review status `reviewed` or `disputed`, and each of them carries the record of its review (see
+"The record of a review"). The rule and its reasons are in [ADR 0009](adr/0009-published-revision.md). Reviewing
+and publishing are decisions of the editors, not of a writer.
+
+`history` is a list with one entry for every revision from 1 to the revision the file is, in that order and
+without a gap: `number`, `publishedAt` (a day, not before the entry it follows), an optional `note`, and
+`changes` – empty for the first revision. A change names one record that differs from the revision before:
+
+| Field | Meaning |
+|---|---|
+| `kind` | `added`, `changed` or `removed` |
+| `record` | The identifier of the record |
+| `recordKind` | `source`, `entity`, `relation`, `event` or `media` |
+| `label` | The name of the record at that revision – of a removed record, the name it had |
+| `spoilerLevel` | The reading stage of the record. A visitor is told of a change only from that stage on |
+
+The site shows the history on the page "what changed" of the collection (`/<collection>/revisions`).
+
+### The record of a review
+
+A relation, an event and a dated statement may carry `review` – who reviewed the statement and when:
+
+| Field | Meaning |
+|---|---|
+| `by` | Who reviewed it: a name or a role, as the editors want it on record. It is not shown on a public page |
+| `on` | The day of the review – not after the day the revision is published |
+| `note` | Optional: what the statement was checked against |
+
+`review` belongs to a statement whose `reviewStatus` is `reviewed` or `disputed`; on any other statement it is a
+problem. An editorial sample may hold reviewed statements with their record before it is published; a published
+revision has to have the record on every statement.
 
 ### `editionContext`
 
@@ -213,5 +243,7 @@ a dated statement before its entity, or with a time that is not one of the calen
 entity associated twice; a place that is not the setting, an object that is not an object; a media item that is
 shown without what showing it needs; a local path that leaves its folder or names a file that does not exist; a
 translation into the language of the collection, a second one into the same language, or one for another
-collection. Every problem is reported with the name of its record; the app does not start with a collection it
+collection; a review recorded for a statement that is not reviewed, or dated after the revision; a history in an
+editorial sample, or one that leaves out a revision, ends with another revision than the file is or goes back in
+time. Every problem is reported with the name of its record; the app does not start with a collection it
 cannot read.
