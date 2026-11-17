@@ -310,7 +310,7 @@ top, one row per neighbour. They are a chart in a stage now (`ConnectionsLayout`
   what it shows and scrolls in its stage. Lines run across or down, never at a slant.
 * **Limit.** A stage begins at the top of its chart. When much is opened above the name, the name in the middle
   is below what the window shows first and is reached by scrolling the stage; nothing without a script moves a
-  frame to a place inside it without moving the page as well.
+  frame to a place inside it without moving the page as well. *(Lifted on 2026-11-17 – see the fifth addendum.)*
 
 Verification, 2026-11-16: `ConnectionsLayoutTests` (Core, 197 tests in the project), `ConnectionsPageTests` (Web,
 275), `ConnectionsChartBrowserTests` (27 cases at 360, 412 and 1280 px, English and Persian: where the neighbours
@@ -354,3 +354,26 @@ Verification, 2026-11-17: `DatedStatementTests` (Core, 204 tests in the project)
 views of the browser tests that check that a view fits the window at 360, 412 and 1280 px in both languages and
 breaks no rule of accessibility a tool can check: 318 passed in Chromium. With statements made up for looking,
 the chart was looked at in English at 1280 px and in Persian at 390 px.
+
+## Fifth addendum of 2026-11-17 – the two limits of the stage (step 10.4)
+
+* **The name a chart is drawn around is in sight.** The charts of connections and of a family are drawn around one
+  name. The one script of the site (`app.js`) moves the frame of such a stage once, when the page has arrived,
+  so that the box of the name is in the middle – and only when the box is not wholly in sight already. It does
+  not follow a visitor who scrolls afterwards and does nothing on a stage that is not shown. Why a script: a
+  fragment of the address moves the page together with the frame, and a stage that is aligned to a place inside
+  its chart no longer fills the window; scroll snapping would hold the visitor at the name. The rule of
+  [ADR 0003](0003-server-rendered-pages.md) stands – no page needs the script: without it the chart is whole and
+  the name is reached by scrolling the stage, as before.
+* **On a narrow screen the sides beside the chart stand above it.** Up to 40 rem of width, the steps of the left
+  and of the right side stand in a row of their own between the upper side and the chart – the left ones at the
+  left, the right ones at the right, their words running along the row – and the frame gets the whole width of
+  the stage. Before, the two sides took about 106 of 360 px. A side is still a side of the screen (D-040); wider
+  screens are unchanged. One row of height is given for a quarter of the width: the family of the first story,
+  opened at every side, now stands in the stage of a phone without scrolling.
+
+Verification: `StageBrowserTests` – with much opened above the name, the box of the name is inside the frame at
+360 and 1280 px in English and Persian, also in the family drawing; a chart whose name is in sight is not moved;
+without the script nothing is moved and the chart is whole; at 360 px the frame is as wide as the stage, the
+steps of the sides stand between the upper side and the chart, each at least 44 px, and the page does not scroll
+sideways; at 1280 px the sides stand beside the chart. All browser tests in Chromium, Firefox and WebKit.

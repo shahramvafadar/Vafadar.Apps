@@ -58,7 +58,9 @@ for Dastan is added here in the same commit as the work it came with.
 * A chart stands in a stage (`ChartStage`, D-040): the whole width of the page and the height of the window, with a
   "−" and a "+" at each of its four sides (`EdgeSteps`) that close and open the chart in that direction. Every
   step is a link to an address; a new chart says in ADR 0008 what its four sides mean. Class names of the stage
-  begin with `stage-` – a short name like `step` belongs to the story already.
+  begin with `stage-` – a short name like `step` belongs to the story already. A chart drawn around a name
+  marks its box with `graph-focus`; the one script of the site brings it into sight, and nothing else may depend
+  on that script.
 * Everybody sees a collection only as a published revision ([ADR 0009](docs/adr/0009-published-revision.md),
   D-044). The rule lives in the checks of `Catalogue`, in the readers and in `Projection`; a page never decides by
   the audience what it shows. Reviewing a statement and publishing a revision are the editors' decisions – never
