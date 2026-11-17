@@ -152,6 +152,8 @@ What a collection can say ([format](collection-format.md)):
   types holds ("The relations of the world outside the story"; `-- vocabulary` prints every type with its
   meaning). A type has one meaning: do not use one for something it does not say.
 * A relation of the world says **when it held** (`time`); somebody who came back is two relations.
+* A statement about an entity states a **date, a quantity or both**: a population in a year, the number of
+  verses of a poem ("A quantity").
 * An entity has **other names** – earlier names, titles, short forms – and **identifiers** of other catalogues.
 * A file is written in **any language** and says which; a translation document adds another language.
 
@@ -159,7 +161,6 @@ What has no place yet:
 
 * What a collection states with a date (`dated`) belongs to one entity. Time across several subjects that is
   no part of a collection is written as a comparison.
-* A quantity with a unit – a population, a price, a number of goals – as a statement of its own.
 * Coordinates of a place, and borders that change with time.
 
 ## For the editors: publishing a revision

@@ -134,3 +134,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - In the tool of the editors the names of the reading stages can be changed in every language, and a stage
   added; the Persian texts of a statement with a date stand beside it in the form of its entity. A change of
   the stages or of anything else that is not a record now appears in the history with who made it and why.
+- A collection can state quantities: how many people lived in a city in a year, how many verses a poem has,
+  what something cost. The page of an entity now lists everything that is stated about it – with every digit
+  as the source gives it, and "about" where the source says so.

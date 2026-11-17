@@ -1050,4 +1050,76 @@
   <data name="Foreign_Note_Other" xml:space="preserve">
     <value>in the language of the collection</value>
   </data>
+  <data name="Entity_Stated" xml:space="preserve">
+    <value>What is stated</value>
+  </data>
+  <data name="Quantity_About" xml:space="preserve">
+    <value>about {0}</value>
+  </data>
+  <data name="Unit_count" xml:space="preserve">
+    <value>{0}</value>
+  </data>
+  <data name="Unit_people" xml:space="preserve">
+    <value>{0} people</value>
+  </data>
+  <data name="Unit_members" xml:space="preserve">
+    <value>{0} members</value>
+  </data>
+  <data name="Unit_employees" xml:space="preserve">
+    <value>{0} employees</value>
+  </data>
+  <data name="Unit_verses" xml:space="preserve">
+    <value>{0} verses</value>
+  </data>
+  <data name="Unit_pages" xml:space="preserve">
+    <value>{0} pages</value>
+  </data>
+  <data name="Unit_volumes" xml:space="preserve">
+    <value>{0} volumes</value>
+  </data>
+  <data name="Unit_copies" xml:space="preserve">
+    <value>{0} copies</value>
+  </data>
+  <data name="Unit_manuscripts" xml:space="preserve">
+    <value>{0} manuscripts</value>
+  </data>
+  <data name="Unit_goals" xml:space="preserve">
+    <value>{0} goals</value>
+  </data>
+  <data name="Unit_matches" xml:space="preserve">
+    <value>{0} matches</value>
+  </data>
+  <data name="Unit_points" xml:space="preserve">
+    <value>{0} points</value>
+  </data>
+  <data name="Unit_titles" xml:space="preserve">
+    <value>{0} titles</value>
+  </data>
+  <data name="Unit_seats" xml:space="preserve">
+    <value>{0} seats</value>
+  </data>
+  <data name="Unit_years" xml:space="preserve">
+    <value>{0} years</value>
+  </data>
+  <data name="Unit_days" xml:space="preserve">
+    <value>{0} days</value>
+  </data>
+  <data name="Unit_metres" xml:space="preserve">
+    <value>{0} m</value>
+  </data>
+  <data name="Unit_kilometres" xml:space="preserve">
+    <value>{0} km</value>
+  </data>
+  <data name="Unit_square_kilometres" xml:space="preserve">
+    <value>{0} km²</value>
+  </data>
+  <data name="Unit_kilograms" xml:space="preserve">
+    <value>{0} kg</value>
+  </data>
+  <data name="Unit_percent" xml:space="preserve">
+    <value>{0}%</value>
+  </data>
+  <data name="Unit_money" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
 </root>

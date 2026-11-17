@@ -425,7 +425,7 @@ public sealed class Projection
         // A relation with a time stands in the lane of the entity it reads from: "played for" in the lane of the player.
         ImmutableArray<Edge> held = [.. Relations.Where(relation => relation.Time is not null).Select(ToEdge)];
         var holders = held.Select(edge => edge.From.Id).ToHashSet();
-        return new([.. Entities.Where(entity => !entity.Dated.IsEmpty || holders.Contains(entity.Id))], Media, held);
+        return new([.. Entities.Where(entity => entity.Dated.Any(dated => dated.Time is not null) || holders.Contains(entity.Id))], Media, held);
     }
 
     /// <summary>

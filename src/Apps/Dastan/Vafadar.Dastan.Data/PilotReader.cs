@@ -325,6 +325,10 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                             + (type.Meaning is null ? string.Empty : "; " + type.Meaning)
                             + (type.From.IsDefaultOrEmpty && type.To.IsDefaultOrEmpty ? string.Empty : $"; from {Natures(type.From)} to {Natures(type.To)}"))),
                 ]),
+            new(
+                "entities[].dated[].quantity.unit",
+                "The unit of a quantity a statement states.",
+                [.. QuantityUnits.All.OrderBy(unit => unit.Key, StringComparer.Ordinal).Select(unit => new ContentChoice(unit.Key, unit.Meaning))]),
             new("entities[].names[].kind", "What kind of other name a name of an entity is.", Of(NameKindNames.Keys)),
             new("entities[].identifiers[].match", "How sure the editors are that the record of another catalogue is about the entity.", Of(MatchNames.Keys)),
             new("relations[].directionality", "Whether the relation reads from one entity to the other; it has to agree with the type.", Of(DirectionNames.Keys)),
@@ -780,9 +784,18 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var reviewKnown = record.Choice("reviewStatus", DatedReviewNames, out var review);
         var reviewed = ReadReview(record);
         CheckWithdrawn(record, review, reviewed);
-        var time = ReadTime(record, "time is not a time of the calendar: a statement with a date is not a step of the story.");
+        // A statement says when, how much, or both; a quantity alone needs no time.
+        var quantified = record.Child("quantity", required: false) is { } stated;
+        var quantity = quantified ? ReadQuantity(record.Child("quantity", required: false)!) : null;
+        var timed = record.IsStated("time");
+        var time = timed ? ReadTime(record, "time is not a time of the calendar: a statement with a date is not a step of the story.") : null;
+        if (!timed && !quantified)
+        {
+            record.Problem("time is missing.");
+        }
+
         record.Finish();
-        if (key is null || label is null || level is null || !reviewKnown || time is null)
+        if (key is null || label is null || level is null || !reviewKnown || (timed && time is null) || (quantified && quantity is null) || (!timed && !quantified))
         {
             return null;
         }
@@ -793,12 +806,44 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Label = Localized(label, $"dated/{key}/label"),
             Summary = summary is null ? null : Localized(summary, $"dated/{key}/summary"),
             Time = time,
+            Quantity = quantity,
             Sources = [.. sources.Select(source => new SourceId(source))],
             Review = review,
             Reviewed = reviewed,
             Level = level.Value,
         };
     }
+
+    /// <summary>Reads a quantity: a number, its unit from the list, and whether it is stated as approximate.</summary>
+    private static Quantity? ReadQuantity(JsonRecord record)
+    {
+        var value = record.Number("value");
+        var unit = record.Text("unit");
+        if (unit is not null && !QuantityUnits.Has(unit))
+        {
+            record.Problem($"unit has the unknown value \"{unit}\".");
+            unit = null;
+        }
+
+        var approximate = record.Flag("approximate", required: false) ?? false;
+        var currency = record.Text("currency", required: false);
+        if (unit == QuantityUnits.Money && (currency is null || !Currency().IsMatch(currency)))
+        {
+            record.Problem("an amount of money names its currency with three capital letters, such as EUR.");
+            unit = null;
+        }
+        else if (unit is not null && unit != QuantityUnits.Money && currency is not null)
+        {
+            record.Problem("currency belongs to an amount of money only.");
+            unit = null;
+        }
+
+        record.Finish();
+        return value is null || unit is null ? null : new Quantity(value.Value, unit, approximate, currency);
+    }
+
+    [GeneratedRegex("^[A-Z]{3}$")]
+    private static partial Regex Currency();
 
     private Relation? ReadRelation(JsonRecord record)
     {
