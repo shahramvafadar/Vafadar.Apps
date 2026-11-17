@@ -381,4 +381,28 @@
   <data name="Done_published" xml:space="preserve">
     <value>نسخه منتشر شد و در ذخیره‌گاه نگه داشته می‌شود.</value>
   </data>
+  <data name="Fields_Title" xml:space="preserve">
+    <value>تغییر فیلدهای رکورد</value>
+  </data>
+  <data name="Fields_Lead" xml:space="preserve">
+    <value>هر فیلدی که رکورد دارد، با آنچه می‌تواند در آن باشد. متنی که خالی بماند، فیلدش را از رکورد برمی‌دارد. برای افزودن فیلدی که رکورد هنوز ندارد، رکورد را در پایین به‌صورت متن تغییر دهید.</value>
+  </data>
+  <data name="Fields_LinesHint" xml:space="preserve">
+    <value>هر مورد در یک سطر.</value>
+  </data>
+  <data name="Fields_RowsHint" xml:space="preserve">
+    <value>ردیفی که همهٔ متن‌هایش خالی باشد برداشته می‌شود؛ ردیف آخر برای افزودن است.</value>
+  </data>
+  <data name="Fields_Row" xml:space="preserve">
+    <value>ردیف {0}</value>
+  </data>
+  <data name="Fields_NewRow" xml:space="preserve">
+    <value>ردیف تازه</value>
+  </data>
+  <data name="Fields_JsonHint" xml:space="preserve">
+    <value>همان‌گونه که در فایل مجموعه نوشته می‌شود.</value>
+  </data>
+  <data name="Change_TextTitle" xml:space="preserve">
+    <value>تغییر رکورد به‌صورت متن</value>
+  </data>
 </root>

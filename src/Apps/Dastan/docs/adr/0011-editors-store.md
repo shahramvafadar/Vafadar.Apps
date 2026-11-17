@@ -204,3 +204,51 @@ has the forms of what can be done there and no other. In a browser, on a publish
 Persian: the page of a record with its three forms does not scroll sideways, every field has a label and every
 control is at least 44 px high. A form could not be sent from the browser of this session (its window does not
 draw); sending is covered by the tests above.
+
+## Addendum of 2026-11-17 – the fields of a record as a form (step 11.6)
+
+The page of a record has a second way to change it: its fields as a form (`RecordForm`, `FieldInput`). The record
+as text stays below it.
+
+* **The form is made from the record, not from a description of records.** Every field the record has gets the
+  input that fits what it holds:
+
+  | What the field holds | Input |
+  |---|---|
+  | A text | One line, or several when the text is long |
+  | A number | A number; the reading stage (`spoilerLevel`) is a choice of the stages of the collection |
+  | Yes or no | A box to tick |
+  | A text with a vocabulary (`ContentVocabulary`, by the place of the field: `relations[].scope.kind`) | A choice of its values |
+  | The identifier of a record (`from`, `to`, `entityId`, `storyId`) | A choice of the records of that group |
+  | Identifiers of records (`sourceIds`, `eventIds`, `depictedEntityIds`, …) | A box to tick for each record of that group |
+  | Texts | A text with one in a line |
+  | A part with fields of its own (`scope`, `rights`) | Its fields, set in |
+  | A list of parts with the same simple fields (`entityAssociations`) | A row for each, and an empty one |
+  | Anything else – nothing, a part within a part | The text it is written as |
+
+  So a new field or a new value needs nothing in the tool: the readers and their vocabulary know it, and the form
+  follows. The label of an input is the name of the field in the file – the name the guide to the content and the
+  reasons of the readers use.
+* **What the form sends is the record again.** The fields are read in the order of the record; what the form does
+  not show – the identifier, the state and the record of a review – stays as it is. The records a field points
+  to keep the order the record names them in, new ones follow in the order of the collection. A text left empty
+  takes its field out of the record. A row whose texts are all empty is no row: that is how the empty row stays
+  out, and how a row is taken out. Every record of the sample comes back from its form as it was; a test holds
+  that for each of them.
+* **The form adds no rule.** It refuses only what it cannot understand – a number that is none, a text of a part
+  that is not JSON – and hands the record to `Put`, which tries it on the whole collection. A value the record
+  has that the vocabulary does not know stays choosable; the readers say what is wrong with it.
+* **The form does not add a field.** It changes the fields a record has. A field the record does not have yet is
+  written in the record as text.
+
+Not done, and named as step 11.8: the texts of the other languages. A row of an event whose role is translated
+cannot be taken out in the tool – the readers refuse a translation of something that is not there, and the tool
+has no form for the translation. The reasons of the form itself ("is not a number") are English, as the reasons of
+the readers are.
+
+Verification: `StudioFormTests` (15 tests): every record of the sample through its form and back; the inputs of
+an event; the form on the page; sent as it stands it changes nothing, for a name, a relation, an event and a
+source; a text, a stage and the sources filled in; a row added; a row taken out; a translated row refused with
+the reason; an emptied text; a refusal that keeps the form; a number that is none; Persian. Measured in a browser
+on the published tool at 375 px, right to left: no overflow, every input with a label, every target at least
+44 px, and one change sent from the browser and kept.

@@ -1,0 +1,112 @@
+@* One field of a record with the input that fits what it holds (step 11.6). The label is the name the field has in
+   the file of a collection: the guide to the content describes the fields by these names. *@
+@inject IStringLocalizer<Ui> T
+
+@switch (Field.Kind)
+{
+    case FieldKind.Text:
+        <p class="field">
+            <label for="@Id"><code>@Field.Name</code></label>
+            <input id="@Id" name="@Field.Path" value="@Field.Text" maxlength="2000" dir="auto" />
+        </p>
+        break;
+
+    case FieldKind.LongText:
+        <p class="field">
+            <label for="@Id"><code>@Field.Name</code></label>
+            <textarea id="@Id" name="@Field.Path" rows="@Lines(Field.Text, 3)" maxlength="20000" dir="auto">@Field.Text</textarea>
+        </p>
+        break;
+
+    case FieldKind.Number:
+        <p class="field">
+            <label for="@Id"><code>@Field.Name</code></label>
+            <input id="@Id" name="@Field.Path" value="@Field.Text" inputmode="decimal" dir="ltr" required />
+        </p>
+        break;
+
+    case FieldKind.Flag:
+        <p class="field">
+            <label class="choice"><input type="checkbox" name="@Field.Path" value="true" checked="@(Field.Text == "true")" /> <code>@Field.Name</code></label>
+        </p>
+        break;
+
+    case FieldKind.Choice:
+        <p class="field">
+            <label for="@Id"><code>@Field.Name</code></label>
+            <select id="@Id" name="@Field.Path">
+                @foreach (var option in Field.Options)
+                {
+                    <option value="@option.Value" selected="@(option.Value == Field.Text)">@option.Label</option>
+                }
+            </select>
+        </p>
+        break;
+
+    case FieldKind.References:
+        <fieldset class="field">
+            <legend><code>@Field.Name</code></legend>
+            <div class="options">
+                @foreach (var option in Field.Options)
+                {
+                    <label class="choice"><input type="checkbox" name="@Field.Path" value="@option.Value" checked="@Field.Chosen.Contains(option.Value)" /> <bdi>@option.Label</bdi></label>
+                }
+            </div>
+        </fieldset>
+        break;
+
+    case FieldKind.Lines:
+        <p class="field">
+            <label for="@Id"><code>@Field.Name</code></label>
+            <textarea id="@Id" name="@Field.Path" rows="@Lines(Field.Text, 2)" maxlength="20000" dir="auto" aria-describedby="@($"{Id}-hint")">@Field.Text</textarea>
+            <span class="hint" id="@($"{Id}-hint")">@T["Fields_LinesHint"]</span>
+        </p>
+        break;
+
+    case FieldKind.Group:
+        <fieldset class="field part">
+            <legend><code>@Field.Name</code></legend>
+            @foreach (var part in Field.Parts)
+            {
+                <FieldInput Field="part" />
+            }
+        </fieldset>
+        break;
+
+    case FieldKind.Rows:
+        <fieldset class="field part">
+            <legend><code>@Field.Name</code></legend>
+            <span class="hint">@T["Fields_RowsHint"]</span>
+            @for (var index = 0; index < Field.Rows.Count; index++)
+            {
+                var last = index == Field.Rows.Count - 1;
+                <fieldset class="field part row">
+                    <legend>@(last ? T["Fields_NewRow"] : string.Format(CultureInfo.CurrentCulture, T["Fields_Row"], index + 1))</legend>
+                    @foreach (var part in Field.Rows[index])
+                    {
+                        <FieldInput Field="part" />
+                    }
+                </fieldset>
+            }
+        </fieldset>
+        break;
+
+    default:
+        <p class="field">
+            <label for="@Id"><code>@Field.Name</code></label>
+            <textarea id="@Id" class="code" name="@Field.Path" rows="@Lines(Field.Text, 2)" spellcheck="false" dir="ltr" aria-describedby="@($"{Id}-hint")">@Field.Text</textarea>
+            <span class="hint" id="@($"{Id}-hint")">@T["Fields_JsonHint"]</span>
+        </p>
+        break;
+}
+
+@code {
+    /// <summary>Gets or sets the field.</summary>
+    [Parameter, EditorRequired]
+    public FormField Field { get; set; } = null!;
+
+    // The name of the input, as an identifier a label can point to.
+    private string Id => "field-" + string.Concat(Field.Path.Select(character => char.IsAsciiLetterOrDigit(character) ? character : '-'));
+
+    private static int Lines(string text, int least) => Math.Clamp(text.Count(character => character == '\n') + 1 + (text.Length / 80), least, 30);
+}

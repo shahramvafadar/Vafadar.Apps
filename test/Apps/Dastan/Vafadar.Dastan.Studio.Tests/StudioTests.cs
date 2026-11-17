@@ -274,8 +274,8 @@ public sealed class StudioTests(Studio studio) : IClassFixture<Studio>
     [InlineData($"/en/{Collection}/waiting", new string[0])]
     [InlineData($"/en/{Collection}/history", new string[0])]
     [InlineData($"/en/{Collection}/records/relations", new[] { "add" })]
-    [InlineData($"/en/{Collection}/record/relations/relation-02", new[] { "review", "change", "remove" })]
-    [InlineData($"/en/{Collection}/record/entities/character-rostam", new[] { "change", "remove" })]
+    [InlineData($"/en/{Collection}/record/relations/relation-02", new[] { "review", "fields", "change", "remove" })]
+    [InlineData($"/en/{Collection}/record/entities/character-rostam", new[] { "fields", "change", "remove" })]
     [InlineData($"/en/{Collection}/record/relations/relation-18", new string[0])]
     [InlineData($"/en/{Collection}/revisions", new[] { "publish" })]
     public async Task A_page_has_the_forms_of_what_can_be_done_there_and_no_other(string address, string[] forms)

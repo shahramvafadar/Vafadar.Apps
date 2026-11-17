@@ -139,8 +139,8 @@ public sealed class StudioActsTests : IDisposable
 
         var next = await _desk.Get(Rostam);
 
-        // The page of a name has two forms – to change it and to take it out – and both start with the name.
-        Assert.Equal(2, Regex.Matches(next.Main, "value=\"Mina the reviewer\"").Count);
+        // The page of a name has three forms – its fields, the record as text, taking it out – and all start with the name.
+        Assert.Equal(3, Regex.Matches(next.Main, "value=\"Mina the reviewer\"").Count);
         Assert.Contains("id=\"change-by\" name=\"Changing.By\" value=\"Mina the reviewer\"", next.Main, StringComparison.Ordinal);
     }
 

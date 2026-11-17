@@ -74,6 +74,15 @@ public sealed partial class EditorialStore
         return record is null ? null : new RecordView(Info(record), JsonNode.Parse(record.Body)!.AsObject());
     }
 
+    /// <summary>Returns the reading stages of a collection, in their order; empty for a collection the store does not hold.</summary>
+    public ImmutableArray<(int Level, string Label)> Stages(string collectionId)
+    {
+        var collection = _context.Collections.AsNoTracking().SingleOrDefault(item => item.Id == collectionId);
+        return collection is null
+            ? []
+            : [.. JsonNode.Parse(collection.Header)!["spoilerPolicy"]!["levels"]!.AsArray().Select(stage => ((int)stage!["level"]!, (string)stage["label"]!))];
+    }
+
     private static RecordInfo Info(StoredRecord record)
     {
         var body = JsonNode.Parse(record.Body)!;

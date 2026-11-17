@@ -35,6 +35,16 @@ public sealed class ChangeInput
     public string? Reason { get; set; }
 }
 
+/// <summary>What an editor fills in beside the fields of a record: the fields themselves are read by their names.</summary>
+public sealed class FieldsInput
+{
+    /// <summary>Gets or sets who changes the record.</summary>
+    public string? By { get; set; }
+
+    /// <summary>Gets or sets why.</summary>
+    public string? Reason { get; set; }
+}
+
 /// <summary>What an editor fills in to take a record out of a collection.</summary>
 public sealed class RemoveInput
 {

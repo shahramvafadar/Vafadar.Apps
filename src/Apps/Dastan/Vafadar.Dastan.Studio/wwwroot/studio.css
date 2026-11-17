@@ -466,7 +466,7 @@ h3 {
   font-weight: 400;
 }
 
-.field input:not([type="radio"]),
+.field input:not([type="radio"], [type="checkbox"]),
 .field select,
 .field textarea {
   inline-size: 100%;
@@ -479,9 +479,43 @@ h3 {
   font: inherit;
 }
 
-.field input[type="radio"] {
+.field input[type="radio"],
+.field input[type="checkbox"] {
+  flex: none;
   inline-size: 1.25rem;
   block-size: 1.25rem;
+}
+
+.field label code,
+.field legend code {
+  font-size: 0.95rem;
+}
+
+/* A part of a record with fields of its own, and the rows of a list: set in from the fields around them. */
+.field.part {
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.field.part > legend {
+  padding-inline: var(--space-2);
+}
+
+.field.row {
+  border-style: dashed;
+}
+
+/* The records a field can point to: a list that scrolls in itself when it is long. */
+.field .options {
+  display: grid;
+  max-block-size: 18rem;
+  overflow: auto;
+  padding-inline: var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 .field .code {
