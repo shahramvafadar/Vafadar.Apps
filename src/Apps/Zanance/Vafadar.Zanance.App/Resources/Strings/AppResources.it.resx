@@ -7636,7 +7636,7 @@ Identità: {2}</value>
     <value>Plus locale non richiede un account Zanance. Un’identità collega Pro tra gli store supportati. Crearla non crea un conto finanziario, non condivide un profilo e non avvia un acquisto.</value>
   </data>
   <data name="BillingIdentity_Privacy" xml:space="preserve">
-    <value>La password e il codice monouso non vengono salvati. I file finanziari locali e gli acquisti dello store restano separati da questo modulo.</value>
+    <value>Questo modulo non conserva la tua password né il codice monouso. Per le email di conferma e recupero, il servizio ospitato di Zanance invia a Brevo il tuo indirizzo email, l’identificativo della richiesta, il codice e la lingua del messaggio. Non invia a Brevo la tua password né i tuoi file finanziari. I file finanziari locali e gli acquisti nello store restano separati.</value>
   </data>
   <data name="BillingIdentity_Instructions" xml:space="preserve">
     <value>Se la richiesta è idonea, le istruzioni vengono inviate tramite il servizio configurato. Questa risposta non conferma l’esistenza di un account.</value>

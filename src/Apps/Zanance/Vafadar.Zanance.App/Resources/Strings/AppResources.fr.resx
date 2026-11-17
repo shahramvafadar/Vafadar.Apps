@@ -7624,7 +7624,7 @@ Identité : {2}</value>
     <value>Plus local ne nécessite pas de compte Zanance. Une identité relie Pro entre les boutiques prises en charge. Sa création ne crée pas de compte financier, ne partage aucun profil et ne lance aucun achat.</value>
   </data>
   <data name="BillingIdentity_Privacy" xml:space="preserve">
-    <value>Votre mot de passe et votre code à usage unique ne sont pas enregistrés. Les fichiers financiers locaux et les achats restent séparés de ce formulaire d’identité.</value>
+    <value>Ce formulaire ne conserve ni votre mot de passe ni le code à usage unique. Pour les e-mails de confirmation et de récupération, le service hébergé de Zanance transmet à Brevo votre adresse e-mail, l’identifiant de la demande, le code et la langue du message. Votre mot de passe et vos fichiers financiers ne sont pas envoyés à Brevo. Les fichiers financiers locaux et les achats en boutique restent distincts.</value>
   </data>
   <data name="BillingIdentity_Instructions" xml:space="preserve">
     <value>Si la demande est admissible, les instructions sont envoyées par le service configuré. Cette réponse ne confirme pas l’existence d’un compte.</value>

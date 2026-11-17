@@ -96,6 +96,8 @@ and [complete current flow](../../src/Apps/Zanance/docs/quality/complete-brevo-i
 distinguish fictional contracts from genuine delivery/public operation. Actual
 credentials/sender, account/domain/processor acceptance and the separately scoped
 real-send/public-hosting checks remain external inputs, not missing mail code.
+The [six-language account-entry disclosure](../../src/Apps/Zanance/docs/quality/brevo-entry-disclosure-d1228.md)
+names the hosted mail processor and transmitted data before the original form choices.
 
 Primary references:
 

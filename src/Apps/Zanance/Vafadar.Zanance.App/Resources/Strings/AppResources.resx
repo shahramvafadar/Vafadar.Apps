@@ -7676,7 +7676,7 @@ Identity: {2}</value>
     <value>Local Plus needs no Zanance account. An identity connects Pro across supported stores. Creating it does not create a financial account, share a profile or start a purchase.</value>
   </data>
   <data name="BillingIdentity_Privacy" xml:space="preserve">
-    <value>Your password and one-use code are not saved. Local financial files and store purchases remain separate from this identity form.</value>
+    <value>This form does not retain your password or one-use code. For confirmation and recovery emails, the hosted Zanance service sends your email address, request identifier, code and message language to Brevo. It does not send your password or financial files to Brevo. Local financial files and store purchases remain separate.</value>
   </data>
   <data name="BillingIdentity_Instructions" xml:space="preserve">
     <value>If the request is eligible, instructions are delivered through the configured service. This response does not confirm whether an account already exists.</value>

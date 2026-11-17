@@ -7647,7 +7647,7 @@ Identität: {2}</value>
     <value>Lokales Plus benötigt kein Zanance-Konto. Eine Identität verbindet Pro über unterstützte Stores hinweg. Ihre Erstellung legt kein Finanzkonto an, teilt kein Profil und startet keinen Kauf.</value>
   </data>
   <data name="BillingIdentity_Privacy" xml:space="preserve">
-    <value>Passwort und Einmalcode werden nicht gespeichert. Lokale Finanzdateien und Store-Käufe bleiben von diesem Identitätsformular getrennt.</value>
+    <value>Dieses Formular speichert weder Ihr Passwort noch den Einmalcode. Für Bestätigungs- und Wiederherstellungs-E-Mails übermittelt der gehostete Zanance-Dienst Ihre E-Mail-Adresse, die Anfragekennung, den Code und die Nachrichtensprache an Brevo. Ihr Passwort und Ihre Finanzdateien werden nicht an Brevo gesendet. Lokale Finanzdateien und Store-Käufe bleiben getrennt.</value>
   </data>
   <data name="BillingIdentity_Instructions" xml:space="preserve">
     <value>Wenn die Anfrage berechtigt ist, werden Anweisungen über den konfigurierten Dienst zugestellt. Diese Antwort bestätigt nicht, ob bereits ein Konto besteht.</value>
