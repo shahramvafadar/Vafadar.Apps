@@ -91,3 +91,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   unchanged, and every change of a name, a relation, a step or an image is kept with who made it, when and why,
   and what it said before. The public site does not use the store. Working in the store without a file, and a
   tool with pages for the editors, are the next steps.
+- In the store the editors can record the review of a statement – reviewed, disputed or withdrawn –, change one
+  record and take one out, without a file in between. Each change is tried on the whole collection first; what
+  the site could not use afterwards is refused with the reasons.

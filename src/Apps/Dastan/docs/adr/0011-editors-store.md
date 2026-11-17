@@ -75,3 +75,32 @@ with its Persian translation; what comes out is read by the site; the store keep
 again; the same file a second time changes nothing; a changed record, a review, a removed record and a changed
 translation each become a change with who, when, why, before and after; a file the site cannot use and a published
 revision are refused and change nothing; the commands `store import`, `store export` and `store history`.
+
+## Addendum of 2026-11-17 – the acts of an editor (step 11.2)
+
+The store now knows three acts on one record, without a file in between:
+
+* **Putting a record** – in place of the record with its identifier, or new at the end of its group.
+* **Taking a record out** – with the texts that translate it, since a translation names only what the collection
+  has.
+* **Recording a review** of a relation, an event or a statement with a date: reviewed, disputed or withdrawn, with
+  who reviewed, on which day, and a note. The record of the review is written into the statement as the file
+  format has it (ADR 0009).
+
+Every act is **tried on the whole collection first**: the collection as it would be is read by the readers of the
+site, and only a collection they accept is kept. So the store never holds a collection the site could not use,
+and it has no rule of its own: that a disputed statement says what is disputed, that a withdrawn one says why,
+that nothing may point to a record that is gone, that nothing gives the story away early – each is what a reader
+says, returned to the editor with the name of the record. An act that is refused changes nothing. An act needs
+somebody and a reason; both are kept in the history of the record.
+
+The store looks for the files a media item names only when it was told where the files of its collections lie;
+otherwise an act cannot be refused for a file that is missing, and the check of a written-out file finds it.
+
+Statements can be asked for with the state of their review – all of them, or those that still wait.
+
+Verification: `EditorialActsTests` (26 tests): a review with and without a note; disputed and withdrawn only
+with a note, by the words of the readers; a withdrawn statement stays in the store and is no part of what the site
+reads; a statement something points to is not withdrawn; a dated statement by its key; put and remove, and what
+they are refused for, with the collection unchanged afterwards; the commands `store waiting`, `store review`,
+`store put`, `store remove`.

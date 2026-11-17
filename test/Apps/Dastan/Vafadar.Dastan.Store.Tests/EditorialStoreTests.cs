@@ -11,37 +11,25 @@ namespace Vafadar.Dastan.Store.Tests;
 /// </summary>
 public sealed class EditorialStoreTests : IDisposable
 {
-    private const string Collection = "dastan-shahnameh-rostam-sohrab-pilot-v0.5";
+    private const string Collection = WorkingCopy.Collection;
 
-    private readonly string _folder = Path.Combine(Path.GetTempPath(), "dastan-store-" + Guid.NewGuid().ToString("N"));
-    private readonly Clock _clock = new(new DateTimeOffset(2026, 11, 17, 9, 0, 0, TimeSpan.Zero));
+    private readonly WorkingCopy _copy = new();
 
-    public EditorialStoreTests()
-    {
-        // The working files of the editors and, beside them, the documents a media item points to for reviewers.
-        var app = Path.Combine(RepositoryRoot(), "src", "Apps", "Dastan");
-        foreach (var folder in new[] { "content", Path.Combine("docs", "product") })
-        {
-            foreach (var file in Directory.EnumerateFiles(Path.Combine(app, folder), "*", SearchOption.AllDirectories))
-            {
-                var copy = Path.Combine(_folder, Path.GetRelativePath(app, file));
-                Directory.CreateDirectory(Path.GetDirectoryName(copy)!);
-                File.Copy(file, copy);
-            }
-        }
-    }
+    public void Dispose() => _copy.Dispose();
 
-    public void Dispose() => Directory.Delete(_folder, recursive: true);
+    private string Folder => _copy.Folder;
 
-    private string Sample => Path.Combine(_folder, "content", "samples", "shahnameh-pilot.json");
+    private TestClock Clock => _copy.Clock;
 
-    private string Persian => Path.Combine(_folder, "content", "samples", "shahnameh-pilot.fa.json");
+    private string Sample => _copy.Sample;
 
-    private string Database => Path.Combine(_folder, "store", "editors.db");
+    private string Persian => _copy.Persian;
 
-    private EditorialStore Open() => EditorialStore.Open(Database, _clock);
+    private string Database => _copy.Database;
 
-    private JsonObject Working() => JsonNode.Parse(File.ReadAllText(Sample))!.AsObject();
+    private EditorialStore Open() => _copy.Open();
+
+    private JsonObject Working() => _copy.Working();
 
     private void Change(Action<JsonObject> change)
     {
@@ -50,21 +38,7 @@ public sealed class EditorialStoreTests : IDisposable
         File.WriteAllText(Sample, sample.ToJsonString());
     }
 
-    private static JsonObject Record(JsonObject sample, string group, string id) =>
-        sample[group]!.AsArray().Select(node => node!.AsObject()).Single(record => (string?)record["id"] == id);
-
-    private static string RepositoryRoot()
-    {
-        for (var directory = new DirectoryInfo(AppContext.BaseDirectory); directory is not null; directory = directory.Parent)
-        {
-            if (File.Exists(Path.Combine(directory.FullName, "Vafadar.Apps.slnx")))
-            {
-                return directory.FullName;
-            }
-        }
-
-        throw new InvalidOperationException("The root of the repository was not found.");
-    }
+    private static JsonObject Record(JsonObject sample, string group, string id) => WorkingCopy.Record(sample, group, id);
 
     // --- in and out ---
 
@@ -96,14 +70,14 @@ public sealed class EditorialStoreTests : IDisposable
         {
             store.Import(Sample, "an editor");
             var exported = store.Export(Collection)!;
-            var folder = Path.Combine(_folder, "content", "exported");
+            var folder = Path.Combine(Folder, "content", "exported");
             Directory.CreateDirectory(folder);
             File.WriteAllText(Path.Combine(folder, "shahnameh-pilot.json"), exported.Json);
             File.WriteAllText(Path.Combine(folder, "shahnameh-pilot.fa.json"), exported.Translations["fa"]);
         }
 
-        var report = ContentCheck.File(Path.Combine(_folder, "content", "exported", "shahnameh-pilot.json"));
-        var collection = PilotSample.Load(Path.Combine(_folder, "content", "exported", "shahnameh-pilot.json"));
+        var report = ContentCheck.File(Path.Combine(Folder, "content", "exported", "shahnameh-pilot.json"));
+        var collection = PilotSample.Load(Path.Combine(Folder, "content", "exported", "shahnameh-pilot.json"));
 
         Assert.True(report.IsUsable, string.Join('\n', report.Problems));
         Assert.Equal(20, collection.Relations.Length);
@@ -145,7 +119,7 @@ public sealed class EditorialStoreTests : IDisposable
         var change = Assert.Single(store.History(Collection, "relations", "relation-02"));
 
         Assert.Equal((RecordChangeKind.Added, 1, "an editor", "The first import."), (change.Kind, change.Version, change.By, change.Reason));
-        Assert.Equal(_clock.GetUtcNow().UtcDateTime, change.At);
+        Assert.Equal(Clock.GetUtcNow().UtcDateTime, change.At);
         Assert.Null(change.Before);
         Assert.Equal("Father of", (string?)JsonNode.Parse(change.After!)!["label"]);
     }
@@ -169,7 +143,7 @@ public sealed class EditorialStoreTests : IDisposable
         using var store = Open();
         store.Import(Sample, "an editor");
         Change(sample => Record(sample, "entities", "character-rostam")["summary"] = "A corrected summary.");
-        _clock.Advance(TimeSpan.FromHours(3));
+        Clock.Advance(TimeSpan.FromHours(3));
 
         var result = store.Import(Sample, "a second editor", "The summary said too much.");
         var history = store.History(Collection, "entities", "character-rostam");
@@ -281,7 +255,7 @@ public sealed class EditorialStoreTests : IDisposable
             }
         });
         var revision = ContentRevision.Make(new RevisionRequest(Sample, 1, new DateOnly(2026, 11, 17)));
-        var published = Path.Combine(_folder, "content", "published", "shahnameh-pilot.json");
+        var published = Path.Combine(Folder, "content", "published", "shahnameh-pilot.json");
         Directory.CreateDirectory(Path.GetDirectoryName(published)!);
         File.WriteAllText(published, revision.Json);
         using var store = Open();
@@ -297,13 +271,13 @@ public sealed class EditorialStoreTests : IDisposable
     private (int Exit, string Output) Run(params string[] arguments)
     {
         using var output = new StringWriter();
-        return (ContentCommands.Run(arguments, output, new DateOnly(2026, 11, 17), _clock), output.ToString());
+        return (ContentCommands.Run(arguments, output, new DateOnly(2026, 11, 17), Clock), output.ToString());
     }
 
     [Fact]
     public void The_commands_bring_a_file_in_write_it_out_where_the_site_can_read_it_and_tell_the_history()
     {
-        var target = Path.Combine(_folder, "content", "exported", "shahnameh-pilot.json");
+        var target = Path.Combine(Folder, "content", "exported", "shahnameh-pilot.json");
 
         var (brought, said) = Run("store", "import", Sample, "--store", Database, "--by", "an editor", "--reason", "The first import.");
         Change(sample => Record(sample, "events", "event-01")["summary"] = "A corrected step.");
@@ -318,7 +292,7 @@ public sealed class EditorialStoreTests : IDisposable
         Assert.Equal(ContentCommands.Done, written);
         Assert.Contains("and 1 translation beside it", saidOut, StringComparison.Ordinal);
         Assert.Contains("The site can use it.", saidOut, StringComparison.Ordinal);
-        Assert.True(File.Exists(Path.Combine(_folder, "content", "exported", "shahnameh-pilot.fa.json")));
+        Assert.True(File.Exists(Path.Combine(Folder, "content", "exported", "shahnameh-pilot.fa.json")));
         Assert.Equal(ContentCommands.NotUnderstood, again);
         Assert.Contains("never writes over a file", refusal, StringComparison.Ordinal);
         Assert.Equal(ContentCommands.Done, told);
@@ -333,7 +307,7 @@ public sealed class EditorialStoreTests : IDisposable
         Change(sample => Record(sample, "entities", "character-rostam")["type"] = "Hero");
 
         var (refused, why) = Run("store", "import", Sample, "--store", Database, "--by", "an editor");
-        var (unknown, which) = Run("store", "export", "another-collection", "--store", Database, "--out", Path.Combine(_folder, "out.json"));
+        var (unknown, which) = Run("store", "export", "another-collection", "--store", Database, "--out", Path.Combine(Folder, "out.json"));
         var (untold, none) = Run("store", "history", "another-collection", "--store", Database);
 
         Assert.Equal(ContentCommands.NotUsable, refused);
@@ -360,14 +334,5 @@ public sealed class EditorialStoreTests : IDisposable
         Assert.Equal(ContentCommands.NotUnderstood, exit);
         Assert.Contains("store import <file> --store <database> --by <name>", text, StringComparison.Ordinal);
         Assert.False(File.Exists("x.db"));
-    }
-
-    private sealed class Clock(DateTimeOffset now) : TimeProvider
-    {
-        private DateTimeOffset _now = now;
-
-        public override DateTimeOffset GetUtcNow() => _now;
-
-        public void Advance(TimeSpan by) => _now += by;
     }
 }
