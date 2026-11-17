@@ -11,7 +11,7 @@
             @* On the page of a collection the change names its record; on the page of a record it need not. *@
             <span>
                 @T[$"Group_{Change.Group}"]:
-                @if (Change.Group == EditorialStore.TranslationGroup)
+                @if (Change.Group is EditorialStore.TranslationGroup or EditorialStore.CollectionGroup)
                 {
                     <bdi dir="ltr">@Change.RecordId</bdi>
                 }

@@ -85,6 +85,49 @@ public sealed partial class EditorialStore
             .Select(translation => (translation.Language, (JsonNode.Parse(translation.Body)![group]?[recordId]?.DeepClone() as JsonObject) ?? [])),
     ];
 
+    /// <summary>
+    /// Returns the texts of the statements with a date of an entity in the other languages of its collection:
+    /// by the language, the texts by the key of the statement.
+    /// </summary>
+    public ImmutableArray<(string Language, JsonObject Texts)> DatedTexts(string collectionId, string entityId)
+    {
+        var keys = (Record(collectionId, "entities", entityId)?.Body["dated"] as JsonArray ?? [])
+            .Select(statement => (string?)statement?["key"]).OfType<string>().ToList();
+        return
+        [
+            .. _context.Translations.AsNoTracking().Where(translation => translation.CollectionId == collectionId).ToList()
+                .OrderBy(translation => translation.Language, StringComparer.Ordinal)
+                .Select(translation =>
+                {
+                    var all = JsonNode.Parse(translation.Body)![DatedGroup] as JsonObject;
+                    return (translation.Language, new JsonObject(keys
+                        .Where(key => all?[key] is JsonObject)
+                        .Select(key => KeyValuePair.Create(key, all![key]!.DeepClone()))!));
+                }),
+        ];
+    }
+
+    /// <summary>
+    /// Returns the names of the reading stages in the other languages of a collection: by the language, the name
+    /// of every stage in the order of the stages, nothing where the language has none.
+    /// </summary>
+    public ImmutableArray<(string Language, ImmutableArray<string?> Labels)> StageTexts(string collectionId)
+    {
+        var count = Stages(collectionId).Length;
+        return
+        [
+            .. _context.Translations.AsNoTracking().Where(translation => translation.CollectionId == collectionId).ToList()
+                .OrderBy(translation => translation.Language, StringComparer.Ordinal)
+                .Select(translation =>
+                {
+                    var stages = JsonNode.Parse(translation.Body)![StagesGroup] as JsonObject;
+                    return (translation.Language, Enumerable.Range(0, count)
+                        .Select(level => (string?)stages?[level.ToString(System.Globalization.CultureInfo.InvariantCulture)])
+                        .ToImmutableArray());
+                }),
+        ];
+    }
+
     /// <summary>Returns the reading stages of a collection, in their order; empty for a collection the store does not hold.</summary>
     public ImmutableArray<(int Level, string Label)> Stages(string collectionId)
     {

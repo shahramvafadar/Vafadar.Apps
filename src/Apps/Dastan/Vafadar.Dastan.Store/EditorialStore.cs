@@ -34,6 +34,16 @@ public sealed partial class EditorialStore : IDisposable
     /// <summary>The group a change of a translation document is recorded under.</summary>
     public const string TranslationGroup = "translation";
 
+    /// <summary>
+    /// The group under which a change of what is not a record is kept: the reading stages, the edition, what
+    /// the collection is about. Its one "record" is the collection itself.
+    /// </summary>
+    public const string CollectionGroup = "collection";
+
+    // The places of a translation document that are not named by a group of records.
+    private const string DatedGroup = "dated";
+    private const string StagesGroup = "readingStages";
+
     private static readonly JsonSerializerOptions Written = new() { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
 
     private readonly StoreContext _context;
@@ -239,6 +249,14 @@ public sealed partial class EditorialStore : IDisposable
         }
         else if (collection!.Header != written || added + changed + removed > 0)
         {
+            if (collection.Header != written)
+            {
+                // What is not a record changed: it is kept with who, when and why like any record.
+                var version = _context.Changes.Count(change => change.CollectionId == id && change.Group == CollectionGroup) + 1;
+                Record(id, CollectionGroup, id, RecordChangeKind.Changed, version, by, now, reason, collection.Header, written);
+                changed++;
+            }
+
             collection.Header = written;
             collection.UpdatedAt = now;
         }

@@ -58,7 +58,12 @@ public sealed partial class EditorialStore
     /// record; they are kept in the same act, so that a record and what translates it never disagree. A language
     /// that is not named keeps its texts; a language named with no texts loses them.
     /// </param>
-    public ActResult Put(string collectionId, string group, JsonObject record, string by, string reason, IReadOnlyDictionary<string, JsonObject>? texts = null)
+    /// <param name="dated">
+    /// For an entity: the texts of its statements with a date in the other languages, by the language and then
+    /// by the key of the statement. A language that is named keeps exactly the texts given for the statements
+    /// the record has now; the texts of a statement that was taken out go with it.
+    /// </param>
+    public ActResult Put(string collectionId, string group, JsonObject record, string by, string reason, IReadOnlyDictionary<string, JsonObject>? texts = null, IReadOnlyDictionary<string, JsonObject>? dated = null)
     {
         ArgumentNullException.ThrowIfNull(record);
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
@@ -99,6 +104,41 @@ public sealed partial class EditorialStore
 
             var records = root[group]!.AsArray();
             var place = Enumerable.Range(0, records.Count).Where(index => (string?)records[index]!["id"] == id).Cast<int?>().FirstOrDefault();
+            if (dated is not null)
+            {
+                static IEnumerable<string> Keys(JsonNode? entity) =>
+                    (entity?["dated"] as JsonArray ?? []).Select(statement => (string?)statement?["key"]).OfType<string>();
+
+                var before = Keys(place is { } held ? records[held] : null).ToList();
+                var now = Keys(record).ToHashSet(StringComparer.Ordinal);
+                foreach (var (language, named) in dated)
+                {
+                    if (!translations.TryGetValue(language, out var translation))
+                    {
+                        return $"{language}: the collection has no texts in that language; a language is added by importing its file.";
+                    }
+
+                    var kept = translation[DatedGroup] as JsonObject;
+                    foreach (var key in before)
+                    {
+                        kept?.Remove(key);
+                    }
+
+                    foreach (var (key, translated) in named)
+                    {
+                        if (now.Contains(key) && translated is JsonObject { Count: > 0 })
+                        {
+                            if (kept is null)
+                            {
+                                translation[DatedGroup] = kept = [];
+                            }
+
+                            kept[key] = translated.DeepClone();
+                        }
+                    }
+                }
+            }
+
             if (place is { } index)
             {
                 records[index] = record.DeepClone();
@@ -225,6 +265,89 @@ public sealed partial class EditorialStore
         return root["entities"]!.AsArray()
             .SelectMany(entity => entity!["dated"] as JsonArray ?? [])
             .FirstOrDefault(dated => (string?)dated!["key"] == name)?.AsObject();
+    }
+
+    /// <summary>
+    /// Changes the reading stages of a collection: their names in the language of the file and in the other
+    /// languages. A stage is added at the end; the last one is taken out by leaving it away – which the readers
+    /// refuse while a record is still told at it.
+    /// </summary>
+    /// <param name="collectionId">The collection.</param>
+    /// <param name="labels">The names of the stages from the opening on, in the language of the file.</param>
+    /// <param name="texts">The names in the other languages, by the language; a name left empty is one the language does not have.</param>
+    /// <param name="by">Who changes them.</param>
+    /// <param name="reason">Why.</param>
+    public ActResult PutStages(string collectionId, IReadOnlyList<string> labels, IReadOnlyDictionary<string, IReadOnlyList<string?>> texts, string by, string reason)
+    {
+        ArgumentNullException.ThrowIfNull(labels);
+        ArgumentNullException.ThrowIfNull(texts);
+        ArgumentException.ThrowIfNullOrWhiteSpace(by);
+        ArgumentException.ThrowIfNullOrWhiteSpace(reason);
+        if (labels.Count == 0 || labels.Any(string.IsNullOrWhiteSpace))
+        {
+            return Refused("a collection has at least one reading stage, and every stage has a name.");
+        }
+
+        return Act(collectionId, by, reason, (root, translations) =>
+        {
+            var levels = root["spoilerPolicy"]!["levels"]!.AsArray();
+            while (levels.Count > labels.Count)
+            {
+                levels.RemoveAt(levels.Count - 1);
+            }
+
+            for (var level = 0; level < labels.Count; level++)
+            {
+                if (level < levels.Count)
+                {
+                    levels[level]!["label"] = labels[level].Trim();
+                }
+                else
+                {
+                    levels.Add(new JsonObject { ["level"] = level, ["label"] = labels[level].Trim() });
+                }
+            }
+
+            foreach (var (language, names) in texts)
+            {
+                if (!translations.TryGetValue(language, out var translation))
+                {
+                    return $"{language}: the collection has no texts in that language; a language is added by importing its file.";
+                }
+
+                var stages = new JsonObject();
+                for (var level = 0; level < labels.Count && level < names.Count; level++)
+                {
+                    if (!string.IsNullOrWhiteSpace(names[level]))
+                    {
+                        stages[level.ToString(System.Globalization.CultureInfo.InvariantCulture)] = names[level]!.Trim();
+                    }
+                }
+
+                if (stages.Count > 0)
+                {
+                    translation[StagesGroup] = stages;
+                }
+                else
+                {
+                    translation.Remove(StagesGroup);
+                }
+            }
+
+            // A stage that is no longer there has no name in any language.
+            foreach (var translation in translations.Values)
+            {
+                if (translation[StagesGroup] is JsonObject named)
+                {
+                    foreach (var gone in named.Select(name => name.Key).Where(key => !int.TryParse(key, out var level) || level >= labels.Count).ToList())
+                    {
+                        named.Remove(gone);
+                    }
+                }
+            }
+
+            return null;
+        });
     }
 
     // Tries an act on the collection as the store holds it and keeps the result when the readers accept it.

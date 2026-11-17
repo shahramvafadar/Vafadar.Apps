@@ -381,3 +381,30 @@ be written to; `Check-Studio.ps1` passed all 23 checks; a store with a test acco
 signed in as a proxy would pass it on, the start and a record answered; the key of the sign-in written to the
 volume; `store editors` and `store copy` run in the container, an account refused without a terminal; then the
 container and the volume removed. Not done is listed at the end of the operations page.
+
+## Ninth addendum of 2026-11-17 – texts that belong to no record of their own (step 12.5)
+
+Step 11.8 put the texts of the other languages beside the fields of a record. Two kinds of text had no place:
+the names of the reading stages (they are part of the collection, not a record) and the texts of a statement
+with a date (a translation names them by the key of the statement, not by their entity).
+
+* **`EditorialStore.PutStages`** changes the names of the stages in the language of the file and in the other
+  languages in one act; a stage is added at the end, the last one is left away – which the readers refuse
+  while a record is told at it. A stage that is gone loses its name in every language.
+  `Stages` and `StageTexts` read them.
+* **`EditorialStore.Put`** takes, for an entity, the texts of its dated statements by language and key
+  (`dated`); a statement that is taken out loses its texts in the same act. `DatedTexts` reads them.
+* **What is not a record has a history.** Until now a change of the header of a collection – stages, edition,
+  publication note – was kept without a trace. It is now a change of the group `collection`
+  (`EditorialStore.CollectionGroup`) with who, when, why, before and after, and counts as a change.
+* **The tool**: the page `<collection>/stages` – one form, a row per stage and one more to add a stage, the
+  name in every language of the collection. In the form of an entity the list `dated` is shown row by row
+  (a list whose rows have parts of their own was written as text before); the texts of a row in the other
+  languages stand below its `label` and `summary`. The time of a row is still written as it stands in the
+  file – a form for a time is step 13.1.
+
+Verification: `EditorialStagesAndDatedTests` (9 tests, store) and `StudioStagesAndDatedTests` (10 tests,
+tool): read by language; kept with who and why; unchanged sent as it stands; a stage added and taken out; a
+stage in use, a nameless stage and an unknown language refused with the form kept; the texts of a dated
+statement kept with its entity and gone with its row; records with lists of nested parts (media, an entity
+with dates) sent as they stand change nothing. Not looked at in a browser.

@@ -131,3 +131,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   or none at all: a collection about a company, a club or a person, with what is known about it and when. A
   collection can be written in Persian or any other language instead of English; pages in another language say
   so where a text exists in that language only.
+- In the tool of the editors the names of the reading stages can be changed in every language, and a stage
+  added; the Persian texts of a statement with a date stand beside it in the form of its entity. A change of
+  the stages or of anything else that is not a record now appears in the history with who made it and why.
