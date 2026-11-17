@@ -53,11 +53,12 @@ without a gap: `number`, `publishedAt` (a day, not before the entry it follows),
 
 | Field | Meaning |
 |---|---|
-| `kind` | `added`, `changed` or `removed` |
+| `kind` | `added`, `changed`, `removed` or `withdrawn` |
 | `record` | The identifier of the record |
 | `recordKind` | `source`, `entity`, `relation`, `event` or `media` |
 | `label` | The name of the record at that revision – of a removed record, the name it had |
 | `spoilerLevel` | The reading stage of the record. A visitor is told of a change only from that stage on |
+| `reason` | Only for `withdrawn`, and required there: why the editors took the statement back. It is shown to the public – from the reading stage of the record on |
 
 The site shows the history on the page "what changed" of the collection (`/<collection>/revisions`).
 
@@ -69,10 +70,10 @@ A relation, an event and a dated statement may carry `review` – who reviewed t
 |---|---|
 | `by` | Who reviewed it: a name or a role, as the editors want it on record. It is not shown on a public page |
 | `on` | The day of the review – not after the day the revision is published |
-| `note` | Optional: what the statement was checked against |
+| `note` | What the statement was checked against. Required for a `disputed` and a `withdrawn` statement, where it is shown to the public: what the sources disagree about, or why the statement was taken back |
 
-`review` belongs to a statement whose `reviewStatus` is `reviewed` or `disputed`; on any other statement it is a
-problem. An editorial sample may hold reviewed statements with their record before it is published; a published
+`review` belongs to a statement whose `reviewStatus` is `reviewed`, `disputed` or `withdrawn`; on any other
+statement it is a problem. An editorial sample may hold reviewed statements with their record before it is published; a published
 revision has to have the record on every statement.
 
 ### `editionContext`
@@ -141,6 +142,19 @@ manuscript was made, when a place was founded. The collection shows these statem
 | `spoilerLevel` | The stage from which the statement is shown – not before its entity |
 | `reviewStatus` | `proposed`, `sourcedReviewPending`, `reviewed`, `disputed` or `withdrawn` |
 
+### Disputed and withdrawn statements
+
+A **disputed** statement is one the sources disagree about. It is part of the collection and of a published
+revision, and every page that shows it says so: a mark beside it in a list, a sign in a chart, and on the page of
+its sources what the disagreement is – the `note` of its review.
+
+A **withdrawn** statement is one the editors took back. It stays in the working file, with a `review` that says
+who withdrew it, when, and in its `note` why – and it is no part of the collection: the reader leaves it out, no
+page shows it, and a record that still points to it is a problem (a relation whose `scope` names a withdrawn
+event, a media item that depicts it). The `revision` command leaves it out of the revision it writes; when the
+statement was in the revision before, the history names it as `withdrawn` with the reason. A published revision
+that holds a withdrawn statement is refused.
+
 ## A relation
 
 | Field | Meaning |
@@ -152,7 +166,7 @@ manuscript was made, when a place was founded. The collection shows these statem
 | `label` | The relation in words, read from the first entity: "Father of" |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage at which the relation is told – not earlier than both entities |
-| `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed` |
+| `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed`; taken back by the editors `withdrawn` – see "Disputed and withdrawn statements" |
 | `passageLocator` | Optional |
 | `scope` | What the relation is a statement about – see below |
 
@@ -174,7 +188,7 @@ empty; optional `interpretation`; `calendarPeriod` is `null` or left out. A fami
 | `entityAssociations` | Who and what has to do with the step, at least one – see below |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage |
-| `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed` |
+| `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed`; taken back by the editors `withdrawn` – see "Disputed and withdrawn statements" |
 | `grouping` | Optional: `editorial_beat_may_condense_multiple_scenes`, when the step stands for several scenes |
 
 An association has `entityId`, `role` (in words: "traveler searching for Rakhsh") and `presence`:

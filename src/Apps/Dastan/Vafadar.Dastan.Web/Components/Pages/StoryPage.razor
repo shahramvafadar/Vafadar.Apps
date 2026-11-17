@@ -27,7 +27,7 @@
             {
                 <li class="step" id="@($"step-{step.Number}")">
                     <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(step.Number))</p>
-                    <h2><Loc Text="step.Event.Label" /></h2>
+                    <h2><Loc Text="step.Event.Label" /> <DisputedMark Review="step.Event.Review" /></h2>
                     <p><Loc Text="step.Event.Summary" /></p>
                     @if (step.Event.CondensesSeveralScenes)
                     {
@@ -78,6 +78,11 @@
 
         <h2>@T["Story_Chart"]</h2>
         <p class="note">@T["Story_ChartLead"] @T["Stage_Lead"]</p>
+        @if (story.Steps.Any(step => step.Event.Review == ReviewStatus.Disputed))
+        {
+            <p class="note">@T["Disputed_Legend"]</p>
+        }
+
         <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Story_ChartShown"], Visitor.Number(_chart.First), Visitor.Number(_chart.Last), Visitor.Number(_chart.StepCount), Visitor.Number(_chart.Lanes.Length), Visitor.Number(_chart.LaneCount))</p>
         if (Visitor.Language.IsRightToLeft)
         {

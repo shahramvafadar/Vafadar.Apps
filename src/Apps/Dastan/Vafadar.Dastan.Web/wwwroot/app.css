@@ -1518,3 +1518,38 @@ main:has(> .stage) > :not(.stage) {
   outline: 2px solid var(--focus);
   outline-offset: -2px;
 }
+
+/* A statement the sources disagree about (GOV-004) is said to be disputed wherever it is shown: with the word in
+   a text, with a sign in a chart, and with a broken line or outline where a chart has only a line or a bar. The
+   mark never relies on colour. */
+.disputed {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  border: 1px dashed currentColor;
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.disputed-sign {
+  margin-inline-start: var(--space-1);
+  font-weight: 700;
+}
+
+.graph-line.graph-disputed {
+  stroke-dasharray: 0.1em 0.45em;
+  stroke-linecap: round;
+}
+
+.tl-bar.tl-disputed,
+.tl-callout.tl-disputed {
+  outline: 2px dashed currentColor;
+  outline-offset: -3px;
+}
+
+.statement .reason {
+  flex: 0 0 100%;
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}

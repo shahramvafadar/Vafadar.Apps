@@ -10,14 +10,22 @@ namespace Vafadar.Dastan.Core;
 /// <param name="To">Where it ends.</param>
 /// <param name="StartIsApproximate">Whether the beginning is stated as "about".</param>
 /// <param name="EndIsApproximate">Whether the end is stated as "about".</param>
-public sealed record TimelineBand(string Key, string Label, decimal From, decimal To, bool StartIsApproximate = false, bool EndIsApproximate = false);
+public sealed record TimelineBand(string Key, string Label, decimal From, decimal To, bool StartIsApproximate = false, bool EndIsApproximate = false)
+{
+    /// <summary>Gets whether the sources disagree about the statement; the chart says so.</summary>
+    public bool IsDisputed { get; init; }
+}
 
 /// <summary>A single event as a timeline draws it: a name at one place of the axis of years.</summary>
 /// <param name="Key">What the event is, for the page that draws it; unique in the timeline.</param>
 /// <param name="Label">The words of its callout.</param>
 /// <param name="At">Where it stands on the axis.</param>
 /// <param name="IsApproximate">Whether its time is stated as "about".</param>
-public sealed record TimelineMark(string Key, string Label, decimal At, bool IsApproximate = false);
+public sealed record TimelineMark(string Key, string Label, decimal At, bool IsApproximate = false)
+{
+    /// <summary>Gets whether the sources disagree about the statement; the chart says so.</summary>
+    public bool IsDisputed { get; init; }
+}
 
 /// <summary>One lane of a timeline: a subject with its periods and its single events.</summary>
 /// <param name="Key">What the lane is, for the page that draws it.</param>

@@ -119,7 +119,8 @@ public static class ContentRevision
             }
         }
 
-        var changes = previous is null ? [] : Compare(previous, sample);
+        var withdrawn = Withdraw(sample);
+        var changes = previous is null ? [] : Compare(previous, sample, withdrawn);
         var day = request.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         var entered = new JsonObject { ["number"] = request.Number, ["publishedAt"] = day };
         if (!string.IsNullOrWhiteSpace(request.Note))
@@ -159,7 +160,7 @@ public static class ContentRevision
         }
 
         int Count(string kind) => changes.Count(change => (string?)change["kind"] == kind);
-        return new RevisionResult(json, [], (Count("added"), Count("changed"), Count("removed")));
+        return new RevisionResult(json, [], (Count("added"), Count("changed"), Count("removed") + Count("withdrawn")));
     }
 
     private static RevisionResult Refused(string problem) => new(null, [problem]);
@@ -169,7 +170,7 @@ public static class ContentRevision
     // What the new file changes against the last revision, record by record: a record is the same when it is
     // written the same. The changes keep the name and the reading stage of their record, so that a page can
     // show a change to those who may see the record and to nobody else.
-    private static List<JsonObject> Compare(JsonObject before, JsonObject after)
+    private static List<JsonObject> Compare(JsonObject before, JsonObject after, Dictionary<string, string> withdrawn)
     {
         var changes = new List<JsonObject>();
         foreach (var (group, kind) in Groups)
@@ -190,11 +191,49 @@ public static class ContentRevision
 
             foreach (var (id, record) in earlier.Where(entry => !later.ContainsKey(entry.Key)))
             {
-                changes.Add(Change("removed", id, kind, record));
+                // A statement the editors withdrew is not just gone: the history says so, and why.
+                var change = Change(withdrawn.ContainsKey(id) ? "withdrawn" : "removed", id, kind, record);
+                if (withdrawn.TryGetValue(id, out var reason))
+                {
+                    change["reason"] = reason;
+                }
+
+                changes.Add(change);
             }
         }
 
         return changes;
+    }
+
+    // Takes the statements the editors withdrew out of the file that becomes the revision, and returns why each
+    // relation and event was withdrawn. A dated statement is part of its entity: withdrawing it changes the entity.
+    private static Dictionary<string, string> Withdraw(JsonObject sample)
+    {
+        static bool IsWithdrawn(JsonNode? record) => (string?)record!["reviewStatus"] == "withdrawn";
+
+        var reasons = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var group in new[] { "relations", "events" })
+        {
+            var records = sample[group]!.AsArray();
+            foreach (var record in records.Where(IsWithdrawn).ToList())
+            {
+                reasons[(string)record!["id"]!] = (string)record["review"]!["note"]!;
+                records.Remove(record);
+            }
+        }
+
+        foreach (var entity in sample["entities"]!.AsArray())
+        {
+            if (entity!["dated"] is JsonArray dated)
+            {
+                foreach (var statement in dated.Where(IsWithdrawn).ToList())
+                {
+                    dated.Remove(statement);
+                }
+            }
+        }
+
+        return reasons;
     }
 
     private static Dictionary<string, JsonObject> Records(JsonObject collection, string group) =>

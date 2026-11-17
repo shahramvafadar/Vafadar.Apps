@@ -255,7 +255,7 @@ public static class ComparisonCharts
             {
                 if (Start(period.Time) is { } start && End(period.Time) is { } end && end.At > start.At)
                 {
-                    bands.Add(new TimelineBand(period.Key, text(period.Label), start.At, end.At, start.Approximate, end.Approximate));
+                    bands.Add(new TimelineBand(period.Key, text(period.Label), start.At, end.At, start.Approximate, end.Approximate) { IsDisputed = period.Review == ReviewStatus.Disputed });
                 }
                 else
                 {
@@ -268,7 +268,7 @@ public static class ComparisonCharts
             {
                 if (Moment(single.Time) is { } moment)
                 {
-                    marks.Add(new TimelineMark(single.Key, callout?.Invoke(single) ?? text(single.Label), moment.At, moment.Approximate));
+                    marks.Add(new TimelineMark(single.Key, callout?.Invoke(single) ?? text(single.Label), moment.At, moment.Approximate) { IsDisputed = single.Review == ReviewStatus.Disputed });
                 }
                 else
                 {

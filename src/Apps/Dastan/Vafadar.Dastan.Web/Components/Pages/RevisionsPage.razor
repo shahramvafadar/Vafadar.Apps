@@ -50,7 +50,7 @@
                         <li>
                             <span class="statement">
                                 <strong>@T[$"Change_{change.Kind}"]</strong>
-                                <span class="meta">@T[$"RecordKind_{change.RecordKind}"]</span>@(": ")
+                                <span class="meta">@T[$"RecordKind_{change.RecordKind}"]@(":")</span>
                                 @if (Address(change) is { } address)
                                 {
                                     <a href="@address"><Loc Text="change.Label" /></a>
@@ -58,6 +58,12 @@
                                 else
                                 {
                                     <Loc Text="change.Label" />
+                                }
+
+                                @if (change.Reason is { } reason)
+                                {
+                                    @* Why the editors took a statement back (GOV-004), in their words. *@
+                                    <span class="reason">@T["Change_Reason"] <bdi>@reason</bdi></span>
                                 }
                             </span>
                         </li>
@@ -92,7 +98,7 @@
 
     // Where a record of a change can be looked at now: a name and an image have a page of their own. A record
     // that was removed has none any more.
-    private string? Address(RevisionChange change) => change.Kind == RevisionChangeKind.Removed
+    private string? Address(RevisionChange change) => change.Kind is RevisionChangeKind.Removed or RevisionChangeKind.Withdrawn
         ? null
         : change.RecordKind switch
         {

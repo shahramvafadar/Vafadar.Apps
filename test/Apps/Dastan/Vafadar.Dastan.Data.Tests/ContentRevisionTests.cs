@@ -201,6 +201,90 @@ public sealed class ContentRevisionTests : IDisposable
         Assert.Contains(result.Problems, problem => problem.StartsWith("character-first: type has the unknown value \"Hero\"", StringComparison.Ordinal));
     }
 
+    // --- withdrawn statements (step 10.2, GOV-004) ---
+
+    private static JsonObject Withdrawn(JsonObject sample, string? reason = "The source does not say this.")
+    {
+        var relation = sample["relations"]![0]!.AsObject();
+        relation["reviewStatus"] = "withdrawn";
+        relation["review"] = new JsonObject { ["by"] = "an editor", ["on"] = "2026-11-16" };
+        if (reason is not null)
+        {
+            relation["review"]!["note"] = reason;
+        }
+
+        return sample;
+    }
+
+    [Fact]
+    public void A_withdrawn_statement_stays_in_the_working_file_and_is_no_part_of_the_collection()
+    {
+        Write(Sample, Withdrawn(Reviewed()));
+
+        var report = ContentCheck.File(Sample);
+        var collection = PilotSample.Load(Sample);
+
+        Assert.True(report.IsUsable, string.Join('\n', report.Problems));
+        Assert.Empty(collection.Relations);
+        Assert.Single(collection.Events);
+    }
+
+    [Fact]
+    public void A_statement_is_not_withdrawn_without_saying_why()
+    {
+        Write(Sample, Withdrawn(Reviewed(), reason: null));
+
+        var report = ContentCheck.File(Sample);
+
+        Assert.Equal(["relation-01: a withdrawn statement says in its review who withdrew it and when, and in the note of the review why."], report.Problems);
+    }
+
+    [Fact]
+    public void A_revision_names_the_statement_it_withdraws_with_the_reason_and_does_not_hold_it()
+    {
+        Publish(Reviewed(), 1);
+
+        var result = Make(Withdrawn(Reviewed()), 2, previous: 1);
+        var revision = JsonNode.Parse(result.Json!)!;
+        var change = Assert.Single(revision["publication"]!["history"]![1]!["changes"]!.AsArray())!;
+
+        Assert.Empty(result.Problems);
+        Assert.Empty(revision["relations"]!.AsArray());
+        Assert.Equal(("withdrawn", "relation-01", "relation", "The source does not say this."), ((string)change["kind"]!, (string)change["record"]!, (string)change["recordKind"]!, (string)change["reason"]!));
+        Assert.Equal((0, 0, 1), result.Changes);
+
+        // The revision reads back: the withdrawal is part of its history, the statement is not part of it.
+        File.WriteAllText(Revision(2), result.Json);
+        var read = PilotSample.Load(Revision(2));
+        Assert.Empty(read.Relations);
+        Assert.Equal((RevisionChangeKind.Withdrawn, "The source does not say this."), (read.Info.History[1].Changes[0].Kind, read.Info.History[1].Changes[0].Reason));
+
+        // The working file still holds the statement, with who withdrew it.
+        Assert.Equal("withdrawn", (string?)JsonNode.Parse(File.ReadAllText(Sample))!["relations"]![0]!["reviewStatus"]);
+    }
+
+    [Fact]
+    public void A_statement_withdrawn_before_it_was_ever_published_leaves_no_trace_in_a_revision()
+    {
+        var result = Make(Withdrawn(Reviewed()));
+        var revision = JsonNode.Parse(result.Json!)!;
+
+        Assert.Empty(revision["relations"]!.AsArray());
+        Assert.Empty(revision["publication"]!["history"]![0]!["changes"]!.AsArray());
+    }
+
+    [Fact]
+    public void A_published_revision_does_not_hold_a_withdrawn_statement()
+    {
+        Publish(Reviewed(), 1);
+        var revision = JsonNode.Parse(File.ReadAllText(Revision(1)))!.AsObject();
+        Write(Revision(1), Withdrawn(revision));
+
+        var report = ContentCheck.File(Revision(1));
+
+        Assert.Contains("relation-01: a withdrawn statement is no part of a published revision; its history names it with the reason.", report.Problems);
+    }
+
     // --- the command ---
 
     private static (int Exit, string Output) Run(params string[] arguments)

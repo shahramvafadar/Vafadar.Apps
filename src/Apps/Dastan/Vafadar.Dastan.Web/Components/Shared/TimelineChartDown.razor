@@ -44,11 +44,11 @@
                     <foreignObject x="@Em(LanePad + ((bar.Row - lane.FirstRow) * RowWidth) + 0.1)" y="@Em(Pad + bar.Start + 0.05)" width="@Em(RowWidth - 0.2)" height="@Em(Math.Max(0.1, bar.End - bar.Start - 0.1))">
                         @if (bar.Text == BandText.Nothing)
                         {
-                            <span class="tl-bar @Shape(bar) @Colour(lane)" title="@words.Title"></span>
+                            <span class="tl-bar@(bar.Band.IsDisputed ? " tl-disputed" : null) @Shape(bar) @Colour(lane)" title="@(bar.Band.IsDisputed ? $"{words.Title} – {T["Disputed_Mark"]}" : words.Title)"></span>
                         }
                         else
                         {
-                            <a class="tl-bar @Shape(bar) @Colour(lane)" href="@($"{Here}#item-{bar.Band.Key}")" title="@words.Title">
+                            <a class="tl-bar@(bar.Band.IsDisputed ? " tl-disputed" : null) @Shape(bar) @Colour(lane)" href="@($"{Here}#item-{bar.Band.Key}")" title="@(bar.Band.IsDisputed ? $"{words.Title} – {T["Disputed_Mark"]}" : words.Title)">
                                 @if (bar.Text == BandText.NameAndYears && words.Start is not null)
                                 {
                                     <bdi class="tl-year">@words.Start</bdi>
@@ -83,7 +83,7 @@
             {
                 <line class="tl-leader @Colour(mark.Lane)" x1="0" y1="@Em(Pad + mark.At)" x2="6%" y2="@Em(Pad + mark.Start + 0.9)" />
                 <foreignObject x="0" y="@Em(Pad + mark.Start)" width="100%" height="@Em(mark.Length)">
-                    <a class="tl-callout @Colour(mark.Lane)" href="@($"{Here}#item-{mark.Mark.Key}")" title="@($"{Drawing.Lanes[mark.Lane].Lane.Label}: {mark.Mark.Label}")" dir="@Visitor.Language.Direction">@mark.Mark.Label</a>
+                    <a class="tl-callout@(mark.Mark.IsDisputed ? " tl-disputed" : null) @Colour(mark.Lane)" href="@($"{Here}#item-{mark.Mark.Key}")" title="@($"{Drawing.Lanes[mark.Lane].Lane.Label}: {mark.Mark.Label}" + (mark.Mark.IsDisputed ? $" – {T["Disputed_Mark"]}" : null))" dir="@Visitor.Language.Direction">@mark.Mark.Label</a>
                 </foreignObject>
             }
         </svg>

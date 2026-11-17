@@ -100,7 +100,12 @@ public sealed class PublishedRevisionReaderTests
     [Fact]
     public void A_disputed_statement_is_part_of_a_revision_as_disputed()
     {
-        var collection = SampleFiles.Read(Published(sample => sample.Record("relations", "relation-02")["reviewStatus"] = "disputed"));
+        var collection = SampleFiles.Read(Published(sample =>
+        {
+            var relation = sample.Record("relations", "relation-02");
+            relation["reviewStatus"] = "disputed";
+            relation["review"]!["note"] = "Two manuscripts tell this differently.";
+        }));
 
         Assert.Equal(ReviewStatus.Disputed, collection.Find(new RelationId("relation-02"))!.Review);
     }

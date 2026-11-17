@@ -75,6 +75,11 @@ RenderFragment Lanes(string stage) => Steps(
     </p>
 }
 
+@if (Comparison.Lanes.Any(lane => lane.Periods.Any(period => period.Review == ReviewStatus.Disputed) || lane.Events.Any(single => single.Review == ReviewStatus.Disputed)))
+{
+    <p class="note">@T["Disputed_Legend"]</p>
+}
+
 @* The table says what the chart says, with what a bar has no room for: the same lanes, read from the same model. *@
 <section aria-labelledby="as-table">
     <h2 id="as-table">@T["Chart_Table"]</h2>
@@ -261,6 +266,11 @@ RenderFragment Lanes(string stage) => Steps(
             </th>
             <td>@TimeText.Of(time, Visitor, T)</td>
             <td>
+                @if (review == ReviewStatus.Disputed)
+                {
+                    <DisputedMark Review="review" />
+                }
+
                 @T[$"Review_{review}"]
                 <span class="chart-summary">
                     @if (sources.IsDefaultOrEmpty)

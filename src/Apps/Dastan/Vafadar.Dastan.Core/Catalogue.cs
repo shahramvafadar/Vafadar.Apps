@@ -45,6 +45,9 @@ public enum RevisionChangeKind
 
     /// <summary>The record was in the revision before and is not in this one.</summary>
     Removed = 2,
+
+    /// <summary>The statement was in the revision before and was withdrawn by the editors, who say why.</summary>
+    Withdrawn = 3,
 }
 
 /// <summary>One change of a published revision: a record that was added, changed or removed.</summary>
@@ -53,7 +56,8 @@ public enum RevisionChangeKind
 /// <param name="RecordKind">What the record is: <c>source</c>, <c>entity</c>, <c>relation</c>, <c>event</c> or <c>media</c>.</param>
 /// <param name="Label">The name of the record when the revision was made.</param>
 /// <param name="Level">The reading level of the record; a change is shown to nobody who may not see its record.</param>
-public sealed record RevisionChange(RevisionChangeKind Kind, string Record, string RecordKind, LocalizedText Label, ReadingLevel Level);
+/// <param name="Reason">Why a statement was withdrawn; only a withdrawal has a reason, and it always has one.</param>
+public sealed record RevisionChange(RevisionChangeKind Kind, string Record, string RecordKind, LocalizedText Label, ReadingLevel Level, string? Reason = null);
 
 /// <summary>A published revision in the history of a collection, with what it changed.</summary>
 /// <param name="Number">The number of the revision.</param>
@@ -314,7 +318,11 @@ public sealed class Catalogue
 
             foreach (var (name, review, record) in Statements())
             {
-                if (review is not (ReviewStatus.Reviewed or ReviewStatus.Disputed))
+                if (review == ReviewStatus.Withdrawn)
+                {
+                    // Named once, where every collection is checked.
+                }
+                else if (review is not (ReviewStatus.Reviewed or ReviewStatus.Disputed))
                 {
                     problems.Add($"{name}: a published revision holds only reviewed statements; this one is {review}.");
                 }
@@ -339,9 +347,19 @@ public sealed class Catalogue
         {
             foreach (var (name, review, record) in Statements())
             {
-                if (record is not null && review is not (ReviewStatus.Reviewed or ReviewStatus.Disputed))
+                if (review == ReviewStatus.Withdrawn)
+                {
+                    // What the editors took back is told by the history of revisions (GOV-004), not shown as a
+                    // statement: a reader leaves it out of the collection, with its reason.
+                    problems.Add($"{name}: a withdrawn statement is no part of a collection; the history of revisions names it.");
+                }
+                else if (record is not null && review is not (ReviewStatus.Reviewed or ReviewStatus.Disputed))
                 {
                     problems.Add($"{name}: a review is recorded for a statement that is {review}.");
+                }
+                else if (record is { Note: null } && review == ReviewStatus.Disputed)
+                {
+                    problems.Add($"{name}: the review of a disputed statement says in its note what the sources disagree about.");
                 }
             }
 
@@ -378,6 +396,10 @@ public sealed class Catalogue
             foreach (var change in history.SelectMany(entry => entry.Changes))
             {
                 CheckStage($"history of {change.Record}", change.Level);
+                if ((change.Kind == RevisionChangeKind.Withdrawn) != (change.Reason is not null))
+                {
+                    problems.Add($"history of {change.Record}: a withdrawal says why, and only a withdrawal has a reason.");
+                }
             }
         }
 

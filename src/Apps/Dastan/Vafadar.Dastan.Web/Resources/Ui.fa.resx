@@ -535,7 +535,7 @@
     <value>منبع‌ها هم‌نظر نیستند؛ این اختلاف نگه داشته شده</value>
   </data>
   <data name="Review_Withdrawn" xml:space="preserve">
-    <value>پس گرفته شده</value>
+    <value>ویراستاران آن را پس گرفته‌اند</value>
   </data>
   <data name="Evidence_Where" xml:space="preserve">
     <value>کجا را باید دید</value>
@@ -914,5 +914,20 @@
   </data>
   <data name="RecordKind_media" xml:space="preserve">
     <value>تصویر یا ویدئو</value>
+  </data>
+  <data name="Disputed_Mark" xml:space="preserve">
+    <value>مورد اختلاف</value>
+  </data>
+  <data name="Disputed_Legend" xml:space="preserve">
+    <value>آنچه با «مورد اختلاف»، با نشانهٔ ≠، یا با خط نقطه‌چین یا حاشیهٔ خط‌چین آمده است: منابع دربارهٔ این گزاره هم‌نظر نیستند. این گزاره به‌عنوان مورد اختلاف نشان داده می‌شود، نه قطعی؛ در منابع آن آمده است که اختلاف بر سر چیست.</value>
+  </data>
+  <data name="Evidence_Dispute" xml:space="preserve">
+    <value>اختلاف منابع بر سر چیست</value>
+  </data>
+  <data name="Change_Withdrawn" xml:space="preserve">
+    <value>پس گرفته شد</value>
+  </data>
+  <data name="Change_Reason" xml:space="preserve">
+    <value>دلیل:</value>
   </data>
 </root>

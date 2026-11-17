@@ -55,7 +55,9 @@ public sealed class PublishedSite : DemoSite
               { "number": 3, "publishedAt": "2026-11-17", "note": "The summary of Rostam was corrected.", "changes": [
                 { "kind": "changed", "record": "character-rostam", "recordKind": "entity", "label": "Rostam", "spoilerLevel": 0 },
                 { "kind": "added", "record": "character-sohrab-new-detail", "recordKind": "relation", "label": "Father of", "spoilerLevel": 2 },
-                { "kind": "removed", "record": "character-earlier", "recordKind": "entity", "label": "An earlier name", "spoilerLevel": 0 } ] }
+                { "kind": "removed", "record": "character-earlier", "recordKind": "entity", "label": "An earlier name", "spoilerLevel": 0 },
+                { "kind": "withdrawn", "record": "relation-21", "recordKind": "relation", "label": "Brother of", "spoilerLevel": 0, "reason": "The passage names another man." },
+                { "kind": "withdrawn", "record": "relation-22", "recordKind": "relation", "label": "Kills", "spoilerLevel": 4, "reason": "A reason that tells the ending." } ] }
             ]
             """);
         foreach (var group in new[] { "relations", "events" })
@@ -65,6 +67,14 @@ public sealed class PublishedSite : DemoSite
                 record!["reviewStatus"] = "reviewed";
                 record["review"] = new JsonObject { ["by"] = "an editor", ["on"] = "2026-11-16" };
             }
+        }
+
+        // Two statements the sources disagree about: who Rostam's father is, and the first step of the telling.
+        foreach (var (group, id) in new[] { ("relations", "relation-02"), ("events", "event-01") })
+        {
+            var disputed = sample[group]!.AsArray().Single(record => (string?)record!["id"] == id)!;
+            disputed["reviewStatus"] = "disputed";
+            disputed["review"]!["note"] = "Two manuscripts tell this differently.";
         }
 
         var diagram = sample["media"]!.AsArray().Single(item => (string?)item!["id"] == PublicDiagram)!;

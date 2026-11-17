@@ -62,6 +62,24 @@ public sealed class DatedSite : DemoSite
                 "sourceIds": ["src-ganjoor-index"],
                 "spoilerLevel": 3,
                 "reviewStatus": "proposed"
+              },
+              {
+                "key": "work-finished",
+                "label": "The work is finished",
+                "time": { "kind": "occurrence", "at": { "frame": "calendar", "era": "commonEra", "year": 1010 } },
+                "sourceIds": ["src-ganjoor-index"],
+                "spoilerLevel": 0,
+                "reviewStatus": "disputed",
+                "review": { "by": "an editor", "on": "2026-11-16", "note": "The manuscripts give two years." }
+              },
+              {
+                "key": "work-lost",
+                "label": "A lost first version",
+                "time": { "kind": "occurrence", "at": { "frame": "calendar", "era": "commonEra", "year": 990 } },
+                "sourceIds": ["src-ganjoor-index"],
+                "spoilerLevel": 0,
+                "reviewStatus": "withdrawn",
+                "review": { "by": "an editor", "on": "2026-11-16", "note": "The source does not say this." }
               }
             ]
             """);
@@ -139,7 +157,7 @@ public sealed class TimelinePageTests(DemoSite site, DatedSite dated) : IClassFi
     {
         var page = await At(dated, 0);
 
-        Assert.Equal(["work-written"], Rows(page));
+        Assert.Equal(["work-written", "work-finished"], Rows(page));
         Assert.Contains("<caption><bdi>Shahnameh</bdi></caption>", page.Html, StringComparison.Ordinal);
         Assert.Matches("<tr id=\"item-work-written\">\\s*<th scope=\"row\">\\s*<bdi>The work is written</bdi>", page.Html);
         Assert.Contains("Test data of the tests.", page.Main, StringComparison.Ordinal);

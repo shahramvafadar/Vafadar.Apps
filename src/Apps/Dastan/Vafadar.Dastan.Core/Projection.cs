@@ -419,12 +419,18 @@ public sealed class Projection
             Relation = ToEdge(relation),
             PassageLocator = relation.PassageLocator,
             Review = relation.Review,
+            Dispute = Dispute(relation.Review, relation.Reviewed),
         };
 
     /// <summary>Returns the sources of an event, or <see langword="null"/>.</summary>
     public EvidenceView? Evidence(EventId id) => Find(id) is not { } step
         ? null
-        : Evidence(EvidenceSubject.Event, step.Event.Sources) with { Step = step, Review = step.Event.Review };
+        : Evidence(EvidenceSubject.Event, step.Event.Sources) with
+        {
+            Step = step,
+            Review = step.Event.Review,
+            Dispute = Dispute(step.Event.Review, step.Event.Reviewed),
+        };
 
     /// <summary>Returns the sources for what an entity has to do with an event, or <see langword="null"/>.</summary>
     public EvidenceView? Evidence(EventId storyEvent, EntityId entity)
@@ -441,8 +447,13 @@ public sealed class Projection
             Entity = _entities[entity],
             Association = association,
             Review = step.Event.Review,
+            Dispute = Dispute(step.Event.Review, step.Event.Reviewed),
         };
     }
+
+    // What a review says about a dispute is said to the visitor; who reviewed is the editors' record.
+    private static string? Dispute(ReviewStatus review, ReviewRecord? record) =>
+        review == ReviewStatus.Disputed ? record?.Note : null;
 
     /// <summary>Returns the sources of a media item, or <see langword="null"/>.</summary>
     public EvidenceView? Evidence(MediaId id) => Find(id) is not { } item
