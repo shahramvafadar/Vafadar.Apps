@@ -28,6 +28,9 @@ services:
       # a proxy can be tried from this machine. A server names its own proxy.
       Studio__TrustedProxies__0: 172.16.0.0/12
       Studio__TrustedProxies__1: 192.168.0.0/16
+      # To let editors bring image and video files in, name a folder of the volume and copy the folder
+      # "media" of the collections beside it first (docs/operations-studio.md):
+      # Studio__Files: /data/content/samples
     volumes:
       # The store and the keys of the sign-in. They outlive the container; "down -v" throws them away.
       - studio-data:/data

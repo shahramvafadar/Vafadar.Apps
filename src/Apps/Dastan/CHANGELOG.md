@@ -139,6 +139,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- A collection that names real places has a page "On the map": the places drawn where they lie to each
+  other on a grid of degrees, and listed with what is said to be there. The site still loads no map from
+  anybody.
 - Images and videos are brought in through the tool of the editors: a new item with its file, or a poster,
   captions and a transcript for an item that is there. The tool recognises a file by its content, names it
   itself and removes from an image what it says about where and with which device it was made.

@@ -288,7 +288,7 @@ looked at in a browser.
 * The page of the place writes the position in the language of the page and links it as a `geo:` address – a
   device opens it with the map it has. The page loads no map and names no map service: nothing about the
   visitor goes to a third party (privacy matrix unchanged).
-* Borders, and borders that change with time, are not modelled; a map of the collection is phase 14.
+* Borders, and borders that change with time, are not modelled; a map of the collection is phase 14 (built as step 14.1: ADR 0008, sixth addendum).
 
 Verification: `PlacePositionTests` (9 tests) and `RealWorldPagesTests` (the page in English and Persian).
 Test data only; not looked at in a browser.

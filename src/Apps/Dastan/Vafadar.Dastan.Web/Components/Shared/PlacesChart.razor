@@ -1,0 +1,51 @@
+@* The places of a collection on a grid of degrees: SVG written by the server (ADR 0008). The drawing is laid
+   out the same in every language – east is at the right – and only its texts follow the language of the page.
+   A mark carries the number its place has in the list of the page and leads to it; the name is its title. *@
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
+
+<svg class="places-map" width="@Em(Map.Width + (2 * Pad))" height="@Em(Map.Height + (2 * Pad))" dir="ltr">
+    <rect class="map-ground" x="@Em(Pad)" y="@Em(Pad)" width="@Em(Map.Width)" height="@Em(Map.Height)" />
+    @foreach (var line in Map.Meridians)
+    {
+        <g>
+            <line class="map-grid" x1="@Em(Pad + line.At)" y1="@Em(Pad)" x2="@Em(Pad + line.At)" y2="@Em(Pad + Map.Height)" />
+            <text class="map-degrees" x="@Em(Pad + line.At)" y="@Em(Pad - 0.4)" text-anchor="middle" direction="@Visitor.Language.Direction">@Degrees(line.Degrees, "Position_East", "Position_West")</text>
+        </g>
+    }
+    @foreach (var line in Map.Parallels)
+    {
+        <g>
+            <line class="map-grid" x1="@Em(Pad)" y1="@Em(Pad + line.At)" x2="@Em(Pad + Map.Width)" y2="@Em(Pad + line.At)" />
+            <text class="map-degrees" x="@Em(Pad - 0.3)" y="@Em(Pad + line.At + 0.25)" text-anchor="end" direction="@Visitor.Language.Direction">@Degrees(line.Degrees, "Position_North", "Position_South")</text>
+        </g>
+    }
+    @foreach (var mark in Map.Marks)
+    {
+        var name = Visitor.Text(mark.Place.Place.Label).Value;
+        <a class="map-mark @(mark.Place.Position.Precision == PositionPrecision.Exact ? null : "map-about")" href="@($"{Here}#place-{mark.Place.Place.Id}")">
+            <title>@string.Format(CultureInfo.CurrentCulture, T["Places_Mark"], Visitor.Number(mark.Number), name)</title>
+            <circle cx="@Em(Pad + mark.X)" cy="@Em(Pad + mark.Y)" r="@Em(mark.Place.Position.Precision == PositionPrecision.CentreOfArea ? 1.3 : 0.85)" />
+            <text x="@Em(Pad + mark.X)" y="@Em(Pad + mark.Y + 0.27)" text-anchor="middle">@Visitor.Number(mark.Number)</text>
+        </a>
+    }
+</svg>
+
+@code {
+    // The room around the drawing for the degrees of its grid.
+    private const double Pad = 3.2;
+
+    /// <summary>Gets or sets the drawing.</summary>
+    [Parameter, EditorRequired]
+    public PlacesMap Map { get; set; } = null!;
+
+    /// <summary>Gets or sets the address of the page, which the marks lead back into.</summary>
+    [Parameter, EditorRequired]
+    public string Here { get; set; } = string.Empty;
+
+    private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+
+    private string Degrees(decimal degrees, string positive, string negative) => degrees == 0
+        ? QuantityText.Number(0, Visitor) + "°"
+        : string.Format(CultureInfo.CurrentCulture, T["Places_Degrees"], QuantityText.Number(Math.Abs(degrees), Visitor), T[degrees < 0 ? negative : positive]);
+}

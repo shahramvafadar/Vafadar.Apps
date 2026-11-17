@@ -1146,4 +1146,40 @@
   <data name="PositionPrecision_CentreOfArea" xml:space="preserve">
     <value>the middle of an area; its borders are not said</value>
   </data>
+  <data name="Places_Link" xml:space="preserve">
+    <value>On the map</value>
+  </data>
+  <data name="Places_Title" xml:space="preserve">
+    <value>Places of {0}</value>
+  </data>
+  <data name="Places_Lead" xml:space="preserve">
+    <value>The real places this collection names, where they lie to each other, and what is said to be there.</value>
+  </data>
+  <data name="Places_NoTiles" xml:space="preserve">
+    <value>The drawing has no coasts and no borders: this site loads no map from anybody. The grid says where on the earth the places are; a position opens in the map of your device.</value>
+  </data>
+  <data name="Places_Graph" xml:space="preserve">
+    <value>Drawing of the places of {0}</value>
+  </data>
+  <data name="Places_List" xml:space="preserve">
+    <value>The places</value>
+  </data>
+  <data name="Places_Here" xml:space="preserve">
+    <value>What is said to be there</value>
+  </data>
+  <data name="Places_Unmapped" xml:space="preserve">
+    <value>Places without a position</value>
+  </data>
+  <data name="Places_UnmappedLead" xml:space="preserve">
+    <value>These places are named, but where they are is not stated.</value>
+  </data>
+  <data name="Places_Empty" xml:space="preserve">
+    <value>No real place can be shown here.</value>
+  </data>
+  <data name="Places_Mark" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Places_Degrees" xml:space="preserve">
+    <value>{0}° {1}</value>
+  </data>
 </root>

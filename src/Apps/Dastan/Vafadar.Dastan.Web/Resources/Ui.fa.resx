@@ -1146,4 +1146,40 @@
   <data name="PositionPrecision_CentreOfArea" xml:space="preserve">
     <value>میانهٔ یک پهنه؛ مرزهایش گفته نشده</value>
   </data>
+  <data name="Places_Link" xml:space="preserve">
+    <value>روی نقشه</value>
+  </data>
+  <data name="Places_Title" xml:space="preserve">
+    <value>جاهای {0}</value>
+  </data>
+  <data name="Places_Lead" xml:space="preserve">
+    <value>جاهای واقعی‌ای که این مجموعه از آن‌ها نام می‌برد، این‌که نسبت به هم کجا هستند، و آنچه گفته شده آن‌جاست.</value>
+  </data>
+  <data name="Places_NoTiles" xml:space="preserve">
+    <value>این نگاره ساحل و مرز ندارد: این سایت از هیچ‌کس نقشه‌ای بار نمی‌کند. شبکهٔ درجه‌ها می‌گوید جاها کجای زمین‌اند؛ هر موقعیت در نقشهٔ دستگاه شما باز می‌شود.</value>
+  </data>
+  <data name="Places_Graph" xml:space="preserve">
+    <value>نگارهٔ جاهای {0}</value>
+  </data>
+  <data name="Places_List" xml:space="preserve">
+    <value>جاها</value>
+  </data>
+  <data name="Places_Here" xml:space="preserve">
+    <value>آنچه گفته شده آن‌جاست</value>
+  </data>
+  <data name="Places_Unmapped" xml:space="preserve">
+    <value>جاهای بدون موقعیت</value>
+  </data>
+  <data name="Places_UnmappedLead" xml:space="preserve">
+    <value>از این جاها نام برده شده، اما گفته نشده کجا هستند.</value>
+  </data>
+  <data name="Places_Empty" xml:space="preserve">
+    <value>هیچ جای واقعی‌ای را این‌جا نمی‌توان نشان داد.</value>
+  </data>
+  <data name="Places_Mark" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Places_Degrees" xml:space="preserve">
+    <value>{0}° {1}</value>
+  </data>
 </root>
