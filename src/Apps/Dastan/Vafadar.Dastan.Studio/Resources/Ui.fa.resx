@@ -456,4 +456,43 @@
   <data name="Stages_NeedsNames" xml:space="preserve">
     <value>هر مرحله نامی دارد؛ فقط مرحله‌های آخر می‌توانند خالی بمانند.</value>
   </data>
+  <data name="Nav_Comparisons" xml:space="preserve">
+    <value>مقایسه‌ها</value>
+  </data>
+  <data name="Comparisons_Lead" xml:space="preserve">
+    <value>موضوع‌هایی کنار هم بر یک گونه زمان. هر مقایسه یکجا نگه داشته می‌شود، با همهٔ تغییرهایش.</value>
+  </data>
+  <data name="Comparisons_None" xml:space="preserve">
+    <value>انبار هیچ مقایسه‌ای ندارد.</value>
+  </data>
+  <data name="Comparison_Add" xml:space="preserve">
+    <value>آوردن یک مقایسه</value>
+  </data>
+  <data name="Comparison_AddLead" xml:space="preserve">
+    <value>فایل یک مقایسه همان‌گونه که نوشته شده. همان‌طور خوانده می‌شود که سایت می‌خواند؛ آنچه سایت نتواند به کار ببرد با دلیل رد می‌شود.</value>
+  </data>
+  <data name="Comparison_File" xml:space="preserve">
+    <value>فایل مقایسه</value>
+  </data>
+  <data name="Comparison_Translation" xml:space="preserve">
+    <value>ترجمه – {0}</value>
+  </data>
+  <data name="Comparison_NewTranslation" xml:space="preserve">
+    <value>ترجمه‌ای دیگر</value>
+  </data>
+  <data name="Comparison_TranslationHint" xml:space="preserve">
+    <value>ترجمه‌ای که خالی شود برداشته می‌شود. ترجمهٔ تازه زبانش را در سند خودش می‌گوید.</value>
+  </data>
+  <data name="Comparison_ChangeLead" xml:space="preserve">
+    <value>فایل و ترجمه‌هایش در یک کنش نگه داشته و پیش از آن با هم آزموده می‌شوند.</value>
+  </data>
+  <data name="Comparison_RemoveLead" xml:space="preserve">
+    <value>مقایسه و ترجمه‌هایش را از انبار برمی‌دارد. تاریخچهٔ تغییرهایش می‌ماند.</value>
+  </data>
+  <data name="Comparison_Exists" xml:space="preserve">
+    <value>انبار مقایسهٔ {0} را دارد؛ آن را در صفحهٔ خودش تغییر دهید.</value>
+  </data>
+  <data name="Comparison_NeedsLanguage" xml:space="preserve">
+    <value>ترجمهٔ تازه باید زبانی را بگوید که مقایسه هنوز به آن ترجمه نشده است.</value>
+  </data>
 </root>

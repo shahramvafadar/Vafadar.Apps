@@ -153,3 +153,17 @@ the level "Warning" and above – no name and no address. What the proxy and the
 * **Load**, and two editors changing the same record at the same moment (the later act replaces the record; the
   history shows both).
 * **An image registry.** The image was built and run locally; nothing was pushed anywhere.
+
+## Comparisons
+
+A comparison is kept in the same store as the collections. On the machine of the store:
+
+```powershell
+dotnet run --project $content -- store comparison import <file> --store <database> --by <name> --reason "<why>"
+dotnet run --project $content -- store comparison list --store <database>
+dotnet run --project $content -- store comparison export <id> --store <database> --out <a new file>
+```
+
+What `export` writes – the file and its translations beside it – is what a site is given in its folder
+`comparisons`. An update of the tool that brings new tables (here: the documents) applies them when the store
+is opened; make a copy of the store first (`store copy`).

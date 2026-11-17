@@ -408,3 +408,31 @@ tool): read by language; kept with who and why; unchanged sent as it stands; a s
 stage in use, a nameless stage and an unknown language refused with the form kept; the texts of a dated
 statement kept with its entity and gone with its row; records with lists of nested parts (media, an entity
 with dates) sent as they stand change nothing. Not looked at in a browser.
+
+## Tenth addendum of 2026-11-17 – comparisons in the store (step 12.6)
+
+Comparisons stayed files while the store learned to hold collections. They are now kept in the store too.
+
+* **A comparison is one document**, not a set of records: its lanes, periods and events are parts of it and
+  have no identity outside it. The store keeps the file as it is written and one document per language it is
+  translated into (`StoredDocument`, kind `comparison`), and every change of either with who, when, why,
+  before and after (`DocumentChange`). Two new tables, migration `Documents`; the tables of the collections
+  are untouched.
+* **The readers of the site decide**, as for a collection: `PutComparison` reads the file with its
+  translations through `ComparisonSample.Read` before anything is kept; what the site could not read is
+  refused with the reasons and changes nothing.
+* **The translations given are all translations**: a language that is not among them is taken out, in the
+  same act and with the same reason.
+* A comparison has no revisions of its own: its file says whether it may be shown to the public
+  (`publication`), and what is written out of the store (`store comparison export`) is the file a site is
+  given in its folder `comparisons`.
+* **The tool**: `comparisons` lists them and brings a new one in as its file; `comparisons/<id>` changes the
+  file and every translation as text in one form – an emptied translation is taken out, a further one names
+  its language in its document –, takes the comparison out, and shows what was changed of it. Forms for the
+  lanes and periods of a comparison are step 13.2.
+
+Verification: `ComparisonStoreTests` (6 tests) – in and out as it went in, read by the site again; unchanged
+twice; a change with who and why; four refusals that change nothing; a translation and a comparison taken
+out with the history kept; beside a collection in one store; the commands. `StudioComparisonsTests`
+(6 tests) – the list in both languages, bringing in, changing, refusing with what was written kept, taking
+out. Not looked at in a browser.

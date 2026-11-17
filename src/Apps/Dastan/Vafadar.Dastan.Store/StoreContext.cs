@@ -125,6 +125,71 @@ public sealed class RecordChange
     public string? After { get; set; }
 }
 
+/// <summary>
+/// A document the store keeps as a whole: a comparison, or the translation of one. Its parts are not records
+/// of their own.
+/// </summary>
+public sealed class StoredDocument
+{
+    /// <summary>Gets or sets what kind of document it is: <c>comparison</c>.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>Gets or sets the identifier of the document.</summary>
+    public required string DocumentId { get; set; }
+
+    /// <summary>Gets or sets the language of a translation; empty for the document itself.</summary>
+    public required string Language { get; set; }
+
+    /// <summary>Gets or sets the document, as JSON.</summary>
+    public required string Body { get; set; }
+
+    /// <summary>Gets or sets how many times the document was changed, the first time counted.</summary>
+    public int Version { get; set; }
+
+    /// <summary>Gets or sets when it was last changed.</summary>
+    public DateTime UpdatedAt { get; set; }
+
+    /// <summary>Gets or sets who changed it last.</summary>
+    public required string UpdatedBy { get; set; }
+}
+
+/// <summary>One change of a document: who, when, why, and the document before and after. Changes are only added.</summary>
+public sealed class DocumentChange
+{
+    /// <summary>Gets or sets the number of the change in the store.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets what kind of document it is.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>Gets or sets the identifier of the document.</summary>
+    public required string DocumentId { get; set; }
+
+    /// <summary>Gets or sets the language of a translation; empty for the document itself.</summary>
+    public required string Language { get; set; }
+
+    /// <summary>Gets or sets what happened.</summary>
+    public RecordChangeKind Change { get; set; }
+
+    /// <summary>Gets or sets the version of the document after the change.</summary>
+    public int Version { get; set; }
+
+    /// <summary>Gets or sets who made the change.</summary>
+    public required string By { get; set; }
+
+    /// <summary>Gets or sets when.</summary>
+    public DateTime At { get; set; }
+
+    /// <summary>Gets or sets why, in the words of whoever made the change.</summary>
+    public string? Reason { get; set; }
+
+    /// <summary>Gets or sets the document before the change; nothing for one that came in.</summary>
+    public string? Before { get; set; }
+
+    /// <summary>Gets or sets the document after the change; nothing for one that was taken out.</summary>
+    public string? After { get; set; }
+}
+
 /// <summary>The database of the editors' store.</summary>
 public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbContext(options)
 {
@@ -145,6 +210,12 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
 
     /// <summary>Gets the accounts of the editors.</summary>
     public DbSet<StoredEditor> Editors => Set<StoredEditor>();
+
+    /// <summary>Gets the documents kept as a whole: comparisons and their translations.</summary>
+    public DbSet<StoredDocument> Documents => Set<StoredDocument>();
+
+    /// <summary>Gets the history of every document.</summary>
+    public DbSet<DocumentChange> DocumentChanges => Set<DocumentChange>();
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -191,6 +262,26 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             editor.Property(item => item.Name).HasMaxLength(200);
             editor.Property(item => item.Password).HasMaxLength(200);
             editor.Property(item => item.Stamp).HasMaxLength(40);
+        });
+
+        modelBuilder.Entity<StoredDocument>(document =>
+        {
+            document.HasKey(item => new { item.Kind, item.DocumentId, item.Language });
+            document.Property(item => item.Kind).HasMaxLength(40);
+            document.Property(item => item.DocumentId).HasMaxLength(200);
+            document.Property(item => item.Language).HasMaxLength(40);
+            document.Property(item => item.UpdatedBy).HasMaxLength(200);
+        });
+
+        modelBuilder.Entity<DocumentChange>(change =>
+        {
+            change.HasKey(item => item.Number);
+            change.Property(item => item.Kind).HasMaxLength(40);
+            change.Property(item => item.DocumentId).HasMaxLength(200);
+            change.Property(item => item.Language).HasMaxLength(40);
+            change.Property(item => item.By).HasMaxLength(200);
+            change.Property(item => item.Change).HasConversion<string>().HasMaxLength(20);
+            change.HasIndex(item => new { item.Kind, item.DocumentId, item.Number });
         });
 
         modelBuilder.Entity<RecordChange>(change =>

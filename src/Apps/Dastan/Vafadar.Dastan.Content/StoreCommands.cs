@@ -51,6 +51,14 @@ internal static class StoreCommands
 
           store revision <collection> <number> --store <database> --out <file>
               Writes a published revision again, as it was published. Never over a file.
+
+          store comparison list --store <database>
+          store comparison import <file> --store <database> --by <name> [--reason <text>]
+          store comparison export <id> --store <database> --out <file>
+          store comparison history <id> --store <database>
+          store comparison remove <id> --store <database> --by <name> --reason <text>
+              A comparison in the store: brought in with the translations beside it, written out again,
+              what was changed of it, taken out. It is read as the site reads it before it is kept.
         """;
 
     /// <summary>Runs a command of the store; <see langword="null"/> when it was not understood.</summary>
@@ -59,6 +67,11 @@ internal static class StoreCommands
         if (words.Count < 2)
         {
             return null;
+        }
+
+        if (words[0] == "comparison")
+        {
+            return Comparison(words, output, time);
         }
 
         if (words[0] is "review" or "put" or "remove")
@@ -92,6 +105,67 @@ internal static class StoreCommands
                 => Publish(words[1], database, publisher, day, revision, given.GetValueOrDefault("--note"), given.GetValueOrDefault("--files"), output, time),
             _ => null,
         };
+    }
+
+    // The commands for a comparison: "list" names nothing, the others a file or an identifier.
+    private static int? Comparison(IReadOnlyList<string> words, TextWriter output, TimeProvider time)
+    {
+        var named = words[1] != "list";
+        if (words.Count < (named ? 3 : 2) || Options(words.Skip(named ? 3 : 2).ToList()) is not { } given || !given.TryGetValue("--store", out var database))
+        {
+            return null;
+        }
+
+        switch (words[1])
+        {
+            case "list" when Only(given, "--store"):
+            {
+                using var store = EditorialStore.Open(database, time);
+                var held = store.Comparisons();
+                output.WriteLine($"{held.Length} {(held.Length == 1 ? "comparison" : "comparisons")}.");
+                foreach (var comparison in held)
+                {
+                    output.WriteLine($"  {comparison.Id}  version {comparison.Version}  {(comparison.Languages.IsEmpty ? "not translated" : string.Join(", ", comparison.Languages))}  – {comparison.Title}");
+                }
+
+                return ContentCommands.Done;
+            }
+
+            case "import" when given.TryGetValue("--by", out var by) && Only(given, "--store", "--by", "--reason"):
+                return Said(output, $"{Path.GetFileName(words[2])}: brought in.", store => store.ImportComparison(words[2], by, given.GetValueOrDefault("--reason")), database, time, null);
+
+            case "remove" when given.TryGetValue("--by", out var remover) && given.TryGetValue("--reason", out var why) && Only(given, "--store", "--by", "--reason"):
+                return Said(output, $"{words[2]}: taken out.", store => store.RemoveComparison(words[2], remover, why), database, time, null);
+
+            case "export" when given.TryGetValue("--out", out var target) && Only(given, "--store", "--out"):
+            {
+                using var store = EditorialStore.Open(database, time);
+                if (store.Comparison(words[2]) is not { } exported)
+                {
+                    output.WriteLine($"{words[2]}: the store holds no comparison of that name.");
+                    return ContentCommands.NotUsable;
+                }
+
+                return WriteOut(exported, target, output);
+            }
+
+            case "history" when Only(given, "--store"):
+            {
+                using var store = EditorialStore.Open(database, time);
+                var changes = store.ComparisonHistory(words[2]);
+                output.WriteLine($"{words[2]}: {changes.Length} {(changes.Length == 1 ? "change" : "changes")}.");
+                foreach (var change in changes)
+                {
+                    var at = change.At.ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+                    output.WriteLine($"  {at}  {change.Change,-7}  {(change.Language.Length == 0 ? "the file" : change.Language)}  version {change.Version}  by {change.By}{(change.Reason is null ? null : $"  – {change.Reason}")}");
+                }
+
+                return ContentCommands.Done;
+            }
+
+            default:
+                return null;
+        }
     }
 
     // The acts name a second thing after the collection – a statement, a group, a record – before their options.
