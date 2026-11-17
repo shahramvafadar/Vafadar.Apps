@@ -1011,4 +1011,34 @@
   <data name="Type_concept" xml:space="preserve">
     <value>مفهوم</value>
   </data>
+  <data name="Names_Title" xml:space="preserve">
+    <value>نام‌های دیگر</value>
+  </data>
+  <data name="NameKind_Alternative" xml:space="preserve">
+    <value>نام دیگر</value>
+  </data>
+  <data name="NameKind_Former" xml:space="preserve">
+    <value>نام پیشین</value>
+  </data>
+  <data name="NameKind_Abbreviation" xml:space="preserve">
+    <value>کوته‌نوشت</value>
+  </data>
+  <data name="NameKind_Title" xml:space="preserve">
+    <value>لقب</value>
+  </data>
+  <data name="NameKind_OriginalScript" xml:space="preserve">
+    <value>به خط اصلی</value>
+  </data>
+  <data name="Identifiers_Title" xml:space="preserve">
+    <value>در فهرست‌های دیگر</value>
+  </data>
+  <data name="Identifiers_Note" xml:space="preserve">
+    <value>پیوندها از داستان بیرون می‌روند. آنچه فهرست دیگری می‌گوید گفتهٔ خود آن است.</value>
+  </data>
+  <data name="IdentifierMatch_Close" xml:space="preserve">
+    <value>دربارهٔ موضوعی نزدیک به این</value>
+  </data>
+  <data name="IdentifierMatch_Uncertain" xml:space="preserve">
+    <value>یکی‌بودنش ثابت نشده است</value>
+  </data>
 </root>

@@ -13,6 +13,20 @@
         <p class="meta"><TypeName Type="overview.Entity.Type" /></p>
         <h1><Loc Text="overview.Entity.Label" /></h1>
         <p class="lead"><Loc Text="overview.Entity.Summary" /></p>
+        @if (!overview.Entity.Names.IsEmpty)
+        {
+            @* The other names, each in its own language and with what kind of name it is. *@
+            <p class="meta" id="names">@T["Names_Title"]:</p>
+            <ul class="names" role="list" aria-labelledby="names">
+                @foreach (var name in overview.Entity.Names)
+                {
+                    <li>
+                        <span lang="@name.Language" dir="auto">@name.Name</span>
+                        <span class="meta">– @T[$"NameKind_{name.Kind}"]@if (name.Time is { } time) {<text>, @TimeText.Of(time, Visitor, T)</text>}</span>
+                    </li>
+                }
+            </ul>
+        }
         <p class="meta">
             <a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Entity_Collection"], Visitor.Text(story.Label).Value)</a>
         </p>
@@ -49,6 +63,35 @@
     @if (_hasMedia)
     {
         <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/gallery")">@T["Gallery_Title"]</a></p>
+    }
+
+    @if (!overview.Entity.Identifiers.IsEmpty)
+    {
+        @* What others call it. A link leaves Dastan; what the other catalogue states is not vouched for here. *@
+        <section aria-labelledby="identifiers">
+            <h2 id="identifiers">@T["Identifiers_Title"]</h2>
+            <p class="note">@T["Identifiers_Note"]</p>
+            <ul class="identifiers" role="list">
+                @foreach (var identifier in overview.Entity.Identifiers)
+                {
+                    <li>
+                        <span dir="auto">@identifier.Issuer</span>:
+                        @if (identifier.Url is { } url)
+                        {
+                            <a href="@url" rel="external noopener noreferrer"><bdi>@identifier.Value</bdi></a>
+                        }
+                        else
+                        {
+                            <bdi>@identifier.Value</bdi>
+                        }
+                        @if (identifier.Match != IdentifierMatch.Exact)
+                        {
+                            <span class="meta">– @T[$"IdentifierMatch_{identifier.Match}"]</span>
+                        }
+                    </li>
+                }
+            </ul>
+        </section>
     }
 
     @if (!overview.Appearances.IsEmpty)

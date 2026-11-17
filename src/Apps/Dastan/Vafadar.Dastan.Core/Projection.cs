@@ -42,7 +42,7 @@ public sealed class Projection
         [
             .. catalogue.Entities
                 .Where(entity => entity.Level.IsWithin(boundary))
-                .Select(entity => entity.Dated.All(dated => dated.Level.IsWithin(boundary))
+                .Select(entity => entity.Dated.All(dated => dated.Level.IsWithin(boundary)) && entity.Names.All(name => name.Level.IsWithin(boundary))
                     ? entity
                     : new Entity
                     {
@@ -53,6 +53,8 @@ public sealed class Projection
                         Sources = entity.Sources,
                         Level = entity.Level,
                         Dated = [.. entity.Dated.Where(dated => dated.Level.IsWithin(boundary))],
+                        Names = [.. entity.Names.Where(name => name.Level.IsWithin(boundary))],
+                        Identifiers = entity.Identifiers,
                     }),
         ];
         Relations = [.. catalogue.Relations.Where(relation => relation.Level.IsWithin(boundary))];
@@ -89,7 +91,7 @@ public sealed class Projection
 
         // Only the sources that support something visible are named: a source of a hidden record or of an item that
         // may not be shown would tell that the record exists.
-        var cited = Entities.SelectMany(entity => entity.Sources.Concat(entity.Dated.SelectMany(dated => dated.Sources)))
+        var cited = Entities.SelectMany(entity => entity.Sources.Concat(entity.Dated.SelectMany(dated => dated.Sources)).Concat(entity.Names.SelectMany(name => name.Sources)))
             .Concat(Relations.SelectMany(relation => relation.Sources))
             .Concat(Steps.SelectMany(step => step.Event.Sources))
             .Concat(Media.SelectMany(item => item.Sources))
@@ -520,6 +522,16 @@ public sealed class Projection
                 if (rank >= 0 && (best is null || rank < best.Value.Rank))
                 {
                     best = (rank, new SearchHit(entity, name, language));
+                }
+            }
+
+            // The other names of the entity find it too: an earlier name, an abbreviation, the name in its own script.
+            foreach (var other in entity.Names)
+            {
+                var rank = Rank(SearchText.Fold(other.Name), query);
+                if (rank >= 0 && (best is null || rank < best.Value.Rank))
+                {
+                    best = (rank, new SearchHit(entity, other.Name, other.Language));
                 }
             }
 

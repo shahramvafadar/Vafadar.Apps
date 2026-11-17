@@ -75,6 +75,18 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         ("museum_object_record", SourceKind.MuseumRecord),
         ("institutional_rights_policy", SourceKind.RightsPolicy));
 
+    private static readonly FrozenDictionary<string, NameKind> NameKindNames = Names(
+        ("alternative", NameKind.Alternative),
+        ("former", NameKind.Former),
+        ("abbreviation", NameKind.Abbreviation),
+        ("title", NameKind.Title),
+        ("original_script", NameKind.OriginalScript));
+
+    private static readonly FrozenDictionary<string, IdentifierMatch> MatchNames = Names(
+        ("exact", IdentifierMatch.Exact),
+        ("close", IdentifierMatch.Close),
+        ("uncertain", IdentifierMatch.Uncertain));
+
     private static readonly FrozenDictionary<string, MediaKind> MediaKindNames = Names(
         ("image", MediaKind.Image),
         ("video", MediaKind.Video));
@@ -274,6 +286,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                             + (type.Meaning is null ? string.Empty : "; " + type.Meaning)
                             + (type.From.IsDefaultOrEmpty && type.To.IsDefaultOrEmpty ? string.Empty : $"; from {Natures(type.From)} to {Natures(type.To)}"))),
                 ]),
+            new("entities[].names[].kind", "What kind of other name a name of an entity is.", Of(NameKindNames.Keys)),
+            new("entities[].identifiers[].match", "How sure the editors are that the record of another catalogue is about the entity.", Of(MatchNames.Keys)),
             new("relations[].directionality", "Whether the relation reads from one entity to the other; it has to agree with the type.", Of(DirectionNames.Keys)),
             new("relations[].scope.kind", "What the relation is a statement about.", Of(ScopeKindNames.Keys)),
             new("relations[].reviewStatus, events[].reviewStatus", "How far a statement has been checked.", Of(ReviewNames.Keys)),
@@ -554,8 +568,35 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             }
         }
 
+        var names = ImmutableArray.CreateBuilder<EntityName>();
+        var identifiers = ImmutableArray.CreateBuilder<ExternalIdentifier>();
+        var partsComplete = true;
+        foreach (var part in record.Children("names", required: false))
+        {
+            if (ReadName(part, level) is { } other)
+            {
+                names.Add(other);
+            }
+            else
+            {
+                partsComplete = false;
+            }
+        }
+
+        foreach (var part in record.Children("identifiers", required: false))
+        {
+            if (ReadIdentifier(part) is { } identifier)
+            {
+                identifiers.Add(identifier);
+            }
+            else
+            {
+                partsComplete = false;
+            }
+        }
+
         record.Finish();
-        if (id is null || !typeKnown || label is null || summary is null || level is null || !datedComplete)
+        if (id is null || !typeKnown || label is null || summary is null || level is null || !datedComplete || !partsComplete)
         {
             return null;
         }
@@ -587,8 +628,59 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Sources = [.. sources.Select(source => new SourceId(source))],
             Level = level.Value,
             Dated = dated.ToImmutable(),
+            Names = names.ToImmutable(),
+            Identifiers = identifiers.ToImmutable(),
         };
     }
+
+    /// <summary>Reads another name of an entity. Without a stage of its own it is shown with its entity.</summary>
+    private static EntityName? ReadName(JsonRecord record, ReadingLevel? ofEntity)
+    {
+        var name = record.Text("name");
+        if (name is not null)
+        {
+            record.Name = "the name " + name;
+        }
+
+        var language = record.Text("language");
+        if (language is not null && !LanguageTag().IsMatch(language))
+        {
+            record.Problem($"language {language} is no language tag; write en, fa, ar or the like.");
+            language = null;
+        }
+
+        var kindKnown = record.Choice("kind", NameKindNames, out var kind);
+        var sources = Ids(record, "sourceIds", required: false);
+        var level = record.IsStated("spoilerLevel") ? Level(record) : ofEntity;
+        var timed = record.IsStated("time");
+        var time = timed ? ReadTime(record, "time is not a time of the calendar: a name is not dated by a place in the story.") : null;
+        record.Finish();
+        if (name is null || language is null || !kindKnown || level is null || (timed && time is null))
+        {
+            return null;
+        }
+
+        return new EntityName(name, language, kind, time, [.. sources.Select(source => new SourceId(source))], level.Value);
+    }
+
+    /// <summary>Reads what an entity is called in the catalogue of somebody else.</summary>
+    private static ExternalIdentifier? ReadIdentifier(JsonRecord record)
+    {
+        var issuer = record.Text("issuer");
+        var value = record.Text("value");
+        if (issuer is not null && value is not null)
+        {
+            record.Name = $"the identifier {value} of {issuer}";
+        }
+
+        var url = Address(record, "url", required: false);
+        var matchKnown = record.Choice("match", MatchNames, out var match);
+        record.Finish();
+        return issuer is null || value is null || !matchKnown ? null : new ExternalIdentifier(issuer, value, url, match);
+    }
+
+    [GeneratedRegex("^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$")]
+    private static partial Regex LanguageTag();
 
     /// <summary>
     /// Reads a statement about an entity with a time of the calendar. The time is written as in a comparison and
