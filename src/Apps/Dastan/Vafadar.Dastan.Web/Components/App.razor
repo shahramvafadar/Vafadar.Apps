@@ -10,6 +10,9 @@
     <base href="@Base" />
     <link rel="stylesheet" href="@Assets["_content/Vafadar.Web/vafadar.css"]" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
+    @* Every page has Persian text – the name of the language at least. The font is asked for with the page, so
+       that the text does not move when it arrives. *@
+    <link rel="preload" href="/fonts/vazirmatn-nl-wght.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="@Assets["icon.svg"]" type="image/svg+xml" />
 
     @* The installable app (ADR 0007). These addresses carry no language: there is one app, not one per language. *@

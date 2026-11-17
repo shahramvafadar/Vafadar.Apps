@@ -117,6 +117,9 @@ The sample is read by `PilotSample` (`Vafadar.Dastan.Data`), which refuses a fil
 translation of the sample is a file next to it, `<sample>.<language>.json`; `shahnameh-pilot.fa.json` is the Persian
 text, a **draft that nobody has reviewed yet** (`"review": "draft"`). Pages will mark such text as unreviewed (phase 4).
 
+What a collection states with a date about its entities (`dated`) and the times its images and videos were made
+are shown at `/<collection>/timeline`, on the chart of a comparison.
+
 [`content/comparisons`](content/comparisons) holds comparisons: several subjects side by side over one axis of
 years, shown at `/compare/<id>` as a timeline and a table ([ADR 0008](docs/adr/0008-charts.md)). They are read by
 `ComparisonSample`, as strictly as the sample; [the format](docs/comparison-format.md) is described on a page of its

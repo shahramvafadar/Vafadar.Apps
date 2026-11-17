@@ -36,7 +36,25 @@ public sealed class Projection
     {
         _info = catalogue.Info;
         Boundary = boundary;
-        Entities = [.. catalogue.Entities.Where(entity => entity.Level.IsWithin(boundary))];
+        // An entity is shown with what is stated about it up to the boundary; a later statement is not part of
+        // the entity a visitor gets.
+        Entities =
+        [
+            .. catalogue.Entities
+                .Where(entity => entity.Level.IsWithin(boundary))
+                .Select(entity => entity.Dated.All(dated => dated.Level.IsWithin(boundary))
+                    ? entity
+                    : new Entity
+                    {
+                        Id = entity.Id,
+                        Type = entity.Type,
+                        Label = entity.Label,
+                        Summary = entity.Summary,
+                        Sources = entity.Sources,
+                        Level = entity.Level,
+                        Dated = [.. entity.Dated.Where(dated => dated.Level.IsWithin(boundary))],
+                    }),
+        ];
         Relations = [.. catalogue.Relations.Where(relation => relation.Level.IsWithin(boundary))];
         Media = [.. catalogue.Media.Where(item => item.Level.IsWithin(boundary) && MayBeShown(item, audience))];
 
@@ -54,7 +72,7 @@ public sealed class Projection
 
         // Only the sources that support something visible are named: a source of a hidden record or of an item that
         // may not be shown would tell that the record exists.
-        var cited = Entities.SelectMany(entity => entity.Sources)
+        var cited = Entities.SelectMany(entity => entity.Sources.Concat(entity.Dated.SelectMany(dated => dated.Sources)))
             .Concat(Relations.SelectMany(relation => relation.Sources))
             .Concat(Steps.SelectMany(step => step.Event.Sources))
             .Concat(Media.SelectMany(item => item.Sources))
@@ -339,6 +357,12 @@ public sealed class Projection
                     [.. Steps.Select(step => step.Event.Associations.FirstOrDefault(association => association.Entity == id))])),
             ]);
     }
+
+    /// <summary>
+    /// Returns what the collection has with a time of the calendar: the entities something dated is stated about,
+    /// and the media, each of which was made at some time. The story itself is not in it – it has an order, no dates.
+    /// </summary>
+    public TimelineView Timeline() => new([.. Entities.Where(entity => !entity.Dated.IsEmpty)], Media);
 
     /// <summary>Returns every media item that may be shown.</summary>
     public GalleryView Gallery() => new(GalleryRule.WholeCollection, null, null, GalleryOrder.Editorial, Media);

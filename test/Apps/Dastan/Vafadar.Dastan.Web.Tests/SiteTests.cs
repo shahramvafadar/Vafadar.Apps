@@ -330,9 +330,10 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
 
         var files = Regex.Matches(page.Html, "<link[^>]*href=\"([^\"]+)\"").Select(match => match.Groups[1].Value).ToList();
 
-        // Two style sheets and the icon, addressed from the page; the manifest and the icon for a home screen,
-        // addressed from the root of the site.
-        Assert.Equal(5, files.Count);
+        // Two style sheets and the icon, addressed from the page; the font of the Persian text, the manifest and
+        // the icon for a home screen, addressed from the root of the site.
+        Assert.Equal(6, files.Count);
+        Assert.Contains("<link rel=\"preload\" href=\"/fonts/vazirmatn-nl-wght.woff2\" as=\"font\" type=\"font/woff2\" crossorigin", page.Html, StringComparison.Ordinal);
         foreach (var file in files)
         {
             Assert.Equal(HttpStatusCode.OK, (await visitor.Get(new Uri(new Uri("http://localhost/fa/"), file).AbsolutePath)).Status);

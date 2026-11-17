@@ -317,3 +317,40 @@ Verification, 2026-11-16: `ConnectionsLayoutTests` (Core, 197 tests in the proje
 stand, a step at a side and Back with the stage staying on the screen, no box cut or on another one with boxes
 opened at every side, every control of a box at least 44 px). All tests without a browser: 1012 passed. The
 browser tests: 308 passed in Chromium, in a run of their own.
+
+## Fourth addendum of 2026-11-17 – the timeline of a collection (steps 8.6 and 9.4)
+
+A collection can state something with a time of the calendar about its entities (`dated`, in
+[the file of a collection](../collection-format.md)), and each of its images and videos was made at some time.
+The page `/<collection>/timeline` shows both as the chart and the table of a comparison.
+
+* **One chart, two pages.** What a comparison page did is the component `ComparisonView`: the tools, the chart
+  across and down the page on its stage, the table. A page gives it what is compared, the address its choices are
+  written to and how the visitor asked to look at it. The page of a collection builds a comparison in memory from
+  the answer of the projection – one lane per entity something dated is stated about, one lane for the images and
+  videos – and begins with the stretch of time of what it holds. The four sides of its stage mean what they mean
+  for a comparison.
+* **The story is not on it.** A step of a telling has a place in the story and no date; the reader of the file
+  refuses a dated statement whose time is such a place. The page says so.
+* **Never beyond the reading position.** A dated statement has a reading stage like every record, never before
+  its entity or its source. The projection gives an entity without its later statements, so that no page that
+  shows the entity can show them; an address cannot ask for them.
+* **Sources stay inside the site.** A source of a collection is reached through the page that says where it
+  leads; a comparison links its sources directly, as before.
+* **Long names.** The lanes of a collection carry the names of entities: across the page the column of names is
+  wider, down the page a name runs down its lane.
+* **Dates are stored in the Gregorian calendar** (D-043): the reader knows no other calendar for a day, and years
+  are years of the common era or before it.
+
+The collection of the repository states nothing with a date about its entities yet – that is content, and content
+is written apart from the software (D-042). Its timeline shows the two diagrams of the project at the day they
+were made, from the third reading stage on; the statements the tests use are test data.
+
+Also in this step: every page asks for the font of the Persian text in its head (`preload`), so that text does
+not move when the font arrives after the page.
+
+Verification, 2026-11-17: `DatedStatementTests` (Core, 204 tests in the project), `DatedStatementReaderTests`
+(Data, 243), `TimelinePageTests` (Web, 284); all tests without a browser: 1070 passed. The page is one of the
+views of the browser tests that check that a view fits the window at 360, 412 and 1280 px in both languages and
+breaks no rule of accessibility a tool can check: 318 passed in Chromium. With statements made up for looking,
+the chart was looked at in English at 1280 px and in Persian at 390 px.

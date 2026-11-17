@@ -196,6 +196,9 @@ internal sealed class JsonRecord
         return new JsonRecord(value, $"{Name}.{field}", _problems);
     }
 
+    /// <summary>Returns the value of a field as it stands in the file, for a reader of its own; null when it is missing.</summary>
+    public JsonElement? Raw(string field, bool required = true) => Value(field, required, out var value) ? value : null;
+
     /// <summary>Reads a list of objects.</summary>
     public IReadOnlyList<JsonRecord> Children(string field, bool required = true)
     {

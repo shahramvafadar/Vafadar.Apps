@@ -26,6 +26,12 @@ public static partial class ComparisonSample
 
     private static readonly JsonSerializerOptions Options = CreateOptions();
 
+    /// <summary>Gets how a time is read from JSON: the form of <c>Vafadar.Temporal</c>, with nothing unknown accepted.</summary>
+    internal static JsonSerializerOptions TimeOptions => Options;
+
+    /// <summary>Gets the names of the review states as the files write them, with a small first letter.</summary>
+    internal static IEnumerable<string> ReviewNames => Enum.GetNames<ReviewStatus>().Select(name => char.ToLowerInvariant(name[0]) + name[1..]);
+
     /// <summary>Reads every comparison of a folder, in the order of their file names. A folder that does not exist holds none.</summary>
     /// <exception cref="SampleFormatException">A file cannot be used; the problems name the file.</exception>
     public static ImmutableArray<Comparison> LoadAll(string folder)
