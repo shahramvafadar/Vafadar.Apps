@@ -209,3 +209,14 @@ Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "n
 | The site is hosted | **Not done** | No host, no address, no certificate |
 | A collection is published | **Not done** | The collection of the repository is an editorial sample; nothing of it is reviewed |
 | A public site was looked at in a browser | **Not done** | The tests ask the site in memory; no browser and no host were used |
+
+## The store of the editors (phase 11)
+
+| Condition | Status | Evidence |
+|---|---|---|
+| A collection goes into the store and comes out as it went in, with its translations | **Implemented and checked** | `EditorialStoreTests`, with a copy of the collection of the repository |
+| Every change of a record is kept with who, when, why, before and after | **Implemented and checked** | `EditorialStoreTests`: a changed record, a review, a removed record, a changed translation |
+| What the site cannot use does not get into the store | **Implemented and checked** | `EditorialStoreTests`: an unusable file and a published revision are refused and change nothing |
+| Editors change, review and publish in the store without a file in between | **Not done** | Steps 11.2 and 11.3 |
+| Editors have a tool with pages | **Not done** | Steps 11.4 to 11.6 |
+| The store knows who an editor is | **Not done** | Step 11.7, the owner's decision |

@@ -190,6 +190,33 @@ dotnet run --project $content -- revision src/Apps/Dastan/content/samples/my-sto
 * The command does not review. It cannot know whether a statement was read against its source; it only refuses a
   file in which nobody says so. A writer or an assistant never runs it to make something visible.
 
+## For the editors: the store
+
+The editors keep a collection in a store of their own ([ADR 0011](adr/0011-editors-store.md)): a database file
+that holds every record with the history of its changes. A writer does not need it – a writer hands over files.
+
+```powershell
+$store = "<a file outside the repository>/editors.db"
+
+# Bring a working file in, with the translations beside it. Say who and why.
+dotnet run --project $content -- store import src/Apps/Dastan/content/samples/my-story.json --store $store --by "<name>" --reason "<why>"
+
+# Write the collection out again, to hand it to a writer or to make a revision from it. Never over a file.
+dotnet run --project $content -- store export <datasetId> --store $store --out <folder>/samples/my-story.json
+
+# What was changed, by whom and why – of the collection, or of one record.
+dotnet run --project $content -- store history <datasetId> --store $store --record relation-02
+```
+
+* The first import brings everything in. Afterwards a record that reads differently is a change with the record
+  before and after; a record the file no longer has is taken out, and its history stays.
+* A file the site cannot use is refused and changes nothing; so is a published revision – the store holds the
+  working state, and a revision is made from it.
+* What comes out reads as what went in. Write it into a folder beside `media/`, where its paths are right; the
+  command checks it there.
+* The file of the store holds unpublished content: keep it outside the repository and outside any folder a site
+  is given. The name after `--by` is taken as it is given – the store does not check who you are.
+
 ## What the check does not check
 
 That a source says what a record claims; that an address still answers; that a summary is fair, a translation

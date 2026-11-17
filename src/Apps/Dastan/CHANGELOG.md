@@ -87,3 +87,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The site can run outside a developer's machine: as a container that holds the program and is given a published
   revision to show. It says whether it is alive, and a script checks from outside what a host has to be sure of.
   How to update it and how to take a revision back is written down. It is not hosted anywhere yet.
+- The editors have a store of their own: a collection is brought into it from its file and written out again
+  unchanged, and every change of a name, a relation, a step or an image is kept with who made it, when and why,
+  and what it said before. The public site does not use the store. Working in the store without a file, and a
+  tool with pages for the editors, are the next steps.

@@ -27,13 +27,15 @@ concern the whole repository are in [`docs/adr`](../../../docs/adr/README.md).
 
 ## Projects
 
-All three exist.
+All exist.
 
 | Project | Purpose | Phase |
 |---|---|---|
 | `Vafadar.Dastan.Core` | Domain model, catalogue, the projection that decides what a visitor may see, views, search | 3 |
 | `Vafadar.Dastan.Data` | Reads and validates the editorial sample; later the relational store | 3 |
 | `Vafadar.Dastan.Web` | The website: pages, components, texts in English and Persian, media delivery | 4 |
+| `Vafadar.Dastan.Content` | The command of the writers and the editors: check, vocabulary, template, revision, store | 9 |
+| `Vafadar.Dastan.Store` | The store of the editors: the records of a collection with the history of their changes ([ADR 0011](docs/adr/0011-editors-store.md)). The website does not use it | 11 |
 
 Shared libraries written for Dastan and usable by other apps:
 [`Vafadar.Temporal`](../../Libraries/Vafadar.Temporal/README.md) (done: stated time, compared without invented

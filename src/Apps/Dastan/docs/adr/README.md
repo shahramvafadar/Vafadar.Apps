@@ -17,6 +17,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0008](0008-charts.md) | Charts: the timeline and the family tree are drawn by Dastan itself; Syncfusion for the tools of editors; a chart has the whole page and is opened at its four sides | Accepted |
 | [0009](0009-published-revision.md) | What everybody may see: only a published revision – numbered, with reviewed statements, reviewed texts and media allowed for the public | Accepted |
 | [0010](0010-running-the-site.md) | Running the site: one container without content, a mounted revision, a proxy it is told to believe | Accepted; no host used |
+| [0011](0011-editors-store.md) | The store of the editors: the records of a collection with their history, in SQLite, beside the file – the public site never reads it | Accepted (D-045) |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),
 [0012](../../../../../docs/adr/0012-temporal-model.md) (stated time), [0013](../../../../../docs/adr/0013-web-library.md) (the web library).
