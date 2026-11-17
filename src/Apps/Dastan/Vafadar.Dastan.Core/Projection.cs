@@ -589,16 +589,49 @@ public sealed class Projection
     /// </summary>
     /// <param name="text">What the visitor typed.</param>
     /// <param name="limit">The largest number of hits.</param>
-    public ImmutableArray<SearchHit> Search(string? text, int limit = 10)
+    public ImmutableArray<SearchHit> Search(string? text, int limit = 10) => Search(text, new SearchFilter(), limit);
+
+    /// <summary>
+    /// Finds entities by a name and by what they are: of a kind, connected to a place, taking part in something
+    /// that held in a year. Without a name, everything the filter lets through is found, in the order of the
+    /// collection; without a name and without a filter, nothing is.
+    /// </summary>
+    /// <param name="text">What the visitor typed.</param>
+    /// <param name="filter">What the hits have to be.</param>
+    /// <param name="limit">The largest number of hits.</param>
+    public ImmutableArray<SearchHit> Search(string? text, SearchFilter filter, int limit = 10)
     {
+        ArgumentNullException.ThrowIfNull(filter);
         var query = SearchText.Fold(text);
-        if (query.Length == 0 || limit <= 0)
+        if ((query.Length == 0 && filter.IsEmpty) || limit <= 0)
         {
             return [];
         }
 
+        // Who is connected to the place, and who takes part in what held in the year – asked once, not per entity.
+        var atPlace = filter.Place is { } place
+            ? Relations.Where(relation => relation.From == place || relation.To == place).SelectMany(relation => new[] { relation.From, relation.To }).Append(place).ToHashSet()
+            : null;
+        HashSet<EntityId>? inYear = null;
+        if (filter.Year is { } year)
+        {
+            var moment = At(year);
+            inYear = moment.Relations.SelectMany(held => new[] { held.Edge.From.Id, held.Edge.To.Id }).Concat(moment.Stated.Select(stated => stated.Entity.Id)).ToHashSet();
+        }
+
+        bool Passes(Entity entity) =>
+            (filter.Nature is not { } nature || entity.Type.Nature == nature)
+            && (atPlace is null || atPlace.Contains(entity.Id))
+            && (inYear is null || inYear.Contains(entity.Id));
+
+        if (query.Length == 0)
+        {
+            // No name was typed: the hit carries no name that matched.
+            return [.. Entities.Where(Passes).Take(limit).Select(entity => new SearchHit(entity, string.Empty, string.Empty))];
+        }
+
         var hits = new List<(int Rank, SearchHit Hit)>();
-        foreach (var entity in Entities)
+        foreach (var entity in Entities.Where(Passes))
         {
             (int Rank, SearchHit Hit)? best = null;
             foreach (var language in entity.Label.Languages.Order(StringComparer.Ordinal))

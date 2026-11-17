@@ -1,6 +1,8 @@
 @* The search of a collection: a form that asks for a page, so it works without a script. It looks for names
-   only, in what the visitor has read. *@
+   in what the visitor has read; on the page of the search it also asks what kind of thing is looked for, at
+   which place and in which year – each only when the collection has something to choose from. *@
 @inject DastanSite Site
+@inject Visitor Visitor
 @inject IStringLocalizer<Ui> T
 
 <form class="search" method="get" action="@($"{Site.Collection}/search")" role="search">
@@ -9,11 +11,63 @@
         <input type="search" id="search-q" name="q" value="@Query" maxlength="80" autocomplete="off" enterkeyhint="search" dir="auto" />
         <button type="submit" class="action">@T["Search_Title"]</button>
     </div>
+    @if (Filters && Visitor.Projection is { } projection)
+    {
+        var natures = projection.Entities.Select(entity => entity.Type.Nature).Distinct().Order().ToList();
+        var places = projection.Places();
+        <div class="search-row search-filters">
+            @if (natures.Count > 1)
+            {
+                <p class="field">
+                    <label for="search-kind">@T["Search_Kind"]</label>
+                    <select id="search-kind" name="kind">
+                        <option value="">@T["Search_Any"]</option>
+                        @foreach (var nature in natures)
+                        {
+                            <option value="@nature.ToString().ToLowerInvariant()" selected="@(nature == Filter.Nature)">@T[$"Nature_{nature}"]</option>
+                        }
+                    </select>
+                </p>
+            }
+            @if (!places.IsEmpty)
+            {
+                <p class="field">
+                    <label for="search-place">@T["Search_Place"]</label>
+                    <select id="search-place" name="place">
+                        <option value="">@T["Search_Any"]</option>
+                        @foreach (var place in places.Mapped.Select(mapped => mapped.Place).Concat(places.Unmapped))
+                        {
+                            <option value="@place.Id" selected="@(place.Id == Filter.Place)">@Visitor.Text(place.Label).Value</option>
+                        }
+                    </select>
+                </p>
+            }
+            @if (projection.Years() is not null)
+            {
+                <p class="field">
+                    <label for="search-year">@T["Search_Year"]</label>
+                    <input type="number" id="search-year" name="year" value="@(Filter.Year is { Era: Vafadar.Temporal.Era.CommonEra } year ? year.Number.ToString(CultureInfo.InvariantCulture) : null)" min="1" max="9999" step="1" inputmode="numeric" dir="ltr" />
+                </p>
+            }
+        </div>
+    }
     <p class="note">@T["Search_Hint"]</p>
+    @if (Filters)
+    {
+        <p class="note">@T["Search_HintFilters"]</p>
+    }
 </form>
 
 @code {
     /// <summary>Gets or sets what the visitor typed before.</summary>
     [Parameter]
     public string Query { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets whether the form asks for more than a name.</summary>
+    [Parameter]
+    public bool Filters { get; set; }
+
+    /// <summary>Gets or sets what the visitor chose before.</summary>
+    [Parameter]
+    public SearchFilter Filter { get; set; } = new();
 }

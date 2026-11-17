@@ -1257,4 +1257,73 @@
   <data name="Series_Graph" xml:space="preserve">
     <value>نگارهٔ عددهای: {0}</value>
   </data>
+  <data name="Search_Kind" xml:space="preserve">
+    <value>چه گونه چیزی</value>
+  </data>
+  <data name="Search_Place" xml:space="preserve">
+    <value>در کدام جا</value>
+  </data>
+  <data name="Search_Year" xml:space="preserve">
+    <value>در کدام سال (میلادی)</value>
+  </data>
+  <data name="Search_Any" xml:space="preserve">
+    <value>هر کدام</value>
+  </data>
+  <data name="Search_HintFilters" xml:space="preserve">
+    <value>بدون نام هم می‌توانید یک گونه، یک جا یا یک سال را برگزینید تا هر آنچه جور است فهرست شود.</value>
+  </data>
+  <data name="Search_NoneFiltered" xml:space="preserve">
+    <value>تا جایی که خوانده‌اید، چیزی با این گزینه‌ها جور نیست.</value>
+  </data>
+  <data name="Search_ResultsFiltered" xml:space="preserve">
+    <value>پیدا شد: {0}</value>
+  </data>
+  <data name="Nature_Being" xml:space="preserve">
+    <value>کسان و جانداران</value>
+  </data>
+  <data name="Nature_Group" xml:space="preserve">
+    <value>گروه‌ها</value>
+  </data>
+  <data name="Nature_Place" xml:space="preserve">
+    <value>جاها</value>
+  </data>
+  <data name="Nature_Work" xml:space="preserve">
+    <value>آثار</value>
+  </data>
+  <data name="Nature_Object" xml:space="preserve">
+    <value>چیزها</value>
+  </data>
+  <data name="Nature_Occasion" xml:space="preserve">
+    <value>رویدادها و دوره‌ها</value>
+  </data>
+  <data name="Nature_Role" xml:space="preserve">
+    <value>سمت‌ها و نشان‌ها</value>
+  </data>
+  <data name="Nature_Subject" xml:space="preserve">
+    <value>موضوع‌ها</value>
+  </data>
+  <data name="Gallery_Tools" xml:space="preserve">
+    <value>چینش نگارخانه</value>
+  </data>
+  <data name="Gallery_OrderName" xml:space="preserve">
+    <value>ترتیب</value>
+  </data>
+  <data name="Gallery_Order_Editorial" xml:space="preserve">
+    <value>به گزینش ویراستاران</value>
+  </data>
+  <data name="Gallery_Order_OldestFirst" xml:space="preserve">
+    <value>کهن‌ترین نخست</value>
+  </data>
+  <data name="Gallery_Order_NewestFirst" xml:space="preserve">
+    <value>تازه‌ترین نخست</value>
+  </data>
+  <data name="Gallery_OrderMade" xml:space="preserve">
+    <value>به ترتیب زمان ساخته‌شدن هر کدام – نه زمانِ آنچه نشان می‌دهد.</value>
+  </data>
+  <data name="Gallery_KindName" xml:space="preserve">
+    <value>نمایش</value>
+  </data>
+  <data name="Gallery_Kind_All" xml:space="preserve">
+    <value>همه</value>
+  </data>
 </root>

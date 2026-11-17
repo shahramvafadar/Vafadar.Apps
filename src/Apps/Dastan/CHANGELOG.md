@@ -139,6 +139,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- The search also finds without a name: everything of a kind, at a place or of a year. A gallery can be put
+  in the order its pictures were made, and show images or videos only.
 - Pages can be found and passed on: each says where it is in every language and what it is about, a public
   site lists its pages for search engines – never one a new reader has not reached – and pages print without
   the navigation.

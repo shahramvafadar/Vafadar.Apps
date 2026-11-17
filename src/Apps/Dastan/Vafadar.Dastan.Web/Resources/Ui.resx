@@ -1257,4 +1257,73 @@
   <data name="Series_Graph" xml:space="preserve">
     <value>Drawing of the numbers of: {0}</value>
   </data>
+  <data name="Search_Kind" xml:space="preserve">
+    <value>What kind of thing</value>
+  </data>
+  <data name="Search_Place" xml:space="preserve">
+    <value>At which place</value>
+  </data>
+  <data name="Search_Year" xml:space="preserve">
+    <value>In which year (of the common era)</value>
+  </data>
+  <data name="Search_Any" xml:space="preserve">
+    <value>any</value>
+  </data>
+  <data name="Search_HintFilters" xml:space="preserve">
+    <value>Without a name, choose a kind, a place or a year to list everything that fits.</value>
+  </data>
+  <data name="Search_NoneFiltered" xml:space="preserve">
+    <value>Nothing fits what was chosen, as far as you have read.</value>
+  </data>
+  <data name="Search_ResultsFiltered" xml:space="preserve">
+    <value>Found: {0}</value>
+  </data>
+  <data name="Nature_Being" xml:space="preserve">
+    <value>People and beings</value>
+  </data>
+  <data name="Nature_Group" xml:space="preserve">
+    <value>Groups</value>
+  </data>
+  <data name="Nature_Place" xml:space="preserve">
+    <value>Places</value>
+  </data>
+  <data name="Nature_Work" xml:space="preserve">
+    <value>Works</value>
+  </data>
+  <data name="Nature_Object" xml:space="preserve">
+    <value>Objects</value>
+  </data>
+  <data name="Nature_Occasion" xml:space="preserve">
+    <value>Events and times</value>
+  </data>
+  <data name="Nature_Role" xml:space="preserve">
+    <value>Offices and honours</value>
+  </data>
+  <data name="Nature_Subject" xml:space="preserve">
+    <value>Subjects</value>
+  </data>
+  <data name="Gallery_Tools" xml:space="preserve">
+    <value>How the gallery is arranged</value>
+  </data>
+  <data name="Gallery_OrderName" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="Gallery_Order_Editorial" xml:space="preserve">
+    <value>as the editors chose</value>
+  </data>
+  <data name="Gallery_Order_OldestFirst" xml:space="preserve">
+    <value>oldest first</value>
+  </data>
+  <data name="Gallery_Order_NewestFirst" xml:space="preserve">
+    <value>newest first</value>
+  </data>
+  <data name="Gallery_OrderMade" xml:space="preserve">
+    <value>By when each was made – not by the time of what it shows.</value>
+  </data>
+  <data name="Gallery_KindName" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Gallery_Kind_All" xml:space="preserve">
+    <value>everything</value>
+  </data>
 </root>

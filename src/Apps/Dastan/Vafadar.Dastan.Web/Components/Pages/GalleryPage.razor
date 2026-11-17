@@ -28,9 +28,38 @@
             }
         </p>
     }
-    else if (!gallery.Items.IsEmpty)
+    else
     {
-        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Gallery_Count"], Visitor.Number(gallery.Items.Length)) – @T["Gallery_Order"]</p>
+        @* How the gallery is arranged (MED-003): the order, and images or videos only. The order by time says which
+           time it is – when an item was made, never the time of what it shows. *@
+        <nav class="chart-tools" aria-label="@T["Gallery_Tools"]">
+            <p class="chart-tool">
+                <span class="chart-tool-name">@T["Gallery_OrderName"]</span>
+                @Choice(_order == GalleryOrder.Editorial, Address(GalleryOrder.Editorial, _kind), T["Gallery_Order_Editorial"])
+                @Choice(_order == GalleryOrder.OldestFirst, Address(GalleryOrder.OldestFirst, _kind), T["Gallery_Order_OldestFirst"])
+                @Choice(_order == GalleryOrder.NewestFirst, Address(GalleryOrder.NewestFirst, _kind), T["Gallery_Order_NewestFirst"])
+            </p>
+            @if (_kinds.Count > 1)
+            {
+                <p class="chart-tool">
+                    <span class="chart-tool-name">@T["Gallery_KindName"]</span>
+                    @Choice(_kind is null, Address(_order, null), T["Gallery_Kind_All"])
+                    @foreach (var kind in _kinds)
+                    {
+                        @Choice(_kind == kind, Address(_order, kind), T[$"Media_Kind_{kind}"])
+                    }
+                </p>
+            }
+        </nav>
+        @if (_order != GalleryOrder.Editorial)
+        {
+            <p class="note">@T["Gallery_OrderMade"]</p>
+        }
+    }
+
+    @if (!gallery.Items.IsEmpty)
+    {
+        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Gallery_Count"], Visitor.Number(gallery.Items.Length))@(_order == GalleryOrder.Editorial ? $" – {T["Gallery_Order"]}" : null)</p>
         <ul class="cards gallery" role="list">
             @foreach (var item in gallery.Items)
             {
@@ -117,10 +146,22 @@
     private string _backName = string.Empty;
     private string _context = string.Empty;
     private bool _continues;
+    private string _here = string.Empty;
+    private GalleryOrder _order;
+    private MediaKind? _kind;
+    private IReadOnlyList<MediaKind> _kinds = [];
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
     public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the order in the address: <c>oldest</c> or <c>newest</c>; anything else is the order of the editors.</summary>
+    [SupplyParameterFromQuery(Name = "order")]
+    public string? Order { get; set; }
+
+    /// <summary>Gets or sets the kind in the address: <c>image</c> or <c>video</c>; anything else is both.</summary>
+    [SupplyParameterFromQuery(Name = "kind")]
+    public string? Kind { get; set; }
 
     /// <summary>Gets or sets the identifier of the entity whose media are asked for, if the address names one.</summary>
     [Parameter]
@@ -148,6 +189,16 @@
         {
             Navigation.NotFound();
             return;
+        }
+
+        // What a gallery has to choose from is asked before anything is left out.
+        _kinds = [.. _gallery.Items.Select(item => item.Kind).Concat(_gallery.References.Select(item => item.Kind)).Distinct().Order()];
+        _order = Order switch { "oldest" => GalleryOrder.OldestFirst, "newest" => GalleryOrder.NewestFirst, _ => GalleryOrder.Editorial };
+        _kind = Kind switch { "image" => MediaKind.Image, "video" => MediaKind.Video, _ => null };
+        _here = Subject is not null ? $"{Site.Collection}/entity/{Subject}/gallery" : Step is not null ? $"{Site.Collection}/event/{Step}/gallery" : $"{Site.Collection}/gallery";
+        if (!_gallery.IsEmpty)
+        {
+            _gallery = _gallery.Arranged(_order, _kind);
         }
 
         var overview = projection.Overview();
@@ -180,4 +231,19 @@
                 break;
         }
     }
+
+    private string Address(GalleryOrder order, MediaKind? kind)
+    {
+        var asked = new[]
+        {
+            order switch { GalleryOrder.OldestFirst => "order=oldest", GalleryOrder.NewestFirst => "order=newest", _ => null },
+            kind is { } one ? $"kind={one.ToString().ToLowerInvariant()}" : null,
+        }.Where(part => part is not null).ToList();
+        return asked.Count == 0 ? _here : $"{_here}?{string.Join('&', asked)}";
+    }
+
+    // A choice of several: the one that is on says so.
+    private static RenderFragment Choice(bool on, string address, string name) => on
+        ? @<a class="choice" href="@address" aria-current="true">@name</a>
+        : @<a class="choice" href="@address">@name</a>;
 }
