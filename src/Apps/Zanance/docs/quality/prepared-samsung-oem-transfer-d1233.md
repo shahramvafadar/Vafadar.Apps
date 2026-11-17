@@ -38,3 +38,7 @@ A domain is accepted only if the positive control actually arrives with its exac
 Samsung documents selective transfer and also transfer limitations; source policy alone is insufficient to establish this device pair's behavior. See [Samsung transfer instructions](https://www.samsung.com/us/support/answer/ANS10001345/), [Samsung supported content](https://www.samsung.com/us/support/answer/ANS10001412/) and [Android backup/extraction rules](https://developer.android.com/identity/data/autobackup).
 
 Actual owner-controlled transfer, final target/provider observations and retirement of only fresh helpers remain outstanding. Both Main versions/data, retained evidence and canonical parent states remain protected. This preparation does not close the general OEM/cloud/security/release gates.
+
+## Subsequent terminal observation
+
+The owner subsequently completed the one reviewed transfer. Both APKs arrived but neither positive-control nor candidate synthetic payloads arrived. See [the actual transfer result](samsung-oem-transfer-result-d1233.md); preparation is complete and this transfer is terminal, while rule-enforced domain exclusion remains inconclusive.
