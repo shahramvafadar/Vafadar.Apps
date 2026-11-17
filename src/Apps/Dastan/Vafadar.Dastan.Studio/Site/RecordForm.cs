@@ -71,6 +71,9 @@ public sealed class FormField
     /// <summary>Gets the rows of a list, each with its fields; the last one is empty, for a part to add.</summary>
     public IReadOnlyList<IReadOnlyList<FormField>> Rows { get; init; } = [];
 
+    /// <summary>Gets the language of the text, when the field is a text of the record in another language.</summary>
+    public string? Language { get; init; }
+
     /// <summary>Gets the text an input starts with.</summary>
     public string Text => Value switch
     {
@@ -137,13 +140,148 @@ public static class RecordForm
         .SelectMany(choices => choices.Field.Split(", ").Select(field => (Field: field, Values: (IReadOnlyList<FieldOption>)[.. choices.Values.Select(value => new FieldOption(value.Name, value.Name))])))
         .ToFrozenDictionary(entry => entry.Field, entry => entry.Values, StringComparer.Ordinal);
 
+    // The texts a translation may translate, by the group of the record – the list of the readers.
+    private static readonly FrozenDictionary<string, ContentTexts> Translated = ContentVocabulary.Translated.ToFrozenDictionary(texts => texts.Group, StringComparer.Ordinal);
+
+    // What takes part in a record: the list, who a row names, and the role the row gives – the places of the
+    // file that a translation names as "roles", by who takes part.
+    private const string Taking = "entityAssociations";
+    private const string Who = "entityId";
+    private const string Role = "role";
+
     /// <summary>Returns the fields of a record a form shows, in the order of the record.</summary>
-    public static IReadOnlyList<FormField> Of(string group, JsonObject record, FormContext context)
+    /// <param name="group">The group of the record.</param>
+    /// <param name="record">The record.</param>
+    /// <param name="context">What the form needs to know of the collection.</param>
+    /// <param name="texts">
+    /// The texts of the record in the other languages (step 11.8). Each stands below the field it translates: a
+    /// text of the record, or the role of a row of what takes part.
+    /// </param>
+    public static IReadOnlyList<FormField> Of(string group, JsonObject record, FormContext context, IReadOnlyList<(string Language, JsonObject Texts)>? texts = null)
     {
         ArgumentNullException.ThrowIfNull(record);
         ArgumentNullException.ThrowIfNull(context);
-        return [.. record.Where(field => !Kept.Contains(field.Key)).Select(field => Field($"{group}[]", "f", field.Key, field.Value, context, nested: false))];
+        var fields = record.Where(field => !Kept.Contains(field.Key)).Select(field => Field($"{group}[]", "f", field.Key, field.Value, context, nested: false)).ToList();
+        if (texts is not { Count: > 0 } || !Translated.TryGetValue(group, out var translated))
+        {
+            return fields;
+        }
+
+        var shown = new List<FormField>();
+        foreach (var field in fields)
+        {
+            if (translated.Roles && field is { Name: Taking, Kind: FieldKind.Rows })
+            {
+                // The role of a row in another language goes with its row – also into the row that is added.
+                shown.Add(new FormField
+                {
+                    Path = field.Path, Name = field.Name, Kind = field.Kind, Value = field.Value,
+                    Rows =
+                    [
+                        .. field.Rows.Select((row, index) => (IReadOnlyList<FormField>)
+                        [
+                            .. row.SelectMany(part => part.Name != Role
+                                ? [part]
+                                : texts.Select(text => Translation($"t.{text.Language}.{Taking}[{index}].{Role}", Role, text.Language, RoleOf(text.Texts, row), part.Kind)).Prepend(part)),
+                        ]),
+                    ],
+                });
+                continue;
+            }
+
+            shown.Add(field);
+            if (field.Kind is FieldKind.Text or FieldKind.LongText && translated.Fields.Contains(field.Name))
+            {
+                shown.AddRange(texts.Select(text => Translation($"t.{text.Language}.{field.Name}", field.Name, text.Language, TextOf(text.Texts[field.Name]), field.Kind)));
+            }
+        }
+
+        return shown;
     }
+
+    /// <summary>
+    /// Returns the texts of the record in the other languages as a form was filled in, by the language. A text
+    /// left empty is a text the language does not have; the role of a row that was taken out goes with it.
+    /// </summary>
+    /// <param name="group">The group of the record.</param>
+    /// <param name="record">The record as the form was made from it.</param>
+    /// <param name="form">What was sent.</param>
+    /// <param name="texts">The texts the form was made from.</param>
+    public static Dictionary<string, JsonObject> ReadTexts(string group, JsonObject record, IFormCollection form, IReadOnlyList<(string Language, JsonObject Texts)> texts)
+    {
+        ArgumentNullException.ThrowIfNull(record);
+        ArgumentNullException.ThrowIfNull(form);
+        ArgumentNullException.ThrowIfNull(texts);
+        var read = new Dictionary<string, JsonObject>(StringComparer.Ordinal);
+        if (!Translated.TryGetValue(group, out var translated))
+        {
+            return read;
+        }
+
+        foreach (var (language, before) in texts)
+        {
+            var now = new JsonObject();
+            foreach (var name in translated.Fields)
+            {
+                if (form.TryGetValue($"t.{language}.{name}", out var sent))
+                {
+                    if (Sent(sent) is { Length: > 0 } text)
+                    {
+                        now[name] = text;
+                    }
+                }
+                else if (before[name] is { } kept)
+                {
+                    // The form had no input for the text: it stays as it is, for the readers to judge.
+                    now[name] = kept.DeepClone();
+                }
+            }
+
+            if (translated.Roles)
+            {
+                if (record[Taking] is JsonArray rows)
+                {
+                    var roles = new JsonObject();
+                    for (var index = 0; index <= rows.Count; index++)
+                    {
+                        var who = Sent(form[$"f.{Taking}[{index}].{Who}"]);
+                        if (who.Length > 0 && Sent(form[$"f.{Taking}[{index}].{Role}"]).Length > 0 && Sent(form[$"t.{language}.{Taking}[{index}].{Role}"]) is { Length: > 0 } role)
+                        {
+                            roles[who] = role;
+                        }
+                    }
+
+                    if (roles.Count > 0)
+                    {
+                        now["roles"] = roles;
+                    }
+                }
+                else if (before["roles"] is { } kept)
+                {
+                    now["roles"] = kept.DeepClone();
+                }
+            }
+
+            read[language] = now;
+        }
+
+        return read;
+    }
+
+    private static string Sent(StringValues sent) =>
+        sent.Count == 0 ? string.Empty : (sent[^1] ?? string.Empty).Replace("\r\n", "\n", StringComparison.Ordinal).Trim();
+
+    private static string TextOf(JsonNode? node) => node is JsonValue value && value.TryGetValue<string>(out var text) ? text : string.Empty;
+
+    // The role a language gives the row of what takes part, by whom the row names.
+    private static string RoleOf(JsonObject texts, IReadOnlyList<FormField> row) =>
+        row.FirstOrDefault(part => part.Name == Who) is { } who && who.Text.Length > 0 ? TextOf((texts["roles"] as JsonObject)?[who.Text]) : string.Empty;
+
+    private static FormField Translation(string path, string name, string language, string text, FieldKind kind) => new()
+    {
+        Path = path, Name = name, Language = language, Value = JsonValue.Create(text),
+        Kind = kind == FieldKind.LongText || text.Length > 70 || text.Contains('\n', StringComparison.Ordinal) ? FieldKind.LongText : FieldKind.Text,
+    };
 
     /// <summary>
     /// Returns the record with its fields as a form was filled in, or the reasons the form cannot be understood.

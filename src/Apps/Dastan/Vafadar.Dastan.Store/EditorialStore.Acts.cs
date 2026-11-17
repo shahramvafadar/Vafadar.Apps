@@ -53,7 +53,12 @@ public sealed partial class EditorialStore
     /// <param name="record">The record as it is written in the file of a collection.</param>
     /// <param name="by">Who puts it there.</param>
     /// <param name="reason">Why.</param>
-    public ActResult Put(string collectionId, string group, JsonObject record, string by, string reason)
+    /// <param name="texts">
+    /// The texts of the record in the other languages, by the language, as a translation writes them for the
+    /// record; they are kept in the same act, so that a record and what translates it never disagree. A language
+    /// that is not named keeps its texts; a language named with no texts loses them.
+    /// </param>
+    public ActResult Put(string collectionId, string group, JsonObject record, string by, string reason, IReadOnlyDictionary<string, JsonObject>? texts = null)
     {
         ArgumentNullException.ThrowIfNull(record);
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
@@ -68,8 +73,30 @@ public sealed partial class EditorialStore
             return Refused("a record names itself: it has an id.");
         }
 
-        return Act(collectionId, by, reason, (root, _) =>
+        return Act(collectionId, by, reason, (root, translations) =>
         {
+            foreach (var (language, translated) in texts ?? new Dictionary<string, JsonObject>())
+            {
+                if (!translations.TryGetValue(language, out var translation))
+                {
+                    return $"{language}: the collection has no texts in that language; a language is added by importing its file.";
+                }
+
+                if (translated.Count > 0)
+                {
+                    if (translation[group] is not JsonObject named)
+                    {
+                        translation[group] = named = [];
+                    }
+
+                    named[id] = translated.DeepClone();
+                }
+                else
+                {
+                    (translation[group] as JsonObject)?.Remove(id);
+                }
+            }
+
             var records = root[group]!.AsArray();
             var place = Enumerable.Range(0, records.Count).Where(index => (string?)records[index]!["id"] == id).Cast<int?>().FirstOrDefault();
             if (place is { } index)

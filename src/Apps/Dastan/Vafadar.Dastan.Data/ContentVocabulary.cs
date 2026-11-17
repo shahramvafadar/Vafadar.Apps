@@ -13,6 +13,12 @@ public sealed record ContentChoice(string Name, string? Note = null);
 /// <param name="Values">The values the readers understand; any other value is refused.</param>
 public sealed record ContentChoices(string Field, string Meaning, ImmutableArray<ContentChoice> Values);
 
+/// <summary>The texts of the records of a group that a translation may give in its language.</summary>
+/// <param name="Group">The group of the translation: a group of records, or <c>dated</c> for the statements with a date.</param>
+/// <param name="Fields">The fields of a record that are translated.</param>
+/// <param name="Roles">Whether the roles of what takes part in a record are translated, by the identifier of what takes part.</param>
+public sealed record ContentTexts(string Group, ImmutableArray<string> Fields, bool Roles = false);
+
 /// <summary>
 /// The fixed sets of values of the content files, taken from the readers themselves – a list for writers that
 /// cannot differ from what is accepted (D-042). A value that is missing here does not exist for the site: it is
@@ -22,6 +28,9 @@ public static class ContentVocabulary
 {
     /// <summary>Gets the fixed sets of the file of a collection (<see cref="PilotSample.SchemaVersion"/>) and of its translations.</summary>
     public static ImmutableArray<ContentChoices> Collection { get; } = PilotReader.Choices();
+
+    /// <summary>Gets the texts of a collection that its translations may translate; the readers refuse any other.</summary>
+    public static ImmutableArray<ContentTexts> Translated => PilotReader.Translated;
 
     /// <summary>Gets the fixed sets of the file of a comparison (<see cref="ComparisonSample.FormatVersion"/>) and of its translations.</summary>
     public static ImmutableArray<ContentChoices> Comparison { get; } = ComparisonSample.Choices();

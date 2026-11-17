@@ -89,7 +89,7 @@
             <ActOutcome Problems="_fieldsProblems" />
             <form method="post" @formname="fields" @onsubmit="Fill" class="act" action="@Here">
                 <AntiforgeryToken />
-                @foreach (var field in RecordForm.Of(Group, _filled ?? record.Body, _form!))
+                @foreach (var field in RecordForm.Of(Group, _filled ?? record.Body, _form!, _filledTexts ?? _texts))
                 {
                     <FieldInput Field="field" />
                 }
@@ -152,6 +152,8 @@
     private List<string>? _fieldsProblems;
     private FormContext? _form;
     private JsonObject? _filled;
+    private IReadOnlyList<(string Language, JsonObject Texts)> _texts = [];
+    private IReadOnlyList<(string Language, JsonObject Texts)>? _filledTexts;
     private List<string>? _removeProblems;
 
     [CascadingParameter]
@@ -204,6 +206,7 @@
 
         _record = Store.Record(Collection, Group, Record);
         _form = _record is null ? null : FormContext.Of(Store, Collection);
+        _texts = _record is null ? [] : Store.Texts(Collection, Group, Record);
 
         // The statements of the record: itself when it is a relation or an event, its dated statements when it is an entity.
         _statements = [.. Store.Statements(Collection).Where(statement => statement.Group == Group && statement.Record == Record)];
@@ -257,9 +260,11 @@
         var by = Name(input.By, problems);
         var reason = Reason(input.Reason, problems);
         var record = RecordForm.Read(Group, _record.Body, Context.Request.Form, _form!, problems);
+        var texts = RecordForm.ReadTexts(Group, _record.Body, Context.Request.Form, _texts);
         if (problems.Count == 0)
         {
-            var result = Store.Put(Collection, Group, record, by!, reason!);
+            // The record and its texts in the other languages in one act: they are tried together.
+            var result = Store.Put(Collection, Group, record, by!, reason!, texts);
             if (Finished(result, by!, result.Changed == 0 ? "unchanged" : "changed"))
             {
                 return;
@@ -270,6 +275,7 @@
 
         // The form again, with what was filled in.
         _filled = RecordForm.Shown(_record.Body, record);
+        _filledTexts = [.. _texts.Select(text => (text.Language, texts.GetValueOrDefault(text.Language) ?? text.Texts))];
         _fieldsProblems = problems;
     }
 

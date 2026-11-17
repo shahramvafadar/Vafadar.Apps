@@ -271,15 +271,75 @@ public sealed class StudioFormTests : IDisposable
         Assert.DoesNotContain(rows, row => (string)row!["entityId"]! == "place-samangan");
     }
 
+    // --- the texts of the other languages (step 11.8) ---
+
+    private static string Standing(StudioPage page, string name) =>
+        Desk.Standing(FieldsForm(page)).Single(input => input.Name == name).Value;
+
     [Fact]
-    public async Task A_row_another_language_still_has_a_text_for_is_not_taken_out()
+    public async Task The_text_of_a_field_in_Persian_stands_below_the_field()
     {
-        // The Persian texts name the role of every row; the tool has no form for them yet, so the readers refuse.
+        var page = await _desk.Get(Event);
+        var form = FieldsForm(page);
+
+        Assert.Equal("اسبی گم‌شده و پذیرایی", Standing(page, "t.fa.label"));
+        Assert.Equal("جای پذیرایی", Standing(page, "t.fa.entityAssociations[4].role"));
+        Assert.Equal(string.Empty, Standing(page, "t.fa.entityAssociations[5].role"));
+        Assert.Matches("name=\"t\\.fa\\.label\"[^>]*lang=\"fa\"", form);
+        Assert.Contains("<span class=\"language\"> – Persian (fa)</span>", form, StringComparison.Ordinal);
+        Assert.True(form.IndexOf("name=\"f.label\"", StringComparison.Ordinal) < form.IndexOf("name=\"t.fa.label\"", StringComparison.Ordinal));
+        Assert.True(form.IndexOf("name=\"t.fa.label\"", StringComparison.Ordinal) < form.IndexOf("name=\"f.summary\"", StringComparison.Ordinal));
+
+        // A field no translation may translate has no input for one.
+        Assert.DoesNotContain("name=\"t.fa.orderBasis\"", form, StringComparison.Ordinal);
+        Assert.DoesNotContain("name=\"t.fa.title\"", FieldsForm(await _desk.Get($"/en/{Collection}/record/sources/src-ganjoor-index")), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_Persian_text_is_changed_and_one_left_empty_is_taken_out()
+    {
+        var page = await _desk.Fill(Event, "fields", [("t.fa.label", "اسبی گم‌شده و مهمانی"), ("t.fa.summary", " "), .. WhoAndWhy]);
+
+        Assert.EndsWith("event-01?done=changed", page.Arrived, StringComparison.Ordinal);
+        Assert.Equal("اسبی گم‌شده و مهمانی", Standing(page, "t.fa.label"));
+        Assert.Equal(string.Empty, Standing(page, "t.fa.summary"));
+
+        // The record itself says what it said: only the Persian texts were changed.
+        Assert.Equal("A missing horse and a welcome", (string)(await Written(Event))["label"]!);
+        Assert.DoesNotContain("version 3", page.Text, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_row_is_taken_out_together_with_its_Persian_role()
+    {
         var page = await _desk.Fill(Event, "fields", [("f.entityAssociations[4].role", string.Empty), .. WhoAndWhy]);
 
+        Assert.EndsWith("event-01?done=changed", page.Arrived, StringComparison.Ordinal);
+        Assert.Equal(4, (await Written(Event))["entityAssociations"]!.AsArray().Count);
+        Assert.DoesNotContain("جای پذیرایی", FieldsForm(page), StringComparison.Ordinal);
+        Assert.Equal("سرزمین مرزی شکار آغازین", Standing(page, "t.fa.entityAssociations[3].role"));
+    }
+
+    [Fact]
+    public async Task A_row_is_added_with_its_Persian_role()
+    {
+        var page = await _desk.Fill(Event, "fields",
+            [("f.entityAssociations[5].entityId", "character-zal"), ("f.entityAssociations[5].role", "father named by the host"), ("f.entityAssociations[5].presence", "setting"),
+             ("t.fa.entityAssociations[5].role", "پدری که میزبان از او نام می‌برد"), .. WhoAndWhy]);
+
+        Assert.EndsWith("event-01?done=changed", page.Arrived, StringComparison.Ordinal);
+        Assert.Equal("پدری که میزبان از او نام می‌برد", Standing(page, "t.fa.entityAssociations[5].role"));
+        Assert.Equal("مسافری در جست‌وجوی رخش", Standing(page, "t.fa.entityAssociations[0].role"));
+    }
+
+    [Fact]
+    public async Task A_refused_form_keeps_the_Persian_texts_as_they_were_filled_in()
+    {
+        var page = await _desk.Fill(Event, "fields", [("f.order", "first"), ("t.fa.label", "اسبی گم‌شده و مهمانی"), .. WhoAndWhy]);
+
         Assert.Null(page.Arrived);
-        Assert.Contains("translation fa: events/event-01/roles/place-samangan translates nothing the sample has.", page.Text, StringComparison.Ordinal);
-        Assert.Equal(5, (await Written(Event))["entityAssociations"]!.AsArray().Count);
+        Assert.Equal("اسبی گم‌شده و مهمانی", Standing(page, "t.fa.label"));
+        Assert.Equal("اسبی گم‌شده و پذیرایی", Standing(await _desk.Get(Event), "t.fa.label"));
     }
 
     [Fact]

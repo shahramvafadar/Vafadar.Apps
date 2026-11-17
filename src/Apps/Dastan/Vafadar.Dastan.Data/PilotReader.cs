@@ -1339,11 +1339,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 translation.Add($"stages/{level}/label", text);
             }
 
-            ReadTranslated(record, translation, "entities", "label", "summary");
-            ReadTranslated(record, translation, "relations", "label");
-            ReadTranslated(record, translation, "events", "label", "summary");
-            ReadTranslated(record, translation, "media", "label", "caption", "altText");
-            ReadTranslated(record, translation, "dated", "label", "summary");
+            foreach (var texts in Translated)
+            {
+                ReadTranslated(record, translation, texts);
+            }
+
             record.Finish();
             if (language is not null && reviewKnown)
             {
@@ -1352,11 +1352,22 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
     }
 
-    private static void ReadTranslated(JsonRecord record, Translation translation, string group, params string[] fields)
+    /// <summary>The texts a translation may translate. The tool of the editors makes its inputs from this list.</summary>
+    internal static readonly ImmutableArray<ContentTexts> Translated =
+    [
+        new("entities", ["label", "summary"]),
+        new("relations", ["label"]),
+        new("events", ["label", "summary"], Roles: true),
+        new("media", ["label", "caption", "altText"]),
+        new("dated", ["label", "summary"]),
+    ];
+
+    private static void ReadTranslated(JsonRecord record, Translation translation, ContentTexts translated)
     {
+        var group = translated.Group;
         foreach (var (id, texts) in record.Named(group, required: false))
         {
-            foreach (var field in fields)
+            foreach (var field in translated.Fields)
             {
                 if (texts.Text(field, required: false) is { } text)
                 {
@@ -1364,7 +1375,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 }
             }
 
-            if (group == "events")
+            if (translated.Roles)
             {
                 foreach (var (entity, role) in texts.NamedTexts("roles", required: false))
                 {

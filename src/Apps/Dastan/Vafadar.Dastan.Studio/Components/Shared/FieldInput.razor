@@ -5,16 +5,16 @@
 @switch (Field.Kind)
 {
     case FieldKind.Text:
-        <p class="field">
-            <label for="@Id"><code>@Field.Name</code></label>
-            <input id="@Id" name="@Field.Path" value="@Field.Text" maxlength="2000" dir="auto" />
+        <p class="@(Field.Language is null ? "field" : "field translated")">
+            <label for="@Id"><code>@Field.Name</code>@if (Field.Language is not null) { <span class="language"> – @Language(Field.Language)</span> }</label>
+            <input id="@Id" name="@Field.Path" value="@Field.Text" maxlength="2000" dir="auto" lang="@Field.Language" />
         </p>
         break;
 
     case FieldKind.LongText:
-        <p class="field">
-            <label for="@Id"><code>@Field.Name</code></label>
-            <textarea id="@Id" name="@Field.Path" rows="@Lines(Field.Text, 3)" maxlength="20000" dir="auto">@Field.Text</textarea>
+        <p class="@(Field.Language is null ? "field" : "field translated")">
+            <label for="@Id"><code>@Field.Name</code>@if (Field.Language is not null) { <span class="language"> – @Language(Field.Language)</span> }</label>
+            <textarea id="@Id" name="@Field.Path" rows="@Lines(Field.Text, 3)" maxlength="20000" dir="auto" lang="@Field.Language">@Field.Text</textarea>
         </p>
         break;
 
@@ -107,6 +107,19 @@
 
     // The name of the input, as an identifier a label can point to.
     private string Id => "field-" + string.Concat(Field.Path.Select(character => char.IsAsciiLetterOrDigit(character) ? character : '-'));
+
+    // The name of a language as the editor reads it, with its code: "Persian (fa)".
+    private static string Language(string code)
+    {
+        try
+        {
+            return $"{CultureInfo.GetCultureInfo(code).DisplayName} ({code})";
+        }
+        catch (CultureNotFoundException)
+        {
+            return code;
+        }
+    }
 
     private static int Lines(string text, int least) => Math.Clamp(text.Count(character => character == '\n') + 1 + (text.Length / 80), least, 30);
 }
