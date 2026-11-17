@@ -74,7 +74,32 @@ public sealed class Entity
 
     /// <summary>Gets what the entity is called in the catalogues of others, each with who issued it.</summary>
     public ImmutableArray<ExternalIdentifier> Identifiers { get; init; } = [];
+
+    /// <summary>
+    /// Gets where on the earth a real place is, when the editors state it. A place of a story has none: it is
+    /// not a place on a map.
+    /// </summary>
+    public GeoPosition? Position { get; init; }
 }
+
+/// <summary>How exactly a position says where a place is.</summary>
+public enum PositionPrecision
+{
+    /// <summary>The place is there: a building, a monument, a small town.</summary>
+    Exact = 0,
+
+    /// <summary>The place is about there: its site is known roughly.</summary>
+    Approximate = 1,
+
+    /// <summary>The position is the middle of an area – a region, a country – and says nothing of its borders.</summary>
+    CentreOfArea = 2,
+}
+
+/// <summary>Where a real place is: degrees north and east, and how exactly that is meant.</summary>
+/// <param name="Latitude">Degrees north of the equator; negative to the south. From −90 to 90.</param>
+/// <param name="Longitude">Degrees east of Greenwich; negative to the west. From −180 to 180.</param>
+/// <param name="Precision">How exactly the position is meant.</param>
+public sealed record GeoPosition(decimal Latitude, decimal Longitude, PositionPrecision Precision);
 
 /// <summary>What kind of other name a name is.</summary>
 public enum NameKind

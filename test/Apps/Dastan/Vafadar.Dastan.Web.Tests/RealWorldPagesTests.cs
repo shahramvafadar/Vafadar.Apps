@@ -53,6 +53,8 @@ public sealed class WorldSite : DemoSite
             """);
         entities.Add(Entity("place-city", "Place", "A city of the tests"));
 
+        entities[^1]!["position"] = JsonNode.Parse("""{ "latitude": 36.2972, "longitude": 59.6067, "precision": "approximate" }""");
+
         // What is stated of the city: how many lived there in a year, and how far it reaches, said for no year (step 12.7).
         entities[^1]!["dated"] = JsonNode.Parse("""
             [
@@ -237,6 +239,25 @@ public sealed class RealWorldPagesTests(WorldSite site) : IClassFixture<WorldSit
         Assert.DoesNotContain(heading, poet.Main, StringComparison.Ordinal);
         Assert.Contains("People of the city", timeline.Text, StringComparison.Ordinal);
         Assert.DoesNotContain("Area of the city", timeline.Text, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("en", "Where it is", "36.2972° N, 59.6067° E", "about there")]
+    [InlineData("fa", "جای آن", "۳۶٫۲۹۷۲° شمالی، ۵۹٫۶۰۶۷° شرقی", "کم‌وبیش همان‌جا")]
+    public async Task The_page_of_a_real_place_says_where_it_is_and_loads_no_map(string language, string title, string position, string precision)
+    {
+        var city = await site.Visitor().Get($"/{language}/{Story}/entity/place-city");
+        var land = await site.Visitor().Get($"/{language}/{Story}/entity/region-land");
+
+        Assert.Contains(title, city.Main, StringComparison.Ordinal);
+        Assert.Contains(position, city.Main, StringComparison.Ordinal);
+        Assert.Contains(precision, city.Main, StringComparison.Ordinal);
+        Assert.Contains("href=\"geo:36.2972,59.6067\"", city.Html, StringComparison.Ordinal);
+
+        // No map of anybody else is loaded: the page names no other site for it.
+        Assert.DoesNotContain("openstreetmap", city.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("google", city.Html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain(title, land.Main, StringComparison.Ordinal);
     }
 
     [Fact]

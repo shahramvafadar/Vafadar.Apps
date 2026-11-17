@@ -276,3 +276,19 @@ other systems.
 Verification: `QuantityTests` (6 tests) and `RealWorldPagesTests` (the page of an entity in English and
 Persian with a quantity at a time, a disputed one without a time and an amount of money). Test data only; not
 looked at in a browser.
+
+## Seventh addendum of 2026-11-17 – where a place is (step 12.8)
+
+* `Entity.Position` (`GeoPosition`): latitude and longitude as decimal degrees, written with the digits the
+  source gives, and a `PositionPrecision` – `Exact`, `Approximate`, `CentreOfArea`. The precision is said
+  because a point for a country is no statement about its borders (DOM-011: "names, boundaries and affiliations
+  can depend on time and source").
+* **Only a real place has a position.** A `NarrativePlace` or `NarrativeRegion` with one is refused, as is
+  anything that is no place: the Turan of the poem is not put on a map by accident.
+* The page of the place writes the position in the language of the page and links it as a `geo:` address – a
+  device opens it with the map it has. The page loads no map and names no map service: nothing about the
+  visitor goes to a third party (privacy matrix unchanged).
+* Borders, and borders that change with time, are not modelled; a map of the collection is phase 14.
+
+Verification: `PlacePositionTests` (9 tests) and `RealWorldPagesTests` (the page in English and Persian).
+Test data only; not looked at in a browser.

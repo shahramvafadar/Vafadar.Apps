@@ -82,6 +82,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         ("title", NameKind.Title),
         ("original_script", NameKind.OriginalScript));
 
+    private static readonly FrozenDictionary<string, PositionPrecision> PrecisionNames = Names(
+        ("exact", PositionPrecision.Exact),
+        ("approximate", PositionPrecision.Approximate),
+        ("centre_of_area", PositionPrecision.CentreOfArea));
+
     private static readonly FrozenDictionary<string, IdentifierMatch> MatchNames = Names(
         ("exact", IdentifierMatch.Exact),
         ("close", IdentifierMatch.Close),
@@ -329,6 +334,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 "entities[].dated[].quantity.unit",
                 "The unit of a quantity a statement states.",
                 [.. QuantityUnits.All.OrderBy(unit => unit.Key, StringComparer.Ordinal).Select(unit => new ContentChoice(unit.Key, unit.Meaning))]),
+            new("entities[].position.precision", "How exactly the position of a place is meant.", Of(PrecisionNames.Keys)),
             new("entities[].names[].kind", "What kind of other name a name of an entity is.", Of(NameKindNames.Keys)),
             new("entities[].identifiers[].match", "How sure the editors are that the record of another catalogue is about the entity.", Of(MatchNames.Keys)),
             new("relations[].directionality", "Whether the relation reads from one entity to the other; it has to agree with the type.", Of(DirectionNames.Keys)),
@@ -648,6 +654,23 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             }
         }
 
+        GeoPosition? position = null;
+        if (record.Child("position", required: false) is { } where)
+        {
+            var latitude = where.Number("latitude");
+            var longitude = where.Number("longitude");
+            var precisionKnown = where.Choice("precision", PrecisionNames, out var precision);
+            where.Finish();
+            if (latitude is null || longitude is null || !precisionKnown)
+            {
+                partsComplete = false;
+            }
+            else
+            {
+                position = new GeoPosition(latitude.Value, longitude.Value, precision);
+            }
+        }
+
         record.Finish();
         if (id is null || !typeKnown || label is null || summary is null || level is null || !datedComplete || !partsComplete)
         {
@@ -687,6 +710,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Dated = dated.ToImmutable(),
             Names = names.ToImmutable(),
             Identifiers = identifiers.ToImmutable(),
+            Position = position,
         };
     }
 
