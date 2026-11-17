@@ -951,4 +951,64 @@
   <data name="Type_region" xml:space="preserve">
     <value>Region</value>
   </data>
+  <data name="Type_company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="Type_brand" xml:space="preserve">
+    <value>Brand</value>
+  </data>
+  <data name="Type_product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Type_university" xml:space="preserve">
+    <value>University</value>
+  </data>
+  <data name="Type_government" xml:space="preserve">
+    <value>Government</value>
+  </data>
+  <data name="Type_dynasty" xml:space="preserve">
+    <value>Dynasty</value>
+  </data>
+  <data name="Type_family" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="Type_community" xml:space="preserve">
+    <value>Community</value>
+  </data>
+  <data name="Type_country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Type_sportsClub" xml:space="preserve">
+    <value>Sports club</value>
+  </data>
+  <data name="Type_sportsTeam" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="Type_competition" xml:space="preserve">
+    <value>Competition</value>
+  </data>
+  <data name="Type_competitionSeason" xml:space="preserve">
+    <value>Season</value>
+  </data>
+  <data name="Type_event" xml:space="preserve">
+    <value>Event</value>
+  </data>
+  <data name="Type_period" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="Type_office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="Type_honour" xml:space="preserve">
+    <value>Honour</value>
+  </data>
+  <data name="Type_object" xml:space="preserve">
+    <value>Object</value>
+  </data>
+  <data name="Type_naturalSubject" xml:space="preserve">
+    <value>Natural subject</value>
+  </data>
+  <data name="Type_concept" xml:space="preserve">
+    <value>Concept</value>
+  </data>
 </root>

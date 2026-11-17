@@ -113,7 +113,7 @@ public sealed class RealWorldTypesTests
         Assert.All(
             RelationTypes.All.Where(type => type.Meaning is null),
             type => Assert.True(type.From.IsDefaultOrEmpty && type.To.IsDefaultOrEmpty && type.Fits(EntityNature.Occasion, first: true)));
-        Assert.Equal(8, RelationTypes.All.Count(type => type.Meaning is not null));
+        Assert.Equal(17, RelationTypes.All.Count(type => type.Meaning is null));
     }
 
     [Fact]

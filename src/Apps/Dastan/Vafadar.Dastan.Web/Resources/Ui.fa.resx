@@ -951,4 +951,64 @@
   <data name="Type_region" xml:space="preserve">
     <value>سرزمین</value>
   </data>
+  <data name="Type_company" xml:space="preserve">
+    <value>شرکت</value>
+  </data>
+  <data name="Type_brand" xml:space="preserve">
+    <value>برند</value>
+  </data>
+  <data name="Type_product" xml:space="preserve">
+    <value>محصول</value>
+  </data>
+  <data name="Type_university" xml:space="preserve">
+    <value>دانشگاه</value>
+  </data>
+  <data name="Type_government" xml:space="preserve">
+    <value>حکومت</value>
+  </data>
+  <data name="Type_dynasty" xml:space="preserve">
+    <value>دودمان</value>
+  </data>
+  <data name="Type_family" xml:space="preserve">
+    <value>خاندان</value>
+  </data>
+  <data name="Type_community" xml:space="preserve">
+    <value>مردم</value>
+  </data>
+  <data name="Type_country" xml:space="preserve">
+    <value>کشور</value>
+  </data>
+  <data name="Type_sportsClub" xml:space="preserve">
+    <value>باشگاه ورزشی</value>
+  </data>
+  <data name="Type_sportsTeam" xml:space="preserve">
+    <value>تیم</value>
+  </data>
+  <data name="Type_competition" xml:space="preserve">
+    <value>رقابت</value>
+  </data>
+  <data name="Type_competitionSeason" xml:space="preserve">
+    <value>فصل</value>
+  </data>
+  <data name="Type_event" xml:space="preserve">
+    <value>رویداد</value>
+  </data>
+  <data name="Type_period" xml:space="preserve">
+    <value>دوره</value>
+  </data>
+  <data name="Type_office" xml:space="preserve">
+    <value>منصب</value>
+  </data>
+  <data name="Type_honour" xml:space="preserve">
+    <value>افتخار</value>
+  </data>
+  <data name="Type_object" xml:space="preserve">
+    <value>شیء</value>
+  </data>
+  <data name="Type_naturalSubject" xml:space="preserve">
+    <value>موضوع طبیعی</value>
+  </data>
+  <data name="Type_concept" xml:space="preserve">
+    <value>مفهوم</value>
+  </data>
 </root>

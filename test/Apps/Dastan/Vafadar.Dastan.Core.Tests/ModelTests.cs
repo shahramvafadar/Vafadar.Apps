@@ -129,7 +129,7 @@ public sealed class ModelTests
         Assert.Equal(Directionality.Symmetric, RelationTypes.Find("opponentOf")!.Directionality);
         Assert.Equal(Directionality.Directed, RelationTypes.Find("parentOf")!.Directionality);
         Assert.Equal(Directionality.Symmetric, RelationTypes.Find("siblingOf")!.Directionality);
-        Assert.Equal(3, RelationTypes.All.Count(type => type.Directionality == Directionality.Symmetric));
+        Assert.Equal(6, RelationTypes.All.Count(type => type.Directionality == Directionality.Symmetric));
     }
 
     [Theory]

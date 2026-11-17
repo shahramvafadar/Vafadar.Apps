@@ -137,3 +137,43 @@ a step is refused like a place of the story; the list for writers says the meani
 `RealWorldPagesTests` (10 tests): the page of each of the four kinds, with its kind in English and Persian; the
 connections of a person and of the work; no family from what is no family; found by the search. All with test
 data – the collection of the repository uses none of the new types.
+
+## Second addendum of 2026-11-17 – the whole vocabulary (step 12.1, D-047)
+
+Step 10.6 added four types and eight relations and left the rest "until content asks". The owner decided
+otherwise (D-047): what the product documents name is supported before content needs it. This step completes
+the vocabulary against documents 03 (DOM-002 to DOM-012) and 14.
+
+* **Twenty more types of entity** in the file, beside those of the story and of step 10.6: `Company`, `Brand`,
+  `Product`, `University`, `Government`, `Dynasty`, `Family`, `Community`, `Country`, `SportsClub`,
+  `SportsTeam`, `Competition`, `CompetitionSeason`, `Event`, `Period`, `Office`, `Honour`, `Object`,
+  `NaturalSubject`, `Concept`. What the documents ask to keep apart is apart by type: a brand is a thing, not
+  the company; a team is not its club; a government is a group, the country a place; a season is not its
+  competition (DOM-009, DOM-010, DOM-011).
+* **Two more natures**: `Role` (an office, a title, an honour – what somebody holds) and `Subject` (a species,
+  an idea, a field). No view treats them specially; they exist so that a relation can say "to an office".
+* **Every type says what it is** (`EntityType.Meaning`), and the list for writers prints it. The name of a type
+  in a file is its key with a capital, except the names the first files chose (`NarrativeArc`).
+* **Forty-seven more relation types**, each with its meaning and its ends, in the groups of the documents:
+  persons and offices (`holderOf`, `successorOf`, `patronOf`, `employedBy`, `leaderOf`, `ownerOf`,
+  `studiedAt`, `alliedWith`, `supporterOf`, `livedIn`, `adoptiveParentOf`); works (`translatorOf`,
+  `illustratorOf`, `publisherOf`, `commissionerOf`, `dedicatedTo`, `adaptationOf`, `translationOf`,
+  `editionOf`, `about`, `keptAt`); identity (`portrayalOf`, `possiblySameAs`, `confusedWith` – DOM-003,
+  DOM-004: none of them makes two entities one); organisations (`acquired`, `mergedInto`, `spunOffFrom`,
+  `subsidiaryOf`, `brandOf`, `productOf` – DOM-009); governments (`governs`, `capitalOf`); sport (`teamOf`,
+  `playsFor`, `coachOf`, `captainOf`, `loanedTo`, `transferredTo`, `competesIn`, `winnerOf`,
+  `organiserOf`, `seasonOf` – DOM-010); events (`participantIn`, `tookPlaceIn`, `during`); subjects
+  (`worksIn`, `foundIn`).
+* **An inverse is not a second type**: "student of" is `teacherOf` read from the other side, "owned by" is
+  `ownerOf`. The label of a relation says it in words.
+* **A rename is no relation** (DOM-009): a name with the time it was used is a name of the entity – step 12.3.
+* `adoptiveParentOf` is no kinship for the family drawing, which is drawn from parents by birth and partners
+  (ADR 0005); the relation is shown among the connections.
+
+Not part of the step: when a relation held (step 12.2), names (12.3), views made for companies or sport
+(phase 14).
+
+Verification: `WorldVocabularyTests` (8 tests), made from the vocabulary itself so that a type added later is
+tested without a new test: a collection with two things of every kind and one relation of every bound type is
+read; every bound type is refused at each end for a kind it does not hold between; every type has a meaning and
+a name in `Ui.resx` and `Ui.fa.resx`; the list for writers prints meanings and ends. Test data only.

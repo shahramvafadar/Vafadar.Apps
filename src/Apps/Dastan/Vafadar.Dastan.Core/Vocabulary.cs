@@ -23,14 +23,21 @@ public enum EntityNature
     /// <summary>A thing.</summary>
     Object = 4,
 
-    /// <summary>A recurring or bounded occasion: a competition, a season.</summary>
+    /// <summary>A recurring or bounded occasion: a competition, a season, an event of history, a period.</summary>
     Occasion = 5,
+
+    /// <summary>An office, a title or an honour: what somebody holds or receives.</summary>
+    Role = 6,
+
+    /// <summary>A subject of knowledge: a species, an idea, a field.</summary>
+    Subject = 7,
 }
 
 /// <summary>A type of entity from the managed list <see cref="EntityTypes"/>.</summary>
 /// <param name="Key">The stable name of the type.</param>
 /// <param name="Nature">What kind of thing entities of the type are.</param>
-public sealed record EntityType(string Key, EntityNature Nature);
+/// <param name="Meaning">What an entity of the type is, in a sentence for who writes content.</param>
+public sealed record EntityType(string Key, EntityNature Nature, string Meaning);
 
 /// <summary>
 /// The entity types Dastan knows. A new type is a new entry here; who may add entries is an open product question
@@ -39,58 +46,104 @@ public sealed record EntityType(string Key, EntityNature Nature);
 public static class EntityTypes
 {
     /// <summary>A work, such as a poem.</summary>
-    public static EntityType Work { get; } = new("work", EntityNature.Work);
+    public static EntityType Work { get; } = new("work", EntityNature.Work, "A work, such as a poem");
 
     /// <summary>A story inside a work, selected as one collection.</summary>
-    public static EntityType StoryArc { get; } = new("storyArc", EntityNature.Work);
+    public static EntityType StoryArc { get; } = new("storyArc", EntityNature.Work, "A story inside a work, selected as one collection");
 
     /// <summary>A character of a story.</summary>
-    public static EntityType Character { get; } = new("character", EntityNature.Being);
+    public static EntityType Character { get; } = new("character", EntityNature.Being, "A character of a story");
 
     /// <summary>An animal that is a character of a story.</summary>
-    public static EntityType AnimalCharacter { get; } = new("animalCharacter", EntityNature.Being);
+    public static EntityType AnimalCharacter { get; } = new("animalCharacter", EntityNature.Being, "An animal that is a character of a story");
 
     /// <summary>A place of a story. It is not a place on a modern map.</summary>
-    public static EntityType NarrativePlace { get; } = new("narrativePlace", EntityNature.Place);
+    public static EntityType NarrativePlace { get; } = new("narrativePlace", EntityNature.Place, "A place of a story. It is not a place on a modern map");
 
     /// <summary>A region of a story. It has no modern border.</summary>
-    public static EntityType NarrativeRegion { get; } = new("narrativeRegion", EntityNature.Place);
+    public static EntityType NarrativeRegion { get; } = new("narrativeRegion", EntityNature.Place, "A region of a story. It has no modern border");
 
     /// <summary>An object of a story.</summary>
-    public static EntityType NarrativeObject { get; } = new("narrativeObject", EntityNature.Object);
+    public static EntityType NarrativeObject { get; } = new("narrativeObject", EntityNature.Object, "An object of a story");
 
     /// <summary>A real person, living or historical: a poet, a ruler, a scholar. Not a character of a story.</summary>
-    public static EntityType Person { get; } = new("person", EntityNature.Being);
+    public static EntityType Person { get; } = new("person", EntityNature.Being, "A real person, living or historical: a poet, a ruler, a scholar. Not a character of a story");
 
     /// <summary>People who act under one name: a court, a dynasty, a school, an institution.</summary>
-    public static EntityType Organisation { get; } = new("organisation", EntityNature.Group);
+    public static EntityType Organisation { get; } = new("organisation", EntityNature.Group, "People who act under one name: a court, a dynasty, a school, an institution");
 
     /// <summary>A real place: a city, a village, a building. It is, or was, somewhere on a map.</summary>
-    public static EntityType Place { get; } = new("place", EntityNature.Place);
+    public static EntityType Place { get; } = new("place", EntityNature.Place, "A real place: a city, a village, a building. It is, or was, somewhere on a map");
 
     /// <summary>A real region: a country, a province, a historical land.</summary>
-    public static EntityType Region { get; } = new("region", EntityNature.Place);
+    public static EntityType Region { get; } = new("region", EntityNature.Place, "A real region: a country, a province, a historical land");
 
-    /// <summary>A company.</summary>
-    public static EntityType Company { get; } = new("company", EntityNature.Group);
+    /// <summary>A company: a legal body that does business; not its brands.</summary>
+    public static EntityType Company { get; } = new("company", EntityNature.Group, "A company: a legal body that does business; not its brands");
 
     /// <summary>A sports club.</summary>
-    public static EntityType SportsClub { get; } = new("sportsClub", EntityNature.Group);
+    public static EntityType SportsClub { get; } = new("sportsClub", EntityNature.Group, "A sports club");
 
-    /// <summary>A team of a club.</summary>
-    public static EntityType SportsTeam { get; } = new("sportsTeam", EntityNature.Group);
+    /// <summary>One team of a club: the first team, a youth team, the women's team.</summary>
+    public static EntityType SportsTeam { get; } = new("sportsTeam", EntityNature.Group, "One team of a club: the first team, a youth team, the women's team");
 
-    /// <summary>A competition.</summary>
-    public static EntityType Competition { get; } = new("competition", EntityNature.Occasion);
+    /// <summary>A competition: a league, a cup, a tournament.</summary>
+    public static EntityType Competition { get; } = new("competition", EntityNature.Occasion, "A competition: a league, a cup, a tournament");
 
-    /// <summary>One season of a competition.</summary>
-    public static EntityType CompetitionSeason { get; } = new("competitionSeason", EntityNature.Occasion);
+    /// <summary>One season or edition of a competition.</summary>
+    public static EntityType CompetitionSeason { get; } = new("competitionSeason", EntityNature.Occasion, "One season or edition of a competition");
+
+    /// <summary>A brand: a name under which things are sold; not the company that owns it.</summary>
+    public static EntityType Brand { get; } = new("brand", EntityNature.Object, "A brand: a name under which things are sold; not the company that owns it");
+
+    /// <summary>A product or a line of products.</summary>
+    public static EntityType Product { get; } = new("product", EntityNature.Object, "A product or a line of products");
+
+    /// <summary>A university or another institution of learning; not the place of its campus.</summary>
+    public static EntityType University { get; } = new("university", EntityNature.Group, "A university or another institution of learning; not the place of its campus");
+
+    /// <summary>A government or a state as an institution; not the land it rules.</summary>
+    public static EntityType Government { get; } = new("government", EntityNature.Group, "A government or a state as an institution; not the land it rules");
+
+    /// <summary>A dynasty: a ruling house over generations.</summary>
+    public static EntityType Dynasty { get; } = new("dynasty", EntityNature.Group, "A dynasty: a ruling house over generations");
+
+    /// <summary>A family or a house, as a group with a name.</summary>
+    public static EntityType Family { get; } = new("family", EntityNature.Group, "A family or a house, as a group with a name");
+
+    /// <summary>A people or a community; not the land it lives in.</summary>
+    public static EntityType Community { get; } = new("community", EntityNature.Group, "A people or a community; not the land it lives in");
+
+    /// <summary>A country as a land with a name; its borders depend on the time.</summary>
+    public static EntityType Country { get; } = new("country", EntityNature.Place, "A country as a land with a name; its borders depend on the time");
+
+    /// <summary>Something that happened in the world: a battle, a founding, a match – not a step of the story.</summary>
+    public static EntityType Event { get; } = new("event", EntityNature.Occasion, "Something that happened in the world: a battle, a founding, a match – not a step of the story");
+
+    /// <summary>A period of history: an era, a reign as a span of time.</summary>
+    public static EntityType Period { get; } = new("period", EntityNature.Occasion, "A period of history: an era, a reign as a span of time");
+
+    /// <summary>An office or a title somebody holds: king, vizier, president.</summary>
+    public static EntityType Office { get; } = new("office", EntityNature.Role, "An office or a title somebody holds: king, vizier, president");
+
+    /// <summary>An honour or a prize that is given.</summary>
+    public static EntityType Honour { get; } = new("honour", EntityNature.Role, "An honour or a prize that is given");
+
+    /// <summary>A real thing: a manuscript, a sword, a coin.</summary>
+    public static EntityType RealObject { get; } = new("object", EntityNature.Object, "A real thing: a manuscript, a sword, a coin");
+
+    /// <summary>A subject of nature: a species, a river system, an element.</summary>
+    public static EntityType NaturalSubject { get; } = new("naturalSubject", EntityNature.Subject, "A subject of nature: a species, a river system, an element");
+
+    /// <summary>An idea, a field of knowledge, a technique.</summary>
+    public static EntityType Concept { get; } = new("concept", EntityNature.Subject, "An idea, a field of knowledge, a technique");
 
     /// <summary>Gets every known type.</summary>
     public static ImmutableArray<EntityType> All { get; } =
     [
         Work, StoryArc, Character, AnimalCharacter, NarrativePlace, NarrativeRegion, NarrativeObject,
         Person, Organisation, Place, Region, Company, SportsClub, SportsTeam, Competition, CompetitionSeason,
+        Brand, Product, University, Government, Dynasty, Family, Community, Country, Event, Period, Office, Honour, RealObject, NaturalSubject, Concept,
     ];
 
     /// <summary>Returns the type named <paramref name="key"/>, or <see langword="null"/> when the list has none.</summary>
@@ -185,6 +238,103 @@ public static class RelationTypes
             "the first founded the group or the place", Beings, [EntityNature.Group, EntityNature.Place]),
         new("locatedIn", Directionality.Directed, Kinship.None,
             "the first lies in, or has its seat in, the second", [EntityNature.Place, EntityNature.Group], Places),
+
+        // The rest of what the product documents name (step 12.1, D-047): persons and offices, works and their
+        // versions, identity that is not established, companies and brands, governments, sport, events, subjects.
+        new("adoptiveParentOf", Directionality.Directed, Kinship.None,
+            "the first adopted or raised the second; a family tree is drawn from parents by birth", [EntityNature.Being], [EntityNature.Being]),
+        new("patronOf", Directionality.Directed, Kinship.None,
+            "the first supported the second with money, protection or a commission", [EntityNature.Being, EntityNature.Group], [EntityNature.Being, EntityNature.Group, EntityNature.Work]),
+        new("successorOf", Directionality.Directed, Kinship.None,
+            "the first followed the second, in an office or as an organisation", [EntityNature.Being, EntityNature.Group], [EntityNature.Being, EntityNature.Group]),
+        new("holderOf", Directionality.Directed, Kinship.None,
+            "the first held the office, bore the title or received the honour", [EntityNature.Being, EntityNature.Group], [EntityNature.Role]),
+        new("employedBy", Directionality.Directed, Kinship.None,
+            "the first worked for the group", [EntityNature.Being], [EntityNature.Group]),
+        new("leaderOf", Directionality.Directed, Kinship.None,
+            "the first led, managed or governed the second", [EntityNature.Being], [EntityNature.Group, EntityNature.Place]),
+        new("ownerOf", Directionality.Directed, Kinship.None,
+            "the first owned the second, wholly or in part", [EntityNature.Being, EntityNature.Group], [EntityNature.Group, EntityNature.Place, EntityNature.Object, EntityNature.Work]),
+        new("studiedAt", Directionality.Directed, Kinship.None,
+            "the first studied at the institution or in the place", [EntityNature.Being], [EntityNature.Group, EntityNature.Place]),
+        new("alliedWith", Directionality.Symmetric, Kinship.None,
+            "allies", [EntityNature.Being, EntityNature.Group], [EntityNature.Being, EntityNature.Group]),
+        new("supporterOf", Directionality.Directed, Kinship.None,
+            "the first is known as a supporter of the group", [EntityNature.Being], [EntityNature.Group]),
+        new("livedIn", Directionality.Directed, Kinship.None,
+            "the first lived or worked in the place", [EntityNature.Being, EntityNature.Group], [EntityNature.Place]),
+        new("translatorOf", Directionality.Directed, Kinship.None,
+            "the first translated the work", [EntityNature.Being, EntityNature.Group], [EntityNature.Work]),
+        new("illustratorOf", Directionality.Directed, Kinship.None,
+            "the first illustrated or painted the work", [EntityNature.Being, EntityNature.Group], [EntityNature.Work]),
+        new("publisherOf", Directionality.Directed, Kinship.None,
+            "the first published the work", [EntityNature.Being, EntityNature.Group], [EntityNature.Work]),
+        new("commissionerOf", Directionality.Directed, Kinship.None,
+            "the first ordered the work to be made", [EntityNature.Being, EntityNature.Group], [EntityNature.Work]),
+        new("dedicatedTo", Directionality.Directed, Kinship.None,
+            "the work is dedicated to the second", [EntityNature.Work], [EntityNature.Being, EntityNature.Group]),
+        new("adaptationOf", Directionality.Directed, Kinship.None,
+            "the first work retells or adapts the second", [EntityNature.Work], [EntityNature.Work]),
+        new("translationOf", Directionality.Directed, Kinship.None,
+            "the first work is a translation of the second", [EntityNature.Work], [EntityNature.Work]),
+        new("editionOf", Directionality.Directed, Kinship.None,
+            "the first is an edition, a manuscript or a copy of the second work", [EntityNature.Work, EntityNature.Object], [EntityNature.Work]),
+        new("about", Directionality.Directed, Kinship.None,
+            "the work is about the second", [EntityNature.Work], default),
+        new("keptAt", Directionality.Directed, Kinship.None,
+            "the first is kept in the place or by the group", [EntityNature.Work, EntityNature.Object], [EntityNature.Place, EntityNature.Group]),
+        new("portrayalOf", Directionality.Directed, Kinship.None,
+            "the first portrays the second – a character drawn from a person, a role in an adaptation; they stay two entities", [EntityNature.Being], [EntityNature.Being]),
+        new("possiblySameAs", Directionality.Symmetric, Kinship.None,
+            "possibly the same; it is not established, and the two stay two entities", default, default),
+        new("confusedWith", Directionality.Symmetric, Kinship.None,
+            "commonly taken for one another; they are not the same", default, default),
+        new("acquired", Directionality.Directed, Kinship.None,
+            "the first took over ownership or control of the second; the second need not cease to exist", [EntityNature.Being, EntityNature.Group], [EntityNature.Group, EntityNature.Object]),
+        new("mergedInto", Directionality.Directed, Kinship.None,
+            "the first merged into the second, which followed it", [EntityNature.Group], [EntityNature.Group]),
+        new("spunOffFrom", Directionality.Directed, Kinship.None,
+            "the first was split off from the second", [EntityNature.Group], [EntityNature.Group]),
+        new("subsidiaryOf", Directionality.Directed, Kinship.None,
+            "the first belongs to the second as a part with a name of its own", [EntityNature.Group], [EntityNature.Group]),
+        new("brandOf", Directionality.Directed, Kinship.None,
+            "the first is a brand of the second", [EntityNature.Object], [EntityNature.Group]),
+        new("productOf", Directionality.Directed, Kinship.None,
+            "the first is made or sold by the second", [EntityNature.Object], [EntityNature.Being, EntityNature.Group]),
+        new("governs", Directionality.Directed, Kinship.None,
+            "the government or dynasty held power over the land or the people", [EntityNature.Group], [EntityNature.Place, EntityNature.Group]),
+        new("capitalOf", Directionality.Directed, Kinship.None,
+            "the first is the seat of government of the second", [EntityNature.Place], [EntityNature.Place, EntityNature.Group]),
+        new("teamOf", Directionality.Directed, Kinship.None,
+            "the first is a team of the club", [EntityNature.Group], [EntityNature.Group]),
+        new("playsFor", Directionality.Directed, Kinship.None,
+            "the first played for the team or club", [EntityNature.Being], [EntityNature.Group]),
+        new("coachOf", Directionality.Directed, Kinship.None,
+            "the first coached the team or club", [EntityNature.Being], [EntityNature.Group]),
+        new("captainOf", Directionality.Directed, Kinship.None,
+            "the first was captain of the team", [EntityNature.Being], [EntityNature.Group]),
+        new("loanedTo", Directionality.Directed, Kinship.None,
+            "the first played for the group on loan", [EntityNature.Being], [EntityNature.Group]),
+        new("transferredTo", Directionality.Directed, Kinship.None,
+            "the first moved to the group", [EntityNature.Being], [EntityNature.Group]),
+        new("competesIn", Directionality.Directed, Kinship.None,
+            "the first took part in the competition or season", [EntityNature.Being, EntityNature.Group], [EntityNature.Occasion]),
+        new("winnerOf", Directionality.Directed, Kinship.None,
+            "the first won the competition, the season or the event", [EntityNature.Being, EntityNature.Group], [EntityNature.Occasion]),
+        new("organiserOf", Directionality.Directed, Kinship.None,
+            "the first organised the competition or the event", [EntityNature.Being, EntityNature.Group], [EntityNature.Occasion]),
+        new("seasonOf", Directionality.Directed, Kinship.None,
+            "the first is a season or an edition of the second", [EntityNature.Occasion], [EntityNature.Occasion]),
+        new("participantIn", Directionality.Directed, Kinship.None,
+            "the first took part in the event", [EntityNature.Being, EntityNature.Group], [EntityNature.Occasion]),
+        new("tookPlaceIn", Directionality.Directed, Kinship.None,
+            "the event took place there", [EntityNature.Occasion], [EntityNature.Place]),
+        new("during", Directionality.Directed, Kinship.None,
+            "the first happened in, or is part of, the period", [EntityNature.Occasion], [EntityNature.Occasion]),
+        new("worksIn", Directionality.Directed, Kinship.None,
+            "the first worked in the field or on the subject", [EntityNature.Being, EntityNature.Group], [EntityNature.Subject]),
+        new("foundIn", Directionality.Directed, Kinship.None,
+            "the subject is found in the place", [EntityNature.Subject], [EntityNature.Place]),
     ];
 
     private static ImmutableArray<EntityNature> Beings => [EntityNature.Being];
