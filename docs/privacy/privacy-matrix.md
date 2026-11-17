@@ -22,6 +22,15 @@ told to believe that proxy, and uses it for nothing. A gallery links to the page
 host log – addresses, times, requested pages – is theirs and has to be entered here when a host is chosen; the
 site is not hosted yet.
 
+The tool of Dastan's editors (Dastan Studio, [ADR 0011](../../src/Apps/Dastan/docs/adr/0011-editors-store.md)) is
+not for visitors. Entered on 2026-11-17, with its accounts: the store of the editors keeps, for each editor, a
+name, a value derived from the password (PBKDF2 with SHA-256; the password itself is kept nowhere), when the
+account was made and closed, and how many wrong passwords were given in a row; and with every change of a record
+the name of the editor, the time and the reason. A signed-in editor has one more cookie, `dastan.studio.session`
+(HttpOnly, SameSite, `Secure` over https, twelve hours, renewed while it is used), which holds the name and ends
+with another password or a closed account. Nothing of this goes into a published revision or to the public site.
+The store is one file on the machine of the tool; it is not hosted yet.
+
 Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · – not applicable
 
 **Current engineering inventory, 2026-10-27 (D-604):** optional local service implementations

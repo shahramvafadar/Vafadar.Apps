@@ -69,7 +69,7 @@
     {
         var input = Adding ?? new ChangeInput();
         var problems = new List<string>();
-        var by = ActInput.Text(input.By);
+        var by = Editor.By(input.By);
         var reason = ActInput.Text(input.Reason);
         if (by is null)
         {

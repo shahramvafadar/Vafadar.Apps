@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
-    <Description>The tool of Dastan's editors (ADR 0011): pages that show what the store holds – collections, records, what waits for a review, the history of every change, the published revisions. It runs on the editors' machine only.</Description>
+    <Description>The tool of Dastan's editors (ADR 0011): pages that show what the store holds – collections, records, what waits for a review, the history of every change, the published revisions. It runs on the editors' machine only, or – with accounts – on a server for editors who sign in.</Description>
     <!-- A page answers "not found" by setting the status, not by throwing (static server rendering). -->
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
   </PropertyGroup>

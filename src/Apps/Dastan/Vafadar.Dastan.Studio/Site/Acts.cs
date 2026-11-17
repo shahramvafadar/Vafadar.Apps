@@ -3,6 +3,16 @@ using Vafadar.Web;
 
 namespace Vafadar.Dastan.Studio.Site;
 
+/// <summary>What an editor fills in to sign in.</summary>
+public sealed class SignInInput
+{
+    /// <summary>Gets or sets the name of the account.</summary>
+    public string? Name { get; set; }
+
+    /// <summary>Gets or sets the password.</summary>
+    public string? Password { get; set; }
+}
+
 /// <summary>What an editor fills in to record the review of a statement.</summary>
 public sealed class ReviewInput
 {
@@ -90,6 +100,12 @@ public static class EditorName
     {
         ArgumentNullException.ThrowIfNull(context);
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        if (context.User.Identity?.IsAuthenticated == true)
+        {
+            // Who signed in needs no name kept: the account is the name.
+            return;
+        }
+
         context.Response.Cookies.Append(CookieName, Uri.EscapeDataString(name.Trim()), PreferenceCookie.Options(context));
     }
 }

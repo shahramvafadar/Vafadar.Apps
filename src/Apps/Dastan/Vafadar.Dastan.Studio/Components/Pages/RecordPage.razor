@@ -339,7 +339,7 @@
 
     private string? Name(string? given, List<string> problems)
     {
-        var name = ActInput.Text(given);
+        var name = Editor.By(given);
         if (name is null)
         {
             problems.Add(T["Act_NeedsName"]);

@@ -143,6 +143,9 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     /// <summary>Gets the published revisions, each as it was published.</summary>
     public DbSet<StoredRevision> Revisions => Set<StoredRevision>();
 
+    /// <summary>Gets the accounts of the editors.</summary>
+    public DbSet<StoredEditor> Editors => Set<StoredEditor>();
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -179,6 +182,15 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             revision.HasKey(item => new { item.CollectionId, item.Number });
             revision.Property(item => item.By).HasMaxLength(200);
             revision.HasOne<StoredCollection>().WithMany().HasForeignKey(item => item.CollectionId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<StoredEditor>(editor =>
+        {
+            editor.HasKey(item => item.Id);
+            editor.Property(item => item.Id).HasMaxLength(200);
+            editor.Property(item => item.Name).HasMaxLength(200);
+            editor.Property(item => item.Password).HasMaxLength(200);
+            editor.Property(item => item.Stamp).HasMaxLength(40);
         });
 
         modelBuilder.Entity<RecordChange>(change =>

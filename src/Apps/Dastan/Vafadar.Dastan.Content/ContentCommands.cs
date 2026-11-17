@@ -39,7 +39,7 @@ public static class ContentCommands
               history of the revisions before and what this one changes. Refuses a file in which a statement
               is not reviewed or a review is not recorded. Never over a file.
 
-        """ + StoreCommands.Usage + """
+        """ + StoreCommands.Usage + EditorCommands.Usage + """
 
         Exit code: 0 in order, 1 a content file cannot be used, 2 the command was not understood.
         """;
@@ -52,7 +52,8 @@ public static class ContentCommands
     /// <param name="today">The day a template is written on.</param>
     /// <returns>The exit code.</returns>
     /// <param name="time">The clock of the store; the system's when nothing is given.</param>
-    public static int Run(IReadOnlyList<string> arguments, TextWriter output, DateOnly today, TimeProvider? time = null)
+    /// <param name="secret">Asks for a text that is not shown while it is typed – a password; nothing when nobody can be asked.</param>
+    public static int Run(IReadOnlyList<string> arguments, TextWriter output, DateOnly today, TimeProvider? time = null, Func<string, string?>? secret = null)
     {
         ArgumentNullException.ThrowIfNull(arguments);
         ArgumentNullException.ThrowIfNull(output);
@@ -67,6 +68,7 @@ public static class ContentCommands
             ["template", "collection" or "comparison", _] => Template(words[1], words[2], null, output, today),
             ["template", "collection" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
             ["revision", _, ..] => Revision(words[1], words[2..], output),
+            ["store", "editor" or "editors", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
             ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
             _ => NotAsked(output),
         };
