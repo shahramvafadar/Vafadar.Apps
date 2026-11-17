@@ -33,6 +33,9 @@
         @* A demonstration is not for search engines. *@
         <meta name="robots" content="noindex, nofollow" />
     }
+    @* Where this page is, and where it is in the other languages (step 14.4): the layout says it, and a page
+       that says "not found", "refused" or "an error" takes it back – it has no address of its own. *@
+    <SectionOutlet SectionName="@PageAddress.Section" />
     <HeadOutlet />
 </head>
 

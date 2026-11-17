@@ -7,6 +7,7 @@
 @if (_comparison is { } comparison)
 {
     <PageTitle>@Visitor.Text(comparison.Title).Value – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@Visitor.Text(comparison.Title).Value" Text="@Visitor.Text(comparison.Summary).Value" />
 
     <header class="page-header">
         <p class="meta">@T["Compare_Kind"]</p>

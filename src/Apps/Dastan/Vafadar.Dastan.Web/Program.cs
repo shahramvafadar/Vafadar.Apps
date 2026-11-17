@@ -29,6 +29,8 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
     options.UnlocalizedPaths.Add("/preferences");
     options.UnlocalizedPaths.Add(MediaAddress.Root);
     options.UnlocalizedPaths.Add(SiteHealth.Address);
+    options.UnlocalizedPaths.Add(SearchEngineFiles.Robots);
+    options.UnlocalizedPaths.Add(SearchEngineFiles.Sitemap);
 });
 
 builder.Services.Configure<DastanOptions>(builder.Configuration.GetSection("Dastan"));
@@ -118,6 +120,7 @@ app.MapThemePreference();
 app.MapReadingPreference();
 app.MapMediaFiles();
 app.MapSiteHealth();
+app.MapSearchEngineFiles();
 app.MapRazorComponents<App>();
 
 await app.RunAsync();

@@ -4,6 +4,7 @@
 @inject IStringLocalizer<Ui> T
 
 <PageTitle>@T["Site_Name"] – @T["Site_Tagline"]</PageTitle>
+<PageDescription Title="@T["Site_Name"]" Text="@($"{T["Site_Tagline"]} {T["Discover_Lead"]}")" />
 
 <section class="hero">
     <h1>@T["Site_Name"]</h1>

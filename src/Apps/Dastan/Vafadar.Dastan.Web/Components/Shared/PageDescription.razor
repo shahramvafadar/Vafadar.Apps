@@ -1,0 +1,36 @@
+@* What a page is about, for whoever shows the page without opening it – a search engine, a messenger that
+   previews a link (step 14.4). The words are the ones the page shows to this visitor: a description never says
+   more than the page does. The address and the language of the page stand in the head of every page already. *@
+<HeadContent>
+    <meta name="description" content="@Short" />
+    <meta property="og:title" content="@Title" />
+    <meta property="og:description" content="@Short" />
+</HeadContent>
+
+@code {
+    // A description is a sentence or two; what is longer is cut at a word.
+    private const int Longest = 200;
+
+    /// <summary>Gets or sets the name of what the page is about.</summary>
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets what the page is about, in a sentence.</summary>
+    [Parameter, EditorRequired]
+    public string Text { get; set; } = string.Empty;
+
+    private string Short
+    {
+        get
+        {
+            var text = string.Join(' ', Text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
+            if (text.Length <= Longest)
+            {
+                return text;
+            }
+
+            var cut = text.LastIndexOf(' ', Longest);
+            return text[..(cut > 0 ? cut : Longest)] + "…";
+        }
+    }
+}
