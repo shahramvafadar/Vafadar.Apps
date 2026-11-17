@@ -73,14 +73,14 @@ public sealed class OtherSubjectsTests
             seniors.Connections.Select(connection => (connection.Relation.Id.Value, connection.Other.Id.Value, connection.Direction)));
         Assert.Equal(["kick-off", "title"], seniors.Appearances.Select(appearance => appearance.Step.Event.Id.Value));
 
-        var lane = projection.Lanes().Lanes.Single(row => row.Entity.Id == Seniors);
+        var lane = projection.Lanes()!.Lanes.Single(row => row.Entity.Id == Seniors);
         Assert.Equal([Presence.Acts, null, Presence.Acts], lane.Cells.Select(cell => cell?.Presence));
     }
 
     [Fact]
     public void A_season_takes_part_in_events_without_being_a_place_or_an_actor()
     {
-        var season = At(2).Lanes().Lanes.Single(lane => lane.Entity.Type == EntityTypes.CompetitionSeason);
+        var season = At(2).Lanes()!.Lanes.Single(lane => lane.Entity.Type == EntityTypes.CompetitionSeason);
 
         Assert.Equal(EntityNature.Occasion, season.Entity.Type.Nature);
         Assert.Equal([Presence.Involved, null, Presence.Involved], season.Cells.Select(cell => cell?.Presence));

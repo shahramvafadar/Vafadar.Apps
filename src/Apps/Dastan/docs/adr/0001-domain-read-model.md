@@ -221,3 +221,34 @@ and external identifiers; search finds these names; similarity does not establis
 
 Verification: `EntityNamesTests` (9 tests) and `RealWorldPagesTests` (the page in English and Persian, the
 search by another name). Test data only; not looked at in a browser.
+
+## Fifth addendum of 2026-11-17 – what a collection is about (step 12.4)
+
+A collection was one story: exactly one `NarrativeArc`, an edition of a text, English texts. With the
+vocabulary of step 12.1 a collection can be about a company or a club, which tells no story (DOM-002: "a
+collection selects material for a purpose").
+
+* `CatalogueInfo.Subject` (was `Story`): the entity the collection is about and the name of the collection in
+  addresses. With exactly one story it is that story, as before – no existing file changes.
+* `CatalogueInfo.Stories`: the stories the collection tells, the one a visitor enters first at the beginning –
+  the subject when it is a story, else the first in the file. Each story counts its steps from 1; a step says
+  its story (`storyId`, derived as `StoryStep.Story`). `Projection.Steps` stays the first story,
+  `AllSteps` is every story, `Story(id)` and `Lanes(id)` take a story.
+* **One ladder of reading stages for the collection**, also with several stories. Stages per story would make
+  "how far have you read" a question per story on every page; no document asks for that.
+* **No story**: no events, no edition (`CatalogueInfo.Edition` is optional), relations with the scope
+  `outside_the_story` need not name a story. The pages show the subject with its kind, leave out what is of
+  a story (work and text, the first step, the link to the story), and `story` is not found.
+* **The language of the file** is `CatalogueInfo.Language`: any language tag. A page falls back to it, not to
+  English, and marks a text that exists in it only (`Foreign`) with its language and direction.
+* Addresses: `story` is the first story, `story/<id>` another one (`StoryAddress`).
+
+Not done: a site that serves several collections at once (it serves one, as before – phase 14); reading
+stages per story; a story chart across stories.
+
+Verification: `CollectionSubjectTests` (13 tests) and `CollectionSubjectPagesTests` (6 tests): a collection
+about an organisation written in Persian – read, projected, all its pages answer, `story` is not found; two
+stories – order, steps from 1, pages, the way from an entity to a step of the second story; the refusals; the
+language as a tag, said once, never repeated by a translation; a story written in Persian and translated into
+English. The template `subject` is read by the readers in `ContentToolTests`. Test data only; not looked at in
+a browser.

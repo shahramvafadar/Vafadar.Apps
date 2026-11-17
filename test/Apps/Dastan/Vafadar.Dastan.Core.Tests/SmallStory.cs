@@ -51,7 +51,8 @@ internal sealed class SmallStory
         {
             Id = "small-story",
             WorldId = "world",
-            Story = new EntityId("story"),
+            Subject = new EntityId("story"),
+            Stories = [new EntityId("story")],
             Edition = new EditionContext
             {
                 Id = "edition",

@@ -1041,4 +1041,13 @@
   <data name="IdentifierMatch_Uncertain" xml:space="preserve">
     <value>یکی‌بودنش ثابت نشده است</value>
   </data>
+  <data name="Collection_Stories" xml:space="preserve">
+    <value>داستان‌های این مجموعه</value>
+  </data>
+  <data name="Foreign_Note_fa" xml:space="preserve">
+    <value>به فارسی</value>
+  </data>
+  <data name="Foreign_Note_Other" xml:space="preserve">
+    <value>به زبان مجموعه</value>
+  </data>
 </root>

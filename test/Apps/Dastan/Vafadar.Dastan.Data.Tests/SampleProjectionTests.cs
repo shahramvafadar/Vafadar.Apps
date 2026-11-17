@@ -99,8 +99,8 @@ public sealed class SampleProjectionTests
         Assert.Equal(["story-rostam-sohrab"], opening.Search("Sohrab").Select(hit => hit.Entity.Id.Value));
         Assert.Equal(["story-rostam-sohrab"], opening.Search("سهراب").Select(hit => hit.Entity.Id.Value));
         Assert.Empty(opening.Search("Tahmineh"));
-        Assert.Equal("A missing horse and a welcome", opening.Story().Steps.Single().Event.Label.Resolve("en").Value);
-        Assert.True(opening.Story().Continues);
+        Assert.Equal("A missing horse and a welcome", opening.Story()!.Steps.Single().Event.Label.Resolve("en").Value);
+        Assert.True(opening.Story()!.Continues);
     }
 
     [Fact]
@@ -108,8 +108,8 @@ public sealed class SampleProjectionTests
     {
         var overview = At(0).Overview();
 
-        Assert.Equal("Rostam and Sohrab", overview.Story.Label.Resolve("en").Value);
-        Assert.Equal("شاهنامه", overview.Work.Label.Resolve("fa").Value);
+        Assert.Equal("Rostam and Sohrab", overview.Subject.Label.Resolve("en").Value);
+        Assert.Equal("شاهنامه", overview.Work!.Label.Resolve("fa").Value);
         Assert.Equal(5, overview.Stages.Length);
         Assert.Equal(
             ["character-rostam", "character-rakhsh", "character-king-samangan", "character-zal"],
@@ -217,8 +217,8 @@ public sealed class SampleProjectionTests
     public void The_story_and_the_lanes_agree_on_the_order_and_on_how_somebody_takes_part(int level)
     {
         var projection = At(level);
-        var story = projection.Story();
-        var lanes = projection.Lanes();
+        var story = projection.Story()!;
+        var lanes = projection.Lanes()!;
 
         Assert.Equal(story.Steps, lanes.Steps);
         Assert.Equal(level < 4, story.Continues);
@@ -242,7 +242,7 @@ public sealed class SampleProjectionTests
     [Fact]
     public void In_the_lanes_Rostam_is_named_and_not_present_when_Sohrab_learns_his_lineage()
     {
-        var lanes = At(2).Lanes();
+        var lanes = At(2).Lanes()!;
         var rostam = lanes.Lanes.Single(lane => lane.Entity.Id == Rostam);
         var lineage = lanes.Steps.Single(step => step.Event.Id.Value == "event-03");
 
@@ -253,7 +253,7 @@ public sealed class SampleProjectionTests
     [Fact]
     public void In_the_lanes_a_place_is_a_setting_and_the_token_an_object()
     {
-        foreach (var lane in At(4).Lanes().Lanes)
+        foreach (var lane in At(4).Lanes()!.Lanes)
         {
             var presences = lane.Cells.OfType<EventAssociation>().Select(cell => cell.Presence).Distinct().ToList();
             switch (lane.Entity.Type.Nature)
@@ -335,7 +335,7 @@ public sealed class SampleProjectionTests
         Assert.Equal(RelationScopeKind.RevealedInEvent, evidence.Relation.Relation.Scope.Kind);
         Assert.NotNull(evidence.PassageLocator);
         Assert.Equal(ReviewStatus.SourcedReviewPending, evidence.Review);
-        Assert.Equal("edition-ganjoor-sohrab-observed-2026-11-15", evidence.Edition.Id);
+        Assert.Equal("edition-ganjoor-sohrab-observed-2026-11-15", evidence.Edition!.Id);
         Assert.True(evidence.SourcesMayRevealMore);
         Assert.Null(At(1).Evidence(new RelationId("relation-04")));
     }

@@ -7,7 +7,7 @@ namespace Vafadar.Dastan.Core.Tests;
 public sealed class StoryChartTests
 {
     private static LanesView Lanes(int level = 2) =>
-        Projection.Of(new SmallStory().Build(), new ReadingLevel(level), Audience.LocalDemonstration)!.Lanes();
+        Projection.Of(new SmallStory().Build(), new ReadingLevel(level), Audience.LocalDemonstration)!.Lanes()!;
 
     private static IEnumerable<string> Names(StoryChart chart) => chart.Lanes.Select(lane => lane.Entity.Id.Value);
 

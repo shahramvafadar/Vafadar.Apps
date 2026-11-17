@@ -100,7 +100,7 @@ public sealed class ProjectionTests
         Assert.True(At(0).StoryContinues);
         Assert.True(At(1).StoryContinues);
         Assert.False(At(2).StoryContinues);
-        Assert.True(At(0).Story().Continues);
+        Assert.True(At(0).Story()!.Continues);
     }
 
     [Fact]
@@ -183,16 +183,16 @@ public sealed class ProjectionTests
         var story = new SmallStory();
         story.Events.Reverse();
 
-        Assert.Equal(["arrival", "gift", "lineage"], At(2, story).Story().Steps.Select(step => step.Event.Id.Value));
+        Assert.Equal(["arrival", "gift", "lineage"], At(2, story).Story()!.Steps.Select(step => step.Event.Id.Value));
     }
 
     [Fact]
     public void The_lanes_have_the_steps_of_the_story_and_keep_how_somebody_takes_part()
     {
         var projection = At(2);
-        var lanes = projection.Lanes();
+        var lanes = projection.Lanes()!;
 
-        Assert.Equal(projection.Story().Steps, lanes.Steps);
+        Assert.Equal(projection.Story()!.Steps, lanes.Steps);
         Assert.Equal(["hero", "town", "keepsake", "child"], lanes.Lanes.Select(lane => lane.Entity.Id.Value));
 
         var hero = lanes.Lanes[0];
@@ -205,7 +205,7 @@ public sealed class ProjectionTests
     [Fact]
     public void A_cell_of_a_lane_is_the_association_of_the_event()
     {
-        var lanes = At(2).Lanes();
+        var lanes = At(2).Lanes()!;
 
         foreach (var lane in lanes.Lanes)
         {
@@ -224,8 +224,8 @@ public sealed class ProjectionTests
     {
         var overview = At(2).Overview();
 
-        Assert.Equal("story", overview.Story.Id.Value);
-        Assert.Equal("work", overview.Work.Id.Value);
+        Assert.Equal("story", overview.Subject.Id.Value);
+        Assert.Equal("work", overview.Work!.Id.Value);
         Assert.Equal(3, overview.Stages.Length);
         Assert.Equal(new ReadingLevel(2), overview.Boundary);
         Assert.Equal(["hero", "child"], overview.Subjects.Select(entity => entity.Id.Value));
@@ -461,7 +461,7 @@ public sealed class ProjectionTests
         Assert.Equal(["passage-2"], evidence.Sources.Select(source => source.Id.Value));
         Assert.Equal(("hero", "child"), (evidence.Relation!.From.Id.Value, evidence.Relation.To.Id.Value));
         Assert.Equal(ReviewStatus.SourcedReviewPending, evidence.Review);
-        Assert.Equal("edition", evidence.Edition.Id);
+        Assert.Equal("edition", evidence.Edition!.Id);
     }
 
     [Fact]

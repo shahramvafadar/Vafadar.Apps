@@ -167,7 +167,7 @@
                 var label = Visitor.Text(step.Event.Label).Value;
                 _title = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleStep"], label);
                 _lead = T["Gallery_LeadStep"];
-                _back = $"{Site.Collection}/story#step-{step.Number}";
+                _back = StoryAddress.Of(Site, Visitor, step);
                 _backName = label;
                 _context = $"?event={Uri.EscapeDataString(step.Event.Id.Value)}";
                 break;
@@ -176,7 +176,7 @@
                 _title = T["Gallery_Title"];
                 _lead = T["Gallery_LeadCollection"];
                 _back = Site.Collection;
-                _backName = Visitor.Text(overview.Story.Label).Value;
+                _backName = Visitor.Text(overview.Subject.Label).Value;
                 break;
         }
     }

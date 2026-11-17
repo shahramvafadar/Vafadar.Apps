@@ -31,8 +31,9 @@ public static class ContentCommands
           vocabulary [collection|comparison] [--json]
               Lists every field that takes one of a fixed set of values, with the values.
 
-          template collection|comparison <id> [--out <file>]
+          template collection|subject|comparison <id> [--out <file>]
               Writes the smallest file of that kind the site accepts, to start from. Never over a file.
+              "collection" tells a story; "subject" is about a company, a club, a person and tells none.
 
           revision <file> --number <n> --date <yyyy-MM-dd> --out <file> [--previous <file>] [--note <text>]
               For the editors: makes a published revision out of their working file – numbered, with the
@@ -65,8 +66,8 @@ public static class ContentCommands
             ["check", _, ..] => Check(words[1..], output, json),
             ["vocabulary"] => Vocabulary(null, output, json),
             ["vocabulary", "collection" or "comparison"] => Vocabulary(words[1], output, json),
-            ["template", "collection" or "comparison", _] => Template(words[1], words[2], null, output, today),
-            ["template", "collection" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
+            ["template", "collection" or "subject" or "comparison", _] => Template(words[1], words[2], null, output, today),
+            ["template", "collection" or "subject" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
             ["revision", _, ..] => Revision(words[1], words[2..], output),
             ["store", "editor" or "editors" or "copy", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
             ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
@@ -258,7 +259,12 @@ public static class ContentCommands
         string text;
         try
         {
-            text = kind == "collection" ? ContentTemplates.Collection(id, today) : ContentTemplates.Comparison(id, today);
+            text = kind switch
+            {
+                "collection" => ContentTemplates.Collection(id, today),
+                "subject" => ContentTemplates.Subject(id, today),
+                _ => ContentTemplates.Comparison(id, today),
+            };
         }
         catch (ArgumentException refused)
         {

@@ -297,7 +297,7 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         Assert.Equal(projection.Steps.Select(step => (step.Number, step.Event.Label.Resolve(language, "en").Value)), labels);
 
         // One row per lane, one filled cell per association – the same associations the steps list.
-        var lanes = projection.Lanes();
+        var lanes = projection.Lanes()!;
         var table = Regex.Match(page.Html, "<tbody>.*?</tbody>", RegexOptions.Singleline).Value;
         Assert.Equal(lanes.Lanes.Length, Regex.Matches(table, "<tr>").Count);
         Assert.Equal(lanes.Lanes.Length * lanes.Steps.Length, Regex.Matches(table, "<td>").Count);

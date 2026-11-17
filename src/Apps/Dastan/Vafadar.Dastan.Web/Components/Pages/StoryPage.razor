@@ -1,4 +1,5 @@
 @page "/{Collection}/story"
+@page "/{Collection}/story/{Arc}"
 @inject Visitor Visitor
 @inject DastanSite Site
 @inject NavigationManager Navigation
@@ -44,7 +45,7 @@
                             </li>
                         }
                     </ul>
-                    <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, step.Event.Id, $"{Site.Collection}/story#step-{step.Number}")">@T["Story_StepEvidence"]<span class="visually-hidden"> – @Visitor.Text(step.Event.Label).Value</span></a></p>
+                    <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, step.Event.Id, $"{_base}#step-{step.Number}")">@T["Story_StepEvidence"]<span class="visually-hidden"> – @Visitor.Text(step.Event.Label).Value</span></a></p>
                     @if (!Visitor.Projection!.Gallery(step.Event.Id)!.IsEmpty)
                     {
                         <p><a href="@($"{Site.Collection}/event/{step.Event.Id}/gallery")">@T["Gallery_StepLink"]</a></p>
@@ -117,7 +118,7 @@
                             @foreach (var step in _lanes.Steps)
                             {
                                 <th scope="col">
-                                    <a href="@($"{Site.Collection}/story#step-{step.Number}")" title="@Visitor.Text(step.Event.Label).Value">
+                                    <a href="@($"{_base}#step-{step.Number}")" title="@Visitor.Text(step.Event.Label).Value">
                                         <span class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], string.Empty)</span>@Visitor.Number(step.Number)
                                     </a>
                                 </th>
@@ -154,6 +155,11 @@
     private StoryChart _chart = null!;
     private StoryChartState _state = new();
     private string _here = string.Empty;
+    private string _base = string.Empty;
+
+    /// <summary>Gets or sets the story, when it is not the one a visitor enters first.</summary>
+    [Parameter]
+    public string? Arc { get; set; }
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -177,14 +183,15 @@
 
     protected override void OnInitialized()
     {
-        _story = Collection == Site.Collection ? Visitor.Projection?.Story() : null;
+        _story = Collection == Site.Collection ? Visitor.Projection?.Story(Arc is null ? null : new EntityId(Arc)) : null;
         if (_story is null)
         {
             Navigation.NotFound();
             return;
         }
 
-        _lanes = Visitor.Projection!.Lanes();
+        _base = StoryAddress.Of(Site, Visitor, _story.Story.Id);
+        _lanes = Visitor.Projection!.Lanes(_story.Story.Id)!;
 
         // The chart is cut out of the lanes the visitor may see; the address only says how much of them. What the
         // chart then shows is written back into the state, so that its links never name a step that is not there.
@@ -196,12 +203,12 @@
             To = _chart.Last < _chart.StepCount ? _chart.Last : null,
             Lanes = _chart.Lanes.Length < _chart.LaneCount ? _chart.Lanes.Length : null,
         };
-        _here = $"{Site.Collection}/story{_state.Query()}";
+        _here = $"{_base}{_state.Query()}";
     }
 
     // The steps of a side of the stage.
     private RenderFragment Steps(string name, StoryChartState? fewer, StoryChartState? more) =>
         @<EdgeSteps Name="@name"
-                    Fewer="@(fewer is null ? null : $"{Site.Collection}/story{fewer.Query()}#chart")"
-                    More="@(more is null ? null : $"{Site.Collection}/story{more.Query()}#chart")" />;
+                    Fewer="@(fewer is null ? null : $"{_base}{fewer.Query()}#chart")"
+                    More="@(more is null ? null : $"{_base}{more.Query()}#chart")" />;
 }

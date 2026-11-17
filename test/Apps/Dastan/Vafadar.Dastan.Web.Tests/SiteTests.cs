@@ -375,7 +375,7 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
     {
         var overview = projection.Overview();
         var reached = new HashSet<string>(StringComparer.Ordinal);
-        var waiting = new Queue<EntityId>(overview.Subjects.Select(entity => entity.Id).Append(overview.Work.Id));
+        var waiting = new Queue<EntityId>(overview.Subjects.Select(entity => entity.Id).Append(overview.Work!.Id));
         while (waiting.TryDequeue(out var id))
         {
             if (reached.Add(id.Value))

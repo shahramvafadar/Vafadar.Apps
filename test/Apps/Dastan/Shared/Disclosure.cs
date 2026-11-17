@@ -17,7 +17,7 @@ internal static class Disclosure
     {
         var texts = new Collector();
         texts.Add(projection.Entities, projection.Relations, projection.Steps, projection.Sources, projection.Media, projection.References);
-        texts.Add(projection.Overview(), projection.Story(), projection.Lanes(), projection.Family(), projection.Gallery(), projection.Timeline(), projection.Revisions());
+        texts.Add(projection.Overview(), projection.Story()!, projection.Lanes()!, projection.Family(), projection.Gallery(), projection.Timeline(), projection.Revisions());
 
         // Questions are asked about every record of the collection, visible or not: an answer about a hidden record
         // has to be the same as about one that does not exist, so it adds nothing.

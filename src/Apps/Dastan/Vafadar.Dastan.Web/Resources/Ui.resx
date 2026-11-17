@@ -1041,4 +1041,13 @@
   <data name="IdentifierMatch_Uncertain" xml:space="preserve">
     <value>not established that it is the same</value>
   </data>
+  <data name="Collection_Stories" xml:space="preserve">
+    <value>The stories of this collection</value>
+  </data>
+  <data name="Foreign_Note_fa" xml:space="preserve">
+    <value>in Persian</value>
+  </data>
+  <data name="Foreign_Note_Other" xml:space="preserve">
+    <value>in the language of the collection</value>
+  </data>
 </root>

@@ -304,7 +304,7 @@ public sealed class CatalogueTests
         var story = new SmallStory();
         story.Entities[1] = SmallStory.Entity("story", EntityTypes.StoryArc, level: 1, source: "passage-1");
 
-        Assert.Contains(story.Problems(), problem => problem.StartsWith("collection: its story story belongs to a later reading level", StringComparison.Ordinal));
+        Assert.Contains(story.Problems(), problem => problem.StartsWith("collection: its subject story belongs to a later reading level", StringComparison.Ordinal));
     }
 
     [Fact]

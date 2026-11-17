@@ -30,6 +30,7 @@ public sealed class Projection
     private readonly FrozenDictionary<SourceId, Source> _sources;
     private readonly FrozenDictionary<MediaId, MediaItem> _media;
     private readonly FrozenDictionary<EventId, StoryStep> _steps;
+    private readonly FrozenDictionary<EntityId, ImmutableArray<StoryStep>> _stepsOf;
     private readonly ILookup<EntityId, Relation> _relationsOf;
 
     private Projection(Catalogue catalogue, ReadingLevel boundary, Audience audience)
@@ -77,23 +78,29 @@ public sealed class Projection
                 }),
         ];
 
-        // The steps of the story: the visible events that have a place in the telling of this story, in that order.
-        var story = _info.Story.Value;
-        Steps =
-        [
-            .. catalogue.Events
-                .Where(storyEvent => storyEvent.Level.IsWithin(boundary))
-                .Select(storyEvent => (Event: storyEvent, Position: (storyEvent.Time as Occurrence)?.At as NarrativePosition))
-                .Where(entry => entry.Position is { Order: NarrativeOrder.Presentation } position && position.Sequence == story)
-                .OrderBy(entry => entry.Position!.Ordinal)
-                .Select((entry, index) => new StoryStep(index + 1, entry.Event)),
-        ];
+        // The steps of every story: the visible events that have a place in its telling, in that order. Each
+        // story counts its own steps from 1.
+        var shown = Entities.Select(entity => entity.Id).ToHashSet();
+        Stories = [.. _info.Stories.Where(shown.Contains)];
+        _stepsOf = Stories.ToFrozenDictionary(
+            story => story,
+            story => (ImmutableArray<StoryStep>)
+            [
+                .. catalogue.Events
+                    .Where(storyEvent => storyEvent.Level.IsWithin(boundary))
+                    .Select(storyEvent => (Event: storyEvent, Position: (storyEvent.Time as Occurrence)?.At as NarrativePosition))
+                    .Where(entry => entry.Position is { Order: NarrativeOrder.Presentation } position && position.Sequence == story.Value)
+                    .OrderBy(entry => entry.Position!.Ordinal)
+                    .Select((entry, index) => new StoryStep(index + 1, entry.Event)),
+            ]);
+        Steps = Stories.IsEmpty ? [] : _stepsOf[Stories[0]];
+        AllSteps = [.. Stories.SelectMany(story => _stepsOf[story])];
 
         // Only the sources that support something visible are named: a source of a hidden record or of an item that
         // may not be shown would tell that the record exists.
         var cited = Entities.SelectMany(entity => entity.Sources.Concat(entity.Dated.SelectMany(dated => dated.Sources)).Concat(entity.Names.SelectMany(name => name.Sources)))
             .Concat(Relations.SelectMany(relation => relation.Sources))
-            .Concat(Steps.SelectMany(step => step.Event.Sources))
+            .Concat(AllSteps.SelectMany(step => step.Event.Sources))
             .Concat(Media.SelectMany(item => item.Sources))
             .ToHashSet();
         Sources = [.. catalogue.Sources.Where(source => cited.Contains(source.Id))];
@@ -102,7 +109,7 @@ public sealed class Projection
         _relations = Relations.ToFrozenDictionary(relation => relation.Id);
         _sources = Sources.ToFrozenDictionary(source => source.Id);
         _media = Media.ToFrozenDictionary(item => item.Id);
-        _steps = Steps.ToFrozenDictionary(step => step.Event.Id);
+        _steps = AllSteps.ToFrozenDictionary(step => step.Event.Id);
         _relationsOf = Relations
             .SelectMany(relation => relation.From == relation.To
                 ? [(Entity: relation.From, Relation: relation)]
@@ -124,6 +131,12 @@ public sealed class Projection
 
     /// <summary>Gets the visible events of the story, in the order of the telling.</summary>
     public ImmutableArray<StoryStep> Steps { get; }
+
+    /// <summary>Gets the visible stories the collection tells, the one a visitor enters first at the beginning.</summary>
+    public ImmutableArray<EntityId> Stories { get; }
+
+    /// <summary>Gets the visible events of all stories, story by story, each in the order of its telling.</summary>
+    public ImmutableArray<StoryStep> AllSteps { get; }
 
     /// <summary>Gets the sources that support something visible, in the order of the collection.</summary>
     public ImmutableArray<Source> Sources { get; }
@@ -187,14 +200,17 @@ public sealed class Projection
                 .OrderBy(entity => first.GetValueOrDefault(entity.Id, int.MaxValue)),
         ];
         return new CollectionOverview(
-            _entities[_info.Story],
-            _entities[_info.Edition.Work],
+            _entities[_info.Subject],
+            _info.Edition is { } edition ? _entities[edition.Work] : null,
             _info.Edition,
             _info.ReadingStages,
             Boundary,
             StoryContinues,
             subjects,
-            Steps.IsEmpty ? null : Steps[0]);
+            Steps.IsEmpty ? null : Steps[0])
+        {
+            Stories = [.. Stories.Select(story => _entities[story])],
+        };
     }
 
     /// <summary>Returns an entity with what a visitor may follow from it, or <see langword="null"/>.</summary>
@@ -209,7 +225,7 @@ public sealed class Projection
             entity,
             [.. _relationsOf[id].Select(relation => Connect(relation, id))],
             [
-                .. Steps.SelectMany(step => step.Event.Associations
+                .. AllSteps.SelectMany(step => step.Event.Associations
                     .Where(association => association.Entity == id)
                     .Select(association => new Appearance(step, association))),
             ],
@@ -358,11 +374,28 @@ public sealed class Projection
         }
     }
 
-    /// <summary>Returns the events of the story in the order of the telling.</summary>
-    public StoryView Story() => new(_entities[_info.Story], Steps, StoryContinues);
+    /// <summary>
+    /// Returns the events of a story in the order of the telling – of the story a visitor enters first when none
+    /// is named – or <see langword="null"/> when the collection tells no such story.
+    /// </summary>
+    public StoryView? Story(EntityId? story = null)
+    {
+        var id = story ?? (Stories.IsEmpty ? null : Stories[0]);
+        return id is { } known && _stepsOf.TryGetValue(known, out var steps) ? new(_entities[known], steps, StoryContinues) : null;
+    }
 
-    /// <summary>Returns the story as rows of entities over the steps of <see cref="Story"/>.</summary>
-    public LanesView Lanes()
+    /// <summary>Returns a story as rows of entities over the steps of <see cref="Story"/>, or <see langword="null"/>.</summary>
+    public LanesView? Lanes(EntityId? story = null)
+    {
+        if (Story(story) is not { Steps: var steps })
+        {
+            return null;
+        }
+
+        return Lanes(steps);
+    }
+
+    private LanesView Lanes(ImmutableArray<StoryStep> Steps)
     {
         var order = new List<EntityId>();
         var seen = new HashSet<EntityId>();
@@ -589,7 +622,7 @@ public sealed class Projection
     private Dictionary<EntityId, int> FirstAppearances()
     {
         var first = new Dictionary<EntityId, int>();
-        foreach (var step in Steps)
+        foreach (var step in AllSteps)
         {
             foreach (var association in step.Event.Associations)
             {

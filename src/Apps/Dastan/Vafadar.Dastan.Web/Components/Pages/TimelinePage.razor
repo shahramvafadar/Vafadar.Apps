@@ -86,8 +86,8 @@
         }
 
         var overview = projection.Overview();
-        _story = overview.Story;
-        _continues = projection.Story().Continues;
+        _story = overview.Subject;
+        _continues = projection.StoryContinues;
         _state = ChartState.Read(View, Scale, From, To, Events, Lanes);
         _here = $"{Site.Collection}/timeline{_state.Query()}";
         _timeline = Build(projection);

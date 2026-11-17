@@ -10,26 +10,34 @@ namespace Vafadar.Dastan.Core;
 /// <summary>An event of the story among the events a visitor may see.</summary>
 /// <param name="Number">The place of the event among the visible events, from 1. This is what a page shows.</param>
 /// <param name="Event">The event.</param>
-public sealed record StoryStep(int Number, StoryEvent Event);
+public sealed record StoryStep(int Number, StoryEvent Event)
+{
+    /// <summary>Gets the story the event is a step of.</summary>
+    public EntityId Story => new(((NarrativePosition)((Occurrence)Event.Time).At).Sequence);
+}
 
 /// <summary>The entry of a collection.</summary>
-/// <param name="Story">The story the collection tells.</param>
-/// <param name="Work">The work the story belongs to.</param>
-/// <param name="Edition">The text the editors worked from.</param>
+/// <param name="Subject">What the collection is about: the story it tells, or a company, a club, a person.</param>
+/// <param name="Work">The work the story belongs to, when the collection follows a text.</param>
+/// <param name="Edition">The text the editors worked from, when the collection follows one.</param>
 /// <param name="Stages">The reading stages a visitor can choose from. Their labels are written for readers.</param>
 /// <param name="Boundary">The stage the visitor has read to.</param>
 /// <param name="StoryContinues">Whether a later stage exists. It says nothing about what or how much follows.</param>
 /// <param name="Subjects">Who a visitor can start from – beings and groups – in the order they appear in the story.</param>
 /// <param name="FirstStep">The first event of the story, if one is visible.</param>
 public sealed record CollectionOverview(
-    Entity Story,
-    Entity Work,
-    EditionContext Edition,
+    Entity Subject,
+    Entity? Work,
+    EditionContext? Edition,
     ImmutableArray<ReadingStage> Stages,
     ReadingLevel Boundary,
     bool StoryContinues,
     ImmutableArray<Entity> Subjects,
-    StoryStep? FirstStep);
+    StoryStep? FirstStep)
+{
+    /// <summary>Gets the stories the collection tells, the one a visitor enters first at the beginning.</summary>
+    public ImmutableArray<Entity> Stories { get; init; } = [];
+}
 
 /// <summary>How a relation reads from the side of one of its entities.</summary>
 public enum ConnectionDirection
@@ -250,7 +258,7 @@ public enum EvidenceSubject
 public sealed record EvidenceView(
     EvidenceSubject Subject,
     ImmutableArray<Source> Sources,
-    EditionContext Edition,
+    EditionContext? Edition,
     bool SourcesMayRevealMore)
 {
     /// <summary>Gets the entity of the statement, for an entity and for an association.</summary>

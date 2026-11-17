@@ -75,7 +75,7 @@ public sealed class RealWorldTypesTests
         Assert.Equal(Directionality.Symmetric, catalogue.Find(new RelationId("world-05"))!.Type.Directionality);
 
         // The story is still the one story of the collection, and a brother is not drawn into a family tree.
-        Assert.Equal("story-rostam-sohrab", catalogue.Info.Story.Value);
+        Assert.Equal("story-rostam-sohrab", catalogue.Info.Subject.Value);
         Assert.Equal(Kinship.None, catalogue.Find(new RelationId("world-05"))!.Type.Kinship);
     }
 

@@ -84,11 +84,23 @@ public sealed class CatalogueInfo
     /// <summary>Gets the identifier of the story world the collection belongs to.</summary>
     public required string WorldId { get; init; }
 
-    /// <summary>Gets the entity that stands for the collection itself – the story a visitor enters.</summary>
-    public required EntityId Story { get; init; }
+    /// <summary>
+    /// Gets the entity that stands for the collection itself: what a visitor enters. For a collection that tells
+    /// one story it is that story; a collection can as well be about a company, a club, a person, a period.
+    /// </summary>
+    public required EntityId Subject { get; init; }
 
-    /// <summary>Gets the text witness the statements follow.</summary>
-    public required EditionContext Edition { get; init; }
+    /// <summary>
+    /// Gets the stories the collection tells, the one a visitor enters first at the beginning. Empty for a
+    /// collection that tells none; then it has no steps of a telling and no reading position to guard.
+    /// </summary>
+    public ImmutableArray<EntityId> Stories { get; init; } = [];
+
+    /// <summary>Gets the text witness the statements of the stories follow; a collection without a story may have none.</summary>
+    public EditionContext? Edition { get; init; }
+
+    /// <summary>Gets the language the texts of the collection are written in, as a language tag.</summary>
+    public string Language { get; init; } = "en";
 
     /// <summary>Gets the stages a visitor can choose as their reading boundary, from the opening on, without gaps.</summary>
     public required ImmutableArray<ReadingStage> ReadingStages { get; init; }
@@ -314,8 +326,23 @@ public sealed class Catalogue
             CheckStage("collection", info.DefaultLevel);
             CheckPublication(info.Publication);
             CheckReviewsAndHistory(info);
-            Known("collection", info.Story, ReadingLevel.Opening, "story");
-            Known("collection", info.Edition.Work, ReadingLevel.Opening, "work of the edition");
+            Known("collection", info.Subject, ReadingLevel.Opening, "subject");
+            foreach (var story in info.Stories)
+            {
+                if (catalogue.Find(story) is { } arc && arc.Type != EntityTypes.StoryArc)
+                {
+                    problems.Add($"collection: {story} is no story.");
+                }
+            }
+
+            if (info.Edition is { } edition)
+            {
+                Known("collection", edition.Work, ReadingLevel.Opening, "work of the edition");
+            }
+            else if (!info.Stories.IsEmpty)
+            {
+                problems.Add("collection: a collection that tells a story says which text it follows.");
+            }
         }
 
         // What everybody may see is a published revision (GOV-021): it says which revision it is, and every
@@ -433,7 +460,14 @@ public sealed class Catalogue
             Known(name, relation.To, relation.Level, "endpoint");
             Fits(relation, relation.From, first: true);
             Fits(relation, relation.To, first: false);
-            Known(name, relation.Scope.Story, relation.Level, "story of the scope");
+            if (relation.Scope.Story is { } story)
+            {
+                Known(name, story, relation.Level, "story of the scope");
+            }
+            else if (relation.Scope.Kind != RelationScopeKind.OutsideTheStory)
+            {
+                problems.Add($"{name}: a relation of a story names its story.");
+            }
             foreach (var id in relation.Scope.Events)
             {
                 Known(name, id, relation.Level, "event of the scope");
@@ -508,6 +542,15 @@ public sealed class Catalogue
             foreach (var shared in positions.GroupBy(entry => entry.Position).Where(group => group.Count() > 1))
             {
                 problems.Add($"{shared.First().Id}: {string.Join(", ", shared.Skip(1).Select(entry => entry.Id))} has the same place in the story order.");
+            }
+
+            // A step belongs to one of the stories the collection tells.
+            var stories = catalogue.Info.Stories.Select(story => story.Value).ToHashSet(StringComparer.Ordinal);
+            foreach (var (id, position) in catalogue.Events
+                .Select(storyEvent => (storyEvent.Id, Position: (storyEvent.Time as Occurrence)?.At as NarrativePosition))
+                .Where(entry => entry.Position is not null && !stories.Contains(entry.Position.Sequence)))
+            {
+                problems.Add($"{id}: {position!.Sequence} is no story the collection tells.");
             }
         }
 

@@ -127,3 +127,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - An entity can have other names – earlier names with the time they were used, titles, short forms, its name
   in its own script – and the identifiers other catalogues give it. Its page lists them and the search finds
   it by any of them.
+- A collection no longer has to be one story. It can tell several stories, each with its own steps and page,
+  or none at all: a collection about a company, a club or a person, with what is known about it and when. A
+  collection can be written in Persian or any other language instead of English; pages in another language say
+  so where a text exists in that language only.
