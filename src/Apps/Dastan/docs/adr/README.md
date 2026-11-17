@@ -15,6 +15,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0006](0006-media-delivery.md) | A media file reaches a browser through one route that asks the projection | Accepted |
 | [0007](0007-installable-app.md) | The installable app, a service worker that only shows "no connection", one script | Accepted; installation not observed |
 | [0008](0008-charts.md) | Charts: the timeline and the family tree are drawn by Dastan itself; Syncfusion for the tools of editors; a chart has the whole page and is opened at its four sides | Accepted |
+| [0009](0009-published-revision.md) | What everybody may see: only a published revision – numbered, with reviewed statements, reviewed texts and media allowed for the public | Accepted |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),
 [0012](../../../../../docs/adr/0012-temporal-model.md) (stated time), [0013](../../../../../docs/adr/0013-web-library.md) (the web library).

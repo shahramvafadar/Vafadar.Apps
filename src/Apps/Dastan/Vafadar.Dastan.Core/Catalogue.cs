@@ -29,10 +29,19 @@ public sealed class EditionContext
     public required string SummaryLanguage { get; init; }
 }
 
+/// <summary>A published revision of a collection: which one it is and when it was published.</summary>
+/// <param name="Number">The number of the revision, counted from 1.</param>
+/// <param name="PublishedOn">The day the revision was published.</param>
+public sealed record PublicationRevision(int Number, DateOnly PublishedOn);
+
 /// <summary>What the editors allow to be done with a collection. Each permission is its own decision.</summary>
 /// <param name="LocalDemoAllowed">Whether the collection may be shown in a local demonstration.</param>
 /// <param name="PublicReleaseApproved">Whether the collection is approved for publication.</param>
-public sealed record PublicationState(bool LocalDemoAllowed, bool PublicReleaseApproved);
+/// <param name="Revision">
+/// The published revision the collection is, or <see langword="null"/> for an editorial sample. Only a published
+/// revision can be approved for publication, and it holds nothing but reviewed statements.
+/// </param>
+public sealed record PublicationState(bool LocalDemoAllowed, bool PublicReleaseApproved, PublicationRevision? Revision = null);
 
 /// <summary>What a collection is as a whole.</summary>
 public sealed class CatalogueInfo
@@ -244,8 +253,40 @@ public sealed class Catalogue
             }
 
             CheckStage("collection", info.DefaultLevel);
+            CheckPublication(info.Publication);
             Known("collection", info.Story, ReadingLevel.Opening, "story");
             Known("collection", info.Edition.Work, ReadingLevel.Opening, "work of the edition");
+        }
+
+        // What everybody may see is a published revision (GOV-021): it says which revision it is, and every
+        // statement in it has been reviewed – a disputed one is shown as disputed, anything else is not ready.
+        private void CheckPublication(PublicationState publication)
+        {
+            if (publication.Revision is { Number: < 1 })
+            {
+                problems.Add("collection: the number of a published revision starts at 1.");
+            }
+
+            if (!publication.PublicReleaseApproved)
+            {
+                return;
+            }
+
+            if (publication.Revision is null)
+            {
+                problems.Add("collection: only a published revision is approved for the public; it states its number and the day it was published.");
+            }
+
+            var statements = catalogue.Relations.Select(relation => (Name: relation.Id.Value, relation.Review))
+                .Concat(catalogue.Events.Select(storyEvent => (Name: storyEvent.Id.Value, storyEvent.Review)))
+                .Concat(catalogue.Entities.SelectMany(entity => entity.Dated).Select(dated => (Name: dated.Key, dated.Review)));
+            foreach (var (name, review) in statements)
+            {
+                if (review is not (ReviewStatus.Reviewed or ReviewStatus.Disputed))
+                {
+                    problems.Add($"{name}: a published revision holds only reviewed statements; this one is {review}.");
+                }
+            }
         }
 
         private void Check(Relation relation)
@@ -330,17 +371,29 @@ public sealed class Catalogue
                 Known(name, id, item.Level, "explained relation");
             }
 
-            if (item.Rights.Status == RightsStatus.PermissionNotVerified && (item.DemoRenderAllowed || item.File is not null || item.RemoteFile is not null))
+            if (item.Rights.Status == RightsStatus.PermissionNotVerified && (item.DemoRenderAllowed || item.PublicRenderAllowed || item.File is not null || item.RemoteFile is not null))
             {
                 problems.Add($"{name}: an item without established permission has no file and is not shown.");
             }
 
-            if (!item.DemoRenderAllowed)
+            // Showing an item to everybody is a decision of its own and asks for more than a demonstration does
+            // of the rights, and the same of the item itself.
+            if (item.PublicRenderAllowed && item.Rights.Status is not (RightsStatus.OriginalProjectContent or RightsStatus.OpenAccessVerified))
+            {
+                problems.Add($"{name}: only original project content and items with verified open access are shown to the public.");
+            }
+
+            if (item.PublicRenderAllowed && !item.DemoRenderAllowed && item.Rights.Status == RightsStatus.OriginalProjectContent)
+            {
+                problems.Add($"{name}: an item that is shown to the public is shown in a demonstration as well.");
+            }
+
+            if (!item.DemoRenderAllowed && !item.PublicRenderAllowed)
             {
                 return;
             }
 
-            if (item.Rights.Status != RightsStatus.OriginalProjectContent)
+            if (item.DemoRenderAllowed && item.Rights.Status != RightsStatus.OriginalProjectContent)
             {
                 problems.Add($"{name}: only original project content is shown in the demonstration.");
             }

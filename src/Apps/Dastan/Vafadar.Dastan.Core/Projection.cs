@@ -478,8 +478,12 @@ public sealed class Projection
 
     // An item is shown when its eligibility says so. The model knows the eligibility for a demonstration only;
     // until it knows one for a public release, the public sees no media rather than media nobody cleared.
-    private static bool MayBeShown(MediaItem item, Audience audience) =>
-        audience == Audience.LocalDemonstration && item.DemoRenderAllowed;
+    private static bool MayBeShown(MediaItem item, Audience audience) => audience switch
+    {
+        Audience.LocalDemonstration => item.DemoRenderAllowed,
+        Audience.Public => item.PublicRenderAllowed,
+        _ => false,
+    };
 
     private static int Rank(string name, string query)
     {

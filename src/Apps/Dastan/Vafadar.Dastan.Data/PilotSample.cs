@@ -23,9 +23,10 @@ public static class PilotSample
     /// above that one the editors' working documents.
     /// </summary>
     /// <param name="sampleFile">The path of the sample.</param>
+    /// <param name="reviewedTextsOnly">Whether a translation that is a draft is left out, as for the public.</param>
     /// <returns>The collection.</returns>
     /// <exception cref="SampleFormatException">The sample or a translation cannot be used.</exception>
-    public static Catalogue Load(string sampleFile)
+    public static Catalogue Load(string sampleFile, bool reviewedTextsOnly = false)
     {
         var file = Path.GetFullPath(sampleFile);
         var directory = Path.GetDirectoryName(file)!;
@@ -41,6 +42,7 @@ public static class PilotSample
             ContentRoot = content,
             ReviewRoot = Path.GetDirectoryName(content) ?? content,
             Translations = translations,
+            ReviewedTextsOnly = reviewedTextsOnly,
         });
     }
 

@@ -59,6 +59,10 @@ for Dastan is added here in the same commit as the work it came with.
   "−" and a "+" at each of its four sides (`EdgeSteps`) that close and open the chart in that direction. Every
   step is a link to an address; a new chart says in ADR 0008 what its four sides mean. Class names of the stage
   begin with `stage-` – a short name like `step` belongs to the story already.
+* Everybody sees a collection only as a published revision ([ADR 0009](docs/adr/0009-published-revision.md),
+  D-044). The rule lives in the checks of `Catalogue`, in the readers and in `Projection`; a page never decides by
+  the audience what it shows. Reviewing a statement and publishing a revision are the editors' decisions – never
+  mark content as reviewed or approved to make something visible.
 * Dates are stored in the Gregorian calendar (D-043); another calendar is a matter of display. Content is written
   apart from the software, by people and assistants who follow the official guide and tools (D-042): a format
   that changes is changed in its guide and its checks in the same commit. The guide is `docs/content-guide.md`, the

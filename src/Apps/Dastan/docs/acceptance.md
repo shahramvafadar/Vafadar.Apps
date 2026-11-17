@@ -182,4 +182,21 @@ so WebKit is **not confirmed clean** for this state. Two tests that failed now a
 corrected: the font of the Persian text is asked for with the page (a link chosen while the text still moved
 was missed), and a test of the story chart asked for more room than a phone of 390 px has.
 
+Run again on 2026-11-17 with free memory, after the rule of the published revision (ADR 0009): 318 passed in
+Chromium, 317 in WebKit (1 not asked), 315 in Firefox (3 not asked) – no test failed in any engine. WebKit is
+confirmed clean for this state.
+
 Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "no connection" in Firefox.
+
+## What everybody may see (ADR 0009)
+
+2026-11-17. Not a condition of M0; the first gate of section 8 of the delivery plan.
+
+| What | State | Evidence |
+|---|---|---|
+| An editorial sample reaches nobody outside a demonstration | **Implemented and checked** | `PublishedRevisionTests`, `PublishedSiteTests.An_editorial_sample_is_not_shown_to_the_public_at_all` |
+| Only a numbered revision with nothing but reviewed statements can be approved | **Implemented and checked** | `PublishedRevisionTests`, `PublishedRevisionReaderTests`: an approved collection without a revision, a revision with a statement that is not reviewed, an approved editorial sample are refused, each statement named |
+| The public gets no draft text and no media that are not allowed for the public | **Implemented and checked** | `PublishedSiteTests`: a site in the Production settings with revision 3 made from a copy of the collection |
+| The reading position holds for the public | **Implemented and checked** | `PublishedSiteTests.The_reading_position_holds_for_the_public_as_for_a_demonstration` |
+| A collection is published | **Not done** | The collection of the repository is an editorial sample; nothing of it is reviewed |
+| A public site was looked at in a browser | **Not done** | The tests ask the site in memory; no browser and no host were used |

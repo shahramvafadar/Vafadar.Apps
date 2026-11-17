@@ -867,4 +867,7 @@
   <data name="Timeline_Link" xml:space="preserve">
     <value>In time</value>
   </data>
+  <data name="Published_Notice" xml:space="preserve">
+    <value>Published revision {0} of {1}. A correction is published as a new revision.</value>
+  </data>
 </root>

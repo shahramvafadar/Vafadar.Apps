@@ -38,7 +38,7 @@ public sealed class ProjectionTests
     [Fact]
     public void The_public_sees_no_media_that_was_only_cleared_for_a_demonstration()
     {
-        var story = new SmallStory { Publication = new PublicationState(LocalDemoAllowed: true, PublicReleaseApproved: true) };
+        var story = new SmallStory().Published();
 
         var projection = Projection.Of(story.Build(), new ReadingLevel(2), Audience.Public)!;
 

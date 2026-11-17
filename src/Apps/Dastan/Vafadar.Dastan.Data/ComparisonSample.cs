@@ -34,7 +34,11 @@ public static partial class ComparisonSample
 
     /// <summary>Reads every comparison of a folder, in the order of their file names. A folder that does not exist holds none.</summary>
     /// <exception cref="SampleFormatException">A file cannot be used; the problems name the file.</exception>
-    public static ImmutableArray<Comparison> LoadAll(string folder)
+    public static ImmutableArray<Comparison> LoadAll(string folder) => LoadAll(folder, reviewedTextsOnly: false);
+
+    /// <summary>Reads every comparison of a folder; a translation that is a draft is left out when only reviewed texts are asked for.</summary>
+    /// <exception cref="SampleFormatException">A file cannot be used; the problems name the file.</exception>
+    public static ImmutableArray<Comparison> LoadAll(string folder, bool reviewedTextsOnly)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(folder);
         if (!Directory.Exists(folder))
@@ -47,13 +51,17 @@ public static partial class ComparisonSample
             .. Directory.EnumerateFiles(folder, "*.json")
                 .Where(file => !Path.GetFileNameWithoutExtension(file).Contains('.', StringComparison.Ordinal))
                 .Order(StringComparer.Ordinal)
-                .Select(Load),
+                .Select(file => Load(file, reviewedTextsOnly)),
         ];
     }
 
     /// <summary>Reads a comparison with the translations that lie beside it.</summary>
     /// <exception cref="SampleFormatException">The file or one of its translations cannot be used.</exception>
-    public static Comparison Load(string file)
+    public static Comparison Load(string file) => Load(file, reviewedTextsOnly: false);
+
+    /// <summary>Reads a comparison with the translations beside it; a draft translation is left out when only reviewed texts are asked for.</summary>
+    /// <exception cref="SampleFormatException">The file or one of its translations cannot be used.</exception>
+    public static Comparison Load(string file, bool reviewedTextsOnly)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(file);
         var path = Path.GetFullPath(file);
@@ -64,7 +72,7 @@ public static partial class ComparisonSample
             .ToArray();
         try
         {
-            return Read(File.ReadAllText(path), translations);
+            return Read(File.ReadAllText(path), translations, reviewedTextsOnly);
         }
         catch (SampleFormatException refused)
         {
@@ -74,7 +82,7 @@ public static partial class ComparisonSample
 
     /// <summary>Reads a comparison from its JSON and the JSON of its translations.</summary>
     /// <exception cref="SampleFormatException">The comparison or a translation cannot be used.</exception>
-    public static Comparison Read(string json, IReadOnlyList<string>? translations = null)
+    public static Comparison Read(string json, IReadOnlyList<string>? translations = null, bool reviewedTextsOnly = false)
     {
         ArgumentNullException.ThrowIfNull(json);
         var document = Parse<ComparisonDocument>(json, "The comparison");
@@ -93,6 +101,30 @@ public static partial class ComparisonSample
         if (document.Status is not ("draft" or "reviewed"))
         {
             problems.Add($"status has the unknown value \"{document.Status}\".");
+        }
+
+        // What everybody may see has been reviewed as a whole and statement by statement (GOV-021).
+        if (document.Publication.PublicReleaseApproved)
+        {
+            if (document.Status != "reviewed")
+            {
+                problems.Add("a comparison that is approved for the public has the status reviewed.");
+            }
+
+            problems.AddRange(document.Lanes
+                .SelectMany(lane => lane.Periods.Concat(lane.Events))
+                .Where(item => !item.ReviewStatus.Equals("reviewed", StringComparison.OrdinalIgnoreCase) && !item.ReviewStatus.Equals("disputed", StringComparison.OrdinalIgnoreCase))
+                .Select(item => $"\"{item.Key}\": a comparison that is approved for the public holds only reviewed statements; this one is {item.ReviewStatus}."));
+            problems.AddRange(document.Lanes
+                .SelectMany(lane => lane.Periods.Concat(lane.Events))
+                .Where(item => item.SourceIds.Count == 0)
+                .Select(item => $"\"{item.Key}\": a statement that is shown to the public cites a source."));
+        }
+
+        // A draft translation is checked above and then left out for the public.
+        if (reviewedTextsOnly)
+        {
+            texts.RemoveAll(translation => translation.Review != "reviewed");
         }
 
         if (!Enum.TryParse<ComparisonFrame>(document.Frame, ignoreCase: true, out var frame) || !Enum.IsDefined(frame) || document.Frame.Any(char.IsDigit))

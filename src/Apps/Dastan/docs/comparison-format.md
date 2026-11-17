@@ -22,7 +22,7 @@ version, and the reader refuses what it does not understand.
 | `frame` | The kind of time all lanes share. Only `commonEraYears` exists: years of the common era and before it. Lanes stand side by side only when they are counted in the same way (document 04) |
 | `title`, `summary` | English texts |
 | `show` | `from` and `to`: the stretch of time the comparison is about, as two positions in time. The chart starts with this stretch; a visitor can move it |
-| `publication` | `localDemoAllowed` and `publicReleaseApproved`. A comparison that is not approved for the audience of the site does not exist for it |
+| `publication` | `localDemoAllowed` and `publicReleaseApproved`. A comparison that is not approved for the audience of the site does not exist for it. One that is approved for the public has the status `reviewed`, and each of its statements is `reviewed` or `disputed` and cites a source ([ADR 0009](adr/0009-published-revision.md)) |
 | `sources` | The sources the statements cite: `id`, `title`, `url` (https only), `kind` (`primaryText`, `scholarlyReference`, `museumRecord`, `rightsPolicy`), `accessedAt` (`yyyy-MM-dd`), optional `passageLocator` |
 | `lanes` | The subjects, in the order they are drawn |
 
