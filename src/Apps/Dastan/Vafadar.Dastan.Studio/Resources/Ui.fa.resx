@@ -633,4 +633,58 @@
   <data name="Comparison_LaneRemoveLead" xml:space="preserve">
     <value>ردیف را با دوره‌ها و رویدادهایش و متن‌هایی که آن‌ها را ترجمه می‌کنند از مقایسه برمی‌دارد.</value>
   </data>
+  <data name="Files_Title" xml:space="preserve">
+    <value>آوردن یک فایل</value>
+  </data>
+  <data name="Files_Lead" xml:space="preserve">
+    <value>فایلِ خودِ این مورد، تصویر پیش‌نمایش یک ویدئو، زیرنویس آن به یک زبان، متن پیاده‌شدهٔ آن، یا نسخه‌ای دیگر. چیستیِ فایل از خودِ فایل خوانده می‌شود. از تصویر، آنچه دربارهٔ جا و دستگاهِ ساختنش می‌گوید برداشته می‌شود؛ ویدئو همان‌گونه که هست نگه داشته می‌شود – پیش از آوردن، چنین یادداشت‌هایی را از آن بردارید. فایلی که جایگزین شود روی دستگاه می‌ماند: تاریخچهٔ این مورد هنوز نامش را دارد.</value>
+  </data>
+  <data name="Files_Part" xml:space="preserve">
+    <value>این فایل کدام بخشِ این مورد است</value>
+  </data>
+  <data name="Files_Part_file" xml:space="preserve">
+    <value>فایل اصلی – خودِ تصویر یا ویدئو</value>
+  </data>
+  <data name="Files_Part_poster" xml:space="preserve">
+    <value>تصویر پیش‌نمایش ویدئو</value>
+  </data>
+  <data name="Files_Part_captions" xml:space="preserve">
+    <value>زیرنویس (زبانش را پایین بگویید)</value>
+  </data>
+  <data name="Files_Part_transcript" xml:space="preserve">
+    <value>متن پیاده‌شده</value>
+  </data>
+  <data name="Files_Part_rendition" xml:space="preserve">
+    <value>نسخه‌ای دیگر از فایل</value>
+  </data>
+  <data name="Files_Language" xml:space="preserve">
+    <value>زبان زیرنویس، به شکل برچسب زبان مانند en</value>
+  </data>
+  <data name="Files_File" xml:space="preserve">
+    <value>فایل</value>
+  </data>
+  <data name="Files_Submit" xml:space="preserve">
+    <value>آوردن فایل</value>
+  </data>
+  <data name="Files_NeedsFile" xml:space="preserve">
+    <value>یک فایل برگزینید.</value>
+  </data>
+  <data name="Files_NoFolder" xml:space="preserve">
+    <value>ابزار بدون پوشه‌ای برای فایل‌ها (Studio:Files) راه‌اندازی شده است؛ نمی‌تواند فایلی نگه دارد.</value>
+  </data>
+  <data name="Files_OtherKind" xml:space="preserve">
+    <value>گونهٔ فایل با این مورد نمی‌خواند: تصویر برای ویدئو، یا ویدئو برای تصویر.</value>
+  </data>
+  <data name="Media_NewTitle" xml:space="preserve">
+    <value>تصویر یا ویدئوی تازه</value>
+  </data>
+  <data name="Media_NewLead" xml:space="preserve">
+    <value>هر مورد با فایلش آورده می‌شود. در آغاز، حقوقش احرازنشده است و به هیچ‌کس نشان داده نمی‌شود؛ اینکه چه چیزی را نشان می‌دهد، کی ساخته شده و آیا می‌شود نشانش داد، بعداً در صفحهٔ خودش گفته می‌شود.</value>
+  </data>
+  <data name="Media_RightsHint" xml:space="preserve">
+    <value>فایل فقط برای موردی آورده می‌شود که بتوان نشانش داد: چیزی که برای همین پروژه ساخته شده، یا اثری که نگه‌دارنده‌اش آن را آزادانه منتشر کرده است. اثری که حقوقش احراز نشده، ارجاعی بدون فایل می‌ماند.</value>
+  </data>
+  <data name="Media_NeedsRights" xml:space="preserve">
+    <value>بگویید چرا این فایل را می‌توان نشان داد: آنچه درباره‌اش درست است را برگزینید و توضیحش را بنویسید.</value>
+  </data>
 </root>

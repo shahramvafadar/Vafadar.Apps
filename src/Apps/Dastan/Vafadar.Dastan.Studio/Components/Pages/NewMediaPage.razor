@@ -1,0 +1,179 @@
+@page "/{Collection}/records/media/new"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* A new image or video, brought in with its file (step 13.7). It starts as an item whose rights are not
+   established and that may not be shown; what it shows, when it was made and whether it may be shown is said
+   afterwards on its page. *@
+@if (_sources.Count > 0)
+{
+    <PageTitle>@T["Media_NewTitle"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta">
+            <a href="@Collection"><bdi dir="ltr">@Collection</bdi></a> –
+            <a href="@($"{Collection}/records/media")">@T["Group_media"]</a>
+        </p>
+        <h1>@T["Media_NewTitle"]</h1>
+        <p class="lead">@T["Media_NewLead"]</p>
+    </header>
+
+    <ActOutcome Problems="_problems" />
+    <Allowed Role="EditorRoles.Writer">
+        <form method="post" enctype="multipart/form-data" @formname="new" @onsubmit="Add" class="act" action="@Here">
+            <AntiforgeryToken />
+            <p class="field">
+                <label for="media-id"><code>id</code></label>
+                <input id="media-id" name="id" value="@Sent("id")" required maxlength="200" dir="ltr" aria-describedby="media-id-hint" />
+                <span class="hint" id="media-id-hint">@T["New_IdHint"]</span>
+            </p>
+            <p class="field">
+                <label for="media-label"><code>label</code></label>
+                <input id="media-label" name="label" value="@Sent("label")" required maxlength="300" dir="auto" />
+            </p>
+            <p class="field">
+                <label for="media-caption"><code>caption</code></label>
+                <textarea id="media-caption" name="caption" rows="3" required maxlength="2000" dir="auto">@Sent("caption")</textarea>
+            </p>
+            <p class="field">
+                <label for="media-creator"><code>creator</code></label>
+                <input id="media-creator" name="creator" value="@Sent("creator")" required maxlength="500" dir="auto" />
+            </p>
+            <p class="field">
+                <label for="media-rights"><code>rights.status</code></label>
+                <select id="media-rights" name="rights" aria-describedby="media-rights-hint">
+                    @foreach (var status in Rights)
+                    {
+                        <option value="@status" selected="@(status == Sent("rights"))">@status</option>
+                    }
+                </select>
+                <span class="hint" id="media-rights-hint">@T["Media_RightsHint"]</span>
+            </p>
+            <p class="field">
+                <label for="media-statement"><code>rights.statement</code></label>
+                <textarea id="media-statement" name="statement" rows="3" required maxlength="2000" dir="auto">@Sent("statement")</textarea>
+            </p>
+            <p class="field">
+                <label for="media-source"><code>sourceIds</code></label>
+                <select id="media-source" name="source">
+                    @foreach (var source in _sources)
+                    {
+                        <option value="@source.Value" selected="@(source.Value == Sent("source"))">@source.Label</option>
+                    }
+                </select>
+            </p>
+            <p class="field">
+                <label for="media-file">@T["Files_File"]</label>
+                <input id="media-file" type="file" name="file" required accept=".png,.jpg,.jpeg,.webp,.mp4,.webm" />
+            </p>
+            <WhoAndWhy Form="new" Model="Adding" By="@(Adding?.By ?? Editor.Name)" Reason="@(Adding?.Reason ?? string.Empty)" />
+            <p><button type="submit" class="action">@T["Add_Submit"]</button></p>
+        </form>
+    </Allowed>
+}
+
+@code {
+    // What can be said about the right to show a file. An item whose rights are not established has no file.
+    private static readonly string[] Rights = ["original_project_content", "verified_open_access_metadata"];
+
+    private IReadOnlyList<FieldOption> _sources = [];
+    private List<string>? _problems;
+    private bool _sent;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets the identifier of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets who brings the item in, and why.</summary>
+    [SupplyParameterFromForm(FormName = "new")]
+    public FieldsInput? Adding { get; set; }
+
+    private string Here => $"{Collection}/records/media/new";
+
+    protected override void OnInitialized()
+    {
+        // An item names a source; a collection without one has nothing an item could rest on.
+        _sources = Store.Collections.Contains(Collection) ? FormContext.Of(Store, Collection).Records["sources"] : [];
+        if (_sources.Count == 0)
+        {
+            Navigation.NotFound();
+        }
+    }
+
+    private string Sent(string name) => _sent ? Context.Request.Form[name].ToString().Trim() : string.Empty;
+
+    private void Add()
+    {
+        _sent = true;
+        var input = Adding ?? new FieldsInput();
+        var problems = new List<string>();
+        var by = Editor.By(input.By);
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        var reason = ActInput.Text(input.Reason);
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        var id = Sent("id");
+        if (id.Length == 0 || id.Any(char.IsWhiteSpace))
+        {
+            problems.Add(T["Add_NeedsId"]);
+        }
+        else if (EditorialStore.Groups.Any(group => Store.Record(Collection, group, id) is not null))
+        {
+            problems.Add(string.Format(CultureInfo.CurrentCulture, T["Add_Exists"], id));
+        }
+
+        if (!Rights.Contains(Sent("rights")) || Sent("statement").Length == 0)
+        {
+            problems.Add(T["Media_NeedsRights"]);
+        }
+
+        var file = Context.Request.Form.Files["file"];
+        if (file is null || file.Length == 0)
+        {
+            problems.Add(T["Files_NeedsFile"]);
+        }
+
+        if (Store.FilesFolder is not { } folder)
+        {
+            problems.Add(T["Files_NoFolder"]);
+        }
+        else if (problems.Count == 0)
+        {
+            using var content = file!.OpenReadStream();
+            var (taken, refused) = MediaIntake.Take(folder, id, "file", null, content);
+            if (taken is null)
+            {
+                problems.Add(refused!);
+            }
+            else
+            {
+                var record = MediaForm.New(id, Sent("label"), Sent("caption"), Sent("creator"), Sent("source"), Store.WorldId(Collection)!, Sent("rights"), Sent("statement"), Editor.Today, taken);
+                var result = Store.Put(Collection, "media", record, by!, reason!);
+                if (result.Done)
+                {
+                    EditorName.Keep(Context, by!);
+                    Navigation.NavigateTo($"{Collection}/record/media/{id}?done=added");
+                    return;
+                }
+
+                // The record was not kept: the file that was brought in for it is not kept either.
+                MediaIntake.Discard(taken);
+                problems.AddRange(result.Problems);
+            }
+        }
+
+        _problems = problems;
+    }
+}

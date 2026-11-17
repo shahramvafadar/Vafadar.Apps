@@ -35,7 +35,7 @@ docker build -f src/Apps/Dastan/Dockerfile.studio -t dastan-studio .
 | `Studio__Keys` | The folder of the keys of the sign-in; without it everybody signs in again after a restart | `/data/keys` |
 | `AllowedHosts` | The names the tool is reached by, separated by `;`. A request by another name is refused | has to be given |
 | `Studio__TrustedProxies__0`, `__1`, … | The address or network of the proxy that is believed about how an editor came | has to be given |
-| `Studio__Files` | The folder of the files of the collections (`content/samples`), when the tool is to check that the file of a media item exists; mounted read-only | not set: files are not looked for |
+| `Studio__Files` | The folder of the files of the collections (`content/samples`). With it the tool checks that the file of a media item exists, and editors can bring files in: they are kept in the folder `media` beside it, which the tool must be able to write to. On a server that is a folder of the volume, such as `/data/content/samples` – copy the folder `media` of the collections there first, or every change is refused for the files that are missing | not set: files are not looked for, and no file can be brought in |
 
 The tool answers a request from another machine only when it came by https. It learns that from the proxy
 (`X-Forwarded-Proto`) and believes it only from the proxies it was told. **A proxy that is not named is not
@@ -179,3 +179,10 @@ dotnet run --project $content -- store editors --store <database>
 The roles are `writer`, `reviewer` and `publisher`, with commas between them, or `all`; an empty text makes
 an account that reads only. A change holds from the next page the editor opens. An editor changes the own
 password on the page `account` of the tool; a forgotten one is set anew with `store editor password`.
+
+## Files that editors bring in
+
+With `Studio__Files` set, the files editors bring in lie in the folder `media` beside it, on the volume. They
+are part of what has to be copied when the store is copied (`store copy` copies the store, not the files),
+and part of what a site is given: beside a published revision, the folder `media` goes into the content
+folder of the site. A file that an item no longer names stays in that folder; nothing deletes it.

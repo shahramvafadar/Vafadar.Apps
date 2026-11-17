@@ -633,4 +633,58 @@
   <data name="Comparison_LaneRemoveLead" xml:space="preserve">
     <value>Takes the lane out of the comparison, with its periods and events and the texts that translate them.</value>
   </data>
+  <data name="Files_Title" xml:space="preserve">
+    <value>Bring a file in</value>
+  </data>
+  <data name="Files_Lead" xml:space="preserve">
+    <value>The file of the item, the poster of a video, its captions in a language, its transcript, or a further rendition. What a file is is read from the file itself. Of an image, what it says about where and with which device it was made is taken out; a video is kept as it is – remove such notes before you bring it in. A file that is replaced stays on the machine: the history of the item still names it.</value>
+  </data>
+  <data name="Files_Part" xml:space="preserve">
+    <value>What the file is of the item</value>
+  </data>
+  <data name="Files_Part_file" xml:space="preserve">
+    <value>its file – the image or the video itself</value>
+  </data>
+  <data name="Files_Part_poster" xml:space="preserve">
+    <value>the poster of the video</value>
+  </data>
+  <data name="Files_Part_captions" xml:space="preserve">
+    <value>captions (say their language below)</value>
+  </data>
+  <data name="Files_Part_transcript" xml:space="preserve">
+    <value>the transcript</value>
+  </data>
+  <data name="Files_Part_rendition" xml:space="preserve">
+    <value>a further rendition of the file</value>
+  </data>
+  <data name="Files_Language" xml:space="preserve">
+    <value>Language of the captions, as a language tag such as en</value>
+  </data>
+  <data name="Files_File" xml:space="preserve">
+    <value>The file</value>
+  </data>
+  <data name="Files_Submit" xml:space="preserve">
+    <value>Bring the file in</value>
+  </data>
+  <data name="Files_NeedsFile" xml:space="preserve">
+    <value>Choose a file.</value>
+  </data>
+  <data name="Files_NoFolder" xml:space="preserve">
+    <value>The tool was started without a folder for files (Studio:Files); it cannot keep a file.</value>
+  </data>
+  <data name="Files_OtherKind" xml:space="preserve">
+    <value>The file is of another kind than the item: an image for a video, or a video for an image.</value>
+  </data>
+  <data name="Media_NewTitle" xml:space="preserve">
+    <value>A new image or video</value>
+  </data>
+  <data name="Media_NewLead" xml:space="preserve">
+    <value>An item is brought in with its file. It starts as an item whose rights are not established and that is not shown to anybody; what it shows, when it was made and whether it may be shown is said afterwards on its page.</value>
+  </data>
+  <data name="Media_RightsHint" xml:space="preserve">
+    <value>A file is brought in only for an item that may be shown: something made for this project, or a work its holder releases openly. A work whose rights are not established stays a reference without a file.</value>
+  </data>
+  <data name="Media_NeedsRights" xml:space="preserve">
+    <value>Say why the file may be shown: choose what holds for it and write the statement.</value>
+  </data>
 </root>

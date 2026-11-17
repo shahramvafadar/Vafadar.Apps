@@ -9,6 +9,8 @@
   <ItemGroup>
     <!-- The working copy of the collection that the tests of the store use: one way to get a filled store. -->
     <Compile Include="..\Vafadar.Dastan.Store.Tests\WorkingCopy.cs" Link="Shared\WorkingCopy.cs" />
+    <!-- The smallest files of each kind a media item is made of, for the tests that bring files in. -->
+    <Compile Include="..\Vafadar.Dastan.Data.Tests\TestFiles.cs" Link="Shared\TestFiles.cs" />
   </ItemGroup>
 
 </Project>

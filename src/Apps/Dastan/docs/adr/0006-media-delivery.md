@@ -114,3 +114,45 @@ Verification: `MediaReferenceTests` (Data, on the sample: its three museum works
 reference leaves out stays a secret at every stage), `GalleryAndMediaTests` (the card and its record, no address
 of the image, no page and no file; the galleries of a name and a step; Persian), `PublishedSiteTests` (the public
 gallery).
+
+## Second addendum of 2026-11-18 – a file is brought in through the tool (step 13.7)
+
+Until now a media file came into the folder of a collection by hand. With editors on a server (D-046) it comes
+through the tool.
+
+* **`MediaIntake.Take`** (`Vafadar.Dastan.Data`) takes a file for one part of an item – its file, the poster
+  of a video, captions in a language, a transcript, a further rendition – and keeps it in the folder `media`
+  beside the samples.
+* **What a file is is read from its content**: PNG, JPEG, WebP; MP4, WebM; WebVTT; plain text. Not from its
+  name and not from the type its sender states. An SVG is not taken – it can carry a script, and the files of
+  the repository that are SVG were written by its authors, not received. What is none of these is refused.
+* **The name on the machine is made by the tool**: the identifier of the item, the part, and a number when
+  there already is such a file. The name a file had on the editor's machine is used nowhere, so no path can
+  be asked for and no name tells anything. A file is never written over another.
+* **Limits**: an image 25 MB, a video 250 MB, a text 2 MB; the tool takes a request of that length and no
+  longer.
+* **An image loses what it says about its making**: the EXIF and XMP segments of a JPEG, the text, time and
+  EXIF chunks of a PNG are left out before it is kept – they can say where a picture was taken and with which
+  device. A WebP that carries such notes is refused with the advice to save it without them (rewriting a WebP
+  safely needs a library). **A video is kept as it is**: the tool says so, and the editor removes such notes
+  before bringing it in.
+* **Its size is read from the image** and written into the record (`dimensions`).
+* **The record decides**: the record with the new file is put into the store like any change, tried by the
+  readers; when it is refused, the file that was taken in for it is deleted again. A file that is replaced
+  stays on the machine – the history of the item still names it.
+* **A new item states its rights**: the readers refuse an item with a file and without established rights, so
+  the form of a new item asks whether it is original project content or openly released by its holder, and
+  for the statement. It starts as not shown (`demoRenderEligibility.allowed: false`): an item becomes visible
+  by what an editor then says about it, never by being brought in.
+* **Not built: converting.** The tool makes no smaller sizes and re-encodes nothing; an editor brings a
+  rendition in as a file of its own. Resizing needs a library that reads and writes images – a dependency,
+  which the owner decides on.
+
+Verification: `MediaIntakeTests` (11 tests, readers) – each kind recognised by its content, named after its
+item, sized, without its metadata; a second file under a name of its own; ten refusals that leave nothing
+behind; names and parts that are none refused before anything is written. `StudioMediaIntakeTests` (7 tests,
+tool) – the form of a new item in both languages; a new image kept with its file, its rights and nothing of
+the name it had; an SVG, a taken identifier, a missing name and missing rights leave no record and no file;
+captions in Persian and a poster for the video that is there; a file of another kind refused and not kept;
+only the page of an image or video brings files in. Files of the tests are made by the tests. Not looked at
+in a browser; no real photograph with location data and no large video was tried.

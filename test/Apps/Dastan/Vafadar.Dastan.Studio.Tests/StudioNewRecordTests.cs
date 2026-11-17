@@ -109,9 +109,8 @@ public sealed class StudioNewRecordTests : IDisposable
     }
 
     [Fact]
-    public async Task An_image_has_no_such_form_and_neither_has_a_group_that_is_none()
+    public async Task A_group_that_is_none_and_a_collection_that_is_not_there_have_no_such_form()
     {
-        Assert.Equal(HttpStatusCode.NotFound, (await _desk.Get(New("media"))).Status);
         Assert.Equal(HttpStatusCode.NotFound, (await _desk.Get(New("things"))).Status);
         Assert.Equal(HttpStatusCode.NotFound, (await _desk.Get("/en/no-collection/records/entities/new")).Status);
     }

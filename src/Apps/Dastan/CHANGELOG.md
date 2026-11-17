@@ -139,6 +139,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- Images and videos are brought in through the tool of the editors: a new item with its file, or a poster,
+  captions and a transcript for an item that is there. The tool recognises a file by its content, names it
+  itself and removes from an image what it says about where and with which device it was made.
 - A comparison is worked on with forms in the tool: its title and sources, and each of its lanes with its
   periods and events and their times. Other names, identifiers and dated statements of a name can be added
   with the form from the first one on.
