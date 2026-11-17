@@ -1,0 +1,46 @@
+# The tool of Dastan's editors as a container image (docs/operations.md, ADR 0011).
+#
+# Build from the root of the repository – the tool uses the shared libraries and the build settings there:
+#
+#   docker build -f src/Apps/Dastan/Dockerfile.studio -t dastan-studio .
+#
+# The image holds the program and nothing of a store: the store, and the keys of the sign-in, lie in a folder
+# that is mounted when the container is started (/data). What is sent to the build is named in
+# Dockerfile.studio.dockerignore.
+
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /repo
+COPY . .
+
+# The repository names two local package folders for other apps; they have to exist, and stay empty here.
+# The command of the store is in the image beside the tool: accounts are made with it, where the store lies.
+RUN mkdir -p artifacts/native-sqlcipher/feed artifacts/maui-core/feed \
+    && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Studio -c Release -o /studio -p:ContinuousIntegrationBuild=true \
+    && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Content -c Release -o /command -p:ContinuousIntegrationBuild=true
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS studio
+WORKDIR /app
+COPY --from=build /studio .
+COPY --from=build /command /command
+
+# The folder of the store belongs to the user of the tool; a volume mounted there starts with that owner.
+RUN mkdir -p /data/keys && chown -R $APP_UID /data
+
+# The tool listens on 8080 without encryption: a proxy in front of it holds the certificate and says how an
+# editor came. The tool believes only the proxies it is told to (Studio__TrustedProxies__0, __1, …) and answers
+# another machine only when it came by https. It has accounts: nothing is shown to who has not signed in.
+ENV ASPNETCORE_HTTP_PORTS=8080 \
+    DOTNET_gcServer=0 \
+    Studio__Accounts=true \
+    Studio__Store=/data/editors.db \
+    Studio__Keys=/data/keys
+EXPOSE 8080
+VOLUME /data
+
+# Not the administrator of the container.
+USER $APP_UID
+
+# The program asks its own tool; the image has no other tool to ask with.
+HEALTHCHECK --interval=30s --timeout=6s --start-period=20s --retries=3 CMD ["dotnet", "Vafadar.Dastan.Studio.dll", "--probe"]
+
+ENTRYPOINT ["dotnet", "Vafadar.Dastan.Studio.dll"]

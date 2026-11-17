@@ -24,6 +24,11 @@ internal static class EditorCommands
           store editor open <name> --store <database>
               Closes an account – it signs in nowhere, what the editor did stays in the history – or opens
               it again.
+
+          store copy --store <database> --out <file>
+              Writes a copy of the whole store – collections, history, revisions and accounts – as it is at
+              this moment; the tool of the editors can run meanwhile. Never over a file. A store is brought
+              back by stopping the tool and putting a copy in the place of its file.
         """;
 
     /// <summary>Runs a command of the accounts; <see langword="null"/> when it was not understood.</summary>
@@ -65,6 +70,25 @@ internal static class EditorCommands
 
                 return Said(output, database, time, words[1] == "add" ? $"{name}: the account was made." : $"{name}: has another password and is signed out everywhere.",
                     store => words[1] == "add" ? store.AddEditor(name, password) : store.SetPassword(name, password));
+
+            case ["copy", "--store", var database, "--out", var target]:
+                if (!File.Exists(database))
+                {
+                    output.WriteLine($"{database}: there is no store of that name.");
+                    return ContentCommands.NotUsable;
+                }
+
+                using (var store = EditorialStore.Open(database, time))
+                {
+                    if (store.CopyTo(target) is { } refused)
+                    {
+                        output.WriteLine(refused);
+                        return ContentCommands.NotUsable;
+                    }
+
+                    output.WriteLine($"{Path.GetFullPath(target)}: a copy of the store, {new FileInfo(target).Length:N0} bytes.");
+                    return ContentCommands.Done;
+                }
 
             case ["editor", "close" or "open", var name, "--store", var database]:
                 var closing = words[1] == "close";

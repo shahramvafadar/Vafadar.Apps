@@ -335,8 +335,7 @@ only, with the name an editor types. With it:
 * **Every act is kept under the account.** No form asks for a name, and a name a form gives all the same is not
   heard. Signing out is a form with the token of the tool.
 
-Not done: the tool on a server – its container, the store and the keys on a volume, copies of the store
-(step 11.9); roles – every editor may do every act, also publish; a page for an editor to change their own
+Not done: roles – every editor may do every act, also publish; a page for an editor to change their own
 password; a record of who signed in when. Two editors who change the same record at the same moment: the later
 act is tried on the collection as the earlier one left it and replaces the record – the history shows both, and
 nothing warns the later editor.
@@ -352,3 +351,33 @@ account whatever a form says; two editors in one store; signing out with the tok
 closed account ending a sign-in; another machine answered over an encrypted connection only, and a stranger's
 word about it not heard; the tool without accounts as before. In a browser on the published tool at 375 px,
 right to left: sent to the sign-in, signed in, arrived at the record, no input for a name, signed out.
+
+## Addendum of 2026-11-17 – the tool on a server (step 11.9)
+
+With accounts the tool can leave the machine of an editor. How it runs there is in
+[operations of the tool](../operations-studio.md); what was decided:
+
+* **One container, the store on a volume.** The image (`Dockerfile.studio`) holds the tool and the command of
+  the store, nothing of a store. The store and the keys of the sign-in lie in `/data`, the one place the
+  container can write to. It stays SQLite (D-045): one program writes to one file, which is what one container
+  is. A database server becomes right when the tool has to run more than once – nothing asks for that yet.
+* **The proxy holds the certificate, and has to be named.** The tool refuses a request from another machine
+  that did not come by https, and believes only a named proxy about that. A tool whose proxy was forgotten
+  refuses everything – it fails closed.
+* **Accounts are made in the container**, with the command beside the tool, by whoever may run a command on
+  the server. There is still no page that makes an account.
+* **Alive or not** is asked at `/health`, without a sign-in; it says nothing of the store.
+* **A copy of the store** is written by the database itself (`store copy`, `CopyTo`): whole, of one moment,
+  while the tool runs, never over a file. Bringing it back is putting it in the place of the file while the tool
+  is stopped. The store does not copy itself anywhere: where copies go and how often is the server's question.
+* **Checking from outside** (`eng/Check-Studio.ps1`) needs no account and asks as the proxy would. Its first
+  run found that the cookie of the forms was not Secure behind a proxy; it is now.
+
+Verification: `StoreCopyTests` (3 tests): a copy holds the collections, the history and the accounts of its
+moment and not what came after; never over a file; the command, which makes no store where there is none.
+`StudioAccountsTests`: alive without a sign-in; every cookie Secure over https. On this machine, in the Compose
+project of Dastan: the image built; the container healthy, as a user without rights on a file system that cannot
+be written to; `Check-Studio.ps1` passed all 23 checks; a store with a test account put into the volume;
+signed in as a proxy would pass it on, the start and a record answered; the key of the sign-in written to the
+volume; `store editors` and `store copy` run in the container, an account refused without a terminal; then the
+container and the volume removed. Not done is listed at the end of the operations page.

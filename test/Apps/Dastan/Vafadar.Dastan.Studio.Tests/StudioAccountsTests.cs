@@ -220,6 +220,21 @@ public sealed class StudioAccountsTests : IDisposable
             context.Request.Path = "/en/sign-in";
         }, TestContext.Current.CancellationToken);
         Assert.Equal(400, claimed.Response.StatusCode);
+
+        // Over https every cookie of the tool is Secure – also the one of its forms.
+        var cookies = (await From("203.0.113.7", "https")).Response.Headers.SetCookie;
+        Assert.NotEmpty(cookies.ToArray());
+        Assert.All(cookies, cookie => Assert.Contains("; secure", cookie, StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public async Task Whether_the_tool_is_alive_is_answered_without_a_sign_in_and_says_nothing_of_the_store()
+    {
+        var answer = await _studio.Get("/health");
+        using var without = new Studio();
+
+        Assert.Equal((HttpStatusCode.OK, "ok"), (answer.Status, answer.Html));
+        Assert.Equal((HttpStatusCode.OK, "ok"), ((await without.Get("/health")).Status, (await without.Get("/health")).Html));
     }
 
     // --- a tool without accounts ---

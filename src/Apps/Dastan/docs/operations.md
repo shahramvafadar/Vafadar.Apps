@@ -5,6 +5,9 @@ whoever hosts the site, independent of which host that is ([ADR 0010](adr/0010-r
 here makes the site reachable: a host, an address and a certificate are the owner's decisions, and no host has
 been used yet.
 
+The tool of the editors is a different program and has a page of its own:
+[operations of the tool](operations-studio.md).
+
 ## What runs
 
 One container: the program of the site, listening on port 8080 without encryption. It holds no collection, no

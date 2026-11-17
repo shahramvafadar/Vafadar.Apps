@@ -92,7 +92,9 @@ for Dastan is added here in the same commit as the work it came with.
   machine has to come encrypted, and an act is kept under the account – never under a name a form gives. A new
   page or address is behind the sign-in unless it is added to the short list in `StudioAccess`; do not add what
   shows anything of the store. A password is typed where a command asks for it and is never a word of a command,
-  a setting or a file. Do not make the public site reference the tool or the store.
+  a setting or a file. Do not make the public site reference the tool or the store. On a server the tool is one container with
+  the store on a volume ([operations of the tool](docs/operations-studio.md)); a change of a header, a cookie, the
+  sign-in or what is open without one is checked with `eng/Check-Studio.ps1` against the running container.
 * The site runs outside a developer's machine as one container without content
   ([ADR 0010](docs/adr/0010-running-the-site.md), [operations](docs/operations.md)). A change of a header, a
   cookie, a setting or of what the site serves is checked with `eng/Check-Site.ps1` against the container of

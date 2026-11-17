@@ -1,0 +1,39 @@
+# The tool of Dastan's editors as it runs on a server (docs/operations.md), to try the image of
+# Dockerfile.studio on this machine. It belongs to the same Compose project "test" as the other services of
+# Dastan (decision D-034):
+#
+#   docker compose -f src/Apps/Dastan/compose.studio.yaml up -d --build      build and start
+#   docker compose -f src/Apps/Dastan/compose.studio.yaml down               stop and remove; the store stays
+#
+# The tool answers another machine over https only, and a container sees this machine as another one: ask it
+# as a proxy would – eng/Check-Studio.ps1 does – or put a proxy with a certificate in front of it.
+name: test
+
+services:
+  # The image of Dockerfile.studio. Nothing in the container can be written to but its memory and the volume
+  # of the store.
+  studio:
+    build:
+      context: ../../..
+      dockerfile: src/Apps/Dastan/Dockerfile.studio
+    image: dastan-studio:local
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 512m
+    environment:
+      # The names the tool is reached by; any other is refused.
+      AllowedHosts: ${STUDIO_HOSTS:-localhost;127.0.0.1}
+      # Who the tool believes about how an editor came: here the networks Docker gives its containers, so that
+      # a proxy can be tried from this machine. A server names its own proxy.
+      Studio__TrustedProxies__0: 172.16.0.0/12
+      Studio__TrustedProxies__1: 192.168.0.0/16
+    volumes:
+      # The store and the keys of the sign-in. They outlive the container; "down -v" throws them away.
+      - studio-data:/data
+    ports:
+      # Reachable from this machine only.
+      - "127.0.0.1:53381:8080"
+
+volumes:
+  studio-data:
