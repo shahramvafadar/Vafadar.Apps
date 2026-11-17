@@ -20,6 +20,9 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
     private static List<string> Cards(Page page) =>
         [.. Regex.Matches(page.Html, "<li class=\"card media-card\" id=\"([^\"]+)\"").Select(match => match.Groups[1].Value)];
 
+    private static List<string> References(Page page) =>
+        [.. Regex.Matches(page.Html, "<li class=\"card media-card media-reference\" id=\"([^\"]+)\"").Select(match => match.Groups[1].Value)];
+
     private Projection At(int level) => Projection.Of(site.Catalogue, new ReadingLevel(level), Audience.LocalDemonstration)!;
 
     private string OnDisk(string name) =>
@@ -30,7 +33,7 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
     [Theory]
     [InlineData(0)]
     [InlineData(1)]
-    public async Task Before_the_media_are_reached_the_gallery_is_empty_and_gives_nothing_away(int level)
+    public async Task Before_the_media_are_reached_the_gallery_shows_no_picture_and_gives_nothing_away(int level)
     {
         var visitor = site.Visitor();
         await visitor.ReadTo(level);
@@ -40,9 +43,11 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
 
         Assert.Contains($"{Story}/gallery", collection.Links);
         Assert.Equal(HttpStatusCode.OK, gallery.Status);
-        Assert.Contains("There is nothing to show here.", gallery.Main, StringComparison.Ordinal);
-        Assert.Contains("Images and videos are shown only as far as the story has been read.", gallery.Main, StringComparison.Ordinal);
         Assert.Empty(Cards(gallery));
+
+        // What it holds are the works held elsewhere that belong to what has been read – and none of a later part.
+        Assert.Equal(level == 0 ? ["media-met-452419"] : ["media-met-452419", "media-umma-1963-1-46"], References(gallery));
+        Assert.DoesNotContain("slain", gallery.Main, StringComparison.OrdinalIgnoreCase);
 
         // No picture, no address of a file, no count, no name of what comes later.
         Assert.DoesNotContain("<img", gallery.Html, StringComparison.Ordinal);
@@ -80,15 +85,15 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
     public async Task The_gallery_of_an_entity_holds_what_shows_it_and_is_offered_only_when_it_holds_something()
     {
         var visitor = site.Visitor();
-        var before = await visitor.Get($"/en/{Story}/entity/character-rostam");
+        var before = await visitor.Get($"/en/{Story}/entity/character-zal");
         await visitor.ReadTo(2);
 
         var rostam = await visitor.Get($"/en/{Story}/entity/character-rostam");
         var gallery = await visitor.Get($"/en/{Story}/entity/character-rostam/gallery");
-        var rakhsh = await visitor.Get($"/en/{Story}/entity/character-rakhsh");
-        var empty = await visitor.Get($"/en/{Story}/entity/character-rakhsh/gallery");
+        var rakhsh = await visitor.Get($"/en/{Story}/entity/place-samangan");
+        var empty = await visitor.Get($"/en/{Story}/entity/place-samangan/gallery");
 
-        Assert.DoesNotContain($"{Story}/entity/character-rostam/gallery", before.Links);
+        Assert.DoesNotContain($"{Story}/entity/character-zal/gallery", before.Links);
         Assert.Contains($"{Story}/entity/character-rostam/gallery", rostam.Links);
         Assert.Contains("<h1>Images and videos of Rostam</h1>", gallery.Html, StringComparison.Ordinal);
         Assert.Equal([Video, Diagram], Cards(gallery));
@@ -97,7 +102,7 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
         Assert.Contains($"{Story}/media/{Diagram}?entity=character-rostam", gallery.Links);
         Assert.Contains($"{Story}/gallery", gallery.Links);
 
-        Assert.DoesNotContain($"{Story}/entity/character-rakhsh/gallery", rakhsh.Links);
+        Assert.DoesNotContain($"{Story}/entity/place-samangan/gallery", rakhsh.Links);
         Assert.Equal(HttpStatusCode.OK, empty.Status);
         Assert.Empty(Cards(empty));
         Assert.Contains("There is nothing to show here.", empty.Main, StringComparison.Ordinal);
@@ -391,6 +396,76 @@ public sealed class GalleryAndMediaTests(DemoSite site) : IClassFixture<DemoSite
         Assert.Null(MediaFiles.PathOf(video, "FILE"));
         Assert.Null(MediaFiles.TypeOf("notes.md"));
         Assert.Null(MediaFiles.TypeOf("sample.json"));
+    }
+
+    // --- Works held elsewhere (step 10.3) ---
+
+    [Fact]
+    public async Task A_work_that_may_not_be_shown_stands_in_the_gallery_with_its_catalogue_record_and_the_way_to_its_holder()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(1);
+
+        var gallery = await visitor.Get($"/en/{Story}/gallery");
+        var card = Regex.Match(gallery.Html, "<li class=\"card media-card media-reference\" id=\"media-umma-1963-1-46\">.*?</li>", RegexOptions.Singleline).Value;
+
+        Assert.Contains("Held elsewhere – not shown here", gallery.Text, StringComparison.Ordinal);
+        Assert.Contains("<h3><bdi>Tahmineh meets Rostam</bdi></h3>", card, StringComparison.Ordinal);
+        Assert.Contains("Tahmina Comes to Rustam", card, StringComparison.Ordinal);
+        Assert.Contains("1963/1.46", card, StringComparison.Ordinal);
+        Assert.Contains("University of Michigan Museum of Art, Museum Purchase.", card, StringComparison.Ordinal);
+        Assert.Contains("Permission not verified", card, StringComparison.Ordinal);
+        Assert.Contains("about 1460 CE", card, StringComparison.Ordinal);
+        Assert.Contains("href=\"https://umma.umich.edu/objects/tahmina-comes-to-rustam-from-the-shahnama-of-firdausi-1963-1-46/\" rel=\"external noopener\"", card, StringComparison.Ordinal);
+        Assert.Contains("umma.umich.edu", card, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Nothing_of_the_image_of_a_reference_is_on_the_page_or_delivered()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+
+        var gallery = await visitor.Get($"/en/{Story}/gallery");
+        var page = await visitor.Get($"/en/{Story}/media/media-met-452419");
+        var file = await visitor.Get(File("media-met-452419", "file"));
+
+        Assert.Equal(["media-met-452419", "media-met-453265", "media-umma-1963-1-46"], References(gallery));
+
+        // The address of the image at the museum and the draft of its description are not part of a reference; a
+        // reference has no page of its own and no file.
+        Assert.DoesNotContain("collectionapi.metmuseum.org", gallery.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("pending image review", gallery.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"{Story}/media/media-met-452419", gallery.Links);
+        Assert.Equal(HttpStatusCode.NotFound, page.Status);
+        Assert.Equal(HttpStatusCode.NotFound, file.Status);
+    }
+
+    [Fact]
+    public async Task A_gallery_of_a_name_and_of_a_step_holds_the_references_that_show_them()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(1);
+
+        var rakhsh = await visitor.Get($"/en/{Story}/entity/character-rakhsh");
+        var ofRakhsh = await visitor.Get($"/en/{Story}/entity/character-rakhsh/gallery");
+        var story = await visitor.Get($"/en/{Story}/story");
+        var ofStep = await visitor.Get($"/en/{Story}/event/event-02/gallery");
+
+        Assert.Contains($"{Story}/entity/character-rakhsh/gallery", rakhsh.Links);
+        Assert.Equal(["media-met-452419"], References(ofRakhsh));
+        Assert.Contains($"{Story}/event/event-02/gallery", story.Links);
+        Assert.DoesNotContain($"{Story}/event/event-01/gallery", story.Links);
+        Assert.Equal(["media-umma-1963-1-46"], References(ofStep));
+    }
+
+    [Fact]
+    public async Task The_references_are_named_in_Persian_on_a_Persian_page()
+    {
+        var gallery = await site.Visitor().Get($"/fa/{Story}/gallery");
+
+        Assert.Contains("نگهداری‌شده در جای دیگر", gallery.Text, StringComparison.Ordinal);
+        Assert.Equal(["media-met-452419"], References(gallery));
     }
 }
 

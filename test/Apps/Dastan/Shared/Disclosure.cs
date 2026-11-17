@@ -16,7 +16,7 @@ internal static class Disclosure
     public static HashSet<string> Of(Projection projection, Catalogue catalogue)
     {
         var texts = new Collector();
-        texts.Add(projection.Entities, projection.Relations, projection.Steps, projection.Sources, projection.Media);
+        texts.Add(projection.Entities, projection.Relations, projection.Steps, projection.Sources, projection.Media, projection.References);
         texts.Add(projection.Overview(), projection.Story(), projection.Lanes(), projection.Family(), projection.Gallery(), projection.Timeline(), projection.Revisions());
 
         // Questions are asked about every record of the collection, visible or not: an answer about a hidden record
@@ -75,6 +75,10 @@ internal static class Disclosure
         var visible = new Collector();
         visible.Add(projection.Entities, projection.Relations, projection.Steps, projection.Sources, projection.Media);
         visible.Add(catalogue.Info);
+
+        // A reference is what the visitor may know of a work that may not be shown: its catalogue record. What
+        // the record leaves out – the address of the image, its text alternative, its sources – stays a secret.
+        visible.Add(projection.References);
 
         var hidden = new Collector();
         hidden.Add(

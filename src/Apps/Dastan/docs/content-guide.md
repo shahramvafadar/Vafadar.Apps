@@ -121,6 +121,9 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
 
 * An item is shown only when its rights allow it and the file says so. Do not add a file whose rights you have
   not established; an item with `permission_not_verified` has no file and is listed, not shown.
+* A work you may not show is still worth writing down: with its `sourceUrl` (the page of the museum), its
+  catalogue title, number, credit line and the date it was made, the site lists it as a reference – a card with
+  that record and a link to the museum, without a picture.
 * A shown image needs a checked text alternative, a shown video its playing time, captions and a transcript.
 * The date an artwork was made is not a date of the story it shows.
 

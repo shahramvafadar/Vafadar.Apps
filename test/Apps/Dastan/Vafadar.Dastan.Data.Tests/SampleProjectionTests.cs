@@ -45,13 +45,18 @@ public sealed class SampleProjectionTests
         Assert.Contains("Mourning in Zabulistan", secrets);
         Assert.Contains("relation-04", secrets);
         Assert.Contains("media/dastan-family-connections.png", secrets);
-        Assert.Contains("media-met-452419", secrets);
-        Assert.Contains("https://www.metmuseum.org/art/collection/search/452419", secrets);
+        // A museum work of a later stage is a secret as a whole; of one the visitor may know as a reference, the
+        // address of the image is.
+        Assert.Contains("media-met-453265", secrets);
+        Assert.Contains("https://www.metmuseum.org/art/collection/search/453265", secrets);
+        Assert.DoesNotContain("media-met-452419", secrets);
+        Assert.Contains("https://collectionapi.metmuseum.org/api/collection/v1/iiif/452419/904434/main-image", secrets);
         Assert.Contains("src-ganjoor-s21", secrets);
 
-        // At the last stage only the items that may not be shown stay secret.
+        // At the last stage only what a reference leaves out of an item that may not be shown stays secret.
         var last = Disclosure.Secrets(At(4), Catalogue);
-        Assert.Contains("media-umma-1963-1-46", last);
+        Assert.Contains("https://collectionapi.metmuseum.org/api/collection/v1/iiif/453265/904428/main-image", last);
+        Assert.DoesNotContain("media-umma-1963-1-46", last);
         Assert.DoesNotContain("character-sohrab", last);
     }
 

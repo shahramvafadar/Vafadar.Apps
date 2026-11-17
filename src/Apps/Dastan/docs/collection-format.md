@@ -212,7 +212,7 @@ not say what each has to do with the step.
 | `publicRenderEligibility` | Optional: `allowed` – whether the item is shown to everybody in a published revision, a decision of its own; optional `reason`. It needs rights that are `original_project_content` or `verified_open_access_metadata`, and what showing an item needs |
 | `sourceIds`, `spoilerLevel` | As for every record |
 | `url` | Optional. The file, as a path relative to the collection's file with forward slashes (`../media/x.png`), inside `content/`; or an `https` address of a file that is not shown from here |
-| `sourceUrl` | Optional: the public page of the item, an `https` address |
+| `sourceUrl` | Optional: the public page of the item, an `https` address. An item that may not be shown and has this page stands in the galleries as a **reference**: its catalogue record and a link to the page, without a picture ([ADR 0006](adr/0006-media-delivery.md), addendum) |
 | `altText`, `altTextStatus` | Optional: the text alternative and its state – `not_prepared_image_not_cleared`, `draft_pending_visual_review` or `project_authored_for_exact_diagram` |
 | `depictedEntityIds`, `depictedEventIds`, `relatedRelationIds` | Optional lists: whom and what the item shows |
 | `posterUrl`, `captions` (`language`, `url`), `transcriptUrl` with `transcriptFormat` `text/plain` (a `.txt` file), `renditions` (`format`, `url`), `durationSeconds`, `audioTrack`, `dimensions` (`width`, `height`) | Optional; local paths like `url` |

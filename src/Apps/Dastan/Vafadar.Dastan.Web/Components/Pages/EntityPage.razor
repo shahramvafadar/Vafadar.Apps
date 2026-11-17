@@ -97,6 +97,6 @@
 
         _here = $"{Site.Collection}/entity/{_entity.Entity.Id}";
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
-        _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.Items.IsEmpty;
+        _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.IsEmpty;
     }
 }

@@ -67,6 +67,9 @@ for Dastan is added here in the same commit as the work it came with.
   edited by hand; what a visitor is told of the history goes through `Projection.Revisions`, by reading stage.
   A disputed statement is marked with `DisputedMark` wherever a page or a chart shows a
   statement – a new view of statements uses it too; a withdrawn statement never reaches a `Catalogue`.
+* An item that may not be shown is told to a page only as a `MediaReference` (`Projection.References`, the
+  galleries): the catalogue record and the link to the holder. Never pass its `MediaItem` to a page, never load
+  anything from the holder's server, and add a field to the reference only if a visitor may see it.
 * To look at the site as the public gets it, publish it (`dotnet publish`) and run the published output with
   `ASPNETCORE_ENVIRONMENT=Production` and `Dastan__Content` pointing to a published revision. `dotnet run` in
   the Production environment serves empty style sheets (static web assets are off there) – a page looked at
