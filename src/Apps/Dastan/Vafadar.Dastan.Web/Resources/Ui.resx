@@ -273,9 +273,6 @@
   <data name="Gallery_TitleStep" xml:space="preserve">
     <value>Images and videos of the step “{0}”</value>
   </data>
-  <data name="Gallery_LeadCollection" xml:space="preserve">
-    <value>Everything of this collection that can be shown at your reading position.</value>
-  </data>
   <data name="Gallery_LeadEntity" xml:space="preserve">
     <value>Images and videos that show {0}, as far as you have read.</value>
   </data>
@@ -929,5 +926,17 @@
   </data>
   <data name="Change_Reason" xml:space="preserve">
     <value>Reason:</value>
+  </data>
+  <data name="Reference_Heading" xml:space="preserve">
+    <value>Held elsewhere – not shown here</value>
+  </data>
+  <data name="Reference_Lead" xml:space="preserve">
+    <value>These works belong to this part of the collection, but Dastan may not show their images, or has not established that it may. Each stands here with its catalogue record and the way to the institution that holds it.</value>
+  </data>
+  <data name="Reference_Open" xml:space="preserve">
+    <value>See it at</value>
+  </data>
+  <data name="Gallery_LeadCollection" xml:space="preserve">
+    <value>Everything of this collection that can be shown at your reading position, and the works held elsewhere that belong to it.</value>
   </data>
 </root>

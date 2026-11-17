@@ -273,9 +273,6 @@
   <data name="Gallery_TitleStep" xml:space="preserve">
     <value>تصویرها و ویدیوهای گام «{0}»</value>
   </data>
-  <data name="Gallery_LeadCollection" xml:space="preserve">
-    <value>هر آنچه از این مجموعه در جایگاه خواندن شما قابل نمایش است.</value>
-  </data>
   <data name="Gallery_LeadEntity" xml:space="preserve">
     <value>تصویرها و ویدیوهایی که {0} را نشان می‌دهند، تا جایی که خوانده‌اید.</value>
   </data>
@@ -929,5 +926,17 @@
   </data>
   <data name="Change_Reason" xml:space="preserve">
     <value>دلیل:</value>
+  </data>
+  <data name="Reference_Heading" xml:space="preserve">
+    <value>نگهداری‌شده در جای دیگر – اینجا نمایش داده نمی‌شود</value>
+  </data>
+  <data name="Reference_Lead" xml:space="preserve">
+    <value>این آثار به همین بخش از مجموعه مربوط‌اند، اما «داستان» اجازهٔ نمایش تصویرشان را ندارد یا هنوز این اجازه برایش روشن نشده است. هر کدام با مشخصات فهرست و راهِ رسیدن به نهادِ نگه‌دارنده‌اش اینجا آمده است.</value>
+  </data>
+  <data name="Reference_Open" xml:space="preserve">
+    <value>دیدن آن در</value>
+  </data>
+  <data name="Gallery_LeadCollection" xml:space="preserve">
+    <value>هر آنچه از این مجموعه در جایگاه خواندن شما قابل نمایش است، و آثاری که جای دیگری نگهداری می‌شوند و به آن مربوط‌اند.</value>
   </data>
 </root>

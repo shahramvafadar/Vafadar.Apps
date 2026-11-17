@@ -17,7 +17,7 @@
         <p class="lead">@_lead</p>
     </header>
 
-    @if (gallery.Items.IsEmpty)
+    @if (gallery.IsEmpty)
     {
         @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
         <p class="note" role="status">
@@ -28,7 +28,7 @@
             }
         </p>
     }
-    else
+    else if (!gallery.Items.IsEmpty)
     {
         <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Gallery_Count"], Visitor.Number(gallery.Items.Length)) – @T["Gallery_Order"]</p>
         <ul class="cards gallery" role="list">
@@ -51,6 +51,56 @@
                 </li>
             }
         </ul>
+    }
+
+    @if (!gallery.References.IsEmpty)
+    {
+        @* An image the site may not show is not left out as if it did not exist: its catalogue record stands here,
+           with the way to the institution that holds it. Nothing of the image itself is asked for or delivered. *@
+        <section aria-labelledby="references">
+            <h2 id="references">@T["Reference_Heading"]</h2>
+            <p class="note">@T["Reference_Lead"]</p>
+            <ul class="cards gallery" role="list">
+                @foreach (var item in gallery.References)
+                {
+                    <li class="card media-card media-reference" id="@item.Id">
+                        <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+                        <h3><Loc Text="item.Label" /></h3>
+                        <p><Loc Text="item.Caption" /></p>
+                        <dl class="facts">
+                            @if (item.CatalogueTitle is { } catalogueTitle)
+                            {
+                                <dt>@T["Media_CatalogueTitle"]</dt>
+                                <dd><Foreign Text="@catalogueTitle" /></dd>
+                            }
+
+                            <dt>@T["Media_Creator"]</dt>
+                            <dd><Foreign Text="@item.Creator" /></dd>
+                            <dt>@T["Media_Made"]</dt>
+                            <dd>@TimeText.Of(item.Created, Visitor, T)</dd>
+                            @if (item.AccessionNumber is { } accession)
+                            {
+                                <dt>@T["Media_Accession"]</dt>
+                                <dd><bdi dir="ltr">@accession</bdi></dd>
+                            }
+
+                            @if (item.CreditLine is { } credit)
+                            {
+                                <dt>@T["Media_Credit"]</dt>
+                                <dd><Foreign Text="@credit" /></dd>
+                            }
+
+                            <dt>@T["Media_Rights"]</dt>
+                            <dd>@T[$"Rights_{item.Rights}"]</dd>
+                        </dl>
+                        <p>
+                            <a class="action secondary" href="@item.CataloguePage" rel="external noopener">@T["Reference_Open"] <bdi dir="ltr">@item.CataloguePage!.Host</bdi><span class="visually-hidden"> – @Visitor.Text(item.Label).Value</span></a>
+                            <small class="note">(@T["External_Note"])</small>
+                        </p>
+                    </li>
+                }
+            </ul>
+        </section>
     }
 
     @if (gallery.Rule != GalleryRule.WholeCollection)

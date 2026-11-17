@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using Vafadar.Temporal;
 
 namespace Vafadar.Dastan.Core;
 
@@ -146,6 +147,45 @@ public enum GalleryOrder
     Editorial = 0,
 }
 
+/// <summary>
+/// A work the collection has to do with and may not show: what the catalogue of the institution that holds it
+/// says about it, and the way to its page there. The record holds nothing of the image – no address of a file, no
+/// text alternative, no path – so that a page that shows all of it shows nothing it may not.
+/// </summary>
+/// <param name="Id">The identifier of the media item the reference stands for.</param>
+/// <param name="Kind">Whether the work is an image or a video.</param>
+/// <param name="Label">The title the editors give it.</param>
+/// <param name="Caption">The editors' caption.</param>
+/// <param name="Representation">How the work relates to what it shows.</param>
+/// <param name="Created">When the work was made – never a time of the story.</param>
+/// <param name="Creator">Who made it, as far as it is known, in the editors' words.</param>
+/// <param name="Rights">What is established about the right to show it.</param>
+/// <param name="CataloguePage">The public page of the institution that holds the work.</param>
+/// <param name="DepictedEntities">The entities the work shows.</param>
+/// <param name="DepictedEvents">The events the work shows.</param>
+public sealed record MediaReference(
+    MediaId Id,
+    MediaKind Kind,
+    LocalizedText Label,
+    LocalizedText Caption,
+    MediaRepresentation Representation,
+    TemporalExpression Created,
+    string Creator,
+    RightsStatus Rights,
+    Uri CataloguePage,
+    ImmutableArray<EntityId> DepictedEntities,
+    ImmutableArray<EventId> DepictedEvents)
+{
+    /// <summary>Gets the title the holding institution gives the work.</summary>
+    public string? CatalogueTitle { get; init; }
+
+    /// <summary>Gets the number the holding institution gives the work.</summary>
+    public string? AccessionNumber { get; init; }
+
+    /// <summary>Gets the credit line the holding institution asks for.</summary>
+    public string? CreditLine { get; init; }
+}
+
 /// <summary>Media that may be shown, with the rule that selected them.</summary>
 /// <param name="Rule">Why the items are in the gallery.</param>
 /// <param name="Entity">The entity of the rule, if it has one.</param>
@@ -157,7 +197,17 @@ public sealed record GalleryView(
     Entity? Entity,
     StoryStep? Step,
     GalleryOrder Order,
-    ImmutableArray<MediaItem> Items);
+    ImmutableArray<MediaItem> Items)
+{
+    /// <summary>
+    /// Gets the items of the rule that may not be shown and are held by an institution with a public page: the
+    /// gallery names them with their catalogue record and the way to that page, and shows nothing of them.
+    /// </summary>
+    public ImmutableArray<MediaReference> References { get; init; } = [];
+
+    /// <summary>Gets whether the gallery has nothing to show and nothing to refer to.</summary>
+    public bool IsEmpty => Items.IsEmpty && References.IsEmpty;
+}
 
 /// <summary>One media item with what it shows.</summary>
 /// <param name="Item">The item.</param>

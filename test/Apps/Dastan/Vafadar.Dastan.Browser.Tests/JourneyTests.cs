@@ -113,9 +113,11 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
     {
         var page = await site.Visitor(width: 412);
 
-        // Before: the gallery is empty.
+        // Before: the gallery shows nothing – it names one work held elsewhere, without a picture.
         await page.GotoAsync($"/en/{Story}/gallery");
-        Assert.Equal(0, await page.Locator(".media-card").CountAsync());
+        Assert.Equal(0, await page.Locator(".media-card:not(.media-reference)").CountAsync());
+        Assert.Equal(1, await page.Locator(".media-reference").CountAsync());
+        Assert.Equal(0, await page.Locator("main img").CountAsync());
 
         // The visitor moves forward by their own act, on the page of the story.
         await page.GotoAsync($"/en/{Story}");
@@ -125,7 +127,7 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
 
         await page.Locator("main a").GetByText("Images and videos", new LocatorGetByTextOptions { Exact = true }).ClickAsync();
         await Arrived(page, new Regex("/gallery$"));
-        Assert.Equal(2, await page.Locator(".media-card").CountAsync());
+        Assert.Equal(2, await page.Locator(".media-card:not(.media-reference)").CountAsync());
 
         // The image arrives and is as wide as the page allows.
         await page.Locator("#media-dastan-family-illustration h2 a").ClickAsync();
