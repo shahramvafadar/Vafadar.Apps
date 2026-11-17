@@ -38,6 +38,19 @@ public sealed class WorldSite : DemoSite
         var sample = JsonNode.Parse(File.ReadAllText(path))!.AsObject();
         var entities = sample["entities"]!.AsArray();
         entities.Add(Entity("person-poet", "Person", "A poet of the tests"));
+        entities[^1]!["names"] = JsonNode.Parse("""
+            [
+              { "name": "The sage of the tests", "language": "en", "kind": "title" },
+              { "name": "حکیم آزمون", "language": "fa", "kind": "original_script" },
+              { "name": "A younger poet", "language": "en", "kind": "former", "time": { "kind": "occurrence", "at": { "frame": "calendar", "era": "commonEra", "year": 980 } } }
+            ]
+            """);
+        entities[^1]!["identifiers"] = JsonNode.Parse("""
+            [
+              { "issuer": "A catalogue of the tests", "value": "T-1", "url": "https://catalogue.example/T-1", "match": "exact" },
+              { "issuer": "Another catalogue", "value": "X 9", "match": "uncertain" }
+            ]
+            """);
         entities.Add(Entity("place-city", "Place", "A city of the tests"));
         entities.Add(Entity("region-land", "Region", "A land of the tests"));
         entities.Add(Entity("organisation-court", "Organisation", "A court of the tests"));
@@ -152,6 +165,41 @@ public sealed class RealWorldPagesTests(WorldSite site) : IClassFixture<WorldSit
 
         // What has no time is not on the timeline: where the poet was born is said without a year.
         Assert.DoesNotContain("Born in", page.Text, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("en", "Other names", "title", "earlier name", "980 CE", "In other catalogues", "not established that it is the same")]
+    [InlineData("fa", "نام‌های دیگر", "لقب", "نام پیشین", "۹۸۰", "در فهرست‌های دیگر", "یکی‌بودنش ثابت نشده است")]
+    public async Task The_page_of_an_entity_names_its_other_names_and_what_others_call_it(string language, string heading, string title, string former, string year, string catalogues, string uncertain)
+    {
+        var page = await site.Visitor().Get($"/{language}/{Story}/entity/person-poet");
+
+        Assert.Contains(heading, page.Main, StringComparison.Ordinal);
+        Assert.Contains("The sage of the tests", page.Main, StringComparison.Ordinal);
+        Assert.Contains("<span lang=\"fa\" dir=\"auto\">", page.Html, StringComparison.Ordinal);
+        Assert.Contains("حکیم آزمون", page.Main, StringComparison.Ordinal);
+        Assert.Contains(title, page.Main, StringComparison.Ordinal);
+        Assert.Contains(former, page.Main, StringComparison.Ordinal);
+        Assert.Contains(year, page.Main, StringComparison.Ordinal);
+        Assert.Contains(catalogues, page.Main, StringComparison.Ordinal);
+        Assert.Contains("<a href=\"https://catalogue.example/T-1\" rel=\"external noopener noreferrer\">", page.Html, StringComparison.Ordinal);
+        Assert.Contains(uncertain, page.Main, StringComparison.Ordinal);
+
+        // An entity without other names says nothing about names.
+        var city = await site.Visitor().Get($"/{language}/{Story}/entity/place-city");
+        Assert.DoesNotContain(heading, city.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain(catalogues, city.Main, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("sage", "The sage of the tests")]
+    [InlineData("حکیم", "حکیم آزمون")]
+    public async Task The_search_of_the_site_finds_an_entity_by_another_name_and_says_by_which(string typed, string name)
+    {
+        var search = await site.Visitor().Get($"/en/{Story}/search?q={Uri.EscapeDataString(typed)}");
+
+        Assert.Contains("A poet of the tests", search.Text, StringComparison.Ordinal);
+        Assert.Contains(name, search.Text, StringComparison.Ordinal);
     }
 
     [Fact]

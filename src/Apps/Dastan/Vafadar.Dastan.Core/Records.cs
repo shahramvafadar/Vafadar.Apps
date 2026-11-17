@@ -64,7 +64,68 @@ public sealed class Entity
     /// work was written, when a manuscript was made.
     /// </summary>
     public ImmutableArray<DatedStatement> Dated { get; init; } = [];
+
+    /// <summary>
+    /// Gets the other names of the entity: names it is also known by, names it had before, abbreviations, titles,
+    /// its name in the script it was first written in. The search finds the entity by each of them. A name
+    /// that is alike does not make two entities one (DOM-003).
+    /// </summary>
+    public ImmutableArray<EntityName> Names { get; init; } = [];
+
+    /// <summary>Gets what the entity is called in the catalogues of others, each with who issued it.</summary>
+    public ImmutableArray<ExternalIdentifier> Identifiers { get; init; } = [];
 }
+
+/// <summary>What kind of other name a name is.</summary>
+public enum NameKind
+{
+    /// <summary>A name the entity is also known by.</summary>
+    Alternative = 0,
+
+    /// <summary>A name the entity had before; its time says when, where that is stated.</summary>
+    Former = 1,
+
+    /// <summary>A short form.</summary>
+    Abbreviation = 2,
+
+    /// <summary>A title or an epithet the entity is called by.</summary>
+    Title = 3,
+
+    /// <summary>The name in the script it was first written in.</summary>
+    OriginalScript = 4,
+}
+
+/// <summary>Another name of an entity.</summary>
+/// <param name="Name">The name, as it is written.</param>
+/// <param name="Language">The language of the name, as a language tag: "en", "fa", "ar".</param>
+/// <param name="Kind">What kind of name it is.</param>
+/// <param name="Time">When the name was used, where that is stated; a time of the calendar.</param>
+/// <param name="Sources">The sources that support the name, when the editors name some.</param>
+/// <param name="Level">The reading level from which the name may be shown; never before its entity.</param>
+public sealed record EntityName(string Name, string Language, NameKind Kind, TemporalExpression? Time, ImmutableArray<SourceId> Sources, ReadingLevel Level);
+
+/// <summary>How sure the editors are that an identifier of another catalogue names this entity.</summary>
+public enum IdentifierMatch
+{
+    /// <summary>The record of the catalogue is about this entity.</summary>
+    Exact = 0,
+
+    /// <summary>The record is about nearly the same: a wider or a narrower subject.</summary>
+    Close = 1,
+
+    /// <summary>It is not established that the record is about this entity.</summary>
+    Uncertain = 2,
+}
+
+/// <summary>
+/// What an entity is called in the catalogue of somebody else. Naming the identifier does not endorse what that
+/// catalogue states (DOM-003).
+/// </summary>
+/// <param name="Issuer">Who issued the identifier: the name of the catalogue.</param>
+/// <param name="Value">The identifier.</param>
+/// <param name="Url">The address of the record in that catalogue, when there is one.</param>
+/// <param name="Match">How sure the editors are that the record is about this entity.</param>
+public sealed record ExternalIdentifier(string Issuer, string Value, Uri? Url, IdentifierMatch Match);
 
 /// <summary>A statement about an entity with a time of the calendar: something that lasted or something that happened.</summary>
 public sealed class DatedStatement

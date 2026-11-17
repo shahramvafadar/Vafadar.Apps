@@ -200,3 +200,24 @@ Verification: `RelationTimeTests` (5 tests) – read as stated; two tenures stay
 place in the story and an unreadable time are refused; hidden before its stage; the collection of the repository
 dates no relation. `RealWorldPagesTests` – the time in the sentence in English and Persian, on the page of
 sources, and the lane with a bar for every tenure on the timeline. Test data only; not looked at in a browser.
+
+## Fourth addendum of 2026-11-17 – names and identifiers (step 12.3)
+
+DOM-003: an entity may have alternatives, historical names, names in several languages, titles, abbreviations
+and external identifiers; search finds these names; similarity does not establish identity.
+
+* `Entity.Names`: each a name with its language tag, a kind (`alternative`, `former`, `abbreviation`, `title`,
+  `original_script`), optionally the time it was used, its sources and a reading stage. The label of an entity
+  stays the one translated name; other names are stated in their own language and are not translated.
+* A name can give a story away ("the grieving father"), so it may carry a stage of its own, never earlier than
+  its entity; the projection drops what lies beyond the boundary, and the search cannot find by it.
+* `Entity.Identifiers`: issuer, value, optional address, and how sure the editors are (`exact`, `close`,
+  `uncertain`). The page names the issuer, links out with `rel="external noopener noreferrer"` and says that
+  what the other catalogue states is its own.
+* **Nothing merges.** Two entities with one name are both found. "Possibly the same" is a relation
+  (`possiblySameAs`, step 12.1), never a merge. Merging and splitting records as acts of the editors with a
+  trail belong to the tool (phase 13).
+* A rename is a `former` name with its time, of one entity (DOM-009).
+
+Verification: `EntityNamesTests` (9 tests) and `RealWorldPagesTests` (the page in English and Persian, the
+search by another name). Test data only; not looked at in a browser.

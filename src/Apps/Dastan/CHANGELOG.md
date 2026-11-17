@@ -124,3 +124,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A relation of the world outside a story can say when it held – from when to when somebody belonged to a court
   or played for a club. The time stands beside the relation and on the timeline; somebody who came back is
   shown with two separate spans, never one.
+- An entity can have other names – earlier names with the time they were used, titles, short forms, its name
+  in its own script – and the identifiers other catalogues give it. Its page lists them and the search finds
+  it by any of them.

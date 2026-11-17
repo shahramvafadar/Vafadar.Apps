@@ -1011,4 +1011,34 @@
   <data name="Type_concept" xml:space="preserve">
     <value>Concept</value>
   </data>
+  <data name="Names_Title" xml:space="preserve">
+    <value>Other names</value>
+  </data>
+  <data name="NameKind_Alternative" xml:space="preserve">
+    <value>also known as</value>
+  </data>
+  <data name="NameKind_Former" xml:space="preserve">
+    <value>earlier name</value>
+  </data>
+  <data name="NameKind_Abbreviation" xml:space="preserve">
+    <value>short form</value>
+  </data>
+  <data name="NameKind_Title" xml:space="preserve">
+    <value>title</value>
+  </data>
+  <data name="NameKind_OriginalScript" xml:space="preserve">
+    <value>in its own script</value>
+  </data>
+  <data name="Identifiers_Title" xml:space="preserve">
+    <value>In other catalogues</value>
+  </data>
+  <data name="Identifiers_Note" xml:space="preserve">
+    <value>A link leaves Dastan. What another catalogue states is its own.</value>
+  </data>
+  <data name="IdentifierMatch_Close" xml:space="preserve">
+    <value>a record about nearly the same</value>
+  </data>
+  <data name="IdentifierMatch_Uncertain" xml:space="preserve">
+    <value>not established that it is the same</value>
+  </data>
 </root>

@@ -239,6 +239,27 @@ public sealed class Catalogue
                         problems.Add($"{dated.Key}: a statement about {entity.Id} cannot be shown before {entity.Id} itself.");
                     }
                 }
+
+                foreach (var name in entity.Names)
+                {
+                    var named = $"{entity.Id.Value}, the name {name.Name}";
+                    CheckSources(named, name.Sources, name.Level, required: false);
+                    CheckStage(named, name.Level);
+                    if (!entity.Level.IsWithin(name.Level))
+                    {
+                        problems.Add($"{named}: a name of {entity.Id} cannot be shown before {entity.Id} itself.");
+                    }
+                }
+
+                foreach (var twice in entity.Names.GroupBy(name => (name.Name, name.Language)).Where(names => names.Count() > 1))
+                {
+                    problems.Add($"{entity.Id.Value}: the name {twice.Key.Name} is given twice in {twice.Key.Language}.");
+                }
+
+                foreach (var twice in entity.Identifiers.GroupBy(identifier => (identifier.Issuer, identifier.Value)).Where(identifiers => identifiers.Count() > 1))
+                {
+                    problems.Add($"{entity.Id.Value}: the identifier {twice.Key.Value} of {twice.Key.Issuer} is given twice.");
+                }
             }
 
             foreach (var relation in catalogue.Relations)
@@ -553,11 +574,15 @@ public sealed class Catalogue
             }
         }
 
-        private void CheckSources(string name, ImmutableArray<SourceId> sources, ReadingLevel level)
+        private void CheckSources(string name, ImmutableArray<SourceId> sources, ReadingLevel level, bool required = true)
         {
             if (sources.IsDefaultOrEmpty)
             {
-                problems.Add($"{name}: no source supports the record.");
+                if (required)
+                {
+                    problems.Add($"{name}: no source supports the record.");
+                }
+
                 return;
             }
 

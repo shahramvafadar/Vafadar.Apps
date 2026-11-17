@@ -155,6 +155,32 @@ event, a media item that depicts it). The `revision` command leaves it out of th
 statement was in the revision before, the history names it as `withdrawn` with the reason. A published revision
 that holds a withdrawn statement is refused.
 
+### Other names and identifiers of an entity
+
+`names` – optional – lists what else the entity is called. The search finds the entity by each of them, and
+its page lists them. A name that two entities share joins nothing: they stay two entities.
+
+| Field | Meaning |
+|---|---|
+| `name` | The name as it is written |
+| `language` | The language of the name as a language tag: `en`, `fa`, `ar` |
+| `kind` | `alternative` (also known as), `former` (a name it had before), `abbreviation`, `title` (a title or an epithet), `original_script` (the name in the script it was first written in) |
+| `time` | Optional: when the name was used, written like the `time` of a statement with a date |
+| `sourceIds` | Optional: the sources of the name |
+| `spoilerLevel` | Optional: the stage from which the name may be shown, when the name itself gives something away; without it the name is shown with its entity |
+
+`identifiers` – optional – lists what the entity is called in the catalogues of others. Naming an identifier
+does not take over what that catalogue states.
+
+| Field | Meaning |
+|---|---|
+| `issuer` | Who issued the identifier: the name of the catalogue |
+| `value` | The identifier |
+| `url` | Optional: the address of the record there, `https` |
+| `match` | `exact` (the record is about this entity), `close` (about nearly the same), `uncertain` (not established) |
+
+A new name of the same thing is a `former` name of one entity, not a second entity and not a relation.
+
 ### The types of entities
 
 | `type` | What it is | Kind of thing |
