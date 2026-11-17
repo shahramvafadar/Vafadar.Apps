@@ -1,0 +1,23 @@
+@* What came of an act: that it was done – said on the page the editor is sent back to – or why it was not, with
+   every reason the readers of the site gave. An act that was refused changed nothing, and the form keeps what
+   was filled in. *@
+@inject IStringLocalizer<Ui> T
+
+@if (Problems is { Count: > 0 })
+{
+    <div class="problems" role="alert">
+        <p><strong>@T["Act_Refused"]</strong></p>
+        <ul>
+            @foreach (var problem in Problems)
+            {
+                <li><bdi>@problem</bdi></li>
+            }
+        </ul>
+    </div>
+}
+
+@code {
+    /// <summary>Gets or sets why the act was not done.</summary>
+    [Parameter]
+    public IReadOnlyList<string>? Problems { get; set; }
+}

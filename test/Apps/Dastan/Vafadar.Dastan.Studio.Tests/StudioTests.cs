@@ -73,6 +73,9 @@ public sealed class Studio : WebApplicationFactory<Program>
 /// <summary>A page of the tool as it was answered.</summary>
 public sealed partial record StudioPage(HttpStatusCode Status, string Html, IReadOnlyDictionary<string, string> Headers)
 {
+    /// <summary>Gets the address an act led back to, when the page was reached that way.</summary>
+    public string? Arrived { get; init; }
+
     /// <summary>Gets the text of the page: the markup of its main part without the tags, with single spaces.</summary>
     public string Text => Spaces().Replace(WebUtility.HtmlDecode(Tags().Replace(Main, " ")), " ").Trim();
 
@@ -266,16 +269,23 @@ public sealed class StudioTests(Studio studio) : IClassFixture<Studio>
     }
 
     [Theory]
-    [InlineData("/en/")]
-    [InlineData($"/en/{Collection}")]
-    [InlineData($"/en/{Collection}/waiting")]
-    [InlineData($"/en/{Collection}/record/relations/relation-02")]
-    public async Task The_tool_only_shows_the_store_no_page_has_a_form_that_changes_it(string address)
+    [InlineData("/en/", new string[0])]
+    [InlineData($"/en/{Collection}", new string[0])]
+    [InlineData($"/en/{Collection}/waiting", new string[0])]
+    [InlineData($"/en/{Collection}/history", new string[0])]
+    [InlineData($"/en/{Collection}/records/relations", new[] { "add" })]
+    [InlineData($"/en/{Collection}/record/relations/relation-02", new[] { "review", "change", "remove" })]
+    [InlineData($"/en/{Collection}/record/entities/character-rostam", new[] { "change", "remove" })]
+    [InlineData($"/en/{Collection}/record/relations/relation-18", new string[0])]
+    [InlineData($"/en/{Collection}/revisions", new[] { "publish" })]
+    public async Task A_page_has_the_forms_of_what_can_be_done_there_and_no_other(string address, string[] forms)
     {
         var page = await studio.Get(address);
 
-        // The one form of a page is the choice of its appearance.
-        Assert.Equal(["/preferences/theme"], Regex.Matches(page.Html, "<form[^>]*action=\"([^\"]*)\"").Select(match => match.Groups[1].Value));
+        // Every form that changes the store names what it does and carries the token of the tool.
+        Assert.Equal(forms, Regex.Matches(page.Html, "name=\"_handler\" value=\"([^\"]*)\"").Select(match => match.Groups[1].Value));
+        Assert.Equal(forms.Length + 1, Regex.Matches(page.Html, "<form ").Count);
+        Assert.Equal(forms.Length + 1, Regex.Matches(page.Html, "name=\"__RequestVerificationToken\"").Count);
     }
 
     [Fact]

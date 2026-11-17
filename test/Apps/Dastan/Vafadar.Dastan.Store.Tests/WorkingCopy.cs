@@ -60,7 +60,14 @@ internal sealed class WorkingCopy : IDisposable
     public static JsonObject Stored(EditorialStore store, string group, string id) =>
         Record(JsonNode.Parse(store.Export(Collection)!.Json)!.AsObject(), group, id);
 
-    public void Dispose() => Directory.Delete(_folder, recursive: true);
+    public void Dispose()
+    {
+        // A copy is thrown away once, however often its owner is.
+        if (Directory.Exists(_folder))
+        {
+            Directory.Delete(_folder, recursive: true);
+        }
+    }
 
     private static string RepositoryRoot()
     {

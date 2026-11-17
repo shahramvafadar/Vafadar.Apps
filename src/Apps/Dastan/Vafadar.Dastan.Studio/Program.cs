@@ -16,6 +16,7 @@ builder.Services.AddSiteLanguages("en", "fa");
 builder.Services.Configure<SiteLanguageOptions>(options => options.UnlocalizedPaths.Add("/preferences"));
 
 builder.Services.Configure<StudioOptions>(builder.Configuration.GetSection("Studio"));
+builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<StudioStore>();
 
 // The store is opened for a request and closed with it: its database is one file, and nothing is held between

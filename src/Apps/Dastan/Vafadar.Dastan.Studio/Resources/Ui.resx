@@ -40,7 +40,7 @@
     <value>Dark</value>
   </data>
   <data name="Local_Notice" xml:space="preserve">
-    <value>The tool of the editors. It answers this machine only and shows what is not published.</value>
+    <value>The tool of the editors. It answers this machine only, shows what is not published and changes the store.</value>
   </data>
   <data name="Home_Title" xml:space="preserve">
     <value>Collections</value>
@@ -242,5 +242,143 @@
   </data>
   <data name="Error_Text" xml:space="preserve">
     <value>The page could not be shown. Nothing was changed. What failed is in the log of the tool.</value>
+  </data>
+  <data name="Act_By" xml:space="preserve">
+    <value>Your name</value>
+  </data>
+  <data name="Act_ByHint" xml:space="preserve">
+    <value>Kept with the change. The tool does not check who you are.</value>
+  </data>
+  <data name="Act_Reason" xml:space="preserve">
+    <value>Why</value>
+  </data>
+  <data name="Act_NeedsName" xml:space="preserve">
+    <value>Say who you are.</value>
+  </data>
+  <data name="Act_NeedsReason" xml:space="preserve">
+    <value>Say why.</value>
+  </data>
+  <data name="Act_NeedsDay" xml:space="preserve">
+    <value>Give the day as a date.</value>
+  </data>
+  <data name="Act_Refused" xml:space="preserve">
+    <value>Not done. Nothing was changed.</value>
+  </data>
+  <data name="Review_Title" xml:space="preserve">
+    <value>Record a review</value>
+  </data>
+  <data name="Review_Lead" xml:space="preserve">
+    <value>Who reviewed the statement, on which day and what the review found is kept in the statement and in its history.</value>
+  </data>
+  <data name="Review_Statement" xml:space="preserve">
+    <value>Statement</value>
+  </data>
+  <data name="Review_Found" xml:space="preserve">
+    <value>What the review found</value>
+  </data>
+  <data name="Review_As_reviewed" xml:space="preserve">
+    <value>Reviewed: read against its sources, it stands</value>
+  </data>
+  <data name="Review_As_disputed" xml:space="preserve">
+    <value>Disputed: the sources disagree – the note says about what</value>
+  </data>
+  <data name="Review_As_withdrawn" xml:space="preserve">
+    <value>Withdrawn: the statement is taken back – the note says why</value>
+  </data>
+  <data name="Review_On" xml:space="preserve">
+    <value>Day of the review</value>
+  </data>
+  <data name="Review_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Review_NoteHint" xml:space="preserve">
+    <value>What the statement was checked against; what is disputed; why it is withdrawn.</value>
+  </data>
+  <data name="Review_Submit" xml:space="preserve">
+    <value>Record the review</value>
+  </data>
+  <data name="Review_NeedsChoice" xml:space="preserve">
+    <value>Choose what the review found.</value>
+  </data>
+  <data name="Review_NeedsStatement" xml:space="preserve">
+    <value>Choose the statement of this record that was reviewed.</value>
+  </data>
+  <data name="Change_Title" xml:space="preserve">
+    <value>Change the record</value>
+  </data>
+  <data name="Change_Lead" xml:space="preserve">
+    <value>The record as it is written in the file of a collection. The whole collection is read with the change before it is kept; what the site could not use is refused with the reasons.</value>
+  </data>
+  <data name="Change_Json" xml:space="preserve">
+    <value>The record</value>
+  </data>
+  <data name="Change_Submit" xml:space="preserve">
+    <value>Keep the change</value>
+  </data>
+  <data name="Change_NotJson" xml:space="preserve">
+    <value>The text is not a record: {0}</value>
+  </data>
+  <data name="Change_NotAnObject" xml:space="preserve">
+    <value>it has to be one object in braces.</value>
+  </data>
+  <data name="Change_OtherId" xml:space="preserve">
+    <value>A record keeps its id ({0}). A record with another id is a new record – add it on the page of its group.</value>
+  </data>
+  <data name="Remove_Title" xml:space="preserve">
+    <value>Take the record out</value>
+  </data>
+  <data name="Remove_Lead" xml:space="preserve">
+    <value>With the texts that translate it. What still points to the record stops this. Its history stays.</value>
+  </data>
+  <data name="Remove_Submit" xml:space="preserve">
+    <value>Take the record out</value>
+  </data>
+  <data name="Add_Title" xml:space="preserve">
+    <value>Add a record</value>
+  </data>
+  <data name="Add_Lead" xml:space="preserve">
+    <value>A new record of this group, as it is written in the file of a collection. It is added at the end of the group.</value>
+  </data>
+  <data name="Add_Submit" xml:space="preserve">
+    <value>Add the record</value>
+  </data>
+  <data name="Add_Exists" xml:space="preserve">
+    <value>A record {0} is there already; change it on its page.</value>
+  </data>
+  <data name="Add_NeedsId" xml:space="preserve">
+    <value>A record names itself: it has an id.</value>
+  </data>
+  <data name="Publish_Title" xml:space="preserve">
+    <value>Publish the next revision</value>
+  </data>
+  <data name="Publish_Lead" xml:space="preserve">
+    <value>This makes revision {0} out of what the store holds. Every statement has to be reviewed. The store keeps the revision as it is published; the command “store revision” writes it out for a site.</value>
+  </data>
+  <data name="Publish_On" xml:space="preserve">
+    <value>Day of publication</value>
+  </data>
+  <data name="Publish_Note" xml:space="preserve">
+    <value>Note about the revision</value>
+  </data>
+  <data name="Publish_Submit" xml:space="preserve">
+    <value>Publish revision {0}</value>
+  </data>
+  <data name="Done_reviewed" xml:space="preserve">
+    <value>The review was recorded.</value>
+  </data>
+  <data name="Done_changed" xml:space="preserve">
+    <value>The change was kept.</value>
+  </data>
+  <data name="Done_unchanged" xml:space="preserve">
+    <value>Nothing had to be changed.</value>
+  </data>
+  <data name="Done_removed" xml:space="preserve">
+    <value>The record was taken out.</value>
+  </data>
+  <data name="Done_added" xml:space="preserve">
+    <value>The record was added.</value>
+  </data>
+  <data name="Done_published" xml:space="preserve">
+    <value>The revision was published and is kept in the store.</value>
   </data>
 </root>

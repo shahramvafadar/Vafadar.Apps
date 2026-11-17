@@ -18,6 +18,11 @@
         <p class="lead"><bdi dir="ltr">@Record</bdi></p>
     </header>
 
+    @if (Done is "reviewed" or "changed" or "unchanged" or "removed" or "added")
+    {
+        <p class="done" role="status">@T[$"Done_{Done}"]</p>
+    }
+
     @if (_record is { } record)
     {
         <section aria-labelledby="now">
@@ -30,6 +35,78 @@
                 }
             </p>
             <JsonView Node="record.Body" />
+        </section>
+
+        @if (_statements.Count > 0)
+        {
+            <section aria-labelledby="review">
+                <h2 id="review">@T["Review_Title"]</h2>
+                <p class="note">@T["Review_Lead"]</p>
+                <ActOutcome Problems="_reviewProblems" />
+                <form method="post" @formname="review" @onsubmit="Review" class="act" action="@Here">
+                    <AntiforgeryToken />
+                    @if (_statements.Count == 1)
+                    {
+                        <input type="hidden" name="Reviewing.Statement" value="@_statements[0].Statement" />
+                    }
+                    else
+                    {
+                        <p class="field">
+                            <label for="review-statement">@T["Review_Statement"]</label>
+                            <select id="review-statement" name="Reviewing.Statement">
+                                @foreach (var statement in _statements)
+                                {
+                                    <option value="@statement.Statement" selected="@(statement.Statement == Reviewing?.Statement)">@statement.Label (@statement.Statement)</option>
+                                }
+                            </select>
+                        </p>
+                    }
+                    <fieldset class="field">
+                        <legend>@T["Review_Found"]</legend>
+                        @foreach (var choice in new[] { "reviewed", "disputed", "withdrawn" })
+                        {
+                            <label class="choice"><input type="radio" name="Reviewing.As" value="@choice" checked="@(Reviewing?.As == choice)" required /> @T[$"Review_As_{choice}"]</label>
+                        }
+                    </fieldset>
+                    <p class="field">
+                        <label for="review-on">@T["Review_On"]</label>
+                        <input id="review-on" type="date" name="Reviewing.On" value="@(Reviewing?.On ?? ActInput.Day(Editor.Today))" required />
+                    </p>
+                    <p class="field">
+                        <label for="review-note">@T["Review_Note"]</label>
+                        <textarea id="review-note" name="Reviewing.Note" rows="3" maxlength="2000" dir="auto" aria-describedby="review-note-hint">@Reviewing?.Note</textarea>
+                        <span class="hint" id="review-note-hint">@T["Review_NoteHint"]</span>
+                    </p>
+                    <WhoAndWhy Form="review" Model="Reviewing" By="@(Reviewing?.By ?? Editor.Name)" />
+                    <p><button type="submit" class="action">@T["Review_Submit"]</button></p>
+                </form>
+            </section>
+        }
+
+        <section aria-labelledby="change">
+            <h2 id="change">@T["Change_Title"]</h2>
+            <p class="note">@T["Change_Lead"]</p>
+            <ActOutcome Problems="_changeProblems" />
+            <form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
+                <AntiforgeryToken />
+                <p class="field">
+                    <label for="change-json">@T["Change_Json"]</label>
+                    <textarea id="change-json" class="code" name="Changing.Json" rows="@Rows(Changing?.Json ?? Written(record.Body))" spellcheck="false" dir="ltr" required>@(Changing?.Json ?? Written(record.Body))</textarea>
+                </p>
+                <WhoAndWhy Form="change" Model="Changing" By="@(Changing?.By ?? Editor.Name)" Reason="@(Changing?.Reason ?? string.Empty)" />
+                <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
+            </form>
+        </section>
+
+        <section aria-labelledby="remove">
+            <h2 id="remove">@T["Remove_Title"]</h2>
+            <p class="note">@T["Remove_Lead"]</p>
+            <ActOutcome Problems="_removeProblems" />
+            <form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
+                <AntiforgeryToken />
+                <WhoAndWhy Form="remove" Model="Removing" By="@(Removing?.By ?? Editor.Name)" Reason="@(Removing?.Reason ?? string.Empty)" />
+                <p><button type="submit" class="action danger">@T["Remove_Submit"]</button></p>
+            </form>
         </section>
     }
     else
@@ -50,8 +127,17 @@
 }
 
 @code {
+    private static readonly System.Text.Json.JsonSerializerOptions Indented = new() { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+
     private RecordView? _record;
     private List<RecordChange> _history = [];
+    private List<StatementState> _statements = [];
+    private List<string>? _reviewProblems;
+    private List<string>? _changeProblems;
+    private List<string>? _removeProblems;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
 
     /// <summary>Gets or sets the identifier of the collection in the address.</summary>
     [Parameter]
@@ -65,6 +151,25 @@
     [Parameter]
     public string Record { get; set; } = string.Empty;
 
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets what the form of a review was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "review")]
+    public ReviewInput? Reviewing { get; set; }
+
+    /// <summary>Gets or sets what the form of a change was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "change")]
+    public ChangeInput? Changing { get; set; }
+
+    /// <summary>Gets or sets what the form for taking the record out was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "remove")]
+    public RemoveInput? Removing { get; set; }
+
+    // The address of the page, to which its forms are sent and to which an act leads back.
+    private string Here => $"{Collection}/record/{Group}/{Record}";
+
     protected override void OnInitialized()
     {
         // The newest change first. A record that never was in the store has no history and no page.
@@ -76,5 +181,142 @@
         }
 
         _record = Store.Record(Collection, Group, Record);
+
+        // The statements of the record: itself when it is a relation or an event, its dated statements when it is an entity.
+        _statements = [.. Store.Statements(Collection).Where(statement => statement.Group == Group && statement.Record == Record)];
     }
+
+    private void Review()
+    {
+        var input = Reviewing ?? new ReviewInput();
+        var problems = new List<string>();
+        var by = Name(input.By, problems);
+        var day = ActInput.Day(input.On);
+        if (day is null)
+        {
+            problems.Add(T["Act_NeedsDay"]);
+        }
+
+        var known = Enum.TryParse<ReviewAct>(input.As, ignoreCase: true, out var act) && input.As!.All(char.IsLetter);
+        if (!known)
+        {
+            problems.Add(T["Review_NeedsChoice"]);
+        }
+
+        if (!_statements.Any(statement => statement.Statement == input.Statement))
+        {
+            problems.Add(T["Review_NeedsStatement"]);
+        }
+
+        if (problems.Count == 0)
+        {
+            var result = Store.Review(Collection, input.Statement!, act, by!, day!.Value, input.Note);
+            if (Finished(result, by!, result.Changed == 0 ? "unchanged" : "reviewed"))
+            {
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _reviewProblems = problems;
+    }
+
+    private void Change()
+    {
+        var input = Changing ?? new ChangeInput();
+        var problems = new List<string>();
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        JsonObject? record = null;
+        try
+        {
+            record = JsonNode.Parse(input.Json ?? string.Empty) as JsonObject;
+            if (record is null)
+            {
+                problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_NotJson"], T["Change_NotAnObject"]));
+            }
+            else if ((record["id"] as JsonValue)?.TryGetValue<string>(out var id) != true || id != Record)
+            {
+                problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_OtherId"], Record));
+            }
+        }
+        catch (System.Text.Json.JsonException refused)
+        {
+            problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_NotJson"], refused.Message));
+        }
+
+        if (problems.Count == 0)
+        {
+            var result = Store.Put(Collection, Group, record!, by!, reason!);
+            if (Finished(result, by!, result.Changed == 0 ? "unchanged" : "changed"))
+            {
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _changeProblems = problems;
+    }
+
+    private void Remove()
+    {
+        var input = Removing ?? new RemoveInput();
+        var problems = new List<string>();
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        if (problems.Count == 0)
+        {
+            var result = Store.Remove(Collection, Record, by!, reason!);
+            if (Finished(result, by!, "removed"))
+            {
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _removeProblems = problems;
+    }
+
+    private string? Name(string? given, List<string> problems)
+    {
+        var name = ActInput.Text(given);
+        if (name is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        return name;
+    }
+
+    private string? Reason(string? given, List<string> problems)
+    {
+        var reason = ActInput.Text(given);
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        return reason;
+    }
+
+    // An act that was done leads back to the page, which then shows the record as it is now and says what was
+    // done; loading the page again does not do the act again.
+    private bool Finished(ActResult result, string by, string done)
+    {
+        if (!result.Done)
+        {
+            return false;
+        }
+
+        EditorName.Keep(Context, by);
+        Navigation.NavigateTo($"{Here}?done={done}");
+        return true;
+    }
+
+    private static string Written(JsonObject record) => record.ToJsonString(Indented);
+
+    private static int Rows(string text) => Math.Clamp(text.Count(character => character == '\n') + 2, 8, 40);
 }

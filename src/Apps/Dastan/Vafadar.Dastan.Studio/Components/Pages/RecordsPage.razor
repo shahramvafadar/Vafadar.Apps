@@ -16,11 +16,34 @@
     </header>
 
     <RecordList Collection="@Collection" Records="_records" />
+
+    <section aria-labelledby="add">
+        <h2 id="add">@T["Add_Title"]</h2>
+        <p class="note">@T["Add_Lead"]</p>
+        <ActOutcome Problems="_problems" />
+        <form method="post" @formname="add" @onsubmit="Add" class="act" action="@($"{Collection}/records/{Group}")">
+            <AntiforgeryToken />
+            <p class="field">
+                <label for="add-json">@T["Change_Json"]</label>
+                <textarea id="add-json" class="code" name="Adding.Json" rows="12" spellcheck="false" dir="ltr" required>@Adding?.Json</textarea>
+            </p>
+            <WhoAndWhy Form="add" Model="Adding" By="@(Adding?.By ?? Editor.Name)" Reason="@(Adding?.Reason ?? string.Empty)" />
+            <p><button type="submit" class="action">@T["Add_Submit"]</button></p>
+        </form>
+    </section>
 }
 
 @code {
     private bool _known;
     private List<RecordInfo> _records = [];
+    private List<string>? _problems;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets what the form of a new record was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "add")]
+    public ChangeInput? Adding { get; set; }
 
     /// <summary>Gets or sets the identifier of the collection in the address.</summary>
     [Parameter]
@@ -40,5 +63,61 @@
         }
 
         _records = [.. Store.Records(Collection, Group)];
+    }
+
+    private void Add()
+    {
+        var input = Adding ?? new ChangeInput();
+        var problems = new List<string>();
+        var by = ActInput.Text(input.By);
+        var reason = ActInput.Text(input.Reason);
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        if (reason is null)
+        {
+            problems.Add(T["Act_NeedsReason"]);
+        }
+
+        JsonObject? record = null;
+        string? id = null;
+        try
+        {
+            record = JsonNode.Parse(input.Json ?? string.Empty) as JsonObject;
+            if (record is null)
+            {
+                problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_NotJson"], T["Change_NotAnObject"]));
+            }
+            else if ((record["id"] as JsonValue)?.TryGetValue(out id) != true || string.IsNullOrWhiteSpace(id))
+            {
+                problems.Add(T["Add_NeedsId"]);
+            }
+            else if (_records.Any(existing => existing.Id == id))
+            {
+                // Adding never replaces: a record that is there is changed on its own page, where its history is.
+                problems.Add(string.Format(CultureInfo.CurrentCulture, T["Add_Exists"], id));
+            }
+        }
+        catch (System.Text.Json.JsonException refused)
+        {
+            problems.Add(string.Format(CultureInfo.CurrentCulture, T["Change_NotJson"], refused.Message));
+        }
+
+        if (problems.Count == 0)
+        {
+            var result = Store.Put(Collection, Group, record!, by!, reason!);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Collection}/record/{Group}/{id}?done=added");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _problems = problems;
     }
 }

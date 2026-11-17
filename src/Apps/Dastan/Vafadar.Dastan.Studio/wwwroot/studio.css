@@ -433,3 +433,102 @@ h3 {
 .diff td {
   min-inline-size: 12rem;
 }
+
+/* The forms of an act: one field below the other, each as wide as the page allows. */
+.act {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
+}
+
+.field label,
+.field legend {
+  font-weight: 600;
+}
+
+.field .choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+  font-weight: 400;
+}
+
+.field input:not([type="radio"]),
+.field select,
+.field textarea {
+  inline-size: 100%;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.field input[type="radio"] {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+.field .code {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre;
+  overflow: auto;
+}
+
+.hint {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+button.action {
+  border: 0;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Taking a record out is said by the words of the button; the border sets it apart from the other acts. */
+.action.danger {
+  background: transparent;
+  color: var(--text);
+  border: 2px dashed var(--mark);
+}
+
+/* What came of an act. */
+.problems,
+.done {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.problems {
+  border: 2px solid var(--mark);
+}
+
+.problems ul {
+  margin: var(--space-2) 0 0;
+  padding-inline-start: var(--space-6);
+}
+
+.done {
+  border: 2px solid var(--accent);
+  font-weight: 600;
+}

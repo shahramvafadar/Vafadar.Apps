@@ -220,5 +220,6 @@ Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "n
 | Editors change a record and record a review in the store without a file in between; what the site could not use is refused and changes nothing | **Implemented and checked** | `EditorialActsTests` |
 | Editors publish from the store: the next revision by the rule of ADR 0009, kept as it was published, read by a public site from its content folder | **Implemented and checked** | `EditorialPublishingTests` |
 | Editors see in a browser what the store holds: records, what waits, the history of every change, the revisions | **Implemented and checked** | `StudioTests`; measured in a browser at phone width in both languages |
-| Editors act in the tool – review, change, publish | **Not done** | Steps 11.5 and 11.6; the commands do it today |
+| Editors act in the tool: review, change a record as text, take out, add, publish – done says so, refused says why and changes nothing | **Implemented and checked** | `StudioActsTests`; the forms measured in a browser at phone width |
+| Editors change the parts of a record in forms instead of as text | **Not done** | Step 11.6 |
 | The store knows who an editor is | **Not done** | Step 11.7, the owner's decision |

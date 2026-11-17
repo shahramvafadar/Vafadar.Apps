@@ -164,3 +164,43 @@ no page kept, indexed or with a script or an inline style; no form but the choic
 from another address is refused; the tool does not start without its store. In a browser, on a published build
 at the width of a phone, English and Persian: no page scrolls sideways – a table wider than the page scrolls in
 its frame –, every link and button is at least 44 px high. Measured, not seen: no picture could be taken.
+
+## Addendum of 2026-11-17 – the tool of the editors, to work (step 11.5)
+
+The tool now acts as well as shows. Every act of the store has a form on the page of what it acts on:
+
+| Where | Form | Act of the store |
+|---|---|---|
+| The page of a record that is or holds a statement | Record a review: what it found, the day, a note | `Review` |
+| The page of a record | Change the record, as the text it is written as | `Put` |
+| The page of a record | Take the record out | `Remove` |
+| The page of a group | Add a record – never in place of one that is there | `Put` |
+| The page of the revisions | Publish the next revision | `Publish` |
+
+* **A form is an ordinary form** sent to the address of its page, with the token of the tool; there is no script.
+  An act that was done leads back to the page (a redirect), which shows the record as it is now and says what was
+  done – so loading the page again does not do the act again. An act that was refused answers with the page
+  itself: "Not done. Nothing was changed.", every reason in the words of the readers, and the form as it was
+  filled in.
+* **Every act asks who and – except a review, whose note is the reason – why.** The name is what the editor says
+  it is; the tool keeps the last one in a cookie to start the next form with, and says on the form that it does
+  not check it. This is a convenience, not an identity (step 11.7).
+* **A record is changed as text**, the JSON it is written as. It is the one editor that can change every field of
+  every kind of record today; forms for the parts of a record are step 11.6. The identifier of a record cannot be
+  changed there: a record with another identifier is a new record.
+* **The tool adds nothing to the rules.** It checks only what a form needs to be understood – a name, a reason, a
+  day, a text that is a record – and hands the rest to the store, which tries the act on the whole collection.
+* **Guards.** The forms are reachable from the machine of the tool only; a form without the token of the tool is
+  refused; what a page says was done is one of the things that can be done there, never a text from the address.
+
+Not done: writing a published revision out to a folder from the tool (the command `store revision` does it);
+changing a translation in the tool (`store import` does it); undoing an act other than by another act.
+
+Verification: `StudioActsTests` (19 tests), each with a store of its own and a browser with cookies that fills
+in a form of a page and sends it with its token: a review recorded and refused; a change kept, unchanged and
+refused, with the text staying in the form; taking out and what stops it; adding and never replacing; publishing
+refused until every statement is reviewed, then kept; a forged form; a forged "done". `StudioTests`: every page
+has the forms of what can be done there and no other. In a browser, on a published build at phone width in
+Persian: the page of a record with its three forms does not scroll sideways, every field has a label and every
+control is at least 44 px high. A form could not be sent from the browser of this session (its window does not
+draw); sending is covered by the tests above.

@@ -240,8 +240,9 @@ dotnet run --project $content -- store revision <datasetId> 1 --store $store --o
 * With `--files` the store looks for the files of media from the folder of the collections; without it, a missing
   file is found when the collection is written out and checked.
 * What the store holds can be looked at in a browser with the tool of the editors (`Vafadar.Dastan.Studio`, see
-  the README of the app): the records, what waits for a review, and the history of every record. It shows; the
-  commands above act.
+  the README of the app): the records, what waits for a review, and the history of every record. It also acts: a review,
+  a change of a record, taking one out, adding one and publishing a revision are forms on its pages, with the
+  same refusals as the commands.
 * The first import brings everything in. Afterwards a record that reads differently is a change with the record
   before and after; a record the file no longer has is taken out, and its history stays.
 * A file the site cannot use is refused and changes nothing; so is a published revision – the store holds the
