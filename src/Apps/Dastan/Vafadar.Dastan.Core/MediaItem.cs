@@ -118,6 +118,12 @@ public sealed class MediaItem
     /// </summary>
     public required bool DemoRenderAllowed { get; init; }
 
+    /// <summary>
+    /// Gets whether the editors allow the item to be shown to everybody, in a published revision. It is a decision
+    /// of its own: an item that is shown in a demonstration is not thereby one that may be published.
+    /// </summary>
+    public bool PublicRenderAllowed { get; init; }
+
     /// <summary>Gets the editors' reason for <see cref="DemoRenderAllowed"/>.</summary>
     public string? DemoRenderReason { get; init; }
 

@@ -867,4 +867,7 @@
   <data name="Timeline_Link" xml:space="preserve">
     <value>در گذر زمان</value>
   </data>
+  <data name="Published_Notice" xml:space="preserve">
+    <value>نسخهٔ منتشرشدهٔ {0}، به تاریخ {1}. هر اصلاح، نسخه‌ای تازه است.</value>
+  </data>
 </root>

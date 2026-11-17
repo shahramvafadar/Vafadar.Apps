@@ -19,8 +19,9 @@ The guide says how to work. What every field means is in the two format pages:
    read for that statement. What you cannot support, leave out and name it in your hand-over note.
 2. **You do not review and you do not release.** New statements are written as *not yet reviewed*
    (`source_backed_editorial_review_pending` in a collection, `proposed` or `sourcedReviewPending` in a comparison;
-   a translation is a `draft`). `publicReleaseApproved` stays `false`. Reviewing and releasing are decisions of the
-   editors; a file that claims them is refused or taken back.
+   a translation is a `draft`). `publicReleaseApproved` stays `false` and the file stays an `editorial_sample`.
+   Reviewing a statement, publishing a revision and allowing an image for the public are decisions of the editors
+   ([ADR 0009](adr/0009-published-revision.md)); a file that claims them is refused or taken back.
 3. **Never more exact than the source.** A year that is "about" stays about, a time between two years stays
    between two years, a story that tells an order gets no dates. The formats have a place for each of these.
 4. **Nothing that gives a story away early.** Every record of a collection has a reading stage. A record, its

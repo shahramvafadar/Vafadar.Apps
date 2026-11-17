@@ -259,7 +259,7 @@ work of its own; the order is not a plan.
 |---|---|
 | Content is reviewed | The sample is a draft: its statements are "sourced, review pending", the Persian text is an unreviewed draft (D-037), and the collection is not approved for publication – which is why the public site shows nothing. A review, and a way to record a correction and a new revision |
 | Media may be shown | The model knows whether an item may be shown in a demonstration, not whether it may be published. The museum images are references only: rights and delivery are open, and so is how a reference without a picture is shown |
-| The public is an audience of the projection | Today "public" means "nothing". The projection needs the rule for a published collection before any page is public |
+| The public is an audience of the projection | **Done** (2026-11-17, D-044): only a published revision is public – numbered, with nothing but reviewed statements, reviewed texts and media allowed for the public ([ADR 0009](adr/0009-published-revision.md)). No collection is published: that needs the review of the content and the decisions on its media |
 | Devices | No phone was used. Installing was not observed in any browser. Android, iOS and Windows each need their own check |
 | Accessibility with people | A tool found no broken rule. Nobody has used the site with a screen reader, and no visitor has been watched using it |
 | Identity | Palette, wordmark, icons and the Latin font are provisional (ADR 0004); the Persian spelling of the name is open |

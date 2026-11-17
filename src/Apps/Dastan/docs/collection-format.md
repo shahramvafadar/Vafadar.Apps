@@ -27,9 +27,23 @@ the Gregorian calendar (D-043). An address is an `https` address without a user 
 | `documentVersion`, `preparedAt`, `status`, `reviewNotes` | Optional notes of the editors about the state of the file; kept in the file, not shown |
 | `editionContext` | The text the collection follows – see below |
 | `spoilerPolicy` | The reading stages – see below |
-| `publication` | `state`: `editorial_sample`. `localDemoAllowed`: whether a local demonstration may show the collection. `publicReleaseApproved`: `false` – an editorial sample cannot be approved for everybody. Optional `note` |
+| `publication` | What may be done with the file – see below |
 | `inputContract` | `rawDatasetPubliclyServable` and `reviewerFilesPubliclyServable`, both `false`: the file and the documents of reviewers are never served. Optional notes for whoever builds a reader: `datasetIdentityNote`, `narrativeContext`, `eventAssociations`, `publicationAndSpoilers`, `mediaEligibility`, `sourceLinks`, `reviewerProvenance` |
 | `sources`, `entities`, `relations`, `events`, `media` | The records, as lists. `media` may be empty |
+
+### `publication`
+
+| Field | Meaning |
+|---|---|
+| `state` | `editorial_sample` – the working file of the editors – or `published_revision` |
+| `localDemoAllowed` | Whether a local demonstration may show the collection |
+| `publicReleaseApproved` | Whether everybody may see the collection. An editorial sample cannot be approved; only a published revision can |
+| `revision` | Only in a published revision, and required there: `number` (from 1) and `publishedAt` (a day); optional `note`. A correction is published as the next number |
+| `note` | Optional |
+
+A published revision that is approved holds only reviewed statements: every relation, every event and every dated
+statement has the review status `reviewed` or `disputed`. The rule and its reasons are in
+[ADR 0009](adr/0009-published-revision.md). Reviewing and publishing are decisions of the editors, not of a writer.
 
 ### `editionContext`
 
@@ -108,7 +122,7 @@ manuscript was made, when a place was founded. The collection shows these statem
 | `label` | The relation in words, read from the first entity: "Father of" |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage at which the relation is told – not earlier than both entities |
-| `reviewStatus` | `source_backed_editorial_review_pending` |
+| `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed` |
 | `passageLocator` | Optional |
 | `scope` | What the relation is a statement about – see below |
 
@@ -130,7 +144,7 @@ empty; optional `interpretation`; `calendarPeriod` is `null` or left out. A fami
 | `entityAssociations` | Who and what has to do with the step, at least one – see below |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage |
-| `reviewStatus` | `source_backed_editorial_review_pending` |
+| `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed` |
 | `grouping` | Optional: `editorial_beat_may_condense_multiple_scenes`, when the step stands for several scenes |
 
 An association has `entityId`, `role` (in words: "traveler searching for Rakhsh") and `presence`:
@@ -151,6 +165,7 @@ not say what each has to do with the step.
 | `depictedContext` | `kind` – `later_artwork_of_literary_narrative` or `present_day_explanatory_diagram`; `worldId`; optional `scope`. `calendarDate` is refused: an artwork does not date the story |
 | `creationDate` | When the item was made – see below |
 | `demoRenderEligibility` | `allowed` – whether a local demonstration shows the item; optional `reason` |
+| `publicRenderEligibility` | Optional: `allowed` – whether the item is shown to everybody in a published revision, a decision of its own; optional `reason`. It needs rights that are `original_project_content` or `verified_open_access_metadata`, and what showing an item needs |
 | `sourceIds`, `spoilerLevel` | As for every record |
 | `url` | Optional. The file, as a path relative to the collection's file with forward slashes (`../media/x.png`), inside `content/`; or an `https` address of a file that is not shown from here |
 | `sourceUrl` | Optional: the public page of the item, an `https` address |

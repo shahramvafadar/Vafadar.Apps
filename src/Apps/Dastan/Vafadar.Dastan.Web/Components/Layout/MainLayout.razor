@@ -51,7 +51,7 @@
             @string.Format(CultureInfo.CurrentCulture, T["Reading_Current"], Visitor.Text(stage.Label).Value)
             <a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
         </p>
-        @if (Visitor.Language.Tag == "fa")
+        @if (Visitor.Language.Tag == "fa" && Site.Audience == Audience.LocalDemonstration)
         {
             <p class="note">@T["Draft_Notice"]</p>
         }
@@ -59,6 +59,11 @@
     @if (Site.Audience == Audience.LocalDemonstration)
     {
         <p class="note">@T["Demo_Notice"]</p>
+    }
+    else if (Site.Revision is { } revision && Visitor.Projection is not null)
+    {
+        @* A public page says which revision it shows: a correction is a new revision, not a silent change. *@
+        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Published_Notice"], Visitor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))</p>
     }
 </footer>
 

@@ -41,12 +41,14 @@ public sealed class DastanSite
         var settings = options.Value;
         Audience = settings.Audience;
         _content = Path.GetFullPath(Path.Combine(environment.ContentRootPath, settings.Content));
-        _catalogue = PilotSample.Load(Path.Combine(_content, "samples", settings.Sample));
+        // The public gets reviewed texts only: a translation that is a draft is not read into a public site.
+        var reviewedOnly = Audience == Audience.Public;
+        _catalogue = PilotSample.Load(Path.Combine(_content, "samples", settings.Sample), reviewedOnly);
 
         // A comparison that is not released to the audience of the site does not exist for it.
         Comparisons =
         [
-            .. ComparisonSample.LoadAll(Path.Combine(_content, "comparisons")).Where(comparison => comparison.MayBeShownTo(Audience)),
+            .. ComparisonSample.LoadAll(Path.Combine(_content, "comparisons"), reviewedOnly).Where(comparison => comparison.MayBeShownTo(Audience)),
         ];
 
         // One projection per reading stage; the catalogue never changes, so a projection is built once.
@@ -65,6 +67,9 @@ public sealed class DastanSite
 
     /// <summary>Returns the comparison with an identifier, or <see langword="null"/> when the site has none it may show.</summary>
     public Comparison? Comparison(string id) => Comparisons.FirstOrDefault(comparison => comparison.Id.Value == id);
+
+    /// <summary>Gets the published revision the collection is, or <see langword="null"/> for an editorial sample.</summary>
+    public PublicationRevision? Revision => _catalogue.Info.Publication.Revision;
 
     /// <summary>Gets the name of the collection in addresses and cookies: the identifier of its story.</summary>
     public string Collection => _catalogue.Info.Story.Value;

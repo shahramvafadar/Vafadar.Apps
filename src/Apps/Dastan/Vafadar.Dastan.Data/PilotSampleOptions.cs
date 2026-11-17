@@ -21,6 +21,12 @@ public sealed class PilotSampleOptions
     /// <summary>Gets a value indicating whether a local file the sample names has to exist.</summary>
     public bool CheckFiles { get; init; } = true;
 
+    /// <summary>
+    /// Gets a value indicating whether only reviewed texts are taken: a translation that is a draft is checked
+    /// like any other and then left out. This is how a collection is read for the public.
+    /// </summary>
+    public bool ReviewedTextsOnly { get; init; }
+
     /// <summary>Gets the translation documents of the sample (<see cref="PilotSample.TranslationVersion"/>), as JSON.</summary>
     public IReadOnlyList<string> Translations { get; init; } = [];
 }

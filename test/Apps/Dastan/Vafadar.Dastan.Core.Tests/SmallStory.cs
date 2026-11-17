@@ -70,6 +70,51 @@ internal sealed class SmallStory
         Sources,
         Media);
 
+    /// <summary>
+    /// Makes the story a published revision: approved for the public, with a number and a day, and every relation
+    /// and event reviewed.
+    /// </summary>
+    public SmallStory Published()
+    {
+        Publication = new PublicationState(LocalDemoAllowed: true, PublicReleaseApproved: true, new PublicationRevision(1, new DateOnly(2026, 11, 17)));
+        for (var index = 0; index < Relations.Count; index++)
+        {
+            var relation = Relations[index];
+            Relations[index] = new Relation
+            {
+                Id = relation.Id,
+                From = relation.From,
+                To = relation.To,
+                Type = relation.Type,
+                Label = relation.Label,
+                Scope = relation.Scope,
+                Sources = relation.Sources,
+                PassageLocator = relation.PassageLocator,
+                Review = ReviewStatus.Reviewed,
+                Level = relation.Level,
+            };
+        }
+
+        for (var index = 0; index < Events.Count; index++)
+        {
+            var storyEvent = Events[index];
+            Events[index] = new StoryEvent
+            {
+                Id = storyEvent.Id,
+                Label = storyEvent.Label,
+                Summary = storyEvent.Summary,
+                Time = storyEvent.Time,
+                Associations = storyEvent.Associations,
+                CondensesSeveralScenes = storyEvent.CondensesSeveralScenes,
+                Sources = storyEvent.Sources,
+                Review = ReviewStatus.Reviewed,
+                Level = storyEvent.Level,
+            };
+        }
+
+        return this;
+    }
+
     /// <summary>Builds the catalogue and returns the problems it is refused for.</summary>
     public IReadOnlyList<string> Problems() => Assert.Throws<CatalogueException>(() => Build()).Problems;
 
@@ -141,7 +186,8 @@ internal sealed class SmallStory
         string? transcript = null,
         decimal? seconds = null,
         string[]? depicted = null,
-        string[]? relations = null) => new()
+        string[]? relations = null,
+        bool forPublic = false) => new()
     {
         Id = new MediaId(id),
         Kind = kind,
@@ -159,6 +205,7 @@ internal sealed class SmallStory
         Sources = [new SourceId("passage-2")],
         Level = new ReadingLevel(level),
         DemoRenderAllowed = allowed,
+        PublicRenderAllowed = forPublic,
         Captions = captions ?? [],
         Transcript = transcript,
         DurationSeconds = seconds,

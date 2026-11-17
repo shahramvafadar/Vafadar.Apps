@@ -68,3 +68,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as a table. The story itself is not on it: a story has an order, not dates. Writers state such dates in the
   file of the collection; the first collection has none yet.
 - The Persian font is asked for together with the page, so the text of a page does not move when the font arrives.
+- The rule for publishing exists: everybody sees a collection only as a published revision – numbered, with every
+  statement reviewed – and of it only reviewed texts and the images and videos allowed for the public. A public
+  page names the revision it shows. Nothing is published yet; the first collection is still an editorial sample.

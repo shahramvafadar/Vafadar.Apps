@@ -51,7 +51,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         ("deceased_subject", Presence.DeceasedSubject));
 
     private static readonly FrozenDictionary<string, ReviewStatus> ReviewNames = Names(
-        ("source_backed_editorial_review_pending", ReviewStatus.SourcedReviewPending));
+        ("source_backed_editorial_review_pending", ReviewStatus.SourcedReviewPending),
+        ("reviewed", ReviewStatus.Reviewed),
+        ("disputed", ReviewStatus.Disputed));
+
+    private static readonly string[] PublicationStates = ["editorial_sample", "published_revision"];
 
     // A dated statement is written like a statement of a comparison, with the same states of review.
     private static readonly FrozenDictionary<string, ReviewStatus> DatedReviewNames =
@@ -205,7 +209,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         return
         [
             new("spoilerPolicy.kind", "How the reading stages are meant.", Of(["minimum_reader_progress_level"])),
-            new("publication.state", "What kind of file this is.", Of(["editorial_sample"])),
+            new("publication.state", "What kind of file this is: the working file of the editors, or a revision that is published.", Of(PublicationStates)),
             new("editionContext.summaryLanguage", "The language the texts of the file are written in.", Of(LanguageNames.Keys)),
             new("sources[].kind", "What kind of source it is.", Of(SourceKindNames.Keys)),
             new("entities[].type", "What kind of thing an entity is.", Of(EntityTypeNames.Keys)),
@@ -369,21 +373,45 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
 
         var state = record.Text("state");
-        if (state is not null && state != "editorial_sample")
+        if (state is not null && !PublicationStates.Contains(state, StringComparer.Ordinal))
         {
-            record.Problem($"the publication state {state} is not understood; this reader reads editorial samples.");
+            record.Problem($"the publication state {state} is not understood; a file is an editorial_sample or a published_revision.");
         }
 
         var local = record.Flag("localDemoAllowed");
         var approved = record.Flag("publicReleaseApproved");
-        if (approved == true)
+
+        // A published revision says which one it is; an editorial sample is none and cannot be approved.
+        PublicationRevision? revision = null;
+        var revisionComplete = true;
+        if (state == "published_revision")
         {
-            record.Problem("an editorial sample cannot be approved for public release.");
+            if (record.Child("revision") is { } stated)
+            {
+                var number = stated.Integer("number");
+                var published = stated.Day("publishedAt");
+                stated.Notes("note");
+                stated.Finish();
+                revisionComplete = number is not null && published is not null;
+                revision = revisionComplete ? new PublicationRevision(number!.Value, published!.Value) : null;
+            }
+            else
+            {
+                revisionComplete = false;
+            }
+        }
+        else
+        {
+            record.Absent("revision", "revision belongs to a published revision; an editorial sample is none.");
+            if (approved == true)
+            {
+                record.Problem("an editorial sample cannot be approved for public release.");
+            }
         }
 
         record.Notes("note");
         record.Finish();
-        return local is null || approved is null ? null : new PublicationState(local.Value, approved.Value);
+        return local is null || approved is null || !revisionComplete ? null : new PublicationState(local.Value, approved.Value, revision);
     }
 
     private static void ReadInputContract(JsonRecord? record)
@@ -489,7 +517,10 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             {
                 // The name follows the review state of the Persian translation; without one nobody has confirmed it.
                 var review = _translations.Find(translation => translation.Language == "fa")?.Review ?? TextReview.Draft;
-                name = name.With("fa", persianLabel, review);
+                if (!(options.ReviewedTextsOnly && review == TextReview.Draft))
+                {
+                    name = name.With("fa", persianLabel, review);
+                }
             }
         }
 
@@ -792,6 +823,14 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             eligibility.Finish();
         }
 
+        var forPublic = false;
+        if (record.Child("publicRenderEligibility", required: false) is { } published)
+        {
+            forPublic = published.Flag("allowed") == true;
+            published.Notes("reason");
+            published.Finish();
+        }
+
         var poster = LocalFile(record, "posterUrl");
         var captions = ImmutableArray.CreateBuilder<CaptionTrack>();
         foreach (var track in record.Children("captions", required: false))
@@ -897,6 +936,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Sources = [.. sources.Select(source => new SourceId(source))],
             Level = level.Value,
             DemoRenderAllowed = allowed.Value,
+            PublicRenderAllowed = forPublic,
             DemoRenderReason = reason,
             Poster = poster,
             Captions = captions.ToImmutable(),
@@ -1122,7 +1162,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var localized = LocalizedText.Of(_language, text);
         foreach (var translation in _translations)
         {
-            if (translation.Take(key) is { } translated)
+            // A draft is asked for as well, so that what it names counts as named, and then left out for the public.
+            if (translation.Take(key) is { } translated && !(options.ReviewedTextsOnly && translation.Review == TextReview.Draft))
             {
                 localized = localized.With(translation.Language, translated, translation.Review);
             }
