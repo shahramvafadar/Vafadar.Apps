@@ -403,3 +403,24 @@ of the editors (`Vafadar.Dastan.Studio`) so that nothing of the daily work needs
 | 13.6 | **Two entities that are one** (DOM-003): merging an entity into another as an act with a reason and a trail; the name of the merged one stays findable; a merge the collection cannot bear is refused | **Done** 2026-11-18 – `EditorialStore.MergeEntities` and "The same as another name" on the page of an entity ([ADR 0011](adr/0011-editors-store.md), fifteenth addendum). An entity that turns out to be two is split by adding the second with the form and pointing the relations that are its to it |
 | 13.6b | **A comparison as a form**: the title, the sources and, lane by lane, the periods and events of a comparison filled in as rows with the inputs of a time | **Done** 2026-11-18 – the page of a comparison has the form of what it says as a whole and the list of its lanes; a lane has a page with its periods and events as rows; a lane is added and taken out; and a list that has no row yet – the sources of a comparison, the other names, identifiers and statements of an entity – begins with one ([ADR 0011](adr/0011-editors-store.md), sixteenth addendum) |
 | 13.7 | **Images and videos brought in through the tool**: a file is taken in, checked, converted to the sizes the site delivers and kept with its record (ADR 0006) | **Done** 2026-11-18, without the converting – a new image or video is brought in with its file and what the editor states about the right to show it; a file for a part of an item (its file, a poster, captions in a language, a transcript, a further rendition) on the page of the item; what a file is is read from its content, its name is made by the tool, an image loses what it says about its making, and a record that is refused leaves no file ([ADR 0006](adr/0006-media-delivery.md), second addendum). **Not built: making smaller sizes of an image.** That needs a library that reads and writes images, which is a dependency the owner decides on; until then an editor brings a rendition in as a file of its own |
+
+## 15. The public site, completed (phase 14)
+
+Phase 13 is done: the daily work of the editors needs no file and no command. Phase 14 gives the public site
+(`Vafadar.Dastan.Web`) the views the product documents name and the model can already answer (D-047). The
+list comes from comparing the documents `docs/product/02`, `05`, `10`, `14`, `15`, `16` and `18` with the
+pages of the site on 2026-11-18.
+
+| Step | What | Status |
+|---|---|---|
+| 14.1 | **The places of a collection on a map** (DOM-011): the real places drawn where they lie to each other, and listed with what is stated to be there | **Done** 2026-11-18 – the page `<collection>/places`: a grid of degrees with a numbered mark for each place, the list that says the same, and the real places that state no position apart; offered on the page of a collection that names a real place. The site loads no map from anybody, so the drawing has no coasts and no borders ([ADR 0008](adr/0008-charts.md), sixth addendum) |
+| 14.2 | **What held at a time** (R-PUB-03): a year is chosen, and the page says which relations of the world held then, what was stated of each entity for that year and where the people were | Planned |
+| 14.3 | **A series of quantities as a chart**: the numbers stated of one entity in one unit over the years, drawn and listed | Planned |
+| 14.4 | **Pages that can be found and passed on** (R-PLAT-04, B-013): a description, a canonical address and a preview for each page; a sitemap and `robots.txt` for a public site; pages that print | Planned |
+| 14.5 | **Finding by kind, place and time** (R-PUB-04) and **galleries by place and period, sorted and filtered** (R-MED-02, MED-003) | Planned |
+| 14.6 | **A moment of a video has an address** (MED-014, SC-19) | Planned |
+| 14.7 | **A statement is cited as it was** (R-PUB-07): the address of a statement in the published revision it was read in, with the words to cite it | Planned |
+| 14.8 | **A visitor reports an error** (R-GOV-03, B-015, SC-14): from a statement to a report the editors find in their tool | Planned |
+| 14.9 | **Threads** (R-PUB-06, R-EXP-04, B-025, SC-15): where to go on from an entity, each with its reason; threads the editors lay | Planned |
+| 14.10 | **Several collections on one site**: every collection in the content folder has its address; the start page lists them | Planned |
+| 14.11 | **A reading position for each story** and **switching the edition** (R-STORY-02, FLOW-06) | Planned |

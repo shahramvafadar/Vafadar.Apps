@@ -430,6 +430,20 @@ public sealed class Projection
     }
 
     /// <summary>
+    /// Returns the real places of the collection: those that say where they are, each with what is stated to be
+    /// there, and those that do not. A place of a story is not among them – it is no place on a map.
+    /// </summary>
+    public PlacesView Places()
+    {
+        var real = Entities.Where(entity => entity.Type.Nature == EntityNature.Place
+            && entity.Type != EntityTypes.NarrativePlace && entity.Type != EntityTypes.NarrativeRegion).ToList();
+        var here = Relations.ToLookup(relation => relation.To);
+        return new(
+            [.. real.Where(place => place.Position is not null).Select(place => new PlaceOnMap(place, place.Position!, [.. here[place.Id].Select(ToEdge)]))],
+            [.. real.Where(place => place.Position is null)]);
+    }
+
+    /// <summary>
     /// Returns the published revisions of the collection, the newest first, each with the changes the visitor may
     /// know of: a change of a record of a later reading stage is not named, and not counted either. Empty for a
     /// collection that is no published revision.

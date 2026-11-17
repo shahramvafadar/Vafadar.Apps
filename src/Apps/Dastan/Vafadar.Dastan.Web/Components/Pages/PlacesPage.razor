@@ -1,0 +1,115 @@
+@page "/{Collection}/places"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The places of a collection (step 14.1): the real places it names, drawn where they lie to each other, and
+   listed with what is stated to be there. Only what the visitor may see at the reading position is asked of
+   the projection. The page loads no map from anybody: the drawing is a grid of degrees. *@
+@if (_subject is { } subject)
+{
+    var name = Visitor.Text(subject.Label).Value;
+    var title = string.Format(CultureInfo.CurrentCulture, T["Places_Title"], name);
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], name)</a></p>
+        <h1>@title</h1>
+        <p class="lead">@T["Places_Lead"]</p>
+    </header>
+
+    @if (_places.IsEmpty)
+    {
+        @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
+        <p class="note" role="status">
+            @T["Places_Empty"]
+            @if (_continues)
+            {
+                <text> @T["Gallery_EmptyHint"] </text><a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
+            }
+        </p>
+    }
+    else
+    {
+        @if (_map is { } map)
+        {
+            <p class="note">@T["Places_NoTiles"] @T["Stage_Lead"]</p>
+            <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Places_Graph"], name)" FrameDirection="ltr">
+                <PlacesChart Map="map" Here="@_here" />
+            </ChartStage>
+
+            @* The list says what the drawing says, and more: the number of a place is the number of its mark. *@
+            <section aria-labelledby="as-list">
+                <h2 id="as-list">@T["Places_List"]</h2>
+                <ol class="places-list">
+                    @foreach (var mark in map.Marks)
+                    {
+                        var place = mark.Place;
+                        <li id="@($"place-{place.Place.Id}")">
+                            <h3><a href="@($"{Site.Collection}/entity/{place.Place.Id}")"><Loc Text="place.Place.Label" /></a> <span class="meta">– <TypeName Type="place.Place.Type" /></span></h3>
+                            <p class="meta position">
+                                <a href="@PositionText.Address(place.Position)"><bdi>@PositionText.Of(place.Position, Visitor, T)</bdi></a>
+                                @if (place.Position.Precision != PositionPrecision.Exact)
+                                {
+                                    <span>– @T[$"PositionPrecision_{place.Position.Precision}"]</span>
+                                }
+                            </p>
+                            @if (!place.Here.IsEmpty)
+                            {
+                                <p class="meta">@T["Places_Here"]:</p>
+                                <ul class="statements" role="list">
+                                    @foreach (var edge in place.Here)
+                                    {
+                                        <li><Statement Relation="edge" Self="place.Place.Id" Evidence="true" From="@_here" /></li>
+                                    }
+                                </ul>
+                            }
+                        </li>
+                    }
+                </ol>
+            </section>
+        }
+
+        @if (!_places.Unmapped.IsEmpty)
+        {
+            <section aria-labelledby="unmapped">
+                <h2 id="unmapped">@T["Places_Unmapped"]</h2>
+                <p class="note">@T["Places_UnmappedLead"]</p>
+                <ul role="list">
+                    @foreach (var place in _places.Unmapped)
+                    {
+                        <li><a href="@($"{Site.Collection}/entity/{place.Id}")"><Loc Text="place.Label" /></a> <span class="meta">– <TypeName Type="place.Type" /></span></li>
+                    }
+                </ul>
+            </section>
+        }
+    }
+}
+
+@code {
+    private Entity? _subject;
+    private PlacesView _places = null!;
+    private PlacesMap? _map;
+    private string _here = string.Empty;
+    private bool _continues;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        if (Collection != Site.Collection || Visitor.Projection is not { } projection)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _subject = projection.Overview().Subject;
+        _places = projection.Places();
+        _map = PlacesMap.Of(_places);
+        _here = $"{Site.Collection}/places";
+        _continues = projection.StoryContinues;
+    }
+}

@@ -377,3 +377,35 @@ Verification: `StageBrowserTests` – with much opened above the name, the box o
 without the script nothing is moved and the chart is whole; at 360 px the frame is as wide as the stage, the
 steps of the sides stand between the upper side and the chart, each at least 44 px, and the page does not scroll
 sideways; at 1280 px the sides stand beside the chart. All browser tests in Chromium, Firefox and WebKit.
+
+## Sixth addendum of 2026-11-18 – the places of a collection (step 14.1)
+
+A real place can say where it is (step 12.8); its page shows the degrees and a `geo:` address. The collection
+as a whole now has a page of its places, `<collection>/places`.
+
+* **`Projection.Places()`** answers a `PlacesView`: the real places the visitor may see that state a
+  position, each with the relations that end there (`PlaceOnMap`), and the real places that state none. A
+  place of a story is in neither list – it is no place on a map (ADR 0001).
+* **`PlacesMap.Of`** lays the drawing out, without a page and without a browser: the area the places span,
+  a tenth more at each side and at least two degrees; a degree of longitude drawn shorter by the cosine of the
+  middle latitude; the longer side 40 units and the shorter at least 16; a grid of whole steps of degrees with
+  the widest step that still gives three lines. Places on both sides of the line of the date are laid out
+  beside each other, not a whole earth apart.
+* **`PlacesChart`** writes it as SVG on the stage: the grid with its degrees, and for each place a mark with
+  the number it has in the list. A position that is exact is a filled mark; one that is about there or the
+  middle of an area is drawn open, the latter larger – it is no point. A mark leads to its row; the row leads
+  to the page of the place and to the position in the map of the device.
+* **No map is loaded.** The site asks nobody for tiles – that would tell a third party who reads what – and
+  ships no coastlines. So the drawing says how the places lie to each other, and the grid where on the earth
+  that is; the page says so. A drawn background (coasts from data that may be shipped, or tiles from a host of
+  the owner's) is a decision of the owner.
+* The page is offered on the page of the collection when it names a real place the visitor may see.
+
+Not done: borders, routes, and places that move with time; marks that lie on each other are not pulled apart
+(two places a few kilometres apart in a collection that spans a continent cover each other – the list still
+names both).
+
+Verification: `PlacesViewTests` (7 tests) – which places are on the lists, what lies there, a place of a later
+reading stage on none; north at the top, east at the right, every place inside, the grid in whole steps; one
+place alone; the line of the date; a pole. `PlacesPageTests` (7 tests) – the page in both languages, the mark
+and its row, nothing loaded from anybody, a story alone, another collection. Not looked at in a browser.
