@@ -42,3 +42,7 @@ Neither Main database nor key was read. Public identity equality is not proof of
 The fixed target observations and comparison were saved before removal of fresh helpers. All four exact reviewed helper installations on owner user0 were removed successfully and their absence verified: sourceUID10459/10460 and targetUID11030/11031. Both original Main public identities were then compared again and remained exact. No Main or unrelated app was removed, launched or altered during retirement. Local signed packages, source, compiler output, source-preparation results, target public/hash/results, the owner's completion receipt and preservation comparison remain under `artifacts/d1233-oem-transfer-preparation`.
 
 This one transfer is terminal; it must not be replayed as if it were an unattempted check. No fresh transfer, rescue variant or destination preparation is part of this result. The broad OEM exclusion gate remains unqualified where a positive transfer control is required. See [prepared comparison](prepared-samsung-oem-transfer-d1233.md) for the original policy, independent packages and finite acceptance rule. Canonical parent states and retained crash/financial checkpoints remain unchanged.
+
+## Follow-up diagnosis
+
+[Independent control-route diagnosis](transfer-control-diagnosis-d1234.md) resolves the older-Main hypothesis for the helper payloads and establishes a nine-domain positive restore control on a fresh Android D2D framework. It does not replay or relabel this OEM transfer as accepted.
