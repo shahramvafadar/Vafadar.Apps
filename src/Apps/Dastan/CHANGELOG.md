@@ -81,3 +81,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A work whose image may not be shown is no longer missing from the galleries: it stands there as a reference,
   with its title, who made it and when, its catalogue number and credit line, and a link to the museum that holds
   it. The three museum works of the first collection appear this way, each from the part of the story it belongs to.
+- The charts of connections and of a family open with the name they are about in sight, however much is opened
+  above it. On a phone the chart is as wide as the screen: the steps of its left and right side stand in a row
+  above it instead of beside it.

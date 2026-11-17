@@ -73,3 +73,9 @@ worker that shows a page for "no connection". What this record decided stands: a
 answer, needs no script to show its content or to be used, and has no script written into it. The two candidates
 of point 7 – a notice for a lost connection and an install prompt – were not built. A refused form now leads to a
 page that says so.
+
+## Addendum of 2026-11-17 – the script does a second thing
+
+The one script also brings the name a chart is drawn around into sight
+([ADR 0008](0008-charts.md), fifth addendum). The rule is unchanged: a page shows its content and can be used
+without the script, and no script is written into a page.

@@ -29,15 +29,18 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
     }
 
     [Fact]
-    public async Task On_a_phone_the_tree_scrolls_in_its_frame_by_touch_and_keyboard_and_the_page_does_not()
+    public async Task On_a_phone_the_family_opened_at_every_side_stands_in_its_stage_and_the_page_does_not_scroll_sideways()
     {
         var page = await site.Visitor(width: 360, readTo: 4);
-        await page.GotoAsync($"/en/{Sohrab}");
+        await page.GotoAsync($"/en/{Sohrab}?up=9&down=9&beside=9");
         var frame = page.Locator(".stage-frame");
 
-        // Two boxes beside each other are wider than a phone: the tree is as large as its family, the frame scrolls.
+        // Since the sides beside the chart stand above it on a phone (step 10.4), the family of the story is as
+        // wide as the stage: nothing is cut, and what would be larger scrolls in the frame, which the keyboard
+        // reaches. Scrolling a frame by the keyboard is tested where a chart is larger: the story and the time.
         Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");
-        Assert.True(await frame.EvaluateAsync<bool>("frame => frame.scrollWidth > frame.clientWidth + 20"));
+        Assert.True(await frame.EvaluateAsync<bool>("frame => frame.scrollWidth <= frame.clientWidth + 1"));
+        Assert.Equal(5, await page.Locator("svg.graph foreignObject").CountAsync());
 
         for (var stops = 0; stops < 60 && !await frame.EvaluateAsync<bool>("frame => document.activeElement === frame"); stops++)
         {
@@ -45,11 +48,6 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         }
 
         Assert.True(await frame.EvaluateAsync<bool>("frame => document.activeElement === frame"), "The keyboard does not reach the frame of the tree.");
-        await page.Keyboard.PressAsync("ArrowRight");
-        await page.Keyboard.PressAsync("ArrowRight");
-        // The browser moves the frame after the key; the test waits until it has.
-        await page.WaitForFunctionAsync("() => document.querySelector('.stage-frame').scrollLeft > 0");
-        Assert.False(await ScrollsSideways(page), "The page scrolls sideways after the frame was scrolled.");
     }
 
     [Fact]

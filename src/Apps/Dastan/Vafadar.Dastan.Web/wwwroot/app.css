@@ -1566,3 +1566,45 @@ main:has(> .stage) > :not(.stage) {
 .media-reference .facts {
   margin-block: var(--space-2);
 }
+
+/* On a narrow screen the two sides beside the chart would take a quarter of its width. Their steps stand in a row
+   of their own between the upper side and the chart – the left ones at the left, the right ones at the right – and
+   the chart gets the whole width (ADR 0008). */
+@media (max-width: 40rem) {
+  .stage {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "top top"
+      "left right"
+      "frame frame"
+      "bottom bottom";
+  }
+
+  .stage-left,
+  .stage-right {
+    flex-direction: row;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stage-left {
+    justify-content: flex-start;
+  }
+
+  .stage-right {
+    justify-content: flex-end;
+  }
+
+  .stage-left .stage-label,
+  .stage-right .stage-label {
+    writing-mode: horizontal-tb;
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .stage-left .stage-steps,
+  .stage-right .stage-steps {
+    flex: none;
+    flex-direction: row;
+  }
+}
