@@ -547,3 +547,34 @@ Verification: `StudioNewRecordTests` (11 tests): the form in both languages; an 
 world with its time and a step of the story added and kept with who and why; no identifier, a taken one and a
 record the site cannot read refused with the form kept; no form for media or an unknown group; a language
 added and its first text filled in; three languages that are refused. Not looked at in a browser.
+
+## Fifteenth addendum of 2026-11-18 – two entities that are one (step 13.6)
+
+DOM-003: "Merging records requires review of identity, evidence, relationships, and disclosure consequences.
+A mistaken merge must be correctable. Renaming an entity must not break an existing entity link."
+
+* **`MergeEntities(collection, keep, merged, by, reason)`** is an act of an editor, never a conclusion of the
+  store. The kept entity keeps its identifier, type, name and summary. From the merged one it takes: the name
+  – and its name in every other language – as another name (`alternative`), so that the search still finds
+  it; its other names; what is stated about it (`dated`); its identifiers, each once; its sources. Then every
+  record that named the merged entity names the kept one: the ends of relations, who takes part in a step
+  (with the role of that step in the other languages), who an image shows, the story of a scope, the subject
+  of the collection. The merged record is taken out, with the texts that translated it.
+* **One act, one reason, many changes.** Every record the merge touches gets its change in the history with
+  the reason of the editor and "(x merged into y)" – and with the record as it was before. That is what makes
+  a mistaken merge correctable: the history says exactly what was changed where.
+* **Refused, with nothing changed**: an entity into itself; an entity the collection does not have; a merge
+  after which a relation would connect an entity with itself; two entities that take part in the same step
+  (the step would have to say which part the one entity has); and whatever the readers refuse of the result –
+  a person merged into a place leaves "author of" reading from a place.
+* **Splitting needs no act of its own**: the second entity is added with the form (step 13.5) and the
+  relations that are its are pointed to it on their pages – each a change with its reason.
+* Not built: merging the entities of two collections; a view that proposes merges. "Possibly the same" stays
+  a relation (`possiblySameAs`) for what is not established.
+
+Verification: `EntityMergeTests` (4 tests, store) – everything that named the merged entity names the kept
+one, names in two languages, statements and identifiers moved; every touched record with who, why and the
+record before, an untouched one without a change; six refusals that change nothing; a step and its Persian
+role follow the kept entity. `StudioMergeTests` (4 tests) – the form on the page of an entity only, in both
+languages; a merge that leads to the entity that stays; two refusals with the reason. Not looked at in a
+browser.

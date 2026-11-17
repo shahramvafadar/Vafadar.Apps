@@ -68,6 +68,19 @@ public sealed class FieldsInput
     public string? Reason { get; set; }
 }
 
+/// <summary>What an editor fills in to say that an entity is the same as another one.</summary>
+public sealed class MergeInput
+{
+    /// <summary>Gets or sets the entity that stays: the one this entity goes into.</summary>
+    public string? Into { get; set; }
+
+    /// <summary>Gets or sets who merges.</summary>
+    public string? By { get; set; }
+
+    /// <summary>Gets or sets why the two are one.</summary>
+    public string? Reason { get; set; }
+}
+
 /// <summary>What an editor fills in to take a record out of a collection.</summary>
 public sealed class RemoveInput
 {

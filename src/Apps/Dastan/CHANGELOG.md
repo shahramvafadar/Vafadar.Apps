@@ -139,6 +139,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- When two records turn out to be the same person, place or thing, an editor merges one into the other:
+  everything that named the one names the other, its name stays findable, and the history says what was
+  changed.
 - In the tool of the editors a new record – a source, a name, a relation, a step of the story – is added with
   a form, and a collection gets a further language with one input.
 - An editor's account says what it may do – write, review, publish – and the tool offers each of them only to

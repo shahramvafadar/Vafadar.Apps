@@ -591,4 +591,22 @@
   <data name="Language_Added" xml:space="preserve">
     <value>The language was added. Its texts are filled in on the pages of the records.</value>
   </data>
+  <data name="Merge_Title" xml:space="preserve">
+    <value>The same as another name</value>
+  </data>
+  <data name="Merge_Lead" xml:space="preserve">
+    <value>When two records turn out to be one and the same, this one goes into the other: every relation, step and image that names it names the other from then on, what is stated about it is stated about the other, and its name stays findable as another name. A likeness of names is no reason; say what shows that the two are one. The history keeps every record as it was before.</value>
+  </data>
+  <data name="Merge_Into" xml:space="preserve">
+    <value>It is the same as</value>
+  </data>
+  <data name="Merge_Submit" xml:space="preserve">
+    <value>Merge into that one</value>
+  </data>
+  <data name="Merge_NeedsOther" xml:space="preserve">
+    <value>Choose the name this one is the same as.</value>
+  </data>
+  <data name="Done_merged" xml:space="preserve">
+    <value>The other record was merged into this one.</value>
+  </data>
 </root>
