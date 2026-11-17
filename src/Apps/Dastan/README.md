@@ -52,6 +52,9 @@ shows it as a demonstration. Started with any other settings the site is for the
 is published, because the sample is not approved for publication. No page needs a script to be read; the reading position
 is chosen at the bottom of the page of the story.
 
+Running it outside a developer's machine – the container image, what it is told, how it is checked, updated and
+taken back – is in [operations](docs/operations.md).
+
 ## Build and test
 
 .NET SDK 10.0.404 or a newer 10.0 feature band (`global.json`). From the repository root:

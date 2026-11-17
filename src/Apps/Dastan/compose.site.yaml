@@ -1,0 +1,34 @@
+# The Dastan website as it runs outside a developer's machine (docs/operations.md), to try the image of the
+# Dockerfile on this machine. It belongs to the same Compose project "test" as the other services of Dastan
+# (decision D-034) and is a file of its own because it needs to be told what to show:
+#
+#   $env:DASTAN_CONTENT = "<the content folder of a published revision>"
+#   docker compose -f src/Apps/Dastan/compose.site.yaml up -d --build      build and start: http://127.0.0.1:53380
+#   docker compose -f src/Apps/Dastan/compose.site.yaml down               stop and remove
+name: test
+
+services:
+  # The image of the Dockerfile, with a folder of content mounted read-only. Nothing in the container can be
+  # written to but its memory.
+  # DASTAN_CONTENT names the folder to show: the content of a published revision, made with the "revision" command
+  # (docs/content-guide.md). The working files of the repository are not such a folder and are not offered here.
+  site:
+    build:
+      context: ../../..
+      dockerfile: src/Apps/Dastan/Dockerfile
+    image: dastan-site:local
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 512m
+    environment:
+      Dastan__Sample: ${DASTAN_SAMPLE:-shahnameh-pilot.json}
+      # Who the site believes about how a visitor came: here the networks Docker gives its containers, so that
+      # a proxy can be tried from this machine. A host names its own proxy.
+      Dastan__TrustedProxies__0: 172.16.0.0/12
+      Dastan__TrustedProxies__1: 192.168.0.0/16
+    volumes:
+      - ${DASTAN_CONTENT:?name the folder of a published revision in DASTAN_CONTENT}:/app/content:ro
+    ports:
+      # Reachable from this machine only.
+      - "127.0.0.1:53380:8080"

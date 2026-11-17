@@ -72,6 +72,11 @@ for Dastan is added here in the same commit as the work it came with.
 * An item that may not be shown is told to a page only as a `MediaReference` (`Projection.References`, the
   galleries): the catalogue record and the link to the holder. Never pass its `MediaItem` to a page, never load
   anything from the holder's server, and add a field to the reference only if a visitor may see it.
+* The site runs outside a developer's machine as one container without content
+  ([ADR 0010](docs/adr/0010-running-the-site.md), [operations](docs/operations.md)). A change of a header, a
+  cookie, a setting or of what the site serves is checked with `eng/Check-Site.ps1` against the container of
+  `compose.site.yaml`, and a new setting is written into operations in the same commit. Never put content into
+  the image and never widen what the site believes from a proxy.
 * To look at the site as the public gets it, publish it (`dotnet publish`) and run the published output with
   `ASPNETCORE_ENVIRONMENT=Production` and `Dastan__Content` pointing to a published revision. `dotnet run` in
   the Production environment serves empty style sheets (static web assets are off there) – a page looked at

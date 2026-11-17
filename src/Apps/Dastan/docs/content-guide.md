@@ -184,6 +184,9 @@ dotnet run --project $content -- revision src/Apps/Dastan/content/samples/my-sto
   What still points to the statement has to be corrected first; the check names it.
 * **A disputed statement** (`disputed`) is published as disputed. The `note` of its review says what the sources
   disagree about and is shown on the page of its sources.
+* A revision needs nothing beside its content folder: the command leaves out the pointers of media items to the
+  working documents of reviewers (`reviewerProvenancePath`). The site is given the folder of the revision and
+  nothing else ([operations](operations.md)).
 * The command does not review. It cannot know whether a statement was read against its source; it only refuses a
   file in which nobody says so. A writer or an assistant never runs it to make something visible.
 

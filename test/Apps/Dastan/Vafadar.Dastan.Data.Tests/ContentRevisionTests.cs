@@ -285,6 +285,56 @@ public sealed class ContentRevisionTests : IDisposable
         Assert.Contains("relation-01: a withdrawn statement is no part of a published revision; its history names it with the reason.", report.Problems);
     }
 
+    // --- a revision is the folder of content and nothing beside it (step 10.5) ---
+
+    private static void Copy(string from, string to)
+    {
+        foreach (var file in Directory.EnumerateFiles(from, "*", SearchOption.AllDirectories))
+        {
+            var copy = Path.Combine(to, Path.GetRelativePath(from, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(copy)!);
+            File.Copy(file, copy);
+        }
+    }
+
+    [Fact]
+    public void A_revision_of_the_collection_starts_a_site_that_has_the_folder_of_content_and_no_document_of_the_editors()
+    {
+        // The working copy: the collection of the repository, reviewed for the test, with the documents of the
+        // editors beside it – one of its media items points to a document for reviewers.
+        var work = Path.Combine(_folder, "work");
+        Copy(SampleFiles.Content, Path.Combine(work, "content"));
+        Copy(Path.Combine(SampleFiles.App, "docs", "product"), Path.Combine(work, "docs", "product"));
+        var working = Path.Combine(work, "content", "samples", "shahnameh-pilot.json");
+        var sample = JsonNode.Parse(File.ReadAllText(working))!.AsObject();
+        Assert.Contains("reviewerProvenancePath", sample.ToJsonString(), StringComparison.Ordinal);
+        foreach (var group in new[] { "relations", "events" })
+        {
+            foreach (var record in sample[group]!.AsArray())
+            {
+                record!["reviewStatus"] = "reviewed";
+                record["review"] = new JsonObject { ["by"] = "an editor", ["on"] = "2026-11-16" };
+            }
+        }
+
+        File.WriteAllText(working, sample.ToJsonString());
+
+        var result = ContentRevision.Make(new RevisionRequest(working, 1, Today));
+        Assert.True(result.Json is not null, string.Join('\n', result.Problems));
+        Assert.All(JsonNode.Parse(result.Json)!["media"]!.AsArray(), item => Assert.False(item!.AsObject().ContainsKey("reviewerProvenancePath")));
+
+        // What a site is given: the content with the revision in place of the working file – no docs folder.
+        var site = Path.Combine(_folder, "site", "content");
+        Copy(Path.Combine(work, "content"), site);
+        var published = Path.Combine(site, "samples", "shahnameh-pilot.json");
+        File.WriteAllText(published, result.Json);
+
+        var collection = PilotSample.Load(published, reviewedTextsOnly: true);
+
+        Assert.Equal(new PublicationRevision(1, Today), collection.Info.Publication.Revision);
+        Assert.Equal(5, collection.Media.Length);
+    }
+
     // --- the command ---
 
     private static (int Exit, string Output) Run(params string[] arguments)

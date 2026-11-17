@@ -1,0 +1,24 @@
+# What is sent to the build of the Dastan image: the build settings of the repository, the shared libraries and
+# the app. Everything else stays out – other apps, tests, outputs, and the collection itself: an image holds no
+# content, and the working files of the editors never leave the repository this way.
+*
+
+!Directory.Build.props
+!Directory.Build.targets
+!Directory.Packages.props
+!global.json
+!nuget.config
+!.editorconfig
+!eng
+!src/Libraries
+!src/Apps/Dastan
+
+eng/benchmarks
+eng/hosting
+eng/native
+eng/sync
+eng/tests
+src/Apps/Dastan/content
+src/Apps/Dastan/docs
+**/bin
+**/obj

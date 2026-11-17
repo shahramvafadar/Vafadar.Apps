@@ -12,6 +12,16 @@ language of the last page opened), `vafadar.theme` (light or dark, only after a 
 `dastan.reading.<collection>` (the reading stage, only after a choice) and the framework's antiforgery cookie for
 its forms. It loads no script, no font and no other file from another site, has no analytics and no accounts.
 
+Read again on 2026-11-17 against the way the site runs outside a developer's machine (one container behind a
+proxy, [operations](../../src/Apps/Dastan/docs/operations.md)): the profile is unchanged. The container keeps
+nothing about a visitor – no database, no file, no log of requests or addresses; its only stored data are the
+keys of its forms, when a host gives it a folder for them, and they identify nobody. All four cookies are
+`Secure` when the visitor came by https. The site takes the address of a visitor from a proxy only when it was
+told to believe that proxy, and uses it for nothing. A gallery links to the page of a museum that holds a work
+(the link is followed only when the visitor chooses it; nothing is loaded from the museum). What a proxy and a
+host log – addresses, times, requested pages – is theirs and has to be entered here when a host is chosen; the
+site is not hosted yet.
+
 Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · – not applicable
 
 **Current engineering inventory, 2026-10-27 (D-604):** optional local service implementations

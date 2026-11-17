@@ -1,7 +1,16 @@
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Web.Components;
 using Vafadar.Dastan.Web.Site;
 using Vafadar.Web;
+
+// Started with "--probe" the program is not the site: it asks the site of this machine whether it is alive and
+// ends with the answer. A container has no other tool to ask with (docs/operations.md).
+if (args is ["--probe"])
+{
+    return await SiteHealth.Probe();
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents();
 builder.Services.AddLocalization();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddAntiforgery();
+// The cookie of the forms is sent by https only wherever the visitor came by https, like every other cookie.
+builder.Services.AddAntiforgery(options => options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest);
 
 // English and Persian (Directory.Build.props: VafadarLanguages). The first language is used when nothing else decides.
 builder.Services.AddSiteLanguages("en", "fa");
@@ -18,17 +28,52 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
 {
     options.UnlocalizedPaths.Add("/preferences");
     options.UnlocalizedPaths.Add(MediaAddress.Root);
+    options.UnlocalizedPaths.Add(SiteHealth.Address);
 });
 
 builder.Services.Configure<DastanOptions>(builder.Configuration.GetSection("Dastan"));
 builder.Services.AddSingleton<DastanSite>();
+
+// The keys of the forms outlive the process only where a folder for them is named (docs/operations.md).
+if (builder.Configuration["Dastan:Keys"] is { Length: > 0 } keys)
+{
+    builder.Services.AddDataProtection().SetApplicationName("dastan").PersistKeysToFileSystem(new DirectoryInfo(keys));
+}
 builder.Services.AddScoped<Visitor>();
+
+// Behind a proxy that holds the certificate, the site learns from the proxy how the visitor came – by https, and
+// from which address. It believes only the proxies it was told to (docs/operations.md): what anybody else says
+// about that is not heard. Told nothing, it believes nobody.
+var proxies = builder.Configuration.GetSection("Dastan:TrustedProxies").Get<string[]>() ?? [];
+if (proxies.Length > 0)
+{
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        foreach (var proxy in proxies)
+        {
+            if (proxy.Contains('/', StringComparison.Ordinal))
+            {
+                options.KnownIPNetworks.Add(System.Net.IPNetwork.Parse(proxy));
+            }
+            else
+            {
+                options.KnownProxies.Add(System.Net.IPAddress.Parse(proxy));
+            }
+        }
+    });
+}
 
 var app = builder.Build();
 
 // The collection is read now: a collection that cannot be used stops the app with the list of what is wrong,
 // instead of failing for the first visitor.
 var site = app.Services.GetRequiredService<DastanSite>();
+
+if (proxies.Length > 0)
+{
+    app.UseForwardedHeaders();
+}
 
 app.UseSecurityHeaders();
 app.UseFreshPages();
@@ -72,9 +117,11 @@ app.MapStaticAssets();
 app.MapThemePreference();
 app.MapReadingPreference();
 app.MapMediaFiles();
+app.MapSiteHealth();
 app.MapRazorComponents<App>();
 
-app.Run();
+await app.RunAsync();
+return 0;
 
 /// <summary>The entry point of the website; public so that tests can start the app.</summary>
 public partial class Program;
