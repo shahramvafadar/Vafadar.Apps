@@ -24,7 +24,13 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         ("AnimalCharacter", EntityTypes.AnimalCharacter),
         ("NarrativePlace", EntityTypes.NarrativePlace),
         ("NarrativeRegion", EntityTypes.NarrativeRegion),
-        ("NarrativeObject", EntityTypes.NarrativeObject));
+        ("NarrativeObject", EntityTypes.NarrativeObject),
+
+        // What is not of the story but of the world it was told in (step 10.6).
+        ("Person", EntityTypes.Person),
+        ("Organisation", EntityTypes.Organisation),
+        ("Place", EntityTypes.Place),
+        ("Region", EntityTypes.Region));
 
     private static readonly FrozenDictionary<string, RelationType> RelationTypeNames =
         RelationTypes.All.ToFrozenDictionary(type => type.Key, StringComparer.Ordinal);
@@ -39,7 +45,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         ("relationship_revealed_in_beat", RelationScopeKind.RevealedInEvent),
         ("observed_narrative_context", RelationScopeKind.ObservedContext),
         ("selected_beat_action", RelationScopeKind.ActionInEvent),
-        ("reported_in_selected_beat", RelationScopeKind.ReportedInEvent));
+        ("reported_in_selected_beat", RelationScopeKind.ReportedInEvent),
+        ("outside_the_story", RelationScopeKind.OutsideTheStory));
 
     private static readonly FrozenDictionary<string, Presence> PresenceNames = Names(
         ("acts_in_selected_scenes", Presence.Acts),
@@ -206,6 +213,17 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
     }
 
+    // The kinds of thing a relation type holds between, in the words of the list for writers.
+    private static string Natures(ImmutableArray<EntityNature> natures) => string.Join(" or ", natures.Select(nature => nature switch
+    {
+        EntityNature.Being => "a person, character or animal",
+        EntityNature.Group => "an organisation",
+        EntityNature.Place => "a place or region",
+        EntityNature.Work => "a work",
+        EntityNature.Object => "an object",
+        _ => "an occasion",
+    }));
+
     /// <summary>Returns the name a file gives a type of entity.</summary>
     internal static string NameOf(EntityType type) => EntityTypeNames.First(name => name.Value == type).Key;
 
@@ -235,7 +253,9 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                                 Kinship.Parentage => "; a parent and a child in a family tree",
                                 Kinship.Partnership => "; partners in a family tree",
                                 _ => string.Empty,
-                            })),
+                            }
+                            + (type.Meaning is null ? string.Empty : "; " + type.Meaning)
+                            + (type.From.IsDefaultOrEmpty ? string.Empty : $"; from {Natures(type.From)} to {Natures(type.To)}"))),
                 ]),
             new("relations[].directionality", "Whether the relation reads from one entity to the other; it has to agree with the type.", Of(DirectionNames.Keys)),
             new("relations[].scope.kind", "What the relation is a statement about.", Of(ScopeKindNames.Keys)),

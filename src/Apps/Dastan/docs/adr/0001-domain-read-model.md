@@ -100,3 +100,40 @@ Phase 3 builds this model and the reader for the sample. The screens come later 
   product question (Q-15); until it is answered the list changes with the code.
 * The Persian overlay keeps the reviewed English sample byte-for-byte as delivered. A missing Persian text is a
   visible fallback, never an invented translation.
+
+## Addendum of 2026-11-17 – more than narrative things (step 10.6)
+
+The file of a collection could name the things of a story only. The model always allowed more – a nature, not a
+"person", is what a view asks an entity for – and the plan held the rest back until content asked for it. The
+owner asked for the step on 2026-11-17, before such content exists; so it adds what the guide named as missing
+and no more.
+
+* **Four types of entity** in the file: `Person` (a real person; the type the model already had),
+  `Organisation`, `Place` and `Region`. Their natures are the ones views know – somebody, a group, a place –
+  so no view changes: a real place is the setting of a step like a place of the story, a person stands in a
+  drawing of connections like a character.
+* **A thing of the story and a thing of the world stay two entities**, also under one name. `NarrativeRegion`
+  says "it has no modern border"; a `Region` is a land of history. Nothing maps one to the other.
+* **Eight relation types of the world outside a story**: `authorOf`, `bornIn`, `diedIn`, `teacherOf`,
+  `siblingOf`, `memberOf`, `founderOf`, `locatedIn`. Unlike the types of the first story, each **says what it
+  means and between what kinds of thing it holds** (`RelationType.Meaning`, `From`, `To`), and a collection in
+  which one stands between other kinds is refused: "born in" reads from somebody to a place. The kinds are
+  natures – a character may be taught as a person may. The types of the first story keep holding between
+  whatever they held between; giving them ends would be a judgement about content that exists.
+* `siblingOf` is no kinship for the family drawing: the drawing is made from parents and partners (ADR 0005),
+  and a sibling without a parent in the collection would have no place in it.
+* **A scope for what is not of the story**: `outside_the_story`. A relation still names the story of its
+  collection; the scope says the statement is about the world the story was told in.
+* **When** something happened is not a relation: it is a statement with a date of the entity (step 9.4).
+
+Not done, on purpose: types nobody asked for (a battle, an office, a title, "patron of", "successor of"); a
+check that a relation of the world has the scope `outside_the_story`; pages that set things of the world apart
+from things of the story. The first collection that uses the types shows which of these it needs.
+
+Verification: `RealWorldTypesTests` (12 tests): a collection with a poet, a teacher, a brother, a court, a city
+and a land and ten relations is read; seven relations between the wrong kinds are refused, each with one reason;
+a character may stand where somebody stands; the types of the first story are unbound; a real place that acts in
+a step is refused like a place of the story; the list for writers says the meaning and the ends.
+`RealWorldPagesTests` (10 tests): the page of each of the four kinds, with its kind in English and Persian; the
+connections of a person and of the work; no family from what is no family; found by the search. All with test
+data – the collection of the repository uses none of the new types.

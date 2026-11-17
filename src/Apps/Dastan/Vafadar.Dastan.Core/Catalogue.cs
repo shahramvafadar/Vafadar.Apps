@@ -410,11 +410,34 @@ public sealed class Catalogue
             CheckStage(name, relation.Level);
             Known(name, relation.From, relation.Level, "endpoint");
             Known(name, relation.To, relation.Level, "endpoint");
+            Fits(relation, relation.From, first: true);
+            Fits(relation, relation.To, first: false);
             Known(name, relation.Scope.Story, relation.Level, "story of the scope");
             foreach (var id in relation.Scope.Events)
             {
                 Known(name, id, relation.Level, "event of the scope");
             }
+        }
+
+        // A relation type that says between what it holds is not used between other kinds of thing: "born in"
+        // reads from somebody to a place.
+        private void Fits(Relation relation, EntityId id, bool first)
+        {
+            if (catalogue.Find(id) is { } entity && !relation.Type.Fits(entity.Type.Nature, first))
+            {
+                var allowed = first ? relation.Type.From : relation.Type.To;
+                problems.Add($"{relation.Id.Value}: {relation.Type.Key} reads {(first ? "from" : "to")} {string.Join(" or ", allowed.Select(Named))}; {id.Value} is {Named(entity.Type.Nature)}.");
+            }
+
+            static string Named(EntityNature nature) => nature switch
+            {
+                EntityNature.Being => "somebody",
+                EntityNature.Group => "a group",
+                EntityNature.Place => "a place",
+                EntityNature.Work => "a work",
+                EntityNature.Object => "a thing",
+                _ => "an occasion",
+            };
         }
 
         private void Check(StoryEvent storyEvent)

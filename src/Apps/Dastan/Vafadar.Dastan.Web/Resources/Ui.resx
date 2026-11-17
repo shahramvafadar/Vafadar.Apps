@@ -939,4 +939,16 @@
   <data name="Gallery_LeadCollection" xml:space="preserve">
     <value>Everything of this collection that can be shown at your reading position, and the works held elsewhere that belong to it.</value>
   </data>
+  <data name="Type_person" xml:space="preserve">
+    <value>Person</value>
+  </data>
+  <data name="Type_organisation" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
+  <data name="Type_place" xml:space="preserve">
+    <value>Place</value>
+  </data>
+  <data name="Type_region" xml:space="preserve">
+    <value>Region</value>
+  </data>
 </root>

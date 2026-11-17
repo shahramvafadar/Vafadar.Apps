@@ -142,11 +142,13 @@ The formats are those of the first collection and the first comparison. They are
 things have no place in them yet. Do not press content into a field that means something else – name the gap in
 your hand-over note, so that the format is extended with its meaning.
 
-* A collection tells **one story** of one work (`NarrativeArc`) and knows the kinds of things a narrative has:
-  works, a story, characters, animals, places, regions, objects. Historical persons, organisations and real
-  places have no types yet.
-* The **types of relations** are a fixed list (`vocabulary` shows it). A type has one meaning; "sibling of",
-  "teacher of" or "born in" are not in it.
+* A collection tells **one story** of one work (`NarrativeArc`). Beside the things of the story it can name
+  real persons, organisations, places and regions (`Person`, `Organisation`, `Place`, `Region`) and say of
+  them who wrote a work, who taught whom, who was born or died where, who belonged to or founded what, and what
+  lies where ([format](collection-format.md), "The relations of the world outside the story"). Other kinds of
+  things – a battle, a book of another author, a title or an office – have no types yet.
+* The **types of relations** are a fixed list (`vocabulary` shows it). A type has one meaning; "patron of",
+  "successor of" or "ruled from … to …" are not in it.
 * What a collection states with a date (`dated`) belongs to one entity. Time across several subjects that is
   no part of a collection is written as a comparison.
 * A statement of a collection has one review state (`source_backed_editorial_review_pending`); a comparison has

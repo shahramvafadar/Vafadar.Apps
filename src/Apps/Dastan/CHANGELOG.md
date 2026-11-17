@@ -112,3 +112,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   store lies.
 - Dastan Studio can run on a server as a container, with its store on a volume. A copy of the whole store can be
   written while the editors work (`store copy`) and put back when the store is lost.
+- A collection can name more than the things of its story: real persons, organisations, places and regions, and
+  what is said of them – who wrote a work, who taught whom, where somebody was born or died, who belonged to or
+  founded what, what lies where. Their pages name their kind in English and Persian. The first collection does
+  not use this yet.
