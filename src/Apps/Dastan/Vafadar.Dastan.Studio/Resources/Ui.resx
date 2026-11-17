@@ -609,4 +609,28 @@
   <data name="Done_merged" xml:space="preserve">
     <value>The other record was merged into this one.</value>
   </data>
+  <data name="Comparison_FieldsLead" xml:space="preserve">
+    <value>What the comparison says as a whole: its title, the kind of time it uses, what part of time it shows, and its sources. Its lanes have pages of their own.</value>
+  </data>
+  <data name="Comparison_Lanes" xml:space="preserve">
+    <value>The lanes</value>
+  </data>
+  <data name="Comparison_LaneCounts" xml:space="preserve">
+    <value>{0} periods, {1} events</value>
+  </data>
+  <data name="Comparison_AddLane" xml:space="preserve">
+    <value>Add a lane</value>
+  </data>
+  <data name="Comparison_LaneLead" xml:space="preserve">
+    <value>One subject of the comparison: what lasted (periods) and what happened (events), each with its time and its sources. A row that is emptied is taken out, with the texts that translate it.</value>
+  </data>
+  <data name="Comparison_LaneKeyHint" xml:space="preserve">
+    <value>The key names the lane for good: a lower-case word such as iran. No lane of the comparison has it yet.</value>
+  </data>
+  <data name="Comparison_LaneNeedsKey" xml:space="preserve">
+    <value>A lane has a key: one word without blanks.</value>
+  </data>
+  <data name="Comparison_LaneRemoveLead" xml:space="preserve">
+    <value>Takes the lane out of the comparison, with its periods and events and the texts that translate them.</value>
+  </data>
 </root>

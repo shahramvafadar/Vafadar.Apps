@@ -609,4 +609,28 @@
   <data name="Done_merged" xml:space="preserve">
     <value>رکورد دیگر در این رکورد ادغام شد.</value>
   </data>
+  <data name="Comparison_FieldsLead" xml:space="preserve">
+    <value>آنچه مقایسه در کل می‌گوید: عنوانش، گونهٔ زمانی که به کار می‌برد، بازه‌ای که نشان می‌دهد و منابعش. ردیف‌هایش صفحهٔ خودشان را دارند.</value>
+  </data>
+  <data name="Comparison_Lanes" xml:space="preserve">
+    <value>ردیف‌ها</value>
+  </data>
+  <data name="Comparison_LaneCounts" xml:space="preserve">
+    <value>{0} دوره، {1} رویداد</value>
+  </data>
+  <data name="Comparison_AddLane" xml:space="preserve">
+    <value>افزودن یک ردیف</value>
+  </data>
+  <data name="Comparison_LaneLead" xml:space="preserve">
+    <value>یکی از موضوع‌های مقایسه: آنچه طول کشید (دوره‌ها) و آنچه رخ داد (رویدادها)، هرکدام با زمان و منابعش. ردیفی که خالی شود برداشته می‌شود، همراه با متن‌هایی که آن را ترجمه می‌کنند.</value>
+  </data>
+  <data name="Comparison_LaneKeyHint" xml:space="preserve">
+    <value>کلید برای همیشه نام ردیف است: واژه‌ای با حروف کوچک لاتین مانند iran. هیچ ردیفی از مقایسه نباید آن را داشته باشد.</value>
+  </data>
+  <data name="Comparison_LaneNeedsKey" xml:space="preserve">
+    <value>هر ردیف یک کلید دارد: یک واژه بدون فاصله.</value>
+  </data>
+  <data name="Comparison_LaneRemoveLead" xml:space="preserve">
+    <value>ردیف را با دوره‌ها و رویدادهایش و متن‌هایی که آن‌ها را ترجمه می‌کنند از مقایسه برمی‌دارد.</value>
+  </data>
 </root>

@@ -23,6 +23,41 @@
 
     @if (_comparison is { } comparison)
     {
+        <section aria-labelledby="fields">
+            <h2 id="fields">@T["Fields_Title"]</h2>
+            <p class="note">@T["Comparison_FieldsLead"]</p>
+            <ActOutcome Problems="_fieldsProblems" />
+            <Allowed Role="EditorRoles.Writer">
+                <form method="post" @formname="fields" @onsubmit="Fill" class="act" action="@Here">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="@Seen.Input" value="@_seen" />
+                    @foreach (var field in RecordForm.Of(ComparisonForm.Whole, _filled ?? ComparisonForm.WholeOf(_file!), _form!))
+                    {
+                        <FieldInput Field="field" />
+                    }
+                    <WhoAndWhy Form="fields" Model="Filling" By="@(Filling?.By ?? Editor.Name)" Reason="@(Filling?.Reason ?? string.Empty)" />
+                    <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
+                </form>
+            </Allowed>
+        </section>
+
+        <section aria-labelledby="lanes">
+            <h2 id="lanes">@T["Comparison_Lanes"]</h2>
+            <ul class="plain" role="list">
+                @foreach (var lane in ComparisonForm.LanesOf(_file!))
+                {
+                    <li>
+                        <a href="@($"comparisons/{Id}/lanes/{lane.Key}")"><bdi>@lane.Label</bdi></a>
+                        <span class="meta">– <bdi dir="ltr">@lane.Key</bdi>, @string.Format(CultureInfo.CurrentCulture, T["Comparison_LaneCounts"], Editor.Number(lane.Periods), Editor.Number(lane.Events))</span>
+                    </li>
+                }
+            </ul>
+            @if (Editor.May(EditorRoles.Writer))
+            {
+                <p><a class="action" href="@($"comparisons/{Id}/new-lane")">@T["Comparison_AddLane"]</a></p>
+            }
+        </section>
+
         <section aria-labelledby="change">
             <h2 id="change">@T["Change_TextTitle"]</h2>
             <p class="note">@T["Comparison_ChangeLead"]</p>
@@ -110,6 +145,10 @@
     private string? _title;
     private List<DocumentChange> _history = [];
     private List<string>? _changeProblems;
+    private List<string>? _fieldsProblems;
+    private JsonObject? _file;
+    private JsonObject? _filled;
+    private FormContext? _form;
     private List<string>? _removeProblems;
     private bool _sent;
     private string _seen = string.Empty;
@@ -124,6 +163,10 @@
     /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
     [SupplyParameterFromQuery]
     public string? Done { get; set; }
+
+    /// <summary>Gets or sets who filled in what the comparison says as a whole, and why.</summary>
+    [SupplyParameterFromForm(FormName = "fields")]
+    public FieldsInput? Filling { get; set; }
 
     /// <summary>Gets or sets who changes the comparison, and why.</summary>
     [SupplyParameterFromForm(FormName = "change")]
@@ -146,6 +189,8 @@
         }
 
         _comparison = Store.Comparison(Id);
+        _file = _comparison is null ? null : JsonNode.Parse(_comparison.Json)!.AsObject();
+        _form = _file is null ? null : ComparisonForm.Context(_file, Editor.Today);
         _seen = Seen.Of(_comparison is null ? [] : [_comparison.Json, .. _comparison.Translations.SelectMany(translation => new[] { translation.Key, translation.Value })]);
         _title = Store.Comparisons().FirstOrDefault(comparison => comparison.Id == Id)?.Title;
     }
@@ -158,6 +203,36 @@
     private string Sent(string name) => Context.Request.Form[name].ToString().Replace("\r\n", "\n", StringComparison.Ordinal);
 
     private static int Rows(string text) => Math.Clamp(text.Count(character => character == '\n') + 2, 6, 40);
+
+    private void Fill()
+    {
+        var input = Filling ?? new FieldsInput();
+        var problems = new List<string>();
+        if (!Seen.Holds(Context, _seen))
+        {
+            problems.Add(T["Act_Stale"]);
+        }
+
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        var whole = ComparisonForm.WholeOf(_file!);
+        var filled = RecordForm.Read(ComparisonForm.Whole, whole, Context.Request.Form, _form!, problems);
+        if (problems.Count == 0)
+        {
+            var result = Store.PutComparison(ComparisonForm.WithWhole(_file!, filled).ToJsonString(), _comparison!.Translations, by!, reason);
+            if (result.Done)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Here}?done={(result.Changed == 0 ? "unchanged" : "changed")}");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _filled = RecordForm.Shown(whole, filled);
+        _fieldsProblems = problems;
+    }
 
     private void Change()
     {

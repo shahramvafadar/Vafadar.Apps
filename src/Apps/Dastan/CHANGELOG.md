@@ -139,6 +139,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- A comparison is worked on with forms in the tool: its title and sources, and each of its lanes with its
+  periods and events and their times. Other names, identifiers and dated statements of a name can be added
+  with the form from the first one on.
 - When two records turn out to be the same person, place or thing, an editor merges one into the other:
   everything that named the one names the other, its name stays findable, and the history says what was
   changed.

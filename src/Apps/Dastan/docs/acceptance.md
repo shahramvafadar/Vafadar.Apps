@@ -231,6 +231,7 @@ Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "n
 | Writing, reviewing and publishing are roles of an account; an editor changes the own password and sees when it was tried (steps 13.3, 13.4; GOV-002) | **Implemented and checked** | `EditorRolesTests`, `StudioRolesTests`. Not looked at in a browser |
 | Editors add a record with a form and a language to a collection, without a file (step 13.5) | **Implemented and checked** | `StudioNewRecordTests`. Not looked at in a browser |
 | Two entities that are one are merged by an editor with a reason and a trail; a likeness of names merges nothing (DOM-003) | **Implemented and checked** | `EntityMergeTests`, `StudioMergeTests`. Not looked at in a browser |
+| A comparison is filled in with forms, lane by lane; a list that has no row yet can be begun (step 13.6b) | **Implemented and checked** | `StudioComparisonFormTests`. Not looked at in a browser |
 | Editors change a record and record a review in the store without a file in between; what the site could not use is refused and changes nothing | **Implemented and checked** | `EditorialActsTests` |
 | Editors publish from the store: the next revision by the rule of ADR 0009, kept as it was published, read by a public site from its content folder | **Implemented and checked** | `EditorialPublishingTests` |
 | Editors see in a browser what the store holds: records, what waits, the history of every change, the revisions | **Implemented and checked** | `StudioTests`; measured in a browser at phone width in both languages |

@@ -97,6 +97,12 @@ public sealed class FormField
 /// <param name="Records">The records of each group a field can point to, by their identifier and name.</param>
 public sealed record FormContext(IReadOnlyList<FieldOption> Stages, IReadOnlyDictionary<string, IReadOnlyList<FieldOption>> Records)
 {
+    /// <summary>
+    /// Gets what a row of a list looks like, by the place of the list, for a list that has no row yet: without
+    /// it an empty list has no inputs to add its first row with.
+    /// </summary>
+    public IReadOnlyDictionary<string, JsonObject> Shapes { get; init; } = new Dictionary<string, JsonObject>(StringComparer.Ordinal);
+
     /// <summary>Reads what a form needs from the store.</summary>
     public static FormContext Of(EditorialStore store, string collection)
     {
@@ -138,8 +144,20 @@ public static class RecordForm
         ["entityId"] = "entities",
     }.ToFrozenDictionary(StringComparer.Ordinal);
 
-    // The vocabulary of the readers, by the place of a field: "relations[].scope.kind".
+    // The lists of an entity a form offers also when the entity has none of them yet (step 13.6): its other
+    // names, its identifiers in other catalogues, what is stated about it. Each with the row a list begins with.
+    private static readonly FrozenDictionary<string, JsonObject> EntityLists = new Dictionary<string, JsonObject>(StringComparer.Ordinal)
+    {
+        ["names"] = new() { ["name"] = string.Empty, ["language"] = string.Empty, ["kind"] = "alternative" },
+        ["identifiers"] = new() { ["issuer"] = string.Empty, ["value"] = string.Empty, ["url"] = string.Empty, ["match"] = "exact" },
+        ["dated"] = new() { ["key"] = string.Empty, ["label"] = string.Empty, ["summary"] = string.Empty, ["time"] = null, ["sourceIds"] = new JsonArray(), ["spoilerLevel"] = 0, ["reviewStatus"] = "proposed" },
+    }.ToFrozenDictionary(StringComparer.Ordinal);
+
+    // The vocabulary of the readers, by the place of a field: "relations[].scope.kind". The fields of a
+    // comparison stand under "comparison[]" except those of its lanes, which the readers name by their place.
     private static readonly FrozenDictionary<string, IReadOnlyList<FieldOption>> Vocabulary = ContentVocabulary.Collection
+        .Concat(ContentVocabulary.Comparison.Where(choices => !choices.Field.StartsWith("translation", StringComparison.Ordinal))
+            .Select(choices => choices with { Field = string.Join(", ", choices.Field.Split(", ").Select(field => field.StartsWith("lanes[]", StringComparison.Ordinal) ? field : "comparison[]." + field)) }))
         .SelectMany(choices => choices.Field.Split(", ").Select(field => (Field: field, Values: (IReadOnlyList<FieldOption>)[.. choices.Values.Select(value => new FieldOption(value.Name, value.Name))])))
         .ToFrozenDictionary(entry => entry.Field, entry => entry.Values, StringComparer.Ordinal);
 
@@ -181,6 +199,13 @@ public static class RecordForm
         if (StatesNoTime(group, record))
         {
             fields.Add(new FormField { Path = $"f.{Time}", Name = Time, Kind = FieldKind.Time, Parts = TimeForm.Parts($"f.{Time}", null) });
+        }
+
+        if (group == "entities")
+        {
+            // A list the entity does not have yet, with the one row that begins it.
+            fields.AddRange(EntityLists.Keys.Order(StringComparer.Ordinal).Where(list => !record.ContainsKey(list))
+                .Select(list => Field("entities[]", "f", list, new JsonArray(), context, nested: false)));
         }
 
         if (texts is not { Count: > 0 } || !Translated.TryGetValue(group, out var translated))
@@ -412,6 +437,17 @@ public static class RecordForm
             filled[Time] = time.Node;
         }
 
+        if (group == "entities")
+        {
+            foreach (var list in EntityLists.Keys.Where(list => !record.ContainsKey(list)))
+            {
+                if (fields.TryGetValue(list, out var begun) && Filled(begun, form, problems) is { Node: JsonArray { Count: > 0 } rows })
+                {
+                    filled[list] = rows;
+                }
+            }
+        }
+
         return filled;
     }
 
@@ -476,6 +512,23 @@ public static class RecordForm
             case JsonArray { Count: > 0 } items when items.All(IsText):
                 return Of(FieldKind.Lines);
 
+            case JsonArray { Count: 0 } when !nested && (context.Shapes.TryGetValue(here, out var begins) || (place == "entities[]" && EntityLists.TryGetValue(name, out begins))):
+                // A list without a row: the one row that begins it. Its texts are empty – a row nothing is
+                // typed into is no row – and its choices stand at what is usual for such a row.
+                return new FormField
+                {
+                    Path = input, Name = name, Kind = FieldKind.Rows, Value = value,
+                    Rows =
+                    [
+                        [
+                            .. Row($"{here}[]", $"{input}[0]", Empty(begins), context).Select(part =>
+                                part.Kind == FieldKind.Choice && begins[part.Name] is JsonValue usual && usual.TryGetValue<string>(out var chosen) && chosen.Length > 0
+                                    ? new FormField { Path = part.Path, Name = part.Name, Kind = part.Kind, Value = JsonValue.Create(chosen), Options = part.Options }
+                                    : part),
+                        ],
+                    ],
+                };
+
             case JsonArray { Count: > 0 } items when !nested && items.All(item => item is JsonObject { Count: > 0 }):
                 // The rows of the list, and one more that is empty: filled in, it is a part that is added. A part
                 // of a row that has parts of its own – the time of a statement with a date – is written as it
@@ -487,6 +540,10 @@ public static class RecordForm
 
             case JsonObject stated when name == Time && TimeForm.Parse(stated) is { } time:
                 return new FormField { Path = input, Name = name, Kind = FieldKind.Time, Value = value, Parts = TimeForm.Parts(input, time) };
+
+            case null when name == Time && nested:
+                // The time of a row that states none yet.
+                return new FormField { Path = input, Name = name, Kind = FieldKind.Time, Parts = TimeForm.Parts(input, null) };
 
             case JsonObject parts when !nested && parts.Count > 0:
                 return new FormField
@@ -503,14 +560,20 @@ public static class RecordForm
     private static List<FormField> Row(string place, string path, JsonObject row, FormContext context) =>
         [.. row.Select(part => Field(place, path, part.Key, part.Value, context, nested: true))];
 
-    // A row like the first one of its list, with nothing in it.
+    // A row like the first one of its list, with nothing in it: no text, nothing ticked, no time and nothing
+    // pointed to. A number – a reading stage – stays; a part with parts of its own that is no time is left out,
+    // for a row that is added says such a thing itself or not at all (the record of a review is not copied).
     private static JsonObject Empty(JsonObject shape) =>
-        new(shape.Select(part => KeyValuePair.Create(part.Key, part.Value!.GetValueKind() switch
-        {
-            JsonValueKind.String => (JsonNode?)JsonValue.Create(string.Empty),
-            JsonValueKind.True or JsonValueKind.False => JsonValue.Create(false),
-            _ => part.Value.DeepClone(),
-        })));
+        new(shape
+            .Where(part => part.Value is not JsonObject || part.Key == Time)
+            .Select(part => KeyValuePair.Create(part.Key, part.Value?.GetValueKind() switch
+            {
+                null or JsonValueKind.Object => null,
+                JsonValueKind.String => (JsonNode?)JsonValue.Create(string.Empty),
+                JsonValueKind.True or JsonValueKind.False => JsonValue.Create(false),
+                JsonValueKind.Array => new JsonArray(),
+                _ => part.Value.DeepClone(),
+            })));
 
     private static bool IsText(JsonNode? node) => node is JsonValue value && value.TryGetValue<string>(out _);
 
