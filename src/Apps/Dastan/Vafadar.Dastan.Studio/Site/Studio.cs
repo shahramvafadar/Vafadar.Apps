@@ -31,7 +31,7 @@ public sealed class StudioStore
     private readonly TimeProvider _time;
 
     /// <summary>Opens the store once, so that a store that cannot be opened stops the tool at its start.</summary>
-    public StudioStore(IOptions<StudioOptions> options, TimeProvider? time = null)
+    public StudioStore(IOptions<StudioOptions> options, TimeProvider time)
     {
         ArgumentNullException.ThrowIfNull(options);
         if (string.IsNullOrWhiteSpace(options.Value.Store))
@@ -41,7 +41,8 @@ public sealed class StudioStore
 
         _file = Path.GetFullPath(options.Value.Store);
         _files = string.IsNullOrWhiteSpace(options.Value.Files) ? null : Path.GetFullPath(options.Value.Files);
-        _time = time ?? TimeProvider.System;
+        ArgumentNullException.ThrowIfNull(time);
+        _time = time;
         using var store = EditorialStore.Open(_file, _time, _files);
     }
 
@@ -53,13 +54,22 @@ public sealed class StudioStore
 public sealed class Editor
 {
     /// <summary>Reads the language and the appearance of the request.</summary>
-    public Editor(IHttpContextAccessor accessor)
+    public Editor(IHttpContextAccessor accessor, TimeProvider time)
     {
+        ArgumentNullException.ThrowIfNull(time);
         ArgumentNullException.ThrowIfNull(accessor);
         var context = accessor.HttpContext ?? throw new InvalidOperationException("An editor exists during a request only.");
         Language = context.GetSiteLanguage();
         Theme = ThemePreference.Read(context);
+        Name = EditorName.Read(context);
+        Today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
     }
+
+    /// <summary>Gets the name the editor gave with their last act, to start a form with.</summary>
+    public string? Name { get; }
+
+    /// <summary>Gets the day on the machine of the tool, to start a form with.</summary>
+    public DateOnly Today { get; }
 
     /// <summary>Gets the language of the page.</summary>
     public SiteLanguage Language { get; }

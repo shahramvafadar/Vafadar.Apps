@@ -99,3 +99,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The editors have a tool in the browser, Dastan Studio: it shows the collections of their store, every record
   as it is written, what still waits for a review, and the history of each record with what it said before and
   after. It runs on the editors' machine only and does not change anything yet; the commands do.
+- Dastan Studio now does the work as well: the editors record a review, change a record, take one out, add one
+  and publish a revision on its pages. What was done is said; what cannot be done is said with the reasons, and
+  nothing is changed.

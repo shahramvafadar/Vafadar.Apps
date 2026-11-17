@@ -80,7 +80,9 @@ for Dastan is added here in the same commit as the work it came with.
   is never committed.
 * The tool of the editors (`Vafadar.Dastan.Studio`) is built by the rules of the site – server-rendered pages, no
   script, no style in a page, both languages – and shows a record as it is written, never an interpretation of
-  it. It answers the machine it runs on only; do not loosen that before editors can sign in (step 11.7), and do
+  it. Its forms are ordinary forms without a script: done leads back to the page, refused answers
+  with the page, the reasons of the readers and the form as it was filled in; the tool checks only what a form
+  needs to be understood and leaves every rule to the store. It answers the machine it runs on only; do not loosen that before editors can sign in (step 11.7), and do
   not make the public site reference it or the store.
 * The site runs outside a developer's machine as one container without content
   ([ADR 0010](docs/adr/0010-running-the-site.md), [operations](docs/operations.md)). A change of a header, a

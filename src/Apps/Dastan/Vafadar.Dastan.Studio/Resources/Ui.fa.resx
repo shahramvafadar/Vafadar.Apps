@@ -40,7 +40,7 @@
     <value>تیره</value>
   </data>
   <data name="Local_Notice" xml:space="preserve">
-    <value>ابزار ویراستاران. فقط به همین دستگاه پاسخ می‌دهد و چیزهایی را نشان می‌دهد که منتشر نشده‌اند.</value>
+    <value>ابزار ویراستاران. فقط به همین دستگاه پاسخ می‌دهد، چیزهای منتشرنشده را نشان می‌دهد و ذخیره‌گاه را تغییر می‌دهد.</value>
   </data>
   <data name="Home_Title" xml:space="preserve">
     <value>مجموعه‌ها</value>
@@ -242,5 +242,143 @@
   </data>
   <data name="Error_Text" xml:space="preserve">
     <value>صفحه نمایش داده نشد. چیزی تغییر نکرد. علت در گزارش ابزار ثبت شده است.</value>
+  </data>
+  <data name="Act_By" xml:space="preserve">
+    <value>نام شما</value>
+  </data>
+  <data name="Act_ByHint" xml:space="preserve">
+    <value>همراه تغییر نگه داشته می‌شود. ابزار بررسی نمی‌کند که شما چه کسی هستید.</value>
+  </data>
+  <data name="Act_Reason" xml:space="preserve">
+    <value>چرا</value>
+  </data>
+  <data name="Act_NeedsName" xml:space="preserve">
+    <value>بگویید چه کسی هستید.</value>
+  </data>
+  <data name="Act_NeedsReason" xml:space="preserve">
+    <value>بگویید چرا.</value>
+  </data>
+  <data name="Act_NeedsDay" xml:space="preserve">
+    <value>روز را به‌صورت تاریخ بدهید.</value>
+  </data>
+  <data name="Act_Refused" xml:space="preserve">
+    <value>انجام نشد. چیزی تغییر نکرد.</value>
+  </data>
+  <data name="Review_Title" xml:space="preserve">
+    <value>ثبت بازبینی</value>
+  </data>
+  <data name="Review_Lead" xml:space="preserve">
+    <value>اینکه چه کسی، در چه روزی گزاره را بازبینی کرد و چه یافت، در خودِ گزاره و در تاریخچهٔ آن نگه داشته می‌شود.</value>
+  </data>
+  <data name="Review_Statement" xml:space="preserve">
+    <value>گزاره</value>
+  </data>
+  <data name="Review_Found" xml:space="preserve">
+    <value>نتیجهٔ بازبینی</value>
+  </data>
+  <data name="Review_As_reviewed" xml:space="preserve">
+    <value>بازبینی‌شده: با منابعش سنجیده شد و درست است</value>
+  </data>
+  <data name="Review_As_disputed" xml:space="preserve">
+    <value>مورد اختلاف: منابع هم‌نظر نیستند – یادداشت می‌گوید بر سر چه</value>
+  </data>
+  <data name="Review_As_withdrawn" xml:space="preserve">
+    <value>پس‌گرفته: گزاره پس گرفته می‌شود – یادداشت می‌گوید چرا</value>
+  </data>
+  <data name="Review_On" xml:space="preserve">
+    <value>روز بازبینی</value>
+  </data>
+  <data name="Review_Note" xml:space="preserve">
+    <value>یادداشت</value>
+  </data>
+  <data name="Review_NoteHint" xml:space="preserve">
+    <value>گزاره با چه سنجیده شد؛ اختلاف بر سر چیست؛ چرا پس گرفته می‌شود.</value>
+  </data>
+  <data name="Review_Submit" xml:space="preserve">
+    <value>ثبت بازبینی</value>
+  </data>
+  <data name="Review_NeedsChoice" xml:space="preserve">
+    <value>نتیجهٔ بازبینی را انتخاب کنید.</value>
+  </data>
+  <data name="Review_NeedsStatement" xml:space="preserve">
+    <value>گزاره‌ای از این رکورد را که بازبینی شده انتخاب کنید.</value>
+  </data>
+  <data name="Change_Title" xml:space="preserve">
+    <value>تغییر رکورد</value>
+  </data>
+  <data name="Change_Lead" xml:space="preserve">
+    <value>رکورد، همان‌گونه که در فایل مجموعه نوشته می‌شود. پیش از نگه‌داشتن، کل مجموعه با این تغییر خوانده می‌شود؛ آنچه سایت نتواند به کار ببرد با دلیل رد می‌شود.</value>
+  </data>
+  <data name="Change_Json" xml:space="preserve">
+    <value>رکورد</value>
+  </data>
+  <data name="Change_Submit" xml:space="preserve">
+    <value>نگه‌داشتن تغییر</value>
+  </data>
+  <data name="Change_NotJson" xml:space="preserve">
+    <value>این متن یک رکورد نیست: {0}</value>
+  </data>
+  <data name="Change_NotAnObject" xml:space="preserve">
+    <value>باید یک شیء درون آکولاد باشد.</value>
+  </data>
+  <data name="Change_OtherId" xml:space="preserve">
+    <value>شناسهٔ رکورد ثابت می‌ماند ({0}). رکوردی با شناسهٔ دیگر رکوردی تازه است – آن را در صفحهٔ گروهش اضافه کنید.</value>
+  </data>
+  <data name="Remove_Title" xml:space="preserve">
+    <value>برداشتن رکورد</value>
+  </data>
+  <data name="Remove_Lead" xml:space="preserve">
+    <value>همراه با متن‌هایی که آن را ترجمه می‌کنند. اگر چیزی هنوز به این رکورد اشاره کند، انجام نمی‌شود. تاریخچهٔ آن می‌ماند.</value>
+  </data>
+  <data name="Remove_Submit" xml:space="preserve">
+    <value>برداشتن رکورد</value>
+  </data>
+  <data name="Add_Title" xml:space="preserve">
+    <value>افزودن رکورد</value>
+  </data>
+  <data name="Add_Lead" xml:space="preserve">
+    <value>رکوردی تازه در این گروه، همان‌گونه که در فایل مجموعه نوشته می‌شود. به انتهای گروه افزوده می‌شود.</value>
+  </data>
+  <data name="Add_Submit" xml:space="preserve">
+    <value>افزودن رکورد</value>
+  </data>
+  <data name="Add_Exists" xml:space="preserve">
+    <value>رکوردی با شناسهٔ {0} از پیش هست؛ آن را در صفحهٔ خودش تغییر دهید.</value>
+  </data>
+  <data name="Add_NeedsId" xml:space="preserve">
+    <value>رکورد خودش را نام می‌برد: باید شناسه داشته باشد.</value>
+  </data>
+  <data name="Publish_Title" xml:space="preserve">
+    <value>انتشار نسخهٔ بعدی</value>
+  </data>
+  <data name="Publish_Lead" xml:space="preserve">
+    <value>این کار از آنچه در ذخیره‌گاه هست نسخهٔ {0} را می‌سازد. همهٔ گزاره‌ها باید بازبینی شده باشند. ذخیره‌گاه نسخه را همان‌گونه که منتشر شد نگه می‌دارد؛ فرمان «store revision» آن را برای سایت می‌نویسد.</value>
+  </data>
+  <data name="Publish_On" xml:space="preserve">
+    <value>روز انتشار</value>
+  </data>
+  <data name="Publish_Note" xml:space="preserve">
+    <value>یادداشت دربارهٔ نسخه</value>
+  </data>
+  <data name="Publish_Submit" xml:space="preserve">
+    <value>انتشار نسخهٔ {0}</value>
+  </data>
+  <data name="Done_reviewed" xml:space="preserve">
+    <value>بازبینی ثبت شد.</value>
+  </data>
+  <data name="Done_changed" xml:space="preserve">
+    <value>تغییر نگه داشته شد.</value>
+  </data>
+  <data name="Done_unchanged" xml:space="preserve">
+    <value>نیازی به تغییر نبود.</value>
+  </data>
+  <data name="Done_removed" xml:space="preserve">
+    <value>رکورد برداشته شد.</value>
+  </data>
+  <data name="Done_added" xml:space="preserve">
+    <value>رکورد افزوده شد.</value>
+  </data>
+  <data name="Done_published" xml:space="preserve">
+    <value>نسخه منتشر شد و در ذخیره‌گاه نگه داشته می‌شود.</value>
   </data>
 </root>
