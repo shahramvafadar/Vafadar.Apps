@@ -591,4 +591,22 @@
   <data name="Language_Added" xml:space="preserve">
     <value>زبان افزوده شد. متن‌هایش در صفحهٔ رکوردها پر می‌شوند.</value>
   </data>
+  <data name="Merge_Title" xml:space="preserve">
+    <value>همان است که نامی دیگر</value>
+  </data>
+  <data name="Merge_Lead" xml:space="preserve">
+    <value>وقتی معلوم شود دو رکورد یک چیزند، این رکورد در دیگری ادغام می‌شود: هر رابطه، گام و تصویری که نام آن را دارد از آن پس نام دیگری را خواهد داشت، آنچه دربارهٔ آن گفته شده دربارهٔ دیگری گفته می‌شود، و نامش به‌عنوان نام دیگر قابل جست‌وجو می‌ماند. شباهت نام‌ها دلیل نیست؛ بگویید چه چیز نشان می‌دهد این دو یکی‌اند. تاریخچه هر رکورد را همان‌گونه که پیش‌تر بود نگه می‌دارد.</value>
+  </data>
+  <data name="Merge_Into" xml:space="preserve">
+    <value>همان است که</value>
+  </data>
+  <data name="Merge_Submit" xml:space="preserve">
+    <value>ادغام در آن</value>
+  </data>
+  <data name="Merge_NeedsOther" xml:space="preserve">
+    <value>نامی را که این رکورد با آن یکی است برگزینید.</value>
+  </data>
+  <data name="Done_merged" xml:space="preserve">
+    <value>رکورد دیگر در این رکورد ادغام شد.</value>
+  </data>
 </root>

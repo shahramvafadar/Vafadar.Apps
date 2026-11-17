@@ -18,7 +18,7 @@
         <p class="lead"><bdi dir="ltr">@Record</bdi></p>
     </header>
 
-    @if (Done is "reviewed" or "changed" or "unchanged" or "removed" or "added")
+    @if (Done is "reviewed" or "changed" or "unchanged" or "removed" or "added" or "merged")
     {
         <p class="done" role="status">@T[$"Done_{Done}"]</p>
     }
@@ -122,6 +122,33 @@
 </Allowed>
         </section>
 
+        @if (Group == "entities" && _form!.Records.TryGetValue("entities", out var others) && others.Count > 1)
+        {
+            <section aria-labelledby="merge">
+                <h2 id="merge">@T["Merge_Title"]</h2>
+                <p class="note">@T["Merge_Lead"]</p>
+                <ActOutcome Problems="_mergeProblems" />
+                <Allowed Role="EditorRoles.Writer">
+                    <form method="post" @formname="merge" @onsubmit="Merge" class="act" action="@Here">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="@Seen.Input" value="@_seen" />
+                        <p class="field">
+                            <label for="merge-into">@T["Merge_Into"]</label>
+                            <select id="merge-into" name="Merging.Into" required>
+                                <option value="">–</option>
+                                @foreach (var other in others.Where(other => other.Value != Record))
+                                {
+                                    <option value="@other.Value" selected="@(other.Value == Merging?.Into)">@other.Label</option>
+                                }
+                            </select>
+                        </p>
+                        <WhoAndWhy Form="merge" Model="Merging" By="@(Merging?.By ?? Editor.Name)" Reason="@(Merging?.Reason ?? string.Empty)" />
+                        <p><button type="submit" class="action danger">@T["Merge_Submit"]</button></p>
+                    </form>
+                </Allowed>
+            </section>
+        }
+
         <section aria-labelledby="remove">
             <h2 id="remove">@T["Remove_Title"]</h2>
             <p class="note">@T["Remove_Lead"]</p>
@@ -170,6 +197,7 @@
     private IReadOnlyList<(string Language, JsonObject Texts)>? _filledDated;
     private string _seen = string.Empty;
     private List<string>? _removeProblems;
+    private List<string>? _mergeProblems;
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
@@ -201,6 +229,10 @@
     /// <summary>Gets or sets what the form of a change was filled with.</summary>
     [SupplyParameterFromForm(FormName = "change")]
     public ChangeInput? Changing { get; set; }
+
+    /// <summary>Gets or sets what the form that says the entity is the same as another one was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "merge")]
+    public MergeInput? Merging { get; set; }
 
     /// <summary>Gets or sets what the form for taking the record out was filled with.</summary>
     [SupplyParameterFromForm(FormName = "remove")]
@@ -337,6 +369,36 @@
         }
 
         _changeProblems = problems;
+    }
+
+    private void Merge()
+    {
+        var input = Merging ?? new MergeInput();
+        var problems = new List<string>();
+        Fresh(problems);
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        var into = ActInput.Text(input.Into);
+        if (into is null)
+        {
+            problems.Add(T["Merge_NeedsOther"]);
+        }
+
+        if (problems.Count == 0)
+        {
+            var result = Store.MergeEntities(Collection, into!, Record, by!, reason!);
+            if (result.Done)
+            {
+                // The way leads to the entity that stays; this one keeps its page with its history.
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Collection}/record/entities/{into}?done=merged");
+                return;
+            }
+
+            problems.AddRange(result.Problems);
+        }
+
+        _mergeProblems = problems;
     }
 
     private void Remove()
