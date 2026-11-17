@@ -174,6 +174,16 @@ event, a media item that depicts it). The `revision` command leaves it out of th
 statement was in the revision before, the history names it as `withdrawn` with the reason. A published revision
 that holds a withdrawn statement is refused.
 
+### Where a place is
+
+A real place – `Place`, `Region`, `Country` – may say where it is:
+`"position": { "latitude": 36.3, "longitude": 59.6, "precision": "approximate" }`. `latitude` is degrees north
+(negative to the south, −90 to 90), `longitude` degrees east (negative to the west, −180 to 180), written with
+as many digits as the source gives. `precision`: `exact` (the place is there), `approximate` (about there),
+`centre_of_area` (the middle of a region or a country; it says nothing of its borders). A place of a story
+(`NarrativePlace`, `NarrativeRegion`) has no position – it is not a place on a map – and neither has
+anything that is no place.
+
 ### A quantity
 
 A statement about an entity can state a quantity: `"quantity": { "value": 50000, "unit": "verses", "approximate": true }`.

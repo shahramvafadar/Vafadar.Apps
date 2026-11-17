@@ -161,7 +161,8 @@ What has no place yet:
 
 * What a collection states with a date (`dated`) belongs to one entity. Time across several subjects that is
   no part of a collection is written as a comparison.
-* Coordinates of a place, and borders that change with time.
+* Borders of a land, and borders that change with time (a real place can say where it is – "Where a place
+  is" – as a point only).
 
 ## For the editors: publishing a revision
 

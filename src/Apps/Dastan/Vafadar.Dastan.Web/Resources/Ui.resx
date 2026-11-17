@@ -1122,4 +1122,28 @@
   <data name="Unit_money" xml:space="preserve">
     <value>{0} {1}</value>
   </data>
+  <data name="Position_Title" xml:space="preserve">
+    <value>Where it is</value>
+  </data>
+  <data name="Position_Format" xml:space="preserve">
+    <value>{0}° {1}, {2}° {3}</value>
+  </data>
+  <data name="Position_North" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="Position_South" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="Position_East" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="Position_West" xml:space="preserve">
+    <value>W</value>
+  </data>
+  <data name="PositionPrecision_Approximate" xml:space="preserve">
+    <value>about there</value>
+  </data>
+  <data name="PositionPrecision_CentreOfArea" xml:space="preserve">
+    <value>the middle of an area; its borders are not said</value>
+  </data>
 </root>

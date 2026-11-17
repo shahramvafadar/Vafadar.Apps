@@ -278,6 +278,19 @@ public sealed class Catalogue
                     problems.Add($"{entity.Id.Value}: the name {twice.Key.Name} is given twice in {twice.Key.Language}.");
                 }
 
+                if (entity.Position is { } position)
+                {
+                    if (entity.Type.Nature != EntityNature.Place || entity.Type == EntityTypes.NarrativePlace || entity.Type == EntityTypes.NarrativeRegion)
+                    {
+                        problems.Add($"{entity.Id.Value}: only a real place has a position; a place of a story is not a place on a map.");
+                    }
+
+                    if (position.Latitude is < -90 or > 90 || position.Longitude is < -180 or > 180)
+                    {
+                        problems.Add($"{entity.Id.Value}: its position is not on the earth.");
+                    }
+                }
+
                 foreach (var twice in entity.Identifiers.GroupBy(identifier => (identifier.Issuer, identifier.Value)).Where(identifiers => identifiers.Count() > 1))
                 {
                     problems.Add($"{entity.Id.Value}: the identifier {twice.Key.Value} of {twice.Key.Issuer} is given twice.");

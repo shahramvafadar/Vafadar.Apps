@@ -137,3 +137,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A collection can state quantities: how many people lived in a city in a year, how many verses a poem has,
   what something cost. The page of an entity now lists everything that is stated about it – with every digit
   as the source gives it, and "about" where the source says so.
+- A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
+  and lets a phone or computer open it in its own map; the site itself loads no map from anybody.

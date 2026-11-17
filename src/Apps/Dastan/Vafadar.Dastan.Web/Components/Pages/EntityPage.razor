@@ -13,6 +13,17 @@
         <p class="meta"><TypeName Type="overview.Entity.Type" /></p>
         <h1><Loc Text="overview.Entity.Label" /></h1>
         <p class="lead"><Loc Text="overview.Entity.Summary" /></p>
+        @if (overview.Entity.Position is { } position)
+        {
+            @* Where the place is. The link is a position a device opens with its own map; the page loads no map. *@
+            <p class="meta position">
+                @T["Position_Title"]: <a href="@PositionText.Address(position)"><bdi>@PositionText.Of(position, Visitor, T)</bdi></a>
+                @if (position.Precision != PositionPrecision.Exact)
+                {
+                    <span>– @T[$"PositionPrecision_{position.Precision}"]</span>
+                }
+            </p>
+        }
         @if (!overview.Entity.Names.IsEmpty)
         {
             @* The other names, each in its own language and with what kind of name it is. *@

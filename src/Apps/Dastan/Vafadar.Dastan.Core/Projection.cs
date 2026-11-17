@@ -56,6 +56,7 @@ public sealed class Projection
                         Dated = [.. entity.Dated.Where(dated => dated.Level.IsWithin(boundary))],
                         Names = [.. entity.Names.Where(name => name.Level.IsWithin(boundary))],
                         Identifiers = entity.Identifiers,
+                        Position = entity.Position,
                     }),
         ];
         Relations = [.. catalogue.Relations.Where(relation => relation.Level.IsWithin(boundary))];
