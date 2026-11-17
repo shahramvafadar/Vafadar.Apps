@@ -1251,4 +1251,10 @@
   <data name="Moment_Rule" xml:space="preserve">
     <value>پرسش دربارهٔ یک سال است، نه یک روز: آنچه در این سال پایان یافته هنوز آمده است و آنچه در آن آغاز شده نیز.</value>
   </data>
+  <data name="Series_Caption" xml:space="preserve">
+    <value>{0} عدد، از {1} تا {2}</value>
+  </data>
+  <data name="Series_Graph" xml:space="preserve">
+    <value>نگارهٔ عددهای: {0}</value>
+  </data>
 </root>

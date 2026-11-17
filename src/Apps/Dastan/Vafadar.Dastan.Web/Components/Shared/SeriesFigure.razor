@@ -1,0 +1,63 @@
+@* A series of quantities as a drawing: SVG written by the server (ADR 0008). Time runs from left to right in
+   every language; the numbers of the scale and the years follow the language of the page. A mark leads to the
+   row of its statement, where the number stands with every digit; the drawing rounds nothing but shows less. *@
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
+
+<figure class="series">
+    <figcaption>
+        <Loc Text="Series.Label" /> – @string.Format(CultureInfo.CurrentCulture, T["Series_Caption"], Visitor.Number(Series.Points.Length), TimeText.Year(Series.Points[0].Year.Era, Series.Points[0].Year.Number, Visitor, T), TimeText.Year(Series.Points[^1].Year.Era, Series.Points[^1].Year.Number, Visitor, T))
+    </figcaption>
+    <div class="series-frame" tabindex="0" role="group" aria-label="@string.Format(CultureInfo.CurrentCulture, T["Series_Graph"], Visitor.Text(Series.Label).Value)" dir="ltr">
+        <svg class="series-plot" width="@Em(Left + _chart.Width + Right)" height="@Em(Top + _chart.Height + Bottom)">
+            @foreach (var line in _chart.Values)
+            {
+                <g>
+                    <line class="series-grid @(line.Value == 0 ? "series-zero" : null)" x1="@Em(Left)" y1="@Em(Top + line.At)" x2="@Em(Left + _chart.Width)" y2="@Em(Top + line.At)" />
+                    <text class="series-scale" x="@Em(Left - 0.4)" y="@Em(Top + line.At + 0.25)" text-anchor="end">@QuantityText.Number(line.Value, Visitor)</text>
+                </g>
+            }
+            @foreach (var line in _chart.Years)
+            {
+                <g>
+                    <line class="series-tick" x1="@Em(Left + line.At)" y1="@Em(Top + _chart.Height)" x2="@Em(Left + line.At)" y2="@Em(Top + _chart.Height + 0.4)" />
+                    <text class="series-scale" x="@Em(Left + line.At)" y="@Em(Top + _chart.Height + 1.3)" text-anchor="middle" direction="@Visitor.Language.Direction">@TimeText.Year(line.Year.Era, line.Year.Number, Visitor, T)</text>
+                </g>
+            }
+            @for (var index = 1; index < _chart.Marks.Length; index++)
+            {
+                var (from, to) = (_chart.Marks[index - 1], _chart.Marks[index]);
+                <line class="series-line" x1="@Em(Left + from.X)" y1="@Em(Top + from.Y)" x2="@Em(Left + to.X)" y2="@Em(Top + to.Y)" />
+            }
+            @foreach (var mark in _chart.Marks)
+            {
+                <a class="series-mark @(mark.Point.Quantity.IsApproximate ? "series-about" : null)" href="@($"{Here}#stated-{mark.Point.Statement.Key}")">
+                    <title>@QuantityText.Of(mark.Point.Quantity, Visitor, T) – @TimeText.Of(mark.Point.Statement.Time!, Visitor, T)</title>
+                    <circle cx="@Em(Left + mark.X)" cy="@Em(Top + mark.Y)" r="0.4em" />
+                </a>
+            }
+        </svg>
+    </div>
+</figure>
+
+@code {
+    // The room around the drawing: for the numbers of the scale at the left and the years below.
+    private const double Left = 8;
+    private const double Right = 2.5;
+    private const double Top = 1;
+    private const double Bottom = 2;
+
+    private SeriesChart _chart = null!;
+
+    /// <summary>Gets or sets the series.</summary>
+    [Parameter, EditorRequired]
+    public QuantitySeries Series { get; set; } = null!;
+
+    /// <summary>Gets or sets the address of the page, which the marks lead back into.</summary>
+    [Parameter, EditorRequired]
+    public string Here { get; set; } = string.Empty;
+
+    protected override void OnParametersSet() => _chart = SeriesChart.Of(Series);
+
+    private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+}

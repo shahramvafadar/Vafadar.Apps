@@ -409,3 +409,33 @@ Verification: `PlacesViewTests` (7 tests) – which places are on the lists, wha
 reading stage on none; north at the top, east at the right, every place inside, the grid in whole steps; one
 place alone; the line of the date; a pole. `PlacesPageTests` (7 tests) – the page in both languages, the mark
 and its row, nothing loaded from anybody, a story alone, another collection. Not looked at in a browser.
+
+## Seventh addendum of 2026-11-18 – a series of quantities (step 14.3)
+
+An entity can state a quantity for a time (step 12.7); its page lists every statement with every digit. When
+the same quantity is stated for several times, the page now draws it as well.
+
+* **`QuantitySeries.Of(entity, language)`**: the statements of a quantity whose time can be placed among the
+  years of the common era, grouped by what they are called in the language of the collection, by their unit
+  and – for money – their currency. A group of two or more is a series, in the order of its times. One number
+  alone is none, and neither are numbers that state no time. The format has no field that names a series:
+  what is called the same and counted the same is the same quantity. Two things of one entity that are called
+  the same in the same unit would be drawn as one – the editors name them apart.
+* **`SeriesChart.Of`** lays it out without a page: time from the first to the last number with a little room;
+  the value from zero – or from below, when a number is below zero – to the next whole step above the
+  greatest, in steps of 1, 2 or 5 times a power of ten. Starting at zero is deliberate: a difference then
+  looks as large as it is. A time that is a stretch is drawn at its middle.
+* **`SeriesFigure`** writes it as SVG in a figure under the list: the lines of the scale with their numbers
+  in the digits of the page, the years, a line from number to number and a mark for each. A number the source
+  calls "about" is drawn open. A mark leads to the row of its statement; its title says the quantity and the
+  time as the list does. Nothing is converted between units, nothing is added up and nothing is put between
+  two numbers but a straight line – which says nothing about the years between; the caption says how many
+  numbers there are.
+
+Not done: two series in one drawing, a series across entities (the people of two cities), a scale that is not
+linear, and numbers that are a range.
+
+Verification: `QuantitySeriesTests` (5 tests) – what is one series and what is not; the scale from zero, with
+small numbers, with numbers below zero and with equal numbers; the years of the scale. `SeriesFigureTests`
+(3 cases) – the drawing on the page of a city in both languages with its marks and their rows; one drawing
+for one series and none for what is stated once. Not looked at in a browser.

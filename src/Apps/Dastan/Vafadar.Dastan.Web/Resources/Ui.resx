@@ -1251,4 +1251,10 @@
   <data name="Moment_Rule" xml:space="preserve">
     <value>A year is asked for, not a day: what ended in this year is still named, and what began in it already.</value>
   </data>
+  <data name="Series_Caption" xml:space="preserve">
+    <value>{0} numbers, from {1} to {2}</value>
+  </data>
+  <data name="Series_Graph" xml:space="preserve">
+    <value>Drawing of the numbers of: {0}</value>
+  </data>
 </root>
