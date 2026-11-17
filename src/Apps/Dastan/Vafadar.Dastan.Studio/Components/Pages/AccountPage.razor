@@ -1,0 +1,118 @@
+@page "/account"
+@inject EditorialStore Store
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The account of the editor who is signed in (steps 13.3 and 13.4): what it may do, another password, and when
+   its password was tried. A tool without accounts has no such page. *@
+@if (Editor.Account is { } account)
+{
+    <PageTitle>@T["Account_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <h1>@T["Account_Title"]</h1>
+        <p class="lead"><bdi>@account</bdi></p>
+    </header>
+
+    @if (Done == "changed")
+    {
+        <p class="done" role="status">@T["Account_PasswordChanged"]</p>
+    }
+
+    <section aria-labelledby="roles">
+        <h2 id="roles">@T["Account_Roles"]</h2>
+        @if (Editor.Roles == EditorRoles.None)
+        {
+            <p class="note">@T["Account_ReadsOnly"]</p>
+        }
+        else
+        {
+            <ul class="plain" role="list">
+                @foreach (var role in new[] { EditorRoles.Writer, EditorRoles.Reviewer, EditorRoles.Publisher }.Where(Editor.May))
+                {
+                    <li>@T[$"Role_{role}"]</li>
+                }
+            </ul>
+        }
+        <p class="note">@T["Account_RolesNote"]</p>
+    </section>
+
+    <section aria-labelledby="password">
+        <h2 id="password">@T["Account_Password"]</h2>
+        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Account_PasswordLead"], Editor.Number(EditorialStore.PasswordLength))</p>
+        <ActOutcome Problems="_problems" />
+        <form method="post" @formname="password" @onsubmit="Change" class="act" action="account">
+            <AntiforgeryToken />
+            <p class="field">
+                <label for="password-current">@T["Account_Current"]</label>
+                <input id="password-current" type="password" name="Changing.Current" required maxlength="1000" autocomplete="current-password" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="password-new">@T["Account_New"]</label>
+                <input id="password-new" type="password" name="Changing.Password" required minlength="@EditorialStore.PasswordLength" maxlength="1000" autocomplete="new-password" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="password-again">@T["Account_Again"]</label>
+                <input id="password-again" type="password" name="Changing.Again" required maxlength="1000" autocomplete="new-password" dir="ltr" />
+            </p>
+            <p><button type="submit" class="action">@T["Account_ChangePassword"]</button></p>
+        </form>
+    </section>
+
+    <section aria-labelledby="signins">
+        <h2 id="signins">@T["Account_SignIns"]</h2>
+        <p class="note">@T["Account_SignInsNote"]</p>
+        <ol class="changes" role="list">
+            @foreach (var entry in _signIns)
+            {
+                <li><bdi dir="ltr">@Editor.Moment(entry.At)</bdi> – @T[entry.Succeeded ? "Account_SignedIn" : "Account_WrongPassword"]</li>
+            }
+        </ol>
+    </section>
+}
+
+@code {
+    private IReadOnlyList<EditorSignIn> _signIns = [];
+    private List<string>? _problems;
+
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets what the form for another password was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "password")]
+    public PasswordInput? Changing { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Editor.Account is not { } account)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _signIns = Store.SignIns(account);
+    }
+
+    private void Change()
+    {
+        var input = Changing ?? new PasswordInput();
+        if (input.Password != input.Again)
+        {
+            _problems = [T["Account_Differ"]];
+            return;
+        }
+
+        var result = Store.ChangePassword(Editor.Account!, input.Current ?? string.Empty, input.Password ?? string.Empty);
+        if (result.Done)
+        {
+            // The old password signs in nowhere any more – not here either: the way back leads over the sign-in.
+            Navigation.NavigateTo("account?done=changed");
+            return;
+        }
+
+        _problems = [.. result.Problems];
+        _signIns = Store.SignIns(Editor.Account!);
+    }
+}

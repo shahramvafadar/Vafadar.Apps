@@ -30,6 +30,9 @@ the name of the editor, the time and the reason. A signed-in editor has one more
 (HttpOnly, SameSite, `Secure` over https, twelve hours, renewed while it is used), which holds the name and ends
 with another password or a closed account. Nothing of this goes into a published revision or to the public site.
 The store is one file on the machine of the tool; it is not hosted yet.
+Since step 13.3 the store also keeps, for each editor, what the account may do (writer, reviewer, publisher), and
+since step 13.4 the last 50 times the password of an account was tried: the account, the time and whether the
+password was right – no address, no browser, nothing that was typed; a try with an unknown name is not kept.
 
 Legend: ✅ yes · ❌ no · ⚙️ optional (user-enabled) · 🔜 planned · – not applicable
 

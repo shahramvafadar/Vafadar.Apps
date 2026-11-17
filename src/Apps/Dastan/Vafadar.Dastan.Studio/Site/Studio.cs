@@ -67,8 +67,9 @@ public sealed class StudioStore
 public sealed class Editor
 {
     /// <summary>Reads the language and the appearance of the request.</summary>
-    public Editor(IHttpContextAccessor accessor, TimeProvider time, IOptions<StudioOptions> options)
+    public Editor(IHttpContextAccessor accessor, TimeProvider time, IOptions<StudioOptions> options, EditorialStore store)
     {
+        ArgumentNullException.ThrowIfNull(store);
         ArgumentNullException.ThrowIfNull(time);
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(accessor);
@@ -78,6 +79,9 @@ public sealed class Editor
         Accounts = options.Value.Accounts;
         Account = Accounts ? StudioAccess.Session(context.User)?.Name : null;
         Name = Account ?? EditorName.Read(context);
+
+        // A tool without accounts runs on the machine of its one editor, who may do everything.
+        Roles = !Accounts ? EditorRoles.All : Account is null ? EditorRoles.None : store.RolesOf(Account);
         Today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
     }
 
@@ -86,6 +90,12 @@ public sealed class Editor
 
     /// <summary>Gets the name of the account the editor signed in with; nothing in a tool without accounts.</summary>
     public string? Account { get; }
+
+    /// <summary>Gets what the editor may do (step 13.3).</summary>
+    public EditorRoles Roles { get; }
+
+    /// <summary>Returns whether the editor may do what that role does.</summary>
+    public bool May(EditorRoles role) => (Roles & role) == role;
 
     /// <summary>Gets the name a form starts with: the account, or the name the editor gave with their last act.</summary>
     public string? Name { get; }

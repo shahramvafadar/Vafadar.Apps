@@ -44,7 +44,8 @@ else
     <h2 id="add">@T["Comparison_Add"]</h2>
     <p class="note">@T["Comparison_AddLead"]</p>
     <ActOutcome Problems="_problems" />
-    <form method="post" @formname="add" @onsubmit="Add" class="act" action="comparisons">
+    <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="add" @onsubmit="Add" class="act" action="comparisons">
         <AntiforgeryToken />
         <p class="field">
             <label for="add-json">@T["Comparison_File"]</label>
@@ -53,6 +54,7 @@ else
         <WhoAndWhy Form="add" Model="Adding" By="@(Adding?.By ?? Editor.Name)" Reason="@(Adding?.Reason ?? string.Empty)" />
         <p><button type="submit" class="action">@T["Comparison_Add"]</button></p>
     </form>
+</Allowed>
 </section>
 
 @code {

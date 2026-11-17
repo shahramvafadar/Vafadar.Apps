@@ -13,6 +13,19 @@ public sealed class SignInInput
     public string? Password { get; set; }
 }
 
+/// <summary>What an editor fills in to give the own account another password.</summary>
+public sealed class PasswordInput
+{
+    /// <summary>Gets or sets the present password.</summary>
+    public string? Current { get; set; }
+
+    /// <summary>Gets or sets the new password.</summary>
+    public string? Password { get; set; }
+
+    /// <summary>Gets or sets the new password, typed again.</summary>
+    public string? Again { get; set; }
+}
+
 /// <summary>What an editor fills in to record the review of a statement.</summary>
 public sealed class ReviewInput
 {

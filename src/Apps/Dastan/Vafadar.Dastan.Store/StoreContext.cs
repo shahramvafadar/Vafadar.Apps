@@ -211,6 +211,9 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     /// <summary>Gets the accounts of the editors.</summary>
     public DbSet<StoredEditor> Editors => Set<StoredEditor>();
 
+    /// <summary>Gets the times the password of an account was tried.</summary>
+    public DbSet<EditorSignIn> SignIns => Set<EditorSignIn>();
+
     /// <summary>Gets the documents kept as a whole: comparisons and their translations.</summary>
     public DbSet<StoredDocument> Documents => Set<StoredDocument>();
 
@@ -262,6 +265,14 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             editor.Property(item => item.Name).HasMaxLength(200);
             editor.Property(item => item.Password).HasMaxLength(200);
             editor.Property(item => item.Stamp).HasMaxLength(40);
+            editor.Property(item => item.Roles).HasMaxLength(100).HasDefaultValue("writer,reviewer,publisher");
+        });
+
+        modelBuilder.Entity<EditorSignIn>(entry =>
+        {
+            entry.HasKey(item => item.Number);
+            entry.Property(item => item.EditorId).HasMaxLength(200);
+            entry.HasIndex(item => new { item.EditorId, item.Number });
         });
 
         modelBuilder.Entity<StoredDocument>(document =>

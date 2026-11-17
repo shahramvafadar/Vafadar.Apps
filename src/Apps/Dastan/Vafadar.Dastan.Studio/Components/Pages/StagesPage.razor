@@ -23,7 +23,8 @@
     }
 
     <ActOutcome Problems="_problems" />
-    <form method="post" @formname="stages" @onsubmit="Keep" class="act" action="@Here">
+    <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="stages" @onsubmit="Keep" class="act" action="@Here">
         <AntiforgeryToken />
         <input type="hidden" name="@Seen.Input" value="@_seen" />
         @for (var level = 0; level <= _stages.Count; level++)
@@ -47,6 +48,7 @@
         <WhoAndWhy Form="stages" Model="Keeping" By="@(Keeping?.By ?? Editor.Name)" Reason="@(Keeping?.Reason ?? string.Empty)" />
         <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
     </form>
+</Allowed>
 }
 
 @code {

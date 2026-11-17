@@ -14,11 +14,16 @@ internal static class EditorCommands
           store editors --store <database>
               Lists the editors the store knows.
 
-          store editor add <name> --store <database>
+          store editor add <name> --store <database> [--roles <roles>]
           store editor password <name> --store <database>
               Makes the account of an editor, or gives the editor another password. The password is asked
               for and typed twice; it has at least 12 characters. Another password signs the editor out
               everywhere.
+
+          store editor roles <name> <roles> --store <database>
+              Says what an editor may do: writer (changes records, texts, stages, comparisons), reviewer
+              (records reviews), publisher (publishes a revision) – with commas between them – or all.
+              An account that is made without roles may do everything.
 
           store editor close <name> --store <database>
           store editor open <name> --store <database>
@@ -48,13 +53,39 @@ internal static class EditorCommands
                     foreach (var editor in editors)
                     {
                         var state = editor.Closed ? "  closed" : editor.LockedUntil is { } until ? $"  takes no password until {until:yyyy-MM-dd HH:mm} UTC" : null;
-                        output.WriteLine($"  {editor.Name}  since {editor.CreatedAt:yyyy-MM-dd}{state}");
+                        output.WriteLine($"  {editor.Name}  since {editor.CreatedAt:yyyy-MM-dd}  {(editor.Roles == EditorRoles.None ? "reads only" : EditorialStore.RolesText(editor.Roles))}{state}");
                     }
 
                     return ContentCommands.Done;
                 }
 
+            case ["editor", "roles", var name, var written, "--store", var database]:
+                if (EditorialStore.ReadRoles(written) is not { } given)
+                {
+                    output.WriteLine($"{written}: roles are writer, reviewer and publisher with commas between them, or all.");
+                    return ContentCommands.NotUsable;
+                }
+
+                return Said(output, database, time, $"{name}: {(given == EditorRoles.None ? "reads only" : EditorialStore.RolesText(given))}.", store => store.SetRoles(name, given));
+
+            case ["editor", "add", var name, "--roles", var written, "--store", var database]:
+                return Run(["editor", "add", name, "--store", database, "--roles", written], output, time, secret);
+
+            case ["editor", "add", var name, "--store", var database, "--roles", var written]:
+                if (EditorialStore.ReadRoles(written) is not { } roles)
+                {
+                    output.WriteLine($"{written}: roles are writer, reviewer and publisher with commas between them, or all.");
+                    return ContentCommands.NotUsable;
+                }
+
+                return Add(name, database, roles, output, time, secret);
+
             case ["editor", "add" or "password", var name, "--store", var database]:
+                if (words[1] == "add")
+                {
+                    return Add(name, database, EditorRoles.All, output, time, secret);
+                }
+
                 if (secret is null)
                 {
                     output.WriteLine("A password is typed where the command runs: run it in a terminal.");
@@ -68,8 +99,7 @@ internal static class EditorCommands
                     return ContentCommands.NotUsable;
                 }
 
-                return Said(output, database, time, words[1] == "add" ? $"{name}: the account was made." : $"{name}: has another password and is signed out everywhere.",
-                    store => words[1] == "add" ? store.AddEditor(name, password) : store.SetPassword(name, password));
+                return Said(output, database, time, $"{name}: has another password and is signed out everywhere.", store => store.SetPassword(name, password));
 
             case ["copy", "--store", var database, "--out", var target]:
                 if (!File.Exists(database))
@@ -97,6 +127,24 @@ internal static class EditorCommands
             default:
                 return null;
         }
+    }
+
+    private static int Add(string name, string database, EditorRoles roles, TextWriter output, TimeProvider time, Func<string, string?>? secret)
+    {
+        if (secret is null)
+        {
+            output.WriteLine("A password is typed where the command runs: run it in a terminal.");
+            return ContentCommands.NotUsable;
+        }
+
+        var password = secret($"Password for {name}: ");
+        if (password is null || password != secret("The password again: "))
+        {
+            output.WriteLine("The two passwords differ. Nothing was changed.");
+            return ContentCommands.NotUsable;
+        }
+
+        return Said(output, database, time, $"{name}: the account was made.", store => store.AddEditor(name, password, roles));
     }
 
     private static int Said(TextWriter output, string database, TimeProvider time, string done, Func<EditorialStore, ActResult> act)

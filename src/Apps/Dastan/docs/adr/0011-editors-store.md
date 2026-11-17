@@ -493,3 +493,33 @@ Verification: `StudioStaleFormTests` (7 tests) – the form of fields, the form 
 taking out, each opened before somebody else changed the record: refused, nothing kept; the form that comes
 back has the inputs and is kept when sent again; a change of the Persian text makes it stale; a change of
 another record does not; the stages and a comparison are guarded in the same way. Not looked at in a browser.
+
+## Thirteenth addendum of 2026-11-17 – who may do what, and the own account (steps 13.3 and 13.4)
+
+Every account could do everything. GOV-002 keeps writing, reviewing and publishing apart.
+
+* **Three roles**, any of which an account has: `writer` (changes, adds and takes out records, texts, stages
+  and comparisons), `reviewer` (records the review of a statement), `publisher` (publishes a revision).
+  Reading needs no role. An account is made with all three unless roles are given; the accounts that existed
+  keep all three (the migration gives them). A closed account may do nothing.
+* **Roles are given where the store lies**, by command (`store editor add <name> --roles …`,
+  `store editor roles <name> <roles>`), like the accounts themselves: the tool has no page that makes an
+  account or changes what one may do, so nobody can give themselves a role through the tool.
+* **In the tool** a form is on the page only for who has its role (`Allowed`); who has not reads a sentence
+  instead. A form that is not on the page cannot be sent: the request is refused before anything is done.
+  The roles are read from the store with every request – a role that is taken away is gone at once.
+* A tool without accounts runs on the machine of its one editor, who may do everything, as before.
+* The rule that who wrote a statement is not who reviews it is not enforced: with one or two editors it would
+  stop the work. The history says who did what.
+* **The own account** (`account`): what it may do; another password, for which the present one is proved – a
+  wrong one counts like a wrong one at a sign-in, and the new password signs the editor out everywhere, this
+  browser included; and the last times the password of the account was tried, with whether it was right.
+* **What is kept of a sign-in** is the account, the time and whether the password was right – for the last 50
+  tries of an account. No address, no browser, nothing typed. A try with a name the store does not know is
+  not kept: what was typed there could be a password. (Privacy matrix: the paragraph of the accounts.)
+
+Verification: `EditorRolesTests` (16 tests, store) and `StudioRolesTests` (10 tests, tool): default and given
+roles, changed and listed by command; what is no role; a closed account; a form per role in five kinds of
+account; a form sent after the role was taken away does nothing; the page of the account in both languages;
+another password with a wrong present one, with two different new ones, and done – after which the old one
+signs in nowhere; tries remembered, the last 50 only, none for an unknown name. Not looked at in a browser.
