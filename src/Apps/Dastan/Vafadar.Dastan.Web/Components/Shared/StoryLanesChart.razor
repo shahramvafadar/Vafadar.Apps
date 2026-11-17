@@ -28,7 +28,7 @@
             <line class="sc-rule" x1="@Em(Across(column * ColumnWidth, 0))" y1="@Em(HeadHeight)" x2="@Em(Across(column * ColumnWidth, 0))" y2="@Em(Height)" />
             <foreignObject x="@Em(Across(column * ColumnWidth, ColumnWidth))" y="0" width="@Em(ColumnWidth)" height="@Em(HeadHeight)">
                 <a class="sc-head" href="@($"{Here}#step-{step.Number}")" title="@(Titles ? null : title)">
-                    <span class="sc-number"><span class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], string.Empty)</span>@Visitor.Number(step.Number)</span>
+                    <span class="sc-number"><span class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], string.Empty)</span>@Visitor.Number(step.Number)<DisputedMark Review="step.Event.Review" Compact="true" /></span>
                     @if (Titles)
                     {
                         <bdi class="sc-title">@title</bdi>

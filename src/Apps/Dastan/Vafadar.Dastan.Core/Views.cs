@@ -223,6 +223,9 @@ public sealed record EvidenceView(
 
     /// <summary>Gets how far the editors' review of the statement has come, when the statement carries one.</summary>
     public ReviewStatus? Review { get; init; }
+
+    /// <summary>Gets what the sources disagree about, for a disputed statement whose review says so.</summary>
+    public string? Dispute { get; init; }
 }
 
 /// <summary>An entity found by its name.</summary>

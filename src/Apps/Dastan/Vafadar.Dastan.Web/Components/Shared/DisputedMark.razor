@@ -1,0 +1,26 @@
+@* Says of a statement that the sources disagree about it (GOV-004). A disputed statement is shown wherever the
+   statement is shown, and never as if it were settled; a statement in any other state gets no mark here.
+   Compact is for a chart, where a word has no room: a sign, with the word for a screen reader and on hover. *@
+@inject IStringLocalizer<Ui> T
+
+@if (Review == ReviewStatus.Disputed)
+{
+    if (Compact)
+    {
+        <span class="disputed-sign" title="@T["Disputed_Mark"]"><span aria-hidden="true">≠</span><span class="visually-hidden"> (@T["Disputed_Mark"])</span></span>
+    }
+    else
+    {
+        <span class="disputed">@T["Disputed_Mark"]</span>
+    }
+}
+
+@code {
+    /// <summary>Gets or sets how far the review of the statement has come.</summary>
+    [Parameter, EditorRequired]
+    public ReviewStatus? Review { get; set; }
+
+    /// <summary>Gets or sets whether the mark is the sign of a chart instead of the word.</summary>
+    [Parameter]
+    public bool Compact { get; set; }
+}

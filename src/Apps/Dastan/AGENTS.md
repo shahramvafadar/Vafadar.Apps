@@ -65,6 +65,12 @@ for Dastan is added here in the same commit as the work it came with.
   mark content as reviewed or approved to make something visible. A revision is made with the `revision` command
   from the working file, carries the record of each review and its history (`publication.history`), and is never
   edited by hand; what a visitor is told of the history goes through `Projection.Revisions`, by reading stage.
+  A disputed statement is marked with `DisputedMark` wherever a page or a chart shows a
+  statement – a new view of statements uses it too; a withdrawn statement never reaches a `Catalogue`.
+* To look at the site as the public gets it, publish it (`dotnet publish`) and run the published output with
+  `ASPNETCORE_ENVIRONMENT=Production` and `Dastan__Content` pointing to a published revision. `dotnet run` in
+  the Production environment serves empty style sheets (static web assets are off there) – a page looked at
+  that way was not looked at.
 * Dates are stored in the Gregorian calendar (D-043); another calendar is a matter of display. Content is written
   apart from the software, by people and assistants who follow the official guide and tools (D-042): a format
   that changes is changed in its guide and its checks in the same commit. The guide is `docs/content-guide.md`, the

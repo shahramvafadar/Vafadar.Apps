@@ -96,3 +96,29 @@ the difference of its texts); the history of a comparison.
 Verification: `RevisionHistoryTests` (Core), `ContentRevisionTests` (Data: the template of the writers reviewed,
 made into revision 1 and 2, read back by the site; what is refused; the command), `RevisionsPageTests` (Web).
 The revisions of the tests are test data; nothing is published.
+
+## Addendum of 2026-11-17 – disputed and withdrawn statements for the public (step 10.2, GOV-004)
+
+* **A disputed statement is said to be disputed wherever it is shown.** One component (`DisputedMark`) says it:
+  the word beside a relation in every list, beside a step of the telling and in the tables of a chart; a sign
+  (≠, with the word for a screen reader) on a relation of the connections chart and on a step of the story chart;
+  a dotted line in the family drawing and a dashed outline on a bar or a mark in time, where a chart has only a
+  line or a bar – each with a line below the chart that says what the mark means. The mark never relies on colour.
+  The page of its sources says what the disagreement is: the note of its review, which a disputed statement of a
+  revision has to have. Who reviewed stays the editors' record.
+* **A withdrawn statement is no part of a collection.** It stays in the working file with who withdrew it, when
+  and why; the reader leaves it out for every audience – also in a local demonstration – and `Catalogue` refuses
+  one that reaches it. What points to a withdrawn statement is a problem the editors correct: that is how the
+  effect on what depends on it is made visible before anything is published.
+* **The history tells a withdrawal.** The `revision` command leaves withdrawn statements out of the revision and
+  names each relation and event that the revision before still held as `withdrawn`, with the reason. The page
+  "what changed" shows it with the reason, from the reading stage of the statement on.
+
+Still open: a withdrawn dated statement is told as a change of its entity, not as a withdrawal of its own; a
+comparison has no history, so a withdrawn statement of a comparison is refused for the public and still listed as
+withdrawn in a demonstration; the note of a review is one text in the language of the collection and is not
+translated.
+
+Verification: `DisputedAndWithdrawnTests` (Core), `ContentRevisionTests` (Data: withdrawn in the working file,
+in a revision and in the history), `DisputedStatementTests` (Web: lists, the three charts, the pages of sources,
+the timeline, the history; a page without a disputed statement has no mark).

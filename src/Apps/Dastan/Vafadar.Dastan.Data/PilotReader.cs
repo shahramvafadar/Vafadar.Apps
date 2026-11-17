@@ -53,7 +53,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private static readonly FrozenDictionary<string, ReviewStatus> ReviewNames = Names(
         ("source_backed_editorial_review_pending", ReviewStatus.SourcedReviewPending),
         ("reviewed", ReviewStatus.Reviewed),
-        ("disputed", ReviewStatus.Disputed));
+        ("disputed", ReviewStatus.Disputed),
+        ("withdrawn", ReviewStatus.Withdrawn));
 
     private static readonly string[] PublicationStates = ["editorial_sample", "published_revision"];
 
@@ -110,6 +111,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private readonly List<MediaItem> _media = [];
     private CatalogueInfo? _info;
     private ImmutableArray<RevisionEntry> _history = [];
+    private bool _published;
     private string _language = "en";
     private string? _worldId;
     private EntityId? _story;
@@ -169,6 +171,10 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         {
             Add(_events, ReadEvent(record));
         }
+
+        // What was withdrawn was read – its texts and its translations are accounted for – and is left out.
+        _relations.RemoveAll(relation => relation.Review == ReviewStatus.Withdrawn);
+        _events.RemoveAll(storyEvent => storyEvent.Review == ReviewStatus.Withdrawn);
 
         foreach (var record in sample.Children("media"))
         {
@@ -382,6 +388,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             record.Problem($"the publication state {state} is not understood; a file is an editorial_sample or a published_revision.");
         }
 
+        _published = state == "published_revision";
         var local = record.Flag("localDemoAllowed");
         var approved = record.Flag("publicReleaseApproved");
 
@@ -499,7 +506,10 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         {
             if (ReadDated(statement) is { } read)
             {
-                dated.Add(read);
+                if (read.Review != ReviewStatus.Withdrawn)
+                {
+                    dated.Add(read);
+                }
             }
             else
             {
@@ -561,6 +571,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var level = Level(record);
         var reviewKnown = record.Choice("reviewStatus", DatedReviewNames, out var review);
         var reviewed = ReadReview(record);
+        CheckWithdrawn(record, review, reviewed);
         TemporalExpression? time = null;
         if (record.Raw("time") is { } stated)
         {
@@ -611,6 +622,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var locator = record.Text("passageLocator", required: false);
         var reviewKnown = record.Choice("reviewStatus", ReviewNames, out var review);
         var reviewed = ReadReview(record);
+        CheckWithdrawn(record, review, reviewed);
         var directionKnown = record.Choice("directionality", DirectionNames, out var direction);
         if (typeKnown && directionKnown && type!.Directionality != direction)
         {
@@ -641,6 +653,25 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         };
     }
 
+    // A statement the editors took back stays in their working file – with who withdrew it, when and why – and
+    // is no part of the collection: no page shows it, and the next revision names it in its history (GOV-004).
+    private void CheckWithdrawn(JsonRecord record, ReviewStatus review, ReviewRecord? reviewed)
+    {
+        if (review != ReviewStatus.Withdrawn)
+        {
+            return;
+        }
+
+        if (_published)
+        {
+            record.Problem("a withdrawn statement is no part of a published revision; its history names it with the reason.");
+        }
+        else if (reviewed?.Note is null)
+        {
+            record.Problem("a withdrawn statement says in its review who withdrew it and when, and in the note of the review why.");
+        }
+    }
+
     /// <summary>Reads who reviewed a statement and when, where the file says so.</summary>
     private static ReviewRecord? ReadReview(JsonRecord record)
     {
@@ -659,7 +690,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private static readonly FrozenDictionary<string, RevisionChangeKind> ChangeKindNames = Names(
         ("added", RevisionChangeKind.Added),
         ("changed", RevisionChangeKind.Changed),
-        ("removed", RevisionChangeKind.Removed));
+        ("removed", RevisionChangeKind.Removed),
+        ("withdrawn", RevisionChangeKind.Withdrawn));
 
     private static readonly string[] RecordKinds = ["source", "entity", "relation", "event", "media"];
 
@@ -686,10 +718,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
 
                 var label = change.Text("label");
                 var level = Level(change);
+                var reason = change.Text("reason", required: false);
                 change.Finish();
                 if (kindKnown && id is not null && recordKind is not null && label is not null && level is not null)
                 {
-                    changes.Add(new RevisionChange(kind, id, recordKind, LocalizedText.Of(_language, label), level.Value));
+                    changes.Add(new RevisionChange(kind, id, recordKind, LocalizedText.Of(_language, label), level.Value, reason));
                 }
             }
 
@@ -753,6 +786,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var level = Level(record);
         var reviewKnown = record.Choice("reviewStatus", ReviewNames, out var review);
         var reviewed = ReadReview(record);
+        CheckWithdrawn(record, review, reviewed);
         var timeIsPlaceInStory = ReadStoryTime(record.Child("temporalExpression"));
 
         var associations = ImmutableArray.CreateBuilder<EventAssociation>();

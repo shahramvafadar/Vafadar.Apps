@@ -175,6 +175,12 @@ dotnet run --project $content -- revision src/Apps/Dastan/content/samples/my-sto
   the revision before. The working file is not touched; work goes on in it.
 * The revision is written into a folder beside the folder of the working file (`samples` → `published`), so that
   the paths of media and translations stay right. A translation is published by copying it beside the revision.
+* **Withdrawing a statement:** do not delete it. Set its `reviewStatus` to `withdrawn` and write the `review`
+  with the reason in its `note`. The site stops showing it at once; the next revision leaves it out and says in
+  its history that it was withdrawn and why – in words a reader may see at the reading stage of the statement.
+  What still points to the statement has to be corrected first; the check names it.
+* **A disputed statement** (`disputed`) is published as disputed. The `note` of its review says what the sources
+  disagree about and is shown on the page of its sources.
 * The command does not review. It cannot know whether a statement was read against its source; it only refuses a
   file in which nobody says so. A writer or an assistant never runs it to make something visible.
 

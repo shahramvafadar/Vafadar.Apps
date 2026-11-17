@@ -40,11 +40,11 @@
             <foreignObject x="@Em(Pad + bar.Start + 0.05)" y="@Em(RowTop(bar) + 0.15)" width="@Em(Math.Max(0.1, bar.End - bar.Start - 0.1))" height="@Em(RowHeight - 0.3)">
                 @if (bar.Text == BandText.Nothing)
                 {
-                    <span class="tl-bar @Shape(bar) @Colour(bar.Lane)" title="@words.Title"></span>
+                    <span class="tl-bar@(bar.Band.IsDisputed ? " tl-disputed" : null) @Shape(bar) @Colour(bar.Lane)" title="@(bar.Band.IsDisputed ? $"{words.Title} – {T["Disputed_Mark"]}" : words.Title)"></span>
                 }
                 else
                 {
-                    <a class="tl-bar @Shape(bar) @Colour(bar.Lane)" href="@($"{Here}#item-{bar.Band.Key}")" title="@words.Title">
+                    <a class="tl-bar@(bar.Band.IsDisputed ? " tl-disputed" : null) @Shape(bar) @Colour(bar.Lane)" href="@($"{Here}#item-{bar.Band.Key}")" title="@(bar.Band.IsDisputed ? $"{words.Title} – {T["Disputed_Mark"]}" : words.Title)">
                         @if (bar.Text == BandText.NameAndYears && words.Start is not null)
                         {
                             <bdi class="tl-year">@words.Start</bdi>
@@ -63,7 +63,7 @@
         {
             <circle class="tl-dot @Colour(mark.Lane)" cx="@Em(Pad + mark.At)" cy="@Em(LaneTop(Drawing.Lanes[mark.Lane]) + LanePad)" r="0.3em" />
             <foreignObject x="@Em(Pad + mark.Start)" y="@Em(CalloutTop(mark))" width="@Em(mark.Length)" height="@Em(CalloutHeight - 0.35)">
-                <a class="tl-callout @Colour(mark.Lane)" href="@($"{Here}#item-{mark.Mark.Key}")" title="@($"{Drawing.Lanes[mark.Lane].Lane.Label}: {mark.Mark.Label}")" dir="@Visitor.Language.Direction">@mark.Mark.Label</a>
+                <a class="tl-callout@(mark.Mark.IsDisputed ? " tl-disputed" : null) @Colour(mark.Lane)" href="@($"{Here}#item-{mark.Mark.Key}")" title="@($"{Drawing.Lanes[mark.Lane].Lane.Label}: {mark.Mark.Label}" + (mark.Mark.IsDisputed ? $" – {T["Disputed_Mark"]}" : null))" dir="@Visitor.Language.Direction">@mark.Mark.Label</a>
             </foreignObject>
         }
     </svg>

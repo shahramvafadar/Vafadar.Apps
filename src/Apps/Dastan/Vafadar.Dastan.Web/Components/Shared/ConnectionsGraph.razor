@@ -70,7 +70,7 @@
             <div class="graph-node @(box.IsReference ? "graph-reference" : null)">
                 @foreach (var relation in box.Relations)
                 {
-                    <span class="graph-relation"><Loc Text="relation.Label" /></span>
+                    <span class="graph-relation"><Loc Text="relation.Label" /><DisputedMark Review="relation.Review" Compact="true" /></span>
                 }
                 <span class="graph-entity">
                     <a class="graph-name" href="@Address(box.Entity.Id, [])"><Loc Text="box.Entity.Label" /></a>

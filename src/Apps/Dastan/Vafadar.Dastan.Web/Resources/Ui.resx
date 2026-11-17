@@ -535,7 +535,7 @@
     <value>The sources disagree; the disagreement is kept</value>
   </data>
   <data name="Review_Withdrawn" xml:space="preserve">
-    <value>Withdrawn</value>
+    <value>Withdrawn by the editors</value>
   </data>
   <data name="Evidence_Where" xml:space="preserve">
     <value>Where to look</value>
@@ -914,5 +914,20 @@
   </data>
   <data name="RecordKind_media" xml:space="preserve">
     <value>Image or video</value>
+  </data>
+  <data name="Disputed_Mark" xml:space="preserve">
+    <value>Disputed</value>
+  </data>
+  <data name="Disputed_Legend" xml:space="preserve">
+    <value>Marked “Disputed”, with the sign ≠, or drawn with a dotted line or a dashed outline: the sources disagree about this statement. It is shown as disputed, not as settled; its sources say what the disagreement is.</value>
+  </data>
+  <data name="Evidence_Dispute" xml:space="preserve">
+    <value>What the sources disagree about</value>
+  </data>
+  <data name="Change_Withdrawn" xml:space="preserve">
+    <value>Withdrawn</value>
+  </data>
+  <data name="Change_Reason" xml:space="preserve">
+    <value>Reason:</value>
   </data>
 </root>

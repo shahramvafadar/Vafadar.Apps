@@ -72,7 +72,7 @@ public sealed class PublishedRevisionTests
         {
             var story = new SmallStory().Published();
             var visits = story.Relations[0];
-            story.Relations[0] = new Relation { Id = visits.Id, From = visits.From, To = visits.To, Type = visits.Type, Label = visits.Label, Scope = visits.Scope, Sources = visits.Sources, Review = state, Reviewed = state == ReviewStatus.Disputed ? visits.Reviewed : null, Level = visits.Level };
+            story.Relations[0] = new Relation { Id = visits.Id, From = visits.From, To = visits.To, Type = visits.Type, Label = visits.Label, Scope = visits.Scope, Sources = visits.Sources, Review = state, Reviewed = state == ReviewStatus.Disputed ? visits.Reviewed! with { Note = "Two manuscripts name different towns." } : null, Level = visits.Level };
             try
             {
                 story.Build();

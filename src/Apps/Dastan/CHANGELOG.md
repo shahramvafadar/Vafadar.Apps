@@ -75,3 +75,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   lists the revisions of a collection, newest first, with the names, relations, steps and images each added,
   changed or removed – only as far as the visitor has read. The editors make a revision with one command that
   refuses a file with a statement nobody reviewed. Nothing is published yet.
+- A statement the sources disagree about is marked as disputed wherever it appears – in lists, in the charts of
+  connections, family, story and time, and in tables – and the page of its sources says what the disagreement is.
+  A statement the editors take back is no longer shown anywhere; the page "what changed" names it with the reason.

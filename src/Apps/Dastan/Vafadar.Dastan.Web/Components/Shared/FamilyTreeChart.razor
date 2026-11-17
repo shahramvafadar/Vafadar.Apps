@@ -18,7 +18,7 @@
         <g class="tree-link">
             @for (var index = 1; index < corners.Count; index++)
             {
-                <line class="graph-line" x1="@Em(Across(corners[index - 1].X))" y1="@Em(corners[index - 1].Y)" x2="@Em(Across(corners[index].X))" y2="@Em(corners[index].Y)"
+                <line class="graph-line@(route.Relation.Relation.Review == ReviewStatus.Disputed ? " graph-disputed" : null)" x1="@Em(Across(corners[index - 1].X))" y1="@Em(corners[index - 1].Y)" x2="@Em(Across(corners[index].X))" y2="@Em(corners[index].Y)"
                       marker-end="@(index == corners.Count - 1 ? "url(#graph-arrow)" : null)" />
             }
         </g>
@@ -28,7 +28,7 @@
     {
         var (from, to) = Between(Tree.Node(edge.From.Id), Tree.Node(edge.To.Id));
         <g class="tree-link">
-            <line class="graph-line graph-partner" x1="@Em(Across(from.X))" y1="@Em(from.Y)" x2="@Em(Across(to.X))" y2="@Em(to.Y)" />
+            <line class="graph-line graph-partner@(edge.Relation.Review == ReviewStatus.Disputed ? " graph-disputed" : null)" x1="@Em(Across(from.X))" y1="@Em(from.Y)" x2="@Em(Across(to.X))" y2="@Em(to.Y)" />
         </g>
     }
 

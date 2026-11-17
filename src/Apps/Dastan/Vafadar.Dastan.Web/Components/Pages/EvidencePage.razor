@@ -61,7 +61,12 @@
         @if (evidence.Review is { } review)
         {
             <dt>@T["Evidence_Review"]</dt>
-            <dd>@T[$"Review_{review}"]</dd>
+            <dd><DisputedMark Review="review" /> @T[$"Review_{review}"]</dd>
+            @if (evidence.Dispute is { } dispute)
+            {
+                <dt>@T["Evidence_Dispute"]</dt>
+                <dd><bdi>@dispute</bdi></dd>
+            }
         }
 
         @if (evidence.PassageLocator is { } locator)

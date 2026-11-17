@@ -33,6 +33,11 @@
             <ConnectionsGraph Chart="_chart" Open="_open" Address="Address" />
         </ChartStage>
 
+        @if (view.Edges.Any(edge => edge.Relation.Review == ReviewStatus.Disputed))
+        {
+            <p class="note">@T["Disputed_Legend"]</p>
+        }
+
         @* The list says what the drawing says: both are the same answer of the projection (ADR 0002). *@
         <section aria-labelledby="as-list">
             <h2 id="as-list">@T["Connections_List"]</h2>
