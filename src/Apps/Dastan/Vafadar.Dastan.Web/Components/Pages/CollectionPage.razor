@@ -63,6 +63,11 @@
     <p class="actions">
         <a class="action secondary" href="@($"{Site.Collection}/gallery")">@T["Gallery_Title"]</a>
         <a class="action secondary" href="@($"{Site.Collection}/timeline")">@T["Timeline_Link"]</a>
+        @if (Visitor.Projection!.Years() is not null)
+        {
+            @* Offered when something the visitor may see states a year. *@
+            <a class="action secondary" href="@($"{Site.Collection}/at")">@T["Moment_Link"]</a>
+        }
         @if (!Visitor.Projection!.Places().IsEmpty)
         {
             @* Offered when the collection names a real place the visitor may see: a story alone has none. *@

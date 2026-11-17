@@ -1182,4 +1182,73 @@
   <data name="Places_Degrees" xml:space="preserve">
     <value>{0}° {1}</value>
   </data>
+  <data name="Moment_Link" xml:space="preserve">
+    <value>In a year</value>
+  </data>
+  <data name="Moment_Title" xml:space="preserve">
+    <value>A year of {0}</value>
+  </data>
+  <data name="Moment_TitleYear" xml:space="preserve">
+    <value>{0} in the year {1}</value>
+  </data>
+  <data name="Moment_Lead" xml:space="preserve">
+    <value>Choose a year, and the page says what the collection states for it: who held which place, office or tie then, and what is said of that year.</value>
+  </data>
+  <data name="Moment_Year" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Moment_Era" xml:space="preserve">
+    <value>Era</value>
+  </data>
+  <data name="Moment_Era_CommonEra" xml:space="preserve">
+    <value>of the common era</value>
+  </data>
+  <data name="Moment_Era_BeforeCommonEra" xml:space="preserve">
+    <value>before the common era</value>
+  </data>
+  <data name="Moment_Show" xml:space="preserve">
+    <value>Show the year</value>
+  </data>
+  <data name="Moment_Range" xml:space="preserve">
+    <value>The collection states years from {0} to {1}.</value>
+  </data>
+  <data name="Moment_Choose" xml:space="preserve">
+    <value>No year is chosen yet.</value>
+  </data>
+  <data name="Moment_First" xml:space="preserve">
+    <value>Begin at {0}</value>
+  </data>
+  <data name="Moment_Invalid" xml:space="preserve">
+    <value>That is no year: a year is a whole number from 1, of the common era or before it.</value>
+  </data>
+  <data name="Moment_Nothing" xml:space="preserve">
+    <value>Nothing is stated for this year.</value>
+  </data>
+  <data name="Moment_NoYears" xml:space="preserve">
+    <value>Nothing with a year can be shown here.</value>
+  </data>
+  <data name="Moment_Where" xml:space="preserve">
+    <value>Who and what was where</value>
+  </data>
+  <data name="Moment_Held" xml:space="preserve">
+    <value>What held</value>
+  </data>
+  <data name="Moment_Stated" xml:space="preserve">
+    <value>What is stated for this year</value>
+  </data>
+  <data name="Moment_Possibly" xml:space="preserve">
+    <value>may have held – the sources do not say it for certain for this year</value>
+  </data>
+  <data name="Moment_Earlier" xml:space="preserve">
+    <value>Earlier: {0}</value>
+  </data>
+  <data name="Moment_Later" xml:space="preserve">
+    <value>Later: {0}</value>
+  </data>
+  <data name="Moment_Steps" xml:space="preserve">
+    <value>To the years in which something changes</value>
+  </data>
+  <data name="Moment_Rule" xml:space="preserve">
+    <value>A year is asked for, not a day: what ended in this year is still named, and what began in it already.</value>
+  </data>
 </root>

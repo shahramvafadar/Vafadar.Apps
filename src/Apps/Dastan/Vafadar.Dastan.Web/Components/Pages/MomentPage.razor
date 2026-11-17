@@ -1,0 +1,200 @@
+@page "/{Collection}/at"
+@using Vafadar.Temporal
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* One year of a collection (step 14.2, R-PUB-03): the relations of the world that held then, and what is stated
+   of its entities for that year. The year is asked for with a form that asks for a page, so it works without a
+   script. Only what the visitor may see at the reading position is asked of the projection. *@
+@if (_subject is { } subject)
+{
+    var name = Visitor.Text(subject.Label).Value;
+    var title = _moment is { } shown
+        ? string.Format(CultureInfo.CurrentCulture, T["Moment_TitleYear"], name, Written(shown.Year))
+        : string.Format(CultureInfo.CurrentCulture, T["Moment_Title"], name);
+    <PageTitle>@title – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], name)</a></p>
+        <h1>@title</h1>
+        <p class="lead">@T["Moment_Lead"]</p>
+    </header>
+
+    @if (_years is not { } years)
+    {
+        @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
+        <p class="note" role="status">
+            @T["Moment_NoYears"]
+            @if (_continues)
+            {
+                <text> @T["Gallery_EmptyHint"] </text><a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
+            }
+        </p>
+    }
+    else
+    {
+        <form class="search moment-form" method="get" action="@($"{Site.Collection}/at")">
+            <div class="search-row">
+                <p class="field">
+                    <label for="moment-year">@T["Moment_Year"]</label>
+                    <input type="number" id="moment-year" name="year" value="@_moment?.Year.Number.ToString(CultureInfo.InvariantCulture)" min="1" max="9999" step="1" required inputmode="numeric" dir="ltr" />
+                </p>
+                <p class="field">
+                    <label for="moment-era">@T["Moment_Era"]</label>
+                    <select id="moment-era" name="era">
+                        <option value="ce" selected="@(!_before)">@T["Moment_Era_CommonEra"]</option>
+                        <option value="bce" selected="@_before">@T["Moment_Era_BeforeCommonEra"]</option>
+                    </select>
+                </p>
+                <button type="submit" class="action">@T["Moment_Show"]</button>
+            </div>
+            <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Moment_Range"], Written(years.First), Written(years.Last))</p>
+        </form>
+
+        @if (_invalid)
+        {
+            <p class="note" role="alert">@T["Moment_Invalid"]</p>
+        }
+
+        @if (_moment is not { } moment)
+        {
+            @if (!_invalid)
+            {
+                <p class="note" role="status">@T["Moment_Choose"]</p>
+            }
+            <p class="actions"><a class="action secondary" href="@Address(years.First)">@string.Format(CultureInfo.CurrentCulture, T["Moment_First"], Written(years.First))</a></p>
+        }
+        else
+        {
+            var where = moment.Relations.Where(held => held.Edge.To.Type.Nature == EntityNature.Place).ToList();
+            var other = moment.Relations.Where(held => held.Edge.To.Type.Nature != EntityNature.Place).ToList();
+
+            <nav class="actions" aria-label="@T["Moment_Steps"]">
+                @if (moment.Earlier is { } earlier)
+                {
+                    <a class="action secondary" rel="prev" href="@Address(earlier)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Earlier"], Written(earlier))</a>
+                }
+                @if (moment.Later is { } later)
+                {
+                    <a class="action secondary" rel="next" href="@Address(later)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Later"], Written(later))</a>
+                }
+            </nav>
+
+            @if (moment.IsEmpty)
+            {
+                <p class="note" role="status">@T["Moment_Nothing"]</p>
+            }
+            else
+            {
+                <p class="note">@T["Moment_Rule"]</p>
+                @Held("where", T["Moment_Where"], where)
+                @Held("held", T["Moment_Held"], other)
+
+                @if (!moment.Stated.IsEmpty)
+                {
+                    <section aria-labelledby="stated">
+                        <h2 id="stated">@T["Moment_Stated"]</h2>
+                        <dl class="facts stated">
+                            @foreach (var stated in moment.Stated)
+                            {
+                                <dt>
+                                    <a href="@($"{Site.Collection}/entity/{stated.Entity.Id}#stated-{stated.Statement.Key}")"><Loc Text="stated.Entity.Label" /></a>:
+                                    <Loc Text="stated.Statement.Label" /> <DisputedMark Review="stated.Statement.Review" />
+                                </dt>
+                                <dd>
+                                    @if (stated.Statement.Quantity is { } quantity)
+                                    {
+                                        <strong class="quantity">@QuantityText.Of(quantity, Visitor, T)</strong>
+                                    }
+                                    <span class="when">@TimeText.Of(stated.Statement.Time!, Visitor, T)</span>
+                                    @if (stated.Holding == Holding.Possibly)
+                                    {
+                                        <span class="meta possibly">– @T["Moment_Possibly"]</span>
+                                    }
+                                </dd>
+                            }
+                        </dl>
+                    </section>
+                }
+            }
+        }
+    }
+}
+
+@code {
+    private Entity? _subject;
+    private YearsCovered? _years;
+    private MomentView? _moment;
+    private bool _invalid;
+    private bool _before;
+    private bool _continues;
+    private string _here = string.Empty;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the year in the address.</summary>
+    [SupplyParameterFromQuery(Name = "year")]
+    public string? Year { get; set; }
+
+    /// <summary>Gets or sets the era of the year in the address: <c>bce</c> for the time before the common era.</summary>
+    [SupplyParameterFromQuery(Name = "era")]
+    public string? Era { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Collection != Site.Collection || Visitor.Projection is not { } projection)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _subject = projection.Overview().Subject;
+        _continues = projection.StoryContinues;
+        _years = projection.Years();
+        _before = Era == "bce";
+        _here = $"{Site.Collection}/at";
+        if (_years is null || string.IsNullOrWhiteSpace(Year))
+        {
+            return;
+        }
+
+        // The address is written by anybody: a year is a whole number of an era, nothing else.
+        if (!int.TryParse(Year, NumberStyles.None, CultureInfo.InvariantCulture, out var number) || number is < 1 or > 9999 || Era is not (null or "" or "ce" or "bce"))
+        {
+            _invalid = true;
+            return;
+        }
+
+        var year = new YearOfEra(_before ? Vafadar.Temporal.Era.BeforeCommonEra : Vafadar.Temporal.Era.CommonEra, number);
+        _moment = projection.At(year);
+        _here = Address(year);
+    }
+
+    private string Address(YearOfEra year) =>
+        $"{Site.Collection}/at?year={year.Number.ToString(CultureInfo.InvariantCulture)}{(year.Era == Vafadar.Temporal.Era.BeforeCommonEra ? "&era=bce" : null)}";
+
+    private string Written(YearOfEra year) => TimeText.Year(year.Era, year.Number, Visitor, T);
+
+    // A list of relations that held: each as its sentence, with what is not certain said so.
+    private RenderFragment Held(string id, string title, IReadOnlyList<HeldThen> relations) => relations.Count == 0
+        ? @<text></text>
+        : @<section aria-labelledby="@id">
+            <h2 id="@id">@title</h2>
+            <ul class="statements" role="list">
+                @foreach (var held in relations)
+                {
+                    <li>
+                        <Statement Relation="held.Edge" Evidence="true" From="@_here" />
+                        @if (held.Holding == Holding.Possibly)
+                        {
+                            <span class="meta possibly">– @T["Moment_Possibly"]</span>
+                        }
+                    </li>
+                }
+            </ul>
+        </section>;
+}
