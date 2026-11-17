@@ -167,3 +167,15 @@ dotnet run --project $content -- store comparison export <id> --store <database>
 What `export` writes – the file and its translations beside it – is what a site is given in its folder
 `comparisons`. An update of the tool that brings new tables (here: the documents) applies them when the store
 is opened; make a copy of the store first (`store copy`).
+
+## What an account may do
+
+```powershell
+dotnet run --project $content -- store editor add <name> --store <database> --roles writer,reviewer
+dotnet run --project $content -- store editor roles <name> publisher --store <database>
+dotnet run --project $content -- store editors --store <database>
+```
+
+The roles are `writer`, `reviewer` and `publisher`, with commas between them, or `all`; an empty text makes
+an account that reads only. A change holds from the next page the editor opens. An editor changes the own
+password on the page `account` of the tool; a forgotten one is set anew with `store editor password`.

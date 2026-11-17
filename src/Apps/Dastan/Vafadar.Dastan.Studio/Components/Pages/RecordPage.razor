@@ -43,7 +43,8 @@
                 <h2 id="review">@T["Review_Title"]</h2>
                 <p class="note">@T["Review_Lead"]</p>
                 <ActOutcome Problems="_reviewProblems" />
-                <form method="post" @formname="review" @onsubmit="Review" class="act" action="@Here">
+                <Allowed Role="EditorRoles.Reviewer">
+<form method="post" @formname="review" @onsubmit="Review" class="act" action="@Here">
                     <AntiforgeryToken />
                 <input type="hidden" name="@Seen.Input" value="@_seen" />
                     @if (_statements.Count == 1)
@@ -81,6 +82,7 @@
                     <WhoAndWhy Form="review" Model="Reviewing" By="@(Reviewing?.By ?? Editor.Name)" />
                     <p><button type="submit" class="action">@T["Review_Submit"]</button></p>
                 </form>
+</Allowed>
             </section>
         }
 
@@ -88,7 +90,8 @@
             <h2 id="fields">@T["Fields_Title"]</h2>
             <p class="note">@T["Fields_Lead"]</p>
             <ActOutcome Problems="_fieldsProblems" />
-            <form method="post" @formname="fields" @onsubmit="Fill" class="act" action="@Here">
+            <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="fields" @onsubmit="Fill" class="act" action="@Here">
                 <AntiforgeryToken />
                 <input type="hidden" name="@Seen.Input" value="@_seen" />
                 @foreach (var field in RecordForm.Of(Group, _filled ?? record.Body, _form!, _filledTexts ?? _texts, _filledDated ?? _dated))
@@ -98,13 +101,15 @@
                 <WhoAndWhy Form="fields" Model="Filling" By="@(Filling?.By ?? Editor.Name)" Reason="@(Filling?.Reason ?? string.Empty)" />
                 <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
             </form>
+</Allowed>
         </section>
 
         <section aria-labelledby="change">
             <h2 id="change">@T["Change_TextTitle"]</h2>
             <p class="note">@T["Change_Lead"]</p>
             <ActOutcome Problems="_changeProblems" />
-            <form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
+            <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
                 <AntiforgeryToken />
                 <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <p class="field">
@@ -114,18 +119,21 @@
                 <WhoAndWhy Form="change" Model="Changing" By="@(Changing?.By ?? Editor.Name)" Reason="@(Changing?.Reason ?? string.Empty)" />
                 <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
             </form>
+</Allowed>
         </section>
 
         <section aria-labelledby="remove">
             <h2 id="remove">@T["Remove_Title"]</h2>
             <p class="note">@T["Remove_Lead"]</p>
             <ActOutcome Problems="_removeProblems" />
-            <form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
+            <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
                 <AntiforgeryToken />
                 <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <WhoAndWhy Form="remove" Model="Removing" By="@(Removing?.By ?? Editor.Name)" Reason="@(Removing?.Reason ?? string.Empty)" />
                 <p><button type="submit" class="action danger">@T["Remove_Submit"]</button></p>
             </form>
+</Allowed>
         </section>
     }
     else

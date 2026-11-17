@@ -18,7 +18,7 @@
             <form method="post" action="/sign-out" class="account" aria-label="@T["Account_Label"]">
                 <AntiforgeryToken />
                 <input type="hidden" name="returnUrl" value="@($"/{Editor.Language.Tag}/")" />
-                <span class="account-name"><bdi>@account</bdi></span>
+                <a class="account-name" href="account"><bdi>@account</bdi></a>
                 <button type="submit">@T["Account_SignOut"]</button>
             </form>
         }

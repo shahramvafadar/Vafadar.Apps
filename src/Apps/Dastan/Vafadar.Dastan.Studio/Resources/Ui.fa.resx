@@ -501,4 +501,70 @@
   <data name="Act_Stale" xml:space="preserve">
     <value>پس از آنکه این فرم را باز کردید کس دیگری این را تغییر داده است؛ برای همین چیزی از آنچه پر کرده بودید نگه داشته نشد. فرم هنوز نوشته‌های شما را دارد، روی آنچه اکنون در انبار است؛ تاریخچهٔ پایین صفحه می‌گوید چه تغییر کرده است. اگر تغییر شما هنوز درست است، فرم را دوباره بفرستید.</value>
   </data>
+  <data name="Role_Writer" xml:space="preserve">
+    <value>می‌نویسد: رکوردها، متن‌ها، مرحله‌ها و مقایسه‌ها را تغییر می‌دهد، می‌افزاید و برمی‌دارد.</value>
+  </data>
+  <data name="Role_Reviewer" xml:space="preserve">
+    <value>بازبینی می‌کند: ثبت می‌کند که گزاره‌ای بازبینی، محل اختلاف یا پس گرفته شده است.</value>
+  </data>
+  <data name="Role_Publisher" xml:space="preserve">
+    <value>منتشر می‌کند: نسخه‌ای می‌سازد که همه می‌توانند ببینند.</value>
+  </data>
+  <data name="Role_Needs_Writer" xml:space="preserve">
+    <value>حساب شما اجازهٔ نوشتن ندارد. کسی که حساب‌ها را نگه می‌دارد می‌تواند این را تغییر دهد.</value>
+  </data>
+  <data name="Role_Needs_Reviewer" xml:space="preserve">
+    <value>حساب شما اجازهٔ بازبینی ندارد. کسی که حساب‌ها را نگه می‌دارد می‌تواند این را تغییر دهد.</value>
+  </data>
+  <data name="Role_Needs_Publisher" xml:space="preserve">
+    <value>حساب شما اجازهٔ انتشار ندارد. کسی که حساب‌ها را نگه می‌دارد می‌تواند این را تغییر دهد.</value>
+  </data>
+  <data name="Account_Title" xml:space="preserve">
+    <value>حساب شما</value>
+  </data>
+  <data name="Account_Roles" xml:space="preserve">
+    <value>آنچه این حساب می‌تواند انجام دهد</value>
+  </data>
+  <data name="Account_ReadsOnly" xml:space="preserve">
+    <value>این حساب فقط می‌خواند.</value>
+  </data>
+  <data name="Account_RolesNote" xml:space="preserve">
+    <value>اینکه یک حساب چه می‌تواند بکند همان‌جا که انبار هست با یک فرمان گفته می‌شود؛ ابزار صفحه‌ای برای آن ندارد.</value>
+  </data>
+  <data name="Account_Password" xml:space="preserve">
+    <value>گذرواژهٔ تازه</value>
+  </data>
+  <data name="Account_PasswordLead" xml:space="preserve">
+    <value>گذرواژه دست‌کم {0} نویسه دارد. با گذرواژهٔ تازه از همه‌جا، از جمله همین‌جا، بیرون می‌روید.</value>
+  </data>
+  <data name="Account_Current" xml:space="preserve">
+    <value>گذرواژهٔ کنونی</value>
+  </data>
+  <data name="Account_New" xml:space="preserve">
+    <value>گذرواژهٔ تازه</value>
+  </data>
+  <data name="Account_Again" xml:space="preserve">
+    <value>تکرار گذرواژهٔ تازه</value>
+  </data>
+  <data name="Account_ChangePassword" xml:space="preserve">
+    <value>تغییر گذرواژه</value>
+  </data>
+  <data name="Account_Differ" xml:space="preserve">
+    <value>گذرواژهٔ تازه و تکرارش یکی نیستند. چیزی تغییر نکرد.</value>
+  </data>
+  <data name="Account_PasswordChanged" xml:space="preserve">
+    <value>گذرواژه تغییر کرد.</value>
+  </data>
+  <data name="Account_SignIns" xml:space="preserve">
+    <value>چه وقت‌هایی گذرواژهٔ این حساب آزموده شده است</value>
+  </data>
+  <data name="Account_SignInsNote" xml:space="preserve">
+    <value>تازه‌ترین در آغاز. گذرواژهٔ نادرستی که شما وارد نکرده‌اید دلیلی است برای تغییر گذرواژه. اینکه از کجا آزموده شده نگه داشته نمی‌شود.</value>
+  </data>
+  <data name="Account_SignedIn" xml:space="preserve">
+    <value>وارد شد</value>
+  </data>
+  <data name="Account_WrongPassword" xml:space="preserve">
+    <value>گذرواژهٔ نادرست</value>
+  </data>
 </root>

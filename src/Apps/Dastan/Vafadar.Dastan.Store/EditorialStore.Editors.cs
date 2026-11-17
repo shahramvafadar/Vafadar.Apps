@@ -37,6 +37,45 @@ public sealed class StoredEditor
 
     /// <summary>Gets or sets when the account was closed; nothing for an account that is open.</summary>
     public DateTime? ClosedAt { get; set; }
+
+    /// <summary>Gets or sets what the editor may do, as the names of the roles with commas between them.</summary>
+    public string Roles { get; set; } = EditorialStore.RolesText(EditorRoles.All);
+}
+
+/// <summary>What an editor may do in the tool (step 13.3). An account has any of them.</summary>
+[Flags]
+public enum EditorRoles
+{
+    /// <summary>Nothing but reading.</summary>
+    None = 0,
+
+    /// <summary>Changing, adding and taking out records, texts, stages and comparisons.</summary>
+    Writer = 1,
+
+    /// <summary>Recording the review of a statement: reviewed, disputed, withdrawn.</summary>
+    Reviewer = 2,
+
+    /// <summary>Publishing a revision.</summary>
+    Publisher = 4,
+
+    /// <summary>Everything.</summary>
+    All = Writer | Reviewer | Publisher,
+}
+
+/// <summary>One time somebody tried the password of an account (step 13.4). Where from is not kept.</summary>
+public sealed class EditorSignIn
+{
+    /// <summary>Gets or sets the number of the entry in the store.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the account, as names are compared.</summary>
+    public required string EditorId { get; set; }
+
+    /// <summary>Gets or sets when.</summary>
+    public DateTime At { get; set; }
+
+    /// <summary>Gets or sets whether the password was right and the account took it.</summary>
+    public bool Succeeded { get; set; }
 }
 
 /// <summary>An editor of the store, without what proves the name.</summary>
@@ -44,7 +83,11 @@ public sealed class StoredEditor
 /// <param name="CreatedAt">When the account was made.</param>
 /// <param name="Closed">Whether the account is closed.</param>
 /// <param name="LockedUntil">Until when the account takes no password; nothing when it does.</param>
-public sealed record EditorInfo(string Name, DateTime CreatedAt, bool Closed, DateTime? LockedUntil);
+public sealed record EditorInfo(string Name, DateTime CreatedAt, bool Closed, DateTime? LockedUntil)
+{
+    /// <summary>Gets what the editor may do.</summary>
+    public EditorRoles Roles { get; init; } = EditorRoles.All;
+}
 
 /// <summary>An editor who has signed in.</summary>
 /// <param name="Name">The name, as the account writes it.</param>
@@ -80,12 +123,111 @@ public sealed partial class EditorialStore
         return
         [
             .. _context.Editors.AsNoTracking().OrderBy(editor => editor.Id).AsEnumerable()
-                .Select(editor => new EditorInfo(editor.Name, editor.CreatedAt, editor.ClosedAt is not null, editor.LockedUntil > now ? editor.LockedUntil : null)),
+                .Select(editor => new EditorInfo(editor.Name, editor.CreatedAt, editor.ClosedAt is not null, editor.LockedUntil > now ? editor.LockedUntil : null) { Roles = ReadRoles(editor.Roles) ?? EditorRoles.None }),
         ];
     }
 
-    /// <summary>Makes the account of an editor.</summary>
-    public ActResult AddEditor(string name, string password)
+    /// <summary>How many sign-ins of an account the store remembers.</summary>
+    public const int SignInsKept = 50;
+
+    /// <summary>Returns the roles as an account keeps them: their names with commas between them.</summary>
+    public static string RolesText(EditorRoles roles) =>
+        string.Join(',', new[] { EditorRoles.Writer, EditorRoles.Reviewer, EditorRoles.Publisher }.Where(role => roles.HasFlag(role)).Select(role => role.ToString().ToLowerInvariant()));
+
+    /// <summary>Reads roles as they are written – names with commas between them – or nothing when a name is no role.</summary>
+    public static EditorRoles? ReadRoles(string? written)
+    {
+        var roles = EditorRoles.None;
+        foreach (var name in (written ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            if (name.Equals("all", StringComparison.OrdinalIgnoreCase))
+            {
+                roles = EditorRoles.All;
+            }
+            else if (name.All(char.IsLetter) && Enum.TryParse<EditorRoles>(name, ignoreCase: true, out var role) && role is EditorRoles.Writer or EditorRoles.Reviewer or EditorRoles.Publisher)
+            {
+                roles |= role;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        return roles;
+    }
+
+    /// <summary>Returns what the editor of that name may do; nothing for a name the store does not know or an account that is closed.</summary>
+    public EditorRoles RolesOf(string name)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        var key = Key(name.Trim());
+        var editor = _context.Editors.AsNoTracking().SingleOrDefault(account => account.Id == key && account.ClosedAt == null);
+        return editor is null ? EditorRoles.None : ReadRoles(editor.Roles) ?? EditorRoles.None;
+    }
+
+    /// <summary>Says what an editor may do from now on.</summary>
+    public ActResult SetRoles(string name, EditorRoles roles)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        if (Found(name) is not { } editor)
+        {
+            return Refused($"{name.Trim()}: the store knows no editor of that name.");
+        }
+
+        var written = RolesText(roles);
+        if (editor.Roles == written)
+        {
+            _context.ChangeTracker.Clear();
+            return new ActResult([]);
+        }
+
+        editor.Roles = written;
+        _context.SaveChanges();
+        _context.ChangeTracker.Clear();
+        return new ActResult([], 1);
+    }
+
+    /// <summary>
+    /// Gives an editor another password when the editor proves the present one. A wrong present password counts
+    /// like a wrong one at a sign-in. Whoever is signed in with the old password is signed in no longer.
+    /// </summary>
+    public ActResult ChangePassword(string name, string current, string password)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(current);
+        ArgumentNullException.ThrowIfNull(password);
+        if (Weak(password) is { } weak)
+        {
+            return Refused(weak);
+        }
+
+        if (password == current)
+        {
+            return Refused("the new password is the present one.");
+        }
+
+        return SignIn(name, current) is null ? Refused("the present password is not right.") : SetPassword(name, password);
+    }
+
+    /// <summary>Returns the last times the password of an account was tried, the newest first.</summary>
+    public ImmutableArray<EditorSignIn> SignIns(string name, int take = 20)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        var key = Key(name.Trim());
+        return [.. _context.SignIns.AsNoTracking().Where(entry => entry.EditorId == key).OrderByDescending(entry => entry.Number).Take(take)];
+    }
+
+    // Remembers one try of a password, and forgets the oldest ones of the account beyond what is kept.
+    private void Tried(StoredEditor editor, DateTime at, bool succeeded)
+    {
+        _context.SignIns.Add(new EditorSignIn { EditorId = editor.Id, At = at, Succeeded = succeeded });
+        var old = _context.SignIns.Where(entry => entry.EditorId == editor.Id).OrderByDescending(entry => entry.Number).Skip(SignInsKept - 1).ToList();
+        _context.SignIns.RemoveRange(old);
+    }
+
+    /// <summary>Makes the account of an editor, who may do everything unless roles are given.</summary>
+    public ActResult AddEditor(string name, string password, EditorRoles roles = EditorRoles.All)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
@@ -105,7 +247,7 @@ public sealed partial class EditorialStore
             return Refused(weak);
         }
 
-        _context.Editors.Add(new StoredEditor { Id = Key(written), Name = written, Password = Derive(password), Stamp = NewStamp(), CreatedAt = _time.GetUtcNow().UtcDateTime });
+        _context.Editors.Add(new StoredEditor { Id = Key(written), Name = written, Password = Derive(password), Stamp = NewStamp(), Roles = RolesText(roles), CreatedAt = _time.GetUtcNow().UtcDateTime });
         _context.SaveChanges();
         _context.ChangeTracker.Clear();
         return new ActResult([], 1);
@@ -180,6 +322,7 @@ public sealed partial class EditorialStore
                 return null;
             }
 
+            Tried(editor, now, right);
             if (!right)
             {
                 editor.Failures++;
@@ -192,12 +335,8 @@ public sealed partial class EditorialStore
                 return null;
             }
 
-            if (editor.Failures != 0 || editor.LockedUntil is not null)
-            {
-                (editor.Failures, editor.LockedUntil) = (0, null);
-                _context.SaveChanges();
-            }
-
+            (editor.Failures, editor.LockedUntil) = (0, null);
+            _context.SaveChanges();
             return new EditorSession(editor.Name, editor.Stamp);
         }
         finally

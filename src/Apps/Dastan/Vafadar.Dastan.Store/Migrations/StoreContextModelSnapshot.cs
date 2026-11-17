@@ -70,6 +70,30 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.ToTable("DocumentChanges");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.EditorSignIn", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EditorId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Succeeded")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("EditorId", "Number");
+
+                    b.ToTable("SignIns");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.RecordChange", b =>
                 {
                     b.Property<long>("Id")
@@ -204,6 +228,13 @@ namespace Vafadar.Dastan.Store.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("Roles")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("writer,reviewer,publisher");
 
                     b.Property<string>("Stamp")
                         .IsRequired()

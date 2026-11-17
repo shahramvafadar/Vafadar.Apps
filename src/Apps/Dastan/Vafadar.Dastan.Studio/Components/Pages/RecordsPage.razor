@@ -21,7 +21,8 @@
         <h2 id="add">@T["Add_Title"]</h2>
         <p class="note">@T["Add_Lead"]</p>
         <ActOutcome Problems="_problems" />
-        <form method="post" @formname="add" @onsubmit="Add" class="act" action="@($"{Collection}/records/{Group}")">
+        <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="add" @onsubmit="Add" class="act" action="@($"{Collection}/records/{Group}")">
             <AntiforgeryToken />
             <p class="field">
                 <label for="add-json">@T["Change_Json"]</label>
@@ -30,6 +31,7 @@
             <WhoAndWhy Form="add" Model="Adding" By="@(Adding?.By ?? Editor.Name)" Reason="@(Adding?.Reason ?? string.Empty)" />
             <p><button type="submit" class="action">@T["Add_Submit"]</button></p>
         </form>
+</Allowed>
     </section>
 }
 

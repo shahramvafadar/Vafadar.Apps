@@ -55,7 +55,8 @@
         <h2 id="publish">@T["Publish_Title"]</h2>
         <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Publish_Lead"], Editor.Number(next))</p>
         <ActOutcome Problems="_problems" />
-        <form method="post" @formname="publish" @onsubmit="Publish" class="act" action="@($"{Collection}/revisions")">
+        <Allowed Role="EditorRoles.Publisher">
+<form method="post" @formname="publish" @onsubmit="Publish" class="act" action="@($"{Collection}/revisions")">
             <AntiforgeryToken />
             <p class="field">
                 <label for="publish-on">@T["Publish_On"]</label>
@@ -68,6 +69,7 @@
             <WhoAndWhy Form="publish" Model="Publishing" By="@(Publishing?.By ?? Editor.Name)" />
             <p><button type="submit" class="action">@string.Format(CultureInfo.CurrentCulture, T["Publish_Submit"], Editor.Number(next))</button></p>
         </form>
+</Allowed>
     </section>
 }
 

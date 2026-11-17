@@ -27,7 +27,8 @@
             <h2 id="change">@T["Change_TextTitle"]</h2>
             <p class="note">@T["Comparison_ChangeLead"]</p>
             <ActOutcome Problems="_changeProblems" />
-            <form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
+            <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="change" @onsubmit="Change" class="act" action="@Here">
                 <AntiforgeryToken />
                 <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <p class="field">
@@ -49,18 +50,21 @@
                 <WhoAndWhy Form="change" Model="Changing" By="@(Changing?.By ?? Editor.Name)" Reason="@(Changing?.Reason ?? string.Empty)" />
                 <p><button type="submit" class="action">@T["Change_Submit"]</button></p>
             </form>
+</Allowed>
         </section>
 
         <section aria-labelledby="remove">
             <h2 id="remove">@T["Remove_Title"]</h2>
             <p class="note">@T["Comparison_RemoveLead"]</p>
             <ActOutcome Problems="_removeProblems" />
-            <form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
+            <Allowed Role="EditorRoles.Writer">
+<form method="post" @formname="remove" @onsubmit="Remove" class="act" action="@Here">
                 <AntiforgeryToken />
                 <input type="hidden" name="@Seen.Input" value="@_seen" />
                 <WhoAndWhy Form="remove" Model="Removing" By="@(Removing?.By ?? Editor.Name)" Reason="@(Removing?.Reason ?? string.Empty)" />
                 <p><button type="submit" class="action danger">@T["Remove_Submit"]</button></p>
             </form>
+</Allowed>
         </section>
     }
     else

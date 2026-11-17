@@ -168,7 +168,7 @@ public sealed class EditorAccountsTests : IDisposable
     public void The_commands_make_an_account_list_it_change_its_password_and_close_it()
     {
         Assert.Equal((0, $"Mina: the account was made.{Environment.NewLine}"), Run([Password, Password], "store", "editor", "add", "Mina"));
-        Assert.Equal((0, $"1 editor.{Environment.NewLine}  Mina  since 2026-11-17{Environment.NewLine}"), Run([], "store", "editors"));
+        Assert.Equal((0, $"1 editor.{Environment.NewLine}  Mina  since 2026-11-17  writer,reviewer,publisher{Environment.NewLine}"), Run([], "store", "editors"));
 
         Assert.Equal(0, Run(["another long phrase", "another long phrase"], "store", "editor", "password", "Mina").Exit);
         using (var store = _copy.Open())
@@ -178,7 +178,7 @@ public sealed class EditorAccountsTests : IDisposable
         }
 
         Assert.Equal((0, $"Mina: the account is closed.{Environment.NewLine}"), Run([], "store", "editor", "close", "Mina"));
-        Assert.Contains("Mina  since 2026-11-17  closed", Run([], "store", "editors").Output, StringComparison.Ordinal);
+        Assert.Contains("Mina  since 2026-11-17  writer,reviewer,publisher  closed", Run([], "store", "editors").Output, StringComparison.Ordinal);
         Assert.Equal((0, $"Nothing had to be changed.{Environment.NewLine}"), Run([], "store", "editor", "close", "Mina"));
         Assert.Equal((0, $"Mina: the account is open.{Environment.NewLine}"), Run([], "store", "editor", "open", "Mina"));
     }

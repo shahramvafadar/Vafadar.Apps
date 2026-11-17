@@ -501,4 +501,70 @@
   <data name="Act_Stale" xml:space="preserve">
     <value>This was changed by somebody else after you opened the form, so nothing of what you filled in was kept. The form still has what you filled in, on top of what the store holds now; the history at the end of the page says what was changed. Send the form again if your change still holds.</value>
   </data>
+  <data name="Role_Writer" xml:space="preserve">
+    <value>Writes: changes, adds and takes out records, texts, stages and comparisons.</value>
+  </data>
+  <data name="Role_Reviewer" xml:space="preserve">
+    <value>Reviews: records that a statement is reviewed, disputed or withdrawn.</value>
+  </data>
+  <data name="Role_Publisher" xml:space="preserve">
+    <value>Publishes: makes a revision that everybody may see.</value>
+  </data>
+  <data name="Role_Needs_Writer" xml:space="preserve">
+    <value>Your account does not write. Somebody who looks after the accounts can change that.</value>
+  </data>
+  <data name="Role_Needs_Reviewer" xml:space="preserve">
+    <value>Your account does not review. Somebody who looks after the accounts can change that.</value>
+  </data>
+  <data name="Role_Needs_Publisher" xml:space="preserve">
+    <value>Your account does not publish. Somebody who looks after the accounts can change that.</value>
+  </data>
+  <data name="Account_Title" xml:space="preserve">
+    <value>Your account</value>
+  </data>
+  <data name="Account_Roles" xml:space="preserve">
+    <value>What this account may do</value>
+  </data>
+  <data name="Account_ReadsOnly" xml:space="preserve">
+    <value>This account reads only.</value>
+  </data>
+  <data name="Account_RolesNote" xml:space="preserve">
+    <value>What an account may do is said where the store lies, with a command; the tool has no page for it.</value>
+  </data>
+  <data name="Account_Password" xml:space="preserve">
+    <value>Another password</value>
+  </data>
+  <data name="Account_PasswordLead" xml:space="preserve">
+    <value>A password has at least {0} characters. Another password signs you out everywhere, here too.</value>
+  </data>
+  <data name="Account_Current" xml:space="preserve">
+    <value>The present password</value>
+  </data>
+  <data name="Account_New" xml:space="preserve">
+    <value>The new password</value>
+  </data>
+  <data name="Account_Again" xml:space="preserve">
+    <value>The new password again</value>
+  </data>
+  <data name="Account_ChangePassword" xml:space="preserve">
+    <value>Change the password</value>
+  </data>
+  <data name="Account_Differ" xml:space="preserve">
+    <value>The new password and its repetition differ. Nothing was changed.</value>
+  </data>
+  <data name="Account_PasswordChanged" xml:space="preserve">
+    <value>The password was changed.</value>
+  </data>
+  <data name="Account_SignIns" xml:space="preserve">
+    <value>When the password of this account was tried</value>
+  </data>
+  <data name="Account_SignInsNote" xml:space="preserve">
+    <value>The newest first. A wrong password you did not type is a reason to change yours. From where somebody tried is not kept.</value>
+  </data>
+  <data name="Account_SignedIn" xml:space="preserve">
+    <value>signed in</value>
+  </data>
+  <data name="Account_WrongPassword" xml:space="preserve">
+    <value>a wrong password</value>
+  </data>
 </root>
