@@ -46,6 +46,12 @@ public sealed class WorldSite : DemoSite
         relations.Add(Relation("world-02", "person-poet", "place-city", "bornIn", "Born in"));
         relations.Add(Relation("world-03", "place-city", "region-land", "locatedIn", "Lies in"));
         relations.Add(Relation("world-04", "person-poet", "organisation-court", "memberOf", "Poet at"));
+
+        // Two tenures at the court, each with its time, and the year the work was finished (step 12.2).
+        relations[^1]!["time"] = JsonNode.Parse("""{ "kind": "period", "start": { "state": "known", "at": { "frame": "calendar", "era": "commonEra", "year": 994 } }, "end": { "state": "known", "at": { "frame": "calendar", "era": "commonEra", "year": 999 } }, "continuity": "notAsserted" }""");
+        relations.Add(Relation("world-05", "person-poet", "organisation-court", "memberOf", "Poet again at"));
+        relations[^1]!["time"] = JsonNode.Parse("""{ "kind": "period", "start": { "state": "known", "at": { "frame": "calendar", "era": "commonEra", "year": 1004 } }, "end": { "state": "unknown" }, "continuity": "notAsserted" }""");
+        relations.Single(relation => (string?)relation!["id"] == "world-01")!["time"] = JsonNode.Parse("""{ "kind": "occurrence", "at": { "frame": "calendar", "era": "commonEra", "year": 1010 } }""");
         File.WriteAllText(path, sample.ToJsonString());
     }
 
@@ -115,6 +121,37 @@ public sealed class RealWorldPagesTests(WorldSite site) : IClassFixture<WorldSit
         Assert.Contains("Born in", poet.Text, StringComparison.Ordinal);
         Assert.Contains("Poet at", poet.Text, StringComparison.Ordinal);
         Assert.Contains("A poet of the tests", work.Text, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("en", "994 CE", "999 CE", "1010 CE")]
+    [InlineData("fa", "۹۹۴", "۹۹۹", "۱۰۱۰")]
+    public async Task A_relation_that_says_when_it_held_says_so_where_it_is_shown(string language, string from, string to, string once)
+    {
+        var poet = await site.Visitor().Get($"/{language}/{Story}/entity/person-poet/connections");
+        var evidence = await site.Visitor().Get($"/{language}/{Story}/evidence/relation/world-04");
+
+        Assert.Contains(from, poet.Main, StringComparison.Ordinal);
+        Assert.Contains(to, poet.Main, StringComparison.Ordinal);
+        Assert.Contains(once, poet.Main, StringComparison.Ordinal);
+        Assert.Contains("class=\"when\"", poet.Html, StringComparison.Ordinal);
+        Assert.Equal(HttpStatusCode.OK, evidence.Status);
+        Assert.Contains(from, evidence.Main, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task The_timeline_has_a_lane_for_who_a_dated_relation_reads_from_with_a_bar_for_every_tenure()
+    {
+        var page = await site.Visitor().Get($"/en/{Story}/timeline");
+
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Contains("A poet of the tests", page.Text, StringComparison.Ordinal);
+        Assert.Contains("Poet at A court of the tests", page.Text, StringComparison.Ordinal);
+        Assert.Contains("Poet again at A court of the tests", page.Text, StringComparison.Ordinal);
+        Assert.Contains("Author of", page.Text, StringComparison.Ordinal);
+
+        // What has no time is not on the timeline: where the poet was born is said without a year.
+        Assert.DoesNotContain("Born in", page.Text, StringComparison.Ordinal);
     }
 
     [Fact]

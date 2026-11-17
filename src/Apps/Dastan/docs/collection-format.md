@@ -213,6 +213,7 @@ A place – of the story or real – takes part in a step of the story only as i
 | `spoilerLevel` | The stage at which the relation is told – not earlier than both entities |
 | `reviewStatus` | `source_backed_editorial_review_pending`; after the review of the editors `reviewed` or `disputed`; taken back by the editors `withdrawn` – see "Disputed and withdrawn statements" |
 | `passageLocator` | Optional |
+| `time` | Optional, and only with the scope `outside_the_story`: when the relation held, written like the `time` of a statement with a date – `kind` `period` for what lasted (a membership, a reign, a season), `occurrence` for what happened once. Somebody who left and came back is two relations, each with its time |
 | `scope` | What the relation is a statement about – see below |
 
 `scope`: `kind` – `work_structure` (a story is part of a work), `background_lineage` (who descends from whom,
@@ -288,8 +289,9 @@ name of the same thing is no relation either.
 | `worksIn` | The first worked in the field or on the subject | somebody or a group | a subject |
 | `foundIn` | The subject is found in the place | a subject | a place |
 
-When something happened – a birth, a death, a reign – is not said by a relation: it is a statement with a date
-of the entity (`dated`).
+When a relation held – from when to when somebody played for a club, held an office, ruled – is the `time` of
+the relation. When something happened to one entity alone – a birth, a death – is a statement with a date of
+that entity (`dated`). A relation of the story has no `time`: what a story tells has an order, not dates.
 
 ## An event – a step of the telling
 

@@ -177,3 +177,26 @@ Verification: `WorldVocabularyTests` (8 tests), made from the vocabulary itself 
 tested without a new test: a collection with two things of every kind and one relation of every bound type is
 read; every bound type is refused at each end for a kind it does not hold between; every type has a meaning and
 a name in `Ui.resx` and `Ui.fa.resx`; the list for writers prints meanings and ends. Test data only.
+
+## Third addendum of 2026-11-17 – when a relation held (step 12.2)
+
+DOM-007 asks that a role has its time and that "separate tenures must not become one continuous bar".
+
+* `Relation.Time` is an optional `TemporalExpression` – the same type and the same JSON as the time of a dated
+  statement, so "about", "between two years", an open or unknown end are said as they are stated (document 04).
+* **Only a relation with the scope `outside_the_story` has a time.** A relation of the story with a `time` is
+  refused, as `scope.calendarPeriod` always was: told order is never turned into dates.
+* **A tenure is a relation.** Nothing merges two relations of one type between the same two entities; each has
+  its identifier, its sources and its time, and the timeline draws each as its own bar.
+* The time is shown where the relation is: in its sentence (`Statement`), hence in lists of connections and on
+  its page of sources; and on the timeline of the collection, in the lane of the entity the relation reads
+  from, labelled with the wording of the relation and the name of the other entity.
+* A relation the visitor may not see yet gives nothing of its time (the projection drops the relation).
+
+Not done here: a form for a time in the tool of the editors (step 13.1; until then the record is changed as
+text); a "who was where at this date" view over relations (phase 14).
+
+Verification: `RelationTimeTests` (5 tests) – read as stated; two tenures stay two; a relation of the story, a
+place in the story and an unreadable time are refused; hidden before its stage; the collection of the repository
+dates no relation. `RealWorldPagesTests` – the time in the sentence in English and Persian, on the page of
+sources, and the lane with a bar for every tenure on the timeline. Test data only; not looked at in a browser.

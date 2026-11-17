@@ -121,3 +121,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   events and periods, offices and honours, real objects and subjects of knowledge – and 47 more things that can
   be said between them, from "held the office" and "translation of" to "merged into", "plays for" and "possibly
   the same". Each has its meaning and its name in English and Persian.
+- A relation of the world outside a story can say when it held – from when to when somebody belonged to a court
+  or played for a club. The time stands beside the relation and on the timeline; somebody who came back is
+  shown with two separate spans, never one.
