@@ -139,6 +139,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- "My list": a page of a name, an image or a thread can be kept with one button. The list lives in a cookie
+  on your own device – there is no account, and the site keeps nothing of it.
 - A collection names the other collections of the site that tell of the same world – another edition, another
   telling – and says that each keeps its own reading position.
 - One site can offer several collections: each has its own address, reading position and search, and the

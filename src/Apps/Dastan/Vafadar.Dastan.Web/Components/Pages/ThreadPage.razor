@@ -17,6 +17,7 @@
         <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _collection)</a> – @T["Thread_Kind"]</p>
         <h1><Loc Text="thread.Thread.Label" /></h1>
         <p class="lead"><Loc Text="thread.Thread.Summary" /></p>
+        <SaveControl Kind="SavedKind.Thread" Id="@thread.Thread.Id" />
     </header>
 
     <p class="note">@T["Thread_Lead"]</p>

@@ -115,3 +115,34 @@ Verification: `FindablePagesTests` (10 cases) – the address of a page in both 
 description in the words of the page; no address on a page that is not there; `robots.txt` and the list of a
 demonstration and of a public site; nothing of a later reading stage in the list; rules for paper in the
 style sheet. Not looked at in a browser and not printed.
+
+## Fourth addendum of 2026-11-18 – a list of one's own, in a cookie (step 15.1, B-016)
+
+A visitor wants to keep a page to come back to. The product documents call that saved views and place them
+with the accounts. An account is a decision of the owner; a list is not.
+
+* **The list is a cookie on the visitor's device** (`dastan.saved`): the collection, the kind of page – a
+  name, an image or video, a thread – and its identifier, for at most 30 pages. It is written like the other
+  cookies of a choice: readable by the site only, not by a script, sent with requests of this site, for a
+  year. The site has no account and no store for it: nothing of a list is kept on the server, and another
+  browser or device does not have it. The page of the list says so.
+* **Keeping and taking out** is one button, sent without a script, with the token every form carries. Keeping
+  a page the visitor cannot open is refused: the page is asked of the projection of its collection at the
+  visitor's reading position.
+* **The list never shows more than its pages do.** The page of the list asks the projection again for every
+  entry. A page that was kept and cannot be opened any more – the reading position was moved back, a record
+  was withdrawn – is not shown and not counted; it comes back when it can be opened again.
+* **A cookie is written by anybody.** What is no entry of a list is passed over; a list that is too long is
+  cut; nothing of a cookie is written into a page but through the records it names.
+* **A full list lets its oldest page go.** Thirty pages fit a cookie with room to spare; a larger list would
+  need a store, and with it an account.
+* The link "My list" stands in the head of the pages of a visitor who has a list. The page of the list is not
+  for search engines.
+
+Not done: saved views of a chart or a search (an address of the site already is one, and a browser keeps
+it); names and notes for kept pages; a list that follows a visitor to another device – that is an account.
+
+Verification: `SavedListTests` (17 cases) – keeping a page and finding it in the list, in both languages;
+the cookie as it is written; the page without a list; the last page taken out; a page that cannot be opened;
+a page that is not reached any more; four things that are no act; three cookies that are no list; a full
+list; pages of two collections. Not looked at in a browser.

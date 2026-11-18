@@ -1,0 +1,40 @@
+@* Keeping a page in the list of the visitor, or taking it out (step 15.1): one button, sent without a script.
+   The list is a cookie on the visitor's device; the site keeps nothing of it. *@
+@inject DastanSite Site
+@inject Visitor Visitor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+<form method="post" action="@SavedList.Address" class="save">
+    <AntiforgeryToken />
+    <input type="hidden" name="collection" value="@Site.Collection" />
+    <input type="hidden" name="kind" value="@Kind.ToString().ToLowerInvariant()" />
+    <input type="hidden" name="id" value="@Id" />
+    <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}/{Navigation.ToBaseRelativePath(Navigation.Uri)}")" />
+    @if (_kept)
+    {
+        <button type="submit" class="action secondary" name="act" value="drop" aria-pressed="true">@T["Saved_Drop"]</button>
+        <a href="saved">@T["Saved_Link"]</a>
+    }
+    else
+    {
+        <button type="submit" class="action secondary" name="act" value="keep" aria-pressed="false">@T["Saved_Keep"]</button>
+    }
+</form>
+
+@code {
+    private bool _kept;
+
+    /// <summary>Gets or sets what kind of page this is.</summary>
+    [Parameter, EditorRequired]
+    public SavedKind Kind { get; set; }
+
+    /// <summary>Gets or sets the identifier of what the page is about.</summary>
+    [Parameter, EditorRequired]
+    public string Id { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    protected override void OnParametersSet() => _kept = SavedList.Has(Context, new SavedPage(Site.Collection, Kind, Id));
+}

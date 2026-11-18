@@ -13,6 +13,11 @@
     <a class="wordmark" href="./">@T["Site_Name"]</a>
     <nav class="site-nav" aria-label="@T["Nav_Main"]">
         <a href="./">@T["Nav_Discover"]</a>
+        @if (Context.Request.Cookies.ContainsKey(SavedList.CookieName))
+        {
+            @* Offered to who has a list: a visitor who keeps nothing is not shown an empty place. *@
+            <a href="saved">@T["Saved_Link"]</a>
+        }
     </nav>
     <div class="site-tools">
         <ul class="languages" role="list" aria-label="@T["Language_Label"]">
@@ -79,4 +84,7 @@
     private string ReturnUrl => $"/{Visitor.Language.Tag}/{Here}";
 
     private string Pressed(ThemeChoice choice) => Visitor.Theme == choice ? "true" : "false";
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
 }

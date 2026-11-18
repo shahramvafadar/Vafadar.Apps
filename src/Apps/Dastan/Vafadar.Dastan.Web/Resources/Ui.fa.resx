@@ -1422,4 +1422,34 @@
   <data name="Elsewhere_Reading" xml:space="preserve">
     <value>هر یک از این‌ها مجموعه‌ای جداست و جایگاه خواندن خودش را دارد: این‌که این‌جا تا کجا خوانده‌اید چیزی دربارهٔ آن‌جا نمی‌گوید.</value>
   </data>
+  <data name="Saved_Keep" xml:space="preserve">
+    <value>نگه‌داشتن در فهرست من</value>
+  </data>
+  <data name="Saved_Drop" xml:space="preserve">
+    <value>برداشتن از فهرست من</value>
+  </data>
+  <data name="Saved_Link" xml:space="preserve">
+    <value>فهرست من</value>
+  </data>
+  <data name="Saved_Title" xml:space="preserve">
+    <value>فهرست من</value>
+  </data>
+  <data name="Saved_Lead" xml:space="preserve">
+    <value>صفحه‌هایی که خواسته‌اید نگه دارید؛ تازه‌ترین در آغاز.</value>
+  </data>
+  <data name="Saved_Empty" xml:space="preserve">
+    <value>چیزی در فهرست شما نیست. صفحهٔ هر نام، تصویر یا رشته دکمه‌ای برای نگه‌داشتن دارد.</value>
+  </data>
+  <data name="Saved_Where" xml:space="preserve">
+    <value>این فهرست فقط در همین مرورگر نگه داشته می‌شود – در یک کوکی روی دستگاه شما – و حداکثر یک سال. این سایت حسابی ندارد و چیزی از آن نگه نمی‌دارد؛ مرورگر یا دستگاه دیگر آن را ندارد. فهرست حداکثر ۳۰ صفحه جا دارد.</value>
+  </data>
+  <data name="Saved_Kind_Entity" xml:space="preserve">
+    <value>یک نام</value>
+  </data>
+  <data name="Saved_Kind_Media" xml:space="preserve">
+    <value>یک تصویر یا ویدئو</value>
+  </data>
+  <data name="Saved_Kind_Thread" xml:space="preserve">
+    <value>یک رشته</value>
+  </data>
 </root>

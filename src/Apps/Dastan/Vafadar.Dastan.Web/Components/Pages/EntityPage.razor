@@ -43,6 +43,7 @@
             <a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Entity_Collection"], Visitor.Text(story.Label).Value)</a>
         </p>
         <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
+        <SaveControl Kind="SavedKind.Entity" Id="@overview.Entity.Id.Value" />
     </header>
 
     @if (!overview.Entity.Dated.IsEmpty)
