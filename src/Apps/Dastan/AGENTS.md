@@ -87,6 +87,12 @@ for Dastan is added here in the same commit as the work it came with.
   record of its own – a new field or value belongs to the readers and their vocabulary, and the form follows.
   A new entity or relation type is added in `Vocabulary.cs` with what it means; a relation type of the world
   outside a story also says between what kinds of thing it holds, and the readers refuse it elsewhere.
+  **Accounts of visitors and private spaces are decided** (D-048 to D-055, 2026-11-18): a name and a password
+  kept by the site, and Google or Microsoft as well; anybody may register and may invite others; a store of its
+  own beside the site; all private spaces; a claim on a record is confirmed by who made the record; private
+  things about living people become public only with the consent of everybody named; a tree has an owner who
+  names who may change it; withdrawn consent hides at once and a closed account is deleted after 30 days. The
+  rules are the library of ADR 0013 and are asked before anything is read for a viewer.
   **Do not wait for real content to show a gap** (D-047): what the product documents name as possible – kinds
   of things, relations, time, media, audiences – is supported before content needs it, each with its meaning
   and its tests; "it follows the content" is no longer a reason to leave a capability out.
