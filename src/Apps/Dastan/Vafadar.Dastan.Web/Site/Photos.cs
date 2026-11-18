@@ -250,22 +250,13 @@ public static class PhotoEndpoints
     }
 
     /// <summary>The longer side of the smaller size of a photograph, in pixels: enough for a card on a screen that draws two pixels for one.</summary>
-    public const int SmallSide = 800;
+    public const int SmallSide = PhotoSizes.SmallSide;
 
     /// <summary>Returns the name of the smaller size of a photograph, made from the name of its file.</summary>
-    public static string SmallName(string name)
-    {
-        ArgumentNullException.ThrowIfNull(name);
-        return $"{Path.GetFileNameWithoutExtension(name)}-small{Path.GetExtension(name)}";
-    }
+    public static string SmallName(string name) => PhotoSizes.SmallName(name);
 
     /// <summary>Returns the name of the photograph a smaller size belongs to, or nothing for a name that is not one of a smaller size.</summary>
-    public static string? OfSmall(string name)
-    {
-        ArgumentNullException.ThrowIfNull(name);
-        var stem = Path.GetFileNameWithoutExtension(name);
-        return stem.EndsWith("-small", StringComparison.Ordinal) ? stem[..^"-small".Length] + Path.GetExtension(name) : null;
-    }
+    public static string? OfSmall(string name) => PhotoSizes.OfSmall(name);
 
     /// <summary>Returns how wide the smaller size of a photograph is, or nothing when the photograph is that small itself.</summary>
     public static int? SmallWidth(PhotoFile file)

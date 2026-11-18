@@ -103,6 +103,55 @@ public sealed class ImageSizesTests : IDisposable
     }
 
     [Fact]
+    public void The_photographs_that_have_no_smaller_size_yet_get_one_and_nothing_else_is_touched()
+    {
+        // Brought in before the site made sizes: a large one, one that has its size, a little one, a file that is no picture.
+        Write("large-file.jpg", RealImages.Jpeg(1600, 1200));
+        Write("done-file.jpg", RealImages.Jpeg(1600, 1200));
+        var had = Write("done-file-small.jpg", RealImages.Jpeg(8, 6));
+        Write("little-file.png", RealImages.Png(400, 300));
+        Write("none-file.jpg", TestFiles.Jpeg());
+        Write(".arriving-1", RealImages.Jpeg(1600, 1200));
+        var before = File.ReadAllBytes(Path.Combine(_root, "large-file.jpg"));
+
+        Assert.Equal(1, PhotoSizes.MakeMissing(_root));
+
+        Assert.Equal((800, 600, "red green blue white"), RealImages.Look(File.ReadAllBytes(Path.Combine(_root, "large-file-small.jpg"))));
+        Assert.Equal(before, File.ReadAllBytes(Path.Combine(_root, "large-file.jpg")));
+        Assert.Equal((8, 6), (RealImages.Look(File.ReadAllBytes(had)).Width, RealImages.Look(File.ReadAllBytes(had)).Height));
+        Assert.Equal(7, Directory.GetFiles(_root).Length);
+
+        // A second run finds nothing to do: a smaller size gets no smaller size of its own.
+        Assert.Equal(0, PhotoSizes.MakeMissing(_root));
+        Assert.Equal(7, Directory.GetFiles(_root).Length);
+    }
+
+    [Fact]
+    public void The_command_makes_the_missing_sizes_of_a_folder_and_says_how_many()
+    {
+        Write("large-file.jpg", RealImages.Jpeg(1600, 1200));
+        using var output = new StringWriter();
+        var day = new DateOnly(2026, 11, 18);
+
+        var done = Vafadar.Dastan.Content.ContentCommands.Run(["photos", "sizes", _root], output, day);
+        var noFolder = Vafadar.Dastan.Content.ContentCommands.Run(["photos", "sizes", _root + "-none"], output, day);
+
+        Assert.Equal((0, 1), (done, noFolder));
+        Assert.Contains("Made 1 smaller size(s).", output.ToString(), StringComparison.Ordinal);
+        Assert.True(File.Exists(Path.Combine(_root, "large-file-small.jpg")));
+    }
+
+    [Theory]
+    [InlineData("photo-file.jpg", "photo-file-small.jpg")]
+    [InlineData("0123abcd-file.png", "0123abcd-file-small.png")]
+    public void The_name_of_a_smaller_size_is_made_from_the_name_of_its_photograph_and_leads_back_to_it(string name, string small)
+    {
+        Assert.Equal(small, PhotoSizes.SmallName(name));
+        Assert.Equal(name, PhotoSizes.OfSmall(small));
+        Assert.Null(PhotoSizes.OfSmall(name));
+    }
+
+    [Fact]
     public void An_image_that_is_small_already_or_cannot_be_read_gets_no_smaller_size()
     {
         var small = Write("small.jpg", RealImages.Jpeg(800, 600));

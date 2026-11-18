@@ -229,8 +229,11 @@ something else. It is its own field now.
   with their widths (`srcset`) – when the image says how wide it is – and the browser takes the one that fits.
   A size has an address of its own (`…/size-0`) and is given by the rule of every file of an item: from the
   visitor's own projection.
-* An image that is in a collection already has no sizes until its file is brought in again; nothing goes
-  through the collections and converts them.
+* An image that is in a collection already has no sizes until an editor asks for them: its page in the tool
+  offers "Make the smaller sizes" (step 18.3.1) – an act with a name and a reason, which makes the sizes
+  beside the file and names them in the record. Nothing goes through the collections by itself. For the
+  photographs of the visitors that were brought in before step 17.3, whoever runs the site runs
+  `photos sizes <folder>`; it changes no photograph and makes each missing size once.
 
 Checked: `ImageSizesOfItemsTests` (9 cases, readers and intake), one more case of `StudioMediaIntakeTests`
 (the tool), `ImageSizesPagesTests` (3 cases, the site). Not looked at in a browser.

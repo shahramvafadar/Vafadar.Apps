@@ -126,6 +126,30 @@ public sealed class StudioMediaIntakeTests : IDisposable
     }
 
     [Fact]
+    public async Task An_image_that_was_there_before_the_tool_made_sizes_gets_them_by_an_act_of_an_editor()
+    {
+        const string diagram = $"/en/{Collection}/record/media/media-dastan-family-illustration";
+        var page = await _desk.Get(diagram);
+        Assert.Contains("Smaller sizes of this image", page.Html, StringComparison.Ordinal);
+
+        // A video has no sizes to make, and neither has an image that has them.
+        Assert.DoesNotContain("Smaller sizes of this image", (await _desk.Get(Video)).Html, StringComparison.Ordinal);
+
+        var made = await _desk.Fill(diagram, "sizes", ("Sizing.By", "a writer"), ("Sizing.Reason", "Sizes for the gallery."));
+
+        Assert.Contains("done=changed", made.Arrived, StringComparison.Ordinal);
+        using var store = _studio.Store();
+        var record = store.Record(Collection, "media", "media-dastan-family-illustration")!.Body;
+
+        // The diagram is 1195 pixels wide: it gets the size for a card, not the one for a page.
+        Assert.Equal("""[{"width":480,"url":"../media/dastan-family-connections-480.png"}]""", record["sizes"]!.ToJsonString());
+        Assert.Equal("../media/dastan-family-connections.png", (string?)record["url"]);
+        Assert.True(File.Exists(Path.Combine(Media, "dastan-family-connections-480.png")));
+        Assert.Equal("Sizes for the gallery.", store.History(Collection, "media", "media-dastan-family-illustration")[^1].Reason);
+        Assert.DoesNotContain("Smaller sizes of this image", (await _desk.Get(diagram)).Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task A_file_that_is_no_image_and_an_item_the_collection_cannot_take_leave_no_record_and_no_file()
     {
         var before = Directory.GetFiles(Media).Length;

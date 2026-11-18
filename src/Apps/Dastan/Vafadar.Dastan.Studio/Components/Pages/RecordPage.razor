@@ -152,6 +152,19 @@
                         <WhoAndWhy Form="upload" Model="Uploading" By="@(Uploading?.By ?? Editor.Name)" Reason="@(Uploading?.Reason ?? string.Empty)" />
                         <p><button type="submit" class="action">@T["Files_Submit"]</button></p>
                     </form>
+                    @if (Store.FilesFolder is { } samples && MediaForm.FileWithoutSizes(_record!.Body, samples) is not null)
+                    {
+                        @* An image that was brought in before the tool made sizes (step 18.3.1). *@
+                        <h3 id="sizes">@T["Sizes_Title"]</h3>
+                        <p class="note">@T["Sizes_Lead"]</p>
+                        <ActOutcome Problems="_sizesProblems" />
+                        <form method="post" @formname="sizes" @onsubmit="MakeSizes" class="act" action="@Here">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="@Seen.Input" value="@_seen" />
+                            <WhoAndWhy Form="sizes" Model="Sizing" By="@(Sizing?.By ?? Editor.Name)" Reason="@(Sizing?.Reason ?? string.Empty)" />
+                            <p><button type="submit" class="action secondary">@T["Sizes_Submit"]</button></p>
+                        </form>
+                    }
                 </Allowed>
             </section>
         }
@@ -233,6 +246,7 @@
     private List<string>? _removeProblems;
     private List<string>? _mergeProblems;
     private List<string>? _uploadProblems;
+    private List<string>? _sizesProblems;
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
@@ -268,6 +282,10 @@
     /// <summary>Gets or sets who brings a file in, and why.</summary>
     [SupplyParameterFromForm(FormName = "upload")]
     public FieldsInput? Uploading { get; set; }
+
+    /// <summary>Gets or sets who makes the smaller sizes of an image, and why.</summary>
+    [SupplyParameterFromForm(FormName = "sizes")]
+    public FieldsInput? Sizing { get; set; }
 
     /// <summary>Gets or sets what the form that says the entity is the same as another one was filled with.</summary>
     [SupplyParameterFromForm(FormName = "merge")]
@@ -455,6 +473,44 @@
         }
 
         _uploadProblems = problems;
+    }
+
+    // Makes the smaller sizes of an image that is there, and names them in its record – an act of an editor
+    // like every change. A record that is refused takes the sizes that were made for it with it.
+    private void MakeSizes()
+    {
+        var input = Sizing ?? new FieldsInput();
+        var problems = new List<string>();
+        Fresh(problems);
+        var by = Name(input.By, problems);
+        var reason = Reason(input.Reason, problems);
+        if (problems.Count == 0)
+        {
+            var sizes = Store.FilesFolder is { } folder && MediaForm.FileWithoutSizes(_record!.Body, folder) is { } file
+                ? MediaIntake.SizesOf(file, MediaForm.Sizes)
+                : [];
+            if (sizes.Count == 0)
+            {
+                problems.Add(T["Sizes_None"]);
+            }
+            else
+            {
+                var result = Store.Put(Collection, Group, MediaForm.WithSizes(_record!.Body, sizes), by!, reason!);
+                if (Finished(result, by!, "changed"))
+                {
+                    return;
+                }
+
+                foreach (var size in sizes)
+                {
+                    File.Delete(size.Path);
+                }
+
+                problems.AddRange(result.Problems);
+            }
+        }
+
+        _sizesProblems = problems;
     }
 
     private void Merge()

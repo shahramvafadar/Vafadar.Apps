@@ -15,13 +15,47 @@ public static class MediaForm
 
     // The smaller sizes that were made of the file of an image, as the record names them; an image that got
     // none names none – those of the file it had before are not its sizes.
-    private static void Smaller(JsonObject record, TakenFile file)
+    private static void Smaller(JsonObject record, TakenFile file) => Smaller(record, file.Sizes);
+
+    private static void Smaller(JsonObject record, IReadOnlyList<SmallerImage> sizes)
     {
         record.Remove("sizes");
-        if (file.Sizes.Count > 0)
+        if (sizes.Count > 0)
         {
-            record["sizes"] = new JsonArray([.. file.Sizes.Select(size => (JsonNode)new JsonObject { ["width"] = size.Width, ["url"] = TakenFile.UrlOf(size) })]);
+            record["sizes"] = new JsonArray([.. sizes.Select(size => (JsonNode)new JsonObject { ["width"] = size.Width, ["url"] = TakenFile.UrlOf(size) })]);
         }
+    }
+
+    /// <summary>
+    /// Returns where the file of an image lies when the item is an image whose file was brought in and that
+    /// names no smaller sizes yet – an image the tool can make sizes of (step 18.3.1); else nothing.
+    /// </summary>
+    /// <param name="item">The record of the item.</param>
+    /// <param name="samplesFolder">The folder of the samples; the files lie in the folder <c>media</c> beside it.</param>
+    public static string? FileWithoutSizes(JsonObject item, string samplesFolder)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentException.ThrowIfNullOrWhiteSpace(samplesFolder);
+        const string beside = "../media/";
+        if ((string?)item["type"] != "image" || item["sizes"] is not null || item["url"] is not JsonValue address
+            || !address.TryGetValue<string>(out var url) || !url.StartsWith(beside, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        var name = url[beside.Length..];
+        var path = Path.GetFullPath(Path.Combine(samplesFolder, "..", "media", name));
+        return name == Path.GetFileName(name) && File.Exists(path) ? path : null;
+    }
+
+    /// <summary>Returns the record of an item with the smaller sizes that were made of its image.</summary>
+    public static JsonObject WithSizes(JsonObject item, IReadOnlyList<SmallerImage> sizes)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(sizes);
+        var record = item.DeepClone().AsObject();
+        Smaller(record, sizes);
+        return record;
     }
 
     /// <summary>

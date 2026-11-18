@@ -732,4 +732,16 @@
   <data name="Group_threads" xml:space="preserve">
     <value>Threads</value>
   </data>
+  <data name="Sizes_Title" xml:space="preserve">
+    <value>Smaller sizes of this image</value>
+  </data>
+  <data name="Sizes_Lead" xml:space="preserve">
+    <value>This image was brought in before the tool made smaller sizes. With them the pages of the site give a browser the size that fits – the gallery loads small pictures. The image itself is not changed.</value>
+  </data>
+  <data name="Sizes_Submit" xml:space="preserve">
+    <value>Make the smaller sizes</value>
+  </data>
+  <data name="Sizes_None" xml:space="preserve">
+    <value>No smaller size was made: the image is small already, or it cannot be read.</value>
+  </data>
 </root>
