@@ -350,6 +350,9 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<bool>("Everybody")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Objection")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
 

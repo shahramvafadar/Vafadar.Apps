@@ -2586,4 +2586,22 @@
   <data name="Account_InvitationOnly" xml:space="preserve">
     <value>این سایت فعلاً فقط با دعوت‌نامه حساب تازه می‌پذیرد. کسی که حساب دارد می‌تواند پیوندی برایتان بفرستد.</value>
   </data>
+  <data name="Photos_Object" xml:space="preserve">
+    <value>من در این عکس هستم و موافق نیستم که همه آن را ببینند</value>
+  </data>
+  <data name="Photos_Object_Back" xml:space="preserve">
+    <value>پس گرفتن اعتراض: دیگر نامی از من در آن نیست</value>
+  </data>
+  <data name="Photos_Objected" xml:space="preserve">
+    <value>شما گفته‌اید که در این عکس هستید. تا وقتی موافقت نکنید یا حرف خود را پس نگیرید، عکس از همه نگه داشته می‌شود.</value>
+  </data>
+  <data name="Photos_Tag_Objection" xml:space="preserve">
+    <value>می‌گوید در این عکس است</value>
+  </data>
+  <data name="Photos_Said_objected" xml:space="preserve">
+    <value>عکس نگه داشته شد: اکنون فقط صاحب عکس و کسانی که در آن نام برده شده‌اند آن را می‌بینند. صاحب عکس می‌بیند که شما چنین گفته‌اید.</value>
+  </data>
+  <data name="Photos_Said_objection-back" xml:space="preserve">
+    <value>اعتراض خود را پس گرفتید.</value>
+  </data>
 </root>

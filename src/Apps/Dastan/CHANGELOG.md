@@ -249,3 +249,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Without a connection, a page of a story that was opened on the same device before can still be read. Only
   public pages of somebody who is not signed in are kept that way – nothing of an account, a family tree or a
   photograph.
+- Somebody who is in a photograph that everybody sees, and was not named by its owner, can say so under the
+  photograph. It is then shown to nobody else until they agree or take that back.

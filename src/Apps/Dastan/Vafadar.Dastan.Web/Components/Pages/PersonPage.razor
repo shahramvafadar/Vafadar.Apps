@@ -1,4 +1,5 @@
 @page "/people/{Id}"
+@using Vafadar.Dastan.Core.Personal
 @using Vafadar.Dastan.People
 @inject Visitor Visitor
 @inject AccountDesk Desk
@@ -77,6 +78,16 @@
                                 }
                             </figcaption>
                         </figure>
+                        @if (MayObject(photo))
+                        {
+                            @* Somebody the photograph shows and its owner did not name (D-059): their word holds it back. *@
+                            <form method="post" action="@($"{PhotoEndpoints.Root}/object")" class="save">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}{PhotoEndpoints.Page}")" />
+                                <input type="hidden" name="photo" value="@photo.Id" />
+                                <button type="submit" name="answer" value="object">@T["Photos_Object"]</button>
+                            </form>
+                        }
                     </li>
                 }
             </ul>
@@ -108,6 +119,16 @@
                                         <figcaption><bdi>@photo.Caption</bdi></figcaption>
                                     }
                                 </figure>
+                                @if (MayObject(photo))
+                                {
+                                    @* Somebody the photograph shows and its owner did not name (D-059): their word holds it back. *@
+                                    <form method="post" action="@($"{PhotoEndpoints.Root}/object")" class="save">
+                                        <AntiforgeryToken />
+                                        <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}{PhotoEndpoints.Page}")" />
+                                        <input type="hidden" name="photo" value="@photo.Id" />
+                                        <button type="submit" name="answer" value="object">@T["Photos_Object"]</button>
+                                    </form>
+                                }
                             </li>
                         }
                     </ul>
@@ -123,6 +144,7 @@
     private IReadOnlyList<PhotoInfo> _photos = [];
     private ProfileView? _profile;
     private bool _own;
+    private string? _viewer;
 
     /// <summary>Gets or sets the identifier of the account the page is about.</summary>
     [Parameter]
@@ -134,6 +156,11 @@
     /// <summary>Gets or sets the year whose photographs are shown; none: all of them.</summary>
     [SupplyParameterFromQuery]
     private int? Year { get; set; }
+
+    // Who is signed in may say of a photograph of somebody else that everybody sees that it shows them – when it
+    // does not name them already.
+    private bool MayObject(PhotoInfo photo) =>
+        _viewer is not null && photo.Owner.Id != _viewer && photo.Shown == ScopeKind.Public && photo.Tags.All(tag => tag.Person.Id != _viewer);
 
     protected override void OnInitialized()
     {
@@ -150,6 +177,7 @@
                 Year = _years.Contains(Year ?? 0) ? Year : null;
             }
             _own = viewer == Id;
+            _viewer = viewer;
         }
 
         if (_profile is null)

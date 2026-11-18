@@ -366,6 +366,12 @@ public sealed class StoredPhotoTag
 
     /// <summary>Gets or sets a value indicating whether the person agreed that the photograph is shown to everybody (D-053).</summary>
     public bool Everybody { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the person said themselves that the photograph shows them
+    /// (D-059) – an objection to its being shown to everybody – instead of being named by its owner.
+    /// </summary>
+    public bool Objection { get; set; }
 }
 
 /// <summary>An album: photographs its owner put together under a name (step 16.10).</summary>

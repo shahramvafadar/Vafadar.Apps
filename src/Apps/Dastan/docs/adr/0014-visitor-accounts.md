@@ -441,3 +441,26 @@ Checked: one more case of `PhotoPagesTests`. The refusal was looked at in a brow
   nothing about who sees a relationship.
 
 Checked: `ClosedTrialTests` (8 cases). Not looked at in a browser.
+
+## Fourteenth addendum (2026-11-18): objecting to a photograph (step 17.6, D-059)
+
+The twelfth addendum made the owner of a photograph say that the people in it agree. D-059 asks for more
+before registration is open to everybody: a way for somebody a photograph shows, whom its owner did not name.
+
+* **An objection is a tag a person puts on themselves.** Who is signed in and may see a photograph everybody
+  sees – of somebody else, that does not name them yet – says "I am in this picture and do not agree". From
+  then on the photograph names them, and the rule of the tenth addendum holds: it is held back, seen by its
+  owner and the people it names, until everybody it names agreed.
+* **Only who objected lets it go**: by agreeing after all, or by taking the objection back – then the
+  photograph names them no more. The owner of the photograph sees who objected and cannot take the word back
+  for them; what the owner can do is show the photograph to fewer people, or remove it. An objection stands
+  through that: shown to everybody again, the photograph is held back again.
+* **It asks for an account.** The site keeps no mail address, so somebody without an account cannot be
+  answered or told apart from a program; on the site of a closed trial everybody who can see it has one.
+* **Nobody decides who is right.** The site has no moderator. Against objections made to do harm there is one
+  limit – twenty standing at a time for an account – and the owner of the photograph sees who it was. Who
+  judges between the two is the owner's question, with the legal review, before the site is open to everybody.
+* A photograph that is held back by an objection is not in the life of who objected; it is, once they agreed.
+
+Checked: `PhotoObjectionTests` (8 cases), one more case of `PhotoPagesTests` and the form among those
+refused to who is not signed in. Not looked at in a browser.
