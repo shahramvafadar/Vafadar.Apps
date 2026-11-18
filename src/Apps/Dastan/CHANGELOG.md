@@ -200,3 +200,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Who has an account can invite somebody: a link to pass on by any way they like, good for fourteen days and
   for one person. The site sends nothing, and the invitation connects nobody with anybody.
 - The small buttons beside an entry of a list ("Take out of my list") look like the rest of the site.
+- Two people with accounts can show a relationship together – friend, family, colleague and so on. One asks
+  by the other's account name, only the other can accept, and each says who else may see it: nobody, a circle
+  of their own, or everybody. It is shown to those both allow. Either can end it. Who is asked finds
+  "1 waiting" in the header; the site sends nothing to anybody.
+- Circles: a name for some of the people one shows a relationship with, to show something to them only.
+- Every account has a page that shows its name and what the viewer may see of its relationships.

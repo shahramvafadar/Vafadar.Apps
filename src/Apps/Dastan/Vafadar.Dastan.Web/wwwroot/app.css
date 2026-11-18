@@ -1951,3 +1951,65 @@ main:has(> .stage) > :not(.stage) {
 .invitations code {
   overflow-wrap: anywhere;
 }
+
+/* The people of an account (step 16.3): one entry per person with what can be done beside it. */
+.people {
+  margin: var(--space-3) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.people li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--border);
+}
+
+.people .save.inline {
+  margin-inline-start: 0;
+}
+
+.people select,
+.account select {
+  min-block-size: 2.75rem;
+  max-inline-size: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+}
+
+.account fieldset {
+  margin: var(--space-3) 0;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.account .choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+  margin: 0;
+}
+
+.account .choice input {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+.account .choice label {
+  font-weight: 400;
+}
+
+.circle {
+  margin-block: var(--space-4);
+  padding-block-end: var(--space-3);
+  border-block-end: 1px solid var(--border);
+}

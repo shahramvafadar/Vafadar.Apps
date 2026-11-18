@@ -135,6 +135,7 @@ app.MapSearchEngineFiles();
 app.MapVisitorReports();
 app.MapSavedList();
 app.MapVisitorAccounts();
+app.MapPeople();
 app.MapRazorComponents<App>();
 
 await app.RunAsync();

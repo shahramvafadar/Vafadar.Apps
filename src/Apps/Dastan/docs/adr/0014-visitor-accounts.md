@@ -116,3 +116,37 @@ Checked: `BelongingsAndInvitationsTests` (the store: 16 cases), `AccountFollowsT
 two devices of one account, a later stage opened on another device only through the account, signing out, a new
 account, bringing in, the list, invitations made, used, taken back, limited). Looked at in a browser signed in,
 in English and Persian at 375 px, dark appearance. Not tried: two real devices; a container.
+
+## Second addendum (step 16.3): relationships two accounts show together, and circles
+
+* **The rules are those of step 15.2** ([ADR 0013](0013-private-space-rules.md)). The store keeps where a
+  relationship stands and brings a `SocialRelationship` to that place before every act and every question of
+  who may see it; no rule is written a second time in the store or in a page.
+* **Asking** names the other account by its name and one of six kinds (friend, close friend, family, partner,
+  colleague, classmate – a proposal; the owner may change the list). Two accounts have one request or
+  relationship at a time. The site sends nothing: who is asked finds "1 waiting" in the header of every page.
+  That a name is no account is said – a name is public already, the form to make an account says when it is
+  taken – but an address asks only thirty times an hour.
+* **Only the side that was asked answers** (PRIV-005). Declined, the request is kept for thirty days so that
+  the same question is not asked again at once, then forgotten. Taken back or ended, nothing of it is kept.
+* **Who sees it**: each side chooses for its own side – nobody else, one of its circles, everybody – and
+  begins with nobody else. A relationship is shown to who **both** allow (PRIV-008); until then to the two
+  only. The page about an account (`/people/{id}`, the identifier the store made, which says nothing) shows
+  the name and what this viewer may see; what they may not see is neither counted nor hinted at (PRIV-012) –
+  the page of somebody who shows nothing and of somebody who shows nothing to this viewer are the same. It is
+  not for search engines.
+* **A circle** is a name its owner gives to some of the people they have an accepted relationship with, at
+  most twenty of them. Nobody is told they are in one and only the owner sees its name. Somebody the owner
+  has no relationship with does not come into a circle – a circle is no way to probe for accounts. Removing a
+  circle narrows what was shown to it to the two sides; ending a relationship takes each side out of the
+  circles of the other. A circle that is gone never widens anything: the scope falls back to the owner alone.
+* A closed account shows nothing and is shown nowhere at once; deleted, its relationships and circles go
+  with it.
+
+Not built: blocking an account; telling somebody outside the site; relationships in a chart; the kinds as
+content the editors or the owner can change without a release.
+
+Checked: `RelationshipsAndCirclesTests` (the store: 23 cases), `PeoplePagesTests` (the site: 25 cases,
+with up to four accounts – both sides' audiences, a circle, what a third account and a visitor without one
+see, every act tried by the wrong account). Looked at in a browser with two accounts, English and Persian at
+375 px, dark appearance. Not tried: a screen reader, the light appearance, a container.

@@ -1,0 +1,71 @@
+@page "/people/{Id}"
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* What a viewer may see of an account (step 16.3): its name and the relationships that both sides let this
+   viewer see (PRIV-008). What the viewer may not see is neither shown nor counted nor hinted at (PRIV-012):
+   the page of somebody who shows nothing and of somebody who shows nothing to this viewer are the same. *@
+@if (_profile is not null)
+{
+    <PageTitle>@_profile.Person.Name – @T["Site_Name"]</PageTitle>
+    <PageAddress None="true" />
+    @* The page of a person is for people, not for search engines. *@
+    <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+    <header class="page-header">
+        <h1 dir="auto">@_profile.Person.Name</h1>
+        @if (_own)
+        {
+            <p class="lead">@T["Person_Lead_Self"]</p>
+            <p class="actions"><a class="action secondary" href="account/people">@T["People_Title"]</a></p>
+        }
+    </header>
+
+    <section aria-labelledby="person-relationships">
+        <h2 id="person-relationships">@T["Person_Relationships"]</h2>
+        @if (_profile.Relationships.IsEmpty)
+        {
+            <p class="note">@T["Person_None"]</p>
+        }
+        else
+        {
+            <ul class="statements" role="list">
+                @foreach (var shown in _profile.Relationships)
+                {
+                    <li><a href="@($"people/{shown.Other.Id}")" dir="auto">@shown.Other.Name</a> <span class="meta">– @T[$"People_Kind_{shown.Kind}"]</span></li>
+                }
+            </ul>
+        }
+    </section>
+}
+
+@code {
+    private ProfileView? _profile;
+    private bool _own;
+
+    /// <summary>Gets or sets the identifier of the account the page is about.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        if (Desk.IsOpen && Id.Length <= 40)
+        {
+            var viewer = AccountDesk.Session(Context.User)?.Id;
+            using var store = Desk.Open();
+            _profile = store.Profile(viewer, Id);
+            _own = viewer == Id;
+        }
+
+        if (_profile is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}

@@ -159,3 +159,12 @@ the cookies `dastan.reading.<collection>` and `dastan.saved` of the device are n
 a device holds enters an account only when an account is made on it (the form says so) or when the visitor
 asks for it. The address of an invitation carries the code and nothing about anybody; the site sends no mail
 and no message. All of it is deleted with the account.
+
+Since step 16.3 the store of Dastan's visitors also keeps relationships between accounts: the two accounts,
+one of six kinds, whether it is asked or accepted, who each side lets see it (nobody else, a circle, everybody)
+and when it was asked and last moved; and circles: the owner, a name and the accounts in it. A request that was
+declined is kept for thirty days and then deleted; one that was taken back and a relationship that was ended
+are deleted at once. A relationship is shown to somebody other than the two only when both sides allow that
+viewer; nobody is told about circles. The page about an account shows its name to everybody who has its
+address (an identifier made by the store) and asks search engines to stay away. Nothing is sent to anybody
+outside the site. All of it is deleted with either account.

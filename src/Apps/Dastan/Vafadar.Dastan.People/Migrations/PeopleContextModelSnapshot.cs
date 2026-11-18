@@ -17,6 +17,45 @@ namespace Vafadar.Dastan.People.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredCircle", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("Owner");
+
+                    b.ToTable("Circles");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredCircleMember", b =>
+                {
+                    b.Property<long>("Circle")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Member")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Circle", "Member");
+
+                    b.HasIndex("Member");
+
+                    b.ToTable("CircleMembers");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
                 {
                     b.Property<string>("Id")
@@ -100,6 +139,57 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("RecoveryCodes");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredRelationship", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("FromCircle")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FromScope")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("State")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<long?>("ToCircle")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ToScope")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("From");
+
+                    b.HasIndex("To");
+
+                    b.ToTable("Relationships");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredSavedPage", b =>
                 {
                     b.Property<long>("Number")
@@ -180,6 +270,30 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("Visitors");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredCircle", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Owner")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredCircleMember", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredCircle", null)
+                        .WithMany()
+                        .HasForeignKey("Circle")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Member")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
                 {
                     b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
@@ -208,6 +322,21 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
                         .WithMany()
                         .HasForeignKey("VisitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredRelationship", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("From")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("To")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

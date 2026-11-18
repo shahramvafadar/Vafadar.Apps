@@ -82,7 +82,11 @@ for Dastan is added here in the same commit as the work it came with.
   store is never committed. A page asks `ReadingPreference.Read` and `SavedList.Read` for the reading position
   and the list – never a cookie itself: signed in they are the account's, and the cookies of the device are
   neither read nor changed. Nothing is taken from a device into an account without an act of the visitor. An
-  invitation makes an account and nothing else (PRIV-006).
+  invitation makes an account and nothing else (PRIV-006). What an act on a relationship may do and who may
+  see it is asked of the rules in `Vafadar.Dastan.Core.Personal` – the store brings a rule object to where
+  things stand; never write such a rule into a query or a page. Ask the scope before producing anything from
+  a private item, a count included (PRIV-012), and never let a missing circle or a removed account widen an
+  audience.
 * The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
   records as they are written in the file of a collection, each change kept with who, when, why, before and
   after. The website never references the store. What a record may say is decided by the readers – never add a
