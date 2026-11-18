@@ -261,3 +261,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   way to back up what the site keeps and to bring it back.
 - The site has pages for its terms of use, its privacy notice and its imprint, named at the foot of every
   page. Their words come from files of whoever runs the site; a text that is not written yet says so.
+- Without a connection, a page that is shown from what the device kept says so at its top. The page of your
+  list says how many pages the device keeps and lets you have them forgotten.

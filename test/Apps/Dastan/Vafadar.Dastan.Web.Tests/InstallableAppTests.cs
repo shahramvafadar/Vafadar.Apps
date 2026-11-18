@@ -149,6 +149,11 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
         Assert.DoesNotContain("/photo", worker.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("/account", worker.Html, StringComparison.Ordinal);
 
+        // A page that is shown from what was kept says so, in the language of its address.
+        Assert.Contains("kept ? marked(kept, address.pathname) : caches.match('/offline.html')", worker.Html, StringComparison.Ordinal);
+        Assert.Contains("class=\"note kept-copy\" role=\"status\" lang=\"fa\" dir=\"rtl\"", worker.Html, StringComparison.Ordinal);
+        Assert.Contains("class=\"note kept-copy\" role=\"status\" lang=\"en\" dir=\"ltr\"", worker.Html, StringComparison.Ordinal);
+
         // With a connection every page comes from the network: what was kept is asked for only in a catch.
         Assert.All(Regex.Matches(worker.Html, "read\\.match\\(").Select(found => worker.Html[..found.Index]), before => Assert.Contains(".catch(() => caches.open(READ)", before[^120..], StringComparison.Ordinal));
     }

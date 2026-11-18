@@ -2628,4 +2628,16 @@
   <data name="Legal_NotWritten" xml:space="preserve">
     <value>This text is not written yet. Until it is, this site is a trial among invited people.</value>
   </data>
+  <data name="Kept_Title" xml:space="preserve">
+    <value>Kept on this device for a time without a connection</value>
+  </data>
+  <data name="Kept_Lead" xml:space="preserve">
+    <value>Public pages you read on this device are kept by it, so that you can read them again when the site cannot be reached. Nothing of an account is among them.</value>
+  </data>
+  <data name="Kept_Forget" xml:space="preserve">
+    <value>Forget these pages</value>
+  </data>
+  <data name="Kept_Forgotten" xml:space="preserve">
+    <value>This device keeps none of them any more.</value>
+  </data>
 </root>

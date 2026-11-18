@@ -2628,4 +2628,16 @@
   <data name="Legal_NotWritten" xml:space="preserve">
     <value>این متن هنوز نوشته نشده است. تا آن زمان، این سایت آزمایشی است میان دعوت‌شدگان.</value>
   </data>
+  <data name="Kept_Title" xml:space="preserve">
+    <value>نگه‌داشته‌شده روی این دستگاه برای زمان بی‌اتصالی</value>
+  </data>
+  <data name="Kept_Lead" xml:space="preserve">
+    <value>صفحه‌های عمومی‌ای که روی این دستگاه خوانده‌اید نزد همین دستگاه می‌مانند تا وقتی سایت در دسترس نیست دوباره بخوانیدشان. چیزی از حساب در میانشان نیست.</value>
+  </data>
+  <data name="Kept_Forget" xml:space="preserve">
+    <value>فراموش‌کردن این صفحه‌ها</value>
+  </data>
+  <data name="Kept_Forgotten" xml:space="preserve">
+    <value>این دستگاه دیگر هیچ‌کدام را نگه نمی‌دارد.</value>
+  </data>
 </root>

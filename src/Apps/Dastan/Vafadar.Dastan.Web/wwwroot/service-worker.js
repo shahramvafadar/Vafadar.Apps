@@ -32,6 +32,21 @@ self.addEventListener('activate', event => {
       .then(() => self.clients.claim()));
 });
 
+// A page that is shown from what was kept says so at its top (step 18.3.2): it is the page as it was when the
+// visitor read it, and the site may have changed since. The worker reads the language from the address.
+const KEPT = {
+  fa: '<p class="note kept-copy" role="status" lang="fa" dir="rtl">اتصال برقرار نیست. این صفحه همان است که پیش‌تر روی این دستگاه خوانده‌اید؛ ممکن است سایت از آن زمان تغییر کرده باشد.</p>',
+  en: '<p class="note kept-copy" role="status" lang="en" dir="ltr">There is no connection. This is the page as you read it on this device before; the site may have changed since.</p>',
+};
+
+async function marked(kept, path) {
+  const page = await kept.text();
+  const main = page.indexOf('<main');
+  const end = main < 0 ? -1 : page.indexOf('>', main);
+  const note = path.startsWith('/fa/') ? KEPT.fa : KEPT.en;
+  return new Response(end < 0 ? page : page.slice(0, end + 1) + note + page.slice(end + 1), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+}
+
 // Keeps an answer of the network for later, and lets go of what was kept longest ago.
 async function keep(address, answer) {
   const read = await caches.open(READ);
@@ -71,7 +86,7 @@ self.addEventListener('fetch', event => {
         })
         .catch(() => caches.open(READ)
           .then(read => read.match(request.url))
-          .then(kept => kept || caches.match('/offline.html'))));
+          .then(kept => kept ? marked(kept, address.pathname) : caches.match('/offline.html'))));
     return;
   }
 

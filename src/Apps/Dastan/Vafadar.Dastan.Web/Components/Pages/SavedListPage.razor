@@ -16,6 +16,15 @@
     <p class="lead">@T["Saved_Lead"]</p>
 </header>
 
+@* What the device keeps for a time without a connection (step 18.3.2). Hidden until the script of the site
+   finds something kept: without the script the page says nothing it cannot know. *@
+<section data-kept-pages hidden aria-labelledby="kept-title">
+    <h2 id="kept-title">@T["Kept_Title"]</h2>
+    <p>@T["Kept_Lead"] <span class="meta">(<span data-kept-count></span>)</span></p>
+    <p><button type="button" class="action secondary" data-kept-forget>@T["Kept_Forget"]</button></p>
+    <p class="note" role="status" data-kept-forgotten hidden>@T["Kept_Forgotten"]</p>
+</section>
+
 @if (_shown.Count == 0)
 {
     <p class="note" role="status">@T["Saved_Empty"]</p>

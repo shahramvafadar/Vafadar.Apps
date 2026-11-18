@@ -2069,6 +2069,14 @@ main:has(> .stage) > :not(.stage) {
 
 /* Photographs of visitors (step 16.5): a grid of pictures, each with what is written about it and, for its
    owner, what can be done with it. */
+/* The note at the top of a page that is shown from what the device kept (step 18.3.2). */
+.kept-copy {
+  margin-block: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
 /* The legal pages at the foot of every page, and the text of one (step 18.3.4). */
 .legal-links ul {
   display: flex;
