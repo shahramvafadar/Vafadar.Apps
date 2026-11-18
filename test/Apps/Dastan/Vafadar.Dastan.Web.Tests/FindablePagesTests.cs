@@ -3,6 +3,47 @@ using System.Text.RegularExpressions;
 
 namespace Vafadar.Dastan.Web.Tests;
 
+/// <summary>The picture a link to the site is shown with (step 17.4, D-056).</summary>
+public sealed class PreviewPictureTests(DemoSite demo) : IClassFixture<DemoSite>
+{
+    [Fact]
+    public async Task The_site_draws_the_picture_a_link_is_shown_with()
+    {
+        var picture = await demo.Visitor().Get("/preview.png");
+
+        Assert.Equal(System.Net.HttpStatusCode.OK, picture.Status);
+        Assert.Equal("image/png", picture.Response.Content.Headers.ContentType?.MediaType);
+        Assert.Equal("public, max-age=86400", picture.Response.Headers.CacheControl?.ToString());
+        using var read = SkiaSharp.SKBitmap.Decode(await picture.Bytes());
+        Assert.Equal((1200, 630), (read.Width, read.Height));
+
+        // The ground of the mark at a corner, and the mark – something lighter – in the middle of the picture.
+        Assert.Equal(new SkiaSharp.SKColor(0x2f, 0x2e, 0x7a), read.GetPixel(5, 5));
+        Assert.Contains(Enumerable.Range(400, 400).Select(x => read.GetPixel(x, 315)), colour => colour.Red > 0xc0);
+    }
+
+    [Theory]
+    [InlineData("/en/")]
+    [InlineData("/fa/story-rostam-sohrab")]
+    public async Task A_page_names_the_picture_with_its_whole_address_and_its_size(string address)
+    {
+        var page = await demo.Visitor().Get(address);
+
+        Assert.Contains("<meta property=\"og:image\" content=\"http://localhost/preview.png\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains("<meta property=\"og:image:width\" content=\"1200\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains("<meta property=\"og:image:height\" content=\"630\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains("<meta name=\"twitter:card\" content=\"summary_large_image\"", page.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_page_without_an_address_of_its_own_names_no_picture()
+    {
+        var page = await demo.Visitor().Get("/en/no-such-page");
+
+        Assert.DoesNotContain("og:image", page.Html, StringComparison.Ordinal);
+    }
+}
+
 /// <summary>
 /// Pages that can be found and passed on (step 14.4): every page says where it is and where it is in the other
 /// language, the pages of content say what they are about, a public site lists its pages for search engines –

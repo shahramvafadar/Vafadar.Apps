@@ -245,3 +245,4 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   public domain, shipped with the site). It shows no borders and still loads nothing from anybody.
 - A photograph taken with the phone upright is no longer shown on its side. Large photographs are shown faster
   where they stand among others: the site makes a smaller size of each and gives the browser the one that fits.
+- A link to a page of the site is shown with a picture where somebody passes it on: the mark of the site.

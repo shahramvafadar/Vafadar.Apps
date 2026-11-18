@@ -19,6 +19,8 @@
       The collection is input of the app, not a web asset: it is copied next to the program (content/), never under
       wwwroot. Only the app reads it; a visitor gets what the projection allows (ADR 0002).
     -->
+    <!-- The picture for the preview of a link is drawn by the site (D-056, step 17.4). -->
+    <PackageReference Include="SkiaSharp" />
     <!-- The coasts of the earth for the drawing of the places (D-057): Natural Earth, public domain. -->
     <EmbeddedResource Include="Data\coasts.txt" LogicalName="Vafadar.Dastan.Web.Data.coasts.txt" />
     <EmbeddedResource Include="Data\waters.txt" LogicalName="Vafadar.Dastan.Web.Data.waters.txt" />
