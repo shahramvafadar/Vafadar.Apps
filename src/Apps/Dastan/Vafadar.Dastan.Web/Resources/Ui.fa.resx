@@ -2604,4 +2604,46 @@
   <data name="Photos_Said_objection-back" xml:space="preserve">
     <value>اعتراض خود را پس گرفتید.</value>
   </data>
+  <data name="Albums_Earlier" xml:space="preserve">
+    <value>جلوتر در آلبوم</value>
+  </data>
+  <data name="Albums_Later" xml:space="preserve">
+    <value>عقب‌تر در آلبوم</value>
+  </data>
+  <data name="Photos_Said_moved" xml:space="preserve">
+    <value>جای عکس با عکس کناری‌اش عوض شد.</value>
+  </data>
+  <data name="Legal_terms" xml:space="preserve">
+    <value>شرایط استفاده</value>
+  </data>
+  <data name="Legal_privacy" xml:space="preserve">
+    <value>حریم خصوصی</value>
+  </data>
+  <data name="Legal_imprint" xml:space="preserve">
+    <value>مشخصات گرداننده</value>
+  </data>
+  <data name="Legal_Links" xml:space="preserve">
+    <value>دربارهٔ این سایت</value>
+  </data>
+  <data name="Legal_NotWritten" xml:space="preserve">
+    <value>این متن هنوز نوشته نشده است. تا آن زمان، این سایت آزمایشی است میان دعوت‌شدگان.</value>
+  </data>
+  <data name="Kept_Title" xml:space="preserve">
+    <value>نگه‌داشته‌شده روی این دستگاه برای زمان بی‌اتصالی</value>
+  </data>
+  <data name="Kept_Lead" xml:space="preserve">
+    <value>صفحه‌های عمومی‌ای که روی این دستگاه خوانده‌اید نزد همین دستگاه می‌مانند تا وقتی سایت در دسترس نیست دوباره بخوانیدشان. چیزی از حساب در میانشان نیست.</value>
+  </data>
+  <data name="Kept_Forget" xml:space="preserve">
+    <value>فراموش‌کردن این صفحه‌ها</value>
+  </data>
+  <data name="Kept_Forgotten" xml:space="preserve">
+    <value>این دستگاه دیگر هیچ‌کدام را نگه نمی‌دارد.</value>
+  </data>
+  <data name="Account_Provider_made-up" xml:space="preserve">
+    <value>ارائه‌دهندهٔ ساختگی (فقط برای توسعه)</value>
+  </data>
+  <data name="Account_Choose_Privacy" xml:space="preserve">
+    <value>سایت نام را نگه می‌دارد و اینکه این حساب از راه {0} باز می‌شود – نه گذرواژه‌ای، نه نشانی ایمیلی و نه چیز دیگری که {0} دربارهٔ شما می‌داند. تا وقتی در صفحهٔ حسابتان گذرواژه‌ای نگذارید، حساب فقط از راه {0} باز می‌شود.</value>
+  </data>
 </root>

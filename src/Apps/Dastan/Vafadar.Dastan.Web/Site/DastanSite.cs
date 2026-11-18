@@ -39,6 +39,13 @@ public sealed class DastanOptions
     public string? Photos { get; set; }
 
     /// <summary>
+    /// Gets or sets the folder of the legal texts of the site (step 18.3.4): its terms, its privacy notice and
+    /// its imprint, a plain file for each page and language. Empty, the site has no such pages. The words are
+    /// the owner's; the site has only the places.
+    /// </summary>
+    public string? Legal { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether a new account needs an invitation (D-068): the site of a closed
     /// trial. Who has an account invites others; nobody else makes one. The first account is made before this
     /// is set.
@@ -67,7 +74,7 @@ public sealed class DastanOptions
 public sealed class DastanLibrary
 {
     // The first part of an address that is no collection: a collection of that name could not be reached.
-    private static readonly string[] Taken = ["account", "compare", "media", "people", "photo", "preferences", "preview.png", "report", "saved", "search", "signin-google", "signin-microsoft", "trees", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
+    private static readonly string[] Taken = ["account", "compare", "media", "imprint", "people", "photo", "preferences", "preview.png", "privacy", "terms", "report", "saved", "search", "signin-google", "signin-microsoft", "trees", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
 
     /// <summary>Returns whether a first part of an address belongs to the site itself, so that no collection can have that name.</summary>
     public static bool IsTaken(string name) => Taken.Contains(name, StringComparer.Ordinal);

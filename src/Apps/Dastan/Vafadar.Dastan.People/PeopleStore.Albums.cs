@@ -116,6 +116,31 @@ public sealed partial class PeopleStore
         return true;
     }
 
+    /// <summary>
+    /// Moves a photograph one place earlier or later in an album (step 18.3.3): it changes places with its
+    /// neighbour. Only the owner of the album can; at the end of the album there is nowhere further to go.
+    /// </summary>
+    public bool MoveInAlbum(string id, long album, string photo, bool earlier)
+    {
+        if (!IsOpen(id) || !_context.Albums.AsNoTracking().Any(candidate => candidate.Number == album && candidate.Owner == id))
+        {
+            return false;
+        }
+
+        var placed = _context.AlbumPhotos.Where(candidate => candidate.Album == album).OrderBy(candidate => candidate.Position).ToList();
+        var at = placed.FindIndex(candidate => candidate.Photo == photo);
+        var other = earlier ? at - 1 : at + 1;
+        if (at < 0 || other < 0 || other >= placed.Count)
+        {
+            _context.ChangeTracker.Clear();
+            return false;
+        }
+
+        (placed[at].Position, placed[other].Position) = (placed[other].Position, placed[at].Position);
+        Save();
+        return true;
+    }
+
     /// <summary>Returns the albums of an account as their owner sees them – the empty ones too – by name.</summary>
     public IReadOnlyList<AlbumInfo> Albums(string id) => !IsOpen(id) ? [] : AlbumsShown(id, id, empty: true);
 

@@ -49,6 +49,7 @@ builder.Services.AddSingleton<ReportDesk>();
 
 // The accounts of the visitors (step 16.1): there are some only where the site was told a file for their store.
 builder.Services.AddVisitorAccounts(builder.Configuration);
+builder.Services.AddSingleton<LegalTexts>();
 
 // The keys of the forms outlive the process only where a folder for them is named (docs/operations.md).
 if (builder.Configuration["Dastan:Keys"] is { Length: > 0 } keys)

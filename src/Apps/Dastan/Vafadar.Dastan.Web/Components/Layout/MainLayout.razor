@@ -2,6 +2,7 @@
 @inject Visitor Visitor
 @inject DastanSite Site
 @inject AccountDesk Accounts
+@inject LegalTexts Legal
 @inject NavigationManager Navigation
 @inject IOptions<SiteLanguageOptions> Languages
 @inject IStringLocalizer<Ui> T
@@ -85,6 +86,18 @@
             @string.Format(CultureInfo.CurrentCulture, T["Published_Notice"], Visitor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))
             <a href="@($"{Site.Collection}/revisions")">@T["Revisions_Link"]</a>
         </p>
+    }
+    @if (Legal.IsOffered)
+    {
+        @* The legal pages stand at the foot of every page (step 18.3.4). *@
+        <nav class="legal-links" aria-label="@T["Legal_Links"]">
+            <ul role="list">
+                @foreach (var legal in LegalTexts.Pages)
+                {
+                    <li><a href="@legal">@T[$"Legal_{legal}"]</a></li>
+                }
+            </ul>
+        </nav>
     }
 </footer>
 

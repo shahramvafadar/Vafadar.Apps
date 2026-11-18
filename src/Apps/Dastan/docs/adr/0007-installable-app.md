@@ -110,3 +110,15 @@ keeps only what carries it, in a store a form of the preferences empties, and as
 **Tried in a browser** with the site stopped (en, dark): two pages of the story that were read came back with
 their style; the page of the account and a page of the story that had not been read gave "no connection".
 The tests do not run the worker.
+
+## Addendum of 2026-11-18: a kept page says that it is one, and the device forgets on request (step 18.3.2)
+
+A page the worker answers from what it kept gets a note after the opening tag of its `main`: there is no
+connection, this is the page as it was read on this device, the site may have changed. The worker writes the
+note – in English or Persian by the first part of the address – because the page it kept cannot know that it
+will be shown later; the kept copy itself stays as the site gave it.
+
+The page of the visitor's list has a section, hidden as it comes from the site, that the script of the site
+shows when the cache `dastan-read-1` holds pages: how many, and a button that deletes the cache. Without
+script nothing is claimed there; the browser's own control for the data of a site does the same. Forgetting
+does not unregister the worker and does not touch the small cache of the page for "no connection".

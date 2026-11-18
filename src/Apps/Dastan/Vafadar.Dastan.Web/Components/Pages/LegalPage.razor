@@ -1,0 +1,58 @@
+@page "/terms"
+@page "/privacy"
+@page "/imprint"
+@inject LegalTexts Legal
+@inject Visitor Visitor
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* A legal page of the site (step 18.3.4): the terms, what happens to what the site keeps about people, who is
+   responsible. The place is the site's, the words are the owner's: they come from a file, and where there is
+   none the page says that the text is not written – it does not make one up. *@
+@if (_page is not null)
+{
+    <PageTitle>@T[$"Legal_{_page}"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <h1>@T[$"Legal_{_page}"]</h1>
+    </header>
+
+    @if (_blocks is null)
+    {
+        <p class="note" role="status">@T["Legal_NotWritten"]</p>
+    }
+    else
+    {
+        <article class="legal" dir="auto">
+            @foreach (var block in _blocks)
+            {
+                if (block.IsHeading)
+                {
+                    <h2>@block.Text</h2>
+                }
+                else
+                {
+                    <p>@block.Text</p>
+                }
+            }
+        </article>
+    }
+}
+
+@code {
+    private string? _page;
+    private IReadOnlyList<LegalBlock>? _blocks;
+
+    protected override void OnInitialized()
+    {
+        var page = Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].Trim('/');
+        if (!Legal.IsOffered || !LegalTexts.Pages.Contains(page))
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _page = page;
+        _blocks = Legal.Of(page, Visitor.Language.Tag);
+    }
+}

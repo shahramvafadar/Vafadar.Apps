@@ -72,6 +72,32 @@ public sealed class KeptOfflineTests : IDisposable
         Assert.Equal("page", Kept(await stranger.Get($"/en/{Story}")));
     }
 
+    [Theory]
+    [InlineData("en", "Forget these pages")]
+    [InlineData("fa", "فراموش‌کردن این صفحه‌ها")]
+    public async Task The_page_of_the_list_can_say_what_the_device_keeps_and_says_nothing_until_the_script_finds_something(string language, string forget)
+    {
+        var page = await _site.Visitor().Get($"/{language}/saved");
+
+        // Hidden as it comes from the site: only the script of the site, in the browser, knows what is kept.
+        Assert.Matches("<section data-kept-pages hidden aria-labelledby=\"kept-title\">", page.Html);
+        Assert.Contains(forget, page.Main, StringComparison.Ordinal);
+        Assert.Contains("data-kept-forgotten hidden", page.Html, StringComparison.Ordinal);
+        Assert.Contains("<button type=\"button\" class=\"action secondary\" data-kept-forget>", page.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task The_script_of_the_site_forgets_what_the_device_keeps_when_the_visitor_says_so()
+    {
+        var visitor = _site.Visitor();
+        var address = System.Text.RegularExpressions.Regex.Match((await visitor.Get("/en/")).Html, "<script src=\"(app[^\"]*\\.js)\"").Groups[1].Value;
+
+        var script = await visitor.Get($"/en/{address}");
+
+        Assert.Contains("caches.delete('dastan-read-1')", script.Html, StringComparison.Ordinal);
+        Assert.Contains("document.querySelector('[data-kept-pages]')", script.Html, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task A_form_is_not_kept()
     {

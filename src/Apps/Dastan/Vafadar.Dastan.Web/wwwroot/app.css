@@ -2049,8 +2049,11 @@ main:has(> .stage) > :not(.stage) {
   margin-block-start: var(--space-2);
 }
 
-.tree-people details > summary {
-  padding-block: var(--space-2);
+/* What opens a folded part of a page is pressed like a button: as high as one (seen at 360 pixels, step 18.2.3). */
+main details > summary {
+  box-sizing: border-box;
+  min-block-size: 2.75rem;
+  padding-block: 0.625rem;
   cursor: pointer;
 }
 
@@ -2069,6 +2072,34 @@ main:has(> .stage) > :not(.stage) {
 
 /* Photographs of visitors (step 16.5): a grid of pictures, each with what is written about it and, for its
    owner, what can be done with it. */
+/* The note at the top of a page that is shown from what the device kept (step 18.3.2). */
+.kept-copy {
+  margin-block: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+/* The legal pages at the foot of every page, and the text of one (step 18.3.4). */
+.legal-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legal-links a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.legal {
+  max-inline-size: 42rem;
+}
+
 /* The years of a gallery by time, and an album: a name above its photographs (step 16.10). */
 .years ul {
   display: flex;

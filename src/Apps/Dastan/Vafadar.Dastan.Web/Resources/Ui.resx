@@ -2604,4 +2604,46 @@
   <data name="Photos_Said_objection-back" xml:space="preserve">
     <value>You took your objection back.</value>
   </data>
+  <data name="Albums_Earlier" xml:space="preserve">
+    <value>Earlier in the album</value>
+  </data>
+  <data name="Albums_Later" xml:space="preserve">
+    <value>Later in the album</value>
+  </data>
+  <data name="Photos_Said_moved" xml:space="preserve">
+    <value>The photograph changed places with its neighbour.</value>
+  </data>
+  <data name="Legal_terms" xml:space="preserve">
+    <value>Terms of use</value>
+  </data>
+  <data name="Legal_privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="Legal_imprint" xml:space="preserve">
+    <value>Imprint</value>
+  </data>
+  <data name="Legal_Links" xml:space="preserve">
+    <value>About this site</value>
+  </data>
+  <data name="Legal_NotWritten" xml:space="preserve">
+    <value>This text is not written yet. Until it is, this site is a trial among invited people.</value>
+  </data>
+  <data name="Kept_Title" xml:space="preserve">
+    <value>Kept on this device for a time without a connection</value>
+  </data>
+  <data name="Kept_Lead" xml:space="preserve">
+    <value>Public pages you read on this device are kept by it, so that you can read them again when the site cannot be reached. Nothing of an account is among them.</value>
+  </data>
+  <data name="Kept_Forget" xml:space="preserve">
+    <value>Forget these pages</value>
+  </data>
+  <data name="Kept_Forgotten" xml:space="preserve">
+    <value>This device keeps none of them any more.</value>
+  </data>
+  <data name="Account_Provider_made-up" xml:space="preserve">
+    <value>a made-up provider (development only)</value>
+  </data>
+  <data name="Account_Choose_Privacy" xml:space="preserve">
+    <value>The site keeps the name and that this account is opened through {0} – no password, no mail address and nothing else {0} knows about you. Until you set a password on the page of your account, it opens only through {0}.</value>
+  </data>
 </root>

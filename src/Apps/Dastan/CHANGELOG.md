@@ -256,3 +256,13 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - For whoever runs the site: `photos sizes <folder>` makes the smaller sizes of photographs that were brought
   in earlier. For editors: an image that is in a collection already gets its smaller sizes from a button on its
   page in the tool.
+- An album's owner changes the order of its photographs.
+- For whoever runs the site: a Compose file for a closed trial with accounts (`compose.trial.yaml`), with the
+  way to back up what the site keeps and to bring it back.
+- The site has pages for its terms of use, its privacy notice and its imprint, named at the foot of every
+  page. Their words come from files of whoever runs the site; a text that is not written yet says so.
+- Without a connection, a page that is shown from what the device kept says so at its top. The page of your
+  list says how many pages the device keeps and lets you have them forgotten.
+- After signing in through a provider, the form that makes the account says what is kept of an account
+  without a password; on a site that takes accounts by invitation only it says that an invitation is needed.
+- What opens a folded part of a page ("Change the album") is as high as a button.

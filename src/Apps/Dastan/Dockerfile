@@ -25,6 +25,11 @@ ENV ASPNETCORE_HTTP_PORTS=8080 \
     DOTNET_gcServer=0
 EXPOSE 8080
 
+# What the site keeps – the store of the visitors, their photographs, the keys of the forms, the reports – lies
+# on a volume mounted at /data. The folder exists in the image and belongs to the user of the container, so that
+# a new volume does too.
+RUN mkdir -p /data && chown $APP_UID /data
+
 # Not the administrator of the container.
 USER $APP_UID
 
