@@ -334,9 +334,105 @@ public sealed class PhotoPagesTests : IDisposable
         Assert.Equal(HttpStatusCode.NotFound, (await stranger.Get($"/photo/{id}")).Status);
     }
 
+    [Fact]
+    public async Task An_album_names_photographs_and_shows_each_viewer_those_they_may_see()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var open = await Bring(mina, "public", caption: "The beach");
+        var own = await Bring(mina, "private", caption: "The house");
+        var minas = $"/en/people/{await Me(mina)}";
+
+        var made = await Send(mina, "album-add", ("name", "Summer 1998"), ("note", "At the Caspian"));
+
+        Assert.Equal($"{Photos}?said=album-added#albums", made.Response.Headers.Location?.OriginalString);
+        var number = Regex.Match((await mina.Get(Photos)).Html, "name=\"album\" value=\"(\\d+)\"").Groups[1].Value;
+        Assert.Contains("Nothing in it yet", (await mina.Get(Photos)).Main, StringComparison.Ordinal);
+
+        // An album that names nothing a viewer may see is not on the page of the person.
+        Assert.DoesNotContain("Summer 1998", (await sara.Get(minas)).Main, StringComparison.Ordinal);
+
+        Assert.Equal($"{Photos}?said=placed#albums", (await Send(mina, "album-place", ("album", number), ("photo", own))).Response.Headers.Location?.OriginalString);
+        Assert.DoesNotContain("Summer 1998", (await sara.Get(minas)).Main, StringComparison.Ordinal);
+        await Send(mina, "album-place", ("album", number), ("photo", open));
+        Assert.Equal("/refused", (await Send(mina, "album-place", ("album", number), ("photo", open))).Response.Headers.Location?.OriginalString);
+
+        // Sara and a stranger see the album with the one photograph everybody may see; Mina sees both.
+        foreach (var viewer in new[] { sara, _site.Visitor() })
+        {
+            var seen = await viewer.Get(minas);
+            Assert.Contains("Summer 1998", seen.Main, StringComparison.Ordinal);
+            Assert.Contains("At the Caspian", seen.Main, StringComparison.Ordinal);
+            Assert.Contains(open, seen.Html, StringComparison.Ordinal);
+            Assert.DoesNotContain(own, seen.Html, StringComparison.Ordinal);
+        }
+
+        Assert.Contains(own, (await mina.Get(minas)).Html, StringComparison.Ordinal);
+
+        // Nobody else puts anything into it or takes it apart.
+        Assert.Equal("/refused", (await Send(sara, "album-take", ("album", number), ("photo", open))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, "album-remove", ("album", number))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, "album-change", ("album", number), ("name", "Hers"), ("note", string.Empty))).Response.Headers.Location?.OriginalString);
+
+        // A name another album has is said; a new name is kept.
+        await Send(mina, "album-add", ("name", "Winter"), ("note", string.Empty));
+        var taken = await Send(mina, "album-change", ("album", number), ("name", "winter"), ("note", string.Empty));
+        Assert.Equal($"{Photos}?form=albums&problem=album-name#albums", taken.Response.Headers.Location?.OriginalString);
+        Assert.Contains("role=\"alert\"", (await mina.Get($"{Photos}?form=albums&problem=album-name")).Html, StringComparison.Ordinal);
+        Assert.Equal($"{Photos}?form=albums&problem=album-name#albums", (await Send(mina, "album-add", ("name", " "), ("note", string.Empty))).Response.Headers.Location?.OriginalString);
+        await Send(mina, "album-change", ("album", number), ("name", "The summer of 1998"), ("note", string.Empty));
+        Assert.Contains("The summer of 1998", (await sara.Get(minas)).Main, StringComparison.Ordinal);
+
+        // Out of the album the photograph is still hers and still seen; without the album too.
+        Assert.Equal($"{Photos}?said=taken-out#albums", (await Send(mina, "album-take", ("album", number), ("photo", open))).Response.Headers.Location?.OriginalString);
+        Assert.DoesNotContain("The summer of 1998", (await sara.Get(minas)).Main, StringComparison.Ordinal);
+        Assert.Equal(HttpStatusCode.OK, (await sara.Get($"/photo/{open}")).Status);
+        Assert.Equal($"{Photos}?said=album-removed#albums", (await Send(mina, "album-remove", ("album", number))).Response.Headers.Location?.OriginalString);
+        Assert.Equal([own, open], Ids(await mina.Get(Photos)).Order().ToArray() is var both && both.Length == 2 ? [own, open] : []);
+    }
+
+    [Fact]
+    public async Task Photographs_are_gone_through_by_the_year_they_were_taken()
+    {
+        var mina = await Signed("Mina");
+        var old = await Bring(mina, "public", caption: "Long ago", taken: "1998-07-04");
+        var late = await Bring(mina, "public", caption: "Lately", taken: "2024-03-01");
+        var hidden = await Bring(mina, "private", caption: "For me", taken: "2011-01-01");
+        var undated = await Bring(mina, "public", caption: "Some day", taken: string.Empty);
+        var minas = $"/en/people/{await Me(mina)}";
+
+        var all = await mina.Get(Photos);
+        Assert.Matches("href=\"account/photos\\?year=2024#mine\"[^>]*>2024</a>.*href=\"account/photos\\?year=2011#mine\".*href=\"account/photos\\?year=1998#mine\"", all.Html.ReplaceLineEndings(" "));
+        Assert.Equal(4, Ids(all).Length);
+
+        var year = await mina.Get($"{Photos}?year=1998");
+        Assert.Equal([old], Ids(year));
+        Assert.Contains("aria-current=\"true\">1998</a>", year.Html, StringComparison.Ordinal);
+
+        // A year nothing was taken in is all years.
+        Assert.Equal(4, Ids(await mina.Get($"{Photos}?year=1500")).Length);
+
+        // A stranger is offered the years of what they may see: not the year of a photograph that is hers alone.
+        var strangers = await _site.Visitor().Get(minas);
+        Assert.Contains($"people/{await Me(mina)}?year=2024#person-photos", strangers.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("year=2011", strangers.Html, StringComparison.Ordinal);
+        Assert.Equal([late], Ids(await _site.Visitor().Get($"{minas}?year=2024")));
+        Assert.Equal(3, Ids(await _site.Visitor().Get($"{minas}?year=2011")).Length);
+        Assert.DoesNotContain(hidden, strangers.Html, StringComparison.Ordinal);
+        Assert.Contains(undated, strangers.Html, StringComparison.Ordinal);
+
+        // In Persian a year is written in Persian digits and without a separator.
+        Assert.Contains(">۱۹۹۸</a>", (await mina.Get("/fa/account/photos")).Main, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("add")]
     [InlineData("agree")]
+    [InlineData("album-add")]
+    [InlineData("album-change")]
+    [InlineData("album-remove")]
+    [InlineData("album-place")]
+    [InlineData("album-take")]
     [InlineData("share")]
     [InlineData("remove")]
     [InlineData("tag")]
@@ -346,7 +442,7 @@ public sealed class PhotoPagesTests : IDisposable
     {
         Directory.CreateDirectory(_site.Media);
         // The form that brings a photograph in carries a file; the others are plain forms.
-        (string, string)[] fields = [("photo", "x"), ("scope", "public"), ("account", "x"), ("answer", "approve"), ("returnUrl", Photos)];
+        (string, string)[] fields = [("photo", "x"), ("scope", "public"), ("account", "x"), ("answer", "approve"), ("album", "1"), ("name", "x"), ("note", "x"), ("returnUrl", Photos)];
         var answer = form == "add"
             ? await _site.Visitor().Upload($"{Forms}/{form}", Account, "picture.png", TestFiles.Png(), fields)
             : await _site.Visitor().Post($"{Forms}/{form}", Account, fields);

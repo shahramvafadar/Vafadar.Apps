@@ -147,6 +147,40 @@ public static class PhotoEndpoints
             return store.UntagPhoto(Me(context), photo ?? string.Empty, account ?? string.Empty) ? Said(returnUrl, "untagged", "mine") : Results.BadRequest();
         });
 
+        // Albums (step 16.10): a name for photographs of one's own. Who may see a photograph is not asked here.
+        forms.MapPost("/album-add", (HttpContext context, AccountDesk desk, [FromForm] string? name, [FromForm] string? note, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return store.AddAlbum(Me(context), name ?? string.Empty, note ?? string.Empty) is null ? Back(returnUrl, "albums", "album-name") : Said(returnUrl, "album-added", "albums");
+        });
+
+        forms.MapPost("/album-change", (HttpContext context, AccountDesk desk, [FromForm] long? album, [FromForm] string? name, [FromForm] string? note, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return album is null ? Results.BadRequest()
+                : store.ChangeAlbum(Me(context), album.Value, name ?? string.Empty, note ?? string.Empty) ? Said(returnUrl, "album-changed", "albums")
+                : store.Albums(Me(context)).Any(own => own.Number == album) ? Back(returnUrl, "albums", "album-name")
+                : Results.BadRequest();
+        });
+
+        forms.MapPost("/album-remove", (HttpContext context, AccountDesk desk, [FromForm] long? album, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return album is not null && store.RemoveAlbum(Me(context), album.Value) ? Said(returnUrl, "album-removed", "albums") : Results.BadRequest();
+        });
+
+        forms.MapPost("/album-place", (HttpContext context, AccountDesk desk, [FromForm] long? album, [FromForm] string? photo, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return album is not null && store.PlaceInAlbum(Me(context), album.Value, photo ?? string.Empty) ? Said(returnUrl, "placed", "albums") : Results.BadRequest();
+        });
+
+        forms.MapPost("/album-take", (HttpContext context, AccountDesk desk, [FromForm] long? album, [FromForm] string? photo, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return album is not null && store.TakeFromAlbum(Me(context), album.Value, photo ?? string.Empty) ? Said(returnUrl, "taken-out", "albums") : Results.BadRequest();
+        });
+
         // A person a photograph names agrees that it is shown to everybody, or takes that back (D-053, step 16.9).
         forms.MapPost("/agree", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? answer, [FromForm] string? returnUrl) =>
         {

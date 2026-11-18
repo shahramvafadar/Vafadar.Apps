@@ -2054,6 +2054,31 @@ main:has(> .stage) > :not(.stage) {
 
 /* Photographs of visitors (step 16.5): a grid of pictures, each with what is written about it and, for its
    owner, what can be done with it. */
+/* The years of a gallery by time, and an album: a name above its photographs (step 16.10). */
+.years ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin: var(--space-2) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.years a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.years a[aria-current] {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.album {
+  margin-block: var(--space-5);
+}
+
 .photos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));

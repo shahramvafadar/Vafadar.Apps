@@ -368,6 +368,35 @@ public sealed class StoredPhotoTag
     public bool Everybody { get; set; }
 }
 
+/// <summary>An album: photographs its owner put together under a name (step 16.10).</summary>
+public sealed class StoredAlbum
+{
+    /// <summary>Gets or sets the number of the album.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the account it belongs to.</summary>
+    public required string Owner { get; set; }
+
+    /// <summary>Gets or sets its name.</summary>
+    public required string Name { get; set; }
+
+    /// <summary>Gets or sets what its owner wrote about it.</summary>
+    public string Note { get; set; } = string.Empty;
+}
+
+/// <summary>That a photograph stands in an album, and where.</summary>
+public sealed class StoredAlbumPhoto
+{
+    /// <summary>Gets or sets the album.</summary>
+    public long Album { get; set; }
+
+    /// <summary>Gets or sets the photograph.</summary>
+    public required string Photo { get; set; }
+
+    /// <summary>Gets or sets its place in the album: the lower, the earlier.</summary>
+    public int Position { get; set; }
+}
+
 /// <summary>That an account can be signed in through a provider (D-048). Nothing the provider knows about the person is kept.</summary>
 public sealed class StoredExternalLogin
 {
@@ -437,6 +466,12 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
     /// <summary>Gets who the photographs are said to show.</summary>
     public DbSet<StoredPhotoTag> PhotoTags => Set<StoredPhotoTag>();
+
+    /// <summary>Gets the albums.</summary>
+    public DbSet<StoredAlbum> Albums => Set<StoredAlbum>();
+
+    /// <summary>Gets which photographs stand in the albums.</summary>
+    public DbSet<StoredAlbumPhoto> AlbumPhotos => Set<StoredAlbumPhoto>();
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -612,6 +647,26 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             photo.Property(item => item.ContentType).HasMaxLength(40);
             photo.HasIndex(item => item.Owner);
             photo.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Owner).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // An album goes with its owner; a place in it goes with the album and with the photograph.
+        modelBuilder.Entity<StoredAlbum>(album =>
+        {
+            album.HasKey(item => item.Number);
+            album.Property(item => item.Owner).HasMaxLength(40);
+            album.Property(item => item.Name).HasMaxLength(160);
+            album.Property(item => item.Note).HasMaxLength(800);
+            album.HasIndex(item => item.Owner);
+            album.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Owner).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredAlbumPhoto>(placed =>
+        {
+            placed.HasKey(item => new { item.Album, item.Photo });
+            placed.Property(item => item.Photo).HasMaxLength(40);
+            placed.HasIndex(item => item.Photo);
+            placed.HasOne<StoredAlbum>().WithMany().HasForeignKey(item => item.Album).OnDelete(DeleteBehavior.Cascade);
+            placed.HasOne<StoredPhoto>().WithMany().HasForeignKey(item => item.Photo).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredPhotoTag>(tag =>

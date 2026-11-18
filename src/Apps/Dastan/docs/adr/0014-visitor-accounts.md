@@ -379,3 +379,32 @@ site (the legal review, which is the owner's).
 
 Checked: `PhotoAgreementTests` (the store: 9 cases), one more case of `PhotoPagesTests` and the form among
 those refused to who is not signed in. **Not looked at in a browser.**
+
+## Eleventh addendum (2026-11-18): albums and a gallery by time (step 16.10)
+
+R-MED-07 asks for curated albums and for galleries over the same items; the media rules say that the
+visibility of an album does not override the permission of an item, and that taking an item out of an album is
+not withdrawing it.
+
+* **An album** is a name, a note and photographs of its owner in the order they were put there
+  (`Albums`, `AlbumPhotos`). A photograph stands in as many albums as its owner likes; the file is kept once.
+* **No audience of its own**: nothing is chosen for an album. Each photograph in it is seen by who its owner
+  chose for that photograph – a photograph that is held back (step 16.9) is held back in an album too.
+* **An album tells nothing by being there**: a viewer is given the albums in which they may see at least one
+  photograph, each with those photographs only. An album of which they may see nothing is not named to them –
+  a name such as "The wedding" says something. The owner alone sees empty albums, where albums are changed.
+* **Taking out is not removing**: out of an album a photograph stays among its owner's and as visible as it
+  was; removing an album removes no photograph. A photograph that is removed leaves its albums; an account
+  that is deleted takes its albums with it.
+* **A gallery by time**: above the photographs of an account and of the life of a person stand the years in
+  which they were taken, each a way to the photographs of that year. The years are those of the photographs
+  the viewer was given, so a year tells nothing about a photograph the viewer may not see. A photograph that
+  does not say when it was taken is among all, not in a year.
+* **The copy of one's own data** names the albums and the files in them.
+
+Not built: an order the owner changes afterwards (a photograph is taken out and put in again), an album of
+several owners, an album of the editors' media – none is named for visitors by a requirement that is decided.
+
+Checked: `AlbumsTests` (the store: 13 cases), two more cases of `PhotoPagesTests` and the five forms among
+those refused to who is not signed in. Looked at in a browser: the albums on the page of the photographs (fa)
+and on the page of a person (en), 375 px, dark. The years were not seen there.

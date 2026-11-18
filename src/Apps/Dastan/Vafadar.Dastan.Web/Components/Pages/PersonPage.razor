@@ -47,8 +47,21 @@
            each only when its owner lets this viewer see it (PRIV-013). *@
         <section aria-labelledby="person-photos">
             <h2 id="person-photos">@T["Photos_Title"]</h2>
+            @if (_years.Length > 1 || Year is not null)
+            {
+                @* A gallery by the time a picture was taken (step 16.10): the years among what this viewer may see. *@
+                <nav class="years" aria-label="@T["Photos_Years"]">
+                    <ul role="list">
+                        <li><a href="@($"people/{Id}#person-photos")" aria-current="@(Year is null ? "true" : null)">@T["Photos_Years_All"]</a></li>
+                        @foreach (var year in _years)
+                        {
+                            <li><a href="@($"people/{Id}?year={year.ToString(CultureInfo.InvariantCulture)}#person-photos")" aria-current="@(Year == year ? "true" : null)">@PhotoYears.Written(year, Visitor.Language.Tag)</a></li>
+                        }
+                    </ul>
+                </nav>
+            }
             <ul class="photos" role="list">
-                @foreach (var photo in _photos)
+                @foreach (var photo in _photos.Where(photo => Year is null || photo.Taken?.Year == Year))
                 {
                     <li>
                         <figure>
@@ -69,9 +82,44 @@
             </ul>
         </section>
     }
+
+    @if (_albums.Count > 0)
+    {
+        @* The albums of the person, each with the photographs this viewer may see. An album in which they may
+           see nothing is not named (PRIV-012). *@
+        <section aria-labelledby="person-albums">
+            <h2 id="person-albums">@T["Albums_Title"]</h2>
+            @foreach (var album in _albums)
+            {
+                <article class="album" aria-labelledby="@($"album-{album.Number}")">
+                    <h3 id="@($"album-{album.Number}")" dir="auto">@album.Name</h3>
+                    @if (album.Note.Length > 0)
+                    {
+                        <p dir="auto">@album.Note</p>
+                    }
+                    <ul class="photos" role="list">
+                        @foreach (var photo in album.Photos)
+                        {
+                            <li>
+                                <figure>
+                                    <img src="@($"{PhotoEndpoints.File}/{photo.Id}")" alt="@(photo.Caption.Length > 0 ? photo.Caption : T["Photos_Alt"].Value)" width="@photo.File.Width" height="@photo.File.Height" loading="lazy" />
+                                    @if (photo.Caption.Length > 0)
+                                    {
+                                        <figcaption><bdi>@photo.Caption</bdi></figcaption>
+                                    }
+                                </figure>
+                            </li>
+                        }
+                    </ul>
+                </article>
+            }
+        </section>
+    }
 }
 
 @code {
+    private IReadOnlyList<AlbumInfo> _albums = [];
+    private int[] _years = [];
     private IReadOnlyList<PhotoInfo> _photos = [];
     private ProfileView? _profile;
     private bool _own;
@@ -83,6 +131,10 @@
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
 
+    /// <summary>Gets or sets the year whose photographs are shown; none: all of them.</summary>
+    [SupplyParameterFromQuery]
+    private int? Year { get; set; }
+
     protected override void OnInitialized()
     {
         if (Desk.IsOpen && Id.Length <= 40)
@@ -93,6 +145,9 @@
             if (_profile is not null && Desk.PhotoFolder is not null)
             {
                 _photos = store.LifeOf(viewer, Id);
+                _albums = store.AlbumsOf(viewer, Id);
+                _years = PhotoYears.Of(_photos);
+                Year = _years.Contains(Year ?? 0) ? Year : null;
             }
             _own = viewer == Id;
         }
