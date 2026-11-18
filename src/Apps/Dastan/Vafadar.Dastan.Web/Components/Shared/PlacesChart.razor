@@ -4,20 +4,22 @@
 @inject Visitor Visitor
 @inject IStringLocalizer<Ui> T
 
+@* A place in the drawing is measured in the font of the drawing; only the letters are smaller, so their size is
+   on a span inside the text (as in the chart of time). *@
 <svg class="places-map" width="@Em(Map.Width + (2 * Pad))" height="@Em(Map.Height + (2 * Pad))" dir="ltr">
     <rect class="map-ground" x="@Em(Pad)" y="@Em(Pad)" width="@Em(Map.Width)" height="@Em(Map.Height)" />
     @foreach (var line in Map.Meridians)
     {
         <g>
             <line class="map-grid" x1="@Em(Pad + line.At)" y1="@Em(Pad)" x2="@Em(Pad + line.At)" y2="@Em(Pad + Map.Height)" />
-            <text class="map-degrees" x="@Em(Pad + line.At)" y="@Em(Pad - 0.4)" text-anchor="middle" direction="@Visitor.Language.Direction">@Degrees(line.Degrees, "Position_East", "Position_West")</text>
+            <text x="@Em(Pad + line.At)" y="@Em(Pad - 0.4)" text-anchor="middle" direction="@Visitor.Language.Direction"><tspan class="map-degrees">@Degrees(line.Degrees, "Position_East", "Position_West")</tspan></text>
         </g>
     }
     @foreach (var line in Map.Parallels)
     {
         <g>
             <line class="map-grid" x1="@Em(Pad)" y1="@Em(Pad + line.At)" x2="@Em(Pad + Map.Width)" y2="@Em(Pad + line.At)" />
-            <text class="map-degrees" x="@Em(Pad - 0.3)" y="@Em(Pad + line.At + 0.25)" text-anchor="end" direction="@Visitor.Language.Direction">@Degrees(line.Degrees, "Position_North", "Position_South")</text>
+            <text x="@Em(Pad - 0.3)" y="@Em(Pad + line.At + 0.25)" text-anchor="end" direction="@Visitor.Language.Direction"><tspan class="map-degrees">@Degrees(line.Degrees, "Position_North", "Position_South")</tspan></text>
         </g>
     }
     @foreach (var mark in Map.Marks)
@@ -26,7 +28,7 @@
         <a class="map-mark @(mark.Place.Position.Precision == PositionPrecision.Exact ? null : "map-about")" href="@($"{Here}#place-{mark.Place.Place.Id}")">
             <title>@string.Format(CultureInfo.CurrentCulture, T["Places_Mark"], Visitor.Number(mark.Number), name)</title>
             <circle cx="@Em(Pad + mark.X)" cy="@Em(Pad + mark.Y)" r="@Em(mark.Place.Position.Precision == PositionPrecision.CentreOfArea ? 1.3 : 0.85)" />
-            <text x="@Em(Pad + mark.X)" y="@Em(Pad + mark.Y + 0.27)" text-anchor="middle">@Visitor.Number(mark.Number)</text>
+            <text x="@Em(Pad + mark.X)" y="@Em(Pad + mark.Y + 0.27)" text-anchor="middle"><tspan class="map-number">@Visitor.Number(mark.Number)</tspan></text>
         </a>
     }
 </svg>

@@ -439,3 +439,31 @@ Verification: `QuantitySeriesTests` (5 tests) – what is one series and what is
 small numbers, with numbers below zero and with equal numbers; the years of the scale. `SeriesFigureTests`
 (3 cases) – the drawing on the page of a city in both languages with its marks and their rows; one drawing
 for one series and none for what is stated once. Not looked at in a browser.
+
+## Eighth addendum of 2026-11-18 – what a browser showed (steps 14.1 and 14.3)
+
+The drawing of the places and the drawing of a series were written and tested without a browser. Looked at in
+one – the site run on this machine with made-up records of the world, in the browser of the development tool,
+800 and 375 pixels wide, English and Persian, the dark appearance – three things were wrong that no test of
+the markup could see:
+
+* **The degrees of the grid and the numbers of the marks stood beside their places.** A place in an SVG that
+  is written in `em` is measured in the font of the element it stands on; the texts carried a smaller font
+  themselves, so their places shrank with it. The size is now on a `tspan` inside the text – as the chart of
+  time has done since phase 8 – and the text is measured in the font of the drawing. The same held for the
+  numbers of the scale and the years of a series.
+* **A series lost its last number and its years.** The style of the site keeps every picture inside the page
+  (`max-width: 100%`), which pressed the drawing together while what it draws kept its size. The two drawings
+  now keep their size, and their frame scrolls.
+* **A series was wider than the column of the text.** Its width is now 30 units, which with its scale fits the
+  column; on a narrow screen its frame scrolls.
+
+The forms that ask for more than one thing – a year and its era, a kind, a place and a year – had a list of
+choices without the style of the other inputs and a button stretched to the height of the row; they have the
+style of the search now, each field with its name above it.
+
+Also looked at and found right: the page of a year in Persian at the width of a phone; the page of a thread;
+keeping a page in the list with its button and finding it in the list. **Not looked at:** the light
+appearance, a real phone, a screen reader, printing, the tool of the editors, and the pages of phases 14 and
+15 that are not named here. The tests of the browser of the repository (Playwright) were not run: this
+machine had no container for them in this session.
