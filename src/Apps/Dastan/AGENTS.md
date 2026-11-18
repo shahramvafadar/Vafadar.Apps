@@ -79,7 +79,10 @@ for Dastan is added here in the same commit as the work it came with.
   decision of the owner and a line in the privacy matrix. A site without the setting must behave as it did
   before accounts. Answers never say whether a name exists. A password and a recovery code are never logged,
   never put into an address and never kept as they are. A change of the schema is a migration; the file of the
-  store is never committed.
+  store is never committed. A page asks `ReadingPreference.Read` and `SavedList.Read` for the reading position
+  and the list – never a cookie itself: signed in they are the account's, and the cookies of the device are
+  neither read nor changed. Nothing is taken from a device into an account without an act of the visitor. An
+  invitation makes an account and nothing else (PRIV-006).
 * The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
   records as they are written in the file of a collection, each change kept with who, when, why, before and
   after. The website never references the store. What a record may say is decided by the readers – never add a

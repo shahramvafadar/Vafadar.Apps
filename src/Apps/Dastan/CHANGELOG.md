@@ -194,3 +194,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   password (shown once), closing the account with thirty days to open it again. The name of who signed in stands
   in the header. An account opens nothing yet; the list, the reading position and the private spaces follow.
 - The links in the header of a page no longer stand without a gap between them.
+- Who is signed in has their list and their reading position on every device. A device keeps its own for
+  who is signed out; a new account begins with what its device holds, and signing in takes nothing from a
+  device unless its visitor says so on the page of the account.
+- Who has an account can invite somebody: a link to pass on by any way they like, good for fourteen days and
+  for one person. The site sends nothing, and the invitation connects nobody with anybody.
+- The small buttons beside an entry of a list ("Take out of my list") look like the rest of the site.

@@ -1808,6 +1808,19 @@ main:has(> .stage) > :not(.stage) {
   margin-block: var(--space-2);
 }
 
+/* A small act beside an entry of a list – taking a page out, taking an invitation back – looks like the site,
+   not like the browser. */
+.save button:not(.action) {
+  min-block-size: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
 .save.inline {
   display: inline-flex;
   margin: 0;
@@ -1917,4 +1930,24 @@ main:has(> .stage) > :not(.stage) {
 .codes code {
   font-size: 1.05em;
   letter-spacing: 0.04em;
+}
+
+/* The invitations of an account: the link to pass on, where it stands, and the way to take it back. */
+.invitations {
+  margin: var(--space-3) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.invitations li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--border);
+}
+
+.invitations code {
+  overflow-wrap: anywhere;
 }

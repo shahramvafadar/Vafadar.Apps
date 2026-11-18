@@ -164,6 +164,66 @@ public sealed class AccountDesk
     }
 }
 
+/// <summary>
+/// The account of one request (step 16.2): who signed in and what follows them. While a visitor is signed in,
+/// their reading position and their list are those of the account – the same on every device; what the device
+/// holds itself is left as it is and counts again when they sign out. Read from the store once, when first asked.
+/// </summary>
+public sealed class AccountState
+{
+    private readonly AccountDesk _desk;
+    private readonly HttpContext _context;
+    private Belongings? _belongings;
+
+    /// <summary>Initializes a new instance of the <see cref="AccountState"/> class from the current request.</summary>
+    public AccountState(IHttpContextAccessor accessor, AccountDesk desk)
+    {
+        ArgumentNullException.ThrowIfNull(accessor);
+        _context = accessor.HttpContext ?? throw new InvalidOperationException("An account is asked for during a request only.");
+        _desk = desk;
+    }
+
+    /// <summary>Gets who signed in, or nothing.</summary>
+    public VisitorSession? Session => _desk.IsOpen ? AccountDesk.Session(_context.User) : null;
+
+    /// <summary>Gets what follows the visitor who signed in, or nothing when nobody did.</summary>
+    public Belongings? Belongings
+    {
+        get
+        {
+            if (_belongings is null && Session is { } session)
+            {
+                using var store = _desk.Open();
+                _belongings = store.Belongings(session.Id);
+            }
+
+            return _belongings;
+        }
+    }
+
+    /// <summary>Returns the account of a request.</summary>
+    public static AccountState Of(HttpContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        return context.RequestServices.GetRequiredService<AccountState>();
+    }
+
+    /// <summary>
+    /// Returns what the device of a request holds itself, whoever is signed in: the reading positions it chose
+    /// for the collections of the site, and its list.
+    /// </summary>
+    public static Belongings Device(HttpContext context, DastanLibrary library)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(library);
+        var positions = library.Collections
+            .Select(site => (site.Collection, Level: ReadingPreference.Device(context, site)))
+            .Where(position => position.Level is not null)
+            .ToImmutableDictionary(position => position.Collection, position => position.Level!.Value, StringComparer.Ordinal);
+        return new(positions, [.. SavedList.Device(context).Select(SavedList.Kept)]);
+    }
+}
+
 /// <summary>What signing in needs, and the addresses the forms of the account are sent to.</summary>
 public static class AccountEndpoints
 {
@@ -171,6 +231,7 @@ public static class AccountEndpoints
     public static void AddVisitorAccounts(this IServiceCollection services)
     {
         services.AddSingleton<AccountDesk>();
+        services.AddScoped<AccountState>();
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
         {
             options.Cookie.Name = AccountDesk.SessionCookie;
@@ -224,35 +285,45 @@ public static class AccountEndpoints
         forms.MapPost("/register", async (
             HttpContext context,
             AccountDesk desk,
+            DastanLibrary library,
             [FromForm] string? name,
             [FromForm] string? password,
             [FromForm] string? again,
             [FromForm] string? website,
+            [FromForm] string? invitation,
             [FromForm] string? returnUrl) =>
         {
+            // Who came by an invitation and has to try again still has it.
+            var from = invitation is { Length: > 0 and <= 40 } && invitation.All(char.IsAsciiLetterOrDigit)
+                ? $"{Home(returnUrl)}?invitation={invitation}"
+                : returnUrl;
+
             // A program that fills in every field has filled in the one a person does not see.
             if (!string.IsNullOrEmpty(website))
             {
-                return Back(returnUrl, "register", "later");
+                return Back(from, "register", "later");
             }
 
             if (!desk.Allows(context, "register", AccountDesk.RegistrationsPerHour))
             {
-                return Back(returnUrl, "register", "later");
+                return Back(from, "register", "later");
             }
 
             if (password != again)
             {
-                return Back(returnUrl, "register", "password-differs");
+                return Back(from, "register", "password-differs");
             }
 
             using var store = desk.Open();
-            var made = store.Register(name ?? string.Empty, password ?? string.Empty);
+            var made = store.Register(name ?? string.Empty, password ?? string.Empty, invitation);
             if (!made.Done)
             {
-                return Back(returnUrl, "register", [.. made.Problems]);
+                return Back(from, "register", [.. made.Problems]);
             }
 
+            // The new account begins with what the device it was made on holds: the list and how far its
+            // visitor has read. The device keeps its own.
+            store.BringIn(made.Session!.Id, AccountState.Device(context, library));
             await AccountDesk.SignIn(context, made.Session!).ConfigureAwait(false);
             desk.Carry(context, made.RecoveryCodes);
             return Said(returnUrl, "welcome");
@@ -404,6 +475,46 @@ public static class AccountEndpoints
             await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
             return Said(returnUrl, "closed");
         });
+
+        MapBelongings(forms);
+    }
+
+    // More of what is for a visitor who signed in: what follows them, and their invitations.
+    private static void MapBelongings(RouteGroupBuilder forms)
+    {
+        forms.MapPost("/bring", (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            store.BringIn(session.Id, AccountState.Device(context, library));
+            return Said(returnUrl, "brought");
+        });
+
+        forms.MapPost("/invite", (HttpContext context, AccountDesk desk, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            return store.Invite(session.Id) is null ? Back(returnUrl, "invite", "invitations") : Results.Redirect($"{Home(returnUrl)}?said=invited#invite");
+        });
+
+        forms.MapPost("/revoke", (HttpContext context, AccountDesk desk, [FromForm] string? code, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            return store.Revoke(session.Id, code ?? string.Empty) ? Results.Redirect($"{Home(returnUrl)}?said=revoked#invite") : Results.BadRequest();
+        });
     }
 
     private static string Current(string problem) => problem == "wrong" ? "wrong-current" : problem;
@@ -420,6 +531,10 @@ public static class AccountEndpoints
 
     private static IResult Said(string? returnUrl, string what) => Results.Redirect($"{Home(returnUrl)}?said={what}");
 
-    private static IResult Back(string? returnUrl, string form, params string[] problems) =>
-        Results.Redirect($"{Home(returnUrl)}?form={form}&problem={string.Join(',', problems)}#{form}");
+    private static IResult Back(string? returnUrl, string form, params string[] problems)
+    {
+        // An invitation the visitor came by stays in the address.
+        var invitation = returnUrl?.IndexOf("?invitation=", StringComparison.Ordinal) is { } at and >= 0 ? "&" + returnUrl[(at + 1)..] : string.Empty;
+        return Results.Redirect($"{Home(returnUrl)}?form={form}&problem={string.Join(',', problems)}{invitation}#{form}");
+    }
 }

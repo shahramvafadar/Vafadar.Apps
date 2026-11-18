@@ -47,8 +47,27 @@ public static class SavedList
     // A cookie holds about four thousand characters; the list stays well below.
     private const int Longest = 3000;
 
-    /// <summary>Returns the list the request carries, the page kept last at the end. What is no entry of a list is passed over.</summary>
+    /// <summary>
+    /// Returns the list of the visitor of a request, the page kept last at the end: the list of the account of
+    /// who signed in (step 16.2), else the list the device holds.
+    /// </summary>
     public static ImmutableArray<SavedPage> Read(HttpContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        return AccountState.Of(context).Belongings is { } follows
+            ? [.. follows.Kept.Select(kept => Parse($"{kept.Collection}/{kept.Kind}/{kept.Id}")).OfType<SavedPage>()]
+            : Device(context);
+    }
+
+    /// <summary>Returns the list as the store of the accounts keeps a page of it.</summary>
+    public static Vafadar.Dastan.People.KeptPage Kept(SavedPage page)
+    {
+        ArgumentNullException.ThrowIfNull(page);
+        return new(page.Collection, page.Kind.ToString().ToLowerInvariant(), page.Id);
+    }
+
+    /// <summary>Returns the list the device of a request holds, whoever is signed in. What is no entry of a list is passed over.</summary>
+    public static ImmutableArray<SavedPage> Device(HttpContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         var written = context.Request.Cookies[CookieName];
@@ -85,6 +104,7 @@ public static class SavedList
             HttpContext context,
             DastanLibrary library,
             Visitor visitor,
+            AccountDesk desk,
             [FromForm] string? collection,
             [FromForm] string? kind,
             [FromForm] string? id,
@@ -96,15 +116,31 @@ public static class SavedList
                 return Results.BadRequest();
             }
 
-            var list = Read(context).Remove(page);
-            if (act == "keep")
+            // Only a page this visitor can open is kept: the list is no way around the reading position.
+            if (act == "keep" && (library.Find(page.Collection) is not { } site || visitor.Of(site) is not { } projection || !IsShown(projection, page)))
             {
-                // Only a page this visitor can open is kept: the list is no way around the reading position.
-                if (library.Find(page.Collection) is not { } site || visitor.Of(site) is not { } projection || !IsShown(projection, page))
+                return Results.BadRequest();
+            }
+
+            if (AccountState.Of(context).Session is { } session)
+            {
+                // Signed in, the list is the account's; the device keeps what it held.
+                using var store = desk.Open();
+                if (act == "keep")
                 {
-                    return Results.BadRequest();
+                    store.Keep(session.Id, Kept(page));
+                }
+                else
+                {
+                    store.Drop(session.Id, Kept(page));
                 }
 
+                return Results.Redirect(ReturnAddress.Safe(returnUrl));
+            }
+
+            var list = Device(context).Remove(page);
+            if (act == "keep")
+            {
                 // A full list lets its oldest page go.
                 list = [.. list.Add(page).TakeLast(Most)];
             }

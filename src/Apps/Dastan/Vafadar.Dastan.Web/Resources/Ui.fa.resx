@@ -1441,7 +1441,7 @@
     <value>چیزی در فهرست شما نیست. صفحهٔ هر نام، تصویر یا رشته دکمه‌ای برای نگه‌داشتن دارد.</value>
   </data>
   <data name="Saved_Where" xml:space="preserve">
-    <value>این فهرست فقط در همین مرورگر نگه داشته می‌شود – در یک کوکی روی دستگاه شما – و حداکثر یک سال. این سایت حسابی ندارد و چیزی از آن نگه نمی‌دارد؛ مرورگر یا دستگاه دیگر آن را ندارد. فهرست حداکثر ۳۰ صفحه جا دارد.</value>
+    <value>این فهرست فقط در همین مرورگر نگه داشته می‌شود – در یک کوکی روی دستگاه شما – و حداکثر یک سال. سایت چیزی از آن نگه نمی‌دارد؛ مرورگر یا دستگاه دیگر آن را ندارد. فهرست حداکثر ۳۰ صفحه جا دارد.</value>
   </data>
   <data name="Saved_Kind_Entity" xml:space="preserve">
     <value>یک نام</value>
@@ -1468,7 +1468,7 @@
     <value>حساب شما</value>
   </data>
   <data name="Account_Lead" xml:space="preserve">
-    <value>حساب شما روی هر دستگاهی با شماست. فقط یک نام و یک گذرواژه می‌خواهد؛ نه نشانی ایمیل و نه چیز دیگری دربارهٔ شما.</value>
+    <value>حساب شما روی هر دستگاهی با شماست: فهرست شما و جایی که تا آن خوانده‌اید همراهتان می‌آید. فقط یک نام و یک گذرواژه می‌خواهد؛ نه نشانی ایمیل و نه چیز دیگری دربارهٔ شما.</value>
   </data>
   <data name="Account_Signed" xml:space="preserve">
     <value>با نام {0} وارد شده‌اید.</value>
@@ -1628,5 +1628,71 @@
   </data>
   <data name="Account_Problem_wrong-current" xml:space="preserve">
     <value>گذرواژهٔ کنونی درست نیست.</value>
+  </data>
+  <data name="Account_Follows_Title" xml:space="preserve">
+    <value>آنچه همراه شماست</value>
+  </data>
+  <data name="Account_Follows_Lead" xml:space="preserve">
+    <value>تا وقتی وارد شده‌اید، فهرست شما و جایی که تا آن خوانده‌اید در حسابتان نگه داشته می‌شود و روی هر دستگاهی یکی است. پس از خروج، هر دستگاه آنچه را خودش دارد نشان می‌دهد.</value>
+  </data>
+  <data name="Account_Bring_Lead" xml:space="preserve">
+    <value>این دستگاه فهرست یا جایگاه خواندنی از خودش دارد.</value>
+  </data>
+  <data name="Account_Bring_Note" xml:space="preserve">
+    <value>صفحه‌هایی که در فهرست شما نیست افزوده می‌شود. جایگاه خواندن فقط برای مجموعه‌ای برداشته می‌شود که حساب شما برایش جایگاهی ندارد؛ آنچه حساب شما می‌گوید هرگز جابه‌جا نمی‌شود. دستگاه آنچه را دارد نگه می‌دارد.</value>
+  </data>
+  <data name="Account_Bring_Send" xml:space="preserve">
+    <value>به حساب من بیاور</value>
+  </data>
+  <data name="Account_Register_Adopts" xml:space="preserve">
+    <value>آنچه این دستگاه دارد – فهرست شما و جایی که تا آن خوانده‌اید – به حساب تازه می‌رود.</value>
+  </data>
+  <data name="Account_Invite_Title" xml:space="preserve">
+    <value>دعوت از دیگران</value>
+  </data>
+  <data name="Account_Invite_Lead" xml:space="preserve">
+    <value>دعوت‌نامه پیوندی است که خودتان به دست دیگری می‌رسانید؛ سایت برای کسی چیزی نمی‌فرستد. با آن یک نفر حساب می‌سازد و نه بیشتر: هیچ پیوندی میان شما دو نفر از آن پدید نمی‌آید. دعوت‌نامه ۱۴ روز اعتبار دارد.</value>
+  </data>
+  <data name="Account_Invite_Send" xml:space="preserve">
+    <value>ساختن دعوت‌نامه</value>
+  </data>
+  <data name="Account_Invite_Open" xml:space="preserve">
+    <value>تا {0} اعتبار دارد</value>
+  </data>
+  <data name="Account_Invite_Used" xml:space="preserve">
+    <value>به کار رفته</value>
+  </data>
+  <data name="Account_Invite_Revoked" xml:space="preserve">
+    <value>پس گرفته شده</value>
+  </data>
+  <data name="Account_Invite_RunOut" xml:space="preserve">
+    <value>مهلتش گذشته</value>
+  </data>
+  <data name="Account_Invite_Revoke" xml:space="preserve">
+    <value>پس گرفتن</value>
+  </data>
+  <data name="Account_Invited" xml:space="preserve">
+    <value>شما به داستان دعوت شده‌اید. حساب خود را همین‌جا بسازید.</value>
+  </data>
+  <data name="Account_Invitation_Gone" xml:space="preserve">
+    <value>این دعوت‌نامه دیگر اعتبار ندارد. با این همه می‌توانید حساب بسازید.</value>
+  </data>
+  <data name="Account_Said_brought" xml:space="preserve">
+    <value>آنچه این دستگاه داشت اکنون در حساب شماست.</value>
+  </data>
+  <data name="Account_Said_invited" xml:space="preserve">
+    <value>دعوت‌نامه ساخته شد. پیوندش را به کسی که دعوت می‌کنید برسانید.</value>
+  </data>
+  <data name="Account_Said_revoked" xml:space="preserve">
+    <value>دعوت‌نامه پس گرفته شد.</value>
+  </data>
+  <data name="Account_Problem_invitations" xml:space="preserve">
+    <value>شما ۱۰ دعوت‌نامهٔ معتبر دارید. یکی را پس بگیرید یا صبر کنید تا یکی به کار رود یا مهلتش بگذرد.</value>
+  </data>
+  <data name="Saved_Where_Account" xml:space="preserve">
+    <value>فهرست شما در حسابتان نگه داشته می‌شود و روی هر دستگاهی که وارد شوید یکی است. فهرست حداکثر ۲۰۰ صفحه جا دارد.</value>
+  </data>
+  <data name="Saved_Where_Offer" xml:space="preserve">
+    <value>با داشتن حساب، فهرست شما روی هر دستگاهی همراهتان است.</value>
   </data>
 </root>
