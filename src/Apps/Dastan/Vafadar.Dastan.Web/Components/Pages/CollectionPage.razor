@@ -47,10 +47,23 @@
                         {
                             <span class="meta"> – <Foreign Text="@text.BaseText" /></span>
                         }
+                        @if (Site.Carried(other, overview.Boundary) is { } carried && carried.CompareTo(told.Boundary) > 0)
+                        {
+                            @* The editors state which stage there corresponds to the stage read here: the visitor
+                               carries the reading position by their own act, and only forward. *@
+                            var stage = told.Stages.First(candidate => candidate.Level == carried);
+                            <form method="post" action="/preferences/reading" class="save inline">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="collection" value="@other.Collection" />
+                                <input type="hidden" name="level" value="@carried.Value" />
+                                <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}/{other.Collection}#reading")" />
+                                <button type="submit">@string.Format(CultureInfo.CurrentCulture, T["Elsewhere_Carry"], Visitor.Text(stage.Label).Value)</button>
+                            </form>
+                        }
                     </li>
                 }
             </ul>
-            <p class="note">@T["Elsewhere_Reading"]</p>
+            <p class="note">@T[elsewhere.Any(entry => Site.Carried(entry.Collection, overview.Boundary) is not null) ? "Elsewhere_ReadingStated" : "Elsewhere_Reading"]</p>
         </section>
     }
 

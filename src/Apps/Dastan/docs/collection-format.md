@@ -106,6 +106,21 @@ revision has to have the record on every statement.
 Every record below has a `spoilerLevel`: the earliest stage at which a reader may see it. It has to be one of the
 stages. A record never points to a record of a later stage – its sources included.
 
+### `correspondences` – another telling of the same world
+
+Optional, inside `spoilerPolicy`. When the site offers another collection about the same world (`worldId`) –
+another edition, a retelling – the editors may state which of its stages a reader of a stage of this
+collection has read. A visitor can then go on there from that stage, by their own choice.
+
+| Field | Meaning |
+|---|---|
+| `collection` | The other collection, by the identifier of what it is about (its name in addresses) |
+| `levels` | Pairs `here` and `there`: who has read this collection to stage `here` has read the other up to stage `there`. A later `here` never has an earlier `there` |
+| `note` | Optional: a note of the editors; not shown |
+
+State only what is sure: a stage that is not named takes the answer of the nearest named stage before it, and
+before the first named stage nothing is carried.
+
 ## What a collection is about
 
 * **One story** – the usual case: one `NarrativeArc`, and nothing more to say. The address of the collection

@@ -82,6 +82,18 @@ public sealed class DastanLibrary
             throw new InvalidOperationException($"Two collections of the site are about {twice.Key}: an address can lead to one of them only.");
         }
 
+        // A correspondence the editors state with another collection of the site names stages that collection has.
+        foreach (var site in Collections)
+        {
+            foreach (var correspondence in site.Correspondences)
+            {
+                if (Find(correspondence.Collection) is { } other && correspondence.Stages.Values.Any(there => there >= other.StageCount))
+                {
+                    throw new InvalidOperationException($"{site.Collection} states a correspondence with a stage {correspondence.Collection} does not have.");
+                }
+            }
+        }
+
         if (Collections.FirstOrDefault(site => Taken.Contains(site.Collection, StringComparer.Ordinal)) is { } unreachable)
         {
             throw new InvalidOperationException($"A collection about {unreachable.Collection} cannot be reached: the site has an address of that name.");
@@ -186,6 +198,19 @@ public sealed class DastanSite
 
     /// <summary>Gets the world the collection is about: collections that name the same world tell of the same things.</summary>
     public string World => _catalogue.Info.WorldId;
+
+    /// <summary>Gets what the editors state about the stages of other tellings of the same world.</summary>
+    public ImmutableArray<StageCorrespondence> Correspondences => _catalogue.Info.Correspondences;
+
+    /// <summary>
+    /// Returns the stage of another collection that a reader of a stage of this one has read, as the editors
+    /// state it; <see langword="null"/> when they state nothing for it.
+    /// </summary>
+    public ReadingLevel? Carried(DastanSite other, ReadingLevel here)
+    {
+        ArgumentNullException.ThrowIfNull(other);
+        return Correspondences.FirstOrDefault(correspondence => correspondence.Collection == other.Collection)?.For(here);
+    }
 
     /// <summary>Gets the language the texts of the collection are written in.</summary>
     public string Language => _catalogue.Info.Language;

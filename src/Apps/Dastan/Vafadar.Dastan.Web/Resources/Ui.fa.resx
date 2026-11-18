@@ -1455,4 +1455,10 @@
   <data name="SiteSearch_Label" xml:space="preserve">
     <value>یک نام، در هر آنچه این‌جا برای خواندن هست</value>
   </data>
+  <data name="Elsewhere_Carry" xml:space="preserve">
+    <value>آن‌جا از «{0}» ادامه بدهید</value>
+  </data>
+  <data name="Elsewhere_ReadingStated" xml:space="preserve">
+    <value>هر یک از این‌ها مجموعه‌ای جداست و جایگاه خواندن خودش را دارد. هرجا ویراستاران گفته باشند کدام بخشِ آن‌جا با آنچه این‌جا خوانده‌اید برابر است، می‌توانید به انتخاب خودتان آن‌جا از همان بخش ادامه بدهید.</value>
+  </data>
 </root>

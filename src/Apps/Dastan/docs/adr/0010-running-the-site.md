@@ -129,3 +129,27 @@ reveals something of another is the editors' statement to make, in a form the ow
 Verification: `SameWorldTests` (4 cases) – a collection names the other telling of its world in both
 languages, and is named by it; a collection of another world is not named; what was read in one telling is
 not read in the other until it is read there.
+
+## Third addendum of 2026-11-18 – a reading position carried where the editors state it (step 14.11)
+
+The second addendum said that a reading position is not carried because nobody states which stage of one
+telling corresponds to which of another. The editors can now state it.
+
+* **`spoilerPolicy.correspondences`** of a collection: for another collection – named by what it is about –
+  pairs of stages, `here` and `there`: who has read this collection to `here` has read what the other tells
+  up to `there`. A stage that is not named takes the answer of the nearest stage before it; before the first
+  named stage nothing is stated. The readers refuse stages this collection does not have, a later stage here
+  that corresponds to an earlier one there, a correspondence with the collection itself and one stated twice;
+  the site refuses to start when a stage of the other collection does not exist.
+* **The statement is one-sided**: what the poem says about the retelling says nothing about the way back. A
+  collection that states nothing carries nothing.
+* **The visitor carries it, not the site.** The page of a collection lists the other tellings of its world;
+  where a correspondence is stated and leads further than the visitor has read there, a button offers to go on
+  there from that stage. It is the form of the reading position of the other collection – the same explicit act
+  as choosing a stage – so a link somebody sends still cannot move anybody's reading position. Nothing is
+  carried backwards.
+
+Verification: `StageCorrespondenceTests` (3 tests, readers) – nothing in the collection of the repository; the
+nearest stage at or before; seven things that are no correspondence. `CarriedReadingTests` (3 tests, site) –
+nothing to carry at the opening; the stated stage offered and carried by the visitor's act; never backwards
+and nothing from a telling that states nothing. Not looked at in a browser.

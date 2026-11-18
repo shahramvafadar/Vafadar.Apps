@@ -76,6 +76,12 @@ public sealed class TwoCollectionsSite : DemoSite
             .Replace("dastan-shahnameh-rostam-sohrab-pilot-v0.5", "dastan-shahnameh-retold", StringComparison.Ordinal);
         File.WriteAllText(Path.Combine(_content, "samples", "retold.json"), again);
 
+        // The editors of the story state which part of the retelling a reader of a part of the story has read:
+        // the opening is the opening, the third part is the second there, the end is the end.
+        var story = JsonNode.Parse(File.ReadAllText(Path.Combine(_content, "samples", "shahnameh-pilot.json")))!.AsObject();
+        story["spoilerPolicy"]!["correspondences"] = JsonNode.Parse("""[ { "collection": "story-retold", "levels": [ { "here": 0, "there": 0 }, { "here": 2, "there": 1 }, { "here": 4, "there": 4 } ] } ]""");
+        File.WriteAllText(Path.Combine(_content, "samples", "shahnameh-pilot.json"), story.ToJsonString());
+
         // Beside the collections, a file that is none: the site passes it over.
         File.WriteAllText(Path.Combine(_content, "samples", "notes.json"), """{ "note": "No collection." }""");
     }
@@ -240,6 +246,7 @@ public sealed class SameWorldTests(TwoCollectionsSite site) : IClassFixture<TwoC
 
         Assert.Contains(title, story.Main, StringComparison.Ordinal);
         Assert.Contains(reading, story.Main, StringComparison.Ordinal);
+        Assert.Contains(reading, retold.Main, StringComparison.Ordinal);
         Assert.Contains($"<a href=\"{Retold}\"", story.Html, StringComparison.Ordinal);
         Assert.Contains($"<a href=\"{Story}\"", retold.Html, StringComparison.Ordinal);
     }
@@ -336,5 +343,59 @@ public sealed class SiteSearchTests(TwoCollectionsSite site, DemoSite one) : ICl
 
         Assert.Contains($"action=\"{Story}/search\"", page.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("action=\"search\"", page.Html, StringComparison.Ordinal);
+    }
+}
+
+/// <summary>
+/// A reading position carried to another telling (step 14.11): only where the editors state which stage there
+/// corresponds to the stage read here, only forward, and only by the visitor's own act.
+/// </summary>
+public sealed class CarriedReadingTests(TwoCollectionsSite site) : IClassFixture<TwoCollectionsSite>
+{
+    private const string Story = "story-rostam-sohrab";
+    private const string Retold = TwoCollectionsSite.Retold;
+
+    [Fact]
+    public async Task At_the_opening_there_is_nothing_to_carry()
+    {
+        var page = await site.Visitor().Get($"/en/{Story}");
+
+        Assert.Contains("Where the editors state which part there corresponds", page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Go on there from", page.Main, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Who_has_read_on_is_offered_the_stage_the_editors_state_and_carries_it_by_their_own_act()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(3);
+        var page = await visitor.Get($"/en/{Story}");
+
+        // The fourth part here has no stage stated; the nearest before it is the third, which is the second there.
+        Assert.Contains("Go on there from", page.Main, StringComparison.Ordinal);
+        Assert.Contains($"name=\"collection\" value=\"{Retold}\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains("name=\"level\" value=\"1\"", page.Html, StringComparison.Ordinal);
+
+        // Nothing is carried until the visitor says so.
+        Assert.False(visitor.Cookies.ContainsKey($"dastan.reading.{Retold}"));
+        await visitor.ReadTo(1, collection: Retold);
+        Assert.Equal("1", visitor.Cookies[$"dastan.reading.{Retold}"]);
+        Assert.DoesNotContain("Go on there from", (await visitor.Get($"/en/{Story}")).Main, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_position_is_never_carried_backwards_and_not_from_a_telling_that_states_nothing()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(2);
+        await visitor.ReadTo(4, collection: Retold);
+
+        // Further on there than what corresponds to here: nothing is offered.
+        Assert.DoesNotContain("Go on there from", (await visitor.Get($"/en/{Story}")).Main, StringComparison.Ordinal);
+
+        // The retelling states nothing about the story: its page offers nothing to carry and says the plain sentence.
+        var retold = await visitor.Get($"/en/{Retold}");
+        Assert.DoesNotContain("Go on there from", retold.Main, StringComparison.Ordinal);
+        Assert.Contains("how far you have read here says nothing there", retold.Main, StringComparison.Ordinal);
     }
 }
