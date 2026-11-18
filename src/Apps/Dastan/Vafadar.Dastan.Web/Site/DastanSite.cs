@@ -48,7 +48,7 @@ public sealed class DastanOptions
 public sealed class DastanLibrary
 {
     // The first part of an address that is no collection: a collection of that name could not be reached.
-    private static readonly string[] Taken = ["compare", "media", "preferences", "report", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
+    private static readonly string[] Taken = ["compare", "media", "preferences", "report", "saved", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
 
     /// <summary>Initializes a new instance of the <see cref="DastanLibrary"/> class and reads the collections.</summary>
     /// <exception cref="SampleFormatException">A collection cannot be used; the app does not start.</exception>

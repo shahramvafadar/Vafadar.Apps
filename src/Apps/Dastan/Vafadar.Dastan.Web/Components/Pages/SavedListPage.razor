@@ -1,0 +1,77 @@
+@page "/saved"
+@inject Visitor Visitor
+@inject DastanLibrary Library
+@inject IStringLocalizer<Ui> T
+
+@* The list of the visitor (step 15.1, B-016): the pages they kept, read from the cookie of their device. A
+   page they can no longer open – because they moved their reading position back, or the site changed – is not
+   shown and not counted: the list never says more than its pages do. *@
+<PageTitle>@T["Saved_Title"] – @T["Site_Name"]</PageTitle>
+@* The list of one visitor is no page for anybody else. *@
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+<header class="page-header">
+    <h1>@T["Saved_Title"]</h1>
+    <p class="lead">@T["Saved_Lead"]</p>
+</header>
+
+@if (_shown.Count == 0)
+{
+    <p class="note" role="status">@T["Saved_Empty"]</p>
+}
+else
+{
+    @foreach (var group in _shown.GroupBy(entry => entry.Site))
+    {
+        var projection = Visitor.Of(group.Key)!;
+        <section aria-labelledby="@($"saved-{group.Key.Collection}")">
+            <h2 id="@($"saved-{group.Key.Collection}")"><a href="@group.Key.Collection"><Loc Text="projection.Overview().Subject.Label" /></a></h2>
+            <ul class="statements" role="list">
+                @foreach (var (site, kept, label) in group)
+                {
+                    <li>
+                        <a href="@kept.Address"><Loc Text="label" /></a>
+                        <span class="meta">– @T[$"Saved_Kind_{kept.Kind}"]</span>
+                        <form method="post" action="@SavedList.Address" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="collection" value="@kept.Collection" />
+                            <input type="hidden" name="kind" value="@kept.Kind.ToString().ToLowerInvariant()" />
+                            <input type="hidden" name="id" value="@kept.Id" />
+                            <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}/saved")" />
+                            <button type="submit" name="act" value="drop">@T["Saved_Drop"]<span class="visually-hidden"> – @Visitor.Text(label).Value</span></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+}
+
+<p class="note">@T["Saved_Where"]</p>
+
+@code {
+    private List<(DastanSite Site, SavedPage Page, LocalizedText Label)> _shown = [];
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        // The page kept last stands first.
+        foreach (var page in SavedList.Read(Context).Reverse())
+        {
+            if (Library.Find(page.Collection) is not { } site || Visitor.Of(site) is not { } projection || !SavedList.IsShown(projection, page))
+            {
+                continue;
+            }
+
+            var label = page.Kind switch
+            {
+                SavedKind.Entity => projection.Find(new EntityId(page.Id))!.Label,
+                SavedKind.Media => projection.Find(new MediaId(page.Id))!.Label,
+                _ => projection.Thread(page.Id)!.Thread.Label,
+            };
+            _shown.Add((site, page, label));
+        }
+    }
+}

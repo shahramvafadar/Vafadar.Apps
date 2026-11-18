@@ -1791,3 +1791,18 @@ main:has(> .stage) > :not(.stage) {
     overflow-wrap: anywhere;
   }
 }
+
+/* Keeping a page in the list of the visitor (step 15.1). */
+.save {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block: var(--space-2);
+}
+
+.save.inline {
+  display: inline-flex;
+  margin: 0;
+  margin-inline-start: var(--space-3);
+}

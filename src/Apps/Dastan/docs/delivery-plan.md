@@ -430,3 +430,17 @@ name for it. What is left of it is named in the rows above as not built, each wi
 picture for the preview of a link, a gallery of a period or a theme, an earlier revision shown, suggestions
 the site works out by itself, a search across collections, and a reading position that is carried between
 editions or kept for each story.
+
+## 16. What is a visitor's own (phase 15)
+
+The product documents name capabilities that belong to one person: saved views, accounts, invitations, private
+and family spaces, personal photographs ([document 06](product/06-private-spaces-consent-and-privacy.md),
+B-016 to B-020). Most of them keep data about people and need decisions that are the owner's – which the
+document itself lists as open (Q-05, Q-06, Q-07, Q-13, Q-14). Phase 15 builds what needs none of them, and
+names the rest with the decision each waits for.
+
+| Step | What | Status |
+|---|---|---|
+| 15.1 | **A list of one's own** (B-016): pages a visitor keeps, without an account | **Done** 2026-11-18 – a button on the page of a name, an image or video and a thread keeps the page in "My list"; the list is a cookie on the visitor's device, at most 30 pages, for a year; the site keeps nothing of it; a page that cannot be opened any more is neither shown nor counted ([ADR 0003](adr/0003-server-rendered-pages.md), fourth addendum) |
+| 15.2 | **The rules of private spaces as a library**: who may see a relationship, a tag, an affiliation – the accepted rules of document 06, checked by its acceptance examples, before any account exists | Planned |
+| – | **Accounts of visitors, invitations, private and family spaces, personal photographs, copies for use without a connection** | **Not built – the owner's decisions first**: who may have an account and how an identity is proved (Q-06); what is published about living people (Q-05); shared family trees (Q-07); what happens when consent ends (Q-14); copies without a connection (Q-13); and, with any of them, where data about people is kept, who is responsible for it, and how an invitation is sent – a mail service is a third party |

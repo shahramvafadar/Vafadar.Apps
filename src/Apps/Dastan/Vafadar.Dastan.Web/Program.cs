@@ -129,6 +129,7 @@ app.MapMediaFiles();
 app.MapSiteHealth();
 app.MapSearchEngineFiles();
 app.MapVisitorReports();
+app.MapSavedList();
 app.MapRazorComponents<App>();
 
 await app.RunAsync();

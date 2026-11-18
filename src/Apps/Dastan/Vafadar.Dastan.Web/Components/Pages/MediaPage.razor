@@ -15,6 +15,7 @@
         <h1><Loc Text="item.Label" /></h1>
         @* What kind of picture this is stands above the picture: nobody takes a diagram of today for an old painting. *@
         <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+        <SaveControl Kind="SavedKind.Media" Id="@item.Id.Value" />
     </header>
 
     <figure class="media-figure">

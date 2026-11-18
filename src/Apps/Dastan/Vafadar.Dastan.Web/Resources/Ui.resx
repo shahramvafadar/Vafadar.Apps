@@ -1422,4 +1422,34 @@
   <data name="Elsewhere_Reading" xml:space="preserve">
     <value>Each of these is a collection of its own, with its own reading position: how far you have read here says nothing there.</value>
   </data>
+  <data name="Saved_Keep" xml:space="preserve">
+    <value>Keep in my list</value>
+  </data>
+  <data name="Saved_Drop" xml:space="preserve">
+    <value>Take out of my list</value>
+  </data>
+  <data name="Saved_Link" xml:space="preserve">
+    <value>My list</value>
+  </data>
+  <data name="Saved_Title" xml:space="preserve">
+    <value>My list</value>
+  </data>
+  <data name="Saved_Lead" xml:space="preserve">
+    <value>The pages you chose to keep, the last one first.</value>
+  </data>
+  <data name="Saved_Empty" xml:space="preserve">
+    <value>Nothing is in your list. A page of a name, an image or a thread has a button to keep it.</value>
+  </data>
+  <data name="Saved_Where" xml:space="preserve">
+    <value>The list is kept in this browser only – in a cookie on your device – and for a year at most. This site has no account and keeps nothing of it; another browser or device does not have it. It holds at most 30 pages.</value>
+  </data>
+  <data name="Saved_Kind_Entity" xml:space="preserve">
+    <value>a name</value>
+  </data>
+  <data name="Saved_Kind_Media" xml:space="preserve">
+    <value>an image or a video</value>
+  </data>
+  <data name="Saved_Kind_Thread" xml:space="preserve">
+    <value>a thread</value>
+  </data>
 </root>
