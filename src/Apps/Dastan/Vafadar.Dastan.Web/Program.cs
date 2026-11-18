@@ -34,6 +34,7 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
     options.UnlocalizedPaths.Add(PhotoEndpoints.File);
     options.UnlocalizedPaths.Add("/signin-google");
     options.UnlocalizedPaths.Add("/signin-microsoft");
+    options.UnlocalizedPaths.Add(PreviewPicture.Address);
     options.UnlocalizedPaths.Add(SearchEngineFiles.Robots);
     options.UnlocalizedPaths.Add(SearchEngineFiles.Sitemap);
 });
@@ -135,6 +136,7 @@ app.MapReadingPreference();
 app.MapMediaFiles();
 app.MapSiteHealth();
 app.MapSearchEngineFiles();
+app.MapPreviewPicture();
 app.MapVisitorReports();
 app.MapSavedList();
 app.MapVisitorAccounts();

@@ -146,3 +146,26 @@ Verification: `SavedListTests` (17 cases) – keeping a page and finding it in t
 the cookie as it is written; the page without a list; the last page taken out; a page that cannot be opened;
 a page that is not reached any more; four things that are no act; three cookies that are no list; a full
 list; pages of two collections. Not looked at in a browser.
+
+## Addendum of 2026-11-18 – the picture a link is shown with (step 17.4, D-056)
+
+The third addendum left the picture for the preview of a link out: it would have to be drawn for each page.
+With a library that writes images (D-056) the site draws one.
+
+* **One picture for every page**: `/preview.png`, 1200 by 630 pixels – the mark of the site (the paths of
+  `icon.svg`) on its ground, drawn once by `PreviewPicture` and kept. A page that has an address of its own
+  names it in its head with its whole address, its kind and its size (`og:image`, `og:image:width`,
+  `og:image:height`, `og:image:alt`) and asks for the large form of a preview (`twitter:card`).
+* **What a page is about stays text**: the title and the description of the page stand beside the picture
+  wherever a link is shown (third addendum). Nothing of a collection is in the picture, so a link to a page
+  shows nothing a visitor has not reached.
+* **Not built: the words of the page on the picture.** Drawing text needs a font in the program for every
+  script the site writes. The site has one font file – Vazirmatn without Latin letters, in a form for browsers
+  – and takes the Latin letters from the device of the visitor; a container has no fonts at all. Persian
+  needs its letters joined as well, which is a second library. Fonts in the program are a decision that was
+  not made.
+* The mark is the provisional one; a new mark is a change in two places, `icon.svg` and `PreviewPicture`.
+
+Checked: `PreviewPictureTests` (4 cases): the picture is a PNG of that size with the ground at its corner and
+the mark in its middle; pages in both languages name it; a page without an address names none. Looked at in a
+browser. Not tried: what the places that show links make of it – that needs a site they can reach.
