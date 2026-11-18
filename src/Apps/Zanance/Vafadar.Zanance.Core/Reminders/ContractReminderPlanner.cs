@@ -33,12 +33,17 @@ public static class ContractReminderPlanner
     public static IReadOnlyList<ContractReminder> Plan(IEnumerable<Schedule> schedules, DateTime now)
     {
         ArgumentNullException.ThrowIfNull(schedules);
+        var today = DateOnly.FromDateTime(now);
+        var until = ReminderPlanner.HorizonEnd(now);
         var result = new List<ContractReminder>();
         foreach (var schedule in schedules.Where(s => s.State != ScheduleState.Ended))
         {
-            if (schedule.CancellationDeadline is { } deadline)
+            if (schedule.CancellationDeadline is { } deadline && deadline >= today)
             {
-                Add(schedule, ContractDateKind.Cancellation, deadline, deadline.AddDays(-CancellationLeadDays), 0x0800_0000);
+                if (deadline.DayNumber - today.DayNumber >= CancellationLeadDays)
+                {
+                    Add(schedule, ContractDateKind.Cancellation, deadline, deadline.AddDays(-CancellationLeadDays), 0x0800_0000);
+                }
                 Add(schedule, ContractDateKind.Cancellation, deadline, deadline, 0x0400_0000);
             }
 
@@ -53,7 +58,7 @@ public static class ContractReminderPlanner
         void Add(Schedule schedule, ContractDateKind kind, DateOnly date, DateOnly day, int mask)
         {
             var at = day.ToDateTime(schedule.ReminderTime, DateTimeKind.Local);
-            if (at > now && at <= now.AddDays(ReminderPlanner.HorizonDays))
+            if (at > now && at <= until)
             {
                 result.Add(new ContractReminder((ReminderPlanner.StableId(schedule.Id, date) ^ mask) | 1, at, schedule, kind, date));
             }

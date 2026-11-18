@@ -20,6 +20,10 @@ public static class ReminderPlanner
     /// <summary>How far ahead reminders are scheduled.</summary>
     public const int HorizonDays = 62;
 
+    /// <summary>Returns the last representable instant inside the delivery horizon.</summary>
+    internal static DateTime HorizonEnd(DateTime now) =>
+        now.AddTicks(Math.Min(HorizonDays * TimeSpan.TicksPerDay, DateTime.MaxValue.Ticks - now.Ticks));
+
     /// <summary>At most this many reminders are pending, far below platform limits (REM-10).</summary>
     public const int MaxPending = 30;
 
@@ -32,16 +36,26 @@ public static class ReminderPlanner
         ArgumentNullException.ThrowIfNull(schedules);
         var stateList = states.ToList();
         var today = DateOnly.FromDateTime(now);
+        var until = HorizonEnd(now);
         var reminders = new List<PlannedReminder>();
 
         foreach (var schedule in schedules.Where(s => s.State == ScheduleState.Active && s.ReminderEnabled))
         {
-            var from = today;
-            var to = today.AddDays(HorizonDays + Math.Max(0, schedule.ReminderDaysBefore));
-            foreach (var occurrence in Occurrences.Between(schedule, stateList, from, to, today).Where(o => o.IsOpen))
+            var leadDays = Math.Max(0, schedule.ReminderDaysBefore);
+            var lastDeliveryDay = DateOnly.FromDateTime(until);
+            var lastDay = DateOnly.MaxValue.DayNumber;
+            // An advance reminder beyond the date range cannot deliver today or later.
+            // The independent due-day reminder still uses the ordinary delivery horizon.
+            var canRemindInAdvance = leadDays <= lastDay - today.DayNumber;
+            var searchEnd = DateOnly.FromDayNumber(lastDeliveryDay.DayNumber
+                + (canRemindInAdvance ? Math.Min(leadDays, lastDay - lastDeliveryDay.DayNumber) : 0));
+            foreach (var occurrence in Occurrences.Between(schedule, stateList, today, searchEnd, today).Where(o => o.IsOpen))
             {
                 var id = StableId(schedule.Id, occurrence.OriginalDate);
-                Add(id, NotifyAt(occurrence.DueDate, schedule.ReminderDaysBefore, schedule.ReminderTime), occurrence);
+                if (canRemindInAdvance && leadDays <= occurrence.DueDate.DayNumber - DateOnly.MinValue.DayNumber)
+                {
+                    Add(id, NotifyAt(occurrence.DueDate, leadDays, schedule.ReminderTime), occurrence);
+                }
 
                 // The optional second reminder on the due date gets its own stable id (REM-01).
                 if (schedule.ReminderOnDueDate && schedule.ReminderDaysBefore > 0)
@@ -56,7 +70,7 @@ public static class ReminderPlanner
         // Only future reminders: missed ones are shown in the app, not as a burst of notifications (AT-33).
         void Add(int id, DateTime notifyAt, Occurrence occurrence)
         {
-            if (notifyAt > now && notifyAt <= now.AddDays(HorizonDays))
+            if (notifyAt > now && notifyAt <= until)
             {
                 reminders.Add(new PlannedReminder(id, notifyAt, occurrence));
             }

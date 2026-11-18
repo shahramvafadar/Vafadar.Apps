@@ -20,12 +20,18 @@ public static class ReviewReminderPlanner
     {
         if (!enabled || firstData is null) { return []; }
         var today = DateOnly.FromDateTime(now);
-        var until = now.AddDays(ReminderPlanner.HorizonDays);
+        var until = ReminderPlanner.HorizonEnd(now);
         var (year, month) = PeriodMath.MonthOf(today, calendar, startDay);
+        var (lastYear, lastMonth) = PeriodMath.MonthOf(DateOnly.FromDateTime(until), calendar);
+        var offset = Math.Clamp(startDay, 1, PeriodMath.MaxStartDay) - 1;
         var result = new List<ReviewReminder>();
-        while (PeriodMath.IsSupportedYear(year, calendar))
+        // A supported final year may end partway through the calendar year or month.
+        while (PeriodMath.IsSupportedYear(year, calendar) &&
+            (year < lastYear || (year == lastYear && month <= lastMonth)))
         {
-            var boundary = PeriodMath.ToDate(year, month, 1, calendar).AddDays(Math.Clamp(startDay, 1, PeriodMath.MaxStartDay) - 1);
+            var first = PeriodMath.ToDate(year, month, 1, calendar);
+            if (offset > DateOnly.MaxValue.DayNumber - first.DayNumber) break;
+            var boundary = first.AddDays(offset);
             var at = boundary.ToDateTime(new TimeOnly(9, 0), DateTimeKind.Local);
             if (at > until) { break; }
             // Resume never catches up missed alerts. On the boundary morning the review is already due.

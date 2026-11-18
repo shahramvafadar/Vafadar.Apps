@@ -24,7 +24,7 @@ public static class GoalReminderPlanner
         ArgumentNullException.ThrowIfNull(plans);
         var byGoal = plans.Where(p => p.ReminderEnabled).GroupBy(p => p.GoalId).ToDictionary(g => g.Key, g => g.First());
         var today = DateOnly.FromDateTime(now);
-        var until = now.AddDays(ReminderPlanner.HorizonDays);
+        var until = ReminderPlanner.HorizonEnd(now);
         var result = new List<GoalReminder>();
         foreach (var item in progress.Where(IsEligible))
         {

@@ -1,0 +1,9 @@
+# Reminder dates at calendar boundaries
+
+A stored contract deadline in the first two weeks of the supported date range could throw when subtracting the 14-day reminder lead. The reminder service rebuilds the queue from several planners, so a throw while computing one expired contract prevents publication of other valid reminders. Near the final representable day, adding the 62-day horizon could throw in the plan, contract, goal and period-review planners.
+
+The planners now limit their shared delivery horizon to the last representable instant. A plan skips an advance reminder whose date is unrepresentable and keeps its independent due-day reminder when eligible. Contract planning skips expired deadlines and lead dates before today. Period reviews stop at the final representable month and omit a review boundary whose chosen start day falls outside it. The same saved dates, reminder times, identifiers and caps still drive normal scheduling.
+
+Seven new planner cases reproduced date exceptions on the previous code. All seven pass after the change, covering the earliest date, final-day reminders and the partial final Persian and Hijri months. Four directly affected checks also pass for a moved due date, contract lead and due day, monthly goal anchor and period-review start day. Logs are retained under local artifact folder d1236-reminder-date-boundaries. The initial test fixture omitted required names and the first filter used a different runner's option. Both were corrected before the baseline assertions ran.
+
+Strict Release builds of the Android and Windows app both completed with zero warnings and errors. Verification uses synthetic inputs at the planner boundary. Android reminder delivery, OEM transfers, and financial operations have separate acceptance evidence. Both physical phones retain their installed versions and data.
