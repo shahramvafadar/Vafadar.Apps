@@ -2178,4 +2178,13 @@
   <data name="Tree_Change_claim-withdrawn" xml:space="preserve">
     <value>پس گرفتن «این منم»</value>
   </data>
+  <data name="Account_Export_Title" xml:space="preserve">
+    <value>نسخه‌ای از دادهٔ شما</value>
+  </data>
+  <data name="Account_Export_Lead" xml:space="preserve">
+    <value>هر آنچه سایت دربارهٔ حساب شما نگه می‌دارد را در یک فایل بگیرید: فهرست و جایگاه‌های خواندن، دعوت‌نامه‌ها، رابطه‌ها و حلقه‌ها، و شجره‌نامه‌هایی که از آنِ شماست. از شجره‌نامه‌های دیگران فقط نام برده می‌شود. گذرواژه‌ای در آن نیست.</value>
+  </data>
+  <data name="Account_Export_Send" xml:space="preserve">
+    <value>دریافت فایل</value>
+  </data>
 </root>

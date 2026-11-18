@@ -2178,4 +2178,13 @@
   <data name="Tree_Change_claim-withdrawn" xml:space="preserve">
     <value>Took back "this is me"</value>
   </data>
+  <data name="Account_Export_Title" xml:space="preserve">
+    <value>A copy of your data</value>
+  </data>
+  <data name="Account_Export_Lead" xml:space="preserve">
+    <value>Get everything the site keeps about your account as one file: your list and reading positions, invitations, relationships and circles, and the family trees you own. Trees of others are named, not copied. No password is in it.</value>
+  </data>
+  <data name="Account_Export_Send" xml:space="preserve">
+    <value>Get the file</value>
+  </data>
 </root>

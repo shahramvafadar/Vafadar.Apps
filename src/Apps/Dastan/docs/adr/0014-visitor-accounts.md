@@ -201,3 +201,27 @@ screen reader, the light appearance, a container.
 
 Checked: `IdentityClaimsTests` (the store: 10 cases), three more cases of `FamilyTreePagesTests` (the site).
 **Not looked at in a browser.**
+
+## Fifth addendum (step 16.7): taking back, closing, and a copy of one's own data
+
+* **Taking back holds at once** (D-055), and each thing is taken back by the account it belongs to: a
+  relationship is ended by either side; who may see it is narrowed by a side for its own side; a claim, or
+  that a record is the account, by that account only; a place in a tree by the owner or by ending the
+  relationship. None of these waits for anybody, and none leaves the thing visible meanwhile.
+* **A closed account** signs nobody in, shows nothing and is shown nowhere from that moment – its page, its
+  relationships, its trees, its records in the trees of others – and is deleted for good thirty days later
+  with everything that belongs to it. What others made stays: a record of a tree names nobody then, a change
+  of a tree says "an account that is deleted". Until then the name and the password open the account again
+  with what it had.
+* **A copy of one's own data**: the page of the account hands over one file (`dastan-account.json`, JSON,
+  written to be read) for the password – it is everything at once. It holds the name and when the account was
+  made, how many recovery codes are left, the reading positions, the list, the invitations, the relationships
+  with who they are shown to, the circles, and the trees the account owns with their people, links, who they
+  are shared with and their history. A tree of somebody else is named with its owner and the role, and with
+  the record that is this account – it is not copied, it is theirs. **Not in it**: the password or anything
+  derived from it, the recovery codes, any identifier the store made, and anything about an account the
+  visitor has nothing to do with. Other accounts stand in it by their names.
+* The form of the file has a version (`PeopleStore.ExportVersion`); bringing such a file back in is not built.
+
+Checked: `OwnDataTests` (the store: 5 cases, among them that no secret and no identifier is in the copy),
+two more cases of `VisitorAccountTests` (the site). The form was not looked at in a browser.

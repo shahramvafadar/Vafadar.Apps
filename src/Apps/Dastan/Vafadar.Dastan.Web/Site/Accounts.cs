@@ -487,6 +487,26 @@ public static class AccountEndpoints
     // More of what is for a visitor who signed in: what follows them, and their invitations.
     private static void MapBelongings(RouteGroupBuilder forms)
     {
+        // A copy of what the store holds about the account (step 16.7), handed over as a file – proved by the
+        // password, since it is everything at once.
+        forms.MapPost("/export", (HttpContext context, AccountDesk desk, [FromForm] string? current, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            if (store.Export(session.Id, current ?? string.Empty) is not { } copy)
+            {
+                return Back(returnUrl, "export", "wrong-current");
+            }
+
+            context.Response.Headers.CacheControl = "no-store";
+            context.Response.Headers.ContentDisposition = "attachment; filename=\"dastan-account.json\"";
+            return Results.Text(copy.ToJsonString(Written), "application/json", System.Text.Encoding.UTF8);
+        });
+
         forms.MapPost("/bring", (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? returnUrl) =>
         {
             if (AccountDesk.Session(context.User) is not { } session)
@@ -521,6 +541,13 @@ public static class AccountEndpoints
             return store.Revoke(session.Id, code ?? string.Empty) ? Results.Redirect($"{Home(returnUrl)}?said=revoked#invite") : Results.BadRequest();
         });
     }
+
+    // A copy is for a person to read: on lines of its own, with the letters of every script as they are.
+    private static readonly System.Text.Json.JsonSerializerOptions Written = new()
+    {
+        WriteIndented = true,
+        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    };
 
     private static string Current(string problem) => problem == "wrong" ? "wrong-current" : problem;
 

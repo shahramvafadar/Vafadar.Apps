@@ -213,3 +213,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - In a family tree shared with them, somebody can say of a record "this is me". Who made the record confirms
   or refuses – the same name is not proof. Confirmed, the record names the account and nothing else changes;
   the account can take it back at any time.
+- The page of the account hands over a copy of one's own data as a file: the list, the reading positions,
+  invitations, relationships, circles and one's own family trees.
