@@ -19,6 +19,9 @@
       The collection is input of the app, not a web asset: it is copied next to the program (content/), never under
       wwwroot. Only the app reads it; a visitor gets what the projection allows (ADR 0002).
     -->
+    <!-- The coasts of the earth for the drawing of the places (D-057): Natural Earth, public domain. -->
+    <EmbeddedResource Include="Data\coasts.txt" LogicalName="Vafadar.Dastan.Web.Data.coasts.txt" />
+    <EmbeddedResource Include="Data\waters.txt" LogicalName="Vafadar.Dastan.Web.Data.waters.txt" />
     <Content Include="..\content\**\*" LinkBase="content" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="Never" />
     <InternalsVisibleTo Include="Vafadar.Dastan.Web.Tests" />
   </ItemGroup>

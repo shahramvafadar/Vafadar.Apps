@@ -8,6 +8,21 @@
    on a span inside the text (as in the chart of time). *@
 <svg class="places-map" width="@Em(Map.Width + (2 * Pad))" height="@Em(Map.Height + (2 * Pad))" dir="ltr">
     <rect class="map-ground" x="@Em(Pad)" y="@Em(Pad)" width="@Em(Map.Width)" height="@Em(Map.Height)" />
+    @if (!Map.Coasts.IsEmpty || !Map.Waters.IsEmpty)
+    {
+        @* The coasts lie under the grid, in a drawing of their own whose measure is that of the map: a path
+           cannot be measured in the font, the frame around it can. They say nothing a reader has to hear. *@
+        <svg class="map-coasts" x="@Em(Pad)" y="@Em(Pad)" width="@Em(Map.Width)" height="@Em(Map.Height)" viewBox="0 0 @Number(Map.Width) @Number(Map.Height)" preserveAspectRatio="none" aria-hidden="true">
+            @foreach (var water in Map.Waters)
+            {
+                <path class="map-water" d="@water" />
+            }
+            @foreach (var coast in Map.Coasts)
+            {
+                <path d="@coast" />
+            }
+        </svg>
+    }
     @foreach (var line in Map.Meridians)
     {
         <g>
@@ -46,6 +61,8 @@
     public string Here { get; set; } = string.Empty;
 
     private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+
+    private static string Number(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
 
     private string Degrees(decimal degrees, string positive, string negative) => degrees == 0
         ? QuantityText.Number(0, Visitor) + "°"

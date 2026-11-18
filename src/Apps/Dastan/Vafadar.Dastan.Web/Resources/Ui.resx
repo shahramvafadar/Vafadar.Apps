@@ -1156,7 +1156,7 @@
     <value>The real places this collection names, where they lie to each other, and what is said to be there.</value>
   </data>
   <data name="Places_NoTiles" xml:space="preserve">
-    <value>The drawing has no coasts and no borders: this site loads no map from anybody. The grid says where on the earth the places are; a position opens in the map of your device.</value>
+    <value>The drawing shows coasts, rivers and lakes and no borders, and this site loads no map from anybody: the coasts come with the site (Natural Earth). The grid says where on the earth the places are; a position opens in the map of your device.</value>
   </data>
   <data name="Places_Graph" xml:space="preserve">
     <value>Drawing of the places of {0}</value>
