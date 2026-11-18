@@ -229,3 +229,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   site that it is the same person again: the visitor chooses the name of the account, and no name, mail address
   or picture is taken from them. An account can add and remove such a way in, and always keeps one. Not tried
   against Google or Microsoft yet – that needs the owner's registration with each.
+- A photograph that is said to show somebody is shown to everybody only when they agreed. Until then its owner
+  and the people it names see it, and its owner is told who is waited for. Anybody who agreed can take that
+  back, and the photograph is hidden from everybody else at once.

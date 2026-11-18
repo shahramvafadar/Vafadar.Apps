@@ -363,6 +363,9 @@ public sealed class StoredPhotoTag
 
     /// <summary>Gets or sets where the tag stands (<c>TagState</c>).</summary>
     public int State { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether the person agreed that the photograph is shown to everybody (D-053).</summary>
+    public bool Everybody { get; set; }
 }
 
 /// <summary>That an account can be signed in through a provider (D-048). Nothing the provider knows about the person is kept.</summary>

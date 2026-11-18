@@ -53,6 +53,38 @@
         </section>
     }
 
+    @if (_asked.Count > 0)
+    {
+        @* A photograph that names somebody is shown to everybody only when they agreed (D-053, step 16.9). *@
+        <section id="asked" aria-labelledby="asked-title">
+            <h2 id="asked-title">@T["Photos_Asked_Title"]</h2>
+            <p class="note">@T["Photos_Asked_Note"]</p>
+            <ul class="photos" role="list">
+                @foreach (var photo in _asked)
+                {
+                    var agreed = photo.Tags.Any(tag => tag.Person.Id == _me!.Id && tag.Everybody);
+                    <li>
+                        @Picture(photo, owner: true)
+                        <form method="post" action="@($"{PhotoEndpoints.Root}/agree")" class="save">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="photo" value="@photo.Id" />
+                            @if (agreed)
+                            {
+                                <span class="meta">@T["Photos_Agreed"]</span>
+                                <button type="submit" name="answer" value="back">@T["Photos_Agree_Back"]</button>
+                            }
+                            else
+                            {
+                                <button type="submit" name="answer" value="agree">@T["Photos_Agree"]</button>
+                            }
+                        </form>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
     <section id="add" aria-labelledby="add-title">
         <h2 id="add-title">@T["Photos_Add_Title"]</h2>
         @if (_form == "add" && _problem is not null)
@@ -107,6 +139,10 @@
                             @Audience($"scope-{photo.Id}", chosen)
                             <button type="submit">@T["People_Shown_Send"]</button>
                         </form>
+                        @if (photo.Held)
+                        {
+                            <p class="note" role="status">@T["Photos_Held"]</p>
+                        }
                         @foreach (var tag in photo.Tags)
                         {
                             <form method="post" action="@($"{PhotoEndpoints.Root}/untag")" class="save">
@@ -114,7 +150,7 @@
                                 <input type="hidden" name="returnUrl" value="@_here" />
                                 <input type="hidden" name="photo" value="@photo.Id" />
                                 <input type="hidden" name="account" value="@tag.Person.Id" />
-                                <span><bdi>@tag.Person.Name</bdi> <span class="meta">– @T[$"Photos_Tag_{tag.State}"]</span></span>
+                                <span><bdi>@tag.Person.Name</bdi> <span class="meta">– @T[$"Photos_Tag_{tag.State}"]@if (photo.Shown == ScopeKind.Public && tag.State != TagState.Removed && tag.Person.Id != _me!.Id) { <text>; @T[tag.Everybody ? "Photos_Tag_Agreed" : "Photos_Tag_NotAgreed"]</text> }</span></span>
                                 @if (tag.State != TagState.Removed)
                                 {
                                     <button type="submit">@T["Photos_Untag"]<span class="visually-hidden"> – @tag.Person.Name</span></button>
@@ -166,12 +202,13 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed"];
+    private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed", "agreed", "agreement-back"];
     private static readonly string[] Known = ["photo-form", "photo-large", "photo-many", "photo-file"];
 
     private VisitorSession? _me;
     private IReadOnlyList<PhotoInfo> _mine = [];
     private IReadOnlyList<PhotoInfo> _waiting = [];
+    private IReadOnlyList<PhotoInfo> _asked = [];
     private IReadOnlyList<PhotoInfo> _recent = [];
     private IReadOnlyList<CircleInfo> _circles = [];
     private List<PersonRef> _known = [];
@@ -215,6 +252,7 @@
         using var store = Desk.Open();
         _mine = store.Photos(session.Id);
         _waiting = store.TagsWaiting(session.Id);
+        _asked = store.AskedForEverybody(session.Id);
         _recent = store.RecentShares(session.Id, Time.GetUtcNow().UtcDateTime.AddDays(-30));
         _circles = store.Circles(session.Id);
 

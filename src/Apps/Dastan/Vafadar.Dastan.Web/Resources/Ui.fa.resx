@@ -2466,4 +2466,34 @@
   <data name="Account_Problem_last-way-in" xml:space="preserve">
     <value>این تنها راه ورود به حساب است. نخست گذرواژه بگذارید یا راه دیگری بیفزایید.</value>
   </data>
+  <data name="Photos_Asked_Title" xml:space="preserve">
+    <value>برای همه نشان داده شود؟</value>
+  </data>
+  <data name="Photos_Asked_Note" xml:space="preserve">
+    <value>صاحب هر یک از این عکس‌ها می‌خواهد آن را به همه نشان دهد. گفته شده که شما در آن هستید، پس عکس منتظر موافقت شماست؛ تا وقتی همهٔ کسانی که در آن نام برده شده‌اند موافقت نکرده‌اند، فقط صاحب عکس و آن‌ها آن را می‌بینند. اگر موافقت خود را پس بگیرید، عکس همان دم پنهان می‌شود.</value>
+  </data>
+  <data name="Photos_Agree" xml:space="preserve">
+    <value>موافقم که همه ببینند</value>
+  </data>
+  <data name="Photos_Agree_Back" xml:space="preserve">
+    <value>پس گرفتن موافقت</value>
+  </data>
+  <data name="Photos_Agreed" xml:space="preserve">
+    <value>شما موافقت کرده‌اید.</value>
+  </data>
+  <data name="Photos_Held" xml:space="preserve">
+    <value>نگه داشته شده: هنوز همهٔ کسانی که در این عکس نام برده شده‌اند موافقت نکرده‌اند که همه آن را ببینند. تا آن زمان فقط شما و آن‌ها عکس را می‌بینید.</value>
+  </data>
+  <data name="Photos_Tag_Agreed" xml:space="preserve">
+    <value>موافقت کرده که همه ببینند</value>
+  </data>
+  <data name="Photos_Tag_NotAgreed" xml:space="preserve">
+    <value>هنوز موافقت نکرده که همه ببینند</value>
+  </data>
+  <data name="Photos_Said_agreed" xml:space="preserve">
+    <value>موافقت کردید. وقتی همهٔ کسانی که در عکس نام برده شده‌اند موافقت کنند، عکس به همه نشان داده می‌شود.</value>
+  </data>
+  <data name="Photos_Said_agreement-back" xml:space="preserve">
+    <value>موافقت خود را پس گرفتید. عکس دیگر به همه نشان داده نمی‌شود.</value>
+  </data>
 </root>

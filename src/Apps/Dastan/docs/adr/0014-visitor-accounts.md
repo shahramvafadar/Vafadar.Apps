@@ -350,3 +350,32 @@ form that chooses a name was not looked at in a browser. **Nothing was tried aga
 needs the site registered with each of them (the addresses to give them are `/signin-google` and
 `/signin-microsoft` of the site), which is the owner's, and it is the first thing to do before anybody relies
 on it.
+
+## Tenth addendum (2026-11-18): a photograph is shown to everybody with the agreement of who it names (step 16.9)
+
+Step 16.5 let the owner of a photograph choose "everybody" alone; the people it names could take their tag
+away, not the picture. D-053 says that something private about living people is public only with the agreement
+of everybody it names. It is read as written, for photographs as for family trees.
+
+* **Who is named**: an account the owner tagged, as long as the person did not take the tag away. The owner's
+  own tag asks nobody. A tag that waits for its answer names the person already – the photograph is held back
+  from the moment its owner says who is in it.
+* **Held back**: the owner chose "everybody", and somebody the photograph names has not agreed. It is then seen
+  by its owner and the people it names (they are asked, so they see what they are asked about) and by nobody
+  else – every way to it, the address of the file too. The owner is told that it is held back and who is waited
+  for.
+* **Agreeing is not approving the tag**: "this is me" and "everybody may see it" are two answers. A tag can be
+  approved and the photograph stay among the people its owner knows.
+* **Taken back at once**: an agreement that is taken back hides the photograph with the next request. One that
+  was given to a showing to everybody is not kept for the next: an owner who makes the photograph private and
+  public again asks again. Nothing is agreed ahead.
+* **Somebody named later**: a person who is tagged on a photograph everybody saw holds it back until they
+  agree.
+* **A closed account** that did not agree holds the photograph back until it is deleted; with it its tag goes.
+
+What this does not do: a person a photograph shows and its owner did not name is asked by nothing – the site
+does not know who is in a picture. That stays with the owner of the picture, and with the terms of a public
+site (the legal review, which is the owner's).
+
+Checked: `PhotoAgreementTests` (the store: 9 cases), one more case of `PhotoPagesTests` and the form among
+those refused to who is not signed in. **Not looked at in a browser.**
