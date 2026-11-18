@@ -28,6 +28,7 @@
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Core/Vafadar.Dastan.Core.csproj" />
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Data/Vafadar.Dastan.Data.csproj" />
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Store/Vafadar.Dastan.Store.csproj" />
+    <Project Path="src/Apps/Dastan/Vafadar.Dastan.People/Vafadar.Dastan.People.csproj" />
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Studio/Vafadar.Dastan.Studio.csproj" />
     <Project Path="src/Apps/Dastan/Vafadar.Dastan.Web/Vafadar.Dastan.Web.csproj" />
   </Folder>
@@ -61,6 +62,7 @@
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Core.Tests/Vafadar.Dastan.Core.Tests.csproj" />
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Data.Tests/Vafadar.Dastan.Data.Tests.csproj" />
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Store.Tests/Vafadar.Dastan.Store.Tests.csproj" />
+    <Project Path="test/Apps/Dastan/Vafadar.Dastan.People.Tests/Vafadar.Dastan.People.Tests.csproj" />
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Studio.Tests/Vafadar.Dastan.Studio.Tests.csproj" />
     <Project Path="test/Apps/Dastan/Vafadar.Dastan.Web.Tests/Vafadar.Dastan.Web.Tests.csproj" />
   </Folder>

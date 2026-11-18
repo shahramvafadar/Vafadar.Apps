@@ -189,3 +189,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   an unknown beginning or end – instead of being written as text.
 - Comparisons are kept in the store of the editors like collections: brought in, changed with their
   translations in the tool, with every change recorded, and written out for the site.
+- A visitor can make an account – on a site that was told where to keep accounts: a name and a password, nothing
+  else about the person and no mail address. Signing in and out, another password, recovery codes for a lost
+  password (shown once), closing the account with thirty days to open it again. The name of who signed in stands
+  in the header. An account opens nothing yet; the list, the reading position and the private spaces follow.
+- The links in the header of a page no longer stand without a gap between them.

@@ -19,6 +19,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0010](0010-running-the-site.md) | Running the site: one container without content, a mounted revision, a proxy it is told to believe | Accepted; no host used |
 | [0011](0011-editors-store.md) | The store of the editors: the records of a collection with their history, in SQLite, beside the file – the public site never reads it | Accepted (D-045) |
 | [0013](0013-private-space-rules.md) | The rules of private spaces as a library, checked by the acceptance examples of document 06, before anything is kept | Accepted for the accepted rules; nothing reaches it |
+| [0014](0014-visitor-accounts.md) | Accounts of visitors: a third store beside the site, a name and a password, recovery codes instead of mail, closing with thirty days to think again | Accepted (D-048 to D-050, D-055); not run in a container |
 | [0012](0012-visitor-reports.md) | Reports of visitors: a folder between the site and the tool – the statement, the words and the day, nothing about the visitor | Accepted |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),

@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
+using Vafadar.Core.Security;
 
 namespace Vafadar.Dastan.Store;
 
@@ -106,12 +107,6 @@ public sealed partial class EditorialStore
 
     /// <summary>How long an account takes no password after too many wrong ones.</summary>
     public static readonly TimeSpan LockedFor = TimeSpan.FromMinutes(15);
-
-    // PBKDF2 with SHA-256, as the platform derives it; the work is written into the value, so that it can be
-    // raised later without asking anybody for a new password before their next sign-in.
-    private const int Work = 600_000;
-    private const int SaltLength = 16;
-    private const int KeyLength = 32;
 
     // What a password is compared with when the name is unknown, so that an unknown name takes as long as a known one.
     private static readonly string Nobody = Derive(Guid.NewGuid().ToString("N"));
@@ -368,23 +363,9 @@ public sealed partial class EditorialStore
         : password.Length > 1000 ? "a password has at most 1000 characters."
         : null;
 
-    private static string Derive(string password)
-    {
-        var salt = RandomNumberGenerator.GetBytes(SaltLength);
-        var key = Rfc2898DeriveBytes.Pbkdf2(password, salt, Work, HashAlgorithmName.SHA256, KeyLength);
-        return string.Create(CultureInfo.InvariantCulture, $"pbkdf2-sha256${Work}${Convert.ToBase64String(salt)}${Convert.ToBase64String(key)}");
-    }
+    // What is kept of a password is derived as everywhere in these apps (PasswordHash of Vafadar.Core): the work
+    // is written into the value, so that it can be raised later without asking anybody for a new password.
+    private static string Derive(string password) => PasswordHash.Derive(password);
 
-    private static bool Matches(string password, string derived)
-    {
-        var parts = derived.Split('$');
-        if (parts is not ["pbkdf2-sha256", var work, var salt, var key] || !int.TryParse(work, NumberStyles.None, CultureInfo.InvariantCulture, out var rounds))
-        {
-            return false;
-        }
-
-        var expected = Convert.FromBase64String(key);
-        var given = Rfc2898DeriveBytes.Pbkdf2(password, Convert.FromBase64String(salt), rounds, HashAlgorithmName.SHA256, expected.Length);
-        return CryptographicOperations.FixedTimeEquals(given, expected);
-    }
+    private static bool Matches(string password, string derived) => PasswordHash.Matches(password, derived);
 }

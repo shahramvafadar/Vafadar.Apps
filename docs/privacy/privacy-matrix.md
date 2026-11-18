@@ -134,3 +134,19 @@ the current Play Console help texts before submitting; when in doubt, declare co
 ## D-313 optional hosted edge processor (not active)
 
 The approved Cloudflare Tunnel path terminates public TLS at Cloudflare; visitor IP/routing metadata and identity request plaintext can be processed there. Existing application-layer sync/share ciphertext is separate from TLS; disclosed analysis has its own consent boundary. No mobile SDK, permission, local schema or automatic upload is added. The connector mounts only the owner credential file and original public CA; bounded error logs never enable request/header debugging. No live tunnel, account, DNS or real mail is configured. Draft processor/retention and exact release-build declarations need review before publication; historical offline/cloud-backup-only answers do not apply to optional identity/sync builds.
+
+Since step 16.1 the public site of Dastan has **accounts of visitors** when it is told a file for their store
+(`Dastan:People`; without it nothing of this exists, [ADR 0014](../../src/Apps/Dastan/docs/adr/0014-visitor-accounts.md)).
+Kept on the server for an account: an identifier made by the store, the name the visitor chose (shown to
+others; it need not be a real name), a value derived from the password (PBKDF2, never the password), the hashes
+of eight recovery codes, the time the account was made, the number of wrong passwords in a row, until when it is
+locked, and when it was closed. **Not kept**: a mail address, an address of the visitor's machine, the browser,
+when the visitor signed in or what they opened. Two more cookies: `dastan.visitor.session` (the sign-in: the
+identifier, the name and a stamp of the password, sealed by the site; HttpOnly, thirty days, renewed while
+used) and, for at most five minutes after codes were made, `dastan.visitor.codes` (the new recovery codes,
+sealed, taken away when the page has shown them). The address a form came from is counted in the memory of the
+process for one hour – at most five new accounts and thirty tried passwords – and written nowhere. A visitor
+closes the account with the password; it is then signed out everywhere and deleted for good thirty days later
+(D-055). There is no copy of one's own data to take away yet (step 16.7) and no sign-in through Google or
+Microsoft yet (step 16.8); when that is built, what each of them learns belongs here. Nothing is hosted; a
+legal review of accounts (terms, age, the law of the place) is the owner's and not done.

@@ -27,6 +27,12 @@ public sealed class DastanOptions
     public string? Reports { get; set; }
 
     /// <summary>
+    /// Gets or sets the file of the store of the visitors (step 16.1, D-050): their accounts and what belongs to
+    /// them, in a database of its own beside the site. Empty, the site has no accounts and no page for one.
+    /// </summary>
+    public string? People { get; set; }
+
+    /// <summary>
     /// Gets or sets a folder in which the keys that protect the forms of the site are kept, so that a form a
     /// visitor opened before the site was started again is still accepted afterwards. Without it the keys live as
     /// long as the process: enough for a development machine, not for a site that is updated while it is visited.
@@ -48,7 +54,7 @@ public sealed class DastanOptions
 public sealed class DastanLibrary
 {
     // The first part of an address that is no collection: a collection of that name could not be reached.
-    private static readonly string[] Taken = ["compare", "media", "preferences", "report", "saved", "search", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
+    private static readonly string[] Taken = ["account", "compare", "media", "preferences", "report", "saved", "search", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
 
     /// <summary>Initializes a new instance of the <see cref="DastanLibrary"/> class and reads the collections.</summary>
     /// <exception cref="SampleFormatException">A collection cannot be used; the app does not start.</exception>

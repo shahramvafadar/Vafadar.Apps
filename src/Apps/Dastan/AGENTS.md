@@ -72,6 +72,14 @@ for Dastan is added here in the same commit as the work it came with.
 * An item that may not be shown is told to a page only as a `MediaReference` (`Projection.References`, the
   galleries): the catalogue record and the link to the holder. Never pass its `MediaItem` to a page, never load
   anything from the holder's server, and add a field to the reference only if a visitor may see it.
+* Visitors have accounts in a third store ([ADR 0014](docs/adr/0014-visitor-accounts.md),
+  `Vafadar.Dastan.People`, the setting `Dastan:People`). It references neither the collections' readers nor the
+  store of the editors, and nothing of it reaches a collection. An account is a name and what is kept of a
+  password – never add a field about the person (a mail address, a real name, an address of a machine) without a
+  decision of the owner and a line in the privacy matrix. A site without the setting must behave as it did
+  before accounts. Answers never say whether a name exists. A password and a recovery code are never logged,
+  never put into an address and never kept as they are. A change of the schema is a migration; the file of the
+  store is never committed.
 * The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
   records as they are written in the file of a collection, each change kept with who, when, why, before and
   after. The website never references the store. What a record may say is decided by the readers – never add a

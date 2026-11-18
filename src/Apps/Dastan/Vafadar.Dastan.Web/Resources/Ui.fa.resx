@@ -1461,4 +1461,172 @@
   <data name="Elsewhere_ReadingStated" xml:space="preserve">
     <value>هر یک از این‌ها مجموعه‌ای جداست و جایگاه خواندن خودش را دارد. هرجا ویراستاران گفته باشند کدام بخشِ آن‌جا با آنچه این‌جا خوانده‌اید برابر است، می‌توانید به انتخاب خودتان آن‌جا از همان بخش ادامه بدهید.</value>
   </data>
+  <data name="Account_Link" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="Account_Title" xml:space="preserve">
+    <value>حساب شما</value>
+  </data>
+  <data name="Account_Lead" xml:space="preserve">
+    <value>حساب شما روی هر دستگاهی با شماست. فقط یک نام و یک گذرواژه می‌خواهد؛ نه نشانی ایمیل و نه چیز دیگری دربارهٔ شما.</value>
+  </data>
+  <data name="Account_Signed" xml:space="preserve">
+    <value>با نام {0} وارد شده‌اید.</value>
+  </data>
+  <data name="Account_NeedsHttps" xml:space="preserve">
+    <value>گذرواژه بدون رمزنگاری فرستاده نمی‌شود: حساب فقط از راه https در دسترس است.</value>
+  </data>
+  <data name="Account_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Account_Name_Hint" xml:space="preserve">
+    <value>۳ تا ۴۰ نویسه: حرف، رقم، فاصله، نقطه و خط تیره. دیگران این نام را می‌بینند؛ لازم نیست نام واقعی شما باشد.</value>
+  </data>
+  <data name="Account_Password" xml:space="preserve">
+    <value>گذرواژه</value>
+  </data>
+  <data name="Account_Password_Hint" xml:space="preserve">
+    <value>دست‌کم ۱۲ نویسه. جمله‌ای که خودتان ساخته‌اید گذرواژهٔ خوبی است.</value>
+  </data>
+  <data name="Account_Password_Again" xml:space="preserve">
+    <value>تکرار گذرواژه</value>
+  </data>
+  <data name="Account_NewPassword" xml:space="preserve">
+    <value>گذرواژهٔ تازه</value>
+  </data>
+  <data name="Account_Current" xml:space="preserve">
+    <value>گذرواژهٔ کنونی</value>
+  </data>
+  <data name="Account_Code" xml:space="preserve">
+    <value>کد بازیابی</value>
+  </data>
+  <data name="Account_SignIn_Title" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="Account_SignIn_Send" xml:space="preserve">
+    <value>ورود</value>
+  </data>
+  <data name="Account_Register_Title" xml:space="preserve">
+    <value>تازه آمده‌اید؟ حساب بسازید</value>
+  </data>
+  <data name="Account_Register_Privacy" xml:space="preserve">
+    <value>سایت نام و مقداری را که از گذرواژه ساخته می‌شود نگه می‌دارد، نه خود گذرواژه را. نشانی ایمیلی از شما ندارد: اگر گذرواژه را گم کنید، فقط کدهای بازیابی شما را دوباره راه می‌دهند.</value>
+  </data>
+  <data name="Account_Register_Send" xml:space="preserve">
+    <value>ساختن حساب</value>
+  </data>
+  <data name="Account_Recover_Title" xml:space="preserve">
+    <value>گذرواژه را گم کرده‌اید؟</value>
+  </data>
+  <data name="Account_Recover_Lead" xml:space="preserve">
+    <value>با یکی از کدهای بازیابی می‌توانید گذرواژهٔ تازه‌ای بگذارید.</value>
+  </data>
+  <data name="Account_Recover_Send" xml:space="preserve">
+    <value>ثبت گذرواژهٔ تازه</value>
+  </data>
+  <data name="Account_Reopen_Title" xml:space="preserve">
+    <value>حساب خود را بسته‌اید؟</value>
+  </data>
+  <data name="Account_Reopen_Lead" xml:space="preserve">
+    <value>حساب بسته‌شده ۳۰ روز نگه داشته می‌شود. تا آن زمان با نام و گذرواژه‌اش دوباره باز می‌شود.</value>
+  </data>
+  <data name="Account_Reopen_Send" xml:space="preserve">
+    <value>بازکردن دوبارهٔ حساب</value>
+  </data>
+  <data name="Account_Codes_Title" xml:space="preserve">
+    <value>کدهای بازیابی شما</value>
+  </data>
+  <data name="Account_Codes_Lead" xml:space="preserve">
+    <value>همین حالا این کدها را یادداشت کنید و در جای امنی نگه دارید: فقط همین یک بار نشان داده می‌شوند. اگر گذرواژه را گم کنید، هر کد یک بار شما را راه می‌دهد.</value>
+  </data>
+  <data name="Account_CodesLeft" xml:space="preserve">
+    <value>کدهای بازیابی که هنوز به کار نبرده‌اید: {0}.</value>
+  </data>
+  <data name="Account_SignOut" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="Account_Password_Title" xml:space="preserve">
+    <value>تغییر گذرواژه</value>
+  </data>
+  <data name="Account_Password_Note" xml:space="preserve">
+    <value>با تغییر گذرواژه، حساب در همهٔ دستگاه‌های دیگر بسته می‌شود.</value>
+  </data>
+  <data name="Account_Password_Send" xml:space="preserve">
+    <value>تغییر گذرواژه</value>
+  </data>
+  <data name="Account_NewCodes_Title" xml:space="preserve">
+    <value>کدهای بازیابی</value>
+  </data>
+  <data name="Account_NewCodes_Lead" xml:space="preserve">
+    <value>کدهای تازه بگیرید. کدهای کنونی پس از آن دیگر کار نمی‌کنند.</value>
+  </data>
+  <data name="Account_NewCodes_Send" xml:space="preserve">
+    <value>ساختن کدهای تازه</value>
+  </data>
+  <data name="Account_Close_Title" xml:space="preserve">
+    <value>بستن حساب</value>
+  </data>
+  <data name="Account_Close_Lead" xml:space="preserve">
+    <value>با بستن حساب، بی‌درنگ از همه‌جا خارج می‌شوید. پس از ۳۰ روز حساب و هرچه به آن تعلق دارد برای همیشه پاک می‌شود؛ تا آن زمان با نام و گذرواژه‌اش دوباره باز می‌شود.</value>
+  </data>
+  <data name="Account_Close_Send" xml:space="preserve">
+    <value>حسابم را ببند</value>
+  </data>
+  <data name="Account_Said_welcome" xml:space="preserve">
+    <value>حساب شما ساخته شد و وارد شده‌اید.</value>
+  </data>
+  <data name="Account_Said_signed-in" xml:space="preserve">
+    <value>وارد شدید.</value>
+  </data>
+  <data name="Account_Said_signed-out" xml:space="preserve">
+    <value>خارج شدید.</value>
+  </data>
+  <data name="Account_Said_recovered" xml:space="preserve">
+    <value>گذرواژهٔ تازه ثبت شد و وارد شده‌اید. آن کد بازیابی دیگر کار نمی‌کند.</value>
+  </data>
+  <data name="Account_Said_reopened" xml:space="preserve">
+    <value>حساب شما دوباره باز شد.</value>
+  </data>
+  <data name="Account_Said_password" xml:space="preserve">
+    <value>گذرواژه تغییر کرد. حساب در همهٔ دستگاه‌های دیگر بسته شد.</value>
+  </data>
+  <data name="Account_Said_codes" xml:space="preserve">
+    <value>این‌ها کدهای بازیابی تازهٔ شما هستند.</value>
+  </data>
+  <data name="Account_Said_closed" xml:space="preserve">
+    <value>حساب شما بسته شد. ۳۰ روز دیگر برای همیشه پاک می‌شود.</value>
+  </data>
+  <data name="Account_Problem_later" xml:space="preserve">
+    <value>این درخواست بیش از اندازه تکرار شد. لطفاً یک ساعت دیگر دوباره بکوشید.</value>
+  </data>
+  <data name="Account_Problem_name-length" xml:space="preserve">
+    <value>نام باید ۳ تا ۴۰ نویسه باشد.</value>
+  </data>
+  <data name="Account_Problem_name-letters" xml:space="preserve">
+    <value>نام از حرف، رقم، تک‌فاصله، نقطه، زیرخط و خط تیره ساخته می‌شود.</value>
+  </data>
+  <data name="Account_Problem_password-short" xml:space="preserve">
+    <value>گذرواژه باید دست‌کم ۱۲ نویسه باشد.</value>
+  </data>
+  <data name="Account_Problem_password-long" xml:space="preserve">
+    <value>گذرواژه نباید بیش از ۱۰۰۰ نویسه باشد.</value>
+  </data>
+  <data name="Account_Problem_password-differs" xml:space="preserve">
+    <value>دو گذرواژه یکسان نیستند.</value>
+  </data>
+  <data name="Account_Problem_taken" xml:space="preserve">
+    <value>این نام را کس دیگری برداشته است. لطفاً نام دیگری برگزینید.</value>
+  </data>
+  <data name="Account_Problem_wrong" xml:space="preserve">
+    <value>نام یا گذرواژه درست نیست؛ یا حساب پس از چند گذرواژهٔ نادرست، تا مدتی گذرواژه نمی‌پذیرد.</value>
+  </data>
+  <data name="Account_Problem_wrong-code" xml:space="preserve">
+    <value>نام یا کد بازیابی درست نیست، یا این کد پیش‌تر به کار رفته است.</value>
+  </data>
+  <data name="Account_Problem_wrong-closed" xml:space="preserve">
+    <value>حساب بسته‌شده‌ای با این نام و گذرواژه نیست.</value>
+  </data>
+  <data name="Account_Problem_wrong-current" xml:space="preserve">
+    <value>گذرواژهٔ کنونی درست نیست.</value>
+  </data>
 </root>

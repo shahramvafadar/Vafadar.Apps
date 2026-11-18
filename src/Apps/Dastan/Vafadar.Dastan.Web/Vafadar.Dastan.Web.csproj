@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Vafadar.Dastan.Core\Vafadar.Dastan.Core.csproj" />
     <ProjectReference Include="..\Vafadar.Dastan.Data\Vafadar.Dastan.Data.csproj" />
+    <ProjectReference Include="..\Vafadar.Dastan.People\Vafadar.Dastan.People.csproj" />
     <ProjectReference Include="..\..\..\Libraries\Vafadar.Web\Vafadar.Web.csproj" />
   </ItemGroup>
 
