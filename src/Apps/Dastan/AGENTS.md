@@ -90,7 +90,10 @@ for Dastan is added here in the same commit as the work it came with.
   "refused". A record of a person says a name and years – add nothing to it without a decision of the owner
   (PRIV-003). Every change of a tree is recorded with who made it, in the same save as the change. A family is laid out
   by `TreeShapeLayout` and drawn by `TreeDrawing`, whatever its members are – never write a second layout or
-  a second drawing for another kind of family.
+  a second drawing for another kind of family. The file of a photograph is given by one address that asks
+  its audience (`/photo/{id}`); never serve the folder of the photographs, never link a file by its name, and
+  bring a file in through `MediaIntake` only – it reads what the file is from its content and takes out what
+  an image says about its making. Answer "not found" for a photograph a viewer may not see.
 * The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
   records as they are written in the file of a collection, each change kept with who, when, why, before and
   after. The website never references the store. What a record may say is decided by the readers – never add a

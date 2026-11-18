@@ -41,6 +41,7 @@ public sealed class AccountDesk
     private const string StampClaim = "dastan.visitor.stamp";
 
     private readonly string? _file;
+    private readonly string? _photos;
     private readonly TimeProvider _time;
     private readonly IDataProtector _codes;
 
@@ -62,7 +63,22 @@ public sealed class AccountDesk
         {
             _file = Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.People));
             using var store = PeopleStore.Open(_file, time);
+            if (!string.IsNullOrWhiteSpace(options.Value.Photos))
+            {
+                _photos = Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.Photos));
+                Directory.CreateDirectory(Path.Combine(_photos, "media"));
+            }
         }
+    }
+
+    /// <summary>Gets the folder of the photographs of the visitors, or nothing when the site has none.</summary>
+    public string? PhotoFolder => _photos;
+
+    /// <summary>Returns where the file of a photograph lies, by the name the store keeps for it; nothing for a name that is no plain file name.</summary>
+    public string? PhotoPath(string name)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        return _photos is null || name.Length == 0 || name[0] == '.' || name != Path.GetFileName(name) ? null : Path.Combine(_photos, "media", name);
     }
 
     /// <summary>Gets a value indicating whether the site has accounts.</summary>
@@ -79,9 +95,30 @@ public sealed class AccountDesk
         if (Interlocked.Exchange(ref _purgedOn, day) != day)
         {
             store.Purge();
+            Sweep(store);
         }
 
         return store;
+    }
+
+    // A file that no photograph of the store names belongs to nothing – its account was deleted – and is
+    // deleted. One that only just arrived is left alone: its photograph may not be kept yet.
+    private void Sweep(PeopleStore store)
+    {
+        if (_photos is null)
+        {
+            return;
+        }
+
+        var named = store.PhotoFiles();
+        var before = _time.GetUtcNow().UtcDateTime.AddHours(-1);
+        foreach (var file in new DirectoryInfo(Path.Combine(_photos, "media")).EnumerateFiles())
+        {
+            if (!named.Contains(file.Name) && file.LastWriteTimeUtc < before)
+            {
+                file.Delete();
+            }
+        }
     }
 
     /// <summary>Counts a request of a kind for an address and returns whether it is still within what an hour allows.</summary>

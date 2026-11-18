@@ -114,6 +114,23 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
         });
     }
 
+    /// <summary>Sends a form of the site that carries a file, with the token of the page it stands on.</summary>
+    public async Task<Page> Upload(string address, string from, string fileName, byte[] file, params (string Name, string Value)[] fields)
+    {
+        var form = await Open(from);
+        var token = Regex.Match(form.Html, "name=\"__RequestVerificationToken\" value=\"([^\"]+)\"").Groups[1].Value;
+        var content = new MultipartFormDataContent();
+        foreach (var (name, value) in fields.Append(("__RequestVerificationToken", token)))
+        {
+            content.Add(new StringContent(value, System.Text.Encoding.UTF8), name);
+        }
+
+        var sent = new ByteArrayContent(file);
+        sent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+        content.Add(sent, "file", fileName);
+        return await Send(new HttpRequestMessage(HttpMethod.Post, address) { Content = content });
+    }
+
     /// <summary>Uses the reading control of the collection.</summary>
     public Task<Page> ReadTo(int level, string language = "en", string collection = "story-rostam-sohrab") => Post(
         "/preferences/reading",

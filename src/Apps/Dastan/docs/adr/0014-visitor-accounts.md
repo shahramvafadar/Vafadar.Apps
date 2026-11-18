@@ -232,3 +232,43 @@ The page of a tree draws it above the list, with the layout and the drawing of t
 ([ADR 0008](0008-charts.md), ninth addendum): parents above their children, partners side by side, a name
 leading to its record. "This is me" is offered only on a record somebody else can confirm – not on a record
 its viewer made in a tree they own, where it could only be refused.
+
+## Seventh addendum (step 16.5): photographs of visitors
+
+* **The files lie in a folder of their own** (`Dastan:Photos`), on a volume no web server shows; the store
+  keeps what a photograph is and the name of its file. Without the folder the site has no photographs – no
+  page, no form, no address.
+* **Bringing one in** goes through the intake of the editors' files (`MediaIntake`, step 13.7): what the file
+  is is read from its content, not from its name or from what the browser says; only PNG, JPEG and WebP images
+  are kept, of at most 10 MB; an SVG is not. **What an image says about where and with which device it was
+  made is taken out before it is kept.** The name of the file is made by the site from the identifier of the
+  photograph. A file that is not kept leaves nothing behind. An account holds 200 photographs.
+* **Every way to a photograph asks its audience** through the rule of step 15.2 (`SharedMedia`): the page of
+  its owner, the life of somebody it shows, the list of recent shares – and **the address of the file itself**
+  (`/photo/{id}`), which answers "not found", without a page, for a photograph that does not exist and for one
+  the viewer may not see alike. A change of the audience holds at once, for all of them. The audience is the
+  owner alone (as it begins), a circle of the owner, or everybody.
+* **A tag** says that a photograph shows somebody: the owner, or an account the owner shows a relationship
+  with – a tag is no way to reach a stranger. The person is asked on their own page and approves or says that
+  it is not them; only that account answers, and only for a photograph it may see. **An approved tag shows the
+  photograph to nobody who could not see it** (PRIV-013): it then stands among the photographs of that person
+  for those the *owner* lets see it. A tag the person took away stays taken away – the owner cannot put it on
+  again, the person can change their mind.
+* **The life of a person** on their page is their own photographs and those of others they approved to be
+  shown in, each asked for this viewer. **Recent shares** are what the people a visitor shows a relationship
+  with brought in during the last thirty days and let them see – by the day it was brought in, whenever it was
+  taken; a stranger's public photograph is not "shared with" anybody.
+* **Removing** deletes the file. A closed account shows no photograph and is shown in none; when it is deleted
+  its photographs go with it, and a file no photograph names any more is deleted by the first request of a day
+  (a file that only just arrived is left alone). The copy of one's own data names the photographs with their
+  captions, audiences and tags; the pictures themselves are fetched at their addresses.
+
+Not built: videos of visitors; smaller renditions – a page loads the picture as it was brought in; albums; a
+gallery by the time a picture was taken (the day is kept and shown); telling somebody outside the site that
+they were tagged.
+
+Checked: `PhotographsTests` (the store: 15 cases), `PhotoPagesTests` (the site: 24 cases – among them that
+the kept file no longer says who made it, that the address of a file refuses a friend who is not in the
+audience, and that a tag does not open a photograph to a friend of the tagged person). Looked at in a browser
+with two made-up pictures, English and Persian at 375 px, dark appearance. Not tried: a real photograph of a
+camera or a phone, a large number of photographs, a container, a screen reader.

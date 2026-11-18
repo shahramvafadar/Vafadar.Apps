@@ -28,6 +28,10 @@
             <p class="actions">
                 <a class="action secondary" href="account/people">@T["People_Link"]</a>
                 <a class="action secondary" href="account/trees">@T["Trees_Title"]</a>
+                @if (Desk.PhotoFolder is not null)
+                {
+                    <a class="action secondary" href="account/photos">@T["Photos_Title"]</a>
+                }
             </p>
         }
     </header>

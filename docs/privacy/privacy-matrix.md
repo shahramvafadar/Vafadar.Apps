@@ -182,3 +182,14 @@ Since the second part of step 16.4 a record of a family tree can name the accoun
 account said so itself and the account that made the record confirmed it. A waiting claim is kept with the
 tree, the record, the account and the time, and shown to the claimant and to who answers it only. The account
 takes the link back at any time; it is removed when the account may not see the tree any more or is deleted.
+
+Since step 16.5 the site of Dastan, when it is told a folder for them (`Dastan:Photos`), keeps photographs of
+visitors: the image file (PNG, JPEG or WebP, at most 10 MB) – **after what it says about where and with which
+device it was made (EXIF, text chunks) was taken out** –, what its owner wrote about it, the day it was taken
+when the owner says so, when it was brought in, who may see it (the owner alone, a circle, everybody), and for
+each account it is said to show whether that account approved or took the tag away. A photograph can show
+people who have no account and were not asked; what is kept about them is the picture itself. The file is
+given only at an address of the site that asks the audience each time; a photograph for everybody is public,
+and its page asks search engines to stay away. Removing a photograph deletes its file; the files of a deleted
+account are deleted within a day. Faces are not recognised, pictures are not analysed, and nothing is sent to
+anybody.

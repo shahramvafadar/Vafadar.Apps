@@ -62,7 +62,7 @@ public sealed class OwnDataTests : IDisposable
 
         Assert.Equal(("dastan-account", PeopleStore.ExportVersion, "2026-11-18T09:00:00Z"), ((string?)copy["format"], (int?)copy["version"], (string?)copy["madeAt"]));
         Assert.Equal(("Mina", "2026-11-18T09:00:00Z", PeopleStore.RecoveryCodeCount), ((string?)copy["account"]!["name"], (string?)copy["account"]!["createdAt"], (int?)copy["account"]!["recoveryCodesLeft"]));
-        foreach (var part in new[] { "readingPositions", "list", "invitations", "relationships", "circles", "trees", "treesSharedWithMe" })
+        foreach (var part in new[] { "readingPositions", "list", "invitations", "relationships", "circles", "photographs", "trees", "treesSharedWithMe" })
         {
             Assert.Empty(copy[part]!.AsArray());
         }

@@ -40,9 +40,39 @@
             </ul>
         }
     </section>
+
+    @if (_photos.Count > 0)
+    {
+        @* The life of the person in photographs: their own, and those of others that they approved to be shown in –
+           each only when its owner lets this viewer see it (PRIV-013). *@
+        <section aria-labelledby="person-photos">
+            <h2 id="person-photos">@T["Photos_Title"]</h2>
+            <ul class="photos" role="list">
+                @foreach (var photo in _photos)
+                {
+                    <li>
+                        <figure>
+                            <img src="@($"{PhotoEndpoints.File}/{photo.Id}")" alt="@(photo.Caption.Length > 0 ? photo.Caption : T["Photos_Alt"].Value)" width="@photo.File.Width" height="@photo.File.Height" loading="lazy" />
+                            <figcaption>
+                                @if (photo.Caption.Length > 0)
+                                {
+                                    <bdi>@photo.Caption</bdi>
+                                }
+                                @if (photo.Owner.Id != _profile.Person.Id)
+                                {
+                                    <span class="meta">– <a href="@($"people/{photo.Owner.Id}")"><bdi>@photo.Owner.Name</bdi></a></span>
+                                }
+                            </figcaption>
+                        </figure>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
 }
 
 @code {
+    private IReadOnlyList<PhotoInfo> _photos = [];
     private ProfileView? _profile;
     private bool _own;
 
@@ -60,6 +90,10 @@
             var viewer = AccountDesk.Session(Context.User)?.Id;
             using var store = Desk.Open();
             _profile = store.Profile(viewer, Id);
+            if (_profile is not null && Desk.PhotoFolder is not null)
+            {
+                _photos = store.LifeOf(viewer, Id);
+            }
             _own = viewer == Id;
         }
 

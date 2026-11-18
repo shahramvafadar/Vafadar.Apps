@@ -2196,4 +2196,121 @@
   <data name="Tree_Drawing_Note" xml:space="preserve">
     <value>Parents stand above their children; a dashed line joins partners. A name leads to its record below.</value>
   </data>
+  <data name="Photos_Title" xml:space="preserve">
+    <value>Photographs</value>
+  </data>
+  <data name="Photos_Lead" xml:space="preserve">
+    <value>A photograph is yours. Only you see it until you say who else may – a circle of yours, or everybody – and you can change that or remove the photograph at any time.</value>
+  </data>
+  <data name="Photos_Alt" xml:space="preserve">
+    <value>A photograph without a description</value>
+  </data>
+  <data name="Photos_Taken" xml:space="preserve">
+    <value>taken {0}</value>
+  </data>
+  <data name="Photos_None" xml:space="preserve">
+    <value>You have brought in no photograph yet.</value>
+  </data>
+  <data name="Photos_Add_Title" xml:space="preserve">
+    <value>Bring a photograph in</value>
+  </data>
+  <data name="Photos_Add_File" xml:space="preserve">
+    <value>The picture</value>
+  </data>
+  <data name="Photos_Add_File_Hint" xml:space="preserve">
+    <value>A PNG, JPEG or WebP image of at most 10 MB.</value>
+  </data>
+  <data name="Photos_Add_Caption" xml:space="preserve">
+    <value>What it shows (optional)</value>
+  </data>
+  <data name="Photos_Add_Taken" xml:space="preserve">
+    <value>The day it was taken (optional)</value>
+  </data>
+  <data name="Photos_Add_Note" xml:space="preserve">
+    <value>What the file says about where and with which device it was made is taken out before it is kept. The picture itself is kept as it is.</value>
+  </data>
+  <data name="Photos_Add_Send" xml:space="preserve">
+    <value>Bring it in</value>
+  </data>
+  <data name="Photos_Shown_Label" xml:space="preserve">
+    <value>Who may see it</value>
+  </data>
+  <data name="Photos_Scope_private" xml:space="preserve">
+    <value>Only me</value>
+  </data>
+  <data name="Photos_Mine_Title" xml:space="preserve">
+    <value>Your photographs</value>
+  </data>
+  <data name="Photos_Remove" xml:space="preserve">
+    <value>Remove the photograph</value>
+  </data>
+  <data name="Photos_Tag_Label" xml:space="preserve">
+    <value>It shows</value>
+  </data>
+  <data name="Photos_Tag_Send" xml:space="preserve">
+    <value>Say so</value>
+  </data>
+  <data name="Photos_Untag" xml:space="preserve">
+    <value>Take that back</value>
+  </data>
+  <data name="Photos_Tag_Proposed" xml:space="preserve">
+    <value>waits for their answer</value>
+  </data>
+  <data name="Photos_Tag_Approved" xml:space="preserve">
+    <value>is shown in it</value>
+  </data>
+  <data name="Photos_Tag_Removed" xml:space="preserve">
+    <value>said it is not them</value>
+  </data>
+  <data name="Photos_Waiting_Title" xml:space="preserve">
+    <value>Are you in these photographs?</value>
+  </data>
+  <data name="Photos_Waiting_Note" xml:space="preserve">
+    <value>Somebody says a photograph shows you. If you say yes, it stands among your photographs for the people its owner lets see it – nobody sees it who could not before.</value>
+  </data>
+  <data name="Photos_Tag_Approve" xml:space="preserve">
+    <value>Yes, that is me</value>
+  </data>
+  <data name="Photos_Tag_Remove" xml:space="preserve">
+    <value>That is not me</value>
+  </data>
+  <data name="Photos_Recent_Title" xml:space="preserve">
+    <value>Shared with you lately</value>
+  </data>
+  <data name="Photos_Recent_Note" xml:space="preserve">
+    <value>What the people you show a relationship with brought in during the last 30 days and let you see – whenever it was taken.</value>
+  </data>
+  <data name="Photos_Said_added" xml:space="preserve">
+    <value>The photograph is kept.</value>
+  </data>
+  <data name="Photos_Said_shared" xml:space="preserve">
+    <value>Saved. It holds from now on, wherever the photograph is shown.</value>
+  </data>
+  <data name="Photos_Said_removed" xml:space="preserve">
+    <value>The photograph is removed.</value>
+  </data>
+  <data name="Photos_Said_tagged" xml:space="preserve">
+    <value>Said. They will be asked.</value>
+  </data>
+  <data name="Photos_Said_untagged" xml:space="preserve">
+    <value>Taken back.</value>
+  </data>
+  <data name="Photos_Said_approved" xml:space="preserve">
+    <value>You said that it is you. The photograph stands among yours for those who may see it.</value>
+  </data>
+  <data name="Photos_Said_tag-removed" xml:space="preserve">
+    <value>You said that it is not you. You will not be asked about this photograph again.</value>
+  </data>
+  <data name="Photos_Problem_photo-form" xml:space="preserve">
+    <value>Please choose a picture; a day is written like 1998-07-04 and is not in the future, and a description has at most 200 characters.</value>
+  </data>
+  <data name="Photos_Problem_photo-large" xml:space="preserve">
+    <value>The picture is larger than 10 MB.</value>
+  </data>
+  <data name="Photos_Problem_photo-many" xml:space="preserve">
+    <value>You have 200 photographs, which is as many as an account holds. Remove one first.</value>
+  </data>
+  <data name="Photos_Problem_photo-file" xml:space="preserve">
+    <value>The file is no PNG, JPEG or WebP image, or cannot be read as one.</value>
+  </data>
 </root>

@@ -217,3 +217,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   invitations, relationships, circles and one's own family trees.
 - A family tree of one's own is drawn: parents above their children, partners side by side, like the family
   of a story. A name in the drawing leads to its record.
+- Photographs – on a site that was told where to keep them: who has an account brings a picture in, says who
+  may see it (only me, a circle, everybody) and who it shows. Somebody a photograph is said to show is asked
+  and can say yes or no; saying yes shows the photograph to nobody who could not see it before. A person's
+  page shows their photographs to those who may see them, and one's own page lists what was shared lately.
+  What a picture file says about where and with which device it was taken is removed before it is kept.
