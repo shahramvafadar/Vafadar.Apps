@@ -153,3 +153,31 @@ Verification: `StageCorrespondenceTests` (3 tests, readers) – nothing in the c
 nearest stage at or before; seven things that are no correspondence. `CarriedReadingTests` (3 tests, site) –
 nothing to carry at the opening; the stated stage offered and carried by the visitor's act; never backwards
 and nothing from a telling that states nothing. Not looked at in a browser.
+
+## Addendum of 2026-11-18 – a line of reading stages for each story (step 17.7, D-058)
+
+The second addendum left a reading position for each story of one collection open: the model has one ladder
+per collection, and how reading one story reveals something of another was a statement of a form nobody had
+decided. The owner decided (D-058): each story has a line of its own; the editors may state which stage of
+one corresponds to which of another; nothing is carried without such a statement. The proposal named the way:
+the model that is there.
+
+* **A collection per story.** Stories of one world that are to be read each at its own pace are collections
+  of their own with the same `worldId`. Each has its stages, its cookie and – for an account – its position;
+  the page of each lists the others; `spoilerPolicy.correspondences` (third addendum) carry a position from
+  one to another where the editors state it, forwards only and by the visitor's own act. Nothing new was
+  built for this: the second and third addenda built it for "another telling", and another story of the same
+  world is the same thing to the site. The format says so now.
+* **One collection with several stories** keeps one ladder for all of them, as before: there, reading one
+  story is reading the collection.
+
+**Not built, and not decided beyond D-058**: several ladders inside one collection. A character who appears in
+two stories is one record there; with a ladder per story the record would have to say for each story from
+which stage on it may be seen, the reading position would be one stage per story, and every page, the search,
+the list of a visitor and the sitemap would ask a different question before showing anything. That is a
+change of the rule that keeps a reader from seeing what they have not read – not one to make on a guess of
+what the editors will write.
+
+Verification: nothing new to run – `SameWorldTests`, `StageCorrespondenceTests` and `SeveralCollectionsTests`
+check that collections of one world have positions of their own, lead to each other and carry a position
+only where it is stated.
