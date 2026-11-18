@@ -2038,3 +2038,16 @@ main:has(> .stage) > :not(.stage) {
   padding-block: var(--space-2);
   cursor: pointer;
 }
+
+/* A stage on a page that holds more than the chart (the tree of a visitor, step 16.4): as high as its chart
+   needs and never higher than the window; a side without steps takes no room. */
+.stage.stage-fitted {
+  block-size: auto;
+  min-block-size: 0;
+  max-block-size: calc(100vh - 2 * var(--space-4));
+  max-block-size: calc(100dvh - 2 * var(--space-4));
+}
+
+.stage-fitted .stage-edge:empty {
+  display: none;
+}

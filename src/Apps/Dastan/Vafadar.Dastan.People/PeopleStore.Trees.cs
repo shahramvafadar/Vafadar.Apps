@@ -38,7 +38,8 @@ public sealed record TreeInfo(string Id, string Name, PersonRef Owner, TreeRole 
 /// <param name="Children">The records of the children.</param>
 /// <param name="Partners">The records of the partners.</param>
 /// <param name="Account">The account the record is, once a claim was confirmed (D-052).</param>
-public sealed record TreePerson(string Id, string Name, int? Born, int? Died, bool Deceased, ImmutableArray<string> Parents, ImmutableArray<string> Children, ImmutableArray<string> Partners, PersonRef? Account = null);
+/// <param name="Claimable">Whether the account that asks can say that the record is it: the record is nobody's, the account is no record of the tree yet, and there is somebody else to confirm it.</param>
+public sealed record TreePerson(string Id, string Name, int? Born, int? Died, bool Deceased, ImmutableArray<string> Parents, ImmutableArray<string> Children, ImmutableArray<string> Partners, PersonRef? Account = null, bool Claimable = false);
 
 /// <summary>A link between two records of a tree.</summary>
 /// <param name="Number">The number of the link.</param>
@@ -150,6 +151,7 @@ public sealed partial class PeopleStore
             .Concat(changes.Select(change => change.By).OfType<string>())
             .Concat(people.Select(person => person.Account).OfType<string>())
             .Concat(claims.Select(claim => claim.Account)));
+        var canClaim = !people.Any(person => person.Account == viewer) && !claims.Any(claim => claim.Account == viewer);
         return new(
             info,
             [.. people.OrderBy(person => person.Name, StringComparer.CurrentCultureIgnoreCase).Select(person => new TreePerson(
@@ -161,7 +163,8 @@ public sealed partial class PeopleStore
                 [.. links.Where(link => link.Kind == "parent" && link.To == person.Id).Select(link => link.From)],
                 [.. links.Where(link => link.Kind == "parent" && link.From == person.Id).Select(link => link.To)],
                 [.. links.Where(link => link.Kind == "partner" && (link.From == person.Id || link.To == person.Id)).Select(link => link.From == person.Id ? link.To : link.From)],
-                person.Account is { } account ? names.GetValueOrDefault(account) : null))],
+                person.Account is { } account ? names.GetValueOrDefault(account) : null,
+                canClaim && person.Account is null && Reviewer(person, viewer) is not null))],
             [.. links.Select(link => new TreeLink(link.Number, link.Kind, link.From, link.To))],
             [.. members.Where(member => names.ContainsKey(member.Account)).Select(member => new TreeMember(names[member.Account], (TreeRole)member.Role)).OrderBy(member => member.Account.Name, StringComparer.CurrentCultureIgnoreCase)],
             [.. changes.Select(change => new TreeChange(change.At, change.By is { } by && names.TryGetValue(by, out var account) ? account.Name : null, change.What, change.Subject))])
@@ -173,7 +176,7 @@ public sealed partial class PeopleStore
                     .Select(claim => new ClaimInfo(claim.Number, claim.Person, names[claim.Account], claim.Account == viewer, Reviewer(people.First(person => person.Id == claim.Person), claim.Account) == viewer))
                     .Where(claim => claim.Mine || claim.CanReview),
             ],
-            CanClaim = !people.Any(person => person.Account == viewer) && !claims.Any(claim => claim.Account == viewer),
+            CanClaim = canClaim,
         };
     }
 

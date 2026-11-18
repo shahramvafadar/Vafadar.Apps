@@ -215,3 +215,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   the account can take it back at any time.
 - The page of the account hands over a copy of one's own data as a file: the list, the reading positions,
   invitations, relationships, circles and one's own family trees.
+- A family tree of one's own is drawn: parents above their children, partners side by side, like the family
+  of a story. A name in the drawing leads to its record.

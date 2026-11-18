@@ -225,3 +225,10 @@ Checked: `IdentityClaimsTests` (the store: 10 cases), three more cases of `Famil
 
 Checked: `OwnDataTests` (the store: 5 cases, among them that no secret and no identifier is in the copy),
 two more cases of `VisitorAccountTests` (the site). The form was not looked at in a browser.
+
+## Sixth addendum (step 16.4, third part): the tree is drawn
+
+The page of a tree draws it above the list, with the layout and the drawing of the family of a collection
+([ADR 0008](0008-charts.md), ninth addendum): parents above their children, partners side by side, a name
+leading to its record. "This is me" is offered only on a record somebody else can confirm – not on a record
+its viewer made in a tree they own, where it could only be refused.

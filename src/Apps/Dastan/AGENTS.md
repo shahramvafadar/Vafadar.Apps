@@ -88,7 +88,9 @@ for Dastan is added here in the same commit as the work it came with.
   a private item, a count included (PRIV-012), and never let a missing circle or a removed account widen an
   audience. A family tree does not exist for an account it is not shared with: answer "not found", never
   "refused". A record of a person says a name and years – add nothing to it without a decision of the owner
-  (PRIV-003). Every change of a tree is recorded with who made it, in the same save as the change.
+  (PRIV-003). Every change of a tree is recorded with who made it, in the same save as the change. A family is laid out
+  by `TreeShapeLayout` and drawn by `TreeDrawing`, whatever its members are – never write a second layout or
+  a second drawing for another kind of family.
 * The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
   records as they are written in the file of a collection, each change kept with who, when, why, before and
   after. The website never references the store. What a record may say is decided by the readers – never add a

@@ -1,6 +1,7 @@
 @page "/account/trees/{Id}"
 @using Vafadar.Dastan.Core.Personal
 @using Vafadar.Dastan.People
+@using System.Collections.Immutable
 @inject Visitor Visitor
 @inject AccountDesk Desk
 @inject NavigationManager Navigation
@@ -8,7 +9,8 @@
 
 @* One family tree (step 16.4, D-054): its records of people with their parents, partners and children, who may
    see or change it, and every change with who made it. Who may only see it gets no form; who may not see it
-   gets "not found", like for a tree that does not exist. The drawing of a tree is a later step. *@
+   gets "not found", like for a tree that does not exist. The tree is drawn like the family of a collection
+   (TreeDrawing) and listed below the drawing. *@
 @if (_tree is not null)
 {
     var mayChange = _tree.Tree.Role >= TreeRole.Editor;
@@ -27,6 +29,24 @@
     @if (_said is not null)
     {
         <p class="note" role="status">@T[$"Trees_Said_{_said}"]</p>
+    }
+
+    @if (_placement is not null)
+    {
+        @* The drawing of the tree: the same layout and the same drawing as the family of a collection. *@
+        <section aria-labelledby="drawing-title">
+            <h2 id="drawing-title">@T["Tree_Drawing_Title"]</h2>
+            <ChartStage Id="drawing" Class="stage-fitted" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
+                <TreeDrawing Tree="_placement">
+                    <Box Context="id">
+                        <span class="graph-entity">
+                            <a class="graph-name" href="@($"account/trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
+                        </span>
+                    </Box>
+                </TreeDrawing>
+            </ChartStage>
+            <p class="note">@T["Tree_Drawing_Note"]</p>
+        </section>
     }
 
     @if (_tree.Claims.Any(claim => claim.CanReview))
@@ -102,7 +122,7 @@
                                 <button type="submit">@T[waits ? "Tree_Claim_Withdraw" : "Tree_Claim_NotMe"]<span class="visually-hidden"> – @person.Name</span></button>
                             </form>
                         }
-                        else if (person.Account is null && _tree.CanClaim)
+                        else if (person.Claimable)
                         {
                             <form method="post" action="@($"{TreeEndpoints.Root}/claim")" class="save">
                                 <AntiforgeryToken />
@@ -308,6 +328,7 @@
     private TreeView? _tree;
     private List<PersonRef> _known = [];
     private string? _viewer;
+    private TreePlacement? _placement;
     private string? _said;
     private string? _form;
     private string? _problem;
@@ -347,6 +368,15 @@
             // A tree that is not shared with somebody does not exist for them – signed in or not.
             Navigation.NotFound();
             return;
+        }
+
+        if (!_tree.People.IsEmpty)
+        {
+            // Generations follow from the links: parents above their children, partners in one row.
+            var parentage = _tree.Links.Where(link => link.Kind == "parent").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
+            var partnerships = _tree.Links.Where(link => link.Kind == "partner").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
+            var rows = TreeShape.Generations(_tree.People.Select(person => person.Id), parentage, partnerships);
+            _placement = TreeShapeLayout.Of(new TreeShape([.. _tree.People.Select(person => new TreeShapeMember(person.Id, rows[person.Id], person.Name))], parentage, partnerships));
         }
 
         _here = $"/{Visitor.Language.Tag}{TreeEndpoints.Page}/{_tree.Tree.Id}";

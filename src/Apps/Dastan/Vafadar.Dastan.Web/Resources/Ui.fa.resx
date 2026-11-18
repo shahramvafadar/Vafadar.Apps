@@ -2187,4 +2187,13 @@
   <data name="Account_Export_Send" xml:space="preserve">
     <value>دریافت فایل</value>
   </data>
+  <data name="Tree_Drawing_Title" xml:space="preserve">
+    <value>نمودار درخت</value>
+  </data>
+  <data name="Tree_Drawing_Label" xml:space="preserve">
+    <value>نمودار شجره‌نامهٔ «{0}»</value>
+  </data>
+  <data name="Tree_Drawing_Note" xml:space="preserve">
+    <value>پدر و مادر بالای فرزندانشان قرار دارند و خط‌چین همسران را به هم می‌پیوندد. هر نام به رکوردش در پایین می‌رسد.</value>
+  </data>
 </root>
