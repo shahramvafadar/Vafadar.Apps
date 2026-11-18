@@ -20,7 +20,9 @@ services:
     read_only: true
     tmpfs:
       - /tmp
-    mem_limit: 768m
+    # Enough for the site and for one large photograph that is read whole to make its smaller size
+    # (ImageSizes.MostPixels: fifty million pixels, four bytes each, twice while it is turned upright).
+    mem_limit: 1g
     environment:
       Dastan__Sample: ${DASTAN_SAMPLE:-shahnameh-pilot.json}
       # Public (the default) shows a published revision. A trial with content that is not published yet names
@@ -29,6 +31,11 @@ services:
       Dastan__People: /data/people.db
       Dastan__Photos: /data/photos
       Dastan__Keys: /data/keys
+      # What visitors report about a statement (ADR 0012); the editors read the folder with their tool.
+      Dastan__Reports: /data/reports
+      # The legal texts (terms, privacy, imprint): a folder of plain files the owner puts onto the volume, for
+      # example /data/legal. Not set, the site has no such pages.
+      Dastan__Legal: ${DASTAN_LEGAL:-}
       Dastan__InvitationOnly: ${DASTAN_INVITATION_ONLY:-false}
       # Who the site believes about how a visitor came: the networks Docker gives its containers. A tunnel or a
       # proxy in front of the site is named here by whoever sets it up.
@@ -53,7 +60,9 @@ services:
     image: cloudflare/cloudflared:latest
     command: tunnel --no-autoupdate run
     environment:
-      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:?enter the token of the tunnel into CLOUDFLARE_TUNNEL_TOKEN}
+      # Not required here: a file that demanded the token would not start the trial without a tunnel either.
+      # Without a token the tunnel itself says so and stops.
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
     depends_on:
       - trial
     mem_limit: 256m

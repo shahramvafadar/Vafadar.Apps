@@ -266,3 +266,4 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - After signing in through a provider, the form that makes the account says what is kept of an account
   without a password; on a site that takes accounts by invitation only it says that an invitation is needed.
 - What opens a folded part of a page ("Change the album") is as high as a button.
+- A photograph of more than 50 million pixels is not taken, and the form says so.

@@ -21,17 +21,30 @@ public static class ImageSizes
     public const int Quality = 85;
 
     /// <summary>
+    /// The most pixels of a picture that is read here. A picture is read whole into memory, four bytes for a
+    /// pixel, and a small file can say that it is very large: beyond this a picture is left as it is – not
+    /// turned, and without a smaller size – so that one file cannot take the memory of the site.
+    /// </summary>
+    public const long MostPixels = 50_000_000;
+
+    /// <summary>Returns whether a picture of a width and a height is one that is read here.</summary>
+    public static bool IsRead(int width, int height, long mostPixels = MostPixels) => width > 0 && height > 0 && (long)width * height <= mostPixels;
+
+    /// <summary>
     /// Returns a JPEG upright when it says that it was taken turned – a camera writes the picture as its sensor
     /// lies and notes how it was held; without the note the picture would lie on its side. A JPEG that is
-    /// upright, and what is no picture that can be read, is returned as it is.
+    /// upright, what is no picture that can be read, and a picture of more pixels than are read here, is
+    /// returned as it is.
     /// </summary>
-    public static byte[] Upright(byte[] jpeg)
+    /// <param name="jpeg">The picture.</param>
+    /// <param name="mostPixels">The most pixels of a picture that is read.</param>
+    public static byte[] Upright(byte[] jpeg, long mostPixels = MostPixels)
     {
         ArgumentNullException.ThrowIfNull(jpeg);
         try
         {
             using var codec = SKCodec.Create(new MemoryStream(jpeg));
-            if (codec is null || codec.EncodedOrigin is SKEncodedOrigin.TopLeft or SKEncodedOrigin.Default)
+            if (codec is null || codec.EncodedOrigin is SKEncodedOrigin.TopLeft or SKEncodedOrigin.Default || !IsRead(codec.Info.Width, codec.Info.Height, mostPixels))
             {
                 return jpeg;
             }
@@ -76,12 +89,15 @@ public static class ImageSizes
     /// <summary>
     /// Makes a smaller size of an image beside it: the same picture, its longer side no longer than asked for.
     /// A PNG stays a PNG – it may be see-through –, a WebP a WebP, everything else becomes a JPEG. Returns
-    /// nothing, and writes nothing, when the image is that small already or cannot be read.
+    /// nothing, and writes nothing, when the image is that small already, cannot be read, or has more pixels
+    /// than are read here. The smaller size is written under another name and takes its own when it is whole:
+    /// nobody is given half of one.
     /// </summary>
     /// <param name="file">The image.</param>
     /// <param name="longest">The longer side of the smaller size, in pixels.</param>
     /// <param name="name">The name of the smaller size, without a folder; it lies beside the image.</param>
-    public static SmallerImage? Smaller(string file, int longest, string name)
+    /// <param name="mostPixels">The most pixels of an image that is read.</param>
+    public static SmallerImage? Smaller(string file, int longest, string name, long mostPixels = MostPixels)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(file);
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
@@ -91,8 +107,18 @@ public static class ImageSizes
             throw new ArgumentException("The name of a smaller size is a plain file name.", nameof(name));
         }
 
+        string? unfinished = null;
         try
         {
+            // What the file says about its size is asked before the picture is read.
+            using (var codec = SKCodec.Create(file))
+            {
+                if (codec is null || Math.Max(codec.Info.Width, codec.Info.Height) <= longest || !IsRead(codec.Info.Width, codec.Info.Height, mostPixels))
+                {
+                    return null;
+                }
+            }
+
             using var read = SKBitmap.Decode(file);
             if (read is null || Math.Max(read.Width, read.Height) <= longest)
             {
@@ -120,17 +146,28 @@ public static class ImageSizes
                 return null;
             }
 
-            var path = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(file))!, name);
-            using (var target = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
+            var folder = Path.GetDirectoryName(Path.GetFullPath(file))!;
+            var path = Path.Combine(folder, name);
+            unfinished = Path.Combine(folder, $".{name}.{Guid.NewGuid():N}.part");
+            using (var target = new FileStream(unfinished, FileMode.CreateNew, FileAccess.Write, FileShare.None))
             {
                 written.SaveTo(target);
             }
 
+            File.Move(unfinished, path, overwrite: true);
+            unfinished = null;
             return new(path, width, height, new FileInfo(path).Length);
         }
-        catch (Exception unreadable) when (unreadable is ArgumentException or InvalidOperationException or IOException)
+        catch (Exception unreadable) when (unreadable is ArgumentException or InvalidOperationException or IOException or UnauthorizedAccessException)
         {
             return null;
+        }
+        finally
+        {
+            if (unfinished is not null && File.Exists(unfinished))
+            {
+                File.Delete(unfinished);
+            }
         }
     }
 }

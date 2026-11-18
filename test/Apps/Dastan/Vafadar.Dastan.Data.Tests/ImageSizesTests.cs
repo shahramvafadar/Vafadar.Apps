@@ -152,6 +152,37 @@ public sealed class ImageSizesTests : IDisposable
     }
 
     [Fact]
+    public void A_picture_of_more_pixels_than_are_read_is_left_as_it_is()
+    {
+        // 40 by 20 is 800 pixels: with 799 allowed the picture is not read, with 800 it is.
+        var turned = RealImages.Jpeg(40, 20, 6);
+        var large = Write("large.png", RealImages.Png(40, 20));
+
+        Assert.Same(turned, ImageSizes.Upright(turned, mostPixels: 799));
+        Assert.NotSame(turned, ImageSizes.Upright(turned, mostPixels: 800));
+        Assert.Null(ImageSizes.Smaller(large, 16, "large-small.png", mostPixels: 799));
+        Assert.Equal(["large.png"], Directory.GetFiles(_root).Select(Path.GetFileName));
+        Assert.NotNull(ImageSizes.Smaller(large, 16, "large-small.png", mostPixels: 800));
+
+        Assert.True(ImageSizes.IsRead(8000, 6000));
+        Assert.False(ImageSizes.IsRead(30000, 30000));
+        Assert.False(ImageSizes.IsRead(0, 10));
+    }
+
+    [Fact]
+    public void A_smaller_size_takes_its_name_only_when_it_is_whole_and_takes_the_place_of_an_earlier_one()
+    {
+        var picture = Write("picture.jpg", RealImages.Jpeg(400, 200));
+        File.WriteAllText(Path.Combine(_root, "picture-small.jpg"), "what was there before");
+
+        var made = ImageSizes.Smaller(picture, 100, "picture-small.jpg");
+
+        Assert.NotNull(made);
+        Assert.Equal((100, 50), (RealImages.Look(File.ReadAllBytes(made.Path)).Item1, RealImages.Look(File.ReadAllBytes(made.Path)).Item2));
+        Assert.Equal(["picture-small.jpg", "picture.jpg"], Directory.GetFiles(_root).Select(Path.GetFileName).Order());
+    }
+
+    [Fact]
     public void An_image_that_is_small_already_or_cannot_be_read_gets_no_smaller_size()
     {
         var small = Write("small.jpg", RealImages.Jpeg(800, 600));
