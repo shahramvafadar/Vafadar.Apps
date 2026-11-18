@@ -75,6 +75,26 @@ public sealed record RevisionEntry(int Number, DateOnly PublishedOn, string? Not
 /// </param>
 public sealed record PublicationState(bool LocalDemoAllowed, bool PublicReleaseApproved, PublicationRevision? Revision = null);
 
+/// <summary>
+/// What the editors state about another telling of the same world (step 14.11): who has read this collection to
+/// a stage has read what the other tells up to a stage of its own. It is a statement, never a guess: a stage
+/// that is not named corresponds to nothing.
+/// </summary>
+/// <param name="Collection">The other collection, by the identifier of what it is about – its name in addresses.</param>
+/// <param name="Stages">For stages of this collection, the stage of the other one.</param>
+public sealed record StageCorrespondence(string Collection, ImmutableSortedDictionary<int, int> Stages)
+{
+    /// <summary>
+    /// Returns the stage of the other collection a reader of a stage of this one has read: what is stated for
+    /// the nearest stage at or before it, or <see langword="null"/> when nothing is stated that far.
+    /// </summary>
+    public ReadingLevel? For(ReadingLevel here)
+    {
+        var stated = Stages.Where(entry => entry.Key <= here.Value).Select(entry => (int?)entry.Value).LastOrDefault();
+        return stated is { } level ? new ReadingLevel(level) : null;
+    }
+}
+
 /// <summary>What a collection is as a whole.</summary>
 public sealed class CatalogueInfo
 {
@@ -107,6 +127,12 @@ public sealed class CatalogueInfo
 
     /// <summary>Gets the boundary a visitor starts with.</summary>
     public required ReadingLevel DefaultLevel { get; init; }
+
+    /// <summary>
+    /// Gets what the editors state about other tellings of the same world: which stage of another collection a
+    /// reader of a stage of this one has read. Empty when nothing is stated – then nothing is carried.
+    /// </summary>
+    public ImmutableArray<StageCorrespondence> Correspondences { get; init; } = [];
 
     /// <summary>Gets what the editors allow to be done with the collection.</summary>
     public required PublicationState Publication { get; init; }
@@ -353,6 +379,31 @@ public sealed class Catalogue
             }
 
             CheckStage("collection", info.DefaultLevel);
+            foreach (var correspondence in info.Correspondences)
+            {
+                var name = $"collection, correspondence with {correspondence.Collection}";
+                if (correspondence.Collection == info.Subject.Value)
+                {
+                    problems.Add($"{name}: a collection corresponds to another one, not to itself.");
+                }
+
+                if (correspondence.Stages.IsEmpty || correspondence.Stages.Keys.Any(here => !levels.Contains(here)) || correspondence.Stages.Values.Any(there => there < 0))
+                {
+                    problems.Add($"{name}: it names stages of this collection and, for each, a stage of the other.");
+                }
+
+                // Who has read further here has read no less there.
+                if (!correspondence.Stages.Values.SequenceEqual(correspondence.Stages.Values.Order()))
+                {
+                    problems.Add($"{name}: a later stage here does not correspond to an earlier stage there.");
+                }
+            }
+
+            if (info.Correspondences.GroupBy(correspondence => correspondence.Collection, StringComparer.Ordinal).Any(group => group.Count() > 1))
+            {
+                problems.Add("collection: a correspondence with another collection is stated once.");
+            }
+
             CheckPublication(info.Publication);
             CheckReviewsAndHistory(info);
             Known("collection", info.Subject, ReadingLevel.Opening, "subject");

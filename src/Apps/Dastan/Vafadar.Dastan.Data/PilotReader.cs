@@ -137,6 +137,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private readonly List<StoryEvent> _events = [];
     private readonly List<MediaItem> _media = [];
     private readonly List<DiscoveryThread> _threads = [];
+    private readonly List<StageCorrespondence> _correspondences = [];
     private CatalogueInfo? _info;
     private ImmutableArray<RevisionEntry> _history = [];
     private bool _published;
@@ -269,6 +270,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 Language = _language,
                 Edition = edition,
                 ReadingStages = stages,
+                Correspondences = [.. _correspondences],
                 DefaultLevel = defaultLevel.Value,
                 Publication = publication,
                 History = _history,
@@ -487,6 +489,37 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
 
         defaultLevel = Level(record, "defaultLevel");
+
+        // What the editors state about another telling of the same world: stage by stage.
+        foreach (var stated in record.Children("correspondences", required: false))
+        {
+            var collection = stated.Identifier("collection");
+            var levels = ImmutableSortedDictionary.CreateBuilder<int, int>();
+            var complete = collection is not null;
+            foreach (var pair in stated.Children("levels"))
+            {
+                var here = pair.Integer("here");
+                var there = pair.Integer("there");
+                pair.Finish();
+                if (here is null || there is null)
+                {
+                    complete = false;
+                }
+                else if (!levels.TryAdd(here.Value, there.Value))
+                {
+                    stated.Problem($"the stage {here.Value} is named twice.");
+                    complete = false;
+                }
+            }
+
+            stated.Notes("note");
+            stated.Finish();
+            if (complete)
+            {
+                _correspondences.Add(new StageCorrespondence(collection!, levels.ToImmutable()));
+            }
+        }
+
         record.Notes("rule", "readerKnowledgeNote", "distributionNote");
         record.Finish();
         return stages.ToImmutable();

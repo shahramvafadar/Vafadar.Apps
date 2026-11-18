@@ -1455,4 +1455,10 @@
   <data name="SiteSearch_Label" xml:space="preserve">
     <value>A name, in everything that is here to read</value>
   </data>
+  <data name="Elsewhere_Carry" xml:space="preserve">
+    <value>Go on there from “{0}”</value>
+  </data>
+  <data name="Elsewhere_ReadingStated" xml:space="preserve">
+    <value>Each of these is a collection of its own, with its own reading position. Where the editors state which part there corresponds to what you have read here, you can go on there from that part – by your own choice.</value>
+  </data>
 </root>
