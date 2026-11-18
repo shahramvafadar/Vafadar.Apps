@@ -361,7 +361,8 @@
                     {
                         <text>: </text><bdi>@change.Subject</bdi>
                     }
-                    <span class="meta">– <bdi>@(change.By ?? T["Tree_Change_Gone"].Value)</bdi>@T["Tree_And"]@Day(change.At)</span>
+                    @* The space stands inside the element: between two elements Razor leaves none. *@
+                    <span class="meta"> – <bdi>@(change.By ?? T["Tree_Change_Gone"].Value)</bdi>@T["Tree_And"]@Day(change.At)</span>
                 </li>
             }
         </ul>

@@ -114,7 +114,7 @@ public sealed class FamilyTreePagesTests : IDisposable
         Assert.Contains("people: 3", (await mina.Get(Trees)).Main, StringComparison.Ordinal);
 
         // Every change is there with who made it, the newest first.
-        Assert.Matches("Partners linked</span>:\\s*<bdi>Zal – Rudabeh</bdi>\\s*<span class=\"meta\">– <bdi>Mina</bdi>, 20\\d\\d-\\d\\d-\\d\\d", tree.Main);
+        Assert.Matches("Partners linked</span>:\\s*<bdi>Zal – Rudabeh</bdi>\\s*<span class=\"meta\"> – <bdi>Mina</bdi>, 20\\d\\d-\\d\\d-\\d\\d", tree.Main);
         Assert.True(tree.Main.IndexOf("Partners linked", StringComparison.Ordinal) < tree.Main.IndexOf("Tree begun", StringComparison.Ordinal));
         Assert.DoesNotContain("<script", tree.Own, StringComparison.Ordinal);
     }
@@ -244,7 +244,7 @@ public sealed class FamilyTreePagesTests : IDisposable
         await Person(dara, page, "Sohrab");
         Assert.Equal("/refused", (await Send(dara, page, "remove")).Response.Headers.Location?.OriginalString);
         Assert.Contains("problem=tree-name", (await Send(dara, page, "rename", ("name", "Dara's"))).Response.Headers.Location?.OriginalString, StringComparison.Ordinal);
-        Assert.Matches("Person added</span>:\\s*<bdi>Sohrab</bdi>\\s*<span class=\"meta\">– <bdi>Dara</bdi>", (await mina.Get(page)).Main);
+        Assert.Matches("Person added</span>:\\s*<bdi>Sohrab</bdi>\\s*<span class=\"meta\"> – <bdi>Dara</bdi>", (await mina.Get(page)).Main);
 
         // Somebody the owner shows no relationship with is not named, and is not offered.
         var zalId = Regex.Match((await zal.Get("/en/account/people")).Html, "href=\"people/([a-f0-9]{32})\"[^>]*>Your page").Groups[1].Value;
