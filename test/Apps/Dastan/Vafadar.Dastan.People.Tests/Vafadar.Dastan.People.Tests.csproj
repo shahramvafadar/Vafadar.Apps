@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.People\Vafadar.Dastan.People.csproj" />
+  </ItemGroup>
+
+</Project>

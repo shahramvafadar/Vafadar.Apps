@@ -1,0 +1,285 @@
+@page "/account"
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The account of a visitor (step 16.1, D-048 to D-050): making one, signing in and out, another password,
+   recovery codes, closing. Every form is sent to an address of its own (AccountEndpoints) and comes back here
+   with what happened; the page needs no script. A site without a store for accounts has no such page. *@
+<PageTitle>@T["Account_Title"] – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+@* The account of one visitor is no page for a search engine. *@
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+@if (Desk.IsOpen)
+{
+    <header class="page-header">
+        <h1>@T["Account_Title"]</h1>
+        @if (_info is null)
+        {
+            <p class="lead">@T["Account_Lead"]</p>
+        }
+        else
+        {
+            <p class="lead">@string.Format(CultureInfo.CurrentCulture, T["Account_Signed"], _info.Name)</p>
+        }
+    </header>
+
+    @if (_said is not null)
+    {
+        <p class="note" role="status">@T[$"Account_Said_{_said}"]</p>
+    }
+
+    @if (!_private)
+    {
+        <p class="note" role="alert">@T["Account_NeedsHttps"]</p>
+    }
+    else if (_info is null)
+    {
+        <section id="sign-in" aria-labelledby="sign-in-title">
+            <h2 id="sign-in-title">@T["Account_SignIn_Title"]</h2>
+            @Problems("sign-in")
+            <form method="post" action="@($"{AccountDesk.Root}/sign-in")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <p class="field">
+                    <label for="sign-in-name">@T["Account_Name"]</label>
+                    <input id="sign-in-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" />
+                </p>
+                <p class="field">
+                    <label for="sign-in-password">@T["Account_Password"]</label>
+                    <input id="sign-in-password" name="password" type="password" required autocomplete="current-password" />
+                </p>
+                <p><button type="submit" class="action">@T["Account_SignIn_Send"]</button></p>
+            </form>
+        </section>
+
+        <section id="register" aria-labelledby="register-title">
+            <h2 id="register-title">@T["Account_Register_Title"]</h2>
+            @Problems("register")
+            <form method="post" action="@($"{AccountDesk.Root}/register")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                @* A field no person sees: a program that fills in everything fills it in. *@
+                <p class="visually-hidden" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></p>
+                <p class="field">
+                    <label for="register-name">@T["Account_Name"]</label>
+                    <input id="register-name" name="name" type="text" required minlength="@PeopleStore.ShortestName" maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" aria-describedby="register-name-hint" />
+                    <span class="meta" id="register-name-hint">@T["Account_Name_Hint"]</span>
+                </p>
+                <p class="field">
+                    <label for="register-password">@T["Account_Password"]</label>
+                    <input id="register-password" name="password" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" aria-describedby="register-password-hint" />
+                    <span class="meta" id="register-password-hint">@T["Account_Password_Hint"]</span>
+                </p>
+                <p class="field">
+                    <label for="register-again">@T["Account_Password_Again"]</label>
+                    <input id="register-again" name="again" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" />
+                </p>
+                <p class="note">@T["Account_Register_Privacy"]</p>
+                <p><button type="submit" class="action secondary">@T["Account_Register_Send"]</button></p>
+            </form>
+        </section>
+
+        <section id="recover" aria-labelledby="recover-title">
+            <h2 id="recover-title">@T["Account_Recover_Title"]</h2>
+            @Problems("recover")
+            <details open="@(_form == "recover")">
+                <summary>@T["Account_Recover_Lead"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/recover")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="recover-name">@T["Account_Name"]</label>
+                        <input id="recover-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" />
+                    </p>
+                    <p class="field">
+                        <label for="recover-code">@T["Account_Code"]</label>
+                        <input id="recover-code" name="code" type="text" required maxlength="40" autocomplete="off" dir="ltr" />
+                    </p>
+                    <p class="field">
+                        <label for="recover-password">@T["Account_NewPassword"]</label>
+                        <input id="recover-password" name="password" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" />
+                    </p>
+                    <p class="field">
+                        <label for="recover-again">@T["Account_Password_Again"]</label>
+                        <input id="recover-again" name="again" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_Recover_Send"]</button></p>
+                </form>
+            </details>
+        </section>
+
+        <section id="reopen" aria-labelledby="reopen-title">
+            <h2 id="reopen-title">@T["Account_Reopen_Title"]</h2>
+            @Problems("reopen")
+            <details open="@(_form == "reopen")">
+                <summary>@T["Account_Reopen_Lead"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/reopen")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="reopen-name">@T["Account_Name"]</label>
+                        <input id="reopen-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" />
+                    </p>
+                    <p class="field">
+                        <label for="reopen-password">@T["Account_Password"]</label>
+                        <input id="reopen-password" name="password" type="password" required autocomplete="current-password" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_Reopen_Send"]</button></p>
+                </form>
+            </details>
+        </section>
+    }
+    else
+    {
+        @if (!_codes.IsEmpty)
+        {
+            <section id="codes-shown" aria-labelledby="codes-shown-title" class="codes">
+                <h2 id="codes-shown-title">@T["Account_Codes_Title"]</h2>
+                <p>@T["Account_Codes_Lead"]</p>
+                <ul role="list" dir="ltr">
+                    @foreach (var shown in _codes)
+                    {
+                        <li><code>@shown</code></li>
+                    }
+                </ul>
+            </section>
+        }
+
+        <form method="post" action="@($"{AccountDesk.Root}/sign-out")" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@_here" />
+            <p><button type="submit" class="action">@T["Account_SignOut"]</button></p>
+        </form>
+
+        <section id="password" aria-labelledby="password-title">
+            <h2 id="password-title">@T["Account_Password_Title"]</h2>
+            @Problems("password")
+            <form method="post" action="@($"{AccountDesk.Root}/password")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                @* A password manager fills in a form by the name that stands with it. *@
+                <p class="visually-hidden" aria-hidden="true"><input type="text" name="name" value="@_info.Name" autocomplete="username" readonly tabindex="-1" /></p>
+                <p class="field">
+                    <label for="password-current">@T["Account_Current"]</label>
+                    <input id="password-current" name="current" type="password" required autocomplete="current-password" />
+                </p>
+                <p class="field">
+                    <label for="password-new">@T["Account_NewPassword"]</label>
+                    <input id="password-new" name="password" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" aria-describedby="password-new-hint" />
+                    <span class="meta" id="password-new-hint">@T["Account_Password_Hint"]</span>
+                </p>
+                <p class="field">
+                    <label for="password-again">@T["Account_Password_Again"]</label>
+                    <input id="password-again" name="again" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" />
+                </p>
+                <p class="note">@T["Account_Password_Note"]</p>
+                <p><button type="submit" class="action secondary">@T["Account_Password_Send"]</button></p>
+            </form>
+        </section>
+
+        <section id="codes" aria-labelledby="codes-title">
+            <h2 id="codes-title">@T["Account_NewCodes_Title"]</h2>
+            <p>@string.Format(CultureInfo.CurrentCulture, T["Account_CodesLeft"], Visitor.Number(_info.RecoveryCodesLeft))</p>
+            @Problems("codes")
+            <details open="@(_form == "codes")">
+                <summary>@T["Account_NewCodes_Lead"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/codes")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="codes-current">@T["Account_Current"]</label>
+                        <input id="codes-current" name="current" type="password" required autocomplete="current-password" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_NewCodes_Send"]</button></p>
+                </form>
+            </details>
+        </section>
+
+        <section id="close" aria-labelledby="close-title">
+            <h2 id="close-title">@T["Account_Close_Title"]</h2>
+            @Problems("close")
+            <details open="@(_form == "close")">
+                <summary>@T["Account_Close_Lead"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/close")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="close-current">@T["Account_Current"]</label>
+                        <input id="close-current" name="current" type="password" required autocomplete="current-password" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_Close_Send"]</button></p>
+                </form>
+            </details>
+        </section>
+    }
+}
+
+@code {
+    // What the forms may answer with: nothing else of an address is turned into words of the page.
+    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed"];
+    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close"];
+    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current"];
+
+    private VisitorInfo? _info;
+    private System.Collections.Immutable.ImmutableArray<string> _codes = [];
+    private string? _said;
+    private string? _form;
+    private string[] _problems = [];
+    private bool _private;
+    private string _here = AccountDesk.Page;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Desk.IsOpen)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _here = $"/{Visitor.Language.Tag}{AccountDesk.Page}";
+        _private = AccountDesk.IsPrivate(Context);
+        _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
+        _form = Forms.Contains(Form, StringComparer.Ordinal) ? Form : null;
+        _problems = _form is null ? [] : [.. (Problem ?? string.Empty).Split(',').Where(problem => Known.Contains(problem, StringComparer.Ordinal)).Distinct()];
+        if (AccountDesk.Session(Context.User) is { } session)
+        {
+            using var store = Desk.Open();
+            _info = store.Info(session.Id);
+        }
+
+        if (_info is not null)
+        {
+            _codes = Desk.Shown(Context);
+        }
+    }
+
+    // What was wrong with a form, said above it.
+    private RenderFragment Problems(string form) => __builder =>
+    {
+        if (_form == form && _problems.Length > 0)
+        {
+            <ul class="problems" role="alert">
+                @foreach (var problem in _problems)
+                {
+                    <li>@T[$"Account_Problem_{problem}"]</li>
+                }
+            </ul>
+        }
+    };
+}

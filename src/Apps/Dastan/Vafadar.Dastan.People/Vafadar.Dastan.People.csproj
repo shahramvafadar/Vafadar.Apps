@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(VafadarTargetFramework)</TargetFramework>
+    <Description>The store of Dastan's visitors (D-050): their accounts and, with them, what belongs to one person. A database of its own beside the site, apart from the store of the editors; the rules of who may see what are those of Vafadar.Dastan.Core.Personal.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Vafadar.Dastan.Core\Vafadar.Dastan.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Vafadar.Dastan.People.Tests" />
+  </ItemGroup>
+
+</Project>

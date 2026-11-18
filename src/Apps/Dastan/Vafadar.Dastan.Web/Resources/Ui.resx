@@ -1461,4 +1461,172 @@
   <data name="Elsewhere_ReadingStated" xml:space="preserve">
     <value>Each of these is a collection of its own, with its own reading position. Where the editors state which part there corresponds to what you have read here, you can go on there from that part – by your own choice.</value>
   </data>
+  <data name="Account_Link" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Account_Title" xml:space="preserve">
+    <value>Your account</value>
+  </data>
+  <data name="Account_Lead" xml:space="preserve">
+    <value>An account is yours on every device. It asks for a name and a password – no mail address and nothing else about you.</value>
+  </data>
+  <data name="Account_Signed" xml:space="preserve">
+    <value>You are signed in as {0}.</value>
+  </data>
+  <data name="Account_NeedsHttps" xml:space="preserve">
+    <value>A password does not travel in the open: the account is reached over https only.</value>
+  </data>
+  <data name="Account_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Account_Name_Hint" xml:space="preserve">
+    <value>3 to 40 characters: letters, digits, spaces, dots and hyphens. Others will see this name; it need not be your real one.</value>
+  </data>
+  <data name="Account_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Account_Password_Hint" xml:space="preserve">
+    <value>At least 12 characters. A sentence of your own is a good password.</value>
+  </data>
+  <data name="Account_Password_Again" xml:space="preserve">
+    <value>The password once more</value>
+  </data>
+  <data name="Account_NewPassword" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="Account_Current" xml:space="preserve">
+    <value>Present password</value>
+  </data>
+  <data name="Account_Code" xml:space="preserve">
+    <value>Recovery code</value>
+  </data>
+  <data name="Account_SignIn_Title" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Account_SignIn_Send" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="Account_Register_Title" xml:space="preserve">
+    <value>New here? Make an account</value>
+  </data>
+  <data name="Account_Register_Privacy" xml:space="preserve">
+    <value>The site keeps the name and a value derived from the password – never the password itself. It knows no mail address of yours: if you lose the password, only your recovery codes let you in again.</value>
+  </data>
+  <data name="Account_Register_Send" xml:space="preserve">
+    <value>Make the account</value>
+  </data>
+  <data name="Account_Recover_Title" xml:space="preserve">
+    <value>Lost the password?</value>
+  </data>
+  <data name="Account_Recover_Lead" xml:space="preserve">
+    <value>One of your recovery codes lets you choose a new password.</value>
+  </data>
+  <data name="Account_Recover_Send" xml:space="preserve">
+    <value>Set the new password</value>
+  </data>
+  <data name="Account_Reopen_Title" xml:space="preserve">
+    <value>Closed your account?</value>
+  </data>
+  <data name="Account_Reopen_Lead" xml:space="preserve">
+    <value>A closed account is kept for 30 days. Until then its name and password open it again.</value>
+  </data>
+  <data name="Account_Reopen_Send" xml:space="preserve">
+    <value>Open the account again</value>
+  </data>
+  <data name="Account_Codes_Title" xml:space="preserve">
+    <value>Your recovery codes</value>
+  </data>
+  <data name="Account_Codes_Lead" xml:space="preserve">
+    <value>Write these down now and keep them in a safe place: they are shown this once. If you lose the password, each of them lets you in one time.</value>
+  </data>
+  <data name="Account_CodesLeft" xml:space="preserve">
+    <value>Recovery codes you have not used yet: {0}.</value>
+  </data>
+  <data name="Account_SignOut" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="Account_Password_Title" xml:space="preserve">
+    <value>Another password</value>
+  </data>
+  <data name="Account_Password_Note" xml:space="preserve">
+    <value>With another password, every other device is signed out.</value>
+  </data>
+  <data name="Account_Password_Send" xml:space="preserve">
+    <value>Change the password</value>
+  </data>
+  <data name="Account_NewCodes_Title" xml:space="preserve">
+    <value>Recovery codes</value>
+  </data>
+  <data name="Account_NewCodes_Lead" xml:space="preserve">
+    <value>Get new codes. The ones you have are worth nothing afterwards.</value>
+  </data>
+  <data name="Account_NewCodes_Send" xml:space="preserve">
+    <value>Make new codes</value>
+  </data>
+  <data name="Account_Close_Title" xml:space="preserve">
+    <value>Close the account</value>
+  </data>
+  <data name="Account_Close_Lead" xml:space="preserve">
+    <value>Closing signs you out everywhere at once. After 30 days the account and everything that belongs to it is deleted for good; until then its name and password open it again.</value>
+  </data>
+  <data name="Account_Close_Send" xml:space="preserve">
+    <value>Close my account</value>
+  </data>
+  <data name="Account_Said_welcome" xml:space="preserve">
+    <value>Your account is made and you are signed in.</value>
+  </data>
+  <data name="Account_Said_signed-in" xml:space="preserve">
+    <value>You are signed in.</value>
+  </data>
+  <data name="Account_Said_signed-out" xml:space="preserve">
+    <value>You are signed out.</value>
+  </data>
+  <data name="Account_Said_recovered" xml:space="preserve">
+    <value>The new password is set and you are signed in. The recovery code is used up.</value>
+  </data>
+  <data name="Account_Said_reopened" xml:space="preserve">
+    <value>Your account is open again.</value>
+  </data>
+  <data name="Account_Said_password" xml:space="preserve">
+    <value>The password is changed. Every other device is signed out.</value>
+  </data>
+  <data name="Account_Said_codes" xml:space="preserve">
+    <value>These are your new recovery codes.</value>
+  </data>
+  <data name="Account_Said_closed" xml:space="preserve">
+    <value>Your account is closed. It will be deleted for good in 30 days.</value>
+  </data>
+  <data name="Account_Problem_later" xml:space="preserve">
+    <value>That was asked too often. Please try again in an hour.</value>
+  </data>
+  <data name="Account_Problem_name-length" xml:space="preserve">
+    <value>A name has 3 to 40 characters.</value>
+  </data>
+  <data name="Account_Problem_name-letters" xml:space="preserve">
+    <value>A name is made of letters, digits, single spaces, dots, underscores and hyphens.</value>
+  </data>
+  <data name="Account_Problem_password-short" xml:space="preserve">
+    <value>A password has at least 12 characters.</value>
+  </data>
+  <data name="Account_Problem_password-long" xml:space="preserve">
+    <value>A password has at most 1000 characters.</value>
+  </data>
+  <data name="Account_Problem_password-differs" xml:space="preserve">
+    <value>The two passwords are not the same.</value>
+  </data>
+  <data name="Account_Problem_taken" xml:space="preserve">
+    <value>Somebody has this name already. Please choose another.</value>
+  </data>
+  <data name="Account_Problem_wrong" xml:space="preserve">
+    <value>The name or the password is not right – or the account takes no password for a while after too many wrong ones.</value>
+  </data>
+  <data name="Account_Problem_wrong-code" xml:space="preserve">
+    <value>The name or the recovery code is not right, or the code was used before.</value>
+  </data>
+  <data name="Account_Problem_wrong-closed" xml:space="preserve">
+    <value>No closed account has this name and password.</value>
+  </data>
+  <data name="Account_Problem_wrong-current" xml:space="preserve">
+    <value>The present password is not right.</value>
+  </data>
 </root>

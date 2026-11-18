@@ -43,6 +43,9 @@ builder.Services.AddScoped(services => services.GetRequiredService<DastanLibrary
 builder.Services.TryAddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<ReportDesk>();
 
+// The accounts of the visitors (step 16.1): there are some only where the site was told a file for their store.
+builder.Services.AddVisitorAccounts();
+
 // The keys of the forms outlive the process only where a folder for them is named (docs/operations.md).
 if (builder.Configuration["Dastan:Keys"] is { Length: > 0 } keys)
 {
@@ -120,6 +123,7 @@ app.UseRefusedFormPage();
 
 // Routes are matched after the language was taken out of the path.
 app.UseRouting();
+app.UseAuthentication();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
@@ -130,6 +134,7 @@ app.MapSiteHealth();
 app.MapSearchEngineFiles();
 app.MapVisitorReports();
 app.MapSavedList();
+app.MapVisitorAccounts();
 app.MapRazorComponents<App>();
 
 await app.RunAsync();

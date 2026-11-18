@@ -1,6 +1,7 @@
 @inherits LayoutComponentBase
 @inject Visitor Visitor
 @inject DastanSite Site
+@inject AccountDesk Accounts
 @inject NavigationManager Navigation
 @inject IOptions<SiteLanguageOptions> Languages
 @inject IStringLocalizer<Ui> T
@@ -17,6 +18,11 @@
         {
             @* Offered to who has a list: a visitor who keeps nothing is not shown an empty place. *@
             <a href="saved">@T["Saved_Link"]</a>
+        }
+        @if (Accounts.IsOpen)
+        {
+            @* Who signed in is shown their name; everybody else where to sign in. *@
+            <a href="account">@(AccountDesk.Session(Context.User)?.Name ?? T["Account_Link"].Value)</a>
         }
     </nav>
     <div class="site-tools">
