@@ -32,5 +32,30 @@ if ($proof.CompilerPresent) {
     $proof.SignatureStatus = $signature.Status.ToString()
     $proof.SignerSubject = if ($signature.SignerCertificate) { $signature.SignerCertificate.Subject } else { '' }
 }
+# Every installed MSVC tool set, by its public folder name and signed executable metadata. A hosted image
+# that no longer carries the pinned tool set is then diagnosable from this record alone; nothing here
+# executes or admits a compiler.
+$toolsRoot = Join-Path $records[0].installationPath 'VC/Tools/MSVC'
+$proof.InstalledTools = @(if (Test-Path -LiteralPath $toolsRoot -PathType Container) {
+    Get-ChildItem -LiteralPath $toolsRoot -Directory | Sort-Object Name | ForEach-Object {
+        $candidate = Join-Path $_.FullName 'bin/Hostx64/x64/cl.exe'
+        $entry = [ordered]@{ ToolsVersion = $_.Name; CompilerPresent = (Test-Path -LiteralPath $candidate -PathType Leaf) }
+        if ($entry.CompilerPresent) {
+            $candidateSignature = Get-AuthenticodeSignature -LiteralPath $candidate
+            $entry.CompilerSha256 = (Get-FileHash -LiteralPath $candidate -Algorithm SHA256).Hash.ToLowerInvariant()
+            $entry.CompilerFileVersion = [Diagnostics.FileVersionInfo]::GetVersionInfo($candidate).FileVersion
+            $entry.SignatureStatus = $candidateSignature.Status.ToString()
+            $entry.SignerSubject = if ($candidateSignature.SignerCertificate) { $candidateSignature.SignerCertificate.Subject } else { '' }
+        }
+        $entry
+    }
+})
+$sdkRoot = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits/10/Include'
+$proof.InstalledSdks = @(if (Test-Path -LiteralPath $sdkRoot -PathType Container) { (Get-ChildItem -LiteralPath $sdkRoot -Directory | Sort-Object Name).Name })
 # These are public executable metadata only. No environment, credential, user path or source data is exported.
-$proof | ConvertTo-Json
+# On a hosted runner the same record is also raised as a notice of the job, so that hosted-image drift
+# can be read from the public check of a commit. It goes to the host, not to the output a caller parses.
+if ($env:GITHUB_ACTIONS -eq 'true') {
+    Write-Host ('::notice title=Windows toolchain observation::' + ($proof | ConvertTo-Json -Depth 5 -Compress))
+}
+$proof | ConvertTo-Json -Depth 5
