@@ -467,3 +467,30 @@ keeping a page in the list with its button and finding it in the list. **Not loo
 appearance, a real phone, a screen reader, printing, the tool of the editors, and the pages of phases 14 and
 15 that are not named here. The tests of the browser of the repository (Playwright) were not run: this
 machine had no container for them in this session.
+
+## Ninth addendum (step 16.4): one layout and one drawing for every family
+
+The family chart was written for the entities of a collection. The tree of a visitor (ADR 0014) is a family
+too, of records that are no entities – and it is to look the same and be laid out the same.
+
+* The layout no longer knows what a member is. `TreeShape` holds members (an identifier, a generation, the
+  name a box has to hold), links from parents to children and links between partners; `TreeShapeLayout`
+  places them – the algorithm that was `FamilyTreeLayout`, unchanged but for the type of an identifier.
+  `FamilyTreeLayout.Of` now turns a `FamilyView` into a shape and the placement back into a `FamilyTree`,
+  so that nothing that used it had to change; its tests run through the new layout and all pass.
+* `TreeShape.Generations` finds the generations from the links alone, for a family whose members carry none:
+  nobody without a parent stands below row 0, a child stands below the lowest of its parents, partners stand
+  in one row. A collection states its generations through its projection; a visitor's tree has only links.
+* The drawing is `TreeDrawing`: the SVG, the lines, the boxes, right to left. What stands in a box is the
+  caller's. `FamilyTreeChart` is now that drawing with the name of an entity in each box; the page of a
+  visitor's tree puts the name of a record there, leading to the record in the list below.
+* A stage can be **fitted** (`stage-fitted`): as high as its chart and never higher than the window, a side
+  without steps taking no room – for a page that holds more than the chart. The family of a collection keeps
+  the stage of the height of the window.
+
+Not built for a visitor's tree: opening the tree further side by side (it is drawn whole), generations across
+the page, and a focus on one person. A tree of several hundred people was not looked at.
+
+Checked: `TreeShapeTests` (7 cases); `FamilyTreeTests` and the tests of the family page unchanged and
+passing; one case of `FamilyTreePagesTests` for the drawing of a visitor's tree. Looked at in a browser in
+English at 800 px and in Persian at 375 px, dark appearance, with a tree of two people.

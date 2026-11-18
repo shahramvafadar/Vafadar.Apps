@@ -1,0 +1,142 @@
+@* A tree of generations as a drawing: SVG written by the server (ADR 0005, ADR 0008). Generations are layers –
+   rows down the page or columns across it; a line with an arrow leads from a parent to a child, a dashed line
+   joins partners. A tree that is larger than its stage scrolls there. The boxes are HTML inside the SVG; what
+   stands in a box is the caller's. On a page that is read from right to left the tree begins at the right.
+   The drawing knows nothing of what a member is: it draws the family of a collection (FamilyTreeChart) and the
+   tree of a visitor (step 16.4) alike. *@
+@inject Visitor Visitor
+
+<svg class="graph tree" width="@Em(Width)" height="@Em(Height)">
+    <defs>
+        <marker id="graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="graph-arrow" d="M0 0L10 5L0 10z" />
+        </marker>
+    </defs>
+
+    @for (var number = 0; number < Tree.Parentage.Length; number++)
+    {
+        var corners = Corners(Tree.Parentage[number]);
+        var disputed = DisputedParentage?.Invoke(number) == true;
+        <g class="tree-link">
+            @for (var index = 1; index < corners.Count; index++)
+            {
+                <line class="graph-line@(disputed ? " graph-disputed" : null)" x1="@Em(Across(corners[index - 1].X))" y1="@Em(corners[index - 1].Y)" x2="@Em(Across(corners[index].X))" y2="@Em(corners[index].Y)"
+                      marker-end="@(index == corners.Count - 1 ? "url(#graph-arrow)" : null)" />
+            }
+        </g>
+    }
+
+    @for (var number = 0; number < Tree.Partnerships.Length; number++)
+    {
+        var (from, to) = Between(Tree.Node(Tree.Partnerships[number].From), Tree.Node(Tree.Partnerships[number].To));
+        <g class="tree-link">
+            <line class="graph-line graph-partner@(DisputedPartnership?.Invoke(number) == true ? " graph-disputed" : null)" x1="@Em(Across(from.X))" y1="@Em(from.Y)" x2="@Em(Across(to.X))" y2="@Em(to.Y)" />
+        </g>
+    }
+
+    @foreach (var node in Tree.Nodes)
+    {
+        <foreignObject x="@Em(Across(Left(node), BoxWidth))" y="@Em(Top(node))" width="@Em(BoxWidth)" height="@Em(BoxHeight)">
+            <div class="graph-node @(node.Id == Focus ? "graph-focus" : null)">
+                @Box(node.Id)
+            </div>
+        </foreignObject>
+    }
+</svg>
+
+@code {
+    // Measures of the drawing in em. The layout gives generations and places as counts; these make lengths of them.
+    private const double BoxWidth = 10;
+    private const double Pad = 0.6;
+    private const double BesideGap = 1.2;
+    private const double StackGap = 0.9;
+    private const double GenerationGap = 3;
+    private const double ArrowGap = 0.3;
+
+    /// <summary>Gets or sets the tree.</summary>
+    [Parameter, EditorRequired]
+    public TreePlacement Tree { get; set; } = null!;
+
+    /// <summary>Gets or sets what stands in the box of a member.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment<string> Box { get; set; } = null!;
+
+    /// <summary>Gets or sets the member the page is about, when it is about one.</summary>
+    [Parameter]
+    public string? Focus { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether generations run across the page instead of down it.</summary>
+    [Parameter]
+    public bool GenerationsAcross { get; set; }
+
+    /// <summary>Gets or sets what says whether the link from a parent to a child with a number is disputed.</summary>
+    [Parameter]
+    public Func<int, bool>? DisputedParentage { get; set; }
+
+    /// <summary>Gets or sets what says whether the link between partners with a number is disputed.</summary>
+    [Parameter]
+    public Func<int, bool>? DisputedPartnership { get; set; }
+
+    private bool RightToLeft => Visitor.Language.IsRightToLeft;
+
+    // A box is as high as the longest name of the tree needs, and never lower than what a finger needs.
+    private double BoxHeight => 1.15 + Math.Max(2.75, Tree.Lines * (RightToLeft ? 1.9 : 1.6));
+
+    private double Width => (2 * Pad) + BoxWidth + (GenerationsAcross
+        ? (Tree.Layers - 1) * (BoxWidth + GenerationGap)
+        : (Tree.Breadth - 1) * (BoxWidth + BesideGap));
+
+    private double Height => (2 * Pad) + BoxHeight + (GenerationsAcross
+        ? (Tree.Breadth - 1) * (BoxHeight + StackGap)
+        : (Tree.Layers - 1) * (BoxHeight + GenerationGap));
+
+    // Numbers in markup are written the same in every language of the page.
+    private static string Em(double value) => value.ToString("0.###", CultureInfo.InvariantCulture) + "em";
+
+    // Where a box begins, counted from the side where reading starts.
+    private double Left(PlacedMember node) => Pad + (GenerationsAcross ? node.Layer * (BoxWidth + GenerationGap) : node.Place * (BoxWidth + BesideGap));
+
+    private double Top(PlacedMember node) => Pad + (GenerationsAcross ? node.Place * (BoxHeight + StackGap) : node.Layer * (BoxHeight + GenerationGap));
+
+    // A place across the drawing as the SVG counts it: from the left.
+    private double Across(double position) => RightToLeft ? Width - position : position;
+
+    private double Across(double start, double width) => RightToLeft ? Width - start - width : start;
+
+    // The line from a parent to a child: out of the parent at the port of the child's family, across the room
+    // between two generations on the track of that family, into the child. Children of the same parents share
+    // the track; a child of other parents has another one, so a line never says more than its relation.
+    private List<(double X, double Y)> Corners(PlacedRoute route)
+    {
+        var (parent, child) = (Tree.Node(route.From), Tree.Node(route.To));
+        if (GenerationsAcross)
+        {
+            var (from, to) = (Top(parent) + (BoxHeight * route.Port), Top(child) + (BoxHeight / 2));
+            var turn = Left(child) - (GenerationGap * route.Track);
+            return Straight([(Left(parent) + BoxWidth, from), (turn, from), (turn, to), (Left(child) - ArrowGap, to)]);
+        }
+        else
+        {
+            var (from, to) = (Left(parent) + (BoxWidth * route.Port), Left(child) + (BoxWidth / 2));
+            var turn = Top(child) - (GenerationGap * route.Track);
+            return Straight([(from, Top(parent) + BoxHeight), (from, turn), (to, turn), (to, Top(child) - ArrowGap)]);
+        }
+    }
+
+    // A line without a bend is one line: corners that lie on it are left out.
+    private static List<(double X, double Y)> Straight(List<(double X, double Y)> corners) =>
+        Math.Abs(corners[0].X - corners[^1].X) < 0.001 || Math.Abs(corners[0].Y - corners[^1].Y) < 0.001 ? [corners[0], corners[^1]] : corners;
+
+    // The line between two partners: between the sides of their boxes that face each other.
+    private ((double X, double Y) From, (double X, double Y) To) Between(PlacedMember first, PlacedMember second)
+    {
+        if (first.Place > second.Place)
+        {
+            (first, second) = (second, first);
+        }
+
+        return GenerationsAcross
+            ? ((Left(first) + (BoxWidth / 2), Top(first) + BoxHeight), (Left(second) + (BoxWidth / 2), Top(second)))
+            : ((Left(first) + BoxWidth, Top(first) + (BoxHeight / 2)), (Left(second), Top(second) + (BoxHeight / 2)));
+    }
+}

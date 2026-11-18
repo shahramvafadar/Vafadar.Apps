@@ -2187,4 +2187,13 @@
   <data name="Account_Export_Send" xml:space="preserve">
     <value>Get the file</value>
   </data>
+  <data name="Tree_Drawing_Title" xml:space="preserve">
+    <value>The tree</value>
+  </data>
+  <data name="Tree_Drawing_Label" xml:space="preserve">
+    <value>The family tree “{0}” as a drawing</value>
+  </data>
+  <data name="Tree_Drawing_Note" xml:space="preserve">
+    <value>Parents stand above their children; a dashed line joins partners. A name leads to its record below.</value>
+  </data>
 </root>

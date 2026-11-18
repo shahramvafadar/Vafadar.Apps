@@ -144,8 +144,11 @@ public sealed class IdentityClaimsTests : IDisposable
         Assert.Equal("refused", _store.Claim(zal, _tree, _record));
         Assert.Equal("unknown", _store.Claim(_sara, _tree, "no-such-record"));
 
-        // In her own tree Mina made the record herself: nobody else could confirm that it is her.
+        // In her own tree Mina made the record herself: nobody else could confirm that it is her, and it is
+        // not offered to her. To somebody else who sees the tree it is.
         Assert.Equal("nobody", _store.Claim(_mina, _tree, minas));
+        Assert.False(_store.Tree(_mina, _tree)!.Person(minas).Claimable);
+        Assert.True(_store.Tree(_sara, _tree)!.Person(minas).Claimable);
 
         Assert.Equal("claimed", _store.Claim(_sara, _tree, _record));
         Assert.Equal("own", _store.Claim(_sara, _tree, other));

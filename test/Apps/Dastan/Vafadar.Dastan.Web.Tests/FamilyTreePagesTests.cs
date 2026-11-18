@@ -382,7 +382,9 @@ public sealed class FamilyTreePagesTests : IDisposable
         Assert.DoesNotContain("This is the account", after.Main, StringComparison.Ordinal);
         Assert.Contains("This is me", after.Main, StringComparison.Ordinal);
 
-        // In her own tree, on a record she made herself, nobody else could say that it is her.
+        // In her own tree, on a record she made herself, nobody else could say that it is her: it is not offered,
+        // and a form sent all the same says why.
+        Assert.DoesNotContain($"action=\"{Forms}/claim\"", (await mina.Get(page)).Html, StringComparison.Ordinal);
         var own = await Send(mina, page, "claim", ("person", record));
         Assert.Equal($"{page}?form=people&problem=claim-nobody#people", own.Response.Headers.Location?.OriginalString);
         Assert.Contains("Somebody other than you has to confirm", (await mina.Get($"{page}?form=people&problem=claim-nobody")).Main, StringComparison.Ordinal);
@@ -401,5 +403,40 @@ public sealed class FamilyTreePagesTests : IDisposable
 
         Assert.Equal("/refused", (await _site.Visitor().Post($"{Forms}/{form}", Account, ("tree", Id(page)), ("person", record), ("claim", "1"), ("answer", "confirm"), ("returnUrl", page))).Response.Headers.Location?.OriginalString);
         Assert.Equal("/refused", (await Send(zal, page, form, ("person", record), ("claim", "1"), ("answer", "confirm"))).Response.Headers.Location?.OriginalString);
+    }
+
+    [Fact]
+    public async Task A_tree_is_drawn_with_parents_above_their_children_and_partners_side_by_side()
+    {
+        var mina = await Signed("Mina");
+        var page = await Tree(mina);
+        Assert.DoesNotContain("<svg class=\"graph tree\"", (await mina.Get(page)).Html, StringComparison.Ordinal);
+        var zal = await Person(mina, page, "Zal");
+        var rudabeh = await Person(mina, page, "Rudabeh");
+        var rostam = await Person(mina, page, "Rostam");
+        await Send(mina, page, "link", ("kind", "parent"), ("from", zal), ("to", rostam));
+        await Send(mina, page, "link", ("kind", "parent"), ("from", rudabeh), ("to", rostam));
+        await Send(mina, page, "link", ("kind", "partner"), ("from", zal), ("to", rudabeh));
+
+        var tree = await mina.Get(page);
+
+        Assert.Contains("<svg class=\"graph tree\"", tree.Html, StringComparison.Ordinal);
+        Assert.Contains("aria-label=\"The family tree “The Rad family” as a drawing\"", WebUtility.HtmlDecode(tree.Html), StringComparison.Ordinal);
+
+        // A box per person, each leading to its record in the list; two lines with arrows and one dashed line.
+        var boxes = Regex.Matches(tree.Html, "<foreignObject x=\"([\\d.]+)em\" y=\"([\\d.]+)em\"[^>]*>\\s*<div class=\"graph-node \">\\s*<span class=\"graph-entity\">\\s*<a class=\"graph-name\" href=\"account/trees/[a-f0-9]{32}#person-([a-f0-9]{32})\"")
+            .ToDictionary(match => match.Groups[3].Value, match => (X: double.Parse(match.Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture), Y: double.Parse(match.Groups[2].Value, System.Globalization.CultureInfo.InvariantCulture)));
+        Assert.Equal(3, boxes.Count);
+        Assert.Equal(boxes[zal].Y, boxes[rudabeh].Y);
+        Assert.True(boxes[rostam].Y > boxes[zal].Y);
+        Assert.NotEqual(boxes[zal].X, boxes[rudabeh].X);
+        Assert.Equal(2, Regex.Matches(tree.Html, "marker-end=\"url\\(#graph-arrow\\)\"").Count);
+        Assert.Single(Regex.Matches(tree.Html, "class=\"graph-line graph-partner\""));
+        Assert.DoesNotContain("<script", tree.Own, StringComparison.Ordinal);
+
+        // On a Persian page the tree begins at the right.
+        var fa = await mina.Get(page.Replace("/en/", "/fa/", StringComparison.Ordinal));
+        Assert.Contains("<svg class=\"graph tree\"", fa.Html, StringComparison.Ordinal);
+        Assert.Contains("نمودار درخت", fa.Main, StringComparison.Ordinal);
     }
 }
