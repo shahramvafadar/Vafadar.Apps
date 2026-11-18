@@ -235,3 +235,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Photographs can be put into albums: a name and a note for photographs of one's own. An album shows nothing to
   anybody by itself – each photograph is seen by the people chosen for it – and stands on the page of its
   owner for who may see something in it. Photographs can be gone through by the year they were taken.
+- Who shows a photograph to everybody ticks that the people in the picture agree; without that it is not shown
+  to everybody.
+- For whoever runs the site: `reports forget <folder>` deletes reports of visitors that were looked at more
+  than 90 days ago; `--kept-days` names another number.
