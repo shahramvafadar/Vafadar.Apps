@@ -1,5 +1,14 @@
 # 01 – Assessment and decision log
 
+## D-1239 - Refresh the Plans banner after Android settings
+
+[Native regression evidence](quality/plans-notification-settings-return-d1239.md)
+covers the Turn on route from a denied plan reminder through Android settings.
+The permission action waits for the original Android activity to resume and
+queries the new system status before publishing to the current view. The
+reminder plan remains unchanged.
+
+
 ## D-970 - Actual pending-read OS notification order
 
 [OS input evidence](quality/original-pending-os-notification-order.md) adds two genuine

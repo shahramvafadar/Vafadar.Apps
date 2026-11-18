@@ -54,34 +54,28 @@ internal static class PermissionPrompts
     public static async Task<bool> EnableNotificationsAsync(ReminderService reminders, Translator translator)
     {
         var watch = Stopwatch.StartNew();
-        if (await reminders.EnsurePermissionAsync())
-        {
-            reminders.RefreshSoon();
-            return true;
-        }
-
-        if (reminders.Scheduler.IsSupported && watch.Elapsed < AnsweredWithoutDialog && Shell.Current is { } shell
+        var enabled = await reminders.EnsurePermissionAsync();
+        if (!enabled && reminders.Scheduler.IsSupported && watch.Elapsed < AnsweredWithoutDialog && Shell.Current is { } shell
             && await shell.DisplayAlertAsync(translator["Notify_OffTitle"], translator["Notify_OffText"], translator["Common_OpenSettings"], translator["Common_Cancel"]))
         {
-            OpenNotificationSettings();
-        }
-
-        return false;
-    }
-
-    /// <summary>Opens the notification settings of the app (Android 8 and later), otherwise the app's settings page.</summary>
-    public static void OpenNotificationSettings()
-    {
 #if ANDROID
-        if (OperatingSystem.IsAndroidVersionAtLeast(26) && Platform.CurrentActivity is { } activity)
-        {
-            var intent = new Android.Content.Intent(Android.Provider.Settings.ActionAppNotificationSettings);
-            intent.PutExtra(Android.Provider.Settings.ExtraAppPackage, activity.PackageName);
-            activity.StartActivity(intent);
-            return;
-        }
+            if (Platform.CurrentActivity is MainActivity activity)
+            {
+                enabled = await activity.OpenNotificationSettingsAsync() && await reminders.Scheduler.AreEnabledAsync();
+            }
+            else
 #endif
-        AppInfo.Current.ShowSettingsUI();
+            {
+                AppInfo.Current.ShowSettingsUI();
+            }
+        }
+
+        if (enabled)
+        {
+            reminders.RefreshSoon();
+        }
+
+        return enabled;
     }
 
     /// <summary>

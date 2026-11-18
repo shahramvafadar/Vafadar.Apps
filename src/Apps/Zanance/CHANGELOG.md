@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-1239: after allowing notifications in Android settings, Plans immediately hides the warning and keeps the saved reminder.
+
 - D-970: qualified original warm notification destination order with two real Android content taps while the first validated read waits; product behavior and managed-test count stay unchanged.
 
 - D-969: keep returned analysis outcomes coherent and frame-owned; retain known original results after missing, foreign or regressed private follow-up while permitting valid pending advancement.

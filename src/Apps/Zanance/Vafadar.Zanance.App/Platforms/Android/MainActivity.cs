@@ -17,6 +17,7 @@ public class MainActivity : MauiAppCompatActivity
 {
     private int _configurationDensityDpi;
     private float _configurationFontScale;
+    private TaskCompletionSource<bool>? _notificationSettingsReturn;
 
     // Start protected before the first frame, then apply the saved foreground choice (D-63).
     protected override void OnCreate(Bundle? savedInstanceState)
@@ -60,6 +61,40 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnResume();
         Security.ScreenProtection.SetBackground(false);
+        _notificationSettingsReturn?.TrySetResult(true);
+    }
+
+    /// <summary>Opens this app's Android settings and waits for the same activity to resume.</summary>
+    internal async Task<bool> OpenNotificationSettingsAsync()
+    {
+        if (_notificationSettingsReturn is not null)
+        {
+            return false;
+        }
+
+        var returned = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        _notificationSettingsReturn = returned;
+        try
+        {
+            if (OperatingSystem.IsAndroidVersionAtLeast(26))
+            {
+                using var intent = new Intent(Android.Provider.Settings.ActionAppNotificationSettings);
+                intent.PutExtra(Android.Provider.Settings.ExtraAppPackage, PackageName);
+                StartActivity(intent);
+            }
+            else
+            {
+                AppInfo.Current.ShowSettingsUI();
+            }
+
+            // Settings does not supply a permission result. Resume lets the caller query
+            // the current permission after the user has returned to this original activity.
+            return await returned.Task;
+        }
+        finally
+        {
+            _notificationSettingsReturn = null;
+        }
     }
 
     /// <inheritdoc />
@@ -85,7 +120,12 @@ public class MainActivity : MauiAppCompatActivity
 
     /// <inheritdoc />
     protected override void OnDestroy()
-    { CameraCapture.OnDestroyed(this); Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this); base.OnDestroy(); }
+    {
+        _notificationSettingsReturn?.TrySetResult(false);
+        CameraCapture.OnDestroyed(this);
+        Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this);
+        base.OnDestroy();
+    }
 
     protected override void OnNewIntent(Intent? intent)
     {
