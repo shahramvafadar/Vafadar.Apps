@@ -128,8 +128,8 @@ public sealed class SeveralCollectionsTests(TwoCollectionsSite site) : IClassFix
         Assert.Contains("A club of the tests", page.Main, StringComparison.Ordinal);
         Assert.True(page.Html.IndexOf($"href=\"{Story}\"", StringComparison.Ordinal) < page.Html.IndexOf($"href=\"{Club}\"", StringComparison.Ordinal));
 
-        // A search looks through one collection: the start page of a site with several has none.
-        Assert.DoesNotContain("role=\"search\"", page.Html, StringComparison.Ordinal);
+        // With several collections the search of the start page looks through all of them.
+        Assert.Contains("<form class=\"search\" method=\"get\" action=\"search\"", page.Html, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -267,5 +267,74 @@ public sealed class SameWorldTests(TwoCollectionsSite site) : IClassFixture<TwoC
         // Read on in the other telling, and it opens there too – by its own cookie.
         await visitor.ReadTo(4, collection: Retold);
         Assert.Equal(HttpStatusCode.OK, (await visitor.Get($"/en/{Retold}/entity/{later}")).Status);
+    }
+}
+
+/// <summary>
+/// The search of a site with several collections (step 14.10): a name is looked for in all of them, each in
+/// what the visitor has read of it.
+/// </summary>
+public sealed class SiteSearchTests(TwoCollectionsSite site, DemoSite one) : IClassFixture<TwoCollectionsSite>, IClassFixture<DemoSite>
+{
+    private const string Story = "story-rostam-sohrab";
+
+    [Theory]
+    [InlineData("en", "A name, in everything that is here to read")]
+    [InlineData("fa", "یک نام، در هر آنچه این‌جا برای خواندن هست")]
+    public async Task A_name_is_found_in_every_collection_under_its_collection(string language, string label)
+    {
+        var page = await site.Visitor().Get($"/{language}/search?q=club");
+        var hero = await site.Visitor().Get($"/{language}/search?q=rostam");
+
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Contains(label, page.Main, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{TwoCollectionsSite.Club}/entity/{TwoCollectionsSite.Club}\"", page.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"id=\"found-{Story}\"", page.Html, StringComparison.Ordinal);
+
+        // The hero is told of in two collections of the site: he is found in both, each under its name.
+        Assert.Contains($"href=\"{Story}/entity/character-rostam\"", hero.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{TwoCollectionsSite.Retold}/entity/character-rostam\"", hero.Html, StringComparison.Ordinal);
+        Assert.Contains("content=\"noindex, follow\"", hero.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task What_a_visitor_has_not_read_in_a_collection_is_not_found_there()
+    {
+        var visitor = site.Visitor();
+        var later = site.Catalogue.Entities.First(entity => entity.Level.CompareTo(Core.ReadingLevel.Opening) > 0);
+        var name = later.Label.Resolve("en").Value;
+        var before = await visitor.Get($"/en/search?q={Uri.EscapeDataString(name)}");
+
+        Assert.DoesNotContain($"/entity/{later.Id}\"", before.Html, StringComparison.Ordinal);
+
+        // Read on in one telling: the name is found there, and still not in the other.
+        await visitor.ReadTo(4);
+        var after = await visitor.Get($"/en/search?q={Uri.EscapeDataString(name)}");
+        Assert.Contains($"href=\"{Story}/entity/{later.Id}\"", after.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"href=\"{TwoCollectionsSite.Retold}/entity/{later.Id}\"", after.Html, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("?q=", "A name, in everything")]
+    [InlineData("", "A name, in everything")]
+    [InlineData("?q=zzzzzz", "Nothing")]
+    [InlineData("?q=%3Cscript%3E", "Nothing")]
+    public async Task Nothing_typed_and_nothing_found_say_so(string query, string said)
+    {
+        var page = await site.Visitor().Get($"/en/search{query}");
+
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Contains(said, page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("<script", page.Own, StringComparison.Ordinal);
+        Assert.DoesNotContain("class=\"cards\"", page.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_site_with_one_collection_keeps_the_search_of_that_collection_on_its_start_page()
+    {
+        var page = await one.Visitor().Get("/en/");
+
+        Assert.Contains($"action=\"{Story}/search\"", page.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("action=\"search\"", page.Html, StringComparison.Ordinal);
     }
 }

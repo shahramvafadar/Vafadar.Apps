@@ -92,15 +92,17 @@ The site showed one collection: the file `Dastan:Sample` names. It now shows eve
   beginning – its own search, and its own files under `/media/<collection>/…`. The forms that carry the name
   of a collection (the reading position, a report) are answered for that collection.
 * **The start page** lists the collections a visitor may see, each with what it is about as far as this
-  visitor has read it. With one collection it is as it was, with its search; with several it has no search,
-  because a search looks through one collection.
+  visitor has read it. With one collection it is as it was, with the search of that collection; with several
+  its search looks for a name in all of them (`<language>/search`): every collection is asked through its own
+  projection at the visitor's reading position for it, and the hits stand under their collection. The choices
+  of kind, place and year stay with the search of one collection – they are choices among its records.
 * **The list for search engines** (`sitemap.xml`) names the pages of every collection.
 * The comparisons belong to the site, not to a collection, as before.
 
 For whoever runs the site nothing changes with one collection. To offer another, its file – and its
 translations and files – is put into the content folder beside the first and the site is started again.
 
-Not done: a search across collections; the same entity in two collections shown as one (each collection has
+Not done: the same entity in two collections shown as one (each collection has
 its own records; the identifiers in other catalogues of step 12.3 are what could connect them); a start page
 the editors arrange.
 

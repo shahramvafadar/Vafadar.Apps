@@ -147,7 +147,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A collection names the other collections of the site that tell of the same world – another edition, another
   telling – and says that each keeps its own reading position.
 - One site can offer several collections: each has its own address, reading position and search, and the
-  start page lists them.
+  start page lists them and looks for a name in all of them.
 - Editors can lay threads through a collection: a few stops in an order, each with the reason it follows.
   A collection lists its threads, a thread is shown as far as a visitor has read, and the page of a name says
   where a thread leads on from it and why.
