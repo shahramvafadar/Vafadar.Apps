@@ -2069,6 +2069,26 @@ main:has(> .stage) > :not(.stage) {
 
 /* Photographs of visitors (step 16.5): a grid of pictures, each with what is written about it and, for its
    owner, what can be done with it. */
+/* The legal pages at the foot of every page, and the text of one (step 18.3.4). */
+.legal-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legal-links a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.legal {
+  max-inline-size: 42rem;
+}
+
 /* The years of a gallery by time, and an album: a name above its photographs (step 16.10). */
 .years ul {
   display: flex;

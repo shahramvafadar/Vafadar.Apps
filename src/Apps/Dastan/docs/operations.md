@@ -39,6 +39,7 @@ Settings are environment variables (two underscores for a level).
 | `Dastan__Reports` | A folder for the reports of visitors, on a volume the user of the container may write to (step 14.8, [ADR 0012](adr/0012-visitor-reports.md)). The editors read it with their tool (`Studio__Reports`): on one machine the same folder, else it is carried over. Each report is a small file with the statement, the words and the day – nothing about the visitor | not set: the site offers no form for reports and takes none |
 | `Dastan__People` | The file of the store of the visitors (step 16.1, [ADR 0014](adr/0014-visitor-accounts.md)): a SQLite database with their accounts, on a volume that outlives the container and that the user of the container may write to. The site makes the file and brings it to the form it knows when it starts. One container at a time may use it. It holds names and values derived from passwords: it is backed up and protected like a database, and never lies in a folder a web server shows. Set it together with `Dastan__Keys`, or everybody signs in again after each start | not set: the site has no accounts, no page for one, and keeps nothing |
 | `Dastan__Photos` | A folder for the photographs of the visitors (step 16.5), on a volume that outlives the container, that the user of the container may write to and that **no web server shows**: a photograph is given only through the site, which asks who may see it. Needs `Dastan__People`. It is backed up together with the store of the visitors – one without the other is of no use | not set: the site has no photographs |
+| `Dastan__Legal` | A folder with the legal texts of the site (step 18.3.4), read-only: a plain text file for each page and language – `terms.en.txt`, `terms.fa.txt`, `privacy.en.txt`, `imprint.en.txt`, … A line that begins with `#` is a heading, lines that follow each other are one paragraph, an empty line ends it; nothing in a file is taken as markup. A file that is missing or empty shows "this text is not written yet" on its page | not set: the site has no legal pages and names none |
 | `Dastan__InvitationOnly` | `true`: a new account needs an invitation of somebody who has an account (D-068) – the site of a closed trial. Make the first account before setting it | not set: anybody may make an account |
 | `Dastan__SignIn__Google__ClientId`, `Dastan__SignIn__Google__ClientSecret` | The client of the site at Google (step 16.8), for signing in through Google. The owner registers the site there with the address `https://<the site>/signin-google` to come back to, and enters both values into the environment of the container – the secret never into a file of the repository, a command line or a ticket. Needs `Dastan__People`. **Not tried against Google yet** | not set: no sign-in through Google is offered |
 | `Dastan__SignIn__Microsoft__ClientId`, `Dastan__SignIn__Microsoft__ClientSecret` | The same for Microsoft; the address to come back to is `https://<the site>/signin-microsoft`. **Not tried against Microsoft yet** | not set: no sign-in through Microsoft is offered |
@@ -125,6 +126,58 @@ published as revision *n + 1*, which says in its history what it changed against
 again.
 
 Taking the program back is the same with the image: the tag of the commit before.
+
+## A closed trial in a container
+
+`compose.trial.yaml` runs the site with accounts as the image of the Dockerfile: the content mounted
+read-only, and **one volume at `/data`** for everything the site keeps – the store of the visitors
+(`/data/people.db`), their photographs (`/data/photos`) and the keys of the forms (`/data/keys`). The folder
+`/data` of the image belongs to the user of the container, so a new volume does too.
+
+1. `$env:DASTAN_CONTENT = "<the content folder>"`, then
+   `docker compose -f src/Apps/Dastan/compose.trial.yaml up -d --build`. The site answers at
+   `http://127.0.0.1:53382` – for this machine only.
+2. **The site takes a password over https only.** A container sees this machine as another one, so the forms
+   of an account are refused over plain http; the page of the account says so. A proxy or a tunnel in front
+   of the site holds the certificate and says how the visitor came (`X-Forwarded-Proto: https`), and the
+   site believes it when it is among `Dastan__TrustedProxies__…`.
+3. Make the first account. Then start again with `$env:DASTAN_INVITATION_ONLY = "true"`: a new account
+   needs an invitation of somebody who has one (D-068).
+4. From outside (D-067): `--profile tunnel` starts a tunnel of Cloudflare beside the site. The owner makes
+   the tunnel in their own account, points it at `http://trial:8080` and enters its token into
+   `CLOUDFLARE_TUNNEL_TOKEN` of the environment – into no file. **Not tried**: it needs that account.
+5. Content that is not a published revision is shown only with `$env:DASTAN_AUDIENCE = "LocalDemonstration"`
+   – for a trial among invited people, never on a site everybody can reach.
+
+Tried on 2026-11-18 on the development machine, asked from outside as a proxy would: an account made, a
+picture of 1200 by 630 pixels brought in and its smaller size made (800 by 420 – the library for images runs
+in the image), `/preview.png` drawn, a stranger given nothing of the photograph; then with invitations only:
+no form and no account without an invitation, an account with one, the invitation used up by it.
+
+## Backing up what the site keeps, and bringing it back
+
+Everything is on the one volume, and it is backed up as one – the photographs without the store are of no
+use, and without the keys every form that was open is refused once. **Stop the site first**: the store is a
+database file that is copied whole.
+
+```
+docker compose -f src/Apps/Dastan/compose.trial.yaml stop trial
+docker compose -f src/Apps/Dastan/compose.trial.yaml run --rm --no-deps -v "<a folder for backups>:/backup" --entrypoint tar trial czf /backup/dastan-data.tgz -C /data .
+docker compose -f src/Apps/Dastan/compose.trial.yaml start trial
+```
+
+Bringing it back, into a volume that is new (`docker volume rm test_dastan-trial-data` removes the old one –
+only when the backup is known to be good):
+
+```
+docker compose -f src/Apps/Dastan/compose.trial.yaml down
+docker compose -f src/Apps/Dastan/compose.trial.yaml run --rm --no-deps -v "<the folder of backups>:/backup" --entrypoint tar trial xzf /backup/dastan-data.tgz -C /data
+docker compose -f src/Apps/Dastan/compose.trial.yaml up -d
+```
+
+Tried on 2026-11-18: backed up, the volume removed, brought back – both accounts signed in again, and the
+photograph and its smaller size were given as before. The backup holds what the visitors entrusted to the
+site: it is kept where the volume would be kept, and not in a folder anybody else reads.
 
 ## Smaller sizes of photographs that are there already
 

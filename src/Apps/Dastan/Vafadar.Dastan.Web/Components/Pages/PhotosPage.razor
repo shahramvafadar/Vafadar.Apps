@@ -255,6 +255,18 @@
                         {
                             <li>
                                 @Picture(photo, owner: false)
+                                @if (album.Photos.Length > 1)
+                                {
+                                    @* The order of an album is its owner's: a photograph changes places with its neighbour. *@
+                                    <form method="post" action="@($"{PhotoEndpoints.Root}/album-move")" class="save">
+                                        <AntiforgeryToken />
+                                        <input type="hidden" name="returnUrl" value="@_here" />
+                                        <input type="hidden" name="album" value="@album.Number" />
+                                        <input type="hidden" name="photo" value="@photo.Id" />
+                                        <button type="submit" name="answer" value="earlier" disabled="@(photo.Id == album.Photos[0].Id)">@T["Albums_Earlier"]</button>
+                                        <button type="submit" name="answer" value="later" disabled="@(photo.Id == album.Photos[^1].Id)">@T["Albums_Later"]</button>
+                                    </form>
+                                }
                                 <form method="post" action="@($"{PhotoEndpoints.Root}/album-take")" class="save">
                                     <AntiforgeryToken />
                                     <input type="hidden" name="returnUrl" value="@_here" />
@@ -327,7 +339,7 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed", "agreed", "agreement-back", "album-added", "album-changed", "album-removed", "placed", "taken-out", "objected", "objection-back"];
+    private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed", "agreed", "agreement-back", "album-added", "album-changed", "album-removed", "placed", "taken-out", "moved", "objected", "objection-back"];
     private static readonly string[] Known = ["photo-form", "photo-large", "photo-many", "photo-file", "album-name", "photo-agreement"];
 
     private VisitorSession? _me;

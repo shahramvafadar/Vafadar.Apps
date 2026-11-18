@@ -202,6 +202,14 @@ public static class PhotoEndpoints
             return album is not null && store.PlaceInAlbum(Me(context), album.Value, photo ?? string.Empty) ? Said(returnUrl, "placed", "albums") : Results.BadRequest();
         });
 
+        forms.MapPost("/album-move", (HttpContext context, AccountDesk desk, [FromForm] long? album, [FromForm] string? photo, [FromForm] string? answer, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return album is not null && answer is "earlier" or "later" && store.MoveInAlbum(Me(context), album!.Value, photo ?? string.Empty, answer == "earlier")
+                ? Said(returnUrl, "moved", "albums")
+                : Results.BadRequest();
+        });
+
         forms.MapPost("/album-take", (HttpContext context, AccountDesk desk, [FromForm] long? album, [FromForm] string? photo, [FromForm] string? returnUrl) =>
         {
             using var store = desk.Open();

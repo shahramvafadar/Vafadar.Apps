@@ -1,0 +1,63 @@
+# The Dastan website with accounts, as it runs for a closed trial (docs/operations.md, D-067, D-068): the image of
+# the Dockerfile, a folder of content mounted read-only, and one volume for everything the site keeps – the store
+# of the visitors, their photographs, the keys of the forms. It belongs to the Compose project "test" like the
+# other services of Dastan (decision D-034).
+#
+#   $env:DASTAN_CONTENT = "<the content folder to show>"
+#   docker compose -f src/Apps/Dastan/compose.trial.yaml up -d --build     build and start: http://127.0.0.1:53382
+#   docker compose -f src/Apps/Dastan/compose.trial.yaml down              stop and remove; the volume stays
+#
+# Make the first account, then start again with $env:DASTAN_INVITATION_ONLY = "true": from then on a new account
+# needs an invitation of somebody who has one.
+name: test
+
+services:
+  trial:
+    build:
+      context: ../../..
+      dockerfile: src/Apps/Dastan/Dockerfile
+    image: dastan-site:local
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 768m
+    environment:
+      Dastan__Sample: ${DASTAN_SAMPLE:-shahnameh-pilot.json}
+      # Public (the default) shows a published revision. A trial with content that is not published yet names
+      # LocalDemonstration – never on a site everybody can reach.
+      Dastan__Audience: ${DASTAN_AUDIENCE:-Public}
+      Dastan__People: /data/people.db
+      Dastan__Photos: /data/photos
+      Dastan__Keys: /data/keys
+      Dastan__InvitationOnly: ${DASTAN_INVITATION_ONLY:-false}
+      # Who the site believes about how a visitor came: the networks Docker gives its containers. A tunnel or a
+      # proxy in front of the site is named here by whoever sets it up.
+      Dastan__TrustedProxies__0: 172.16.0.0/12
+      Dastan__TrustedProxies__1: 192.168.0.0/16
+    volumes:
+      - ${DASTAN_CONTENT:?name the folder of content in DASTAN_CONTENT}:/app/content:ro
+      - dastan-trial-data:/data
+    ports:
+      # Reachable from this machine only; a tunnel reaches it from here.
+      - "127.0.0.1:53382:8080"
+
+  # The way from outside to the trial (D-067): a tunnel of Cloudflare, started only when it is asked for –
+  #
+  #   docker compose -f src/Apps/Dastan/compose.trial.yaml --profile tunnel up -d
+  #
+  # The owner makes the tunnel in their own Cloudflare account, points it at http://trial:8080, and enters its
+  # token into the environment of this machine (CLOUDFLARE_TUNNEL_TOKEN) – never into a file of the repository.
+  # Not tried: it needs that account.
+  tunnel:
+    profiles: ["tunnel"]
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:?enter the token of the tunnel into CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - trial
+    mem_limit: 256m
+
+volumes:
+  # Everything the site keeps. Back it up as one: the photographs without the store are of no use.
+  dastan-trial-data:

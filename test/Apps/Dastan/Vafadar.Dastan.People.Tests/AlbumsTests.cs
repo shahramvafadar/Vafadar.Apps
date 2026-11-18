@@ -61,6 +61,34 @@ public sealed class AlbumsTests : IDisposable
         Assert.Equal([third, first, second], In(kept));
     }
 
+    [Fact]
+    public void The_owner_of_an_album_changes_its_order_one_place_at_a_time()
+    {
+        var (first, second, third) = (Photo(_mina), Photo(_mina), Photo(_mina));
+        var album = _store.AddAlbum(_mina, "Summer 1998")!.Value;
+        foreach (var photo in new[] { first, second, third })
+        {
+            _store.PlaceInAlbum(_mina, album, photo);
+        }
+
+        Assert.True(_store.MoveInAlbum(_mina, album, third, earlier: true));
+        Assert.Equal([first, third, second], In(_store.Albums(_mina)[0]));
+        Assert.True(_store.MoveInAlbum(_mina, album, first, earlier: false));
+        Assert.Equal([third, first, second], In(_store.Albums(_mina)[0]));
+
+        // At an end there is nowhere further; nobody else moves anything, and nothing that is not in the album.
+        Assert.False(_store.MoveInAlbum(_mina, album, third, earlier: true));
+        Assert.False(_store.MoveInAlbum(_mina, album, second, earlier: false));
+        Assert.False(_store.MoveInAlbum(_sara, album, first, earlier: true));
+        Assert.False(_store.MoveInAlbum(_mina, album, Photo(_mina), earlier: true));
+        Assert.Equal([third, first, second], In(_store.Albums(_mina)[0]));
+
+        // A photograph that is put in afterwards comes last, also after the order was changed.
+        var fourth = Photo(_mina);
+        _store.PlaceInAlbum(_mina, album, fourth);
+        Assert.Equal(fourth, In(_store.Albums(_mina)[0])[^1]);
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData("   ")]

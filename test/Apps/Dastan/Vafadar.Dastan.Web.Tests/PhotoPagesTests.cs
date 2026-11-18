@@ -484,6 +484,16 @@ public sealed class PhotoPagesTests : IDisposable
         await Send(mina, "album-change", ("album", number), ("name", "The summer of 1998"), ("note", string.Empty));
         Assert.Contains("The summer of 1998", (await sara.Get(minas)).Main, StringComparison.Ordinal);
 
+        // She changes the order of the album: the second photograph comes first, and a stranger sees it so.
+        await Send(mina, "album-place", ("album", number), ("photo", own));
+        var moved = await Send(mina, "album-move", ("album", number), ("photo", open), ("answer", "earlier"));
+        Assert.Equal($"{Photos}?said=moved#albums", moved.Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(mina, "album-move", ("album", number), ("photo", open), ("answer", "earlier"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, "album-move", ("album", number), ("photo", open), ("answer", "later"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(mina, "album-move", ("album", number), ("photo", open), ("answer", "sideways"))).Response.Headers.Location?.OriginalString);
+        Assert.Contains("Earlier in the album", (await mina.Get(Photos)).Main, StringComparison.Ordinal);
+        await Send(mina, "album-take", ("album", number), ("photo", own));
+
         // Out of the album the photograph is still hers and still seen; without the album too.
         Assert.Equal($"{Photos}?said=taken-out#albums", (await Send(mina, "album-take", ("album", number), ("photo", open))).Response.Headers.Location?.OriginalString);
         Assert.DoesNotContain("The summer of 1998", (await sara.Get(minas)).Main, StringComparison.Ordinal);
@@ -534,6 +544,7 @@ public sealed class PhotoPagesTests : IDisposable
     [InlineData("album-remove")]
     [InlineData("album-place")]
     [InlineData("album-take")]
+    [InlineData("album-move")]
     [InlineData("object")]
     [InlineData("share")]
     [InlineData("remove")]
