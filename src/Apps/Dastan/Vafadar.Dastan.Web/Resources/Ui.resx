@@ -2115,4 +2115,67 @@
   <data name="Tree_Remove_Send" xml:space="preserve">
     <value>Remove the tree for good</value>
   </data>
+  <data name="Tree_Claims_Title" xml:space="preserve">
+    <value>Waiting for your answer</value>
+  </data>
+  <data name="Tree_Claims_Note" xml:space="preserve">
+    <value>Somebody says that a record you made is them. Confirm it only if you know it is so – the same name is not proof. Confirming names the account on the record and changes nothing else: nobody sees more than before.</value>
+  </data>
+  <data name="Tree_Claim_Says" xml:space="preserve">
+    <value>says they are</value>
+  </data>
+  <data name="Tree_Claim_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Tree_Claim_Refuse" xml:space="preserve">
+    <value>Refuse</value>
+  </data>
+  <data name="Tree_Claim_Is" xml:space="preserve">
+    <value>This is the account</value>
+  </data>
+  <data name="Tree_Claim_Waits" xml:space="preserve">
+    <value>You said this is you. It waits for the answer of who made the record.</value>
+  </data>
+  <data name="Tree_Claim_Me" xml:space="preserve">
+    <value>This is me</value>
+  </data>
+  <data name="Tree_Claim_NotMe" xml:space="preserve">
+    <value>This is not me after all</value>
+  </data>
+  <data name="Tree_Claim_Withdraw" xml:space="preserve">
+    <value>Take it back</value>
+  </data>
+  <data name="Trees_Said_claimed" xml:space="preserve">
+    <value>You said that this record is you. Who made the record will answer.</value>
+  </data>
+  <data name="Trees_Said_claim-confirmed" xml:space="preserve">
+    <value>Confirmed. The record names the account now.</value>
+  </data>
+  <data name="Trees_Said_claim-refused" xml:space="preserve">
+    <value>Refused. The record names nobody.</value>
+  </data>
+  <data name="Trees_Said_unclaimed" xml:space="preserve">
+    <value>Taken back. The record names nobody.</value>
+  </data>
+  <data name="Trees_Problem_claim-taken" xml:space="preserve">
+    <value>This record is another account already.</value>
+  </data>
+  <data name="Trees_Problem_claim-own" xml:space="preserve">
+    <value>You are a record of this tree already, or have said so and wait for the answer.</value>
+  </data>
+  <data name="Trees_Problem_claim-nobody" xml:space="preserve">
+    <value>Somebody other than you has to confirm that a record is you, and for this record there is nobody: you made it yourself.</value>
+  </data>
+  <data name="Tree_Change_claim-made" xml:space="preserve">
+    <value>Said "this is me"</value>
+  </data>
+  <data name="Tree_Change_claim-confirmed" xml:space="preserve">
+    <value>Confirmed "this is me"</value>
+  </data>
+  <data name="Tree_Change_claim-refused" xml:space="preserve">
+    <value>Refused "this is me"</value>
+  </data>
+  <data name="Tree_Change_claim-withdrawn" xml:space="preserve">
+    <value>Took back "this is me"</value>
+  </data>
 </root>

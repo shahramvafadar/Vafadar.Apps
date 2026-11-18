@@ -2115,4 +2115,67 @@
   <data name="Tree_Remove_Send" xml:space="preserve">
     <value>برداشتن همیشگی شجره‌نامه</value>
   </data>
+  <data name="Tree_Claims_Title" xml:space="preserve">
+    <value>در انتظار پاسخ شما</value>
+  </data>
+  <data name="Tree_Claims_Note" xml:space="preserve">
+    <value>کسی می‌گوید رکوردی که شما ساخته‌اید خودِ اوست. فقط اگر می‌دانید چنین است تأیید کنید؛ هم‌نامی دلیل نیست. با تأیید، نام حساب روی رکورد می‌آید و چیز دیگری تغییر نمی‌کند: هیچ‌کس بیش از پیش نمی‌بیند.</value>
+  </data>
+  <data name="Tree_Claim_Says" xml:space="preserve">
+    <value>می‌گوید این فرد است:</value>
+  </data>
+  <data name="Tree_Claim_Confirm" xml:space="preserve">
+    <value>تأیید</value>
+  </data>
+  <data name="Tree_Claim_Refuse" xml:space="preserve">
+    <value>رد</value>
+  </data>
+  <data name="Tree_Claim_Is" xml:space="preserve">
+    <value>این فرد همان حساب است:</value>
+  </data>
+  <data name="Tree_Claim_Waits" xml:space="preserve">
+    <value>گفته‌اید این شمایید. در انتظار پاسخ کسی است که رکورد را ساخته.</value>
+  </data>
+  <data name="Tree_Claim_Me" xml:space="preserve">
+    <value>این منم</value>
+  </data>
+  <data name="Tree_Claim_NotMe" xml:space="preserve">
+    <value>این من نیستم</value>
+  </data>
+  <data name="Tree_Claim_Withdraw" xml:space="preserve">
+    <value>پس گرفتن</value>
+  </data>
+  <data name="Trees_Said_claimed" xml:space="preserve">
+    <value>گفتید این رکورد شمایید. کسی که رکورد را ساخته پاسخ می‌دهد.</value>
+  </data>
+  <data name="Trees_Said_claim-confirmed" xml:space="preserve">
+    <value>تأیید شد. اکنون نام حساب روی رکورد است.</value>
+  </data>
+  <data name="Trees_Said_claim-refused" xml:space="preserve">
+    <value>رد شد. رکورد نام کسی را ندارد.</value>
+  </data>
+  <data name="Trees_Said_unclaimed" xml:space="preserve">
+    <value>پس گرفته شد. رکورد نام کسی را ندارد.</value>
+  </data>
+  <data name="Trees_Problem_claim-taken" xml:space="preserve">
+    <value>این رکورد از پیش به حساب دیگری پیوسته است.</value>
+  </data>
+  <data name="Trees_Problem_claim-own" xml:space="preserve">
+    <value>شما از پیش رکوردی در این شجره‌نامه دارید، یا چنین گفته‌اید و منتظر پاسخید.</value>
+  </data>
+  <data name="Trees_Problem_claim-nobody" xml:space="preserve">
+    <value>کسی جز خودتان باید تأیید کند که رکوردی شمایید، و برای این رکورد چنین کسی نیست: آن را خودتان ساخته‌اید.</value>
+  </data>
+  <data name="Tree_Change_claim-made" xml:space="preserve">
+    <value>گفتن «این منم»</value>
+  </data>
+  <data name="Tree_Change_claim-confirmed" xml:space="preserve">
+    <value>تأیید «این منم»</value>
+  </data>
+  <data name="Tree_Change_claim-refused" xml:space="preserve">
+    <value>رد «این منم»</value>
+  </data>
+  <data name="Tree_Change_claim-withdrawn" xml:space="preserve">
+    <value>پس گرفتن «این منم»</value>
+  </data>
 </root>

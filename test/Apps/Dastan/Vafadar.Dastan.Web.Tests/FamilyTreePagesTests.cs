@@ -225,7 +225,11 @@ public sealed class FamilyTreePagesTests : IDisposable
         Assert.Contains("Mina lets you see this tree.", seen.Main, StringComparison.Ordinal);
         Assert.Contains("Rostam", seen.Main, StringComparison.Ordinal);
         Assert.Contains("Every change", seen.Main, StringComparison.Ordinal);
-        Assert.DoesNotContain("<form method=\"post\" action=\"/preferences/trees", seen.Main, StringComparison.Ordinal);
+        // No form that changes the tree; what they may do is say that a record is them.
+        Assert.DoesNotContain($"action=\"{Forms}/person-", seen.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"action=\"{Forms}/link\"", seen.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"action=\"{Forms}/unlink\"", seen.Html, StringComparison.Ordinal);
+        Assert.Contains($"action=\"{Forms}/claim\"", seen.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("Who may see or change this tree", seen.Main, StringComparison.Ordinal);
         Assert.Contains("Mina lets you see this tree.", (await sara.Get(Trees)).Main, StringComparison.Ordinal);
         Assert.Equal("/refused", (await Send(sara, page, "person-remove", ("person", rostam))).Response.Headers.Location?.OriginalString);
@@ -309,5 +313,93 @@ public sealed class FamilyTreePagesTests : IDisposable
         Assert.DoesNotContain("hello", tree.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("nonsense", tree.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("role=\"alert\"", tree.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task Somebody_says_a_record_is_them_and_who_made_it_confirms()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var dara = await Signed("Dara");
+        var saraId = await Friends(mina, sara, "Sara");
+        var daraId = await Friends(mina, dara, "Dara");
+        var page = await Tree(mina);
+        var record = await Person(mina, page, "Sara Rad");
+        await Send(mina, page, "member", ("account", saraId), ("role", "viewer"));
+        await Send(mina, page, "member", ("account", daraId), ("role", "editor"));
+
+        var claimed = await Send(sara, page, "claim", ("person", record));
+
+        Assert.Equal($"{page}?said=claimed#people", claimed.Response.Headers.Location?.OriginalString);
+        var waiting = await sara.Get(page);
+        Assert.Contains("You said this is you.", waiting.Main, StringComparison.Ordinal);
+        Assert.Contains("Take it back", waiting.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("This is me", waiting.Main, StringComparison.Ordinal);
+
+        // Who made the record is asked; somebody else who may change the tree is not, and sees no claim.
+        var asked = await mina.Get(page);
+        Assert.Contains("Waiting for your answer", asked.Main, StringComparison.Ordinal);
+        Assert.Contains("the same name is not proof", asked.Main, StringComparison.Ordinal);
+        Assert.Matches("<bdi>Sara</bdi></a>\\s*<span class=\"meta\">– says they are <bdi>Sara Rad</bdi>", asked.Main);
+        Assert.DoesNotContain("Waiting for your answer", (await dara.Get(page)).Main, StringComparison.Ordinal);
+        var claim = Regex.Match(asked.Html, "name=\"claim\" value=\"(\\d+)\"").Groups[1].Value;
+        Assert.Equal("/refused", (await Send(dara, page, "claim-review", ("claim", claim), ("answer", "confirm"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, page, "claim-review", ("claim", claim), ("answer", "confirm"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(mina, page, "claim-review", ("claim", claim), ("answer", "perhaps"))).Response.Headers.Location?.OriginalString);
+
+        var confirmed = await Send(mina, page, "claim-review", ("claim", claim), ("answer", "confirm"));
+
+        Assert.Equal($"{page}?said=claim-confirmed#claims", confirmed.Response.Headers.Location?.OriginalString);
+        Assert.Matches($"This is the account <a href=\"people/{saraId}\"><bdi>Sara</bdi></a>", (await dara.Get(page)).Main);
+        Assert.Contains("Confirmed \"this is me\"", (await mina.Get(page)).Main, StringComparison.Ordinal);
+
+        // It names the account and widens nothing: Sara may still only see.
+        Assert.DoesNotContain($"action=\"{Forms}/person-add\"", (await sara.Get(page)).Html, StringComparison.Ordinal);
+
+        // Only she takes it back.
+        Assert.Equal("/refused", (await Send(mina, page, "unclaim", ("person", record))).Response.Headers.Location?.OriginalString);
+        Assert.Contains("This is not me after all", (await sara.Get(page)).Main, StringComparison.Ordinal);
+        Assert.Equal($"{page}?said=unclaimed#people", (await Send(sara, page, "unclaim", ("person", record))).Response.Headers.Location?.OriginalString);
+        Assert.DoesNotContain("This is the account", (await mina.Get(page)).Main, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_claim_that_is_refused_names_nobody_and_one_on_a_record_of_ones_own_has_nobody_to_confirm_it()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var saraId = await Friends(mina, sara, "Sara");
+        var page = await Tree(mina);
+        var record = await Person(mina, page, "Sara Rad");
+        await Send(mina, page, "member", ("account", saraId), ("role", "viewer"));
+        await Send(sara, page, "claim", ("person", record));
+        var claim = Regex.Match((await mina.Get(page)).Html, "name=\"claim\" value=\"(\\d+)\"").Groups[1].Value;
+
+        var refused = await Send(mina, page, "claim-review", ("claim", claim), ("answer", "refuse"));
+
+        Assert.Equal($"{page}?said=claim-refused#claims", refused.Response.Headers.Location?.OriginalString);
+        var after = await sara.Get(page);
+        Assert.DoesNotContain("This is the account", after.Main, StringComparison.Ordinal);
+        Assert.Contains("This is me", after.Main, StringComparison.Ordinal);
+
+        // In her own tree, on a record she made herself, nobody else could say that it is her.
+        var own = await Send(mina, page, "claim", ("person", record));
+        Assert.Equal($"{page}?form=people&problem=claim-nobody#people", own.Response.Headers.Location?.OriginalString);
+        Assert.Contains("Somebody other than you has to confirm", (await mina.Get($"{page}?form=people&problem=claim-nobody")).Main, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("claim")]
+    [InlineData("claim-review")]
+    [InlineData("unclaim")]
+    public async Task A_claim_is_refused_to_who_is_not_signed_in_and_to_who_may_not_see_the_tree(string form)
+    {
+        var mina = await Signed("Mina");
+        var zal = await Signed("Zal");
+        var page = await Tree(mina);
+        var record = await Person(mina, page, "Zal Rad");
+
+        Assert.Equal("/refused", (await _site.Visitor().Post($"{Forms}/{form}", Account, ("tree", Id(page)), ("person", record), ("claim", "1"), ("answer", "confirm"), ("returnUrl", page))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(zal, page, form, ("person", record), ("claim", "1"), ("answer", "confirm"))).Response.Headers.Location?.OriginalString);
     }
 }

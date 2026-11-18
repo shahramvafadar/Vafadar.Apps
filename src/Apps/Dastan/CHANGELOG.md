@@ -210,3 +210,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   and death; a person needs no account – and link parents and partners. The owner names who may see the tree
   and who may change it, and every change is listed with who made it. Nobody else sees a tree. It is shown as
   a list for now; the drawing follows.
+- In a family tree shared with them, somebody can say of a record "this is me". Who made the record confirms
+  or refuses – the same name is not proof. Confirmed, the record names the account and nothing else changes;
+  the account can take it back at any time.

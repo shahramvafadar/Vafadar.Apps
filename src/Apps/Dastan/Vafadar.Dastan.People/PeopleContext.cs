@@ -225,6 +225,31 @@ public sealed class StoredPerson
 
     /// <summary>Gets or sets when the record was made.</summary>
     public DateTime CreatedAt { get; set; }
+
+    /// <summary>
+    /// Gets or sets the account the record is, once that account claimed it and who made the record confirmed
+    /// the claim (D-052); nothing once that account is deleted.
+    /// </summary>
+    public string? Account { get; set; }
+}
+
+/// <summary>The claim of an account that a record is the same person, waiting to be confirmed or refused.</summary>
+public sealed class StoredClaim
+{
+    /// <summary>Gets or sets the number of the claim.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the tree.</summary>
+    public required string Tree { get; set; }
+
+    /// <summary>Gets or sets the record that is claimed.</summary>
+    public required string Person { get; set; }
+
+    /// <summary>Gets or sets the account that claims it.</summary>
+    public required string Account { get; set; }
+
+    /// <summary>Gets or sets when it was claimed.</summary>
+    public DateTime At { get; set; }
 }
 
 /// <summary>A link between two records of a tree: a parent and a child, or two partners.</summary>
@@ -303,6 +328,9 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
     /// <summary>Gets the records of people.</summary>
     public DbSet<StoredPerson> Persons => Set<StoredPerson>();
+
+    /// <summary>Gets the claims that wait.</summary>
+    public DbSet<StoredClaim> Claims => Set<StoredClaim>();
 
     /// <summary>Gets the links between records.</summary>
     public DbSet<StoredKinship> Kinships => Set<StoredKinship>();
@@ -419,6 +447,22 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
             // The record stays in the tree when who made it is gone.
             person.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.CreatedBy).OnDelete(DeleteBehavior.SetNull);
+
+            // And it names nobody when the account it was is gone.
+            person.Property(item => item.Account).HasMaxLength(40);
+            person.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        modelBuilder.Entity<StoredClaim>(claim =>
+        {
+            claim.HasKey(item => item.Number);
+            claim.Property(item => item.Tree).HasMaxLength(40);
+            claim.Property(item => item.Person).HasMaxLength(40);
+            claim.Property(item => item.Account).HasMaxLength(40);
+            claim.HasIndex(item => item.Tree);
+            claim.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);
+            claim.HasOne<StoredPerson>().WithMany().HasForeignKey(item => item.Person).OnDelete(DeleteBehavior.Cascade);
+            claim.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredKinship>(link =>

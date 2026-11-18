@@ -177,3 +177,8 @@ A tree is shown to its owner and the accounts the owner named, and to nobody els
 other than the visitor are personal data of third parties kept without their knowledge – kept minimal on
 purpose (PRIV-003); a rule for children and guardians is not decided, and a legal review is the owner's.
 A tree is deleted with its owner's account; the name of a deleted account leaves the history of other trees.
+
+Since the second part of step 16.4 a record of a family tree can name the account it is: only after that
+account said so itself and the account that made the record confirmed it. A waiting claim is kept with the
+tree, the record, the account and the time, and shown to the claimant and to who answers it only. The account
+takes the link back at any time; it is removed when the account may not see the tree any more or is deleted.

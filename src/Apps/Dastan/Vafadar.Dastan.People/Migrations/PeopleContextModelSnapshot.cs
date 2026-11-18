@@ -56,6 +56,41 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("CircleMembers");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredClaim", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Account")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Person")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Tree")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("Account");
+
+                    b.HasIndex("Person");
+
+                    b.HasIndex("Tree");
+
+                    b.ToTable("Claims");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
                 {
                     b.Property<string>("Id")
@@ -138,6 +173,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Account")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("Born")
                         .HasColumnType("INTEGER");
 
@@ -165,6 +204,8 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Account");
 
                     b.HasIndex("CreatedBy");
 
@@ -455,6 +496,27 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredClaim", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Account")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredPerson", null)
+                        .WithMany()
+                        .HasForeignKey("Person")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredTree", null)
+                        .WithMany()
+                        .HasForeignKey("Tree")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
                 {
                     b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
@@ -492,6 +554,11 @@ namespace Vafadar.Dastan.People.Migrations
 
             modelBuilder.Entity("Vafadar.Dastan.People.StoredPerson", b =>
                 {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Account")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
                         .WithMany()
                         .HasForeignKey("CreatedBy")
