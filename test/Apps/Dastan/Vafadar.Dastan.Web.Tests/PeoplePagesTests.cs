@@ -22,7 +22,7 @@ public sealed class PeoplePagesTests : IDisposable
     private async Task<Browser> Signed(string name)
     {
         var visitor = _site.Visitor();
-        var made = await visitor.Post("/preferences/account/register", Account, ("name", name), ("password", Password), ("again", Password), ("returnUrl", Account));
+        var made = await visitor.Post("/preferences/account/register", Account, ("name", name), ("age", "on"), ("password", Password), ("again", Password), ("returnUrl", Account));
         Assert.Contains("said=welcome", made.Response.Headers.Location?.OriginalString, StringComparison.Ordinal);
         return visitor;
     }

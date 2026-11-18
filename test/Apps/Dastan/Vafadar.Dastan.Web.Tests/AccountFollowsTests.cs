@@ -22,7 +22,7 @@ public sealed class AccountFollowsTests : IDisposable
     public void Dispose() => _site.Dispose();
 
     private static async Task<Page> Register(Browser visitor, string name = "Mina", string invitation = "") =>
-        await visitor.Post($"{Forms}/register", Account, ("name", name), ("password", Password), ("again", Password), ("invitation", invitation), ("returnUrl", Account));
+        await visitor.Post($"{Forms}/register", Account, ("name", name), ("age", "on"), ("password", Password), ("again", Password), ("invitation", invitation), ("returnUrl", Account));
 
     private static async Task<Page> SignIn(Browser visitor, string name = "Mina") =>
         await visitor.Post($"{Forms}/sign-in", Account, ("name", name), ("password", Password), ("returnUrl", Account));
@@ -242,7 +242,7 @@ public sealed class AccountFollowsTests : IDisposable
         var code = Assert.Single(await Invitations(mina));
         var sara = _site.Visitor();
 
-        var answer = await sara.Post($"{Forms}/register", $"/en/account?invitation={code}", ("name", "Mina"), ("password", Password), ("again", Password), ("invitation", code), ("returnUrl", Account));
+        var answer = await sara.Post($"{Forms}/register", $"/en/account?invitation={code}", ("name", "Mina"), ("age", "on"), ("password", Password), ("again", Password), ("invitation", code), ("returnUrl", Account));
 
         Assert.Equal($"/en/account?form=register&problem=taken&invitation={code}#register", answer.Response.Headers.Location?.OriginalString);
         var page = await sara.Get(answer.Response.Headers.Location!.OriginalString);

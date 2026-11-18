@@ -39,6 +39,13 @@ public sealed class DastanOptions
     public string? Photos { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether a new account needs an invitation (D-068): the site of a closed
+    /// trial. Who has an account invites others; nobody else makes one. The first account is made before this
+    /// is set.
+    /// </summary>
+    public bool InvitationOnly { get; set; }
+
+    /// <summary>
     /// Gets or sets a folder in which the keys that protect the forms of the site are kept, so that a form a
     /// visitor opened before the site was started again is still accepted afterwards. Without it the keys live as
     /// long as the process: enough for a development machine, not for a site that is updated while it is visited.

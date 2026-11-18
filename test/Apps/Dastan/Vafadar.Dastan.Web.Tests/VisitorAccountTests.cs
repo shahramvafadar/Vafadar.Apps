@@ -44,7 +44,7 @@ public sealed class VisitorAccountTests : IDisposable
     private static (string, string)[] Fields(params (string, string)[] fields) => [.. fields, ("returnUrl", Account)];
 
     private static async Task<Page> Register(Browser visitor, string name = "Mina", string password = Password, string? again = null, string website = "") =>
-        await visitor.Post($"{Forms}/register", Account, Fields(("name", name), ("password", password), ("again", again ?? password), ("website", website)));
+        await visitor.Post($"{Forms}/register", Account, Fields(("name", name), ("age", "on"), ("password", password), ("again", again ?? password), ("website", website)));
 
     private static async Task<Page> SignIn(Browser visitor, string name = "Mina", string password = Password) =>
         await visitor.Post($"{Forms}/sign-in", Account, Fields(("name", name), ("password", password)));
@@ -292,7 +292,7 @@ public sealed class VisitorAccountTests : IDisposable
         var visitor = _site.Visitor();
         await visitor.Get(Account);
 
-        var answer = await visitor.Post($"{Forms}/register", "/health", Fields(("name", "Mina"), ("password", Password), ("again", Password)));
+        var answer = await visitor.Post($"{Forms}/register", "/health", Fields(("name", "Mina"), ("age", "on"), ("password", Password), ("again", Password)));
 
         Assert.Equal("/refused", answer.Response.Headers.Location?.OriginalString);
         Assert.DoesNotContain(AccountDesk.SessionCookie, visitor.Cookies.Keys);

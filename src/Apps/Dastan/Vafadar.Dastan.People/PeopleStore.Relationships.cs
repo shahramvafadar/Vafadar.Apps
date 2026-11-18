@@ -43,7 +43,7 @@ public sealed record ProfileView(PersonRef Person, ImmutableArray<ShownRelations
 public sealed partial class PeopleStore
 {
     /// <summary>What a relationship can be called.</summary>
-    public static readonly ImmutableArray<string> RelationshipKinds = ["friend", "close-friend", "family", "partner", "colleague", "classmate"];
+    public static readonly ImmutableArray<string> RelationshipKinds = ["friend", "close-friend", "family", "partner", "colleague", "classmate", "other"];
 
     /// <summary>How many requests of an account can wait for an answer at the same time.</summary>
     public const int OpenRequests = 20;

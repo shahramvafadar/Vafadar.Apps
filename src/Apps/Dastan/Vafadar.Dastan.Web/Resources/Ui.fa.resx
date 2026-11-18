@@ -2571,4 +2571,19 @@
   <data name="Photos_Problem_photo-agreement" xml:space="preserve">
     <value>عکس فقط وقتی به همه نشان داده می‌شود که بگویید کسانی که در آن هستند موافق‌اند. آن را تیک بزنید یا بینندگان را انتخاب کنید. چیزی تغییر نکرد.</value>
   </data>
+  <data name="People_Kind_other" xml:space="preserve">
+    <value>گونه‌ای دیگر</value>
+  </data>
+  <data name="Account_Age" xml:space="preserve">
+    <value>۱۶ سال یا بیشتر دارم.</value>
+  </data>
+  <data name="Account_Problem_age" xml:space="preserve">
+    <value>حساب برای کسانی است که ۱۶ سال یا بیشتر دارند. لطفاً بگویید که چنین است.</value>
+  </data>
+  <data name="Account_Problem_invitation-needed" xml:space="preserve">
+    <value>این سایت فعلاً فقط با دعوت‌نامه حساب تازه می‌پذیرد و این دعوت‌نامه قابل استفاده نیست.</value>
+  </data>
+  <data name="Account_InvitationOnly" xml:space="preserve">
+    <value>این سایت فعلاً فقط با دعوت‌نامه حساب تازه می‌پذیرد. کسی که حساب دارد می‌تواند پیوندی برایتان بفرستد.</value>
+  </data>
 </root>

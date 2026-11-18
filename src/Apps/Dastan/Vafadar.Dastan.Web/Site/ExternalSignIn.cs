@@ -146,7 +146,7 @@ public static class ExternalSignIn
             return Results.Redirect($"{AccountEndpoints.Home(returnUrl)}?form=external#external");
         });
 
-        forms.MapPost("/external-register", async (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? name, [FromForm] string? website, [FromForm] string? returnUrl) =>
+        forms.MapPost("/external-register", async (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? name, [FromForm] string? website, [FromForm] string? age, [FromForm] string? returnUrl) =>
         {
             if (desk.Arrival(context) is not var (provider, subject, invitation))
             {
@@ -159,6 +159,11 @@ public static class ExternalSignIn
             }
 
             using var store = desk.Open();
+            if (desk.MayNotRegister(store, age, invitation) is { } kept)
+            {
+                return AccountEndpoints.Back(returnUrl, "external", kept);
+            }
+
             var made = store.RegisterWith(name ?? string.Empty, provider, subject, invitation);
             if (!made.Done)
             {

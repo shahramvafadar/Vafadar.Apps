@@ -61,6 +61,7 @@ public sealed class AccountDesk
         _time = time;
         _codes = protection.CreateProtector("dastan.visitor.codes");
         _arrivals = protection.CreateProtector("dastan.visitor.external").ToTimeLimitedDataProtector();
+        InvitationOnly = options.Value.InvitationOnly;
         if (!string.IsNullOrWhiteSpace(options.Value.People))
         {
             _file = Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.People));
@@ -85,6 +86,20 @@ public sealed class AccountDesk
 
     /// <summary>Gets a value indicating whether the site has accounts.</summary>
     public bool IsOpen => _file is not null;
+
+    /// <summary>Gets a value indicating whether a new account needs an invitation (D-068).</summary>
+    public bool InvitationOnly { get; }
+
+    /// <summary>
+    /// Returns what keeps somebody from making an account before anything about the account is looked at:
+    /// they did not say that they are 16 or older (D-061), or the site takes new accounts by invitation only
+    /// and they have none that can be used (D-068). Nothing: they may go on.
+    /// </summary>
+    public string? MayNotRegister(PeopleStore store, string? age, string? invitation)
+    {
+        ArgumentNullException.ThrowIfNull(store);
+        return age != "on" ? "age" : InvitationOnly && !store.IsInvited(invitation) ? "invitation-needed" : null;
+    }
 
     /// <summary>
     /// Opens the store for one request. Once a day, the first request deletes for good the accounts that were
@@ -374,6 +389,7 @@ public static class AccountEndpoints
             [FromForm] string? again,
             [FromForm] string? website,
             [FromForm] string? invitation,
+            [FromForm] string? age,
             [FromForm] string? returnUrl) =>
         {
             // Who came by an invitation and has to try again still has it.
@@ -398,6 +414,11 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
+            if (desk.MayNotRegister(store, age, invitation) is { } kept)
+            {
+                return Back(from, "register", kept);
+            }
+
             var made = store.Register(name ?? string.Empty, password ?? string.Empty, invitation);
             if (!made.Done)
             {

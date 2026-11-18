@@ -239,3 +239,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   to everybody.
 - For whoever runs the site: `reports forget <folder>` deletes reports of visitors that were looked at more
   than 90 days ago; `--kept-days` names another number.
+- Making an account asks for the tick "I am 16 or older". A site can take new accounts by invitation only
+  (for a closed trial). A relationship can be of "another kind".
