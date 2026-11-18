@@ -144,6 +144,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   year, a kind or a place are laid out like the search.
 - "My list": a page of a name, an image or a thread can be kept with one button. The list lives in a cookie
   on your own device – there is no account, and the site keeps nothing of it.
+- Where the editors state which part of another telling corresponds to what you have read, you can go on
+  there from that part with one button – never further than what you have read.
 - A collection names the other collections of the site that tell of the same world – another edition, another
   telling – and says that each keeps its own reading position.
 - One site can offer several collections: each has its own address, reading position and search, and the
