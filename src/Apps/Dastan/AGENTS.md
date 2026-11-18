@@ -93,7 +93,9 @@ for Dastan is added here in the same commit as the work it came with.
   a second drawing for another kind of family. The file of a photograph is given by one address that asks
   its audience (`/photo/{id}`); never serve the folder of the photographs, never link a file by its name, and
   bring a file in through `MediaIntake` only – it reads what the file is from its content and takes out what
-  an image says about its making. Answer "not found" for a photograph a viewer may not see.
+  an image says about its making. Answer "not found" for a photograph a viewer may not see. Whether something that was made public is shown
+  is asked of the store with every request (`PublicTree`) – never keep "is public" as a fact of its own, and
+  never let anybody agree for somebody else (D-053).
 * The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
   records as they are written in the file of a collection, each change kept with who, when, why, before and
   after. The website never references the store. What a record may say is decided by the readers – never add a

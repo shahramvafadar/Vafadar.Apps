@@ -2313,4 +2313,91 @@
   <data name="Photos_Problem_photo-file" xml:space="preserve">
     <value>The file is no PNG, JPEG or WebP image, or cannot be read as one.</value>
   </data>
+  <data name="PublicTree_Lead" xml:space="preserve">
+    <value>A family tree somebody made public. Everybody living it names has agreed to be named here.</value>
+  </data>
+  <data name="Tree_Publication_Title" xml:space="preserve">
+    <value>Making this tree public</value>
+  </data>
+  <data name="Tree_Publication_Lead" xml:space="preserve">
+    <value>A public tree is seen by everybody, with or without an account: its people, their years and how they belong together – not who it is shared with and not its history. It needs the agreement of everybody living it names. Somebody who has no account cannot agree, so a tree that names a living person without an account cannot be public.</value>
+  </data>
+  <data name="Tree_Publication_Ask" xml:space="preserve">
+    <value>Prepare to make it public</value>
+  </data>
+  <data name="Tree_Publication_Publish" xml:space="preserve">
+    <value>Make it public now</value>
+  </data>
+  <data name="Tree_Publication_TakeBack" xml:space="preserve">
+    <value>Take it back: not public</value>
+  </data>
+  <data name="Tree_Publication_Blockers" xml:space="preserve">
+    <value>These people stand in the way:</value>
+  </data>
+  <data name="Tree_Publication_no-account" xml:space="preserve">
+    <value>is living and has no account here, so nobody can agree for them</value>
+  </data>
+  <data name="Tree_Publication_no-consent" xml:space="preserve">
+    <value>has been asked and has not agreed</value>
+  </data>
+  <data name="Tree_Publication_Ready" xml:space="preserve">
+    <value>Nobody stands in the way. The tree is not public until you make it so.</value>
+  </data>
+  <data name="Tree_Publication_IsPublic" xml:space="preserve">
+    <value>This tree is public.</value>
+  </data>
+  <data name="Tree_Publication_Link" xml:space="preserve">
+    <value>See it as everybody does</value>
+  </data>
+  <data name="Tree_Publication_Hidden" xml:space="preserve">
+    <value>You made this tree public, but it is hidden now: somebody it names does not agree.</value>
+  </data>
+  <data name="Tree_Consent_Title" xml:space="preserve">
+    <value>This tree is to be public</value>
+  </data>
+  <data name="Tree_Consent_Asked" xml:space="preserve">
+    <value>The owner of this tree wants everybody to be able to see it. A record in it is you. Do you agree to be named in it for everybody?</value>
+  </data>
+  <data name="Tree_Consent_Given" xml:space="preserve">
+    <value>You agreed to be named in this tree for everybody.</value>
+  </data>
+  <data name="Tree_Consent_Note" xml:space="preserve">
+    <value>Without your agreement the tree is not public. You can take it back at any time; the tree is then hidden from everybody else at once. If your record is changed, you are asked again.</value>
+  </data>
+  <data name="Tree_Consent_Agree" xml:space="preserve">
+    <value>I agree to be named</value>
+  </data>
+  <data name="Tree_Consent_TakeBack" xml:space="preserve">
+    <value>I take my agreement back</value>
+  </data>
+  <data name="Trees_Said_publication-asked" xml:space="preserve">
+    <value>The accounts this tree names are asked now. Below you see who stands in the way.</value>
+  </data>
+  <data name="Trees_Said_published" xml:space="preserve">
+    <value>The tree is public.</value>
+  </data>
+  <data name="Trees_Said_unpublished" xml:space="preserve">
+    <value>Taken back. The tree is seen only by those you share it with, and what was agreed is forgotten.</value>
+  </data>
+  <data name="Trees_Said_consent-given" xml:space="preserve">
+    <value>You agreed to be named.</value>
+  </data>
+  <data name="Trees_Said_consent-withdrawn" xml:space="preserve">
+    <value>You took your agreement back. The tree is hidden from everybody else.</value>
+  </data>
+  <data name="Tree_Change_publication-asked" xml:space="preserve">
+    <value>Asked to make public</value>
+  </data>
+  <data name="Tree_Change_published" xml:space="preserve">
+    <value>Made public</value>
+  </data>
+  <data name="Tree_Change_unpublished" xml:space="preserve">
+    <value>Taken back from the public</value>
+  </data>
+  <data name="Tree_Change_consent-given" xml:space="preserve">
+    <value>Agreed to be named</value>
+  </data>
+  <data name="Tree_Change_consent-withdrawn" xml:space="preserve">
+    <value>Took the agreement back</value>
+  </data>
 </root>

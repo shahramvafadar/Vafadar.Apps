@@ -272,3 +272,40 @@ the kept file no longer says who made it, that the address of a file refuses a f
 audience, and that a tag does not open a photograph to a friend of the tagged person). Looked at in a browser
 with two made-up pictures, English and Persian at 375 px, dark appearance. Not tried: a real photograph of a
 camera or a phone, a large number of photographs, a container, a screen reader.
+
+## Eighth addendum (step 16.6): making a family tree public
+
+* **Making public is an act of its own** (PRIV-014), of the owner of the tree, in two steps: asking, and –
+  when nobody stands in the way – making it public. Sharing a tree with accounts never makes it public.
+* **The check before it** is the rule of step 15.2 (`PublicationCheck`): the store tells it, for every record,
+  whether that person may be named in public – somebody who has died, or somebody whose account agreed – and
+  shows the owner who stands in the way and why.
+* **Everybody living the tree names agrees with their own account** (D-053). A record is somebody's account
+  only after that account said so and the maker of the record confirmed it (D-052), so nobody agrees for
+  anybody else. **Somebody living who is no account cannot agree, and a tree that names such a person cannot
+  be public** – the owner is told so, and can only leave that person out or wait until they join. A record is
+  taken to be of a living person unless it says that the person has died.
+* **What everybody then sees** (`/trees/{id}`): the name of the tree, the drawing, the people with their years
+  and how they belong together. Not the owner, not who it is shared with, not its history, not which account
+  a record is, no form. The page asks search engines to stay away.
+* **Whether the tree is shown is asked with every request**: it is shown while the owner made it public *and*
+  nobody stands in the way. So it is hidden at once (D-055) when somebody takes their agreement back, stops
+  being a record of the tree, loses access or closes their account, when a living person without agreement is
+  added, or when a record somebody agreed to is changed – that person is asked again – and it is shown again
+  when that is settled. The owner sees on the page of the tree that it is hidden and who it waits for.
+* The owner takes it back at any time; what was agreed is then forgotten, and asking again asks everybody
+  again. Asking, agreeing, taking back and making public are in the history of the tree.
+
+**Open, for the owner to decide** (the legal review is the owner's, D-053):
+
+* A **photograph** its owner shows to everybody is not held back by the people in it. Somebody it is said to
+  show can take their tag away, which takes it out of their own page – not out of the owner's. D-053 read
+  strictly would ask their agreement before "everybody"; people in a picture who are not tagged cannot be
+  known at all. A **relationship** is public only when both sides say so, which is the consent of both.
+* Whether a public tree may be **found by search engines**. Until that is decided it is public for who has
+  its address.
+* **Children** (PRIV-003): no rule yet; a record of a child is a record of a living person without an
+  account and so keeps a tree from being public.
+
+Checked: `MakingPublicTests` (the store: 13 cases), five more cases of `FamilyTreePagesTests` (the site).
+**Not looked at in a browser.**

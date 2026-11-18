@@ -288,6 +288,26 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("PhotoTags");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredPublicationConsent", b =>
+                {
+                    b.Property<string>("Tree")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Account")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Tree", "Account");
+
+                    b.HasIndex("Account");
+
+                    b.ToTable("PublicationConsents");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredReadingPosition", b =>
                 {
                     b.Property<string>("VisitorId")
@@ -434,6 +454,12 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<string>("Owner")
                         .IsRequired()
                         .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("PublicationAskedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("PublishedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -665,6 +691,21 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasOne("Vafadar.Dastan.People.StoredPhoto", null)
                         .WithMany()
                         .HasForeignKey("Photo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredPublicationConsent", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Account")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredTree", null)
+                        .WithMany()
+                        .HasForeignKey("Tree")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

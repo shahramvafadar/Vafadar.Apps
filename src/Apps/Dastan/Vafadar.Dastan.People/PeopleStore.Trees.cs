@@ -74,6 +74,9 @@ public sealed record TreeView(TreeInfo Tree, ImmutableArray<TreePerson> People, 
     /// <summary>Gets a value indicating whether the account that asks can claim a record: it is none and claims none yet.</summary>
     public bool CanClaim { get; init; }
 
+    /// <summary>Gets where the making public of the tree stands (D-053).</summary>
+    public PublicationState Publication { get; init; } = PublicationState.None;
+
     /// <summary>Returns the record with an identifier.</summary>
     public TreePerson Person(string id) => People.First(person => person.Id == id);
 }
@@ -177,6 +180,7 @@ public sealed partial class PeopleStore
                     .Where(claim => claim.Mine || claim.CanReview),
             ],
             CanClaim = canClaim,
+            Publication = Publication(_context.Trees.AsNoTracking().Single(candidate => candidate.Id == tree), viewer, info.Role),
         };
     }
 
@@ -285,6 +289,13 @@ public sealed partial class PeopleStore
         }
 
         (stored.Name, stored.Born, stored.Died, stored.Deceased) = (written, born, died, deceased || died is not null);
+
+        // Somebody agreed to be named as the record was: changed, the record is agreed to again.
+        if (stored.Account is { } account)
+        {
+            ForgetConsent(tree, account);
+        }
+
         Record(tree, id, "person-changed", written);
         Save();
         return true;
@@ -301,6 +312,11 @@ public sealed partial class PeopleStore
         }
 
         _context.Kinships.RemoveRange(_context.Kinships.Where(link => link.Tree == tree && (link.From == person || link.To == person)));
+        if (stored.Account is { } account)
+        {
+            ForgetConsent(tree, account);
+        }
+
         _context.Persons.Remove(stored);
         Record(tree, id, "person-removed", stored.Name);
         Save();

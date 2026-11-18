@@ -102,6 +102,7 @@ public sealed partial class PeopleStore
                         ["role"] = tree.Role.ToString().ToLowerInvariant(),
                         ["recordThatIsMe"] = shared.People.FirstOrDefault(person => person.Account?.Id == id)?.Name,
                         ["recordIClaim"] = shared.Claims.Where(claim => claim.Mine).Select(claim => shared.Person(claim.Person).Name).FirstOrDefault(),
+                        ["iAgreedToBeNamedInPublic"] = shared.Publication.Consented,
                     };
                 })]),
         };
@@ -110,6 +111,7 @@ public sealed partial class PeopleStore
     private static JsonObject Written(TreeView tree) => new()
     {
         ["name"] = tree.Tree.Name,
+        ["public"] = tree.Publication.IsPublic,
         ["people"] = new JsonArray([.. tree.People
             .Select(person => (JsonNode)new JsonObject
             {

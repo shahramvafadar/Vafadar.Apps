@@ -120,6 +120,7 @@ public sealed partial class PeopleStore
         if (record.Account == id)
         {
             record.Account = null;
+            ForgetConsent(tree, id);
         }
 
         Record(tree, id, "claim-withdrawn", record.Name);
@@ -140,6 +141,7 @@ public sealed partial class PeopleStore
     private void LeaveRecords(string tree, string account)
     {
         _context.Claims.RemoveRange(_context.Claims.Where(claim => claim.Tree == tree && claim.Account == account));
+        ForgetConsent(tree, account);
         foreach (var record in _context.Persons.Where(person => person.Tree == tree && person.Account == account))
         {
             record.Account = null;

@@ -1,7 +1,11 @@
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Vafadar.Dastan.Core;
 using Vafadar.Dastan.People;
+using Vafadar.Dastan.Web.Resources;
 using Vafadar.Web;
 
 namespace Vafadar.Dastan.Web.Site;
@@ -17,6 +21,44 @@ public static partial class TreeEndpoints
 
     /// <summary>The address the forms are sent to. It has no language.</summary>
     public const string Root = "/preferences/trees";
+
+    /// <summary>The address of a tree its owner made public, without the language and the identifier.</summary>
+    public const string Public = "/trees";
+
+    /// <summary>
+    /// Returns where the people of a tree stand in its drawing, or nothing for a tree without people.
+    /// Generations follow from the links: parents above their children, partners in one row.
+    /// </summary>
+    public static TreePlacement? Placement(TreeView tree)
+    {
+        ArgumentNullException.ThrowIfNull(tree);
+        if (tree.People.IsEmpty)
+        {
+            return null;
+        }
+
+        var parentage = tree.Links.Where(link => link.Kind == "parent").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
+        var partnerships = tree.Links.Where(link => link.Kind == "partner").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
+        var rows = TreeShape.Generations(tree.People.Select(person => person.Id), parentage, partnerships);
+        return TreeShapeLayout.Of(new TreeShape([.. tree.People.Select(person => new TreeShapeMember(person.Id, rows[person.Id], person.Name))], parentage, partnerships));
+    }
+
+    /// <summary>Returns the years of a record as a page writes them: "1300–1380", "born 1300", "died 1380", "deceased" – whatever is known, and nothing when nothing is.</summary>
+    public static string Years(TreePerson person, IStringLocalizer<Ui> text, Visitor visitor)
+    {
+        ArgumentNullException.ThrowIfNull(person);
+        ArgumentNullException.ThrowIfNull(text);
+        ArgumentNullException.ThrowIfNull(visitor);
+        return (person.Born, person.Died, person.Deceased) switch
+        {
+            ({ } born, { } died, _) => $"{visitor.Number(born)}–{visitor.Number(died)}",
+            ({ } born, null, false) => string.Format(CultureInfo.CurrentCulture, text["Tree_Born"], visitor.Number(born)),
+            ({ } born, null, true) => $"{string.Format(CultureInfo.CurrentCulture, text["Tree_Born"], visitor.Number(born))}{text["Tree_And"]}{text["Tree_Deceased"]}",
+            (null, { } died, _) => string.Format(CultureInfo.CurrentCulture, text["Tree_Died"], visitor.Number(died)),
+            (null, null, true) => text["Tree_Deceased"],
+            _ => string.Empty,
+        };
+    }
 
     /// <summary>Maps the forms. Each sends the visitor back to the page it came from, which says what happened.</summary>
     public static void MapTrees(this IEndpointRouteBuilder endpoints)
@@ -97,6 +139,37 @@ public static partial class TreeEndpoints
         });
 
         MapClaims(forms);
+        MapPublication(forms);
+    }
+
+    // Making a tree public (D-053): asked and done by its owner, agreed to by the accounts it names.
+    private static void MapPublication(RouteGroupBuilder forms)
+    {
+        forms.MapPost("/publication", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? act, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            var (me, which) = (Me(context), tree ?? string.Empty);
+            return act switch
+            {
+                "ask" when store.AskPublication(me, which) => Said(returnUrl, "publication-asked", "publication"),
+                "publish" when store.Publish(me, which) => Said(returnUrl, "published", "publication"),
+                "take-back" when store.Unpublish(me, which) => Said(returnUrl, "unpublished", "publication"),
+                _ => Results.BadRequest(),
+            };
+        });
+
+        forms.MapPost("/consent", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? answer, [FromForm] string? returnUrl) =>
+        {
+            if (answer is not ("agree" or "take-back"))
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            return store.Consent(Me(context), tree ?? string.Empty, answer == "agree")
+                ? Said(returnUrl, answer == "agree" ? "consent-given" : "consent-withdrawn", "consent")
+                : Results.BadRequest();
+        });
     }
 
     // "This record is me" (D-052): asked by an account, answered by who made the record, taken back by the account.

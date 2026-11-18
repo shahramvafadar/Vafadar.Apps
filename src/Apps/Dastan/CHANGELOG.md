@@ -222,3 +222,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   and can say yes or no; saying yes shows the photograph to nobody who could not see it before. A person's
   page shows their photographs to those who may see them, and one's own page lists what was shared lately.
   What a picture file says about where and with which device it was taken is removed before it is kept.
+- A family tree can be made public: its owner asks, sees who stands in the way, and every living person the
+  tree names is asked with their own account. A living person without an account cannot agree, so such a tree
+  stays private. Anybody who agreed can take that back, and the tree is hidden at once.

@@ -111,13 +111,13 @@ public sealed class OwnDataTests : IDisposable
         _store.Claim(_sara, tree, record);
 
         var waiting = _store.Export(_sara, Password)!;
-        Assert.Equal("""[{"name":"The Rad family","owner":"Mina","role":"viewer","recordThatIsMe":null,"recordIClaim":"Sara Rad"}]""", waiting["treesSharedWithMe"]!.ToJsonString());
+        Assert.Equal("""[{"name":"The Rad family","owner":"Mina","role":"viewer","recordThatIsMe":null,"recordIClaim":"Sara Rad","iAgreedToBeNamedInPublic":false}]""", waiting["treesSharedWithMe"]!.ToJsonString());
 
         _store.ReviewClaim(_mina, tree, _store.Tree(_mina, tree)!.Claims[0].Number, confirm: true);
         var copy = _store.Export(_sara, Password)!;
 
         Assert.Empty(copy["trees"]!.AsArray());
-        Assert.Equal("""[{"name":"The Rad family","owner":"Mina","role":"viewer","recordThatIsMe":"Sara Rad","recordIClaim":null}]""", copy["treesSharedWithMe"]!.ToJsonString());
+        Assert.Equal("""[{"name":"The Rad family","owner":"Mina","role":"viewer","recordThatIsMe":"Sara Rad","recordIClaim":null,"iAgreedToBeNamedInPublic":false}]""", copy["treesSharedWithMe"]!.ToJsonString());
         Assert.DoesNotContain("Zal", copy.ToJsonString(), StringComparison.Ordinal);
     }
 

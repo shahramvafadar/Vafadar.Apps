@@ -1,0 +1,84 @@
+@page "/trees/{Id}"
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* A family tree its owner made public (step 16.6, D-053): shown to everybody while everybody living it names
+   agrees – the store decides that with every request. It shows the people and how they belong together, and
+   nothing else: not who made it, who it is shared with, its history, or which account a record is. A tree that
+   is not public answers "not found", like one that does not exist. *@
+@if (_tree is not null)
+{
+    <PageTitle>@_tree.Tree.Name – @T["Site_Name"]</PageTitle>
+    <PageAddress None="true" />
+    @* The names of living people: for people, not for search engines. *@
+    <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+    <header class="page-header">
+        <h1 dir="auto">@_tree.Tree.Name</h1>
+        <p class="lead">@T["PublicTree_Lead"]</p>
+    </header>
+
+    @if (TreeEndpoints.Placement(_tree) is { } placement)
+    {
+        <ChartStage Id="drawing" Class="stage-fitted" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
+            <TreeDrawing Tree="placement">
+                <Box Context="id">
+                    <span class="graph-entity">
+                        <a class="graph-name" href="@($"trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
+                    </span>
+                </Box>
+            </TreeDrawing>
+        </ChartStage>
+    }
+
+    <section aria-labelledby="public-people">
+        <h2 id="public-people">@T["Tree_People_Title"]</h2>
+        <ul class="tree-people" role="list">
+            @foreach (var person in _tree.People)
+            {
+                <li id="@($"person-{person.Id}")">
+                    <p><strong dir="auto">@person.Name</strong> <span class="meta">@TreeEndpoints.Years(person, T, Visitor)</span></p>
+                    @if (!person.Parents.IsEmpty)
+                    {
+                        <p class="meta">@T["Tree_Parents"] @Named(person.Parents)</p>
+                    }
+                    @if (!person.Partners.IsEmpty)
+                    {
+                        <p class="meta">@T["Tree_Partners"] @Named(person.Partners)</p>
+                    }
+                    @if (!person.Children.IsEmpty)
+                    {
+                        <p class="meta">@T["Tree_Children"] @Named(person.Children)</p>
+                    }
+                </li>
+            }
+        </ul>
+    </section>
+}
+
+@code {
+    private TreeView? _tree;
+
+    /// <summary>Gets or sets the identifier of the tree.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        if (Desk.IsOpen && Id.Length <= 40)
+        {
+            using var store = Desk.Open();
+            _tree = store.PublicTree(Id);
+        }
+
+        if (_tree is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+
+    private string Named(System.Collections.Immutable.ImmutableArray<string> people) => string.Join(T["Tree_And"], people.Select(person => _tree!.Person(person).Name));
+}
