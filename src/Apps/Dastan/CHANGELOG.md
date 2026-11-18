@@ -225,3 +225,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A family tree can be made public: its owner asks, sees who stands in the way, and every living person the
   tree names is asked with their own account. A living person without an account cannot agree, so such a tree
   stays private. Anybody who agreed can take that back, and the tree is hidden at once.
+- An account can be signed in through Google or Microsoft, on a site whose owner set that up. They only tell the
+  site that it is the same person again: the visitor chooses the name of the account, and no name, mail address
+  or picture is taken from them. An account can add and remove such a way in, and always keeps one. Not tried
+  against Google or Microsoft yet – that needs the owner's registration with each.

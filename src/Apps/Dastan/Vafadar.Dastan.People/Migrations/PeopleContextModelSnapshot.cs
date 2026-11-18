@@ -91,6 +91,28 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("Claims");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredExternalLogin", b =>
+                {
+                    b.Property<string>("Provider")
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Key")
+                        .HasMaxLength(64)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("VisitorId")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Provider", "Key");
+
+                    b.HasIndex("VisitorId");
+
+                    b.ToTable("ExternalLogins");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
                 {
                     b.Property<string>("Id")
@@ -613,6 +635,15 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasOne("Vafadar.Dastan.People.StoredTree", null)
                         .WithMany()
                         .HasForeignKey("Tree")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredExternalLogin", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("VisitorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

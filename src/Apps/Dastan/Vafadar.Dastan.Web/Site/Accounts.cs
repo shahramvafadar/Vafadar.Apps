@@ -44,6 +44,7 @@ public sealed class AccountDesk
     private readonly string? _photos;
     private readonly TimeProvider _time;
     private readonly IDataProtector _codes;
+    private readonly ITimeLimitedDataProtector _arrivals;
 
     // Who asked how often in the present hour. It lives in the memory of the process and is thrown away with the
     // hour: an address is never written anywhere.
@@ -59,6 +60,7 @@ public sealed class AccountDesk
         ArgumentNullException.ThrowIfNull(protection);
         _time = time;
         _codes = protection.CreateProtector("dastan.visitor.codes");
+        _arrivals = protection.CreateProtector("dastan.visitor.external").ToTimeLimitedDataProtector();
         if (!string.IsNullOrWhiteSpace(options.Value.People))
         {
             _file = Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.People));
@@ -179,6 +181,44 @@ public sealed class AccountDesk
         context.Response.Cookies.Append(CodesCookie, _codes.Protect(string.Join(' ', codes)), options);
     }
 
+    /// <summary>
+    /// Hands a sign-in of a provider that has no account yet to the form on which the visitor chooses a name:
+    /// sealed for ten minutes in a cookie only this site can read.
+    /// </summary>
+    public void CarryArrival(HttpContext context, string provider, string subject, string? invitation)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        var options = PreferenceCookie.Options(context);
+        options.MaxAge = TimeSpan.FromMinutes(10);
+        context.Response.Cookies.Append(ExternalSignIn.PendingCookie, _arrivals.Protect($"{provider}\n{subject}\n{invitation}", TimeSpan.FromMinutes(10)), options);
+    }
+
+    /// <summary>Returns the sign-in of a provider a request carries, or nothing: none, not sealed by this site, or older than ten minutes.</summary>
+    public (string Provider, string Subject, string? Invitation)? Arrival(HttpContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        if (context.Request.Cookies[ExternalSignIn.PendingCookie] is not { Length: > 0 } carried)
+        {
+            return null;
+        }
+
+        try
+        {
+            return _arrivals.Unprotect(carried).Split('\n') is [var provider, var subject, var invitation] ? (provider, subject, invitation.Length > 0 ? invitation : null) : null;
+        }
+        catch (System.Security.Cryptography.CryptographicException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>Takes the sign-in of a provider a request carries away: the account is made.</summary>
+    public void ForgetArrival(HttpContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        context.Response.Cookies.Delete(ExternalSignIn.PendingCookie, PreferenceCookie.Options(context));
+    }
+
     /// <summary>Returns the recovery codes a request carries, and takes them away: they are shown once.</summary>
     public ImmutableArray<string> Shown(HttpContext context)
     {
@@ -270,11 +310,12 @@ public sealed class AccountState
 public static class AccountEndpoints
 {
     /// <summary>Adds the sign-in of a visitor: kept in a cookie, asked of the store with every request.</summary>
-    public static void AddVisitorAccounts(this IServiceCollection services)
+    public static void AddVisitorAccounts(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<AccountDesk>();
         services.AddScoped<AccountState>();
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddExternalSignIn(configuration);
+        services.AddAuthentication().AddCookie(options =>
         {
             options.Cookie.Name = AccountDesk.SessionCookie;
             options.Cookie.HttpOnly = true;
@@ -519,6 +560,7 @@ public static class AccountEndpoints
         });
 
         MapBelongings(forms);
+        forms.MapExternalSignIn();
     }
 
     // More of what is for a visitor who signed in: what follows them, and their invitations.
@@ -590,7 +632,7 @@ public static class AccountEndpoints
 
     // The page of the account in the language the form came from; what a form names as its page is used only
     // when it is that page.
-    private static string Home(string? returnUrl)
+    internal static string Home(string? returnUrl)
     {
         var address = ReturnAddress.Safe(returnUrl, AccountDesk.Page);
         var end = address.IndexOfAny(['?', '#']);
@@ -598,9 +640,9 @@ public static class AccountEndpoints
         return address.EndsWith(AccountDesk.Page, StringComparison.Ordinal) && address.Length <= AccountDesk.Page.Length + 12 ? address : AccountDesk.Page;
     }
 
-    private static IResult Said(string? returnUrl, string what) => Results.Redirect($"{Home(returnUrl)}?said={what}");
+    internal static IResult Said(string? returnUrl, string what) => Results.Redirect($"{Home(returnUrl)}?said={what}");
 
-    private static IResult Back(string? returnUrl, string form, params string[] problems)
+    internal static IResult Back(string? returnUrl, string form, params string[] problems)
     {
         // An invitation the visitor came by stays in the address.
         var invitation = returnUrl?.IndexOf("?invitation=", StringComparison.Ordinal) is { } at and >= 0 ? "&" + returnUrl[(at + 1)..] : string.Empty;

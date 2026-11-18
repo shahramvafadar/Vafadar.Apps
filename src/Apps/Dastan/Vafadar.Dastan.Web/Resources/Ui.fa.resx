@@ -2400,4 +2400,70 @@
   <data name="Tree_Change_consent-withdrawn" xml:space="preserve">
     <value>پس گرفتن رضایت</value>
   </data>
+  <data name="Account_External_Title" xml:space="preserve">
+    <value>ورود از راه سرویسی دیگر</value>
+  </data>
+  <data name="Account_External_Lead" xml:space="preserve">
+    <value>آن‌ها فقط به این سایت می‌گویند که باز شما هستید. سایت از آن‌ها نام، نشانی ایمیل یا تصویر نمی‌خواهد و هیچ‌کدام را نگه نمی‌دارد. آن‌ها باخبر می‌شوند که شما از این سایت استفاده می‌کنید.</value>
+  </data>
+  <data name="Account_External_Send" xml:space="preserve">
+    <value>ورود با {0}</value>
+  </data>
+  <data name="Account_Provider_google" xml:space="preserve">
+    <value>گوگل</value>
+  </data>
+  <data name="Account_Provider_microsoft" xml:space="preserve">
+    <value>مایکروسافت</value>
+  </data>
+  <data name="Account_Choose_Title" xml:space="preserve">
+    <value>نامی برای حساب خود انتخاب کنید</value>
+  </data>
+  <data name="Account_Choose_Lead" xml:space="preserve">
+    <value>شما با {0} وارد شدید و هنوز حسابی به این ورود تعلق ندارد. نام حساب را خودتان انتخاب کنید؛ هیچ نامی از {0} گرفته نمی‌شود.</value>
+  </data>
+  <data name="Account_Choose_Send" xml:space="preserve">
+    <value>ساختن حساب</value>
+  </data>
+  <data name="Account_Providers_Title" xml:space="preserve">
+    <value>راه‌های ورود</value>
+  </data>
+  <data name="Account_Providers_Lead" xml:space="preserve">
+    <value>افزون بر نام حساب، از این راه‌ها هم می‌توان وارد شد. از آنچه آن‌ها دربارهٔ شما می‌دانند چیزی اینجا نگه داشته نمی‌شود.</value>
+  </data>
+  <data name="Account_Providers_None" xml:space="preserve">
+    <value>به این حساب فقط با نام و گذرواژه وارد می‌شوند.</value>
+  </data>
+  <data name="Account_Providers_Remove" xml:space="preserve">
+    <value>برداشتن {0}</value>
+  </data>
+  <data name="Account_Providers_Add" xml:space="preserve">
+    <value>افزودن {0}</value>
+  </data>
+  <data name="Account_SetPassword_Title" xml:space="preserve">
+    <value>گذاشتن گذرواژه</value>
+  </data>
+  <data name="Account_SetPassword_Lead" xml:space="preserve">
+    <value>این حساب گذرواژه ندارد. با گذرواژه می‌توانید با نام هم وارد شوید، کدهای بازیابی تازه بگیرید، داده‌هایتان را ببرید و حساب را ببندید.</value>
+  </data>
+  <data name="Account_SetPassword_Send" xml:space="preserve">
+    <value>گذاشتن گذرواژه</value>
+  </data>
+  <data name="Account_NeedsPassword" xml:space="preserve">
+    <value>این کار گذرواژهٔ حساب را می‌خواهد. نخست در بالا یک گذرواژه بگذارید.</value>
+  </data>
+  <data name="Account_Said_linked" xml:space="preserve">
+    <value>از این پس می‌توان از این راه هم به حساب وارد شد.</value>
+  </data>
+  <data name="Account_Said_unlinked" xml:space="preserve">
+    <value>این راه ورود برداشته شد.</value>
+  </data>
+  <data name="Account_Problem_external-failed" xml:space="preserve">
+    <value>ورود به سرانجام نرسید. لطفاً دوباره تلاش کنید.</value>
+  </data>
+  <data name="Account_Problem_login-taken" xml:space="preserve">
+    <value>این ورود از پیش به حساب دیگری تعلق دارد، یا این حساب یکی از همین نوع دارد.</value>
+  </data>
+  <data name="Account_Problem_last-way-in" xml:space="preserve">
+    <value>این تنها راه ورود به حساب است. نخست گذرواژه بگذارید یا راه دیگری بیفزایید.</value>
+  </data>
 </root>

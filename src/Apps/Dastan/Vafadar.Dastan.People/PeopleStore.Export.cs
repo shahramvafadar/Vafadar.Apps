@@ -42,6 +42,7 @@ public sealed partial class PeopleStore
                 ["name"] = visitor.Name,
                 ["createdAt"] = Stamp(visitor.CreatedAt),
                 ["recoveryCodesLeft"] = _context.RecoveryCodes.AsNoTracking().Count(code => code.VisitorId == id && code.UsedAt == null),
+                ["signInThrough"] = new JsonArray([.. _context.ExternalLogins.AsNoTracking().Where(login => login.VisitorId == id).Select(login => login.Provider).OrderBy(provider => provider).AsEnumerable().Select(provider => (JsonNode)provider)]),
             },
             ["readingPositions"] = new JsonArray([.. belongings.Positions.OrderBy(position => position.Key, StringComparer.Ordinal)
                 .Select(position => (JsonNode)new JsonObject { ["collection"] = position.Key, ["stage"] = position.Value })]),
