@@ -34,6 +34,7 @@ the Gregorian calendar (D-043). An address is an `https` address without a user 
 | `publication` | What may be done with the file – see below |
 | `inputContract` | `rawDatasetPubliclyServable` and `reviewerFilesPubliclyServable`, both `false`: the file and the documents of reviewers are never served. Optional notes for whoever builds a reader: `datasetIdentityNote`, `narrativeContext`, `eventAssociations`, `publicationAndSpoilers`, `mediaEligibility`, `sourceLinks`, `reviewerProvenance` |
 | `sources`, `entities`, `relations`, `events`, `media` | The records, as lists. `media` may be empty |
+| `threads` | Optional: the threads the editors laid through the collection (see "A thread") |
 
 ### `publication`
 
@@ -441,6 +442,25 @@ playing time, captions and a transcript. An item without established permission 
 `day`. `calendar` is `Gregorian`; a year whose calendar the catalogue does not name leaves it out, a day always
 names it. Optional notes: `refersTo`, `calendarStatus`.
 
+## A thread
+
+A way through the collection that its editors lay (step 14.9): a few stops in an order, each with the reason
+it follows. A thread says in which order to read; it states nothing about the world and has no sources – what
+its stops state has its sources there.
+
+| Field | Meaning |
+|---|---|
+| `id` | The identifier, unique among the threads; it is in the address of the page of the thread |
+| `label` | The name of the thread |
+| `summary` | What it is about, in a sentence. It is read from the stage of the thread on, so it gives nothing away that this stage does not |
+| `spoilerLevel` | The reading stage from which the thread is offered – no earlier than the stage of its first stop |
+| `stops` | At least two. Each names one thing – `entityId`, `eventId` or `mediaId` – and has a `note`: why the thread leads there. No stop twice |
+| `note` | Optional: a note of the editors about the thread; not shown |
+
+A later stop may belong to a later reading stage. A visitor follows the thread as far as they have read; the
+page says only that it goes on. What stands behind a stop that is not reached is not shown either, so put the
+stops in an order a reader can follow: the later the stage, the later the stop.
+
 ## A translation (`dastan-translation-0.1`)
 
 | Field | Meaning |
@@ -455,6 +475,7 @@ names it. Optional notes: `refersTo`, `calendarStatus`.
 | `relations` | Identifier → `label` |
 | `events` | Identifier → `label`, `summary`, and `roles`: entity identifier → the role of that entity in the event |
 | `media` | Identifier → `label`, `caption`, `altText` |
+| `threads` | Identifier → `label`, `summary`, and `notes`: the identifier of what a stop names → the note of that stop |
 | `dated` | Key of a dated statement → `label`, `summary` |
 
 Every part is optional. A text that is left out is shown in the language of the collection and marked as such. A

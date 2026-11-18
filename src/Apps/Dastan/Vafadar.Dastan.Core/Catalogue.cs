@@ -156,9 +156,11 @@ public sealed class Catalogue
         IEnumerable<Relation> relations,
         IEnumerable<StoryEvent> events,
         IEnumerable<Source> sources,
-        IEnumerable<MediaItem> media)
+        IEnumerable<MediaItem> media,
+        IEnumerable<DiscoveryThread>? threads = null)
     {
         ArgumentNullException.ThrowIfNull(info);
+        Threads = [.. threads ?? []];
         Info = info;
         Entities = [.. entities];
         Relations = [.. relations];
@@ -196,6 +198,9 @@ public sealed class Catalogue
 
     /// <summary>Gets the media items, in the order of the source.</summary>
     public ImmutableArray<MediaItem> Media { get; }
+
+    /// <summary>Gets the threads the editors laid through the collection, in the order of the source.</summary>
+    public ImmutableArray<DiscoveryThread> Threads { get; }
 
     /// <summary>Returns the entity, or <see langword="null"/> when the collection has none with this identifier.</summary>
     public Entity? Find(EntityId id) => _entities.GetValueOrDefault(id);
@@ -238,6 +243,7 @@ public sealed class Catalogue
         {
             CheckIdentifiersAcrossKinds();
             CheckInfo();
+            CheckThreads();
             foreach (var entity in catalogue.Entities)
             {
                 CheckSources(entity.Id.Value, entity.Sources, entity.Level);
@@ -574,6 +580,56 @@ public sealed class Catalogue
                 .Where(entry => entry.Position is not null && !stories.Contains(entry.Position.Sequence)))
             {
                 problems.Add($"{id}: {position!.Sequence} is no story the collection tells.");
+            }
+        }
+
+        // A thread: known stops, each one thing, and offered no earlier than its first stop can be read. A later
+        // stop may lie at a later reading stage – the thread is then followed as far as the visitor has read.
+        private void CheckThreads()
+        {
+            foreach (var twice in catalogue.Threads.GroupBy(thread => thread.Id, StringComparer.Ordinal).Where(group => group.Count() > 1))
+            {
+                problems.Add($"{twice.Key}: two threads have this identifier.");
+            }
+
+            foreach (var thread in catalogue.Threads)
+            {
+                CheckStage(thread.Id, thread.Level);
+                if (thread.Stops.Length < 2)
+                {
+                    problems.Add($"{thread.Id}: a thread has at least two stops.");
+                }
+
+                foreach (var (stop, index) in thread.Stops.Select((stop, index) => (stop, index)))
+                {
+                    var name = $"{thread.Id}, stop {index + 1}";
+                    if (new object?[] { stop.Entity, stop.Event, stop.Media }.Count(target => target is not null) != 1)
+                    {
+                        problems.Add($"{name}: a stop is one thing – an entity, an event or a media item.");
+                        continue;
+                    }
+
+                    var level = stop switch
+                    {
+                        { Entity: { } entity } => catalogue.Find(entity)?.Level,
+                        { Event: { } storyEvent } => catalogue.Find(storyEvent)?.Level,
+                        { Media: { } item } => catalogue.Find(item)?.Level,
+                        _ => null,
+                    };
+                    if (level is null)
+                    {
+                        problems.Add($"{name}: {(object?)stop.Entity ?? (object?)stop.Event ?? stop.Media} is not in the collection.");
+                    }
+                    else if (index == 0 && !level.Value.IsWithin(thread.Level))
+                    {
+                        problems.Add($"{thread.Id}: a thread cannot be offered before its first stop can be read.");
+                    }
+                }
+
+                foreach (var twice in thread.Stops.GroupBy(stop => (stop.Entity, stop.Event, stop.Media)).Where(group => group.Count() > 1))
+                {
+                    problems.Add($"{thread.Id}: {(object?)twice.Key.Entity ?? (object?)twice.Key.Event ?? twice.Key.Media} is a stop twice.");
+                }
             }
         }
 

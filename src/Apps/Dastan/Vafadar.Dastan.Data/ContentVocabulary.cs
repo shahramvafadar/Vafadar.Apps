@@ -17,7 +17,8 @@ public sealed record ContentChoices(string Field, string Meaning, ImmutableArray
 /// <param name="Group">The group of the translation: a group of records, or <c>dated</c> for the statements with a date.</param>
 /// <param name="Fields">The fields of a record that are translated.</param>
 /// <param name="Roles">Whether the roles of what takes part in a record are translated, by the identifier of what takes part.</param>
-public sealed record ContentTexts(string Group, ImmutableArray<string> Fields, bool Roles = false);
+/// <param name="Notes">Whether the notes of the stops of a record are translated, by the identifier of what the stop names.</param>
+public sealed record ContentTexts(string Group, ImmutableArray<string> Fields, bool Roles = false, bool Notes = false);
 
 /// <summary>
 /// The fixed sets of values of the content files, taken from the readers themselves – a list for writers that

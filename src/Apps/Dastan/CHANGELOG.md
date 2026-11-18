@@ -139,6 +139,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- Editors can lay threads through a collection: a few stops in an order, each with the reason it follows.
+  A collection lists its threads, a thread is shown as far as a visitor has read, and the page of a name says
+  where a thread leads on from it and why.
 - A visitor who sees an error can say so: the page of the sources of a statement has a short form. The site
   keeps the words, the statement and the day – nothing about the visitor – and the editors find the report in
   their tool, with the way to the record it is about.

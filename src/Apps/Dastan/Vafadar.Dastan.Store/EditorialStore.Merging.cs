@@ -154,6 +154,49 @@ public sealed partial class EditorialStore
                 }
             }
 
+            // A thread that stops at the merged entity stops at the kept one; a thread that stopped at both
+            // stops there once, at the first of the two places.
+            foreach (var thread in root["threads"]!.AsArray().Select(thread => thread!.AsObject()))
+            {
+                if (thread["stops"] is not JsonArray stops || !stops.Any(stop => (string?)stop?["entityId"] == mergedId))
+                {
+                    continue;
+                }
+
+                var kept = new JsonArray();
+                var once = false;
+                foreach (var stop in stops.Select(stop => stop!.AsObject()))
+                {
+                    var here = (string?)stop["entityId"];
+                    if (here == mergedId || here == keepId)
+                    {
+                        if (once)
+                        {
+                            continue;
+                        }
+
+                        once = true;
+                        var copy = (JsonObject)stop.DeepClone();
+                        copy["entityId"] = keepId;
+                        kept.Add(copy);
+                    }
+                    else
+                    {
+                        kept.Add(stop.DeepClone());
+                    }
+                }
+
+                thread["stops"] = kept;
+                foreach (var translation in translations.Values)
+                {
+                    if ((translation["threads"] as JsonObject)?[(string)thread["id"]!]?["notes"] is JsonObject notes && notes[mergedId] is { } note)
+                    {
+                        notes.Remove(mergedId);
+                        notes[keepId] ??= note.DeepClone();
+                    }
+                }
+            }
+
             if ((string?)root["subjectId"] == mergedId)
             {
                 root["subjectId"] = keepId;

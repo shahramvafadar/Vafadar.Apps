@@ -78,6 +78,23 @@
 
     <SearchForm />
 
+    @if (!Visitor.Projection!.Threads.IsEmpty)
+    {
+        @* Ways through the collection the editors laid (step 14.9): each says what it is about before it is followed. *@
+        <section aria-labelledby="threads">
+            <h2 id="threads">@T["Thread_List"]</h2>
+            <ul class="cards" role="list">
+                @foreach (var thread in Visitor.Projection!.Threads)
+                {
+                    <li class="card">
+                        <h3><a href="@($"{Site.Collection}/thread/{thread.Thread.Id}")"><Loc Text="thread.Thread.Label" /></a></h3>
+                        <p><Loc Text="thread.Thread.Summary" /></p>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
     <section aria-labelledby="subjects">
         <h2 id="subjects">@T["Collection_Subjects"]</h2>
         <ul class="cards" role="list">

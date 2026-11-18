@@ -1377,4 +1377,37 @@
   <data name="Report_full" xml:space="preserve">
     <value>The editors have more reports than they can read at the moment. Please try again in a few days; nothing was kept this time.</value>
   </data>
+  <data name="Thread_Kind" xml:space="preserve">
+    <value>A thread</value>
+  </data>
+  <data name="Thread_List" xml:space="preserve">
+    <value>Threads to follow</value>
+  </data>
+  <data name="Thread_Lead" xml:space="preserve">
+    <value>A way through this collection, laid by its editors. Each stop says why it follows; what a stop states has its own sources on its page.</value>
+  </data>
+  <data name="Thread_Stop" xml:space="preserve">
+    <value>Stop {0}</value>
+  </data>
+  <data name="Thread_Stop_Entity" xml:space="preserve">
+    <value>a name</value>
+  </data>
+  <data name="Thread_Stop_Step" xml:space="preserve">
+    <value>a step of the story</value>
+  </data>
+  <data name="Thread_Stop_Media" xml:space="preserve">
+    <value>an image or a video</value>
+  </data>
+  <data name="Thread_Continues" xml:space="preserve">
+    <value>The thread goes on after what you have read.</value>
+  </data>
+  <data name="Thread_Ends" xml:space="preserve">
+    <value>The thread ends here.</value>
+  </data>
+  <data name="Thread_Onward" xml:space="preserve">
+    <value>Where to go on from here</value>
+  </data>
+  <data name="Thread_LastReached" xml:space="preserve">
+    <value>This is the last stop of a thread you have reached.</value>
+  </data>
 </root>

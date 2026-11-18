@@ -11,7 +11,7 @@ namespace Vafadar.Dastan.Studio.Site;
 public static class NewRecord
 {
     /// <summary>The groups a new record of which starts as a form. An image or a video is brought in with its file.</summary>
-    public static IReadOnlyList<string> Groups { get; } = ["sources", "entities", "relations", "events"];
+    public static IReadOnlyList<string> Groups { get; } = ["sources", "entities", "relations", "events", "threads"];
 
     /// <summary>Returns the record a form for a new record of the group starts with, or nothing for a group without one.</summary>
     public static JsonObject? Of(string group, EditorialStore store, string collection, DateOnly today)
@@ -48,6 +48,14 @@ public static class NewRecord
                 ["sourceIds"] = new JsonArray(), ["spoilerLevel"] = 0,
                 ["temporalExpression"] = new JsonObject { ["kind"] = "narrative_position" }, ["reviewStatus"] = Pending,
                 ["entityAssociations"] = new JsonArray(new JsonObject { ["entityId"] = string.Empty, ["role"] = string.Empty, ["presence"] = "acts_in_selected_scenes" }),
+            },
+            "threads" => new JsonObject
+            {
+                // A thread begins with two stops at entities; a stop at an event or an item is written as text.
+                ["id"] = string.Empty, ["label"] = string.Empty, ["summary"] = string.Empty, ["spoilerLevel"] = 0,
+                ["stops"] = new JsonArray(
+                    new JsonObject { ["entityId"] = string.Empty, ["note"] = string.Empty },
+                    new JsonObject { ["entityId"] = string.Empty, ["note"] = string.Empty }),
             },
             _ => null,
         };

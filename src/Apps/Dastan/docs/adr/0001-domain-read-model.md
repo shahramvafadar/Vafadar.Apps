@@ -326,3 +326,56 @@ ongoing ends, times that are about, the change of the era, alternatives, what ha
 `MomentPageTests` (23 cases) – the years of the projection, the page in both languages, what held, what may
 have, what is stated with its quantity, an empty year, a year before the era, six addresses that are no year,
 a story alone, another collection. Not looked at in a browser.
+
+## Ninth addendum of 2026-11-18 – threads (step 14.9, R-EXP-04, R-PUB-06, B-025)
+
+A visitor who has read a page wants to know where to go on, and why there. The connections of an entity say
+what is connected; they do not say what is worth reading next. That is a judgement, and a judgement with a
+reason is something an editor writes.
+
+* **A collection may have `threads`** – an optional list beside its records. A thread (`DiscoveryThread`)
+  has an identifier, a name, a sentence about what it is about, the reading stage from which it is offered,
+  and at least two **stops** in an order. A stop names one thing – `entityId`, `eventId` or `mediaId` – and
+  carries a `note`: why the thread leads there.
+* **A thread is a way to read, not a statement about the world.** It has no sources and no review of its own:
+  what its stops state has its sources on their pages. So a thread cannot say anything the collection does
+  not say elsewhere with its evidence – only in which order to read it.
+* **What the readers refuse**: a thread with fewer than two stops; a stop that names nothing, or two things,
+  or something that is not in the collection; the same stop twice; two threads with one identifier; and a
+  thread that is offered before its first stop can be read.
+* **A later stop may lie at a later reading stage.** The projection follows a thread as far as the visitor may
+  see its stops and ends it before the first that is not reached – or that is an item the audience is not
+  shown. What comes after such a stop is not shown either, even when it could be read: a thread is an order,
+  and a stop behind a gap would say that there is a gap and what stands behind it. The view says only that
+  the thread goes on (`ThreadView.Continues`): no number of stops, no name. A thread whose stage is not
+  reached does not exist for the visitor.
+* **`Projection.Onward(entity)`** answers where the threads lead on from a name: each thread that stops at
+  it, with the stop that follows and its reason. This is the "next thread with a reason" of R-PUB-06. The
+  site does not work suggestions out by itself: a list of the most connected names would be a ranking nobody
+  wrote and nobody could give a reason for.
+* **Translations**: the name and the summary of a thread, and the note of a stop under the identifier of what
+  the stop names (`threads.<id>.notes.<stop>`).
+* **The store and the tool**: `threads` is a group of records a collection need not have
+  (`EditorialStore.OptionalGroups`): a collection without threads is written without the group, so a file
+  that had none comes out as it went in. A thread is put, changed and taken out like any record and tried by
+  the readers; an event or an entity a thread stops at cannot be taken out from under it. Merging two
+  entities leaves a thread with one stop at the kept one. The tool has the group among its records and a form
+  for a new thread; the notes of a thread in another language have no inputs yet and stay as they are when
+  the form is sent.
+* **The pages**: `<collection>/thread/<id>`; a list on the page of a collection that has threads the visitor
+  may follow; "Where to go on from here" on the page of a name a thread passes. A thread that is not reached
+  and one that does not exist are the same page: not found.
+
+Not done: a thread across collections; a thread with branches ("or go this way"); a stop at a relation, a
+place on the map or a year; remembering how far a visitor followed a thread (the site keeps nothing of a
+visitor but the reading position).
+
+Verification: `ThreadsTests` (8 tests, readers) – a thread read with its stops; followed as far as the
+visitor has read; a thread of a later part; onward from a name; nine things that are no thread; the texts in
+another language; a translation of what is not there. `EditorialThreadsTests` (5 tests, store) – a collection
+without threads; a thread put, written and taken out; a file with threads in and out; a thread the readers
+refuse; two entities that are one. `ThreadPagesTests` (9 cases, site) – the list in both languages; a thread
+at the opening and for a reader of the end; onward from a name; no word of threads where there are none; a
+thread that is not reached. `StudioThreadsTests` (3 cases, tool) – the group and the form a new thread begins
+with in both languages; the page of a thread with its stops. No test sends the form of a new thread, and
+nothing was looked at in a browser.

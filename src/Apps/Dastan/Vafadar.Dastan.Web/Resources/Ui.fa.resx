@@ -1377,4 +1377,37 @@
   <data name="Report_full" xml:space="preserve">
     <value>ویراستاران اکنون بیش از توانشان گزارش دارند. لطفاً چند روز دیگر دوباره بفرستید؛ این بار چیزی نگه داشته نشد.</value>
   </data>
+  <data name="Thread_Kind" xml:space="preserve">
+    <value>یک رشته</value>
+  </data>
+  <data name="Thread_List" xml:space="preserve">
+    <value>رشته‌هایی برای دنبال‌کردن</value>
+  </data>
+  <data name="Thread_Lead" xml:space="preserve">
+    <value>راهی در این مجموعه که ویراستارانش چیده‌اند. هر ایستگاه می‌گوید چرا در پی قبلی آمده است؛ آنچه هر ایستگاه می‌گوید منابع خودش را در صفحهٔ خودش دارد.</value>
+  </data>
+  <data name="Thread_Stop" xml:space="preserve">
+    <value>ایستگاه {0}</value>
+  </data>
+  <data name="Thread_Stop_Entity" xml:space="preserve">
+    <value>یک نام</value>
+  </data>
+  <data name="Thread_Stop_Step" xml:space="preserve">
+    <value>گامی از داستان</value>
+  </data>
+  <data name="Thread_Stop_Media" xml:space="preserve">
+    <value>یک تصویر یا ویدئو</value>
+  </data>
+  <data name="Thread_Continues" xml:space="preserve">
+    <value>این رشته پس از آنچه خوانده‌اید ادامه دارد.</value>
+  </data>
+  <data name="Thread_Ends" xml:space="preserve">
+    <value>رشته این‌جا پایان می‌یابد.</value>
+  </data>
+  <data name="Thread_Onward" xml:space="preserve">
+    <value>از این‌جا به کجا برویم</value>
+  </data>
+  <data name="Thread_LastReached" xml:space="preserve">
+    <value>این واپسین ایستگاهِ یک رشته است که به آن رسیده‌اید.</value>
+  </data>
 </root>
