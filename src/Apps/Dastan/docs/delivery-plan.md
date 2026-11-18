@@ -452,11 +452,33 @@ left waits for one of these – each is a question of the owner's, not of code:
 
 | Decision | What it opens |
 |---|---|
-| Accounts of visitors: who may have one, how somebody signs in and proves an identity (Q-06), where data about people is kept and who is responsible for it | A list that follows a visitor to another device; private and family spaces; family trees of private records; personal photographs; "view as another audience". The rules exist (step 15.2) |
-| What is published about living people (Q-05), shared family trees (Q-07), the end of consent (Q-14), copies without a connection (Q-13) | The rules the library leaves out: children and guardians, blocking, exports, offline copies |
+| ~~Accounts of visitors, what is published about living people, shared family trees, the end of consent~~ | **Decided on 2026-11-18** (D-048 to D-055): phase 16 below |
+| Copies without a connection (Q-13); children and guardians (PRIV-003) | The rules the library leaves out |
 | A mail service for invitations | Sending an invitation – a third party |
 | A library that reads and writes images | Smaller sizes of an image that is brought in (step 13.7); a picture for the preview of a link (step 14.4) |
 | A map: coasts and borders that may be shipped, or tiles from a host of the owner's | A background for the drawing of the places (step 14.1) |
 | The form of a statement that connects reading stages – between two editions, between the stories of one collection | A reading position that is carried between editions, and one for each story (step 14.11) |
 | How long reports of visitors that were looked at are kept | The day to run `reports forget` with: the command exists and deletes nothing by itself (step 14.8) |
 | The owner's part of a public pilot (section 11): the review of the content, the rights of the images, the host, the devices, the people | A public site |
+
+## 17. Accounts of visitors and private spaces (phase 16)
+
+On 2026-11-18 the owner decided what phase 15 waited for (D-048 to D-055): visitors sign in with a name and a
+password or with Google or Microsoft; anybody may register and invite others; accounts and private spaces are
+kept in a store of their own beside the site; an account opens all private spaces; the open questions Q-05,
+Q-06, Q-07 and Q-14 are answered. The rules exist as a library (step 15.2); phase 16 gives them a store, a
+sign-in and pages.
+
+| Step | What | Status |
+|---|---|---|
+| 16.1 | **The store of the visitors and an account with a password**: a SQLite file of its own; registering, signing in and out, another password, recovery codes, closing the account; limits against misuse | Planned |
+| 16.2 | **What follows the visitor**: the list and the reading position kept with the account and brought together with what the device held; **invitations** as a code or link the sender passes on | Planned |
+| 16.3 | **Relationships two people show together**: request, acceptance, both sides' audiences, ending (ADR 0013), with circles to name an audience | Planned |
+| 16.4 | **Records of people and family trees**: records without an account, a tree with its owner and those who may change or see it, the history of every change; the claim of an account on a record, confirmed by who made the record | Planned |
+| 16.5 | **Personal photographs**: brought in like the files of the editors, with their audience, tags that the tagged person approves, the life of a person, recent shares | Planned |
+| 16.6 | **Making something public**, with the consent of everybody it names and the check before publication | Planned |
+| 16.7 | **Withdrawing and closing**: hidden at once; a closed account deleted after 30 days; a copy of one's own data | Planned |
+| 16.8 | **Signing in with Google or Microsoft** | Planned – needs the site registered with each of them, which the owner does; the secrets are entered by the owner |
+
+Not in this phase: sending mail (no mail service is decided), copies for use without a connection (Q-13 is
+open), children and guardians (PRIV-003 needs a rule of the owner's).
