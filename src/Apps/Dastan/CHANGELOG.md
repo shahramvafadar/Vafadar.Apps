@@ -206,3 +206,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   "1 waiting" in the header; the site sends nothing to anybody.
 - Circles: a name for some of the people one shows a relationship with, to show something to them only.
 - Every account has a page that shows its name and what the viewer may see of its relationships.
+- Family trees: who has an account can begin a tree, add people – a name and, when known, the years of birth
+  and death; a person needs no account – and link parents and partners. The owner names who may see the tree
+  and who may change it, and every change is listed with who made it. Nobody else sees a tree. It is shown as
+  a list for now; the drawing follows.

@@ -1,0 +1,102 @@
+@page "/account/trees"
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The family trees of who signed in (step 16.4, D-054): those they own and those shared with them. A tree
+   that is not shared with somebody does not exist for them. *@
+<PageTitle>@T["Trees_Title"] – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+@if (_trees is not null)
+{
+    <header class="page-header">
+        <h1>@T["Trees_Title"]</h1>
+        <p class="lead">@T["Trees_Lead"]</p>
+        <p class="actions"><a class="action secondary" href="account">@T["Account_Title"]</a></p>
+    </header>
+
+    @if (Said == "removed")
+    {
+        <p class="note" role="status">@T["Trees_Said_removed"]</p>
+    }
+
+    @if (_trees.Count == 0)
+    {
+        <p class="note">@T["Trees_None"]</p>
+    }
+    else
+    {
+        <ul class="statements" role="list">
+            @foreach (var tree in _trees)
+            {
+                <li>
+                    <a href="@($"account/trees/{tree.Id}")" dir="auto">@tree.Name</a>
+                    <span class="meta">
+                        – @string.Format(CultureInfo.CurrentCulture, T["Trees_People_Count"], Visitor.Number(tree.People))
+                        @if (tree.Role != TreeRole.Owner)
+                        {
+                            <text> · @string.Format(CultureInfo.CurrentCulture, T[$"Trees_Shared_{tree.Role}"], tree.Owner.Name)</text>
+                        }
+                    </span>
+                </li>
+            }
+        </ul>
+    }
+
+    <section id="add" aria-labelledby="add-title">
+        <h2 id="add-title">@T["Trees_Add_Title"]</h2>
+        @if (Form == "add" && Problem == "tree-name")
+        {
+            <ul class="problems" role="alert"><li>@T["Trees_Problem_tree-name"]</li></ul>
+        }
+        <form method="post" action="@($"{TreeEndpoints.Root}/add")" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}{TreeEndpoints.Page}")" />
+            <p class="field">
+                <label for="tree-name">@T["Trees_Name"]</label>
+                <input id="tree-name" name="name" type="text" required maxlength="@PeopleStore.LongestTreeName" autocomplete="off" dir="auto" />
+            </p>
+            <p class="note">@T["Trees_Add_Note"]</p>
+            <p><button type="submit" class="action secondary">@T["Trees_Add_Send"]</button></p>
+        </form>
+    </section>
+}
+
+@code {
+    private IReadOnlyList<TreeInfo>? _trees;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Desk.IsOpen)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        if (AccountDesk.Session(Context.User) is not { } session)
+        {
+            // Who is not signed in is shown where to sign in.
+            Navigation.NavigateTo($"/{Visitor.Language.Tag}{AccountDesk.Page}");
+            return;
+        }
+
+        using var store = Desk.Open();
+        _trees = store.Trees(session.Id);
+    }
+}

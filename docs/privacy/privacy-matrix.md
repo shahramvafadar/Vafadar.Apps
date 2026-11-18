@@ -168,3 +168,12 @@ are deleted at once. A relationship is shown to somebody other than the two only
 viewer; nobody is told about circles. The page about an account shows its name to everybody who has its
 address (an identifier made by the store) and asks search engines to stay away. Nothing is sent to anybody
 outside the site. All of it is deleted with either account.
+
+Since step 16.4 the store of Dastan's visitors also keeps family trees: for a tree its owner and name; the
+accounts the owner lets see or change it; **records of people, who need not have an account and are not asked**:
+a name, the year of birth and of death when known, whether the person has died, and the account that made the
+record; links between records (parent, partner); and every change with the account that made it and the time.
+A tree is shown to its owner and the accounts the owner named, and to nobody else. Records of living people
+other than the visitor are personal data of third parties kept without their knowledge – kept minimal on
+purpose (PRIV-003); a rule for children and guardians is not decided, and a legal review is the owner's.
+A tree is deleted with its owner's account; the name of a deleted account leaves the history of other trees.

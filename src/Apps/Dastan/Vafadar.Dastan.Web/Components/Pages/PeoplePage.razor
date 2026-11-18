@@ -161,7 +161,7 @@
                             @foreach (var relationship in _accepted)
                             {
                                 var box = $"circle-{circle.Number}-{relationship.Other.Id}";
-                                <p class="choice">
+                                <p class="tick">
                                     <input type="checkbox" id="@box" name="member" value="@relationship.Other.Id" checked="@circle.Members.Any(member => member.Id == relationship.Other.Id)" />
                                     <label for="@box" dir="auto">@relationship.Other.Name</label>
                                 </p>

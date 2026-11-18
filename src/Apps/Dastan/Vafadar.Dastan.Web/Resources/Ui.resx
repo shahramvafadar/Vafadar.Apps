@@ -1869,4 +1869,250 @@
   <data name="Person_None" xml:space="preserve">
     <value>Nothing is shown to you here.</value>
   </data>
+  <data name="Trees_Title" xml:space="preserve">
+    <value>Family trees</value>
+  </data>
+  <data name="Trees_Lead" xml:space="preserve">
+    <value>A family tree is yours. You say who else may see it and who may change it, and every change is kept with who made it. Nobody else sees it.</value>
+  </data>
+  <data name="Trees_None" xml:space="preserve">
+    <value>You have no family tree yet, and none is shared with you.</value>
+  </data>
+  <data name="Trees_People_Count" xml:space="preserve">
+    <value>people: {0}</value>
+  </data>
+  <data name="Trees_Shared_Viewer" xml:space="preserve">
+    <value>{0} lets you see this tree.</value>
+  </data>
+  <data name="Trees_Shared_Editor" xml:space="preserve">
+    <value>{0} lets you see and change this tree.</value>
+  </data>
+  <data name="Trees_Add_Title" xml:space="preserve">
+    <value>Begin a family tree</value>
+  </data>
+  <data name="Trees_Name" xml:space="preserve">
+    <value>Name of the tree</value>
+  </data>
+  <data name="Trees_Add_Note" xml:space="preserve">
+    <value>Only you see it until you name somebody.</value>
+  </data>
+  <data name="Trees_Add_Send" xml:space="preserve">
+    <value>Begin the tree</value>
+  </data>
+  <data name="Trees_Said_made" xml:space="preserve">
+    <value>The tree is made. Add the first person below.</value>
+  </data>
+  <data name="Trees_Said_removed" xml:space="preserve">
+    <value>The tree is removed.</value>
+  </data>
+  <data name="Trees_Said_renamed" xml:space="preserve">
+    <value>The tree has its new name.</value>
+  </data>
+  <data name="Trees_Said_person-added" xml:space="preserve">
+    <value>The person is added.</value>
+  </data>
+  <data name="Trees_Said_person-changed" xml:space="preserve">
+    <value>The record is changed.</value>
+  </data>
+  <data name="Trees_Said_person-removed" xml:space="preserve">
+    <value>The record is removed, with its links.</value>
+  </data>
+  <data name="Trees_Said_linked" xml:space="preserve">
+    <value>The link is added.</value>
+  </data>
+  <data name="Trees_Said_unlinked" xml:space="preserve">
+    <value>The link is removed.</value>
+  </data>
+  <data name="Trees_Said_member-set" xml:space="preserve">
+    <value>Saved.</value>
+  </data>
+  <data name="Trees_Problem_tree-name" xml:space="preserve">
+    <value>A tree needs a name of 1 to 80 characters, and you can own 20 trees.</value>
+  </data>
+  <data name="Trees_Problem_person" xml:space="preserve">
+    <value>A person needs a name of 1 to 80 characters. A year is a number from 1 to 9999, and nobody dies before they are born. A tree holds 500 people.</value>
+  </data>
+  <data name="Trees_Problem_link-kind" xml:space="preserve">
+    <value>Please choose what the two are to each other.</value>
+  </data>
+  <data name="Trees_Problem_link-unknown" xml:space="preserve">
+    <value>Both people have to be in this tree.</value>
+  </data>
+  <data name="Trees_Problem_link-same" xml:space="preserve">
+    <value>A link is between two different people.</value>
+  </data>
+  <data name="Trees_Problem_link-exists" xml:space="preserve">
+    <value>These two are linked like this already.</value>
+  </data>
+  <data name="Trees_Problem_link-loop" xml:space="preserve">
+    <value>That would make somebody their own ancestor.</value>
+  </data>
+  <data name="Tree_Lead_Owner" xml:space="preserve">
+    <value>This tree is yours.</value>
+  </data>
+  <data name="Tree_People_Title" xml:space="preserve">
+    <value>People</value>
+  </data>
+  <data name="Tree_People_None" xml:space="preserve">
+    <value>Nobody is in this tree yet.</value>
+  </data>
+  <data name="Tree_Parents" xml:space="preserve">
+    <value>Parents:</value>
+  </data>
+  <data name="Tree_Partners" xml:space="preserve">
+    <value>Partner:</value>
+  </data>
+  <data name="Tree_Children" xml:space="preserve">
+    <value>Children:</value>
+  </data>
+  <data name="Tree_And" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="Tree_Born" xml:space="preserve">
+    <value>born {0}</value>
+  </data>
+  <data name="Tree_Died" xml:space="preserve">
+    <value>died {0}</value>
+  </data>
+  <data name="Tree_Deceased" xml:space="preserve">
+    <value>deceased</value>
+  </data>
+  <data name="Tree_Person_Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Tree_Person_Save" xml:space="preserve">
+    <value>Save the record</value>
+  </data>
+  <data name="Tree_Person_Remove" xml:space="preserve">
+    <value>Remove the record</value>
+  </data>
+  <data name="Tree_Person_Add_Title" xml:space="preserve">
+    <value>Add a person</value>
+  </data>
+  <data name="Tree_Person_Add_Send" xml:space="preserve">
+    <value>Add the person</value>
+  </data>
+  <data name="Tree_Person_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Tree_Person_Born" xml:space="preserve">
+    <value>Year of birth, if known</value>
+  </data>
+  <data name="Tree_Person_Died" xml:space="preserve">
+    <value>Year of death, if known</value>
+  </data>
+  <data name="Tree_Person_Deceased" xml:space="preserve">
+    <value>Has died</value>
+  </data>
+  <data name="Tree_Person_Note" xml:space="preserve">
+    <value>A record says little on purpose: a name and years. A person needs no account to be in a tree, and being in your tree gives you no say over who they are.</value>
+  </data>
+  <data name="Tree_Links_Title" xml:space="preserve">
+    <value>Parents and partners</value>
+  </data>
+  <data name="Tree_Links_Few" xml:space="preserve">
+    <value>With two people in the tree you can link them.</value>
+  </data>
+  <data name="Tree_Link_From" xml:space="preserve">
+    <value>This person</value>
+  </data>
+  <data name="Tree_Link_Kind" xml:space="preserve">
+    <value>is</value>
+  </data>
+  <data name="Tree_Link_parent" xml:space="preserve">
+    <value>a parent of</value>
+  </data>
+  <data name="Tree_Link_partner" xml:space="preserve">
+    <value>the partner of</value>
+  </data>
+  <data name="Tree_Link_To" xml:space="preserve">
+    <value>this person</value>
+  </data>
+  <data name="Tree_Link_Send" xml:space="preserve">
+    <value>Add the link</value>
+  </data>
+  <data name="Tree_Link_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Tree_Linked_parent" xml:space="preserve">
+    <value>{0} is a parent of {1}</value>
+  </data>
+  <data name="Tree_Linked_partner" xml:space="preserve">
+    <value>{0} and {1} are partners</value>
+  </data>
+  <data name="Tree_Members_Title" xml:space="preserve">
+    <value>Who may see or change this tree</value>
+  </data>
+  <data name="Tree_Members_Lead" xml:space="preserve">
+    <value>You can name people you show a relationship with. Who may change the tree adds, changes and removes people and links; only you name others, rename the tree or remove it.</value>
+  </data>
+  <data name="Tree_Members_Nobody" xml:space="preserve">
+    <value>Once somebody has accepted a relationship with you, you can name them here.</value>
+  </data>
+  <data name="Tree_Member_Label" xml:space="preserve">
+    <value>What {0} may do</value>
+  </data>
+  <data name="Tree_Role_none" xml:space="preserve">
+    <value>Nothing</value>
+  </data>
+  <data name="Tree_Role_viewer" xml:space="preserve">
+    <value>See</value>
+  </data>
+  <data name="Tree_Role_editor" xml:space="preserve">
+    <value>See and change</value>
+  </data>
+  <data name="Tree_History_Title" xml:space="preserve">
+    <value>Every change</value>
+  </data>
+  <data name="Tree_Change_Gone" xml:space="preserve">
+    <value>an account that is deleted</value>
+  </data>
+  <data name="Tree_Change_tree-made" xml:space="preserve">
+    <value>Tree begun</value>
+  </data>
+  <data name="Tree_Change_tree-renamed" xml:space="preserve">
+    <value>Tree renamed</value>
+  </data>
+  <data name="Tree_Change_person-added" xml:space="preserve">
+    <value>Person added</value>
+  </data>
+  <data name="Tree_Change_person-changed" xml:space="preserve">
+    <value>Record changed</value>
+  </data>
+  <data name="Tree_Change_person-removed" xml:space="preserve">
+    <value>Record removed</value>
+  </data>
+  <data name="Tree_Change_parent-added" xml:space="preserve">
+    <value>Parent linked</value>
+  </data>
+  <data name="Tree_Change_parent-removed" xml:space="preserve">
+    <value>Parent link removed</value>
+  </data>
+  <data name="Tree_Change_partner-added" xml:space="preserve">
+    <value>Partners linked</value>
+  </data>
+  <data name="Tree_Change_partner-removed" xml:space="preserve">
+    <value>Partner link removed</value>
+  </data>
+  <data name="Tree_Change_member-viewer" xml:space="preserve">
+    <value>May see</value>
+  </data>
+  <data name="Tree_Change_member-editor" xml:space="preserve">
+    <value>May see and change</value>
+  </data>
+  <data name="Tree_Change_member-removed" xml:space="preserve">
+    <value>May no longer see</value>
+  </data>
+  <data name="Tree_Rename_Title" xml:space="preserve">
+    <value>The tree itself</value>
+  </data>
+  <data name="Tree_Rename_Send" xml:space="preserve">
+    <value>Rename the tree</value>
+  </data>
+  <data name="Tree_Remove_Lead" xml:space="preserve">
+    <value>Remove this tree with everybody in it. This cannot be undone.</value>
+  </data>
+  <data name="Tree_Remove_Send" xml:space="preserve">
+    <value>Remove the tree for good</value>
+  </data>
 </root>

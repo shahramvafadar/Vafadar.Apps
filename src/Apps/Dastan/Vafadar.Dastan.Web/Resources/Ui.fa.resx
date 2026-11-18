@@ -1869,4 +1869,250 @@
   <data name="Person_None" xml:space="preserve">
     <value>این‌جا چیزی به شما نشان داده نمی‌شود.</value>
   </data>
+  <data name="Trees_Title" xml:space="preserve">
+    <value>شجره‌نامه‌ها</value>
+  </data>
+  <data name="Trees_Lead" xml:space="preserve">
+    <value>شجره‌نامه از آنِ شماست. شما می‌گویید چه کس دیگری آن را ببیند و چه کسی بتواند تغییرش دهد، و هر تغییر با نام کسی که آن را داده نگه داشته می‌شود. هیچ‌کس دیگری آن را نمی‌بیند.</value>
+  </data>
+  <data name="Trees_None" xml:space="preserve">
+    <value>هنوز شجره‌نامه‌ای ندارید و شجره‌نامه‌ای هم با شما در میان گذاشته نشده است.</value>
+  </data>
+  <data name="Trees_People_Count" xml:space="preserve">
+    <value>افراد: {0}</value>
+  </data>
+  <data name="Trees_Shared_Viewer" xml:space="preserve">
+    <value>{0} دیدن این شجره‌نامه را به شما اجازه داده است.</value>
+  </data>
+  <data name="Trees_Shared_Editor" xml:space="preserve">
+    <value>{0} دیدن و تغییر این شجره‌نامه را به شما اجازه داده است.</value>
+  </data>
+  <data name="Trees_Add_Title" xml:space="preserve">
+    <value>آغاز یک شجره‌نامه</value>
+  </data>
+  <data name="Trees_Name" xml:space="preserve">
+    <value>نام شجره‌نامه</value>
+  </data>
+  <data name="Trees_Add_Note" xml:space="preserve">
+    <value>تا کسی را نام نبرید فقط خودتان آن را می‌بینید.</value>
+  </data>
+  <data name="Trees_Add_Send" xml:space="preserve">
+    <value>آغاز شجره‌نامه</value>
+  </data>
+  <data name="Trees_Said_made" xml:space="preserve">
+    <value>شجره‌نامه ساخته شد. نخستین فرد را پایین‌تر بیفزایید.</value>
+  </data>
+  <data name="Trees_Said_removed" xml:space="preserve">
+    <value>شجره‌نامه برداشته شد.</value>
+  </data>
+  <data name="Trees_Said_renamed" xml:space="preserve">
+    <value>نام تازهٔ شجره‌نامه ثبت شد.</value>
+  </data>
+  <data name="Trees_Said_person-added" xml:space="preserve">
+    <value>فرد افزوده شد.</value>
+  </data>
+  <data name="Trees_Said_person-changed" xml:space="preserve">
+    <value>رکورد تغییر کرد.</value>
+  </data>
+  <data name="Trees_Said_person-removed" xml:space="preserve">
+    <value>رکورد با پیوندهایش برداشته شد.</value>
+  </data>
+  <data name="Trees_Said_linked" xml:space="preserve">
+    <value>پیوند افزوده شد.</value>
+  </data>
+  <data name="Trees_Said_unlinked" xml:space="preserve">
+    <value>پیوند برداشته شد.</value>
+  </data>
+  <data name="Trees_Said_member-set" xml:space="preserve">
+    <value>ذخیره شد.</value>
+  </data>
+  <data name="Trees_Problem_tree-name" xml:space="preserve">
+    <value>شجره‌نامه نامی ۱ تا ۸۰ نویسه‌ای می‌خواهد، و می‌توانید ۲۰ شجره‌نامه داشته باشید.</value>
+  </data>
+  <data name="Trees_Problem_person" xml:space="preserve">
+    <value>فرد نامی ۱ تا ۸۰ نویسه‌ای می‌خواهد. سال عددی از ۱ تا ۹۹۹۹ است و کسی پیش از تولدش نمی‌میرد. هر شجره‌نامه ۵۰۰ نفر جا دارد.</value>
+  </data>
+  <data name="Trees_Problem_link-kind" xml:space="preserve">
+    <value>لطفاً نسبت این دو را برگزینید.</value>
+  </data>
+  <data name="Trees_Problem_link-unknown" xml:space="preserve">
+    <value>هر دو فرد باید در همین شجره‌نامه باشند.</value>
+  </data>
+  <data name="Trees_Problem_link-same" xml:space="preserve">
+    <value>پیوند میان دو فرد متفاوت است.</value>
+  </data>
+  <data name="Trees_Problem_link-exists" xml:space="preserve">
+    <value>این دو از پیش همین پیوند را دارند.</value>
+  </data>
+  <data name="Trees_Problem_link-loop" xml:space="preserve">
+    <value>با این پیوند کسی نیای خودش می‌شود.</value>
+  </data>
+  <data name="Tree_Lead_Owner" xml:space="preserve">
+    <value>این شجره‌نامه از آنِ شماست.</value>
+  </data>
+  <data name="Tree_People_Title" xml:space="preserve">
+    <value>افراد</value>
+  </data>
+  <data name="Tree_People_None" xml:space="preserve">
+    <value>هنوز کسی در این شجره‌نامه نیست.</value>
+  </data>
+  <data name="Tree_Parents" xml:space="preserve">
+    <value>پدر و مادر:</value>
+  </data>
+  <data name="Tree_Partners" xml:space="preserve">
+    <value>همسر:</value>
+  </data>
+  <data name="Tree_Children" xml:space="preserve">
+    <value>فرزندان:</value>
+  </data>
+  <data name="Tree_And" xml:space="preserve">
+    <value>، </value>
+  </data>
+  <data name="Tree_Born" xml:space="preserve">
+    <value>زادهٔ {0}</value>
+  </data>
+  <data name="Tree_Died" xml:space="preserve">
+    <value>درگذشتهٔ {0}</value>
+  </data>
+  <data name="Tree_Deceased" xml:space="preserve">
+    <value>درگذشته</value>
+  </data>
+  <data name="Tree_Person_Change" xml:space="preserve">
+    <value>تغییر</value>
+  </data>
+  <data name="Tree_Person_Save" xml:space="preserve">
+    <value>ذخیرهٔ رکورد</value>
+  </data>
+  <data name="Tree_Person_Remove" xml:space="preserve">
+    <value>برداشتن رکورد</value>
+  </data>
+  <data name="Tree_Person_Add_Title" xml:space="preserve">
+    <value>افزودن فرد</value>
+  </data>
+  <data name="Tree_Person_Add_Send" xml:space="preserve">
+    <value>افزودن فرد</value>
+  </data>
+  <data name="Tree_Person_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Tree_Person_Born" xml:space="preserve">
+    <value>سال تولد، اگر دانسته است</value>
+  </data>
+  <data name="Tree_Person_Died" xml:space="preserve">
+    <value>سال درگذشت، اگر دانسته است</value>
+  </data>
+  <data name="Tree_Person_Deceased" xml:space="preserve">
+    <value>درگذشته است</value>
+  </data>
+  <data name="Tree_Person_Note" xml:space="preserve">
+    <value>رکورد به‌عمد کم می‌گوید: یک نام و سال‌ها. کسی برای بودن در شجره‌نامه به حساب نیاز ندارد، و بودنش در شجره‌نامهٔ شما اختیاری دربارهٔ هویت او به شما نمی‌دهد.</value>
+  </data>
+  <data name="Tree_Links_Title" xml:space="preserve">
+    <value>پدر و مادر و همسران</value>
+  </data>
+  <data name="Tree_Links_Few" xml:space="preserve">
+    <value>با بودن دو نفر در شجره‌نامه می‌توانید آن‌ها را به هم پیوند دهید.</value>
+  </data>
+  <data name="Tree_Link_From" xml:space="preserve">
+    <value>این فرد</value>
+  </data>
+  <data name="Tree_Link_Kind" xml:space="preserve">
+    <value>نسبت</value>
+  </data>
+  <data name="Tree_Link_parent" xml:space="preserve">
+    <value>پدر یا مادرِ</value>
+  </data>
+  <data name="Tree_Link_partner" xml:space="preserve">
+    <value>همسرِ</value>
+  </data>
+  <data name="Tree_Link_To" xml:space="preserve">
+    <value>این فرد</value>
+  </data>
+  <data name="Tree_Link_Send" xml:space="preserve">
+    <value>افزودن پیوند</value>
+  </data>
+  <data name="Tree_Link_Remove" xml:space="preserve">
+    <value>برداشتن</value>
+  </data>
+  <data name="Tree_Linked_parent" xml:space="preserve">
+    <value>{0} پدر یا مادرِ {1} است</value>
+  </data>
+  <data name="Tree_Linked_partner" xml:space="preserve">
+    <value>{0} و {1} همسرند</value>
+  </data>
+  <data name="Tree_Members_Title" xml:space="preserve">
+    <value>چه کسی این شجره‌نامه را ببیند یا تغییر دهد</value>
+  </data>
+  <data name="Tree_Members_Lead" xml:space="preserve">
+    <value>می‌توانید کسانی را نام ببرید که با آن‌ها رابطه نشان می‌دهید. کسی که اجازهٔ تغییر دارد افراد و پیوندها را می‌افزاید، تغییر می‌دهد و برمی‌دارد؛ نام‌بردن از دیگران، تغییر نام و برداشتن شجره‌نامه فقط با شماست.</value>
+  </data>
+  <data name="Tree_Members_Nobody" xml:space="preserve">
+    <value>وقتی کسی رابطه با شما را بپذیرد، می‌توانید این‌جا از او نام ببرید.</value>
+  </data>
+  <data name="Tree_Member_Label" xml:space="preserve">
+    <value>اجازهٔ {0}</value>
+  </data>
+  <data name="Tree_Role_none" xml:space="preserve">
+    <value>هیچ</value>
+  </data>
+  <data name="Tree_Role_viewer" xml:space="preserve">
+    <value>دیدن</value>
+  </data>
+  <data name="Tree_Role_editor" xml:space="preserve">
+    <value>دیدن و تغییر</value>
+  </data>
+  <data name="Tree_History_Title" xml:space="preserve">
+    <value>همهٔ تغییرها</value>
+  </data>
+  <data name="Tree_Change_Gone" xml:space="preserve">
+    <value>حسابی که پاک شده است</value>
+  </data>
+  <data name="Tree_Change_tree-made" xml:space="preserve">
+    <value>آغاز شجره‌نامه</value>
+  </data>
+  <data name="Tree_Change_tree-renamed" xml:space="preserve">
+    <value>تغییر نام شجره‌نامه</value>
+  </data>
+  <data name="Tree_Change_person-added" xml:space="preserve">
+    <value>افزودن فرد</value>
+  </data>
+  <data name="Tree_Change_person-changed" xml:space="preserve">
+    <value>تغییر رکورد</value>
+  </data>
+  <data name="Tree_Change_person-removed" xml:space="preserve">
+    <value>برداشتن رکورد</value>
+  </data>
+  <data name="Tree_Change_parent-added" xml:space="preserve">
+    <value>پیوند پدر یا مادر</value>
+  </data>
+  <data name="Tree_Change_parent-removed" xml:space="preserve">
+    <value>برداشتن پیوند پدر یا مادر</value>
+  </data>
+  <data name="Tree_Change_partner-added" xml:space="preserve">
+    <value>پیوند همسری</value>
+  </data>
+  <data name="Tree_Change_partner-removed" xml:space="preserve">
+    <value>برداشتن پیوند همسری</value>
+  </data>
+  <data name="Tree_Change_member-viewer" xml:space="preserve">
+    <value>اجازهٔ دیدن</value>
+  </data>
+  <data name="Tree_Change_member-editor" xml:space="preserve">
+    <value>اجازهٔ دیدن و تغییر</value>
+  </data>
+  <data name="Tree_Change_member-removed" xml:space="preserve">
+    <value>برداشتن اجازه</value>
+  </data>
+  <data name="Tree_Rename_Title" xml:space="preserve">
+    <value>خودِ شجره‌نامه</value>
+  </data>
+  <data name="Tree_Rename_Send" xml:space="preserve">
+    <value>تغییر نام شجره‌نامه</value>
+  </data>
+  <data name="Tree_Remove_Lead" xml:space="preserve">
+    <value>برداشتن این شجره‌نامه با همهٔ افرادش. این کار برگشت‌پذیر نیست.</value>
+  </data>
+  <data name="Tree_Remove_Send" xml:space="preserve">
+    <value>برداشتن همیشگی شجره‌نامه</value>
+  </data>
 </root>
