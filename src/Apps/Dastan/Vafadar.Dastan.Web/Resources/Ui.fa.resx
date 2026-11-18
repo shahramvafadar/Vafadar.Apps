@@ -2562,4 +2562,13 @@
   <data name="Photos_Said_taken-out" xml:space="preserve">
     <value>عکس از آلبوم برداشته شد. در میان عکس‌های شما می‌ماند.</value>
   </data>
+  <data name="Photos_Confirm" xml:space="preserve">
+    <value>اگر آن را به همه نشان می‌دهم: کسانی که در عکس هستند با این کار موافق‌اند.</value>
+  </data>
+  <data name="Photos_Confirm_Short" xml:space="preserve">
+    <value>برای «همه»: کسانی که در عکس هستند موافق‌اند</value>
+  </data>
+  <data name="Photos_Problem_photo-agreement" xml:space="preserve">
+    <value>عکس فقط وقتی به همه نشان داده می‌شود که بگویید کسانی که در آن هستند موافق‌اند. آن را تیک بزنید یا بینندگان را انتخاب کنید. چیزی تغییر نکرد.</value>
+  </data>
 </root>

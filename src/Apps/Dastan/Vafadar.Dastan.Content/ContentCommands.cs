@@ -40,9 +40,10 @@ public static class ContentCommands
               history of the revisions before and what this one changes. Refuses a file in which a statement
               is not reviewed or a review is not recorded. Never over a file.
 
-          reports forget <folder> --looked-at-before <yyyy-MM-dd>
-              For whoever runs the site: deletes the reports of visitors that an editor looked at before
-              that day. A report nobody has looked at is never deleted. Says how many were deleted.
+          reports forget <folder> [--kept-days <n> | --looked-at-before <yyyy-MM-dd>]
+              For whoever runs the site: deletes the reports of visitors that an editor looked at more than
+              90 days ago – or another number of days, or before a day that is named. A report nobody has
+              looked at is never deleted. Says how many were deleted. Nothing runs it by itself.
 
         """ + StoreCommands.Usage + EditorCommands.Usage + """
 
@@ -74,11 +75,21 @@ public static class ContentCommands
             ["template", "collection" or "subject" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
             ["revision", _, ..] => Revision(words[1], words[2..], output),
             ["reports", "forget", _, "--looked-at-before", _] => ForgetReports(words[2], words[4], output),
+            ["reports", "forget", _] => ForgetReports(words[2], today.AddDays(-ReportsKeptDays).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), output),
+            ["reports", "forget", _, "--kept-days", _] => int.TryParse(words[4], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var days) && days <= 36500
+                ? ForgetReports(words[2], today.AddDays(-days).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), output)
+                : NotAsked(output),
             ["store", "editor" or "editors" or "copy", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
             ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
             _ => NotAsked(output),
         };
     }
+
+    /// <summary>
+    /// How many days a report of a visitor is kept after an editor looked at it, when whoever runs the site
+    /// names no other number (step 16.11): long enough to come back to it, not longer than it is of use.
+    /// </summary>
+    public const int ReportsKeptDays = 90;
 
     private static int ForgetReports(string folder, string day, TextWriter output)
     {

@@ -68,13 +68,20 @@ public static class PhotoEndpoints
                 : await next(invocation).ConfigureAwait(false);
         });
 
-        forms.MapPost("/add", (HttpContext context, AccountDesk desk, IFormFile? file, [FromForm] string? caption, [FromForm] string? taken, [FromForm] string? scope, [FromForm] string? returnUrl) =>
+        forms.MapPost("/add", (HttpContext context, AccountDesk desk, IFormFile? file, [FromForm] string? caption, [FromForm] string? taken, [FromForm] string? scope, [FromForm] string? confirmed, [FromForm] string? returnUrl) =>
         {
             var day = Day(taken, out var known);
             using var store = desk.Open();
             if (file is null || file.Length == 0 || PeopleEndpoints.Scope(scope) is not { } shown || !known)
             {
                 return Back(returnUrl, "add", "photo-form");
+            }
+
+            // The site does not know who is in a picture. Who shows one to everybody says that the people in it
+            // agree (D-053, step 16.11); without that it is not shown to everybody.
+            if (shown.Kind == ScopeKind.Public && confirmed != "on")
+            {
+                return Back(returnUrl, "add", "photo-agreement");
             }
 
             if (file.Length > Limit)
@@ -111,12 +118,21 @@ public static class PhotoEndpoints
             return Said(returnUrl, "added", "mine");
         });
 
-        forms.MapPost("/share", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? scope, [FromForm] string? returnUrl) =>
+        forms.MapPost("/share", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? scope, [FromForm] string? confirmed, [FromForm] string? returnUrl) =>
         {
             using var store = desk.Open();
-            return PeopleEndpoints.Scope(scope) is { } shown && store.SharePhoto(Me(context), photo ?? string.Empty, shown.Kind, shown.Circle)
-                ? Said(returnUrl, "shared", "mine")
-                : Results.BadRequest();
+            if (PeopleEndpoints.Scope(scope) is not { } shown)
+            {
+                return Results.BadRequest();
+            }
+
+            // Asked of the owner alone: for anybody else the form is refused, whatever they ticked.
+            if (shown.Kind == ScopeKind.Public && confirmed != "on" && store.Photos(Me(context)).Any(own => own.Id == photo))
+            {
+                return Back(returnUrl, "mine", "photo-agreement");
+            }
+
+            return store.SharePhoto(Me(context), photo ?? string.Empty, shown.Kind, shown.Circle) ? Said(returnUrl, "shared", "mine") : Results.BadRequest();
         });
 
         forms.MapPost("/remove", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? returnUrl) =>

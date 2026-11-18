@@ -111,6 +111,10 @@
                 <label for="add-scope">@T["Photos_Shown_Label"]</label>
                 @Audience("add-scope", "private")
             </p>
+            <p class="tick">
+                <input id="add-confirmed" name="confirmed" type="checkbox" />
+                <label for="add-confirmed">@T["Photos_Confirm"]</label>
+            </p>
             <p class="note">@T["Photos_Add_Note"]</p>
             <p><button type="submit" class="action secondary">@T["Photos_Add_Send"]</button></p>
         </form>
@@ -124,6 +128,10 @@
         }
         else
         {
+            @if (_form == "mine" && _problem is not null)
+            {
+                <ul class="problems" role="alert"><li>@T[$"Photos_Problem_{_problem}"]</li></ul>
+            }
             @Years(_years, "account/photos", "mine")
             <ul class="photos" role="list">
                 @foreach (var photo in _mine.Where(photo => Year is null || photo.Taken?.Year == Year))
@@ -139,6 +147,7 @@
                             <input type="hidden" name="photo" value="@photo.Id" />
                             <label for="@($"scope-{photo.Id}")">@T["Photos_Shown_Label"]</label>
                             @Audience($"scope-{photo.Id}", chosen)
+                            <label><input name="confirmed" type="checkbox" checked="@(photo.Shown == ScopeKind.Public)" /> @T["Photos_Confirm_Short"]</label>
                             <button type="submit">@T["People_Shown_Send"]</button>
                         </form>
                         @if (photo.Held)
@@ -304,7 +313,7 @@
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
     private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed", "agreed", "agreement-back", "album-added", "album-changed", "album-removed", "placed", "taken-out"];
-    private static readonly string[] Known = ["photo-form", "photo-large", "photo-many", "photo-file", "album-name"];
+    private static readonly string[] Known = ["photo-form", "photo-large", "photo-many", "photo-file", "album-name", "photo-agreement"];
 
     private VisitorSession? _me;
     private IReadOnlyList<PhotoInfo> _mine = [];
@@ -354,7 +363,7 @@
         _me = session;
         _here = $"/{Visitor.Language.Tag}{PhotoEndpoints.Page}";
         _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
-        _form = Form is "add" or "albums" ? Form : null;
+        _form = Form is "add" or "albums" or "mine" ? Form : null;
         _problem = _form is not null && Known.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
         using var store = Desk.Open();
         _mine = store.Photos(session.Id);

@@ -408,3 +408,20 @@ several owners, an album of the editors' media – none is named for visitors by
 Checked: `AlbumsTests` (the store: 13 cases), two more cases of `PhotoPagesTests` and the five forms among
 those refused to who is not signed in. Looked at in a browser: the albums on the page of the photographs (fa)
 and on the page of a person (en), 375 px, dark. The years were not seen there.
+
+## Twelfth addendum (2026-11-18): the owner of a photograph says that the people in it agree (step 16.11)
+
+The tenth addendum asks the people a photograph names. People it shows and does not name can be asked by
+nothing: the site does not know who is in a picture. The owner was given four ways on 2026-11-18 (a statement
+of the owner of the picture, a form to object, both, nothing but the terms) with the first recommended for
+now, and had not answered when this was built. It is built because it takes nothing away that cannot be given
+back: one condition in two forms.
+
+* Whoever brings a photograph in for everybody, or changes one to everybody, ticks that the people in it
+  agree. Without the tick nothing is kept or changed, and the page says why. For the owner alone or a circle
+  nothing is asked.
+* The statement is asked for by the form and **is not kept**: the store does not record that it was made. It
+  is a promise, not a proof – a site with open registration needs the way to object as well, and with it
+  somebody who looks at objections. That stays the owner's.
+
+Checked: one more case of `PhotoPagesTests`. The refusal was looked at in a browser (fa, 375 px, dark).

@@ -69,7 +69,7 @@ public sealed class PhotoPagesTests : IDisposable
     private static async Task<string> Bring(Browser owner, string scope = "private", string caption = "At the sea", string taken = "1998-07-04", byte[]? file = null)
     {
         var known = Ids(await owner.Get(Photos));
-        var added = await owner.Upload($"{Forms}/add", Photos, "IMG_0001.png", file ?? TestFiles.Png(), ("caption", caption), ("taken", taken), ("scope", scope), ("returnUrl", Photos));
+        var added = await owner.Upload($"{Forms}/add", Photos, "IMG_0001.png", file ?? TestFiles.Png(), ("caption", caption), ("taken", taken), ("scope", scope), ("confirmed", "on"), ("returnUrl", Photos));
         Assert.Equal($"{Photos}?said=added#mine", added.Response.Headers.Location?.OriginalString);
         return Ids(await owner.Get(Photos)).Except(known).Single();
     }
@@ -204,7 +204,7 @@ public sealed class PhotoPagesTests : IDisposable
         Assert.Matches($"<option value=\"circle-{circle}\" selected[^>]*>Circle: Trusted</option>", (await mina.Get(Photos)).Html);
 
         // For everybody.
-        Assert.Equal($"{Photos}?said=shared#mine", (await Send(mina, "share", ("photo", id), ("scope", "public"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal($"{Photos}?said=shared#mine", (await Send(mina, "share", ("photo", id), ("scope", "public"), ("confirmed", "on"))).Response.Headers.Location?.OriginalString);
         Assert.Equal(HttpStatusCode.OK, (await _site.Visitor().Get($"/photo/{id}")).Status);
         Assert.Contains(id, (await _site.Visitor().Get(page)).Html, StringComparison.Ordinal);
         Assert.Equal(HttpStatusCode.OK, (await dara.Get($"/photo/{id}")).Status);
@@ -332,6 +332,36 @@ public sealed class PhotoPagesTests : IDisposable
 
         Assert.Equal($"{Photos}?said=agreement-back#asked", back.Response.Headers.Location?.OriginalString);
         Assert.Equal(HttpStatusCode.NotFound, (await stranger.Get($"/photo/{id}")).Status);
+    }
+
+    [Fact]
+    public async Task A_photograph_is_shown_to_everybody_only_when_its_owner_says_that_the_people_in_it_agree()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        Directory.CreateDirectory(_site.Media);
+        var files = Directory.GetFiles(_site.Media, "*", SearchOption.AllDirectories).Length;
+
+        // Brought in for everybody without the words: nothing is kept, and the page says why.
+        var refused = await mina.Upload($"{Forms}/add", Photos, "IMG_0001.png", TestFiles.Png(), ("caption", "At the sea"), ("taken", string.Empty), ("scope", "public"), ("returnUrl", Photos));
+        Assert.Equal($"{Photos}?form=add&problem=photo-agreement#add", refused.Response.Headers.Location?.OriginalString);
+        Assert.Empty(Ids(await mina.Get(Photos)));
+        Assert.Equal(files, Directory.GetFiles(_site.Media, "*", SearchOption.AllDirectories).Length);
+        Assert.Contains("the people in it agree", (await mina.Get($"{Photos}?form=add&problem=photo-agreement")).Main, StringComparison.Ordinal);
+
+        // For the owner alone or a circle nothing is asked.
+        var id = await Bring(mina, "private");
+        var kept = await Send(mina, "share", ("photo", id), ("scope", "public"));
+        Assert.Equal($"{Photos}?form=mine&problem=photo-agreement#mine", kept.Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.NotFound, (await sara.Get($"/photo/{id}")).Status);
+        Assert.Contains("role=\"alert\"", (await mina.Get($"{Photos}?form=mine&problem=photo-agreement")).Html, StringComparison.Ordinal);
+
+        Assert.Equal($"{Photos}?said=shared#mine", (await Send(mina, "share", ("photo", id), ("scope", "public"), ("confirmed", "on"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.OK, (await sara.Get($"/photo/{id}")).Status);
+
+        // Somebody else changes nothing with the words.
+        Assert.Equal("/refused", (await Send(sara, "share", ("photo", id), ("scope", "public"), ("confirmed", "on"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, "share", ("photo", id), ("scope", "public"))).Response.Headers.Location?.OriginalString);
     }
 
     [Fact]

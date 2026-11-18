@@ -2562,4 +2562,13 @@
   <data name="Photos_Said_taken-out" xml:space="preserve">
     <value>The photograph was taken out of the album. It stays among your photographs.</value>
   </data>
+  <data name="Photos_Confirm" xml:space="preserve">
+    <value>If I show it to everybody: the people in the picture agree to that.</value>
+  </data>
+  <data name="Photos_Confirm_Short" xml:space="preserve">
+    <value>For "everybody": the people in it agree</value>
+  </data>
+  <data name="Photos_Problem_photo-agreement" xml:space="preserve">
+    <value>A photograph is shown to everybody only when you say that the people in it agree. Tick that, or choose who sees it. Nothing was changed.</value>
+  </data>
 </root>

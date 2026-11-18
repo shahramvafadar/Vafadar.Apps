@@ -172,4 +172,30 @@ public sealed class ReportBoxTests : IDisposable
         Assert.Contains("Deleted 1 report(s)", output.ToString(), StringComparison.Ordinal);
         Assert.Empty(box.Looked());
     }
+
+    [Fact]
+    public void Without_a_day_the_command_keeps_what_was_looked_at_in_the_last_ninety_days()
+    {
+        var box = new ReportBox(_folder);
+        box.Take("story-x", null, "en", "evidence/entity/a", "Looked at long ago.", Day.AddDays(-200));
+        box.Take("story-x", null, "en", "evidence/entity/b", "Looked at ninety days ago.", Day.AddDays(-200));
+        box.Take("story-x", null, "en", "evidence/entity/c", "Looked at lately.", Day.AddDays(-200));
+        box.Take("story-x", null, "en", "evidence/entity/d", "Old, and nobody looked.", Day.AddDays(-200));
+        box.Settle(box.Waiting().Single(report => report.Text == "Looked at long ago.").Id, "a reviewer", Day.AddDays(-91));
+        box.Settle(box.Waiting().Single(report => report.Text == "Looked at ninety days ago.").Id, "a reviewer", Day.AddDays(-90));
+        box.Settle(box.Waiting().Single(report => report.Text == "Looked at lately.").Id, "a reviewer", Day.AddDays(-5));
+        using var output = new StringWriter();
+
+        Assert.Equal(0, Vafadar.Dastan.Content.ContentCommands.Run(["reports", "forget", _folder], output, Day));
+
+        Assert.Equal(["Looked at lately.", "Looked at ninety days ago."], box.Looked().Select(report => report.Text).Order());
+        Assert.Equal("Old, and nobody looked.", Assert.Single(box.Waiting()).Text);
+
+        // Whoever runs the site may name another number of days; what is no number is not understood.
+        Assert.Equal(0, Vafadar.Dastan.Content.ContentCommands.Run(["reports", "forget", _folder, "--kept-days", "30"], output, Day));
+        Assert.Equal("Looked at lately.", Assert.Single(box.Looked()).Text);
+        Assert.Equal(2, Vafadar.Dastan.Content.ContentCommands.Run(["reports", "forget", _folder, "--kept-days", "-1"], output, Day));
+        Assert.Equal(2, Vafadar.Dastan.Content.ContentCommands.Run(["reports", "forget", _folder, "--kept-days", "many"], output, Day));
+        Assert.Single(box.Looked());
+    }
 }
