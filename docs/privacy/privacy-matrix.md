@@ -41,7 +41,8 @@ is the statement it is about, what the visitor wrote (at most 1,000 characters) 
 address of the visitor's machine, no browser, no time of the day; the form says so and asks not to write
 anything personal. The address a report came from is counted in the memory of the process for one hour, to
 refuse more than five reports an hour, and is written nowhere. A report an editor has looked at is kept with
-the name the editor acts under; how long such reports are kept is the owner's decision.
+the name the editor acts under; how long such reports are kept is the owner's decision – the command
+`reports forget` deletes those looked at before a day, and nothing deletes by itself.
 Since step 13.7 editors bring image and video files in through the tool: an image is kept without the notes it
 carries about its making (EXIF, XMP, text chunks – they can name a place and a device); a video is kept as it is,
 and the tool tells the editor so. The name a file had on the editor's machine is not kept.

@@ -112,6 +112,22 @@ public sealed partial class ReportBox
         return true;
     }
 
+    /// <summary>
+    /// Deletes the reports that were looked at before a day, and returns how many. A report that waits is never
+    /// deleted this way: nobody has read it yet.
+    /// </summary>
+    public int Forget(DateOnly lookedAtBefore)
+    {
+        var forgotten = 0;
+        foreach (var report in Read(Settled).Where(report => report.SettledOn is { } looked && looked < lookedAtBefore))
+        {
+            File.Delete(Path.Combine(Settled, report.Id + ".json"));
+            forgotten++;
+        }
+
+        return forgotten;
+    }
+
     private static List<VisitorReport> Read(string folder) => !Directory.Exists(folder)
         ? []
         : [.. Directory.EnumerateFiles(folder, "*.json").Select(ReadOne).OfType<VisitorReport>().OrderBy(report => report.On).ThenBy(report => report.Id, StringComparer.Ordinal)];

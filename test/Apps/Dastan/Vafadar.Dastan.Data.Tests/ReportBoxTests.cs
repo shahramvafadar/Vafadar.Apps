@@ -139,4 +139,37 @@ public sealed class ReportBoxTests : IDisposable
         Assert.False(box.Settle(new string('0', 32), "a reviewer", Day));
         Assert.False(Directory.Exists(_folder));
     }
+    [Fact]
+    public void Reports_that_were_looked_at_long_ago_are_deleted_and_those_that_wait_never()
+    {
+        var box = new ReportBox(_folder);
+        box.Take("story-x", null, "en", "evidence/entity/a", "Looked at early.", Day);
+        box.Take("story-x", null, "en", "evidence/entity/b", "Looked at late.", Day);
+        box.Take("story-x", null, "en", "evidence/entity/c", "Still waiting, and old.", Day.AddDays(-400));
+        Assert.True(box.Settle(box.Waiting().Single(report => report.Text == "Looked at early.").Id, "a reviewer", Day.AddDays(1)));
+        Assert.True(box.Settle(box.Waiting().Single(report => report.Text == "Looked at late.").Id, "a reviewer", Day.AddDays(30)));
+
+        Assert.Equal(1, box.Forget(Day.AddDays(10)));
+
+        Assert.Equal("Looked at late.", Assert.Single(box.Looked()).Text);
+        Assert.Equal("Still waiting, and old.", Assert.Single(box.Waiting()).Text);
+        Assert.Equal(0, box.Forget(Day.AddDays(10)));
+    }
+
+    [Fact]
+    public void The_command_deletes_what_was_looked_at_before_a_day_and_says_how_many()
+    {
+        var box = new ReportBox(_folder);
+        box.Take("story-x", null, "en", "evidence/entity/a", "One.", Day);
+        box.Settle(box.Waiting()[0].Id, "a reviewer", Day);
+        using var output = new StringWriter();
+
+        var done = Vafadar.Dastan.Content.ContentCommands.Run(["reports", "forget", _folder, "--looked-at-before", "2026-12-01"], output, Day);
+        var noDay = Vafadar.Dastan.Content.ContentCommands.Run(["reports", "forget", _folder, "--looked-at-before", "soon"], output, Day);
+        var noFolder = Vafadar.Dastan.Content.ContentCommands.Run(["reports", "forget", _folder + "-none", "--looked-at-before", "2026-12-01"], output, Day);
+
+        Assert.Equal((0, 2, 1), (done, noDay, noFolder));
+        Assert.Contains("Deleted 1 report(s)", output.ToString(), StringComparison.Ordinal);
+        Assert.Empty(box.Looked());
+    }
 }
