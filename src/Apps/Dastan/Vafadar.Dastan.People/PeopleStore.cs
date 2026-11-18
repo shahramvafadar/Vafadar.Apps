@@ -377,6 +377,7 @@ public sealed partial class PeopleStore : IDisposable
         var before = _time.GetUtcNow().UtcDateTime - KeptAfterClosing;
         var gone = _context.Visitors.Where(visitor => visitor.ClosedAt != null && visitor.ClosedAt < before).ToList();
         _context.Visitors.RemoveRange(gone);
+        ForgetDeclined();
         _context.SaveChanges();
         _context.ChangeTracker.Clear();
         return gone.Count;

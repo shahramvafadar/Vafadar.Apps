@@ -1,0 +1,259 @@
+@page "/account/people"
+@using Vafadar.Dastan.Core.Personal
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The relationships and the circles of who signed in (step 16.3, PRIV-005 to PRIV-009). A relationship is
+   asked by one and accepted by the other; each side says who else may see it, and it is shown to who both
+   allow. Every form is sent to an address of its own (PeopleEndpoints) and comes back here. No script. *@
+<PageTitle>@T["People_Title"] – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+@if (_me is not null)
+{
+    <header class="page-header">
+        <h1>@T["People_Title"]</h1>
+        <p class="lead">@T["People_Lead"]</p>
+        <p class="actions">
+            <a class="action secondary" href="@($"people/{_me.Id}")">@T["People_Page_Link"]</a>
+            <a class="action secondary" href="account">@T["Account_Title"]</a>
+        </p>
+    </header>
+
+    @if (_said is not null)
+    {
+        <p class="note" role="status">@T[$"People_Said_{_said}"]</p>
+    }
+
+    @if (_waiting.Count > 0)
+    {
+        <section id="waiting" aria-labelledby="waiting-title">
+            <h2 id="waiting-title">@T["People_Waiting_Title"]</h2>
+            <ul class="people" role="list">
+                @foreach (var request in _waiting)
+                {
+                    <li>
+                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @T[$"People_Kind_{request.Kind}"]</span></span>
+                        <form method="post" action="@($"{PeopleEndpoints.Root}/answer")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="relationship" value="@request.Id" />
+                            <button type="submit" name="answer" value="accept">@T["People_Accept"]<span class="visually-hidden"> – @request.Other.Name</span></button>
+                            <button type="submit" name="answer" value="decline">@T["People_Decline"]<span class="visually-hidden"> – @request.Other.Name</span></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
+    @if (_asked.Count > 0)
+    {
+        <section id="asked" aria-labelledby="asked-title">
+            <h2 id="asked-title">@T["People_Asked_Title"]</h2>
+            <ul class="people" role="list">
+                @foreach (var request in _asked)
+                {
+                    <li>
+                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @T[$"People_Kind_{request.Kind}"]</span></span>
+                        <form method="post" action="@($"{PeopleEndpoints.Root}/cancel")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="relationship" value="@request.Id" />
+                            <button type="submit">@T["People_Cancel"]<span class="visually-hidden"> – @request.Other.Name</span></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
+    <section id="mine" aria-labelledby="mine-title">
+        <h2 id="mine-title">@T["People_Mine_Title"]</h2>
+        @if (_accepted.Count == 0)
+        {
+            <p class="note">@T["People_None"]</p>
+        }
+        else
+        {
+            <p class="note">@T["People_Shown_Note"]</p>
+            <ul class="people" role="list">
+                @foreach (var relationship in _accepted)
+                {
+                    var chosen = relationship.Shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{relationship.Circle}", _ => "private" };
+                    <li>
+                        <span><a href="@($"people/{relationship.Other.Id}")" dir="auto">@relationship.Other.Name</a> <span class="meta">– @T[$"People_Kind_{relationship.Kind}"]</span></span>
+                        <form method="post" action="@($"{PeopleEndpoints.Root}/show")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="relationship" value="@relationship.Id" />
+                            <label for="@($"shown-{relationship.Id}")">@T["People_Shown_Label"]</label>
+                            <select id="@($"shown-{relationship.Id}")" name="scope">
+                                <option value="private" selected="@(chosen == "private")">@T["People_Scope_private"]</option>
+                                @foreach (var circle in _circles)
+                                {
+                                    <option value="@($"circle-{circle.Number}")" selected="@(chosen == $"circle-{circle.Number}")">@string.Format(CultureInfo.CurrentCulture, T["People_Scope_circle"], circle.Name)</option>
+                                }
+                                <option value="public" selected="@(chosen == "public")">@T["People_Scope_public"]</option>
+                            </select>
+                            <button type="submit">@T["People_Shown_Send"]<span class="visually-hidden"> – @relationship.Other.Name</span></button>
+                        </form>
+                        <form method="post" action="@($"{PeopleEndpoints.Root}/end")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="relationship" value="@relationship.Id" />
+                            <button type="submit">@T["People_End"]<span class="visually-hidden"> – @relationship.Other.Name</span></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section id="ask" aria-labelledby="ask-title">
+        <h2 id="ask-title">@T["People_Ask_Title"]</h2>
+        @Problems("ask")
+        <form method="post" action="@($"{PeopleEndpoints.Root}/ask")" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@_here" />
+            <p class="field">
+                <label for="ask-name">@T["People_Ask_Name"]</label>
+                <input id="ask-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="off" dir="auto" />
+            </p>
+            <p class="field">
+                <label for="ask-kind">@T["People_Ask_Kind"]</label>
+                <select id="ask-kind" name="kind" required>
+                    @foreach (var kind in PeopleStore.RelationshipKinds)
+                    {
+                        <option value="@kind">@T[$"People_Kind_{kind}"]</option>
+                    }
+                </select>
+            </p>
+            <p class="note">@T["People_Ask_Note"]</p>
+            <p><button type="submit" class="action secondary">@T["People_Ask_Send"]</button></p>
+        </form>
+    </section>
+
+    <section id="circles" aria-labelledby="circles-title">
+        <h2 id="circles-title">@T["People_Circles_Title"]</h2>
+        <p>@T["People_Circles_Lead"]</p>
+        @Problems("circles")
+        @foreach (var circle in _circles)
+        {
+            <div class="circle">
+                <h3 dir="auto">@circle.Name</h3>
+                @if (_accepted.Count == 0)
+                {
+                    <p class="note">@T["People_Circle_Empty"]</p>
+                }
+                else
+                {
+                    <form method="post" action="@($"{PeopleEndpoints.Root}/circle-set")" class="account">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="returnUrl" value="@_here" />
+                        <input type="hidden" name="circle" value="@circle.Number" />
+                        <fieldset>
+                            <legend>@T["People_Circle_Members"]</legend>
+                            @foreach (var relationship in _accepted)
+                            {
+                                var box = $"circle-{circle.Number}-{relationship.Other.Id}";
+                                <p class="choice">
+                                    <input type="checkbox" id="@box" name="member" value="@relationship.Other.Id" checked="@circle.Members.Any(member => member.Id == relationship.Other.Id)" />
+                                    <label for="@box" dir="auto">@relationship.Other.Name</label>
+                                </p>
+                            }
+                        </fieldset>
+                        <p><button type="submit" class="action secondary">@T["People_Circle_Save"]<span class="visually-hidden"> – @circle.Name</span></button></p>
+                    </form>
+                }
+                <form method="post" action="@($"{PeopleEndpoints.Root}/circle-remove")" class="save">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <input type="hidden" name="circle" value="@circle.Number" />
+                    <button type="submit">@T["People_Circle_Remove"]<span class="visually-hidden"> – @circle.Name</span></button>
+                </form>
+            </div>
+        }
+        <form method="post" action="@($"{PeopleEndpoints.Root}/circle-add")" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@_here" />
+            <p class="field">
+                <label for="circle-name">@T["People_Circle_Name"]</label>
+                <input id="circle-name" name="name" type="text" required maxlength="@PeopleStore.LongestCircleName" autocomplete="off" dir="auto" />
+            </p>
+            <p><button type="submit" class="action secondary">@T["People_Circle_Add"]</button></p>
+        </form>
+    </section>
+}
+
+@code {
+    // What the forms may answer with: nothing else of an address is turned into words of the page.
+    private static readonly string[] Sayings = ["asked", "accepted", "declined", "cancelled", "ended", "shown", "circle", "circle-set", "circle-removed"];
+    private static readonly string[] Forms = ["ask", "circles"];
+    private static readonly string[] Known = ["later", "unknown", "self", "kind", "exists", "declined-lately", "too-many", "circle-name"];
+
+    private VisitorSession? _me;
+    private List<RelationshipInfo> _waiting = [];
+    private List<RelationshipInfo> _asked = [];
+    private List<RelationshipInfo> _accepted = [];
+    private IReadOnlyList<CircleInfo> _circles = [];
+    private string? _said;
+    private string? _form;
+    private string? _problem;
+    private string _here = PeopleEndpoints.Page;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Desk.IsOpen)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        if (AccountDesk.Session(Context.User) is not { } session)
+        {
+            // Who is not signed in is shown where to sign in.
+            Navigation.NavigateTo($"/{Visitor.Language.Tag}{AccountDesk.Page}");
+            return;
+        }
+
+        _me = session;
+        _here = $"/{Visitor.Language.Tag}{PeopleEndpoints.Page}";
+        _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
+        _form = Forms.Contains(Form, StringComparer.Ordinal) ? Form : null;
+        _problem = _form is not null && Known.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
+        using var store = Desk.Open();
+        var all = store.Relationships(session.Id);
+        _waiting = [.. all.Where(relationship => relationship.State == RelationshipState.Requested && !relationship.AskedByMe)];
+        _asked = [.. all.Where(relationship => relationship.State == RelationshipState.Requested && relationship.AskedByMe)];
+        _accepted = [.. all.Where(relationship => relationship.State == RelationshipState.Accepted)];
+        _circles = store.Circles(session.Id);
+    }
+
+    // What was wrong with a form, said above it.
+    private RenderFragment Problems(string form) => __builder =>
+    {
+        if (_form == form && _problem is not null)
+        {
+            <ul class="problems" role="alert">
+                <li>@T[$"People_Problem_{_problem}"]</li>
+            </ul>
+        }
+    };
+}

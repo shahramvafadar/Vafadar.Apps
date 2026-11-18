@@ -174,6 +174,7 @@ public sealed class AccountState
     private readonly AccountDesk _desk;
     private readonly HttpContext _context;
     private Belongings? _belongings;
+    private int _waiting;
 
     /// <summary>Initializes a new instance of the <see cref="AccountState"/> class from the current request.</summary>
     public AccountState(IHttpContextAccessor accessor, AccountDesk desk)
@@ -195,11 +196,15 @@ public sealed class AccountState
             {
                 using var store = _desk.Open();
                 _belongings = store.Belongings(session.Id);
+                _waiting = store.Waiting(session.Id);
             }
 
             return _belongings;
         }
     }
+
+    /// <summary>Gets how many requests for a relationship wait for the answer of who signed in.</summary>
+    public int Waiting => Belongings is null ? 0 : _waiting;
 
     /// <summary>Returns the account of a request.</summary>
     public static AccountState Of(HttpContext context)

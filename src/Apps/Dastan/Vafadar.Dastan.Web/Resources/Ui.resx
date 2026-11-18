@@ -1695,4 +1695,178 @@
   <data name="Saved_Where_Offer" xml:space="preserve">
     <value>With an account your list follows you to every device.</value>
   </data>
+  <data name="People_Title" xml:space="preserve">
+    <value>People</value>
+  </data>
+  <data name="People_Link" xml:space="preserve">
+    <value>People and relationships</value>
+  </data>
+  <data name="People_Page_Link" xml:space="preserve">
+    <value>Your page as others see it</value>
+  </data>
+  <data name="People_Waiting_Count" xml:space="preserve">
+    <value>{0} waiting</value>
+  </data>
+  <data name="People_Lead" xml:space="preserve">
+    <value>A relationship is something two people show together. One asks, the other accepts – nobody can accept for somebody else. It is shown to the two of you only, until each of you says who else may see it.</value>
+  </data>
+  <data name="People_Waiting_Title" xml:space="preserve">
+    <value>Waiting for your answer</value>
+  </data>
+  <data name="People_Asked_Title" xml:space="preserve">
+    <value>You asked</value>
+  </data>
+  <data name="People_Mine_Title" xml:space="preserve">
+    <value>Your relationships</value>
+  </data>
+  <data name="People_None" xml:space="preserve">
+    <value>You show no relationship with anybody yet.</value>
+  </data>
+  <data name="People_Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="People_Decline" xml:space="preserve">
+    <value>Decline</value>
+  </data>
+  <data name="People_Cancel" xml:space="preserve">
+    <value>Take the request back</value>
+  </data>
+  <data name="People_End" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="People_Shown_Label" xml:space="preserve">
+    <value>Who else may see it</value>
+  </data>
+  <data name="People_Shown_Send" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="People_Shown_Note" xml:space="preserve">
+    <value>Somebody else sees a relationship only when both of you allow them. What you choose here is your side of it.</value>
+  </data>
+  <data name="People_Scope_private" xml:space="preserve">
+    <value>Nobody else</value>
+  </data>
+  <data name="People_Scope_public" xml:space="preserve">
+    <value>Everybody</value>
+  </data>
+  <data name="People_Scope_circle" xml:space="preserve">
+    <value>Circle: {0}</value>
+  </data>
+  <data name="People_Ask_Title" xml:space="preserve">
+    <value>Ask somebody</value>
+  </data>
+  <data name="People_Ask_Name" xml:space="preserve">
+    <value>The name of their account</value>
+  </data>
+  <data name="People_Ask_Kind" xml:space="preserve">
+    <value>What you are to each other</value>
+  </data>
+  <data name="People_Ask_Send" xml:space="preserve">
+    <value>Ask</value>
+  </data>
+  <data name="People_Ask_Note" xml:space="preserve">
+    <value>They find your request on their page; the site sends them nothing. Nothing is shown to anybody until they accept, and to decline is their right.</value>
+  </data>
+  <data name="People_Kind_friend" xml:space="preserve">
+    <value>friend</value>
+  </data>
+  <data name="People_Kind_close-friend" xml:space="preserve">
+    <value>close friend</value>
+  </data>
+  <data name="People_Kind_family" xml:space="preserve">
+    <value>family</value>
+  </data>
+  <data name="People_Kind_partner" xml:space="preserve">
+    <value>partner</value>
+  </data>
+  <data name="People_Kind_colleague" xml:space="preserve">
+    <value>colleague</value>
+  </data>
+  <data name="People_Kind_classmate" xml:space="preserve">
+    <value>classmate</value>
+  </data>
+  <data name="People_Said_asked" xml:space="preserve">
+    <value>Your request is made. It waits for their answer.</value>
+  </data>
+  <data name="People_Said_accepted" xml:space="preserve">
+    <value>You accepted. It is shown to the two of you only, until you both choose otherwise.</value>
+  </data>
+  <data name="People_Said_declined" xml:space="preserve">
+    <value>You declined. Nothing is shown to anybody.</value>
+  </data>
+  <data name="People_Said_cancelled" xml:space="preserve">
+    <value>Your request is taken back.</value>
+  </data>
+  <data name="People_Said_ended" xml:space="preserve">
+    <value>The relationship is ended. It is shown to nobody any more.</value>
+  </data>
+  <data name="People_Said_shown" xml:space="preserve">
+    <value>Saved.</value>
+  </data>
+  <data name="People_Said_circle" xml:space="preserve">
+    <value>The circle is made.</value>
+  </data>
+  <data name="People_Said_circle-set" xml:space="preserve">
+    <value>The circle is saved.</value>
+  </data>
+  <data name="People_Said_circle-removed" xml:space="preserve">
+    <value>The circle is removed. What was shown to it is shown to the two of you only.</value>
+  </data>
+  <data name="People_Problem_later" xml:space="preserve">
+    <value>That was asked too often. Please try again in an hour.</value>
+  </data>
+  <data name="People_Problem_unknown" xml:space="preserve">
+    <value>No account has this name.</value>
+  </data>
+  <data name="People_Problem_self" xml:space="preserve">
+    <value>That is your own account.</value>
+  </data>
+  <data name="People_Problem_kind" xml:space="preserve">
+    <value>Please choose what you are to each other.</value>
+  </data>
+  <data name="People_Problem_exists" xml:space="preserve">
+    <value>You two have a request or a relationship already.</value>
+  </data>
+  <data name="People_Problem_declined-lately" xml:space="preserve">
+    <value>This account declined a request of yours not long ago. You can ask again after 30 days.</value>
+  </data>
+  <data name="People_Problem_too-many" xml:space="preserve">
+    <value>20 requests of yours wait for an answer. Take one back, or wait for an answer.</value>
+  </data>
+  <data name="People_Problem_circle-name" xml:space="preserve">
+    <value>A circle needs a name of 1 to 40 characters that you have not used yet, and you can have 20 circles.</value>
+  </data>
+  <data name="People_Circles_Title" xml:space="preserve">
+    <value>Circles</value>
+  </data>
+  <data name="People_Circles_Lead" xml:space="preserve">
+    <value>A circle is a name for some of the people you show a relationship with – “Family”, “Close friends”. You can show a relationship to a circle instead of to everybody. Nobody is told that they are in a circle, and only you see its name.</value>
+  </data>
+  <data name="People_Circle_Members" xml:space="preserve">
+    <value>In this circle</value>
+  </data>
+  <data name="People_Circle_Save" xml:space="preserve">
+    <value>Save the circle</value>
+  </data>
+  <data name="People_Circle_Remove" xml:space="preserve">
+    <value>Remove the circle</value>
+  </data>
+  <data name="People_Circle_Name" xml:space="preserve">
+    <value>Name of a new circle</value>
+  </data>
+  <data name="People_Circle_Add" xml:space="preserve">
+    <value>Make the circle</value>
+  </data>
+  <data name="People_Circle_Empty" xml:space="preserve">
+    <value>Once somebody has accepted a relationship with you, you can put them into this circle.</value>
+  </data>
+  <data name="Person_Lead_Self" xml:space="preserve">
+    <value>This is your own page. Others see a relationship here only when both of you allow them.</value>
+  </data>
+  <data name="Person_Relationships" xml:space="preserve">
+    <value>Relationships</value>
+  </data>
+  <data name="Person_None" xml:space="preserve">
+    <value>Nothing is shown to you here.</value>
+  </data>
 </root>

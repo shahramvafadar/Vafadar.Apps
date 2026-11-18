@@ -1695,4 +1695,178 @@
   <data name="Saved_Where_Offer" xml:space="preserve">
     <value>با داشتن حساب، فهرست شما روی هر دستگاهی همراهتان است.</value>
   </data>
+  <data name="People_Title" xml:space="preserve">
+    <value>آشنایان</value>
+  </data>
+  <data name="People_Link" xml:space="preserve">
+    <value>آشنایان و رابطه‌ها</value>
+  </data>
+  <data name="People_Page_Link" xml:space="preserve">
+    <value>صفحهٔ شما آن‌گونه که دیگران می‌بینند</value>
+  </data>
+  <data name="People_Waiting_Count" xml:space="preserve">
+    <value>{0} درخواست</value>
+  </data>
+  <data name="People_Lead" xml:space="preserve">
+    <value>رابطه چیزی است که دو نفر با هم نشان می‌دهند. یکی درخواست می‌کند و دیگری می‌پذیرد؛ هیچ‌کس نمی‌تواند به جای دیگری بپذیرد. رابطه فقط به خود شما دو نفر نشان داده می‌شود، تا وقتی هر کدام بگویید چه کس دیگری می‌تواند آن را ببیند.</value>
+  </data>
+  <data name="People_Waiting_Title" xml:space="preserve">
+    <value>در انتظار پاسخ شما</value>
+  </data>
+  <data name="People_Asked_Title" xml:space="preserve">
+    <value>درخواست‌های شما</value>
+  </data>
+  <data name="People_Mine_Title" xml:space="preserve">
+    <value>رابطه‌های شما</value>
+  </data>
+  <data name="People_None" xml:space="preserve">
+    <value>هنوز با کسی رابطه‌ای نشان نمی‌دهید.</value>
+  </data>
+  <data name="People_Accept" xml:space="preserve">
+    <value>پذیرفتن</value>
+  </data>
+  <data name="People_Decline" xml:space="preserve">
+    <value>نپذیرفتن</value>
+  </data>
+  <data name="People_Cancel" xml:space="preserve">
+    <value>پس گرفتن درخواست</value>
+  </data>
+  <data name="People_End" xml:space="preserve">
+    <value>پایان دادن</value>
+  </data>
+  <data name="People_Shown_Label" xml:space="preserve">
+    <value>چه کس دیگری ببیند</value>
+  </data>
+  <data name="People_Shown_Send" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
+  <data name="People_Shown_Note" xml:space="preserve">
+    <value>دیگران رابطه را فقط وقتی می‌بینند که هر دوی شما اجازه داده باشید. آنچه این‌جا برمی‌گزینید سهم شما از این اجازه است.</value>
+  </data>
+  <data name="People_Scope_private" xml:space="preserve">
+    <value>هیچ‌کس دیگر</value>
+  </data>
+  <data name="People_Scope_public" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="People_Scope_circle" xml:space="preserve">
+    <value>حلقهٔ {0}</value>
+  </data>
+  <data name="People_Ask_Title" xml:space="preserve">
+    <value>درخواست از کسی</value>
+  </data>
+  <data name="People_Ask_Name" xml:space="preserve">
+    <value>نام حساب او</value>
+  </data>
+  <data name="People_Ask_Kind" xml:space="preserve">
+    <value>نسبت شما با هم</value>
+  </data>
+  <data name="People_Ask_Send" xml:space="preserve">
+    <value>فرستادن درخواست</value>
+  </data>
+  <data name="People_Ask_Note" xml:space="preserve">
+    <value>او درخواست شما را در صفحهٔ خودش می‌بیند؛ سایت چیزی برایش نمی‌فرستد. تا او نپذیرد چیزی به کسی نشان داده نمی‌شود، و نپذیرفتن حق اوست.</value>
+  </data>
+  <data name="People_Kind_friend" xml:space="preserve">
+    <value>دوست</value>
+  </data>
+  <data name="People_Kind_close-friend" xml:space="preserve">
+    <value>دوست نزدیک</value>
+  </data>
+  <data name="People_Kind_family" xml:space="preserve">
+    <value>خانواده</value>
+  </data>
+  <data name="People_Kind_partner" xml:space="preserve">
+    <value>شریک زندگی</value>
+  </data>
+  <data name="People_Kind_colleague" xml:space="preserve">
+    <value>همکار</value>
+  </data>
+  <data name="People_Kind_classmate" xml:space="preserve">
+    <value>هم‌کلاسی</value>
+  </data>
+  <data name="People_Said_asked" xml:space="preserve">
+    <value>درخواست شما ثبت شد و در انتظار پاسخ اوست.</value>
+  </data>
+  <data name="People_Said_accepted" xml:space="preserve">
+    <value>پذیرفتید. تا وقتی هر دو چیز دیگری برنگزینید، فقط به خود شما دو نفر نشان داده می‌شود.</value>
+  </data>
+  <data name="People_Said_declined" xml:space="preserve">
+    <value>نپذیرفتید. چیزی به کسی نشان داده نمی‌شود.</value>
+  </data>
+  <data name="People_Said_cancelled" xml:space="preserve">
+    <value>درخواست شما پس گرفته شد.</value>
+  </data>
+  <data name="People_Said_ended" xml:space="preserve">
+    <value>رابطه پایان یافت و دیگر به کسی نشان داده نمی‌شود.</value>
+  </data>
+  <data name="People_Said_shown" xml:space="preserve">
+    <value>ذخیره شد.</value>
+  </data>
+  <data name="People_Said_circle" xml:space="preserve">
+    <value>حلقه ساخته شد.</value>
+  </data>
+  <data name="People_Said_circle-set" xml:space="preserve">
+    <value>حلقه ذخیره شد.</value>
+  </data>
+  <data name="People_Said_circle-removed" xml:space="preserve">
+    <value>حلقه برداشته شد. آنچه به آن نشان داده می‌شد اکنون فقط به خود شما دو نفر نشان داده می‌شود.</value>
+  </data>
+  <data name="People_Problem_later" xml:space="preserve">
+    <value>این درخواست بیش از اندازه تکرار شد. لطفاً یک ساعت دیگر دوباره بکوشید.</value>
+  </data>
+  <data name="People_Problem_unknown" xml:space="preserve">
+    <value>حسابی با این نام نیست.</value>
+  </data>
+  <data name="People_Problem_self" xml:space="preserve">
+    <value>این حساب خود شماست.</value>
+  </data>
+  <data name="People_Problem_kind" xml:space="preserve">
+    <value>لطفاً نسبت خود را برگزینید.</value>
+  </data>
+  <data name="People_Problem_exists" xml:space="preserve">
+    <value>میان شما دو نفر از پیش درخواست یا رابطه‌ای هست.</value>
+  </data>
+  <data name="People_Problem_declined-lately" xml:space="preserve">
+    <value>این حساب به‌تازگی درخواست شما را نپذیرفته است. پس از ۳۰ روز می‌توانید دوباره درخواست کنید.</value>
+  </data>
+  <data name="People_Problem_too-many" xml:space="preserve">
+    <value>۲۰ درخواست شما در انتظار پاسخ است. یکی را پس بگیرید یا منتظر پاسخ بمانید.</value>
+  </data>
+  <data name="People_Problem_circle-name" xml:space="preserve">
+    <value>حلقه نامی ۱ تا ۴۰ نویسه‌ای می‌خواهد که پیش‌تر به کار نبرده باشید، و می‌توانید ۲۰ حلقه داشته باشید.</value>
+  </data>
+  <data name="People_Circles_Title" xml:space="preserve">
+    <value>حلقه‌ها</value>
+  </data>
+  <data name="People_Circles_Lead" xml:space="preserve">
+    <value>حلقه نامی است برای چند نفر از کسانی که با آن‌ها رابطه نشان می‌دهید؛ مثل «خانواده» یا «دوستان نزدیک». می‌توانید رابطه‌ای را به جای همه، فقط به یک حلقه نشان دهید. به هیچ‌کس گفته نمی‌شود که در حلقه‌ای هست و نام حلقه را فقط شما می‌بینید.</value>
+  </data>
+  <data name="People_Circle_Members" xml:space="preserve">
+    <value>در این حلقه</value>
+  </data>
+  <data name="People_Circle_Save" xml:space="preserve">
+    <value>ذخیرهٔ حلقه</value>
+  </data>
+  <data name="People_Circle_Remove" xml:space="preserve">
+    <value>برداشتن حلقه</value>
+  </data>
+  <data name="People_Circle_Name" xml:space="preserve">
+    <value>نام حلقهٔ تازه</value>
+  </data>
+  <data name="People_Circle_Add" xml:space="preserve">
+    <value>ساختن حلقه</value>
+  </data>
+  <data name="People_Circle_Empty" xml:space="preserve">
+    <value>وقتی کسی رابطه با شما را بپذیرد، می‌توانید او را در این حلقه بگذارید.</value>
+  </data>
+  <data name="Person_Lead_Self" xml:space="preserve">
+    <value>این صفحهٔ خود شماست. دیگران رابطه‌ای را این‌جا فقط وقتی می‌بینند که هر دوی شما اجازه داده باشید.</value>
+  </data>
+  <data name="Person_Relationships" xml:space="preserve">
+    <value>رابطه‌ها</value>
+  </data>
+  <data name="Person_None" xml:space="preserve">
+    <value>این‌جا چیزی به شما نشان داده نمی‌شود.</value>
+  </data>
 </root>

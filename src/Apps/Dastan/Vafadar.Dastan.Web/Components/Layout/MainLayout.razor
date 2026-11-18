@@ -23,6 +23,11 @@
         {
             @* Who signed in is shown their name; everybody else where to sign in. *@
             <a href="account">@(AccountDesk.Session(Context.User)?.Name ?? T["Account_Link"].Value)</a>
+            @if (AccountState.Of(Context).Waiting is > 0 and var waiting)
+            {
+                @* Nobody is sent anything: who is asked for a relationship finds it here. *@
+                <a href="account/people#waiting">@string.Format(CultureInfo.CurrentCulture, T["People_Waiting_Count"], Visitor.Number(waiting))</a>
+            }
         }
     </nav>
     <div class="site-tools">
