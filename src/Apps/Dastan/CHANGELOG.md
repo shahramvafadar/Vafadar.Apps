@@ -263,3 +263,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   page. Their words come from files of whoever runs the site; a text that is not written yet says so.
 - Without a connection, a page that is shown from what the device kept says so at its top. The page of your
   list says how many pages the device keeps and lets you have them forgotten.
+- After signing in through a provider, the form that makes the account says what is kept of an account
+  without a password; on a site that takes accounts by invitation only it says that an invitation is needed.
+- What opens a folded part of a page ("Change the album") is as high as a button.

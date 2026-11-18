@@ -2640,4 +2640,10 @@
   <data name="Kept_Forgotten" xml:space="preserve">
     <value>This device keeps none of them any more.</value>
   </data>
+  <data name="Account_Provider_made-up" xml:space="preserve">
+    <value>a made-up provider (development only)</value>
+  </data>
+  <data name="Account_Choose_Privacy" xml:space="preserve">
+    <value>The site keeps the name and that this account is opened through {0} – no password, no mail address and nothing else {0} knows about you. Until you set a password on the page of your account, it opens only through {0}.</value>
+  </data>
 </root>

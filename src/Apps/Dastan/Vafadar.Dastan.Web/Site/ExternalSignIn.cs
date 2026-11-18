@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,14 @@ public static class ExternalSignIn
 
     /// <summary>The name of the cookie that carries a sign-in of a provider that has no account yet to the form that makes one.</summary>
     public const string PendingCookie = "dastan.visitor.external";
+
+    /// <summary>
+    /// The name of a provider that is made up (step 18.2.2): it asks nobody and says that the visitor is whoever
+    /// the setting <c>Dastan:SignIn:MadeUp</c> names. It is there so that the forms after a sign-in through a
+    /// provider can be looked at on a developer's machine, where no client of Google or Microsoft is entered.
+    /// It exists in the environment <c>Development</c> only: anywhere else the setting does nothing.
+    /// </summary>
+    public const string MadeUp = "made-up";
 
     private const string ProviderItem = "dastan.provider";
     private const string InvitationItem = "dastan.invitation";
@@ -78,6 +87,45 @@ public static class ExternalSignIn
                 KeepTheIdentifierOnly(options.ClaimActions, "id");
             });
             authentication.Services.Configure<ExternalSignInOptions>(options => options.Providers.Add("microsoft"));
+        }
+
+        AddMadeUpProvider(authentication, configuration);
+    }
+
+    private static void AddMadeUpProvider(AuthenticationBuilder authentication, IConfiguration configuration)
+    {
+        if (configuration["Dastan:SignIn:MadeUp"] is not { Length: > 0 })
+        {
+            return;
+        }
+
+        authentication.AddScheme<AuthenticationSchemeOptions, MadeUpProvider>(MadeUp, null);
+
+        // Offered only in development: the list of providers is what the pages show and what the forms take.
+        authentication.Services.AddOptions<ExternalSignInOptions>().Configure<IHostEnvironment>((options, environment) =>
+        {
+            if (environment.IsDevelopment())
+            {
+                options.Providers.Add(MadeUp);
+            }
+        });
+    }
+
+    // The made-up provider: no page of its own, no question – it says at once who the setting names.
+    private sealed class MadeUpProvider(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, IConfiguration configuration, IHostEnvironment environment)
+        : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
+    {
+        protected override Task<AuthenticateResult> HandleAuthenticateAsync() => Task.FromResult(AuthenticateResult.NoResult());
+
+        protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
+        {
+            // Checked here once more: outside development nobody is signed in by a setting, whatever asked.
+            if (environment.IsDevelopment() && configuration["Dastan:SignIn:MadeUp"] is { Length: > 0 } subject)
+            {
+                await Context.SignInAsync(Arriving, new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, subject)], MadeUp)), properties);
+            }
+
+            Response.Redirect(properties.RedirectUri ?? "/");
         }
     }
 

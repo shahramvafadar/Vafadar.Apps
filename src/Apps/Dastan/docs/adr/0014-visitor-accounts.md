@@ -464,3 +464,18 @@ before registration is open to everybody: a way for somebody a photograph shows,
 
 Checked: `PhotoObjectionTests` (8 cases), one more case of `PhotoPagesTests` and the form among those
 refused to who is not signed in. Not looked at in a browser.
+
+## Addendum of 2026-11-18: a made-up provider for development, and what its look found (step 18.2.2)
+
+The forms after a sign-in through a provider could not be looked at without a client of Google or Microsoft,
+which the owner enters last (D-069). A made-up provider closes that: with `Dastan:SignIn:MadeUp` set, the
+site in the environment `Development` offers one more provider that asks nobody and says at once that the
+visitor is whoever the setting names. It is refused twice outside development – it is not in the list the
+pages show and the forms take, and its handler signs nobody in – so a setting left behind opens nothing.
+
+Looking at the form found two things, both mended: it repeated the note of the form with a password ("a value
+derived from the password"), though such an account has none – it now says that the account opens through
+the provider until a password is set; and on a site that takes accounts by invitation only it was offered to
+somebody without an invitation and then refused – the page now says that an invitation is needed.
+
+Checked: `MadeUpProviderTests` (4 cases); seen in a browser in English and Persian.

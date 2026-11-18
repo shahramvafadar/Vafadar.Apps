@@ -55,6 +55,14 @@
                 <h2 id="external-title">@T["Account_Choose_Title"]</h2>
                 <p>@string.Format(CultureInfo.CurrentCulture, T["Account_Choose_Lead"], Provider(arrived))</p>
                 @Problems("external")
+                @if (Desk.InvitationOnly && !_arrivedInvited)
+                {
+                    @* A closed trial (D-068): the form would be refused, so the page says why instead of offering it
+                       (seen in a browser, step 18.2.1). *@
+                    <p class="note">@T["Account_InvitationOnly"]</p>
+                }
+                else
+                {
                 <form method="post" action="@($"{AccountDesk.Root}/external-register")" class="account">
                     <AntiforgeryToken />
                     <input type="hidden" name="returnUrl" value="@_here" />
@@ -68,13 +76,15 @@
                     <input id="external-age" name="age" type="checkbox" required />
                     <label for="external-age">@T["Account_Age"]</label>
                 </p>
-                    <p class="note">@T["Account_Register_Privacy"]</p>
+                    @* Not the note of the form with a password: this account has none (seen in a browser, step 18.2.2). *@
+                    <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Account_Choose_Privacy"], Provider(arrived))</p>
                     @if (_deviceHolds)
                     {
                         <p class="note">@T["Account_Register_Adopts"]</p>
                     }
                     <p><button type="submit" class="action">@T["Account_Choose_Send"]</button></p>
                 </form>
+                }
             </section>
         }
 
@@ -470,6 +480,7 @@
     private IReadOnlyList<InvitationInfo> _invitations = [];
     private IList<string> _providers = [];
     private string? _arrived;
+    private bool _arrivedInvited;
     private string _here = AccountDesk.Page;
 
     [CascadingParameter]
@@ -513,7 +524,9 @@
             else
             {
                 _invited = store.IsInvited(Invitation);
-                _arrived = Desk.Arrival(Context)?.Provider;
+                var arrival = Desk.Arrival(Context);
+                _arrived = arrival?.Provider;
+                _arrivedInvited = arrival is { Invitation: var carried } && store.IsInvited(carried);
             }
         }
 
