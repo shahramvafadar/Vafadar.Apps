@@ -119,7 +119,7 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
     }
 
     [Fact]
-    public async Task The_service_worker_keeps_the_page_for_no_connection_and_what_it_is_made_of_and_nothing_else()
+    public async Task The_service_worker_keeps_the_page_for_no_connection_and_only_what_the_site_lets_it_keep()
     {
         var visitor = site.Visitor();
         var worker = await visitor.Get("/service-worker.js");
@@ -138,11 +138,19 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
             Assert.Equal(HttpStatusCode.OK, (await visitor.Get(file)).Status);
         }
 
-        // It keeps no page and no file of a collection, and it never puts anything into its store while it runs.
-        Assert.DoesNotContain("/media", worker.Html.Replace("// Anything else – the files of a collection above all – is not touched.", string.Empty, StringComparison.Ordinal), StringComparison.Ordinal);
-        Assert.DoesNotContain("cache.put", worker.Html, StringComparison.Ordinal);
+        // It keeps a page only when the site says that the page may be kept (D-064), in a store of its own
+        // that a form of the preferences empties; it names no collection, and never a photograph of a visitor.
+        Assert.Contains("answer.headers.get('Dastan-Keep') === 'page'", worker.Html, StringComparison.Ordinal);
+        Assert.Single(Regex.Matches(worker.Html, "read\\.put\\("));
+        Assert.Contains("address.pathname.startsWith('/preferences/')", worker.Html, StringComparison.Ordinal);
+        Assert.Contains("caches.delete(READ)", worker.Html, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(worker.Html, "addAll"));
         Assert.DoesNotContain(Story, worker.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("/photo", worker.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("/account", worker.Html, StringComparison.Ordinal);
+
+        // With a connection every page comes from the network: what was kept is asked for only in a catch.
+        Assert.All(Regex.Matches(worker.Html, "read\\.match\\(").Select(found => worker.Html[..found.Index]), before => Assert.Contains(".catch(() => caches.open(READ)", before[^120..], StringComparison.Ordinal));
     }
 
     [Fact]
