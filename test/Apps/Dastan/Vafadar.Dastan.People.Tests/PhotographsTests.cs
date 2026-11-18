@@ -177,6 +177,9 @@ public sealed class PhotographsTests : IDisposable
         Assert.False(_store.TagPhoto(_mina, photo, _sara));
         Assert.False(_store.TagPhoto(_sara, photo, _dara));
 
+        // Sara agrees that the photograph is shown to everybody (D-053, PhotoAgreementTests); the tag is another question.
+        Assert.True(_store.AgreeToEverybody(_sara, photo, agree: true));
+
         // The owner sees the tag that waits; nobody else does, and it puts the photograph in nobody's life.
         Assert.Equal(("Sara", TagState.Proposed), (_store.Photos(_mina)[0].Tags[0].Person.Name, _store.Photos(_mina)[0].Tags[0].State));
         Assert.Empty(_store.Photo(_dara, photo)!.Tags);
@@ -221,6 +224,7 @@ public sealed class PhotographsTests : IDisposable
         var photo = Photo(_mina, ScopeKind.Public);
         _store.TagPhoto(_mina, photo, _sara);
         _store.AnswerTag(_sara, photo, approve: true);
+        _store.AgreeToEverybody(_sara, photo, agree: true);
 
         Assert.True(_store.AnswerTag(_sara, photo, approve: false));
 
@@ -233,6 +237,7 @@ public sealed class PhotographsTests : IDisposable
 
         // She may change her mind herself.
         Assert.True(_store.AnswerTag(_sara, photo, approve: true));
+        Assert.True(_store.AgreeToEverybody(_sara, photo, agree: true));
         Assert.Equal([photo], Seen(_store.LifeOf(null, _sara)));
     }
 
@@ -319,6 +324,7 @@ public sealed class PhotographsTests : IDisposable
         var saras = Photo(_sara, ScopeKind.Public);
         _store.TagPhoto(_sara, saras, _mina);
         _store.AnswerTag(_mina, saras, approve: true);
+        _store.AgreeToEverybody(_mina, saras, agree: true);
         _store.Close(_mina, Password);
 
         // Closed: nothing of it is given at once – not its file either – and it is in no photograph any more.

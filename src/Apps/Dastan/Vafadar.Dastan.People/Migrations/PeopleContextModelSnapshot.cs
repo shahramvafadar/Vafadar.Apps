@@ -300,6 +300,9 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Everybody")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("State")
                         .HasColumnType("INTEGER");
 

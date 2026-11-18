@@ -15,7 +15,11 @@ public sealed record PhotoFile(string Name, string ContentType, int Width, int H
 /// <summary>A person a photograph is said to show, and where that stands.</summary>
 /// <param name="Person">The account.</param>
 /// <param name="State">Proposed, approved by the person, or taken away by the person.</param>
-public sealed record PhotoTag(PersonRef Person, TagState State);
+public sealed record PhotoTag(PersonRef Person, TagState State)
+{
+    /// <summary>Gets a value indicating whether the person agreed that the photograph is shown to everybody (D-053).</summary>
+    public bool Everybody { get; init; }
+}
 
 /// <summary>A photograph as somebody who may see it is shown it.</summary>
 /// <param name="Id">The identifier.</param>
@@ -27,7 +31,14 @@ public sealed record PhotoTag(PersonRef Person, TagState State);
 /// <param name="Circle">For a circle: which one. Told to the owner only.</param>
 /// <param name="File">Its file.</param>
 /// <param name="Tags">Who it is said to show: for the owner every tag, for anybody else the approved ones.</param>
-public sealed record PhotoInfo(string Id, PersonRef Owner, string Caption, DateOnly? Taken, DateTime SharedAt, ScopeKind Shown, long? Circle, PhotoFile File, ImmutableArray<PhotoTag> Tags);
+public sealed record PhotoInfo(string Id, PersonRef Owner, string Caption, DateOnly? Taken, DateTime SharedAt, ScopeKind Shown, long? Circle, PhotoFile File, ImmutableArray<PhotoTag> Tags)
+{
+    /// <summary>
+    /// Gets a value indicating whether the photograph is held back: its owner shows it to everybody, and somebody
+    /// it is said to show has not agreed to that. Until they do, only its owner and the people it names see it.
+    /// </summary>
+    public bool Held { get; init; }
+}
 
 /// <content>
 /// The photographs of the visitors (step 16.5, PRIV-012, PRIV-013): each has an owner and an audience, and every
@@ -111,6 +122,15 @@ public sealed partial class PeopleStore
         }
 
         (stored.Scope, stored.Circle) = ((int)shown, shown == ScopeKind.Circle ? circle : null);
+        if (shown != ScopeKind.Public)
+        {
+            // An agreement was given to one showing to everybody. The next one asks again.
+            foreach (var tag in _context.PhotoTags.Where(candidate => candidate.Photo == photo && candidate.Everybody))
+            {
+                tag.Everybody = false;
+            }
+        }
+
         Save();
         return true;
     }
@@ -177,14 +197,15 @@ public sealed partial class PeopleStore
     public bool AnswerTag(string id, string photo, bool approve)
     {
         var stored = _context.Photos.AsNoTracking().SingleOrDefault(candidate => candidate.Id == photo);
-        var tag = _context.PhotoTags.SingleOrDefault(candidate => candidate.Photo == photo && candidate.Account == id);
+        var tags = _context.PhotoTags.Where(candidate => candidate.Photo == photo).ToList();
+        var tag = tags.SingleOrDefault(candidate => candidate.Account == id);
         if (stored is null || tag is null || !IsOpen(id) || !IsOpen(stored.Owner))
         {
             _context.ChangeTracker.Clear();
             return false;
         }
 
-        var rule = Rule(stored, [tag]);
+        var rule = Rule(stored, tags);
         var me = new AccountId(id);
         if (!rule.MayOpen(me) || (approve ? rule.Approve(new PersonId(id), me) : rule.RemoveTag(new PersonId(id), me)) != ActOutcome.Done)
         {
@@ -193,8 +214,49 @@ public sealed partial class PeopleStore
         }
 
         tag.State = (int)rule.TagOf(new PersonId(id))!.Value;
+        if (!approve)
+        {
+            tag.Everybody = false;
+        }
+
         Save();
         return true;
+    }
+
+    /// <summary>
+    /// Says that a photograph its owner shows to everybody may be shown so, or takes that back (D-053). Only a
+    /// person the photograph is said to show can, for themselves. Until everybody it names agreed, the
+    /// photograph is seen by its owner and by them alone; an agreement taken back hides it at once.
+    /// </summary>
+    public bool AgreeToEverybody(string id, string photo, bool agree)
+    {
+        var stored = _context.Photos.AsNoTracking().SingleOrDefault(candidate => candidate.Id == photo);
+        var tag = _context.PhotoTags.SingleOrDefault(candidate => candidate.Photo == photo && candidate.Account == id);
+        if (stored is null || tag is null || stored.Owner == id || (TagState)tag.State == TagState.Removed || tag.Everybody == agree
+            || (agree && stored.Scope != (int)ScopeKind.Public) || !IsOpen(id) || !IsOpen(stored.Owner))
+        {
+            _context.ChangeTracker.Clear();
+            return false;
+        }
+
+        tag.Everybody = agree;
+        Save();
+        return true;
+    }
+
+    /// <summary>
+    /// Returns the photographs their owners show to everybody and that are said to show an account – those that
+    /// wait for its agreement and those it agreed to, which it can take back.
+    /// </summary>
+    public IReadOnlyList<PhotoInfo> AskedForEverybody(string id)
+    {
+        if (!IsOpen(id))
+        {
+            return [];
+        }
+
+        var photos = _context.PhotoTags.AsNoTracking().Where(tag => tag.Account == id && tag.State != (int)TagState.Removed).Select(tag => tag.Photo).ToList();
+        return [.. Shown(id, _context.Photos.AsNoTracking().Where(photo => photos.Contains(photo.Id) && photo.Owner != id && photo.Scope == (int)ScopeKind.Public).ToList(), all: true)];
     }
 
     /// <summary>Returns the photographs that are said to show an account and wait for its answer – those it may see.</summary>
@@ -269,15 +331,27 @@ public sealed partial class PeopleStore
                 photo.Owner == viewer ? photo.Circle : null,
                 new PhotoFile(photo.File, photo.ContentType, photo.Width, photo.Height, photo.Length),
                 [.. tags.Where(tag => tag.Photo == photo.Id && names.ContainsKey(tag.Account) && (all || photo.Owner == viewer || tag.State == (int)TagState.Approved))
-                    .Select(tag => new PhotoTag(names[tag.Account], (TagState)tag.State))
-                    .OrderBy(tag => tag.Person.Name, StringComparer.CurrentCultureIgnoreCase)]));
+                    .Select(tag => new PhotoTag(names[tag.Account], (TagState)tag.State) { Everybody = tag.Everybody })
+                    .OrderBy(tag => tag.Person.Name, StringComparer.CurrentCultureIgnoreCase)])
+            {
+                Held = IsHeld(photo, tags.Where(tag => tag.Photo == photo.Id)),
+            });
     }
+
+    // Shown to everybody by its owner, and somebody it names has not agreed (D-053). A tag its person took away
+    // names nobody; the owner's own tag needs no agreement.
+    private static bool IsHeld(StoredPhoto photo, IEnumerable<StoredPhotoTag> tags) =>
+        photo.Scope == (int)ScopeKind.Public && tags.Any(tag => tag.Account != photo.Owner && (TagState)tag.State != TagState.Removed && !tag.Everybody);
 
     // The photograph as the rules know it, brought to where the store says it stands.
     private SharedMedia Rule(StoredPhoto photo, IReadOnlyList<StoredPhotoTag> tags)
     {
         var shared = DateOnly.FromDateTime(photo.SharedAt);
-        var rule = new SharedMedia(photo.Id, Scope(photo.Owner, (ScopeKind)photo.Scope, photo.Circle), photo.Taken ?? shared, shared);
+        // A photograph that is held back is seen by its owner and the people it names – they are asked.
+        var scope = IsHeld(photo, tags)
+            ? AccessScope.Circle(new AccountId(photo.Owner), [.. tags.Where(tag => (TagState)tag.State != TagState.Removed).Select(tag => new AccountId(tag.Account))])
+            : Scope(photo.Owner, (ScopeKind)photo.Scope, photo.Circle);
+        var rule = new SharedMedia(photo.Id, scope, photo.Taken ?? shared, shared);
         foreach (var tag in tags)
         {
             var (person, account) = (new PersonId(tag.Account), new AccountId(tag.Account));

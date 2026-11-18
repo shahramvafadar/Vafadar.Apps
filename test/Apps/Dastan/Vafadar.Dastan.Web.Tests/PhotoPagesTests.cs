@@ -295,8 +295,48 @@ public sealed class PhotoPagesTests : IDisposable
         Assert.Contains("You have brought in no photograph yet.", (await mina.Get(Photos)).Main, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public async Task A_photograph_that_names_somebody_is_shown_to_everybody_only_when_they_agreed()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        await Friends(mina, sara, "Sara");
+        var id = await Bring(mina, "public");
+        var stranger = _site.Visitor();
+        Assert.Equal(HttpStatusCode.OK, (await stranger.Get($"/photo/{id}")).Status);
+
+        await Send(mina, "tag", ("photo", id), ("account", await Me(sara)));
+
+        // Held back at once: for a stranger there is no such photograph, its owner is told why, she is asked.
+        Assert.Equal(HttpStatusCode.NotFound, (await stranger.Get($"/photo/{id}")).Status);
+        var owners = await mina.Get(Photos);
+        Assert.Contains("Held back", owners.Main, StringComparison.Ordinal);
+        Assert.Contains("has not agreed yet that everybody sees it", owners.Main, StringComparison.Ordinal);
+        var asked = await sara.Get(Photos);
+        Assert.Contains("Shown to everybody?", asked.Main, StringComparison.Ordinal);
+        Assert.Equal(HttpStatusCode.OK, (await sara.Get($"/photo/{id}")).Status);
+
+        // Nobody agrees for her – not the owner either.
+        Assert.Equal("/refused", (await Send(mina, "agree", ("photo", id), ("answer", "agree"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, "agree", ("photo", id), ("answer", "perhaps"))).Response.Headers.Location?.OriginalString);
+
+        var agreed = await Send(sara, "agree", ("photo", id), ("answer", "agree"));
+
+        Assert.Equal($"{Photos}?said=agreed#asked", agreed.Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.OK, (await stranger.Get($"/photo/{id}")).Status);
+        Assert.DoesNotContain("Held back", (await mina.Get(Photos)).Main, StringComparison.Ordinal);
+        Assert.Contains("agreed that everybody sees it", (await mina.Get(Photos)).Main, StringComparison.Ordinal);
+        Assert.Contains("Take the agreement back", (await sara.Get(Photos)).Main, StringComparison.Ordinal);
+
+        var back = await Send(sara, "agree", ("photo", id), ("answer", "back"));
+
+        Assert.Equal($"{Photos}?said=agreement-back#asked", back.Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.NotFound, (await stranger.Get($"/photo/{id}")).Status);
+    }
+
     [Theory]
     [InlineData("add")]
+    [InlineData("agree")]
     [InlineData("share")]
     [InlineData("remove")]
     [InlineData("tag")]

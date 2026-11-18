@@ -147,6 +147,20 @@ public static class PhotoEndpoints
             return store.UntagPhoto(Me(context), photo ?? string.Empty, account ?? string.Empty) ? Said(returnUrl, "untagged", "mine") : Results.BadRequest();
         });
 
+        // A person a photograph names agrees that it is shown to everybody, or takes that back (D-053, step 16.9).
+        forms.MapPost("/agree", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? answer, [FromForm] string? returnUrl) =>
+        {
+            if (answer is not ("agree" or "back"))
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            return store.AgreeToEverybody(Me(context), photo ?? string.Empty, answer == "agree")
+                ? Said(returnUrl, answer == "agree" ? "agreed" : "agreement-back", "asked")
+                : Results.BadRequest();
+        });
+
         forms.MapPost("/answer", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? answer, [FromForm] string? returnUrl) =>
         {
             if (answer is not ("approve" or "remove"))

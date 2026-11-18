@@ -2466,4 +2466,34 @@
   <data name="Account_Problem_last-way-in" xml:space="preserve">
     <value>That is the only way into the account. Set a password or add another way first.</value>
   </data>
+  <data name="Photos_Asked_Title" xml:space="preserve">
+    <value>Shown to everybody?</value>
+  </data>
+  <data name="Photos_Asked_Note" xml:space="preserve">
+    <value>The owner of each of these wants to show it to everybody. It is said to show you, so it waits for your agreement; until everybody it names agreed, only its owner and they see it. An agreement you take back hides it at once.</value>
+  </data>
+  <data name="Photos_Agree" xml:space="preserve">
+    <value>Agree that everybody sees it</value>
+  </data>
+  <data name="Photos_Agree_Back" xml:space="preserve">
+    <value>Take the agreement back</value>
+  </data>
+  <data name="Photos_Agreed" xml:space="preserve">
+    <value>You agreed.</value>
+  </data>
+  <data name="Photos_Held" xml:space="preserve">
+    <value>Held back: not everybody this photograph names has agreed that everybody sees it. Until then only you and they see it.</value>
+  </data>
+  <data name="Photos_Tag_Agreed" xml:space="preserve">
+    <value>agreed that everybody sees it</value>
+  </data>
+  <data name="Photos_Tag_NotAgreed" xml:space="preserve">
+    <value>has not agreed yet that everybody sees it</value>
+  </data>
+  <data name="Photos_Said_agreed" xml:space="preserve">
+    <value>You agreed. The photograph is shown to everybody once everybody it names has agreed.</value>
+  </data>
+  <data name="Photos_Said_agreement-back" xml:space="preserve">
+    <value>You took your agreement back. The photograph is not shown to everybody any more.</value>
+  </data>
 </root>
