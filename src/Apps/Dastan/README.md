@@ -161,6 +161,8 @@ only.
 | File | What | License | From |
 |---|---|---|---|
 | `Vafadar.Dastan.Web/wwwroot/fonts/vazirmatn-nl-wght.woff2` | The font Vazirmatn 33.003, variable weight, without Latin letters – unchanged (`Vazirmatn-NL[wght].woff2`, SHA-256 `cdef5578…bbf5`) | SIL Open Font License 1.1, `wwwroot/fonts/vazirmatn-OFL.txt` | Release v33.003 of <https://github.com/rastikerdar/vazirmatn> |
+| `Vafadar.Dastan.Web/Data/coasts.txt`, `Data/waters.txt` | The coasts of the earth, and its rivers and the shores of its lakes: Natural Earth 1:50m, written as text with positions rounded to a hundredth of a degree (step 17.2) | Public domain | naturalearthdata.com, from the repository `nvkelso/natural-earth-vector` on 2026-11-18 |
+| (package) `SkiaSharp`, `SkiaSharp.NativeAssets.Linux.NoDependencies` 4.154.1 | Reading and writing images (step 17.3); restored by the build, not in the repository | MIT | nuget.org, published by Microsoft |
 
 ## Services
 

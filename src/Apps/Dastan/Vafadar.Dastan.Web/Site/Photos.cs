@@ -46,7 +46,11 @@ public static class PhotoEndpoints
                 photo = store.Photo(AccountDesk.Session(context.User)?.Id, id);
             }
 
-            if (photo is null || desk.PhotoPath(photo.File.Name) is not { } path || !System.IO.File.Exists(path))
+            // A page that shows a photograph small asks for its smaller size; one that has none gets the photograph.
+            var name = photo is not null && context.Request.Query["size"] == "small" && desk.PhotoPath(SmallName(photo.File.Name)) is { } small && System.IO.File.Exists(small)
+                ? SmallName(photo.File.Name)
+                : photo?.File.Name;
+            if (photo is null || desk.PhotoPath(name!) is not { } path || !System.IO.File.Exists(path))
             {
                 // A file is asked for by a page, not by a reader: the answer is the status and no page.
                 if (context.Features.Get<IStatusCodePagesFeature>() is { } pages)
@@ -115,6 +119,10 @@ public static class PhotoEndpoints
                 return Back(returnUrl, "add", "photo-form");
             }
 
+            // A smaller size for the pages that show the photograph among others (D-056). It lies beside the
+            // photograph under a name made from its name, and is nothing the store has to know of.
+            ImageSizes.Smaller(taken1.Path, SmallSide, SmallName(Path.GetFileName(taken1.Path)));
+
             return Said(returnUrl, "added", "mine");
         });
 
@@ -143,9 +151,12 @@ public static class PhotoEndpoints
                 return Results.BadRequest();
             }
 
-            if (desk.PhotoPath(name) is { } path && System.IO.File.Exists(path))
+            foreach (var file in new[] { name, SmallName(name) })
             {
-                System.IO.File.Delete(path);
+                if (desk.PhotoPath(file) is { } path && System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
             }
 
             return Said(returnUrl, "removed", "mine");
@@ -223,6 +234,32 @@ public static class PhotoEndpoints
                 ? Said(returnUrl, answer == "approve" ? "approved" : "tag-removed")
                 : Results.BadRequest();
         });
+    }
+
+    /// <summary>The longer side of the smaller size of a photograph, in pixels: enough for a card on a screen that draws two pixels for one.</summary>
+    public const int SmallSide = 800;
+
+    /// <summary>Returns the name of the smaller size of a photograph, made from the name of its file.</summary>
+    public static string SmallName(string name)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        return $"{Path.GetFileNameWithoutExtension(name)}-small{Path.GetExtension(name)}";
+    }
+
+    /// <summary>Returns the name of the photograph a smaller size belongs to, or nothing for a name that is not one of a smaller size.</summary>
+    public static string? OfSmall(string name)
+    {
+        ArgumentNullException.ThrowIfNull(name);
+        var stem = Path.GetFileNameWithoutExtension(name);
+        return stem.EndsWith("-small", StringComparison.Ordinal) ? stem[..^"-small".Length] + Path.GetExtension(name) : null;
+    }
+
+    /// <summary>Returns how wide the smaller size of a photograph is, or nothing when the photograph is that small itself.</summary>
+    public static int? SmallWidth(PhotoFile file)
+    {
+        ArgumentNullException.ThrowIfNull(file);
+        var longer = Math.Max(file.Width, file.Height);
+        return longer <= SmallSide ? null : Math.Max(1, (int)Math.Round(file.Width * (double)SmallSide / longer));
     }
 
     // The filter of the group has seen that somebody signed in.
