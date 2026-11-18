@@ -442,5 +442,21 @@ names the rest with the decision each waits for.
 | Step | What | Status |
 |---|---|---|
 | 15.1 | **A list of one's own** (B-016): pages a visitor keeps, without an account | **Done** 2026-11-18 – a button on the page of a name, an image or video and a thread keeps the page in "My list"; the list is a cookie on the visitor's device, at most 30 pages, for a year; the site keeps nothing of it; a page that cannot be opened any more is neither shown nor counted ([ADR 0003](adr/0003-server-rendered-pages.md), fourth addendum) |
-| 15.2 | **The rules of private spaces as a library**: who may see a relationship, a tag, an affiliation – the accepted rules of document 06, checked by its acceptance examples, before any account exists | Planned |
+| 15.2 | **The rules of private spaces as a library**: who may see a relationship, a tag, an affiliation – the accepted rules of document 06, checked by its acceptance examples, before any account exists | **Done** 2026-11-18 – `Vafadar.Dastan.Core.Personal`: scopes, relationships that need the other side's acceptance and both sides' audiences, invitations, claims that somebody else confirms, being found through an organisation and a year, tags that widen no audience, the check before something is made public; the ten acceptance examples of the document are its tests. Nothing reaches the library: no page, no store, no account ([ADR 0013](adr/0013-private-space-rules.md)) |
 | – | **Accounts of visitors, invitations, private and family spaces, personal photographs, copies for use without a connection** | **Not built – the owner's decisions first**: who may have an account and how an identity is proved (Q-06); what is published about living people (Q-05); shared family trees (Q-07); what happens when consent ends (Q-14); copies without a connection (Q-13); and, with any of them, where data about people is kept, who is responsible for it, and how an invitation is sent – a mail service is a third party |
+
+### What waits for the owner (after phases 12 to 15)
+
+Everything the product documents name and that can be built without a decision of the owner is built. What is
+left waits for one of these – each is a question of the owner's, not of code:
+
+| Decision | What it opens |
+|---|---|
+| Accounts of visitors: who may have one, how somebody signs in and proves an identity (Q-06), where data about people is kept and who is responsible for it | A list that follows a visitor to another device; private and family spaces; family trees of private records; personal photographs; "view as another audience". The rules exist (step 15.2) |
+| What is published about living people (Q-05), shared family trees (Q-07), the end of consent (Q-14), copies without a connection (Q-13) | The rules the library leaves out: children and guardians, blocking, exports, offline copies |
+| A mail service for invitations | Sending an invitation – a third party |
+| A library that reads and writes images | Smaller sizes of an image that is brought in (step 13.7); a picture for the preview of a link (step 14.4) |
+| A map: coasts and borders that may be shipped, or tiles from a host of the owner's | A background for the drawing of the places (step 14.1) |
+| The form of a statement that connects reading stages – between two editions, between the stories of one collection | A reading position that is carried between editions, and one for each story (step 14.11) |
+| How long reports of visitors that were looked at are kept | Deleting them (step 14.8) |
+| The owner's part of a public pilot (section 11): the review of the content, the rights of the images, the host, the devices, the people | A public site |
