@@ -2051,3 +2051,51 @@ main:has(> .stage) > :not(.stage) {
 .stage-fitted .stage-edge:empty {
   display: none;
 }
+
+/* Photographs of visitors (step 16.5): a grid of pictures, each with what is written about it and, for its
+   owner, what can be done with it. */
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-4);
+  margin: var(--space-3) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.photos li {
+  min-inline-size: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+}
+
+.photos figure {
+  margin: 0 0 var(--space-2);
+}
+
+.photos img {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+  border-radius: var(--radius);
+}
+
+.photos figcaption {
+  margin-block-start: var(--space-2);
+}
+
+.photos select,
+.account input[type="date"],
+.account input[type="file"] {
+  box-sizing: border-box;
+  max-inline-size: 100%;
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+}

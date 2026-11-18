@@ -293,6 +293,11 @@ public sealed partial class PeopleStore
             }
         }
 
+        foreach (var photo in _context.Photos.Where(candidate => candidate.Circle == circle))
+        {
+            (photo.Scope, photo.Circle) = ((int)ScopeKind.Private, null);
+        }
+
         _context.Circles.Remove(stored);
         Save();
         return true;

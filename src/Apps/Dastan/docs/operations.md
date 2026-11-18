@@ -38,6 +38,7 @@ Settings are environment variables (two underscores for a level).
 | `Dastan__TrustedProxies__0`, `__1`, … | The proxies the site believes when they say how a visitor came (`X-Forwarded-Proto`, `X-Forwarded-For`): an address or a network such as `10.0.0.0/8`. Not set, the site believes nobody – then it does not know that a visitor came by https, sets no `Secure` cookie and sends no HSTS. Name the proxy of the host and nothing wider |
 | `Dastan__Reports` | A folder for the reports of visitors, on a volume the user of the container may write to (step 14.8, [ADR 0012](adr/0012-visitor-reports.md)). The editors read it with their tool (`Studio__Reports`): on one machine the same folder, else it is carried over. Each report is a small file with the statement, the words and the day – nothing about the visitor | not set: the site offers no form for reports and takes none |
 | `Dastan__People` | The file of the store of the visitors (step 16.1, [ADR 0014](adr/0014-visitor-accounts.md)): a SQLite database with their accounts, on a volume that outlives the container and that the user of the container may write to. The site makes the file and brings it to the form it knows when it starts. One container at a time may use it. It holds names and values derived from passwords: it is backed up and protected like a database, and never lies in a folder a web server shows. Set it together with `Dastan__Keys`, or everybody signs in again after each start | not set: the site has no accounts, no page for one, and keeps nothing |
+| `Dastan__Photos` | A folder for the photographs of the visitors (step 16.5), on a volume that outlives the container, that the user of the container may write to and that **no web server shows**: a photograph is given only through the site, which asks who may see it. Needs `Dastan__People`. It is backed up together with the store of the visitors – one without the other is of no use | not set: the site has no photographs |
 | `Dastan__Keys` | A folder for the keys of the forms, on a volume that outlives the container and that the user of the container may write to. Without it a form that a visitor opened before the site was started again is refused afterwards ("nothing was changed", and the visitor tries again) |
 | `ASPNETCORE_HTTP_PORTS` | The port, when it is not 8080 |
 
@@ -127,7 +128,9 @@ Taking the program back is the same with the image: the tag of the commit before
 Without `Dastan__People` nothing on its own: no database, no file, no account. With it, the accounts of the
 visitors: for each a name the visitor chose, a value derived from the password, the hashes of the recovery codes,
 when the account was made, how often the password was wrong and when it was closed – no mail address and no
-address of a machine. A closed account is deleted for good thirty days later, by the first request of a day
+address of a machine; and what the visitor keeps with the account: reading positions, a list, invitations,
+relationships and circles, family trees with records of people, and – with `Dastan__Photos` – photographs
+(the [privacy matrix](../../../../docs/privacy/privacy-matrix.md) lists each). A closed account is deleted for good thirty days later, by the first request of a day
 (the site must be visited for it; a site nobody opens deletes nothing). Its log goes to the output of the container and holds what
 the framework says at the level "Warning" and above and what the site says when it starts – no address of a
 visitor and no request. A proxy and a host keep their own logs; what they hold and for how long is the host's

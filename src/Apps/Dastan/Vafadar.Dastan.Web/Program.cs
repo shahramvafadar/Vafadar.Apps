@@ -31,6 +31,7 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
     options.UnlocalizedPaths.Add(MediaAddress.Root);
     options.UnlocalizedPaths.Add(SiteHealth.Address);
     options.UnlocalizedPaths.Add(ReportDesk.Address);
+    options.UnlocalizedPaths.Add(PhotoEndpoints.File);
     options.UnlocalizedPaths.Add(SearchEngineFiles.Robots);
     options.UnlocalizedPaths.Add(SearchEngineFiles.Sitemap);
 });
@@ -137,6 +138,7 @@ app.MapSavedList();
 app.MapVisitorAccounts();
 app.MapPeople();
 app.MapTrees();
+app.MapPhotos();
 app.MapRazorComponents<App>();
 
 await app.RunAsync();

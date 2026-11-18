@@ -9,6 +9,8 @@
   <ItemGroup>
     <!-- Test helpers that the Dastan test projects share (the check of what a projection discloses). -->
     <Compile Include="..\Shared\*.cs" LinkBase="Shared" />
+    <!-- The smallest files of each kind, for the tests that bring a photograph in. -->
+    <Compile Include="..\Vafadar.Dastan.Data.Tests\TestFiles.cs" Link="Shared\TestFiles.cs" />
   </ItemGroup>
 
 </Project>

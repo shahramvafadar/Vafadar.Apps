@@ -72,14 +72,7 @@ public static class PeopleEndpoints
 
         forms.MapPost("/show", (HttpContext context, AccountDesk desk, [FromForm] string? relationship, [FromForm] string? scope, [FromForm] string? returnUrl) =>
         {
-            // "private", "public" or "circle-" and the number of a circle of this account.
-            (ScopeKind Kind, long? Circle)? chosen = scope switch
-            {
-                "private" => (ScopeKind.Private, null),
-                "public" => (ScopeKind.Public, null),
-                _ when scope is not null && scope.StartsWith("circle-", StringComparison.Ordinal) && long.TryParse(scope.AsSpan(7), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var circle) => (ScopeKind.Circle, circle),
-                _ => null,
-            };
+            var chosen = Scope(scope);
             if (chosen is null)
             {
                 return Results.BadRequest();
@@ -109,6 +102,15 @@ public static class PeopleEndpoints
             return circle is { } number && store.RemoveCircle(Me(context), number) ? Said(returnUrl, "circle-removed", "circles") : Results.BadRequest();
         });
     }
+
+    /// <summary>Reads an audience as a form names it: <c>private</c>, <c>public</c>, or <c>circle-</c> and the number of a circle.</summary>
+    internal static (ScopeKind Kind, long? Circle)? Scope(string? scope) => scope switch
+    {
+        "private" => (ScopeKind.Private, null),
+        "public" => (ScopeKind.Public, null),
+        _ when scope is not null && scope.StartsWith("circle-", StringComparison.Ordinal) && long.TryParse(scope.AsSpan(7), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var circle) => (ScopeKind.Circle, circle),
+        _ => null,
+    };
 
     // The filter of the group has seen that somebody signed in.
     private static string Me(HttpContext context) => AccountDesk.Session(context.User)!.Id;

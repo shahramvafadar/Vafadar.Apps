@@ -293,6 +293,59 @@ public sealed class StoredTreeChange
     public required string Subject { get; set; }
 }
 
+/// <summary>A photograph of a visitor: whose it is, who may see it, and where its file lies.</summary>
+public sealed class StoredPhoto
+{
+    /// <summary>Gets or sets the identifier.</summary>
+    public required string Id { get; set; }
+
+    /// <summary>Gets or sets the account it belongs to.</summary>
+    public required string Owner { get; set; }
+
+    /// <summary>Gets or sets what its owner wrote about it.</summary>
+    public required string Caption { get; set; }
+
+    /// <summary>Gets or sets the day it was taken, when its owner said so.</summary>
+    public DateOnly? Taken { get; set; }
+
+    /// <summary>Gets or sets when it was brought in.</summary>
+    public DateTime SharedAt { get; set; }
+
+    /// <summary>Gets or sets who its owner lets see it (<c>ScopeKind</c>).</summary>
+    public int Scope { get; set; }
+
+    /// <summary>Gets or sets the circle of its owner, when it is shown to one.</summary>
+    public long? Circle { get; set; }
+
+    /// <summary>Gets or sets the name of its file in the folder of the photographs.</summary>
+    public required string File { get; set; }
+
+    /// <summary>Gets or sets the type the file is delivered as.</summary>
+    public required string ContentType { get; set; }
+
+    /// <summary>Gets or sets the width of the image in pixels.</summary>
+    public int Width { get; set; }
+
+    /// <summary>Gets or sets the height of the image in pixels.</summary>
+    public int Height { get; set; }
+
+    /// <summary>Gets or sets the length of the file in bytes.</summary>
+    public long Length { get; set; }
+}
+
+/// <summary>That a photograph is said to show an account, and what that account answered.</summary>
+public sealed class StoredPhotoTag
+{
+    /// <summary>Gets or sets the photograph.</summary>
+    public required string Photo { get; set; }
+
+    /// <summary>Gets or sets the account it is said to show.</summary>
+    public required string Account { get; set; }
+
+    /// <summary>Gets or sets where the tag stands (<c>TagState</c>).</summary>
+    public int State { get; set; }
+}
+
 /// <summary>The database of the store of the visitors.</summary>
 public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbContext(options)
 {
@@ -337,6 +390,12 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
     /// <summary>Gets the changes of the trees.</summary>
     public DbSet<StoredTreeChange> TreeChanges => Set<StoredTreeChange>();
+
+    /// <summary>Gets the photographs.</summary>
+    public DbSet<StoredPhoto> Photos => Set<StoredPhoto>();
+
+    /// <summary>Gets who the photographs are said to show.</summary>
+    public DbSet<StoredPhotoTag> PhotoTags => Set<StoredPhotoTag>();
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -490,6 +549,29 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
             // That something was changed stays when who changed it is gone.
             change.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.By).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // A photograph goes with its owner, a tag with the photograph and with the account it names.
+        modelBuilder.Entity<StoredPhoto>(photo =>
+        {
+            photo.HasKey(item => item.Id);
+            photo.Property(item => item.Id).HasMaxLength(40);
+            photo.Property(item => item.Owner).HasMaxLength(40);
+            photo.Property(item => item.Caption).HasMaxLength(400);
+            photo.Property(item => item.File).HasMaxLength(80);
+            photo.Property(item => item.ContentType).HasMaxLength(40);
+            photo.HasIndex(item => item.Owner);
+            photo.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Owner).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredPhotoTag>(tag =>
+        {
+            tag.HasKey(item => new { item.Photo, item.Account });
+            tag.Property(item => item.Photo).HasMaxLength(40);
+            tag.Property(item => item.Account).HasMaxLength(40);
+            tag.HasIndex(item => item.Account);
+            tag.HasOne<StoredPhoto>().WithMany().HasForeignKey(item => item.Photo).OnDelete(DeleteBehavior.Cascade);
+            tag.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredInvitation>(invitation =>

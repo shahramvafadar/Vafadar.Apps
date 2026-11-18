@@ -74,6 +74,21 @@ public sealed partial class PeopleStore
                     ["name"] = circle.Name,
                     ["members"] = new JsonArray([.. circle.Members.Select(member => (JsonNode)member.Name)]),
                 })]),
+            ["photographs"] = new JsonArray([.. Photos(id)
+                .Select(photo => (JsonNode)new JsonObject
+                {
+                    ["caption"] = photo.Caption,
+                    ["taken"] = photo.Taken?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    ["broughtInAt"] = Stamp(photo.SharedAt),
+                    ["shownTo"] = photo.Shown switch
+                    {
+                        ScopeKind.Public => "everybody",
+                        ScopeKind.Circle => circles.FirstOrDefault(circle => circle.Number == photo.Circle)?.Name ?? "nobody else",
+                        _ => "nobody else",
+                    },
+                    ["file"] = photo.File.Name,
+                    ["shows"] = new JsonArray([.. photo.Tags.Select(tag => (JsonNode)new JsonObject { ["account"] = tag.Person.Name, ["state"] = tag.State.ToString().ToLowerInvariant() })]),
+                })]),
             ["trees"] = new JsonArray([.. trees.Where(tree => tree.Role == TreeRole.Owner).Select(tree => (JsonNode)Written(Tree(id, tree.Id)!))]),
             ["treesSharedWithMe"] = new JsonArray([.. trees.Where(tree => tree.Role != TreeRole.Owner)
                 .Select(tree =>

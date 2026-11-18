@@ -1,0 +1,265 @@
+@page "/account/photos"
+@using Vafadar.Dastan.Core.Personal
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject TimeProvider Time
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The photographs of who signed in (step 16.5, PRIV-012, PRIV-013): bringing one in, who may see it, who it
+   shows; the tags that wait for this visitor's answer; and what the people they know shared lately. Every
+   picture on the page is asked for at the address of its file, which asks the audience again. No script. *@
+<PageTitle>@T["Photos_Title"] – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+@if (_me is not null)
+{
+    <header class="page-header">
+        <h1>@T["Photos_Title"]</h1>
+        <p class="lead">@T["Photos_Lead"]</p>
+        <p class="actions">
+            <a class="action secondary" href="@($"people/{_me.Id}")">@T["People_Page_Link"]</a>
+            <a class="action secondary" href="account">@T["Account_Title"]</a>
+        </p>
+    </header>
+
+    @if (_said is not null)
+    {
+        <p class="note" role="status">@T[$"Photos_Said_{_said}"]</p>
+    }
+
+    @if (_waiting.Count > 0)
+    {
+        <section id="waiting" aria-labelledby="waiting-title">
+            <h2 id="waiting-title">@T["Photos_Waiting_Title"]</h2>
+            <p class="note">@T["Photos_Waiting_Note"]</p>
+            <ul class="photos" role="list">
+                @foreach (var photo in _waiting)
+                {
+                    <li>
+                        @Picture(photo, owner: true)
+                        <form method="post" action="@($"{PhotoEndpoints.Root}/answer")" class="save">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="photo" value="@photo.Id" />
+                            <button type="submit" name="answer" value="approve">@T["Photos_Tag_Approve"]</button>
+                            <button type="submit" name="answer" value="remove">@T["Photos_Tag_Remove"]</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
+    <section id="add" aria-labelledby="add-title">
+        <h2 id="add-title">@T["Photos_Add_Title"]</h2>
+        @if (_form == "add" && _problem is not null)
+        {
+            <ul class="problems" role="alert"><li>@T[$"Photos_Problem_{_problem}"]</li></ul>
+        }
+        <form method="post" action="@($"{PhotoEndpoints.Root}/add")" enctype="multipart/form-data" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@_here" />
+            <p class="field">
+                <label for="add-file">@T["Photos_Add_File"]</label>
+                <input id="add-file" name="file" type="file" required accept="image/png,image/jpeg,image/webp" aria-describedby="add-file-hint" />
+                <span class="meta" id="add-file-hint">@T["Photos_Add_File_Hint"]</span>
+            </p>
+            <p class="field">
+                <label for="add-caption">@T["Photos_Add_Caption"]</label>
+                <input id="add-caption" name="caption" type="text" maxlength="@PeopleStore.LongestCaption" autocomplete="off" dir="auto" />
+            </p>
+            <p class="field">
+                <label for="add-taken">@T["Photos_Add_Taken"]</label>
+                <input id="add-taken" name="taken" type="date" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="add-scope">@T["Photos_Shown_Label"]</label>
+                @Audience("add-scope", "private")
+            </p>
+            <p class="note">@T["Photos_Add_Note"]</p>
+            <p><button type="submit" class="action secondary">@T["Photos_Add_Send"]</button></p>
+        </form>
+    </section>
+
+    <section id="mine" aria-labelledby="mine-title">
+        <h2 id="mine-title">@T["Photos_Mine_Title"]</h2>
+        @if (_mine.Count == 0)
+        {
+            <p class="note">@T["Photos_None"]</p>
+        }
+        else
+        {
+            <ul class="photos" role="list">
+                @foreach (var photo in _mine)
+                {
+                    var chosen = photo.Shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{photo.Circle}", _ => "private" };
+                    var untagged = _known.Where(person => photo.Tags.All(tag => tag.Person.Id != person.Id)).ToList();
+                    <li>
+                        @Picture(photo, owner: false)
+                        <form method="post" action="@($"{PhotoEndpoints.Root}/share")" class="save">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="photo" value="@photo.Id" />
+                            <label for="@($"scope-{photo.Id}")">@T["Photos_Shown_Label"]</label>
+                            @Audience($"scope-{photo.Id}", chosen)
+                            <button type="submit">@T["People_Shown_Send"]</button>
+                        </form>
+                        @foreach (var tag in photo.Tags)
+                        {
+                            <form method="post" action="@($"{PhotoEndpoints.Root}/untag")" class="save">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="photo" value="@photo.Id" />
+                                <input type="hidden" name="account" value="@tag.Person.Id" />
+                                <span><bdi>@tag.Person.Name</bdi> <span class="meta">– @T[$"Photos_Tag_{tag.State}"]</span></span>
+                                @if (tag.State != TagState.Removed)
+                                {
+                                    <button type="submit">@T["Photos_Untag"]<span class="visually-hidden"> – @tag.Person.Name</span></button>
+                                }
+                            </form>
+                        }
+                        @if (untagged.Count > 0)
+                        {
+                            <form method="post" action="@($"{PhotoEndpoints.Root}/tag")" class="save">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="photo" value="@photo.Id" />
+                                <label for="@($"tag-{photo.Id}")">@T["Photos_Tag_Label"]</label>
+                                <select id="@($"tag-{photo.Id}")" name="account">
+                                    @foreach (var person in untagged)
+                                    {
+                                        <option value="@person.Id">@person.Name</option>
+                                    }
+                                </select>
+                                <button type="submit">@T["Photos_Tag_Send"]</button>
+                            </form>
+                        }
+                        <form method="post" action="@($"{PhotoEndpoints.Root}/remove")" class="save">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="photo" value="@photo.Id" />
+                            <button type="submit">@T["Photos_Remove"]</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
+    @if (_recent.Count > 0)
+    {
+        <section id="recent" aria-labelledby="recent-title">
+            <h2 id="recent-title">@T["Photos_Recent_Title"]</h2>
+            <p class="note">@T["Photos_Recent_Note"]</p>
+            <ul class="photos" role="list">
+                @foreach (var photo in _recent)
+                {
+                    <li>@Picture(photo, owner: true)</li>
+                }
+            </ul>
+        </section>
+    }
+}
+
+@code {
+    // What the forms may answer with: nothing else of an address is turned into words of the page.
+    private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed"];
+    private static readonly string[] Known = ["photo-form", "photo-large", "photo-many", "photo-file"];
+
+    private VisitorSession? _me;
+    private IReadOnlyList<PhotoInfo> _mine = [];
+    private IReadOnlyList<PhotoInfo> _waiting = [];
+    private IReadOnlyList<PhotoInfo> _recent = [];
+    private IReadOnlyList<CircleInfo> _circles = [];
+    private List<PersonRef> _known = [];
+    private string? _said;
+    private string? _form;
+    private string? _problem;
+    private string _here = PhotoEndpoints.Page;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Desk.PhotoFolder is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        if (AccountDesk.Session(Context.User) is not { } session)
+        {
+            // Who is not signed in is shown where to sign in.
+            Navigation.NavigateTo($"/{Visitor.Language.Tag}{AccountDesk.Page}");
+            return;
+        }
+
+        _me = session;
+        _here = $"/{Visitor.Language.Tag}{PhotoEndpoints.Page}";
+        _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
+        _form = Form == "add" ? Form : null;
+        _problem = _form is not null && Known.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
+        using var store = Desk.Open();
+        _mine = store.Photos(session.Id);
+        _waiting = store.TagsWaiting(session.Id);
+        _recent = store.RecentShares(session.Id, Time.GetUtcNow().UtcDateTime.AddDays(-30));
+        _circles = store.Circles(session.Id);
+
+        // Who a photograph can be said to show: its owner, and the people the owner shows a relationship with.
+        _known = [new PersonRef(session.Id, session.Name), .. store.Relationships(session.Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other)];
+    }
+
+    private string Day(DateOnly day)
+    {
+        var written = day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        return Visitor.Language.Tag == "fa" ? Vafadar.Core.Text.Digits.ToPersian(written) : written;
+    }
+
+    // The picture with what its owner wrote about it; with whose it is, where it is not this visitor's own.
+    private RenderFragment Picture(PhotoInfo photo, bool owner) => __builder =>
+    {
+        <figure>
+            <img src="@($"{PhotoEndpoints.File}/{photo.Id}")" alt="@(photo.Caption.Length > 0 ? photo.Caption : T["Photos_Alt"].Value)" width="@photo.File.Width" height="@photo.File.Height" loading="lazy" />
+            <figcaption>
+                @if (photo.Caption.Length > 0)
+                {
+                    <bdi>@photo.Caption</bdi>
+                }
+                @if (photo.Taken is { } taken)
+                {
+                    <span class="meta">@string.Format(CultureInfo.CurrentCulture, T["Photos_Taken"], Day(taken))</span>
+                }
+                @if (owner)
+                {
+                    <span class="meta">– <a href="@($"people/{photo.Owner.Id}")"><bdi>@photo.Owner.Name</bdi></a></span>
+                }
+            </figcaption>
+        </figure>
+    };
+
+    // Who may see a photograph: its owner alone, a circle of the owner, or everybody.
+    private RenderFragment Audience(string id, string chosen) => __builder =>
+    {
+        <select id="@id" name="scope">
+            <option value="private" selected="@(chosen == "private")">@T["Photos_Scope_private"]</option>
+            @foreach (var circle in _circles)
+            {
+                <option value="@($"circle-{circle.Number}")" selected="@(chosen == $"circle-{circle.Number}")">@string.Format(CultureInfo.CurrentCulture, T["People_Scope_circle"], circle.Name)</option>
+            }
+            <option value="public" selected="@(chosen == "public")">@T["People_Scope_public"]</option>
+        </select>
+    };
+}

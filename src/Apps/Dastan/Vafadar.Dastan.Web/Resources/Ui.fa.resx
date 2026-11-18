@@ -2196,4 +2196,121 @@
   <data name="Tree_Drawing_Note" xml:space="preserve">
     <value>پدر و مادر بالای فرزندانشان قرار دارند و خط‌چین همسران را به هم می‌پیوندد. هر نام به رکوردش در پایین می‌رسد.</value>
   </data>
+  <data name="Photos_Title" xml:space="preserve">
+    <value>عکس‌ها</value>
+  </data>
+  <data name="Photos_Lead" xml:space="preserve">
+    <value>عکس از آنِ شماست. تا نگویید چه کس دیگری ببیند – یکی از حلقه‌هایتان یا همه – فقط خودتان آن را می‌بینید، و هر زمان می‌توانید این را تغییر دهید یا عکس را بردارید.</value>
+  </data>
+  <data name="Photos_Alt" xml:space="preserve">
+    <value>عکسی بدون توضیح</value>
+  </data>
+  <data name="Photos_Taken" xml:space="preserve">
+    <value>گرفته‌شده در {0}</value>
+  </data>
+  <data name="Photos_None" xml:space="preserve">
+    <value>هنوز عکسی نیاورده‌اید.</value>
+  </data>
+  <data name="Photos_Add_Title" xml:space="preserve">
+    <value>آوردن عکس</value>
+  </data>
+  <data name="Photos_Add_File" xml:space="preserve">
+    <value>تصویر</value>
+  </data>
+  <data name="Photos_Add_File_Hint" xml:space="preserve">
+    <value>تصویر PNG، JPEG یا WebP تا ۱۰ مگابایت.</value>
+  </data>
+  <data name="Photos_Add_Caption" xml:space="preserve">
+    <value>چه چیزی را نشان می‌دهد (اختیاری)</value>
+  </data>
+  <data name="Photos_Add_Taken" xml:space="preserve">
+    <value>روزی که گرفته شده (اختیاری)</value>
+  </data>
+  <data name="Photos_Add_Note" xml:space="preserve">
+    <value>آنچه فایل دربارهٔ جا و دستگاهِ گرفتنِ عکس می‌گوید پیش از نگه‌داری برداشته می‌شود. خود تصویر همان‌گونه که هست می‌ماند.</value>
+  </data>
+  <data name="Photos_Add_Send" xml:space="preserve">
+    <value>آوردن</value>
+  </data>
+  <data name="Photos_Shown_Label" xml:space="preserve">
+    <value>چه کسی ببیند</value>
+  </data>
+  <data name="Photos_Scope_private" xml:space="preserve">
+    <value>فقط خودم</value>
+  </data>
+  <data name="Photos_Mine_Title" xml:space="preserve">
+    <value>عکس‌های شما</value>
+  </data>
+  <data name="Photos_Remove" xml:space="preserve">
+    <value>برداشتن عکس</value>
+  </data>
+  <data name="Photos_Tag_Label" xml:space="preserve">
+    <value>در این عکس هست</value>
+  </data>
+  <data name="Photos_Tag_Send" xml:space="preserve">
+    <value>ثبت</value>
+  </data>
+  <data name="Photos_Untag" xml:space="preserve">
+    <value>پس گرفتن</value>
+  </data>
+  <data name="Photos_Tag_Proposed" xml:space="preserve">
+    <value>در انتظار پاسخ او</value>
+  </data>
+  <data name="Photos_Tag_Approved" xml:space="preserve">
+    <value>در این عکس هست</value>
+  </data>
+  <data name="Photos_Tag_Removed" xml:space="preserve">
+    <value>گفته است در این عکس نیست</value>
+  </data>
+  <data name="Photos_Waiting_Title" xml:space="preserve">
+    <value>آیا شما در این عکس‌ها هستید؟</value>
+  </data>
+  <data name="Photos_Waiting_Note" xml:space="preserve">
+    <value>کسی می‌گوید شما در عکسی هستید. اگر بپذیرید، آن عکس برای کسانی که صاحبش اجازهٔ دیدن داده در میان عکس‌های شما می‌آید؛ کسی که پیش‌تر نمی‌توانست آن را ببیند، حالا هم نمی‌بیند.</value>
+  </data>
+  <data name="Photos_Tag_Approve" xml:space="preserve">
+    <value>بله، منم</value>
+  </data>
+  <data name="Photos_Tag_Remove" xml:space="preserve">
+    <value>من نیستم</value>
+  </data>
+  <data name="Photos_Recent_Title" xml:space="preserve">
+    <value>تازه با شما در میان گذاشته شده</value>
+  </data>
+  <data name="Photos_Recent_Note" xml:space="preserve">
+    <value>آنچه آشنایان شما در ۳۰ روز گذشته آورده‌اند و دیدنش را به شما اجازه داده‌اند؛ هر زمان که گرفته شده باشد.</value>
+  </data>
+  <data name="Photos_Said_added" xml:space="preserve">
+    <value>عکس نگه داشته شد.</value>
+  </data>
+  <data name="Photos_Said_shared" xml:space="preserve">
+    <value>ذخیره شد. از هم‌اکنون هر جا عکس نشان داده شود همین برقرار است.</value>
+  </data>
+  <data name="Photos_Said_removed" xml:space="preserve">
+    <value>عکس برداشته شد.</value>
+  </data>
+  <data name="Photos_Said_tagged" xml:space="preserve">
+    <value>ثبت شد. از او پرسیده می‌شود.</value>
+  </data>
+  <data name="Photos_Said_untagged" xml:space="preserve">
+    <value>پس گرفته شد.</value>
+  </data>
+  <data name="Photos_Said_approved" xml:space="preserve">
+    <value>گفتید که شمایید. این عکس برای کسانی که اجازهٔ دیدن دارند در میان عکس‌های شما می‌آید.</value>
+  </data>
+  <data name="Photos_Said_tag-removed" xml:space="preserve">
+    <value>گفتید که شما نیستید. دربارهٔ این عکس دیگر از شما پرسیده نمی‌شود.</value>
+  </data>
+  <data name="Photos_Problem_photo-form" xml:space="preserve">
+    <value>لطفاً تصویری برگزینید؛ روز به شکل 1998-07-04 نوشته می‌شود و در آینده نیست، و توضیح حداکثر ۲۰۰ نویسه دارد.</value>
+  </data>
+  <data name="Photos_Problem_photo-large" xml:space="preserve">
+    <value>تصویر بزرگ‌تر از ۱۰ مگابایت است.</value>
+  </data>
+  <data name="Photos_Problem_photo-many" xml:space="preserve">
+    <value>شما ۲۰۰ عکس دارید و هر حساب بیش از این جا ندارد. نخست یکی را بردارید.</value>
+  </data>
+  <data name="Photos_Problem_photo-file" xml:space="preserve">
+    <value>این فایل تصویر PNG، JPEG یا WebP نیست، یا به این شکل خوانده نمی‌شود.</value>
+  </data>
 </root>
