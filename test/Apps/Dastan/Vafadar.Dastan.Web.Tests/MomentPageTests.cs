@@ -18,7 +18,7 @@ public sealed class MomentPageTests(WorldSite world, DemoSite demo) : IClassFixt
     [Fact]
     public void The_projection_names_the_years_something_is_stated_for()
     {
-        var projection = world.Services.GetRequiredService<DastanSite>().At(ReadingLevel.Opening)!;
+        var projection = world.Services.GetRequiredService<DastanLibrary>().Collections[0].At(ReadingLevel.Opening)!;
         var years = projection.Years()!;
 
         Assert.Equal((994, 1100), (years.First.Number, years.Last.Number));

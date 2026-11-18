@@ -72,3 +72,41 @@ forms and both were corrected; a form opened before a restart was refused after 
 accepted with it. `SiteHealthTests` (Web) and `ContentRevisionTests` (Data: a revision of the collection starts
 a site that has the content folder and no document of the editors). The revision of the trial is test data;
 nothing is published and nothing was deployed.
+
+## Addendum of 2026-11-18 – several collections on one site (step 14.10)
+
+The site showed one collection: the file `Dastan:Sample` names. It now shows every collection of the folder
+`samples`.
+
+* **`DastanLibrary`** reads, when the app starts, the file `Dastan:Sample` names – the collection a visitor
+  enters first – and then every other file of the folder that says it is a collection (`schemaVersion`), by
+  the names of the files. A translation and a file that is something else are passed over. A collection that
+  cannot be used stops the app, as before; so do two collections about the same thing, and a collection about
+  something whose name the site uses for an address of its own (`media`, `compare`, `report` …).
+* **`DastanSite` is the collection of one request**: the one the address names first
+  (`/<language>/<collection>/…`), or the first collection for an address that names none – the start page, a
+  comparison. Pages are written as before: they ask for "the collection" and get the one of their address.
+  An address under the name of one collection never reaches a record of another: the page asks its own
+  projection.
+* **Each collection has its own reading position** – the cookie was named after the collection from the
+  beginning – its own search, and its own files under `/media/<collection>/…`. The forms that carry the name
+  of a collection (the reading position, a report) are answered for that collection.
+* **The start page** lists the collections a visitor may see, each with what it is about as far as this
+  visitor has read it. With one collection it is as it was, with its search; with several it has no search,
+  because a search looks through one collection.
+* **The list for search engines** (`sitemap.xml`) names the pages of every collection.
+* The comparisons belong to the site, not to a collection, as before.
+
+For whoever runs the site nothing changes with one collection. To offer another, its file – and its
+translations and files – is put into the content folder beside the first and the site is started again.
+
+Not done: a search across collections; the same entity in two collections shown as one (each collection has
+its own records; the identifiers in other catalogues of step 12.3 are what could connect them); a start page
+the editors arrange.
+
+Verification: `SeveralCollectionsTests` (13 cases) – the order of the collections and a file that is none;
+the start page in both languages; the pages of each under its name; four addresses that mix two collections;
+a search in its own collection; reading positions that do not touch each other and files under the right
+name; a report kept under its collection; a collection the site could not reach. The second collection is
+written from the template of the editors' tools. The 460 tests of the site with one collection pass
+unchanged. Not looked at in a browser.

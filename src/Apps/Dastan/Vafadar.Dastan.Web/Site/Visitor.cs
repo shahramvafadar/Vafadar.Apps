@@ -13,6 +13,7 @@ namespace Vafadar.Dastan.Web.Site;
 public sealed class Visitor
 {
     private readonly string _source;
+    private readonly HttpContext _context;
 
     /// <summary>Initializes a new instance of the <see cref="Visitor"/> class from the current request.</summary>
     public Visitor(IHttpContextAccessor accessor, DastanSite site)
@@ -20,6 +21,7 @@ public sealed class Visitor
         var context = accessor.HttpContext ?? throw new InvalidOperationException("A visitor exists during a request only.");
         ArgumentNullException.ThrowIfNull(site);
         _source = site.Language;
+        _context = context;
         Language = context.GetSiteLanguage();
         Theme = ThemePreference.Read(context);
         Boundary = ReadingPreference.Read(context, site);
@@ -37,6 +39,13 @@ public sealed class Visitor
 
     /// <summary>Gets what the visitor may see, or <see langword="null"/> when nothing is released to the site's audience.</summary>
     public Projection? Projection { get; }
+
+    /// <summary>Returns what the visitor may see of another collection of the site, at the stage they have read it to.</summary>
+    public Projection? Of(DastanSite collection)
+    {
+        ArgumentNullException.ThrowIfNull(collection);
+        return collection.At(ReadingPreference.Read(_context, collection));
+    }
 
     /// <summary>Returns a text in the language of the page, or in the language of the collection when it has no translation.</summary>
     public ResolvedText Text(LocalizedText text) => text.Resolve(Language.Tag, _source);
@@ -75,12 +84,12 @@ public static class ReadingPreference
     public static IEndpointConventionBuilder MapReadingPreference(this IEndpointRouteBuilder endpoints) =>
         endpoints.MapPost("/preferences/reading", (
             HttpContext context,
-            DastanSite site,
+            DastanLibrary library,
             [FromForm] string? collection,
             [FromForm] string? level,
             [FromForm] string? returnUrl) =>
         {
-            if (collection != site.Collection
+            if (library.Find(collection) is not { } site
                 || !int.TryParse(level, NumberStyles.None, CultureInfo.InvariantCulture, out var chosen)
                 || chosen >= site.StageCount)
             {

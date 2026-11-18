@@ -1410,4 +1410,10 @@
   <data name="Thread_LastReached" xml:space="preserve">
     <value>این واپسین ایستگاهِ یک رشته است که به آن رسیده‌اید.</value>
   </data>
+  <data name="Discover_Collections" xml:space="preserve">
+    <value>آنچه این‌جا برای خواندن هست</value>
+  </data>
+  <data name="Discover_OpenCollection" xml:space="preserve">
+    <value>بازکردن</value>
+  </data>
 </root>

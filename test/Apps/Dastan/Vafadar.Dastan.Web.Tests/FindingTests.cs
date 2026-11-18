@@ -15,7 +15,7 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
 {
     private const string Story = "story-rostam-sohrab";
 
-    private Projection Projection => world.Services.GetRequiredService<DastanSite>().At(ReadingLevel.Opening)!;
+    private Projection Projection => world.Services.GetRequiredService<DastanLibrary>().Collections[0].At(ReadingLevel.Opening)!;
 
     [Fact]
     public void A_filter_alone_finds_everything_that_fits_and_nothing_alone_finds_nothing()
@@ -143,7 +143,7 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
     [Fact]
     public void The_order_of_the_making_puts_the_oldest_first_and_what_has_no_year_last()
     {
-        var gallery = demo.Services.GetRequiredService<DastanSite>().At(ReadingLevel.Opening)!.Gallery();
+        var gallery = demo.Services.GetRequiredService<DastanLibrary>().Collections[0].At(ReadingLevel.Opening)!.Gallery();
         var oldest = gallery.Arranged(GalleryOrder.OldestFirst, null);
         var newest = gallery.Arranged(GalleryOrder.NewestFirst, null);
 

@@ -1410,4 +1410,10 @@
   <data name="Thread_LastReached" xml:space="preserve">
     <value>This is the last stop of a thread you have reached.</value>
   </data>
+  <data name="Discover_Collections" xml:space="preserve">
+    <value>What is here to read</value>
+  </data>
+  <data name="Discover_OpenCollection" xml:space="preserve">
+    <value>Open</value>
+  </data>
 </root>
