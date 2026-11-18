@@ -425,3 +425,19 @@ back: one condition in two forms.
   somebody who looks at objections. That stays the owner's.
 
 Checked: one more case of `PhotoPagesTests`. The refusal was looked at in a browser (fa, 375 px, dark).
+
+## Thirteenth addendum (2026-11-18): who makes an account (step 17.1; D-061, D-063, D-068)
+
+* **16 and older** (D-061): both forms that make an account – with a password, and after a sign-in through a
+  provider – ask for the tick "I am 16 or older". Without it no account is made. The site asks and believes:
+  it keeps no day of birth and checks no document. A record of a child may stand in a private family tree; it
+  is a record of a living person without an account, and so keeps the tree from being public (eighth
+  addendum). There are no accounts of children with a guardian.
+* **By invitation only** (D-068): with `Dastan:InvitationOnly` a new account needs an invitation that can be
+  used. The page shows the form to who came by one and says "by invitation only" to everybody else; a form
+  that is sent all the same makes nothing. Who has an account signs in as ever and invites as ever. **The
+  first account is made before the setting is set** – there is nobody to invite it.
+* **Another kind** (D-063): the kinds of relationship are the fixed list with "other" added. A kind says
+  nothing about who sees a relationship.
+
+Checked: `ClosedTrialTests` (8 cases). Not looked at in a browser.

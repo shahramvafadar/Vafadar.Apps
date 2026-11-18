@@ -453,10 +453,7 @@ left waits for one of these – each is a question of the owner's, not of code:
 | Decision | What it opens |
 |---|---|
 | ~~Accounts of visitors, what is published about living people, shared family trees, the end of consent~~ | **Decided on 2026-11-18** (D-048 to D-055): phase 16 below |
-| Copies without a connection (Q-13); children and guardians (PRIV-003) | The rules the library leaves out |
-| A mail service for invitations | Sending an invitation – a third party |
-| A library that reads and writes images | Smaller sizes of an image that is brought in (step 13.7); a picture for the preview of a link (step 14.4) |
-| A map: coasts and borders that may be shipped, or tiles from a host of the owner's | A background for the drawing of the places (step 14.1) |
+| ~~Copies without a connection (Q-13); children and guardians (PRIV-003); a mail service; a library for images; a map~~ | **Decided on 2026-11-18** (D-056 to D-069, "everything as proposed"): phase 17 below |
 | The form of a statement that connects reading stages between the stories of **one** collection | A reading position for each story of one collection (step 14.11). **What works today**: each story as a collection of its own in the same world, with `spoilerPolicy.correspondences` between them – each then has its own stages and the position is carried where the editors state it. Proposed to the owner on 2026-11-18: keep that, or give one collection a ladder per story – a change of the model of what a reader may see, not built unasked |
 | How long reports of visitors that were looked at are kept | **Proposed and built as a default** (step 16.11): 90 days, which `reports forget <folder>` uses when no other number is named. The owner may name another; nothing runs the command by itself |
 | The owner's part of a public pilot (section 11): the review of the content, the rights of the images, the host, the devices, the people | A public site |
@@ -497,3 +494,23 @@ run in a container, with a screen reader, in the light appearance or with real p
 
 Not in this phase: sending mail (no mail service is decided), copies for use without a connection (Q-13 is
 open), children and guardians (PRIV-003 needs a rule of the owner's).
+
+## 18. What the owner decided after phase 16 (phase 17)
+
+On 2026-11-18 the owner answered the list of what waited for a decision with "everything as proposed"
+(D-056 to D-069). What that opens, in the order it is built:
+
+| Step | What | Status |
+|---|---|---|
+| 17.1 | **Small rules**: "other" among the kinds of relationship (D-063); an account is for people of 16 and older (D-061); a site that takes new accounts by invitation only, for the closed trial (D-068) | **Done** 2026-11-18 – [ADR 0014](adr/0014-visitor-accounts.md), thirteenth addendum. The setting `Dastan:InvitationOnly`; the tick "I am 16 or older" on both forms that make an account. Not looked at in a browser |
+| 17.2 | **Coasts on the drawing of the places** from Natural Earth, shipped with the site (D-057) | Planned |
+| 17.3 | **Smaller sizes of a photograph** with SkiaSharp (D-056) | Planned |
+| 17.4 | **A picture for the preview of a link** (D-056, step 14.4) | Planned |
+| 17.5 | **Public content without a connection** (D-064) | Planned |
+| 17.6 | **A way to object to a photograph** for somebody it shows and does not name (D-059) | Planned |
+| 17.7 | **A line of reading stages for each story** of a collection, with correspondences the editors state (D-058) | Planned |
+
+Already as decided and nothing to build: no search engines for public trees (D-062), no mail (D-065), no videos
+of visitors (D-066), 90 days for reports (D-060, step 16.11), the owner's statement about the people in a
+photograph (D-059, step 16.11). The owner's own: the host (D-067), the legal review (D-068), the registration
+with Google and Microsoft (D-069), the review of the content and the rights of the images.

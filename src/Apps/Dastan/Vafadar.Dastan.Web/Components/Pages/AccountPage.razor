@@ -64,6 +64,10 @@
                         <input id="external-name" name="name" type="text" required minlength="@PeopleStore.ShortestName" maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" aria-describedby="external-name-hint" />
                         <span class="meta" id="external-name-hint">@T["Account_Name_Hint"]</span>
                     </p>
+                    <p class="tick">
+                    <input id="external-age" name="age" type="checkbox" required />
+                    <label for="external-age">@T["Account_Age"]</label>
+                </p>
                     <p class="note">@T["Account_Register_Privacy"]</p>
                     @if (_deviceHolds)
                     {
@@ -121,6 +125,13 @@
                 <p class="note" role="status">@T[_invited ? "Account_Invited" : "Account_Invitation_Gone"]</p>
             }
             @Problems("register")
+            @if (Desk.InvitationOnly && !_invited)
+            {
+                @* A closed trial (D-068): who has an account invites others, and nobody else makes one. *@
+                <p class="note">@T["Account_InvitationOnly"]</p>
+            }
+            else
+            {
             <form method="post" action="@($"{AccountDesk.Root}/register")" class="account">
                 <AntiforgeryToken />
                 <input type="hidden" name="returnUrl" value="@_here" />
@@ -144,6 +155,10 @@
                 {
                     <input type="hidden" name="invitation" value="@Invitation" />
                 }
+                <p class="tick">
+                    <input id="register-age" name="age" type="checkbox" required />
+                    <label for="register-age">@T["Account_Age"]</label>
+                </p>
                 <p class="note">@T["Account_Register_Privacy"]</p>
                 @if (_deviceHolds)
                 {
@@ -151,6 +166,7 @@
                 }
                 <p><button type="submit" class="action secondary">@T["Account_Register_Send"]</button></p>
             </form>
+            }
         </section>
 
         <section id="recover" aria-labelledby="recover-title">
@@ -441,7 +457,7 @@
     // What the forms may answer with: nothing else of an address is turned into words of the page.
     private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked"];
     private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "providers"];
-    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in"];
+    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in", "age", "invitation-needed"];
 
     private VisitorInfo? _info;
     private System.Collections.Immutable.ImmutableArray<string> _codes = [];

@@ -2571,4 +2571,19 @@
   <data name="Photos_Problem_photo-agreement" xml:space="preserve">
     <value>A photograph is shown to everybody only when you say that the people in it agree. Tick that, or choose who sees it. Nothing was changed.</value>
   </data>
+  <data name="People_Kind_other" xml:space="preserve">
+    <value>another kind</value>
+  </data>
+  <data name="Account_Age" xml:space="preserve">
+    <value>I am 16 or older.</value>
+  </data>
+  <data name="Account_Problem_age" xml:space="preserve">
+    <value>An account is for people of 16 and older. Please say that you are.</value>
+  </data>
+  <data name="Account_Problem_invitation-needed" xml:space="preserve">
+    <value>For now this site takes new accounts by invitation only, and this invitation cannot be used.</value>
+  </data>
+  <data name="Account_InvitationOnly" xml:space="preserve">
+    <value>For now this site takes new accounts by invitation only. Somebody who has an account can send you a link.</value>
+  </data>
 </root>
