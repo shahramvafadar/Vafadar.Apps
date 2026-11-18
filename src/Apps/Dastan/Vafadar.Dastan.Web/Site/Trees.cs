@@ -95,6 +95,42 @@ public static partial class TreeEndpoints
             using var store = desk.Open();
             return chosen is { } named && store.SetTreeMember(Me(context), tree ?? string.Empty, account ?? string.Empty, named) ? Said(returnUrl, "member-set", "members") : Results.BadRequest();
         });
+
+        MapClaims(forms);
+    }
+
+    // "This record is me" (D-052): asked by an account, answered by who made the record, taken back by the account.
+    private static void MapClaims(RouteGroupBuilder forms)
+    {
+        forms.MapPost("/claim", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? person, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return store.Claim(Me(context), tree ?? string.Empty, person ?? string.Empty) switch
+            {
+                "claimed" => Said(returnUrl, "claimed", "people"),
+                "refused" or "unknown" => Results.BadRequest(),
+                var problem => Back(returnUrl, "people", $"claim-{problem}"),
+            };
+        });
+
+        forms.MapPost("/claim-review", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] long? claim, [FromForm] string? answer, [FromForm] string? returnUrl) =>
+        {
+            if (answer is not ("confirm" or "refuse") || claim is not { } number)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            return store.ReviewClaim(Me(context), tree ?? string.Empty, number, answer == "confirm")
+                ? Said(returnUrl, answer == "confirm" ? "claim-confirmed" : "claim-refused", "claims")
+                : Results.BadRequest();
+        });
+
+        forms.MapPost("/unclaim", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? person, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return store.Unclaim(Me(context), tree ?? string.Empty, person ?? string.Empty) ? Said(returnUrl, "unclaimed", "people") : Results.BadRequest();
+        });
     }
 
     // The filter of the group has seen that somebody signed in.

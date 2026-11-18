@@ -37,7 +37,8 @@ public sealed record TreeInfo(string Id, string Name, PersonRef Owner, TreeRole 
 /// <param name="Parents">The records of the parents.</param>
 /// <param name="Children">The records of the children.</param>
 /// <param name="Partners">The records of the partners.</param>
-public sealed record TreePerson(string Id, string Name, int? Born, int? Died, bool Deceased, ImmutableArray<string> Parents, ImmutableArray<string> Children, ImmutableArray<string> Partners);
+/// <param name="Account">The account the record is, once a claim was confirmed (D-052).</param>
+public sealed record TreePerson(string Id, string Name, int? Born, int? Died, bool Deceased, ImmutableArray<string> Parents, ImmutableArray<string> Children, ImmutableArray<string> Partners, PersonRef? Account = null);
 
 /// <summary>A link between two records of a tree.</summary>
 /// <param name="Number">The number of the link.</param>
@@ -66,6 +67,12 @@ public sealed record TreeChange(DateTime At, string? By, string What, string Sub
 /// <param name="History">The changes, the newest first.</param>
 public sealed record TreeView(TreeInfo Tree, ImmutableArray<TreePerson> People, ImmutableArray<TreeLink> Links, ImmutableArray<TreeMember> Members, ImmutableArray<TreeChange> History)
 {
+    /// <summary>Gets the claims that wait and that the account that asks made or is to review.</summary>
+    public ImmutableArray<ClaimInfo> Claims { get; init; } = [];
+
+    /// <summary>Gets a value indicating whether the account that asks can claim a record: it is none and claims none yet.</summary>
+    public bool CanClaim { get; init; }
+
     /// <summary>Returns the record with an identifier.</summary>
     public TreePerson Person(string id) => People.First(person => person.Id == id);
 }
@@ -138,7 +145,11 @@ public sealed partial class PeopleStore
         var people = _context.Persons.AsNoTracking().Where(person => person.Tree == tree).ToList();
         var members = info.Role != TreeRole.Owner ? [] : _context.TreeMembers.AsNoTracking().Where(member => member.Tree == tree).ToList();
         var changes = _context.TreeChanges.AsNoTracking().Where(change => change.Tree == tree).OrderByDescending(change => change.Number).Take(HistoryShown).ToList();
-        var names = Names(members.Select(member => member.Account).Concat(changes.Select(change => change.By).OfType<string>()));
+        var claims = _context.Claims.AsNoTracking().Where(claim => claim.Tree == tree).OrderBy(claim => claim.Number).ToList();
+        var names = Names(members.Select(member => member.Account)
+            .Concat(changes.Select(change => change.By).OfType<string>())
+            .Concat(people.Select(person => person.Account).OfType<string>())
+            .Concat(claims.Select(claim => claim.Account)));
         return new(
             info,
             [.. people.OrderBy(person => person.Name, StringComparer.CurrentCultureIgnoreCase).Select(person => new TreePerson(
@@ -149,10 +160,21 @@ public sealed partial class PeopleStore
                 person.Deceased,
                 [.. links.Where(link => link.Kind == "parent" && link.To == person.Id).Select(link => link.From)],
                 [.. links.Where(link => link.Kind == "parent" && link.From == person.Id).Select(link => link.To)],
-                [.. links.Where(link => link.Kind == "partner" && (link.From == person.Id || link.To == person.Id)).Select(link => link.From == person.Id ? link.To : link.From)]))],
+                [.. links.Where(link => link.Kind == "partner" && (link.From == person.Id || link.To == person.Id)).Select(link => link.From == person.Id ? link.To : link.From)],
+                person.Account is { } account ? names.GetValueOrDefault(account) : null))],
             [.. links.Select(link => new TreeLink(link.Number, link.Kind, link.From, link.To))],
             [.. members.Where(member => names.ContainsKey(member.Account)).Select(member => new TreeMember(names[member.Account], (TreeRole)member.Role)).OrderBy(member => member.Account.Name, StringComparer.CurrentCultureIgnoreCase)],
-            [.. changes.Select(change => new TreeChange(change.At, change.By is { } by && names.TryGetValue(by, out var account) ? account.Name : null, change.What, change.Subject))]);
+            [.. changes.Select(change => new TreeChange(change.At, change.By is { } by && names.TryGetValue(by, out var account) ? account.Name : null, change.What, change.Subject))])
+        {
+            // A claim is shown to who made it and to who is to answer it, and to nobody else who sees the tree.
+            Claims =
+            [
+                .. claims.Where(claim => names.ContainsKey(claim.Account))
+                    .Select(claim => new ClaimInfo(claim.Number, claim.Person, names[claim.Account], claim.Account == viewer, Reviewer(people.First(person => person.Id == claim.Person), claim.Account) == viewer))
+                    .Where(claim => claim.Mine || claim.CanReview),
+            ],
+            CanClaim = !people.Any(person => person.Account == viewer) && !claims.Any(claim => claim.Account == viewer),
+        };
     }
 
     /// <summary>Gives a tree another name. Only its owner can.</summary>
@@ -208,6 +230,7 @@ public sealed partial class PeopleStore
             }
 
             _context.TreeMembers.Remove(stored);
+            LeaveRecords(tree, account);
         }
         else if (known is null)
         {
@@ -377,6 +400,7 @@ public sealed partial class PeopleStore
         {
             var guest = tree.Owner == one ? other : one;
             _context.TreeMembers.RemoveRange(_context.TreeMembers.Where(member => member.Tree == tree.Id && member.Account == guest));
+            LeaveRecords(tree.Id, guest);
         }
     }
 

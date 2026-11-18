@@ -29,6 +29,31 @@
         <p class="note" role="status">@T[$"Trees_Said_{_said}"]</p>
     }
 
+    @if (_tree.Claims.Any(claim => claim.CanReview))
+    {
+        <section id="claims" aria-labelledby="claims-title">
+            <h2 id="claims-title">@T["Tree_Claims_Title"]</h2>
+            <p class="note">@T["Tree_Claims_Note"]</p>
+            <ul class="people" role="list">
+                @foreach (var claim in _tree.Claims.Where(claim => claim.CanReview))
+                {
+                    var record = _tree.Person(claim.Person).Name;
+                    <li>
+                        <span><a href="@($"people/{claim.By.Id}")"><bdi>@claim.By.Name</bdi></a> <span class="meta">– @T["Tree_Claim_Says"] <bdi>@record</bdi></span></span>
+                        <form method="post" action="@($"{TreeEndpoints.Root}/claim-review")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                            <input type="hidden" name="claim" value="@claim.Number" />
+                            <button type="submit" name="answer" value="confirm">@T["Tree_Claim_Confirm"]<span class="visually-hidden"> – @claim.By.Name, @record</span></button>
+                            <button type="submit" name="answer" value="refuse">@T["Tree_Claim_Refuse"]<span class="visually-hidden"> – @claim.By.Name, @record</span></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
     <section id="people" aria-labelledby="people-title">
         <h2 id="people-title">@T["Tree_People_Title"]</h2>
         @Problems("people")
@@ -54,6 +79,38 @@
                         @if (!person.Children.IsEmpty)
                         {
                             <p class="meta">@T["Tree_Children"] @Named(person.Children)</p>
+                        }
+                        @{
+                            var waits = _tree.Claims.Any(claim => claim.Mine && claim.Person == person.Id);
+                        }
+                        @if (person.Account is { } account)
+                        {
+                            @* A confirmed claim: the record names the account, and that is all it does (PRIV-004). *@
+                            <p class="meta">@T["Tree_Claim_Is"] <a href="@($"people/{account.Id}")"><bdi>@account.Name</bdi></a></p>
+                        }
+                        else if (waits)
+                        {
+                            <p class="meta">@T["Tree_Claim_Waits"]</p>
+                        }
+                        @if (person.Account?.Id == _viewer || waits)
+                        {
+                            <form method="post" action="@($"{TreeEndpoints.Root}/unclaim")" class="save">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                <input type="hidden" name="person" value="@person.Id" />
+                                <button type="submit">@T[waits ? "Tree_Claim_Withdraw" : "Tree_Claim_NotMe"]<span class="visually-hidden"> – @person.Name</span></button>
+                            </form>
+                        }
+                        else if (person.Account is null && _tree.CanClaim)
+                        {
+                            <form method="post" action="@($"{TreeEndpoints.Root}/claim")" class="save">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                <input type="hidden" name="person" value="@person.Id" />
+                                <button type="submit">@T["Tree_Claim_Me"]<span class="visually-hidden"> – @person.Name</span></button>
+                            </form>
                         }
                         @if (mayChange)
                         {
@@ -244,12 +301,13 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["made", "renamed", "person-added", "person-changed", "person-removed", "linked", "unlinked", "member-set"];
+    private static readonly string[] Sayings = ["made", "renamed", "person-added", "person-changed", "person-removed", "linked", "unlinked", "member-set", "claimed", "claim-confirmed", "claim-refused", "unclaimed"];
     private static readonly string[] Forms = ["people", "person-add", "links", "rename"];
-    private static readonly string[] Known = ["tree-name", "person", "link-kind", "link-unknown", "link-same", "link-exists", "link-loop"];
+    private static readonly string[] Known = ["tree-name", "person", "link-kind", "link-unknown", "link-same", "link-exists", "link-loop", "claim-taken", "claim-own", "claim-nobody"];
 
     private TreeView? _tree;
     private List<PersonRef> _known = [];
+    private string? _viewer;
     private string? _said;
     private string? _form;
     private string? _problem;
@@ -276,6 +334,7 @@
         if (Desk.IsOpen && Id.Length <= 40 && AccountDesk.Session(Context.User) is { } session)
         {
             using var store = Desk.Open();
+            _viewer = session.Id;
             _tree = store.Tree(session.Id, Id);
             if (_tree?.Tree.Role == TreeRole.Owner)
             {

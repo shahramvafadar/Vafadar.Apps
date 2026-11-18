@@ -181,3 +181,23 @@ four accounts). Looked at in a browser in English and Persian at 375 px, dark ap
 found there and corrected – a row with a box to tick that looked like an input, and names of another script
 that turned the words of the history around. Not tried: a tree of several hundred people in a browser, a
 screen reader, the light appearance, a container.
+
+## Fourth addendum (step 16.4, second part): "this record is me"
+
+* An account that may see a tree can say of one record that it is this account (D-052, PRIV-004). An account
+  is at most one record of a tree and has at most one claim waiting there.
+* **Who answers**: the account that made the record, as long as it is open and may still see the tree;
+  otherwise the owner of the tree. **Never the claimant** – that is the rule of step 15.2
+  (`IdentityClaim`), which the store asks. So a record somebody made themselves in their own tree cannot be
+  claimed by them: there is nobody else to confirm it, and the page says so.
+* A claim is shown to who made it and to who is to answer it – not to the others who see the tree. The page
+  of who answers says that the same name is not proof.
+* **Confirmed, the record names the account, and that is all**: nothing is merged, no role changes, nobody
+  sees more than before. Refused, nothing is kept but the line in the history.
+* **Only the account takes it back** – its waiting claim, or that a record is it – at any time; not the
+  owner and not who made the record. An account that may not see the tree any more, was closed or deleted, is
+  no record of it and claims none.
+* A claim, its answer and its taking back are in the history of the tree.
+
+Checked: `IdentityClaimsTests` (the store: 10 cases), three more cases of `FamilyTreePagesTests` (the site).
+**Not looked at in a browser.**
