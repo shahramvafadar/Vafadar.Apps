@@ -152,7 +152,7 @@
         else if (problems.Count == 0)
         {
             using var content = file!.OpenReadStream();
-            var (taken, refused) = MediaIntake.Take(folder, id, "file", null, content);
+            var (taken, refused) = MediaIntake.Take(folder, id, "file", null, content, MediaForm.Sizes);
             if (taken is null)
             {
                 problems.Add(refused!);

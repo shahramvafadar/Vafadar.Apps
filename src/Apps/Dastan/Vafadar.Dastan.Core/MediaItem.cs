@@ -139,6 +139,12 @@ public sealed class MediaItem
     /// <summary>Gets other formats of the same image, as format and file relative to the content folder.</summary>
     public ImmutableArray<(string Format, string File)> Renditions { get; init; } = [];
 
+    /// <summary>
+    /// Gets the smaller sizes of an image, the narrowest first: the same picture with fewer pixels, for a page
+    /// that shows it small (D-056). A rendition is another format; a size is the same format.
+    /// </summary>
+    public ImmutableArray<(int Width, string File)> Sizes { get; init; } = [];
+
     /// <summary>Gets the playing time of a video in seconds. It is not the time the video is about.</summary>
     public decimal? DurationSeconds { get; init; }
 

@@ -447,7 +447,7 @@ not say what each has to do with the step.
 | `sourceUrl` | Optional: the public page of the item, an `https` address. An item that may not be shown and has this page stands in the galleries as a **reference**: its catalogue record and a link to the page, without a picture ([ADR 0006](adr/0006-media-delivery.md), addendum) |
 | `altText`, `altTextStatus` | Optional: the text alternative and its state – `not_prepared_image_not_cleared`, `draft_pending_visual_review` or `project_authored_for_exact_diagram` |
 | `depictedEntityIds`, `depictedEventIds`, `relatedRelationIds` | Optional lists: whom and what the item shows |
-| `posterUrl`, `captions` (`language`, `url`), `transcriptUrl` with `transcriptFormat` `text/plain` (a `.txt` file), `renditions` (`format`, `url`), `durationSeconds`, `audioTrack`, `dimensions` (`width`, `height`) | Optional; local paths like `url` |
+| `posterUrl`, `captions` (`language`, `url`), `transcriptUrl` with `transcriptFormat` `text/plain` (a `.txt` file), `renditions` (`format`, `url` – the same item in another format), `sizes` (`width`, `url` – for an image: the same picture narrower, in pixels; each narrower than the image, no width twice; the tool writes them when an image is brought in), `durationSeconds`, `audioTrack`, `dimensions` (`width`, `height`) | Optional; local paths like `url` |
 | `catalogTitle`, `accessionNumber`, `creditLine` | Optional: the record of a museum |
 | `reviewerProvenancePath` with `reviewerProvenanceAudience` `reviewer_only` | Optional: a working document for reviewers, outside `content/`. It is checked and never shown; the `revision` command leaves it out of a revision |
 | `status`, `deliveryStatus` | Optional notes |

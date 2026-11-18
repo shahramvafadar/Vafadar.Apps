@@ -432,7 +432,7 @@
             var part = Context.Request.Form["part"].ToString();
             var language = ActInput.Text(Context.Request.Form["language"]);
             using var content = sent!.OpenReadStream();
-            var (file, refused) = MediaIntake.Take(folder, Record, part, language, content);
+            var (file, refused) = MediaIntake.Take(folder, Record, part, language, content, MediaForm.Sizes);
             if (file is null)
             {
                 problems.Add(refused!);

@@ -251,3 +251,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   photograph.
 - Somebody who is in a photograph that everybody sees, and was not named by its owner, can say so under the
   photograph. It is then shown to nobody else until they agree or take that back.
+- For editors: an image that is brought in through the tool gets two smaller sizes, and the pages of the site
+  give a browser the one that fits – the gallery loads small pictures.

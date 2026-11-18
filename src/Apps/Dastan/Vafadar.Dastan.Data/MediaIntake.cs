@@ -28,7 +28,18 @@ public enum MediaFileKind
 /// <param name="Height">The height of an image, in pixels.</param>
 /// <param name="Length">Its length in bytes, as it was kept.</param>
 /// <param name="Path">Where it lies on the machine.</param>
-public sealed record TakenFile(string Url, MediaFileKind Kind, string ContentType, int? Width, int? Height, long Length, string Path);
+public sealed record TakenFile(string Url, MediaFileKind Kind, string ContentType, int? Width, int? Height, long Length, string Path)
+{
+    /// <summary>Gets the smaller sizes that were made of an image beside it, the narrowest first; none when none were asked for or the image is small.</summary>
+    public IReadOnlyList<SmallerImage> Sizes { get; init; } = [];
+
+    /// <summary>Returns the address of a smaller size as a record names it: beside the file.</summary>
+    public static string UrlOf(SmallerImage size)
+    {
+        ArgumentNullException.ThrowIfNull(size);
+        return $"../media/{System.IO.Path.GetFileName(size.Path)}";
+    }
+}
 
 /// <summary>
 /// Takes a file for a media item in (step 13.7): what the file is is read from its content, never from its name
@@ -61,7 +72,8 @@ public static partial class MediaIntake
     /// <param name="part">What part of the item the file is; one of <see cref="Parts"/>.</param>
     /// <param name="language">For captions: their language, as a language tag.</param>
     /// <param name="content">The file.</param>
-    public static (TakenFile? File, string? Problem) Take(string samplesFolder, string item, string part, string? language, Stream content)
+    /// <param name="sizes">For the file of an image: the longer sides, in pixels, of the smaller sizes to make beside it (D-056). None: none are made.</param>
+    public static (TakenFile? File, string? Problem) Take(string samplesFolder, string item, string part, string? language, Stream content, IReadOnlyList<int>? sizes = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(samplesFolder);
         ArgumentNullException.ThrowIfNull(item);
@@ -187,7 +199,21 @@ public static partial class MediaIntake
 
             var kept2 = Path.Combine(folder, name);
             File.Move(arriving, kept2);
-            return (new TakenFile($"../media/{name}", kind, type, size?.Width, size?.Height, length, kept2), null);
+
+            // Smaller sizes of the picture lie beside it, under its name and their width.
+            var smaller = new List<SmallerImage>();
+            if (kind == MediaFileKind.Image && part == "file")
+            {
+                foreach (var longest in (sizes ?? []).Distinct().Order())
+                {
+                    if (ImageSizes.Smaller(kept2, longest, $"{Path.GetFileNameWithoutExtension(name)}-{longest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{extension}") is { } made)
+                    {
+                        smaller.Add(made);
+                    }
+                }
+            }
+
+            return (new TakenFile($"../media/{name}", kind, type, size?.Width, size?.Height, length, kept2) { Sizes = smaller }, null);
         }
         finally
         {
@@ -202,9 +228,12 @@ public static partial class MediaIntake
     public static void Discard(TakenFile file)
     {
         ArgumentNullException.ThrowIfNull(file);
-        if (File.Exists(file.Path))
+        foreach (var path in file.Sizes.Select(size => size.Path).Prepend(file.Path))
         {
-            File.Delete(file.Path);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
         }
     }
 

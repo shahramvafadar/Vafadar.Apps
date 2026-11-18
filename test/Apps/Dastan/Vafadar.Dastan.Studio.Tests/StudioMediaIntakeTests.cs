@@ -100,6 +100,32 @@ public sealed class StudioMediaIntakeTests : IDisposable
     }
 
     [Fact]
+    public async Task A_large_image_gets_smaller_sizes_that_its_record_names_and_a_small_one_gets_none()
+    {
+        var page = await _desk.Upload(New, "new", "IMG_0001.jpg", RealImages.Jpeg(2000, 1000), [("id", "media-new"), .. Item]);
+
+        Assert.EndsWith("record/media/media-new?done=added", page.Arrived, StringComparison.Ordinal);
+        using (var store = _studio.Store())
+        {
+            var record = store.Record(Collection, "media", "media-new")!.Body;
+            Assert.Equal("""[{"width":480,"url":"../media/media-new-file-480.jpg"},{"width":1200,"url":"../media/media-new-file-1200.jpg"}]""", record["sizes"]!.ToJsonString());
+            Assert.Equal((2000, 1000), ((int)record["dimensions"]!["width"]!, (int)record["dimensions"]!["height"]!));
+        }
+
+        Assert.True(File.Exists(Path.Combine(Media, "media-new-file-480.jpg")));
+        Assert.Equal((1200, 600, "red green blue white"), RealImages.Look(File.ReadAllBytes(Path.Combine(Media, "media-new-file-1200.jpg"))));
+
+        // Another file in its place: a small one, which has no smaller sizes – the record names none of the old.
+        var changed = await _desk.Upload($"/en/{Collection}/record/media/media-new", "upload", "little.jpg", RealImages.Jpeg(400, 200), [("part", "file"), ("Uploading.By", "a writer"), ("Uploading.Reason", "A smaller picture.")]);
+
+        Assert.Contains("done=changed", changed.Arrived, StringComparison.Ordinal);
+        using var after = _studio.Store();
+        var now = after.Record(Collection, "media", "media-new")!.Body;
+        Assert.False(now.ContainsKey("sizes"));
+        Assert.Equal(400, (int)now["dimensions"]!["width"]!);
+    }
+
+    [Fact]
     public async Task A_file_that_is_no_image_and_an_item_the_collection_cannot_take_leave_no_record_and_no_file()
     {
         var before = Directory.GetFiles(Media).Length;
