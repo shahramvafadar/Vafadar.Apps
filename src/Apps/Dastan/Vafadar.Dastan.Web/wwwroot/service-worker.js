@@ -1,9 +1,15 @@
-// The service worker of Dastan (ADR 0007). It does one thing: when a page cannot be fetched, it shows the page
-// that says so. It keeps the few files that page is made of and nothing else – no page of the site, no file of a
-// collection, no answer that depends on a visitor. Everything else goes to the network exactly as without it.
+// The service worker of Dastan (ADR 0007). It does two things when a page cannot be fetched: it shows a public
+// page the visitor has read on this device before (D-064), or else the page that says there is no connection.
+// It keeps the few files that page is made of, the public pages the site allows it to keep, and what such a
+// page is drawn with. It keeps nothing of an account and nothing of a private space, and with a connection
+// everything goes to the network exactly as without it.
 
-// Changing this name makes browsers drop what an earlier worker kept.
+// Changing a name makes browsers drop what an earlier worker kept.
 const SHELL = 'dastan-shell-1';
+const READ = 'dastan-read-1';
+
+// How many pages and files of pages are kept; beyond that the ones kept longest ago go.
+const MOST = 200;
 
 // The page for "no connection" and what it needs to look like the site. Nothing of a collection.
 const FILES = [
@@ -22,24 +28,77 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(names => Promise.all(names.filter(name => name !== SHELL).map(name => caches.delete(name))))
+      .then(names => Promise.all(names.filter(name => name !== SHELL && name !== READ).map(name => caches.delete(name))))
       .then(() => self.clients.claim()));
 });
 
+// Keeps an answer of the network for later, and lets go of what was kept longest ago.
+async function keep(address, answer) {
+  const read = await caches.open(READ);
+  await read.put(address, answer);
+  const kept = await read.keys();
+  await Promise.all(kept.slice(0, Math.max(0, kept.length - MOST)).map(old => read.delete(old)));
+}
+
 self.addEventListener('fetch', event => {
   const request = event.request;
-
-  // A page: always from the network. Only when the network fails the visitor gets the page that says so.
-  if (request.mode === 'navigate') {
-    event.respondWith(fetch(request).catch(() => caches.match('/offline.html')));
+  const address = new URL(request.url);
+  if (address.origin !== self.location.origin) {
     return;
   }
 
-  // The files of that page: from the network while there is one, so that they are never older than the site.
-  const address = new URL(request.url);
-  if (request.method === 'GET' && address.origin === self.location.origin && FILES.includes(address.pathname)) {
-    event.respondWith(fetch(request).catch(() => caches.match(address.pathname)));
+  // A form of the preferences changes what the visitor sees – the reading position, the language, who is
+  // signed in. What was kept was kept for the visitor as they were before: it is let go.
+  if (request.method !== 'GET') {
+    if (address.pathname.startsWith('/preferences/')) {
+      event.waitUntil(caches.delete(READ));
+    }
+
+    return;
   }
 
-  // Anything else – the files of a collection above all – is not touched.
+  // A page: always from the network. The site says which page may be kept – a public one, for a visitor who is
+  // not signed in. Only when the network fails the visitor gets what was kept, or the page that says so.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then(answer => {
+          if (answer.ok && answer.headers.get('Dastan-Keep') === 'page') {
+            event.waitUntil(keep(request.url, answer.clone()));
+          }
+
+          return answer;
+        })
+        .catch(() => caches.open(READ)
+          .then(read => read.match(request.url))
+          .then(kept => kept || caches.match('/offline.html'))));
+    return;
+  }
+
+  // The files of the page for "no connection": from the network while there is one, so that they are never
+  // older than the site.
+  if (FILES.includes(address.pathname)) {
+    event.respondWith(fetch(request).catch(() => caches.match(address.pathname)));
+    return;
+  }
+
+  // What a kept page is drawn with – its style, its script, its font, the images of its collection: kept when
+  // it was fetched, and given from what was kept only when the network fails. A photograph of a visitor is
+  // never kept, and neither is a video.
+  const drawn = ['style', 'script', 'font'].includes(request.destination)
+    || (request.destination === 'image' && address.pathname.startsWith('/media/'));
+  if (drawn) {
+    event.respondWith(
+      fetch(request)
+        .then(answer => {
+          if (answer.ok) {
+            event.waitUntil(keep(request.url, answer.clone()));
+          }
+
+          return answer;
+        })
+        .catch(() => caches.open(READ).then(read => read.match(request.url)).then(kept => kept || Response.error())));
+  }
+
+  // Anything else is not touched.
 });

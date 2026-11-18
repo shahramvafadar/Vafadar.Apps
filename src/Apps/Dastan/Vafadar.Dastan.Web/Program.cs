@@ -128,6 +128,9 @@ app.UseRefusedFormPage();
 // Routes are matched after the language was taken out of the path.
 app.UseRouting();
 app.UseAuthentication();
+
+// A public page may be kept by the device of who read it, for a time without a connection (D-064).
+app.UseKeptOffline();
 app.UseAntiforgery();
 
 app.MapStaticAssets();

@@ -153,7 +153,10 @@ asks them who it is and nothing else, and keeps which of them it was and a hash 
 no name, no mail address, no picture, no token. What they learn: that this person signs in to this site, and
 when; Microsoft shows the person that the site may read their profile, because it tells who somebody is in no
 other way – the site drops everything but the identifier. A visitor who wants neither of them to know uses a
-name and a password. Since step 16.10 an account keeps albums: a name, a note and which of its photographs
+name and a password. Since step 17.5 the device of a visitor who is not signed in keeps the
+public pages they read there, for a time without a connection (D-064) – in the browser, not on the server;
+nothing of an account, a person, a family tree or a photograph is kept that way, and a form of the preferences
+empties it. Since step 16.10 an account keeps albums: a name, a note and which of its photographs
 stand in each; an album is deleted with its account and is in the copy of one's own data. Nothing is hosted; a
 legal review of accounts (terms, age, the law of the place) is the owner's and not done.
 

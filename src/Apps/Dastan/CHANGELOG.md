@@ -246,3 +246,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A photograph taken with the phone upright is no longer shown on its side. Large photographs are shown faster
   where they stand among others: the site makes a smaller size of each and gives the browser the one that fits.
 - A link to a page of the site is shown with a picture where somebody passes it on: the mark of the site.
+- Without a connection, a page of a story that was opened on the same device before can still be read. Only
+  public pages of somebody who is not signed in are kept that way – nothing of an account, a family tree or a
+  photograph.

@@ -76,3 +76,37 @@ browser keeps is a risk: a kept page or file would outlive the reading position 
 **Not verified.** An installation was not carried out: the browser of the tests is a private window, which cannot
 install, and no other browser was driven. No phone, no iOS or Android, no screen reader. What a tool cannot decide about accessibility – whether a text alternative is
 a good one, whether the order of reading makes sense when spoken – was not judged by a person with a screen reader.
+
+## Addendum of 2026-11-18 – what a device keeps for a time without a connection (step 17.5, D-064)
+
+The decision above kept nothing of the site in the device: every answer depends on how far a visitor has
+read. The owner decided that public content a visitor has read is available without a connection, and
+nothing of an account or a private space (D-064, answering Q-13 for now).
+
+* **The site says what may be kept.** An answer that may be kept carries the header `Dastan-Keep: page`
+  (`KeptOffline`): a page that was found, of the start page, a collection or a comparison, for a visitor who
+  is **not signed in**. A page of an account, of a person, of a family tree – a public one too –, a
+  photograph, a search, a list, a form and every page of somebody who is signed in (their name stands on it)
+  never carries it. The worker keeps a page only with the header; the rule is in one place, on the server.
+* **What is kept is what the visitor was given**: the page as it was at their reading position, so nothing
+  they had not reached. With it, what it is drawn with: its style, its script, its font and the images of its
+  collection – not a video, and never a photograph of a visitor.
+* **The network comes first, always.** A page is asked of the site every time; what was kept is shown only
+  when the site cannot be reached. A page that was not kept gives the page for "no connection", which says
+  that pages read before can still be read.
+* **Let go when the visitor changes**: any form of the preferences – the reading position, the language, the
+  appearance, signing in or out – empties what was kept, so a kept page never shows more or less than the
+  visitor as they are now would be given, and nothing kept before a sign-in is shown as theirs after. At most
+  200 pages and files are kept; the ones kept longest ago go first.
+* **On a device several people use**, somebody else finds the public pages that were read there, as they
+  would find them in the history of the browser. Nothing else is in them.
+
+Not built: a control that shows what is kept and empties it (the browser has one: the data of the site); a
+mark on a kept page that says it is a kept copy; anything of a private space without a connection – that
+would need a rule for how long it stays valid, which is not decided.
+
+Checked: `KeptOfflineTests` (17 cases – which answers carry the header), `InstallableAppTests` (the worker
+keeps only what carries it, in a store a form of the preferences empties, and asks the network first).
+**Tried in a browser** with the site stopped (en, dark): two pages of the story that were read came back with
+their style; the page of the account and a page of the story that had not been read gave "no connection".
+The tests do not run the worker.
