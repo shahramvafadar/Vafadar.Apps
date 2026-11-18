@@ -110,3 +110,20 @@ a search in its own collection; reading positions that do not touch each other a
 name; a report kept under its collection; a collection the site could not reach. The second collection is
 written from the template of the editors' tools. The 460 tests of the site with one collection pass
 unchanged. Not looked at in a browser.
+
+## Second addendum of 2026-11-18 – the same world in another collection (step 14.11)
+
+Collections that name the same `worldId` are about the same world: another edition of the same work, another
+telling of the same story. `DastanLibrary.SameWorld` answers the others for a collection, and the page of a
+collection lists them – each with the text it follows, when it follows one – and leads to them.
+
+**The reading position is not carried.** Each collection has its own stages and its own cookie; the page says
+so. Carrying a position would need a statement of which stage of one telling corresponds to which stage of
+the other – a prose retelling may tell in its second part what a poem tells in its fourth. Nobody has stated
+that, and a guess would show a reader what they have not read. The same holds for a reading position for
+each story of one collection: the model has one line of stages per collection, and whether reading one story
+reveals something of another is the editors' statement to make, in a form the owner has to decide on first.
+
+Verification: `SameWorldTests` (4 cases) – a collection names the other telling of its world in both
+languages, and is named by it; a collection of another world is not named; what was read in one telling is
+not read in the other until it is read there.

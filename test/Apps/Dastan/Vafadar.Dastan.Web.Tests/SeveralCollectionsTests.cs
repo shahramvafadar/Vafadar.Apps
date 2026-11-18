@@ -28,6 +28,9 @@ public sealed class TwoCollectionsSite : DemoSite
     /// <summary>The name of the second collection in addresses.</summary>
     public const string Club = "subject-club";
 
+    /// <summary>The name of the third collection: the story told once more.</summary>
+    public const string Retold = "story-retold";
+
     /// <summary>Gets the folder the reports of visitors are kept in.</summary>
     public string Reports => Path.Combine(Path.GetDirectoryName(_content)!, "reports");
 
@@ -67,6 +70,12 @@ public sealed class TwoCollectionsSite : DemoSite
         about["summary"] = "Test data: a club that tells no story.";
         File.WriteAllText(Path.Combine(_content, "samples", "a-club.json"), club.ToJsonString());
 
+        // A third collection: the story once more under another name – another telling of the same world.
+        var again = File.ReadAllText(Path.Combine(_content, "samples", "shahnameh-pilot.json"))
+            .Replace("story-rostam-sohrab", Retold, StringComparison.Ordinal)
+            .Replace("dastan-shahnameh-rostam-sohrab-pilot-v0.5", "dastan-shahnameh-retold", StringComparison.Ordinal);
+        File.WriteAllText(Path.Combine(_content, "samples", "retold.json"), again);
+
         // Beside the collections, a file that is none: the site passes it over.
         File.WriteAllText(Path.Combine(_content, "samples", "notes.json"), """{ "note": "No collection." }""");
     }
@@ -95,7 +104,7 @@ public sealed class SeveralCollectionsTests(TwoCollectionsSite site) : IClassFix
     {
         var library = site.Services.GetRequiredService<DastanLibrary>();
 
-        Assert.Equal([Story, Club], library.Collections.Select(collection => collection.Collection));
+        Assert.Equal([Story, Club, TwoCollectionsSite.Retold], library.Collections.Select(collection => collection.Collection));
         Assert.Same(library.Collections[1], library.Find(Club));
         Assert.Null(library.Find("notes"));
 
@@ -209,5 +218,54 @@ public sealed class SeveralCollectionsTests(TwoCollectionsSite site) : IClassFix
         var refusal = Assert.ThrowsAny<Exception>(() => unreachable.Services.GetRequiredService<DastanLibrary>());
 
         Assert.Contains("cannot be reached", refusal.ToString(), StringComparison.Ordinal);
+    }
+}
+
+/// <summary>
+/// The same world in another collection of the site (step 14.11): a collection says where else its world is
+/// told, and that the reading position there is another one.
+/// </summary>
+public sealed class SameWorldTests(TwoCollectionsSite site) : IClassFixture<TwoCollectionsSite>
+{
+    private const string Story = "story-rostam-sohrab";
+    private const string Retold = TwoCollectionsSite.Retold;
+
+    [Theory]
+    [InlineData("en", "The same world, told elsewhere on this site", "with its own reading position")]
+    [InlineData("fa", "همین جهان، در جای دیگری از این سایت", "جایگاه خواندن خودش")]
+    public async Task A_collection_names_the_other_collections_of_its_world(string language, string title, string reading)
+    {
+        var story = await site.Visitor().Get($"/{language}/{Story}");
+        var retold = await site.Visitor().Get($"/{language}/{Retold}");
+
+        Assert.Contains(title, story.Main, StringComparison.Ordinal);
+        Assert.Contains(reading, story.Main, StringComparison.Ordinal);
+        Assert.Contains($"<a href=\"{Retold}\"", story.Html, StringComparison.Ordinal);
+        Assert.Contains($"<a href=\"{Story}\"", retold.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_collection_of_another_world_is_not_named_and_names_nothing()
+    {
+        var club = await site.Visitor().Get($"/en/{TwoCollectionsSite.Club}");
+        var story = await site.Visitor().Get($"/en/{Story}");
+
+        Assert.DoesNotContain("told elsewhere", club.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain($"<a href=\"{TwoCollectionsSite.Club}\"", story.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task What_was_read_in_one_telling_is_not_read_in_the_other()
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+        var later = site.Catalogue.Entities.First(entity => entity.Level.CompareTo(Core.ReadingLevel.Opening) > 0).Id.Value;
+
+        Assert.Equal(HttpStatusCode.OK, (await visitor.Get($"/en/{Story}/entity/{later}")).Status);
+        Assert.Equal(HttpStatusCode.NotFound, (await visitor.Get($"/en/{Retold}/entity/{later}")).Status);
+
+        // Read on in the other telling, and it opens there too – by its own cookie.
+        await visitor.ReadTo(4, collection: Retold);
+        Assert.Equal(HttpStatusCode.OK, (await visitor.Get($"/en/{Retold}/entity/{later}")).Status);
     }
 }

@@ -1416,4 +1416,10 @@
   <data name="Discover_OpenCollection" xml:space="preserve">
     <value>بازکردن</value>
   </data>
+  <data name="Elsewhere_Title" xml:space="preserve">
+    <value>همین جهان، در جای دیگری از این سایت</value>
+  </data>
+  <data name="Elsewhere_Reading" xml:space="preserve">
+    <value>هر یک از این‌ها مجموعه‌ای جداست و جایگاه خواندن خودش را دارد: این‌که این‌جا تا کجا خوانده‌اید چیزی دربارهٔ آن‌جا نمی‌گوید.</value>
+  </data>
 </root>
