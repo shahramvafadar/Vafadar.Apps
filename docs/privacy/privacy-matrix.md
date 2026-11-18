@@ -147,7 +147,7 @@ used) and, for at most five minutes after codes were made, `dastan.visitor.codes
 sealed, taken away when the page has shown them). The address a form came from is counted in the memory of the
 process for one hour – at most five new accounts and thirty tried passwords – and written nowhere. A visitor
 closes the account with the password; it is then signed out everywhere and deleted for good thirty days later
-(D-055). There is no copy of one's own data to take away yet (step 16.7) and no sign-in through Google or
+(D-055). Since step 16.7 a visitor takes a copy of their own data away as a file, for the password (no secret and no identifier is in it). There is no sign-in through Google or
 Microsoft yet (step 16.8); when that is built, what each of them learns belongs here. Nothing is hosted; a
 legal review of accounts (terms, age, the law of the place) is the owner's and not done.
 

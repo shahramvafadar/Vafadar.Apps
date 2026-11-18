@@ -390,4 +390,39 @@ public sealed class VisitorAccountTests : IDisposable
 
         Assert.Equal(allowed, AccountDesk.IsPrivate(context));
     }
+
+    [Fact]
+    public async Task A_visitor_gets_a_copy_of_their_own_data_as_a_file()
+    {
+        var visitor = _site.Visitor();
+        await Register(visitor, "مینا");
+        Assert.Contains("A copy of your data", (await visitor.Get(Account)).Main, StringComparison.Ordinal);
+
+        var file = await visitor.Post($"{Forms}/export", Account, Fields(("current", Password)));
+
+        Assert.Equal(HttpStatusCode.OK, file.Status);
+        Assert.Equal("application/json", file.Response.Content.Headers.ContentType?.MediaType);
+        Assert.Equal("attachment; filename=\"dastan-account.json\"", file.Response.Content.Headers.ContentDisposition?.ToString());
+        Assert.True(file.Response.Headers.CacheControl?.NoStore);
+        var copy = System.Text.Json.Nodes.JsonNode.Parse(file.Html)!;
+        Assert.Equal(("dastan-account", "مینا"), ((string?)copy["format"], (string?)copy["account"]!["name"]));
+
+        // Written for a person to read: the name stands in its own letters, each thing on a line of its own.
+        Assert.Contains("\"name\": \"مینا\"", file.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain(Password, file.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("pbkdf2", file.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_copy_is_handed_over_for_the_password_only()
+    {
+        var visitor = _site.Visitor();
+        await Register(visitor);
+
+        var wrong = await visitor.Post($"{Forms}/export", Account, Fields(("current", "a wrong pass phrase")));
+
+        Assert.Equal("/en/account?form=export&problem=wrong-current#export", wrong.Response.Headers.Location?.OriginalString);
+        Assert.Contains("The present password is not right.", (await visitor.Get("/en/account?form=export&problem=wrong-current")).Main, StringComparison.Ordinal);
+        Assert.Equal("/refused", (await _site.Visitor().Post($"{Forms}/export", Account, Fields(("current", Password)))).Response.Headers.Location?.OriginalString);
+    }
 }

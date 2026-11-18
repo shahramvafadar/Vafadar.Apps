@@ -271,6 +271,23 @@
             </details>
         </section>
 
+        <section id="export" aria-labelledby="export-title">
+            <h2 id="export-title">@T["Account_Export_Title"]</h2>
+            @Problems("export")
+            <details open="@(_form == "export")">
+                <summary>@T["Account_Export_Lead"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/export")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="export-current">@T["Account_Current"]</label>
+                        <input id="export-current" name="current" type="password" required autocomplete="current-password" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_Export_Send"]</button></p>
+                </form>
+            </details>
+        </section>
+
         <section id="close" aria-labelledby="close-title">
             <h2 id="close-title">@T["Account_Close_Title"]</h2>
             @Problems("close")
@@ -293,7 +310,7 @@
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
     private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked"];
-    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite"];
+    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export"];
     private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations"];
 
     private VisitorInfo? _info;
