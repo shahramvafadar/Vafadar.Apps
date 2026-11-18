@@ -1356,4 +1356,25 @@
   <data name="Cite_Changed" xml:space="preserve">
     <value>This address was written for revision {0}. The site now shows revision {1}: what is said here may have been corrected.</value>
   </data>
+  <data name="Report_Title" xml:space="preserve">
+    <value>Something is wrong here?</value>
+  </data>
+  <data name="Report_Label" xml:space="preserve">
+    <value>What is wrong, and where you read otherwise</value>
+  </data>
+  <data name="Report_Privacy" xml:space="preserve">
+    <value>The editors get your words, this statement and the day – no name, no address. They cannot answer you, so write nothing personal.</value>
+  </data>
+  <data name="Report_Send" xml:space="preserve">
+    <value>Send to the editors</value>
+  </data>
+  <data name="Report_thanks" xml:space="preserve">
+    <value>Thank you. The editors will read it.</value>
+  </data>
+  <data name="Report_later" xml:space="preserve">
+    <value>Several reports came from your connection within the hour. Please try again later; nothing was kept this time.</value>
+  </data>
+  <data name="Report_full" xml:space="preserve">
+    <value>The editors have more reports than they can read at the moment. Please try again in a few days; nothing was kept this time.</value>
+  </data>
 </root>

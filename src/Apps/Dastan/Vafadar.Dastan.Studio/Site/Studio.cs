@@ -29,6 +29,12 @@ public sealed class StudioOptions
     /// <summary>Gets or sets the folder of the keys of the sign-in, so that a sign-in outlives the process.</summary>
     public string Keys { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the folder the site keeps the reports of its visitors in (step 14.8). Empty, the tool shows
+    /// no reports.
+    /// </summary>
+    public string Reports { get; set; } = string.Empty;
+
     /// <summary>Gets the proxies in front of the tool that are believed about how an editor came.</summary>
     public IList<string> TrustedProxies { get; } = [];
 }

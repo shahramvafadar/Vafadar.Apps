@@ -1,0 +1,169 @@
+@page "/reports"
+@inject Editor Editor
+@inject NavigationManager Navigation
+@inject IOptions<StudioOptions> Options
+@inject IStringLocalizer<Ui> T
+
+@* What visitors of the site wrote about a statement (step 14.8, R-GOV-03). The site keeps each report as a
+   small file in a folder; the tool reads that folder and notes when an editor has looked at a report. A report
+   changes nothing: the record is changed, if the report is right, like any other change. *@
+@if (_box is not null)
+{
+    <PageTitle>@T["Reports_Title"] – @T["Site_Name"]</PageTitle>
+
+    <header class="page-header">
+        <h1>@T["Reports_Title"]</h1>
+        <p class="lead">@T["Reports_Lead"]</p>
+    </header>
+
+    @if (Done == "settled")
+    {
+        <p class="done" role="status">@T["Reports_Settled"]</p>
+    }
+
+    <ActOutcome Problems="_problems" />
+
+    @if (_waiting.Count == 0)
+    {
+        <p class="note" role="status">@T["Reports_None"]</p>
+    }
+
+    @* The form stays on the page while one is being sent, even when the last report was looked at meanwhile:
+       the editor is then told so, not refused. *@
+    @if (_waiting.Count > 0 || Settling is not null)
+    {
+        <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Reports_Waiting"], Editor.Number(_waiting.Count))</p>
+        <Allowed Role="EditorRoles.Reviewer">
+            <form method="post" @formname="settle" @onsubmit="Settle" class="act" action="reports">
+                <AntiforgeryToken />
+                <ol class="changes reports" role="list">
+                    @foreach (var report in _waiting)
+                    {
+                        <li id="@($"report-{report.Id}")">
+                            @Head(report)
+                            <blockquote class="report-text" dir="auto">@report.Text</blockquote>
+                            <p><button type="submit" class="action secondary" name="Settling.Id" value="@report.Id">@T["Reports_Settle"]</button></p>
+                        </li>
+                    }
+                </ol>
+                <WhoAndWhy Form="settle" Model="Settling" By="@(Settling?.By ?? Editor.Name)" />
+            </form>
+        </Allowed>
+        @if (!Editor.May(EditorRoles.Reviewer))
+        {
+            @* Who does not review reads the reports all the same. *@
+            <ol class="changes reports" role="list">
+                @foreach (var report in _waiting)
+                {
+                    <li>
+                        @Head(report)
+                        <blockquote class="report-text" dir="auto">@report.Text</blockquote>
+                    </li>
+                }
+            </ol>
+        }
+    }
+
+    @if (_looked.Count > 0)
+    {
+        <section aria-labelledby="looked">
+            <h2 id="looked">@T["Reports_Looked"]</h2>
+            <ol class="changes reports" role="list">
+                @foreach (var report in _looked)
+                {
+                    <li>
+                        @Head(report)
+                        <blockquote class="report-text" dir="auto">@report.Text</blockquote>
+                        <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Reports_LookedBy"], report.SettledBy, report.SettledOn?.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))</p>
+                    </li>
+                }
+            </ol>
+        </section>
+    }
+}
+
+@code {
+    // The reports that were looked at are a trail, not a list to work through: the last of them are shown.
+    private const int MostLooked = 50;
+
+    private ReportBox? _box;
+    private IReadOnlyList<VisitorReport> _waiting = [];
+    private IReadOnlyList<VisitorReport> _looked = [];
+    private List<string>? _problems;
+
+    /// <summary>Gets or sets what was just done, when the editor was sent back here after an act.</summary>
+    [SupplyParameterFromQuery]
+    public string? Done { get; set; }
+
+    /// <summary>Gets or sets which report an editor notes as looked at, and who the editor is.</summary>
+    [SupplyParameterFromForm(FormName = "settle")]
+    public SettleInput? Settling { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (string.IsNullOrWhiteSpace(Options.Value.Reports))
+        {
+            // A tool that was not told the folder has no such page.
+            Navigation.NotFound();
+            return;
+        }
+
+        _box = new ReportBox(Options.Value.Reports);
+        Read();
+    }
+
+    private void Read()
+    {
+        _waiting = _box!.Waiting();
+        _looked = [.. _box.Looked().Take(MostLooked)];
+    }
+
+    private void Settle()
+    {
+        var by = Editor.By(Settling?.By);
+        if (by is null)
+        {
+            _problems = [T["Act_NeedsName"]];
+            return;
+        }
+
+        if (!_box!.Settle(Settling?.Id ?? string.Empty, by, Editor.Today))
+        {
+            _problems = [T["Reports_Gone"]];
+            Read();
+            return;
+        }
+
+        Navigation.NavigateTo("reports?done=settled");
+    }
+
+    // The day, the statement – as the link to its record in the tool – and what the visitor read.
+    private RenderFragment Head(VisitorReport report) =>
+        @<p class="meta">
+            <bdi dir="ltr">@report.On.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)</bdi> –
+            @T["Reports_About"] <a href="@Record(report)"><bdi dir="ltr">@report.Collection/@report.Statement["evidence/".Length..]</bdi></a>
+            @if (report.Revision is { } revision)
+            {
+                <text> – @string.Format(CultureInfo.CurrentCulture, T["Reports_Revision"], Editor.Number(revision))</text>
+            }
+            – @string.Format(CultureInfo.CurrentCulture, T["Reports_Read"], report.Language)
+        </p>;
+
+    // The record a statement belongs to: an entity, a relation, an item, or the event an entity has part in.
+    private static string Record(VisitorReport report)
+    {
+        var parts = report.Statement.Split('/');
+        var group = parts[1] switch { "entity" => "entities", "relation" => "relations", "event" => "events", _ => "media" };
+        return $"{report.Collection}/record/{group}/{parts[2]}";
+    }
+
+    /// <summary>What the form that notes a report as looked at is filled with.</summary>
+    public sealed class SettleInput
+    {
+        /// <summary>Gets or sets the name of the report.</summary>
+        public string? Id { get; set; }
+
+        /// <summary>Gets or sets who looked at it, when the tool has no accounts.</summary>
+        public string? By { get; set; }
+    }
+}

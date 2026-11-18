@@ -1356,4 +1356,25 @@
   <data name="Cite_Changed" xml:space="preserve">
     <value>این نشانی برای ویرایش {0} نوشته شده است. سایت اکنون ویرایش {1} را نشان می‌دهد: شاید آنچه این‌جا آمده اصلاح شده باشد.</value>
   </data>
+  <data name="Report_Title" xml:space="preserve">
+    <value>چیزی این‌جا نادرست است؟</value>
+  </data>
+  <data name="Report_Label" xml:space="preserve">
+    <value>چه چیزی نادرست است، و کجا جز این خوانده‌اید</value>
+  </data>
+  <data name="Report_Privacy" xml:space="preserve">
+    <value>ویراستاران نوشتهٔ شما، همین گزاره و روز را می‌بینند – بدون نام و بدون نشانی. نمی‌توانند به شما پاسخ دهند؛ پس چیز شخصی ننویسید.</value>
+  </data>
+  <data name="Report_Send" xml:space="preserve">
+    <value>فرستادن برای ویراستاران</value>
+  </data>
+  <data name="Report_thanks" xml:space="preserve">
+    <value>سپاس. ویراستاران آن را می‌خوانند.</value>
+  </data>
+  <data name="Report_later" xml:space="preserve">
+    <value>در این ساعت چند گزارش از اتصال شما رسیده است. لطفاً بعداً دوباره بفرستید؛ این بار چیزی نگه داشته نشد.</value>
+  </data>
+  <data name="Report_full" xml:space="preserve">
+    <value>ویراستاران اکنون بیش از توانشان گزارش دارند. لطفاً چند روز دیگر دوباره بفرستید؛ این بار چیزی نگه داشته نشد.</value>
+  </data>
 </root>

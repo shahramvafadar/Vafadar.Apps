@@ -687,4 +687,46 @@
   <data name="Media_NeedsRights" xml:space="preserve">
     <value>بگویید چرا این فایل را می‌توان نشان داد: آنچه درباره‌اش درست است را برگزینید و توضیحش را بنویسید.</value>
   </data>
+  <data name="Nav_Reports" xml:space="preserve">
+    <value>گزارش‌های بازدیدکنندگان</value>
+  </data>
+  <data name="Reports_Title" xml:space="preserve">
+    <value>گزارش‌های بازدیدکنندگان</value>
+  </data>
+  <data name="Reports_Lead" xml:space="preserve">
+    <value>آنچه بازدیدکنندگان سایت دربارهٔ یک گزاره نوشته‌اند. گزارش، نوشتهٔ یک ناشناس است و خودش چیزی را عوض نمی‌کند. رکورد را ببینید، اگر گزارش درست است آن را اصلاح کنید، و این‌جا ثبت کنید که بررسی شد.</value>
+  </data>
+  <data name="Reports_None" xml:space="preserve">
+    <value>گزارشی در انتظار نیست.</value>
+  </data>
+  <data name="Reports_Waiting" xml:space="preserve">
+    <value>در انتظار: {0}</value>
+  </data>
+  <data name="Reports_About" xml:space="preserve">
+    <value>دربارهٔ</value>
+  </data>
+  <data name="Reports_Revision" xml:space="preserve">
+    <value>ویرایش {0}</value>
+  </data>
+  <data name="Reports_Read" xml:space="preserve">
+    <value>خوانده‌شده به زبان {0}</value>
+  </data>
+  <data name="Reports_Settle" xml:space="preserve">
+    <value>بررسی شد</value>
+  </data>
+  <data name="Reports_Settled" xml:space="preserve">
+    <value>ثبت شد: گزارش بررسی شد.</value>
+  </data>
+  <data name="Reports_Gone" xml:space="preserve">
+    <value>آن گزارش دیگر در انتظار نیست – کس دیگری آن را بررسی کرده است.</value>
+  </data>
+  <data name="Reports_Looked" xml:space="preserve">
+    <value>بررسی‌شده‌ها</value>
+  </data>
+  <data name="Reports_LookedBy" xml:space="preserve">
+    <value>بررسی‌شده توسط {0} در {1}</value>
+  </data>
+  <data name="Reports_Off" xml:space="preserve">
+    <value>ابزار بدون پوشهٔ گزارش‌ها راه‌اندازی شده است.</value>
+  </data>
 </root>

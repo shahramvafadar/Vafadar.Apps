@@ -33,6 +33,12 @@ The store is one file on the machine of the tool; it is not hosted yet.
 Since step 13.3 the store also keeps, for each editor, what the account may do (writer, reviewer, publisher), and
 since step 13.4 the last 50 times the password of an account was tried: the account, the time and whether the
 password was right – no address, no browser, nothing that was typed; a try with an unknown name is not kept.
+Since step 14.8 the public site of Dastan takes reports of visitors when it is told a folder for them: a report
+is the statement it is about, what the visitor wrote (at most 1,000 characters) and the day – no name, no
+address of the visitor's machine, no browser, no time of the day; the form says so and asks not to write
+anything personal. The address a report came from is counted in the memory of the process for one hour, to
+refuse more than five reports an hour, and is written nowhere. A report an editor has looked at is kept with
+the name the editor acts under; how long such reports are kept is the owner's decision.
 Since step 13.7 editors bring image and video files in through the tool: an image is kept without the notes it
 carries about its making (EXIF, XMP, text chunks – they can name a place and a device); a video is kept as it is,
 and the tool tells the editor so. The name a file had on the editor's machine is not kept.

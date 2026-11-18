@@ -2,6 +2,7 @@
 @inject Editor Editor
 @inject NavigationManager Navigation
 @inject IOptions<SiteLanguageOptions> Languages
+@inject IOptions<StudioOptions> Options
 @inject IStringLocalizer<Ui> T
 
 <a class="skip-link" href="@($"{Here}#content")">@T["Skip_ToContent"]</a>
@@ -11,6 +12,10 @@
     <nav class="site-nav" aria-label="@T["Nav_Main"]">
         <a href="./">@T["Nav_Collections"]</a>
         <a href="comparisons">@T["Nav_Comparisons"]</a>
+        @if (!string.IsNullOrWhiteSpace(Options.Value.Reports))
+        {
+            <a href="reports">@T["Nav_Reports"]</a>
+        }
     </nav>
     <div class="site-tools">
         @if (Editor.Account is { } account)

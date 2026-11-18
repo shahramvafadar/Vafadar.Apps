@@ -687,4 +687,46 @@
   <data name="Media_NeedsRights" xml:space="preserve">
     <value>Say why the file may be shown: choose what holds for it and write the statement.</value>
   </data>
+  <data name="Nav_Reports" xml:space="preserve">
+    <value>Reports of visitors</value>
+  </data>
+  <data name="Reports_Title" xml:space="preserve">
+    <value>Reports of visitors</value>
+  </data>
+  <data name="Reports_Lead" xml:space="preserve">
+    <value>What visitors of the site wrote about a statement. A report is words of a stranger: it changes nothing by itself. Look at the record, change it if the report is right, and note here that it was looked at.</value>
+  </data>
+  <data name="Reports_None" xml:space="preserve">
+    <value>No report waits.</value>
+  </data>
+  <data name="Reports_Waiting" xml:space="preserve">
+    <value>Waiting: {0}</value>
+  </data>
+  <data name="Reports_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Reports_Revision" xml:space="preserve">
+    <value>revision {0}</value>
+  </data>
+  <data name="Reports_Read" xml:space="preserve">
+    <value>read in {0}</value>
+  </data>
+  <data name="Reports_Settle" xml:space="preserve">
+    <value>Looked at</value>
+  </data>
+  <data name="Reports_Settled" xml:space="preserve">
+    <value>Noted: the report was looked at.</value>
+  </data>
+  <data name="Reports_Gone" xml:space="preserve">
+    <value>That report waits no longer – somebody else has looked at it.</value>
+  </data>
+  <data name="Reports_Looked" xml:space="preserve">
+    <value>Looked at</value>
+  </data>
+  <data name="Reports_LookedBy" xml:space="preserve">
+    <value>looked at by {0} on {1}</value>
+  </data>
+  <data name="Reports_Off" xml:space="preserve">
+    <value>The tool was started without the folder of the reports.</value>
+  </data>
 </root>
