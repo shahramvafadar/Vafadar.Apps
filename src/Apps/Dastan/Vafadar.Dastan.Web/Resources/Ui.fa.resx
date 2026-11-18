@@ -2496,4 +2496,70 @@
   <data name="Photos_Said_agreement-back" xml:space="preserve">
     <value>موافقت خود را پس گرفتید. عکس دیگر به همه نشان داده نمی‌شود.</value>
   </data>
+  <data name="Albums_Title" xml:space="preserve">
+    <value>آلبوم‌ها</value>
+  </data>
+  <data name="Albums_Note" xml:space="preserve">
+    <value>آلبوم نامی است برای عکس‌های خودتان. آلبوم چیزی را به کسی نشان نمی‌دهد: هر عکسِ آن را همان کسانی می‌بینند که برای آن عکس برگزیده‌اید، و آلبومی که کسی اجازهٔ دیدن هیچ عکسی از آن را ندارد برای او وجود ندارد.</value>
+  </data>
+  <data name="Albums_Empty" xml:space="preserve">
+    <value>هنوز چیزی در آن نیست. از فهرست عکس‌هایتان عکسی در آن بگذارید.</value>
+  </data>
+  <data name="Albums_Take" xml:space="preserve">
+    <value>برداشتن از آلبوم</value>
+  </data>
+  <data name="Albums_Change" xml:space="preserve">
+    <value>تغییر آلبوم</value>
+  </data>
+  <data name="Albums_Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="Albums_NoteField" xml:space="preserve">
+    <value>دربارهٔ چیست (می‌تواند خالی بماند)</value>
+  </data>
+  <data name="Albums_Change_Send" xml:space="preserve">
+    <value>ذخیرهٔ آلبوم</value>
+  </data>
+  <data name="Albums_Remove" xml:space="preserve">
+    <value>حذف آلبوم</value>
+  </data>
+  <data name="Albums_Remove_Note" xml:space="preserve">
+    <value>عکس‌های آن می‌مانند.</value>
+  </data>
+  <data name="Albums_New" xml:space="preserve">
+    <value>آلبوم تازه: نام آن</value>
+  </data>
+  <data name="Albums_Add" xml:space="preserve">
+    <value>ساختن آلبوم</value>
+  </data>
+  <data name="Albums_Place_Label" xml:space="preserve">
+    <value>گذاشتن در آلبوم</value>
+  </data>
+  <data name="Albums_Place_Send" xml:space="preserve">
+    <value>بگذار</value>
+  </data>
+  <data name="Photos_Years" xml:space="preserve">
+    <value>عکس‌ها بر پایهٔ سالی که گرفته شده‌اند</value>
+  </data>
+  <data name="Photos_Years_All" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="Photos_Problem_album-name" xml:space="preserve">
+    <value>آلبوم نامی می‌خواهد با حداکثر ۸۰ نویسه که آلبوم دیگری از شما نداشته باشد؛ توضیح آن حداکثر ۴۰۰ نویسه است.</value>
+  </data>
+  <data name="Photos_Said_album-added" xml:space="preserve">
+    <value>آلبوم ساخته شد.</value>
+  </data>
+  <data name="Photos_Said_album-changed" xml:space="preserve">
+    <value>آلبوم تغییر کرد.</value>
+  </data>
+  <data name="Photos_Said_album-removed" xml:space="preserve">
+    <value>آلبوم حذف شد. عکس‌های آن می‌مانند.</value>
+  </data>
+  <data name="Photos_Said_placed" xml:space="preserve">
+    <value>عکس در آلبوم گذاشته شد.</value>
+  </data>
+  <data name="Photos_Said_taken-out" xml:space="preserve">
+    <value>عکس از آلبوم برداشته شد. در میان عکس‌های شما می‌ماند.</value>
+  </data>
 </root>

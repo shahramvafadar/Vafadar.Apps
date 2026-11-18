@@ -232,3 +232,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A photograph that is said to show somebody is shown to everybody only when they agreed. Until then its owner
   and the people it names see it, and its owner is told who is waited for. Anybody who agreed can take that
   back, and the photograph is hidden from everybody else at once.
+- Photographs can be put into albums: a name and a note for photographs of one's own. An album shows nothing to
+  anybody by itself – each photograph is seen by the people chosen for it – and stands on the page of its
+  owner for who may see something in it. Photographs can be gone through by the year they were taken.

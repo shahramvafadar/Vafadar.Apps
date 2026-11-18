@@ -124,9 +124,11 @@
         }
         else
         {
+            @Years(_years, "account/photos", "mine")
             <ul class="photos" role="list">
-                @foreach (var photo in _mine)
+                @foreach (var photo in _mine.Where(photo => Year is null || photo.Taken?.Year == Year))
                 {
+                    var free = _albums.Where(album => album.Photos.All(placed => placed.Id != photo.Id)).ToList();
                     var chosen = photo.Shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{photo.Circle}", _ => "private" };
                     var untagged = _known.Where(person => photo.Tags.All(tag => tag.Person.Id != person.Id)).ToList();
                     <li>
@@ -173,6 +175,22 @@
                                 <button type="submit">@T["Photos_Tag_Send"]</button>
                             </form>
                         }
+                        @if (free.Count > 0)
+                        {
+                            <form method="post" action="@($"{PhotoEndpoints.Root}/album-place")" class="save">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="photo" value="@photo.Id" />
+                                <label for="@($"album-{photo.Id}")">@T["Albums_Place_Label"]</label>
+                                <select id="@($"album-{photo.Id}")" name="album">
+                                    @foreach (var album in free)
+                                    {
+                                        <option value="@album.Number">@album.Name</option>
+                                    }
+                                </select>
+                                <button type="submit">@T["Albums_Place_Send"]</button>
+                            </form>
+                        }
                         <form method="post" action="@($"{PhotoEndpoints.Root}/remove")" class="save">
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
@@ -182,6 +200,89 @@
                     </li>
                 }
             </ul>
+        }
+    </section>
+
+    @* Albums (step 16.10): a name for photographs of one's own. An album shows nothing to anybody – each
+       photograph in it is seen by who its owner lets see it. *@
+    <section id="albums" aria-labelledby="albums-title">
+        <h2 id="albums-title">@T["Albums_Title"]</h2>
+        <p class="note">@T["Albums_Note"]</p>
+        @if (_form == "albums" && _problem is not null)
+        {
+            <ul class="problems" role="alert"><li>@T[$"Photos_Problem_{_problem}"]</li></ul>
+        }
+        @foreach (var album in _albums)
+        {
+            <article class="album" aria-labelledby="@($"album-title-{album.Number}")">
+                <h3 id="@($"album-title-{album.Number}")" dir="auto">@album.Name</h3>
+                @if (album.Note.Length > 0)
+                {
+                    <p dir="auto">@album.Note</p>
+                }
+                @if (album.Photos.IsEmpty)
+                {
+                    <p class="note">@T["Albums_Empty"]</p>
+                }
+                else
+                {
+                    <ul class="photos" role="list">
+                        @foreach (var photo in album.Photos)
+                        {
+                            <li>
+                                @Picture(photo, owner: false)
+                                <form method="post" action="@($"{PhotoEndpoints.Root}/album-take")" class="save">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="album" value="@album.Number" />
+                                    <input type="hidden" name="photo" value="@photo.Id" />
+                                    <button type="submit">@T["Albums_Take"]</button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                }
+                <details>
+                    <summary>@T["Albums_Change"]<span class="visually-hidden"> – @album.Name</span></summary>
+                    <form method="post" action="@($"{PhotoEndpoints.Root}/album-change")" class="account">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="returnUrl" value="@_here" />
+                        <input type="hidden" name="album" value="@album.Number" />
+                        <p class="field">
+                            <label for="@($"album-name-{album.Number}")">@T["Albums_Name"]</label>
+                            <input id="@($"album-name-{album.Number}")" name="name" type="text" required maxlength="@PeopleStore.LongestAlbumName" value="@album.Name" dir="auto" />
+                        </p>
+                        <p class="field">
+                            <label for="@($"album-note-{album.Number}")">@T["Albums_NoteField"]</label>
+                            <input id="@($"album-note-{album.Number}")" name="note" type="text" maxlength="@PeopleStore.LongestAlbumNote" value="@album.Note" dir="auto" />
+                        </p>
+                        <p><button type="submit" class="action secondary">@T["Albums_Change_Send"]</button></p>
+                    </form>
+                    <form method="post" action="@($"{PhotoEndpoints.Root}/album-remove")" class="save">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="returnUrl" value="@_here" />
+                        <input type="hidden" name="album" value="@album.Number" />
+                        <button type="submit">@T["Albums_Remove"]<span class="visually-hidden"> – @album.Name</span></button>
+                        <span class="meta">@T["Albums_Remove_Note"]</span>
+                    </form>
+                </details>
+            </article>
+        }
+        @if (_albums.Count < PeopleStore.MostAlbums)
+        {
+            <form method="post" action="@($"{PhotoEndpoints.Root}/album-add")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <p class="field">
+                    <label for="album-new-name">@T["Albums_New"]</label>
+                    <input id="album-new-name" name="name" type="text" required maxlength="@PeopleStore.LongestAlbumName" dir="auto" />
+                </p>
+                <p class="field">
+                    <label for="album-new-note">@T["Albums_NoteField"]</label>
+                    <input id="album-new-note" name="note" type="text" maxlength="@PeopleStore.LongestAlbumNote" dir="auto" />
+                </p>
+                <p><button type="submit" class="action secondary">@T["Albums_Add"]</button></p>
+            </form>
         }
     </section>
 
@@ -202,13 +303,15 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed", "agreed", "agreement-back"];
-    private static readonly string[] Known = ["photo-form", "photo-large", "photo-many", "photo-file"];
+    private static readonly string[] Sayings = ["added", "shared", "removed", "tagged", "untagged", "approved", "tag-removed", "agreed", "agreement-back", "album-added", "album-changed", "album-removed", "placed", "taken-out"];
+    private static readonly string[] Known = ["photo-form", "photo-large", "photo-many", "photo-file", "album-name"];
 
     private VisitorSession? _me;
     private IReadOnlyList<PhotoInfo> _mine = [];
     private IReadOnlyList<PhotoInfo> _waiting = [];
     private IReadOnlyList<PhotoInfo> _asked = [];
+    private IReadOnlyList<AlbumInfo> _albums = [];
+    private int[] _years = [];
     private IReadOnlyList<PhotoInfo> _recent = [];
     private IReadOnlyList<CircleInfo> _circles = [];
     private List<PersonRef> _known = [];
@@ -229,6 +332,10 @@
     [SupplyParameterFromQuery]
     private string? Problem { get; set; }
 
+    /// <summary>Gets or sets the year whose photographs are shown; none: all of them.</summary>
+    [SupplyParameterFromQuery]
+    private int? Year { get; set; }
+
     protected override void OnInitialized()
     {
         if (Desk.PhotoFolder is null)
@@ -247,12 +354,15 @@
         _me = session;
         _here = $"/{Visitor.Language.Tag}{PhotoEndpoints.Page}";
         _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
-        _form = Form == "add" ? Form : null;
+        _form = Form is "add" or "albums" ? Form : null;
         _problem = _form is not null && Known.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
         using var store = Desk.Open();
         _mine = store.Photos(session.Id);
         _waiting = store.TagsWaiting(session.Id);
         _asked = store.AskedForEverybody(session.Id);
+        _albums = store.Albums(session.Id);
+        _years = PhotoYears.Of(_mine);
+        Year = _years.Contains(Year ?? 0) ? Year : null;
         _recent = store.RecentShares(session.Id, Time.GetUtcNow().UtcDateTime.AddDays(-30));
         _circles = store.Circles(session.Id);
 
@@ -286,6 +396,23 @@
                 }
             </figcaption>
         </figure>
+    };
+
+    // The years the photographs were taken in, as a way to those of one year (a gallery by time, step 16.10).
+    private RenderFragment Years(int[] years, string address, string at) => __builder =>
+    {
+        if (years.Length > 1 || Year is not null)
+        {
+            <nav class="years" aria-label="@T["Photos_Years"]">
+                <ul role="list">
+                    <li><a href="@($"{address}#{at}")" aria-current="@(Year is null ? "true" : null)">@T["Photos_Years_All"]</a></li>
+                    @foreach (var year in years)
+                    {
+                        <li><a href="@($"{address}?year={year.ToString(CultureInfo.InvariantCulture)}#{at}")" aria-current="@(Year == year ? "true" : null)">@PhotoYears.Written(year, Visitor.Language.Tag)</a></li>
+                    }
+                </ul>
+            </nav>
+        }
     };
 
     // Who may see a photograph: its owner alone, a circle of the owner, or everybody.

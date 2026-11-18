@@ -17,6 +17,53 @@ namespace Vafadar.Dastan.People.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredAlbum", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(800)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("Owner");
+
+                    b.ToTable("Albums");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredAlbumPhoto", b =>
+                {
+                    b.Property<long>("Album")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Photo")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Album", "Photo");
+
+                    b.HasIndex("Photo");
+
+                    b.ToTable("AlbumPhotos");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredCircle", b =>
                 {
                     b.Property<long>("Number")
@@ -595,6 +642,30 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsUnique();
 
                     b.ToTable("Visitors");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredAlbum", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Owner")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredAlbumPhoto", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredAlbum", null)
+                        .WithMany()
+                        .HasForeignKey("Album")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredPhoto", null)
+                        .WithMany()
+                        .HasForeignKey("Photo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.People.StoredCircle", b =>

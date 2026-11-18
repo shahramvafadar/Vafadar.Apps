@@ -75,6 +75,13 @@ public sealed partial class PeopleStore
                     ["name"] = circle.Name,
                     ["members"] = new JsonArray([.. circle.Members.Select(member => (JsonNode)member.Name)]),
                 })]),
+            ["albums"] = new JsonArray([.. Albums(id)
+                .Select(album => (JsonNode)new JsonObject
+                {
+                    ["name"] = album.Name,
+                    ["note"] = album.Note,
+                    ["photographs"] = new JsonArray([.. album.Photos.Select(photo => (JsonNode)photo.File.Name)]),
+                })]),
             ["photographs"] = new JsonArray([.. Photos(id)
                 .Select(photo => (JsonNode)new JsonObject
                 {
