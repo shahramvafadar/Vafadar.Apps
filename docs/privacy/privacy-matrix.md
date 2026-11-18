@@ -150,3 +150,12 @@ closes the account with the password; it is then signed out everywhere and delet
 (D-055). There is no copy of one's own data to take away yet (step 16.7) and no sign-in through Google or
 Microsoft yet (step 16.8); when that is built, what each of them learns belongs here. Nothing is hosted; a
 legal review of accounts (terms, age, the law of the place) is the owner's and not done.
+
+Since step 16.2 the store of Dastan's visitors also keeps, for an account: how far its visitor has read each
+collection (the collection and a stage), the list (at most 200 pages: the collection, the kind of page and its
+identifier), and the invitations it made (a random code, the day it was made, its last day, whether it was used
+or taken back, and the account that used it – which the sender is not shown). While a visitor is signed in,
+the cookies `dastan.reading.<collection>` and `dastan.saved` of the device are neither read nor written. What
+a device holds enters an account only when an account is made on it (the form says so) or when the visitor
+asks for it. The address of an invitation carries the code and nothing about anybody; the site sends no mail
+and no message. All of it is deleted with the account.

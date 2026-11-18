@@ -1,6 +1,7 @@
 @page "/saved"
 @inject Visitor Visitor
 @inject DastanLibrary Library
+@inject AccountDesk Accounts
 @inject IStringLocalizer<Ui> T
 
 @* The list of the visitor (step 15.1, B-016): the pages they kept, read from the cookie of their device. A
@@ -47,7 +48,11 @@ else
     }
 }
 
-<p class="note">@T["Saved_Where"]</p>
+<p class="note">@T[AccountState.Of(Context).Session is null ? "Saved_Where" : "Saved_Where_Account"]</p>
+@if (Accounts.IsOpen && AccountState.Of(Context).Session is null)
+{
+    <p class="note">@T["Saved_Where_Offer"] <a href="account">@T["Account_Link"]</a></p>
+}
 
 @code {
     private List<(DastanSite Site, SavedPage Page, LocalizedText Label)> _shown = [];

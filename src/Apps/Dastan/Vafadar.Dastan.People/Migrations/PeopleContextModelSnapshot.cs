@@ -17,6 +17,63 @@ namespace Vafadar.Dastan.People.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("By")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly>("LastDay")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Purpose")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("RevokedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UsedBy")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateOnly?>("UsedOn")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("By");
+
+                    b.HasIndex("UsedBy");
+
+                    b.ToTable("Invitations");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredReadingPosition", b =>
+                {
+                    b.Property<string>("VisitorId")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Collection")
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("VisitorId", "Collection");
+
+                    b.ToTable("ReadingPositions");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredRecoveryCode", b =>
                 {
                     b.Property<long>("Number")
@@ -41,6 +98,40 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasIndex("VisitorId");
 
                     b.ToTable("RecoveryCodes");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredSavedPage", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Collection")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PageId")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("VisitorId")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("VisitorId", "Collection", "Kind", "PageId")
+                        .IsUnique();
+
+                    b.ToTable("SavedPages");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.People.StoredVisitor", b =>
@@ -89,7 +180,39 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("Visitors");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("By")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("UsedBy")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredReadingPosition", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("VisitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredRecoveryCode", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("VisitorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredSavedPage", b =>
                 {
                     b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
                         .WithMany()

@@ -84,3 +84,35 @@ wrong answered alike, another password ending other browsers, recovery, closing 
 refused, the limits, where a form leads, forged sign-in). Looked at in a browser in English at 800 px and in
 Persian at 375 px, dark appearance. **Not tried**: in a container, behind a proxy, with a password manager, with
 a screen reader, in the light appearance, under load.
+
+## First addendum (step 16.2): what follows a visitor, and invitations
+
+* **Signed in, the reading position and the list are the account's**, kept in the store and the same on every
+  device. The pages ask one place for both (`ReadingPreference.Read`, `SavedList.Read`), which asks the
+  account of the request (`AccountState`) first and the cookies of the device otherwise. The projection and
+  every rule about what a reading position opens are untouched: an account changes where the position is kept,
+  never what it allows.
+* **A device keeps its own.** While somebody is signed in, the cookies of the device are neither read nor
+  changed; signed out, the device shows what it holds itself again. On a machine several people use, signing
+  out leaves nothing of the account behind.
+* **A new account begins with what its device holds** – the form says so. **Signing in takes nothing from a
+  device**: who signs in on somebody else's machine does not carry that machine's list away. The page of the
+  account offers to bring it in; then pages the list lacks are added and a reading position is taken only for a
+  collection the account has none for. What the account says is never moved by a device – a position is a
+  promise about what was read, and the cautious answer is the account's own.
+* The list of an account holds 200 pages (a cookie holds 30). A page is kept only if its visitor can open it,
+  and a page that cannot be opened any more is neither shown nor counted – as before.
+* **An invitation** (D-049) is a code of twenty letters made by the store; its address is the page of the
+  account with that code. The sender passes it on; the site sends nothing. It can be used for fourteen days,
+  once, and taken back while nobody used it; an account has at most ten that can be used. Whether it can be
+  used is decided by the rule of step 15.2 (`Invitation`), which the store brings to where it stands.
+  **It makes an account and nothing else** (PRIV-006): no relationship, no claim; the sender sees that it was
+  used, not by whom, and the new account sees nothing of the sender. Since anybody may make an account, an
+  invitation that cannot be used stops nobody – the page says so and offers the form all the same.
+* What belongs to an account – positions, list, invitations – is deleted with it. That an invitation was used
+  stays when the account that used it is gone.
+
+Checked: `BelongingsAndInvitationsTests` (the store: 16 cases), `AccountFollowsTests` (the site: 19 cases –
+two devices of one account, a later stage opened on another device only through the account, signing out, a new
+account, bringing in, the list, invitations made, used, taken back, limited). Looked at in a browser signed in,
+in English and Persian at 375 px, dark appearance. Not tried: two real devices; a container.

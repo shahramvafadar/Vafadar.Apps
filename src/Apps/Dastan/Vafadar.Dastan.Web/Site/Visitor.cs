@@ -71,10 +71,21 @@ public static class ReadingPreference
     /// <summary>Returns the stage the visitor has read to; the starting stage when they chose none or chose one that does not exist.</summary>
     public static ReadingLevel Read(HttpContext context, DastanSite site)
     {
+        // Who signed in has read as far as their account says, on every device (step 16.2); what the device
+        // holds counts for who is not signed in.
+        var level = AccountState.Of(context).Belongings is { } follows
+            ? follows.Positions.TryGetValue(site.Collection, out var kept) ? kept : (int?)null
+            : Device(context, site);
+        return level is { } read && read < site.StageCount ? new ReadingLevel(read) : site.DefaultLevel;
+    }
+
+    /// <summary>Returns the stage the device of a request chose for a collection, or nothing when it chose none that exists.</summary>
+    public static int? Device(HttpContext context, DastanSite site)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(site);
         var saved = context.Request.Cookies[CookieName(site.Collection)];
-        return int.TryParse(saved, NumberStyles.None, CultureInfo.InvariantCulture, out var level) && level < site.StageCount
-            ? new ReadingLevel(level)
-            : site.DefaultLevel;
+        return int.TryParse(saved, NumberStyles.None, CultureInfo.InvariantCulture, out var level) && level < site.StageCount ? level : null;
     }
 
     /// <summary>
@@ -85,6 +96,7 @@ public static class ReadingPreference
         endpoints.MapPost("/preferences/reading", (
             HttpContext context,
             DastanLibrary library,
+            AccountDesk desk,
             [FromForm] string? collection,
             [FromForm] string? level,
             [FromForm] string? returnUrl) =>
@@ -96,7 +108,13 @@ public static class ReadingPreference
                 return Results.BadRequest();
             }
 
-            if (chosen == site.DefaultLevel.Value)
+            if (AccountState.Of(context).Session is { } session)
+            {
+                // Signed in, the choice is kept with the account; the device keeps what it held.
+                using var store = desk.Open();
+                store.SetPosition(session.Id, site.Collection, chosen == site.DefaultLevel.Value ? null : chosen);
+            }
+            else if (chosen == site.DefaultLevel.Value)
             {
                 context.Response.Cookies.Delete(CookieName(site.Collection), PreferenceCookie.Options(context));
             }

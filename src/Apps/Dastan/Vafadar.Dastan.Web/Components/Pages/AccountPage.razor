@@ -2,6 +2,7 @@
 @using Vafadar.Dastan.People
 @inject Visitor Visitor
 @inject AccountDesk Desk
+@inject DastanLibrary Library
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -58,6 +59,11 @@
 
         <section id="register" aria-labelledby="register-title">
             <h2 id="register-title">@T["Account_Register_Title"]</h2>
+            @if (Invitation is { Length: > 0 })
+            {
+                @* An invitation leads here and to nothing else (PRIV-006). One that cannot be used any more stops nobody. *@
+                <p class="note" role="status">@T[_invited ? "Account_Invited" : "Account_Invitation_Gone"]</p>
+            }
             @Problems("register")
             <form method="post" action="@($"{AccountDesk.Root}/register")" class="account">
                 <AntiforgeryToken />
@@ -78,7 +84,15 @@
                     <label for="register-again">@T["Account_Password_Again"]</label>
                     <input id="register-again" name="again" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" />
                 </p>
+                @if (_invited)
+                {
+                    <input type="hidden" name="invitation" value="@Invitation" />
+                }
                 <p class="note">@T["Account_Register_Privacy"]</p>
+                @if (_deviceHolds)
+                {
+                    <p class="note">@T["Account_Register_Adopts"]</p>
+                }
                 <p><button type="submit" class="action secondary">@T["Account_Register_Send"]</button></p>
             </form>
         </section>
@@ -155,6 +169,60 @@
             <p><button type="submit" class="action">@T["Account_SignOut"]</button></p>
         </form>
 
+        <section id="follows" aria-labelledby="follows-title">
+            <h2 id="follows-title">@T["Account_Follows_Title"]</h2>
+            <p>@T["Account_Follows_Lead"]</p>
+            @if (_deviceHolds)
+            {
+                <form method="post" action="@($"{AccountDesk.Root}/bring")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p>@T["Account_Bring_Lead"]</p>
+                    <p class="note">@T["Account_Bring_Note"]</p>
+                    <p><button type="submit" class="action secondary">@T["Account_Bring_Send"]</button></p>
+                </form>
+            }
+        </section>
+
+        <section id="invite" aria-labelledby="invite-title">
+            <h2 id="invite-title">@T["Account_Invite_Title"]</h2>
+            <p>@T["Account_Invite_Lead"]</p>
+            @Problems("invite")
+            @if (_invitations.Count > 0)
+            {
+                <ul class="invitations" role="list">
+                    @foreach (var invitation in _invitations)
+                    {
+                        <li>
+                            @if (invitation.IsOpen)
+                            {
+                                // The language is the first part of the path of this request already: the address is built from where the site was reached.
+                                var link = $"{Context.Request.Scheme}://{Context.Request.Host}/{Visitor.Language.Tag}{AccountDesk.Page}?invitation={invitation.Code}";
+                                <code dir="ltr">@link</code>
+                                <span class="meta">@string.Format(CultureInfo.CurrentCulture, T["Account_Invite_Open"], Day(invitation.LastDay))</span>
+                                <form method="post" action="@($"{AccountDesk.Root}/revoke")" class="save inline">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="code" value="@invitation.Code" />
+                                    <button type="submit">@T["Account_Invite_Revoke"]</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <code dir="ltr">@invitation.Code[..4]…</code>
+                                <span class="meta">@T[invitation.RunOut ? "Account_Invite_RunOut" : $"Account_Invite_{invitation.State}"]</span>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            <form method="post" action="@($"{AccountDesk.Root}/invite")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <p><button type="submit" class="action secondary">@T["Account_Invite_Send"]</button></p>
+            </form>
+        </section>
+
         <section id="password" aria-labelledby="password-title">
             <h2 id="password-title">@T["Account_Password_Title"]</h2>
             @Problems("password")
@@ -220,9 +288,9 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed"];
-    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close"];
-    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current"];
+    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked"];
+    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite"];
+    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations"];
 
     private VisitorInfo? _info;
     private System.Collections.Immutable.ImmutableArray<string> _codes = [];
@@ -230,6 +298,9 @@
     private string? _form;
     private string[] _problems = [];
     private bool _private;
+    private bool _invited;
+    private bool _deviceHolds;
+    private IReadOnlyList<InvitationInfo> _invitations = [];
     private string _here = AccountDesk.Page;
 
     [CascadingParameter]
@@ -244,6 +315,9 @@
     [SupplyParameterFromQuery]
     private string? Problem { get; set; }
 
+    [SupplyParameterFromQuery]
+    private string? Invitation { get; set; }
+
     protected override void OnInitialized()
     {
         if (!Desk.IsOpen)
@@ -257,16 +331,31 @@
         _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
         _form = Forms.Contains(Form, StringComparer.Ordinal) ? Form : null;
         _problems = _form is null ? [] : [.. (Problem ?? string.Empty).Split(',').Where(problem => Known.Contains(problem, StringComparer.Ordinal)).Distinct()];
-        if (AccountDesk.Session(Context.User) is { } session)
+        var device = AccountState.Device(Context, Library);
+        _deviceHolds = !device.Positions.IsEmpty || !device.Kept.IsEmpty;
+        using (var store = Desk.Open())
         {
-            using var store = Desk.Open();
-            _info = store.Info(session.Id);
+            if (AccountDesk.Session(Context.User) is { } session)
+            {
+                _info = store.Info(session.Id);
+                _invitations = _info is null ? [] : store.Invitations(session.Id);
+            }
+            else
+            {
+                _invited = store.IsInvited(Invitation);
+            }
         }
 
         if (_info is not null)
         {
             _codes = Desk.Shown(Context);
         }
+    }
+
+    private string Day(DateOnly day)
+    {
+        var written = day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        return Visitor.Language.Tag == "fa" ? Vafadar.Core.Text.Digits.ToPersian(written) : written;
     }
 
     // What was wrong with a form, said above it.

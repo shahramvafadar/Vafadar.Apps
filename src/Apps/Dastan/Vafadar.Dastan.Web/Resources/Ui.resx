@@ -1441,7 +1441,7 @@
     <value>Nothing is in your list. A page of a name, an image or a thread has a button to keep it.</value>
   </data>
   <data name="Saved_Where" xml:space="preserve">
-    <value>The list is kept in this browser only – in a cookie on your device – and for a year at most. This site has no account and keeps nothing of it; another browser or device does not have it. It holds at most 30 pages.</value>
+    <value>The list is kept in this browser only – in a cookie on your device – and for a year at most. The site keeps nothing of it; another browser or device does not have it. It holds at most 30 pages.</value>
   </data>
   <data name="Saved_Kind_Entity" xml:space="preserve">
     <value>a name</value>
@@ -1468,7 +1468,7 @@
     <value>Your account</value>
   </data>
   <data name="Account_Lead" xml:space="preserve">
-    <value>An account is yours on every device. It asks for a name and a password – no mail address and nothing else about you.</value>
+    <value>An account is yours on every device: your list and how far you have read follow you. It asks for a name and a password – no mail address and nothing else about you.</value>
   </data>
   <data name="Account_Signed" xml:space="preserve">
     <value>You are signed in as {0}.</value>
@@ -1628,5 +1628,71 @@
   </data>
   <data name="Account_Problem_wrong-current" xml:space="preserve">
     <value>The present password is not right.</value>
+  </data>
+  <data name="Account_Follows_Title" xml:space="preserve">
+    <value>What follows you</value>
+  </data>
+  <data name="Account_Follows_Lead" xml:space="preserve">
+    <value>While you are signed in, your list and how far you have read are kept with your account and are the same on every device. Signed out, a device shows what it holds itself.</value>
+  </data>
+  <data name="Account_Bring_Lead" xml:space="preserve">
+    <value>This device holds a list or a reading position of its own.</value>
+  </data>
+  <data name="Account_Bring_Note" xml:space="preserve">
+    <value>Pages your list does not have yet are added. A reading position is taken only for a collection your account has none for – what your account says is never moved. The device keeps what it holds.</value>
+  </data>
+  <data name="Account_Bring_Send" xml:space="preserve">
+    <value>Bring it into my account</value>
+  </data>
+  <data name="Account_Register_Adopts" xml:space="preserve">
+    <value>What this device holds – your list and how far you have read – goes into the new account.</value>
+  </data>
+  <data name="Account_Invite_Title" xml:space="preserve">
+    <value>Invite somebody</value>
+  </data>
+  <data name="Account_Invite_Lead" xml:space="preserve">
+    <value>An invitation is a link you pass on yourself – the site sends nothing to anybody. It makes an account for one person and nothing else: no connection between the two of you follows from it. It can be used for 14 days.</value>
+  </data>
+  <data name="Account_Invite_Send" xml:space="preserve">
+    <value>Make an invitation</value>
+  </data>
+  <data name="Account_Invite_Open" xml:space="preserve">
+    <value>can be used until {0}</value>
+  </data>
+  <data name="Account_Invite_Used" xml:space="preserve">
+    <value>used</value>
+  </data>
+  <data name="Account_Invite_Revoked" xml:space="preserve">
+    <value>taken back</value>
+  </data>
+  <data name="Account_Invite_RunOut" xml:space="preserve">
+    <value>run out</value>
+  </data>
+  <data name="Account_Invite_Revoke" xml:space="preserve">
+    <value>Take back</value>
+  </data>
+  <data name="Account_Invited" xml:space="preserve">
+    <value>You were invited to Dastan. Make your account here.</value>
+  </data>
+  <data name="Account_Invitation_Gone" xml:space="preserve">
+    <value>This invitation can no longer be used. You can make an account all the same.</value>
+  </data>
+  <data name="Account_Said_brought" xml:space="preserve">
+    <value>What this device held is in your account now.</value>
+  </data>
+  <data name="Account_Said_invited" xml:space="preserve">
+    <value>The invitation is made. Pass its link on to the person you invite.</value>
+  </data>
+  <data name="Account_Said_revoked" xml:space="preserve">
+    <value>The invitation is taken back.</value>
+  </data>
+  <data name="Account_Problem_invitations" xml:space="preserve">
+    <value>You have 10 invitations that can still be used. Take one back, or wait until one is used or runs out.</value>
+  </data>
+  <data name="Saved_Where_Account" xml:space="preserve">
+    <value>Your list is kept with your account and is the same on every device you sign in on. It holds at most 200 pages.</value>
+  </data>
+  <data name="Saved_Where_Offer" xml:space="preserve">
+    <value>With an account your list follows you to every device.</value>
   </data>
 </root>

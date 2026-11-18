@@ -50,6 +50,66 @@ public sealed class StoredRecoveryCode
     public DateTime? UsedAt { get; set; }
 }
 
+/// <summary>How far an account has read a collection.</summary>
+public sealed class StoredReadingPosition
+{
+    /// <summary>Gets or sets the account.</summary>
+    public required string VisitorId { get; set; }
+
+    /// <summary>Gets or sets the name of the collection in addresses.</summary>
+    public required string Collection { get; set; }
+
+    /// <summary>Gets or sets the reading stage.</summary>
+    public int Level { get; set; }
+}
+
+/// <summary>A page in the list of an account.</summary>
+public sealed class StoredSavedPage
+{
+    /// <summary>Gets or sets the number of the entry: a page kept later has a greater one.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the account.</summary>
+    public required string VisitorId { get; set; }
+
+    /// <summary>Gets or sets the name of the collection in addresses.</summary>
+    public required string Collection { get; set; }
+
+    /// <summary>Gets or sets the kind of page, as addresses write it.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>Gets or sets the identifier of what the page is about.</summary>
+    public required string PageId { get; set; }
+}
+
+/// <summary>An invitation an account made for somebody without one.</summary>
+public sealed class StoredInvitation
+{
+    /// <summary>Gets or sets the code: what the address of the invitation carries. It says nothing about anybody.</summary>
+    public required string Id { get; set; }
+
+    /// <summary>Gets or sets the account that made it.</summary>
+    public required string By { get; set; }
+
+    /// <summary>Gets or sets what it is for (<c>InvitationPurpose</c>).</summary>
+    public int Purpose { get; set; }
+
+    /// <summary>Gets or sets when it was made.</summary>
+    public DateTime CreatedAt { get; set; }
+
+    /// <summary>Gets or sets the last day it can be used.</summary>
+    public DateOnly LastDay { get; set; }
+
+    /// <summary>Gets or sets the account that used it; nothing once that account is deleted.</summary>
+    public string? UsedBy { get; set; }
+
+    /// <summary>Gets or sets the day it was used.</summary>
+    public DateOnly? UsedOn { get; set; }
+
+    /// <summary>Gets or sets when it was taken back.</summary>
+    public DateTime? RevokedAt { get; set; }
+}
+
 /// <summary>The database of the store of the visitors.</summary>
 public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbContext(options)
 {
@@ -58,6 +118,15 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
     /// <summary>Gets the recovery codes.</summary>
     public DbSet<StoredRecoveryCode> RecoveryCodes => Set<StoredRecoveryCode>();
+
+    /// <summary>Gets how far the accounts have read.</summary>
+    public DbSet<StoredReadingPosition> ReadingPositions => Set<StoredReadingPosition>();
+
+    /// <summary>Gets the lists of the accounts.</summary>
+    public DbSet<StoredSavedPage> SavedPages => Set<StoredSavedPage>();
+
+    /// <summary>Gets the invitations.</summary>
+    public DbSet<StoredInvitation> Invitations => Set<StoredInvitation>();
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -82,6 +151,39 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             code.Property(item => item.Code).HasMaxLength(100);
             code.HasIndex(item => item.VisitorId);
             code.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.VisitorId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // What belongs to an account goes with it when it is deleted.
+        modelBuilder.Entity<StoredReadingPosition>(position =>
+        {
+            position.HasKey(item => new { item.VisitorId, item.Collection });
+            position.Property(item => item.VisitorId).HasMaxLength(40);
+            position.Property(item => item.Collection).HasMaxLength(120);
+            position.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.VisitorId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredSavedPage>(page =>
+        {
+            page.HasKey(item => item.Number);
+            page.Property(item => item.VisitorId).HasMaxLength(40);
+            page.Property(item => item.Collection).HasMaxLength(120);
+            page.Property(item => item.Kind).HasMaxLength(20);
+            page.Property(item => item.PageId).HasMaxLength(120);
+            page.HasIndex(item => new { item.VisitorId, item.Collection, item.Kind, item.PageId }).IsUnique();
+            page.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.VisitorId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredInvitation>(invitation =>
+        {
+            invitation.HasKey(item => item.Id);
+            invitation.Property(item => item.Id).HasMaxLength(40);
+            invitation.Property(item => item.By).HasMaxLength(40);
+            invitation.Property(item => item.UsedBy).HasMaxLength(40);
+            invitation.HasIndex(item => item.By);
+            invitation.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.By).OnDelete(DeleteBehavior.Cascade);
+
+            // That an invitation was used stays when who used it is gone.
+            invitation.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.UsedBy).OnDelete(DeleteBehavior.SetNull);
         });
     }
 }

@@ -39,7 +39,7 @@ public sealed record VisitorInfo(string Id, string Name, DateTime CreatedAt, int
 /// person, no mail address. An account is made by anybody (D-049) and closed by its visitor; a closed account is
 /// deleted for good after <see cref="KeptAfterClosing"/> (D-055).
 /// </summary>
-public sealed class PeopleStore : IDisposable
+public sealed partial class PeopleStore : IDisposable
 {
     /// <summary>The least length of a password.</summary>
     public const int PasswordLength = 12;
@@ -96,8 +96,9 @@ public sealed class PeopleStore : IDisposable
     /// <summary>
     /// Makes an account. The name is free to choose and belongs to one account; the password has at least
     /// <see cref="PasswordLength"/> characters. The account gets recovery codes, which the answer carries once.
+    /// Made through an invitation, the account uses the invitation up – and nothing else follows from it.
     /// </summary>
-    public AccountResult Register(string name, string password)
+    public AccountResult Register(string name, string password, string? invitation = null)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
@@ -135,6 +136,14 @@ public sealed class PeopleStore : IDisposable
         };
         _context.Visitors.Add(visitor);
         var codes = NewCodes(visitor.Id);
+
+        // An invitation that can be used is used up by the account it led to; one that cannot stops nobody
+        // from making an account, since anybody may (D-049).
+        if (Usable(invitation) is { } invited)
+        {
+            Use(invited, visitor.Id);
+        }
+
         try
         {
             _context.SaveChanges();
