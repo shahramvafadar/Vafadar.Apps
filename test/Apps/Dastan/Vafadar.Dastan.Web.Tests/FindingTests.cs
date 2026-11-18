@@ -123,6 +123,7 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
     public async Task A_gallery_is_put_in_the_order_of_the_making_and_says_which_time_that_is(string language, string choice, string basis)
     {
         var visitor = demo.Visitor();
+        await visitor.ReadTo(4);
         var editorial = await visitor.Get($"/{language}/{Story}/gallery");
         var oldest = await visitor.Get($"/{language}/{Story}/gallery?order=oldest");
         var newest = await visitor.Get($"/{language}/{Story}/gallery?order=newest");
@@ -136,6 +137,7 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
         static List<string> Items(Page page) => [.. Regex.Matches(page.Html, "<li class=\"card media-card\" id=\"([^\"]+)\"").Select(match => match.Groups[1].Value)];
         Assert.Equal(Items(editorial).Order(), Items(oldest).Order());
         Assert.Equal(Items(editorial).Order(), Items(newest).Order());
+        Assert.NotEmpty(Items(oldest));
     }
 
     [Fact]
@@ -159,15 +161,14 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
     [InlineData("?kind=image", "Image")]
     public async Task A_gallery_shows_images_or_videos_only_when_it_has_both(string query, string kind)
     {
-        var all = await demo.Visitor().Get($"/en/{Story}/gallery");
-        var page = await demo.Visitor().Get($"/en/{Story}/gallery{query}");
+        var visitor = demo.Visitor();
+        await visitor.ReadTo(4);
+        var all = await visitor.Get($"/en/{Story}/gallery");
+        var page = await visitor.Get($"/en/{Story}/gallery{query}");
 
-        if (!all.Html.Contains("gallery?kind=video", StringComparison.Ordinal))
-        {
-            // What the visitor may see at the opening is of one kind: there is nothing to choose.
-            Assert.DoesNotContain("everything", all.Main, StringComparison.Ordinal);
-            return;
-        }
+        // The gallery of a reader who has reached the end has both kinds, so both are offered.
+        Assert.Contains($"href=\"{Story}/gallery?kind=video\"", all.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/gallery?kind=image\"", all.Html, StringComparison.Ordinal);
 
         var kinds = Regex.Matches(page.Html, "<li class=\"card media-card\" id=\"[^\"]+\">.*?<p class=\"meta\">([^<–]+)", RegexOptions.Singleline).Select(match => match.Groups[1].Value.Trim()).ToList();
         Assert.NotEmpty(kinds);

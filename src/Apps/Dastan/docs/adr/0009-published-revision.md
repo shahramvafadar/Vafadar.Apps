@@ -122,3 +122,26 @@ translated.
 Verification: `DisputedAndWithdrawnTests` (Core), `ContentRevisionTests` (Data: withdrawn in the working file,
 in a revision and in the history), `DisputedStatementTests` (Web: lists, the three charts, the pages of sources,
 the timeline, the history; a page without a disputed statement has no mark).
+
+## Addendum of 2026-11-18 – a statement is cited with its revision (step 14.7, R-PUB-07)
+
+Every statement has the address of its sources (ADR 0002). On a published site that page now says how to cite
+the statement.
+
+* **What is cited**: the statement in a few words – the name of an entity, a relation as its sentence, an
+  event, the part of an entity in an event, an item – the name of the site, the number and the day of the
+  revision the page shows.
+* **The address** is the address of the page with `?revision=<n>`. It is written whole, with the host the site
+  was reached by, so that it can be copied.
+* **An address written for another revision** than the one the site shows says so above the citation – "this
+  address was written for revision 2; the site now shows revision 3" – and leads to the list of what changed
+  (step 10.2). The statement shown is the one of the present revision: the site has the revision it was given
+  and the list of changes, not the earlier records. A revision that is no number is not asked for.
+* **A demonstration cites nothing**: it is no revision.
+
+Not done: showing a statement as it stood in an earlier revision; a citation in a named style (APA, Chicago);
+copying with one press, which would need a script.
+
+Verification: `MomentAndCitationTests` – the citation of an entity in both languages with the address; an
+address for an earlier revision, for the same and for none; a relation cited as its sentence; no citation on
+a demonstration.

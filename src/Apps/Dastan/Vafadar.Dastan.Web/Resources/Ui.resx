@@ -1326,4 +1326,34 @@
   <data name="Gallery_Kind_All" xml:space="preserve">
     <value>everything</value>
   </data>
+  <data name="Moment_Video_Title" xml:space="preserve">
+    <value>A moment of the video</value>
+  </data>
+  <data name="Moment_Video_Starts" xml:space="preserve">
+    <value>The video starts at {0}.</value>
+  </data>
+  <data name="Moment_Video_Beginning" xml:space="preserve">
+    <value>From the beginning</value>
+  </data>
+  <data name="Moment_Video_Label" xml:space="preserve">
+    <value>The address of a moment</value>
+  </data>
+  <data name="Moment_Video_Go" xml:space="preserve">
+    <value>Open at this moment</value>
+  </data>
+  <data name="Moment_Video_Hint" xml:space="preserve">
+    <value>Minutes and seconds, like 1:15. The address of the page that opens leads to that moment and can be passed on.</value>
+  </data>
+  <data name="Cite_Title" xml:space="preserve">
+    <value>To cite this</value>
+  </data>
+  <data name="Cite_Text" xml:space="preserve">
+    <value>“{0}”. {1}, revision {2} of {3}.</value>
+  </data>
+  <data name="Cite_Hint" xml:space="preserve">
+    <value>The address names the revision. When a later revision is published, the page says so and leads to what changed.</value>
+  </data>
+  <data name="Cite_Changed" xml:space="preserve">
+    <value>This address was written for revision {0}. The site now shows revision {1}: what is said here may have been corrected.</value>
+  </data>
 </root>

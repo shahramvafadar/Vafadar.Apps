@@ -136,5 +136,5 @@ the editors; the search by year takes years of the common era only (the page of 
 Verification: `FindingTests` (19 cases) – a filter alone, a place, a year, a name with a filter; the form in
 both languages; the choices kept; four addresses that are no choice; a story alone; the order of a gallery
 with its time basis in both languages; the oldest first and what has no year last; one kind only; an order
-that is none. The gallery of the repository shows a visitor at the opening no image, so its page was checked
-for the tools and the list by the read model. Not looked at in a browser.
+that is none. The pages of the gallery were asked for as a visitor who has read to the end: at the opening the gallery of
+the repository shows no image. Not looked at in a browser.
