@@ -732,4 +732,16 @@
   <data name="Group_threads" xml:space="preserve">
     <value>رشته‌ها</value>
   </data>
+  <data name="Sizes_Title" xml:space="preserve">
+    <value>اندازه‌های کوچک‌تر این تصویر</value>
+  </data>
+  <data name="Sizes_Lead" xml:space="preserve">
+    <value>این تصویر پیش از آن آورده شده که ابزار اندازه‌های کوچک‌تر بسازد. با آن‌ها صفحه‌های سایت اندازهٔ مناسب را به مرورگر می‌دهند و نگارخانه تصویرهای کوچک بار می‌کند. خود تصویر تغییری نمی‌کند.</value>
+  </data>
+  <data name="Sizes_Submit" xml:space="preserve">
+    <value>ساختن اندازه‌های کوچک‌تر</value>
+  </data>
+  <data name="Sizes_None" xml:space="preserve">
+    <value>هیچ اندازهٔ کوچک‌تری ساخته نشد: تصویر از پیش کوچک است یا خوانده نمی‌شود.</value>
+  </data>
 </root>

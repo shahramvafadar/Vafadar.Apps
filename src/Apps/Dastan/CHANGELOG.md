@@ -253,3 +253,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   photograph. It is then shown to nobody else until they agree or take that back.
 - For editors: an image that is brought in through the tool gets two smaller sizes, and the pages of the site
   give a browser the one that fits – the gallery loads small pictures.
+- For whoever runs the site: `photos sizes <folder>` makes the smaller sizes of photographs that were brought
+  in earlier. For editors: an image that is in a collection already gets its smaller sizes from a button on its
+  page in the tool.

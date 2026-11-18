@@ -45,6 +45,11 @@ public static class ContentCommands
               90 days ago – or another number of days, or before a day that is named. A report nobody has
               looked at is never deleted. Says how many were deleted. Nothing runs it by itself.
 
+          photos sizes <folder>
+              For whoever runs the site: makes the smaller size of every photograph of the visitors that has
+              none yet – those that were brought in before the site made sizes. The folder is the folder
+              "media" inside the folder of the photographs. Says how many were made; changes no photograph.
+
         """ + StoreCommands.Usage + EditorCommands.Usage + """
 
         Exit code: 0 in order, 1 a content file cannot be used, 2 the command was not understood.
@@ -75,6 +80,7 @@ public static class ContentCommands
             ["template", "collection" or "subject" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
             ["revision", _, ..] => Revision(words[1], words[2..], output),
             ["reports", "forget", _, "--looked-at-before", _] => ForgetReports(words[2], words[4], output),
+            ["photos", "sizes", _] => PhotoSizesOf(words[2], output),
             ["reports", "forget", _] => ForgetReports(words[2], today.AddDays(-ReportsKeptDays).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), output),
             ["reports", "forget", _, "--kept-days", _] => int.TryParse(words[4], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var days) && days <= 36500
                 ? ForgetReports(words[2], today.AddDays(-days).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), output)
@@ -107,6 +113,18 @@ public static class ContentCommands
 
         var forgotten = new ReportBox(folder).Forget(before);
         output.WriteLine($"Deleted {forgotten} report(s) that were looked at before {day}.");
+        return 0;
+    }
+
+    private static int PhotoSizesOf(string folder, TextWriter output)
+    {
+        if (!Directory.Exists(folder))
+        {
+            output.WriteLine($"{folder}: there is no such folder.");
+            return NotUsable;
+        }
+
+        output.WriteLine($"Made {PhotoSizes.MakeMissing(folder)} smaller size(s).");
         return 0;
     }
 

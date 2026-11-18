@@ -516,3 +516,59 @@ Already as decided and nothing to build: no search engines for public trees (D-0
 of visitors (D-066), 90 days for reports (D-060, step 16.11), the owner's statement about the people in a
 photograph (D-059, step 16.11). The owner's own: the host (D-067), the legal review (D-068), the registration
 with Google and Microsoft (D-069), the review of the content and the rights of the images.
+
+## 19. What is left (phase 18)
+
+Written on 2026-11-18, after phase 17, as the list a goal can be set on: every row is either done – built,
+checked, written down and merged – or says here why it was not. The groups are in the order they are worked
+through.
+
+### 18.1 – Run in a container (nothing has been so far)
+
+| Row | What | Status |
+|---|---|---|
+| 18.1.1 | The tests of Dastan on Linux in a container (the Compose project `test`), as the pipeline runs them | **Done** 2026-11-18 – `dotnet test --solution Vafadar.Dastan.slnf --configuration Release` in `mcr.microsoft.com/dotnet/sdk:10.0`, on a copy of the repository made with `git archive`: 2250 passed, 328 skipped (the browser tests), none failed – the library for images among them. Done because the pipeline failed in its step "Test" for the commit of steps 17.6 to 17.8 and its log cannot be read without signing in; the tests of Dastan are not what failed there |
+| 18.1.2 | The site and the tool of the editors built as images and run, with volumes for the store of the visitors, their photographs and the keys | Planned |
+| 18.1.3 | In that container: a photograph brought in, its smaller size made, `/preview.png` drawn (the library for images) | Planned |
+| 18.1.4 | The store of the visitors and their photographs backed up and brought back, and the way written into `operations.md` | Planned |
+| 18.1.5 | A closed trial from the first account to an invited one, in the container (`Dastan__InvitationOnly`) | Planned |
+
+A machine that is short of memory or of room on its system drive stops Docker and the containers of other
+projects with it: both are looked at before each run, and a group that cannot run is written down as blocked.
+
+### 18.2 – Look in a browser
+
+| Row | What | Status |
+|---|---|---|
+| 18.2.1 | Pages that were built and not looked at: objecting to a photograph, the years above photographs, a photograph with two sizes, an image of a collection with sizes in the gallery, the site that takes accounts by invitation only, agreeing to a public family tree and its public page, the sizes of an image in the tool | Planned |
+| 18.2.2 | The form that chooses a name after a sign-in through a provider, with a made-up provider that exists in development only | Planned |
+| 18.2.3 | The pages of accounts, people, family trees and photographs in the light appearance and at 360 pixels | Planned |
+| 18.2.4 | The browser tests that are skipped: why, and run where that is possible | Planned |
+
+### 18.3 – What was built in part
+
+| Row | What | Status |
+|---|---|---|
+| 18.3.1 | A command that makes smaller sizes for the photographs and images that are there already | **Done** 2026-11-18 – for the photographs of the visitors the command `photos sizes <folder>` ([operations](operations.md)); for an image of a collection a form on its page in the tool, "Make the smaller sizes" – an act of an editor with a name and a reason, like every change of a record ([ADR 0006](adr/0006-media-delivery.md)). Checked: three more cases of `ImageSizesTests`, one of `StudioMediaIntakeTests`. Not looked at in a browser |
+| 18.3.2 | Without a connection: a mark on a page that is a kept copy, and a control that empties what the device keeps | Planned |
+| 18.3.3 | An album whose order its owner changes | Planned |
+| 18.3.4 | Places for the legal pages – terms, privacy, imprint – with links at the foot of every page; the words are the owner's | Planned |
+| 18.3.5 | The closed trial on the owner's machine behind a tunnel: a Compose file and the way, written down (D-067) | Planned |
+| 18.3.6 | From earlier phases, each looked at again for what the model has now: a gallery of a period (step 14.5), an earlier revision shown (step 14.7) | Planned – or the reason it stays out |
+
+### 18.4 – Decided by the owner's silence or word
+
+Proposed to the owner on 2026-11-18, each with what is recommended; without another word they stand as
+recommended and nothing is built.
+
+| Question | Recommended |
+|---|---|
+| Several ladders of reading stages inside one collection (step 17.7) | Not now: a collection per story |
+| The words of a page on the picture of a link (step 17.4) – two fonts in the program and a library that joins Persian letters | Not now: the mark alone |
+| Somebody who looks at objections to photographs that are made to do harm (step 17.6) | Not now: the limit of twenty; before registration is open |
+| Rivers and lakes on the drawing of the places – added beside the coasts that were decided (step 17.2) | They stay |
+
+### 18.5 – The owner's own
+
+The registration with Google and Microsoft (D-069), a host for a public site (D-067), the legal review (D-068),
+the review of the Persian text of the sample, the rights of the images, devices and people (section 11).

@@ -201,18 +201,7 @@ public static partial class MediaIntake
             File.Move(arriving, kept2);
 
             // Smaller sizes of the picture lie beside it, under its name and their width.
-            var smaller = new List<SmallerImage>();
-            if (kind == MediaFileKind.Image && part == "file")
-            {
-                foreach (var longest in (sizes ?? []).Distinct().Order())
-                {
-                    if (ImageSizes.Smaller(kept2, longest, $"{Path.GetFileNameWithoutExtension(name)}-{longest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{extension}") is { } made)
-                    {
-                        smaller.Add(made);
-                    }
-                }
-            }
-
+            var smaller = kind == MediaFileKind.Image && part == "file" ? SizesOf(kept2, sizes ?? []) : [];
             return (new TakenFile($"../media/{name}", kind, type, size?.Width, size?.Height, length, kept2) { Sizes = smaller }, null);
         }
         finally
@@ -222,6 +211,30 @@ public static partial class MediaIntake
                 File.Delete(arriving);
             }
         }
+    }
+
+    /// <summary>
+    /// Makes the smaller sizes of an image beside it, under its name and their width, the narrowest first – for a
+    /// file that arrives and for one that is there already (step 18.3.1). A size that is not smaller than the
+    /// image is not made.
+    /// </summary>
+    /// <param name="file">The image.</param>
+    /// <param name="sizes">The longer sides of the sizes, in pixels.</param>
+    public static IReadOnlyList<SmallerImage> SizesOf(string file, IReadOnlyList<int> sizes)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(file);
+        ArgumentNullException.ThrowIfNull(sizes);
+        var smaller = new List<SmallerImage>();
+        foreach (var longest in sizes.Distinct().Order())
+        {
+            var name = $"{Path.GetFileNameWithoutExtension(file)}-{longest.ToString(System.Globalization.CultureInfo.InvariantCulture)}{Path.GetExtension(file)}";
+            if (ImageSizes.Smaller(file, longest, name) is { } made)
+            {
+                smaller.Add(made);
+            }
+        }
+
+        return smaller;
     }
 
     /// <summary>Takes a file back that was taken in and is not kept after all – the record that named it was refused.</summary>

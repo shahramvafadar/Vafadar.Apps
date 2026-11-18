@@ -126,6 +126,17 @@ again.
 
 Taking the program back is the same with the image: the tag of the commit before.
 
+## Smaller sizes of photographs that are there already
+
+The site makes a smaller size of a photograph when it is brought in (step 17.3). For the photographs that were
+there before, run once, with the site stopped or running:
+
+```
+dotnet Vafadar.Dastan.Content.dll photos sizes <Dastan__Photos>/media
+```
+
+It says how many sizes it made, changes no photograph, and finds nothing to do when it is run again.
+
 ## What the site keeps about visitors
 
 Without `Dastan__People` nothing on its own: no database, no file, no account. With it, the accounts of the
