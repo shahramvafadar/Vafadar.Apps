@@ -1,6 +1,7 @@
 @page "/{Collection}"
 @inject Visitor Visitor
 @inject DastanSite Site
+@inject DastanLibrary Library
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -29,6 +30,28 @@
             <dt>@T["Collection_Scope"]</dt>
             <dd><Foreign Text="@edition.Scope" /></dd>
         </dl>
+    }
+
+    var elsewhere = Library.SameWorld(Site).Select(other => (Collection: other, Overview: Visitor.Of(other)?.Overview())).Where(entry => entry.Overview is not null).ToList();
+    @if (elsewhere.Count > 0)
+    {
+        @* The same world in another collection of the site (step 14.11): another edition, another telling. *@
+        <section aria-labelledby="elsewhere">
+            <h2 id="elsewhere">@T["Elsewhere_Title"]</h2>
+            <ul class="statements" role="list">
+                @foreach (var (other, told) in elsewhere)
+                {
+                    <li>
+                        <a href="@other.Collection"><Loc Text="told!.Subject.Label" /></a>
+                        @if (told!.Edition is { } text)
+                        {
+                            <span class="meta"> – <Foreign Text="@text.BaseText" /></span>
+                        }
+                    </li>
+                }
+            </ul>
+            <p class="note">@T["Elsewhere_Reading"]</p>
+        </section>
     }
 
     @if (overview.Stories.Length > 1)

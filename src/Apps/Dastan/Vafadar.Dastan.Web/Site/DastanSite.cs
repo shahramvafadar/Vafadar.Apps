@@ -97,6 +97,16 @@ public sealed class DastanLibrary
     /// <summary>Gets the comparisons the audience of the site may see, in the order of their files.</summary>
     public ImmutableArray<Comparison> Comparisons { get; }
 
+    /// <summary>
+    /// Returns the other collections of the site that are about the same world (step 14.11): another edition
+    /// of the same work, another telling of the same story. Each is a collection of its own.
+    /// </summary>
+    public ImmutableArray<DastanSite> SameWorld(DastanSite collection)
+    {
+        ArgumentNullException.ThrowIfNull(collection);
+        return [.. Collections.Where(other => other != collection && other.World == collection.World)];
+    }
+
     /// <summary>Returns the collection of that name, or <see langword="null"/>.</summary>
     public DastanSite? Find(string? collection) => Collections.FirstOrDefault(site => site.Collection == collection);
 
@@ -173,6 +183,9 @@ public sealed class DastanSite
 
     /// <summary>Gets the published revision the collection is, or <see langword="null"/> for an editorial sample.</summary>
     public PublicationRevision? Revision => _catalogue.Info.Publication.Revision;
+
+    /// <summary>Gets the world the collection is about: collections that name the same world tell of the same things.</summary>
+    public string World => _catalogue.Info.WorldId;
 
     /// <summary>Gets the language the texts of the collection are written in.</summary>
     public string Language => _catalogue.Info.Language;
