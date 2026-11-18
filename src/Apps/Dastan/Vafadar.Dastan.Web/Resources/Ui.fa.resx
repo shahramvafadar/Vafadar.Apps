@@ -1452,4 +1452,7 @@
   <data name="Saved_Kind_Thread" xml:space="preserve">
     <value>یک رشته</value>
   </data>
+  <data name="SiteSearch_Label" xml:space="preserve">
+    <value>یک نام، در هر آنچه این‌جا برای خواندن هست</value>
+  </data>
 </root>

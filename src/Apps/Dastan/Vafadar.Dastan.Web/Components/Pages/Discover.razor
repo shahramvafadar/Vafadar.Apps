@@ -39,8 +39,19 @@
 
     @if (shown.Count == 1)
     {
-        @* A search looks through one collection; with several, each has its own on its page. *@
         <SearchForm />
+    }
+    else
+    {
+        @* With several collections a name is looked for in all of them; each has its own search on its page. *@
+        <form class="search" method="get" action="search" role="search">
+            <label for="site-search-q">@T["SiteSearch_Label"]</label>
+            <div class="search-row">
+                <input type="search" id="site-search-q" name="q" maxlength="80" autocomplete="off" enterkeyhint="search" dir="auto" />
+                <button type="submit" class="action">@T["Search_Title"]</button>
+            </div>
+            <p class="note">@T["Search_Hint"]</p>
+        </form>
     }
 }
 else if (Site.Comparisons.IsEmpty)

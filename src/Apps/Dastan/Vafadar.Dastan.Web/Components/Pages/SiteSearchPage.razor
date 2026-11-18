@@ -1,0 +1,86 @@
+@page "/search"
+@using System.Collections.Immutable
+@inject Visitor Visitor
+@inject DastanLibrary Library
+@inject IStringLocalizer<Ui> T
+
+@* The search of a site with several collections (step 14.10): a name is looked for in every collection, in
+   what the visitor has read of each, and the hits stand under their collection. A collection is asked through
+   its own projection, so nothing of a later reading stage is found here either. *@
+<PageTitle>@T["Search_Title"] – @T["Site_Name"]</PageTitle>
+@* The answer to a search is no page of its own: an engine follows its links and keeps none of it. *@
+<HeadContent><meta name="robots" content="noindex, follow" /></HeadContent>
+
+<header class="page-header">
+    <p class="meta"><a href="./">@T["Nav_Discover"]</a></p>
+    <h1>@T["Search_Title"]</h1>
+</header>
+
+<form class="search" method="get" action="search" role="search">
+    <label for="site-search-q">@T["SiteSearch_Label"]</label>
+    <div class="search-row">
+        <input type="search" id="site-search-q" name="q" value="@_query" maxlength="80" autocomplete="off" enterkeyhint="search" dir="auto" />
+        <button type="submit" class="action">@T["Search_Title"]</button>
+    </div>
+    <p class="note">@T["Search_Hint"]</p>
+</form>
+
+@if (_query.Length > 0)
+{
+    @if (_found.Count == 0)
+    {
+        @* The same sentence for a name that does not exist and for one that has not been reached. *@
+        <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_None"], _query)</p>
+    }
+    else
+    {
+        <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Search_Results"], _query, Visitor.Number(_found.Sum(group => group.Hits.Length)))</p>
+        @foreach (var (collection, name, hits) in _found)
+        {
+            <section aria-labelledby="@($"found-{collection.Collection}")">
+                <h2 id="@($"found-{collection.Collection}")"><a href="@collection.Collection"><Loc Text="name" /></a></h2>
+                <ul class="cards" role="list">
+                    @foreach (var hit in hits)
+                    {
+                        <li class="card">
+                            <h3><a href="@($"{collection.Collection}/entity/{hit.Entity.Id}")"><Loc Text="hit.Entity.Label" /></a></h3>
+                            <p class="meta"><TypeName Type="hit.Entity.Type" /></p>
+                            @if (hit.Name != Visitor.Text(hit.Entity.Label).Value)
+                            {
+                                <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Search_MatchedName"], hit.Name)</p>
+                            }
+                            <p><Loc Text="hit.Entity.Summary" /></p>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+    }
+}
+
+@code {
+    // What a visitor types is a name. Longer text is cut; more hits than these are not a list anybody reads.
+    private const int LongestQuery = 80;
+    private const int MostHits = 10;
+
+    private string _query = string.Empty;
+    private List<(DastanSite Collection, LocalizedText Name, ImmutableArray<SearchHit> Hits)> _found = [];
+
+    /// <summary>Gets or sets what the visitor typed.</summary>
+    [SupplyParameterFromQuery(Name = "q")]
+    public string? Q { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var typed = new string([.. (Q ?? string.Empty).Where(character => !char.IsControl(character))]).Trim();
+        _query = typed.Length > LongestQuery ? typed[..LongestQuery] : typed;
+        foreach (var collection in Library.Collections)
+        {
+            // Each collection is searched in what this visitor may see of it, and no further.
+            if (Visitor.Of(collection) is { } projection && projection.Search(_query, MostHits) is { IsEmpty: false } hits)
+            {
+                _found.Add((collection, projection.Overview().Subject.Label, hits));
+            }
+        }
+    }
+}

@@ -1452,4 +1452,7 @@
   <data name="Saved_Kind_Thread" xml:space="preserve">
     <value>a thread</value>
   </data>
+  <data name="SiteSearch_Label" xml:space="preserve">
+    <value>A name, in everything that is here to read</value>
+  </data>
 </root>
