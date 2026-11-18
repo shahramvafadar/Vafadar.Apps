@@ -360,8 +360,9 @@ reason is something an editor writes.
   that had none comes out as it went in. A thread is put, changed and taken out like any record and tried by
   the readers; an event or an entity a thread stops at cannot be taken out from under it. Merging two
   entities leaves a thread with one stop at the kept one. The tool has the group among its records and a form
-  for a new thread; the notes of a thread in another language have no inputs yet and stay as they are when
-  the form is sent.
+  for a new thread. The reason of a stop in another language is filled in beside the reason of the stop and
+  kept under what the stop names, so it goes with its stop when the stops are put in another order and is
+  taken out with it.
 * **The pages**: `<collection>/thread/<id>`; a list on the page of a collection that has threads the visitor
   may follow; "Where to go on from here" on the page of a name a thread passes. A thread that is not reached
   and one that does not exist are the same page: not found.
@@ -376,6 +377,7 @@ another language; a translation of what is not there. `EditorialThreadsTests` (5
 without threads; a thread put, written and taken out; a file with threads in and out; a thread the readers
 refuse; two entities that are one. `ThreadPagesTests` (9 cases, site) – the list in both languages; a thread
 at the opening and for a reader of the end; onward from a name; no word of threads where there are none; a
-thread that is not reached. `StudioThreadsTests` (3 cases, tool) – the group and the form a new thread begins
-with in both languages; the page of a thread with its stops. No test sends the form of a new thread, and
-nothing was looked at in a browser.
+thread that is not reached. `StudioThreadsTests` (4 cases, tool) – the group and the form a new thread begins
+with in both languages; the page of a thread with its stops; the reason of a stop written in Persian, kept
+under what the stop names, and taken out when it is emptied. No test sends the form of a new thread. The page
+of a thread on the site was looked at in a browser (ADR 0008, eighth addendum); the tool was not.

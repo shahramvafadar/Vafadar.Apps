@@ -172,6 +172,12 @@ public static class RecordForm
     private const string Who = "entityId";
     private const string Role = "role";
 
+    // The stops of a thread: the list, what a stop names – one of three – and the reason the stop gives: the
+    // places of the file that a translation names as "notes", by what the stop names.
+    private const string Stops = "stops";
+    private const string Note = "note";
+    private static readonly string[] StopNames = ["entityId", "eventId", "mediaId"];
+
     // The time of a relation: a relation of the world that states none has the inputs to state one.
     private const string Time = "time";
 
@@ -258,6 +264,25 @@ public static class RecordForm
                 continue;
             }
 
+            if (translated.Notes && field is { Name: Stops, Kind: FieldKind.Rows })
+            {
+                // The reason of a stop in another language goes with its stop – also into the stop that is added.
+                shown.Add(new FormField
+                {
+                    Path = field.Path, Name = field.Name, Kind = field.Kind, Value = field.Value,
+                    Rows =
+                    [
+                        .. field.Rows.Select((row, index) => (IReadOnlyList<FormField>)
+                        [
+                            .. row.SelectMany(part => part.Name != Note
+                                ? [part]
+                                : texts.Select(text => Translation($"t.{text.Language}.{Stops}[{index}].{Note}", Note, text.Language, NoteOf(text.Texts, row), part.Kind)).Prepend(part)),
+                        ]),
+                    ],
+                });
+                continue;
+            }
+
             shown.Add(field);
             if (field.Kind is FieldKind.Text or FieldKind.LongText && translated.Fields.Contains(field.Name))
             {
@@ -331,10 +356,31 @@ public static class RecordForm
                 }
             }
 
-            // The notes of the stops of a thread have no inputs in another language: they stay as they are.
-            if (translated.Notes && before["notes"] is { } notes)
+            if (translated.Notes)
             {
-                now["notes"] = notes.DeepClone();
+                if (record[Stops] is JsonArray stops)
+                {
+                    // A reason in another language is kept under what its stop names now; the reason of a stop
+                    // that was taken out goes with it.
+                    var notes = new JsonObject();
+                    for (var index = 0; index <= stops.Count; index++)
+                    {
+                        var named = StopNames.Select(name => Sent(form[$"f.{Stops}[{index}].{name}"])).FirstOrDefault(text => text.Length > 0);
+                        if (named is not null && Sent(form[$"f.{Stops}[{index}].{Note}"]).Length > 0 && Sent(form[$"t.{language}.{Stops}[{index}].{Note}"]) is { Length: > 0 } note)
+                        {
+                            notes[named] = note;
+                        }
+                    }
+
+                    if (notes.Count > 0)
+                    {
+                        now["notes"] = notes;
+                    }
+                }
+                else if (before["notes"] is { } kept)
+                {
+                    now["notes"] = kept.DeepClone();
+                }
             }
 
             read[language] = now;
@@ -410,6 +456,10 @@ public static class RecordForm
     // The role a language gives the row of what takes part, by whom the row names.
     private static string RoleOf(JsonObject texts, IReadOnlyList<FormField> row) =>
         row.FirstOrDefault(part => part.Name == Who) is { } who && who.Text.Length > 0 ? TextOf((texts["roles"] as JsonObject)?[who.Text]) : string.Empty;
+
+    // The reason a language gives a stop, by what the stop names.
+    private static string NoteOf(JsonObject texts, IReadOnlyList<FormField> row) =>
+        row.FirstOrDefault(part => StopNames.Contains(part.Name) && part.Text.Length > 0) is { } named ? TextOf((texts["notes"] as JsonObject)?[named.Text]) : string.Empty;
 
     private static FormField Translation(string path, string name, string language, string text, FieldKind kind) => new()
     {
