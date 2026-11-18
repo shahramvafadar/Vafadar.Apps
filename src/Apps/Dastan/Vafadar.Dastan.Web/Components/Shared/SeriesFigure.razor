@@ -14,14 +14,14 @@
             {
                 <g>
                     <line class="series-grid @(line.Value == 0 ? "series-zero" : null)" x1="@Em(Left)" y1="@Em(Top + line.At)" x2="@Em(Left + _chart.Width)" y2="@Em(Top + line.At)" />
-                    <text class="series-scale" x="@Em(Left - 0.4)" y="@Em(Top + line.At + 0.25)" text-anchor="end">@QuantityText.Number(line.Value, Visitor)</text>
+                    <text x="@Em(Left - 0.4)" y="@Em(Top + line.At + 0.25)" text-anchor="end"><tspan class="series-scale">@QuantityText.Number(line.Value, Visitor)</tspan></text>
                 </g>
             }
             @foreach (var line in _chart.Years)
             {
                 <g>
                     <line class="series-tick" x1="@Em(Left + line.At)" y1="@Em(Top + _chart.Height)" x2="@Em(Left + line.At)" y2="@Em(Top + _chart.Height + 0.4)" />
-                    <text class="series-scale" x="@Em(Left + line.At)" y="@Em(Top + _chart.Height + 1.3)" text-anchor="middle" direction="@Visitor.Language.Direction">@TimeText.Year(line.Year.Era, line.Year.Number, Visitor, T)</text>
+                    <text x="@Em(Left + line.At)" y="@Em(Top + _chart.Height + 1.3)" text-anchor="middle" direction="@Visitor.Language.Direction"><tspan class="series-scale">@TimeText.Year(line.Year.Era, line.Year.Number, Visitor, T)</tspan></text>
                 </g>
             }
             @for (var index = 1; index < _chart.Marks.Length; index++)

@@ -1612,6 +1612,7 @@ main:has(> .stage) > :not(.stage) {
 /* The drawing of the places of a collection (step 14.1): a grid of degrees and a numbered mark for each place. */
 .places-map {
   flex: none;
+  max-width: none;
   margin: auto;
   font-size: 1rem;
 }
@@ -1645,13 +1646,13 @@ main:has(> .stage) > :not(.stage) {
   stroke-dasharray: 3 2;
 }
 
-.places-map .map-mark text {
+.places-map .map-number {
   fill: var(--accent-text);
   font-size: 0.75em;
   font-weight: 600;
 }
 
-.places-map .map-mark.map-about text {
+.places-map .map-mark.map-about .map-number {
   fill: var(--accent);
 }
 
@@ -1686,8 +1687,11 @@ main:has(> .stage) > :not(.stage) {
   outline-offset: 2px;
 }
 
+/* The drawing keeps its size and the frame scrolls: a drawing that is pressed into the page loses its last
+   number and its years. */
 .series-plot {
   display: block;
+  max-width: none;
   font-size: 1rem;
 }
 
@@ -1805,4 +1809,44 @@ main:has(> .stage) > :not(.stage) {
   display: inline-flex;
   margin: 0;
   margin-inline-start: var(--space-3);
+}
+
+/* A form that asks for more than one thing (steps 14.2 and 14.5): each field with its name above it, the
+   fields and the button on one line where there is room, and one under the other where there is not. */
+.search-row {
+  align-items: flex-end;
+}
+
+.search .field {
+  display: flex;
+  flex: 1 1 9rem;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-inline-size: 0;
+  margin: 0;
+}
+
+.search .field label {
+  margin: 0;
+}
+
+.search .field input,
+.search .field select {
+  flex: none;
+  inline-size: 100%;
+  box-sizing: border-box;
+}
+
+.search select {
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+}
+
+.search-filters {
+  margin-block-start: var(--space-3);
 }

@@ -78,7 +78,7 @@ public sealed record YearLine(YearOfEra Year, double At);
 public sealed record SeriesChart(double Width, double Height, ImmutableArray<SeriesMark> Marks, ImmutableArray<ValueLine> Values, ImmutableArray<YearLine> Years)
 {
     /// <summary>The width of a drawing.</summary>
-    public const double Across = 36;
+    public const double Across = 30;
 
     /// <summary>The height of a drawing.</summary>
     public const double Up = 14;
