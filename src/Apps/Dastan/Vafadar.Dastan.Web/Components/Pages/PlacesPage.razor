@@ -6,7 +6,8 @@
 
 @* The places of a collection (step 14.1): the real places it names, drawn where they lie to each other, and
    listed with what is stated to be there. Only what the visitor may see at the reading position is asked of
-   the projection. The page loads no map from anybody: the drawing is a grid of degrees. *@
+   the projection. The page loads no map from anybody: the drawing is a grid of degrees over the coasts
+   that come with the site (D-057). *@
 @if (_subject is { } subject)
 {
     var name = Visitor.Text(subject.Label).Value;
@@ -108,7 +109,7 @@
 
         _subject = projection.Overview().Subject;
         _places = projection.Places();
-        _map = PlacesMap.Of(_places);
+        _map = PlacesMap.Of(_places, CoastData.OfTheEarth, CoastData.Waters);
         _here = $"{Site.Collection}/places";
         _continues = projection.StoryContinues;
     }

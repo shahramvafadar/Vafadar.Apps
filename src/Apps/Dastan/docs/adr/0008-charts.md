@@ -494,3 +494,32 @@ the page, and a focus on one person. A tree of several hundred people was not lo
 Checked: `TreeShapeTests` (7 cases); `FamilyTreeTests` and the tests of the family page unchanged and
 passing; one case of `FamilyTreePagesTests` for the drawing of a visitor's tree. Looked at in a browser in
 English at 800 px and in Persian at 375 px, dark appearance, with a tree of two people.
+
+## Tenth addendum (2026-11-18): coasts, rivers and lakes under the places (step 17.2, D-057)
+
+The drawing of the places was a grid of degrees: the site loads no map from anybody, and no data that may be
+shipped was decided on. The owner decided on Natural Earth, coasts only and no political borders.
+
+* **The data**: Natural Earth 1:50m – the coastline, the rivers and lake centerlines, the lakes – public
+  domain ("No permission is needed to use Natural Earth"). Taken on 2026-11-18 from the repository of its
+  authors (`nvkelso/natural-earth-vector`, `geojson/ne_50m_coastline.geojson`,
+  `ne_50m_rivers_lake_centerlines.geojson`, `ne_50m_lakes.geojson`) and written as text, a line of the coast
+  per line, positions rounded to a hundredth of a degree: `Data/coasts.txt` (0.8 MB) and `Data/waters.txt`
+  (0.6 MB) in the web project, kept in the program. They are read once, when a page first asks.
+* **Rivers and lakes too**: decided were coasts. The places of the sample lie in Khorasan, far from any sea,
+  and a drawing with coasts alone showed the same empty grid as before. Rivers and lakes are of the same
+  source and say as little about whose a land is; they are drawn thinner. **No border of a country** is in
+  the data or the drawing.
+* **The geometry** is `Coasts.Within` (Core): the lines inside the part of the earth a drawing shows, cut
+  where they leave it, counted across the line of the date the way the drawing counts, and without points the
+  drawing cannot tell apart. `PlacesMap.Of` gives the paths in the measure of the drawing.
+* **The drawing**: a nested SVG whose frame is measured in the font like everything else and whose inside is
+  the measure of the map – a path cannot be measured in the font. Lines only, no land and no sea filled in;
+  `aria-hidden`: the list beside the drawing says what the drawing says.
+* **Nothing is asked of anybody**: the page still loads no script, no image and no map.
+
+Scale: 1:50m is for a country or a region. A drawing of one town shows no coast unless it lies on one, and a
+coast then is a rough line.
+
+Checked: `CoastsTests` (11 cases, readers), one more case of `PlacesPageTests`. Looked at in a browser: the
+southern shore of the Caspian, the Amu Darya and the Helmand under four places (en, 800 px, dark).

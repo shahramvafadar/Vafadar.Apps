@@ -30,9 +30,9 @@ public sealed record MapMark(int Number, PlaceOnMap Place, double X, double Y);
 public sealed record MapLine(decimal Degrees, double At);
 
 /// <summary>
-/// The drawing of the places of a collection: the part of the earth they lie in, with a grid of degrees. The
-/// drawing has no coasts and no borders – the site loads no map from anybody – so it says how the places lie to
-/// each other, and the grid says where on the earth that is.
+/// The drawing of the places of a collection: the part of the earth they lie in, with a grid of degrees and –
+/// where the site was given them – the coasts (D-057). It has no borders, and the site loads no map from
+/// anybody: it says how the places lie to each other, and the grid and the coasts say where on the earth.
 /// </summary>
 /// <param name="Width">The width of the drawing.</param>
 /// <param name="Height">The height of the drawing.</param>
@@ -44,6 +44,15 @@ public sealed record PlacesMap(double Width, double Height, ImmutableArray<MapMa
     /// <summary>The length of the longer side of a drawing.</summary>
     public const double Size = 40;
 
+    /// <summary>Gets the coasts inside the drawing, each the path of a line in the measure of the drawing; none when the site was given no coasts.</summary>
+    public ImmutableArray<string> Coasts { get; init; } = [];
+
+    /// <summary>
+    /// Gets the rivers and the shores of the lakes inside the drawing, like the coasts. Far from the sea they
+    /// are what tells a reader where the places are.
+    /// </summary>
+    public ImmutableArray<string> Waters { get; init; } = [];
+
     // The shorter side is never less than this, so that places on one line still have a drawing around them.
     private const double Least = 16;
 
@@ -51,9 +60,17 @@ public sealed record PlacesMap(double Width, double Height, ImmutableArray<MapMa
     private static readonly decimal[] Steps = [0.01m, 0.02m, 0.05m, 0.1m, 0.2m, 0.5m, 1, 2, 5, 10, 15, 30, 45];
 
     /// <summary>Returns the drawing of the places of a view; <see langword="null"/> when none says where it is.</summary>
-    public static PlacesMap? Of(PlacesView view)
+    public static PlacesMap? Of(PlacesView view) => Of(view, Core.Coasts.None, Core.Coasts.None);
+
+    /// <summary>
+    /// Returns the drawing of the places of a view over the coasts of the earth and over its rivers and lakes;
+    /// <see langword="null"/> when no place says where it is.
+    /// </summary>
+    public static PlacesMap? Of(PlacesView view, Coasts coasts, Coasts waters)
     {
         ArgumentNullException.ThrowIfNull(view);
+        ArgumentNullException.ThrowIfNull(coasts);
+        ArgumentNullException.ThrowIfNull(waters);
         if (view.Mapped.IsEmpty)
         {
             return null;
@@ -95,7 +112,11 @@ public sealed record PlacesMap(double Width, double Height, ImmutableArray<MapMa
             Down(south),
             [.. view.Mapped.Select((place, index) => new MapMark(index + 1, place, Across(longitudes[index]), Down(latitudes[index])))],
             [.. Lines(west, east).Select(degrees => new MapLine(degrees > 180 ? degrees - 360 : degrees, Across((double)degrees)))],
-            [.. Lines(south, north).Reverse().Select(degrees => new MapLine(degrees, Down((double)degrees)))]);
+            [.. Lines(south, north).Reverse().Select(degrees => new MapLine(degrees, Down((double)degrees)))])
+        {
+            Coasts = coasts.Within(west, east, south, north, Across, Down),
+            Waters = waters.Within(west, east, south, north, Across, Down),
+        };
     }
 
     private static (double From, double To) Around(double least, double most)

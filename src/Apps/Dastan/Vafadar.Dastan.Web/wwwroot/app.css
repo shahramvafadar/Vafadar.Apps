@@ -1625,6 +1625,21 @@ main:has(> .stage) > :not(.stage) {
   stroke: var(--border);
 }
 
+/* The coasts under the grid: a line, no land and no sea – the drawing does not say whose a land is. */
+.places-map .map-coasts path {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1.25px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* A river or the shore of a lake: thinner than a coast. */
+.places-map .map-coasts .map-water {
+  stroke-width: 0.75px;
+  opacity: 0.7;
+}
+
 .places-map .map-grid {
   stroke: var(--border);
   stroke-width: 1px;

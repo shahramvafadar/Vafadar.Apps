@@ -241,3 +241,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   than 90 days ago; `--kept-days` names another number.
 - Making an account asks for the tick "I am 16 or older". A site can take new accounts by invitation only
   (for a closed trial). A relationship can be of "another kind".
+- The drawing of the places of a collection shows the coasts, rivers and lakes around them (Natural Earth,
+  public domain, shipped with the site). It shows no borders and still loads nothing from anybody.

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -46,6 +47,26 @@ public sealed class PlacesPageTests(WorldSite world, DemoSite demo) : IClassFixt
         Assert.Contains("map-mark map-about", page.Html, StringComparison.Ordinal);
         Assert.Contains($"href=\"{Story}/entity/region-land\"", page.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("id=\"place-region-land\"", page.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task The_coasts_come_with_the_site_and_lie_under_the_places()
+    {
+        // The coasts of the earth are in the program: thousands of lines, the Caspian Sea among them.
+        var coasts = Vafadar.Dastan.Web.Site.CoastData.OfTheEarth;
+        Assert.True(coasts.Count > 1000);
+        var caspian = coasts.Within(46, 56, 36, 48, longitude => longitude, latitude => latitude);
+        Assert.NotEmpty(caspian);
+        Assert.All(caspian, path => Assert.Matches("^M[-0-9. ]+(L[-0-9. ]+)+$", path));
+
+        // Far from the sea a river tells where the places are: the Amu Darya is among the waters.
+        Assert.True(Vafadar.Dastan.Web.Site.CoastData.Waters.Count > 1000);
+        Assert.NotEmpty(Vafadar.Dastan.Web.Site.CoastData.Waters.Within(58, 70, 33, 40, longitude => longitude, latitude => latitude));
+
+        // What lies under the places says nothing a reader would have to hear.
+        var page = await world.Visitor().Get($"/en/{Story}/places");
+        Assert.Contains("coasts come with the site", page.Main, StringComparison.Ordinal);
+        Assert.All(Regex.Matches(page.Html, "<svg class=\"map-coasts\"[^>]*>").Select(found => found.Value), tag => Assert.Contains("aria-hidden=\"true\"", tag, StringComparison.Ordinal));
     }
 
     [Fact]
