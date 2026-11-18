@@ -445,7 +445,7 @@ names the rest with the decision each waits for.
 | 15.2 | **The rules of private spaces as a library**: who may see a relationship, a tag, an affiliation – the accepted rules of document 06, checked by its acceptance examples, before any account exists | **Done** 2026-11-18 – `Vafadar.Dastan.Core.Personal`: scopes, relationships that need the other side's acceptance and both sides' audiences, invitations, claims that somebody else confirms, being found through an organisation and a year, tags that widen no audience, the check before something is made public; the ten acceptance examples of the document are its tests. Nothing reaches the library: no page, no store, no account ([ADR 0013](adr/0013-private-space-rules.md)) |
 | – | **Accounts of visitors, invitations, private and family spaces, personal photographs, copies for use without a connection** | **Not built – the owner's decisions first**: who may have an account and how an identity is proved (Q-06); what is published about living people (Q-05); shared family trees (Q-07); what happens when consent ends (Q-14); copies without a connection (Q-13); and, with any of them, where data about people is kept, who is responsible for it, and how an invitation is sent – a mail service is a third party |
 
-### What waits for the owner (after phases 12 to 15)
+### What waits for the owner (after phases 12 to 16)
 
 Everything the product documents name and that can be built without a decision of the owner is built. What is
 left waits for one of these – each is a question of the owner's, not of code:
@@ -460,6 +460,12 @@ left waits for one of these – each is a question of the owner's, not of code:
 | The form of a statement that connects reading stages – between two editions, between the stories of one collection | A reading position that is carried between editions, and one for each story (step 14.11) |
 | How long reports of visitors that were looked at are kept | The day to run `reports forget` with: the command exists and deletes nothing by itself (step 14.8) |
 | The owner's part of a public pilot (section 11): the review of the content, the rights of the images, the host, the devices, the people | A public site |
+| The site registered with Google and with Microsoft, and the secrets entered by the owner (D-048) | Signing in with Google or Microsoft (step 16.8) – it cannot be tried once without them |
+| Whether a photograph its owner shows to everybody needs the agreement of the people in it (D-053 read strictly) | A check before "everybody" for photographs, like the one for family trees (steps 16.5, 16.6) |
+| Whether a public family tree may be found by search engines | Taking "stay away" off the public page of a tree (step 16.6) |
+| The kinds of relationship (friend, close friend, family, partner, colleague, classmate – a proposal) | Another list, or kinds the editors can change (step 16.3) |
+| A legal review of accounts and private spaces: terms, age, the law of the place, records of living people who were not asked | A site with accounts for the public |
+| Where the store of the visitors and their photographs are kept, backed up and brought back (a host) | Accounts on a site that is not a development machine: nothing of phase 16 was run in a container |
 
 ## 17. Accounts of visitors and private spaces (phase 16)
 
@@ -479,6 +485,11 @@ sign-in and pages.
 | 16.6 | **Making something public**, with the consent of everybody it names and the check before publication | **Done** 2026-11-18 for family trees – [ADR 0014](adr/0014-visitor-accounts.md), eighth addendum. The owner asks, the check says who stands in the way, every living person the tree names agrees with their own account, the owner makes it public at `/trees/{id}`; agreement taken back hides it at once. **Not looked at in a browser.** **Open for the owner**: a photograph its owner shows to everybody is not held back by the people in it (they can take their tag away, not the picture); whether a public tree may be found by search engines (it asks them to stay away); the legal review |
 | 16.7 | **Withdrawing and closing**: hidden at once; a closed account deleted after 30 days; a copy of one's own data | **Done** 2026-11-18 for what exists – [ADR 0014](adr/0014-visitor-accounts.md), fifth addendum. Closing and deleting came with step 16.1, and everything built since is hidden with a closed account and deleted with it; an audience, a claim, a place in a tree are each taken back by the account and hold at once. New here: the copy of one's own data as a file. Photographs (step 16.5) joined both: the copy names them, a closed account shows none, and the files of a deleted account are deleted. The form was not looked at in a browser |
 | 16.8 | **Signing in with Google or Microsoft** | Planned – needs the site registered with each of them, which the owner does; the secrets are entered by the owner |
+
+What phase 16 built and what it left, in one place (2026-11-18): steps 16.1 to 16.7 are done and merged; step
+16.8 waits for the owner. Each step says in its row what was looked at in a browser and what was not – the
+forms of step 16.6, the claims of step 16.4 and the copy of one's own data were not. Nothing of the phase was
+run in a container, with a screen reader, in the light appearance or with real photographs of a camera.
 
 Not in this phase: sending mail (no mail service is decided), copies for use without a connection (Q-13 is
 open), children and guardians (PRIV-003 needs a rule of the owner's).
