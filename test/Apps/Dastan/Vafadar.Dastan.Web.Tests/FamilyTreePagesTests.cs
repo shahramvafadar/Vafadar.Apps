@@ -439,4 +439,126 @@ public sealed class FamilyTreePagesTests : IDisposable
         Assert.Contains("<svg class=\"graph tree\"", fa.Html, StringComparison.Ordinal);
         Assert.Contains("نمودار درخت", fa.Main, StringComparison.Ordinal);
     }
+
+    [Fact]
+    public async Task A_tree_is_made_public_with_the_agreement_of_who_it_names_and_hidden_when_that_is_taken_back()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var dara = await Signed("Dara");
+        var saraId = await Friends(mina, sara, "Sara");
+        var daraId = await Friends(mina, dara, "Dara");
+        var page = await Tree(mina);
+        var open = $"/en/trees/{Id(page)}";
+        await Send(mina, page, "person-add", ("name", "Zal"), ("born", "1870"), ("died", "1950"));
+        var record = await Person(mina, page, "Sara Rad");
+        await Send(mina, page, "member", ("account", saraId), ("role", "viewer"));
+        await Send(mina, page, "member", ("account", daraId), ("role", "viewer"));
+
+        // Not asked for: nobody sees it, and nobody is asked anything.
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get(open)).Status);
+        Assert.Contains("It needs the agreement of everybody living it names.", (await mina.Get(page)).Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Making this tree public", (await sara.Get(page)).Main, StringComparison.Ordinal);
+        Assert.Equal("/refused", (await Send(mina, page, "publication", ("act", "publish"))).Response.Headers.Location?.OriginalString);
+
+        var asked = await Send(mina, page, "publication", ("act", "ask"));
+
+        // Zal died and stands in nobody's way; Sara is living and is no account yet.
+        Assert.Equal($"{page}?said=publication-asked#publication", asked.Response.Headers.Location?.OriginalString);
+        var check = await mina.Get(page);
+        Assert.Matches("<bdi>Sara Rad</bdi></a>\\s*<span class=\"meta\">– is living and has no account here", check.Main);
+        Assert.DoesNotContain("<bdi>Zal</bdi></a>", check.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("value=\"publish\"", check.Html, StringComparison.Ordinal);
+        Assert.Equal("/refused", (await Send(mina, page, "publication", ("act", "publish"))).Response.Headers.Location?.OriginalString);
+
+        // She says the record is her; she is asked, and nobody else is.
+        await Send(sara, page, "claim", ("person", record));
+        var claim = Regex.Match((await mina.Get(page)).Html, "name=\"claim\" value=\"(\\d+)\"").Groups[1].Value;
+        await Send(mina, page, "claim-review", ("claim", claim), ("answer", "confirm"));
+        Assert.Matches("<bdi>Sara Rad</bdi></a>\\s*<span class=\"meta\">– has been asked and has not agreed", (await mina.Get(page)).Main);
+        var question = await sara.Get(page);
+        Assert.Contains("Do you agree to be named in it for everybody?", question.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("This tree is to be public", (await dara.Get(page)).Main, StringComparison.Ordinal);
+        Assert.Equal("/refused", (await Send(dara, page, "consent", ("answer", "agree"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, page, "publication", ("act", "publish"))).Response.Headers.Location?.OriginalString);
+
+        Assert.Equal($"{page}?said=consent-given#consent", (await Send(sara, page, "consent", ("answer", "agree"))).Response.Headers.Location?.OriginalString);
+
+        // Everybody agreed – and it is not public until the owner makes it so.
+        var ready = await mina.Get(page);
+        Assert.Contains("Nobody stands in the way.", ready.Main, StringComparison.Ordinal);
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get(open)).Status);
+        Assert.Equal($"{page}?said=published#publication", (await Send(mina, page, "publication", ("act", "publish"))).Response.Headers.Location?.OriginalString);
+
+        // Everybody sees the people and how they belong together – and nothing about accounts or changes.
+        var shown = await _site.Visitor().Get(open);
+        Assert.Equal(HttpStatusCode.OK, shown.Status);
+        Assert.Contains("Everybody living it names has agreed", shown.Main, StringComparison.Ordinal);
+        Assert.Contains("<svg class=\"graph tree\"", shown.Html, StringComparison.Ordinal);
+        Assert.Matches("Zal</strong>\\s*<span class=\"meta\">1870–1950</span>", shown.Main);
+        Assert.Contains("Sara Rad", shown.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Mina", shown.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("This is the account", shown.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Every change", shown.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("<form", shown.Main, StringComparison.Ordinal);
+        Assert.Contains("<meta name=\"robots\" content=\"noindex, nofollow\"", shown.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("<script", shown.Own, StringComparison.Ordinal);
+        Assert.Contains($"href=\"trees/{Id(page)}\"", (await mina.Get(page)).Html, StringComparison.Ordinal);
+        Assert.Contains("نام برده شده به این نام‌بردن رضایت داده است", (await _site.Visitor().Get(open.Replace("/en/", "/fa/", StringComparison.Ordinal))).Main, StringComparison.Ordinal);
+
+        // She takes her agreement back: hidden at once, and the owner is told why.
+        Assert.Equal($"{page}?said=consent-withdrawn#consent", (await Send(sara, page, "consent", ("answer", "take-back"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get(open)).Status);
+        Assert.Contains("it is hidden now: somebody it names does not agree", (await mina.Get(page)).Main, StringComparison.Ordinal);
+
+        // Agreed again it is shown again; taken back by the owner it is gone and what was agreed is forgotten.
+        await Send(sara, page, "consent", ("answer", "agree"));
+        Assert.Equal(HttpStatusCode.OK, (await _site.Visitor().Get(open)).Status);
+        Assert.Equal($"{page}?said=unpublished#publication", (await Send(mina, page, "publication", ("act", "take-back"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get(open)).Status);
+        Assert.DoesNotContain("This tree is to be public", (await sara.Get(page)).Main, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_tree_of_people_who_all_died_is_made_public_by_its_owner_alone()
+    {
+        var mina = await Signed("Mina");
+        var page = await Tree(mina, "Long ago");
+        await Send(mina, page, "person-add", ("name", "Sam"), ("born", "1800"), ("died", "1870"));
+        await Send(mina, page, "person-add", ("name", "Simin"), ("born", ""), ("died", ""), ("deceased", "yes"));
+
+        await Send(mina, page, "publication", ("act", "ask"));
+        Assert.Contains("Nobody stands in the way.", (await mina.Get(page)).Main, StringComparison.Ordinal);
+        await Send(mina, page, "publication", ("act", "publish"));
+
+        var shown = await _site.Visitor().Get($"/en/trees/{Id(page)}");
+        Assert.Equal(HttpStatusCode.OK, shown.Status);
+        Assert.Contains("Sam", shown.Main, StringComparison.Ordinal);
+        Assert.Matches("Simin</strong>\\s*<span class=\"meta\">deceased</span>", shown.Main);
+
+        // Somebody living added afterwards hides it until that is settled.
+        await Send(mina, page, "person-add", ("name", "Somebody living"), ("born", ""), ("died", ""));
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get($"/en/trees/{Id(page)}")).Status);
+    }
+
+    [Theory]
+    [InlineData("0123456789abcdef0123456789abcdef")]
+    [InlineData("not-a-tree")]
+    public async Task The_address_of_a_tree_that_is_not_public_or_does_not_exist_is_not_found(string id)
+    {
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get($"/en/trees/{id}")).Status);
+
+        using var site = new DemoSite();
+        Assert.Equal(HttpStatusCode.NotFound, (await site.Visitor().Get($"/en/trees/{id}")).Status);
+    }
+
+    [Theory]
+    [InlineData("publication")]
+    [InlineData("consent")]
+    public async Task Making_public_is_refused_to_who_is_not_signed_in(string form)
+    {
+        var answer = await _site.Visitor().Post($"{Forms}/{form}", Account, ("tree", "x"), ("act", "ask"), ("answer", "agree"), ("returnUrl", Trees));
+
+        Assert.Equal("/refused", answer.Response.Headers.Location?.OriginalString);
+    }
 }

@@ -193,3 +193,12 @@ given only at an address of the site that asks the audience each time; a photogr
 and its page asks search engines to stay away. Removing a photograph deletes its file; the files of a deleted
 account are deleted within a day. Faces are not recognised, pictures are not analysed, and nothing is sent to
 anybody.
+
+Since step 16.6 a family tree can be **public**: shown to everybody at an address of its own, with the names
+of the people in it, their years and how they belong together. The store keeps when the owner asked and made
+it public, and for each account the tree names that it agreed and when. A tree is public only while every
+living person it names agrees with their own account; a living person without an account keeps it private.
+Agreement is taken back by the person at any time and hides the tree with the next request. People who have
+died are named without anybody's agreement. The public page asks search engines to stay away; whether that
+changes, and whether naming people who have died needs a rule (relatives, recent deaths), is for the owner's
+legal review.

@@ -184,6 +184,25 @@ public sealed class StoredTree
 
     /// <summary>Gets or sets when it was made.</summary>
     public DateTime CreatedAt { get; set; }
+
+    /// <summary>Gets or sets when its owner asked to make it public (D-053); nothing when that was not asked or was taken back.</summary>
+    public DateTime? PublicationAskedAt { get; set; }
+
+    /// <summary>Gets or sets when its owner made it public. It is shown to everybody only while everybody it names agrees.</summary>
+    public DateTime? PublishedAt { get; set; }
+}
+
+/// <summary>That an account agreed to be named in a tree that is public.</summary>
+public sealed class StoredPublicationConsent
+{
+    /// <summary>Gets or sets the tree.</summary>
+    public required string Tree { get; set; }
+
+    /// <summary>Gets or sets the account that agreed.</summary>
+    public required string Account { get; set; }
+
+    /// <summary>Gets or sets when it agreed.</summary>
+    public DateTime At { get; set; }
 }
 
 /// <summary>An account that may see or change a tree.</summary>
@@ -382,6 +401,9 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
     /// <summary>Gets the records of people.</summary>
     public DbSet<StoredPerson> Persons => Set<StoredPerson>();
 
+    /// <summary>Gets who agreed to be named in a tree that is public.</summary>
+    public DbSet<StoredPublicationConsent> PublicationConsents => Set<StoredPublicationConsent>();
+
     /// <summary>Gets the claims that wait.</summary>
     public DbSet<StoredClaim> Claims => Set<StoredClaim>();
 
@@ -510,6 +532,15 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             // And it names nobody when the account it was is gone.
             person.Property(item => item.Account).HasMaxLength(40);
             person.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        modelBuilder.Entity<StoredPublicationConsent>(consent =>
+        {
+            consent.HasKey(item => new { item.Tree, item.Account });
+            consent.Property(item => item.Tree).HasMaxLength(40);
+            consent.Property(item => item.Account).HasMaxLength(40);
+            consent.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);
+            consent.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredClaim>(claim =>

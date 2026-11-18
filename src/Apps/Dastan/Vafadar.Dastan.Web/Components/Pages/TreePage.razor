@@ -31,6 +31,30 @@
         <p class="note" role="status">@T[$"Trees_Said_{_said}"]</p>
     }
 
+    @if (_tree.Publication.AskedOfMe)
+    {
+        @* Making public needs the consent of everybody living the tree names (D-053): asked here, of the
+           account a record is, and taken back here – which hides the tree at once (D-055). *@
+        <section id="consent" aria-labelledby="consent-title">
+            <h2 id="consent-title">@T["Tree_Consent_Title"]</h2>
+            <p>@T[_tree.Publication.Consented ? "Tree_Consent_Given" : "Tree_Consent_Asked"]</p>
+            <p class="note">@T["Tree_Consent_Note"]</p>
+            <form method="post" action="@($"{TreeEndpoints.Root}/consent")" class="save">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                @if (_tree.Publication.Consented)
+                {
+                    <button type="submit" name="answer" value="take-back">@T["Tree_Consent_TakeBack"]</button>
+                }
+                else
+                {
+                    <button type="submit" name="answer" value="agree">@T["Tree_Consent_Agree"]</button>
+                }
+            </form>
+        </section>
+    }
+
     @if (_placement is not null)
     {
         @* The drawing of the tree: the same layout and the same drawing as the family of a collection. *@
@@ -274,6 +298,58 @@
         </section>
     }
 
+    @if (owns)
+    {
+        var publication = _tree.Publication;
+        <section id="publication" aria-labelledby="publication-title">
+            <h2 id="publication-title">@T["Tree_Publication_Title"]</h2>
+            <p>@T["Tree_Publication_Lead"]</p>
+            @if (publication.Asked)
+            {
+                @if (publication.IsPublic)
+                {
+                    <p role="status">@T["Tree_Publication_IsPublic"] <a href="@($"trees/{_tree.Tree.Id}")">@T["Tree_Publication_Link"]</a></p>
+                }
+                else if (publication.Published)
+                {
+                    <p role="status">@T["Tree_Publication_Hidden"]</p>
+                }
+
+                @if (!publication.Blockers.IsEmpty)
+                {
+                    <p>@T["Tree_Publication_Blockers"]</p>
+                    <ul class="statements" role="list">
+                        @foreach (var blocker in publication.Blockers)
+                        {
+                            <li><a href="@($"account/trees/{_tree.Tree.Id}#person-{blocker.Person}")"><bdi>@blocker.Name</bdi></a> <span class="meta">– @T[$"Tree_Publication_{blocker.Why}"]</span></li>
+                        }
+                    </ul>
+                }
+                else if (!publication.Published)
+                {
+                    <p>@T["Tree_Publication_Ready"]</p>
+                }
+            }
+            <form method="post" action="@($"{TreeEndpoints.Root}/publication")" class="save">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                @if (!publication.Asked)
+                {
+                    <button type="submit" name="act" value="ask">@T["Tree_Publication_Ask"]</button>
+                }
+                else
+                {
+                    @if (!publication.Published && publication.Blockers.IsEmpty)
+                    {
+                        <button type="submit" name="act" value="publish">@T["Tree_Publication_Publish"]</button>
+                    }
+                    <button type="submit" name="act" value="take-back">@T["Tree_Publication_TakeBack"]</button>
+                }
+            </form>
+        </section>
+    }
+
     <section id="history" aria-labelledby="history-title">
         <h2 id="history-title">@T["Tree_History_Title"]</h2>
         <ul class="statements" role="list">
@@ -321,7 +397,7 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["made", "renamed", "person-added", "person-changed", "person-removed", "linked", "unlinked", "member-set", "claimed", "claim-confirmed", "claim-refused", "unclaimed"];
+    private static readonly string[] Sayings = ["made", "renamed", "person-added", "person-changed", "person-removed", "linked", "unlinked", "member-set", "claimed", "claim-confirmed", "claim-refused", "unclaimed", "publication-asked", "published", "unpublished", "consent-given", "consent-withdrawn"];
     private static readonly string[] Forms = ["people", "person-add", "links", "rename"];
     private static readonly string[] Known = ["tree-name", "person", "link-kind", "link-unknown", "link-same", "link-exists", "link-loop", "claim-taken", "claim-own", "claim-nobody"];
 
@@ -370,22 +446,12 @@
             return;
         }
 
-        if (!_tree.People.IsEmpty)
-        {
-            // Generations follow from the links: parents above their children, partners in one row.
-            var parentage = _tree.Links.Where(link => link.Kind == "parent").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
-            var partnerships = _tree.Links.Where(link => link.Kind == "partner").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
-            var rows = TreeShape.Generations(_tree.People.Select(person => person.Id), parentage, partnerships);
-            _placement = TreeShapeLayout.Of(new TreeShape([.. _tree.People.Select(person => new TreeShapeMember(person.Id, rows[person.Id], person.Name))], parentage, partnerships));
-        }
-
+        _placement = TreeEndpoints.Placement(_tree);
         _here = $"/{Visitor.Language.Tag}{TreeEndpoints.Page}/{_tree.Tree.Id}";
         _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
         _form = Forms.Contains(Form, StringComparer.Ordinal) ? Form : null;
         _problem = _form is not null && Known.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
     }
-
-    private string Number(int value) => Visitor.Number(value);
 
     private string Day(DateTime at)
     {
@@ -393,16 +459,7 @@
         return Visitor.Language.Tag == "fa" ? Vafadar.Core.Text.Digits.ToPersian(written) : written;
     }
 
-    // "1300–1380", "born 1300", "died 1380", "died" – whatever is known, and nothing when nothing is.
-    private string Years(TreePerson person) => (person.Born, person.Died, person.Deceased) switch
-    {
-        ({ } born, { } died, _) => $"{Number(born)}–{Number(died)}",
-        ({ } born, null, false) => string.Format(CultureInfo.CurrentCulture, T["Tree_Born"], Number(born)),
-        ({ } born, null, true) => $"{string.Format(CultureInfo.CurrentCulture, T["Tree_Born"], Number(born))}{T["Tree_And"]}{T["Tree_Deceased"]}",
-        (null, { } died, _) => string.Format(CultureInfo.CurrentCulture, T["Tree_Died"], Number(died)),
-        (null, null, true) => T["Tree_Deceased"],
-        _ => string.Empty,
-    };
+    private string Years(TreePerson person) => TreeEndpoints.Years(person, T, Visitor);
 
     private string Named(System.Collections.Immutable.ImmutableArray<string> people) => string.Join(T["Tree_And"], people.Select(person => _tree!.Person(person).Name));
 

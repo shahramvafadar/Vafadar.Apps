@@ -2313,4 +2313,91 @@
   <data name="Photos_Problem_photo-file" xml:space="preserve">
     <value>این فایل تصویر PNG، JPEG یا WebP نیست، یا به این شکل خوانده نمی‌شود.</value>
   </data>
+  <data name="PublicTree_Lead" xml:space="preserve">
+    <value>شجره‌نامه‌ای که کسی آن را عمومی کرده است. هر فرد زنده‌ای که در آن نام برده شده به این نام‌بردن رضایت داده است.</value>
+  </data>
+  <data name="Tree_Publication_Title" xml:space="preserve">
+    <value>عمومی‌کردن این شجره‌نامه</value>
+  </data>
+  <data name="Tree_Publication_Lead" xml:space="preserve">
+    <value>شجره‌نامهٔ عمومی را همه می‌بینند، با حساب یا بی‌حساب: افراد، سال‌ها و نسبت‌هایشان – نه اینکه با چه کسی در میان گذاشته شده و نه تاریخچه‌اش. برای این کار رضایت هر فرد زنده‌ای که در آن نام برده شده لازم است. کسی که حساب ندارد نمی‌تواند رضایت بدهد؛ پس شجره‌نامه‌ای که فرد زندهٔ بی‌حسابی را نام می‌برد نمی‌تواند عمومی شود.</value>
+  </data>
+  <data name="Tree_Publication_Ask" xml:space="preserve">
+    <value>آماده‌سازی برای عمومی‌شدن</value>
+  </data>
+  <data name="Tree_Publication_Publish" xml:space="preserve">
+    <value>اکنون عمومی کن</value>
+  </data>
+  <data name="Tree_Publication_TakeBack" xml:space="preserve">
+    <value>پس گرفتن: عمومی نباشد</value>
+  </data>
+  <data name="Tree_Publication_Blockers" xml:space="preserve">
+    <value>این افراد مانع‌اند:</value>
+  </data>
+  <data name="Tree_Publication_no-account" xml:space="preserve">
+    <value>زنده است و این‌جا حسابی ندارد؛ پس کسی نمی‌تواند به جای او رضایت بدهد</value>
+  </data>
+  <data name="Tree_Publication_no-consent" xml:space="preserve">
+    <value>از او پرسیده شده و هنوز رضایت نداده است</value>
+  </data>
+  <data name="Tree_Publication_Ready" xml:space="preserve">
+    <value>مانعی نیست. تا شما عمومی‌اش نکنید، شجره‌نامه عمومی نیست.</value>
+  </data>
+  <data name="Tree_Publication_IsPublic" xml:space="preserve">
+    <value>این شجره‌نامه عمومی است.</value>
+  </data>
+  <data name="Tree_Publication_Link" xml:space="preserve">
+    <value>دیدن آن‌گونه که همه می‌بینند</value>
+  </data>
+  <data name="Tree_Publication_Hidden" xml:space="preserve">
+    <value>شما این شجره‌نامه را عمومی کرده‌اید، ولی اکنون پنهان است: یکی از افرادی که در آن نام برده شده رضایت ندارد.</value>
+  </data>
+  <data name="Tree_Consent_Title" xml:space="preserve">
+    <value>قرار است این شجره‌نامه عمومی شود</value>
+  </data>
+  <data name="Tree_Consent_Asked" xml:space="preserve">
+    <value>مالک این شجره‌نامه می‌خواهد همه بتوانند آن را ببینند. یکی از رکوردهای آن شمایید. آیا رضایت می‌دهید که نام شما در آن برای همه دیده شود؟</value>
+  </data>
+  <data name="Tree_Consent_Given" xml:space="preserve">
+    <value>رضایت داده‌اید که نام شما در این شجره‌نامه برای همه دیده شود.</value>
+  </data>
+  <data name="Tree_Consent_Note" xml:space="preserve">
+    <value>بدون رضایت شما شجره‌نامه عمومی نمی‌شود. هر زمان می‌توانید رضایت را پس بگیرید؛ آن‌گاه شجره‌نامه بی‌درنگ از دید دیگران پنهان می‌شود. اگر رکورد شما تغییر کند، دوباره از شما پرسیده می‌شود.</value>
+  </data>
+  <data name="Tree_Consent_Agree" xml:space="preserve">
+    <value>رضایت می‌دهم</value>
+  </data>
+  <data name="Tree_Consent_TakeBack" xml:space="preserve">
+    <value>رضایتم را پس می‌گیرم</value>
+  </data>
+  <data name="Trees_Said_publication-asked" xml:space="preserve">
+    <value>اکنون از حساب‌هایی که در این شجره‌نامه نام برده شده‌اند پرسیده می‌شود. پایین می‌بینید چه کسی مانع است.</value>
+  </data>
+  <data name="Trees_Said_published" xml:space="preserve">
+    <value>شجره‌نامه عمومی شد.</value>
+  </data>
+  <data name="Trees_Said_unpublished" xml:space="preserve">
+    <value>پس گرفته شد. شجره‌نامه را فقط کسانی می‌بینند که با آن‌ها در میان گذاشته‌اید، و رضایت‌های داده‌شده فراموش شد.</value>
+  </data>
+  <data name="Trees_Said_consent-given" xml:space="preserve">
+    <value>رضایت دادید.</value>
+  </data>
+  <data name="Trees_Said_consent-withdrawn" xml:space="preserve">
+    <value>رضایت خود را پس گرفتید. شجره‌نامه از دید دیگران پنهان شد.</value>
+  </data>
+  <data name="Tree_Change_publication-asked" xml:space="preserve">
+    <value>درخواست عمومی‌شدن</value>
+  </data>
+  <data name="Tree_Change_published" xml:space="preserve">
+    <value>عمومی شد</value>
+  </data>
+  <data name="Tree_Change_unpublished" xml:space="preserve">
+    <value>از عموم پس گرفته شد</value>
+  </data>
+  <data name="Tree_Change_consent-given" xml:space="preserve">
+    <value>رضایت به نام‌بردن</value>
+  </data>
+  <data name="Tree_Change_consent-withdrawn" xml:space="preserve">
+    <value>پس گرفتن رضایت</value>
+  </data>
 </root>
