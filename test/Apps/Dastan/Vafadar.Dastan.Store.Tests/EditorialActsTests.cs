@@ -191,7 +191,7 @@ public sealed class EditorialActsTests : IDisposable
         Assert.Contains(unknown.Problems, problem => problem.StartsWith("character-rostam: type has the unknown value \"Hero\"", StringComparison.Ordinal));
         Assert.False(givesAway.Done);
         Assert.Contains(givesAway.Problems, problem => problem.StartsWith("relation-04:", StringComparison.Ordinal));
-        Assert.Equal(["people: a collection has no such group of records; it has sources, entities, relations, events, media."], noGroup.Problems);
+        Assert.Equal(["people: a collection has no such group of records; it has sources, entities, relations, events, media, threads."], noGroup.Problems);
         Assert.Equal(["a record names itself: it has an id."], noName.Problems);
         Assert.Equal(before, store.Export(Collection)!.Json);
         Assert.Single(store.History(Collection, "entities", "character-rostam"));

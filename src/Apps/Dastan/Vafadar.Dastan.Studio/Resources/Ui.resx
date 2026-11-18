@@ -729,4 +729,7 @@
   <data name="Reports_Off" xml:space="preserve">
     <value>The tool was started without the folder of the reports.</value>
   </data>
+  <data name="Group_threads" xml:space="preserve">
+    <value>Threads</value>
+  </data>
 </root>

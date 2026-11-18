@@ -105,7 +105,8 @@ public sealed class EditorialTextsTests : IDisposable
     {
         var translated = ContentVocabulary.Translated.ToDictionary(texts => texts.Group);
 
-        Assert.Equal(["dated", "entities", "events", "media", "relations"], translated.Keys.Order());
+        Assert.Equal(["dated", "entities", "events", "media", "relations", "threads"], translated.Keys.Order());
+        Assert.True(translated["threads"].Notes);
         Assert.Equal(["label", "summary"], translated["events"].Fields);
         Assert.True(translated["events"].Roles);
         Assert.Equal(["label", "caption", "altText"], translated["media"].Fields);

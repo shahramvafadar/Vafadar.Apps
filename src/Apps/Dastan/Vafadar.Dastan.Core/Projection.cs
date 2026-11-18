@@ -116,7 +116,46 @@ public sealed class Projection
                 ? [(Entity: relation.From, Relation: relation)]
                 : new[] { (Entity: relation.From, Relation: relation), (Entity: relation.To, Relation: relation) })
             .ToLookup(entry => entry.Entity, entry => entry.Relation);
+
+        // A thread is followed as far as the visitor may see its stops: it ends before the first stop that is not
+        // reached, or that is an item the audience is not shown. A thread whose first stop cannot be seen is none.
+        Threads =
+        [
+            .. catalogue.Threads
+                .Where(thread => thread.Level.IsWithin(boundary))
+                .Select(thread =>
+                {
+                    var steps = thread.Stops
+                        .Select((stop, index) => new ThreadStep(
+                            index + 1,
+                            stop,
+                            stop.Entity is { } entity ? _entities.GetValueOrDefault(entity) : null,
+                            stop.Event is { } storyEvent ? _steps.GetValueOrDefault(storyEvent) : null,
+                            stop.Media is { } item ? _media.GetValueOrDefault(item) : null))
+                        .TakeWhile(step => step.Entity is not null || step.Step is not null || step.Media is not null)
+                        .ToImmutableArray();
+                    return new ThreadView(thread, steps, steps.Length < thread.Stops.Length);
+                })
+                .Where(view => !view.Steps.IsEmpty),
+        ];
     }
+
+    /// <summary>Gets the threads the editors laid, each as far as the visitor may follow it.</summary>
+    public ImmutableArray<ThreadView> Threads { get; }
+
+    /// <summary>Returns a thread as far as the visitor may follow it, or <see langword="null"/>.</summary>
+    public ThreadView? Thread(string id) => Threads.FirstOrDefault(view => view.Thread.Id == id);
+
+    /// <summary>
+    /// Returns where the threads lead on from an entity: each thread that has a stop at it, with the stop that
+    /// follows when the visitor may see it.
+    /// </summary>
+    public ImmutableArray<ThreadOnward> Onward(EntityId entity) =>
+    [
+        .. Threads.SelectMany(view => view.Steps
+            .Where(step => step.Stop.Entity == entity)
+            .Select(step => new ThreadOnward(view.Thread, step, step.Number < view.Steps.Length ? view.Steps[step.Number] : null))),
+    ];
 
     /// <summary>Gets the stage the visitor has read to.</summary>
     public ReadingLevel Boundary { get; }

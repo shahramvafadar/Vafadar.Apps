@@ -136,6 +136,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     private readonly List<Relation> _relations = [];
     private readonly List<StoryEvent> _events = [];
     private readonly List<MediaItem> _media = [];
+    private readonly List<DiscoveryThread> _threads = [];
     private CatalogueInfo? _info;
     private ImmutableArray<RevisionEntry> _history = [];
     private bool _published;
@@ -240,6 +241,12 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         foreach (var record in sample.Children("media"))
         {
             Add(_media, ReadMedia(record));
+        }
+
+        // Threads are optional: a collection has them when its editors laid some.
+        foreach (var record in sample.Children("threads", required: false))
+        {
+            Add(_threads, ReadThread(record));
         }
 
         sample.Finish();
@@ -357,7 +364,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     }
 
     /// <summary>Builds the collection from the records. Only called when reading found no problem.</summary>
-    public Catalogue Build() => new(_info!, _entities, _relations, _events, _sources, _media);
+    public Catalogue Build() => new(_info!, _entities, _relations, _events, _sources, _media, _threads);
 
     private static FrozenDictionary<string, T> Names<T>(params (string Name, T Value)[] names) =>
         names.ToFrozenDictionary(name => name.Name, name => name.Value, StringComparer.Ordinal);
@@ -1571,6 +1578,60 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     }
 
     /// <summary>Gives a text of the sample its translations.</summary>
+    // A thread: its name, what it is about, and its stops – each one thing, with the reason it follows. The
+    // note of a stop is translated under the identifier of what the stop names.
+    private DiscoveryThread? ReadThread(JsonRecord record)
+    {
+        var id = Named(record);
+        var label = record.Text("label");
+        var summary = record.Text("summary");
+        var level = Level(record);
+        var stops = ImmutableArray.CreateBuilder<ThreadStop>();
+        var complete = true;
+        foreach (var (stop, index) in record.Children("stops").Select((stop, index) => (stop, index)))
+        {
+            stop.Name = $"{record.Name}, stop {index + 1}";
+            var entity = stop.Identifier("entityId", required: false);
+            var storyEvent = stop.Identifier("eventId", required: false);
+            var item = stop.Identifier("mediaId", required: false);
+            var note = stop.Text("note");
+            stop.Finish();
+            if (new[] { entity, storyEvent, item }.Count(target => target is not null) != 1)
+            {
+                stop.Problem("a stop names one thing: entityId, eventId or mediaId.");
+                complete = false;
+            }
+            else if (note is null || id is null)
+            {
+                complete = false;
+            }
+            else
+            {
+                stops.Add(new ThreadStop(
+                    entity is null ? null : new EntityId(entity),
+                    storyEvent is null ? null : new EventId(storyEvent),
+                    item is null ? null : new MediaId(item),
+                    Localized(note, $"threads/{id}/notes/{entity ?? storyEvent ?? item}")));
+            }
+        }
+
+        record.Notes("note");
+        record.Finish();
+        if (id is null || label is null || summary is null || level is null || !complete)
+        {
+            return null;
+        }
+
+        return new DiscoveryThread
+        {
+            Id = id,
+            Label = Localized(label, $"threads/{id}/label"),
+            Summary = Localized(summary, $"threads/{id}/summary"),
+            Level = level.Value,
+            Stops = stops.ToImmutable(),
+        };
+    }
+
     private LocalizedText Localized(string text, string key)
     {
         var localized = LocalizedText.Of(_language, text);
@@ -1665,6 +1726,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         new("events", ["label", "summary"], Roles: true),
         new("media", ["label", "caption", "altText"]),
         new("dated", ["label", "summary"]),
+        new("threads", ["label", "summary"], Notes: true),
     ];
 
     private static void ReadTranslated(JsonRecord record, Translation translation, ContentTexts translated)
@@ -1677,6 +1739,14 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 if (texts.Text(field, required: false) is { } text)
                 {
                     translation.Add($"{group}/{id}/{field}", text);
+                }
+            }
+
+            if (translated.Notes)
+            {
+                foreach (var (stop, note) in texts.NamedTexts("notes", required: false))
+                {
+                    translation.Add($"{group}/{id}/notes/{stop}", note);
                 }
             }
 

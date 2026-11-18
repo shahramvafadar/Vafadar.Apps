@@ -53,7 +53,7 @@ public sealed class EditorialStoreTests : IDisposable
 
         Assert.Empty(result.Problems);
         Assert.Equal(Collection, result.CollectionId);
-        var records = EditorialStore.Groups.Sum(group => original[group]!.AsArray().Count);
+        var records = EditorialStore.Groups.Sum(group => (original[group] as JsonArray)?.Count ?? 0);
         Assert.Equal((records + 1, 0, 0), (result.Added, result.Changed, result.Removed));
         Assert.Equal([Collection], store.Collections);
 

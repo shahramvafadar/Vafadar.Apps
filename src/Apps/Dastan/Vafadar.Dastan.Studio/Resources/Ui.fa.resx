@@ -729,4 +729,7 @@
   <data name="Reports_Off" xml:space="preserve">
     <value>ابزار بدون پوشهٔ گزارش‌ها راه‌اندازی شده است.</value>
   </data>
+  <data name="Group_threads" xml:space="preserve">
+    <value>رشته‌ها</value>
+  </data>
 </root>

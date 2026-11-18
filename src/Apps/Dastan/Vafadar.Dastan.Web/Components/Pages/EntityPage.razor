@@ -105,6 +105,33 @@
         }
     </section>
 
+    @if (!_onward.IsEmpty)
+    {
+        @* Where to go on from here, each with its reason (step 14.9, R-PUB-06): the threads that pass this name. *@
+        <section aria-labelledby="onward">
+            <h2 id="onward">@T["Thread_Onward"]</h2>
+            <ul class="statements" role="list">
+                @foreach (var onward in _onward)
+                {
+                    <li>
+                        @if (onward.Next is { } next)
+                        {
+                            <a href="@ThreadText.Address(Site, Visitor, next)"><Loc Text="ThreadText.Label(next)" /></a>
+                            <text> – </text><Loc Text="next.Stop.Note" />
+                        }
+                        else
+                        {
+                            <span>@T["Thread_LastReached"]</span>
+                        }
+                        <span class="meta">
+                            (<a href="@($"{Site.Collection}/thread/{onward.Thread.Id}#stop-{onward.Here.Number}")"><Loc Text="onward.Thread.Label" /></a>)
+                        </span>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
     @if (_hasMedia)
     {
         <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/gallery")">@T["Gallery_Title"]</a></p>
@@ -162,6 +189,7 @@
     private EntityOverview? _entity;
     private bool _hasFamily;
     private bool _hasMedia;
+    private System.Collections.Immutable.ImmutableArray<ThreadOnward> _onward = [];
     private string _here = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
@@ -186,5 +214,6 @@
         _here = $"{Site.Collection}/entity/{_entity.Entity.Id}";
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
         _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.IsEmpty;
+        _onward = Visitor.Projection.Onward(_entity.Entity.Id);
     }
 }

@@ -1,0 +1,70 @@
+@page "/{Collection}/thread/{Id}"
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* A thread the editors laid through the collection (step 14.9, R-EXP-04): its stops in order, each with the
+   reason it follows. It is shown as far as the visitor has read; a stop that is not reached is neither named
+   nor counted. *@
+@if (_thread is { } thread)
+{
+    var name = Visitor.Text(thread.Thread.Label).Value;
+    <PageTitle>@name – @T["Site_Name"]</PageTitle>
+    <PageDescription Title="@name" Text="@Visitor.Text(thread.Thread.Summary).Value" />
+
+    <header class="page-header">
+        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _collection)</a> – @T["Thread_Kind"]</p>
+        <h1><Loc Text="thread.Thread.Label" /></h1>
+        <p class="lead"><Loc Text="thread.Thread.Summary" /></p>
+    </header>
+
+    <p class="note">@T["Thread_Lead"]</p>
+
+    <ol class="steps thread" role="list">
+        @foreach (var step in thread.Steps)
+        {
+            <li id="@($"stop-{step.Number}")">
+                <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Thread_Stop"], Visitor.Number(step.Number)) – @T[ThreadText.Kind(step)]</p>
+                <h2><a href="@ThreadText.Address(Site, Visitor, step)"><Loc Text="ThreadText.Label(step)" /></a></h2>
+                <p><Loc Text="step.Stop.Note" /></p>
+            </li>
+        }
+    </ol>
+
+    @if (thread.Continues)
+    {
+        @* That it goes on is said; how far and where is not. *@
+        <p class="note" role="status">@T["Thread_Continues"] <a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a></p>
+    }
+    else
+    {
+        <p class="note">@T["Thread_Ends"]</p>
+    }
+}
+
+@code {
+    private ThreadView? _thread;
+    private string _collection = string.Empty;
+
+    /// <summary>Gets or sets the name of the collection in the address.</summary>
+    [Parameter]
+    public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the thread in the address.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        // A thread the visitor has not read to and one that does not exist are the same page: not found.
+        _thread = Collection == Site.Collection ? Visitor.Projection?.Thread(Id) : null;
+        if (_thread is null)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _collection = Visitor.Text(Visitor.Projection!.Overview().Subject.Label).Value;
+    }
+}

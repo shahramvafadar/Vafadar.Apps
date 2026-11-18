@@ -29,7 +29,13 @@ public sealed record ExportedCollection(string Json, ImmutableSortedDictionary<s
 public sealed partial class EditorialStore : IDisposable
 {
     /// <summary>The groups of records of a collection, in the order of its file.</summary>
-    public static readonly ImmutableArray<string> Groups = ["sources", "entities", "relations", "events", "media"];
+    public static readonly ImmutableArray<string> Groups = ["sources", "entities", "relations", "events", "media", "threads"];
+
+    /// <summary>
+    /// The groups a collection need not have. A file without such a group is a collection without records of it,
+    /// and a collection without records of it is written without the group.
+    /// </summary>
+    public static readonly ImmutableArray<string> OptionalGroups = ["threads"];
 
     /// <summary>The group a change of a translation document is recorded under.</summary>
     public const string TranslationGroup = "translation";
@@ -163,7 +169,7 @@ public sealed partial class EditorialStore : IDisposable
         var held = _context.Records.Where(record => record.CollectionId == id).ToDictionary(record => (record.Group, record.RecordId));
         foreach (var group in Groups)
         {
-            var records = root[group]!.AsArray();
+            var records = root[group] as JsonArray ?? [];
             for (var position = 0; position < records.Count; position++)
             {
                 var record = records[position]!.AsObject();
@@ -239,7 +245,14 @@ public sealed partial class EditorialStore : IDisposable
         var header = (JsonObject)root.DeepClone();
         foreach (var group in Groups)
         {
-            header[group] = new JsonArray();
+            if (OptionalGroups.Contains(group))
+            {
+                header.Remove(group);
+            }
+            else
+            {
+                header[group] = new JsonArray();
+            }
         }
 
         var written = header.ToJsonString();
@@ -283,7 +296,11 @@ public sealed partial class EditorialStore : IDisposable
         var records = _context.Records.AsNoTracking().Where(record => record.CollectionId == collectionId).ToList();
         foreach (var group in Groups)
         {
-            root[group] = new JsonArray([.. records.Where(record => record.Group == group).OrderBy(record => record.Position).Select(record => JsonNode.Parse(record.Body))]);
+            var written = new JsonArray([.. records.Where(record => record.Group == group).OrderBy(record => record.Position).Select(record => JsonNode.Parse(record.Body))]);
+            if (written.Count > 0 || !OptionalGroups.Contains(group))
+            {
+                root[group] = written;
+            }
         }
 
         var translations = _context.Translations.AsNoTracking().Where(translation => translation.CollectionId == collectionId).ToList()

@@ -57,6 +57,7 @@ public static class SearchEngineFiles
                 pages.Add($"{collection}/revisions");
             }
 
+            pages.AddRange(projection.Threads.Select(thread => $"{collection}/thread/{thread.Thread.Id}"));
             pages.AddRange(projection.Entities.Select(entity => $"{collection}/entity/{entity.Id}"));
             pages.AddRange(projection.Media.Select(item => $"{collection}/media/{item.Id}"));
         }

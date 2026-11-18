@@ -109,7 +109,7 @@ public sealed record FormContext(IReadOnlyList<FieldOption> Stages, IReadOnlyDic
         ArgumentNullException.ThrowIfNull(store);
         return new FormContext(
             [.. store.Stages(collection).Select(stage => new FieldOption(stage.Level.ToString(CultureInfo.InvariantCulture), $"{stage.Level} – {stage.Label}"))],
-            new[] { "sources", "entities", "relations", "events" }.ToDictionary(
+            new[] { "sources", "entities", "relations", "events", "media" }.ToDictionary(
                 group => group,
                 group => (IReadOnlyList<FieldOption>)[.. store.Records(collection, group).Select(record => new FieldOption(record.Id, $"{record.Label} ({record.Id})"))]));
     }
@@ -142,6 +142,8 @@ public static class RecordForm
         ["to"] = "entities",
         ["storyId"] = "entities",
         ["entityId"] = "entities",
+        ["eventId"] = "events",
+        ["mediaId"] = "media",
     }.ToFrozenDictionary(StringComparer.Ordinal);
 
     // The lists of an entity a form offers also when the entity has none of them yet (step 13.6): its other
@@ -327,6 +329,12 @@ public static class RecordForm
                 {
                     now["roles"] = kept.DeepClone();
                 }
+            }
+
+            // The notes of the stops of a thread have no inputs in another language: they stay as they are.
+            if (translated.Notes && before["notes"] is { } notes)
+            {
+                now["notes"] = notes.DeepClone();
             }
 
             read[language] = now;
