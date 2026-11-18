@@ -86,7 +86,9 @@ for Dastan is added here in the same commit as the work it came with.
   see it is asked of the rules in `Vafadar.Dastan.Core.Personal` – the store brings a rule object to where
   things stand; never write such a rule into a query or a page. Ask the scope before producing anything from
   a private item, a count included (PRIV-012), and never let a missing circle or a removed account widen an
-  audience.
+  audience. A family tree does not exist for an account it is not shared with: answer "not found", never
+  "refused". A record of a person says a name and years – add nothing to it without a decision of the owner
+  (PRIV-003). Every change of a tree is recorded with who made it, in the same save as the change.
 * The editors work in a store of their own ([ADR 0011](docs/adr/0011-editors-store.md), `Vafadar.Dastan.Store`):
   records as they are written in the file of a collection, each change kept with who, when, why, before and
   after. The website never references the store. What a record may say is decided by the readers – never add a

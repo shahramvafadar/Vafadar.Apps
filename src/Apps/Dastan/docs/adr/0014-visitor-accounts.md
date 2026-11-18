@@ -150,3 +150,34 @@ Checked: `RelationshipsAndCirclesTests` (the store: 23 cases), `PeoplePagesTests
 with up to four accounts – both sides' audiences, a circle, what a third account and a visitor without one
 see, every act tried by the wrong account). Looked at in a browser with two accounts, English and Persian at
 375 px, dark appearance. Not tried: a screen reader, the light appearance, a container.
+
+## Third addendum (step 16.4, first part): family trees
+
+* **A tree has an owner** (D-054): the account that made it. The owner names accounts that may see it and
+  accounts that may change it – among the people the owner shows an accepted relationship with, for the same
+  reason as with circles – and only the owner names others, renames the tree or removes it. Who may change it
+  adds, changes and removes records and links. **A tree that is not shared with somebody does not exist for
+  them**: its page answers "not found" whether they are signed in or not. Nothing of a tree is public; making
+  something public is step 16.6.
+* **A record of a person needs no account** (PRIV-002) and says little on purpose (PRIV-003): a name and,
+  when they are known, the year of birth and of death, and whether the person has died. No day, no place, no
+  note, no picture. A tree holds 500 records; an account owns 20 trees.
+* **Links** are "a parent of" and "the partner of". The same link is not made twice, a record is not linked
+  to itself, and nobody becomes their own ancestor.
+* **Every change is kept with who made it** (D-054): what was done, what it was done to as it was named then,
+  the account and the time. The history is shown to everybody who may see the tree. When an account is
+  deleted, the changes stay and say "an account that is deleted" – the name goes with the account (D-055).
+* When the relationship between an owner and somebody they named ends, that account sees the tree no more.
+  A tree goes with its owner: closed, nobody sees it; deleted, it is deleted. **A tree with several people
+  who work on it still belongs to one account** – handing a tree on to another owner is not built.
+
+Not built yet: the claim of an account on a record (D-052); the drawing of a tree (the family chart of
+[ADR 0008](0008-charts.md) draws entities of a collection; a tree is shown as a list of its people with their
+parents, partners and children); children and guardians (PRIV-003 needs a rule of the owner's); handing a
+tree on.
+
+Checked: `FamilyTreesTests` (the store: 19 cases), `FamilyTreePagesTests` (the site: 28 cases, with up to
+four accounts). Looked at in a browser in English and Persian at 375 px, dark appearance; two things were
+found there and corrected – a row with a box to tick that looked like an input, and names of another script
+that turned the words of the history around. Not tried: a tree of several hundred people in a browser, a
+screen reader, the light appearance, a container.

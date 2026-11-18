@@ -1,0 +1,351 @@
+@page "/account/trees/{Id}"
+@using Vafadar.Dastan.Core.Personal
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* One family tree (step 16.4, D-054): its records of people with their parents, partners and children, who may
+   see or change it, and every change with who made it. Who may only see it gets no form; who may not see it
+   gets "not found", like for a tree that does not exist. The drawing of a tree is a later step. *@
+@if (_tree is not null)
+{
+    var mayChange = _tree.Tree.Role >= TreeRole.Editor;
+    var owns = _tree.Tree.Role == TreeRole.Owner;
+
+    <PageTitle>@_tree.Tree.Name – @T["Site_Name"]</PageTitle>
+    <PageAddress None="true" />
+    <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+    <header class="page-header">
+        <h1 dir="auto">@_tree.Tree.Name</h1>
+        <p class="lead">@(owns ? T["Tree_Lead_Owner"] : string.Format(CultureInfo.CurrentCulture, T[$"Trees_Shared_{_tree.Tree.Role}"], _tree.Tree.Owner.Name))</p>
+        <p class="actions"><a class="action secondary" href="account/trees">@T["Trees_Title"]</a></p>
+    </header>
+
+    @if (_said is not null)
+    {
+        <p class="note" role="status">@T[$"Trees_Said_{_said}"]</p>
+    }
+
+    <section id="people" aria-labelledby="people-title">
+        <h2 id="people-title">@T["Tree_People_Title"]</h2>
+        @Problems("people")
+        @if (_tree.People.IsEmpty)
+        {
+            <p class="note">@T["Tree_People_None"]</p>
+        }
+        else
+        {
+            <ul class="tree-people" role="list">
+                @foreach (var person in _tree.People)
+                {
+                    <li id="@($"person-{person.Id}")">
+                        <p><strong dir="auto">@person.Name</strong> <span class="meta">@Years(person)</span></p>
+                        @if (!person.Parents.IsEmpty)
+                        {
+                            <p class="meta">@T["Tree_Parents"] @Named(person.Parents)</p>
+                        }
+                        @if (!person.Partners.IsEmpty)
+                        {
+                            <p class="meta">@T["Tree_Partners"] @Named(person.Partners)</p>
+                        }
+                        @if (!person.Children.IsEmpty)
+                        {
+                            <p class="meta">@T["Tree_Children"] @Named(person.Children)</p>
+                        }
+                        @if (mayChange)
+                        {
+                            <details>
+                                <summary>@T["Tree_Person_Change"]<span class="visually-hidden"> – @person.Name</span></summary>
+                                <form method="post" action="@($"{TreeEndpoints.Root}/person-change")" class="account">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                    <input type="hidden" name="person" value="@person.Id" />
+                                    @Fields($"change-{person.Id}", person)
+                                    <p><button type="submit" class="action secondary">@T["Tree_Person_Save"]</button></p>
+                                </form>
+                                <form method="post" action="@($"{TreeEndpoints.Root}/person-remove")" class="save">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                    <input type="hidden" name="person" value="@person.Id" />
+                                    <button type="submit">@T["Tree_Person_Remove"]<span class="visually-hidden"> – @person.Name</span></button>
+                                </form>
+                            </details>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
+    @if (mayChange)
+    {
+        <section id="person-add" aria-labelledby="person-add-title">
+            <h2 id="person-add-title">@T["Tree_Person_Add_Title"]</h2>
+            @Problems("person-add")
+            <form method="post" action="@($"{TreeEndpoints.Root}/person-add")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                @Fields("add", null)
+                <p class="note">@T["Tree_Person_Note"]</p>
+                <p><button type="submit" class="action secondary">@T["Tree_Person_Add_Send"]</button></p>
+            </form>
+        </section>
+
+        <section id="links" aria-labelledby="links-title">
+            <h2 id="links-title">@T["Tree_Links_Title"]</h2>
+            @Problems("links")
+            @if (_tree.People.Length < 2)
+            {
+                <p class="note">@T["Tree_Links_Few"]</p>
+            }
+            else
+            {
+                <form method="post" action="@($"{TreeEndpoints.Root}/link")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                    <p class="field">
+                        <label for="link-from">@T["Tree_Link_From"]</label>
+                        <select id="link-from" name="from" required>
+                            @foreach (var person in _tree.People)
+                            {
+                                <option value="@person.Id">@person.Name</option>
+                            }
+                        </select>
+                    </p>
+                    <p class="field">
+                        <label for="link-kind">@T["Tree_Link_Kind"]</label>
+                        <select id="link-kind" name="kind" required>
+                            <option value="parent">@T["Tree_Link_parent"]</option>
+                            <option value="partner">@T["Tree_Link_partner"]</option>
+                        </select>
+                    </p>
+                    <p class="field">
+                        <label for="link-to">@T["Tree_Link_To"]</label>
+                        <select id="link-to" name="to" required>
+                            @foreach (var person in _tree.People)
+                            {
+                                <option value="@person.Id">@person.Name</option>
+                            }
+                        </select>
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Tree_Link_Send"]</button></p>
+                </form>
+            }
+            @if (!_tree.Links.IsEmpty)
+            {
+                <ul class="people" role="list">
+                    @foreach (var link in _tree.Links)
+                    {
+                        var said = string.Format(CultureInfo.CurrentCulture, T[$"Tree_Linked_{link.Kind}"], _tree.Person(link.From).Name, _tree.Person(link.To).Name);
+                        <li>
+                            <span dir="auto">@said</span>
+                            <form method="post" action="@($"{TreeEndpoints.Root}/unlink")" class="save inline">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                <input type="hidden" name="link" value="@link.Number" />
+                                <button type="submit">@T["Tree_Link_Remove"]<span class="visually-hidden"> – @said</span></button>
+                            </form>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+    }
+
+    @if (owns)
+    {
+        <section id="members" aria-labelledby="members-title">
+            <h2 id="members-title">@T["Tree_Members_Title"]</h2>
+            <p>@T["Tree_Members_Lead"]</p>
+            @if (_known.Count == 0)
+            {
+                <p class="note">@T["Tree_Members_Nobody"] <a href="account/people">@T["People_Link"]</a></p>
+            }
+            else
+            {
+                <ul class="people" role="list">
+                    @foreach (var person in _known)
+                    {
+                        var role = _tree.Members.FirstOrDefault(member => member.Account.Id == person.Id)?.Role ?? TreeRole.None;
+                        <li>
+                            <a href="@($"people/{person.Id}")" dir="auto">@person.Name</a>
+                            <form method="post" action="@($"{TreeEndpoints.Root}/member")" class="save inline">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                <input type="hidden" name="account" value="@person.Id" />
+                                <label for="@($"role-{person.Id}")" class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Tree_Member_Label"], person.Name)</label>
+                                <select id="@($"role-{person.Id}")" name="role">
+                                    <option value="none" selected="@(role == TreeRole.None)">@T["Tree_Role_none"]</option>
+                                    <option value="viewer" selected="@(role == TreeRole.Viewer)">@T["Tree_Role_viewer"]</option>
+                                    <option value="editor" selected="@(role == TreeRole.Editor)">@T["Tree_Role_editor"]</option>
+                                </select>
+                                <button type="submit">@T["People_Shown_Send"]<span class="visually-hidden"> – @person.Name</span></button>
+                            </form>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+    }
+
+    <section id="history" aria-labelledby="history-title">
+        <h2 id="history-title">@T["Tree_History_Title"]</h2>
+        <ul class="statements" role="list">
+            @foreach (var change in _tree.History)
+            {
+                <li>
+                    @* A name of another script stands by itself, so that it does not turn the words around it. *@
+                    <span>@T[$"Tree_Change_{change.What}"]</span>@if (change.Subject.Length > 0)
+                    {
+                        <text>: </text><bdi>@change.Subject</bdi>
+                    }
+                    <span class="meta">– <bdi>@(change.By ?? T["Tree_Change_Gone"].Value)</bdi>@T["Tree_And"]@Day(change.At)</span>
+                </li>
+            }
+        </ul>
+    </section>
+
+    @if (owns)
+    {
+        <section id="rename" aria-labelledby="rename-title">
+            <h2 id="rename-title">@T["Tree_Rename_Title"]</h2>
+            @Problems("rename")
+            <form method="post" action="@($"{TreeEndpoints.Root}/rename")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                <p class="field">
+                    <label for="rename-name">@T["Trees_Name"]</label>
+                    <input id="rename-name" name="name" type="text" required maxlength="@PeopleStore.LongestTreeName" value="@_tree.Tree.Name" autocomplete="off" dir="auto" />
+                </p>
+                <p><button type="submit" class="action secondary">@T["Tree_Rename_Send"]</button></p>
+            </form>
+            <details>
+                <summary>@T["Tree_Remove_Lead"]</summary>
+                <form method="post" action="@($"{TreeEndpoints.Root}/remove")" class="save">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                    <button type="submit">@T["Tree_Remove_Send"]</button>
+                </form>
+            </details>
+        </section>
+    }
+}
+
+@code {
+    // What the forms may answer with: nothing else of an address is turned into words of the page.
+    private static readonly string[] Sayings = ["made", "renamed", "person-added", "person-changed", "person-removed", "linked", "unlinked", "member-set"];
+    private static readonly string[] Forms = ["people", "person-add", "links", "rename"];
+    private static readonly string[] Known = ["tree-name", "person", "link-kind", "link-unknown", "link-same", "link-exists", "link-loop"];
+
+    private TreeView? _tree;
+    private List<PersonRef> _known = [];
+    private string? _said;
+    private string? _form;
+    private string? _problem;
+    private string _here = TreeEndpoints.Page;
+
+    /// <summary>Gets or sets the identifier of the tree.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Desk.IsOpen && Id.Length <= 40 && AccountDesk.Session(Context.User) is { } session)
+        {
+            using var store = Desk.Open();
+            _tree = store.Tree(session.Id, Id);
+            if (_tree?.Tree.Role == TreeRole.Owner)
+            {
+                _known = [.. store.Relationships(session.Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other)];
+            }
+        }
+
+        if (_tree is null)
+        {
+            // A tree that is not shared with somebody does not exist for them – signed in or not.
+            Navigation.NotFound();
+            return;
+        }
+
+        _here = $"/{Visitor.Language.Tag}{TreeEndpoints.Page}/{_tree.Tree.Id}";
+        _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
+        _form = Forms.Contains(Form, StringComparer.Ordinal) ? Form : null;
+        _problem = _form is not null && Known.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
+    }
+
+    private string Number(int value) => Visitor.Number(value);
+
+    private string Day(DateTime at)
+    {
+        var written = at.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        return Visitor.Language.Tag == "fa" ? Vafadar.Core.Text.Digits.ToPersian(written) : written;
+    }
+
+    // "1300–1380", "born 1300", "died 1380", "died" – whatever is known, and nothing when nothing is.
+    private string Years(TreePerson person) => (person.Born, person.Died, person.Deceased) switch
+    {
+        ({ } born, { } died, _) => $"{Number(born)}–{Number(died)}",
+        ({ } born, null, false) => string.Format(CultureInfo.CurrentCulture, T["Tree_Born"], Number(born)),
+        ({ } born, null, true) => $"{string.Format(CultureInfo.CurrentCulture, T["Tree_Born"], Number(born))}{T["Tree_And"]}{T["Tree_Deceased"]}",
+        (null, { } died, _) => string.Format(CultureInfo.CurrentCulture, T["Tree_Died"], Number(died)),
+        (null, null, true) => T["Tree_Deceased"],
+        _ => string.Empty,
+    };
+
+    private string Named(System.Collections.Immutable.ImmutableArray<string> people) => string.Join(T["Tree_And"], people.Select(person => _tree!.Person(person).Name));
+
+    // The fields of a record: the same for a new one and for one that is changed.
+    private RenderFragment Fields(string id, TreePerson? person) => __builder =>
+    {
+        <p class="field">
+            <label for="@($"{id}-name")">@T["Tree_Person_Name"]</label>
+            <input id="@($"{id}-name")" name="name" type="text" required maxlength="@PeopleStore.LongestTreeName" value="@person?.Name" autocomplete="off" dir="auto" />
+        </p>
+        <p class="field">
+            <label for="@($"{id}-born")">@T["Tree_Person_Born"]</label>
+            <input id="@($"{id}-born")" name="born" type="text" inputmode="numeric" maxlength="4" value="@person?.Born?.ToString(CultureInfo.InvariantCulture)" autocomplete="off" dir="ltr" />
+        </p>
+        <p class="field">
+            <label for="@($"{id}-died")">@T["Tree_Person_Died"]</label>
+            <input id="@($"{id}-died")" name="died" type="text" inputmode="numeric" maxlength="4" value="@person?.Died?.ToString(CultureInfo.InvariantCulture)" autocomplete="off" dir="ltr" />
+        </p>
+        <p class="tick">
+            <input type="checkbox" id="@($"{id}-deceased")" name="deceased" value="yes" checked="@(person?.Deceased == true)" />
+            <label for="@($"{id}-deceased")">@T["Tree_Person_Deceased"]</label>
+        </p>
+    };
+
+    // What was wrong with a form, said above it.
+    private RenderFragment Problems(string form) => __builder =>
+    {
+        if (_form == form && _problem is not null)
+        {
+            <ul class="problems" role="alert">
+                <li>@T[$"Trees_Problem_{_problem}"]</li>
+            </ul>
+        }
+    };
+}

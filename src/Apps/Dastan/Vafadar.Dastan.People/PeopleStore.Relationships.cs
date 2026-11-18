@@ -360,6 +360,7 @@ public sealed partial class PeopleStore
                 _context.CircleMembers.RemoveRange(_context.CircleMembers.Where(member => member.Circle == circle.Number && member.Member == other));
             }
 
+            LeaveTrees(stored.From, stored.To);
             _context.Relationships.Remove(stored);
         }
         else

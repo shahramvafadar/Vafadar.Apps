@@ -170,6 +170,104 @@ public sealed class StoredCircleMember
     public required string Member { get; set; }
 }
 
+/// <summary>A family tree: it has an owner, who says who else may see or change it (D-054).</summary>
+public sealed class StoredTree
+{
+    /// <summary>Gets or sets the identifier.</summary>
+    public required string Id { get; set; }
+
+    /// <summary>Gets or sets the account it belongs to.</summary>
+    public required string Owner { get; set; }
+
+    /// <summary>Gets or sets its name.</summary>
+    public required string Name { get; set; }
+
+    /// <summary>Gets or sets when it was made.</summary>
+    public DateTime CreatedAt { get; set; }
+}
+
+/// <summary>An account that may see or change a tree.</summary>
+public sealed class StoredTreeMember
+{
+    /// <summary>Gets or sets the tree.</summary>
+    public required string Tree { get; set; }
+
+    /// <summary>Gets or sets the account.</summary>
+    public required string Account { get; set; }
+
+    /// <summary>Gets or sets what it may do (<c>TreeRole</c>).</summary>
+    public int Role { get; set; }
+}
+
+/// <summary>The record of a person in a tree. It says little on purpose (PRIV-003).</summary>
+public sealed class StoredPerson
+{
+    /// <summary>Gets or sets the identifier.</summary>
+    public required string Id { get; set; }
+
+    /// <summary>Gets or sets the tree.</summary>
+    public required string Tree { get; set; }
+
+    /// <summary>Gets or sets the name.</summary>
+    public required string Name { get; set; }
+
+    /// <summary>Gets or sets the year of birth, when it is known.</summary>
+    public int? Born { get; set; }
+
+    /// <summary>Gets or sets the year of death, when it is known.</summary>
+    public int? Died { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether the person has died.</summary>
+    public bool Deceased { get; set; }
+
+    /// <summary>Gets or sets the account that made the record; nothing once that account is deleted.</summary>
+    public string? CreatedBy { get; set; }
+
+    /// <summary>Gets or sets when the record was made.</summary>
+    public DateTime CreatedAt { get; set; }
+}
+
+/// <summary>A link between two records of a tree: a parent and a child, or two partners.</summary>
+public sealed class StoredKinship
+{
+    /// <summary>Gets or sets the number of the link.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the tree.</summary>
+    public required string Tree { get; set; }
+
+    /// <summary>Gets or sets the kind: <c>parent</c> or <c>partner</c>.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>Gets or sets the first record: the parent, or one partner.</summary>
+    public required string From { get; set; }
+
+    /// <summary>Gets or sets the second record: the child, or the other partner.</summary>
+    public required string To { get; set; }
+}
+
+/// <summary>A change of a tree, kept with who made it (D-054).</summary>
+public sealed class StoredTreeChange
+{
+    /// <summary>Gets or sets the number of the change.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the tree.</summary>
+    public required string Tree { get; set; }
+
+    /// <summary>Gets or sets the account that made it; nothing once that account is deleted.</summary>
+    public string? By { get; set; }
+
+    /// <summary>Gets or sets when.</summary>
+    public DateTime At { get; set; }
+
+    /// <summary>Gets or sets what was done.</summary>
+    public required string What { get; set; }
+
+    /// <summary>Gets or sets what it was done to, as it was named then.</summary>
+    public required string Subject { get; set; }
+}
+
 /// <summary>The database of the store of the visitors.</summary>
 public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbContext(options)
 {
@@ -196,6 +294,21 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
     /// <summary>Gets who is in the circles.</summary>
     public DbSet<StoredCircleMember> CircleMembers => Set<StoredCircleMember>();
+
+    /// <summary>Gets the family trees.</summary>
+    public DbSet<StoredTree> Trees => Set<StoredTree>();
+
+    /// <summary>Gets who may see or change the trees.</summary>
+    public DbSet<StoredTreeMember> TreeMembers => Set<StoredTreeMember>();
+
+    /// <summary>Gets the records of people.</summary>
+    public DbSet<StoredPerson> Persons => Set<StoredPerson>();
+
+    /// <summary>Gets the links between records.</summary>
+    public DbSet<StoredKinship> Kinships => Set<StoredKinship>();
+
+    /// <summary>Gets the changes of the trees.</summary>
+    public DbSet<StoredTreeChange> TreeChanges => Set<StoredTreeChange>();
 
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -271,6 +384,68 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             member.Property(item => item.Member).HasMaxLength(40);
             member.HasOne<StoredCircle>().WithMany().HasForeignKey(item => item.Circle).OnDelete(DeleteBehavior.Cascade);
             member.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Member).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // A tree goes with its owner; what is in a tree goes with the tree.
+        modelBuilder.Entity<StoredTree>(tree =>
+        {
+            tree.HasKey(item => item.Id);
+            tree.Property(item => item.Id).HasMaxLength(40);
+            tree.Property(item => item.Owner).HasMaxLength(40);
+            tree.Property(item => item.Name).HasMaxLength(160);
+            tree.HasIndex(item => item.Owner);
+            tree.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Owner).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredTreeMember>(member =>
+        {
+            member.HasKey(item => new { item.Tree, item.Account });
+            member.Property(item => item.Tree).HasMaxLength(40);
+            member.Property(item => item.Account).HasMaxLength(40);
+            member.HasIndex(item => item.Account);
+            member.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);
+            member.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredPerson>(person =>
+        {
+            person.HasKey(item => item.Id);
+            person.Property(item => item.Id).HasMaxLength(40);
+            person.Property(item => item.Tree).HasMaxLength(40);
+            person.Property(item => item.Name).HasMaxLength(160);
+            person.Property(item => item.CreatedBy).HasMaxLength(40);
+            person.HasIndex(item => item.Tree);
+            person.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);
+
+            // The record stays in the tree when who made it is gone.
+            person.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.CreatedBy).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        modelBuilder.Entity<StoredKinship>(link =>
+        {
+            link.HasKey(item => item.Number);
+            link.Property(item => item.Tree).HasMaxLength(40);
+            link.Property(item => item.Kind).HasMaxLength(20);
+            link.Property(item => item.From).HasMaxLength(40);
+            link.Property(item => item.To).HasMaxLength(40);
+            link.HasIndex(item => item.Tree);
+            link.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);
+            link.HasOne<StoredPerson>().WithMany().HasForeignKey(item => item.From).OnDelete(DeleteBehavior.Cascade);
+            link.HasOne<StoredPerson>().WithMany().HasForeignKey(item => item.To).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredTreeChange>(change =>
+        {
+            change.HasKey(item => item.Number);
+            change.Property(item => item.Tree).HasMaxLength(40);
+            change.Property(item => item.By).HasMaxLength(40);
+            change.Property(item => item.What).HasMaxLength(40);
+            change.Property(item => item.Subject).HasMaxLength(400);
+            change.HasIndex(item => item.Tree);
+            change.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);
+
+            // That something was changed stays when who changed it is gone.
+            change.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.By).OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<StoredInvitation>(invitation =>
