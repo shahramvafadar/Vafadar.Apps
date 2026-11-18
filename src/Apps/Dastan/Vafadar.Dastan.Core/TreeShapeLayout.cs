@@ -117,6 +117,14 @@ public static class TreeShapeLayout
             return new TreePlacement([], [], shape.Partnerships, 0, 0, 0, 0);
         }
 
+        // A member is named once, and a link to somebody who is not named is passed over – as
+        // TreeShape.Generations does: a tree whose store lost a person is drawn without the link, not refused.
+        var named = shape.Members.Select(member => member.Id).ToHashSet(StringComparer.Ordinal);
+        shape = new TreeShape(
+            [.. shape.Members.DistinctBy(member => member.Id, StringComparer.Ordinal)],
+            [.. shape.Parentage.Where(link => named.Contains(link.From) && named.Contains(link.To))],
+            [.. shape.Partnerships.Where(link => named.Contains(link.From) && named.Contains(link.To))]);
+
         // Generations become layers without gaps, in the order of the shape.
         var rows = shape.Members.Select(member => member.Generation).Distinct().Order().ToList();
         var layerOf = shape.Members.ToDictionary(member => member.Id, member => rows.IndexOf(member.Generation), StringComparer.Ordinal);

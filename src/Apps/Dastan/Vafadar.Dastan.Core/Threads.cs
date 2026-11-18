@@ -44,7 +44,7 @@ public sealed class DiscoveryThread
 public sealed record ThreadStep(int Number, ThreadStop Stop, Entity? Entity, StoryStep? Step, MediaItem? Media);
 
 /// <summary>A thread as far as the visitor may follow it.</summary>
-/// <param name="Thread">The thread.</param>
+/// <param name="Thread">The thread, with the stops that are shown and no other.</param>
 /// <param name="Steps">The stops up to the first the visitor may not see yet.</param>
 /// <param name="Continues">
 /// Whether the thread goes on after what is shown. It says nothing about how far or where: a stop that is not
