@@ -63,4 +63,41 @@ public sealed class StudioThreadsTests : IDisposable
         Assert.Contains("Begin here.", page.Html, StringComparison.Ordinal);
         Assert.Contains("stops[1].eventId", page.Html, StringComparison.Ordinal);
     }
+    [Fact]
+    public async Task The_reason_of_a_stop_is_written_in_another_language_and_goes_with_its_stop()
+    {
+        using (var store = _studio.Store())
+        {
+            var thread = new JsonObject
+            {
+                ["id"] = "thread-notes", ["label"] = "A thread of the tests", ["summary"] = "Test data.", ["spoilerLevel"] = 0,
+                ["stops"] = new JsonArray(
+                    new JsonObject { ["entityId"] = "character-rostam", ["note"] = "Begin here." },
+                    new JsonObject { ["eventId"] = "event-01", ["note"] = "Then this." }),
+            };
+            Assert.True(store.Put(Studio.Collection, "threads", thread, "a writer", "A thread.").Done);
+        }
+
+        var address = $"/en/{Studio.Collection}/record/threads/thread-notes";
+        (string, string?)[] who = [("Filling.By", "a writer"), ("Filling.Reason", "The reasons in Persian.")];
+        var page = await _desk.Fill(address, "fields", [("t.fa.stops[0].note", "از این‌جا آغاز کنید."), ("t.fa.stops[1].note", "سپس این."), .. who]);
+
+        Assert.EndsWith("thread-notes?done=changed", page.Arrived, StringComparison.Ordinal);
+        Assert.Contains("از این‌جا آغاز کنید.", WebUtility.HtmlDecode(page.Html), StringComparison.Ordinal);
+        JsonNode Notes()
+        {
+            using var store = _studio.Store();
+            return JsonNode.Parse(store.Export(Studio.Collection)!.Translations["fa"])!["threads"]!["thread-notes"]!["notes"]!;
+        }
+
+        // Kept under what each stop names, not under its place in the list.
+        Assert.Equal("از این‌جا آغاز کنید.", (string?)Notes()["character-rostam"]);
+        Assert.Equal("سپس این.", (string?)Notes()["event-01"]);
+
+        // A reason that is emptied is taken out; the other stays.
+        var emptied = await _desk.Fill(address, "fields", [("t.fa.stops[1].note", " "), .. who]);
+        Assert.EndsWith("thread-notes?done=changed", emptied.Arrived, StringComparison.Ordinal);
+        Assert.Null(Notes()["event-01"]);
+        Assert.Equal("از این‌جا آغاز کنید.", (string?)Notes()["character-rostam"]);
+    }
 }
