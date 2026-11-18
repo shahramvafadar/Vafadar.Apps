@@ -21,6 +21,12 @@ public sealed class DastanOptions
     public Audience Audience { get; set; } = Audience.Public;
 
     /// <summary>
+    /// Gets or sets the folder the reports of visitors are kept in (step 14.8). Empty, the site takes no reports
+    /// and offers no form for them.
+    /// </summary>
+    public string? Reports { get; set; }
+
+    /// <summary>
     /// Gets or sets a folder in which the keys that protect the forms of the site are kept, so that a form a
     /// visitor opened before the site was started again is still accepted afterwards. Without it the keys live as
     /// long as the process: enough for a development machine, not for a site that is updated while it is visited.

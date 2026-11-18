@@ -139,6 +139,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- A visitor who sees an error can say so: the page of the sources of a statement has a short form. The site
+  keeps the words, the statement and the day – nothing about the visitor – and the editors find the report in
+  their tool, with the way to the record it is about.
 - A moment of a video has an address – add `?t=1:15` or use the field under the player – and the page of
   the sources of a statement says how to cite it, with the revision it was read in.
 - The search also finds without a name: everything of a kind, at a place or of a year. A gallery can be put

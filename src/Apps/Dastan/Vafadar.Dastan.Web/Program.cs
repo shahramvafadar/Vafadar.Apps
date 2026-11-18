@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Web.Components;
 using Vafadar.Dastan.Web.Site;
@@ -29,12 +30,15 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
     options.UnlocalizedPaths.Add("/preferences");
     options.UnlocalizedPaths.Add(MediaAddress.Root);
     options.UnlocalizedPaths.Add(SiteHealth.Address);
+    options.UnlocalizedPaths.Add(ReportDesk.Address);
     options.UnlocalizedPaths.Add(SearchEngineFiles.Robots);
     options.UnlocalizedPaths.Add(SearchEngineFiles.Sitemap);
 });
 
 builder.Services.Configure<DastanOptions>(builder.Configuration.GetSection("Dastan"));
 builder.Services.AddSingleton<DastanSite>();
+builder.Services.TryAddSingleton(TimeProvider.System);
+builder.Services.AddSingleton<ReportDesk>();
 
 // The keys of the forms outlive the process only where a folder for them is named (docs/operations.md).
 if (builder.Configuration["Dastan:Keys"] is { Length: > 0 } keys)
@@ -121,6 +125,7 @@ app.MapReadingPreference();
 app.MapMediaFiles();
 app.MapSiteHealth();
 app.MapSearchEngineFiles();
+app.MapVisitorReports();
 app.MapRazorComponents<App>();
 
 await app.RunAsync();

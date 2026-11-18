@@ -26,6 +26,9 @@ public sealed class Studio : WebApplicationFactory<Program>
 
     private readonly bool _accounts;
 
+    /// <summary>Gets the folder of the reports of visitors the tool is told, when a test has one.</summary>
+    internal string? Reports { get; init; }
+
     public Studio()
         : this(accounts: false)
     {
@@ -77,6 +80,11 @@ public sealed class Studio : WebApplicationFactory<Program>
         if (_accounts)
         {
             builder.UseSetting("Studio:Accounts", "true");
+        }
+
+        if (Reports is not null)
+        {
+            builder.UseSetting("Studio:Reports", Reports);
         }
 
         // The tool runs by the clock of the test, as its store does.

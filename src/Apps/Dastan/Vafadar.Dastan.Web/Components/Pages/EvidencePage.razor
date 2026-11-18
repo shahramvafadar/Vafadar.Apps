@@ -6,6 +6,7 @@
 @inject Visitor Visitor
 @inject DastanSite Site
 @inject NavigationManager Navigation
+@inject ReportDesk Desk
 @inject IStringLocalizer<Ui> T
 
 @if (_evidence is { } evidence)
@@ -148,6 +149,36 @@
         </section>
     }
 
+    @if (Desk.IsOpen)
+    {
+        @* A visitor who sees an error says so here (step 14.8, R-GOV-03). The form is sent without a script; what
+           is kept is the statement, the words and the day. *@
+        <section class="card" id="report" aria-labelledby="report-title">
+            <h2 id="report-title">@T["Report_Title"]</h2>
+            @if (Reported is "thanks" or "later" or "full")
+            {
+                <p class="note" role="status">@T[$"Report_{Reported}"]</p>
+            }
+            @if (Reported != "thanks")
+            {
+                <form method="post" action="@ReportDesk.Address" class="report">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="collection" value="@Site.Collection" />
+                    <input type="hidden" name="statement" value="@_statement" />
+                    <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}/{_here}")" />
+                    @* A field no person sees: a program that fills in everything fills it in. *@
+                    <p class="visually-hidden" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></p>
+                    <p class="field">
+                        <label for="report-text">@T["Report_Label"]</label>
+                        <textarea id="report-text" name="text" rows="4" required maxlength="@ReportBox.LongestText" dir="auto"></textarea>
+                    </p>
+                    <p class="note">@T["Report_Privacy"]</p>
+                    <p><button type="submit" class="action secondary">@T["Report_Send"]</button></p>
+                </form>
+            }
+        </section>
+    }
+
     <p class="actions"><a class="action" href="@_back">@_backName</a></p>
 }
 
@@ -160,6 +191,11 @@
     private string _cited = string.Empty;
     private string _citeAddress = string.Empty;
     private int? _citedRevision;
+    private string _statement = string.Empty;
+
+    /// <summary>Gets or sets what became of a report the visitor just sent.</summary>
+    [SupplyParameterFromQuery(Name = "reported")]
+    public string? Reported { get; set; }
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
@@ -227,6 +263,9 @@
             _ => (Site.Collection, T["Site_Name"].Value),
         };
         _here = EvidenceAddress.Path(Navigation);
+
+        // The statement as a report names it: the address of this page inside its collection.
+        _statement = _here[(Site.Collection.Length + 1)..];
         if (EvidenceAddress.Checked(From, Site.Collection) is { } from)
         {
             _back = from;
