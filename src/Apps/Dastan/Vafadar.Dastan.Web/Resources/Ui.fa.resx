@@ -1326,4 +1326,34 @@
   <data name="Gallery_Kind_All" xml:space="preserve">
     <value>همه</value>
   </data>
+  <data name="Moment_Video_Title" xml:space="preserve">
+    <value>لحظه‌ای از ویدئو</value>
+  </data>
+  <data name="Moment_Video_Starts" xml:space="preserve">
+    <value>ویدئو از {0} آغاز می‌شود.</value>
+  </data>
+  <data name="Moment_Video_Beginning" xml:space="preserve">
+    <value>از آغاز</value>
+  </data>
+  <data name="Moment_Video_Label" xml:space="preserve">
+    <value>نشانیِ یک لحظه</value>
+  </data>
+  <data name="Moment_Video_Go" xml:space="preserve">
+    <value>بازکردن از این لحظه</value>
+  </data>
+  <data name="Moment_Video_Hint" xml:space="preserve">
+    <value>دقیقه و ثانیه، مانند 1:15. نشانی صفحه‌ای که باز می‌شود به همان لحظه می‌رسد و می‌توان آن را به دیگری داد.</value>
+  </data>
+  <data name="Cite_Title" xml:space="preserve">
+    <value>برای استناد</value>
+  </data>
+  <data name="Cite_Text" xml:space="preserve">
+    <value>«{0}». {1}، ویرایش {2} به تاریخ {3}.</value>
+  </data>
+  <data name="Cite_Hint" xml:space="preserve">
+    <value>نشانی، ویرایش را نام می‌برد. وقتی ویرایش تازه‌ای منتشر شود، صفحه این را می‌گوید و به آنچه دگرگون شده راه می‌برد.</value>
+  </data>
+  <data name="Cite_Changed" xml:space="preserve">
+    <value>این نشانی برای ویرایش {0} نوشته شده است. سایت اکنون ویرایش {1} را نشان می‌دهد: شاید آنچه این‌جا آمده اصلاح شده باشد.</value>
+  </data>
 </root>

@@ -156,3 +156,25 @@ the name it had; an SVG, a taken identifier, a missing name and missing rights l
 captions in Persian and a poster for the video that is there; a file of another kind refused and not kept;
 only the page of an image or video brings files in. Files of the tests are made by the tests. Not looked at
 in a browser; no real photograph with location data and no large video was tried.
+
+## Third addendum of 2026-11-18 – a moment of a video has an address (step 14.6, MED-014)
+
+* The page of a video reads `?t=` – seconds (`75`), or minutes and seconds with colons (`1:15`, `1:02:03`) –
+  and writes the moment onto the address of the file as a media fragment (`…/file#t=75`). The player of the
+  browser starts there; the site has no script for it, and nothing is played before the visitor asks.
+* The page says where the video starts, in the digits of the page, and offers its beginning. A form with one
+  field asks for the page of a moment; the address of that page is what a visitor passes on. The gallery the
+  visitor came from stays in the address.
+* An address is written by anybody: what is no time – letters, a minute of 75, nothing, more than a day – is
+  no moment, the video starts at its beginning and nothing of what was written stands on the page. An image
+  has no moment.
+* A moment is not checked against the length of the video: the record of an item states none. A moment after
+  the end is the end, which the player handles.
+
+Not done: moments the editors name (chapters), a moment in a caption or transcript that leads into the video,
+and a moment for an audio file (the model has none).
+
+Verification: `MomentAndCitationTests` – five ways to write a moment, thirteen things that are none, the
+moment written back; the page in both languages with the fragment on the file; four addresses without a
+moment; the gallery kept and an image without a moment. Not played in a browser: that a browser starts at the
+fragment is the behaviour of the browser and was not observed here.

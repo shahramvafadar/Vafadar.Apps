@@ -129,6 +129,25 @@
         }
     </section>
 
+    @if (Site.Revision is { } revision)
+    {
+        @* How to cite the statement (step 14.7, R-PUB-07): what it is, the revision it was read in, and the address
+           that names that revision. A correction is a new revision; the address then says so. *@
+        <section class="card" aria-labelledby="cite">
+            <h2 id="cite">@T["Cite_Title"]</h2>
+            @if (_citedRevision is { } cited && cited != revision.Number)
+            {
+                <p class="note warning" role="note">
+                    @string.Format(CultureInfo.CurrentCulture, T["Cite_Changed"], Visitor.Number(cited), Visitor.Number(revision.Number))
+                    <a href="@($"{Site.Collection}/revisions")">@T["Revisions_Link"]</a>
+                </p>
+            }
+            <p class="cite"><bdi>@string.Format(CultureInfo.CurrentCulture, T["Cite_Text"], _cited, T["Site_Name"], Visitor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))</bdi></p>
+            <p class="cite"><bdi dir="ltr">@_citeAddress</bdi></p>
+            <p class="note">@T["Cite_Hint"]</p>
+        </section>
+    }
+
     <p class="actions"><a class="action" href="@_back">@_backName</a></p>
 }
 
@@ -138,6 +157,16 @@
     private string _back = string.Empty;
     private string _backName = string.Empty;
     private string _here = string.Empty;
+    private string _cited = string.Empty;
+    private string _citeAddress = string.Empty;
+    private int? _citedRevision;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    /// <summary>Gets or sets the revision the address was written for, when somebody cited the statement.</summary>
+    [SupplyParameterFromQuery(Name = "revision")]
+    public string? Revision { get; set; }
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -208,6 +237,22 @@
         {
             _back = home;
             _backName = string.Format(CultureInfo.CurrentCulture, T["Story_Back"], name);
+        }
+
+        // What is cited, in a few words, and the address that names the revision it was read in.
+        _cited = _evidence switch
+        {
+            { Subject: EvidenceSubject.Relation, Relation: { } edge } => $"{Visitor.Text(edge.From.Label).Value} – {Visitor.Text(edge.Relation.Label).Value} – {Visitor.Text(edge.To.Label).Value}",
+            { Subject: EvidenceSubject.Media, Media: { } item } => Visitor.Text(item.Label).Value,
+            { Subject: EvidenceSubject.Association, Step: { } step, Entity: { } entity } => $"{Visitor.Text(entity.Label).Value} – {Visitor.Text(step.Event.Label).Value}",
+            { Step: { } step } => Visitor.Text(step.Event.Label).Value,
+            { Entity: { } entity } => Visitor.Text(entity.Label).Value,
+            _ => T["Site_Name"].Value,
+        };
+        if (Site.Revision is { } revision)
+        {
+            _citeAddress = $"{Context.Request.Scheme}://{Context.Request.Host}/{Visitor.Language.Tag}/{EvidenceAddress.Path(Navigation)}?revision={revision.Number.ToString(CultureInfo.InvariantCulture)}";
+            _citedRevision = int.TryParse(Revision, NumberStyles.None, CultureInfo.InvariantCulture, out var number) && number >= 1 ? number : null;
         }
 
         _subject = _evidence.Subject == EvidenceSubject.Entity

@@ -32,7 +32,8 @@
             @* Nothing starts by itself and nothing is loaded before the visitor asks for it, except what the player
                needs to show its length. *@
             <video controls preload="metadata" playsinline poster="@_poster" width="@item.Width" height="@item.Height">
-                <source src="@_file" type="@_fileType" />
+                @* A moment the address names is handed to the player with the address of the file (step 14.6). *@
+                <source src="@(_start is { } start ? $"{_file}#t={start.ToString(CultureInfo.InvariantCulture)}" : _file)" type="@_fileType" />
                 @foreach (var (track, index) in _tracks.Select((track, index) => (track, index)))
                 {
                     <track kind="captions" src="@MediaAddress.Captions(Site.Collection, item.Id, track.Language)" srclang="@track.Language"
@@ -43,6 +44,37 @@
         }
         <figcaption><Loc Text="item.Caption" /></figcaption>
     </figure>
+
+    @if (_file is not null && item.Kind == MediaKind.Video)
+    {
+        @* A moment of the video has an address: the form asks for the page of a moment, which can be passed on. *@
+        <section class="moment" aria-labelledby="moment">
+            <h2 id="moment" class="visually-hidden">@T["Moment_Video_Title"]</h2>
+            @if (_start is { } from)
+            {
+                <p class="note" role="status">
+                    @string.Format(CultureInfo.CurrentCulture, T["Moment_Video_Starts"], Shown(from))
+                    <a href="@_here">@T["Moment_Video_Beginning"]</a>
+                </p>
+            }
+            <form class="search" method="get" action="@($"{Site.Collection}/media/{item.Id}")">
+                @if (_context.StartsWith("?entity=", StringComparison.Ordinal))
+                {
+                    <input type="hidden" name="entity" value="@FromEntity" />
+                }
+                @if (_context.StartsWith("?event=", StringComparison.Ordinal))
+                {
+                    <input type="hidden" name="event" value="@FromEvent" />
+                }
+                <label for="moment-t">@T["Moment_Video_Label"]</label>
+                <div class="search-row">
+                    <input type="text" id="moment-t" name="t" value="@(_start is { } at ? VideoMoment.Write(at) : null)" inputmode="numeric" pattern="[0-9:]{1,8}" maxlength="8" placeholder="1:15" autocomplete="off" dir="ltr" />
+                    <button type="submit" class="action secondary">@T["Moment_Video_Go"]</button>
+                </div>
+                <p class="note">@T["Moment_Video_Hint"]</p>
+            </form>
+        </section>
+    }
 
     @if (_file is not null && item.Kind == MediaKind.Image)
     {
@@ -240,6 +272,10 @@
     private string _galleryName = string.Empty;
     private string _context = string.Empty;
     private string _here = string.Empty;
+    private int? _start;
+
+    // A moment as a person reads it, in the digits of the page: 1:15.
+    private string Shown(int seconds) => string.Concat(VideoMoment.Write(seconds).Select(character => char.IsAsciiDigit(character) ? Visitor.Number(character - '0') : character.ToString()));
     private MediaItem? _previous;
     private MediaItem? _next;
 
@@ -258,6 +294,10 @@
     /// <summary>Gets or sets the event whose gallery the visitor came from, if the address says so.</summary>
     [SupplyParameterFromQuery(Name = "event")]
     public string? FromEvent { get; set; }
+
+    /// <summary>Gets or sets the moment of a video the address names: seconds, or minutes and seconds with a colon.</summary>
+    [SupplyParameterFromQuery(Name = "t")]
+    public string? T0 { get; set; }
 
     protected override void OnInitialized()
     {
@@ -283,6 +323,7 @@
             _poster = MediaAddress.Poster(Site.Collection, item.Id);
         }
 
+        _start = item.Kind == MediaKind.Video ? VideoMoment.Read(T0) : null;
         _alt = Visitor.Text(item.AltText ?? item.Label).Value;
         _transcript = Site.ContentText(item.Transcript);
         _tracks = [.. item.Captions.Where(track => Site.ContentFile(track.File) is not null)];
