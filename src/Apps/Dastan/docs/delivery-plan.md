@@ -572,3 +572,18 @@ recommended and nothing is built.
 
 The registration with Google and Microsoft (D-069), a host for a public site (D-067), the legal review (D-068),
 the review of the Persian text of the sample, the rights of the images, devices and people (section 11).
+
+### 18.6 – A review of phases 17 and 18 (2026-11-18)
+
+The code of both phases was read once more after everything was merged. Nothing was found that works wrongly
+for a visitor; four things were made firmer.
+
+| # | What | State |
+| --- | --- | --- |
+| 18.6.1 | `compose.trial.yaml` asked for the token of the tunnel even when no tunnel was started, so the trial alone did not start without it | **Mended** – the token is asked for by the tunnel only. Tried: the trial built and started without a token |
+| 18.6.2 | A picture is read whole into memory; a file of a few hundred kilobytes can say that it is tens of thousands of pixels wide | **Mended** – no picture of more than fifty million pixels is read ([ADR 0006](adr/0006-media-delivery.md), addendum); such a photograph of a visitor is refused with a message. Tried in the container with 1 GB: a PNG of 640 KB and 8000 by 6000 was taken and got its smaller size, one of 8000 by 6300 was refused; the container was not stopped for memory |
+| 18.6.3 | A smaller size was written under its own name, so that a request in that moment could get half a file | **Mended** – written beside and renamed when whole |
+| 18.6.4 | The trial in the container had no folder for reports of visitors and no way to name the legal texts | **Mended** – `Dastan__Reports` on the volume, `DASTAN_LEGAL` for the folder of the texts. Tried: the legal pages answer in the container |
+
+Not changed, and said here: the image of the tunnel is named without a version (`cloudflare/cloudflared:latest`)
+– which version to hold to is chosen when the tunnel is set up with the owner's account.

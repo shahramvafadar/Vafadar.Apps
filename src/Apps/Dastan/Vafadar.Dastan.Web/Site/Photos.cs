@@ -113,6 +113,14 @@ public static class PhotoEndpoints
                 return Back(returnUrl, "add", "photo-file");
             }
 
+            // A file can be small and its picture very large: a browser that is given it reads it whole. Such
+            // a photograph is not kept (the same measure as for what the site itself reads, ImageSizes).
+            if (!ImageSizes.IsRead(width, height))
+            {
+                MediaIntake.Discard(taken1);
+                return Back(returnUrl, "add", "photo-pixels");
+            }
+
             if (!store.AddPhoto(Me(context), id, new PhotoFile(Path.GetFileName(taken1.Path), taken1.ContentType, width, height, taken1.Length), caption ?? string.Empty, day, shown.Kind, shown.Circle))
             {
                 MediaIntake.Discard(taken1);

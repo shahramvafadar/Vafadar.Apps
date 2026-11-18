@@ -148,6 +148,18 @@ public sealed class PhotoPagesTests : IDisposable
         Assert.DoesNotContain(id, (await sara.Get($"/en/people/{await Me(mina)}")).Html, StringComparison.Ordinal);
     }
 
+    // A small PNG that says it is 30000 by 30000 pixels: the width and the height stand in its first chunk.
+    private static byte[] Wide(byte[] png)
+    {
+        var wide = (byte[])png.Clone();
+        foreach (var at in new[] { 16, 20 })
+        {
+            (wide[at], wide[at + 1], wide[at + 2], wide[at + 3]) = (0, 0, 0x75, 0x30);
+        }
+
+        return wide;
+    }
+
     [Theory]
     [InlineData("text", "1998-07-04", "private", "photo-file", "The file is no PNG, JPEG or WebP image")]
     [InlineData("svg", "1998-07-04", "private", "photo-file", "The file is no PNG, JPEG or WebP image")]
@@ -155,6 +167,7 @@ public sealed class PhotoPagesTests : IDisposable
     [InlineData("png", "2999-01-01", "private", "photo-form", "is not in the future")]
     [InlineData("png", "", "everybody", "photo-form", "Please choose a picture")]
     [InlineData("large", "", "private", "photo-large", "The picture is larger than 10 MB.")]
+    [InlineData("wide", "", "private", "photo-pixels", "The picture has more than 50 million pixels.")]
     public async Task What_cannot_be_kept_is_not_kept_and_the_page_says_why(string kind, string taken, string scope, string problem, string said)
     {
         var mina = await Signed("Mina");
@@ -163,6 +176,7 @@ public sealed class PhotoPagesTests : IDisposable
             "text" => Encoding.UTF8.GetBytes("This is no picture."),
             "svg" => Encoding.UTF8.GetBytes("<svg xmlns=\"http://www.w3.org/2000/svg\"><script>alert(1)</script></svg>"),
             "large" => [.. TestFiles.Png(), .. new byte[(10 * 1024 * 1024) + 1]],
+            "wide" => Wide(TestFiles.Png()),
             _ => TestFiles.Png(),
         };
 

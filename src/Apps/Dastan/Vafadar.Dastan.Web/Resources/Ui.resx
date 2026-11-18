@@ -2646,4 +2646,7 @@
   <data name="Account_Choose_Privacy" xml:space="preserve">
     <value>The site keeps the name and that this account is opened through {0} – no password, no mail address and nothing else {0} knows about you. Until you set a password on the page of your account, it opens only through {0}.</value>
   </data>
+  <data name="Photos_Problem_photo-pixels" xml:space="preserve">
+    <value>The picture has more than 50 million pixels. Bring in a smaller copy of it.</value>
+  </data>
 </root>

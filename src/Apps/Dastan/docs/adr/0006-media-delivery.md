@@ -237,3 +237,19 @@ something else. It is its own field now.
 
 Checked: `ImageSizesOfItemsTests` (9 cases, readers and intake), one more case of `StudioMediaIntakeTests`
 (the tool), `ImageSizesPagesTests` (3 cases, the site). Not looked at in a browser.
+
+## Addendum of 2026-11-18: how large a picture is that the site reads, and how a smaller size is written
+
+A review of the code for sizes found two things to make firmer.
+
+* **A measure of pixels.** A picture is read whole into memory to be turned upright or made smaller, four
+  bytes for a pixel, and a file of a few megabytes can say that it is tens of thousands of pixels wide. The
+  site reads no picture of more than fifty million pixels (`ImageSizes.MostPixels`); what the file says about
+  its size is asked before it is read. An image of a collection that is larger stays as it is, without sizes.
+  A photograph of a visitor that is larger is not kept, and the form says why: every browser that is shown it
+  would read it whole as well. The container of the trial has memory for one such picture (`mem_limit: 1g`).
+* **A smaller size is whole or not there.** It is written under another name beside the image and takes its
+  own name when it is complete, so that a request that comes meanwhile gets the photograph itself and never
+  half a file. What is left of a writing that failed is removed.
+
+Checked: two more cases of `ImageSizesTests`, one of `PhotoPagesTests`.
