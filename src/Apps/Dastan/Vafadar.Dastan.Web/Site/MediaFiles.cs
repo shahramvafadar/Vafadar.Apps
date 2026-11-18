@@ -26,6 +26,35 @@ public static class MediaAddress
     /// <summary>Returns the address of the captions of a video in a language.</summary>
     public static string Captions(string collection, MediaId id, string language) => $"{Root}/{collection}/{id}/captions-{language}";
 
+    /// <summary>Returns the address of a smaller size of an image, by its place among the sizes of the item.</summary>
+    public static string Size(string collection, MediaId id, int index) =>
+        $"{Root}/{collection}/{id}/size-{index.ToString(CultureInfo.InvariantCulture)}";
+
+    /// <summary>
+    /// Returns what tells a browser the sizes of an image – each with its width – so that it takes the one that
+    /// fits where the picture stands; nothing for an image without smaller sizes, a video, or an image that does
+    /// not say how wide it is.
+    /// </summary>
+    /// <param name="collection">The collection of the item.</param>
+    /// <param name="item">The item.</param>
+    /// <param name="available">Whether a file of the collection is there to be given.</param>
+    public static string? SourceSet(string collection, MediaItem item, Func<string?, bool> available)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+        ArgumentNullException.ThrowIfNull(available);
+        if (item.Kind != MediaKind.Image || item.Width is not { } whole)
+        {
+            return null;
+        }
+
+        var sizes = item.Sizes
+            .Select((size, index) => (size.Width, size.File, Address: Size(collection, item.Id, index)))
+            .Where(size => available(size.File))
+            .Select(size => $"{size.Address} {size.Width.ToString(CultureInfo.InvariantCulture)}w")
+            .ToList();
+        return sizes.Count == 0 ? null : string.Join(", ", sizes.Append($"{File(collection, item.Id)} {whole.ToString(CultureInfo.InvariantCulture)}w"));
+    }
+
     /// <summary>Returns the address of another format of an image, by its place in the list of the item.</summary>
     public static string Rendition(string collection, MediaId id, int index) =>
         $"{Root}/{collection}/{id}/rendition-{index.ToString(CultureInfo.InvariantCulture)}";
@@ -65,6 +94,14 @@ public static class MediaFiles
 
         const string captions = "captions-";
         const string rendition = "rendition-";
+        const string size = "size-";
+        if (part.StartsWith(size, StringComparison.Ordinal))
+        {
+            return int.TryParse(part.AsSpan(size.Length), NumberStyles.None, CultureInfo.InvariantCulture, out var place) && place < item.Sizes.Length
+                ? item.Sizes[place].File
+                : null;
+        }
+
         if (part.StartsWith(captions, StringComparison.Ordinal))
         {
             return item.Captions.FirstOrDefault(track => track.Language == part[captions.Length..])?.File;

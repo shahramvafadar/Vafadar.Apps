@@ -212,3 +212,25 @@ before.
 Checked: `ImageSizesTests` (12 cases, with pictures the tests draw: four fields of colour, so that a test sees
 which way up a picture is), one more case of `PhotoPagesTests`. **Not looked at in a browser, and the library
 was not run in a container** – the pipeline runs the tests on Linux, which loads the same library.
+
+## Second addendum of 2026-11-18 on reading and writing images – smaller sizes of the editors' images (step 17.8)
+
+The addendum above left the editors' images out: a rendition is another format, and a smaller size is
+something else. It is its own field now.
+
+* **`sizes`** of a media item: `width` and `url` – the same picture, narrower. The readers take them for an
+  image only, each narrower than the image and no width twice, and give them the narrowest first
+  (`MediaItem.Sizes`). `renditions` stay what they were: other formats.
+* **The tool makes them**: `MediaIntake.Take` is told the longer sides to make (`MediaForm.Sizes`: 480 for a
+  card among others, 1200 for a page) and makes those that are smaller than the image beside its file, under
+  its name and their width. The record names what was made; a file that takes the place of another names its
+  own sizes or none. A record that is refused takes its sizes with its file.
+* **The pages tell the browser**: the page of an image and the gallery name the sizes and the image itself
+  with their widths (`srcset`) – when the image says how wide it is – and the browser takes the one that fits.
+  A size has an address of its own (`…/size-0`) and is given by the rule of every file of an item: from the
+  visitor's own projection.
+* An image that is in a collection already has no sizes until its file is brought in again; nothing goes
+  through the collections and converts them.
+
+Checked: `ImageSizesOfItemsTests` (9 cases, readers and intake), one more case of `StudioMediaIntakeTests`
+(the tool), `ImageSizesPagesTests` (3 cases, the site). Not looked at in a browser.

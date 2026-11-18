@@ -2586,4 +2586,22 @@
   <data name="Account_InvitationOnly" xml:space="preserve">
     <value>For now this site takes new accounts by invitation only. Somebody who has an account can send you a link.</value>
   </data>
+  <data name="Photos_Object" xml:space="preserve">
+    <value>I am in this picture and do not agree that everybody sees it</value>
+  </data>
+  <data name="Photos_Object_Back" xml:space="preserve">
+    <value>Take my objection back: I am not named by it any more</value>
+  </data>
+  <data name="Photos_Objected" xml:space="preserve">
+    <value>You said that this photograph shows you. It is held back from everybody until you agree or take that back.</value>
+  </data>
+  <data name="Photos_Tag_Objection" xml:space="preserve">
+    <value>says that the photograph shows them</value>
+  </data>
+  <data name="Photos_Said_objected" xml:space="preserve">
+    <value>The photograph is held back: only its owner and the people it names see it now. Its owner sees that you said so.</value>
+  </data>
+  <data name="Photos_Said_objection-back" xml:space="preserve">
+    <value>You took your objection back.</value>
+  </data>
 </root>

@@ -1361,6 +1361,35 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             }
         }
 
+        // The smaller sizes of an image: the same picture, narrower.
+        var sizes = ImmutableArray.CreateBuilder<(int Width, string File)>();
+        foreach (var size in record.Children("sizes", required: false))
+        {
+            var sizeWidth = size.Integer("width");
+            var sizeFile = LocalFile(size, "url", required: true);
+            size.Finish();
+            if (sizeWidth is { } narrow && sizeFile is not null)
+            {
+                if (narrow <= 0 || (width is { } whole && narrow >= whole))
+                {
+                    record.Problem("a smaller size is narrower than the image and at least one pixel wide.");
+                }
+                else if (sizes.Any(other => other.Width == narrow))
+                {
+                    record.Problem($"two smaller sizes are {narrow} pixels wide.");
+                }
+                else
+                {
+                    sizes.Add((narrow, sizeFile));
+                }
+            }
+        }
+
+        if (sizes.Count > 0 && kindKnown && kind != MediaKind.Image)
+        {
+            record.Problem("only an image has smaller sizes.");
+        }
+
         record.Finish();
         if (id is null || !kindKnown || label is null || caption is null || creator is null || rights is null
             || !representationKnown || created is null || level is null || allowed is null)
@@ -1396,6 +1425,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Captions = captions.ToImmutable(),
             Transcript = transcript,
             Renditions = renditions.ToImmutable(),
+            Sizes = [.. sizes.OrderBy(size => size.Width)],
             DurationSeconds = duration,
             HasAudio = audio,
             Width = width,

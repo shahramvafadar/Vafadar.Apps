@@ -11,6 +11,7 @@
     <Compile Include="..\Vafadar.Dastan.Store.Tests\WorkingCopy.cs" Link="Shared\WorkingCopy.cs" />
     <!-- The smallest files of each kind a media item is made of, for the tests that bring files in. -->
     <Compile Include="..\Vafadar.Dastan.Data.Tests\TestFiles.cs" Link="Shared\TestFiles.cs" />
+    <Compile Include="..\Vafadar.Dastan.Data.Tests\RealImages.cs" Link="Shared\RealImages.cs" />
   </ItemGroup>
 
 </Project>

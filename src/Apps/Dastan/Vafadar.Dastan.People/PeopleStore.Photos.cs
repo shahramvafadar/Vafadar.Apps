@@ -19,6 +19,9 @@ public sealed record PhotoTag(PersonRef Person, TagState State)
 {
     /// <summary>Gets a value indicating whether the person agreed that the photograph is shown to everybody (D-053).</summary>
     public bool Everybody { get; init; }
+
+    /// <summary>Gets a value indicating whether the person said themselves that the photograph shows them (D-059), instead of being named by its owner.</summary>
+    public bool Objection { get; init; }
 }
 
 /// <summary>A photograph as somebody who may see it is shown it.</summary>
@@ -56,6 +59,9 @@ public sealed partial class PeopleStore
 
     /// <summary>How many people a photograph can be said to show.</summary>
     public const int MostTags = 20;
+
+    /// <summary>How many objections of one account may stand at a time: enough for somebody who is in many pictures, too few to hold back the pictures of a site.</summary>
+    public const int MostObjections = 20;
 
     /// <summary>Returns whether an account can bring in another photograph.</summary>
     public bool CanAddPhoto(string id) => IsOpen(id) && _context.Photos.Count(photo => photo.Owner == id) < MostPhotos;
@@ -177,7 +183,8 @@ public sealed partial class PeopleStore
     {
         var tag = _context.PhotoTags.SingleOrDefault(candidate => candidate.Photo == photo && candidate.Account == account);
         // A tag the person took away stays as it is: taken back and put on again, it would ask them a second time.
-        if (tag is null || (TagState)tag.State == TagState.Removed
+        // An objection is the person's own word: the owner of the photograph does not take it back for them.
+        if (tag is null || (TagState)tag.State == TagState.Removed || tag.Objection
             || !_context.Photos.AsNoTracking().Any(candidate => candidate.Id == photo && candidate.Owner == id) || !IsOpen(id))
         {
             _context.ChangeTracker.Clear();
@@ -245,6 +252,48 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>
+    /// Says that a photograph its owner shows to everybody shows the account, and that the account does not
+    /// agree to that (D-059): the way of somebody the owner did not name. The photograph is held back at once –
+    /// seen by its owner and the people it names – until the account agrees or takes its word back, or the
+    /// owner shows the photograph to fewer people. Only for a photograph the account may see, of somebody else,
+    /// that names the account not yet.
+    /// </summary>
+    public bool ObjectToPhoto(string id, string photo)
+    {
+        var stored = _context.Photos.AsNoTracking().SingleOrDefault(candidate => candidate.Id == photo);
+        if (stored is null || stored.Owner == id || stored.Scope != (int)ScopeKind.Public || !IsOpen(id) || !IsOpen(stored.Owner))
+        {
+            return false;
+        }
+
+        var tags = _context.PhotoTags.AsNoTracking().Where(candidate => candidate.Photo == photo).ToList();
+        if (tags.Any(tag => tag.Account == id) || tags.Count >= MostTags || !Rule(stored, tags).MayOpen(new AccountId(id))
+            || _context.PhotoTags.AsNoTracking().Count(tag => tag.Account == id && tag.Objection && !tag.Everybody) >= MostObjections)
+        {
+            return false;
+        }
+
+        _context.PhotoTags.Add(new StoredPhotoTag { Photo = photo, Account = id, State = (int)TagState.Approved, Objection = true });
+        Save();
+        return true;
+    }
+
+    /// <summary>Takes an objection back: the account is not named by the photograph any more. Only who objected can.</summary>
+    public bool WithdrawObjection(string id, string photo)
+    {
+        var tag = _context.PhotoTags.SingleOrDefault(candidate => candidate.Photo == photo && candidate.Account == id && candidate.Objection);
+        if (tag is null || !IsOpen(id))
+        {
+            _context.ChangeTracker.Clear();
+            return false;
+        }
+
+        _context.PhotoTags.Remove(tag);
+        Save();
+        return true;
+    }
+
+    /// <summary>
     /// Returns the photographs their owners show to everybody and that are said to show an account – those that
     /// wait for its agreement and those it agreed to, which it can take back.
     /// </summary>
@@ -299,7 +348,7 @@ public sealed partial class PeopleStore
             return [];
         }
 
-        var tagged = _context.PhotoTags.AsNoTracking().Where(tag => tag.Account == account && tag.State == (int)TagState.Approved).Select(tag => tag.Photo).ToList();
+        var tagged = _context.PhotoTags.AsNoTracking().Where(tag => tag.Account == account && tag.State == (int)TagState.Approved && (!tag.Objection || tag.Everybody)).Select(tag => tag.Photo).ToList();
         return [.. Shown(Viewer(viewer), _context.Photos.AsNoTracking().Where(photo => photo.Owner == account || tagged.Contains(photo.Id)).ToList())];
     }
 
@@ -330,8 +379,8 @@ public sealed partial class PeopleStore
                 (ScopeKind)photo.Scope,
                 photo.Owner == viewer ? photo.Circle : null,
                 new PhotoFile(photo.File, photo.ContentType, photo.Width, photo.Height, photo.Length),
-                [.. tags.Where(tag => tag.Photo == photo.Id && names.ContainsKey(tag.Account) && (all || photo.Owner == viewer || tag.State == (int)TagState.Approved))
-                    .Select(tag => new PhotoTag(names[tag.Account], (TagState)tag.State) { Everybody = tag.Everybody })
+                [.. tags.Where(tag => tag.Photo == photo.Id && names.ContainsKey(tag.Account) && (all || photo.Owner == viewer || tag.Account == viewer || (tag.State == (int)TagState.Approved && (!tag.Objection || tag.Everybody))))
+                    .Select(tag => new PhotoTag(names[tag.Account], (TagState)tag.State) { Everybody = tag.Everybody, Objection = tag.Objection })
                     .OrderBy(tag => tag.Person.Name, StringComparer.CurrentCultureIgnoreCase)])
             {
                 Held = IsHeld(photo, tags.Where(tag => tag.Photo == photo.Id)),

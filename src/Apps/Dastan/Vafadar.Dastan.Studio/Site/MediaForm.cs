@@ -10,6 +10,20 @@ namespace Vafadar.Dastan.Studio.Site;
 /// </summary>
 public static class MediaForm
 {
+    /// <summary>The longer sides of the smaller sizes the tool makes of an image that is brought in (D-056): one for a card among others, one for a page.</summary>
+    public static IReadOnlyList<int> Sizes { get; } = [480, 1200];
+
+    // The smaller sizes that were made of the file of an image, as the record names them; an image that got
+    // none names none – those of the file it had before are not its sizes.
+    private static void Smaller(JsonObject record, TakenFile file)
+    {
+        record.Remove("sizes");
+        if (file.Sizes.Count > 0)
+        {
+            record["sizes"] = new JsonArray([.. file.Sizes.Select(size => (JsonNode)new JsonObject { ["width"] = size.Width, ["url"] = TakenFile.UrlOf(size) })]);
+        }
+    }
+
     /// <summary>
     /// Returns the record of an item with a file that was taken in for one of its parts, or nothing when the file
     /// is of another kind than the item – a video brought in for an image.
@@ -33,6 +47,7 @@ public static class MediaForm
                     record["dimensions"] = new JsonObject { ["width"] = width, ["height"] = height };
                 }
 
+                Smaller(record, file);
                 break;
 
             case "poster":
@@ -116,6 +131,7 @@ public static class MediaForm
             record["dimensions"] = new JsonObject { ["width"] = width, ["height"] = height };
         }
 
+        Smaller(record, file);
         return record;
     }
 }

@@ -365,6 +365,47 @@ public sealed class PhotoPagesTests : IDisposable
     }
 
     [Fact]
+    public async Task Somebody_a_photograph_shows_and_does_not_name_objects_and_it_is_held_back_until_they_let_it_go()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var id = await Bring(mina, "public");
+        var hidden = await Bring(mina, "private", caption: "For me");
+        var minas = $"/en/people/{await Me(mina)}";
+        var stranger = _site.Visitor();
+
+        // The way to object stands under the photograph for who is signed in and is not its owner.
+        Assert.Contains("I am in this picture", (await sara.Get(minas)).Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("I am in this picture", (await mina.Get(minas)).Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("I am in this picture", (await stranger.Get(minas)).Main, StringComparison.Ordinal);
+
+        var objected = await Send(sara, "object", ("photo", id), ("answer", "object"));
+
+        Assert.Equal($"{Photos}?said=objected#asked", objected.Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.NotFound, (await stranger.Get($"/photo/{id}")).Status);
+        Assert.Equal(HttpStatusCode.OK, (await sara.Get($"/photo/{id}")).Status);
+        Assert.Contains("You said that this photograph shows you", (await sara.Get(Photos)).Main, StringComparison.Ordinal);
+
+        // Its owner is told who said so, and cannot take the word back for her.
+        var owners = await mina.Get(Photos);
+        Assert.Contains("Held back", owners.Main, StringComparison.Ordinal);
+        Assert.Matches("<bdi>Sara</bdi>\\s*<span class=\"meta\">– says that the photograph shows them", owners.Main);
+        Assert.Equal("/refused", (await Send(mina, "untag", ("photo", id), ("account", await Me(sara)))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(mina, "object", ("photo", id), ("answer", "back"))).Response.Headers.Location?.OriginalString);
+
+        // Nothing but a photograph everybody sees, of somebody else, is objected to – and once.
+        Assert.Equal("/refused", (await Send(sara, "object", ("photo", id), ("answer", "object"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, "object", ("photo", hidden), ("answer", "object"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(mina, "object", ("photo", id), ("answer", "object"))).Response.Headers.Location?.OriginalString);
+        Assert.Equal("/refused", (await Send(sara, "object", ("photo", id), ("answer", "perhaps"))).Response.Headers.Location?.OriginalString);
+
+        var back = await Send(sara, "object", ("photo", id), ("answer", "back"));
+
+        Assert.Equal($"{Photos}?said=objection-back#asked", back.Response.Headers.Location?.OriginalString);
+        Assert.Equal(HttpStatusCode.OK, (await stranger.Get($"/photo/{id}")).Status);
+    }
+
+    [Fact]
     public async Task A_large_photograph_is_shown_small_where_it_stands_among_others_and_whole_where_it_is_asked_for()
     {
         var mina = await Signed("Mina");
@@ -493,6 +534,7 @@ public sealed class PhotoPagesTests : IDisposable
     [InlineData("album-remove")]
     [InlineData("album-place")]
     [InlineData("album-take")]
+    [InlineData("object")]
     [InlineData("share")]
     [InlineData("remove")]
     [InlineData("tag")]

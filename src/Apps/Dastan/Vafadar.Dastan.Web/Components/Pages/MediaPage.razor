@@ -26,7 +26,8 @@
         }
         else if (item.Kind == MediaKind.Image)
         {
-            <img src="@_file" alt="@_alt" />
+            @* Where smaller sizes of the image were made, the browser takes the one that fits the page (D-056). *@
+            <img src="@_file" srcset="@MediaAddress.SourceSet(Site.Collection, item, file => Site.ContentFile(file) is not null)" sizes="@(_sizes ? "(min-width: 64rem) 60rem, 100vw" : null)" alt="@_alt" />
         }
         else
         {
@@ -269,6 +270,7 @@
     private List<CaptionTrack> _tracks = [];
     private int _defaultTrack;
     private List<(string Format, string Address)> _renditions = [];
+    private bool _sizes;
     private string _galleryAddress = string.Empty;
     private string _galleryName = string.Empty;
     private string _context = string.Empty;
@@ -332,6 +334,7 @@
         // The video has no words of its own without its captions: they are on unless the visitor turns them off,
         // in the language of the page when there are captions in it.
         _defaultTrack = Math.Max(0, _tracks.FindIndex(track => track.Language == Visitor.Language.Tag));
+        _sizes = MediaAddress.SourceSet(Site.Collection, item, file => Site.ContentFile(file) is not null) is not null;
         _renditions =
         [
             .. item.Renditions

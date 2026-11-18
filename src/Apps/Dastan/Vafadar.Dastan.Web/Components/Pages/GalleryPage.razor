@@ -71,7 +71,7 @@
                     @if (picture is not null)
                     {
                         @* The picture leads where the title leads; for a screen reader and the keyboard the title is the link. *@
-                        <a class="thumb" href="@viewer" tabindex="-1" aria-hidden="true"><img src="@picture" alt="" loading="lazy" /></a>
+                        <a class="thumb" href="@viewer" tabindex="-1" aria-hidden="true"><img src="@picture" srcset="@MediaAddress.SourceSet(Site.Collection, item, file => Site.ContentFile(file) is not null)" sizes="@(item.Sizes.IsEmpty ? null : "(min-width: 40rem) 20rem, 100vw")" alt="" loading="lazy" /></a>
                     }
                     <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
                     <h2><a href="@viewer"><Loc Text="item.Label" /></a></h2>

@@ -208,6 +208,19 @@ public static class PhotoEndpoints
             return album is not null && store.TakeFromAlbum(Me(context), album.Value, photo ?? string.Empty) ? Said(returnUrl, "taken-out", "albums") : Results.BadRequest();
         });
 
+        // Somebody a photograph shows and its owner did not name objects to its being shown to everybody, or
+        // takes that back (D-059, step 17.6). The photograph is held back for as long as the objection stands.
+        forms.MapPost("/object", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? answer, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return answer switch
+            {
+                "object" when store.ObjectToPhoto(Me(context), photo ?? string.Empty) => Said(returnUrl, "objected", "asked"),
+                "back" when store.WithdrawObjection(Me(context), photo ?? string.Empty) => Said(returnUrl, "objection-back", "asked"),
+                _ => Results.BadRequest(),
+            };
+        });
+
         // A person a photograph names agrees that it is shown to everybody, or takes that back (D-053, step 16.9).
         forms.MapPost("/agree", (HttpContext context, AccountDesk desk, [FromForm] string? photo, [FromForm] string? answer, [FromForm] string? returnUrl) =>
         {

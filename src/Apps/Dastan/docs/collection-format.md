@@ -106,10 +106,10 @@ revision has to have the record on every statement.
 Every record below has a `spoilerLevel`: the earliest stage at which a reader may see it. It has to be one of the
 stages. A record never points to a record of a later stage – its sources included.
 
-### `correspondences` – another telling of the same world
+### `correspondences` – another telling, or another story, of the same world
 
 Optional, inside `spoilerPolicy`. When the site offers another collection about the same world (`worldId`) –
-another edition, a retelling – the editors may state which of its stages a reader of a stage of this
+another edition, a retelling, another story of the same work – the editors may state which of its stages a reader of a stage of this
 collection has read. A visitor can then go on there from that stage, by their own choice.
 
 | Field | Meaning |
@@ -128,7 +128,11 @@ before the first named stage nothing is carried.
 * **Several stories**: several `NarrativeArc` entities. `subjectId` names what a visitor enters – one of the
   stories, or the work they belong to; every event says in `storyId` which story it is a step of. The story
   named by `subjectId` – or else the first in the file – is the one at `story`; the others have a page each.
-  The reading stages are those of the collection: one ladder for all its stories.
+  The reading stages are those of the collection: one ladder for all its stories. **For a line of reading
+  stages for each story** (D-058), give each story a collection of its own with the same `worldId`: each then
+  has its own stages and its own reading position, the page of each leads to the others, and
+  `correspondences` (above) say – where the editors are sure – which stage of one a reader of the other has
+  read. Without such a statement nothing is carried from one story to the other.
 * **No story**: a collection about a company, a club, a person, a period. `subjectId` names that entity;
   there are no events (`"events": []`), `editionContext` may be left out, and relations have the scope
   `outside_the_story`. What happened and when is said by statements with a date and by relations with a
@@ -443,7 +447,7 @@ not say what each has to do with the step.
 | `sourceUrl` | Optional: the public page of the item, an `https` address. An item that may not be shown and has this page stands in the galleries as a **reference**: its catalogue record and a link to the page, without a picture ([ADR 0006](adr/0006-media-delivery.md), addendum) |
 | `altText`, `altTextStatus` | Optional: the text alternative and its state – `not_prepared_image_not_cleared`, `draft_pending_visual_review` or `project_authored_for_exact_diagram` |
 | `depictedEntityIds`, `depictedEventIds`, `relatedRelationIds` | Optional lists: whom and what the item shows |
-| `posterUrl`, `captions` (`language`, `url`), `transcriptUrl` with `transcriptFormat` `text/plain` (a `.txt` file), `renditions` (`format`, `url`), `durationSeconds`, `audioTrack`, `dimensions` (`width`, `height`) | Optional; local paths like `url` |
+| `posterUrl`, `captions` (`language`, `url`), `transcriptUrl` with `transcriptFormat` `text/plain` (a `.txt` file), `renditions` (`format`, `url` – the same item in another format), `sizes` (`width`, `url` – for an image: the same picture narrower, in pixels; each narrower than the image, no width twice; the tool writes them when an image is brought in), `durationSeconds`, `audioTrack`, `dimensions` (`width`, `height`) | Optional; local paths like `url` |
 | `catalogTitle`, `accessionNumber`, `creditLine` | Optional: the record of a museum |
 | `reviewerProvenancePath` with `reviewerProvenanceAudience` `reviewer_only` | Optional: a working document for reviewers, outside `content/`. It is checked and never shown; the `revision` command leaves it out of a revision |
 | `status`, `deliveryStatus` | Optional notes |
