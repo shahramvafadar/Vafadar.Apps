@@ -458,5 +458,5 @@ left waits for one of these – each is a question of the owner's, not of code:
 | A library that reads and writes images | Smaller sizes of an image that is brought in (step 13.7); a picture for the preview of a link (step 14.4) |
 | A map: coasts and borders that may be shipped, or tiles from a host of the owner's | A background for the drawing of the places (step 14.1) |
 | The form of a statement that connects reading stages – between two editions, between the stories of one collection | A reading position that is carried between editions, and one for each story (step 14.11) |
-| How long reports of visitors that were looked at are kept | Deleting them (step 14.8) |
+| How long reports of visitors that were looked at are kept | The day to run `reports forget` with: the command exists and deletes nothing by itself (step 14.8) |
 | The owner's part of a public pilot (section 11): the review of the content, the rights of the images, the host, the devices, the people | A public site |

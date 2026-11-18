@@ -40,6 +40,10 @@ public static class ContentCommands
               history of the revisions before and what this one changes. Refuses a file in which a statement
               is not reviewed or a review is not recorded. Never over a file.
 
+          reports forget <folder> --looked-at-before <yyyy-MM-dd>
+              For whoever runs the site: deletes the reports of visitors that an editor looked at before
+              that day. A report nobody has looked at is never deleted. Says how many were deleted.
+
         """ + StoreCommands.Usage + EditorCommands.Usage + """
 
         Exit code: 0 in order, 1 a content file cannot be used, 2 the command was not understood.
@@ -69,10 +73,30 @@ public static class ContentCommands
             ["template", "collection" or "subject" or "comparison", _] => Template(words[1], words[2], null, output, today),
             ["template", "collection" or "subject" or "comparison", _, "--out", _] => Template(words[1], words[2], words[4], output, today),
             ["revision", _, ..] => Revision(words[1], words[2..], output),
+            ["reports", "forget", _, "--looked-at-before", _] => ForgetReports(words[2], words[4], output),
             ["store", "editor" or "editors" or "copy", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
             ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
             _ => NotAsked(output),
         };
+    }
+
+    private static int ForgetReports(string folder, string day, TextWriter output)
+    {
+        if (!DateOnly.TryParseExact(day, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out var before))
+        {
+            output.WriteLine($"{day} is no day; write it as 2026-11-18.");
+            return NotUnderstood;
+        }
+
+        if (!Directory.Exists(folder))
+        {
+            output.WriteLine($"{folder}: there is no such folder.");
+            return NotUsable;
+        }
+
+        var forgotten = new ReportBox(folder).Forget(before);
+        output.WriteLine($"Deleted {forgotten} report(s) that were looked at before {day}.");
+        return 0;
     }
 
     private static int NotAsked(TextWriter output)

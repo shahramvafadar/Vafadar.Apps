@@ -70,3 +70,10 @@ sees; more than five in an hour; an address that says something else; the return
 (6 cases) – the page in both languages; a tool without a folder; a report with its words and the way to its
 record; the note that it was looked at, which leaves the store untouched; a report somebody else looked at
 meanwhile and an act without a name. Not looked at in a browser; not tried with two machines.
+
+## Addendum of 2026-11-18 – deleting reports that were looked at
+
+`ReportBox.Forget(day)` deletes the reports an editor looked at before a day; the command of the editors'
+tools does it: `reports forget <folder> --looked-at-before <yyyy-MM-dd>`. A report nobody has looked at is
+never deleted this way. **Nothing deletes by itself**: how long such reports are kept is the owner's to say,
+and whoever runs the site runs the command with that day. Verification: two tests in `ReportBoxTests`.
