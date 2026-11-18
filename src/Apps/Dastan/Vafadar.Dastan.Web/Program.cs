@@ -32,6 +32,8 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
     options.UnlocalizedPaths.Add(SiteHealth.Address);
     options.UnlocalizedPaths.Add(ReportDesk.Address);
     options.UnlocalizedPaths.Add(PhotoEndpoints.File);
+    options.UnlocalizedPaths.Add("/signin-google");
+    options.UnlocalizedPaths.Add("/signin-microsoft");
     options.UnlocalizedPaths.Add(SearchEngineFiles.Robots);
     options.UnlocalizedPaths.Add(SearchEngineFiles.Sitemap);
 });
@@ -45,7 +47,7 @@ builder.Services.TryAddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<ReportDesk>();
 
 // The accounts of the visitors (step 16.1): there are some only where the site was told a file for their store.
-builder.Services.AddVisitorAccounts();
+builder.Services.AddVisitorAccounts(builder.Configuration);
 
 // The keys of the forms outlive the process only where a folder for them is named (docs/operations.md).
 if (builder.Configuration["Dastan:Keys"] is { Length: > 0 } keys)

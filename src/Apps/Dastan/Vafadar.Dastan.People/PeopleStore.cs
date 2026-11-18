@@ -31,7 +31,14 @@ public sealed record AccountResult(ImmutableArray<string> Problems)
 /// <param name="Name">The name.</param>
 /// <param name="CreatedAt">When it was made.</param>
 /// <param name="RecoveryCodesLeft">How many recovery codes are not used yet.</param>
-public sealed record VisitorInfo(string Id, string Name, DateTime CreatedAt, int RecoveryCodesLeft);
+public sealed record VisitorInfo(string Id, string Name, DateTime CreatedAt, int RecoveryCodesLeft)
+{
+    /// <summary>Gets a value indicating whether the account has a password. One that was made through a provider has none until its visitor sets one.</summary>
+    public bool HasPassword { get; init; } = true;
+
+    /// <summary>Gets the providers the account can be signed in through.</summary>
+    public ImmutableArray<string> Providers { get; init; } = [];
+}
 
 /// <summary>
 /// The store of the visitors (D-050): a database of its own beside the site, apart from the store of the
@@ -125,16 +132,35 @@ public sealed partial class PeopleStore : IDisposable
             return new([.. problems]);
         }
 
+        return Create(written, PasswordHash.Derive(password), invitation, null);
+    }
+
+    // Makes the account of a name that was looked at: with what is kept of a password, or without a password
+    // and with the sign-in of a provider instead.
+    private AccountResult Create(string written, string password, string? invitation, StoredExternalLogin? login)
+    {
+        var key = Key(written);
+        if (_context.Visitors.AsNoTracking().Any(candidate => candidate.NameKey == key))
+        {
+            return new(["taken"]);
+        }
+
         var visitor = new StoredVisitor
         {
             Id = Guid.NewGuid().ToString("N"),
             Name = written,
             NameKey = key,
-            Password = PasswordHash.Derive(password),
+            Password = password,
             Stamp = NewStamp(),
             CreatedAt = _time.GetUtcNow().UtcDateTime,
         };
         _context.Visitors.Add(visitor);
+        if (login is not null)
+        {
+            login.VisitorId = visitor.Id;
+            _context.ExternalLogins.Add(login);
+        }
+
         var codes = NewCodes(visitor.Id);
 
         // An invitation that can be used is used up by the account it led to; one that cannot stops nobody
@@ -215,7 +241,11 @@ public sealed partial class PeopleStore : IDisposable
         var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
         return visitor is null
             ? null
-            : new VisitorInfo(visitor.Id, visitor.Name, visitor.CreatedAt, _context.RecoveryCodes.AsNoTracking().Count(code => code.VisitorId == id && code.UsedAt == null));
+            : new VisitorInfo(visitor.Id, visitor.Name, visitor.CreatedAt, _context.RecoveryCodes.AsNoTracking().Count(code => code.VisitorId == id && code.UsedAt == null))
+            {
+                HasPassword = visitor.Password.Length > 0,
+                Providers = [.. _context.ExternalLogins.AsNoTracking().Where(login => login.VisitorId == id).Select(login => login.Provider).OrderBy(provider => provider)],
+            };
     }
 
     /// <summary>

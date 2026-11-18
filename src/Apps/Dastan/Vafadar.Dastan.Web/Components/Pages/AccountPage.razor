@@ -4,6 +4,7 @@
 @inject AccountDesk Desk
 @inject DastanLibrary Library
 @inject NavigationManager Navigation
+@inject Microsoft.Extensions.Options.IOptions<ExternalSignInOptions> External
 @inject IStringLocalizer<Ui> T
 
 @* The account of a visitor (step 16.1, D-048 to D-050): making one, signing in and out, another password,
@@ -47,6 +48,32 @@
     }
     else if (_info is null)
     {
+        @if (_arrived is { } arrived)
+        {
+            @* Somebody signed in through a provider and has no account yet (step 16.8): they choose its name. *@
+            <section id="external" aria-labelledby="external-title">
+                <h2 id="external-title">@T["Account_Choose_Title"]</h2>
+                <p>@string.Format(CultureInfo.CurrentCulture, T["Account_Choose_Lead"], Provider(arrived))</p>
+                @Problems("external")
+                <form method="post" action="@($"{AccountDesk.Root}/external-register")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="visually-hidden" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></p>
+                    <p class="field">
+                        <label for="external-name">@T["Account_Name"]</label>
+                        <input id="external-name" name="name" type="text" required minlength="@PeopleStore.ShortestName" maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" aria-describedby="external-name-hint" />
+                        <span class="meta" id="external-name-hint">@T["Account_Name_Hint"]</span>
+                    </p>
+                    <p class="note">@T["Account_Register_Privacy"]</p>
+                    @if (_deviceHolds)
+                    {
+                        <p class="note">@T["Account_Register_Adopts"]</p>
+                    }
+                    <p><button type="submit" class="action">@T["Account_Choose_Send"]</button></p>
+                </form>
+            </section>
+        }
+
         <section id="sign-in" aria-labelledby="sign-in-title">
             <h2 id="sign-in-title">@T["Account_SignIn_Title"]</h2>
             @Problems("sign-in")
@@ -63,6 +90,27 @@
                 </p>
                 <p><button type="submit" class="action">@T["Account_SignIn_Send"]</button></p>
             </form>
+            @if (_providers.Count > 0)
+            {
+                @* Offered only when the owner entered a client of the provider (D-048). *@
+                <h3 id="external-sign-in">@T["Account_External_Title"]</h3>
+                <p>@T["Account_External_Lead"]</p>
+                <div class="actions">
+                    @foreach (var provider in _providers)
+                    {
+                        <form method="post" action="@($"{AccountDesk.Root}/external")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="provider" value="@provider" />
+                            @if (_invited)
+                            {
+                                <input type="hidden" name="invitation" value="@Invitation" />
+                            }
+                            <button type="submit" class="action secondary">@string.Format(CultureInfo.CurrentCulture, T["Account_External_Send"], Provider(provider))</button>
+                        </form>
+                    }
+                </div>
+            }
         </section>
 
         <section id="register" aria-labelledby="register-title">
@@ -231,6 +279,83 @@
             </form>
         </section>
 
+        @if (_providers.Count > 0 || !_info.Providers.IsEmpty)
+        {
+            <section id="providers" aria-labelledby="providers-title">
+                <h2 id="providers-title">@T["Account_Providers_Title"]</h2>
+                <p>@T[_info.Providers.IsEmpty ? "Account_Providers_None" : "Account_Providers_Lead"]</p>
+                @Problems("providers")
+                @if (!_info.Providers.IsEmpty)
+                {
+                    <ul class="invitations" role="list">
+                        @foreach (var provider in _info.Providers)
+                        {
+                            <li>
+                                <span>@Provider(provider)</span>
+                                <form method="post" action="@($"{AccountDesk.Root}/unlink")" class="save inline">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="provider" value="@provider" />
+                                    <button type="submit">@string.Format(CultureInfo.CurrentCulture, T["Account_Providers_Remove"], Provider(provider))</button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                }
+                <div class="actions">
+                    @foreach (var provider in _providers.Where(provider => !_info.Providers.Contains(provider)))
+                    {
+                        <form method="post" action="@($"{AccountDesk.Root}/external")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="provider" value="@provider" />
+                            <button type="submit" class="action secondary">@string.Format(CultureInfo.CurrentCulture, T["Account_Providers_Add"], Provider(provider))</button>
+                        </form>
+                    }
+                </div>
+            </section>
+        }
+
+        @if (!_info.HasPassword)
+        {
+            @* An account made through a provider has no password until its visitor sets one. *@
+            <section id="password" aria-labelledby="password-title">
+                <h2 id="password-title">@T["Account_SetPassword_Title"]</h2>
+                <p>@T["Account_SetPassword_Lead"]</p>
+                @Problems("password")
+                <form method="post" action="@($"{AccountDesk.Root}/set-password")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="visually-hidden" aria-hidden="true"><input type="text" name="name" value="@_info.Name" autocomplete="username" readonly tabindex="-1" /></p>
+                    <p class="field">
+                        <label for="password-new">@T["Account_NewPassword"]</label>
+                        <input id="password-new" name="password" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" aria-describedby="password-new-hint" />
+                        <span class="meta" id="password-new-hint">@T["Account_Password_Hint"]</span>
+                    </p>
+                    <p class="field">
+                        <label for="password-again">@T["Account_Password_Again"]</label>
+                        <input id="password-again" name="again" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_SetPassword_Send"]</button></p>
+                </form>
+            </section>
+
+            <section id="codes" aria-labelledby="codes-title">
+                <h2 id="codes-title">@T["Account_NewCodes_Title"]</h2>
+                <p>@string.Format(CultureInfo.CurrentCulture, T["Account_CodesLeft"], Visitor.Number(_info.RecoveryCodesLeft))</p>
+                <p class="note">@T["Account_NeedsPassword"]</p>
+            </section>
+            <section id="export" aria-labelledby="export-title">
+                <h2 id="export-title">@T["Account_Export_Title"]</h2>
+                <p class="note">@T["Account_NeedsPassword"]</p>
+            </section>
+            <section id="close" aria-labelledby="close-title">
+                <h2 id="close-title">@T["Account_Close_Title"]</h2>
+                <p class="note">@T["Account_NeedsPassword"]</p>
+            </section>
+        }
+        else
+        {
         <section id="password" aria-labelledby="password-title">
             <h2 id="password-title">@T["Account_Password_Title"]</h2>
             @Problems("password")
@@ -308,14 +433,15 @@
                 </form>
             </details>
         </section>
+        }
     }
 }
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked"];
-    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export"];
-    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations"];
+    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked"];
+    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "providers"];
+    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in"];
 
     private VisitorInfo? _info;
     private System.Collections.Immutable.ImmutableArray<string> _codes = [];
@@ -326,6 +452,8 @@
     private bool _invited;
     private bool _deviceHolds;
     private IReadOnlyList<InvitationInfo> _invitations = [];
+    private IList<string> _providers = [];
+    private string? _arrived;
     private string _here = AccountDesk.Page;
 
     [CascadingParameter]
@@ -356,6 +484,7 @@
         _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
         _form = Forms.Contains(Form, StringComparer.Ordinal) ? Form : null;
         _problems = _form is null ? [] : [.. (Problem ?? string.Empty).Split(',').Where(problem => Known.Contains(problem, StringComparer.Ordinal)).Distinct()];
+        _providers = External.Value.Providers;
         var device = AccountState.Device(Context, Library);
         _deviceHolds = !device.Positions.IsEmpty || !device.Kept.IsEmpty;
         using (var store = Desk.Open())
@@ -368,6 +497,7 @@
             else
             {
                 _invited = store.IsInvited(Invitation);
+                _arrived = Desk.Arrival(Context)?.Provider;
             }
         }
 
@@ -382,6 +512,9 @@
         var written = day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         return Visitor.Language.Tag == "fa" ? Vafadar.Core.Text.Digits.ToPersian(written) : written;
     }
+
+    // The name of a provider as people know it; one the page has no word for is called by its own name.
+    private string Provider(string provider) => T[$"Account_Provider_{provider}"] is { ResourceNotFound: false } known ? known.Value : provider;
 
     // What was wrong with a form, said above it.
     private RenderFragment Problems(string form) => __builder =>

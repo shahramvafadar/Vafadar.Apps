@@ -23,4 +23,10 @@
     <InternalsVisibleTo Include="Vafadar.Dastan.Web.Tests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Signing in through Google or Microsoft (step 16.8, D-048): the handlers of the framework. Nothing of them is used until the owner enters a client of each. -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" />
+  </ItemGroup>
+
 </Project>

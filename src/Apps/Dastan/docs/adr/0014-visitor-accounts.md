@@ -309,3 +309,44 @@ camera or a phone, a large number of photographs, a container, a screen reader.
 
 Checked: `MakingPublicTests` (the store: 13 cases), five more cases of `FamilyTreePagesTests` (the site).
 **Not looked at in a browser.**
+
+## Ninth addendum (2026-11-18): signing in through Google or Microsoft (step 16.8)
+
+D-048 names two ways into an account: a name with a password, and Google or Microsoft. The second is built so
+that it adds nothing to what the site knows about a person.
+
+* **What is asked of the provider**: who it is, and nothing else. Google is asked for the scope `openid` only.
+  Microsoft tells who somebody is only together with the right to read their profile; of what it answers the
+  identifier is taken and everything else is dropped before a claim is made of it. No name, no mail address and
+  no picture is asked for, shown or kept, and no token of the provider is kept.
+* **What is kept**: the provider and a SHA-256 hash of "provider, identifier" (`ExternalLogins`). The hash finds
+  the account again; who reads the store cannot tell which account of the provider it is. The copy of one's own
+  data names the providers, not the hash.
+* **The name is the visitor's**: a sign-in no account belongs to leads to a form on which the visitor chooses
+  the name of the account, under the rules of every name. What the provider said waits for that form in a
+  cookie only the site can read, for ten minutes. Such an account has no password and gets recovery codes like
+  every account.
+* **A way in is kept**: an account adds a provider while signed in and removes it again; the only way in – one
+  provider and no password – is not removed. An account without a password sets one without being asked for a
+  present one; what asks for the password (new recovery codes, the copy of one's data, closing) waits until
+  then, and the page says so.
+* **One account per sign-in**: a sign-in belongs to one account and an account has one sign-in of a provider.
+  The sign-in of a closed account makes no second account; it is free again when the account is deleted.
+* **Offered only where set up**: a provider appears on the page when the owner entered its client
+  (`Dastan:SignIn:Google:ClientId` and `ClientSecret`, the same for `Microsoft`). Without them the site is as
+  before and has neither the addresses nor the forms. The secret comes from the environment of the container and
+  is never written into the repository, a command or a log.
+* **Limits**: an account made through a provider counts against the limit of new accounts like every other, and
+  an invitation is used up by it too.
+
+Considered and not done: taking the name or the mail address from the provider (it would bring what the site
+promises not to keep); joining a sign-in to an account "with the same mail address" (the site has none);
+signing in through a provider as a second step of a password.
+
+Checked: `ExternalSignInTests` (the store: 11 cases), `ExternalSignInPagesTests` (the site: 11 cases, with a
+made-up provider that answers at once, and for Google and Microsoft up to the address the visitor is sent to).
+The page was looked at in a browser with made-up clients (fa, dark): the buttons signed out and signed in. The
+form that chooses a name was not looked at in a browser. **Nothing was tried against Google or Microsoft**: that
+needs the site registered with each of them (the addresses to give them are `/signin-google` and
+`/signin-microsoft` of the site), which is the owner's, and it is the first thing to do before anybody relies
+on it.

@@ -365,11 +365,27 @@ public sealed class StoredPhotoTag
     public int State { get; set; }
 }
 
+/// <summary>That an account can be signed in through a provider (D-048). Nothing the provider knows about the person is kept.</summary>
+public sealed class StoredExternalLogin
+{
+    /// <summary>Gets or sets the provider: <c>google</c>, <c>microsoft</c>.</summary>
+    public required string Provider { get; set; }
+
+    /// <summary>Gets or sets a hash of the identifier the provider gives the person. The identifier itself is not kept.</summary>
+    public required string Key { get; set; }
+
+    /// <summary>Gets or sets the account.</summary>
+    public required string VisitorId { get; set; }
+}
+
 /// <summary>The database of the store of the visitors.</summary>
 public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbContext(options)
 {
     /// <summary>Gets the accounts.</summary>
     public DbSet<StoredVisitor> Visitors => Set<StoredVisitor>();
+
+    /// <summary>Gets the providers the accounts can be signed in through.</summary>
+    public DbSet<StoredExternalLogin> ExternalLogins => Set<StoredExternalLogin>();
 
     /// <summary>Gets the recovery codes.</summary>
     public DbSet<StoredRecoveryCode> RecoveryCodes => Set<StoredRecoveryCode>();
@@ -603,6 +619,16 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             tag.HasIndex(item => item.Account);
             tag.HasOne<StoredPhoto>().WithMany().HasForeignKey(item => item.Photo).OnDelete(DeleteBehavior.Cascade);
             tag.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredExternalLogin>(login =>
+        {
+            login.HasKey(item => new { item.Provider, item.Key });
+            login.Property(item => item.Provider).HasMaxLength(20);
+            login.Property(item => item.Key).HasMaxLength(64);
+            login.Property(item => item.VisitorId).HasMaxLength(40);
+            login.HasIndex(item => item.VisitorId);
+            login.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.VisitorId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredInvitation>(invitation =>
