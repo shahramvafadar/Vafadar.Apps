@@ -93,7 +93,7 @@ public static class ReportEndpoint
     public static IEndpointConventionBuilder MapVisitorReports(this IEndpointRouteBuilder endpoints) =>
         endpoints.MapPost(ReportDesk.Address, (
             HttpContext context,
-            DastanSite site,
+            DastanLibrary library,
             ReportDesk desk,
             Visitor visitor,
             [FromForm] string? collection,
@@ -109,9 +109,9 @@ public static class ReportEndpoint
 
             // A report is about a statement of this site that its writer could read, in words of a length a form allows.
             var words = (text ?? string.Empty).Trim();
-            if (collection != site.Collection
+            if (library.Find(collection) is not { } site
                 || words.Length is 0 or > ReportBox.LongestText
-                || visitor.Projection is not { } projection
+                || visitor.Of(site) is not { } projection
                 || ReportDesk.Find(projection, statement ?? string.Empty) is null)
             {
                 return Results.BadRequest();

@@ -36,7 +36,10 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
 });
 
 builder.Services.Configure<DastanOptions>(builder.Configuration.GetSection("Dastan"));
-builder.Services.AddSingleton<DastanSite>();
+builder.Services.AddSingleton<DastanLibrary>();
+
+// The collection of a request is the one its address names (step 14.10).
+builder.Services.AddScoped(services => services.GetRequiredService<DastanLibrary>().Of(services.GetRequiredService<IHttpContextAccessor>().HttpContext!));
 builder.Services.TryAddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<ReportDesk>();
 
@@ -74,7 +77,7 @@ var app = builder.Build();
 
 // The collection is read now: a collection that cannot be used stops the app with the list of what is wrong,
 // instead of failing for the first visitor.
-var site = app.Services.GetRequiredService<DastanSite>();
+var site = app.Services.GetRequiredService<DastanLibrary>();
 
 if (proxies.Length > 0)
 {

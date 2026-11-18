@@ -41,8 +41,102 @@ public sealed class DastanOptions
 }
 
 /// <summary>
-/// The collection of the site, read once when the app starts, and its projections. Nothing else in the web project
-/// holds the catalogue: pages get a <see cref="Projection"/> for the visitor's reading boundary and nothing more.
+/// Every collection of the site (step 14.10), read once when the app starts: the files of the folder
+/// <c>samples</c> that are collections, the one the site was told first (<see cref="DastanOptions.Sample"/>)
+/// and then the others by their names. A collection that cannot be used stops the app.
+/// </summary>
+public sealed class DastanLibrary
+{
+    // The first part of an address that is no collection: a collection of that name could not be reached.
+    private static readonly string[] Taken = ["compare", "media", "preferences", "report", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
+
+    /// <summary>Initializes a new instance of the <see cref="DastanLibrary"/> class and reads the collections.</summary>
+    /// <exception cref="SampleFormatException">A collection cannot be used; the app does not start.</exception>
+    public DastanLibrary(IOptions<DastanOptions> options, IHostEnvironment environment)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(environment);
+        var settings = options.Value;
+        Audience = settings.Audience;
+        var content = Path.GetFullPath(Path.Combine(environment.ContentRootPath, settings.Content));
+
+        // The public gets reviewed texts only: a translation that is a draft is not read into a public site.
+        var reviewedOnly = Audience == Audience.Public;
+
+        // A comparison that is not released to the audience of the site does not exist for it.
+        Comparisons =
+        [
+            .. ComparisonSample.LoadAll(Path.Combine(content, "comparisons"), reviewedOnly).Where(comparison => comparison.MayBeShownTo(Audience)),
+        ];
+
+        var samples = Path.Combine(content, "samples");
+        var first = Path.Combine(samples, settings.Sample);
+        IEnumerable<string> others = Directory.Exists(samples)
+            ? Directory.EnumerateFiles(samples, "*.json").Where(file => !PathsEqual(file, first) && IsCollection(file)).Order(StringComparer.Ordinal)
+            : [];
+        Collections = [.. new[] { first }.Concat(others).Select(file => new DastanSite(PilotSample.Load(file, reviewedOnly), Audience, content, Comparisons))];
+
+        var twice = Collections.GroupBy(site => site.Collection, StringComparer.Ordinal).FirstOrDefault(group => group.Count() > 1);
+        if (twice is not null)
+        {
+            throw new InvalidOperationException($"Two collections of the site are about {twice.Key}: an address can lead to one of them only.");
+        }
+
+        if (Collections.FirstOrDefault(site => Taken.Contains(site.Collection, StringComparer.Ordinal)) is { } unreachable)
+        {
+            throw new InvalidOperationException($"A collection about {unreachable.Collection} cannot be reached: the site has an address of that name.");
+        }
+    }
+
+    /// <summary>Gets who the site shows its collections to.</summary>
+    public Audience Audience { get; }
+
+    /// <summary>Gets the collections, the one a visitor enters first at the beginning.</summary>
+    public ImmutableArray<DastanSite> Collections { get; }
+
+    /// <summary>Gets the comparisons the audience of the site may see, in the order of their files.</summary>
+    public ImmutableArray<Comparison> Comparisons { get; }
+
+    /// <summary>Returns the collection of that name, or <see langword="null"/>.</summary>
+    public DastanSite? Find(string? collection) => Collections.FirstOrDefault(site => site.Collection == collection);
+
+    /// <summary>
+    /// Returns the collection a request is about: the one its address names first, or the first collection of the
+    /// site for an address that names none – the start page, a comparison.
+    /// </summary>
+    public DastanSite Of(HttpContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        var path = context.Request.Path.Value ?? string.Empty;
+        var end = path.IndexOf('/', 1);
+        var named = path.Length > 1 ? (end < 0 ? path[1..] : path[1..end]) : string.Empty;
+        return Find(named) ?? Collections[0];
+    }
+
+    // A file of the folder is a collection when it says so: a translation and anything else is none.
+    private static bool IsCollection(string file)
+    {
+        try
+        {
+            using var stream = File.OpenRead(file);
+            using var document = System.Text.Json.JsonDocument.Parse(stream);
+            return document.RootElement.ValueKind == System.Text.Json.JsonValueKind.Object && document.RootElement.TryGetProperty("schemaVersion", out _);
+        }
+        catch (System.Text.Json.JsonException)
+        {
+            // A file that is no JSON is no collection the site could offer; the check of the content says what it is.
+            return false;
+        }
+    }
+
+    private static bool PathsEqual(string one, string other) =>
+        string.Equals(Path.GetFullPath(one), Path.GetFullPath(other), OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal);
+}
+
+/// <summary>
+/// One collection of the site and its projections. A request has the one its address names
+/// (<see cref="DastanLibrary.Of"/>). Nothing else in the web project holds the catalogue: pages get a
+/// <see cref="Projection"/> for the visitor's reading boundary and nothing more.
 /// </summary>
 public sealed class DastanSite
 {
@@ -53,22 +147,12 @@ public sealed class DastanSite
     private readonly Lazy<Projection?>[] _projections;
     private readonly string _content;
 
-    /// <summary>Initializes a new instance of the <see cref="DastanSite"/> class and reads the collection.</summary>
-    /// <exception cref="SampleFormatException">The collection cannot be used; the app does not start.</exception>
-    public DastanSite(IOptions<DastanOptions> options, IHostEnvironment environment)
+    internal DastanSite(Catalogue catalogue, Audience audience, string content, ImmutableArray<Comparison> comparisons)
     {
-        var settings = options.Value;
-        Audience = settings.Audience;
-        _content = Path.GetFullPath(Path.Combine(environment.ContentRootPath, settings.Content));
-        // The public gets reviewed texts only: a translation that is a draft is not read into a public site.
-        var reviewedOnly = Audience == Audience.Public;
-        _catalogue = PilotSample.Load(Path.Combine(_content, "samples", settings.Sample), reviewedOnly);
-
-        // A comparison that is not released to the audience of the site does not exist for it.
-        Comparisons =
-        [
-            .. ComparisonSample.LoadAll(Path.Combine(_content, "comparisons"), reviewedOnly).Where(comparison => comparison.MayBeShownTo(Audience)),
-        ];
+        _catalogue = catalogue;
+        _content = content;
+        Audience = audience;
+        Comparisons = comparisons;
 
         // One projection per reading stage; the catalogue never changes, so a projection is built once.
         _projections =

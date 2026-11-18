@@ -139,6 +139,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   as the source gives it, and "about" where the source says so.
 - A real place can say where it is on the earth and how exactly that is meant. Its page shows the position
   and lets a phone or computer open it in its own map; the site itself loads no map from anybody.
+- One site can offer several collections: each has its own address, reading position and search, and the
+  start page lists them.
 - Editors can lay threads through a collection: a few stops in an order, each with the reason it follows.
   A collection lists its threads, a thread is shown as far as a visitor has read, and the page of a name says
   where a thread leads on from it and why.

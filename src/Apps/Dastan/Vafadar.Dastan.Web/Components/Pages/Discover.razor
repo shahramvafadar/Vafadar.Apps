@@ -1,6 +1,7 @@
 @page "/"
 @inject Visitor Visitor
 @inject DastanSite Site
+@inject DastanLibrary Library
 @inject IStringLocalizer<Ui> T
 
 <PageTitle>@T["Site_Name"] – @T["Site_Tagline"]</PageTitle>
@@ -12,23 +13,35 @@
     <p>@T["Discover_Lead"]</p>
 </section>
 
-@if (Visitor.Projection is { } projection)
+@* Every collection of the site the visitor may see (step 14.10), the one a visitor enters first at the top –
+   each with what it is about as far as this visitor has read it. *@
+@{
+    var shown = Library.Collections.Select(collection => (Collection: collection, Projection: Visitor.Of(collection))).Where(entry => entry.Projection is not null).ToList();
+}
+@if (shown.Count > 0)
 {
-    var overview = projection.Overview();
     <section aria-labelledby="first-story">
-        <h2 id="first-story">@T["Discover_First"]</h2>
-        <article class="card">
-            <h3><a href="@Site.Collection"><Loc Text="overview.Subject.Label" /></a></h3>
-            @if (overview.Work is { } work)
-            {
-                <p class="meta"><Loc Text="work.Label" /></p>
-            }
-            <p><Loc Text="overview.Subject.Summary" /></p>
-            <p><a class="action" href="@Site.Collection">@T["Discover_Open"]</a></p>
-        </article>
+        <h2 id="first-story">@T[shown.Count == 1 ? "Discover_First" : "Discover_Collections"]</h2>
+        @foreach (var (collection, projection) in shown)
+        {
+            var overview = projection!.Overview();
+            <article class="card">
+                <h3><a href="@collection.Collection"><Loc Text="overview.Subject.Label" /></a></h3>
+                @if (overview.Work is { } work)
+                {
+                    <p class="meta"><Loc Text="work.Label" /></p>
+                }
+                <p><Loc Text="overview.Subject.Summary" /></p>
+                <p><a class="action" href="@collection.Collection">@T[projection.Stories.IsEmpty ? "Discover_OpenCollection" : "Discover_Open"]<span class="visually-hidden"> – @Visitor.Text(overview.Subject.Label).Value</span></a></p>
+            </article>
+        }
     </section>
 
-    <SearchForm />
+    @if (shown.Count == 1)
+    {
+        @* A search looks through one collection; with several, each has its own on its page. *@
+        <SearchForm />
+    }
 }
 else if (Site.Comparisons.IsEmpty)
 {

@@ -89,17 +89,18 @@ public static class MediaFiles
 
     /// <summary>Maps the addresses of <see cref="MediaAddress"/>.</summary>
     public static IEndpointConventionBuilder MapMediaFiles(this IEndpointRouteBuilder endpoints) =>
-        endpoints.MapGet(MediaAddress.Root + "/{collection}/{id}/{part}", (HttpContext context, DastanSite site, string collection, string id, string part) =>
+        endpoints.MapGet(MediaAddress.Root + "/{collection}/{id}/{part}", (HttpContext context, DastanLibrary library, string collection, string id, string part) =>
         {
             // The answer depends on the visitor's reading position, so nothing between the site and the browser may
             // keep it, and the browser asks again each time: after the visitor moved back, the file is gone.
             context.Response.Headers.CacheControl = "private, no-cache";
             context.Response.Headers.Vary = "Cookie";
 
-            var projection = collection == site.Collection ? site.At(ReadingPreference.Read(context, site)) : null;
+            var site = library.Find(collection);
+            var projection = site?.At(ReadingPreference.Read(context, site));
             var item = id.Any(char.IsWhiteSpace) ? null : projection?.Find(new MediaId(id));
             var relative = item is null ? null : PathOf(item, part);
-            if (site.ContentFile(relative) is not { } path || !Types.TryGetValue(Path.GetExtension(path), out var type))
+            if (site?.ContentFile(relative) is not { } path || !Types.TryGetValue(Path.GetExtension(path), out var type))
             {
                 // A file is asked for by a page, not by a reader: the answer is the status and no page.
                 if (context.Features.Get<IStatusCodePagesFeature>() is { } pages)

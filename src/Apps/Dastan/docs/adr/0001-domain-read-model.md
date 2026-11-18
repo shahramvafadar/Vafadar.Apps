@@ -243,7 +243,7 @@ collection selects material for a purpose").
   English, and marks a text that exists in it only (`Foreign`) with its language and direction.
 * Addresses: `story` is the first story, `story/<id>` another one (`StoryAddress`).
 
-Not done: a site that serves several collections at once (it serves one, as before – phase 14); reading
+Not done: a site that serves several collections at once (it served one – built as step 14.10: ADR 0010, addendum of 2026-11-18); reading
 stages per story; a story chart across stories.
 
 Verification: `CollectionSubjectTests` (13 tests) and `CollectionSubjectPagesTests` (6 tests): a collection

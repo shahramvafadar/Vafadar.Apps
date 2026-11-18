@@ -27,12 +27,17 @@ public static class SearchEngineFiles
     }
 
     /// <summary>Returns the addresses of the pages of the site, each without its language, for a visitor who has read nothing yet.</summary>
-    public static IReadOnlyList<string> Pages(DastanSite site)
+    public static IReadOnlyList<string> Pages(DastanLibrary library)
     {
-        ArgumentNullException.ThrowIfNull(site);
+        ArgumentNullException.ThrowIfNull(library);
         var pages = new List<string> { string.Empty };
-        if (site.At(ReadingLevel.Opening) is { } projection)
+        foreach (var site in library.Collections)
         {
+            if (site.At(ReadingLevel.Opening) is not { } projection)
+            {
+                continue;
+            }
+
             var collection = site.Collection;
             pages.Add(collection);
             pages.AddRange(projection.Stories.Select((story, index) => index == 0 ? $"{collection}/story" : $"{collection}/story/{story}"));
@@ -62,7 +67,7 @@ public static class SearchEngineFiles
             pages.AddRange(projection.Media.Select(item => $"{collection}/media/{item.Id}"));
         }
 
-        pages.AddRange(site.Comparisons.Select(comparison => $"compare/{comparison.Id}"));
+        pages.AddRange(library.Comparisons.Select(comparison => $"compare/{comparison.Id}"));
         return pages;
     }
 
@@ -70,7 +75,7 @@ public static class SearchEngineFiles
     public static IEndpointRouteBuilder MapSearchEngineFiles(this IEndpointRouteBuilder endpoints)
     {
         ArgumentNullException.ThrowIfNull(endpoints);
-        endpoints.MapGet(Robots, (HttpContext context, DastanSite site) =>
+        endpoints.MapGet(Robots, (HttpContext context, DastanLibrary site) =>
         {
             // The forms of the preferences change something and show nothing; no engine has business there.
             var rules = site.Audience == Audience.Public
@@ -79,7 +84,7 @@ public static class SearchEngineFiles
             return Results.Text(rules, "text/plain", Encoding.UTF8);
         });
 
-        endpoints.MapGet(Sitemap, (HttpContext context, DastanSite site, IOptions<SiteLanguageOptions> languages) =>
+        endpoints.MapGet(Sitemap, (HttpContext context, DastanLibrary site, IOptions<SiteLanguageOptions> languages) =>
         {
             if (site.Audience != Audience.Public)
             {
