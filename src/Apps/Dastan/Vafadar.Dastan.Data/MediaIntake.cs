@@ -153,7 +153,11 @@ public static partial class MediaIntake
             if (kind == MediaFileKind.Image)
             {
                 // An image is small enough to be read whole: what it says about its making is taken out.
-                var bytes = File.ReadAllBytes(arriving);
+                var arrived = File.ReadAllBytes(arriving);
+
+                // A camera notes how it was held beside the picture. The note goes with everything else a
+                // picture says about its making, so the picture is turned upright first (D-056).
+                var bytes = extension == ".jpg" ? ImageSizes.Upright(arrived) : arrived;
                 var (cleaned, problem) = WithoutMetadata(bytes, extension);
                 if (problem is not null)
                 {
@@ -166,7 +170,7 @@ public static partial class MediaIntake
                     return (null, "the image cannot be read: its size is not where an image of its kind says it.");
                 }
 
-                if (cleaned!.Length != bytes.Length)
+                if (cleaned!.Length != arrived.Length || !ReferenceEquals(bytes, arrived))
                 {
                     File.WriteAllBytes(arriving, cleaned);
                     length = cleaned.Length;

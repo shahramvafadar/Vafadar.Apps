@@ -178,3 +178,37 @@ Verification: `MomentAndCitationTests` – five ways to write a moment, thirteen
 moment written back; the page in both languages with the fragment on the file; four addresses without a
 moment; the gallery kept and an image without a moment. Not played in a browser: that a browser starts at the
 fragment is the behaviour of the browser and was not observed here.
+
+## Addendum of 2026-11-18 – reading and writing images (step 17.3, D-056)
+
+The second addendum left converting out: it needs a library, and a library is the owner's decision. The owner
+decided on SkiaSharp.
+
+* **The library**: `SkiaSharp` 4.154.1 and `SkiaSharp.NativeAssets.Linux.NoDependencies` 4.154.1, both MIT,
+  published by Microsoft on nuget.org; the second brings the library for a Linux container and needs nothing
+  of the system. Referenced by `Vafadar.Dastan.Data` only, behind `ImageSizes`: nothing else of the site
+  knows the library. A version that was a few weeks old was taken, not one of the day.
+* **Upright before the notes go**: a camera writes a picture as its sensor lies and notes how it was held.
+  `MediaIntake` took that note out with everything else a picture says about its making – and a picture taken
+  with the phone upright lay on its side. A JPEG that says it was taken turned is now turned upright first
+  (`ImageSizes.Upright`) and written again; one that is upright is kept byte for byte as before. This holds
+  for the files of the editors and for the photographs of the visitors.
+* **A smaller size** (`ImageSizes.Smaller`): the same picture with its longer side no longer than asked for.
+  A PNG stays a PNG, a WebP a WebP, everything else becomes a JPEG (quality 85). An image that is that small
+  already, or that cannot be read, gets none – and nothing is written.
+* **The photographs of the visitors**: one longer than 800 pixels gets a smaller size beside it, under a name
+  made from its name (`…-small`); the store knows nothing of it. `/photo/{id}?size=small` gives it to who
+  may see the photograph – the same question as for the photograph – and the photograph itself where there is
+  no smaller size. The pages name both sizes (`srcset`), and the browser takes the one that fits. Removing a
+  photograph removes both files; a smaller size belongs to its photograph when files that belong to nothing
+  are deleted.
+* **What is written says nothing about its making**: only the picture is written.
+
+**Not built**: smaller sizes of the editors' images. A rendition of a media item is another format of the same
+file (for a video, a second container); a smaller size would be a second kind of rendition, and the record
+would have to say its width. Photographs brought in before this step have no smaller size and are shown as
+before.
+
+Checked: `ImageSizesTests` (12 cases, with pictures the tests draw: four fields of colour, so that a test sees
+which way up a picture is), one more case of `PhotoPagesTests`. **Not looked at in a browser, and the library
+was not run in a container** – the pipeline runs the tests on Linux, which loads the same library.

@@ -365,6 +365,36 @@ public sealed class PhotoPagesTests : IDisposable
     }
 
     [Fact]
+    public async Task A_large_photograph_is_shown_small_where_it_stands_among_others_and_whole_where_it_is_asked_for()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var large = await Bring(mina, "private", file: RealImages.Jpeg(1600, 1200));
+        var little = await Bring(mina, "private", caption: "Little", file: RealImages.Jpeg(640, 480));
+
+        // The page names both sizes of the large one and lets the browser choose; the little one has one size.
+        var page = await mina.Get(Photos);
+        Assert.Contains($"<img src=\"/photo/{large}\" srcset=\"/photo/{large}?size=small 800w, /photo/{large} 1600w\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"<img src=\"/photo/{little}\" alt=", page.Html, StringComparison.Ordinal);
+
+        var whole = await (await mina.Get($"/photo/{large}")).Bytes();
+        var small = await (await mina.Get($"/photo/{large}?size=small")).Bytes();
+        Assert.Equal((1600, 1200, "red green blue white"), RealImages.Look(whole));
+        Assert.Equal((800, 600, "red green blue white"), RealImages.Look(small));
+        Assert.True(small.Length < whole.Length);
+
+        // A photograph that has no smaller size is given as it is, and nobody gets a size of what they may not see.
+        Assert.Equal(640, RealImages.Look(await (await mina.Get($"/photo/{little}?size=small")).Bytes()).Width);
+        Assert.Equal(HttpStatusCode.NotFound, (await sara.Get($"/photo/{large}?size=small")).Status);
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get($"/photo/{large}?size=small")).Status);
+
+        // Removed, the photograph leaves neither of its files.
+        Assert.Equal(3, Directory.GetFiles(_site.Media).Length);
+        await Send(mina, "remove", ("photo", large));
+        Assert.Single(Directory.GetFiles(_site.Media));
+    }
+
+    [Fact]
     public async Task An_album_names_photographs_and_shows_each_viewer_those_they_may_see()
     {
         var mina = await Signed("Mina");

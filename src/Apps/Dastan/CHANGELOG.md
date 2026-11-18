@@ -243,3 +243,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   (for a closed trial). A relationship can be of "another kind".
 - The drawing of the places of a collection shows the coasts, rivers and lakes around them (Natural Earth,
   public domain, shipped with the site). It shows no borders and still loads nothing from anybody.
+- A photograph taken with the phone upright is no longer shown on its side. Large photographs are shown faster
+  where they stand among others: the site makes a smaller size of each and gives the browser the one that fits.

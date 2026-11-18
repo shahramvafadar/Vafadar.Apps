@@ -131,7 +131,8 @@ public sealed class AccountDesk
         var before = _time.GetUtcNow().UtcDateTime.AddHours(-1);
         foreach (var file in new DirectoryInfo(Path.Combine(_photos, "media")).EnumerateFiles())
         {
-            if (!named.Contains(file.Name) && file.LastWriteTimeUtc < before)
+            // The smaller size of a photograph belongs to the photograph.
+            if (!named.Contains(file.Name) && !(PhotoEndpoints.OfSmall(file.Name) is { } of && named.Contains(of)) && file.LastWriteTimeUtc < before)
             {
                 file.Delete();
             }

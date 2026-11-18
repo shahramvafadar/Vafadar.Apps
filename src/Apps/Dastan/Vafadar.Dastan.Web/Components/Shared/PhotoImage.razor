@@ -1,0 +1,21 @@
+@using Vafadar.Dastan.People
+@inject IStringLocalizer<Ui> T
+
+@* A photograph of a visitor on a page. Where a smaller size was made of it (D-056), the browser is told both
+   and takes the one that fits where the picture stands – a card among others needs no picture of a camera. *@
+@if (PhotoEndpoints.SmallWidth(Photo.File) is { } small)
+{
+    <img src="@($"{PhotoEndpoints.File}/{Photo.Id}")" srcset="@($"{PhotoEndpoints.File}/{Photo.Id}?size=small {small.ToString(CultureInfo.InvariantCulture)}w, {PhotoEndpoints.File}/{Photo.Id} {Photo.File.Width.ToString(CultureInfo.InvariantCulture)}w")" sizes="(min-width: 40rem) 20rem, 100vw" alt="@Alt" width="@Photo.File.Width" height="@Photo.File.Height" loading="lazy" />
+}
+else
+{
+    <img src="@($"{PhotoEndpoints.File}/{Photo.Id}")" alt="@Alt" width="@Photo.File.Width" height="@Photo.File.Height" loading="lazy" />
+}
+
+@code {
+    /// <summary>Gets or sets the photograph.</summary>
+    [Parameter, EditorRequired]
+    public PhotoInfo Photo { get; set; } = null!;
+
+    private string Alt => Photo.Caption.Length > 0 ? Photo.Caption : T["Photos_Alt"].Value;
+}

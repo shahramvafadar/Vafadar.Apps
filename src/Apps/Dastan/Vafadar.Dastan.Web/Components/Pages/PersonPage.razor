@@ -65,7 +65,7 @@
                 {
                     <li>
                         <figure>
-                            <img src="@($"{PhotoEndpoints.File}/{photo.Id}")" alt="@(photo.Caption.Length > 0 ? photo.Caption : T["Photos_Alt"].Value)" width="@photo.File.Width" height="@photo.File.Height" loading="lazy" />
+                            <PhotoImage Photo="photo" />
                             <figcaption>
                                 @if (photo.Caption.Length > 0)
                                 {
@@ -102,7 +102,7 @@
                         {
                             <li>
                                 <figure>
-                                    <img src="@($"{PhotoEndpoints.File}/{photo.Id}")" alt="@(photo.Caption.Length > 0 ? photo.Caption : T["Photos_Alt"].Value)" width="@photo.File.Width" height="@photo.File.Height" loading="lazy" />
+                                    <PhotoImage Photo="photo" />
                                     @if (photo.Caption.Length > 0)
                                     {
                                         <figcaption><bdi>@photo.Caption</bdi></figcaption>
