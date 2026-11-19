@@ -40,6 +40,30 @@ for Dastan is added here in the same commit as the work it came with.
 
 ## 3. Architecture
 
+### What holds since 2026-11-19 (phase 19 of the delivery plan)
+
+The owner decided that several choices of the demonstration do not carry the product (D-076 to D-080). Until
+each step of phase 19 has rewritten the lines below that it concerns, **these rules win over any older line
+of this file that says otherwise**:
+
+* **No feature is added before phase 19 is done**, and nothing of it is left for later.
+* **PostgreSQL**, one database with a schema for each part; a rule that must hold is a constraint or a lock
+  of the database, never "look, then write" ([ADR 0015](docs/adr/0015-postgresql.md)). No new code for SQLite.
+* **An account has a mail address**, required and confirmed, and is kept by ASP.NET Core Identity; mail
+  leaves through an outbox ([ADR 0016](docs/adr/0016-identity-and-mail.md)). The older rule "never add a
+  field about the person" still holds for everything else: no real name, no date of birth, no address of a
+  machine.
+* **Every node has a profile** – a picture and the facts its kind needs ([ADR 0017](docs/adr/0017-node-profile.md))
+  – and two accounts can have several relationships ([ADR 0018](docs/adr/0018-relationships.md)).
+* **A page is complete without its script, and is explored with it**: the server still answers with the
+  whole page, and TypeScript in the browser moves, zooms, selects and opens
+  ([ADR 0019](docs/adr/0019-interactive-layer.md)). "No script" is no longer a rule; "nothing is sent to a
+  browser that its visitor may not see" is, as before.
+* **The graph** is Syncfusion EJ2 Diagram behind `DastanGraph` ([ADR 0020](docs/adr/0020-graph.md)); no type
+  of the control reaches the domain or what is stored. **The timeline** is our own
+  ([ADR 0021](docs/adr/0021-timeline.md)).
+* What moves is tested in a real browser, and somebody looks at it: a test of the markup is not a look.
+
 * Projects: `Vafadar.Dastan.Core` (domain, no infrastructure), `Vafadar.Dastan.Data` (reading and validating
   content), `Vafadar.Dastan.Web` (the site). Shared: `Vafadar.Core`, `Vafadar.Temporal`, `Vafadar.Web`. Dastan does
   not reference `Vafadar.Localization`, Zanance or MAUI.

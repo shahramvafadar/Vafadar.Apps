@@ -1,5 +1,7 @@
 # 0008. Charts: who draws the timeline, the family tree and the graph
 
+> Changed on 2026-11-19 (D-079): the timeline is the control of [0021](0021-timeline.md), the family tree and the connections are the graph of [0020](0020-graph.md); both are moved in the browser ([0019](0019-interactive-layer.md)).
+
 - Status: **Accepted** – the comparative timeline (points 1, 4 and 5), the family tree (point 2) and the stage of
   a chart (addendum, D-040) are built and verified on 2026-11-16, see "What was built" and the addendum. Point 6
   (a script for pinching) is not built and still needs its own decision

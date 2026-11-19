@@ -1,0 +1,17 @@
+{
+  "name": "dastan-diagram-persian",
+  "private": true,
+  "description": "Step 19.2 of Dastan's delivery plan: whether Syncfusion EJ2 Diagram shows, lays out and exports Persian. Not part of the product.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "look": "node look.mjs"
+  },
+  "dependencies": {
+    "@syncfusion/ej2-diagrams": "35.2.12"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10",
+    "playwright-core": "1.64.1"
+  }
+}
