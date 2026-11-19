@@ -268,4 +268,73 @@ public sealed class AiPilotProviderSwitchTests
         Assert.Equal(110, saved.VendorInputTokens);
         Assert.Equal(44, saved.VendorOutputTokens);
     }
+
+    /// <summary>Exercises request, user and shared project cost admission under actual PostgreSQL concurrency.</summary>
+    [Fact]
+    public async Task Pilot_cost_budget_reserves_at_acceptance_and_rejects_concurrent_overrun()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_PROVIDER_PILOT_CONNECTION");
+        if (connection is null) { Assert.Skip("Explicit isolated provider-pilot PostgreSQL fixture required."); return; }
+        var settings = new NpgsqlConnectionStringBuilder(connection);
+        Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
+        var factory = new Factory(connection);
+        var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 19, 12, 0, 0, TimeSpan.Zero));
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-budget-test",
+            ["Analysis:ProviderPilot:openai:Project"] = "fixture-budget-project",
+            ["Analysis:ProviderPilot:Budget:RequestMicros"] = "460",
+            ["Analysis:ProviderPilot:Budget:UserMicros"] = "461",
+            ["Analysis:ProviderPilot:Budget:ProjectMicros"] = "922",
+        }).Build();
+        using var transport = new Transport();
+        var pilot = new AiPilotProvider(config, transport, clock);
+        var store = new AiRequestStore(factory, new UnconfiguredAiProvider(), new EphemeralDataProtectionProvider(), clock, pilot);
+        var owners = new[] { "fictional-budget-one", "fictional-budget-two", "fictional-budget-three" };
+        var actors = new List<ClaimsPrincipal>();
+        var payload = AiPilotProvider.ReportFixture;
+        await using (var db = factory.CreateDbContext())
+        {
+            await db.Database.MigrateAsync(ct);
+            Assert.False(db.Database.HasPendingModelChanges());
+            foreach (var owner in owners)
+            {
+                var session = Guid.NewGuid();
+                db.Users.Add(new ServiceUser { Id = owner, UserName = owner, SecurityStamp = "fictional-budget-stamp" });
+                db.Sessions.Add(new DeviceSession { Id = session, UserId = owner, Generation = 1, ExpiresAt = clock.GetUtcNow().AddDays(1) });
+                actors.Add(new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, owner),
+                    new Claim(ServiceHost.SessionClaim, session.ToString("D")), new Claim(ServiceHost.GenerationClaim, "1")], "synthetic")));
+            }
+            await db.SaveChangesAsync(ct);
+            await pilot.SelectModelAsync(db, payload.Purpose, "gpt-6-luna", "fictional-budget-manager", ct);
+        }
+        foreach (var owner in owners) await store.GrantAsync(owner, "fictional-budget-credit-" + owner, false, 3, ct);
+        async Task<AiSubmission> Quote(int index) => new(Guid.NewGuid(), await store.OfferAsync(actors[index], payload.Purpose, ct), payload);
+
+        var perRequest = await Quote(0);
+        Assert.Equal(AiRequestState.NotAccepted, (await store.SubmitAsync(actors[0], perRequest, ct)).State);
+        Assert.Empty(transport.Calls);
+        config["Analysis:ProviderPilot:Budget:RequestMicros"] = "461";
+        var first = await Quote(0);
+        Assert.Equal(AiRequestState.Pending, (await store.SubmitAsync(actors[0], first, ct)).State);
+        var perUser = await Quote(0);
+        Assert.Equal(AiRequestState.NotAccepted, (await store.SubmitAsync(actors[0], perUser, ct)).State);
+        Assert.Single(transport.Calls);
+
+        var second = await Quote(1);
+        var third = await Quote(2);
+        var contenders = await Task.WhenAll(store.SubmitAsync(actors[1], second, ct), store.SubmitAsync(actors[2], third, ct));
+        Assert.Single(contenders, result => result.State == AiRequestState.Pending);
+        Assert.Single(contenders, result => result.State == AiRequestState.NotAccepted);
+        Assert.Equal(2, transport.Calls.Count);
+        Assert.All(transport.Calls, call => Assert.Equal(HttpMethod.Post, call.Method));
+        await using var verification = factory.CreateDbContext();
+        var rows = await verification.Set<AiRequestRow>().ToArrayAsync(ct);
+        Assert.Equal(5, rows.Length);
+        Assert.All(rows.Where(row => row.State == AiRequestState.Pending), row => Assert.Equal(461, row.PilotCostCeilingMicros));
+        Assert.All(rows.Where(row => row.State == AiRequestState.NotAccepted), row => Assert.Null(row.PilotCostCeilingMicros));
+        Assert.Equal(922, rows.Sum(row => row.PilotCostCeilingMicros));
+        Assert.Equal(2, await verification.Set<AiCreditRow>().CountAsync(row => row.Kind == AiCreditEvent.Reserve, ct));
+    }
 }

@@ -16,6 +16,8 @@ namespace Vafadar.Zanance.Api.Analysis;
 internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientFactory clients, TimeProvider time)
 {
     private const int MaxAttemptsPerProvider = 20;
+    private const int InputTokenLimit = 2048;
+    private const long LegacyCostCeilingMicros = 33_792;
     internal const string Client = "ZananceAnalysisPilot";
     internal static readonly AiPayload ReportFixture = new(1, AiPurpose.PeriodExplanation, "en",
         new(new(2026, 11, 1), new(2026, 11, 30), 1, true, [new("EUR", 125000, 0, 41000, 3000)], 0), null);
@@ -186,6 +188,43 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
                 r => r.OfferId, o => o.Id, (r, o) => r.Id)
             .OrderBy(id => id).Skip(MaxAttemptsPerProvider - 1).AnyAsync(ct);
 
+    /// <summary>Computes and admits the original uncached ceiling within the caller's pilot admission lock.</summary>
+    internal async Task<long?> AvailableCostCeilingAsync(ServiceDbContext db, string owner, AiPilotRouteRow route, AiOffer offer, CancellationToken ct)
+    {
+        if (Admit(route, offer) is not { } profile) return null;
+        // Published Standard text rates on 2026-11-19, expressed in nano-USD per token.
+        var (input, output) = profile.Model switch
+        {
+            "gpt-6-luna" => (100L, 500L),
+            "gemini-3.5-flash-lite" => (300L, 2500L),
+            "gpt-6.2-sol" => (2000L, 10000L),
+            "gemini-4-hydrogen" => (1500L, 7500L),
+            _ => throw new InvalidOperationException("The model has no approved pilot tariff."),
+        };
+        var ceiling = (InputTokenLimit * input + profile.OutputLimit * output + 999) / 1000;
+        if (ceiling > BudgetLimit("Request", LegacyCostCeilingMicros)) return null;
+        var previous = from request in db.Set<AiRequestRow>()
+                       join original in db.Set<AiOfferRow>().Where(item => item.PilotRouteId != null)
+                           on request.OfferId equals original.Id
+                       where request.State != AiRequestState.NotAccepted
+                       select new { request.UserId, original.Provider, Cost = request.PilotCostCeilingMicros ?? LegacyCostCeilingMicros };
+
+        // Count retained ceilings even on completion, because vendor invoices are not reconciled here.
+        var userCommitted = await previous.Where(item => item.UserId == owner).SumAsync(item => item.Cost, ct);
+        if (userCommitted > BudgetLimit("User", 4 * LegacyCostCeilingMicros) - ceiling) return null;
+        // Provider-wide accounting also carries prior project revisions, so rotation cannot replenish the budget.
+        var projectCommitted = await previous.Where(item => item.Provider == profile.Provider).SumAsync(item => item.Cost, ct);
+        return projectCommitted <= BudgetLimit("Project", MaxAttemptsPerProvider * LegacyCostCeilingMicros) - ceiling
+            ? ceiling : null;
+    }
+
+    private long BudgetLimit(string scope, long maximum)
+    {
+        var value = configuration.GetValue<long?>($"Analysis:ProviderPilot:Budget:{scope}Micros") ?? maximum;
+        return value >= 0 && value <= maximum ? value
+            : throw new InvalidOperationException("The configured synthetic pilot budget is outside its approved bound.");
+    }
+
     /// <summary>Submits the admitted synthetic operation once and saves the vendor ID before attempting settlement.</summary>
     internal async Task<AiProviderOutcome> BeginAsync(AiPilotRouteRow route, AiOffer offer, string operation,
         string digest, Func<string, Task> saveId, CancellationToken ct)
@@ -263,7 +302,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         var input = Number(usage, openAi ? "input_tokens" : "total_input_tokens");
         var output = Number(usage, openAi ? "output_tokens" : "total_output_tokens");
         var thought = openAi ? 0 : Number(usage, "total_thought_tokens") ?? 0;
-        if (input is null or < 1 or > 2048 || output is null or < 1 || output > profile.OutputLimit ||
+        if (input is null or < 1 or > InputTokenLimit || output is null or < 1 || output > profile.OutputLimit ||
             thought < 0 || thought > profile.OutputLimit || output + thought > profile.OutputLimit) return Unknown;
         var values = Array(response, openAi ? "output" : "steps")
             .Where(item => Text(item, "type") == (openAi ? "message" : "model_output"))

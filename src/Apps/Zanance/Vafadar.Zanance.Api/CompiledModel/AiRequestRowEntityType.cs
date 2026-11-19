@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiRequestRow",
                 typeof(AiRequestRow),
                 baseEntityType,
-                propertyCount: 15,
+                propertyCount: 16,
                 foreignKeyCount: 2,
                 unnamedIndexCount: 2,
                 keyCount: 1);
@@ -76,6 +76,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 fieldInfo: typeof(AiRequestRow).GetField("<PayloadDigest>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 64);
             payloadDigest.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var pilotCostCeilingMicros = runtimeEntityType.AddProperty(
+                "PilotCostCeilingMicros",
+                typeof(long?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("PilotCostCeilingMicros", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<PilotCostCeilingMicros>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            pilotCostCeilingMicros.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var protectedPayload = runtimeEntityType.AddProperty(
                 "ProtectedPayload",

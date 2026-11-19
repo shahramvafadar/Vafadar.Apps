@@ -29,6 +29,21 @@ The isolated HTTPS fixture covered anonymous refusal, the empty queue, oldest-fi
 
 A separate HTTPS and PostgreSQL fixture tested the operator action with synthetic vendor responses. Two simultaneous forms reserved one attempt. Checks at 59 seconds and after the third attempt were refused. A missing reference and an unsupported digest did not use the transport. Three unknown responses kept the original request and reservation pending. A separate valid result used the same retained route and settled once. Four audit rows recorded the original operator and times. The transport accepted only GET for the two synthetic references, so the check incurred no vendor usage.
 
+### Synthetic vendor cost ceiling
+
+Before a new synthetic request is accepted, the same PostgreSQL lock used for route selection and pilot admission checks the monetary ceiling. The accepted row stores the uncached Standard ceiling in integer millionths of a US dollar, rounded up from 2048 input tokens and the output limit on the original model. The customer credit price is unchanged. Requests refused at the cost limit neither reserve customer credits nor call a vendor.
+
+| Model | Standard USD per million input / billable output | Output token limit | Maximum reserved USD |
+|---|---:|---:|---:|
+| GPT-6 Luna | 0.10 / 0.50 | 512 | 0.000461 |
+| GPT-6.2 Sol | 2.00 / 10.00 | 1024 | 0.014336 |
+| Gemini 3.5 Flash-Lite | 0.30 / 2.50 | 512 | 0.001895 |
+| Gemini 4 Hydrogen | 1.50 / 7.50 | 4096 | 0.033792 |
+
+The configured limits may be lowered with integer values for **Analysis__ProviderPilot__Budget__RequestMicros**, **Analysis__ProviderPilot__Budget__UserMicros**, and **Analysis__ProviderPilot__Budget__ProjectMicros**. Their defaults and upper bounds are 33792, 135168 and 675840 respectively. The user limit counts all routes for that owner. The project limit conservatively pools accepted requests on the same provider within the pilot store, including older project revisions. A legacy request without a stored ceiling is counted at 33792, and completion does not release a commitment. This admission estimate assumes the existing fixed synthetic prompt fits the input allowance. External charges and invoice reconciliation are separate. The existing limit of twenty attempts per provider still applies.
+
+The isolated PostgreSQL test used the actual request store and a synthetic transport. A request at 461 microdollars was refused against a 460 limit, a second request for the same owner could not bypass its 461 total, and two owners competing for the last 461 admitted exactly one create. The two accepted requests and credit reservations totaled 922 microdollars of planned vendor exposure. No real vendor requests were made. Standard text tariffs were checked on 2026-11-19. [OpenAI pricing](https://developers.openai.com/api/docs/pricing) and [Gemini pricing](https://aistudio.google.com/docs/pricing).
+
 ### Server command alternative
 
 Supply each dedicated provider project reference with `Analysis__ProviderPilot__openai__Project` or `Analysis__ProviderPilot__gemini__Project`. Inject the corresponding `Analysis__ProviderPilot__openai__ApiKey` or `Analysis__ProviderPilot__gemini__ApiKey` through the private process configuration. The OpenAI profile sends the configured project header by default. Set `Analysis__ProviderPilot__openai__SendProjectHeader=false` only for a key already scoped to the dedicated pilot project, and keep its separate project reference configured. Keep credentials outside Git, command arguments and logs. Keep the original project profiles available for pending requests.

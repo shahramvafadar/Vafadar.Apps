@@ -85,8 +85,13 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                     (pilot is null ? checked(balance.PurchasedAvailable + balance.GiftedAvailable) >= row.MaximumUnits
                         : AiPilotProvider.IsSynthetic(row.Purpose, digest) && balance.GiftedAvailable >= row.MaximumUnits
                             && !await pilot.AtCapacityAsync(db, row.Provider, ct));
+                long? pilotCostCeiling = null;
                 if (accepted && selected is { } route)
+                {
                     admittedRoute = await db.Set<AiPilotRouteRow>().SingleAsync(r => r.Id == route.RouteId, ct);
+                    pilotCostCeiling = await pilot!.AvailableCostCeilingAsync(db, owner, admittedRoute, submission.Offer, ct);
+                    accepted = pilotCostCeiling is not null;
+                }
                 if (accepted && await db.Set<AiRequestRow>().CountAsync(r => r.UserId == owner && r.State == AiRequestState.Pending, ct) >= 16)
                     throw new AiRefusal(429, "AiPendingBound");
                 // A definitive unaccepted closure is durable too: late packets cannot charge after a later new consent.
@@ -94,7 +99,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                 var purchased = accepted ? row.MaximumUnits - gifted : 0;
                 db.Add(new AiRequestRow { Id = submission.RequestId, UserId = owner, OfferId = row.Id, PayloadDigest = digest,
                     ProtectedPayload = Protector(owner, submission.RequestId).Protect(JsonSerializer.Serialize(payload, AiJson.Default.AiPayload)),
-                    PurchasedReserved = purchased, GiftedReserved = gifted, State = accepted ? AiRequestState.Pending : AiRequestState.NotAccepted, CreatedAt = scope.Now });
+                    PurchasedReserved = purchased, GiftedReserved = gifted, PilotCostCeilingMicros = pilotCostCeiling, State = accepted ? AiRequestState.Pending : AiRequestState.NotAccepted, CreatedAt = scope.Now });
                 if (accepted) db.Add(Event(owner, submission.RequestId, AiCreditEvent.Reserve, -purchased, -gifted, purchased, gifted, scope.Now));
                 dispatch = accepted;
             }

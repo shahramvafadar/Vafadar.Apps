@@ -53,6 +53,8 @@ public sealed class AiRequestRow
     public DateTimeOffset? StatusCheckedAt { get; set; }
     /// <summary>Opaque original vendor execution ID, never returned to the client.</summary>
     public string? VendorOperationId { get; set; }
+    /// <summary>Frozen uncached Standard ceiling in millionths of a US dollar for an accepted synthetic dispatch.</summary>
+    public long? PilotCostCeilingMicros { get; set; }
     /// <summary>Actual vendor input usage recorded on an accepted completion.</summary>
     public int? VendorInputTokens { get; set; }
     /// <summary>Actual vendor billable output usage recorded on an accepted completion.</summary>
