@@ -24,12 +24,12 @@ public sealed partial class PeopleStore
     {
         ArgumentNullException.ThrowIfNull(password);
         var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
-        if (visitor is null || !PasswordHash.Matches(password, visitor.Password))
+        if (!Proves(visitor, password, _time.GetUtcNow().UtcDateTime))
         {
             return null;
         }
 
-        var belongings = Belongings(id);
+        var belongings = Belongings(visitor!.Id);
         var circles = Circles(id);
         var trees = Trees(id);
         return new JsonObject

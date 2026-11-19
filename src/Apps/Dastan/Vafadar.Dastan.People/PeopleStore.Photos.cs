@@ -60,7 +60,12 @@ public sealed partial class PeopleStore
     /// <summary>How many people a photograph can be said to show.</summary>
     public const int MostTags = 20;
 
-    /// <summary>How many objections of one account may stand at a time: enough for somebody who is in many pictures, too few to hold back the pictures of a site.</summary>
+    /// <summary>
+    /// How many objections of one account may stand at a time: enough for somebody who is in many pictures, too
+    /// few to hold back the pictures of a site. Counted are those on photographs that are shown to everybody:
+    /// one whose owner shows the photograph to fewer people holds nothing back, cannot be found by who made it,
+    /// and takes no place.
+    /// </summary>
     public const int MostObjections = 20;
 
     /// <summary>Returns whether an account can bring in another photograph.</summary>
@@ -267,14 +272,29 @@ public sealed partial class PeopleStore
         }
 
         var tags = _context.PhotoTags.AsNoTracking().Where(candidate => candidate.Photo == photo).ToList();
-        if (tags.Any(tag => tag.Account == id) || tags.Count >= MostTags || !Rule(stored, tags).MayOpen(new AccountId(id))
-            || _context.PhotoTags.AsNoTracking().Count(tag => tag.Account == id && tag.Objection && !tag.Everybody) >= MostObjections)
+
+        // Somebody the owner named once and who answered "that is not me" is named by nothing: they object
+        // like anybody else, and their answer becomes the objection.
+        var mine = tags.FirstOrDefault(tag => tag.Account == id);
+        var standing = _context.PhotoTags.AsNoTracking().Count(tag => tag.Account == id && tag.Objection && !tag.Everybody
+            && _context.Photos.Any(shown => shown.Id == tag.Photo && shown.Scope == (int)ScopeKind.Public));
+        if ((mine is not null && (TagState)mine.State != TagState.Removed) || (mine is null && tags.Count >= MostTags)
+            || !Rule(stored, tags).MayOpen(new AccountId(id)) || standing >= MostObjections)
         {
             return false;
         }
 
-        _context.PhotoTags.Add(new StoredPhotoTag { Photo = photo, Account = id, State = (int)TagState.Approved, Objection = true });
-        Save();
+        if (mine is null)
+        {
+            _context.PhotoTags.Add(new StoredPhotoTag { Photo = photo, Account = id, State = (int)TagState.Approved, Objection = true });
+            Save();
+        }
+        else
+        {
+            _context.PhotoTags.Where(tag => tag.Photo == photo && tag.Account == id)
+                .ExecuteUpdate(change => change.SetProperty(tag => tag.State, (int)TagState.Approved).SetProperty(tag => tag.Objection, true).SetProperty(tag => tag.Everybody, false));
+        }
+
         return true;
     }
 

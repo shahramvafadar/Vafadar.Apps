@@ -145,7 +145,7 @@ public sealed partial class PeopleStore
         }
 
         var blockers = Blockers(tree.Id);
-        var named = _context.Persons.AsNoTracking().Any(person => person.Tree == tree.Id && person.Account == viewer && !person.Deceased);
+        var named = _context.Persons.AsNoTracking().Any(person => person.Tree == tree.Id && person.Account == viewer);
         var consented = _context.PublicationConsents.AsNoTracking().Any(consent => consent.Tree == tree.Id && consent.Account == viewer);
         return new(
             true,
@@ -171,7 +171,11 @@ public sealed partial class PeopleStore
             new PersonId(person.Id),
             person.Name,
             null,
-            person.Deceased || (AccountOf(person) is { } account && agreed.Contains(account)) ? AccessScope.Everybody(owner) : AccessScope.OnlyMe(owner)));
+            Agreed(person) ? AccessScope.Everybody(owner) : AccessScope.OnlyMe(owner)));
+
+        // Somebody who died is named on the owner's word (D-053) – as long as the record is not an open
+        // account: an account is alive, whatever the record says, and is asked itself.
+        bool Agreed(StoredPerson person) => AccountOf(person) is { } account ? agreed.Contains(account) : person.Deceased;
         var blocked = PublicationCheck.Blockers(records, [], []).Select(finding => finding.What).ToHashSet(StringComparer.Ordinal);
         return [.. people
             .Where(person => blocked.Contains($"person {person.Id}"))

@@ -105,7 +105,11 @@ public sealed partial class PeopleStore : IDisposable
     /// <see cref="PasswordLength"/> characters. The account gets recovery codes, which the answer carries once.
     /// Made through an invitation, the account uses the invitation up – and nothing else follows from it.
     /// </summary>
-    public AccountResult Register(string name, string password, string? invitation = null)
+    /// <param name="name">The name of the account.</param>
+    /// <param name="password">Its password.</param>
+    /// <param name="invitation">The invitation it is made through, if any.</param>
+    /// <param name="invitationNeeded">Whether no account is made without an invitation that can be used (a closed trial, D-068).</param>
+    public AccountResult Register(string name, string password, string? invitation = null, bool invitationNeeded = false)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
@@ -132,18 +136,29 @@ public sealed partial class PeopleStore : IDisposable
             return new([.. problems]);
         }
 
-        return Create(written, PasswordHash.Derive(password), invitation, null);
+        return Create(written, PasswordHash.Derive(password), invitation, null, invitationNeeded);
     }
 
     // Makes the account of a name that was looked at: with what is kept of a password, or without a password
     // and with the sign-in of a provider instead.
-    private AccountResult Create(string written, string password, string? invitation, StoredExternalLogin? login)
+    private AccountResult Create(string written, string password, string? invitation, StoredExternalLogin? login, bool invitationNeeded)
     {
         var key = Key(written);
         if (_context.Visitors.AsNoTracking().Any(candidate => candidate.NameKey == key))
         {
             return new(["taken"]);
         }
+
+        var invited = Usable(invitation)?.Id;
+        _context.ChangeTracker.Clear();
+        if (invitationNeeded && invited is null)
+        {
+            return new(["invitation-needed"]);
+        }
+
+        // The account and the invitation it uses up are one step: of two forms that carry the same
+        // invitation at the same moment, one makes an account.
+        using var step = _context.Database.BeginTransaction();
 
         var visitor = new StoredVisitor
         {
@@ -162,26 +177,36 @@ public sealed partial class PeopleStore : IDisposable
         }
 
         var codes = NewCodes(visitor.Id);
-
-        // An invitation that can be used is used up by the account it led to; one that cannot stops nobody
-        // from making an account, since anybody may (D-049).
-        if (Usable(invitation) is { } invited)
-        {
-            Use(invited, visitor.Id);
-        }
-
         try
         {
             _context.SaveChanges();
         }
         catch (DbUpdateException)
         {
-            // Somebody took the name between the question and the answer.
+            // Somebody took the name – or the sign-in of the provider – between the question and the answer.
             _context.ChangeTracker.Clear();
-            return new(["taken"]);
+            return new([login is not null && _context.ExternalLogins.AsNoTracking().Any(candidate => candidate.Provider == login.Provider && candidate.Key == login.Key) ? "login-taken" : "taken"]);
         }
 
         _context.ChangeTracker.Clear();
+
+        // An invitation that can be used is used up by the account it led to – asked of the store in one
+        // sentence, so that it is used once. One that cannot be used stops nobody from making an account
+        // where anybody may (D-049); where an invitation is needed, no account is made.
+        if (invited is not null)
+        {
+            var today = Today;
+            var used = _context.Invitations
+                .Where(candidate => candidate.Id == invited && candidate.UsedOn == null && candidate.RevokedAt == null)
+                .ExecuteUpdate(change => change.SetProperty(candidate => candidate.UsedBy, visitor.Id).SetProperty(candidate => candidate.UsedOn, today));
+            if (used == 0 && invitationNeeded)
+            {
+                step.Rollback();
+                return new(["invitation-needed"]);
+            }
+        }
+
+        step.Commit();
         return new([]) { Session = new VisitorSession(visitor.Id, visitor.Name, visitor.Stamp), RecoveryCodes = codes };
     }
 
@@ -196,36 +221,57 @@ public sealed partial class PeopleStore : IDisposable
         ArgumentNullException.ThrowIfNull(password);
         var now = _time.GetUtcNow().UtcDateTime;
         var key = Key(name.Trim());
-        var visitor = _context.Visitors.SingleOrDefault(candidate => candidate.NameKey == key);
-        var right = PasswordHash.Matches(password, visitor?.Password ?? Nobody);
-        try
+        var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.NameKey == key && candidate.ClosedAt == null);
+        if (!Proves(visitor, password, now))
         {
-            if (visitor is null || visitor.ClosedAt is not null || visitor.LockedUntil > now)
+            return null;
+        }
+
+        return new VisitorSession(visitor!.Id, visitor.Name, visitor.Stamp);
+    }
+
+    /// <summary>
+    /// Returns whether a password is the password of an account – the one proof every act asks for that needs
+    /// the password: signing in, another password, new recovery codes, a copy of the data, closing, opening
+    /// again. A wrong password is counted wherever it is tried, and after <see cref="FailuresAllowed"/> in a
+    /// row the account takes none for <see cref="LockedFor"/>: a locked account does not count further and
+    /// does not open for the right password either. The count is kept by the store in one sentence, so that
+    /// tries made at the same moment are all counted. Nobody, and an account without a password, take as long
+    /// to refuse as a wrong password.
+    /// </summary>
+    private bool Proves(StoredVisitor? visitor, string password, DateTime now)
+    {
+        var has = visitor is { Password.Length: > 0 };
+        var right = PasswordHash.Matches(password, has ? visitor!.Password : Nobody) && has;
+        if (visitor is null || visitor.LockedUntil > now)
+        {
+            return false;
+        }
+
+        if (!right)
+        {
+            if (has)
             {
-                // A locked account does not count further and does not open for the right password either.
-                return null;
+                Miss(visitor.Id, now);
             }
 
-            if (!right)
-            {
-                visitor.Failures++;
-                if (visitor.Failures >= FailuresAllowed)
-                {
-                    (visitor.Failures, visitor.LockedUntil) = (0, now + LockedFor);
-                }
-
-                _context.SaveChanges();
-                return null;
-            }
-
-            (visitor.Failures, visitor.LockedUntil) = (0, null);
-            _context.SaveChanges();
-            return new VisitorSession(visitor.Id, visitor.Name, visitor.Stamp);
+            return false;
         }
-        finally
-        {
-            _context.ChangeTracker.Clear();
-        }
+
+        _context.Visitors
+            .Where(candidate => candidate.Id == visitor.Id && (candidate.Failures != 0 || candidate.LockedUntil != null))
+            .ExecuteUpdate(change => change.SetProperty(candidate => candidate.Failures, 0).SetProperty(candidate => candidate.LockedUntil, (DateTime?)null));
+        return true;
+    }
+
+    // Counts a wrong password or a wrong recovery code, and locks the account at the last one that is allowed.
+    private void Miss(string id, DateTime now)
+    {
+        var until = now + LockedFor;
+        _context.Visitors.Where(candidate => candidate.Id == id).ExecuteUpdate(change => change.SetProperty(candidate => candidate.Failures, candidate => candidate.Failures + 1));
+        _context.Visitors
+            .Where(candidate => candidate.Id == id && candidate.Failures >= FailuresAllowed)
+            .ExecuteUpdate(change => change.SetProperty(candidate => candidate.Failures, 0).SetProperty(candidate => candidate.LockedUntil, (DateTime?)until));
     }
 
     /// <summary>Returns whether a sign-in still holds: the account is open and has the password it was signed in with.</summary>
@@ -259,7 +305,7 @@ public sealed partial class PeopleStore : IDisposable
         var visitor = _context.Visitors.SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
         try
         {
-            if (visitor is null || !PasswordHash.Matches(current, visitor.Password))
+            if (!Proves(visitor, current, _time.GetUtcNow().UtcDateTime))
             {
                 return new(["wrong"]);
             }
@@ -269,7 +315,7 @@ public sealed partial class PeopleStore : IDisposable
                 return new([weak]);
             }
 
-            (visitor.Password, visitor.Stamp) = (PasswordHash.Derive(password), NewStamp());
+            (visitor!.Password, visitor.Stamp) = (PasswordHash.Derive(password), NewStamp());
             _context.SaveChanges();
             return new([]) { Session = new VisitorSession(visitor.Id, visitor.Name, visitor.Stamp) };
         }
@@ -304,23 +350,21 @@ public sealed partial class PeopleStore : IDisposable
                 return new(["wrong"]);
             }
 
-            var stored = _context.RecoveryCodes.SingleOrDefault(candidate => candidate.VisitorId == visitor.Id && candidate.Code == derived && candidate.UsedAt == null);
-            if (stored is null)
+            // The code is used up in one sentence of the store: of two forms with the same code, one gets in.
+            var used = _context.RecoveryCodes
+                .Where(candidate => candidate.VisitorId == visitor.Id && candidate.Code == derived && candidate.UsedAt == null)
+                .ExecuteUpdate(change => change.SetProperty(candidate => candidate.UsedAt, (DateTime?)now));
+            if (used == 0)
             {
                 // A wrong code counts like a wrong password: codes cannot be tried without end.
-                visitor.Failures++;
-                if (visitor.Failures >= FailuresAllowed)
-                {
-                    (visitor.Failures, visitor.LockedUntil) = (0, now + LockedFor);
-                }
-
-                _context.SaveChanges();
+                Miss(visitor.Id, now);
                 return new(["wrong"]);
             }
 
-            stored.UsedAt = now;
-            (visitor.Password, visitor.Stamp, visitor.Failures, visitor.LockedUntil) = (PasswordHash.Derive(password), NewStamp(), 0, null);
+            (visitor.Password, visitor.Stamp) = (PasswordHash.Derive(password), NewStamp());
             _context.SaveChanges();
+            _context.Visitors.Where(candidate => candidate.Id == visitor.Id)
+                .ExecuteUpdate(change => change.SetProperty(candidate => candidate.Failures, 0).SetProperty(candidate => candidate.LockedUntil, (DateTime?)null));
             return new([]) { Session = new VisitorSession(visitor.Id, visitor.Name, visitor.Stamp) };
         }
         finally
@@ -334,7 +378,7 @@ public sealed partial class PeopleStore : IDisposable
     {
         ArgumentNullException.ThrowIfNull(password);
         var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
-        if (visitor is null || !PasswordHash.Matches(password, visitor.Password))
+        if (!Proves(visitor, password, _time.GetUtcNow().UtcDateTime))
         {
             return new(["wrong"]);
         }
@@ -356,12 +400,12 @@ public sealed partial class PeopleStore : IDisposable
         var visitor = _context.Visitors.SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
         try
         {
-            if (visitor is null || !PasswordHash.Matches(password, visitor.Password))
+            if (!Proves(visitor, password, _time.GetUtcNow().UtcDateTime))
             {
                 return new(["wrong"]);
             }
 
-            (visitor.ClosedAt, visitor.Stamp) = (_time.GetUtcNow().UtcDateTime, NewStamp());
+            (visitor!.ClosedAt, visitor.Stamp) = (_time.GetUtcNow().UtcDateTime, NewStamp());
             _context.SaveChanges();
             return new([]);
         }
@@ -383,12 +427,13 @@ public sealed partial class PeopleStore : IDisposable
         var visitor = _context.Visitors.SingleOrDefault(candidate => candidate.NameKey == key && candidate.ClosedAt != null);
         try
         {
-            if (!PasswordHash.Matches(password, visitor?.Password ?? Nobody) || visitor is null)
+            // A closed account counts wrong passwords like an open one: it is not guessed open.
+            if (!Proves(visitor, password, _time.GetUtcNow().UtcDateTime))
             {
                 return null;
             }
 
-            (visitor.ClosedAt, visitor.Stamp, visitor.Failures, visitor.LockedUntil) = (null, NewStamp(), 0, null);
+            (visitor!.ClosedAt, visitor.Stamp) = (null, NewStamp());
             _context.SaveChanges();
             return new VisitorSession(visitor.Id, visitor.Name, visitor.Stamp);
         }
@@ -406,6 +451,16 @@ public sealed partial class PeopleStore : IDisposable
     {
         var before = _time.GetUtcNow().UtcDateTime - KeptAfterClosing;
         var gone = _context.Visitors.Where(visitor => visitor.ClosedAt != null && visitor.ClosedAt < before).ToList();
+
+        // The name goes with the account (D-055) – out of the histories of the trees of others too, where a
+        // line says with whom a tree was shared. The line stays; whom it named is not said any more.
+        foreach (var name in gone.Select(visitor => visitor.Name))
+        {
+            _context.TreeChanges
+                .Where(change => change.What.StartsWith("member-") && change.Subject == name)
+                .ExecuteUpdate(change => change.SetProperty(line => line.Subject, string.Empty));
+        }
+
         _context.Visitors.RemoveRange(gone);
         ForgetDeclined();
         _context.SaveChanges();
