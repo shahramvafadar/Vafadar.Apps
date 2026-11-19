@@ -8714,4 +8714,31 @@ Original-XML SHA-256: {5}</value>
   <data name="Ai_PlanFact" xml:space="preserve">
     <value>Bekannter Planbetrag: {0} · Bezahlt für abgeschlossene Posten: {1} · Abweichung abgeschlossener Posten: {2} · Abgeschlossen: {3} · Offen: {4} · Unbekannter Betrag: {5}</value>
   </data>
+  <data name="Ai_ExplainLimit" xml:space="preserve">
+    <value>Budgetüberschreitung erklären</value>
+  </data>
+  <data name="Ai_ExplainSuggestion" xml:space="preserve">
+    <value>Diesen Budgetvorschlag erklären</value>
+  </data>
+  <data name="Ai_ExplainGoal" xml:space="preserve">
+    <value>Finanzierungslücke erklären</value>
+  </data>
+  <data name="Ai_OpenFundingDraft" xml:space="preserve">
+    <value>Bearbeitbaren Entwurf öffnen</value>
+  </data>
+  <data name="Ai_BudgetLimitFacts" xml:space="preserve">
+    <value>Wirksames Limit: {0} · Nettoausgaben: {1} · Überschreitung: {2} · Übertrag: {3} · Grundlimit: {4}</value>
+  </data>
+  <data name="Ai_BudgetSuggestionFacts" xml:space="preserve">
+    <value>Historischer Durchschnitt: {0} · Gerundeter Vorschlag: {1} · Abgeschlossene Zeiträume: {2} · Gespeichertes Limit: {3} · Rundungsdifferenz: {4}</value>
+  </data>
+  <data name="Ai_GoalFundingFacts" xml:space="preserve">
+    <value>Zielbetrag: {0} · Finanziert: {1} · Offen: {2} · Ungedeckte Rücklagen: {3} · Beitragstermine: {4} · Geplant je Termin: {5}</value>
+  </data>
+  <data name="Ai_FundingPerDate" xml:space="preserve">
+    <value>Alternative je verbleibendem Beitragstermin: {0}. Die Finanzierung hängt von den verfügbaren Mitteln ab.</value>
+  </data>
+  <data name="Ai_FundingDraftValue" xml:space="preserve">
+    <value>Alternativer Betrag für den Entwurf: {0}.</value>
+  </data>
 </root>

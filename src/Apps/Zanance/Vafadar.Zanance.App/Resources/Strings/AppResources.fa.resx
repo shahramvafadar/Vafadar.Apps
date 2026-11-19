@@ -8714,4 +8714,31 @@
   <data name="Ai_PlanFact" xml:space="preserve">
     <value>مبلغ برنامه‌ریزی‌شدهٔ معلوم: {0} · پرداخت اقلام تسویه‌شده: {1} · اختلاف اقلام تسویه‌شده: {2} · تسویه‌شده: {3} · باز: {4} · مبلغ نامعلوم: {5}</value>
   </data>
+  <data name="Ai_ExplainLimit" xml:space="preserve">
+    <value>توضیح عبور از سقف بودجه</value>
+  </data>
+  <data name="Ai_ExplainSuggestion" xml:space="preserve">
+    <value>توضیح این پیشنهاد بودجه</value>
+  </data>
+  <data name="Ai_ExplainGoal" xml:space="preserve">
+    <value>توضیح کسری تأمین هدف</value>
+  </data>
+  <data name="Ai_OpenFundingDraft" xml:space="preserve">
+    <value>بازکردن پیش‌نویس قابل‌ویرایش</value>
+  </data>
+  <data name="Ai_BudgetLimitFacts" xml:space="preserve">
+    <value>سقف مؤثر: {0} · هزینهٔ خالص: {1} · مازاد بر سقف: {2} · ماندهٔ انتقالی: {3} · سقف پایه: {4}</value>
+  </data>
+  <data name="Ai_BudgetSuggestionFacts" xml:space="preserve">
+    <value>میانگین گذشته: {0} · پیشنهاد گرد‌شده: {1} · دوره‌های کامل: {2} · سقف ذخیره‌شده: {3} · اختلاف گردکردن: {4}</value>
+  </data>
+  <data name="Ai_GoalFundingFacts" xml:space="preserve">
+    <value>مبلغ هدف: {0} · تأمین‌شده: {1} · باقی‌مانده: {2} · مبالغ کنارگذاشته‌شدهٔ بدون پوشش: {3} · نوبت‌های واریز: {4} · مبلغ برنامه‌ریزی‌شده در هر نوبت: {5}</value>
+  </data>
+  <data name="Ai_FundingPerDate" xml:space="preserve">
+    <value>گزینهٔ قابل بررسی برای هر نوبت باقی‌مانده: {0}. تأمین آن به وجه در دسترس بستگی دارد.</value>
+  </data>
+  <data name="Ai_FundingDraftValue" xml:space="preserve">
+    <value>مبلغ جایگزین برای بررسی در پیش‌نویس: {0}.</value>
+  </data>
 </root>

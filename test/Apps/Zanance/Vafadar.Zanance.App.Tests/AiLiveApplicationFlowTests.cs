@@ -42,7 +42,41 @@ public sealed class AiLiveApplicationFlowTests
     public Task Detailed_reports_reach_the_selected_live_provider(bool comparison, string model) =>
         RunAsync(comparison, model, true);
 
-    private static async Task RunAsync(bool comparison, string model, bool detailed)
+    /// <summary>Qualifies the original synthetic budget-limit explanation.</summary>
+    [Fact]
+    public Task Budget_limit_funding_reaches_the_selected_live_provider() =>
+        RunAsync(false, "gpt-6-luna", true, AiFundingKind.BudgetLimit);
+
+    /// <summary>Qualifies the rounded historical suggestion through the selected model.</summary>
+    [Fact]
+    public Task Budget_suggestion_funding_reaches_the_selected_live_provider() =>
+        RunAsync(false, "gemini-3.5-flash-lite", true, AiFundingKind.BudgetSuggestion);
+
+    /// <summary>Qualifies the funding gap and local contribution alternative.</summary>
+    [Fact]
+    public Task Goal_gap_funding_reaches_the_selected_live_provider() =>
+        RunAsync(false, "gemini-3.5-flash-lite", true, AiFundingKind.Goal);
+
+    /// <summary>Checks exact funding arithmetic and rejects inputs outside the reviewed funding contract without a provider.</summary>
+    [Fact]
+    public void Funding_contract_keeps_original_amounts_and_rejects_inconsistent_facts()
+    {
+        var original = AiPilotProvider.FundingFixtures[AiFundingKind.BudgetLimit];
+        var limit = AiFundingFacts.Limit("EUR", 1000, -200, 300, -1200);
+        Assert.Equal(500, limit.Difference);
+        Assert.Equal(1500, limit.Alternative());
+        var packet = original with { Funding = limit };
+        AiProtocol.Validate(packet);
+        Assert.Throws<ArgumentException>(() => AiProtocol.Validate(packet with { Funding = limit with { Difference = 501 } }));
+        Assert.Throws<ArgumentException>(() => AiProtocol.Validate(packet with { Funding = limit with { Currency = "USD" } }));
+        Assert.False(AiPilotProvider.IsSynthetic(AiPurpose.PeriodExplanation, AiProtocol.Digest(packet)));
+
+        var noDates = AiFundingFacts.Goal("EUR", 10000, -500, 10000, 0, null, null, 0);
+        Assert.Null(noDates.Alternative());
+        AiProtocol.Validate(original with { Funding = noDates });
+    }
+
+    private static async Task RunAsync(bool comparison, string model, bool detailed, AiFundingKind? funding = null)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_CONNECTION");
@@ -51,7 +85,7 @@ public sealed class AiLiveApplicationFlowTests
         Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
         var root = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_ROOT")!;
         Assert.Equal("Zanance synthetic app analysis", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
-        var lane = Path.Combine(root, detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report"));
+        var lane = Path.Combine(root, funding?.ToString() ?? (detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report")));
         Directory.CreateDirectory(lane);
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions { EnvironmentName = "Integration", ApplicationName = typeof(ServiceHost).Assembly.FullName });
         builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
@@ -67,14 +101,15 @@ public sealed class AiLiveApplicationFlowTests
         var serviceStore = server.Services.GetRequiredService<AiRequestStore>();
         var factory = server.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         var purpose = comparison ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation;
-        var email = $"synthetic-{model}@example.invalid";
+        var scopeKey = funding is AiFundingKind.BudgetSuggestion or AiFundingKind.Goal ? $"{funding}-qualified" : funding?.ToString() ?? "period";
+        var email = $"synthetic-{model}-{scopeKey}@example.invalid";
         const string fixturePassword = "Fictional-App-Analysis-9!";
         await using (var scope = server.Services.CreateAsyncScope())
         {
             var users = scope.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
             var user = new ServiceUser { Email = email, UserName = email, EmailConfirmed = true };
             Assert.True((await users.CreateAsync(user, fixturePassword)).Succeeded);
-            await serviceStore.GrantAsync(user.Id, "synthetic-app-" + model, false, 1, ct);
+            await serviceStore.GrantAsync(user.Id, $"synthetic-app-{model}-{scopeKey}", false, 1, ct);
             await using var db = await factory.CreateDbContextAsync(ct);
             await pilot.SelectModelAsync(db, comparison ? AiPurpose.PeriodExplanation : AiPurpose.PeriodComparison, "off", "app-pilot", ct);
             await pilot.SelectModelAsync(db, purpose, model, "app-pilot", ct);
@@ -88,7 +123,7 @@ public sealed class AiLiveApplicationFlowTests
         var identity = await login.SignInAsync(email, fixturePassword, ct);
         using var local = new FlowFixture();
         // The app derives an equally long preceding period, October 2–31, from this November selection.
-        var fixture = detailed ? (comparison ? AiPilotProvider.CategoryFixture : AiPilotProvider.PlanFixture)
+        var fixture = funding is { } kind ? AiPilotProvider.FundingFixtures[kind] : detailed ? (comparison ? AiPilotProvider.CategoryFixture : AiPilotProvider.PlanFixture)
             : (comparison ? AiPilotProvider.ComparisonFixture : AiPilotProvider.ReportFixture);
         var localAccounts = new List<Guid>();
         await using (var db = await local.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct))
@@ -117,18 +152,21 @@ public sealed class AiLiveApplicationFlowTests
         var vm = new AiAnalysisViewModel(local.Services.GetRequiredService<AiSnapshotStore>(), local.Translator, local.Localization,
             new DateFormatter(local.Localization), TimeProvider.System, local.Platform, new Runtime(peer, tokens, journal, identity.Id));
         var reportSourceCurrent = true;
+        var draftsOpened = 0;
         if (detailed)
         {
             var store = local.Services.GetRequiredService<AiSnapshotStore>();
             var scope = await store.AccountsAsync(ct);
             var packet = AiPeriodHandoff.Capture(scope.File, fixture.Current.From, fixture.Current.To, fixture.Current.ConfirmedOnly, localAccounts)!;
-            var reportRows = fixture.Report!.Categories?.Count ?? fixture.Report.Plans!.Count;
+            var reportRows = fixture.Report?.Categories?.Count ?? fixture.Report?.Plans?.Count ?? 1;
             vm.SetInitialPeriod(packet with
             {
                 ComparePrevious = comparison,
                 CompareFrom = fixture.Previous?.From,
                 CompareTo = fixture.Previous?.To,
                 Report = fixture.Report,
+                Funding = fixture.Funding,
+                OpenDraftAsync = funding.HasValue ? () => { draftsOpened++; return Task.CompletedTask; } : null,
                 ReportLabels = Enumerable.Range(1, reportRows).Select(i => $"Fictitious private label {i}").ToArray(),
                 ValidateReportAsync = () => reportSourceCurrent ? Task.CompletedTask
                     : Task.FromException(new InvalidOperationException("Synthetic retired report source.")),
@@ -157,6 +195,16 @@ public sealed class AiLiveApplicationFlowTests
             Assert.Contains("Fictitious private label 1", vm.Summary, StringComparison.Ordinal);
             var payload = System.Text.Json.JsonSerializer.Deserialize(vm.Disclosure, AiJson.Default.AiPayload)!;
             Assert.Equal(AiProtocol.Digest(fixture), AiProtocol.Digest(payload));
+            if (funding.HasValue)
+            {
+                Assert.True(vm.CanOpenFundingDraft);
+                reportSourceCurrent = false;
+                await vm.OpenFundingDraftAsync();
+                Assert.Equal(0, draftsOpened);
+                reportSourceCurrent = true;
+                await vm.OpenFundingDraftAsync();
+                Assert.Equal(1, draftsOpened);
+            }
         }
         Assert.DoesNotContain("Fictitious", vm.Disclosure, StringComparison.Ordinal);
         await vm.CheckProviderAsync(); Assert.True(vm.CanQuote, vm.Error);

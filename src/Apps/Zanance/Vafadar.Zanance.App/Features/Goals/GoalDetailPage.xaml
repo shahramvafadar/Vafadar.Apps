@@ -122,6 +122,8 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <p:WrappingAction Text="{v:Translate Ai_ExplainGoal}" Command="{Binding ExplainFundingCommand}"
+                                  IsVisible="{Binding HasFundingAnalysis}" IsEnabled="{Binding CanInteract}" />
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0" />
                 <!-- Life cycle (ZEX-S0303): pause or resume, complete or reopen, archive or restore -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="8">

@@ -53,6 +53,11 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     private readonly IDateFormatter _dates;
     private readonly ILocalizationService _localization;
     private readonly TimeProvider _time;
+    private readonly IAppInteraction _interaction;
+    private Analysis.AiPeriodHandoff? _fundingAnalysis;
+
+    /// <summary>Shows the explanation action only for a recorded over-limit amount.</summary>
+    public bool HasFundingAnalysis => _fundingAnalysis is not null;
     private Core.Budgets.Budget? _budget;
     private PeriodCalendar _calendar;
     private int _startDay = 1;
@@ -99,7 +104,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         _translator = translator;
         _dates = dates;
         _localization = localization;
-        _time = time;
+        _time = time; _interaction = interaction;
         Actions = new(store, translator, dates, interaction, ReloadAfterActionAsync);
         Actions.EditorOpening += (_, _) => _backFromEditor = true;
         Actions.PropertyChanged += (_, e) =>
@@ -528,9 +533,74 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         EquivalentText = projection.Equivalent > 0 && _period == BudgetPeriod.Month
             ? _translator.Format("Budget_Equivalent", MoneyText.Format(projection.Equivalent, _currency, culture)) : null;
         _review = reviewedBudgets;
+        _fundingAnalysis = _budget is { } published
+            ? CaptureFundingAnalysis(reviewedBudgets, published, projection, from, to, Today, ConfirmedOnly) : null;
+        OnPropertyChanged(nameof(HasFundingAnalysis));
         Actions.Publish(reviewedBudgets, new(_year, _month, _calendar, _period, _periodStart, _currency), _budget?.Id);
     }
 
+
+    private Analysis.AiPeriodHandoff? CaptureFundingAnalysis(BudgetEditorReview review, Core.Budgets.Budget budget,
+        BudgetFinancialProjection projection, DateOnly from, DateOnly to, DateOnly today, bool confirmed)
+    {
+        var focus = Funding(projection);
+        if (focus is not { } original) return null;
+        var ids = Core.Ledger.LedgerCalculator.InScope(review.Accounts, budget.AccountIds.Count == 0 ? null : budget.AccountIds)
+            .Where(account => account.CurrencyCode == budget.CurrencyCode).Select(account => account.Id);
+        var origin = review.CreateEditorOrigin();
+        if (Analysis.AiPeriodHandoff.Capture(origin.DatabasePath, from, to, confirmed, ids) is not { } period) return null;
+        var route = new Dictionary<string, object>
+        {
+            ["id"] = budget.Id, ["scope"] = review.Choices.ReminderScope,
+            ["budgetEditorOrigin"] = origin,
+        };
+        return period with
+        {
+            Funding = original.Facts,
+            ReportLabels = original.CategoryId is { } category ? [new CategoryLookup(review.Categories, _translator).Name(category)] : [],
+            ValidateReportAsync = ValidateAsync,
+            OpenDraftAsync = () => _interaction.NavigateAsync(AppRoutes.BudgetEditorRoute, route),
+        };
+
+        async Task ValidateAsync()
+        {
+            await _store.ValidateBudgetEditorReviewAsync(review);
+            var fresh = await _store.GetBudgetReadSnapshotAsync();
+            if (fresh.Review.CreateEditorOrigin().DatabasePath != period.File || today != Today)
+                throw new InvalidOperationException("The original budget period changed.");
+            var freshBudget = fresh.Review.Choices.Items.SingleOrDefault(item => item.Id == budget.Id)?.ToBudget()
+                ?? throw new InvalidOperationException("The original budget is unavailable.");
+            var current = await BudgetFinancialProjection.PrepareAsync(fresh, freshBudget, from, to, budget.CurrencyCode, today, confirmed);
+            if (Funding(current) != original) throw new InvalidOperationException("The original budget funding changed.");
+            await _store.ValidateBudgetEditorReviewAsync(review);
+        }
+
+        (Guid? CategoryId, Core.Analysis.AiFundingFacts Facts)? Funding(BudgetFinancialProjection result)
+        {
+            if (result.Total is { IsOver: true } total && budget.TotalLimit is { } ownLimit)
+                return (null, Core.Analysis.AiFundingFacts.Limit(budget.CurrencyCode, ownLimit, total.Limit, total.Spent, result.Carry.Total));
+            var row = result.Categories.Where(item => item.Status.IsOver).MaxBy(item => item.Status.Overspent);
+            return row is not null ? (row.CategoryId, Core.Analysis.AiFundingFacts.Limit(budget.CurrencyCode,
+                row.OwnLimit, row.Status.Limit, row.Status.Spent, row.Carry)) : null;
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExplainFundingAsync()
+    {
+        if (!CanNavigate || _fundingAnalysis is not { } period || _refreshing || IsBusy) return;
+        var revision = _pageRevision;
+        IsBusy = true;
+        try
+        {
+            await period.ValidateReportAsync!();
+            if (_visible && revision == _pageRevision && ReferenceEquals(period, _fundingAnalysis))
+                await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false));
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (_visible && revision == _pageRevision) await _interaction.ShowFailureAsync(error); }
+        finally { IsBusy = false; }
+    }
 
     // Flex (D-28): one limit for flexible spending; fixed bills expected from the plans, non-monthly bills with their
     // monthly share. Every amount is counted in one group only (BUD-12).

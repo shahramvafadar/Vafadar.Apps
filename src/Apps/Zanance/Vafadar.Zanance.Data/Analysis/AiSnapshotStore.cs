@@ -19,7 +19,7 @@ public sealed record AiAccountScope(string File, IReadOnlyList<AiAccount> Accoun
 /// <summary>Exact read-only disclosure inputs, independent from UI language/calendar presentation.</summary>
 public sealed record AiSelection(string File, IReadOnlyList<Guid> AccountIds, DateOnly From, DateOnly To,
     bool ConfirmedOnly, bool ComparePrevious, string Language, DateOnly? CompareFrom = null, DateOnly? CompareTo = null,
-    AiReportDetails? Report = null);
+    AiReportDetails? Report = null, AiFundingFacts? Funding = null);
 
 /// <summary>Original file/rights/minimal source digest and immutable aggregate payload; no raw notes or blobs retained.</summary>
 public sealed class AiReview
@@ -137,8 +137,8 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         }
         var current = Period(selection.From, selection.To);
         var previous = selection.ComparePrevious ? Period(PreviousFrom(selection), selection.CompareTo ?? selection.From.AddDays(-1)) : null;
-        var result = new AiPayload(selection.Report is null ? 1 : 2, selection.ComparePrevious ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation,
-            selection.Language, current, previous, selection.Report);
+        var result = new AiPayload(selection.Funding is not null ? 3 : selection.Report is null ? 1 : 2, selection.ComparePrevious ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation,
+            selection.Language, current, previous, selection.Report, selection.Funding);
         AiProtocol.Validate(result); return result;
     }
     private static DateOnly PreviousFrom(AiSelection selection) =>

@@ -8703,4 +8703,31 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Ai_PlanFact" xml:space="preserve">
     <value>Importo previsto noto: {0} · Pagato per le voci saldate: {1} · Scostamento per le voci saldate: {2} · Saldate: {3} · Aperte: {4} · Importo sconosciuto: {5}</value>
   </data>
+  <data name="Ai_ExplainLimit" xml:space="preserve">
+    <value>Spiega lo sforamento del budget</value>
+  </data>
+  <data name="Ai_ExplainSuggestion" xml:space="preserve">
+    <value>Spiega questo suggerimento di budget</value>
+  </data>
+  <data name="Ai_ExplainGoal" xml:space="preserve">
+    <value>Spiega quanto manca all’obiettivo</value>
+  </data>
+  <data name="Ai_OpenFundingDraft" xml:space="preserve">
+    <value>Apri la bozza modificabile</value>
+  </data>
+  <data name="Ai_BudgetLimitFacts" xml:space="preserve">
+    <value>Limite effettivo: {0} · Spesa netta: {1} · Eccedenza: {2} · Riporto: {3} · Limite base: {4}</value>
+  </data>
+  <data name="Ai_BudgetSuggestionFacts" xml:space="preserve">
+    <value>Media storica: {0} · Suggerimento arrotondato: {1} · Periodi conclusi: {2} · Limite salvato: {3} · Differenza di arrotondamento: {4}</value>
+  </data>
+  <data name="Ai_GoalFundingFacts" xml:space="preserve">
+    <value>Obiettivo: {0} · Finanziato: {1} · Residuo: {2} · Accantonamenti scoperti: {3} · Date di versamento: {4} · Previsto per data: {5}</value>
+  </data>
+  <data name="Ai_FundingPerDate" xml:space="preserve">
+    <value>Alternativa da esaminare per ogni data di versamento residua: {0}. Il finanziamento dipende dal denaro disponibile.</value>
+  </data>
+  <data name="Ai_FundingDraftValue" xml:space="preserve">
+    <value>Importo alternativo da esaminare nella bozza: {0}.</value>
+  </data>
 </root>

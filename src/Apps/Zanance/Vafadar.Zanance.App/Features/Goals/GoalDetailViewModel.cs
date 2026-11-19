@@ -133,6 +133,10 @@ public sealed partial class GoalDetailViewModel(
     private GoalWorkSnapshot? _review;
     private GoalWorkSnapshot? _originalSource;
     private GoalListSnapshot? _financialReview;
+    private Analysis.AiPeriodHandoff? _fundingAnalysis;
+
+    /// <summary>Shows the funding explanation for the published outstanding monetary goal.</summary>
+    public bool HasFundingAnalysis => _fundingAnalysis is not null;
     private bool _needsReload;
     private readonly SemaphoreSlim _loadGate = new(1, 1);
     private bool _publishingDrafts;
@@ -458,6 +462,7 @@ public sealed partial class GoalDetailViewModel(
         var goal = snapshot.Goals.FirstOrDefault(item => item.Id == _id);
         if (goal is null)
         {
+            _fundingAnalysis = null; OnPropertyChanged(nameof(HasFundingAnalysis)); requireCurrent();
             _goal = null; _review = snapshot; NotFound = true; Summary = null;
             History.ReplaceAll([]); _historyRows.Clear(); PerAccount.ReplaceAll([]); TrendPeriods.ReplaceAll([]); return;
         }
@@ -485,6 +490,8 @@ public sealed partial class GoalDetailViewModel(
             return (Balances: balances, Progress: progress, Trend: trend, Coverage: coverage, Capacity: capacity, Earmarks: earmarks);
         }, token);
         await goals.ValidateListSnapshotAsync(source, token); requireCurrent();
+        _fundingAnalysis = CaptureFunding(source, goal, facts.Progress, today);
+        OnPropertyChanged(nameof(HasFundingAnalysis)); requireCurrent();
         _goal = goal; _review = snapshot; _financialReview = source; _work = snapshot.Work; NotFound = false;
         UnitNote = DisplayUnitNote.For(translator, goal.CurrencyCode);
         Summary = presenter.DetailRow(source, goal, facts.Progress); requireCurrent();
@@ -653,6 +660,45 @@ public sealed partial class GoalDetailViewModel(
             if (!await interaction.ConfirmAsync(translator["Goal_DeleteAllocation"], $"{row.Text} {row.AmountText}", translator["Common_Delete"], translator["Common_Cancel"])) return false;
             await goals.DeleteAllocationAsync(row.Id, review: review, isCurrent: _writeCurrent); return true;
         });
+    }
+
+    private Analysis.AiPeriodHandoff? CaptureFunding(GoalListSnapshot source, Goal goal, GoalProgress? progress, DateOnly today)
+    {
+        if (goal.Type == GoalType.HoldingQuantity || progress is not { Remaining: > 0 }) return null;
+        var accounts = source.Accounts.Where(account => account.CurrencyCode == goal.CurrencyCode &&
+            (goal.AccountId is { } id ? account.Id == id : !account.IsArchived && !account.Type.IsOutsideCash()));
+        if (Analysis.AiPeriodHandoff.Capture(source.DatabasePath, today, today, false, accounts.Select(account => account.Id)) is not { } period)
+            return null;
+        return period with
+        {
+            Funding = Core.Analysis.AiFundingFacts.Goal(goal.CurrencyCode, progress.Target, progress.Current, progress.Remaining,
+                progress.Opportunities, progress.PlannedContribution, progress.Opportunities > 0 ? progress.Required : null, progress.Unfunded),
+            ValidateReportAsync = async () =>
+            {
+                if (Today != today) throw new InvalidOperationException("The original funding date changed.");
+                await goals.ValidateListSnapshotAsync(source);
+                if (Today != today) throw new InvalidOperationException("The original funding date changed.");
+            },
+            OpenDraftAsync = () => interaction.NavigateAsync(AppRoutes.GoalEditorRoute, new Dictionary<string, object>
+            { ["id"] = goal.Id, ["goalEditorOrigin"] = source.CreateEditorOrigin() }),
+        };
+    }
+
+    [RelayCommand]
+    private async Task ExplainFundingAsync()
+    {
+        if (!CanInteract || _fundingAnalysis is not { } period) return;
+        var identity = _identityVersion;
+        IsBusy = true;
+        try
+        {
+            await period.ValidateReportAsync!();
+            if (identity == _identityVersion && !_retired && CanView && ReferenceEquals(period, _fundingAnalysis))
+                await interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false));
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (!_retired && identity == _identityVersion) await interaction.ShowFailureAsync(error); }
+        finally { IsBusy = false; }
     }
 
     private async Task EditAsync()

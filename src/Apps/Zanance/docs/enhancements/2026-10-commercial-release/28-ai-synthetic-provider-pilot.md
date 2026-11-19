@@ -111,3 +111,26 @@ The isolated application flow completed one real model request per new fixture. 
 The independent Windows native review invoked both new Reports buttons and the original Review action, verified the resulting locked scopes and anonymous packets, and used zero provider calls. It exercised one changed category and one open planned item with an unchanged local financial fingerprint. No prior provider or native case was replayed.
 
 The paid estimate uses reported usage, including reasoning or thinking in output, without invoice verification. The pilot remains restricted to exact fictitious fixtures. See [OpenAI model pricing](https://developers.openai.com/api/docs/models/gpt-6.2-sol) and [Gemini model pricing](https://aistudio.google.com/docs/pricing#gemini-3.5-flash-lite).
+
+
+## Budget and goal funding explanations, 2026-11-19
+
+Budget explains the overspent overall or flexible limit first and, without one, the largest overspent category limit in the visible scope. It retains the original financial period, account filter, review choice, effective limit and signed carry. The comparison shows the original base limit and a local draft amount that would match the already recorded spending with the same carry. It does not forecast affordable spending. The existing editor opens for the exact budget.
+
+The budget editor explains how many complete periods contributed to the historical net spending average, how the local rule rounded the limit, and how the result compares with the saved limit if present. This is a comparison with the saved limit, since prior unsaved suggestions are not historical records. The editable-draft action returns to the same editor with its existing draft and leaves its existing Use suggestion and Save actions explicit.
+
+Monetary goal detail explains the target, the amount covered, the gap and uncovered earmarks, using the original funding priority calculation. If eligible contribution dates remain, the local engine supplies the required amount per date beside the planned contribution. Goals without remaining dates show the outstanding amount without a per-date promise. Quantity goals have different units and stay in their existing local screens. The draft action opens the original goal editor without updating an amount.
+
+The new version 3 payload is locked to the original scope, one currency and a fixed type of funding evidence. Preview, draft navigation, share and submit use the original source validation and the existing explicit confirmation rules. User-defined names stay local. The isolated pilot only admits exact synthetic payloads under the existing Simple reports operator setting. No data or model is sent when opening a draft. Local captions were added in all six application languages. The live model fixtures used English.
+
+| Fixture | Model | Standard USD per million input / output tokens | Observed input / billable output | Estimated charge | Paid equivalent |
+|---|---|---:|---:|---:|---:|
+| Budget limit, accepted | GPT-6 Luna | 0.10 / 0.50 | 147 / 190 | USD 0.0001097 | USD 0.0001097 |
+| Budget suggestion, first response rejected | Gemini 3.5 Flash-Lite | 0.30 / 2.50 | 106 / 122 | USD 0 (Free Tier) | USD 0.0003368 |
+| Budget suggestion, new corrected fixture | Gemini 3.5 Flash-Lite | 0.30 / 2.50 | 139 / 52 | USD 0 (Free Tier) | USD 0.0001717 |
+| Monetary goal, accepted | Gemini 3.5 Flash-Lite | 0.30 / 2.50 | 153 / 87 | USD 0 (Free Tier) | USD 0.0002634 |
+
+The first suggestion response multiplied the minor-unit amounts, so the service refused publication. Status of the same vendor operation confirmed completion and usage, with no repeat create for that case. The new fixture supplies exact local integers separately from prose. The first goal fixture setup collided with the previous synthetic credit grant before dispatch. Distinct grant identities resolved the setup failure. The accepted live cases exercised the application model, exact disclosure, retired-source and draft-entry checks, pinned local TLS and the private request journal. Their local financial fingerprints did not change. Prices are usage-based Standard estimates with no invoice verification. See [OpenAI](https://developers.openai.com/api/docs/models/gpt-6-luna) and [Gemini](https://aistudio.google.com/docs/pricing#gemini-3.5-flash-lite).
+
+
+A focused local check covered signed carry, exact draft arithmetic, currency/scope refusal and a goal with no future contribution dates. The independent Windows fixture used original native buttons for the three explanations, Review, and Open editable draft. It observed the budget overrun, the same budget suggestion editor on return, and the original monetary goal editor, with an unchanged local financial fingerprint. The first suggestion navigation refused the all-accounts sentinel. The correction reuses the suggestion calculator's empty-scope meaning. The accepted budget-limit case was not repeated. An isolated WinUI title-bar error was recorded when closing the review window after the three receipts.

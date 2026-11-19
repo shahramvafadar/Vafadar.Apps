@@ -89,6 +89,9 @@
                 </Button>
             </Grid>
 
+            <p:WrappingAction Text="{v:Translate Ai_ExplainLimit}" Command="{Binding ExplainFundingCommand}"
+                              IsVisible="{Binding HasFundingAnalysis}" />
+
             <!-- No budget is not a zero budget (BUD-01) -->
             <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget, Converter={StaticResource InvertedBoolConverter}}">
                 <VerticalStackLayout Spacing="12">

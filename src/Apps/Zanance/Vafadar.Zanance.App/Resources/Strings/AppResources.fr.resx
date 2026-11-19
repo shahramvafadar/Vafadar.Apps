@@ -8691,4 +8691,31 @@ SHA-256 du XML original : {5}</value>
   <data name="Ai_PlanFact" xml:space="preserve">
     <value>Montant prévu connu : {0} · Payé pour les éléments réglés : {1} · Écart sur les éléments réglés : {2} · Réglés : {3} · Ouverts : {4} · Montant inconnu : {5}</value>
   </data>
+  <data name="Ai_ExplainLimit" xml:space="preserve">
+    <value>Expliquer le dépassement du budget</value>
+  </data>
+  <data name="Ai_ExplainSuggestion" xml:space="preserve">
+    <value>Expliquer cette suggestion de budget</value>
+  </data>
+  <data name="Ai_ExplainGoal" xml:space="preserve">
+    <value>Expliquer le montant manquant</value>
+  </data>
+  <data name="Ai_OpenFundingDraft" xml:space="preserve">
+    <value>Ouvrir le brouillon modifiable</value>
+  </data>
+  <data name="Ai_BudgetLimitFacts" xml:space="preserve">
+    <value>Plafond effectif : {0} · Dépenses nettes : {1} · Dépassement : {2} · Report : {3} · Plafond de base : {4}</value>
+  </data>
+  <data name="Ai_BudgetSuggestionFacts" xml:space="preserve">
+    <value>Moyenne historique : {0} · Suggestion arrondie : {1} · Périodes complètes : {2} · Plafond enregistré : {3} · Écart d’arrondi : {4}</value>
+  </data>
+  <data name="Ai_GoalFundingFacts" xml:space="preserve">
+    <value>Objectif : {0} · Financé : {1} · Reste : {2} · Réserves non couvertes : {3} · Dates de versement : {4} · Prévu par date : {5}</value>
+  </data>
+  <data name="Ai_FundingPerDate" xml:space="preserve">
+    <value>Autre montant à examiner par date de versement restante : {0}. Le financement dépend des fonds disponibles.</value>
+  </data>
+  <data name="Ai_FundingDraftValue" xml:space="preserve">
+    <value>Autre montant à examiner dans le brouillon : {0}.</value>
+  </data>
 </root>

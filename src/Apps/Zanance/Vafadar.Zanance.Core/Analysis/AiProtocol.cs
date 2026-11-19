@@ -22,7 +22,8 @@ public sealed record AiPeriod(DateOnly From, DateOnly To, int AccountCount, bool
 
 /// <summary>The exact minimal payload previewed before any service/provider financial request.</summary>
 public sealed record AiPayload(int Version, AiPurpose Purpose, string Language, AiPeriod Current, AiPeriod? Previous,
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiReportDetails? Report = null);
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiReportDetails? Report = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiFundingFacts? Funding = null);
 
 /// <summary>An anonymous top-level category's net spending in two explicitly shown periods.</summary>
 public sealed record AiCategoryChange(long Current, long Previous);
@@ -35,6 +36,39 @@ public sealed record AiPlanDifference(string Currency, EntryKind Kind, long Plan
 public sealed record AiReportDetails(
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] IReadOnlyList<AiCategoryChange>? Categories,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] IReadOnlyList<AiPlanDifference>? Plans);
+
+/// <summary>Identifies the fixed source of the disclosed funding amounts.</summary>
+public enum AiFundingKind { BudgetLimit, BudgetSuggestion, Goal }
+
+/// <summary>Locally computed facts. Baseline and observed mean limit/spent, suggestion/average, or target/funded.</summary>
+public sealed record AiFundingFacts(AiFundingKind Kind, string Currency, long Baseline, long Observed, long Difference,
+    long? Existing, long? Carry, int? PeriodCount, long? PlannedContribution, long? RequiredContribution, long? Unfunded)
+{
+    /// <summary>Explains the effective limit, including carry, and the draft base limit that would cover recorded spending.</summary>
+    public static AiFundingFacts Limit(string currency, long ownLimit, long effectiveLimit, long spent, long carry) =>
+        new(AiFundingKind.BudgetLimit, currency, effectiveLimit, spent, checked(spent - effectiveLimit),
+            ownLimit, carry, null, null, null, null);
+
+    /// <summary>Explains the current locally rounded suggestion against recorded history and any original saved limit.</summary>
+    public static AiFundingFacts Suggestion(string currency, long average, long suggested, int count, long? saved) =>
+        new(AiFundingKind.BudgetSuggestion, currency, suggested, average, checked(suggested - average),
+            saved, null, count, null, null, null);
+
+    /// <summary>Explains recorded monetary progress and the original contribution scenario, where available.</summary>
+    public static AiFundingFacts Goal(string currency, long target, long funded, long remaining, int opportunities,
+        long? planned, long? required, long unfunded) =>
+        new(AiFundingKind.Goal, currency, target, funded, remaining, null, null, opportunities, planned, required, unfunded);
+
+    /// <summary>Returns a local comparison option, which has no authority to update any original amount.</summary>
+    public long? Alternative() => Kind switch
+    {
+        AiFundingKind.BudgetLimit when Existing is { } original && Difference > 0 && (Int128)original + Difference <= long.MaxValue
+            => original + Difference,
+        AiFundingKind.BudgetSuggestion => Baseline,
+        AiFundingKind.Goal => RequiredContribution,
+        _ => null,
+    };
+}
 
 /// <summary>Provider metadata and maximum technical credit units, never a client-supplied price or implied subscription benefit.</summary>
 public sealed record AiOffer(Guid Id, string Provider, string Model, AiPurpose Purpose, long MaximumUnits, DateTimeOffset ExpiresAt);
@@ -83,7 +117,7 @@ public static class AiProtocol
     public static void Validate(AiPayload payload)
     {
         ArgumentNullException.ThrowIfNull(payload);
-        if (payload.Version != (payload.Report is null ? 1 : 2) || !Enum.IsDefined(payload.Purpose) || payload.Language is not ("en" or "fa" or "de" or "es" or "fr" or "it"))
+        if (payload.Version != (payload.Funding is not null ? 3 : payload.Report is null ? 1 : 2) || !Enum.IsDefined(payload.Purpose) || payload.Language is not ("en" or "fa" or "de" or "es" or "fr" or "it"))
             throw new ArgumentException("Unsupported analysis contract.");
         Period(payload.Current);
         if (payload.Purpose == AiPurpose.PeriodComparison)
@@ -97,6 +131,7 @@ public static class AiProtocol
         }
         else if (payload.Previous is not null) throw new ArgumentException("Unrequested previous period refused.");
         if (payload.Report is { } report) ValidateReport(payload, report);
+        if (payload.Funding is { } funding) ValidateFunding(payload, funding);
         if (JsonSerializer.SerializeToUtf8Bytes(payload, AiJson.Default.AiPayload).Length > MaximumPayloadBytes)
             throw new ArgumentException("Analysis payload exceeds its technical bound.");
     }
@@ -113,6 +148,30 @@ public static class AiProtocol
             text.Any(c => char.IsControl(c) && c is not '\r' and not '\n' and not '\t' || c is >= '\u202A' and <= '\u202E' or >= '\u2066' and <= '\u2069'))
             throw new ArgumentException("Provider text is invalid.");
     }
+    private static void ValidateFunding(AiPayload payload, AiFundingFacts facts)
+    {
+        if (payload.Purpose != AiPurpose.PeriodExplanation || payload.Report is not null || payload.Current.Totals.Count != 1 ||
+            payload.Current.Totals[0].CurrencyCode != facts.Currency)
+            throw new ArgumentException("Invalid funding scope.");
+
+        var valid = facts.Kind switch
+        {
+            AiFundingKind.BudgetLimit => facts.Existing is >= 0 && facts.Carry is not null && facts.PeriodCount is null &&
+                facts.PlannedContribution is null && facts.RequiredContribution is null && facts.Unfunded is null &&
+                facts.Difference > 0 && (Int128)facts.Observed - facts.Baseline == facts.Difference,
+            AiFundingKind.BudgetSuggestion => facts.Observed > 0 && facts.Baseline >= facts.Observed &&
+                (Int128)facts.Baseline - facts.Observed == facts.Difference && facts.Existing is null or >= 0 &&
+                facts.PeriodCount is >= 1 and <= 4 && facts.Carry is null && facts.PlannedContribution is null &&
+                facts.RequiredContribution is null && facts.Unfunded is null,
+            AiFundingKind.Goal => facts.Baseline > 0 && facts.Difference > 0 && facts.Unfunded is >= 0 &&
+                (Int128)facts.Baseline - Math.Max(0, facts.Observed) == facts.Difference && facts.PeriodCount is >= 0 &&
+                facts.Existing is null && facts.Carry is null && facts.PlannedContribution is null or >= 0 &&
+                (facts.RequiredContribution is null || facts.RequiredContribution > 0 && facts.PeriodCount > 0),
+            _ => false,
+        };
+        if (!valid) throw new ArgumentException("Invalid funding facts.");
+    }
+
     private static void ValidateReport(AiPayload payload, AiReportDetails report)
     {
         if (payload.Purpose == AiPurpose.PeriodComparison && report.Plans is null &&

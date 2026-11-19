@@ -37,6 +37,9 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
 
     /// <summary>Only freely selected analysis has editable dates, account choices and review filters.</summary>
     public bool CanEditScope => detailedPeriod is null;
+
+    /// <summary>Offers an original editable draft only after the local funding facts have been reviewed.</summary>
+    public bool CanOpenFundingDraft => OwnsPresentation && review is not null && detailedPeriod?.OpenDraftAsync is not null && !HasPendingOperation;
     private AiReview? review;
     private AiOffer? offer;
     private IAiRemote? remote;
@@ -201,8 +204,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             Validate(original); scope = current; choiceEpoch = originalChoices;
             Accounts.Clear(); Validate(original);
             foreach (var account in replacement) { Accounts.Add(account); Validate(original); }
-            detailedPeriod = incoming?.Report is not null ? incoming : null;
-            OnPropertyChanged(nameof(CanEditScope)); Validate(original);
+            detailedPeriod = incoming?.IsDetailed == true ? incoming : null;
+            OnPropertyChanged(nameof(CanEditScope)); OnPropertyChanged(nameof(CanOpenFundingDraft)); Validate(original);
             Loaded = true; Validate(original);
             if (ReferenceEquals(initialPeriod, incoming)) initialPeriod = null;
 
@@ -226,7 +229,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         if (!OwnsPresentation || !Loaded || HasPendingOperation || scope is null) return;
         var original = epoch;
         var selection = new AiSelection(scope.File, Accounts.Where(a => a.Selected).Select(a => a.Id).ToArray(), From, To, ConfirmedOnly, ComparePrevious,
-            local.CurrentLanguage.CultureName.Split('-')[0], detailedPeriod?.CompareFrom, detailedPeriod?.CompareTo, detailedPeriod?.Report);
+            local.CurrentLanguage.CultureName.Split('-')[0], detailedPeriod?.CompareFrom, detailedPeriod?.CompareTo, detailedPeriod?.Report, detailedPeriod?.Funding);
         readingSource = true; operationActive = true;
         try
         {
@@ -253,13 +256,18 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             if (detailedPeriod?.ValidateReportAsync is { } validateReport) { await validateReport(); Validate(original); }
             var payload = prepared.Payload; var summary = Period(payload.Current);
             if (payload.Previous is not null) summary += Environment.NewLine + Period(payload.Previous);
-            if (detailedPeriod is { } report) summary += Environment.NewLine + ReportSummary(report, payload);
+            if (payload.Funding is { } funding)
+            {
+                var label = detailedPeriod?.ReportLabels.FirstOrDefault();
+                summary = (label is null ? string.Empty : label + Environment.NewLine) + FundingSummary(funding);
+            }
+            else if (detailedPeriod is { } report) summary += Environment.NewLine + ReportSummary(report, payload);
             var disclosure = JsonSerializer.Serialize(payload, AiJson.Default.AiPayload); Validate(original);
             // D-962: native/binding notifications may fail, edit the draft or retire the original page.
             // Sharing authority is committed only after the complete current preview was published.
             Summary = summary; Validate(original);
             Disclosure = disclosure; Validate(original);
-            review = prepared;
+            review = prepared; OnPropertyChanged(nameof(CanOpenFundingDraft));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         {
@@ -505,6 +513,42 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         };
     private void ShowBalance(AiBalance balance) => BalanceText = BalanceCaption(balance);
     private string BalanceCaption(AiBalance balance) => text.Format("Ai_Balance", N(balance.PurchasedAvailable), N(balance.GiftedAvailable), N(balance.PurchasedReserved), N(balance.GiftedReserved));
+    /// <summary>Opens the original editor after checking the same reviewed funding source.</summary>
+    [RelayCommand] public async Task OpenFundingDraftAsync()
+    {
+        if (!CanOpenFundingDraft || operationActive || review is not { } original ||
+            detailedPeriod?.OpenDraftAsync is not { } open) return;
+        var version = epoch;
+        readingSource = operationActive = true;
+        try
+        {
+            StartOperation(version); ValidateReview(version, original);
+            await CheckOriginalAsync(original); ValidateReview(version, original);
+            await open();
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (OwnsPresentation && version == epoch) SetError(FailureKey(error)); }
+        finally { readingSource = operationActive = false; IsBusy = false; Refresh(); }
+    }
+
+    private string FundingSummary(AiFundingFacts facts)
+    {
+        var summary = facts.Kind switch
+        {
+            AiFundingKind.BudgetLimit => text.Format("Ai_BudgetLimitFacts", Money(facts.Baseline), Money(facts.Observed),
+                Money(facts.Difference), Money(facts.Carry!.Value), Money(facts.Existing!.Value)),
+            AiFundingKind.BudgetSuggestion => text.Format("Ai_BudgetSuggestionFacts", Money(facts.Observed), Money(facts.Baseline),
+                N(facts.PeriodCount!.Value), Optional(facts.Existing), Money(facts.Difference)),
+            _ => text.Format("Ai_GoalFundingFacts", Money(facts.Baseline), Money(facts.Observed), Money(facts.Difference),
+                Money(facts.Unfunded!.Value), N(facts.PeriodCount!.Value), Optional(facts.PlannedContribution)),
+        };
+        if (facts.Alternative() is { } alternative)
+            summary += Environment.NewLine + text.Format(facts.Kind == AiFundingKind.Goal ? "Ai_FundingPerDate" : "Ai_FundingDraftValue", Money(alternative));
+        return summary;
+        string Money(long amount) => MoneyText.Format(amount, facts.Currency, local.CurrentCulture);
+        string Optional(long? amount) => amount is { } value ? Money(value) : text["Report_NotAvailable"];
+    }
+
     private async Task CheckOriginalAsync(AiReview original)
     {
         await store.CheckAsync(original);
@@ -592,6 +636,6 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
                 throw new InvalidOperationException("Original analysis disclosure changed.");
         }
     }
-    private void Refresh() { OnPropertyChanged(nameof(HasPendingOperation)); OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanShare)); OnPropertyChanged(nameof(CanCheckProvider)); OnPropertyChanged(nameof(CanQuote)); OnPropertyChanged(nameof(CanSend)); OnPropertyChanged(nameof(CanContinue)); }
+    private void Refresh() { if (detailedPeriod?.Funding is not null) OnPropertyChanged(nameof(CanOpenFundingDraft)); OnPropertyChanged(nameof(HasPendingOperation)); OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanShare)); OnPropertyChanged(nameof(CanCheckProvider)); OnPropertyChanged(nameof(CanQuote)); OnPropertyChanged(nameof(CanSend)); OnPropertyChanged(nameof(CanContinue)); }
     private static DateOnly FirstDay(TimeProvider clock) { var date = DateOnly.FromDateTime(clock.GetLocalNow().Date); return new(date.Year, date.Month, 1); }
 }

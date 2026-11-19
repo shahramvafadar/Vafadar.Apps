@@ -35,6 +35,17 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             new("EUR", Core.Ledger.EntryKind.Expense, 6000, 5000, 1, 0, 0, -1000),
         ]),
     };
+    /// <summary>One distinct exact synthetic scope for each funding explanation.</summary>
+    internal static readonly IReadOnlyDictionary<AiFundingKind, AiPayload> FundingFixtures =
+        new Dictionary<AiFundingKind, AiPayload>
+        {
+            [AiFundingKind.BudgetLimit] = ReportFixture with { Version = 3, Funding = AiFundingFacts.Limit("EUR", 28000, 32000, 38000, 4000) },
+            [AiFundingKind.BudgetSuggestion] = ReportFixture with { Version = 3, Funding = AiFundingFacts.Suggestion("EUR", 43720, 44000, 3, 42000) },
+            [AiFundingKind.Goal] = ReportFixture with { Version = 3, Funding = AiFundingFacts.Goal("EUR", 90000, 45000, 45000, 5, 6000, 9000, 2000) },
+        };
+    private static readonly IReadOnlyDictionary<string, AiFundingFacts> FundingByDigest =
+        FundingFixtures.Values.ToDictionary(AiProtocol.Digest, payload => payload.Funding!, StringComparer.Ordinal);
+
     private static readonly string CategoryDigest = AiProtocol.Digest(CategoryFixture);
     private static readonly string PlanDigest = AiProtocol.Digest(PlanFixture);
     private static readonly string ReportDigest = AiProtocol.Digest(ReportFixture);
@@ -47,7 +58,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     /// <summary>Accepts only the fixed synthetic payload for the requested purpose.</summary>
     internal static bool IsSynthetic(AiPurpose purpose, string digest) => purpose switch
     {
-        AiPurpose.PeriodExplanation => digest == ReportDigest || digest == PlanDigest,
+        AiPurpose.PeriodExplanation => digest == ReportDigest || digest == PlanDigest || FundingByDigest.ContainsKey(digest),
         AiPurpose.PeriodComparison => digest == ComparisonDigest || digest == AppComparisonDigest || digest == CategoryDigest,
         _ => false,
     };
@@ -137,6 +148,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         else if (digest == PlanDigest)
             task = "Synthetic Zanance expense plans in EUR minor units. Row [1] planned 10000, paid 12000, settled, comparable. Row [2] planned 5000, still open, excluded from settled variance. Row [3] planned amount unknown, paid 3500, settled, no comparable variance. Row [4] planned 6000, paid 5000, settled, comparable. Return the row numbers for largest settled overrun and largest settled underrun and the counts of open rows and rows with unknown planned amounts. Explain briefly in English using bracketed row numbers. Do not count an open or unknown row as a saving. Do not give advice.";
 
+        if (FundingByDigest.TryGetValue(digest, out var funding)) task = FundingTask(funding);
         var expected = Expected(offer.Purpose, digest);
         var properties = expected.ToDictionary(f => f.Key, f => new { type = f.Value is bool ? "boolean" : "integer" });
         properties.Add("explanation", new { type = "string" });
@@ -204,6 +216,8 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
                 !expected.All(pair => pair.Value is int number ? Number(root, pair.Key) == number
                     : Read(root, pair.Key).ValueKind == JsonValueKind.False) ||
                 Text(root, "explanation") is not { } explanation) return Unknown;
+            if (FundingByDigest.TryGetValue(digest, out var funding) && funding.Kind != AiFundingKind.BudgetLimit &&
+                explanation.Any(char.IsDigit)) return Unknown;
             AiProtocol.ValidateText(explanation);
             return new(AiProviderState.Completed, 1, explanation, input, output + thought);
         }
@@ -217,8 +231,28 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             && profile.Model == offer.Model && offer.Purpose == route.Purpose ? profile : null;
     }
 
+    private static string FundingTask(AiFundingFacts facts)
+    {
+        var task = facts.Kind switch
+        {
+            AiFundingKind.BudgetLimit => FormattableString.Invariant(
+                $"Base limit {facts.Existing}, carry {facts.Carry}, effective limit {facts.Baseline}, and net spending {facts.Observed}. Explain the over-limit amount and the alternative base limit that would match recorded spending if carry stayed the same. Compare with keeping the current base limit."),
+            AiFundingKind.BudgetSuggestion => FormattableString.Invariant(
+                $"Average net spending {facts.Observed} over {facts.PeriodCount} completed periods. The locally rounded suggestion is {facts.Baseline} and the saved limit is {facts.Existing}. Explain the rounding difference and compare keeping the original saved limit with reviewing the rounded suggestion."),
+            _ => FormattableString.Invariant(
+                $"Target {facts.Baseline}, funded {facts.Observed}, uncovered earmarks {facts.Unfunded}. There are {facts.PeriodCount} contribution dates. The saved plan is {facts.PlannedContribution} each and the engine's alternative is {facts.RequiredContribution} each. Explain the remaining amount and compare both scenarios without promising funding."),
+        };
+        const string prefix = "Synthetic Zanance example, EUR minor units. ";
+        if (facts.Kind == AiFundingKind.BudgetLimit)
+            return prefix + task + " Return difference_minor (over-limit amount), alternative_minor and a brief English explanation. State facts only. Never direct a payment or claim the draft was saved.";
+        return prefix + task + FormattableString.Invariant(
+            $" Copy the exact precomputed integer difference_minor={facts.Difference} and alternative_minor={facts.Alternative()} to those JSON fields. Never convert or scale the integers. Explain only how the figures relate, in brief English prose without digits, spelled-out amounts, advice or a claim that edits were saved. The app displays the exact numeric figures beside your explanation.");
+    }
+
     private static Dictionary<string, object> Expected(AiPurpose purpose, string digest)
     {
+        if (FundingByDigest.TryGetValue(digest, out var funding))
+            return new() { ["difference_minor"] = (int)funding.Difference, ["alternative_minor"] = (int)funding.Alternative()!.Value };
         if (digest == CategoryDigest) return new() { ["largest_increase"] = 1, ["largest_decrease"] = 2 };
         if (digest == PlanDigest)
             return new() { ["largest_overrun"] = 1, ["largest_underrun"] = 4, ["open_rows"] = 1, ["unknown_rows"] = 1 };

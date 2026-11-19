@@ -8755,4 +8755,31 @@ Original XML SHA-256: {5}</value>
   <data name="Ai_PlanFact" xml:space="preserve">
     <value>Known planned: {0} · Paid for settled items: {1} · Settled difference: {2} · Settled: {3} · Open: {4} · Unknown amount: {5}</value>
   </data>
+  <data name="Ai_ExplainLimit" xml:space="preserve">
+    <value>Explain budget overrun</value>
+  </data>
+  <data name="Ai_ExplainSuggestion" xml:space="preserve">
+    <value>Explain this budget suggestion</value>
+  </data>
+  <data name="Ai_ExplainGoal" xml:space="preserve">
+    <value>Explain the funding gap</value>
+  </data>
+  <data name="Ai_OpenFundingDraft" xml:space="preserve">
+    <value>Open editable draft</value>
+  </data>
+  <data name="Ai_BudgetLimitFacts" xml:space="preserve">
+    <value>Effective limit: {0} · Net spending: {1} · Over the limit: {2} · Carry: {3} · Base limit: {4}</value>
+  </data>
+  <data name="Ai_BudgetSuggestionFacts" xml:space="preserve">
+    <value>Historical average: {0} · Rounded suggestion: {1} · Completed periods: {2} · Saved limit: {3} · Rounding difference: {4}</value>
+  </data>
+  <data name="Ai_GoalFundingFacts" xml:space="preserve">
+    <value>Target: {0} · Funded: {1} · Remaining: {2} · Uncovered earmarks: {3} · Contribution dates: {4} · Planned per date: {5}</value>
+  </data>
+  <data name="Ai_FundingPerDate" xml:space="preserve">
+    <value>Alternative to review per remaining contribution date: {0}. Funding depends on available money.</value>
+  </data>
+  <data name="Ai_FundingDraftValue" xml:space="preserve">
+    <value>Alternative amount to review in the draft: {0}.</value>
+  </data>
 </root>

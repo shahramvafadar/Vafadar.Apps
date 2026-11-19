@@ -8683,4 +8683,31 @@ SHA-256 del XML original: {5}</value>
   <data name="Ai_PlanFact" xml:space="preserve">
     <value>Importe previsto conocido: {0} · Pagado por partidas liquidadas: {1} · Diferencia liquidada: {2} · Liquidadas: {3} · Abiertas: {4} · Importe desconocido: {5}</value>
   </data>
+  <data name="Ai_ExplainLimit" xml:space="preserve">
+    <value>Explicar el exceso de presupuesto</value>
+  </data>
+  <data name="Ai_ExplainSuggestion" xml:space="preserve">
+    <value>Explicar esta sugerencia de presupuesto</value>
+  </data>
+  <data name="Ai_ExplainGoal" xml:space="preserve">
+    <value>Explicar cuánto falta para la meta</value>
+  </data>
+  <data name="Ai_OpenFundingDraft" xml:space="preserve">
+    <value>Abrir el borrador editable</value>
+  </data>
+  <data name="Ai_BudgetLimitFacts" xml:space="preserve">
+    <value>Límite efectivo: {0} · Gasto neto: {1} · Exceso: {2} · Saldo trasladado: {3} · Límite base: {4}</value>
+  </data>
+  <data name="Ai_BudgetSuggestionFacts" xml:space="preserve">
+    <value>Media histórica: {0} · Sugerencia redondeada: {1} · Periodos completos: {2} · Límite guardado: {3} · Diferencia de redondeo: {4}</value>
+  </data>
+  <data name="Ai_GoalFundingFacts" xml:space="preserve">
+    <value>Meta: {0} · Financiado: {1} · Pendiente: {2} · Reservas sin cobertura: {3} · Fechas de aportación: {4} · Previsto por fecha: {5}</value>
+  </data>
+  <data name="Ai_FundingPerDate" xml:space="preserve">
+    <value>Alternativa por cada fecha de aportación restante: {0}. La financiación depende del dinero disponible.</value>
+  </data>
+  <data name="Ai_FundingDraftValue" xml:space="preserve">
+    <value>Importe alternativo para revisar en el borrador: {0}.</value>
+  </data>
 </root>
