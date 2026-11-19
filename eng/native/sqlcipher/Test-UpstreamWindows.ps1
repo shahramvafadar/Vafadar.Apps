@@ -34,7 +34,7 @@ set LANG=C
 set LC_ALL=C
 set SOURCE_DATE_EPOCH=$($manifest.sourceDateEpoch)
 set "PATH=$nasmDirectory;$perlRoot\perl\bin;%PATH%"
-call "$vcvars" x64 $($inputLock.windowsCompiler.sdkVersion) -vcvars_ver=$($inputLock.windowsCompiler.toolsVersion)
+call "$vcvars" x64 $($toolchain.SdkVersion) -vcvars_ver=$($toolchain.ToolsVersion)
 if errorlevel 1 exit /b 1
 cd /d "$root\openssl-build"
 nmake /NOLOGO test VFP=1

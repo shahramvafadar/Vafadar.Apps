@@ -45,6 +45,13 @@ $unknown=Copy-PublicMetadata $request;$unknown.installationVersion='99.0.0.0'
 Require-Refused 'unreviewed-request-installer' { Assert-RequestedWindowsProducer $observation $unknown $policy $request.candidateVersion } '*Unsupported requested Windows producer identity*'
 $unknown=Copy-PublicMetadata $request;$unknown.compilerSha256='0'*64
 Require-Refused 'unreviewed-request-compiler' { Assert-RequestedWindowsProducer $observation $unknown $policy $request.candidateVersion } '*Unsupported requested Windows producer identity*'
+# A request cannot move reviewed compiler bytes into another tool set.
+$otherTools=@($policy.compilers.toolsVersion | Where-Object { $_ -cne $request.toolsVersion } | Select-Object -First 1)
+if(-not $otherTools){throw 'The policy names a single tool set; the cross tool set refusal cannot be exercised.'}
+$unknown=Copy-PublicMetadata $request;$unknown.toolsVersion=$otherTools[0]
+Require-Refused 'request-compiler-in-another-tool-set' { Assert-RequestedWindowsProducer $observation $unknown $policy $request.candidateVersion } '*Unsupported requested Windows producer identity*'
+$legacy=Copy-PublicMetadata $policy;$legacy.schemaVersion=2
+Require-Refused 'legacy-policy-schema' { Assert-RequestedWindowsProducer $observation $request $legacy $request.candidateVersion } '*Unsupported requested Windows producer identity*'
 Require-Refused 'different-candidate' { Assert-RequestedWindowsProducer $observation $request $policy '4.19.0-candidate.9' } '*Unsupported requested Windows producer identity*'
 if((@($request,$policy,$observation) | ConvertTo-Json -Depth 20) -cne $original){throw 'Request validation mutated original public evidence.'}
 $directory=Join-Path (Get-NativeInputRoot) ('producer-request-review-'+[Guid]::NewGuid().ToString('N'))

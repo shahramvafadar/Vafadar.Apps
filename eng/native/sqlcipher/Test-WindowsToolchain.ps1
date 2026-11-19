@@ -39,12 +39,39 @@ $sdk = Copy-Policy $inputLock; $sdk.windowsCompiler.sdkVersion = '10.0.0.0'
 Require-Refused 'unreviewed-sdk' { Resolve-ReviewedWindowsToolchain $actual.Installation $sdk $acceptance } '*Unsupported Windows compiler acceptance*'
 $tools = Copy-Policy $inputLock; $tools.windowsCompiler.toolsVersion = '14.0.0'
 Require-Refused 'unreviewed-tools' { Resolve-ReviewedWindowsToolchain $actual.Installation $tools $acceptance } '*Unsupported Windows compiler acceptance*'
-$hash = Copy-Policy $acceptance; $hash.compilers = @([pscustomobject]@{ sha256=('0' * 64); fileVersion=$actual.CompilerFileVersion })
+$hash = Copy-Policy $acceptance
+foreach ($item in $hash.compilers) { if ($item.sha256 -eq $actual.CompilerSha256) { $item.sha256 = ('0' * 64) } }
 Require-Refused 'changed-compiler-bytes' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $hash } '*Installed compiler bytes differ*'
 $malformed = Copy-Policy $acceptance; $malformed.compilers[0].sha256 = 'not-a-hash'
 Require-Refused 'malformed-compiler-hash' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $malformed } '*Unsupported Windows compiler acceptance*'
-$schema = Copy-Policy $acceptance; $schema.schemaVersion = 3
+$schema = Copy-Policy $acceptance; $schema.schemaVersion = 4
 Require-Refused 'unknown-policy-schema' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $schema } '*Unsupported Windows compiler acceptance*'
+# The earlier policy named one tool set for every compiler; it can no longer admit a host.
+$legacy = Copy-Policy $acceptance; $legacy.schemaVersion = 2
+$legacy | Add-Member -NotePropertyName toolsVersion -NotePropertyValue $actual.ToolsVersion
+Require-Refused 'legacy-single-tool-set-policy' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $legacy } '*Unsupported Windows compiler acceptance*'
+$unnamed = Copy-Policy $acceptance
+$unnamed.compilers = @($unnamed.compilers | ForEach-Object { [pscustomobject]@{ sha256=$_.sha256; fileVersion=$_.fileVersion } })
+Require-Refused 'compiler-without-tool-set' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $unnamed } '*Unsupported Windows compiler acceptance*'
+$badTools = Copy-Policy $acceptance; $badTools.compilers[0].toolsVersion = '14.latest'
+Require-Refused 'malformed-compiler-tool-set' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $badTools } '*Unsupported Windows compiler acceptance*'
+# The exact reviewed bytes qualify only inside the tool set they were reviewed for.
+$moved = Copy-Policy $acceptance
+foreach ($item in $moved.compilers) { if ($item.sha256 -eq $actual.CompilerSha256) { $item.toolsVersion = '99.0.0' } }
+$movedMessage = if (@($moved.compilers | Where-Object { $_.toolsVersion -eq $actual.ToolsVersion }).Count) { '*Installed compiler bytes differ*' } else { '*compiler or bootstrap is unavailable*' }
+$movedLock = Copy-Policy $inputLock; $movedLock.windowsCompiler.toolsVersion = @($moved.compilers.toolsVersion | Where-Object { $_ -ne '99.0.0' } | Select-Object -First 1)
+Require-Refused 'reviewed-bytes-in-another-tool-set' { Resolve-ReviewedWindowsToolchain $actual.Installation $movedLock $moved } $movedMessage
+# The shared lock is not the source of the tool set: the qualified one is the signed compiler of this host.
+if ($actual.ToolsVersion -notin @($acceptance.compilers.toolsVersion) -or
+    @($acceptance.compilers | Where-Object { $_.sha256 -eq $actual.CompilerSha256 -and $_.toolsVersion -eq $actual.ToolsVersion -and $_.fileVersion -eq $actual.CompilerFileVersion }).Count -ne 1 -or
+    $actual.Compiler -notlike ('*' + $actual.ToolsVersion + '*')) { throw 'The qualified tool set is not the reviewed tool set of the installed compiler.' }
+$results.Add('tool-set-from-qualified-compiler-' + $actual.ToolsVersion)
+if ((Get-WindowsProducerCompilerRecord -InputLock $inputLock -ToolsVersion $inputLock.windowsCompiler.toolsVersion -SdkVersion $inputLock.windowsCompiler.sdkVersion | ConvertTo-Json -Compress) -cne ($inputLock.windowsCompiler | ConvertTo-Json -Compress)) {
+    throw 'The first reviewed tool set lost its original producer record.'
+}
+$results.Add('original-producer-record-preserved')
+Require-Refused 'producer-record-unreviewed-sdk' { Get-WindowsProducerCompilerRecord -InputLock $inputLock -ToolsVersion $actual.ToolsVersion -SdkVersion '10.0.0.0' } '*Unsupported producer compiler record*'
+Require-Refused 'diagnostic-baseline-of-unknown-tool-set' { Get-ReviewedWindowsWarningBaselinePath -InputLock $inputLock -ToolsVersion '99.0.0' } '*No diagnostic baseline is recorded*'
 $empty = Copy-Policy $acceptance; $empty.installationVersions = @()
 Require-Refused 'empty-installer-allowlist' { Resolve-ReviewedWindowsToolchain $actual.Installation $inputLock $empty } '*Unsupported Windows compiler acceptance*'
 $wrongVersion = Copy-Policy $acceptance

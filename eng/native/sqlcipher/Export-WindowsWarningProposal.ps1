@@ -50,7 +50,7 @@ foreach ($row in $rows) {
 $proposal = [pscustomobject][ordered]@{ schemaVersion=1; reviewedOn=[DateTime]::UtcNow.ToString('yyyy-MM-dd');
     scope='Proposed upstream diagnostic drift inventory only; requires explicit source and diagnostic review';
     securitySafetyAcceptance=$false; sourceCommit=$inputLock.sources.openssl.commit; sqlcipherCommit=$inputLock.sources.sqlcipher.commit;
-    cryptoProfileSha256=$profileHash;
+    cryptoProfileSha256=$profileHash; compilerToolsVersion=$manifest.compiler.toolsVersion;
     expectedOccurrences=$rows.Count; sourceFiles=$files; diagnostics=@($groups.Values | Sort-Object path,line,code,message) }
 Test-WindowsWarningSources -Root $root -Baseline $proposal | Out-Null
 Test-WindowsWarningSet -Baseline $proposal -Rows $rows | Out-Null

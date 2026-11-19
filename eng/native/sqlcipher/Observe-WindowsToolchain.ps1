@@ -11,14 +11,18 @@ if ($LASTEXITCODE -ne 0 -or $records.Count -ne 1 -or -not [IO.Path]::IsPathRoote
     throw 'A unique absolute compiler installation is required for observation.'
 }
 $policy = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.compiler.acceptance.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-if ($policy.toolsVersion -notmatch '^\d+\.\d+\.\d+$' -or $policy.sdkVersion -notmatch '^\d+\.\d+\.\d+\.\d+$') {
+$reviewedTools = @($policy.compilers.toolsVersion | Select-Object -Unique | Sort-Object { [Version]$_ } -Descending)
+if ($policy.schemaVersion -ne 3 -or -not $reviewedTools.Count -or @($reviewedTools | Where-Object { $_ -notmatch '^\d+\.\d+\.\d+$' }).Count -or
+    $policy.sdkVersion -notmatch '^\d+\.\d+\.\d+\.\d+$') {
     throw 'Only the existing pinned tool and SDK paths may be observed.'
 }
-$compiler = Join-Path $records[0].installationPath ('VC/Tools/MSVC/' + $policy.toolsVersion + '/bin/Hostx64/x64/cl.exe')
+# The record describes the newest reviewed tool set that is installed; without one, the newest reviewed one as absent.
+$observedTools = @(@($reviewedTools | Where-Object { Test-Path -LiteralPath (Join-Path $records[0].installationPath ('VC/Tools/MSVC/' + $_ + '/bin/Hostx64/x64/cl.exe')) -PathType Leaf }) + $reviewedTools)[0]
+$compiler = Join-Path $records[0].installationPath ('VC/Tools/MSVC/' + $observedTools + '/bin/Hostx64/x64/cl.exe')
 $sdk = Join-Path ${env:ProgramFiles(x86)} ('Windows Kits/10/Include/' + $policy.sdkVersion)
 $proof = [ordered]@{
     InstallationVersion = $records[0].installationVersion
-    ToolsVersion = $policy.toolsVersion
+    ToolsVersion = $observedTools
     SdkVersion = $policy.sdkVersion
     CompilerPresent = (Test-Path -LiteralPath $compiler -PathType Leaf)
     SdkPresent = (Test-Path -LiteralPath $sdk -PathType Container)

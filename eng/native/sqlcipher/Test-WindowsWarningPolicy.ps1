@@ -4,8 +4,16 @@ param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 Import-Module (Join-Path $PSScriptRoot 'WindowsWarnings.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
-$baseline = Get-Content (Join-Path $PSScriptRoot 'windows.warnings.baseline.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$inputLock = Get-Content (Join-Path $PSScriptRoot 'inputs.lock.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$manifest = Get-Content (Join-Path $root 'candidate/manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$tools = $manifest.compiler.toolsVersion
+$baseline = Get-Content (Get-ReviewedWindowsWarningBaselinePath -InputLock $inputLock -ToolsVersion $tools) -Raw -Encoding UTF8 | ConvertFrom-Json
+# The recorded inventory of each compiler tool set: occurrences, distinct sites and warning-bearing sources.
+$recorded = @{ '14.51.36231' = @(508,503,160) }
+if (-not $recorded.ContainsKey($tools)) { throw 'No recorded diagnostic inventory totals for this compiler tool set.' }
+$totals = $recorded[$tools]
 $lines = @(Get-Content (Join-Path $root 'build.log') -Encoding UTF8)
 $rows = @(Get-WindowsWarningRows -Lines $lines)
 $cases = [Collections.Generic.List[string]]::new()
@@ -22,10 +30,10 @@ function Copy-Record($Value) {
     return ($Value | ConvertTo-Json -Depth 12 | ConvertFrom-Json)
 }
 $valid = Test-WindowsWarningSet -Baseline $baseline -Rows $rows
-if ($valid.occurrences -ne 508 -or $valid.sites -ne 503 -or $valid.securitySafetyAcceptance) { throw 'The actual complete baseline differs.' }
-$cases.Add('actual-508-diagnostic-baseline')
-if ((Test-WindowsWarningSources -Root $root -Baseline $baseline) -ne 160) { throw 'Original source coverage differs.' }
-$cases.Add('160-official-source-bindings')
+if ($valid.occurrences -ne $totals[0] -or $valid.sites -ne $totals[1] -or $valid.securitySafetyAcceptance) { throw 'The actual complete baseline differs.' }
+$cases.Add('actual-' + $totals[0] + '-diagnostic-baseline')
+if ((Test-WindowsWarningSources -Root $root -Baseline $baseline) -ne $totals[2]) { throw 'Original source coverage differs.' }
+$cases.Add([string]$totals[2] + '-official-source-bindings')
 $changed = @(Copy-Record $rows); $changed[0].code = 'C9999'
 Expect-Refusal 'new-code' 'added or changed' { Test-WindowsWarningSet $baseline $changed }
 $changed = @(Copy-Record $rows); $changed[0].message += ' changed'
@@ -38,7 +46,7 @@ Expect-Refusal 'partial-log' 'coverage is incomplete' { Test-WindowsWarningSet $
 Expect-Refusal 'empty-log' 'coverage is incomplete' { Test-WindowsWarningSet -Baseline $baseline -Rows @() }
 Expect-Refusal 'fresh-multiplicity-drift' 'multiplicity differs' { Test-WindowsWarningSet $baseline @($rows + $rows[0]) }
 $resumed = Test-WindowsWarningSet -Baseline $baseline -Rows @($rows + $rows[0]) -ResumedHistory
-if ($resumed.occurrences -ne 509 -or -not $resumed.resumedHistory) { throw 'Known repeated resume evidence was lost.' }
+if ($resumed.occurrences -ne ($totals[0] + 1) -or -not $resumed.resumedHistory) { throw 'Known repeated resume evidence was lost.' }
 $cases.Add('known-resume-duplicates-retained')
 $duplicate = @($baseline.diagnostics | Where-Object occurrences -gt 1)[0]
 $at = 0
@@ -104,6 +112,6 @@ Expect-Refusal 'packaging-refuses-source-drift' 'differs from its reviewed' {
 }
 if (Test-Path -LiteralPath (Join-Path $fixture 'package')) { throw 'Refused producer created a package directory.' }
 $cases.Add('no-package-published-after-refusal')
-[ordered]@{ schemaVersion=1; cases=$cases.ToArray(); passed=$cases.Count; securitySafetyAcceptance=$false } |
+[ordered]@{ schemaVersion=1; compilerToolsVersion=$tools; cases=$cases.ToArray(); passed=$cases.Count; securitySafetyAcceptance=$false } |
     ConvertTo-Json -Depth 8 | Set-Content (Join-Path $evidence 'proof.json') -Encoding UTF8
 Write-Output (Join-Path $evidence 'proof.json')

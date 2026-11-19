@@ -7,11 +7,15 @@ param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 Import-Module (Join-Path $PSScriptRoot 'WindowsWarnings.psm1') -Force
+Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
 $root = Join-Path (Get-NativeInputRoot) ('build/' + $RunName)
-$baselinePath = Join-Path $PSScriptRoot 'windows.warnings.baseline.json'
-$baseline = Get-Content -LiteralPath $baselinePath -Raw -Encoding UTF8 | ConvertFrom-Json
 $inputLock = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'inputs.lock.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $manifest = Get-Content -LiteralPath (Join-Path $root 'candidate/manifest.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+# Diagnostics belong to the compiler that raised them: each tool set has its own recorded inventory.
+$baselinePath = Get-ReviewedWindowsWarningBaselinePath -InputLock $inputLock -ToolsVersion $manifest.compiler.toolsVersion
+$baseline = Get-Content -LiteralPath $baselinePath -Raw -Encoding UTF8 | ConvertFrom-Json
+$expectedTools = if ($baseline.PSObject.Properties.Name -contains 'compilerToolsVersion') { $baseline.compilerToolsVersion } else { $inputLock.windowsCompiler.toolsVersion }
+if ($expectedTools -cne $manifest.compiler.toolsVersion) { throw 'The diagnostic baseline belongs to another compiler tool set.' }
 $sourceCommits = @{}; foreach ($source in $manifest.sources) { $sourceCommits[$source.name] = $source.commit }
 if ($baseline.sourceCommit -ne $inputLock.sources.openssl.commit -or $baseline.sqlcipherCommit -ne $inputLock.sources.sqlcipher.commit -or
     $sourceCommits['openssl'] -ne $baseline.sourceCommit -or $sourceCommits['sqlcipher'] -ne $baseline.sqlcipherCommit -or
@@ -30,7 +34,7 @@ $result = Test-WindowsWarningSet -Baseline $baseline -Rows $rows -ResumedHistory
 $evidence = Join-Path $root ('warning-review-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $evidence | Out-Null
 [ordered]@{ schemaVersion=1; scope='upstream diagnostic drift only'; securitySafetyAcceptance=$false;
-    nativeSha256=$manifest.librarySha256; baselineSha256=(Get-FileHash -LiteralPath $baselinePath -Algorithm SHA256).Hash.ToLowerInvariant();
+    nativeSha256=$manifest.librarySha256; compilerToolsVersion=$manifest.compiler.toolsVersion; baselineSha256=(Get-FileHash -LiteralPath $baselinePath -Algorithm SHA256).Hash.ToLowerInvariant();
     sourceCommit=$baseline.sourceCommit; cryptoProfileSha256=$baseline.cryptoProfileSha256; sourceFiles=$sourceCount;
     diagnostics=$result; logs=@($logs | ForEach-Object { @{name=$_.Name;sha256=(Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()} })
 } | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $evidence 'proof.json') -Encoding UTF8
