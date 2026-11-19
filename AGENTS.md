@@ -1,5 +1,20 @@
 # AGENTS.md – working rules for this repository
 
+## D-1240 - One reviewed tool set per Windows compiler; the shared lock stays byte-identical
+
+[Evidence](src/Apps/Zanance/docs/quality/msvc-14-52-windows-producer.md). Never change
+`eng/native/sqlcipher/inputs.lock.json`: its hash is bound into the qualified Android package. Its
+`windowsCompiler.toolsVersion` names the first reviewed tool set only. The tool set that is used comes from
+`windows.compiler.acceptance.json` (schema 3: every compiler names its tool set) and the exact signed
+`cl.exe` found on the host. A new compiler or hosted installation needs: an entry in that policy, a producer
+request, a `shahram/native-producer-<fresh candidate>` run with two equal fresh outputs, its own diagnostic
+inventory (`windows.warnings.msvc-<tools>.baseline.json`, drift only, never safety acceptance) and its own
+immutable package variant and version. Keep earlier variants and inventories unchanged. Producer jobs raise
+public evidence as notices (`Publish-WindowsProducerEvidence.ps1`); never raise keys, databases or source
+bytes. A refusal on another hosted installation is correct and qualifies nothing; do not weaken the request
+gate to make a job pass. Current variants: baseline/candidate.7, servicing/candidate.8,
+hosted20261021/candidate.9, hosted20261116/candidate.11 (MSVC 14.52.37025, installation 18.12.12405.243).
+
 ## D-979 - Prior quote authority revoked before first callback
 
 [Entry authority evidence](src/Apps/Zanance/docs/quality/analysis-quote-entry-authority.md) proves2actual remaining failures: earlier terms stayed sendable after

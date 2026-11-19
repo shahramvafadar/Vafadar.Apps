@@ -2,12 +2,15 @@
 .SYNOPSIS
     Builds a candidate Windows x64 SQLCipher slice from reviewed official sources.
 .DESCRIPTION
-    Requires the pinned installed MSVC/SDK. Restores portable build tools and immutable source
+    Requires a reviewed installed MSVC tool set (exact signed compiler bytes) and the pinned SDK. Restores portable build tools and immutable source
     archives, enables upstream OpenSSL assembly, and records exact inputs/flags/output hashes.
     No app database, app dependency or global machine setting is changed. Run names must be fresh.
 #>
 [CmdletBinding()]
-param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64', [switch]$Resume)
+param([ValidatePattern('^[a-z0-9][a-z0-9-]{0,63}$')][string]$RunName = 'windows-x64', [switch]$Resume,
+    # Producer qualification of a new compiler builds both fresh outputs first and runs the diagnostic
+    # gate as its own step. Nothing is packaged without that gate: Pack-Windows.ps1 always repeats it.
+    [switch]$DeferDiagnosticGate)
 $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'NativeBuildInputs.psm1') -Force
 Import-Module (Join-Path $PSScriptRoot 'WindowsToolchain.psm1') -Force
@@ -69,7 +72,7 @@ set LANG=C
 set LC_ALL=C
 set SOURCE_DATE_EPOCH=$sourceEpoch
 set "PATH=$nasmDirectory;%PATH%"
-call "$vcvars" x64 $($inputLock.windowsCompiler.sdkVersion) -vcvars_ver=$($inputLock.windowsCompiler.toolsVersion)
+call "$vcvars" x64 $($toolchain.SdkVersion) -vcvars_ver=$($toolchain.ToolsVersion)
 if errorlevel 1 exit /b 1
 cd /d "$opensslBuild"
 "$perl" "$opensslSource\Configure" VC-WIN64A no-shared no-module no-autoload-config no-filenames $cryptoOptions --prefix=C:\Vafadar\Sqlcipher /guard:cf
@@ -124,7 +127,7 @@ Copy-Item -LiteralPath (Join-Path $sqlcipherSource 'LICENSE.md') -Destination (J
 Copy-Item -LiteralPath (Join-Path $opensslSource 'LICENSE.txt') -Destination (Join-Path $packageRoot 'licenses/OpenSSL.txt')
 $manifest = [ordered]@{ schemaVersion=1; status='candidate-not-app-or-release-accepted'; runtimeIdentifier='win-x64'; sources=$sourceRecords;
     inputLockSha256=(Get-FileHash -LiteralPath $inputLockPath -Algorithm SHA256).Hash.ToLowerInvariant();
-    nativeDependencies=$dependencies; compiler=$inputLock.windowsCompiler; compilerExecutableSha256=(Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant();
+    nativeDependencies=$dependencies; compiler=(Get-WindowsProducerCompilerRecord -InputLock $inputLock -ToolsVersion $toolchain.ToolsVersion -SdkVersion $toolchain.SdkVersion); compilerExecutableSha256=(Get-FileHash -LiteralPath $compiler -Algorithm SHA256).Hash.ToLowerInvariant();
     perlVersion=$inputLock.windowsPerl.version; nasmVersion=$inputLock.windowsNasm.version; sourceDateEpoch=$sourceEpoch;
     opensslOptions=(@('VC-WIN64A','no-shared','no-module','no-autoload-config','no-filenames','assembly-enabled','/guard:cf') + @($cryptoProfile.opensslConfigureOptions));
     cryptoProfileSha256=(Get-FileHash -LiteralPath $cryptoProfilePath -Algorithm SHA256).Hash.ToLowerInvariant();
@@ -133,6 +136,6 @@ $manifest = [ordered]@{ schemaVersion=1; status='candidate-not-app-or-release-ac
     libraryBytes=(Get-Item -LiteralPath $library).Length; librarySha256=(Get-FileHash -LiteralPath $library -Algorithm SHA256).Hash.ToLowerInvariant() }
 $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $packageRoot 'manifest.json') -Encoding UTF8
 
-[ordered]@{ schemaVersion=1; observedInstallationVersion=$installation.installationVersion; reviewedCompilerExecutableSha256=$toolchain.CompilerSha256; compilerFileVersion=$toolchain.CompilerFileVersion; toolsVersion=$inputLock.windowsCompiler.toolsVersion; sdkVersion=$inputLock.windowsCompiler.sdkVersion } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $root 'compiler-host-proof.json') -Encoding utf8
-& (Join-Path $PSScriptRoot 'Test-WindowsWarnings.ps1') -RunName $RunName | Out-Host
+[ordered]@{ schemaVersion=1; observedInstallationVersion=$installation.installationVersion; reviewedCompilerExecutableSha256=$toolchain.CompilerSha256; compilerFileVersion=$toolchain.CompilerFileVersion; toolsVersion=$toolchain.ToolsVersion; sdkVersion=$toolchain.SdkVersion } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $root 'compiler-host-proof.json') -Encoding utf8
+if (-not $DeferDiagnosticGate) { & (Join-Path $PSScriptRoot 'Test-WindowsWarnings.ps1') -RunName $RunName | Out-Host }
 Write-Output $packageRoot

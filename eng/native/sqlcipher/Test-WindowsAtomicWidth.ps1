@@ -21,7 +21,7 @@ New-Item -ItemType Directory $evidence | Out-Null
 $probe = Join-Path $PSScriptRoot 'Windows/atomic-width.c'
 $command = @"
 @echo off
-call "$vcvars" x64 $($lock.windowsCompiler.sdkVersion) -vcvars_ver=$($lock.windowsCompiler.toolsVersion)
+call "$vcvars" x64 $($toolchain.SdkVersion) -vcvars_ver=$($toolchain.ToolsVersion)
 if errorlevel 1 exit /b 1
 cd /d "$evidence"
 cl /nologo /O2 /W3 /MT /guard:cf /I"$root\openssl\include" "$probe" /Fe:atomic-width.exe /Fo:atomic-width.obj
@@ -47,7 +47,8 @@ if ($assembly -notmatch 'lock xadd\s+dword ptr \[\?new_nid') { throw 'Actual new
 $assembly = Get-Content (Join-Path $evidence 'property-disassembly.txt') -Raw
 if ($assembly -notmatch 'lock (?:xadd|add)\s+dword ptr \[\?global_seed') { throw 'Actual global_seed operation is not 32-bit.' }
 if ((Get-FileHash $library -Algorithm SHA256).Hash.ToLowerInvariant() -ne $manifest.librarySha256) { throw 'Review changed candidate.' }
-[ordered]@{ OfficialHeaderUnchanged=$true; Compiler=$lock.windowsCompiler; NativeSha256=$manifest.librarySha256;
+[ordered]@{ OfficialHeaderUnchanged=$true; Compiler=(Get-WindowsProducerCompilerRecord -InputLock $lock -ToolsVersion $toolchain.ToolsVersion -SdkVersion $toolchain.SdkVersion);
+    CompilerExecutableSha256=$toolchain.CompilerSha256; NativeSha256=$manifest.librarySha256;
     OfficialHeaderSha256=(Get-FileHash $source -Algorithm SHA256).Hash.ToLowerInvariant();
     OriginalObjectSha256=(Get-FileHash (Join-Path $root 'openssl-build/crypto/objects/libcrypto-lib-obj_dat.obj') -Algorithm SHA256).Hash.ToLowerInvariant();
     OriginalPropertySha256=(Get-FileHash (Join-Path $root 'openssl-build/crypto/property/libcrypto-lib-property.obj') -Algorithm SHA256).Hash.ToLowerInvariant();

@@ -46,18 +46,26 @@ $notices = 'Owner-written Zanance source remains all rights reserved. The follow
 # Publish recipe provenance independently of the observed build machine. Exact DLL bytes and all
 # package entries remain pinned; the unmodified candidate manifest retains the actual producer.
 $compilerPolicy = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.compiler.acceptance.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-if ($compilerPolicy.schemaVersion -ne 2 -or $manifest.compilerExecutableSha256 -ne $contents.compilerExecutableSha256 -or $manifest.compilerExecutableSha256 -notin @($compilerPolicy.compilers.sha256)) {
+Test-ReviewedWindowsCompilerPolicy $compilerPolicy
+$toolsetCompilers = @($compilerPolicy.compilers | Where-Object { $_.toolsVersion -ceq $manifest.compiler.toolsVersion })
+# An ordinary consumer package is built by the compiler of its selected immutable variant. A producer
+# export of a compiler that has no consumer identity yet is admitted only for the explicit reviewed request.
+$request = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'windows.producer.request.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$requested = $CandidateVersion -and $request.schemaVersion -eq 1 -and $request.candidateVersion -ceq $CandidateVersion -and
+    $request.compilerSha256 -ceq $manifest.compilerExecutableSha256 -and $request.toolsVersion -ceq $manifest.compiler.toolsVersion
+if ($manifest.compiler.sdkVersion -cne $compilerPolicy.sdkVersion -or
+    $manifest.compilerExecutableSha256 -notin @($toolsetCompilers.sha256) -or
+    ($manifest.compilerExecutableSha256 -ne $contents.compilerExecutableSha256 -and -not $requested)) {
     throw 'Candidate compiler is outside the reviewed producer policy.'
 }
 $packageManifest = $manifest | ConvertTo-Json -Depth 8 | ConvertFrom-Json
 $packageManifest.PSObject.Properties.Remove('compilerExecutableSha256')
-$packageManifest | Add-Member -NotePropertyName reviewedCompilerExecutables -NotePropertyValue @($compilerPolicy.compilers | Sort-Object sha256)
+# Only the reviewed executables of the tool set that built this candidate describe its recipe.
+$packageManifest | Add-Member -NotePropertyName reviewedCompilerExecutables -NotePropertyValue @($toolsetCompilers | Sort-Object sha256 | Select-Object sha256,fileVersion)
 $packageManifestBytes = [Text.Encoding]::UTF8.GetBytes((($packageManifest | ConvertTo-Json -Depth 8).Replace("`r`n","`n")) + "`n")
 # Producer qualification exports only to this owned artifact directory, never the consumer feed.
 # It keeps all source, diagnostic, native, compatibility and compiler gates before proposing new immutable bytes.
-$knownContents = @('windows.package.contents.json','windows.servicing.package.contents.json','windows.hosted20261021.package.contents.json') | ForEach-Object {
-    Get-Content -LiteralPath (Join-Path $PSScriptRoot $_) -Raw -Encoding UTF8 | ConvertFrom-Json
-}
+$knownContents = @(Get-KnownWindowsPackageContents)
 $version = Resolve-NativeProducerVersion -InputLock $inputLock -Contents $contents -KnownContents $knownContents -CandidateVersion $CandidateVersion
 if (-not $CandidateVersion -and $contents.entries.'runtimes/win-x64/native/sqlcipher.dll' -cne $manifest.librarySha256) {
     throw 'Unpinned native bytes require a fresh explicit producer version; never reuse an immutable consumer identity.'

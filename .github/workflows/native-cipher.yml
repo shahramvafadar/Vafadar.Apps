@@ -36,9 +36,16 @@ concurrency:
 
 jobs:
   windows:
-    name: Windows reproducibility and actual protected persistence
+    name: Windows reproducibility and actual protected persistence${{ matrix.attempt > 1 && format(' (attempt {0})', matrix.attempt) || '' }}
     runs-on: windows-2025-vs2026
     timeout-minutes: 60
+    # A new hosted image is rolled out gradually, and a producer request names one installation. Producer
+    # qualification therefore makes several independent attempts, each on a runner of its own and each behind
+    # every gate; an attempt that receives another installation is refused before any native build.
+    strategy:
+      fail-fast: false
+      matrix:
+        attempt: ${{ fromJSON((inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) && '[1,2,3,4,5]' || '[1]') }}
     env:
       VafadarWindowsCipherVariant: servicing
       ContinuousIntegrationBuild: true
@@ -52,6 +59,7 @@ jobs:
       - name: Refuse immutable producer identity reuse
         shell: pwsh
         run: |
+          trap { Write-Host ('::error title=Producer identity checks::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
           ./eng/native/sqlcipher/Test-ProducerVersion.ps1
           ./eng/native/sqlcipher/Test-WindowsProducerRequest.ps1
       - name: Qualify exact installed Windows compiler
@@ -61,6 +69,7 @@ jobs:
           CANDIDATE_VERSION: ${{ inputs.candidate_version }}
           PRODUCER_BRANCH: ${{ github.ref_name }}
         run: |
+          trap { Write-Host ('::error title=Windows compiler qualification::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
           $observed = ./eng/native/sqlcipher/Observe-WindowsToolchain.ps1 | Out-String | ConvertFrom-Json
           $observed | ConvertTo-Json
           if ($env:PRODUCER_ONLY -eq 'true') {
@@ -71,40 +80,87 @@ jobs:
             $request = Get-Content ./eng/native/sqlcipher/windows.producer.request.json -Raw | ConvertFrom-Json
             $policy = Get-Content ./eng/native/sqlcipher/windows.compiler.acceptance.json -Raw | ConvertFrom-Json
             Assert-RequestedWindowsProducer -Observation $observed -Request $request -Policy $policy -CandidateVersion $env:CANDIDATE_VERSION
+            # A requested compiler without a consumer identity yet selects no variant; its export pins nothing.
+            ./eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 -EnvironmentFile $env:GITHUB_ENV -ProspectiveCandidateVersion $env:CANDIDATE_VERSION
+          } else {
+            ./eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 -EnvironmentFile $env:GITHUB_ENV
           }
-          ./eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 -EnvironmentFile $env:GITHUB_ENV
           ./eng/native/sqlcipher/Test-WindowsToolchain.ps1
       # No candidate cache: this lane proves two fresh outputs, not a reused local artifact.
+      # Producer qualification completes both outputs first; its diagnostic gate is the step after the
+      # schema qualification and is repeated by packaging. Ordinary lanes keep the gate inside each build.
       - name: Build two fresh reviewed Windows candidates
         shell: pwsh
+        env:
+          PRODUCER_ONLY: ${{ inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-') }}
         run: |
-          ./eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-ci-a
-          ./eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-ci-b
+          trap { Write-Host ('::error title=Fresh Windows native outputs::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
+          $defer = $env:PRODUCER_ONLY -eq 'true'
+          ./eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-ci-a -DeferDiagnosticGate:$defer
+          ./eng/native/sqlcipher/Build-Windows.ps1 -RunName windows-ci-b -DeferDiagnosticGate:$defer
           $first = Get-FileHash artifacts/native-sqlcipher/build/windows-ci-a/candidate/runtimes/win-x64/native/sqlcipher.dll
           $second = Get-FileHash artifacts/native-sqlcipher/build/windows-ci-b/candidate/runtimes/win-x64/native/sqlcipher.dll
           Write-Host ('Fresh Windows native SHA256: {0}; {1}' -f $first.Hash, $second.Hash)
           if ($first.Hash -ne $second.Hash) { throw 'Fresh Windows native outputs differ.' }
+      # Public producer evidence as notices of the job: a reviewer without the artifact reads them from the check.
+      - name: Raise fresh producer outputs
+        if: ${{ always() && (inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Publish-WindowsProducerEvidence.ps1 -Section Outputs
       - name: Verify original schema and immutable package entries
         if: ${{ !(inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
         shell: pwsh
         run: |
+          trap { Write-Host ('::error title=Immutable Windows package::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
           ./eng/native/sqlcipher/Ensure-WindowsPackage.ps1 -RunName windows-ci-b
-      - name: Qualify original schema and export unpublished producer package
+      - name: Qualify original schema with the fresh producer
+        if: ${{ inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-') }}
+        shell: pwsh
+        run: |
+          trap { Write-Host ('::error title=Original schema qualification::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
+          ./eng/native/sqlcipher/Test-Windows.ps1 -RunName windows-ci-b
+      - name: Review producer diagnostics against the recorded inventory
+        if: ${{ inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-') }}
+        shell: pwsh
+        run: |
+          trap { Write-Host ('::error title=Producer diagnostic gate::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
+          ./eng/native/sqlcipher/Publish-WindowsProducerEvidence.ps1 -Section Diagnostics
+          ./eng/native/sqlcipher/Test-WindowsWarnings.ps1 -RunName windows-ci-a
+          ./eng/native/sqlcipher/Test-WindowsWarnings.ps1 -RunName windows-ci-b
+      - name: Raise proposed diagnostic inventory (parts 1 to 8)
+        if: ${{ always() && (inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Publish-WindowsProducerEvidence.ps1 -Section Proposal -Group 0
+      - name: Raise proposed diagnostic inventory (parts 9 to 16)
+        if: ${{ always() && (inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Publish-WindowsProducerEvidence.ps1 -Section Proposal -Group 1
+      - name: Raise proposed diagnostic inventory (parts 17 to 24)
+        if: ${{ always() && (inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Publish-WindowsProducerEvidence.ps1 -Section Proposal -Group 2
+      - name: Export unpublished producer package
         if: ${{ inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-') }}
         shell: pwsh
         env:
           CANDIDATE_VERSION: ${{ inputs.candidate_version }}
           PRODUCER_BRANCH: ${{ github.ref_name }}
         run: |
+          trap { Write-Host ('::error title=Unpublished producer package::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
           if (-not $env:CANDIDATE_VERSION -and $env:PRODUCER_BRANCH -cmatch '^shahram/native-producer-(?<version>[0-9]+\.[0-9]+\.[0-9]+-candidate\.[1-9][0-9]*)$') {
             $env:CANDIDATE_VERSION = $Matches.version
           }
           if (-not $env:CANDIDATE_VERSION) { throw 'Producer qualification requires an explicit new candidate identity.' }
-          ./eng/native/sqlcipher/Test-Windows.ps1 -RunName windows-ci-b
           ./eng/native/sqlcipher/Pack-Windows.ps1 -RunName windows-ci-b -PackageName producer-qualification -CandidateVersion $env:CANDIDATE_VERSION
+      - name: Raise unpublished producer package entries
+        if: ${{ always() && (inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
+        shell: pwsh
+        run: ./eng/native/sqlcipher/Publish-WindowsProducerEvidence.ps1 -Section Package
       - name: Exercise native diagnostic drift refusals
         shell: pwsh
-        run: ./eng/native/sqlcipher/Test-WindowsWarningPolicy.ps1 -RunName windows-ci-b
+        run: |
+          trap { Write-Host ('::error title=Diagnostic drift refusals::' + ($_.Exception.Message -replace "`r?`n",' ')); break }
+          ./eng/native/sqlcipher/Test-WindowsWarningPolicy.ps1 -RunName windows-ci-b
       - name: Verify production assemblies across fresh process reopening
         if: ${{ !(inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) }}
         shell: pwsh
@@ -122,10 +178,11 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: windows-native-qualification
+          name: ${{ matrix.attempt == 1 && 'windows-native-qualification' || format('windows-native-qualification-attempt-{0}', matrix.attempt) }}
           path: |
             artifacts/native-sqlcipher/toolchain-review-*/proof.json
             artifacts/native-sqlcipher/warning-policy-*/proof.json
+            artifacts/native-sqlcipher/warning-proposal-*/proposed-baseline.json
             artifacts/native-sqlcipher/build/windows-ci-*/warning-review-*/proof.json
             artifacts/native-sqlcipher/build/windows-ci-*/build.log
             artifacts/native-sqlcipher/build/windows-ci-*/exports.txt

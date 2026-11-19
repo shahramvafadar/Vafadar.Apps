@@ -1,5 +1,33 @@
 # 01 – Assessment and decision log
 
+## D-1240 - MSVC 14.52.37025 qualified as a Windows producer of the source-built cipher (2026-11-19)
+
+Hosted image `windows-2025-vs2026` 20261116.315 (installation 18.12.12405.243) no longer carries the reviewed
+MSVC tool set 14.51.36231, so the Windows build failed on every runner that received it. The owner decided on
+2026-11-19 to move to the newest tool set, 14.52.37025 (`cl.exe` 19.52.37029.0, SHA-256 87b094e4…d6fb, valid
+Microsoft signature).
+
+`eng/native/sqlcipher/inputs.lock.json` is unchanged by a single byte: its hash is bound into the Android native
+package that was qualified on a physical device. Instead the compiler acceptance policy (schema 3) names the
+tool set of every accepted compiler, a host qualifies with exactly one reviewed tool set whose installed
+compiler has the reviewed bytes, file version and signature, and every script takes tools and SDK from that
+qualified toolchain. Each tool set has its own diagnostic inventory. The earlier compilers and the packages
+candidate.7, .8 and .9 stay valid and reproducible.
+
+Verified on GitHub, producer-only branch `shahram/native-producer-4.19.0-candidate.11`: four independent jobs on
+the new installation built eight fresh native outputs with one SHA-256 (2648334b…c87c); the original schema
+qualification passed; three complete jobs exported the same unpublished package (0de4f749…17f2). The new
+compiler's 508 diagnostics at 503 sites in 160 official sources equal the inventory of 14.51.36231 in every
+site, code, message, multiplicity and source binding – no new class of diagnostics. The package is pinned as
+its own immutable variant `hosted20261116`, version 4.19.0-candidate.11; ordinary lanes build it from source
+and must reproduce every entry. Jobs that received the earlier installation were refused before any build.
+
+Not verified: nothing native ran on the development machine (no C++ tools); job logs and artifacts were not
+read, only public check runs, steps and notices. An inventory records diagnostic drift and accepts the safety
+of no warning. This is no acceptance of the app, Android, iOS or a release.
+[Evidence and limits](quality/msvc-14-52-windows-producer.md).
+
+
 ## D-1239 - Refresh the Plans banner after Android settings
 
 [Native regression evidence](quality/plans-notification-settings-return-d1239.md)

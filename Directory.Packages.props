@@ -12,6 +12,8 @@
     <VafadarWindowsCipherPackageVersion>4.19.0-candidate.7</VafadarWindowsCipherPackageVersion>
     <VafadarWindowsCipherPackageVersion Condition="'$(VafadarWindowsCipherVariant)' == 'servicing'">4.19.0-candidate.8</VafadarWindowsCipherPackageVersion>
     <VafadarWindowsCipherPackageVersion Condition="'$(VafadarWindowsCipherVariant)' == 'hosted20261021'">4.19.0-candidate.9</VafadarWindowsCipherPackageVersion>
+    <!-- MSVC tool set 14.52.37025 on hosted installation 18.12.12405.243 (D-1240). -->
+    <VafadarWindowsCipherPackageVersion Condition="'$(VafadarWindowsCipherVariant)' == 'hosted20261116'">4.19.0-candidate.11</VafadarWindowsCipherPackageVersion>
   </PropertyGroup>
 
   <ItemGroup Label="Household standard cryptography">

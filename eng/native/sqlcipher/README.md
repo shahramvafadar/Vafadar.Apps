@@ -9,6 +9,43 @@ after its actual signed executable, two fresh outputs and complete package entri
 reviewed below; local baseline evidence alone is not hosted proof.
 [Current observed drift and unchanged gates](../../../src/Apps/Zanance/docs/quality/retired-billing-review-and-hosted-compiler-drift.md).
 
+## Producer request for MSVC 14.52.37025 (candidate.11)
+
+Hosted image `windows-2025-vs2026` 20261116.315 carries installation 18.12.12405.243 with the MSVC
+tool sets 14.29.30133, 14.44.35207 and 14.52.37025; the reviewed tool set 14.51.36231 is gone from it.
+`windows.compiler.acceptance.json` (schema 3) therefore names the tool set of every accepted compiler,
+and a host qualifies with exactly one reviewed tool set whose installed `cl.exe` has the reviewed bytes,
+file version and Microsoft signature. `inputs.lock.json` is unchanged: it keeps naming the first
+reviewed tool set, because its hash is bound into the qualified Android package, and it is no longer
+the source of the tool set that is used.
+
+The branch `shahram/native-producer-4.19.0-candidate.11` requests installation 18.12.12405.243 with
+`cl.exe` 19.52.37029.0 (SHA-256 `87b094e4fb3c646247b8eb515b5daa4fd73f991fe7cc42e98c0c9e3d3805d6fb`).
+The image is rolled out gradually. The first run on commit 5842e4fa received the earlier installation
+18.11.12328.437 and was refused before any native build, as requested; it qualifies nothing.
+
+Producer job 135550645721 on commit 6b6ee158 received the requested installation. The signed compiler
+qualified, both fresh native outputs have SHA-256
+`2648334b7bf285e697571c486dbeb2d729d9ba57f7f6b8be99661643e841c87c`, and the original schema
+qualification passed. The job then stopped at the diagnostic gate, because no inventory was recorded
+for tool set 14.52.37025, and raised the proposed inventory as notices (SHA-256
+`e7620eb221340da41f116fa1d775146b5b35379daaddc29eb012386ff45d210c`, verified after reassembly).
+Its 508 diagnostics at 503 sites in 160 official sources equal the inventory of tool set 14.51.36231 in
+every site, code, message, multiplicity and source binding; it is recorded as
+`windows.warnings.msvc-14.52.37025.baseline.json`. An inventory records drift only and accepts the
+safety of no warning. The jobs on commits ff0fcabd and c644c14a received the earlier installation again and
+were refused.
+
+Producer qualification then makes five independent attempts. On commit 70b3fde6 two attempts received the
+earlier installation and were refused; jobs 135563662849, 135563663445 and 135563664010 received the requested
+one and completed every step. Each built the same two fresh outputs (2648334b…c87c), passed schema and
+diagnostic gates and exported the same unpublished package, SHA-256
+`0de4f749c75418726d0bb67ce5739bfa5337a28627589ab96ebbc73a2b0d17f2`. Its five entries are pinned in
+`windows.hosted20261116.package.contents.json` as version 4.19.0-candidate.11, selected only for installation
+18.12.12405.243 with compiler 87b094e4…d6fb. Candidate.7, .8 and .9 are unchanged; candidate.10 was never a
+consumer identity. Ordinary lanes build from the official sources and must reproduce every pinned entry.
+[Evidence and limits](../../../src/Apps/Zanance/docs/quality/msvc-14-52-windows-producer.md).
+
 ## Qualified 31 October hosted producer identity (D-683)
 
 Original native run41185441600/job124491318973 on e1cbb1be observes installer
