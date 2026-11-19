@@ -382,6 +382,9 @@ namespace Vafadar.Zanance.Api.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
+                    b.Property<int?>("PilotVendorStatus")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ProtectedPayload")
                         .IsRequired()
                         .HasMaxLength(65536)

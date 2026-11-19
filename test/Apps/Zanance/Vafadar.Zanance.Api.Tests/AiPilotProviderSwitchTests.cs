@@ -505,6 +505,103 @@ public sealed class AiPilotProviderSwitchTests
         }
     }
 
+    /// <summary>Preserves an authenticated terminal vendor failure independently of usage or credit movement.</summary>
+    [Fact]
+    public async Task Pilot_reports_original_failure_without_guessing_usage_or_releasing_credit()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_TERMINAL_TEST_CONNECTION");
+        if (connection is null) { Assert.Skip("Explicit isolated terminal-status PostgreSQL fixture required."); return; }
+        var settings = new NpgsqlConnectionStringBuilder(connection);
+        Assert.Equal(("127.0.0.1", 55480, "zanance_ai_terminal_test"), (settings.Host, settings.Port, settings.Database));
+        var factory = new Factory(connection);
+        var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
+        const string owner = "fictional-terminal-status";
+        var session = Guid.NewGuid();
+        await using (var db = factory.CreateDbContext())
+        {
+            await db.Database.MigrateAsync(ct);
+            Assert.False(db.Database.HasPendingModelChanges());
+            db.Users.Add(new ServiceUser { Id = owner, UserName = owner, SecurityStamp = "fictional-terminal-stamp" });
+            db.Sessions.Add(new DeviceSession { Id = session, UserId = owner, Generation = 1, ExpiresAt = clock.GetUtcNow().AddDays(1) });
+            await db.SaveChangesAsync(ct);
+        }
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:gemini:ApiKey"] = "fictional-terminal-only",
+            ["Analysis:ProviderPilot:gemini:Project"] = "fixture-terminal-gemini",
+        }).Build();
+        using var transport = new TerminalStatusTransport();
+        var pilot = new AiPilotProvider(config, transport, clock);
+        var store = new AiRequestStore(factory, new UnconfiguredAiProvider(), new EphemeralDataProtectionProvider(), clock, pilot);
+        var actor = new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, owner),
+            new Claim(ServiceHost.SessionClaim, session.ToString("D")), new Claim(ServiceHost.GenerationClaim, "1")], "synthetic"));
+        var payload = AiPilotProvider.ReportFixture;
+        await store.GrantAsync(owner, "fictional-terminal-credit", false, 1, ct);
+        await using (var db = factory.CreateDbContext())
+            await pilot.SelectModelAsync(db, payload.Purpose, "gemini-3.5-flash-lite", "fixture-terminal-operator", ct);
+        var id = Guid.NewGuid();
+        var result = await store.SubmitAsync(actor, new(id, await store.OfferAsync(actor, payload.Purpose, ct), payload), ct);
+        Assert.Equal(AiRequestState.Pending, result.State);
+        Assert.Null(await RecordedStatus());
+
+        clock.Advance(TimeSpan.FromMinutes(1));
+        Assert.Equal(AiRequestState.Pending, await store.CheckPilotStatusAsync("fixture-terminal-operator", id, ct));
+        Assert.Null(await RecordedStatus());
+
+        clock.Advance(TimeSpan.FromMinutes(1));
+        Assert.Equal(AiRequestState.Pending, await store.CheckPilotStatusAsync("fixture-terminal-operator", id, ct));
+        Assert.Equal(AiPilotVendorStatus.Failed, await RecordedStatus());
+
+        clock.Advance(TimeSpan.FromMinutes(1));
+        Assert.Equal(AiRequestState.Pending, await store.CheckPilotStatusAsync("fixture-terminal-operator", id, ct));
+        Assert.Equal(AiPilotVendorStatus.Failed, await RecordedStatus());
+
+        Assert.Equal(new AiBalance(0, 0, 0, 1), (await store.AvailabilityAsync(actor, ct)).Balance);
+        await using var audit = factory.CreateDbContext();
+        Assert.Empty(await audit.Set<AiCreditRow>().Where(row => row.Kind == AiCreditEvent.Settle || row.Kind == AiCreditEvent.Refund).ToArrayAsync(ct));
+        Assert.Equal(1, transport.Creates);
+        Assert.Equal(3, transport.Reads);
+
+        async Task<AiPilotVendorStatus?> RecordedStatus()
+        {
+            await using var db = factory.CreateDbContext();
+            var row = await db.Set<AiRequestRow>().SingleAsync(item => item.Id == id, ct);
+            Assert.Null(row.PilotMeteredCostMicros);
+            Assert.Null(row.ProtectedText);
+            Assert.Equal("interaction_terminal", row.VendorOperationId);
+            return row.PilotVendorStatus;
+        }
+    }
+
+    private sealed class TerminalStatusTransport : HttpMessageHandler, IHttpClientFactory
+    {
+        internal int Creates;
+        internal int Reads;
+
+        public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            if (request.Method == HttpMethod.Post)
+            {
+                Creates++;
+                return Task.FromResult(Json("""{"id":"interaction_terminal","status":"in_progress","model":"gemini-3.5-flash-lite"}"""));
+            }
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Equal("https://generativelanguage.googleapis.com/v1beta/interactions/interaction_terminal", request.RequestUri!.AbsoluteUri);
+            return Task.FromResult(Json(++Reads switch
+            {
+                1 => """{"id":"interaction_other","status":"failed","model":"gemini-3.5-flash-lite"}""",
+                2 => """{"id":"interaction_terminal","status":"failed","model":"gemini-3.5-flash-lite"}""",
+                _ => """{"id":"interaction_terminal","status":"completed","model":"gemini-3.5-flash-lite","usage":{"total_input_tokens":48,"total_output_tokens":50},"steps":[{"type":"model_output","content":[{"type":"text","text":"{\"net_expenses_minor\":38000,\"explanation\":\"Refunds reduce recorded expenses.\"}"}]}]}""",
+            }));
+
+            static HttpResponseMessage Json(string body) => new(HttpStatusCode.OK)
+                { Content = new StringContent(body, Encoding.UTF8, "application/json") };
+        }
+    }
+
     private sealed class MeteringTransport : HttpMessageHandler, IHttpClientFactory
     {
         internal int Creates;

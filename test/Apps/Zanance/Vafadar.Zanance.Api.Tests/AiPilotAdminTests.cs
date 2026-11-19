@@ -180,7 +180,8 @@ public sealed class AiPilotAdminTests
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
         if (connection is null) { Assert.Skip("Explicit isolated admin PostgreSQL fixture required."); return; }
         var dbSettings = new NpgsqlConnectionStringBuilder(connection);
-        Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (dbSettings.Host, dbSettings.Port, dbSettings.Database));
+        Assert.Equal(("127.0.0.1", "zanance_ai_provider_pilot"), (dbSettings.Host, dbSettings.Database));
+        Assert.True(dbSettings.Port == 55479 || pendingOnly && dbSettings.Port == 55480);
         var root = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_ROOT")!;
         Assert.Equal("Zanance synthetic admin panel", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions { EnvironmentName = "Integration", ApplicationName = typeof(ServiceHost).Assembly.FullName });
@@ -379,7 +380,7 @@ public sealed class AiPilotAdminTests
         Assert.Equal(51, Regex.Matches(html, "<tr>", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1)).Count);
         Assert.Contains("gemini / gemini-4-hydrogen", html, StringComparison.Ordinal);
         Assert.Contains("2026-11-19 12:02:00", html, StringComparison.Ordinal);
-        Assert.Contains(">Recorded</td>", html, StringComparison.Ordinal);
+        Assert.Contains(">Recorded</td><td>Failed</td><td>—</td>", html, StringComparison.Ordinal);
         Assert.Contains(">Missing</td>", html, StringComparison.Ordinal);
         Assert.Contains(pending[0].Id.ToString("D"), html, StringComparison.Ordinal);
         Assert.Contains(pending[49].Id.ToString("D"), html, StringComparison.Ordinal);
@@ -404,6 +405,7 @@ public sealed class AiPilotAdminTests
             var request = new AiRequestRow { Id = Guid.NewGuid(), UserId = memberId, OfferId = offer.Id, State = state,
                 CreatedAt = now.AddSeconds(index), StatusCheckedAt = index == 0 ? now.AddMinutes(2) : null,
                 VendorOperationId = index == 0 ? "fictional-vendor-reference" : null, PayloadDigest = new('a', 64),
+                PilotVendorStatus = index == 0 ? AiPilotVendorStatus.Failed : null,
                 GiftedReserved = 1, ChargedUnits = state == AiRequestState.Completed ? 1 : 0,
                 ProtectedPayload = "fictional-protected-aggregate", ProtectedText = state == AiRequestState.Completed ? "fictional-protected-result" : null };
             db.Add(offer);

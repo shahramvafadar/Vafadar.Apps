@@ -68,6 +68,8 @@ public sealed class AiRequestRow
     public AiPilotDispatchStage? PilotDispatchStage { get; set; }
     /// <summary>Server time at which the one original create became possible.</summary>
     public DateTimeOffset? PilotDispatchClaimedAt { get; set; }
+    /// <summary>Authenticated terminal status of the original synthetic operation, independent of reported usage.</summary>
+    public AiPilotVendorStatus? PilotVendorStatus { get; set; }
     /// <summary>Uncached Standard reference estimate, separate from the vendor invoice and customer debit.</summary>
     public long? PilotMeteredCostMicros { get; set; }
     /// <summary>Reference tariff used when the terminal vendor estimate was recorded.</summary>

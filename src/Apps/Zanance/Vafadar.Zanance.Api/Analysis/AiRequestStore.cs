@@ -331,7 +331,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
 
     private async Task ApplyAsync(string owner, Guid id, AiProviderOutcome outcome, CancellationToken ct)
     {
-        if (outcome.State == AiProviderState.Unknown && outcome.Metering is null) return;
+        if (outcome.State == AiProviderState.Unknown && outcome.Metering is null && outcome.VendorStatus is null) return;
         if (!Enum.IsDefined(outcome.State)) return;
         // Unusable or inconsistent provider evidence leaves the original reservation intact for actual reconciliation.
         if (outcome.ChargedUnits < 0 || outcome.State == AiProviderState.DefinitiveNoCharge && (outcome.ChargedUnits != 0 || outcome.Text is not null)) return;
@@ -341,6 +341,12 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         await SyncRequestScope.LockOwnerAsync(db, owner, ct);
         var row = await db.Set<AiRequestRow>().SingleAsync(r => r.Id == id && r.UserId == owner, ct);
         if (row.State != AiRequestState.Pending) return;
+        if (outcome.VendorStatus is { } vendorStatus)
+        {
+            if (row.VendorOperationId is null || !Enum.IsDefined(vendorStatus) ||
+                row.PilotVendorStatus is { } previousStatus && previousStatus != vendorStatus) return;
+            row.PilotVendorStatus = vendorStatus;
+        }
         if (outcome.Metering is { } metering)
         {
             // Keep one terminal vendor observation even when the original customer result remains unusable.

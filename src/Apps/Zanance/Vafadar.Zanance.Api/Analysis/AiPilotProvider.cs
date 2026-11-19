@@ -373,8 +373,17 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
 
     private static AiProviderOutcome Outcome(PilotProfile profile, AiPurpose purpose, string digest, JsonElement response)
     {
-        var status = Text(response, "status");
-        if (status is not ("completed" or "failed" or "incomplete" or "cancelled") || Text(response, "model") != profile.Model) return Unknown;
+        if (Text(response, "model") != profile.Model) return Unknown;
+        var status = Text(response, "status") switch
+        {
+            "completed" => AiPilotVendorStatus.Completed,
+            "failed" => AiPilotVendorStatus.Failed,
+            "incomplete" => AiPilotVendorStatus.Incomplete,
+            "cancelled" => AiPilotVendorStatus.Cancelled,
+            _ => (AiPilotVendorStatus?)null,
+        };
+        if (status is null) return Unknown;
+        var terminal = Unknown with { VendorStatus = status };
         var usage = Read(response, "usage");
         var openAi = profile.Provider == "openai";
         var input = Number(usage, openAi ? "input_tokens" : "total_input_tokens");
@@ -382,12 +391,12 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         var thinking = openAi ? Number(Read(usage, "output_tokens_details"), "reasoning_tokens") : Number(usage, "total_thought_tokens");
         var cached = openAi ? Number(Read(usage, "input_tokens_details"), "cached_tokens") : Number(usage, "total_cached_tokens");
         if (input is not (>= 0 and <= 1_000_000) || output is not (>= 0 and <= 1_000_000) ||
-            !openAi && thinking is < 0 or > 1_000_000) return Unknown;
+            !openAi && thinking is < 0 or > 1_000_000) return terminal;
         var totalOutput = output.Value + (openAi ? 0 : thinking ?? 0);
         var metering = new AiPilotUsage(input.Value, totalOutput, InRange(cached, input.Value), InRange(thinking, totalOutput),
             StandardEstimate(profile.Model, input.Value, totalOutput));
-        var unpublished = Unknown with { Metering = metering };
-        if (status != "completed" || input is < 1 or > InputTokenLimit || totalOutput > profile.OutputLimit || output is < 1)
+        var unpublished = terminal with { Metering = metering };
+        if (status != AiPilotVendorStatus.Completed || input is < 1 or > InputTokenLimit || totalOutput > profile.OutputLimit || output is < 1)
             return unpublished;
 
         static int? InRange(int? count, int total) => count >= 0 && count <= total ? count : null;
@@ -411,7 +420,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             if ((digest == ForecastDigest || digest == ForecastBaselineDigest || digest == SpendingQuestionDigest || digest == PlanQuestionDigest) && explanation.Any(char.IsDigit)) return unpublished;
             if (AiPilotLocaleFixtures.Match(purpose, digest) is not null && explanation.Any(char.IsDigit)) return unpublished;
             AiProtocol.ValidateText(explanation);
-            return new(AiProviderState.Completed, 1, explanation, metering);
+            return new(AiProviderState.Completed, 1, explanation, metering, status);
         }
         catch (Exception error) when (error is JsonException or ArgumentException) { return unpublished; }
     }

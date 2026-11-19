@@ -7,7 +7,10 @@ internal sealed record AiProviderOffer(string Provider, string Model, long Maxim
 /// <summary>Only a definitive provider outcome may spend/refund an original reservation.</summary>
 internal enum AiProviderState { Unknown, Completed, DefinitiveNoCharge }
 /// <summary>Provider-confirmed outcome, never guessed from HTTP timeout or a missing request lookup.</summary>
-internal sealed record AiProviderOutcome(AiProviderState State, long ChargedUnits = 0, string? Text = null, AiPilotUsage? Metering = null);
+internal sealed record AiProviderOutcome(AiProviderState State, long ChargedUnits = 0, string? Text = null, AiPilotUsage? Metering = null,
+    AiPilotVendorStatus? VendorStatus = null);
+/// <summary>Terminal status reported by the original synthetic vendor operation, independent of customer credit.</summary>
+public enum AiPilotVendorStatus { Completed = 1, Failed = 2, Incomplete = 3, Cancelled = 4 }
 /// <summary>Authenticated terminal usage and an uncached Standard reference estimate, independent of customer credit.</summary>
 internal sealed record AiPilotUsage(int Input, int Output, int? CachedInput, int? Thinking, long EstimateMicros)
 {

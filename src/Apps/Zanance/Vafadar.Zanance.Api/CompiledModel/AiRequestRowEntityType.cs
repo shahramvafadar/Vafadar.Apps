@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiRequestRow",
                 typeof(AiRequestRow),
                 baseEntityType,
-                propertyCount: 22,
+                propertyCount: 23,
                 foreignKeyCount: 2,
                 unnamedIndexCount: 2,
                 keyCount: 1);
@@ -117,6 +117,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 nullable: true,
                 maxLength: 64);
             pilotMeteredTariff.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var pilotVendorStatus = runtimeEntityType.AddProperty(
+                "PilotVendorStatus",
+                typeof(AiPilotVendorStatus?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("PilotVendorStatus", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<PilotVendorStatus>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            pilotVendorStatus.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var protectedPayload = runtimeEntityType.AddProperty(
                 "ProtectedPayload",
