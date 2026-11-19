@@ -5,6 +5,7 @@ internal static partial class TestDatabase
 {
     private static void Migrate(string connection)
     {
+        Vafadar.Dastan.Data.Delivery.Migrate(connection);
         Vafadar.Dastan.People.PeopleStore.Migrate(connection);
     }
 }

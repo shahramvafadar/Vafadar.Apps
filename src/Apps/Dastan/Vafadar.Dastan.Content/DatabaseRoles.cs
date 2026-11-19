@@ -81,6 +81,7 @@ public static partial class DatabaseRoles
             }
 
             // Which changes of form a part has is read by the program that starts, and written by nobody but the command.
+            Run(database, $"""GRANT SELECT ON ALL TABLES IN SCHEMA {schema} TO "{role}" """, onlyIfHistory: schema);
             Run(database, $"""REVOKE INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA {schema} FROM "{role}" """, onlyIfHistory: schema);
         }
 

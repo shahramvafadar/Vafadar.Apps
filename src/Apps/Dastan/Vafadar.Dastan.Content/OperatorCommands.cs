@@ -186,6 +186,7 @@ internal static class OperatorCommands
             case ["database", "migrate", "--database", var database]:
                 try
                 {
+                    Delivery.Migrate(Connection(database));
                     PeopleStore.Migrate(Connection(database));
                     Vafadar.Dastan.Store.EditorialStore.Migrate(Connection(database));
                 }

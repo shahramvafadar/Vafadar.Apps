@@ -462,7 +462,13 @@ public sealed class StoredExternalLogin
 /// <summary>The database of the store of the visitors.</summary>
 public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbContext(options)
 {
-    /// <summary>Gets the accounts.</summary>
+    /// <summary>Gets the accounts as ASP.NET Core Identity keeps them, in the schema <c>identity</c> (ADR 0016).</summary>
+    public DbSet<VisitorAccount> Accounts => Set<VisitorAccount>();
+
+    /// <summary>Gets the tokens of the accounts: what a link in a mail proves, kept as a hash until it is used or ends.</summary>
+    public DbSet<Microsoft.AspNetCore.Identity.IdentityUserToken<string>> AccountTokens => Set<Microsoft.AspNetCore.Identity.IdentityUserToken<string>>();
+
+    /// <summary>Gets what belongs to the visitors in Dastan, by the identifier of their account.</summary>
     public DbSet<StoredVisitor> Visitors => Set<StoredVisitor>();
 
     /// <summary>Gets the providers the accounts can be signed in through.</summary>
@@ -530,6 +536,58 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
     {
         modelBuilder.HasDefaultSchema(PeopleStore.Schema);
         ArgumentNullException.ThrowIfNull(modelBuilder);
+
+        // The accounts of the visitors as Identity keeps them, in a schema of their own (ADR 0016). A name
+        // and a mail address each belong to one account, by the database itself: two forms that arrive at the
+        // same moment cannot both be kept.
+        const string identity = "identity";
+        modelBuilder.Entity<VisitorAccount>(account =>
+        {
+            account.ToTable("VisitorAccounts", identity);
+            account.HasKey(item => item.Id);
+            account.Property(item => item.Id).HasMaxLength(40);
+            account.Property(item => item.UserName).HasMaxLength(80);
+            account.Property(item => item.NormalizedUserName).HasMaxLength(80);
+            account.Property(item => item.Email).HasMaxLength(Vafadar.Dastan.Data.MailOutbox.LongestAddress);
+            account.Property(item => item.NormalizedEmail).HasMaxLength(Vafadar.Dastan.Data.MailOutbox.LongestAddress);
+            account.Property(item => item.Language).HasMaxLength(20);
+            account.Property(item => item.ConcurrencyStamp).IsConcurrencyToken();
+            account.HasIndex(item => item.NormalizedUserName).IsUnique();
+            account.HasIndex(item => item.NormalizedEmail).IsUnique();
+
+            // Dastan asks for no telephone and has no second factor; what is not asked for has no column.
+            account.Ignore(item => item.PhoneNumber);
+            account.Ignore(item => item.PhoneNumberConfirmed);
+            account.Ignore(item => item.TwoFactorEnabled);
+        });
+
+        modelBuilder.Entity<Microsoft.AspNetCore.Identity.IdentityUserToken<string>>(token =>
+        {
+            token.ToTable("VisitorTokens", identity);
+            token.HasKey(item => new { item.UserId, item.LoginProvider, item.Name });
+            token.Property(item => item.UserId).HasMaxLength(40);
+            token.Property(item => item.LoginProvider).HasMaxLength(40);
+            token.Property(item => item.Name).HasMaxLength(40);
+            token.HasOne<VisitorAccount>().WithMany().HasForeignKey(item => item.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Microsoft.AspNetCore.Identity.IdentityUserLogin<string>>(login =>
+        {
+            login.ToTable("VisitorLogins", identity);
+            login.HasKey(item => new { item.LoginProvider, item.ProviderKey });
+            login.Property(item => item.LoginProvider).HasMaxLength(40);
+            login.Property(item => item.ProviderKey).HasMaxLength(200);
+            login.Property(item => item.UserId).HasMaxLength(40);
+            login.HasOne<VisitorAccount>().WithMany().HasForeignKey(item => item.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Microsoft.AspNetCore.Identity.IdentityUserClaim<string>>(claim =>
+        {
+            claim.ToTable("VisitorClaims", identity);
+            claim.HasKey(item => item.Id);
+            claim.Property(item => item.UserId).HasMaxLength(40);
+            claim.HasOne<VisitorAccount>().WithMany().HasForeignKey(item => item.UserId).OnDelete(DeleteBehavior.Cascade);
+        });
 
         modelBuilder.Entity<StoredVisitor>(visitor =>
         {

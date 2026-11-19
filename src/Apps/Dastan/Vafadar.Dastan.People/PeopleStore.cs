@@ -78,7 +78,14 @@ public sealed partial class PeopleStore : IDisposable
     private readonly PeopleContext _context;
     private readonly TimeProvider _time;
 
-    private PeopleStore(PeopleContext context, TimeProvider time) => (_context, _time) = (context, time);
+    private PeopleStore(PeopleContext context, TimeProvider time, string site)
+    {
+        (_context, _time) = (context, time);
+        Accounts = new VisitorAccounts(this, context, time, site);
+    }
+
+    /// <summary>Gets the accounts of the visitors as ASP.NET Core Identity keeps them: with a mail address that is confirmed (ADR 0016).</summary>
+    public VisitorAccounts Accounts { get; }
 
     /// <summary>The schema of the database the store lives in (ADR 0015): what belongs to accounts.</summary>
     public const string Schema = "personal";
@@ -90,10 +97,11 @@ public sealed partial class PeopleStore : IDisposable
     /// </summary>
     /// <param name="connection">The connection of the database, as Npgsql reads it.</param>
     /// <param name="time">The clock; the system's when nothing is given.</param>
-    public static PeopleStore Open(string connection, TimeProvider? time = null)
+    /// <param name="site">The address of the site, as a link in a mail begins; a development machine's when nothing is given.</param>
+    public static PeopleStore Open(string connection, TimeProvider? time = null, string? site = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(connection);
-        return new PeopleStore(new PeopleContext(Options(connection)), time ?? TimeProvider.System);
+        return new PeopleStore(new PeopleContext(Options(connection)), time ?? TimeProvider.System, string.IsNullOrWhiteSpace(site) ? "http://localhost" : site);
     }
 
     /// <summary>Makes the schema of the store in a database, or brings it to the form this program knows.</summary>
@@ -491,7 +499,7 @@ public sealed partial class PeopleStore : IDisposable
         return gone.Count;
     }
 
-    private ImmutableArray<string> NewCodes(string visitorId)
+    internal ImmutableArray<string> NewCodes(string visitorId)
     {
         var codes = Enumerable.Range(0, RecoveryCodeCount).Select(_ => NewCode()).ToImmutableArray();
         foreach (var code in codes)
@@ -517,16 +525,16 @@ public sealed partial class PeopleStore : IDisposable
         return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(typed)));
     }
 
-    private static string Key(string name) => name.Normalize().ToUpperInvariant();
+    internal static string Key(string name) => name.Normalize().ToUpperInvariant();
 
     private static string NewStamp() => Convert.ToHexString(RandomNumberGenerator.GetBytes(16));
 
-    private static string? NameProblem(string name) =>
+    internal static string? NameProblem(string name) =>
         name.Length < ShortestName || name.Length > LongestName ? "name-length"
         : name.Any(character => !(char.IsLetterOrDigit(character) || character is ' ' or '.' or '_' or '-')) || name.Contains("  ", StringComparison.Ordinal) ? "name-letters"
         : null;
 
-    private static string? Weak(string password) =>
+    internal static string? Weak(string password) =>
         password.Length < PasswordLength ? "password-short"
         : password.Length > 1000 ? "password-long"
         : null;
