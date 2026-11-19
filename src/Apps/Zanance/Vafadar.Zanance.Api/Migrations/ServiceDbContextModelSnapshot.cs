@@ -245,6 +245,37 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AiOffers", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiPilotOpenAiNoticeRow", b =>
+                {
+                    b.Property<string>("ResponseId")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<int>("Attempts")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset?>("CheckedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("DeliveryId")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<bool>("Handled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset>("ReceivedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("ResponseId");
+
+                    b.HasIndex("DeliveryId")
+                        .IsUnique();
+
+                    b.ToTable("AiPilotOpenAiNotices", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiPilotRouteRow", b =>
                 {
                     b.Property<long>("Id")

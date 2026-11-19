@@ -276,6 +276,28 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         return Outcome(profile, offer.Purpose, digest, result!.RootElement);
     }
 
+    /// <summary>Reads one signed-notice candidate under the current dedicated OpenAI project.</summary>
+    internal async Task<JsonDocument?> RetrieveOpenAiNoticeAsync(string id, CancellationToken ct)
+    {
+        if (!ValidId(id) || !id.StartsWith("resp_", StringComparison.Ordinal) ||
+            Profile(AiPurpose.PeriodExplanation, "openai", "gpt-6-luna") is not { } profile) return null;
+        using var request = Request(profile, HttpMethod.Get, profile.Url + "/" + id);
+        return await SendAsync(request, ct);
+    }
+
+    /// <summary>Extracts only the candidate immutable operation from an authenticated retrieval.</summary>
+    internal static string? RecoveredOperation(JsonElement response, string id) =>
+        Text(response, "id") == id && Text(response, "status") == "completed"
+            ? Text(Read(response, "metadata"), "zanance_operation") : null;
+
+    /// <summary>Revalidates model, route and content before consulting the original settlement policy.</summary>
+    internal AiProviderOutcome? RecoveredOpenAiOutcome(AiPilotRouteRow route, AiOffer offer, string digest, JsonElement response)
+    {
+        if (offer.Provider != "openai" || Admit(route, offer) is not { } profile ||
+            !IsSynthetic(offer.Purpose, digest) || Text(response, "model") != profile.Model) return null;
+        return Outcome(profile, offer.Purpose, digest, response);
+    }
+
     /// <summary>Checks the original preserved route and known synthetic payload before reserving an operator lookup.</summary>
     internal bool CanCheckStatus(AiPilotRouteRow route, AiOffer offer, string digest, string id) =>
         ValidId(id) && Admit(route, offer) is not null && IsSynthetic(offer.Purpose, digest);

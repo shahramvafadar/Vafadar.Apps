@@ -1,5 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.Extensions.Time.Testing;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Builder;
@@ -70,6 +72,39 @@ public sealed class AiPilotAdminTests
         }
     }
 
+    private sealed class OpenAiRecoveryReplies : HttpMessageHandler, IHttpClientFactory
+    {
+        internal int Calls;
+        internal const string Matched = "resp_fixture_op_matched";
+        internal const string Foreign = "resp_fixture_op_foreign";
+        internal string Correlation { get; set; } = "";
+        internal static readonly byte[] SigningKey = Enumerable.Repeat((byte)23, 32).ToArray();
+
+        public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            Interlocked.Increment(ref Calls);
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Null(request.Content);
+            Assert.Equal("fixture-openai", Assert.Single(request.Headers.GetValues("OpenAI-Project")));
+            var id = request.RequestUri!.Segments[^1];
+            Assert.Contains(id, new[] { Matched, Foreign });
+            Assert.Equal($"https://api.openai.com/v1/responses/{id}", request.RequestUri.AbsoluteUri);
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = JsonContent.Create(new
+                {
+                    id, status = "completed", model = "gpt-6-luna",
+                    usage = new { input_tokens = 17, output_tokens = 11 },
+                    metadata = new { zanance_operation = id == Matched ? Correlation : new string('f', 64) },
+                    output = new[] { new { type = "message", content = new[] { new { type = "output_text",
+                        text = """{"net_expenses_minor":38000,"explanation":"Recorded expenses less refunds are the shown net amount."}""" } } } }
+                })
+            });
+        }
+    }
+
     /// <summary>Verifies identity isolation, independent choices, stale form refusal and zero vendor requests.</summary>
     [Fact]
     public Task Operator_can_view_switch_and_disable_each_purpose_in_the_private_panel() => RunPanelAsync(false);
@@ -82,7 +117,12 @@ public sealed class AiPilotAdminTests
     [Fact]
     public Task Operator_checks_the_original_reference_with_durable_limits() => RunPanelAsync(false, exerciseStatus: true);
 
-    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false)
+    /// <summary>Verifies signed receipt, authenticated lost-ID retrieval and durable duplicate refusal.</summary>
+    [Fact]
+    public Task OpenAi_notice_recovers_one_matching_claim_and_rejects_foreign_and_duplicate_results() =>
+        RunPanelAsync(false, exerciseRecovery: true);
+
+    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, bool exerciseRecovery = false)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
@@ -100,14 +140,17 @@ public sealed class AiPilotAdminTests
             ["Analysis:ProviderPilot:openai:Project"] = "fixture-openai", ["Analysis:ProviderPilot:openai:ApiKey"] = "fixture-only",
             ["Analysis:ProviderPilot:gemini:Project"] = "fixture-gemini", ["Analysis:ProviderPilot:gemini:ApiKey"] = "fixture-only",
         });
+        using var recovery = exerciseRecovery ? new OpenAiRecoveryReplies() : null;
+        if (recovery is not null)
+            builder.Configuration["Analysis:ProviderPilot:openai:WebhookSecret"] = "whsec_" + Convert.ToBase64String(OpenAiRecoveryReplies.SigningKey);
         builder.AddZananceService();
         builder.Logging.ClearProviders();
         builder.Services.RemoveAll<IHostedService>();
         var noEgress = new NoProviderTraffic();
         using var replies = exerciseStatus ? new RetainedStatusReplies() : null;
         var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 19, 12, 0, 0, TimeSpan.Zero));
-        builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>((IHttpClientFactory?)replies ?? noEgress));
-        if (exerciseStatus) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
+        builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>((IHttpClientFactory?)replies ?? (IHttpClientFactory?)recovery ?? noEgress));
+        if (exerciseStatus || exerciseRecovery) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
         await using var app = builder.Build();
         await ServiceHost.MigrateAsync(app.Services);
         await using (var scope = app.Services.CreateAsyncScope())
@@ -126,6 +169,12 @@ public sealed class AiPilotAdminTests
             ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate is not null &&
                 Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(certificate.RawData)) == fingerprint,
         }) { BaseAddress = new Uri(address) };
+        if (recovery is not null)
+        {
+            using var callback = Browser();
+            await VerifyOpenAiRecoveryAsync(app.Services, callback, recovery, clock, ct);
+            return;
+        }
         if (replies is not null)
         {
             using var statusBrowser = Browser();
@@ -373,6 +422,83 @@ public sealed class AiPilotAdminTests
             using var reply = await Check(request);
             Assert.Equal(HttpStatusCode.Redirect, reply.StatusCode);
             Assert.Equal(state, State(reply));
+        }
+    }
+
+    private static async Task VerifyOpenAiRecoveryAsync(IServiceProvider services, HttpClient callback,
+        OpenAiRecoveryReplies replies, FakeTimeProvider clock, CancellationToken ct)
+    {
+        const string owner = "fictional-ai-member";
+        var pending = Guid.NewGuid();
+        var other = Guid.NewGuid();
+        var payload = AiPilotProvider.ReportFixture;
+        var factory = services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
+        var pilot = services.GetRequiredService<AiPilotProvider>();
+        await using var db = await factory.CreateDbContextAsync(ct);
+        await pilot.SelectModelAsync(db, payload.Purpose, "gpt-6-luna", OperatorId, ct);
+        var original = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
+        await pilot.SelectModelAsync(db, payload.Purpose, "off", OperatorId, ct);
+        Seed(pending);
+        Seed(other);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        replies.Correlation = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes($"zanance.analysis.v1\n{owner}\n{pending:N}")));
+        var now = clock.GetUtcNow();
+        await Send("fixture-delivery-stale", OpenAiRecoveryReplies.Matched, now.AddMinutes(-6), HttpStatusCode.BadRequest);
+        await Send("fixture-delivery-altered", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.BadRequest, alter: true);
+        Assert.Empty(await db.Set<AiPilotOpenAiNoticeRow>().ToArrayAsync(ct));
+        await Send("fixture-delivery-original", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-original", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-original", OpenAiRecoveryReplies.Foreign, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-duplicate", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-foreign", OpenAiRecoveryReplies.Foreign, now, HttpStatusCode.NoContent);
+        Assert.Equal(2, await db.Set<AiPilotOpenAiNoticeRow>().CountAsync(ct));
+        Assert.Equal(0, replies.Calls);
+
+        var inbox = services.GetRequiredService<AiPilotOpenAiNotices>();
+        await Task.WhenAll(inbox.DrainAsync(ct), inbox.DrainAsync(ct));
+        Assert.Equal(2, replies.Calls);
+        var accepted = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == pending, ct);
+        Assert.Equal((AiRequestState.Completed, OpenAiRecoveryReplies.Matched, 1L), (accepted.State, accepted.VendorOperationId, accepted.ChargedUnits));
+        var untouched = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == other, ct);
+        Assert.Equal(AiRequestState.Pending, untouched.State);
+        Assert.Null(untouched.VendorOperationId);
+        var settlement = Assert.Single(await db.Set<AiCreditRow>().ToArrayAsync(ct));
+        Assert.Equal(AiCreditEvent.Settle, settlement.Kind);
+        Assert.Equal(pending, settlement.RequestId);
+        Assert.All(await db.Set<AiPilotOpenAiNoticeRow>().ToArrayAsync(ct), row => { Assert.Equal(1, row.Attempts); Assert.True(row.Handled); });
+
+        clock.Advance(TimeSpan.FromMinutes(10));
+        await Send("fixture-delivery-new-signature", OpenAiRecoveryReplies.Matched, clock.GetUtcNow(), HttpStatusCode.NoContent);
+        await inbox.DrainAsync(ct);
+        Assert.Equal(2, replies.Calls);
+
+        void Seed(Guid requestId)
+        {
+            var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = owner, Purpose = payload.Purpose,
+                Provider = original.Provider, Model = original.Model!, MaximumUnits = 1, PilotRouteId = original.Id,
+                ExpiresAt = clock.GetUtcNow().AddHours(1) };
+            db.AddRange(offer, new AiRequestRow { Id = requestId, UserId = owner, OfferId = offer.Id,
+                State = AiRequestState.Pending, CreatedAt = clock.GetUtcNow(), GiftedReserved = 1,
+                PayloadDigest = AiProtocol.Digest(payload), ProtectedPayload = "fictional-protected",
+                PilotDispatchStage = AiPilotDispatchStage.Claimed, PilotDispatchClaimedAt = clock.GetUtcNow() });
+        }
+        async Task Send(string delivery, string id, DateTimeOffset timestamp, HttpStatusCode status, bool alter = false)
+        {
+            var stamp = timestamp.ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture);
+            var body = System.Text.Json.JsonSerializer.Serialize(new { type = "response.completed", data = new { id } });
+            var signature = Convert.ToBase64String(HMACSHA256.HashData(OpenAiRecoveryReplies.SigningKey,
+                Encoding.UTF8.GetBytes($"{delivery}.{stamp}.{body}")));
+            using var request = new HttpRequestMessage(HttpMethod.Post, "/analysis/pilot/openai/completions")
+            {
+                Content = new StringContent(alter ? body + " " : body, Encoding.UTF8, "application/json"),
+            };
+            request.Headers.Add("webhook-id", delivery);
+            request.Headers.Add("webhook-timestamp", stamp);
+            request.Headers.Add("webhook-signature", "v1," + signature);
+            using var response = await callback.SendAsync(request, ct);
+            Assert.Equal(status, response.StatusCode);
         }
     }
 

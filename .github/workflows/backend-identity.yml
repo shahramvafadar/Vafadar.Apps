@@ -259,7 +259,8 @@ jobs:
             Pilot_recovers_only_never_claimed_create_after_restart \
             Operator_can_view_switch_and_disable_each_purpose_in_the_private_panel \
             Operator_sees_only_bounded_original_pending_metadata \
-            Operator_checks_the_original_reference_with_durable_limits
+            Operator_checks_the_original_reference_with_durable_limits \
+            OpenAi_notice_recovers_one_matching_claim_and_rejects_foreign_and_duplicate_results
           do
             docker exec zanance-analysis-ci createdb -h 127.0.0.1 -U postgres zanance_ai_provider_pilot
             export ZANANCE_AI_ADMIN_TEST_ROOT="$ZANANCE_AI_QA_ROOT/$method"

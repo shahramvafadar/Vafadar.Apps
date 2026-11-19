@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("f58c8856-2c5a-41e5-bb6d-833e05bb2de0"), entityTypeCount: 49)
+            : base(skipDetectChanges: false, modelId: new Guid("9fd1923a-7bb8-4d85-8be2-9d68e2b5169c"), entityTypeCount: 50)
         {
         }
 
@@ -26,6 +26,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var identityUserToken = IdentityUserTokenEntityType.Create(this);
             var aiCreditRow = AiCreditRowEntityType.Create(this);
             var aiOfferRow = AiOfferRowEntityType.Create(this);
+            var aiPilotOpenAiNoticeRow = AiPilotOpenAiNoticeRowEntityType.Create(this);
             var aiPilotRouteRow = AiPilotRouteRowEntityType.Create(this);
             var aiPilotStatusCheckRow = AiPilotStatusCheckRowEntityType.Create(this);
             var aiRequestRow = AiRequestRowEntityType.Create(this);
@@ -132,6 +133,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             IdentityUserTokenEntityType.CreateAnnotations(identityUserToken);
             AiCreditRowEntityType.CreateAnnotations(aiCreditRow);
             AiOfferRowEntityType.CreateAnnotations(aiOfferRow);
+            AiPilotOpenAiNoticeRowEntityType.CreateAnnotations(aiPilotOpenAiNoticeRow);
             AiPilotRouteRowEntityType.CreateAnnotations(aiPilotRouteRow);
             AiPilotStatusCheckRowEntityType.CreateAnnotations(aiPilotStatusCheckRow);
             AiRequestRowEntityType.CreateAnnotations(aiRequestRow);

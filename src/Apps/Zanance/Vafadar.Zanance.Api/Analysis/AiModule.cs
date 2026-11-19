@@ -19,6 +19,7 @@ internal static class AiModule
         services.AddSingleton<AiRequestStore>();
         if (!pilotEnabled) return;
         services.AddSingleton<AiPilotProvider>();
+        services.AddSingleton<AiPilotOpenAiNotices>();
         services.AddHostedService<AiPilotDispatchWorker>();
         services.AddHttpClient(AiPilotProvider.Client, client =>
         {
@@ -31,6 +32,7 @@ internal static class AiModule
     internal static void Map(WebApplication app)
     {
         if (!app.Services.GetRequiredService<ServiceStorage>().LocalAnalysisQualification) return;
+        AiPilotOpenAiNotices.Map(app);
         var group = app.MapGroup("/analysis").RequireAuthorization();
         group.AddEndpointFilter(async (context, next) =>
         {

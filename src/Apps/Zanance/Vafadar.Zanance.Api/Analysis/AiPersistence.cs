@@ -106,6 +106,23 @@ public sealed class AiPilotStatusCheckRow
     public DateTimeOffset CheckedAt { get; set; }
 }
 
+/// <summary>Bounded receipt of an authenticated OpenAI completion notice in the isolated pilot.</summary>
+public sealed class AiPilotOpenAiNoticeRow
+{
+    /// <summary>Deduplicated native response ID. No payload or output is stored here.</summary>
+    public string ResponseId { get; set; } = "";
+    /// <summary>Signed delivery ID for replay refusal.</summary>
+    public string DeliveryId { get; set; } = "";
+    /// <summary>The first validated receipt time.</summary>
+    public DateTimeOffset ReceivedAt { get; set; }
+    /// <summary>Number of claimed authenticated read attempts.</summary>
+    public int Attempts { get; set; }
+    /// <summary>Last validation lookup, including calls interrupted before I/O.</summary>
+    public DateTimeOffset? CheckedAt { get; set; }
+    /// <summary>The notice no longer needs a validation lookup.</summary>
+    public bool Handled { get; set; }
+}
+
 /// <summary>Append-only event types; no client can manufacture a purchased grant.</summary>
 public enum AiCreditEvent { PurchasedGrant, GiftedGrant, Reserve, Settle, Refund }
 /// <summary>Immutable credit journal outside personal/shared finance; purchased and gifted movements are independently traceable.</summary>
@@ -160,6 +177,10 @@ internal static class AiServiceModel
         statusCheck.HasKey(r => new { r.RequestId, r.Attempt });
         statusCheck.Property(r => r.Actor).HasMaxLength(256);
         statusCheck.HasOne<AiRequestRow>().WithMany().HasForeignKey(r => r.RequestId).OnDelete(DeleteBehavior.Restrict);
+
+        var notice = model.Entity<AiPilotOpenAiNoticeRow>(); notice.ToTable("AiPilotOpenAiNotices");
+        notice.HasKey(r => r.ResponseId); notice.Property(r => r.ResponseId).HasMaxLength(250);
+        notice.Property(r => r.DeliveryId).HasMaxLength(250); notice.HasIndex(r => r.DeliveryId).IsUnique();
 
         var credit = model.Entity<AiCreditRow>(); credit.ToTable("AiCredits"); credit.HasKey(r => r.Id);
         credit.Property(r => r.UserId).HasMaxLength(256); credit.Property(r => r.GrantKey).HasMaxLength(64);
