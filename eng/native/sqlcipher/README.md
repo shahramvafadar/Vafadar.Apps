@@ -33,7 +33,18 @@ for tool set 14.52.37025, and raised the proposed inventory as notices (SHA-256
 Its 508 diagnostics at 503 sites in 160 official sources equal the inventory of tool set 14.51.36231 in
 every site, code, message, multiplicity and source binding; it is recorded as
 `windows.warnings.msvc-14.52.37025.baseline.json`. An inventory records drift only and accepts the
-safety of no warning. The job on commit ff0fcabd received the earlier installation again and was refused.
+safety of no warning. The jobs on commits ff0fcabd and c644c14a received the earlier installation again and
+were refused.
+
+Producer qualification then makes five independent attempts. On commit 70b3fde6 two attempts received the
+earlier installation and were refused; jobs 135563662849, 135563663445 and 135563664010 received the requested
+one and completed every step. Each built the same two fresh outputs (2648334b…c87c), passed schema and
+diagnostic gates and exported the same unpublished package, SHA-256
+`0de4f749c75418726d0bb67ce5739bfa5337a28627589ab96ebbc73a2b0d17f2`. Its five entries are pinned in
+`windows.hosted20261116.package.contents.json` as version 4.19.0-candidate.11, selected only for installation
+18.12.12405.243 with compiler 87b094e4…d6fb. Candidate.7, .8 and .9 are unchanged; candidate.10 was never a
+consumer identity. Ordinary lanes build from the official sources and must reproduce every pinned entry.
+[Evidence and limits](../../../src/Apps/Zanance/docs/quality/msvc-14-52-windows-producer.md).
 
 ## Qualified 31 October hosted producer identity (D-683)
 

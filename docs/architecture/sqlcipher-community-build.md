@@ -113,6 +113,11 @@ dotnet-proof-final.log,dotnet-backup-proof.log,dotnet-export-proof.log}.
 
 ## Windows candidate producer (D-181)
 
+Since D-1240 the MSVC tool set is the one reviewed tool set whose exact signed compiler is installed on the
+host (14.51.36231 or 14.52.37025, `windows.compiler.acceptance.json` schema 3); `inputs.lock.json` keeps naming
+the first one and is never changed for a compiler, because its hash is bound into the Android package. See
+"Windows compiler tool sets (D-1240)" below.
+
 The checked-in recipe builds official source with the locked existing MSVC 14.51.36231 / SDK
 10.0.26100.0 and portable native Perl plus NASM 3.02. NASM official HTTPS archive size/hash are
 reviewed; this is checksum provenance, not an asserted upstream signature. Assembly stays enabled.
@@ -414,6 +419,26 @@ files and never fix drift by rewriting an immutable version. Independent callers
 provider-neutral Data assemblies so cryptography dependencies and frozen migration SQL resources cannot drift
 away from a duplicated Compile glob. Exact current qualification and remaining adoption work:
 src/Apps/Zanance/docs/enhancements/2026-10-commercial-release/18-native-storage-profile-delivery.md.
+
+### Windows compiler tool sets (D-1240)
+
+`windows.compiler.acceptance.json` lists the accepted hosted installations, the pinned SDK and the accepted
+compilers; each compiler names its MSVC tool set, its exact SHA-256 and its file version.
+`Resolve-ReviewedWindowsToolchain` qualifies a host only when exactly one reviewed tool set is installed with
+those bytes and a valid Microsoft signature; builds call `vcvarsall` with that tool set and SDK. A producer
+manifest records the tool set that built it and lists only the reviewed compilers of that tool set; producers
+of the first tool set keep their original record, so earlier packages stay reproducible. The diagnostic gate
+uses the inventory of the candidate's tool set (`windows.warnings.baseline.json` for 14.51.36231,
+`windows.warnings.msvc-14.52.37025.baseline.json` for 14.52.37025) and refuses a tool set without one.
+
+To qualify a further compiler: add it to the policy with its tool set, set `windows.producer.request.json`,
+push `shahram/native-producer-<fresh candidate>`. The producer lane makes five independent attempts (a hosted
+image is rolled out gradually and the request names one installation), builds two fresh outputs, runs the
+schema qualification, compares the diagnostics and raises the proposed inventory, the package manifest and the
+entry hashes as notices of the job. Review them, record the inventory, pin the package as a new variant with a
+new version, and only then merge. Current variants: baseline (candidate.7), servicing (candidate.8),
+hosted20261021 (candidate.9), hosted20261116 (candidate.11, MSVC 14.52.37025).
+Evidence: src/Apps/Zanance/docs/quality/msvc-14-52-windows-producer.md.
 
 ### D-301 actual consumer inventories
 

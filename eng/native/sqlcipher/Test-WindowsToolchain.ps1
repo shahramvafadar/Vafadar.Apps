@@ -96,12 +96,28 @@ try {
         throw 'Hosted servicing output lost its separately reviewed immutable identity.'
     }
     $results.Add('distinct-immutable-hosted-package')
+    # The producer of another compiler tool set: its own version, compiler and native bytes, and a manifest of its own.
+    $newest = Get-ReviewedWindowsPackageContents -Variant hosted20261116
+    $earlier = @($baseline,$servicing,$current)
+    if ($newest.version -in $earlier.version -or $newest.compilerExecutableSha256 -in $earlier.compilerExecutableSha256 -or
+        $newest.entries.'runtimes/win-x64/native/sqlcipher.dll' -in @($earlier | ForEach-Object { $_.entries.'runtimes/win-x64/native/sqlcipher.dll' }) -or
+        $newest.entries.'manifest.json' -in @($earlier | ForEach-Object { $_.entries.'manifest.json' }) -or
+        @($acceptance.compilers | Where-Object { $_.sha256 -ceq $newest.compilerExecutableSha256 -and $_.toolsVersion -cne $inputLock.windowsCompiler.toolsVersion }).Count -ne 1 -or
+        @($newest.hostedInstallationVersions | Where-Object { $_ -in $current.hostedInstallationVersions -or $_ -notin $acceptance.installationVersions }).Count) {
+        throw 'The producer of the newer compiler tool set lost its separately reviewed immutable identity.'
+    }
+    $results.Add('distinct-immutable-newer-tool-set-package')
+    if ((@(Get-KnownWindowsPackageContents).version -join '|') -cne (@($baseline,$servicing,$newest,$current).version -join '|')) { throw 'A reviewed immutable identity is missing from the known inventories.' }
+    $results.Add('known-immutable-identities-complete')
     Require-Refused 'producer-current-identity-reuse' { Resolve-NativeProducerVersion -InputLock $inputLock -Contents $current -KnownContents @($baseline,$servicing,$current) -CandidateVersion $current.version } '*newer than every immutable consumer candidate*'
+    Require-Refused 'producer-newest-identity-reuse' { Resolve-NativeProducerVersion -InputLock $inputLock -Contents $newest -KnownContents @(Get-KnownWindowsPackageContents) -CandidateVersion $newest.version } '*newer than every immutable consumer candidate*'
+    Require-Refused 'producer-skipped-identity-reuse' { Resolve-NativeProducerVersion -InputLock $inputLock -Contents $newest -KnownContents @(Get-KnownWindowsPackageContents) -CandidateVersion '4.19.0-candidate.10' } '*newer than every immutable consumer candidate*'
     foreach ($row in @(
         @('18.10.12201.205',$baseline.compilerExecutableSha256,'baseline'),
         @('18.11.12306.390',$servicing.compilerExecutableSha256,'servicing'),
         @('18.11.12315.225',$current.compilerExecutableSha256,'hosted20261021'),
-        @('18.11.12328.437',$current.compilerExecutableSha256,'hosted20261021')
+        @('18.11.12328.437',$current.compilerExecutableSha256,'hosted20261021'),
+        @('18.12.12405.243',$newest.compilerExecutableSha256,'hosted20261116')
     )) {
         if ((Resolve-ReviewedWindowsProducer -InstallationVersion $row[0] -CompilerSha256 $row[1]) -cne $row[2]) {
             throw 'Hosted compiler metadata selected a different immutable producer.'
@@ -111,6 +127,9 @@ try {
     Require-Refused 'producer-unknown-installation' { Resolve-ReviewedWindowsProducer -InstallationVersion '99.0.0.0' -CompilerSha256 $current.compilerExecutableSha256 } '*Unsupported Windows producer host*'
     Require-Refused 'producer-unknown-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.11.12315.225' -CompilerSha256 ('0' * 64) } '*Unsupported Windows producer host*'
     Require-Refused 'producer-wrong-reviewed-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.11.12315.225' -CompilerSha256 $baseline.compilerExecutableSha256 } '*Unsupported Windows producer host*'
+    Require-Refused 'producer-newer-tool-set-host-earlier-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.12.12405.243' -CompilerSha256 $current.compilerExecutableSha256 } '*Unsupported Windows producer host*'
+    Require-Refused 'producer-earlier-host-newer-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.11.12328.437' -CompilerSha256 $newest.compilerExecutableSha256 } '*Unsupported Windows producer host*'
+    Require-Refused 'producer-baseline-host-newer-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.10.12201.205' -CompilerSha256 $newest.compilerExecutableSha256 } '*Unsupported Windows producer host*'
     Require-Refused 'producer-new-host-wrong-reviewed-compiler' { Resolve-ReviewedWindowsProducer -InstallationVersion '18.11.12328.437' -CompilerSha256 $baseline.compilerExecutableSha256 } '*Unsupported Windows producer host*'
     $env:VafadarWindowsCipherVariant = 'unknown-fixture'
     Require-Refused 'unknown-package-variant' { Get-ReviewedWindowsPackageContents } '*Unsupported Windows cipher package variant*'

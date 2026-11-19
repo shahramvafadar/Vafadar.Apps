@@ -280,6 +280,12 @@ checks all26 metadata/identity/refusal cases; these do not execute the synthetic
 Adding a new native inventory requires the original unpublished producer archive, every entry hash
 and then the ordinary consumer/persistence/workload run. A matching compiler hash alone is not a
 matching native output. Preserve failures and do not replay unrelated successful local suites.
+
+Since D-1240 the selection also knows hosted20261116 (candidate.11) for installation 18.12.12405.243 with the
+compiler of MSVC tool set 14.52.37025. `Test-WindowsToolchain.ps1` additionally refuses an earlier policy
+schema, a compiler without a tool set, reviewed bytes named under another tool set, and the wrong
+compiler/installation pairs of the new variant. These fixtures run on a host with a real reviewed compiler
+only, that is on GitHub; `Test-WindowsProducerRequest.ps1` and `Test-ProducerVersion.ps1` run anywhere.
 See [actual hosted drift and archive qualification](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).
 
 ## Original physical Android key review (D-483)

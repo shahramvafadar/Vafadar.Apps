@@ -1,5 +1,7 @@
 # Changelog – Zanance
 
+- D-1240: the Windows development build compiles its source-built encrypted-storage library with the newer Microsoft compiler tool set 14.52.37025 on current GitHub runners; storage format, keys and app behavior are unchanged.
+
 - D-1239: after allowing notifications in Android settings, Plans immediately hides the warning and keeps the saved reminder.
 
 - D-970: qualified original warm notification destination order with two real Android content taps while the first validated read waits; product behavior and managed-test count stay unchanged.

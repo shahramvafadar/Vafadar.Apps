@@ -2344,6 +2344,11 @@ eng/native/sqlcipher/Select-HostedWindowsProducer.ps1 before cache/native use. I
 -EnvironmentFile requires an existing absolute file and persists only the qualified variant;
 GITHUB_ENV is scoped to the current hosted job. No global SDK/compiler setup is changed.
 Unknown hosts/compilers refuse, and fresh package output still must match every immutable entry.
+
+Since D-1240 a host with Visual Studio installation 18.12.12405.243 and MSVC tool set 14.52.37025 uses
+hosted20261116/candidate.11. The tool set is taken from the installed reviewed compiler, never from
+`inputs.lock.json`. A local machine with another installation or compiler is refused until that compiler is
+qualified through a producer run (docs/architecture/sqlcipher-community-build.md).
 Keep source/diagnostic/schema and actual binary-consumer gates; producer artifacts are review
 evidence, never a replacement native binary feed or release approval.
 See [bounded evidence](../../src/Apps/Zanance/docs/quality/ci-common-recovery.md).

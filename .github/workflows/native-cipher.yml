@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
   windows:
-    name: Windows reproducibility and actual protected persistence
+    name: Windows reproducibility and actual protected persistence${{ matrix.attempt > 1 && format(' (attempt {0})', matrix.attempt) || '' }}
     runs-on: windows-2025-vs2026
     timeout-minutes: 60
     # A new hosted image is rolled out gradually, and a producer request names one installation. Producer
