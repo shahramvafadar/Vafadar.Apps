@@ -32,13 +32,13 @@ namespace Vafadar.Dastan.Store.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Number"));
 
                     b.Property<string>("After")
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<DateTime>("At")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Before")
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<string>("By")
                         .IsRequired()
@@ -113,13 +113,13 @@ namespace Vafadar.Dastan.Store.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("After")
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<DateTime>("At")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Before")
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<string>("By")
                         .IsRequired()
@@ -158,6 +158,44 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.ToTable("Changes", "editorial");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.RecordLink", b =>
+                {
+                    b.Property<string>("CollectionId")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("FromGroup")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("FromId")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<int>("Ordinal")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ToGroup")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("ToId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("CollectionId", "FromGroup", "FromId", "Role", "Ordinal");
+
+                    b.HasIndex("CollectionId", "ToGroup", "ToId");
+
+                    b.ToTable("RecordLinks", "editorial");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredCollection", b =>
                 {
                     b.Property<string>("Id")
@@ -169,7 +207,7 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.Property<string>("Header")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -195,7 +233,7 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -273,14 +311,30 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("json");
+
+                    b.Property<string>("Kind")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text")
+                        .HasComputedColumnSql("coalesce(\"Body\"::jsonb ->> 'type', \"Body\"::jsonb ->> 'kind')", true);
+
+                    b.Property<string>("Label")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text")
+                        .HasComputedColumnSql("coalesce(\"Body\"::jsonb ->> 'label', \"Body\"::jsonb ->> 'title')", true);
 
                     b.Property<int>("Position")
                         .HasColumnType("integer");
 
                     b.Property<string>("ReviewStatus")
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("text")
+                        .HasComputedColumnSql("(\"Body\"::jsonb ->> 'reviewStatus')", true);
+
+                    b.Property<int?>("SpoilerLevel")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("integer")
+                        .HasComputedColumnSql("CASE WHEN jsonb_typeof(\"Body\"::jsonb -> 'spoilerLevel') = 'number' THEN (\"Body\"::jsonb ->> 'spoilerLevel')::numeric::integer END", true);
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -297,9 +351,14 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.HasIndex("CollectionId", "ReviewStatus");
 
+                    b.HasIndex("CollectionId", "Group", "Kind");
+
                     b.HasIndex("CollectionId", "Group", "Position");
 
-                    b.ToTable("Records", "editorial");
+                    b.ToTable("Records", "editorial", t =>
+                        {
+                            t.HasCheckConstraint("CK_Records_Body_Names_Itself", "(\"Body\"::jsonb ->> 'id') = \"RecordId\"");
+                        });
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredRevision", b =>
@@ -320,7 +379,7 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.Property<string>("Json")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<string>("Note")
                         .HasColumnType("text");
@@ -330,7 +389,7 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.Property<string>("Translations")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.HasKey("CollectionId", "Number");
 
@@ -348,7 +407,7 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("json");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -368,6 +427,21 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.HasOne("Vafadar.Dastan.Store.StoredCollection", null)
                         .WithMany()
                         .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.Store.RecordLink", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.Store.StoredRecord", null)
+                        .WithMany()
+                        .HasForeignKey("CollectionId", "FromGroup", "FromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.Store.StoredRecord", null)
+                        .WithMany()
+                        .HasForeignKey("CollectionId", "ToGroup", "ToId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

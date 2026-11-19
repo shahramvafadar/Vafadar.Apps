@@ -40,8 +40,17 @@ public sealed class StoredRecord
     /// <summary>Gets or sets the record as it is written in the file of a collection, as JSON.</summary>
     public required string Body { get; set; }
 
-    /// <summary>Gets or sets how far the review of a statement has come, as the record says it; nothing for a record that is no statement.</summary>
-    public string? ReviewStatus { get; set; }
+    /// <summary>Gets how far the review of a statement has come, as the record says it; nothing for a record that is no statement. The database reads it out of the record.</summary>
+    public string? ReviewStatus { get; private set; }
+
+    /// <summary>Gets what kind of thing the record is, as it says itself (<c>type</c>, or <c>kind</c> for a source). The database reads it out of the record.</summary>
+    public string? Kind { get; private set; }
+
+    /// <summary>Gets the name of the record (<c>label</c>, or <c>title</c> for a source). The database reads it out of the record.</summary>
+    public string? Label { get; private set; }
+
+    /// <summary>Gets how far a reader must have come to be shown the record. The database reads it out of the record.</summary>
+    public int? SpoilerLevel { get; private set; }
 
     /// <summary>Gets or sets how often the record was written: 1 when it came in, one more with every change.</summary>
     public int Version { get; set; }
@@ -199,6 +208,9 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     /// <summary>Gets the records as they are now.</summary>
     public DbSet<StoredRecord> Records => Set<StoredRecord>();
 
+    /// <summary>Gets the links between the records: which record names which.</summary>
+    public DbSet<RecordLink> Links => Set<RecordLink>();
+
     /// <summary>Gets the translations.</summary>
     public DbSet<StoredTranslation> Translations => Set<StoredTranslation>();
 
@@ -230,6 +242,7 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
         {
             collection.HasKey(item => item.Id);
             collection.Property(item => item.Id).HasMaxLength(200);
+            collection.Property(item => item.Header).HasColumnType("json");
         });
 
         modelBuilder.Entity<StoredRecord>(record =>
@@ -237,15 +250,42 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             record.HasKey(item => new { item.CollectionId, item.Group, item.RecordId });
             record.Property(item => item.Group).HasMaxLength(40);
             record.Property(item => item.RecordId).HasMaxLength(200);
-            record.Property(item => item.ReviewStatus).HasMaxLength(80);
+            // The record as it is written (D-081): checked JSON that keeps the order of its fields, which jsonb
+            // would not. What is asked for often is read out of it by the database itself, so that a column
+            // can never say something else than its record.
+            record.Property(item => item.Body).HasColumnType("json");
+            record.Property(item => item.ReviewStatus).HasComputedColumnSql("""("Body"::jsonb ->> 'reviewStatus')""", stored: true);
+            record.Property(item => item.Kind).HasComputedColumnSql("""coalesce("Body"::jsonb ->> 'type', "Body"::jsonb ->> 'kind')""", stored: true);
+            record.Property(item => item.Label).HasComputedColumnSql("""coalesce("Body"::jsonb ->> 'label', "Body"::jsonb ->> 'title')""", stored: true);
+            record.Property(item => item.SpoilerLevel).HasComputedColumnSql("""CASE WHEN jsonb_typeof("Body"::jsonb -> 'spoilerLevel') = 'number' THEN ("Body"::jsonb ->> 'spoilerLevel')::numeric::integer END""", stored: true);
+            record.HasIndex(item => new { item.CollectionId, item.Group, item.Kind });
+            record.ToTable(table => table.HasCheckConstraint("CK_Records_Body_Names_Itself", """("Body"::jsonb ->> 'id') = "RecordId" """.Trim()));
             record.Property(item => item.UpdatedBy).HasMaxLength(200);
             record.HasIndex(item => new { item.CollectionId, item.Group, item.Position });
             record.HasIndex(item => new { item.CollectionId, item.ReviewStatus });
             record.HasOne<StoredCollection>().WithMany().HasForeignKey(item => item.CollectionId).OnDelete(DeleteBehavior.Restrict);
         });
 
+        modelBuilder.Entity<RecordLink>(link =>
+        {
+            link.ToTable("RecordLinks");
+            link.HasKey(item => new { item.CollectionId, item.FromGroup, item.FromId, item.Role, item.Ordinal });
+            link.Property(item => item.CollectionId).HasMaxLength(200);
+            link.Property(item => item.FromGroup).HasMaxLength(40);
+            link.Property(item => item.FromId).HasMaxLength(200);
+            link.Property(item => item.Role).HasMaxLength(40);
+            link.Property(item => item.ToGroup).HasMaxLength(40);
+            link.Property(item => item.ToId).HasMaxLength(200);
+            link.HasIndex(item => new { item.CollectionId, item.ToGroup, item.ToId });
+
+            // The links of a record go with it; a record that is still named by another cannot go.
+            link.HasOne<StoredRecord>().WithMany().HasForeignKey(item => new { item.CollectionId, item.FromGroup, item.FromId }).OnDelete(DeleteBehavior.Cascade);
+            link.HasOne<StoredRecord>().WithMany().HasForeignKey(item => new { item.CollectionId, item.ToGroup, item.ToId }).OnDelete(DeleteBehavior.Restrict);
+        });
+
         modelBuilder.Entity<StoredTranslation>(translation =>
         {
+            translation.Property(item => item.Body).HasColumnType("json");
             translation.HasKey(item => new { item.CollectionId, item.Language });
             translation.Property(item => item.Language).HasMaxLength(40);
             translation.Property(item => item.UpdatedBy).HasMaxLength(200);
@@ -256,6 +296,10 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
         {
             revision.HasKey(item => new { item.CollectionId, item.Number });
             revision.Property(item => item.By).HasMaxLength(200);
+
+            // A revision stays the text it was: json keeps what is written, character for character.
+            revision.Property(item => item.Json).HasColumnType("json");
+            revision.Property(item => item.Translations).HasColumnType("json");
             revision.HasOne<StoredCollection>().WithMany().HasForeignKey(item => item.CollectionId).OnDelete(DeleteBehavior.Restrict);
         });
 
@@ -283,6 +327,7 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             document.Property(item => item.DocumentId).HasMaxLength(200);
             document.Property(item => item.Language).HasMaxLength(40);
             document.Property(item => item.UpdatedBy).HasMaxLength(200);
+            document.Property(item => item.Body).HasColumnType("json");
         });
 
         modelBuilder.Entity<DocumentChange>(change =>
@@ -293,6 +338,8 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             change.Property(item => item.Language).HasMaxLength(40);
             change.Property(item => item.By).HasMaxLength(200);
             change.Property(item => item.Change).HasConversion<string>().HasMaxLength(20);
+            change.Property(item => item.Before).HasColumnType("json");
+            change.Property(item => item.After).HasColumnType("json");
             change.HasIndex(item => new { item.Kind, item.DocumentId, item.Number });
         });
 
@@ -303,6 +350,8 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             change.Property(item => item.RecordId).HasMaxLength(200);
             change.Property(item => item.By).HasMaxLength(200);
             change.Property(item => item.Kind).HasConversion<string>().HasMaxLength(20);
+            change.Property(item => item.Before).HasColumnType("json");
+            change.Property(item => item.After).HasColumnType("json");
             change.HasIndex(item => new { item.CollectionId, item.Group, item.RecordId, item.Version });
             change.HasOne<StoredCollection>().WithMany().HasForeignKey(item => item.CollectionId).OnDelete(DeleteBehavior.Restrict);
         });

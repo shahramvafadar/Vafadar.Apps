@@ -19,6 +19,18 @@ internal static partial class TestDatabase
     private static string? _template;
     private static int _next;
 
+    // The tests of a project run side by side and wait for the database on the threads of the pool; some let a
+    // dozen requests wait for one lock on purpose. The driver finishes the sending of a large command on a
+    // thread of the pool too. A pool that grows by one thread a second then leaves a command half sent for
+    // longer than the database waits, and a test fails for a reason that is none. So the pool starts wide.
+    [System.Runtime.CompilerServices.ModuleInitializer]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2255:The 'ModuleInitializer' attribute should not be used in libraries", Justification = "A test project, not a library.")]
+    internal static void WidePool()
+    {
+        ThreadPool.GetMinThreads(out var workers, out var ports);
+        ThreadPool.SetMinThreads(Math.Max(workers, 128), Math.Max(ports, 128));
+    }
+
     /// <summary>Gets the connection of the server, without a database.</summary>
     public static string Server =>
         Environment.GetEnvironmentVariable("DASTAN_POSTGRES") is { Length: > 0 } told ? told : "Host=127.0.0.1;Port=53432;Username=postgres;Timeout=5";

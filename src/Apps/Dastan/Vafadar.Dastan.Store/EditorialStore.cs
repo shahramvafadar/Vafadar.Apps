@@ -175,13 +175,12 @@ public sealed partial class EditorialStore : IDisposable
                 var record = records[position]!.AsObject();
                 var recordId = (string)record["id"]!;
                 var body = record.ToJsonString();
-                var review = (string?)record["reviewStatus"];
                 if (!held.Remove((group, recordId), out var stored))
                 {
                     _context.Records.Add(new StoredRecord
                     {
                         CollectionId = id, Group = group, RecordId = recordId, Position = position, Body = body,
-                        ReviewStatus = review, Version = 1, UpdatedAt = now, UpdatedBy = by,
+                        Version = 1, UpdatedAt = now, UpdatedBy = by,
                     });
                     Record(id, group, recordId, RecordChangeKind.Added, 1, by, now, reason, null, body);
                     added++;
@@ -193,7 +192,6 @@ public sealed partial class EditorialStore : IDisposable
                     {
                         Record(id, group, recordId, RecordChangeKind.Changed, stored.Version + 1, by, now, reason, stored.Body, body);
                         stored.Body = body;
-                        stored.ReviewStatus = review;
                         stored.Version++;
                         stored.UpdatedAt = now;
                         stored.UpdatedBy = by;
@@ -210,6 +208,9 @@ public sealed partial class EditorialStore : IDisposable
             _context.Records.Remove(gone);
             removed++;
         }
+
+        // Which record names which, as rows the database checks.
+        KeepLinks(id, root);
 
         // The translations, by their language.
         var translations = _context.Translations.Where(translation => translation.CollectionId == id).ToDictionary(translation => translation.Language);
