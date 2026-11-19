@@ -136,6 +136,21 @@ stays false), and the earlier per-expression reviews (D-221) are not repeated or
 * An ordinary lane does not download the producer package: it builds from the official sources on its own
   runner and must reproduce every pinned entry.
 
+## Ordinary lanes on main
+
+Merge commit 49130231:
+
+* "Windows build" (CI), job 135576183792, received installation 18.12.12405.243 with tool set 14.52.37025.
+  It qualified the compiler, selected hosted20261116, built the package from the official sources, reproduced
+  every pinned entry of candidate.11 ("Prepare reviewed Windows native dependency"), passed the portable
+  snapshot budgets and built the Release solution. Every step succeeded.
+* "Windows reproducibility and actual protected persistence" (Native cipher candidates), job 135576005580,
+  received the earlier installation 18.11.12328.437 with tool set 14.51.36231. With the new policy schema it
+  selected hosted20261021, built two equal fresh outputs, reproduced candidate.9, and passed the diagnostic
+  refusals, fresh-process reopening and protected workloads. This shows that the earlier variant still works
+  after the change; it does not show the ordinary native lane on the new installation.
+* "Official Android slices and stock cipher suite", job 135576005079, succeeded with the unchanged lock.
+
 ## Limits
 
 * The development machine has no Visual Studio C++ tools. Locally only the syntax of the scripts, the

@@ -44,6 +44,9 @@ diagnostic gates and exported the same unpublished package, SHA-256
 `windows.hosted20261116.package.contents.json` as version 4.19.0-candidate.11, selected only for installation
 18.12.12405.243 with compiler 87b094e4…d6fb. Candidate.7, .8 and .9 are unchanged; candidate.10 was never a
 consumer identity. Ordinary lanes build from the official sources and must reproduce every pinned entry.
+On merge commit 49130231 the CI job "Windows build" (135576183792) received installation 18.12.12405.243,
+built from source and reproduced every pinned entry of candidate.11. The native job of the same commit
+(135576005580) received installation 18.11.12328.437 and reproduced candidate.9 under the new policy schema.
 [Evidence and limits](../../../src/Apps/Zanance/docs/quality/msvc-14-52-windows-producer.md).
 
 ## Qualified 31 October hosted producer identity (D-683)
