@@ -1,3 +1,5 @@
+using Vafadar.Zanance.Core.Analysis;
+
 namespace Vafadar.Zanance.App.Features.Analysis;
 
 /// <summary>One read-only navigation packet from the displayed financial period. It grants no disclosure authority.</summary>
@@ -6,6 +8,11 @@ internal sealed record AiPeriodHandoff(string File, DateOnly From, DateOnly To, 
     internal const string QueryKey = "analysisPeriod";
     internal IReadOnlyList<Guid> Accounts { get; private init; } = [];
     internal bool ComparePrevious { get; init; }
+    internal AiReportDetails? Report { get; init; }
+    internal DateOnly? CompareFrom { get; init; }
+    internal DateOnly? CompareTo { get; init; }
+    internal IReadOnlyList<string> ReportLabels { get; init; } = [];
+    internal Func<Task>? ValidateReportAsync { get; init; }
 
     internal static AiPeriodHandoff? Capture(string file, DateOnly from, DateOnly to, bool confirmedOnly, IEnumerable<Guid> accounts)
     {

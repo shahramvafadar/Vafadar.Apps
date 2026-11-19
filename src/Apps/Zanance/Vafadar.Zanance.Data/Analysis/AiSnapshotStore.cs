@@ -18,7 +18,8 @@ public sealed record AiAccount(Guid Id, string Name, string Currency, bool Archi
 public sealed record AiAccountScope(string File, IReadOnlyList<AiAccount> Accounts);
 /// <summary>Exact read-only disclosure inputs, independent from UI language/calendar presentation.</summary>
 public sealed record AiSelection(string File, IReadOnlyList<Guid> AccountIds, DateOnly From, DateOnly To,
-    bool ConfirmedOnly, bool ComparePrevious, string Language);
+    bool ConfirmedOnly, bool ComparePrevious, string Language, DateOnly? CompareFrom = null, DateOnly? CompareTo = null,
+    AiReportDetails? Report = null);
 
 /// <summary>Original file/rights/minimal source digest and immutable aggregate payload; no raw notes or blobs retained.</summary>
 public sealed class AiReview
@@ -83,9 +84,22 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
             selection.AccountIds.Any(id => id == Guid.Empty) || selection.AccountIds.Distinct().Count() != selection.AccountIds.Count ||
             selection.From == DateOnly.MinValue || selection.To < selection.From || selection.To.DayNumber - selection.From.DayNumber > 365)
             throw new ArgumentException("An explicit bounded analysis selection is required.");
-        if (selection.ComparePrevious && selection.From.DayNumber <= selection.To.DayNumber - selection.From.DayNumber + 1)
+        if (selection.CompareFrom is { } compareFrom && selection.CompareTo is { } compareTo)
+        {
+            if (!selection.ComparePrevious || compareFrom == DateOnly.MinValue || compareTo < compareFrom ||
+                compareTo >= selection.From || compareTo.DayNumber - compareFrom.DayNumber > 365)
+                throw new ArgumentException("The original report comparison period is invalid.");
+        }
+        else if (selection.CompareFrom is not null || selection.CompareTo is not null ||
+            selection.ComparePrevious && selection.From.DayNumber <= selection.To.DayNumber - selection.From.DayNumber + 1)
             throw new ArgumentException("The comparison period is outside supported dates.");
-        return selection with { AccountIds = Array.AsReadOnly(selection.AccountIds.Order().ToArray()) };
+        return selection with
+        {
+            AccountIds = Array.AsReadOnly(selection.AccountIds.Order().ToArray()),
+            Report = selection.Report is { } report ? new(
+                report.Categories is null ? null : Array.AsReadOnly(report.Categories.ToArray()),
+                report.Plans is null ? null : Array.AsReadOnly(report.Plans.ToArray())) : null,
+        };
     }
     private static async Task<AiSourceFrame> ReadAsync(ZananceDbContext db, AiSelection selection, CancellationToken ct)
     {
@@ -99,7 +113,7 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         var accounts = await db.Accounts.AsNoTracking().Where(a => selection.AccountIds.Contains(a.Id)).OrderBy(a => a.Id)
             .Select(a => new AiSourceAccount(a.Id, a.Name, a.CurrencyCode, a.OpeningDate, a.IsArchived)).ToListAsync(ct);
         if (accounts.Count != selection.AccountIds.Count) throw new InvalidOperationException("The original selected accounts changed.");
-        var from = selection.ComparePrevious ? selection.From.AddDays(-(selection.To.DayNumber - selection.From.DayNumber + 1)) : selection.From;
+        var from = selection.ComparePrevious ? PreviousFrom(selection) : selection.From;
         var rows = await db.Entries.AsNoTracking().Where(e => selection.AccountIds.Contains(e.AccountId) && e.Date >= from && e.Date <= selection.To)
             .OrderBy(e => e.Id).Select(e => new AiSourceEntry(e.Id, e.AccountId, e.Date, e.Kind, e.Amount, e.Review)).Take(100001).ToListAsync(ct);
         if (rows.Count > 100000) throw new InvalidOperationException("Analysis source exceeds its technical row bound.");
@@ -122,10 +136,14 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
             return new(from, to, accounts.Length, selection.ConfirmedOnly, totals, unreviewed);
         }
         var current = Period(selection.From, selection.To);
-        var previous = selection.ComparePrevious ? Period(selection.From.AddDays(-(selection.To.DayNumber - selection.From.DayNumber + 1)), selection.From.AddDays(-1)) : null;
-        var result = new AiPayload(1, selection.ComparePrevious ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation, selection.Language, current, previous);
+        var previous = selection.ComparePrevious ? Period(PreviousFrom(selection), selection.CompareTo ?? selection.From.AddDays(-1)) : null;
+        var result = new AiPayload(selection.Report is null ? 1 : 2, selection.ComparePrevious ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation,
+            selection.Language, current, previous, selection.Report);
         AiProtocol.Validate(result); return result;
     }
+    private static DateOnly PreviousFrom(AiSelection selection) =>
+        selection.CompareFrom ?? selection.From.AddDays(-(selection.To.DayNumber - selection.From.DayNumber + 1));
+
     private static string SourceDigest(AiSourceFrame frame) => Convert.ToHexStringLower(SHA256.HashData(JsonSerializer.SerializeToUtf8Bytes(frame, AiSourceJson.Default.AiSourceFrame)));
 }
 

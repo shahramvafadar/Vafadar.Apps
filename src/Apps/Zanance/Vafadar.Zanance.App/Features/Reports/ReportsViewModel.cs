@@ -639,6 +639,30 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
     }
 
+    private Analysis.AiPeriodHandoff? _categoryAnalysis, _planAnalysis;
+
+    [RelayCommand] private Task ExplainSpendingChangesAsync() =>
+        OpenDetailedAnalysisAsync(ShowOverview && CanUseAdvancedReports && HasChanges ? _categoryAnalysis : null, true);
+
+    [RelayCommand] private Task ExplainPlanDifferencesAsync() =>
+        OpenDetailedAnalysisAsync(ShowCommitments && IsAdvanced && HasPlanRows ? _planAnalysis : null, false);
+
+    private async Task OpenDetailedAnalysisAsync(Analysis.AiPeriodHandoff? period, bool compare)
+    {
+        if (period is null || !CanRunCommands || _workspace.CaptureCommand(ScopeStamp) is not { } command ||
+            command.Review.DatabasePath != period.File) return;
+        IsBusy = true;
+        try
+        {
+            await command.ValidateAsync();
+            var source = command.CaptureChildSource();
+            await NavigateFrozenAsync(new(AppRoutes.AnalysisRoute, (period with { ValidateReportAsync = source.ValidateAsync }).Query(compare)));
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
+        finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
+    }
+
     [RelayCommand] private Task ExplainReportAsync() => OpenReportAnalysisAsync(false);
     [RelayCommand] private Task CompareReportAsync() => OpenReportAnalysisAsync(true);
 

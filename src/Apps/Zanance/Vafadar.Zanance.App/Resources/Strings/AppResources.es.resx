@@ -8671,4 +8671,16 @@ SHA-256 del XML original: {5}</value>
   <data name="Ai_ComparePeriodFromReport" xml:space="preserve">
     <value>Compara con el periodo anterior usando IA</value>
   </data>
+  <data name="Ai_CategoryChanges" xml:space="preserve">
+    <value>Explicar cambios de gasto por categoría</value>
+  </data>
+  <data name="Ai_PlanDifferences" xml:space="preserve">
+    <value>Explicar diferencias entre lo previsto y lo pagado</value>
+  </data>
+  <data name="Ai_ReportReferences" xml:space="preserve">
+    <value>Hasta {0} filas del informe. Los nombres solo se ven aquí.</value>
+  </data>
+  <data name="Ai_PlanFact" xml:space="preserve">
+    <value>Importe previsto conocido: {0} · Pagado por partidas liquidadas: {1} · Diferencia liquidada: {2} · Liquidadas: {3} · Abiertas: {4} · Importe desconocido: {5}</value>
+  </data>
 </root>

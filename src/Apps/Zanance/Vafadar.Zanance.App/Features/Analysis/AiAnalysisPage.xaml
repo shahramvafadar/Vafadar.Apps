@@ -11,7 +11,7 @@
                     <v:HelpButton Grid.Column="1" Topic="Ai" VerticalOptions="Start" />
                 </Grid>
                 <Border Style="{StaticResource Card}" IsVisible="{Binding Loaded}">
-                    <VerticalStackLayout Spacing="8">
+                    <VerticalStackLayout Spacing="8" IsEnabled="{Binding CanEditScope}">
                         <Label Text="{v:Translate Ai_Accounts}" Style="{StaticResource FieldLabel}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Accounts}" Spacing="8">
                             <BindableLayout.ItemTemplate>

@@ -106,7 +106,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             var operation = ProviderKey(owner, submission.RequestId);
             outcome = admittedRoute is null
                 ? await provider.BeginAsync(operation, submission.Offer, payload, ct)
-                : await pilot!.BeginAsync(admittedRoute, submission.Offer, operation,
+                : await pilot!.BeginAsync(admittedRoute, submission.Offer, operation, digest,
                     handle => SaveVendorHandleAsync(owner, submission.RequestId, handle), ct);
         }
         catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
@@ -116,7 +116,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     /// <summary>Resolves only the original pending id; a missing provider lookup is never a refund or another dispatch.</summary>
     internal async Task<AiRequestResult> StatusAsync(ClaimsPrincipal actor, Guid request, CancellationToken ct)
     {
-        string owner; AiOffer? offer = null; long? pilotRouteId = null; string? vendorId = null;
+        string owner; AiOffer? offer = null; long? pilotRouteId = null; string? vendorId = null; string? originalDigest = null;
         AiPilotRouteRow? originalRoute = null;
         await using (var db = await factory.CreateDbContextAsync(ct))
         await using (var scope = await OpenAsync(actor, db, ct))
@@ -131,6 +131,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                 offer = Offer(original);
                 pilotRouteId = original.PilotRouteId;
                 vendorId = row.VendorOperationId;
+                originalDigest = row.PayloadDigest;
                 if (pilot is not null && pilotRouteId is { } routeId)
                     originalRoute = await db.Set<AiPilotRouteRow>().SingleAsync(r => r.Id == routeId, ct);
             }
@@ -143,8 +144,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             {
                 if (pilotRouteId is null)
                     outcome = await provider.StatusAsync(ProviderKey(owner, request), offer, ct);
-                else if (originalRoute is not null)
-                    outcome = await pilot!.StatusAsync(originalRoute, offer, vendorId, ct);
+                else if (originalRoute is not null && originalDigest is not null)
+                    outcome = await pilot!.StatusAsync(originalRoute, offer, originalDigest, vendorId, ct);
             }
             catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
             if (outcome is not null) await ApplyAsync(owner, request, outcome, CancellationToken.None);

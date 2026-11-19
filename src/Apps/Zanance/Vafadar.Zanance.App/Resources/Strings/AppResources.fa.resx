@@ -8702,4 +8702,16 @@
   <data name="Ai_ComparePeriodFromReport" xml:space="preserve">
     <value>مقایسه با دورهٔ قبل با هوش مصنوعی</value>
   </data>
+  <data name="Ai_CategoryChanges" xml:space="preserve">
+    <value>توضیح تغییر هزینه‌ها به تفکیک دسته</value>
+  </data>
+  <data name="Ai_PlanDifferences" xml:space="preserve">
+    <value>توضیح اختلاف برنامه و پرداخت واقعی</value>
+  </data>
+  <data name="Ai_ReportReferences" xml:space="preserve">
+    <value>تا {0} ردیف گزارش. نام ردیف‌ها فقط همین‌جا دیده می‌شود.</value>
+  </data>
+  <data name="Ai_PlanFact" xml:space="preserve">
+    <value>مبلغ برنامه‌ریزی‌شدهٔ معلوم: {0} · پرداخت اقلام تسویه‌شده: {1} · اختلاف اقلام تسویه‌شده: {2} · تسویه‌شده: {3} · باز: {4} · مبلغ نامعلوم: {5}</value>
+  </data>
 </root>

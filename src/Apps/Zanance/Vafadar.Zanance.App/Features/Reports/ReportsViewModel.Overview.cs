@@ -193,6 +193,7 @@ public sealed partial class ReportsViewModel
     {
         _review!.Demand(Vafadar.Zanance.Core.Commerce.CommercialFeature.AdvancedReports);
         Changes.Clear();
+        _categoryAnalysis = null;
         var previous = PeriodKind == 0 ? PeriodMath.Previous(_year, _month) : (_year - 1, 1);
         if (!PeriodMath.IsSupportedYear(previous.Item1, Calendar))
         {
@@ -212,7 +213,21 @@ public sealed partial class ReportsViewModel
             $"{_dates.Format(_range.CompareFrom, DateFormatStyle.Short)} – {_dates.Format(_range.CompareTo, DateFormatStyle.Short)}");
         Guid? TopLevel(Guid? id) => categories.Get(id)?.ParentId ?? id;
         var changes = KpiCatalog.SpendingChanges(_accounts, entries, _range, _currency, TopLevel, ScopeIds(), ConfirmedOnly);
-        foreach (var change in changes.Where(c => c.Delta != 0).Take(IsAdvanced ? 12 : 3))
+        var shown = changes.Where(c => c.Delta != 0).Take(IsAdvanced ? Core.Analysis.AiProtocol.MaximumReportRows : 3).ToArray();
+        var accounts = LedgerCalculator.InScope(_accounts, ScopeIds())
+            .Where(a => string.Equals(a.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase)).Select(a => a.Id);
+        if (shown.Length > 0 && Analysis.AiPeriodHandoff.Capture(_review.DatabasePath, _range.From, _range.To, ConfirmedOnly, accounts) is { } period)
+        {
+            _categoryAnalysis = period with
+            {
+                CompareFrom = _range.CompareFrom,
+                CompareTo = _range.CompareTo,
+                Report = new(Array.AsReadOnly(shown.Select(row => new Core.Analysis.AiCategoryChange(row.Current, row.Comparison)).ToArray()), null),
+                ReportLabels = Array.AsReadOnly(shown.Select(row => categories.Name(row.CategoryId)).ToArray()),
+            };
+        }
+
+        foreach (var change in shown)
         {
             var ids = change.CategoryId is { } id ? (IReadOnlyCollection<Guid>)[.. categories.All.Where(c => c.Id == id || c.ParentId == id).Select(c => c.Id)] : null;
             var percent = change.DeltaPercent is { } p ? $" ({(p > 0 ? "+" : string.Empty)}{p.ToString("0", Culture)} %)" : change.IsNew ? $" ({_translator["Report_New"]})" : string.Empty;

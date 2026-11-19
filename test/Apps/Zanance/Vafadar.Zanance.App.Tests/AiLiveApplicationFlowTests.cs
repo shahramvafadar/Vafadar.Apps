@@ -32,7 +32,17 @@ public sealed class AiLiveApplicationFlowTests
     [Theory]
     [InlineData(false, "gemini-3.5-flash-lite")]
     [InlineData(true, "gpt-6.2-sol")]
-    public async Task Original_analysis_commands_reach_the_selected_live_provider(bool comparison, string model)
+    public Task Original_analysis_commands_reach_the_selected_live_provider(bool comparison, string model) =>
+        RunAsync(comparison, model, false);
+
+    /// <summary>Qualifies both newly disclosed report detail scopes with two distinct synthetic provider requests.</summary>
+    [Theory]
+    [InlineData(true, "gpt-6.2-sol")]
+    [InlineData(false, "gemini-3.5-flash-lite")]
+    public Task Detailed_reports_reach_the_selected_live_provider(bool comparison, string model) =>
+        RunAsync(comparison, model, true);
+
+    private static async Task RunAsync(bool comparison, string model, bool detailed)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_CONNECTION");
@@ -41,7 +51,7 @@ public sealed class AiLiveApplicationFlowTests
         Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
         var root = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_ROOT")!;
         Assert.Equal("Zanance synthetic app analysis", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
-        var lane = Path.Combine(root, comparison ? "comparison" : "report");
+        var lane = Path.Combine(root, detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report"));
         Directory.CreateDirectory(lane);
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions { EnvironmentName = "Integration", ApplicationName = typeof(ServiceHost).Assembly.FullName });
         builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
@@ -78,13 +88,16 @@ public sealed class AiLiveApplicationFlowTests
         var identity = await login.SignInAsync(email, fixturePassword, ct);
         using var local = new FlowFixture();
         // The app derives an equally long preceding period, October 2–31, from this November selection.
-        var fixture = comparison ? AiPilotProvider.ComparisonFixture : AiPilotProvider.ReportFixture;
+        var fixture = detailed ? (comparison ? AiPilotProvider.CategoryFixture : AiPilotProvider.PlanFixture)
+            : (comparison ? AiPilotProvider.ComparisonFixture : AiPilotProvider.ReportFixture);
+        var localAccounts = new List<Guid>();
         await using (var db = await local.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct))
         {
             foreach (var totals in fixture.Current.Totals)
             {
                 var account = new Account { Name = "Fictitious private account " + totals.CurrencyCode, CurrencyCode = totals.CurrencyCode, OpeningDate = new(2026, 1, 1) };
                 db.Add(account);
+                localAccounts.Add(account.Id);
                 AddPeriod(account.Id, fixture.Current, totals);
                 if (fixture.Previous is { } prior) AddPeriod(account.Id, prior, prior.Totals.Single(t => t.CurrencyCode == totals.CurrencyCode));
             }
@@ -103,11 +116,48 @@ public sealed class AiLiveApplicationFlowTests
         var journal = new Journal(lane, new EphemeralDataProtectionProvider().CreateProtector("synthetic-app-analysis"));
         var vm = new AiAnalysisViewModel(local.Services.GetRequiredService<AiSnapshotStore>(), local.Translator, local.Localization,
             new DateFormatter(local.Localization), TimeProvider.System, local.Platform, new Runtime(peer, tokens, journal, identity.Id));
+        var reportSourceCurrent = true;
+        if (detailed)
+        {
+            var store = local.Services.GetRequiredService<AiSnapshotStore>();
+            var scope = await store.AccountsAsync(ct);
+            var packet = AiPeriodHandoff.Capture(scope.File, fixture.Current.From, fixture.Current.To, fixture.Current.ConfirmedOnly, localAccounts)!;
+            var reportRows = fixture.Report!.Categories?.Count ?? fixture.Report.Plans!.Count;
+            vm.SetInitialPeriod(packet with
+            {
+                ComparePrevious = comparison,
+                CompareFrom = fixture.Previous?.From,
+                CompareTo = fixture.Previous?.To,
+                Report = fixture.Report,
+                ReportLabels = Enumerable.Range(1, reportRows).Select(i => $"Fictitious private label {i}").ToArray(),
+                ValidateReportAsync = () => reportSourceCurrent ? Task.CompletedTask
+                    : Task.FromException(new InvalidOperationException("Synthetic retired report source.")),
+            });
+        }
+
         await vm.LoadAsync();
         Assert.Equal(fixture.Current.AccountCount, vm.Accounts.Count);
-        foreach (var account in vm.Accounts) account.Selected = true;
-        vm.From = fixture.Current.From; vm.To = fixture.Current.To; vm.ComparePrevious = comparison;
+        if (!detailed)
+        {
+            foreach (var account in vm.Accounts) account.Selected = true;
+            vm.From = fixture.Current.From; vm.To = fixture.Current.To; vm.ComparePrevious = comparison;
+        }
+        else
+        {
+            Assert.False(vm.CanEditScope);
+            reportSourceCurrent = false;
+            await vm.ReviewAsync();
+            Assert.Null(vm.Disclosure);
+            reportSourceCurrent = true;
+        }
+
         await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure);
+        if (detailed)
+        {
+            Assert.Contains("Fictitious private label 1", vm.Summary, StringComparison.Ordinal);
+            var payload = System.Text.Json.JsonSerializer.Deserialize(vm.Disclosure, AiJson.Default.AiPayload)!;
+            Assert.Equal(AiProtocol.Digest(fixture), AiProtocol.Digest(payload));
+        }
         Assert.DoesNotContain("Fictitious", vm.Disclosure, StringComparison.Ordinal);
         await vm.CheckProviderAsync(); Assert.True(vm.CanQuote, vm.Error);
         await vm.QuoteAsync(); Assert.True(vm.CanSend, vm.Error); Assert.Contains(model, vm.ProviderText, StringComparison.Ordinal);

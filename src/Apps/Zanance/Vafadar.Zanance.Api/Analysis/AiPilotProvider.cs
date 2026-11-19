@@ -18,6 +18,25 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     internal static readonly AiPayload ComparisonFixture = new(1, AiPurpose.PeriodComparison, "en",
         new(new(2026, 11, 1), new(2026, 11, 30), 2, true, [new("EUR", 125000, 5000, 41000, 3000), new("USD", 60000, 0, 17000, 2000)], 0),
         new(new(2026, 10, 1), new(2026, 10, 31), 2, true, [new("EUR", 119000, 0, 45000, 1000), new("USD", 59000, 1000, 12000, 2000)], 0));
+    internal static readonly AiPayload CategoryFixture = ComparisonFixture with
+    {
+        Version = 2,
+        Current = ComparisonFixture.Current with { AccountCount = 1, Totals = [ComparisonFixture.Current.Totals[0]] },
+        Previous = ComparisonFixture.Previous! with { AccountCount = 1, Totals = [ComparisonFixture.Previous!.Totals[0]] },
+        Report = new([new(30000, 20000), new(8000, 24000)], null),
+    };
+    internal static readonly AiPayload PlanFixture = ReportFixture with
+    {
+        Version = 2,
+        Report = new(null, [
+            new("EUR", Core.Ledger.EntryKind.Expense, 10000, 12000, 1, 0, 0, 2000),
+            new("EUR", Core.Ledger.EntryKind.Expense, 5000, 0, 0, 1, 0, null),
+            new("EUR", Core.Ledger.EntryKind.Expense, 0, 3500, 1, 0, 1, null),
+            new("EUR", Core.Ledger.EntryKind.Expense, 6000, 5000, 1, 0, 0, -1000),
+        ]),
+    };
+    private static readonly string CategoryDigest = AiProtocol.Digest(CategoryFixture);
+    private static readonly string PlanDigest = AiProtocol.Digest(PlanFixture);
     private static readonly string ReportDigest = AiProtocol.Digest(ReportFixture);
     private static readonly string ComparisonDigest = AiProtocol.Digest(ComparisonFixture);
     // The app compares an equally long preceding period. Keep the original server-only fixture readable too.
@@ -28,8 +47,8 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     /// <summary>Accepts only the fixed synthetic payload for the requested purpose.</summary>
     internal static bool IsSynthetic(AiPurpose purpose, string digest) => purpose switch
     {
-        AiPurpose.PeriodExplanation => digest == ReportDigest,
-        AiPurpose.PeriodComparison => digest == ComparisonDigest || digest == AppComparisonDigest,
+        AiPurpose.PeriodExplanation => digest == ReportDigest || digest == PlanDigest,
+        AiPurpose.PeriodComparison => digest == ComparisonDigest || digest == AppComparisonDigest || digest == CategoryDigest,
         _ => false,
     };
 
@@ -106,14 +125,19 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
 
     /// <summary>Submits the admitted synthetic operation once and saves the vendor ID before attempting settlement.</summary>
     internal async Task<AiProviderOutcome> BeginAsync(AiPilotRouteRow route, AiOffer offer, string operation,
-        Func<string, Task> saveId, CancellationToken ct)
+        string digest, Func<string, Task> saveId, CancellationToken ct)
     {
-        if (Admit(route, offer) is not { } profile) return Unknown;
+        if (Admit(route, offer) is not { } profile || !IsSynthetic(offer.Purpose, digest)) return Unknown;
         var comparison = offer.Purpose == AiPurpose.PeriodComparison;
         var task = comparison
             ? "Synthetic Zanance test. Compare recorded previous-period and November results, all amounts in minor units. EUR previous period: income 119000, income reversals 0, expenses 45000, refunds 1000. EUR November: income 125000, income reversals 5000, expenses 41000, refunds 3000. USD previous period: income 59000, income reversals 1000, expenses 12000, refunds 2000. USD November: income 60000, income reversals 0, expenses 17000, refunds 2000. Net spending is expenses minus refunds. Net cash flow is income minus income reversals minus net spending. Give November minus previous-period changes in net spending and net cash flow separately by currency. No exchange rate is supplied; set can_combine to whether one converted total can be computed. Explain the changes briefly in English without advice."
             : "Synthetic Zanance test. November recorded totals in EUR minor units: income 125000, expenses 41000, refunds 3000. Give net_expenses_minor = expenses minus refunds, and a one-sentence explanation in English. No other information.";
-        var expected = Expected(offer.Purpose);
+        if (digest == CategoryDigest)
+            task = "Synthetic Zanance category analysis. Net spending in EUR minor units, previous to current: row [1] 20000 to 30000, row [2] 24000 to 8000. Return the one-based row numbers for the largest increase and largest decrease. Explain the two changes briefly in English using the bracketed row numbers, without guessing why, naming categories, or giving advice.";
+        else if (digest == PlanDigest)
+            task = "Synthetic Zanance expense plans in EUR minor units. Row [1] planned 10000, paid 12000, settled, comparable. Row [2] planned 5000, still open, excluded from settled variance. Row [3] planned amount unknown, paid 3500, settled, no comparable variance. Row [4] planned 6000, paid 5000, settled, comparable. Return the row numbers for largest settled overrun and largest settled underrun and the counts of open rows and rows with unknown planned amounts. Explain briefly in English using bracketed row numbers. Do not count an open or unknown row as a saving. Do not give advice.";
+
+        var expected = Expected(offer.Purpose, digest);
         var properties = expected.ToDictionary(f => f.Key, f => new { type = f.Value is bool ? "boolean" : "integer" });
         properties.Add("explanation", new { type = "string" });
         var schema = new
@@ -134,16 +158,16 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         var id = result is null ? null : Text(result.RootElement, "id");
         if (!ValidId(id)) return Unknown;
         await saveId(id!);
-        return Outcome(profile, offer.Purpose, result!.RootElement);
+        return Outcome(profile, offer.Purpose, digest, result!.RootElement);
     }
 
     /// <summary>Reads only the saved original execution and its matching vendor project.</summary>
-    internal async Task<AiProviderOutcome> StatusAsync(AiPilotRouteRow route, AiOffer offer, string? id, CancellationToken ct)
+    internal async Task<AiProviderOutcome> StatusAsync(AiPilotRouteRow route, AiOffer offer, string digest, string? id, CancellationToken ct)
     {
-        if (!ValidId(id) || Admit(route, offer) is not { } profile) return Unknown;
+        if (!ValidId(id) || Admit(route, offer) is not { } profile || !IsSynthetic(offer.Purpose, digest)) return Unknown;
         using var request = Request(profile, HttpMethod.Get, profile.Url + "/" + id);
         using var result = await SendAsync(request, ct);
-        return result is not null && Text(result.RootElement, "id") == id ? Outcome(profile, offer.Purpose, result.RootElement) : Unknown;
+        return result is not null && Text(result.RootElement, "id") == id ? Outcome(profile, offer.Purpose, digest, result.RootElement) : Unknown;
     }
 
     private async Task<JsonDocument?> SendAsync(HttpRequestMessage request, CancellationToken ct)
@@ -155,7 +179,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         catch (JsonException) { return null; }
     }
 
-    private static AiProviderOutcome Outcome(PilotProfile profile, AiPurpose purpose, JsonElement response)
+    private static AiProviderOutcome Outcome(PilotProfile profile, AiPurpose purpose, string digest, JsonElement response)
     {
         if (Text(response, "status") != "completed" || Text(response, "model") != profile.Model) return Unknown;
         var usage = Read(response, "usage");
@@ -175,7 +199,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         {
             using var parsed = JsonDocument.Parse(value);
             var root = parsed.RootElement;
-            var expected = Expected(purpose);
+            var expected = Expected(purpose, digest);
             if (root.ValueKind != JsonValueKind.Object || root.EnumerateObject().Count() != expected.Count + 1 ||
                 !expected.All(pair => pair.Value is int number ? Number(root, pair.Key) == number
                     : Read(root, pair.Key).ValueKind == JsonValueKind.False) ||
@@ -193,10 +217,16 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             && profile.Model == offer.Model && offer.Purpose == route.Purpose ? profile : null;
     }
 
-    private static Dictionary<string, object> Expected(AiPurpose purpose) => purpose == AiPurpose.PeriodComparison
-        ? new() { ["eur_spending_change"] = -6000, ["usd_spending_change"] = 5000,
-            ["eur_cash_flow_change"] = 7000, ["usd_cash_flow_change"] = -3000, ["can_combine"] = false }
-        : new() { ["net_expenses_minor"] = 38000 };
+    private static Dictionary<string, object> Expected(AiPurpose purpose, string digest)
+    {
+        if (digest == CategoryDigest) return new() { ["largest_increase"] = 1, ["largest_decrease"] = 2 };
+        if (digest == PlanDigest)
+            return new() { ["largest_overrun"] = 1, ["largest_underrun"] = 4, ["open_rows"] = 1, ["unknown_rows"] = 1 };
+        return purpose == AiPurpose.PeriodComparison
+            ? new() { ["eur_spending_change"] = -6000, ["usd_spending_change"] = 5000,
+                ["eur_cash_flow_change"] = 7000, ["usd_cash_flow_change"] = -3000, ["can_combine"] = false }
+            : new() { ["net_expenses_minor"] = 38000 };
+    }
 
     private PilotProfile? Profile(AiPurpose purpose, string provider, string? selectedModel)
     {

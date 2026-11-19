@@ -8743,4 +8743,16 @@ Original XML SHA-256: {5}</value>
   <data name="Ai_ComparePeriodFromReport" xml:space="preserve">
     <value>Compare with the previous period using AI</value>
   </data>
+  <data name="Ai_CategoryChanges" xml:space="preserve">
+    <value>Explain spending changes by category</value>
+  </data>
+  <data name="Ai_PlanDifferences" xml:space="preserve">
+    <value>Explain planned and actual payments</value>
+  </data>
+  <data name="Ai_ReportReferences" xml:space="preserve">
+    <value>Up to {0} report rows. Row names are visible only here.</value>
+  </data>
+  <data name="Ai_PlanFact" xml:space="preserve">
+    <value>Known planned: {0} · Paid for settled items: {1} · Settled difference: {2} · Settled: {3} · Open: {4} · Unknown amount: {5}</value>
+  </data>
 </root>

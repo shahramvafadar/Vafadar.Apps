@@ -33,7 +33,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     IDateFormatter dates, TimeProvider time, IAppInteraction interaction, IAiRuntime runtime) : ViewModelBase
 {
     private AiAccountScope? scope;
-    private AiPeriodHandoff? initialPeriod;
+    private AiPeriodHandoff? initialPeriod, detailedPeriod;
+
+    /// <summary>Only freely selected analysis has editable dates, account choices and review filters.</summary>
+    public bool CanEditScope => detailedPeriod is null;
     private AiReview? review;
     private AiOffer? offer;
     private IAiRemote? remote;
@@ -169,7 +172,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             Summary = Disclosure = ResultText = ResultStatus = ResultSnapshot = ShareStatus = BalanceText = null; ProviderText = text["Ai_NoProvider"];
             Validate(original);
             var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); Validate(original);
-            var incoming = initialPeriod;
+            var incoming = initialPeriod ?? detailedPeriod;
             if (incoming is not null)
             {
                 if (incoming.File != current.File || incoming.Accounts.Any(id => current.Accounts.All(account => account.Id != id)))
@@ -198,6 +201,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             Validate(original); scope = current; choiceEpoch = originalChoices;
             Accounts.Clear(); Validate(original);
             foreach (var account in replacement) { Accounts.Add(account); Validate(original); }
+            detailedPeriod = incoming?.Report is not null ? incoming : null;
+            OnPropertyChanged(nameof(CanEditScope)); Validate(original);
             Loaded = true; Validate(original);
             if (ReferenceEquals(initialPeriod, incoming)) initialPeriod = null;
 
@@ -221,7 +226,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         if (!OwnsPresentation || !Loaded || HasPendingOperation || scope is null) return;
         var original = epoch;
         var selection = new AiSelection(scope.File, Accounts.Where(a => a.Selected).Select(a => a.Id).ToArray(), From, To, ConfirmedOnly, ComparePrevious,
-            local.CurrentLanguage.CultureName.Split('-')[0]);
+            local.CurrentLanguage.CultureName.Split('-')[0], detailedPeriod?.CompareFrom, detailedPeriod?.CompareTo, detailedPeriod?.Report);
         readingSource = true; operationActive = true;
         try
         {
@@ -229,15 +234,26 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             AccountsError = selection.AccountIds.Count > 0 ? null : text["Ai_ChooseAccounts"]; Validate(original);
             FromError = selection.From == DateOnly.MinValue ? text["Ai_InvalidRange"] : null; Validate(original);
             ToError = selection.To < selection.From || selection.To.DayNumber - selection.From.DayNumber > 365
-                || selection.ComparePrevious && selection.From.DayNumber <= selection.To.DayNumber - selection.From.DayNumber + 1 ? text["Ai_InvalidRange"] : null;
+                || selection.ComparePrevious && selection.CompareFrom is null && selection.From.DayNumber <= selection.To.DayNumber - selection.From.DayNumber + 1 ? text["Ai_InvalidRange"] : null;
             Validate(original);
             original = Invalidate(); Validate(original);
             if (AccountsError is not null || FromError is not null || ToError is not null) return;
             var access = runtime.Capture(selection.File); access.Validate(); Validate(original);
             using var linked = CancellationTokenSource.CreateLinkedTokenSource(access.Cancellation, visible?.Token ?? CancellationToken.None);
+            if (detailedPeriod is { } detail)
+            {
+                if (selection.From != detail.From || selection.To != detail.To || selection.ComparePrevious != detail.ComparePrevious ||
+                    selection.ConfirmedOnly != detail.ConfirmedOnly || !selection.AccountIds.ToHashSet().SetEquals(detail.Accounts) ||
+                    detail.ValidateReportAsync is null)
+                    throw new InvalidOperationException("The displayed report scope changed.");
+                await detail.ValidateReportAsync(); Validate(original);
+            }
+
             var prepared = await store.ReviewAsync(selection, linked.Token); Validate(original); access.Validate(); Validate(original);
+            if (detailedPeriod?.ValidateReportAsync is { } validateReport) { await validateReport(); Validate(original); }
             var payload = prepared.Payload; var summary = Period(payload.Current);
             if (payload.Previous is not null) summary += Environment.NewLine + Period(payload.Previous);
+            if (detailedPeriod is { } report) summary += Environment.NewLine + ReportSummary(report, payload);
             var disclosure = JsonSerializer.Serialize(payload, AiJson.Default.AiPayload); Validate(original);
             // D-962: native/binding notifications may fail, edit the draft or retire the original page.
             // Sharing authority is committed only after the complete current preview was published.
@@ -267,7 +283,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             if (!await interaction.ConfirmAsync(text["Ai_Title"], text["Ai_ManualConfirm"], text["Ai_ConfirmShareAction"], text["Ai_ConfirmCancelAction"])) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original);
             if (!await runtime.ConfirmDisclosureAsync()) return;
-            ValidateDisclosure(disclosure); ValidateReview(version, original); await store.CheckAsync(original);
+            ValidateDisclosure(disclosure); ValidateReview(version, original); await CheckOriginalAsync(original);
             ValidateDisclosure(disclosure); ValidateReview(version, original); runtime.Capture(original.Selection.File).Validate();
             // D-975: access validation is an external boundary; a returned callback cannot authorize a retired chooser.
             ValidateDisclosure(disclosure); ValidateReview(version, original);
@@ -378,7 +394,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             if (!await interaction.ConfirmAsync(text["Ai_Title"], text.Format("Ai_SendConfirm", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits)), text["Ai_ConfirmSendAction"], text["Ai_ConfirmCancelAction"])) return;
             ValidateDisclosure(disclosure); ValidateReview(version, original); if (!await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); ValidateReview(version, original);
             enteredSubmission = true;
-            var result = await connection.SubmitAsync(terms, original.Payload, async () => { ValidateDisclosure(disclosure); ValidateReview(version, original); await store.CheckAsync(original); ValidateDisclosure(disclosure); ValidateReview(version, original); }, CancellationToken.None);
+            var result = await connection.SubmitAsync(terms, original.Payload, async () => { ValidateDisclosure(disclosure); ValidateReview(version, original); await CheckOriginalAsync(original); ValidateDisclosure(disclosure); ValidateReview(version, original); }, CancellationToken.None);
             ValidateFrame(presentation);
             // Preserve only the returned original result before fallible private-record follow-through.
             returned = true; retained = new(1, new(result.RequestId, terms, original.Payload), result); ShowRecord(retained, true); offer = null;
@@ -489,6 +505,28 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         };
     private void ShowBalance(AiBalance balance) => BalanceText = BalanceCaption(balance);
     private string BalanceCaption(AiBalance balance) => text.Format("Ai_Balance", N(balance.PurchasedAvailable), N(balance.GiftedAvailable), N(balance.PurchasedReserved), N(balance.GiftedReserved));
+    private async Task CheckOriginalAsync(AiReview original)
+    {
+        await store.CheckAsync(original);
+        if (detailedPeriod?.ValidateReportAsync is { } validateReport) await validateReport();
+    }
+
+    private string ReportSummary(AiPeriodHandoff localReport, AiPayload payload)
+    {
+        var rows = payload.Report!;
+        var amounts = rows.Categories is { } changes
+            ? changes.Select(row => text.Format("Report_ChangeDetail", Formatted(row.Current, payload.Current.Totals[0].CurrencyCode),
+                Formatted(row.Previous, payload.Current.Totals[0].CurrencyCode)))
+            : rows.Plans!.Select(row => text.Format("Ai_PlanFact", Formatted(row.Planned, row.Currency), Formatted(row.Actual, row.Currency),
+                row.Variance is { } variance ? Formatted(variance, row.Currency) : text["Report_NotAvailable"],
+                N(row.Settled), N(row.Open), N(row.Unknown)));
+        return text.Format("Ai_ReportReferences", N(AiProtocol.MaximumReportRows)) + Environment.NewLine
+            + string.Join(Environment.NewLine, amounts.Select((amount, index) =>
+                $"[{index + 1}] {localReport.ReportLabels[index]} · {amount}"));
+
+        string Formatted(long amount, string currency) => MoneyText.Format(amount, currency, local.CurrentCulture);
+    }
+
     private string Period(AiPeriod period) => text.Format("Ai_Summary", dates.Format(period.From, DateFormatStyle.Long), dates.Format(period.To, DateFormatStyle.Long), N(period.AccountCount), N(period.UnreviewedCount)) +
         Environment.NewLine + string.Join(Environment.NewLine, period.Totals.Select(t => text.Format("Ai_CurrencySummary", t.CurrencyCode,
             MoneyText.Format(t.NetIncome, t.CurrencyCode, local.CurrentCulture), MoneyText.Format(t.NetExpense, t.CurrencyCode, local.CurrentCulture), MoneyText.Format(checked(t.NetIncome - t.NetExpense), t.CurrencyCode, local.CurrentCulture))));

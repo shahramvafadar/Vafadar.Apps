@@ -21,7 +21,20 @@ public sealed record AiPeriod(DateOnly From, DateOnly To, int AccountCount, bool
     IReadOnlyList<PeriodTotals> Totals, int UnreviewedCount);
 
 /// <summary>The exact minimal payload previewed before any service/provider financial request.</summary>
-public sealed record AiPayload(int Version, AiPurpose Purpose, string Language, AiPeriod Current, AiPeriod? Previous);
+public sealed record AiPayload(int Version, AiPurpose Purpose, string Language, AiPeriod Current, AiPeriod? Previous,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiReportDetails? Report = null);
+
+/// <summary>An anonymous top-level category's net spending in two explicitly shown periods.</summary>
+public sealed record AiCategoryChange(long Current, long Previous);
+
+/// <summary>An anonymous plan row. Variance compares only settled payments with their known planned amounts.</summary>
+public sealed record AiPlanDifference(string Currency, EntryKind Kind, long Planned, long Actual,
+    int Settled, int Open, int Unknown, long? Variance);
+
+/// <summary>Rows referenced by one-based position. Names, identifiers and notes stay on the device.</summary>
+public sealed record AiReportDetails(
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] IReadOnlyList<AiCategoryChange>? Categories,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] IReadOnlyList<AiPlanDifference>? Plans);
 
 /// <summary>Provider metadata and maximum technical credit units, never a client-supplied price or implied subscription benefit.</summary>
 public sealed record AiOffer(Guid Id, string Provider, string Model, AiPurpose Purpose, long MaximumUnits, DateTimeOffset ExpiresAt);
@@ -70,7 +83,7 @@ public static class AiProtocol
     public static void Validate(AiPayload payload)
     {
         ArgumentNullException.ThrowIfNull(payload);
-        if (payload.Version != 1 || !Enum.IsDefined(payload.Purpose) || payload.Language is not ("en" or "fa" or "de" or "es" or "fr" or "it"))
+        if (payload.Version != (payload.Report is null ? 1 : 2) || !Enum.IsDefined(payload.Purpose) || payload.Language is not ("en" or "fa" or "de" or "es" or "fr" or "it"))
             throw new ArgumentException("Unsupported analysis contract.");
         Period(payload.Current);
         if (payload.Purpose == AiPurpose.PeriodComparison)
@@ -83,6 +96,7 @@ public static class AiProtocol
                 throw new ArgumentException("Comparison scope differs.");
         }
         else if (payload.Previous is not null) throw new ArgumentException("Unrequested previous period refused.");
+        if (payload.Report is { } report) ValidateReport(payload, report);
         if (JsonSerializer.SerializeToUtf8Bytes(payload, AiJson.Default.AiPayload).Length > MaximumPayloadBytes)
             throw new ArgumentException("Analysis payload exceeds its technical bound.");
     }
@@ -99,6 +113,31 @@ public static class AiProtocol
             text.Any(c => char.IsControl(c) && c is not '\r' and not '\n' and not '\t' || c is >= '\u202A' and <= '\u202E' or >= '\u2066' and <= '\u2069'))
             throw new ArgumentException("Provider text is invalid.");
     }
+    private static void ValidateReport(AiPayload payload, AiReportDetails report)
+    {
+        if (payload.Purpose == AiPurpose.PeriodComparison && report.Plans is null &&
+            report.Categories is { Count: >= 1 and <= MaximumReportRows } categories && payload.Current.Totals.Count == 1)
+        {
+            foreach (var row in categories)
+                if (row is null || checked(row.Current - row.Previous) == 0)
+                    throw new ArgumentException("Invalid spending change.");
+            return;
+        }
+
+        if (payload.Purpose == AiPurpose.PeriodExplanation && report.Categories is null &&
+            report.Plans is { Count: >= 1 and <= MaximumReportRows } plans &&
+            plans.All(row => row is not null && Enum.IsDefined(row.Kind) && row.Planned >= 0 && row.Actual >= 0
+                && row.Settled >= 0 && row.Open >= 0 && row.Unknown >= 0
+                && (row.Settled > 0 || (row.Variance is null && row.Actual == 0))
+                && payload.Current.Totals.Any(total => total.CurrencyCode == row.Currency)))
+            return;
+
+        throw new ArgumentException("Invalid report details.");
+    }
+
+    /// <summary>Maximum number of anonymous report rows included in one disclosure.</summary>
+    public const int MaximumReportRows = 12;
+
     private static void Period(AiPeriod period)
     {
         ArgumentNullException.ThrowIfNull(period);

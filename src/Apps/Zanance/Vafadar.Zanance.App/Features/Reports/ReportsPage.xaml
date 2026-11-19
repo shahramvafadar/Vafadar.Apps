@@ -170,6 +170,7 @@
                             <Label Text="{v:Translate Report_SpendingChange}" Style="{StaticResource CardTitle}" />
                             <Button Grid.Column="1" Style="{StaticResource KpiHelp}" Command="{Binding ExplainChangesCommand}" />
                         </Grid>
+                        <p:WrappingAction Text="{v:Translate Ai_CategoryChanges}" Command="{Binding ExplainSpendingChangesCommand}" IsVisible="{Binding HasChanges}" />
                         <Label Text="{Binding ComparisonText}" Style="{StaticResource Secondary}" FontSize="12" />
                         <Label Text="{v:Translate Report_NoChanges}" Style="{StaticResource Secondary}" IsVisible="{Binding HasChanges, Converter={StaticResource InvertedBoolConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding Changes}">
@@ -447,6 +448,7 @@
                 <Border Style="{StaticResource Card}" Padding="12" IsVisible="{Binding HasPlanRows}">
                     <VerticalStackLayout Spacing="0">
                         <Label Text="{v:Translate Report_Plans}" Style="{StaticResource CardTitle}" Margin="0,0,0,6" />
+                        <p:WrappingAction Text="{v:Translate Ai_PlanDifferences}" Command="{Binding ExplainPlanDifferencesCommand}" />
                         <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Padding="0,0,0,6">
                             <Label Text="{v:Translate Plan_Name}" Style="{StaticResource Secondary}" FontSize="12" />
                             <Label Grid.Column="1" Text="{v:Translate Report_Planned}" Style="{StaticResource Secondary}" FontSize="12" />

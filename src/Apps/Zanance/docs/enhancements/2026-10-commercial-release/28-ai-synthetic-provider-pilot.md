@@ -41,7 +41,7 @@ dotnet Vafadar.Zanance.Api.dll --select-analysis-model comparison off
 
 The latest selection for each purpose governs its new offers. A switch invalidates unaccepted offers from older selections for that purpose. Pending requests retain the original provider, model and project revision. `off` stops new offers for the selected purpose while the original pending requests with known handles can still be checked. A pending request without a recorded handle remains pending for investigation. Selecting a model never resends an existing request or routes it to a different provider. Existing provider-only selections and the legacy `--select-analysis-provider` command continue to address the original report profiles.
 
-The pilot admits one fixed synthetic payload per purpose. Reports use low reasoning with a 512-token output limit. Comparisons use medium reasoning, with a 1024-token output limit for Sol and 4096 for Hydrogen. The quota counts both purposes toward 20 admissions per provider per pilot database and uses only gifted test units. Database recreation resets this count. There is no public route for selecting providers.
+The pilot admits only explicitly allowlisted synthetic payloads for each purpose. Reports use low reasoning with a 512-token output limit. Comparisons use medium reasoning, with a 1024-token output limit for Sol and 4096 for Hydrogen. The quota counts both purposes toward 20 admissions per provider per pilot database and uses only gifted test units. Database recreation resets this count. There is no public route for selecting providers.
 
 ## Verification boundary
 
@@ -88,8 +88,26 @@ The original Analysis command methods and connected app client ran against isola
 
 The app compares the equally long period immediately before the selected dates. For November 1–30 it uses October 2–31. The server pilot accepts that exact synthetic scope alongside the original server-only fixture. The app requests purpose-aware availability while the legacy availability response keeps its original shape. A comparison can obtain its own quote while the report route is off.
 
-The Home shortcuts and the Reports period overview now open Analysis with the original local file, date range and account selection. Reports carries its report currency/account scope and confirmed-only choice. Home carries the accounts included in its period totals. Its shortcuts remain accessible with the default home layout, which hides the optional period chart. The comparison shortcut additionally selects the existing preceding-period option. Back returns to the source page. Neither shortcut reviews, checks providers or sends data automatically. The current Analysis content explains period aggregates. Category-level drivers, planned-versus-posted explanations and real customer activation require separate work.
+The Home shortcuts and the Reports period overview now open Analysis with the original local file, date range and account selection. Reports carries its report currency/account scope and confirmed-only choice. Home carries the accounts included in its period totals. Its shortcuts remain accessible with the default home layout, which hides the optional period chart. The comparison shortcut additionally selects the existing preceding-period option. Back returns to the source page. Neither shortcut reviews, checks providers or sends data automatically. This first scope explains period aggregates. The detailed Reports actions are described below.
 
 Four focused host cases passed for prefill, local-only review and refusal of a different file or missing account. The independent Windows review used the actual native Invoke pattern for all four Home and Reports actions, verified the selected scope and purpose on the original Analysis screen, and returned with the financial source unchanged and zero provider calls. The initial Windows control was hidden beneath Home's optional chart in the default layout. The verified version moved both actions to a separate visible card. No successful live request was replayed for native verification.
 
 Strict Windows review and Android development builds succeeded with no warnings or errors. The Android build was not installed for this check.
+
+
+## Spending changes and planned-versus-actual reports, 2026-11-19
+
+The spending-change action starts from the top-level categories in the visible Reports comparison. It uses the report's exact current and preceding financial-calendar periods, including their alignment in a partial current period. Values are net spending after refunds for one selected currency. The plan action starts from the financial-month commitments report. It includes known planned amounts, amounts paid for settled occurrences, settled/open/unknown counts, and a variance only when the settled planned amounts are known. An open or unknown item is never counted as a saving. Rows keep their currencies and kinds, and there is no cross-currency or cross-kind rollup.
+
+Both actions use the existing preview and native confirmation. Analysis keeps the original report scope fixed and revalidates its read lease before preview, manual share and provider submission. Names are visible only in the device's review, indexed by disclosure order. The version 2 contract carries at most twelve anonymous rows. Version 1 period-only payloads keep their existing serialization and digest. The category action uses the manager's Financial comparisons selection and the plan action uses Simple reports.
+
+The isolated application flow completed one real model request per new fixture. It exercised the application draft and private intent journal over pinned local TLS, including a retired-source refusal and cancellation before the approved send. The category fixture checked that a category rose by 10000 minor units and another fell by 16000. The plan fixture checked a settled overrun, a settled underrun, an open item and a settled item with an unknown planned amount. The provider adapter matched the declared structured answers before publishing the accompanying text. Both local financial snapshots remained unchanged.
+
+| Report and model | Standard USD per million text tokens, input / output | Observed input / billable-equivalent output | Estimated charge | Paid Standard equivalent |
+|---|---:|---:|---:|---:|
+| Spending changes, GPT-6.2 Sol | 2.00 / 10.00 | 148 / 52 | USD 0.000816 | USD 0.000816 |
+| Planned versus actual, Gemini 3.5 Flash-Lite | 0.30 / 2.50 | 151 / 117 | USD 0 (Free Tier) | USD 0.0003378 |
+
+The independent Windows native review invoked both new Reports buttons and the original Review action, verified the resulting locked scopes and anonymous packets, and used zero provider calls. It exercised one changed category and one open planned item with an unchanged local financial fingerprint. No prior provider or native case was replayed.
+
+The paid estimate uses reported usage, including reasoning or thinking in output, without invoice verification. The pilot remains restricted to exact fictitious fixtures. See [OpenAI model pricing](https://developers.openai.com/api/docs/models/gpt-6.2-sol) and [Gemini model pricing](https://aistudio.google.com/docs/pricing#gemini-3.5-flash-lite).

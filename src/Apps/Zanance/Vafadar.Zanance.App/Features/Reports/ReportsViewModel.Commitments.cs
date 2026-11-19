@@ -167,6 +167,7 @@ public sealed partial class ReportsViewModel
 
         // Plans versus actual of the financial month (Advanced).
         PlanRows.Clear();
+        _planAnalysis = null;
         if (IsAdvanced)
         {
             BuildPlans(entries, schedules, states, monthFrom, monthTo);
@@ -205,7 +206,21 @@ public sealed partial class ReportsViewModel
     private void BuildPlans(IReadOnlyCollection<LedgerEntry> entries, IReadOnlyList<Core.Plans.Schedule> schedules, IReadOnlyList<Core.Plans.OccurrenceState> states, DateOnly from, DateOnly to)
     {
         var byId = _accounts.ToDictionary(a => a.Id);
-        foreach (var row in ReportCalculator.PlanVsActual(schedules, states, entries, from, to, Today))
+        var rows = ReportCalculator.PlanVsActual(schedules, states, entries, from, to, Today);
+        var selected = rows.Where(row => byId.ContainsKey(row.Schedule.AccountId)).Take(Core.Analysis.AiProtocol.MaximumReportRows).ToArray();
+        if (selected.Length > 0 && _review is { } review &&
+            Analysis.AiPeriodHandoff.Capture(review.DatabasePath, from, to, false, selected.Select(row => row.Schedule.AccountId)) is { } period)
+        {
+            _planAnalysis = period with
+            {
+                Report = new(null, Array.AsReadOnly(selected.Select(row => new Core.Analysis.AiPlanDifference(
+                    byId[row.Schedule.AccountId].CurrencyCode, row.Schedule.Kind, row.Planned, row.Actual,
+                    row.SettledCount, row.OpenCount, row.UnknownCount, row.Variance)).ToArray())),
+                ReportLabels = Array.AsReadOnly(selected.Select(row => row.Schedule.Name).ToArray()),
+            };
+        }
+
+        foreach (var row in rows)
         {
             var currency = byId.TryGetValue(row.Schedule.AccountId, out var account) ? account.CurrencyCode : _currency;
             var details = _translator.Format("Report_PlanDetails", row.SettledCount, row.PlannedCount)
