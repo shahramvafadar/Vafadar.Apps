@@ -11,10 +11,19 @@ namespace Vafadar.Dastan.People;
 /// </content>
 public sealed partial class VisitorAccounts
 {
+    // The provider's identifier of a person is not kept: a hash of it finds the account again and tells nobody
+    // who reads the database which account of the provider it is.
+    internal static string LoginKey(string provider, string subject)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(provider);
+        ArgumentException.ThrowIfNullOrWhiteSpace(subject);
+        return Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes($"{provider}\n{subject}")));
+    }
+
     /// <summary>Signs in the open account a sign-in of a provider belongs to; nothing when it belongs to none.</summary>
     public VisitorSession? SignInWith(string provider, string subject)
     {
-        var key = PeopleStore.LoginKey(provider, subject);
+        var key = LoginKey(provider, subject);
         var login = _context.AccountLogins.AsNoTracking().SingleOrDefault(candidate => candidate.LoginProvider == provider && candidate.ProviderKey == key);
         var visitor = login is null ? null : _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.Id == login.UserId && candidate.ClosedAt == null);
         return visitor is null ? null : new VisitorSession(visitor.Id, visitor.Name, visitor.Stamp);
@@ -52,7 +61,7 @@ public sealed partial class VisitorAccounts
             return new(["mail"]);
         }
 
-        var login = PeopleStore.LoginKey(provider, subject);
+        var login = LoginKey(provider, subject);
         var key = PeopleStore.Key(written);
         var mailKey = new Keys().NormalizeEmail(address)!;
         using var step = _context.Database.BeginTransaction();
@@ -100,7 +109,7 @@ public sealed partial class VisitorAccounts
             var kept = terms is { Length: > 0 and <= 20 };
             visitor = new StoredVisitor
             {
-                Id = account.Id, Name = written, NameKey = key, Password = string.Empty, Stamp = account.SecurityStamp!, CreatedAt = now,
+                Id = account.Id, Name = written, NameKey = key, Stamp = account.SecurityStamp!, CreatedAt = now,
                 TermsVersion = kept ? terms : null, TermsAcceptedAt = kept ? now : null,
             };
             _context.Visitors.Add(visitor);
@@ -142,7 +151,7 @@ public sealed partial class VisitorAccounts
     /// </summary>
     public bool Link(string id, string provider, string subject)
     {
-        var key = PeopleStore.LoginKey(provider, subject);
+        var key = LoginKey(provider, subject);
         _context.ChangeTracker.Clear();
         if (!_context.Visitors.AsNoTracking().Any(visitor => visitor.Id == id && visitor.ClosedAt == null) || !_context.Accounts.AsNoTracking().Any(account => account.Id == id)
             || _context.AccountLogins.AsNoTracking().Any(candidate => candidate.LoginProvider == provider && (candidate.ProviderKey == key || candidate.UserId == id)))

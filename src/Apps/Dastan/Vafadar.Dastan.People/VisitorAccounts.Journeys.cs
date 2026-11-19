@@ -380,6 +380,13 @@ public sealed partial class VisitorAccounts
         });
     }
 
+    /// <summary>Returns whether a password is the one of an open account – counted like a sign-in – before something that needs the proof is done.</summary>
+    public bool ProvesItself(string id, string password)
+    {
+        ArgumentNullException.ThrowIfNull(password);
+        return Proved(id, password, (_, _) => new([])).Done;
+    }
+
     // Does something to an open account whose visitor proved to be it with the password, in one step under the
     // lock of the account: the wrong password is counted, the right one lets the act write what it writes.
     private AccountResult Proved(string id, string password, Func<VisitorAccount, StoredVisitor, AccountResult> act)

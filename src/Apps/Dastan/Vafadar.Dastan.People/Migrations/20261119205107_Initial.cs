@@ -50,11 +50,8 @@ namespace Vafadar.Dastan.People.Migrations
                     Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
                     NameKey = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    Password = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Stamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Failures = table.Column<int>(type: "integer", nullable: false),
-                    LockedUntil = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ClosedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ClosedByOperator = table.Column<bool>(type: "boolean", nullable: false),
                     TermsVersion = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
@@ -171,27 +168,6 @@ namespace Vafadar.Dastan.People.Migrations
                     table.ForeignKey(
                         name: "FK_Circles_Visitors_Owner",
                         column: x => x.Owner,
-                        principalSchema: "personal",
-                        principalTable: "Visitors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExternalLogins",
-                schema: "personal",
-                columns: table => new
-                {
-                    Provider = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Key = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
-                    VisitorId = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExternalLogins", x => new { x.Provider, x.Key });
-                    table.ForeignKey(
-                        name: "FK_ExternalLogins_Visitors_VisitorId",
-                        column: x => x.VisitorId,
                         principalSchema: "personal",
                         principalTable: "Visitors",
                         principalColumn: "Id",
@@ -750,13 +726,6 @@ namespace Vafadar.Dastan.People.Migrations
                 column: "Tree");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExternalLogins_VisitorId_Provider",
-                schema: "personal",
-                table: "ExternalLogins",
-                columns: new[] { "VisitorId", "Provider" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Invitations_By",
                 schema: "personal",
                 table: "Invitations",
@@ -925,10 +894,6 @@ namespace Vafadar.Dastan.People.Migrations
 
             migrationBuilder.DropTable(
                 name: "Claims",
-                schema: "personal");
-
-            migrationBuilder.DropTable(
-                name: "ExternalLogins",
                 schema: "personal");
 
             migrationBuilder.DropTable(

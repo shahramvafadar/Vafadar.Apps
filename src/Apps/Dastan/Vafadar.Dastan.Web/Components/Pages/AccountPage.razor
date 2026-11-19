@@ -7,9 +7,10 @@
 @inject Microsoft.Extensions.Options.IOptions<ExternalSignInOptions> External
 @inject IStringLocalizer<Ui> T
 
-@* The account of a visitor (step 16.1, D-048 to D-050): making one, signing in and out, another password,
-   recovery codes, closing. Every form is sent to an address of its own (AccountEndpoints) and comes back here
-   with what happened; the page needs no script. A site without a store for accounts has no such page. *@
+@* The account of a visitor (step 16.1, D-048 to D-050; with a confirmed mail address since step 19.4, ADR 0016):
+   making one, signing in and out, a forgotten password, another password or address, recovery codes, closing.
+   Every form is sent to an address of its own (AccountEndpoints) and comes back here with what happened; the
+   page needs no script. A site without a store for accounts has no such page. *@
 <PageTitle>@T["Account_Title"] – @T["Site_Name"]</PageTitle>
 <PageAddress None="true" />
 @* The account of one visitor is no page for a search engine. *@
@@ -110,8 +111,8 @@
                 <AntiforgeryToken />
                 <input type="hidden" name="returnUrl" value="@_here" />
                 <p class="field">
-                    <label for="sign-in-name">@T["Account_Name"]</label>
-                    <input id="sign-in-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" />
+                    <label for="sign-in-name">@T["Account_NameOrMail"]</label>
+                    <input id="sign-in-name" name="name" type="text" required maxlength="@LongestAddress" autocomplete="username" dir="auto" />
                 </p>
                 <p class="field">
                     <label for="sign-in-password">@T["Account_Password"]</label>
@@ -119,6 +120,34 @@
                 </p>
                 <p><button type="submit" class="action">@T["Account_SignIn_Send"]</button></p>
             </form>
+            @Problems("forgot")
+            <details id="forgot" open="@(_form == "forgot")">
+                <summary>@T["Account_Forgot_Title"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/forgot")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p>@T["Account_Forgot_Lead"]</p>
+                    <p class="field">
+                        <label for="forgot-name">@T["Account_NameOrMail"]</label>
+                        <input id="forgot-name" name="name" type="text" required maxlength="@LongestAddress" autocomplete="username" dir="auto" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_Forgot_Send"]</button></p>
+                </form>
+            </details>
+            @Problems("resend")
+            <details id="resend" open="@(_form == "resend" || _problems.Contains("unconfirmed"))">
+                <summary>@T["Account_Resend_Title"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/resend")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p>@T["Account_Resend_Lead"]</p>
+                    <p class="field">
+                        <label for="resend-name">@T["Account_NameOrMail"]</label>
+                        <input id="resend-name" name="name" type="text" required maxlength="@LongestAddress" autocomplete="username" dir="auto" />
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_Resend_Send"]</button></p>
+                </form>
+            </details>
             @if (_providers.Count > 0)
             {
                 @* Offered only when the owner entered a client of the provider (D-048). *@
@@ -168,6 +197,11 @@
                     <span class="meta" id="register-name-hint">@T["Account_Name_Hint"]</span>
                 </p>
                 <p class="field">
+                    <label for="register-mail">@T["Account_Mail"]</label>
+                    <input id="register-mail" name="mail" type="email" required maxlength="@LongestAddress" autocomplete="email" dir="ltr" aria-describedby="register-mail-hint" />
+                    <span class="meta" id="register-mail-hint">@T["Account_Mail_Hint"]</span>
+                </p>
+                <p class="field">
                     <label for="register-password">@T["Account_Password"]</label>
                     <input id="register-password" name="password" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" aria-describedby="register-password-hint" />
                     <span class="meta" id="register-password-hint">@T["Account_Password_Hint"]</span>
@@ -208,8 +242,8 @@
                     <AntiforgeryToken />
                     <input type="hidden" name="returnUrl" value="@_here" />
                     <p class="field">
-                        <label for="recover-name">@T["Account_Name"]</label>
-                        <input id="recover-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" />
+                        <label for="recover-name">@T["Account_NameOrMail"]</label>
+                        <input id="recover-name" name="name" type="text" required maxlength="@LongestAddress" autocomplete="username" dir="auto" />
                     </p>
                     <p class="field">
                         <label for="recover-code">@T["Account_Code"]</label>
@@ -237,8 +271,8 @@
                     <AntiforgeryToken />
                     <input type="hidden" name="returnUrl" value="@_here" />
                     <p class="field">
-                        <label for="reopen-name">@T["Account_Name"]</label>
-                        <input id="reopen-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" />
+                        <label for="reopen-name">@T["Account_NameOrMail"]</label>
+                        <input id="reopen-name" name="name" type="text" required maxlength="@LongestAddress" autocomplete="username" dir="auto" />
                     </p>
                     <p class="field">
                         <label for="reopen-password">@T["Account_Password"]</label>
@@ -270,6 +304,16 @@
             <input type="hidden" name="returnUrl" value="@_here" />
             <p><button type="submit" class="action">@T["Account_SignOut"]</button></p>
         </form>
+
+        <section id="sessions" aria-labelledby="sessions-title">
+            <h2 id="sessions-title">@T["Account_Sessions_Title"]</h2>
+            <form method="post" action="@($"{AccountDesk.Root}/sign-out-everywhere")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <p>@T["Account_Sessions_Lead"]</p>
+                <p><button type="submit" class="action secondary">@T["Account_Sessions_Send"]</button></p>
+            </form>
+        </section>
 
         @if (_termsAsked)
         {
@@ -419,6 +463,12 @@
                 </form>
             </section>
 
+            <section id="address" aria-labelledby="address-title">
+                <h2 id="address-title">@T["Account_Address_Title"]</h2>
+                <p>@Address()</p>
+                <p class="note">@T["Account_NeedsPassword"]</p>
+            </section>
+
             <section id="codes" aria-labelledby="codes-title">
                 <h2 id="codes-title">@T["Account_NewCodes_Title"]</h2>
                 <p>@string.Format(CultureInfo.CurrentCulture, T["Account_CodesLeft"], Visitor.Number(_info.RecoveryCodesLeft))</p>
@@ -459,6 +509,29 @@
                 <p class="note">@T["Account_Password_Note"]</p>
                 <p><button type="submit" class="action secondary">@T["Account_Password_Send"]</button></p>
             </form>
+        </section>
+
+        <section id="address" aria-labelledby="address-title">
+            <h2 id="address-title">@T["Account_Address_Title"]</h2>
+            <p>@Address()</p>
+            @Problems("address")
+            <details open="@(_form == "address")">
+                <summary>@T["Account_Address_Lead"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/address")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="address-new">@T["Account_NewMail"]</label>
+                        <input id="address-new" name="mail" type="email" required maxlength="@LongestAddress" autocomplete="email" dir="ltr" />
+                    </p>
+                    <p class="field">
+                        <label for="address-current">@T["Account_Current"]</label>
+                        <input id="address-current" name="current" type="password" required autocomplete="current-password" />
+                    </p>
+                    <p class="note">@T["Account_Address_Note"]</p>
+                    <p><button type="submit" class="action secondary">@T["Account_Address_Send"]</button></p>
+                </form>
+            </details>
         </section>
 
         <section id="codes" aria-labelledby="codes-title">
@@ -547,11 +620,14 @@
         </article>
     };
 
-    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked", "terms-agreed"];
-    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "providers"];
-    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in", "age", "terms", "invitation-needed", "closed-by-operator"];
+    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked", "terms-agreed", "confirm-sent", "resend-sent", "forgot-sent", "address-sent", "address-changed", "signed-out-everywhere"];
+    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "providers", "forgot", "resend", "address"];
+    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in", "age", "terms", "invitation-needed", "closed-by-operator", "mail", "unconfirmed", "same", "external-no-address", "address-has-account"];
 
-    private VisitorInfo? _info;
+    // The longest mail address there is (RFC 5321); a name is shorter.
+    private const int LongestAddress = 254;
+
+    private AccountInfo? _info;
     private System.Collections.Immutable.ImmutableArray<string> _codes = [];
     private string? _said;
     private string? _form;
@@ -605,7 +681,7 @@
 
             if (AccountDesk.Session(Context.User) is { } session)
             {
-                _info = store.Info(session.Id);
+                _info = store.Accounts.Info(session.Id);
                 _restrictions = _info is null ? [] : store.Restrictions(session.Id);
                 _termsAsked = _info is not null && store.TermsOf(session.Id) != AccountDesk.TermsVersion;
                 _invitations = _info is null ? [] : store.Invitations(session.Id);
@@ -630,6 +706,13 @@
         var written = day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         return Visitor.Language.Tag == "fa" ? Vafadar.Core.Text.Digits.ToPersian(written) : written;
     }
+
+    // The address of the account, written from left to right in a sentence of either direction.
+    private RenderFragment Address() => __builder =>
+    {
+        var words = T["Account_Address_Now"].Value.Split("{0}");
+        @words[0]<bdi dir="ltr">@_info!.Address</bdi>@(words.Length > 1 ? words[1] : string.Empty)
+    };
 
     // The name of a provider as people know it; one the page has no word for is called by its own name.
     private string Provider(string provider) => T[$"Account_Provider_{provider}"] is { ResourceNotFound: false } known ? known.Value : provider;

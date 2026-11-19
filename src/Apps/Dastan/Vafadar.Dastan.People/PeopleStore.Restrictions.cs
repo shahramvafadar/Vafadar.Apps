@@ -142,22 +142,30 @@ public sealed partial class PeopleStore
 
     /// <summary>
     /// Returns why an account was closed by who runs the site, to somebody who proves to be its visitor with the
-    /// name and the password – the only way the site has to tell them, since it knows no mail address. Nothing
-    /// for any other account, and nothing for a wrong password, which is counted.
+    /// name or the address and the password. It is also sent to the address of the account; this is how it is
+    /// read on the site. Nothing for any other account, and nothing for a wrong password, which is counted.
     /// </summary>
-    public RestrictionInfo? ClosedByOperator(string name, string password)
+    public RestrictionInfo? ClosedByOperator(string nameOrMail, string password)
     {
-        ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(nameOrMail);
         ArgumentNullException.ThrowIfNull(password);
-        var key = Key(name.Trim());
-        var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.NameKey == key && candidate.ClosedByOperator);
-        if (!Proves(visitor, password, Now))
+        return Accounts.Proves(nameOrMail, password) is { } id ? ClosedByOperator(id) : null;
+    }
+
+    /// <summary>
+    /// Returns why an account was closed by who runs the site, for who has just proved to be its visitor – by
+    /// the password, or through the provider of an account that has no password. Nothing for an account that
+    /// the operator did not close.
+    /// </summary>
+    public RestrictionInfo? ClosedByOperator(string id)
+    {
+        if (!_context.Visitors.AsNoTracking().Any(candidate => candidate.Id == id && candidate.ClosedByOperator))
         {
             return null;
         }
 
         return _context.Restrictions.AsNoTracking()
-            .Where(candidate => candidate.Account == visitor!.Id && candidate.Kind == (int)RestrictionKind.Account && candidate.LiftedAt == null)
+            .Where(candidate => candidate.Account == id && candidate.Kind == (int)RestrictionKind.Account && candidate.LiftedAt == null)
             .OrderByDescending(candidate => candidate.Number)
             .AsEnumerable()
             .Select(Info)

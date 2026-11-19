@@ -65,8 +65,8 @@ public sealed class VisitorAccountTests : IDisposable
     }
 
     [Theory]
-    [InlineData("en", "Sign in", "New here? Make an account", "no mail address")]
-    [InlineData("fa", "ورود", "تازه آمده‌اید؟ حساب بسازید", "نه نشانی ایمیل")]
+    [InlineData("en", "Sign in", "New here? Make an account", "a name, a mail address and a password")]
+    [InlineData("fa", "ورود", "تازه آمده‌اید؟ حساب بسازید", "یک نام، یک نشانی ایمیل و یک گذرواژه")]
     public async Task The_page_offers_signing_in_and_making_an_account_in_the_language_of_the_page(string language, string signIn, string register, string privacy)
     {
         var page = await _site.Visitor().Get($"/{language}/account");

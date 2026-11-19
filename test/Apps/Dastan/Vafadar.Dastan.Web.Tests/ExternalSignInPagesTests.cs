@@ -26,6 +26,9 @@ public sealed class ExternalSite : DemoSite
     /// <summary>Gets or sets who the provider says the visitor is. Nothing: the sign-in did not come through.</summary>
     public string? Subject { get; set; } = "the-identifier-of-mina";
 
+    /// <summary>Gets or sets the mail address the provider says it confirmed. Nothing: one of its own for each identifier; empty: it names none.</summary>
+    public string? Mail { get; set; }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseSetting("Dastan:Database", TestDatabase.For(File));
@@ -55,8 +58,13 @@ public sealed class ExternalSite : DemoSite
         {
             if (site.Subject is { } subject)
             {
-                // A name and a mail address, as a provider may send them along: the site takes neither.
-                var said = new ClaimsIdentity([new(ClaimTypes.NameIdentifier, subject), new(ClaimTypes.Name, "Name At The Provider"), new(ClaimTypes.Email, "mina@example.org")], "test");
+                // A name and the mail address it confirmed, as a provider sends them: the site takes the address only.
+                var said = new ClaimsIdentity([new(ClaimTypes.NameIdentifier, subject), new(ClaimTypes.Name, "Name At The Provider")], "test");
+                if ((site.Mail ?? $"{subject}@example.org") is { Length: > 0 } mail)
+                {
+                    said.AddClaim(new(ClaimTypes.Email, mail));
+                }
+
                 await Context.SignInAsync(ExternalSignIn.Arriving, new ClaimsPrincipal(said), properties);
             }
 
@@ -139,8 +147,8 @@ public sealed class ExternalSignInPagesTests : IDisposable
         Assert.DoesNotContain("a-made-up-value", address.Query, StringComparison.Ordinal);
         if (provider == "google")
         {
-            // Asked for who it is, and for nothing about them.
-            Assert.Contains("scope=openid&", address.Query + "&", StringComparison.Ordinal);
+            // Asked for who it is and for the address it confirmed, and for nothing else about them.
+            Assert.Contains("scope=openid%20email&", address.Query + "&", StringComparison.Ordinal);
         }
     }
 
@@ -165,10 +173,11 @@ public sealed class ExternalSignInPagesTests : IDisposable
         Assert.DoesNotContain($"action=\"{Forms}/close\"", made.Html, StringComparison.Ordinal);
         Assert.DoesNotContain(ExternalSignIn.PendingCookie + "=ey", string.Join(';', visitor.Cookies.Select(cookie => $"{cookie.Key}={cookie.Value}")), StringComparison.Ordinal);
 
-        // Nothing the provider said about the person is kept or shown.
+        // Of what the provider said about the person, the address it confirmed is kept – shown to the visitor
+        // themselves – and nothing else.
         Assert.DoesNotContain("Name At The Provider", made.Html, StringComparison.Ordinal);
-        Assert.DoesNotContain("mina@example.org", made.Html, StringComparison.Ordinal);
-        Assert.DoesNotContain(_site.Subject!, made.Html, StringComparison.Ordinal);
+        Assert.Contains($"{_site.Subject}@example.org", made.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain(_site.Subject!, made.Html.Replace($"{_site.Subject}@example.org", string.Empty, StringComparison.Ordinal), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -216,7 +225,7 @@ public sealed class ExternalSignInPagesTests : IDisposable
         Assert.False(SignedIn(await Choose(program, "Mina", website: "https://example.org")));
 
         using var store = PeopleStore.Open(TestDatabase.For(_site.File), TimeProvider.System);
-        Assert.Null(store.SignInWith("test", _site.Subject!));
+        Assert.Null(store.Accounts.SignInWith("test", _site.Subject!));
     }
 
     [Fact]

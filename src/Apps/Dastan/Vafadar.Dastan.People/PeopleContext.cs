@@ -15,20 +15,11 @@ public sealed class StoredVisitor
     /// <summary>Gets or sets the name as it is compared: no two accounts have the same.</summary>
     public required string NameKey { get; set; }
 
-    /// <summary>Gets or sets what is kept of the password: a derived value, never the password.</summary>
-    public required string Password { get; set; }
-
-    /// <summary>Gets or sets a value that changes with the password: a sign-in made before holds no longer.</summary>
+    /// <summary>Gets or sets a value that changes with everything that changes how the account is entered: a sign-in made before holds no longer.</summary>
     public required string Stamp { get; set; }
 
     /// <summary>Gets or sets when the account was made.</summary>
     public DateTime CreatedAt { get; set; }
-
-    /// <summary>Gets or sets how many times in a row the password was wrong.</summary>
-    public int Failures { get; set; }
-
-    /// <summary>Gets or sets until when the account takes no password, after too many wrong ones.</summary>
-    public DateTime? LockedUntil { get; set; }
 
     /// <summary>Gets or sets when the visitor closed the account. It is deleted for good after the time of the store.</summary>
     public DateTime? ClosedAt { get; set; }
@@ -446,19 +437,6 @@ public sealed class StoredAlbumPhoto
     public int Position { get; set; }
 }
 
-/// <summary>That an account can be signed in through a provider (D-048). Nothing the provider knows about the person is kept.</summary>
-public sealed class StoredExternalLogin
-{
-    /// <summary>Gets or sets the provider: <c>google</c>, <c>microsoft</c>.</summary>
-    public required string Provider { get; set; }
-
-    /// <summary>Gets or sets a hash of the identifier the provider gives the person. The identifier itself is not kept.</summary>
-    public required string Key { get; set; }
-
-    /// <summary>Gets or sets the account.</summary>
-    public required string VisitorId { get; set; }
-}
-
 /// <summary>The database of the store of the visitors.</summary>
 public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbContext(options)
 {
@@ -473,9 +451,6 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 
     /// <summary>Gets what belongs to the visitors in Dastan, by the identifier of their account.</summary>
     public DbSet<StoredVisitor> Visitors => Set<StoredVisitor>();
-
-    /// <summary>Gets the providers the accounts can be signed in through.</summary>
-    public DbSet<StoredExternalLogin> ExternalLogins => Set<StoredExternalLogin>();
 
     /// <summary>Gets the recovery codes.</summary>
     public DbSet<StoredRecoveryCode> RecoveryCodes => Set<StoredRecoveryCode>();
@@ -601,7 +576,6 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             visitor.Property(item => item.Id).HasMaxLength(40);
             visitor.Property(item => item.Name).HasMaxLength(80);
             visitor.Property(item => item.NameKey).HasMaxLength(80);
-            visitor.Property(item => item.Password).HasMaxLength(200);
             visitor.Property(item => item.Stamp).HasMaxLength(40);
             visitor.Property(item => item.TermsVersion).HasMaxLength(20);
             visitor.HasIndex(item => item.NameKey).IsUnique();
@@ -808,17 +782,6 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             tag.HasIndex(item => item.Account);
             tag.HasOne<StoredPhoto>().WithMany().HasForeignKey(item => item.Photo).OnDelete(DeleteBehavior.Cascade);
             tag.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
-        });
-
-        modelBuilder.Entity<StoredExternalLogin>(login =>
-        {
-            login.HasKey(item => new { item.Provider, item.Key });
-            login.Property(item => item.Provider).HasMaxLength(20);
-            login.Property(item => item.Key).HasMaxLength(64);
-            login.Property(item => item.VisitorId).HasMaxLength(40);
-            // One sign-in of a provider for an account: the store holds to it, whoever asks at the same moment.
-            login.HasIndex(item => new { item.VisitorId, item.Provider }).IsUnique();
-            login.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.VisitorId).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredInvitation>(invitation =>

@@ -45,7 +45,8 @@ public sealed record SignInAnswer(SignInOutcome Outcome, VisitorSession? Session
 /// <summary>What came of opening the link that confirms a mail address.</summary>
 /// <param name="Done">Whether the address is confirmed now.</param>
 /// <param name="RecoveryCodes">The recovery codes of the account, which are shown this once.</param>
-public sealed record ConfirmAnswer(bool Done, ImmutableArray<string> RecoveryCodes);
+/// <param name="Session">The session of who opened the link: the codes they are shown open the account anyway.</param>
+public sealed record ConfirmAnswer(bool Done, ImmutableArray<string> RecoveryCodes, VisitorSession? Session = null);
 
 /// <summary>
 /// The accounts of the visitors on ASP.NET Core Identity (step 19.4, ADR 0016): an account has a name others
@@ -193,7 +194,7 @@ public sealed partial class VisitorAccounts
             var kept = terms is { Length: > 0 and <= 20 };
             _context.Visitors.Add(new StoredVisitor
             {
-                Id = account.Id, Name = written, NameKey = key, Password = string.Empty, Stamp = account.SecurityStamp!, CreatedAt = now,
+                Id = account.Id, Name = written, NameKey = key, Stamp = account.SecurityStamp!, CreatedAt = now,
                 TermsVersion = kept ? terms : null, TermsAcceptedAt = kept ? now : null,
             });
             var token = NewToken(account.Id, ConfirmToken, ConfirmationValidFor);
@@ -241,7 +242,8 @@ public sealed partial class VisitorAccounts
         {
             _context.ChangeTracker.Clear();
             var account = _context.Accounts.SingleOrDefault(candidate => candidate.Id == id);
-            if (account is null || account.EmailConfirmed || Take(id, ConfirmToken, token) is null)
+            var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
+            if (account is null || visitor is null || account.EmailConfirmed || Take(id, ConfirmToken, token) is null)
             {
                 return new ConfirmAnswer(false, []);
             }
@@ -250,7 +252,7 @@ public sealed partial class VisitorAccounts
             var codes = _store.NewCodes(id);
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
-            return new ConfirmAnswer(true, codes);
+            return new ConfirmAnswer(true, codes, new VisitorSession(visitor.Id, visitor.Name, visitor.Stamp));
         });
     }
 

@@ -81,11 +81,49 @@ the address is confirmed, not when the form is sent. A name is public, so "that 
 history of changes): the site depends on it for mail and must not depend on the store of the editors for a
 table. `database migrate` makes the three parts.
 
-**Not built yet:** the pages of the site still use the accounts without an address – they are moved in one
-piece once every journey exists in the store (another password, a forgotten one, another address, sign out
-everywhere, recovery codes, closing, Google and Microsoft through Identity's logins), so that the site never
-has two kinds of account; then the texts of the remaining mail, invitations and statements of reasons by
-mail, and the editors' accounts. The delivery plan lists the parts of step 19.4.
+**Every journey of an account, in the store (2026-11-19, parts three and four).** Another password (proved by
+the one it has), a forgotten one (a mailed link, once, one hour), another address (the link goes to the new
+address, the old one is told, nothing changes before the link is opened), signing out everywhere, recovery
+codes as the second way in, closing and opening again. Whatever changes how an account is entered signs it
+out everywhere and is told to its address. Google and Microsoft are Identity's logins: a first sign-in makes
+an account with the address the provider confirmed; an address that has an account makes no second one and
+signs nobody in – its visitor signs in and links the provider there.
+
+**The site is on these accounts (2026-11-19).** The code for accounts with a name and a password alone is
+gone – from the store, its tables and its tests; the site never had two kinds of account. The forms:
+
+* *Making an account* asks for a name, a mail address and a password and answers "look at your mail"; nobody
+  is signed in. Signing in with the right password before the address is confirmed says so and offers the
+  link once more.
+* *A mailed link* leads to a page of its own (`/account/confirm`, `/account/reset`, `/account/address`).
+  **Opening a link changes nothing**: the page shows a button or a form, and that does it – a program that
+  follows the links of a mail (a scanner of a mail provider) uses none up. The page tells no other site
+  where its visitor came from (`referrer: no-referrer`), since its address holds the token.
+* *Confirming* signs the visitor in, on the device the link was opened on, and shows the recovery codes
+  there. That is decided, not an accident: the codes open the account anyway, so whoever is shown them may
+  as well be signed in. What the device holds – the list, the reading position – is brought into the account
+  at that moment.
+* *Asking for a link* ("forgot the password", "no mail with the link") answers in the same words whether
+  there is such an account or not, and one sender gets ten such mails an hour at most.
+* *The page of the account* shows its address to its visitor and nobody else, changes it, and signs out
+  everywhere else.
+* *The providers* are asked for the address they confirmed: Google with the scope `email`, taken only when
+  Google says it verified it; Microsoft's `mail` or, without a mailbox, the name the account signs in with
+  when that is an address of its own. A provider that names none makes no account. Everything else a provider
+  sends is dropped as before.
+* *A mail is written in the language of the page* the form was sent from; later mail in the language of the
+  account.
+
+**What is true until step 19.10 and must not go public:** the legal texts of the program (privacy notice,
+terms) still say that an account needs no mail address. They are written again in step 19.10, together with
+the record of processing and the mail provider (the owner's decision). A site with these accounts is not
+shown to the public before that.
+
+**Not built yet:** the statement of reasons by mail and the mail about relationships, tags and requests
+(part five), invitations by mail (part five), the editors' accounts on Identity (part six), and the journeys
+in a real browser with the mail read from the catcher as part of the tests (part seven) – by hand they were
+taken once, see the delivery plan. Not tried: a real client of Google or Microsoft, so what they really send
+as "the address they confirmed" is known from their documentation only.
 
 ## Consequences
 

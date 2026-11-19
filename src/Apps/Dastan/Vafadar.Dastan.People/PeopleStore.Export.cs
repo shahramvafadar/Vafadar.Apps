@@ -19,13 +19,22 @@ public sealed partial class PeopleStore
 
     /// <summary>
     /// Returns everything the store holds about an open account, proved by its password, or
-    /// <see langword="null"/> when the password is wrong.
+    /// <see langword="null"/> when the password is wrong – which is counted like a wrong sign-in.
     /// </summary>
     public JsonObject? Export(string id, string password)
     {
         ArgumentNullException.ThrowIfNull(password);
+        return Accounts.ProvesItself(id, password) ? Export(id) : null;
+    }
+
+    /// <summary>
+    /// Returns everything the store holds about an open account, for who has just proved to be its visitor –
+    /// by the password, or through the provider of an account that has no password.
+    /// </summary>
+    public JsonObject? Export(string id)
+    {
         var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
-        if (!Proves(visitor, password, _time.GetUtcNow().UtcDateTime))
+        if (visitor is null)
         {
             return null;
         }
@@ -41,9 +50,10 @@ public sealed partial class PeopleStore
             ["account"] = new JsonObject
             {
                 ["name"] = visitor.Name,
+                ["mailAddress"] = _context.Accounts.AsNoTracking().Where(account => account.Id == id).Select(account => account.Email).SingleOrDefault(),
                 ["createdAt"] = Stamp(visitor.CreatedAt),
                 ["recoveryCodesLeft"] = _context.RecoveryCodes.AsNoTracking().Count(code => code.VisitorId == id && code.UsedAt == null),
-                ["signInThrough"] = new JsonArray([.. _context.ExternalLogins.AsNoTracking().Where(login => login.VisitorId == id).Select(login => login.Provider).OrderBy(provider => provider).AsEnumerable().Select(provider => (JsonNode)provider)]),
+                ["signInThrough"] = new JsonArray([.. _context.AccountLogins.AsNoTracking().Where(login => login.UserId == id).Select(login => login.LoginProvider).OrderBy(provider => provider).AsEnumerable().Select(provider => (JsonNode)provider)]),
             },
             ["readingPositions"] = new JsonArray([.. belongings.Positions.OrderBy(position => position.Key, StringComparer.Ordinal)
                 .Select(position => (JsonNode)new JsonObject { ["collection"] = position.Key, ["stage"] = position.Value })]),

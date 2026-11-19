@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Include="..\Databases\TestDatabase.cs" Link="Shared\TestDatabase.cs" />
+    <Compile Include="..\Databases\TestAccounts.cs" Link="Shared\TestAccounts.cs" />
   </ItemGroup>
 
 </Project>
