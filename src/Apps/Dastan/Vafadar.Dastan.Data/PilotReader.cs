@@ -1617,7 +1617,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     /// </summary>
     private string? Local(JsonRecord record, string field, string text, string root, string rootName)
     {
-        if (HasScheme(text) || text.Contains('\\', StringComparison.Ordinal) || Path.IsPathRooted(text))
+        if (HasScheme(text) || text.Contains('\\', StringComparison.Ordinal) || text.Any(char.IsControl) || Path.IsPathRooted(text))
         {
             record.Problem($"{field} is not a path relative to the sample, written with forward slashes.");
             return null;

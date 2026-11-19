@@ -270,7 +270,9 @@ public static partial class MediaIntake
 
         if (head.Length >= 12 && head[4..8].SequenceEqual("ftyp"u8))
         {
-            return (MediaFileKind.Video, ".mp4", "video/mp4");
+            // The family holds more than videos: pictures of a telephone (HEIC, AVIF), sound, films of QuickTime.
+            // A video is what names itself one of the kinds of MP4 a browser plays; the others are not taken.
+            return Mp4Brands.Contains(Encoding.ASCII.GetString(head[8..12])) ? (MediaFileKind.Video, ".mp4", "video/mp4") : null;
         }
 
         if (head.StartsWith<byte>([0x1A, 0x45, 0xDF, 0xA3]))
@@ -429,6 +431,9 @@ public static partial class MediaIntake
         _ => true,
     };
 
+    // What a file of the family of MP4 calls itself when it is an MP4 video.
+    private static readonly HashSet<string> Mp4Brands = new(StringComparer.Ordinal) { "isom", "iso2", "iso3", "iso4", "iso5", "iso6", "mp41", "mp42", "avc1", "dash", "M4V ", "mmp4" };
+
     // The chunks of a PNG a picture is drawn from: the picture and its palette, what is see-through, the
     // colours it is meant in, how dense it is, and the frames of a moving one. Every other chunk – a text, the
     // time, EXIF, the credentials of a maker, what a program kept for itself – says something about the making.
@@ -541,9 +546,9 @@ public static partial class MediaIntake
 
     private static (int Width, int Height)? Positive(int width, int height) => width > 0 && height > 0 ? (width, height) : null;
 
-    [GeneratedRegex("^[a-z0-9]+(-[a-z0-9]+)*$", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"^[a-z0-9]+(-[a-z0-9]+)*\z", RegexOptions.CultureInvariant)]
     private static partial Regex Name();
 
-    [GeneratedRegex("^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*\z", RegexOptions.CultureInvariant)]
     private static partial Regex Language();
 }

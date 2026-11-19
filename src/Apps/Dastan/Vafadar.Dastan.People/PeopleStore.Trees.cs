@@ -172,7 +172,8 @@ public sealed partial class PeopleStore
             [.. members.Where(member => names.ContainsKey(member.Account)).Select(member => new TreeMember(names[member.Account], (TreeRole)member.Role)).OrderBy(member => member.Account.Name, StringComparer.CurrentCultureIgnoreCase)],
             [.. changes.Select(change => new TreeChange(change.At, change.By is { } by && names.TryGetValue(by, out var account) ? account.Name : null, change.What, change.Subject))])
         {
-            // A claim is shown to who made it and to who is to answer it, and to nobody else who sees the tree.
+            // A claim that waits is shown to who made it and to who is to answer it. That one was made, refused
+            // or taken back stands in the history, which everybody who may see the tree reads.
             Claims =
             [
                 .. claims.Where(claim => names.ContainsKey(claim.Account))

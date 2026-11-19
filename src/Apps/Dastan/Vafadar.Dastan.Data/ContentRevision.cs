@@ -88,7 +88,7 @@ public static class ContentRevision
                 ReviewRoot = Path.GetDirectoryName(content) ?? content,
                 Translations =
                 [
-                    .. Directory.EnumerateFiles(directory, Path.GetFileNameWithoutExtension(checkedSample.File) + ".*.json").Order(StringComparer.Ordinal).Select(File.ReadAllText),
+                    .. Directory.EnumerateFiles(directory, Path.GetFileNameWithoutExtension(checkedSample.File) + ".*.json").Order(StringComparer.Ordinal).Select(file => Translation(sample, File.ReadAllText(file))),
                 ],
             }));
     }
@@ -215,6 +215,21 @@ public static class ContentRevision
 
         int Count(string kind) => changes.Count(change => (string?)change["kind"] == kind);
         return new RevisionResult(json, [], (Count("added"), Count("changed"), Count("removed") + Count("withdrawn")));
+    }
+
+    // A translation beside the working file, as the revision takes it: without the texts of statements that
+    // were withdrawn, which the revision does not hold. A file that is no document is left to the reader, which
+    // says what is wrong with it.
+    private static string Translation(JsonObject working, string text)
+    {
+        try
+        {
+            return JsonNode.Parse(text) is JsonObject translation ? WithoutWithdrawn(working, translation).ToJsonString() : text;
+        }
+        catch (System.Text.Json.JsonException)
+        {
+            return text;
+        }
     }
 
     /// <summary>

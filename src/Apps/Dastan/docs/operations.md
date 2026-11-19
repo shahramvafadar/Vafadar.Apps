@@ -10,16 +10,17 @@ The tool of the editors is a different program and has a page of its own:
 
 ## What runs
 
-One container: the program of the site, listening on port 8080 without encryption. It holds no collection, no
-database and no secret, writes nothing to its file system and keeps nothing between two starts except, when asked
-to, the keys of its forms.
+One container: the program of the site, listening on port 8080 without encryption. It holds no collection and no
+secret. Without accounts it has no database, writes nothing to its file system and keeps nothing between two
+starts except, when asked to, the keys of its forms; with accounts it keeps the store of the visitors, their
+photographs and the keys on a volume ("A closed trial in a container", below).
 
 | | |
 |---|---|
 | Image | Built from [`Dockerfile`](../Dockerfile) with the root of the repository as its context; what is sent to the build is named in `Dockerfile.dockerignore` – no content, no other app, no test |
 | User | Not the administrator (`$APP_UID`, 1654) |
 | File system | Can be read-only; the program needs `/tmp` (a `tmpfs` is enough) |
-| Memory | The trial on this machine ran with a limit of 512 MB |
+| Memory | Without accounts the trial on this machine ran with a limit of 512 MB; with accounts and photographs with 1 GB (`compose.trial.yaml`) |
 | Port | 8080, HTTP. A proxy in front of it holds the certificate |
 
 ```powershell
@@ -209,8 +210,9 @@ answer and belongs into the [privacy matrix](../../../../docs/privacy/privacy-ma
 ## What is not decided or not tried
 
 * **A host, an address, a certificate, a proxy, monitoring, backups of the revisions.** The owner's decisions.
-* **The store of the visitors in a container**: the volume, its backup and bringing a backup back were not
-  tried; the site was run with accounts on a development machine only.
+* **The store of the visitors in a container**: the volume, its backup and bringing a backup back were tried
+  on 2026-11-18 ("Backing up what the site keeps, and bringing it back"); not with more than a handful of
+  accounts, and not over a real tunnel.
 * **More than one container at a time.** With several, the keys of the forms have to be shared (`Dastan__Keys`
   on a volume all of them use); it was tried with one container.
 * **The image on another processor or operating system** than this machine's (linux/amd64 under Docker Desktop).

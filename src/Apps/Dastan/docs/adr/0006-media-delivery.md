@@ -253,3 +253,19 @@ A review of the code for sizes found two things to make firmer.
   half a file. What is left of a writing that failed is removed.
 
 Checked: two more cases of `ImageSizesTests`, one of `PhotoPagesTests`.
+
+## Addendum of 2026-11-19: of a picture, only the picture (step 18.7.1)
+
+The rule was "what an image says about where and with which device it was made is taken out". The code left
+out the kinds of notes it knew – two segments of a JPEG, five chunks of a PNG – and kept the rest, and the
+rest grows: a list of further pictures in the same file, the credentials of a maker, a comment, a chunk of a
+program's own, and whatever a file holds after the end of its picture (a telephone hangs a short film with
+sound and its own place onto a still picture).
+
+The rule is turned around. Of a JPEG the segments a picture is drawn from are kept – its tables, frames and
+scans, the first application segment (JFIF), the colour profile, the note of Adobe about how colours are
+stored – up to the marker that ends the picture; of a PNG the chunks a picture is drawn from, up to the chunk
+that ends it. Everything else is left out, known or not. A file that is not built that way to its end is not
+kept: it "cannot be read". A file of the family of MP4 is a video only when it names a kind of MP4.
+
+Not changed: a WebP with EXIF or XMP is refused, as before; a video keeps what it says about its making.
