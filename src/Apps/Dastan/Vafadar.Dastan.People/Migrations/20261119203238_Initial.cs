@@ -15,6 +15,33 @@ namespace Vafadar.Dastan.People.Migrations
             migrationBuilder.EnsureSchema(
                 name: "personal");
 
+            migrationBuilder.EnsureSchema(
+                name: "identity");
+
+            migrationBuilder.CreateTable(
+                name: "VisitorAccounts",
+                schema: "identity",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Language = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    UserName = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
+                    Email = table.Column<string>(type: "character varying(320)", maxLength: 320, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "character varying(320)", maxLength: 320, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VisitorAccounts", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Visitors",
                 schema: "personal",
@@ -36,6 +63,73 @@ namespace Vafadar.Dastan.People.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Visitors", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VisitorClaims",
+                schema: "identity",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VisitorClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VisitorClaims_VisitorAccounts_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "identity",
+                        principalTable: "VisitorAccounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VisitorLogins",
+                schema: "identity",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    ProviderKey = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VisitorLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_VisitorLogins_VisitorAccounts_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "identity",
+                        principalTable: "VisitorAccounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VisitorTokens",
+                schema: "identity",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    LoginProvider = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VisitorTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_VisitorTokens_VisitorAccounts_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "identity",
+                        principalTable: "VisitorAccounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -784,6 +878,32 @@ namespace Vafadar.Dastan.People.Migrations
                 column: "Owner");
 
             migrationBuilder.CreateIndex(
+                name: "IX_VisitorAccounts_NormalizedEmail",
+                schema: "identity",
+                table: "VisitorAccounts",
+                column: "NormalizedEmail",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VisitorAccounts_NormalizedUserName",
+                schema: "identity",
+                table: "VisitorAccounts",
+                column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VisitorClaims_UserId",
+                schema: "identity",
+                table: "VisitorClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VisitorLogins_UserId",
+                schema: "identity",
+                table: "VisitorLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Visitors_NameKey",
                 schema: "personal",
                 table: "Visitors",
@@ -855,6 +975,18 @@ namespace Vafadar.Dastan.People.Migrations
                 schema: "personal");
 
             migrationBuilder.DropTable(
+                name: "VisitorClaims",
+                schema: "identity");
+
+            migrationBuilder.DropTable(
+                name: "VisitorLogins",
+                schema: "identity");
+
+            migrationBuilder.DropTable(
+                name: "VisitorTokens",
+                schema: "identity");
+
+            migrationBuilder.DropTable(
                 name: "Albums",
                 schema: "personal");
 
@@ -869,6 +1001,10 @@ namespace Vafadar.Dastan.People.Migrations
             migrationBuilder.DropTable(
                 name: "Photos",
                 schema: "personal");
+
+            migrationBuilder.DropTable(
+                name: "VisitorAccounts",
+                schema: "identity");
 
             migrationBuilder.DropTable(
                 name: "Trees",

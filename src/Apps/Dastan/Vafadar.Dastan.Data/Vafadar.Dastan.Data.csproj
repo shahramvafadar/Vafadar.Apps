@@ -9,6 +9,11 @@
     <!-- Reading and writing images (D-056). The second package brings the library for a Linux container; it needs nothing of the system. -->
     <!-- The reports of visitors and the notices about content lie in the database (ADR 0015). -->
     <PackageReference Include="Npgsql" />
+    <!-- The tables of the schema "delivery" are made and changed through EF Core, like every part of the database.
+         Identity is named so that everything that uses the stores gets one version of EF Core. -->
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
     <!-- The mail of the site leaves by SMTP (ADR 0016). -->
     <PackageReference Include="MailKit" />
     <PackageReference Include="SkiaSharp" />

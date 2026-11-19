@@ -15,7 +15,7 @@ namespace Vafadar.Dastan.People;
 /// </content>
 public sealed partial class PeopleStore
 {
-    private T Guarded<T>(string[] keys, Func<T> act)
+    internal T Guarded<T>(string[] keys, Func<T> act)
     {
         // An act that is already part of a larger one runs under the locks of that one.
         if (_context.Database.CurrentTransaction is not null)
@@ -34,7 +34,7 @@ public sealed partial class PeopleStore
         return done;
     }
 
-    private static string OfAccount(string id) => "account:" + id;
+    internal static string OfAccount(string id) => "account:" + id;
 
     private static string OfTree(string tree) => "tree:" + tree;
 

@@ -7,13 +7,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Vafadar.Dastan.Core\Vafadar.Dastan.Core.csproj" />
+    <!-- The mail an account is told something by is written into the outbox in the step of what it tells of. -->
+    <ProjectReference Include="..\Vafadar.Dastan.Data\Vafadar.Dastan.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-    <!-- The accounts move to ASP.NET Core Identity in step 19.4 (ADR 0016). Named already, so that everything that
-         uses the store gets one version of EF Core: the tools of the design time ask for a newer one than Npgsql
-         brings, and do not pass theirs on. -->
+    <!-- The accounts of the visitors are kept by ASP.NET Core Identity (ADR 0016). -->
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
   </ItemGroup>

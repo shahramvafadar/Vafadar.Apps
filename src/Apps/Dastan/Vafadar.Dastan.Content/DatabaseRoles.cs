@@ -37,13 +37,15 @@ public static partial class DatabaseRoles
         }
 
         var (personal, editorial, published, delivery) = (PeopleStore.Schema, EditorialStore.Schema, PublishedRevision.Schema, Delivery.Schema);
-        var all = new[] { personal, editorial, published, delivery };
+        const string identity = "identity";
+        var all = new[] { identity, personal, editorial, published, delivery };
 
         // What each program may do with the tables of each part; nothing means the part is closed to it.
         var may = program == "site"
             ? new Dictionary<string, string>
             {
-                [personal] = "SELECT, INSERT, UPDATE, DELETE",   // accounts and what belongs to them
+                [identity] = "SELECT, INSERT, UPDATE, DELETE",   // the accounts of the visitors
+                [personal] = "SELECT, INSERT, UPDATE, DELETE",   // what belongs to them
                 [published] = "SELECT",                          // what was released, and nothing of how it came to be
                 [delivery] = "SELECT, INSERT",                   // a report or a notice is written, and counted
             }
@@ -81,6 +83,7 @@ public static partial class DatabaseRoles
             }
 
             // Which changes of form a part has is read by the program that starts, and written by nobody but the command.
+            Run(database, $"""GRANT SELECT ON ALL TABLES IN SCHEMA {schema} TO "{role}" """, onlyIfHistory: schema);
             Run(database, $"""REVOKE INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA {schema} FROM "{role}" """, onlyIfHistory: schema);
         }
 

@@ -200,7 +200,7 @@ public sealed partial class PeopleStore
     /// <summary>Returns whether a code is an invitation somebody can use today: made by an open account, not used, not taken back, not run out.</summary>
     public bool IsInvited(string? code) => Usable(code) is not null;
 
-    private StoredInvitation? Usable(string? code)
+    internal StoredInvitation? Usable(string? code)
     {
         if (code is not { Length: > 0 and <= 40 })
         {
@@ -228,7 +228,7 @@ public sealed partial class PeopleStore
         return rule;
     }
 
-    private DateOnly Today => DateOnly.FromDateTime(_time.GetUtcNow().UtcDateTime);
+    internal DateOnly Today => DateOnly.FromDateTime(_time.GetUtcNow().UtcDateTime);
 
     private bool IsOpen(string id) => _context.Visitors.AsNoTracking().Any(visitor => visitor.Id == id && visitor.ClosedAt == null);
 

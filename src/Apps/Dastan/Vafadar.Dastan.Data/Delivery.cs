@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Vafadar.Dastan.Data;
@@ -5,12 +6,24 @@ namespace Vafadar.Dastan.Data;
 /// <summary>
 /// The part of the database for what comes in from outside and waits for somebody (ADR 0015): the reports of
 /// visitors, the notices about content, and the mail that waits to be sent. The site writes there, the tool
-/// of the editors and the command of who runs the site read and settle. The tables are made by <c>database migrate</c>; nothing here makes them.
+/// of the editors and the command of who runs the site read and settle. The tables are made by <c>database migrate</c> (<see cref="Migrate"/>), never by a program that starts.
 /// </summary>
 public static class Delivery
 {
     /// <summary>The schema of the database.</summary>
     public const string Schema = "delivery";
+
+    /// <summary>Makes the tables of this part in a database, or brings them to the form this program knows.</summary>
+    public static void Migrate(string connection)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        using var context = new DeliveryContext(Options(connection));
+        context.Database.Migrate();
+    }
+
+    // The history of the changes of form lies in the schema itself, as each part of the database keeps its own.
+    internal static DbContextOptions<DeliveryContext> Options(string connection) =>
+        new DbContextOptionsBuilder<DeliveryContext>().UseNpgsql(connection, npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", Schema)).Options;
 
     /// <summary>Opens a connection; a database that cannot be reached says so in words an operator can act on.</summary>
     internal static NpgsqlConnection Open(string connection)

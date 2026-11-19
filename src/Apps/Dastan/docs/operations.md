@@ -230,7 +230,7 @@ postgres` starts a PostgreSQL that keeps nothing (its data lies in memory) and a
 tests make a database of their own for every test in it and are skipped without it – in CI, where
 `DASTAN_POSTGRES_REQUIRED` is set, they fail instead.
 
-**The parts of the database.** `personal` (accounts and what belongs to them), `editorial` (the work of the
+**The parts of the database.** `identity` (the accounts as ASP.NET Core Identity keeps them), `personal` (what belongs to the accounts), `editorial` (the work of the
 editors), `published` (the revisions and comparisons that were released, and which of them the site shows) and
 `delivery` (reports of visitors, notices about content). One `database migrate` makes all of them.
 
