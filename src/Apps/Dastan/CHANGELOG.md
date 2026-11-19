@@ -279,6 +279,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   owner of the tree only.
 - The copy of your data leaves out the code of an invitation that can still be used.
 - What belongs to accounts is kept in PostgreSQL. Nothing a visitor sees has changed.
+- The work of the editors is kept in PostgreSQL too. Nothing an editor sees has changed; what two editors do to
+  the same collection at the same moment is now done one after the other, so neither loses the other's change.
+  A copy of the store is made with the database's own tool.
 - The site has its legal pages: terms of use, privacy notice, a page that lists everything the site stores on
   your device, and the legal notice – in English, Persian and German. They are linked at the foot of every page.
 - The site stores on your device only what you asked for. Your language is remembered when you change it, not

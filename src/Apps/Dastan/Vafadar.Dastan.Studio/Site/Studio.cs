@@ -55,18 +55,24 @@ public sealed class StudioStore
         ArgumentNullException.ThrowIfNull(options);
         if (string.IsNullOrWhiteSpace(options.Value.Store))
         {
-            throw new InvalidOperationException("The tool of the editors needs the file of its store: set Studio:Store (the environment variable Studio__Store) to the file.");
+            throw new InvalidOperationException("The tool of the editors needs its database: set Studio:Store (the environment variable Studio__Store) to the connection of the PostgreSQL database.");
         }
 
-        _file = Path.GetFullPath(options.Value.Store);
+        _file = options.Value.Store;
         _files = string.IsNullOrWhiteSpace(options.Value.Files) ? null : Path.GetFullPath(options.Value.Files);
         ArgumentNullException.ThrowIfNull(time);
         _time = time;
+        // The tool does not change the form of a database (ADR 0015): one that is behind is said so.
+        if (EditorialStore.Pending(_file) is { Count: > 0 } pending)
+        {
+            throw new InvalidOperationException($"The database lacks {pending.Count} change(s) of form (the first: {pending[0]}). Run \"dotnet Vafadar.Dastan.Content.dll database migrate --database env\" with the connection in DASTAN_DATABASE, then start the tool again.");
+        }
+
         using var store = EditorialStore.Open(_file, _time, _files);
     }
 
     /// <summary>Opens the store for one request.</summary>
-    public EditorialStore Open() => EditorialStore.Open(_file, _time, _files, migrate: false);
+    public EditorialStore Open() => EditorialStore.Open(_file, _time, _files);
 }
 
 /// <summary>Who looks at a page of the tool: the language and the appearance they chose.</summary>

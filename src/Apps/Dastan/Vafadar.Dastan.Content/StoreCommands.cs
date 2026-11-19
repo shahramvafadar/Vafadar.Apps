@@ -120,7 +120,7 @@ internal static class StoreCommands
         {
             case "list" when Only(given, "--store"):
             {
-                using var store = EditorialStore.Open(database, time);
+                using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
                 var held = store.Comparisons();
                 output.WriteLine($"{held.Length} {(held.Length == 1 ? "comparison" : "comparisons")}.");
                 foreach (var comparison in held)
@@ -139,7 +139,7 @@ internal static class StoreCommands
 
             case "export" when given.TryGetValue("--out", out var target) && Only(given, "--store", "--out"):
             {
-                using var store = EditorialStore.Open(database, time);
+                using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
                 if (store.Comparison(words[2]) is not { } exported)
                 {
                     output.WriteLine($"{words[2]}: the store holds no comparison of that name.");
@@ -151,7 +151,7 @@ internal static class StoreCommands
 
             case "history" when Only(given, "--store"):
             {
-                using var store = EditorialStore.Open(database, time);
+                using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
                 var changes = store.ComparisonHistory(words[2]);
                 output.WriteLine($"{words[2]}: {changes.Length} {(changes.Length == 1 ? "change" : "changes")}.");
                 foreach (var change in changes)
@@ -221,7 +221,7 @@ internal static class StoreCommands
     // Does an act and says what came of it.
     private static int Said(TextWriter output, string done, Func<EditorialStore, ActResult> act, string database, TimeProvider time, string? files)
     {
-        using var store = EditorialStore.Open(database, time, files);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time, files);
         var result = act(store);
         if (result.Done)
         {
@@ -240,7 +240,7 @@ internal static class StoreCommands
 
     private static int Waiting(string collection, string database, TextWriter output, TimeProvider time)
     {
-        using var store = EditorialStore.Open(database, time);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
         if (!store.Collections.Contains(collection))
         {
             output.WriteLine($"{collection}: the store holds no collection of that name.");
@@ -277,7 +277,7 @@ internal static class StoreCommands
 
     private static int Import(string file, string database, string by, string? reason, TextWriter output, TimeProvider time)
     {
-        using var store = EditorialStore.Open(database, time);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
         var result = store.Import(file, by, reason);
         if (result.CollectionId is null)
         {
@@ -296,7 +296,7 @@ internal static class StoreCommands
 
     private static int Export(string collection, string database, string target, TextWriter output, TimeProvider time)
     {
-        using var store = EditorialStore.Open(database, time);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
         if (store.Export(collection) is not { } exported)
         {
             output.WriteLine($"{collection}: the store holds no collection of that name. It holds: {(store.Collections.IsEmpty ? "none" : string.Join(", ", store.Collections))}.");
@@ -314,7 +314,7 @@ internal static class StoreCommands
             return ContentCommands.NotUnderstood;
         }
 
-        using var store = EditorialStore.Open(database, time, files);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time, files);
         var result = store.Publish(collection, day, by, note);
         if (result.Revision is null)
         {
@@ -333,7 +333,7 @@ internal static class StoreCommands
 
     private static int Revisions(string collection, string database, TextWriter output, TimeProvider time)
     {
-        using var store = EditorialStore.Open(database, time);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
         if (!store.Collections.Contains(collection))
         {
             output.WriteLine($"{collection}: the store holds no collection of that name.");
@@ -352,7 +352,7 @@ internal static class StoreCommands
 
     private static int Published(string collection, int number, string database, string target, TextWriter output, TimeProvider time)
     {
-        using var store = EditorialStore.Open(database, time);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
         if (store.Revision(collection, number) is not { } revision)
         {
             output.WriteLine($"{collection}: the store did not publish a revision {number}.");
@@ -413,7 +413,7 @@ internal static class StoreCommands
 
     private static int History(string collection, string database, string? record, TextWriter output, TimeProvider time)
     {
-        using var store = EditorialStore.Open(database, time);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
         if (!store.Collections.Contains(collection))
         {
             output.WriteLine($"{collection}: the store holds no collection of that name.");

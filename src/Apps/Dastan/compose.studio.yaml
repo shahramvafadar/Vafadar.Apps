@@ -5,13 +5,20 @@
 #   docker compose -f src/Apps/Dastan/compose.studio.yaml up -d --build      build and start
 #   docker compose -f src/Apps/Dastan/compose.studio.yaml down               stop and remove; the store stays
 #
+# The store is a PostgreSQL database of its own beside the tool (ADR 0015). Its password is read from the
+# environment of this machine (STUDIO_DB_PASSWORD) and is never written into a file of the repository. The
+# tool does not make its tables: once, and after an update that changes them (docs/operations-studio.md),
+#
+#   docker compose -f src/Apps/Dastan/compose.studio.yaml run --rm --entrypoint sh studio \
+#     -c 'DASTAN_DATABASE="$Studio__Store" dotnet /command/Vafadar.Dastan.Content.dll database migrate --database env'
+#
 # The tool answers another machine over https only, and a container sees this machine as another one: ask it
 # as a proxy would – eng/Check-Studio.ps1 does – or put a proxy with a certificate in front of it.
 name: test
 
 services:
   # The image of Dockerfile.studio. Nothing in the container can be written to but its memory and the volume
-  # of the store.
+  # of its keys and files.
   studio:
     build:
       context: ../../..
@@ -21,7 +28,12 @@ services:
     tmpfs:
       - /tmp
     mem_limit: 512m
+    depends_on:
+      studio-database:
+        condition: service_healthy
     environment:
+      # The store: the database below.
+      Studio__Store: Host=studio-database;Database=dastan;Username=dastan;Password=${STUDIO_DB_PASSWORD:?set a password for the database in STUDIO_DB_PASSWORD}
       # The names the tool is reached by; any other is refused.
       AllowedHosts: ${STUDIO_HOSTS:-localhost;127.0.0.1}
       # Who the tool believes about how an editor came: here the networks Docker gives its containers, so that
@@ -32,11 +44,31 @@ services:
       # "media" of the collections beside it first (docs/operations-studio.md):
       # Studio__Files: /data/content/samples
     volumes:
-      # The store and the keys of the sign-in. They outlive the container; "down -v" throws them away.
+      # The keys of the sign-in and the files editors bring in. They outlive the container; "down -v" throws
+      # them away.
       - studio-data:/data
     ports:
       # Reachable from this machine only.
       - "127.0.0.1:53381:8080"
 
+  # The database of the store. Reached by the tool only; no port of it is opened on this machine.
+  studio-database:
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+    environment:
+      POSTGRES_DB: dastan
+      POSTGRES_USER: dastan
+      POSTGRES_PASSWORD: ${STUDIO_DB_PASSWORD:?set a password for the database in STUDIO_DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dastan -d dastan"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - studio-database:/var/lib/postgresql
+    mem_limit: 1g
+
 volumes:
   studio-data:
+  # The store itself: the work of the editors that is not published yet.
+  studio-database:

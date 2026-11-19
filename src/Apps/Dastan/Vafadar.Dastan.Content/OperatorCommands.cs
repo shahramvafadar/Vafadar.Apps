@@ -103,6 +103,7 @@ internal static class OperatorCommands
                 try
                 {
                     PeopleStore.Migrate(Connection(database));
+                    Vafadar.Dastan.Store.EditorialStore.Migrate(Connection(database));
                 }
                 catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)
                 {
@@ -274,7 +275,7 @@ internal static class OperatorCommands
     /// <c>DASTAN_DATABASE</c>: a connection holds a password, and a password is never a word of a command –
     /// the words of a command stay in the history of a shell.
     /// </summary>
-    private static string Connection(string written) =>
+    internal static string Connection(string written) =>
         written == "env" ? Environment.GetEnvironmentVariable("DASTAN_DATABASE") ?? string.Empty : written;
 
     private static int People(string database, TextWriter output, TimeProvider time, Func<PeopleStore, int> act)

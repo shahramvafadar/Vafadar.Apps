@@ -53,9 +53,19 @@ while one writer is let in at a time; the records of the editors were bodies of 
 The store of the visitors (`personal`). A database is made with `--encoding=UTF8 --locale=C`, so that text is
 compared and ordered by its code points, as the store always did; where names are shown in order, the site
 orders them for the language of the page. The rules of that store that count before they add are kept by locks of the transaction, one per account, tree,
-photograph or pair of accounts, taken in one order, with a test of requests at the same moment for each. The
-other parts of this decision are open – the delivery plan,
-step 19.3, says which.
+photograph or pair of accounts, taken in one order, with a test of requests at the same moment for each.
+
+The store of the editors (`editorial`), in the same way: Npgsql, one first migration, the tool told the
+connection in `Studio:Store`, tables made by `database migrate` and never by the tool, and `store copy` gone
+in favour of `pg_dump`. An act on a collection, a change of a comparison and a change of the list of the
+editors each take a lock of the transaction first, so that acts of the same moment are done one after the
+other; a test lets eight editors put a record at once.
+
+**What this second part did not do, said plainly.** The tables of the editors are as they were: a record is a
+row with its group, its identifier, its place, its review status and its body as JSON, exactly as the
+collection file writes it. The sentence above – "no table of a record and its body" – is not met yet. The
+relations with typed columns (relation ends, memberships, media, sources), the published revisions in a schema
+of their own, and reports and notices as tables are the rest of step 19.3; the delivery plan names them.
 
 ## Consequences
 

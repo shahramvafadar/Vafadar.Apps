@@ -38,7 +38,7 @@ internal sealed class WorkingCopy : IDisposable
 
     public string Persian => Path.Combine(Samples, "shahnameh-pilot.fa.json");
 
-    public string Database => Path.Combine(_folder, "store", "editors.db");
+    public string Database => Vafadar.Dastan.Tests.TestDatabase.For(Path.Combine(_folder, "store", "editors.db"));
 
     /// <summary>Opens the store; with <paramref name="files"/> it looks for the files of media in the copy.</summary>
     public EditorialStore Open(bool files = false) => EditorialStore.Open(Database, Clock, files ? Samples : null);

@@ -406,10 +406,11 @@ public sealed partial class EditorialStore
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
 
-        // One step of the store from what the act reads to what it keeps, and one act at a time – the store
-        // lets one writer in. An act keeps the whole collection as it read it: if another act were kept in
+        // One step of the store from what the act reads to what it keeps, and one act at a time – a lock of
+        // the database per collection. An act keeps the whole collection as it read it: if another were kept in
         // between, this one would put that act's records back to what they were, under this editor's name.
         using var step = _context.Database.BeginTransaction();
+        Lock("collection:" + collectionId);
         _context.ChangeTracker.Clear();
         if (Working(collectionId) is not var (root, translations))
         {

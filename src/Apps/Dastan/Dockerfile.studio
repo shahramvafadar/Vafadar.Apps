@@ -4,8 +4,9 @@
 #
 #   docker build -f src/Apps/Dastan/Dockerfile.studio -t dastan-studio .
 #
-# The image holds the program and nothing of a store: the store, and the keys of the sign-in, lie in a folder
-# that is mounted when the container is started (/data). What is sent to the build is named in
+# The image holds the program and nothing of a store: the store is a PostgreSQL database the container is told
+# (Studio__Store), and the keys of the sign-in lie in a folder that is mounted when the container is started
+# (/data). What is sent to the build is named in
 # Dockerfile.studio.dockerignore.
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
@@ -19,11 +20,18 @@ RUN mkdir -p artifacts/native-sqlcipher/feed artifacts/maui-core/feed \
     && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Content -c Release -o /command -p:ContinuousIntegrationBuild=true
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS studio
+
+# The driver of PostgreSQL looks for the Kerberos library of the system when it first connects. The tool does
+# not use Kerberos, but without the library the runtime writes a complaint into the log of every start.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libgssapi-krb5-2 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY --from=build /studio .
 COPY --from=build /command /command
 
-# The folder of the store belongs to the user of the tool; a volume mounted there starts with that owner.
+# The folder of the keys and files belongs to the user of the tool; a volume mounted there starts with that owner.
 RUN mkdir -p /data/keys && chown -R $APP_UID /data
 
 # The tool listens on 8080 without encryption: a proxy in front of it holds the certificate and says how an
@@ -32,7 +40,6 @@ RUN mkdir -p /data/keys && chown -R $APP_UID /data
 ENV ASPNETCORE_HTTP_PORTS=8080 \
     DOTNET_gcServer=0 \
     Studio__Accounts=true \
-    Studio__Store=/data/editors.db \
     Studio__Keys=/data/keys
 EXPOSE 8080
 VOLUME /data

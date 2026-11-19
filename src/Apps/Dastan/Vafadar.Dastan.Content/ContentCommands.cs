@@ -86,7 +86,7 @@ public static class ContentCommands
                 ? ForgetReports(words[2], today.AddDays(-days).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), output)
                 : NotAsked(output),
             ["notices" or "people" or "database", ..] => OperatorCommands.Run(words, output, time ?? TimeProvider.System) ?? NotAsked(output),
-            ["store", "editor" or "editors" or "copy", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
+            ["store", "editor" or "editors", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
             ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
             _ => NotAsked(output),
         };

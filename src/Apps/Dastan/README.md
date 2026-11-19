@@ -56,11 +56,15 @@ shows it as a demonstration. Started with any other settings the site is for the
 is published, because the sample is not approved for publication. No page needs a script to be read; the reading position
 is chosen at the bottom of the page of the story.
 
-The tool of the editors shows what their store holds ([ADR 0011](docs/adr/0011-editors-store.md)). It needs the
-file of the store and answers this machine only:
+The tool of the editors shows what their store holds ([ADR 0011](docs/adr/0011-editors-store.md)). The store is
+a PostgreSQL database ([ADR 0015](docs/adr/0015-postgresql.md)); `compose.yaml` starts one for development that
+keeps nothing. The tool needs its connection and answers this machine only:
 
 ```powershell
-$env:Studio__Store = "<the file of the store>"
+docker compose -f src/Apps/Dastan/compose.yaml up -d postgres
+$env:DASTAN_DATABASE = "Host=127.0.0.1;Port=53432;Username=postgres;Database=dastan"   # the development database has no password
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Content -- database migrate --database env
+$env:Studio__Store = $env:DASTAN_DATABASE
 dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Studio      # then open http://localhost:5211
 ```
 
@@ -69,7 +73,7 @@ account is made where the store lies – the password is asked for, never writte
 is started with `Studio:Accounts`. It then answers other machines over https only, and only who signed in:
 
 ```powershell
-dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Content -- store editor add "<name>" --store "<the file of the store>"
+dotnet run --project src/Apps/Dastan/Vafadar.Dastan.Content -- store editor add "<name>" --store env
 $env:Studio__Accounts = "true"
 $env:Studio__Keys = "<a folder for the keys of the sign-in>"       # without it everybody signs in again after a restart
 $env:AllowedHosts = "<the name the tool is reached by>"

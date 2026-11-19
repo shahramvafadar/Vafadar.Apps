@@ -224,6 +224,7 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
+        modelBuilder.HasDefaultSchema(EditorialStore.Schema);
 
         modelBuilder.Entity<StoredCollection>(collection =>
         {
@@ -312,5 +313,5 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
 internal sealed class StoreContextFactory : IDesignTimeDbContextFactory<StoreContext>
 {
     public StoreContext CreateDbContext(string[] args) =>
-        new(new DbContextOptionsBuilder<StoreContext>().UseSqlite("Data Source=design-time.db").Options);
+        new(EditorialStore.Options("Host=design-time;Database=design-time"));
 }
