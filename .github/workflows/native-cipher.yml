@@ -39,6 +39,13 @@ jobs:
     name: Windows reproducibility and actual protected persistence
     runs-on: windows-2025-vs2026
     timeout-minutes: 60
+    # A new hosted image is rolled out gradually, and a producer request names one installation. Producer
+    # qualification therefore makes several independent attempts, each on a runner of its own and each behind
+    # every gate; an attempt that receives another installation is refused before any native build.
+    strategy:
+      fail-fast: false
+      matrix:
+        attempt: ${{ fromJSON((inputs.producer_qualification || startsWith(github.ref, 'refs/heads/shahram/native-producer-')) && '[1,2,3,4,5]' || '[1]') }}
     env:
       VafadarWindowsCipherVariant: servicing
       ContinuousIntegrationBuild: true
@@ -171,7 +178,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: windows-native-qualification
+          name: ${{ matrix.attempt == 1 && 'windows-native-qualification' || format('windows-native-qualification-attempt-{0}', matrix.attempt) }}
           path: |
             artifacts/native-sqlcipher/toolchain-review-*/proof.json
             artifacts/native-sqlcipher/warning-policy-*/proof.json
