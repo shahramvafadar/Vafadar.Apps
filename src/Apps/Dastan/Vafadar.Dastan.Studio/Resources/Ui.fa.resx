@@ -783,4 +783,28 @@
   <data name="Done_withdrawn" xml:space="preserve">
     <value>سایت از شروع بعدی‌اش هیچ نسخه‌ای از این مجموعه را نشان نمی‌دهد. آنچه منتشر شده بود همچنان نگه داشته می‌شود.</value>
   </data>
+  <data name="ComparisonRelease_Lead" xml:space="preserve">
+    <value>سایتی که از پایگاه‌داده می‌خواند، مقایسه را همان‌گونه نشان می‌دهد که هنگام آزادسازی بود، از شروع بعدی‌اش. آنچه پس از آن تغییر کند وقتی نشان داده می‌شود که مقایسه دوباره آزاد شود.</value>
+  </data>
+  <data name="ComparisonRelease_No" xml:space="preserve">
+    <value>سایت این مقایسه را نشان نمی‌دهد.</value>
+  </data>
+  <data name="ComparisonRelease_AsHeld" xml:space="preserve">
+    <value>سایت این مقایسه را همان‌گونه که این‌جاست نشان می‌دهد.</value>
+  </data>
+  <data name="ComparisonRelease_Earlier" xml:space="preserve">
+    <value>سایت این مقایسه را همان‌گونه که آزاد شد نشان می‌دهد؛ از آن پس تغییر کرده است.</value>
+  </data>
+  <data name="ComparisonRelease_Submit" xml:space="preserve">
+    <value>مقایسه همان‌گونه که اکنون هست روی سایت نشان داده شود</value>
+  </data>
+  <data name="ComparisonWithdraw_Submit" xml:space="preserve">
+    <value>مقایسه روی سایت نشان داده نشود</value>
+  </data>
+  <data name="Done_comparisonreleased" xml:space="preserve">
+    <value>سایت از شروع بعدی‌اش مقایسه را همان‌گونه که اکنون هست نشان می‌دهد.</value>
+  </data>
+  <data name="Done_comparisonwithdrawn" xml:space="preserve">
+    <value>سایت از شروع بعدی‌اش این مقایسه را نشان نمی‌دهد.</value>
+  </data>
 </root>

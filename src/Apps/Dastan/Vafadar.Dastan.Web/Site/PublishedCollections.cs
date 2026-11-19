@@ -19,6 +19,47 @@ public sealed record ReleasedRevision(string Collection, int Number, string Json
 /// </summary>
 public static class PublishedCollections
 {
+    /// <summary>
+    /// Reads the released comparisons, in the order of their identifiers: for each the text of its last release,
+    /// unless it was withdrawn since. Each as its file and the documents of its translations.
+    /// </summary>
+    /// <param name="connection">The connection of the database.</param>
+    /// <exception cref="InvalidOperationException">The database has no such table, or a comparison is not the text it was released as.</exception>
+    public static ImmutableArray<(string Id, string Json, ImmutableArray<string> Translations)> ReadComparisons(string connection)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        var released = ImmutableArray.CreateBuilder<(string, string, ImmutableArray<string>)>();
+        try
+        {
+            using var database = new NpgsqlConnection(connection);
+            database.Open();
+            using var command = database.CreateCommand();
+            command.CommandText = $"""
+                select said."ComparisonId", said."Json"::text, said."Translations"::text, said."Hash"
+                from (select distinct on ("ComparisonId") * from {PublishedRevision.Schema}."Comparisons" order by "ComparisonId", "Number" desc) said
+                where said."Hash" is not null
+                order by said."ComparisonId"
+                """;
+            using var rows = command.ExecuteReader();
+            while (rows.Read())
+            {
+                var (id, json, translations, hash) = (rows.GetString(0), rows.GetString(1), rows.GetString(2), rows.GetString(3));
+                if (!string.Equals(PublishedRevision.HashOf(json, translations), hash, StringComparison.Ordinal))
+                {
+                    throw new InvalidOperationException($"The comparison {id} is not the text it was released as: its hash does not match. The site does not show it.");
+                }
+
+                released.Add((id, json, [.. JsonNode.Parse(translations)!.AsObject().Select(translation => translation.Value!.ToJsonString())]));
+            }
+        }
+        catch (PostgresException missing) when (missing.SqlState is PostgresErrorCodes.UndefinedTable or PostgresErrorCodes.InvalidSchemaName)
+        {
+            throw new InvalidOperationException("The database has no tables of published revisions. Run \"dotnet Vafadar.Dastan.Content.dll database migrate --database env\" with the connection in DASTAN_DATABASE, then start the site again.", missing);
+        }
+
+        return released.ToImmutable();
+    }
+
     /// <summary>Reads the released revisions, in the order of the identifiers of their collections.</summary>
     /// <param name="connection">The connection of the database.</param>
     /// <exception cref="InvalidOperationException">The database has no published revisions to read, or a revision is not the text it was published as.</exception>

@@ -12,7 +12,7 @@ using Vafadar.Dastan.Store;
 namespace Vafadar.Dastan.Store.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20261119182843_Initial")]
+    [Migration("20261119191528_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -197,6 +197,44 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.HasIndex("CollectionId", "ToGroup", "ToId");
 
                     b.ToTable("RecordLinks", "editorial");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.Store.ReleasedComparison", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Number"));
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("By")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ComparisonId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Hash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("Json")
+                        .HasColumnType("json");
+
+                    b.Property<string>("Translations")
+                        .HasColumnType("json");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("ComparisonId", "Number");
+
+                    b.ToTable("Comparisons", "published");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredCollection", b =>

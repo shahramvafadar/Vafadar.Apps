@@ -73,7 +73,7 @@ public sealed class ReleasedFromDatabaseTests : IDisposable
         return result.Number;
     }
 
-    private sealed class Released(string content, string database) : DemoSite
+    private sealed class Released(string content, string database, bool demonstration = false) : DemoSite
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -81,6 +81,10 @@ public sealed class ReleasedFromDatabaseTests : IDisposable
             builder.UseSetting("Dastan:Content", content);
             builder.UseSetting("Dastan:Published", "true");
             builder.UseSetting("Dastan:Database", database);
+            if (demonstration)
+            {
+                builder.UseSetting("Dastan:Audience", "LocalDemonstration");
+            }
         }
     }
 
@@ -137,6 +141,39 @@ public sealed class ReleasedFromDatabaseTests : IDisposable
 
         // What was published is still kept.
         Assert.Equal(2, store.Revisions(Collection).Length);
+    }
+
+    [Fact]
+    public async Task A_comparison_is_shown_once_it_is_released_as_it_was_then_and_no_longer_when_it_is_withdrawn()
+    {
+        const string Comparison = "iran-china-rome";
+        using var store = Editors();
+        Assert.Null(store.Release(Collection, Publish(store), "a publisher"));
+        Assert.True(store.ImportComparison(Path.Combine(_folder, "editors", "content", "comparisons", $"{Comparison}.json"), "an editor").Done);
+
+        // The comparison of the repository is a sample for a demonstration; the folder of the site has no file of it.
+        async Task<Page> Shown()
+        {
+            using var site = new Released(SiteContent, _database, demonstration: true);
+            return await site.Visitor().Get($"/en/compare/{Comparison}");
+        }
+
+        Assert.Equal(HttpStatusCode.NotFound, (await Shown()).Status);
+
+        Assert.Null(store.ReleaseComparison(Comparison, "a publisher"));
+        var released = await Shown();
+        Assert.Equal(HttpStatusCode.OK, released.Status);
+
+        // What the editors change afterwards is not shown before it is released again.
+        var file = System.Text.Json.Nodes.JsonNode.Parse(store.Comparison(Comparison)!.Json)!.AsObject();
+        file["title"] = "A title nobody released";
+        Assert.True(store.PutComparison(file.ToJsonString(), store.Comparison(Comparison)!.Translations, "a writer", "A try.").Done);
+        Assert.DoesNotContain("A title nobody released", (await Shown()).Main, StringComparison.Ordinal);
+        Assert.Null(store.ReleaseComparison(Comparison, "a publisher"));
+        Assert.Contains("A title nobody released", (await Shown()).Main, StringComparison.Ordinal);
+
+        Assert.Null(store.WithdrawComparison(Comparison, "a publisher"));
+        Assert.Equal(HttpStatusCode.NotFound, (await Shown()).Status);
     }
 
     [Fact]

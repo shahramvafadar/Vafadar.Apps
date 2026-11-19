@@ -34,6 +34,25 @@ namespace Vafadar.Dastan.Store.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comparisons",
+                schema: "published",
+                columns: table => new
+                {
+                    Number = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ComparisonId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Json = table.Column<string>(type: "json", nullable: true),
+                    Translations = table.Column<string>(type: "json", nullable: true),
+                    Hash = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: true),
+                    By = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comparisons", x => x.Number);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DocumentChanges",
                 schema: "editorial",
                 columns: table => new
@@ -284,6 +303,12 @@ namespace Vafadar.Dastan.Store.Migrations
                 columns: new[] { "CollectionId", "Group", "RecordId", "Version" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comparisons_ComparisonId_Number",
+                schema: "published",
+                table: "Comparisons",
+                columns: new[] { "ComparisonId", "Number" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DocumentChanges_Kind_DocumentId_Number",
                 schema: "editorial",
                 table: "DocumentChanges",
@@ -338,6 +363,10 @@ namespace Vafadar.Dastan.Store.Migrations
             migrationBuilder.DropTable(
                 name: "Changes",
                 schema: "editorial");
+
+            migrationBuilder.DropTable(
+                name: "Comparisons",
+                schema: "published");
 
             migrationBuilder.DropTable(
                 name: "DocumentChanges",

@@ -17,7 +17,8 @@ public sealed class DastanOptions
     /// <summary>
     /// Gets or sets a value indicating whether the site reads its collections from the published revisions of
     /// its database (<see cref="Database"/>, ADR 0015) – for each collection the revision that was released –
-    /// and not from the files of the folder <c>samples</c>. The files of media stay in the folder of content.
+    /// and not from the files of the folder <c>samples</c> – and its comparisons from the ones that were released,
+    /// not from the folder <c>comparisons</c>. The files of media stay in the folder of content.
     /// A site that reads from the database shows what was released when it started.
     /// </summary>
     public bool Published { get; set; }
@@ -122,10 +123,11 @@ public sealed class DastanLibrary
         var reviewedOnly = Audience == Audience.Public;
 
         // A comparison that is not released to the audience of the site does not exist for it.
-        Comparisons =
-        [
-            .. ComparisonSample.LoadAll(Path.Combine(content, "comparisons"), reviewedOnly).Where(comparison => comparison.MayBeShownTo(Audience)),
-        ];
+        // A site that reads from the database reads its comparisons there too: the ones that were released.
+        var comparisons = settings.Published && !string.IsNullOrWhiteSpace(settings.Database)
+            ? [.. PublishedCollections.ReadComparisons(settings.Database).Select(released => ComparisonSample.Read(released.Json, released.Translations, reviewedOnly))]
+            : ComparisonSample.LoadAll(Path.Combine(content, "comparisons"), reviewedOnly);
+        Comparisons = [.. comparisons.Where(comparison => comparison.MayBeShownTo(Audience))];
 
         var samples = Path.Combine(content, "samples");
         if (settings.Published)

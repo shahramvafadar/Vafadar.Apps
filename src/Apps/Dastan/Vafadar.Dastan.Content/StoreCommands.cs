@@ -64,8 +64,12 @@ internal static class StoreCommands
           store comparison export <id> --store <database> --out <file>
           store comparison history <id> --store <database>
           store comparison remove <id> --store <database> --by <name> --reason <text>
+          store comparison release <id> --store <database> --by <name>
+          store comparison withdraw <id> --store <database> --by <name>
               A comparison in the store: brought in with the translations beside it, written out again,
               what was changed of it, taken out. It is read as the site reads it before it is kept.
+              "release" says that a site that reads from the database shows it, as it is at that moment,
+              from its next start on; "withdraw" that it shows it no longer.
         """;
 
     /// <summary>Runs a command of the store; <see langword="null"/> when it was not understood.</summary>
@@ -142,7 +146,8 @@ internal static class StoreCommands
                 output.WriteLine($"{held.Length} {(held.Length == 1 ? "comparison" : "comparisons")}.");
                 foreach (var comparison in held)
                 {
-                    output.WriteLine($"  {comparison.Id}  version {comparison.Version}  {(comparison.Languages.IsEmpty ? "not translated" : string.Join(", ", comparison.Languages))}  – {comparison.Title}");
+                    var shown = store.ComparisonShown(comparison.Id) switch { ComparisonOnSite.AsHeld => "  (shown by the site)", ComparisonOnSite.Earlier => "  (shown by the site as it was released; changed since)", _ => null };
+                    output.WriteLine($"  {comparison.Id}  version {comparison.Version}  {(comparison.Languages.IsEmpty ? "not translated" : string.Join(", ", comparison.Languages))}  – {comparison.Title}{shown}");
                 }
 
                 return ContentCommands.Done;
@@ -153,6 +158,22 @@ internal static class StoreCommands
 
             case "remove" when given.TryGetValue("--by", out var remover) && given.TryGetValue("--reason", out var why) && Only(given, "--store", "--by", "--reason"):
                 return Said(output, $"{words[2]}: taken out.", store => store.RemoveComparison(words[2], remover, why), database, time, null);
+
+            case "release" or "withdraw" when given.TryGetValue("--by", out var publisher) && Only(given, "--store", "--by"):
+            {
+                using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
+                var release = words[1] == "release";
+                if ((release ? store.ReleaseComparison(words[2], publisher) : store.WithdrawComparison(words[2], publisher)) is { } refused)
+                {
+                    output.WriteLine(refused);
+                    return ContentCommands.NotUsable;
+                }
+
+                output.WriteLine(release
+                    ? $"The site shows {words[2]} as it is now when it is started next."
+                    : $"The site does not show {words[2]} when it is started next.");
+                return ContentCommands.Done;
+            }
 
             case "export" when given.TryGetValue("--out", out var target) && Only(given, "--store", "--out"):
             {

@@ -208,6 +208,9 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     /// <summary>Gets the records as they are now.</summary>
     public DbSet<StoredRecord> Records => Set<StoredRecord>();
 
+    /// <summary>Gets what was said about which comparison the site shows, and as which text, one word after the other.</summary>
+    public DbSet<ReleasedComparison> ReleasedComparisons => Set<ReleasedComparison>();
+
     /// <summary>Gets what was said about which revision of a collection the site shows, one after the other.</summary>
     public DbSet<StoredRelease> Releases => Set<StoredRelease>();
 
@@ -320,6 +323,18 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
 
             // A release names a revision that was published; a withdrawal names none.
             release.HasOne<StoredRevision>().WithMany().HasForeignKey(item => new { item.CollectionId, item.Number }).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<ReleasedComparison>(released =>
+        {
+            released.ToTable("Comparisons", Vafadar.Dastan.Data.PublishedRevision.Schema);
+            released.HasKey(item => item.Number);
+            released.Property(item => item.ComparisonId).HasMaxLength(200);
+            released.Property(item => item.Json).HasColumnType("json");
+            released.Property(item => item.Translations).HasColumnType("json");
+            released.Property(item => item.Hash).HasMaxLength(64);
+            released.Property(item => item.By).HasMaxLength(200);
+            released.HasIndex(item => new { item.ComparisonId, item.Number });
         });
 
         modelBuilder.Entity<StoredEditor>(editor =>
