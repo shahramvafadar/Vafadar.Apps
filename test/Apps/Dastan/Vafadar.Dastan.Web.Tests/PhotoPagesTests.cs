@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
 using Vafadar.Dastan.Data.Tests;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -16,7 +17,7 @@ public sealed class PhotosSite : DemoSite
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.UseSetting("Dastan:People", Path.Combine(_folder, "people.db"));
+        builder.UseSetting("Dastan:Database", TestDatabase.For(Path.Combine(_folder, "people.db")));
         builder.UseSetting("Dastan:Photos", Path.Combine(_folder, "photos"));
     }
 

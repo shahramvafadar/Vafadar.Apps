@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.People.Tests;
 
@@ -31,7 +31,7 @@ public sealed class VisitorAccountsTests : IDisposable
         }
     }
 
-    private PeopleStore Open() => PeopleStore.Open(File, _clock);
+    private PeopleStore Open() => PeopleStore.Open(TestDatabase.For(File), _clock);
 
     [Fact]
     public void Anybody_makes_an_account_and_is_signed_in_with_it()
@@ -92,10 +92,10 @@ public sealed class VisitorAccountsTests : IDisposable
             code = store.Register("Mina", Password).RecoveryCodes[0];
         }
 
-        using var connection = new SqliteConnection($"Data Source={File};Pooling=False");
+        using var connection = new Npgsql.NpgsqlConnection(TestDatabase.For(File));
         connection.Open();
         using var command = connection.CreateCommand();
-        command.CommandText = "select Password from Visitors union all select Code from RecoveryCodes";
+        command.CommandText = TestDatabase.Sql("select Password from Visitors union all select Code from RecoveryCodes");
         using var reader = command.ExecuteReader();
         var kept = new List<string>();
         while (reader.Read())
@@ -353,10 +353,10 @@ public sealed class VisitorAccountsTests : IDisposable
 
     private long Count(string table)
     {
-        using var connection = new SqliteConnection($"Data Source={File};Pooling=False");
+        using var connection = new Npgsql.NpgsqlConnection(TestDatabase.For(File));
         connection.Open();
         using var command = connection.CreateCommand();
-        command.CommandText = $"select count(*) from {table}";
+        command.CommandText = TestDatabase.Sql($"select count(*) from {table}");
         return (long)command.ExecuteScalar()!;
     }
 }

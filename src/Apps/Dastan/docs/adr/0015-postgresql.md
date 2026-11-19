@@ -48,6 +48,13 @@ while one writer is let in at a time; the records of the editors were bodies of 
 * **Nothing is carried over** from the SQLite files (D-080): nobody real has an account, and collections come
   in from their files. The SQLite packages leave Dastan.
 
+## What is built (2026-11-19)
+
+The store of the visitors (`personal`). A database is made with `--encoding=UTF8 --locale=C`, so that text is
+compared and ordered by its code points, as the store always did; where names are shown in order, the site
+orders them for the language of the page. The other parts of this decision are open – the delivery plan,
+step 19.3, says which.
+
 ## Consequences
 
 Backup is `pg_dump` of the database together with the volume of the files, and bringing both back is tried

@@ -13,11 +13,23 @@ COPY . .
 
 # The repository names two local package folders for other apps; they have to exist, and stay empty here.
 RUN mkdir -p artifacts/native-sqlcipher/feed artifacts/maui-core/feed \
-    && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Web -c Release -o /site -p:ContinuousIntegrationBuild=true
+    && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Web -c Release -o /site -p:ContinuousIntegrationBuild=true \
+    && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Content -c Release -o /command -p:ContinuousIntegrationBuild=true
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS site
+
+# The driver of PostgreSQL looks for the Kerberos library of the system when it first connects. The site does
+# not use Kerberos, but without the library the runtime writes a complaint into the log of every start.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends libgssapi-krb5-2 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY --from=build /site .
+
+# The command of the operator (operations.md) comes with the site: the tables of the database are made and
+# brought up with it, notices are read, and what may not stay is restricted – by a person, never by the site.
+COPY --from=build /command /command
 
 # The site listens on 8080 without encryption: a proxy in front of it holds the certificate and says with which
 # address the visitor came. The site believes only the proxies it is told to: Dastan__TrustedProxies__0, __1, …

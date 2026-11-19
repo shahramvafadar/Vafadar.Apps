@@ -33,6 +33,12 @@ internal static class OperatorCommands
               Removes the settled notices that were decided more than a number of days ago (365 when none
               is named).
 
+          database migrate --database env
+              Makes the tables of the site in its PostgreSQL database, or brings them to the form this
+              program knows. Run it before a new version of the site is started; the site itself changes
+              no table. Wherever a command asks for a database, the word env stands for the connection in
+              the variable DASTAN_DATABASE – a connection holds a password and is never typed as a word.
+
           people restrictions --people <database>
               Lists the restrictions that stand.
 
@@ -92,6 +98,20 @@ internal static class OperatorCommands
 
             case ["notices", "forget", var folder, "--kept-days", var written]:
                 return int.TryParse(written, NumberStyles.None, CultureInfo.InvariantCulture, out var days) && days <= 36500 ? Forget(folder, days, output, time) : null;
+
+            case ["database", "migrate", "--database", var database]:
+                try
+                {
+                    PeopleStore.Migrate(Connection(database));
+                }
+                catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)
+                {
+                    output.WriteLine($"The database cannot be reached or changed: {failed.Message}");
+                    return ContentCommands.NotUsable;
+                }
+
+                output.WriteLine("The database has the form this program knows.");
+                return ContentCommands.Done;
 
             case ["people", "restrictions", "--people", var database]:
                 return People(database, output, time, store =>
@@ -249,16 +269,39 @@ internal static class OperatorCommands
         return ContentCommands.Done;
     }
 
+    /// <summary>
+    /// Returns the connection a command works on. The word <c>env</c> stands for the variable
+    /// <c>DASTAN_DATABASE</c>: a connection holds a password, and a password is never a word of a command –
+    /// the words of a command stay in the history of a shell.
+    /// </summary>
+    private static string Connection(string written) =>
+        written == "env" ? Environment.GetEnvironmentVariable("DASTAN_DATABASE") ?? string.Empty : written;
+
     private static int People(string database, TextWriter output, TimeProvider time, Func<PeopleStore, int> act)
     {
-        // A store is never made by a slip of the hand: the command works on the one the site wrote.
-        if (!File.Exists(database))
+        database = Connection(database);
+        if (string.IsNullOrWhiteSpace(database))
         {
-            output.WriteLine($"{database}: there is no such store.");
+            output.WriteLine("No database: set DASTAN_DATABASE to its connection and name it with the word env.");
             return ContentCommands.NotUsable;
         }
 
-        using var store = PeopleStore.Open(database, time);
-        return act(store);
+        // A store is never made by a slip of the hand: the command works on the one that is there.
+        try
+        {
+            if (PeopleStore.Pending(database).Count > 0)
+            {
+                output.WriteLine("The database does not have the form this program knows: run \"database migrate\" first.");
+                return ContentCommands.NotUsable;
+            }
+
+            using var store = PeopleStore.Open(database, time);
+            return act(store);
+        }
+        catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)
+        {
+            output.WriteLine($"The database cannot be reached: {failed.Message}");
+            return ContentCommands.NotUsable;
+        }
     }
 }

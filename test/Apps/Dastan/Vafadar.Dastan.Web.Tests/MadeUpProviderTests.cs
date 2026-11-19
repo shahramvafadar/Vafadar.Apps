@@ -1,5 +1,6 @@
 using System.Net;
 using Microsoft.AspNetCore.Hosting;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -13,7 +14,7 @@ public sealed class MadeUpSite(string environment, bool invitationOnly = false) 
         builder.UseEnvironment(environment);
         builder.UseSetting("Dastan:Content", "../content");
         builder.UseSetting("Dastan:Audience", "LocalDemonstration");
-        builder.UseSetting("Dastan:People", Path.Combine(_folder, "people.db"));
+        builder.UseSetting("Dastan:Database", TestDatabase.For(Path.Combine(_folder, "people.db")));
         builder.UseSetting("Dastan:SignIn:MadeUp", "somebody-made-up");
         builder.UseSetting("Dastan:InvitationOnly", invitationOnly ? "true" : "false");
     }

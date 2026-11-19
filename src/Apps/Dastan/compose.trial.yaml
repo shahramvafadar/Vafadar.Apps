@@ -28,7 +28,9 @@ services:
       # Public (the default) shows a published revision. A trial with content that is not published yet names
       # LocalDemonstration – never on a site everybody can reach.
       Dastan__Audience: ${DASTAN_AUDIENCE:-Public}
-      Dastan__People: /data/people.db
+      # The database of the site (ADR 0015): the PostgreSQL below. Its password is set in the environment of
+      # this machine (DASTAN_DB_PASSWORD) by who runs the trial and is never written into a file.
+      Dastan__Database: Host=database;Database=dastan;Username=dastan;Password=${DASTAN_DB_PASSWORD:?set a password for the database in DASTAN_DB_PASSWORD}
       Dastan__Photos: /data/photos
       Dastan__Keys: /data/keys
       # What visitors report about a statement (ADR 0012); the editors read the folder with their tool.
@@ -54,6 +56,9 @@ services:
       # proxy in front of the site is named here by whoever sets it up.
       # Narrower is better: the address of the proxy alone, where it is known (DASTAN_TRUSTED_PROXY).
       Dastan__TrustedProxies__0: ${DASTAN_TRUSTED_PROXY:-172.16.0.0/12}
+    depends_on:
+      database:
+        condition: service_healthy
     volumes:
       - ${DASTAN_CONTENT:?name the folder of content in DASTAN_CONTENT}:/app/content:ro
       - dastan-trial-data:/data
@@ -80,6 +85,32 @@ services:
       - trial
     mem_limit: 256m
 
+  # The database of the trial. It answers the site only – no port of this machine leads to it. Before the
+  # site is started for the first time, and before a new version of it, its tables are made or brought up:
+  #
+  #   docker compose -f src/Apps/Dastan/compose.trial.yaml run --rm --entrypoint sh trial \
+  #     -c 'DASTAN_DATABASE="$Dastan__Database" dotnet /command/Vafadar.Dastan.Content.dll database migrate --database env'
+  #
+  # (operations.md says where the command lies and how the connection is told).
+  database:
+    image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+    environment:
+      POSTGRES_DB: dastan
+      POSTGRES_USER: dastan
+      POSTGRES_PASSWORD: ${DASTAN_DB_PASSWORD:?set a password for the database in DASTAN_DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dastan -d dastan"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - dastan-trial-database:/var/lib/postgresql
+    mem_limit: 1g
+
 volumes:
-  # Everything the site keeps. Back it up as one: the photographs without the store are of no use.
+  # What the site keeps as files: photographs, keys, notices. Back it up together with the database: the
+  # photographs without the database are of no use.
   dastan-trial-data:
+  # The database of the trial.
+  dastan-trial-database:

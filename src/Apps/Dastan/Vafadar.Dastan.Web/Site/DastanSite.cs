@@ -41,10 +41,11 @@ public sealed class DastanOptions
     public string? Notices { get; set; }
 
     /// <summary>
-    /// Gets or sets the file of the store of the visitors (step 16.1, D-050): their accounts and what belongs to
-    /// them, in a database of its own beside the site. Empty, the site has no accounts and no page for one.
+    /// Gets or sets the connection of the PostgreSQL database of the site (ADR 0015), as Npgsql reads it. With
+    /// it the site has accounts of visitors and what belongs to them; without it nothing of that exists. Its
+    /// password is a secret: it is told to the running site and never written into a file of the repository.
     /// </summary>
-    public string? People { get; set; }
+    public string? Database { get; set; }
 
     /// <summary>
     /// Gets or sets the folder the photographs of the visitors are kept in (step 16.5), on a volume no web

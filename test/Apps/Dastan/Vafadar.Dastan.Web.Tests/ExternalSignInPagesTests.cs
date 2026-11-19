@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Vafadar.Dastan.People;
 using Vafadar.Dastan.Web.Site;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -27,7 +28,7 @@ public sealed class ExternalSite : DemoSite
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.UseSetting("Dastan:People", File);
+        builder.UseSetting("Dastan:Database", TestDatabase.For(File));
         builder.ConfigureServices(services =>
         {
             services.AddSingleton(this);
@@ -214,7 +215,7 @@ public sealed class ExternalSignInPagesTests : IDisposable
         await Through(program);
         Assert.False(SignedIn(await Choose(program, "Mina", website: "https://example.org")));
 
-        using var store = PeopleStore.Open(_site.File, TimeProvider.System);
+        using var store = PeopleStore.Open(TestDatabase.For(_site.File), TimeProvider.System);
         Assert.Null(store.SignInWith("test", _site.Subject!));
     }
 

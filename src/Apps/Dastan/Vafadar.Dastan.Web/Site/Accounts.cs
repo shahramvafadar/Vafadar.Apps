@@ -62,9 +62,16 @@ public sealed class AccountDesk
         _codes = protection.CreateProtector("dastan.visitor.codes");
         _arrivals = protection.CreateProtector("dastan.visitor.external").ToTimeLimitedDataProtector();
         InvitationOnly = options.Value.InvitationOnly;
-        if (!string.IsNullOrWhiteSpace(options.Value.People))
+        if (!string.IsNullOrWhiteSpace(options.Value.Database))
         {
-            _file = Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.People));
+            // The site does not change the form of a database (ADR 0015): one that is behind is said so, with
+            // the command that brings it there, before anybody is served.
+            _file = options.Value.Database;
+            if (PeopleStore.Pending(_file) is { Count: > 0 } pending)
+            {
+                throw new InvalidOperationException($"The database lacks {pending.Count} change(s) of form (the first: {pending[0]}). Run \"dotnet Vafadar.Dastan.Content.dll database migrate\" with the connection in DASTAN_DATABASE, then start the site again.");
+            }
+
             using var store = PeopleStore.Open(_file, time);
             if (!string.IsNullOrWhiteSpace(options.Value.Photos))
             {
@@ -146,7 +153,7 @@ public sealed class AccountDesk
     /// </summary>
     public PeopleStore Open()
     {
-        var store = PeopleStore.Open(_file ?? throw new InvalidOperationException("The site has no accounts."), _time, migrate: false);
+        var store = PeopleStore.Open(_file ?? throw new InvalidOperationException("The site has no accounts."), _time);
         var day = _time.GetUtcNow().ToUnixTimeSeconds() / 86400;
         if (Interlocked.Exchange(ref _purgedOn, day) != day)
         {
@@ -155,7 +162,7 @@ public sealed class AccountDesk
                 store.Purge();
                 Sweep(store);
             }
-            catch (Exception failed) when (failed is Microsoft.EntityFrameworkCore.DbUpdateException or Microsoft.Data.Sqlite.SqliteException or IOException or UnauthorizedAccessException)
+            catch (Exception failed) when (failed is Microsoft.EntityFrameworkCore.DbUpdateException or System.Data.Common.DbException or IOException or UnauthorizedAccessException)
             {
                 // Not done today yet: the next request tries again. The request that asked goes on – it did
                 // not come for this.

@@ -528,6 +528,7 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema(PeopleStore.Schema);
         ArgumentNullException.ThrowIfNull(modelBuilder);
 
         modelBuilder.Entity<StoredVisitor>(visitor =>
@@ -775,5 +776,5 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
 internal sealed class PeopleContextFactory : IDesignTimeDbContextFactory<PeopleContext>
 {
     public PeopleContext CreateDbContext(string[] args) =>
-        new(new DbContextOptionsBuilder<PeopleContext>().UseSqlite("Data Source=design-time.db").Options);
+        new(PeopleStore.Options("Host=design-time;Database=design-time"));
 }

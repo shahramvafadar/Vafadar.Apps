@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Vafadar.Dastan.Core.Personal;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.People.Tests;
 
@@ -19,7 +20,7 @@ public sealed class BelongingsAndInvitationsTests : IDisposable
 
     public BelongingsAndInvitationsTests()
     {
-        _store = PeopleStore.Open(Path.Combine(_folder, "people.db"), _clock);
+        _store = PeopleStore.Open(TestDatabase.For(Path.Combine(_folder, "people.db")), _clock);
         _mina = _store.Register("Mina", Password).Session!.Id;
     }
 

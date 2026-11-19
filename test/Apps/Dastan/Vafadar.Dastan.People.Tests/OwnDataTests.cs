@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
-using Microsoft.Data.Sqlite;
 using Vafadar.Dastan.Core.Personal;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.People.Tests;
 
@@ -20,7 +20,7 @@ public sealed class OwnDataTests : IDisposable
 
     public OwnDataTests()
     {
-        _store = PeopleStore.Open(File, _clock);
+        _store = PeopleStore.Open(TestDatabase.For(File), _clock);
         _mina = _store.Register("Mina", Password).Session!.Id;
         _sara = _store.Register("Sara", Password).Session!.Id;
     }
@@ -132,11 +132,11 @@ public sealed class OwnDataTests : IDisposable
         var copy = _store.Export(_mina, Password)!.ToJsonString();
 
         var kept = new List<string>();
-        using (var connection = new SqliteConnection($"Data Source={File};Pooling=False"))
+        using (var connection = new Npgsql.NpgsqlConnection(TestDatabase.For(File)))
         {
             connection.Open();
             using var command = connection.CreateCommand();
-            command.CommandText = "select Password from Visitors union all select Stamp from Visitors union all select Code from RecoveryCodes union all select Id from Visitors union all select Id from Trees union all select Id from Persons";
+            command.CommandText = TestDatabase.Sql("select Password from Visitors union all select Stamp from Visitors union all select Code from RecoveryCodes union all select Id from Visitors union all select Id from Trees union all select Id from Persons");
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {

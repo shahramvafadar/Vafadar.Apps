@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Vafadar.Dastan.Data;
 using Vafadar.Dastan.People;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -18,7 +19,7 @@ public sealed class NoticesSite : DemoSite
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.UseSetting("Dastan:People", People);
+        builder.UseSetting("Dastan:Database", TestDatabase.For(People));
         builder.UseSetting("Dastan:Notices", Notices);
         builder.UseSetting("Dastan:Announcement", "The site moves on 1 December. <b>");
     }
@@ -26,7 +27,6 @@ public sealed class NoticesSite : DemoSite
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
         if (disposing && Directory.Exists(_folder))
         {
             Directory.Delete(_folder, recursive: true);
@@ -135,7 +135,7 @@ public sealed class LawfulSiteTests : IDisposable
 
         var mina = await Signed("Mina");
         Assert.DoesNotContain("id=\"terms\"", (await mina.Get(Account)).Html, StringComparison.Ordinal);
-        using var store = PeopleStore.Open(_site.People);
+        using var store = PeopleStore.Open(TestDatabase.For(_site.People));
         Assert.Null(store.SignIn("mina", "another pass phrase"));
         Assert.Equal(Site.AccountDesk.TermsVersion, store.TermsOf(store.SignIn("Mina", Password)!.Id));
     }
@@ -144,7 +144,7 @@ public sealed class LawfulSiteTests : IDisposable
     public async Task An_account_that_never_said_it_read_the_terms_is_asked_and_its_yes_is_noted()
     {
         string id;
-        using (var store = PeopleStore.Open(_site.People))
+        using (var store = PeopleStore.Open(TestDatabase.For(_site.People)))
         {
             id = store.Register("Sara", Password).Session!.Id;
             Assert.Null(store.TermsOf(id));
@@ -156,7 +156,7 @@ public sealed class LawfulSiteTests : IDisposable
 
         await sara.Post("/preferences/account/terms", Account, ("terms", "on"), ("returnUrl", Account));
         Assert.DoesNotContain("id=\"terms\"", (await sara.Get(Account)).Html, StringComparison.Ordinal);
-        using var after = PeopleStore.Open(_site.People);
+        using var after = PeopleStore.Open(TestDatabase.For(_site.People));
         Assert.Equal(Site.AccountDesk.TermsVersion, after.TermsOf(id));
     }
 
@@ -219,7 +219,7 @@ public sealed class LawfulSiteTests : IDisposable
     {
         var mina = await Signed("Mina");
         await mina.Post("/preferences/trees/add", "/en/account/trees", ("name", "The Rad family"), ("returnUrl", "/en/account/trees"));
-        using (var store = PeopleStore.Open(_site.People))
+        using (var store = PeopleStore.Open(TestDatabase.For(_site.People)))
         {
             var id = store.SignIn("Mina", Password)!.Id;
             var tree = Assert.Single(store.Trees(id)).Id;
@@ -240,7 +240,7 @@ public sealed class LawfulSiteTests : IDisposable
     {
         var mina = await Signed("Mina");
         long number;
-        using (var store = PeopleStore.Open(_site.People))
+        using (var store = PeopleStore.Open(TestDatabase.For(_site.People)))
         {
             number = store.Restrict(RestrictionKind.Account, "Mina", "The account stored pictures of strangers after two decisions.", "Sections 6 and 10 of the terms of use", noticed: false)!.Value;
         }
@@ -263,7 +263,7 @@ public sealed class LawfulSiteTests : IDisposable
         Assert.DoesNotContain("Sign out", page.Main, StringComparison.Ordinal);
 
         // Lifted, the account opens with its password again.
-        using (var store = PeopleStore.Open(_site.People))
+        using (var store = PeopleStore.Open(TestDatabase.For(_site.People)))
         {
             Assert.True(store.Lift(number));
         }

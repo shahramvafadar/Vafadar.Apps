@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Vafadar.Dastan.People;
 using Vafadar.Dastan.Web.Site;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -15,7 +16,7 @@ public sealed class AccountsSite : DemoSite
     /// <summary>Gets the file of the store.</summary>
     public string File => Path.Combine(_folder, "people.db");
 
-    protected override void ConfigureWebHost(IWebHostBuilder builder) => builder.UseSetting("Dastan:People", File);
+    protected override void ConfigureWebHost(IWebHostBuilder builder) => builder.UseSetting("Dastan:Database", TestDatabase.For(File));
 
     protected override void Dispose(bool disposing)
     {

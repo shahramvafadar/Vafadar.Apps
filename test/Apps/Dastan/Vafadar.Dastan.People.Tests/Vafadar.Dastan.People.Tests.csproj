@@ -4,4 +4,8 @@
     <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.People\Vafadar.Dastan.People.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Databases\TestDatabase.cs" Link="Shared\TestDatabase.cs" />
+  </ItemGroup>
+
 </Project>

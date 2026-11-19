@@ -278,6 +278,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - In the history of a family tree, with whom the tree is shared and who said a record is them is read by the
   owner of the tree only.
 - The copy of your data leaves out the code of an invitation that can still be used.
+- What belongs to accounts is kept in PostgreSQL. Nothing a visitor sees has changed.
 - The site has its legal pages: terms of use, privacy notice, a page that lists everything the site stores on
   your device, and the legal notice – in English, Persian and German. They are linked at the foot of every page.
 - The site stores on your device only what you asked for. Your language is remembered when you change it, not
