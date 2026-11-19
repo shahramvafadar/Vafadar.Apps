@@ -154,7 +154,7 @@ public static class AiProtocol
     {
         if (payload.Report is not null || payload.Funding is not null || payload.Previous is not null ||
             payload.Purpose != AiPurpose.PeriodComparison || payload.Current.ConfirmedOnly || payload.Current.Totals.Count != 1 ||
-            payload.Current.Totals[0].CurrencyCode != forecast.Currency)
+            payload.Current.Totals[0].CurrencyCode != forecast.Currency || forecast.UnknownBeforeWindow < 0)
             throw new ArgumentException("Invalid forecast scope.");
 
         ValidatePath(forecast.Baseline, scenario: false);

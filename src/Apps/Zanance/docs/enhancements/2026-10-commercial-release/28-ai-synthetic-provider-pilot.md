@@ -151,3 +151,21 @@ The focused calculator/protocol check distinguishes a first negative balance of 
 | Selected scenario | Gemini 4 Hydrogen | 1.50 / 7.50 | 387 / 465 | USD 0 (Free Tier) | USD 0.004068 |
 
 The usage estimates include reasoning or thinking in output. No invoice was checked. See [OpenAI](https://developers.openai.com/api/docs/models/gpt-6.2-sol) and [Gemini](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen).
+
+
+## Questions about selected data, 2026-11-19
+
+The Analysis page interprets two bounded questions locally in the six app languages: what drove a change in spending, and which plans contribute to a projected shortfall. An unsupported question, multiple currencies or mismatched account scope requires clarification before a preview. A recognized question shows its source and date/account scope for review. The original words, account names and contributing category or plan labels stay local.
+
+Spending uses the same net expenses and refunds as Reports and compares two equally long periods. The forecast uses the existing daily calculation and projects the original plans and recorded entries for one payment currency. It separates unknown amounts in the interval from unknown amounts before its opening estimate. A next-month question uses the file's financial month and current calendar. The app rechecks the exact source and scope before sharing or submitting, and makes no ledger or plan changes.
+
+Eight focused synthetic cases passed, covering all six languages, mixed scope, source retirement and a custom financial month. The isolated WinUI page used the original native entry, Interpret and Review for both intents. A forecast observation initially missed the preview. Waiting for the native text binding and operation completion resolved the observation without replaying the accepted spending case. Both native receipts report an unchanged financial fingerprint and zero provider calls.
+
+The isolated connected fixture sent one new spending request to OpenAI and one new planning request to Gemini through the existing Financial comparisons route. OpenAI completed in the app flow. The Gemini operation was still in progress when the initial app check ended. A later read of the same operation observed completion and the original authenticated, pinned status endpoint published that result under the same request and unchanged vendor handle. There was no second submission. Neither provider received any real data.
+
+| Synthetic fixture | Model | Standard USD per million input / output | Observed input / billable output | Estimated charge | Paid equivalent |
+|---|---|---:|---:|---:|---:|
+| Spending change | GPT-6.2 Sol | 2.00 / 10.00 | 141 / 49 | USD 0.000772 | USD 0.000772 |
+| Next-month shortfall | Gemini 4 Hydrogen | 1.50 / 7.50 | 304 / 636 | USD 0 (Free Tier) | USD 0.005226 |
+
+Output includes thinking tokens. This cost estimate uses measured usage and published text prices without an invoice comparison. [OpenAI pricing](https://developers.openai.com/api/docs/models/gpt-6.2-sol) and [Gemini pricing](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen). The pilot matches the two exact synthetic payloads. General vendor activation and real-data acceptance remain separate.

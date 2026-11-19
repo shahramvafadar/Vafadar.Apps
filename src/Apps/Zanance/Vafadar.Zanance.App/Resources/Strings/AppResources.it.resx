@@ -8778,4 +8778,40 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="CategoryReview_DraftRule" xml:space="preserve">
     <value>Apri la bozza modificabile della regola</value>
   </data>
+  <data name="AiQuestion_Title" xml:space="preserve">
+    <value>Domanda sui dati selezionati</value>
+  </data>
+  <data name="AiQuestion_Example" xml:space="preserve">
+    <value>Perché sono aumentate le mie spese in EUR?</value>
+  </data>
+  <data name="AiQuestion_Apply" xml:space="preserve">
+    <value>Interpreta la domanda</value>
+  </data>
+  <data name="AiQuestion_Clarify" xml:space="preserve">
+    <value>Chiedi di una variazione di spesa o dei piani che contribuiscono a un deficit. Seleziona qui sotto eventuali altre date.</value>
+  </data>
+  <data name="AiQuestion_Scope" xml:space="preserve">
+    <value>Seleziona conti in una sola valuta corrispondente e controlla le date. Per una previsione, scegli un periodo nei prossimi 90 giorni.</value>
+  </data>
+  <data name="AiQuestion_Spending" xml:space="preserve">
+    <value>Variazione delle spese per categoria. Seleziona conti in una valuta e controlla le date del confronto.</value>
+  </data>
+  <data name="AiQuestion_Plans" xml:space="preserve">
+    <value>Piani e deficit previsto. Seleziona conti di pagamento in una valuta e controlla le date della previsione.</value>
+  </data>
+  <data name="AiQuestion_Currency" xml:space="preserve">
+    <value>{0} Valuta richiesta: {1}.</value>
+  </data>
+  <data name="AiQuestion_ReportSource" xml:space="preserve">
+    <value>Origine: rapporto delle spese registrate</value>
+  </data>
+  <data name="AiQuestion_ForecastSource" xml:space="preserve">
+    <value>Origine: piani registrati e previsione</value>
+  </data>
+  <data name="AiQuestion_CategoryRow" xml:space="preserve">
+    <value>Riga {0} · {1} · Selezionato: {2} · Precedente: {3}</value>
+  </data>
+  <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
+    <value>Importi sconosciuti prima di questo periodo: {0}. Il saldo iniziale potrebbe essere incompleto.</value>
+  </data>
 </root>

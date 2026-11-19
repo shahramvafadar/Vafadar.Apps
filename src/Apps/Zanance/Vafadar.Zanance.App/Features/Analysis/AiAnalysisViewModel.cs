@@ -34,6 +34,73 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
 {
     private AiAccountScope? scope;
     private AiPeriodHandoff? initialPeriod, detailedPeriod;
+    private AiQuestion? question;
+
+    /// <summary>Original question text, retained locally and never included in disclosure.</summary>
+    [ObservableProperty] public partial string QuestionText { get; set; } = string.Empty;
+
+    /// <summary>One supported purpose or a bounded scope clarification.</summary>
+    [ObservableProperty] public partial string? QuestionStatus { get; private set; }
+
+    /// <summary>A recognized forecast always uses the existing projection's all-recorded basis.</summary>
+    public bool CanEditQuestionConfirmation => question?.Intent != AiQuestionIntent.PlanShortfall;
+
+    /// <summary>The selected operation controls comparison, independently of the ordinary Analysis toggle.</summary>
+    public bool CanEditQuestionComparison => question is null;
+
+    partial void OnQuestionTextChanged(string value)
+    {
+        var hadQuestion = question is not null;
+        question = null;
+        QuestionStatus = null;
+        if (hadQuestion) NotifyQuestionScope();
+        Invalidate();
+    }
+
+    private void NotifyQuestionScope()
+    {
+        OnPropertyChanged(nameof(CanEditQuestionConfirmation));
+        OnPropertyChanged(nameof(CanEditQuestionComparison));
+    }
+
+    /// <summary>Applies the finite local interpretation and discloses scope separately through Review.</summary>
+    [RelayCommand]
+    private async Task ApplyQuestionAsync()
+    {
+        if (!OwnsPresentation || !Loaded || !CanEditScope || HasPendingOperation || scope is not { } original) return;
+        question = null;
+        NotifyQuestionScope();
+        var version = Invalidate();
+        var interpretation = AiQuestionParser.Interpret(QuestionText);
+        if (interpretation is null) { QuestionStatus = text["AiQuestion_Clarify"]; return; }
+        var chosenCurrency = interpretation.Currency;
+        var today = DateOnly.FromDateTime(time.GetLocalNow().Date);
+        readingSource = operationActive = true;
+        try
+        {
+            StartOperation(version);
+            var range = interpretation.NextMonth
+                ? await store.UpcomingMonthAsync(original.File, today,
+                    Presentation.Calendars.ToPeriod(local.CurrentCalendar), visible?.Token ?? CancellationToken.None)
+                : ((DateOnly From, DateOnly To)?)null;
+            Validate(version);
+            var compare = interpretation.Intent == AiQuestionIntent.SpendingChange;
+            if (ComparePrevious != compare) { version++; ComparePrevious = compare; Validate(version); }
+            if (!compare && ConfirmedOnly) { version++; ConfirmedOnly = false; Validate(version); }
+            if (range is { } dates)
+            {
+                if (From != dates.From) { version++; From = dates.From; Validate(version); }
+                if (To != dates.To) { version++; To = dates.To; Validate(version); }
+            }
+            question = interpretation;
+            NotifyQuestionScope(); Validate(version);
+            var hint = text[compare ? "AiQuestion_Spending" : "AiQuestion_Plans"];
+            QuestionStatus = chosenCurrency is null ? hint : text.Format("AiQuestion_Currency", hint, chosenCurrency);
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (OwnsPresentation && version == epoch) QuestionStatus = text["AiQuestion_Scope"]; }
+        finally { readingSource = operationActive = false; IsBusy = false; Refresh(); }
+    }
 
     /// <summary>Only freely selected analysis has editable dates, account choices and review filters.</summary>
     public bool CanEditScope => detailedPeriod is null;
@@ -114,7 +181,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     public bool CanCheckProvider => OwnsPresentation && Loaded && !HasPendingOperation && runtime.NetworkAvailable;
     /// <summary>Gets whether metadata-only original terms can be requested.</summary>
     public bool CanQuote => OwnsPresentation && !HasPendingOperation && review is not null && metadataReady && remote is not null &&
-        availability is { } status && ((review.Selection.ComparePrevious || review.Selection.Forecast is not null) ? status.ComparisonConfigured ?? status.Configured : status.Configured) && !Pending;
+        availability is { } status && ((review.Selection.ComparePrevious || review.Selection.Forecast is not null || review.Selection.Question?.Intent == AiQuestionIntent.PlanShortfall) ? status.ComparisonConfigured ?? status.Configured : status.Configured) && !Pending;
     /// <summary>Gets whether current literal terms and actual available quantities permit a request attempt; the service rechecks authority.</summary>
     public bool CanSend => CanQuote && offer is not null && availability is not null &&
         checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= offer.MaximumUnits;
@@ -228,8 +295,26 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     {
         if (!OwnsPresentation || !Loaded || HasPendingOperation || scope is null) return;
         var original = epoch;
-        var selection = new AiSelection(scope.File, Accounts.Where(a => a.Selected).Select(a => a.Id).ToArray(), From, To, ConfirmedOnly, ComparePrevious,
-            local.CurrentLanguage.CultureName.Split('-')[0], detailedPeriod?.CompareFrom, detailedPeriod?.CompareTo, detailedPeriod?.Report, detailedPeriod?.Funding, detailedPeriod?.Forecast);
+        if (detailedPeriod is null && !string.IsNullOrWhiteSpace(QuestionText) && question is null)
+        { QuestionStatus = text["AiQuestion_Clarify"]; return; }
+        var applied = detailedPeriod is null ? question : null;
+        var today = DateOnly.FromDateTime(time.GetLocalNow().Date);
+        var selected = Accounts.Where(account => account.Selected).Select(account => account.Id).ToArray();
+        if (applied is not null)
+        {
+            var currencies = scope.Accounts.Where(account => selected.Contains(account.Id)).Select(account => account.Currency)
+                .Distinct(StringComparer.Ordinal).Take(2).ToArray();
+            if (currencies.Length != 1 || applied.Currency is { } currency && currencies[0] != currency ||
+                applied.Intent == AiQuestionIntent.PlanShortfall && (From < today || To.DayNumber - today.DayNumber > 90))
+            {
+                Invalidate();
+                QuestionStatus = text["AiQuestion_Scope"];
+                return;
+            }
+        }
+        var selection = new AiSelection(scope.File, selected, From, To, ConfirmedOnly, ComparePrevious,
+            local.CurrentLanguage.CultureName.Split('-')[0], detailedPeriod?.CompareFrom, detailedPeriod?.CompareTo, detailedPeriod?.Report, detailedPeriod?.Funding, detailedPeriod?.Forecast, applied,
+            applied is null ? null : today, applied is null ? null : Presentation.Calendars.ToPeriod(local.CurrentCalendar));
         readingSource = true; operationActive = true;
         try
         {
@@ -256,7 +341,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             if (detailedPeriod?.ValidateReportAsync is { } validateReport) { await validateReport(); Validate(original); }
             var payload = prepared.Payload; var summary = Period(payload.Current);
             if (payload.Previous is not null) summary += Environment.NewLine + Period(payload.Previous);
-            if (payload.Forecast is { } forecast && detailedPeriod is { } projection)
+            if (applied is not null) summary = QuestionSummary(prepared, payload, summary);
+            else if (payload.Forecast is { } forecast && detailedPeriod is { } projection)
                 summary = ForecastSummary(payload.Current, forecast, projection.ReportLabels);
             else if (payload.Funding is { } funding)
             {
@@ -533,6 +619,19 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         finally { readingSource = operationActive = false; IsBusy = false; Refresh(); }
     }
 
+    private string QuestionSummary(AiReview prepared, AiPayload payload, string spendingSummary)
+    {
+        if (payload.Forecast is { } forecast)
+            return text["AiQuestion_ForecastSource"] + Environment.NewLine +
+                ForecastSummary(payload.Current, forecast, prepared.QuestionLabels);
+        var lines = payload.Report?.Categories?.Select((item, index) => text.Format("AiQuestion_CategoryRow",
+            N(index + 1), string.IsNullOrWhiteSpace(prepared.QuestionLabels[index]) ? text["Category_Uncategorized"] : prepared.QuestionLabels[index],
+            MoneyText.Format(item.Current, payload.Current.Totals[0].CurrencyCode, local.CurrentCulture),
+            MoneyText.Format(item.Previous, payload.Current.Totals[0].CurrencyCode, local.CurrentCulture)));
+        return text["AiQuestion_ReportSource"] + Environment.NewLine + spendingSummary + Environment.NewLine +
+            (lines is null ? text["Report_NoChanges"] : string.Join(Environment.NewLine, lines));
+    }
+
     private string ForecastSummary(AiPeriod period, AiForecastFacts forecast, IReadOnlyList<string> localLabels)
     {
         var preview = new List<string>
@@ -540,6 +639,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             text.Format("Forecast_Basis", Day(period.From), Day(period.To)),
             text.Format("Ai_ForecastAssumptions", N(AiProtocol.MaximumReportRows)),
         };
+        if (forecast.UnknownBeforeWindow > 0) preview.Add(text.Format("AiQuestion_EarlierUnknown", N(forecast.UnknownBeforeWindow)));
         Add("Ai_ForecastBaseline", forecast.Baseline, 0);
         if (forecast.Scenario is { } scenario) Add("Ai_ForecastScenario", scenario, forecast.Baseline.Events.Count);
         return string.Join(Environment.NewLine, preview);
@@ -591,6 +691,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
 
     private async Task CheckOriginalAsync(AiReview original)
     {
+        if (original.Selection.Question?.Intent == AiQuestionIntent.PlanShortfall &&
+            (original.Selection.AsOf != DateOnly.FromDateTime(time.GetLocalNow().Date) ||
+                original.Selection.QuestionCalendar != Presentation.Calendars.ToPeriod(local.CurrentCalendar)))
+            throw new InvalidOperationException("The original question scope expired.");
         await store.CheckAsync(original);
         if (detailedPeriod?.ValidateReportAsync is { } validateReport) await validateReport();
     }

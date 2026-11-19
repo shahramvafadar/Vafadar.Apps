@@ -8758,4 +8758,40 @@ SHA-256 del XML original: {5}</value>
   <data name="CategoryReview_DraftRule" xml:space="preserve">
     <value>Abrir el borrador editable de la regla</value>
   </data>
+  <data name="AiQuestion_Title" xml:space="preserve">
+    <value>Pregunta sobre los datos seleccionados</value>
+  </data>
+  <data name="AiQuestion_Example" xml:space="preserve">
+    <value>¿Por qué subió mi gasto en EUR?</value>
+  </data>
+  <data name="AiQuestion_Apply" xml:space="preserve">
+    <value>Interpretar pregunta</value>
+  </data>
+  <data name="AiQuestion_Clarify" xml:space="preserve">
+    <value>Pregunta por un cambio de gasto o por planes que contribuyen a un déficit. Elige otras fechas abajo.</value>
+  </data>
+  <data name="AiQuestion_Scope" xml:space="preserve">
+    <value>Elige cuentas en una sola moneda que coincida y revisa las fechas. Para una previsión, elige un intervalo dentro de los próximos 90 días.</value>
+  </data>
+  <data name="AiQuestion_Spending" xml:space="preserve">
+    <value>Cambio del gasto por categoría. Elige cuentas en una moneda y revisa las fechas de comparación.</value>
+  </data>
+  <data name="AiQuestion_Plans" xml:space="preserve">
+    <value>Planes y déficit previsto. Elige cuentas de pago en una moneda y revisa las fechas de la previsión.</value>
+  </data>
+  <data name="AiQuestion_Currency" xml:space="preserve">
+    <value>{0} Moneda solicitada: {1}.</value>
+  </data>
+  <data name="AiQuestion_ReportSource" xml:space="preserve">
+    <value>Origen: informe de gastos registrados</value>
+  </data>
+  <data name="AiQuestion_ForecastSource" xml:space="preserve">
+    <value>Origen: planes registrados y previsión</value>
+  </data>
+  <data name="AiQuestion_CategoryRow" xml:space="preserve">
+    <value>Fila {0} · {1} · Seleccionado: {2} · Anterior: {3}</value>
+  </data>
+  <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
+    <value>Importes desconocidos antes de este intervalo: {0}. El saldo inicial puede estar incompleto.</value>
+  </data>
 </root>

@@ -83,6 +83,21 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             null, Forecast: new("EUR", AiForecastEvidence.Project(baseline).Path, AiForecastEvidence.Project(scenario).Path));
     }
 
+    /// <summary>Exact synthetic question cases using existing category and forecast envelope versions.</summary>
+    internal static readonly AiPayload SpendingQuestionFixture = new(2, AiPurpose.PeriodComparison, "en",
+        new(new(2026, 11, 1), new(2026, 11, 30), 1, true, [new("EUR", 0, 0, 20000, 1000)], 0),
+        new(new(2026, 10, 2), new(2026, 10, 31), 1, true, [new("EUR", 0, 0, 6000, 0)], 0),
+        Report: new([new(19000, 6000)], null));
+    internal static readonly AiPayload PlanQuestionFixture = new(4, AiPurpose.PeriodComparison, "en",
+        new(new(2026, 11, 1), new(2026, 11, 30), 1, false, [new("EUR", 0, 0, 0, 0)], 0), null,
+        Forecast: new("EUR", new(4000, 4000, -5000, new(2026, 11, 4), new(2026, 11, 4), -5000, 0, 2,
+        [
+            new(new(2026, 11, 4), -9000, ForecastSource.Plan, false, false, false, false),
+            new(new(2026, 11, 10), 9000, ForecastSource.Plan, false, false, false, false),
+        ]), null, 1));
+    private static readonly string SpendingQuestionDigest = AiProtocol.Digest(SpendingQuestionFixture);
+    private static readonly string PlanQuestionDigest = AiProtocol.Digest(PlanQuestionFixture);
+
     private static readonly string CategoryDigest = AiProtocol.Digest(CategoryFixture);
     private static readonly string PlanDigest = AiProtocol.Digest(PlanFixture);
     private static readonly string ReportDigest = AiProtocol.Digest(ReportFixture);
@@ -96,7 +111,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     internal static bool IsSynthetic(AiPurpose purpose, string digest) => purpose switch
     {
         AiPurpose.PeriodExplanation => digest == ReportDigest || digest == PlanDigest || FundingByDigest.ContainsKey(digest),
-        AiPurpose.PeriodComparison => digest == ComparisonDigest || digest == AppComparisonDigest || digest == CategoryDigest || digest == ForecastDigest || digest == ForecastBaselineDigest,
+        AiPurpose.PeriodComparison => digest == ComparisonDigest || digest == AppComparisonDigest || digest == CategoryDigest || digest == ForecastDigest || digest == ForecastBaselineDigest || digest == SpendingQuestionDigest || digest == PlanQuestionDigest,
         _ => false,
     };
 
@@ -190,6 +205,10 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             task = "Synthetic forecast with one currency. Existing events only, unknown expenses are excluded from the numeric path. Baseline: an expense before income causes the first negative day (Nov 5), then another expense deepens it (Nov 10). Scenario: move the earlier expense behind income and exclude the other expense. The modeled scenario no longer becomes negative, but still has an unknown expense. Copy baseline_first_day=5, scenario_first_day=0 (no negative day) and unknown_count=1 exactly. In explanation, briefly explain the timing and the unknown amount in English without digits, financial advice or a guarantee.";
         if (digest == ForecastBaselineDigest)
             task = "Synthetic forecast, one currency, existing items only. An expense on Nov 5 happens before income. That day is the first negative balance. Another later expense creates the lowest balance on Nov 10. An unknown expense is omitted from the numeric path. Copy first_day=5, minimum_day=10 and unknown_count=1. Explain the timing and unknown amount in English without digits, invented amounts, financial advice or a guarantee.";
+        if (digest == SpendingQuestionDigest)
+            task = "Synthetic selected EUR spending: previous gross 6000 with no refund, selected gross 20000 with refund 1000. One category contributes the whole net increase. Copy spending_change_minor=13000 and contributing_rows=1. Explain briefly in English that the refund offsets part of the increase. Do not invent a cause or use digits in the explanation.";
+        if (digest == PlanQuestionDigest)
+            task = "Synthetic EUR plan question: the selected month starts with a partly uncertain opening estimate, because an earlier amount is unknown. An outgoing plan precedes the incoming plan, producing the first projected negative balance on day 4. Copy first_day=4 and earlier_unknown_count=1. Explain briefly in English without digits, advice or certainty about the result.";
         var expected = Expected(offer.Purpose, digest);
         var properties = expected.ToDictionary(f => f.Key, f => new { type = f.Value is bool ? "boolean" : "integer" });
         properties.Add("explanation", new { type = "string" });
@@ -259,7 +278,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
                 Text(root, "explanation") is not { } explanation) return Unknown;
             if (FundingByDigest.TryGetValue(digest, out var funding) && funding.Kind != AiFundingKind.BudgetLimit &&
                 explanation.Any(char.IsDigit)) return Unknown;
-            if ((digest == ForecastDigest || digest == ForecastBaselineDigest) && explanation.Any(char.IsDigit)) return Unknown;
+            if ((digest == ForecastDigest || digest == ForecastBaselineDigest || digest == SpendingQuestionDigest || digest == PlanQuestionDigest) && explanation.Any(char.IsDigit)) return Unknown;
             AiProtocol.ValidateText(explanation);
             return new(AiProviderState.Completed, 1, explanation, input, output + thought);
         }
@@ -295,6 +314,8 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     {
         if (FundingByDigest.TryGetValue(digest, out var funding))
             return new() { ["difference_minor"] = (int)funding.Difference, ["alternative_minor"] = (int)funding.Alternative()!.Value };
+        if (digest == SpendingQuestionDigest) return new() { ["spending_change_minor"] = 13000, ["contributing_rows"] = 1 };
+        if (digest == PlanQuestionDigest) return new() { ["first_day"] = 4, ["earlier_unknown_count"] = 1 };
         if (digest == ForecastBaselineDigest) return new() { ["first_day"] = 5, ["minimum_day"] = 10, ["unknown_count"] = 1 };
         if (digest == ForecastDigest) return new() { ["baseline_first_day"] = 5, ["scenario_first_day"] = 0, ["unknown_count"] = 1 };
         if (digest == CategoryDigest) return new() { ["largest_increase"] = 1, ["largest_decrease"] = 2 };

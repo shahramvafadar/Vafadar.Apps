@@ -8766,4 +8766,40 @@ SHA-256 du XML original : {5}</value>
   <data name="CategoryReview_DraftRule" xml:space="preserve">
     <value>Ouvrir le brouillon modifiable de la règle</value>
   </data>
+  <data name="AiQuestion_Title" xml:space="preserve">
+    <value>Question sur les données sélectionnées</value>
+  </data>
+  <data name="AiQuestion_Example" xml:space="preserve">
+    <value>Pourquoi mes dépenses en EUR ont-elles augmenté ?</value>
+  </data>
+  <data name="AiQuestion_Apply" xml:space="preserve">
+    <value>Interpréter la question</value>
+  </data>
+  <data name="AiQuestion_Clarify" xml:space="preserve">
+    <value>Posez une question sur une variation de dépenses ou les plans qui contribuent à un déficit. Choisissez les autres dates ci-dessous.</value>
+  </data>
+  <data name="AiQuestion_Scope" xml:space="preserve">
+    <value>Choisissez des comptes dans une seule devise correspondante et vérifiez les dates. Pour une prévision, choisissez une période dans les 90 prochains jours.</value>
+  </data>
+  <data name="AiQuestion_Spending" xml:space="preserve">
+    <value>Évolution des dépenses par catégorie. Choisissez des comptes dans une devise et vérifiez les dates de comparaison.</value>
+  </data>
+  <data name="AiQuestion_Plans" xml:space="preserve">
+    <value>Plans et déficit prévisionnel. Choisissez des comptes de paiement dans une devise et vérifiez les dates.</value>
+  </data>
+  <data name="AiQuestion_Currency" xml:space="preserve">
+    <value>{0} Devise demandée : {1}.</value>
+  </data>
+  <data name="AiQuestion_ReportSource" xml:space="preserve">
+    <value>Source : rapport des dépenses enregistrées</value>
+  </data>
+  <data name="AiQuestion_ForecastSource" xml:space="preserve">
+    <value>Source : plans enregistrés et prévision</value>
+  </data>
+  <data name="AiQuestion_CategoryRow" xml:space="preserve">
+    <value>Ligne {0} · {1} · Sélection : {2} · Précédent : {3}</value>
+  </data>
+  <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
+    <value>Montants inconnus avant cette période : {0}. Le solde initial peut être incomplet.</value>
+  </data>
 </root>

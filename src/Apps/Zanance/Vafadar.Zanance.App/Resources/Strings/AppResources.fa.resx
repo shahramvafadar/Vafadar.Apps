@@ -8789,4 +8789,40 @@
   <data name="CategoryReview_DraftRule" xml:space="preserve">
     <value>بازکردن پیش‌نویس قابل‌ویرایش قاعده</value>
   </data>
+  <data name="AiQuestion_Title" xml:space="preserve">
+    <value>پرسش دربارهٔ داده‌های انتخاب‌شده</value>
+  </data>
+  <data name="AiQuestion_Example" xml:space="preserve">
+    <value>چرا هزینه‌های EUR من افزایش یافت؟</value>
+  </data>
+  <data name="AiQuestion_Apply" xml:space="preserve">
+    <value>تشخیص نوع پرسش</value>
+  </data>
+  <data name="AiQuestion_Clarify" xml:space="preserve">
+    <value>دربارهٔ تغییر هزینه‌ها یا نقش برنامه‌ها در کسری بپرسید. تاریخ‌های دیگر را در بازهٔ زیر انتخاب کنید.</value>
+  </data>
+  <data name="AiQuestion_Scope" xml:space="preserve">
+    <value>حساب‌های یک ارزِ منطبق را انتخاب کنید و تاریخ‌ها را بررسی کنید. برای پیش‌بینی، بازه‌ای در ۹۰ روز آینده انتخاب کنید.</value>
+  </data>
+  <data name="AiQuestion_Spending" xml:space="preserve">
+    <value>تغییر هزینه‌ها به تفکیک دسته. حساب‌های یک ارز را انتخاب و تاریخ‌های مقایسه را بررسی کنید.</value>
+  </data>
+  <data name="AiQuestion_Plans" xml:space="preserve">
+    <value>برنامه‌ها و کسری پیش‌بینی‌شده. حساب‌های پرداختِ یک ارز را انتخاب و تاریخ‌های پیش‌بینی را بررسی کنید.</value>
+  </data>
+  <data name="AiQuestion_Currency" xml:space="preserve">
+    <value>{0} ارز درخواست‌شده: {1}.</value>
+  </data>
+  <data name="AiQuestion_ReportSource" xml:space="preserve">
+    <value>منبع: گزارش هزینه‌های ثبت‌شده</value>
+  </data>
+  <data name="AiQuestion_ForecastSource" xml:space="preserve">
+    <value>منبع: برنامه‌های ثبت‌شده و پیش‌بینی</value>
+  </data>
+  <data name="AiQuestion_CategoryRow" xml:space="preserve">
+    <value>ردیف {0} · {1} · بازهٔ انتخاب‌شده: {2} · بازهٔ قبل: {3}</value>
+  </data>
+  <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
+    <value>تعداد مبلغ‌های نامعلوم پیش از این بازه: {0}. ماندهٔ آغاز ممکن است ناقص باشد.</value>
+  </data>
 </root>

@@ -8830,4 +8830,40 @@ Original XML SHA-256: {5}</value>
   <data name="CategoryReview_DraftRule" xml:space="preserve">
     <value>Open editable rule draft</value>
   </data>
+  <data name="AiQuestion_Title" xml:space="preserve">
+    <value>Question about selected data</value>
+  </data>
+  <data name="AiQuestion_Example" xml:space="preserve">
+    <value>Why did my EUR spending rise?</value>
+  </data>
+  <data name="AiQuestion_Apply" xml:space="preserve">
+    <value>Interpret question</value>
+  </data>
+  <data name="AiQuestion_Clarify" xml:space="preserve">
+    <value>Ask about a spending change or plans contributing to a shortfall. Set any other dates below.</value>
+  </data>
+  <data name="AiQuestion_Scope" xml:space="preserve">
+    <value>Select accounts in one matching currency and check the dates. For a forecast, select a range within the next 90 days.</value>
+  </data>
+  <data name="AiQuestion_Spending" xml:space="preserve">
+    <value>Spending change by category. Select accounts in one currency and review the comparison dates.</value>
+  </data>
+  <data name="AiQuestion_Plans" xml:space="preserve">
+    <value>Plans and projected shortfall. Select payment accounts in one currency and review the forecast dates.</value>
+  </data>
+  <data name="AiQuestion_Currency" xml:space="preserve">
+    <value>{0} Requested currency: {1}.</value>
+  </data>
+  <data name="AiQuestion_ReportSource" xml:space="preserve">
+    <value>Source: recorded spending report</value>
+  </data>
+  <data name="AiQuestion_ForecastSource" xml:space="preserve">
+    <value>Source: recorded plans and forecast</value>
+  </data>
+  <data name="AiQuestion_CategoryRow" xml:space="preserve">
+    <value>Row {0} · {1} · Selected: {2} · Previous: {3}</value>
+  </data>
+  <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
+    <value>Unknown amounts before this window: {0}. The opening balance may be incomplete.</value>
+  </data>
 </root>

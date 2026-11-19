@@ -12,7 +12,9 @@ public sealed record AiForecastPath(long Opening, long Closing, long Minimum, Da
     IReadOnlyList<AiForecastEvent> Events);
 
 /// <summary>Same-file, same-currency, same-horizon baseline and optional original local scenario.</summary>
-public sealed record AiForecastFacts(string Currency, AiForecastPath Baseline, AiForecastPath? Scenario);
+public sealed record AiForecastFacts(string Currency, AiForecastPath Baseline, AiForecastPath? Scenario,
+    [property: System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]
+    int UnknownBeforeWindow = 0);
 
 /// <summary>Projects a bounded fact list from existing calculator outputs, leaving names and IDs out of the wire model.</summary>
 public static class AiForecastEvidence

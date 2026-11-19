@@ -18,6 +18,8 @@ using Vafadar.Zanance.App.Features.Analysis;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Analysis;
 using Vafadar.Zanance.Core.Ledger;
+using Vafadar.Zanance.Core.Categories;
+using Vafadar.Zanance.Core.Plans;
 using Vafadar.Zanance.Core.Sync;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Analysis;
@@ -111,8 +113,15 @@ public sealed class AiLiveApplicationFlowTests
     public Task Forecast_baseline_reaches_the_selected_live_provider() =>
         RunAsync(true, "gpt-6.2-sol", true, projection: true, baselineOnly: true);
 
+    /// <summary>Exercises distinct locally interpreted questions through the existing app and pinned service.</summary>
+    [Theory]
+    [InlineData(AiQuestionIntent.SpendingChange, "gpt-6.2-sol")]
+    [InlineData(AiQuestionIntent.PlanShortfall, "gemini-4-hydrogen")]
+    public Task Selected_question_reaches_the_selected_live_provider(AiQuestionIntent question, string model) =>
+        RunAsync(true, model, false, question: question);
+
     private static async Task RunAsync(bool comparison, string model, bool detailed, AiFundingKind? funding = null,
-        bool projection = false, bool baselineOnly = false)
+        bool projection = false, bool baselineOnly = false, AiQuestionIntent? question = null)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_CONNECTION");
@@ -121,7 +130,7 @@ public sealed class AiLiveApplicationFlowTests
         Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
         var root = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_ROOT")!;
         Assert.Equal("Zanance synthetic app analysis", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
-        var lane = Path.Combine(root, projection ? (baselineOnly ? "baseline" : model) : funding?.ToString() ?? (detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report")));
+        var lane = Path.Combine(root, question?.ToString() ?? (projection ? (baselineOnly ? "baseline" : model) : funding?.ToString() ?? (detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report"))));
         Directory.CreateDirectory(lane);
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions { EnvironmentName = "Integration", ApplicationName = typeof(ServiceHost).Assembly.FullName });
         builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
@@ -137,7 +146,7 @@ public sealed class AiLiveApplicationFlowTests
         var serviceStore = server.Services.GetRequiredService<AiRequestStore>();
         var factory = server.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         var purpose = comparison ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation;
-        var scopeKey = projection ? (baselineOnly ? "forecast-baseline" : "forecast") : funding is AiFundingKind.BudgetSuggestion or AiFundingKind.Goal ? $"{funding}-qualified" : funding?.ToString() ?? "period";
+        var scopeKey = question?.ToString() ?? (projection ? (baselineOnly ? "forecast-baseline" : "forecast") : funding is AiFundingKind.BudgetSuggestion or AiFundingKind.Goal ? $"{funding}-qualified" : funding?.ToString() ?? "period");
         var email = $"synthetic-{model}-{scopeKey}@example.invalid";
         const string fixturePassword = "Fictional-App-Analysis-9!";
         await using (var scope = server.Services.CreateAsyncScope())
@@ -159,34 +168,52 @@ public sealed class AiLiveApplicationFlowTests
         var identity = await login.SignInAsync(email, fixturePassword, ct);
         using var local = new FlowFixture();
         // The app derives an equally long preceding period, October 2–31, from this November selection.
-        var fixture = projection ? (baselineOnly ? AiPilotProvider.ForecastBaselineFixture : AiPilotProvider.ForecastFixture) : funding is { } kind ? AiPilotProvider.FundingFixtures[kind] : detailed ? (comparison ? AiPilotProvider.CategoryFixture : AiPilotProvider.PlanFixture)
+        var fixture = question is { } asked ? asked == AiQuestionIntent.SpendingChange
+            ? AiPilotProvider.SpendingQuestionFixture : AiPilotProvider.PlanQuestionFixture : projection ? (baselineOnly ? AiPilotProvider.ForecastBaselineFixture : AiPilotProvider.ForecastFixture) : funding is { } kind ? AiPilotProvider.FundingFixtures[kind] : detailed ? (comparison ? AiPilotProvider.CategoryFixture : AiPilotProvider.PlanFixture)
             : (comparison ? AiPilotProvider.ComparisonFixture : AiPilotProvider.ReportFixture);
         var localAccounts = new List<Guid>();
         await using (var db = await local.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct))
         {
+            var category = question == AiQuestionIntent.SpendingChange
+                ? new Category { Name = "Fictitious private cost category", Kind = CategoryKind.Expense } : null;
+            if (category is not null) db.Add(category);
             foreach (var totals in fixture.Current.Totals)
             {
-                var account = new Account { Name = "Fictitious private account " + totals.CurrencyCode, CurrencyCode = totals.CurrencyCode, OpeningDate = new(2026, 1, 1), OpeningBalance = projection ? 10000 : 0 };
+                var account = new Account { Name = "Fictitious private account " + totals.CurrencyCode, CurrencyCode = totals.CurrencyCode, OpeningDate = new(2026, 1, 1), OpeningBalance = question == AiQuestionIntent.PlanShortfall ? 5000 : projection ? 10000 : 0 };
                 db.Add(account);
                 localAccounts.Add(account.Id);
+                if (question == AiQuestionIntent.PlanShortfall)
+                {
+                    AddPlan(account.Id, new(2026, 10, 23), EntryKind.Expense, 1000);
+                    AddPlan(account.Id, new(2026, 10, 25), EntryKind.Expense, null);
+                    AddPlan(account.Id, new(2026, 11, 4), EntryKind.Expense, 9000);
+                    AddPlan(account.Id, new(2026, 11, 10), EntryKind.Income, 9000);
+                }
                 AddPeriod(account.Id, fixture.Current, totals);
                 if (fixture.Previous is { } prior) AddPeriod(account.Id, prior, prior.Totals.Single(t => t.CurrencyCode == totals.CurrencyCode));
             }
             await db.SaveChangesAsync(ct);
+
+            void AddPlan(Guid account, DateOnly due, EntryKind kind, long? amount) => db.Add(new Schedule
+            {
+                AccountId = account, Name = "Fictitious private due plan", Kind = kind, Amount = amount,
+                AmountMode = amount.HasValue ? AmountMode.Fixed : AmountMode.Unknown,
+                Rule = new() { Frequency = Frequency.Once, Start = due },
+            });
 
             void AddPeriod(Guid account, AiPeriod period, PeriodTotals totals)
             {
                 foreach (var (kind, amount) in new[] { (EntryKind.Income, totals.Income), (EntryKind.IncomeReversal, totals.IncomeReversals),
                              (EntryKind.Expense, totals.GrossExpense), (EntryKind.Refund, totals.Refunds) })
                     if (amount != 0) db.Add(new LedgerEntry { AccountId = account, Date = period.To, Kind = kind, Amount = amount,
-                        Review = ReviewState.Confirmed, Note = "Fictitious note never sent" });
+                        Review = ReviewState.Confirmed, CategoryId = category?.Id, Note = "Fictitious note never sent" });
             }
         }
 
         var before = await GoalChooserFlowTests.SnapshotAsync(local);
         var journal = new Journal(lane, new EphemeralDataProtectionProvider().CreateProtector("synthetic-app-analysis"));
         var vm = new AiAnalysisViewModel(local.Services.GetRequiredService<AiSnapshotStore>(), local.Translator, local.Localization,
-            new DateFormatter(local.Localization), TimeProvider.System, local.Platform, new Runtime(peer, tokens, journal, identity.Id));
+            new DateFormatter(local.Localization), question is null ? TimeProvider.System : new FixedTime { Now = new(2026, 10, 20, 9, 0, 0, TimeSpan.Zero) }, local.Platform, new Runtime(peer, tokens, journal, identity.Id));
         var reportSourceCurrent = true;
         var draftsOpened = 0;
         if (detailed)
@@ -213,7 +240,18 @@ public sealed class AiLiveApplicationFlowTests
 
         await vm.LoadAsync();
         Assert.Equal(fixture.Current.AccountCount, vm.Accounts.Count);
-        if (!detailed)
+        if (question is { } askedQuestion)
+        {
+            foreach (var account in vm.Accounts) account.Selected = true;
+            vm.QuestionText = askedQuestion == AiQuestionIntent.SpendingChange
+                ? "Why did my EUR spending rise? Fictitious private marker"
+                : "Which EUR plans contribute to next month's shortfall? Fictitious private marker";
+            await vm.ApplyQuestionCommand.ExecuteAsync(null);
+            Assert.NotNull(vm.QuestionStatus);
+            if (askedQuestion == AiQuestionIntent.SpendingChange) { vm.From = fixture.Current.From; vm.To = fixture.Current.To; }
+            Assert.Equal((fixture.Current.From, fixture.Current.To), (vm.From, vm.To));
+        }
+        else if (!detailed)
         {
             foreach (var account in vm.Accounts) account.Selected = true;
             vm.From = fixture.Current.From; vm.To = fixture.Current.To; vm.ComparePrevious = comparison;
@@ -228,6 +266,12 @@ public sealed class AiLiveApplicationFlowTests
         }
 
         await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure);
+        if (question is not null)
+        {
+            Assert.Contains("Fictitious private", vm.Summary, StringComparison.Ordinal);
+            var reviewed = System.Text.Json.JsonSerializer.Deserialize(vm.Disclosure, AiJson.Default.AiPayload)!;
+            Assert.Equal(AiProtocol.Digest(fixture), AiProtocol.Digest(reviewed));
+        }
         if (detailed)
         {
             Assert.Contains("Fictitious private label 1", vm.Summary, StringComparison.Ordinal);

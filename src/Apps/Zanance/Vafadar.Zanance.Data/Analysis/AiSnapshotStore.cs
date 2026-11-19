@@ -4,6 +4,8 @@ using System.Text.Json.Serialization;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Analysis;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Ledger;
@@ -19,14 +21,16 @@ public sealed record AiAccountScope(string File, IReadOnlyList<AiAccount> Accoun
 /// <summary>Exact read-only disclosure inputs, independent from UI language/calendar presentation.</summary>
 public sealed record AiSelection(string File, IReadOnlyList<Guid> AccountIds, DateOnly From, DateOnly To,
     bool ConfirmedOnly, bool ComparePrevious, string Language, DateOnly? CompareFrom = null, DateOnly? CompareTo = null,
-    AiReportDetails? Report = null, AiFundingFacts? Funding = null, AiForecastFacts? Forecast = null);
+    AiReportDetails? Report = null, AiFundingFacts? Funding = null, AiForecastFacts? Forecast = null, AiQuestion? Question = null, DateOnly? AsOf = null, PeriodCalendar? QuestionCalendar = null);
 
 /// <summary>Original file/rights/minimal source digest and immutable aggregate payload; no raw notes or blobs retained.</summary>
 public sealed class AiReview
 {
     private readonly string payload;
-    internal AiReview(AiSelection selection, CommercialFileAccess access, string sourceDigest, AiPayload content)
-    { Selection = selection; Access = access; SourceDigest = sourceDigest; payload = JsonSerializer.Serialize(content, AiJson.Default.AiPayload); Digest = AiProtocol.Digest(content); }
+    /// <summary>Local display labels for question facts, in the exact disclosure order.</summary>
+    public IReadOnlyList<string> QuestionLabels { get; }
+    internal AiReview(AiSelection selection, CommercialFileAccess access, string sourceDigest, AiPayload content, IReadOnlyList<string>? labels = null)
+    { QuestionLabels = labels ?? []; Selection = selection; Access = access; SourceDigest = sourceDigest; payload = JsonSerializer.Serialize(content, AiJson.Default.AiPayload); Digest = AiProtocol.Digest(content); }
     /// <summary>Immutable original local scope; never sent to the provider.</summary>
     public AiSelection Selection { get; }
     /// <summary>Returns a fresh limited payload, so external draft mutation cannot replace original consent.</summary>
@@ -40,7 +44,7 @@ public sealed class AiReview
 }
 
 /// <summary>Aggregate-only analysis sources from one original coherent protected reader; no financial write or raw-data upload.</summary>
-public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory, ICommercialWriteAccessSource access)
+public sealed partial class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory, ICommercialWriteAccessSource access)
 {
     /// <summary>Lists original account choices off the UI thread; all selections remain explicit.</summary>
     public Task<AiAccountScope> AccountsAsync(CancellationToken ct = default) => Task.Run(async () =>
@@ -60,8 +64,8 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
             await using var db = await factory.CreateDbContextAsync(ct);
             var rights = new CommercialFileAccess(access, DatabaseFileIdentity.ConfiguredPath(db));
             rights.EnsureSnapshotCurrent(); rights.DemandFeature(CommercialFeature.BasicExport);
-            var frame = await ReadAsync(db, frozen, ct); var payload = Build(frozen, frame); rights.EnsureSnapshotCurrent();
-            return new AiReview(frozen, rights, SourceDigest(frame), payload);
+            var frame = await ReadAsync(db, frozen, rights, ct); var payload = Build(frozen, frame); rights.EnsureSnapshotCurrent();
+            return new AiReview(frozen, rights, SourceDigest(frame), payload, frame.Question?.Labels.AsReadOnly());
         }, ct);
     }
     /// <summary>Rechecks the exact original file/minimal source/rights on the worker after native awaits.</summary>
@@ -71,7 +75,7 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         return Task.Run(async () =>
         {
             review.EnsureCurrent(); await using var db = await factory.CreateDbContextAsync(ct);
-            var frame = await ReadAsync(db, review.Selection, ct);
+            var frame = await ReadAsync(db, review.Selection, review.Access, ct);
             if (SourceDigest(frame) != review.SourceDigest || AiProtocol.Digest(Build(review.Selection, frame)) != review.Digest)
                 throw new InvalidOperationException("The original analysis source changed.");
             review.EnsureCurrent();
@@ -93,6 +97,13 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         else if (selection.CompareFrom is not null || selection.CompareTo is not null ||
             selection.ComparePrevious && selection.From.DayNumber <= selection.To.DayNumber - selection.From.DayNumber + 1)
             throw new ArgumentException("The comparison period is outside supported dates.");
+        if (selection.Question is { } question &&
+            (!Enum.IsDefined(question.Intent) || selection.Report is not null || selection.Funding is not null || selection.Forecast is not null ||
+             selection.ComparePrevious != (question.Intent == AiQuestionIntent.SpendingChange) ||
+             question.Intent == AiQuestionIntent.PlanShortfall &&
+                (selection.AsOf is not { } asOf || asOf > selection.From || selection.To.DayNumber - asOf.DayNumber > 90 ||
+                    selection.ConfirmedOnly || question.NextMonth && selection.QuestionCalendar is null)))
+            throw new ArgumentException("The requested question scope is unavailable.");
         return selection with
         {
             AccountIds = Array.AsReadOnly(selection.AccountIds.Order().ToArray()),
@@ -109,7 +120,7 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
     private static AiForecastPath FreezePath(AiForecastPath path) =>
         path with { Events = Array.AsReadOnly(path.Events.ToArray()) };
 
-    private static async Task<AiSourceFrame> ReadAsync(ZananceDbContext db, AiSelection selection, CancellationToken ct)
+    private static async Task<AiSourceFrame> ReadAsync(ZananceDbContext db, AiSelection selection, CommercialFileAccess rights, CancellationToken ct)
     {
         if (DatabaseFileIdentity.ConfiguredPath(db) != selection.File) throw new InvalidOperationException("Original analysis file required.");
         await db.Database.OpenConnectionAsync(ct);
@@ -125,7 +136,8 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         var rows = await db.Entries.AsNoTracking().Where(e => selection.AccountIds.Contains(e.AccountId) && e.Date >= from && e.Date <= selection.To)
             .OrderBy(e => e.Id).Select(e => new AiSourceEntry(e.Id, e.AccountId, e.Date, e.Kind, e.Amount, e.Review)).Take(100001).ToListAsync(ct);
         if (rows.Count > 100000) throw new InvalidOperationException("Analysis source exceeds its technical row bound.");
-        return new(accounts, rows);
+        var question = selection.Question is null ? null : await ReadQuestionAsync(db, selection, rights, accounts, ct);
+        return new(accounts, rows, question);
     }
     private static AiPayload Build(AiSelection selection, AiSourceFrame frame)
     {
@@ -145,9 +157,11 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         }
         var current = Period(selection.From, selection.To);
         var previous = selection.ComparePrevious ? Period(PreviousFrom(selection), selection.CompareTo ?? selection.From.AddDays(-1)) : null;
-        var result = new AiPayload(selection.Forecast is not null ? 4 : selection.Funding is not null ? 3 : selection.Report is null ? 1 : 2,
-            selection.ComparePrevious || selection.Forecast is not null ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation,
-            selection.Language, current, previous, selection.Report, selection.Funding, selection.Forecast);
+        var report = frame.Question?.Report ?? selection.Report;
+        var forecast = frame.Question?.Forecast ?? selection.Forecast;
+        var result = new AiPayload(forecast is not null ? 4 : selection.Funding is not null ? 3 : report is null ? 1 : 2,
+            selection.ComparePrevious || forecast is not null ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation,
+            selection.Language, current, previous, report, selection.Funding, forecast);
         AiProtocol.Validate(result); return result;
     }
     private static DateOnly PreviousFrom(AiSelection selection) =>
@@ -161,7 +175,10 @@ internal sealed record AiSourceAccount(Guid Id, string Name, string Currency, Da
 /// <summary>Only original calculation/source fingerprint fields, never payees/notes/documents.</summary>
 internal sealed record AiSourceEntry(Guid Id, Guid AccountId, DateOnly Date, EntryKind Kind, long Amount, ReviewState Review);
 /// <summary>Coherent bounded original sources used for stale-consent refusal only.</summary>
-internal sealed record AiSourceFrame(List<AiSourceAccount> Accounts, List<AiSourceEntry> Entries);
+internal sealed record AiSourceFrame(List<AiSourceAccount> Accounts, List<AiSourceEntry> Entries, AiQuestionSource? Question);
+
+/// <summary>Only bounded derived question facts and local labels are fingerprinted.</summary>
+internal sealed record AiQuestionSource(AiReportDetails? Report, AiForecastFacts? Forecast, List<string> Labels);
 /// <summary>Explicit AOT metadata for private local source fingerprints, not network DTOs.</summary>
 [JsonSerializable(typeof(AiSourceFrame))]
 internal sealed partial class AiSourceJson : JsonSerializerContext;

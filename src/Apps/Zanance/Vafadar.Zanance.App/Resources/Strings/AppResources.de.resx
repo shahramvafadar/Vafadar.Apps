@@ -8789,4 +8789,40 @@ Original-XML SHA-256: {5}</value>
   <data name="CategoryReview_DraftRule" xml:space="preserve">
     <value>Bearbeitbaren Regelentwurf öffnen</value>
   </data>
+  <data name="AiQuestion_Title" xml:space="preserve">
+    <value>Frage zu ausgewählten Daten</value>
+  </data>
+  <data name="AiQuestion_Example" xml:space="preserve">
+    <value>Warum sind meine EUR-Ausgaben gestiegen?</value>
+  </data>
+  <data name="AiQuestion_Apply" xml:space="preserve">
+    <value>Frage auswerten</value>
+  </data>
+  <data name="AiQuestion_Clarify" xml:space="preserve">
+    <value>Frage nach einer Ausgabenänderung oder nach Plänen, die zu einem Fehlbetrag beitragen. Wähle andere Daten unten aus.</value>
+  </data>
+  <data name="AiQuestion_Scope" xml:space="preserve">
+    <value>Wähle Konten mit derselben passenden Währung und prüfe die Daten. Wähle für eine Prognose einen Zeitraum innerhalb der nächsten 90 Tage.</value>
+  </data>
+  <data name="AiQuestion_Spending" xml:space="preserve">
+    <value>Ausgabenänderung nach Kategorie. Wähle Konten in einer Währung und prüfe die Vergleichsdaten.</value>
+  </data>
+  <data name="AiQuestion_Plans" xml:space="preserve">
+    <value>Pläne und prognostizierter Fehlbetrag. Wähle Zahlungskonten in einer Währung und prüfe die Prognosedaten.</value>
+  </data>
+  <data name="AiQuestion_Currency" xml:space="preserve">
+    <value>{0} Gefragte Währung: {1}.</value>
+  </data>
+  <data name="AiQuestion_ReportSource" xml:space="preserve">
+    <value>Quelle: Bericht über erfasste Ausgaben</value>
+  </data>
+  <data name="AiQuestion_ForecastSource" xml:space="preserve">
+    <value>Quelle: erfasste Pläne und Prognose</value>
+  </data>
+  <data name="AiQuestion_CategoryRow" xml:space="preserve">
+    <value>Zeile {0} · {1} · Ausgewählt: {2} · Vorher: {3}</value>
+  </data>
+  <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
+    <value>Unbekannte Beträge vor diesem Zeitraum: {0}. Der Anfangssaldo kann unvollständig sein.</value>
+  </data>
 </root>
