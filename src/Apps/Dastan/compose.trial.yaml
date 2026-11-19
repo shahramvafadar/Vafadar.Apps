@@ -52,10 +52,13 @@ services:
       # What the operator has to tell everybody, on every page, until it is taken out again.
       Dastan__Announcement: ${DASTAN_ANNOUNCEMENT:-}
       Dastan__InvitationOnly: ${DASTAN_INVITATION_ONLY:-false}
-      # Who the site believes about how a visitor came: the networks Docker gives its containers. A tunnel or a
-      # proxy in front of the site is named here by whoever sets it up.
-      # Narrower is better: the address of the proxy alone, where it is known (DASTAN_TRUSTED_PROXY).
-      Dastan__TrustedProxies__0: ${DASTAN_TRUSTED_PROXY:-172.16.0.0/12}
+      # Who the site believes about how a visitor came – by https, from which address: the tunnel below and
+      # nobody else. The tunnel has an address of its own in the network of the trial, so that no other
+      # container of this machine is believed. To try the trial from this machine without the tunnel, as a
+      # proxy would ask it, name the gateway of that network instead: DASTAN_TRUSTED_PROXY = 10.213.77.1.
+      Dastan__TrustedProxies__0: ${DASTAN_TRUSTED_PROXY:-10.213.77.4}
+    networks:
+      - trial
     depends_on:
       database:
         condition: service_healthy
@@ -84,6 +87,10 @@ services:
     depends_on:
       - trial
     mem_limit: 256m
+    networks:
+      trial:
+        # The one address the site believes (Dastan__TrustedProxies__0 above).
+        ipv4_address: 10.213.77.4
 
   # The database of the trial. It answers the site only – no port of this machine leads to it. Before the
   # site is started for the first time, and before a new version of it, its tables are made or brought up:
@@ -107,6 +114,16 @@ services:
     volumes:
       - dastan-trial-database:/var/lib/postgresql
     mem_limit: 1g
+    networks:
+      - trial
+
+# A network of the trial's own with addresses that are known, so that the site can name the one it believes.
+networks:
+  trial:
+    ipam:
+      config:
+        - subnet: 10.213.77.0/28
+          gateway: 10.213.77.1
 
 volumes:
   # What the site keeps as files: photographs, keys, notices. Back it up together with the database: the

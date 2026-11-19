@@ -17,7 +17,7 @@ public sealed class ReportDesk
     /// <summary>The address the form of a report is sent to. It has no language.</summary>
     public const string Address = "/report";
 
-    /// <summary>How many reports one address may send in an hour.</summary>
+    /// <summary>How many reports one sender (<see cref="Sender"/>) may send in an hour.</summary>
     public const int PerHour = 5;
 
     private readonly ReportBox? _box;
@@ -120,7 +120,7 @@ public static class ReportEndpoint
             // A program that fills in every field has filled in the one a person does not see: it is thanked and
             // nothing is kept.
             var outcome = string.IsNullOrEmpty(website)
-                ? desk.Take(context.Connection.RemoteIpAddress?.ToString() ?? "unknown", site.Collection, site.Revision?.Number, visitor.Language.Tag, statement!, words)
+                ? desk.Take(Sender.Of(context), site.Collection, site.Revision?.Number, visitor.Language.Tag, statement!, words)
                 : "thanks";
             var back = ReturnAddress.Safe(returnUrl);
             var end = back.IndexOf('#', StringComparison.Ordinal);

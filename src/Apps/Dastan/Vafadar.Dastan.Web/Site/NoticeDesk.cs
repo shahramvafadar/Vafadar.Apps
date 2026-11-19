@@ -94,7 +94,7 @@ public sealed class NoticeDesk
                 return Results.Redirect($"{page}?problem={string.Join(',', problems)}#form");
             }
 
-            var taken = desk.Take(context.Connection.RemoteIpAddress?.ToString() ?? "unknown", tag, address!, kind!, explanation!, name, mail);
+            var taken = desk.Take(Sender.Of(context), tag, address!, kind!, explanation!, name, mail);
             return taken is "later" or "full"
                 ? Results.Redirect($"{page}?problem={taken}#form")
                 : Results.Redirect($"{page}?received={taken}#received");

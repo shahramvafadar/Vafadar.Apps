@@ -194,7 +194,7 @@ public sealed class AccountDesk
         }
     }
 
-    /// <summary>Counts a request of a kind for an address and returns whether it is still within what an hour allows.</summary>
+    /// <summary>Counts a request of a kind for who sent it (<see cref="Sender"/>) and returns whether it is still within what an hour allows.</summary>
     public bool Allows(HttpContext context, string kind, int most)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -204,8 +204,7 @@ public sealed class AccountDesk
             _asked.Clear();
         }
 
-        var sender = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
-        return _asked.AddOrUpdate($"{kind} {sender}", 1, (_, count) => count + 1) <= most;
+        return _asked.AddOrUpdate($"{kind} {Sender.Of(context)}", 1, (_, count) => count + 1) <= most;
     }
 
     /// <summary>
