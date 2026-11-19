@@ -50,6 +50,12 @@ public sealed class Visitor
     /// <summary>Returns a text in the language of the page, or in the language of the collection when it has no translation.</summary>
     public ResolvedText Text(LocalizedText text) => text.Resolve(Language.Tag, _source);
 
+    /// <summary>Gets a value indicating whether the visitor has read the note about what the site stores on a device.</summary>
+    public bool HasSeenStorageNotice => DeviceStorage.HasSeenNotice(_context);
+
+    /// <summary>Gets a value indicating whether the visitor agreed to pages being kept on the device for a time without a connection.</summary>
+    public bool KeepsOffline => DeviceStorage.KeepsOffline(_context);
+
     /// <summary>Returns a day as the page shows it: year, month and day, with Persian digits on a Persian page.</summary>
     public string Day(DateOnly day)
     {

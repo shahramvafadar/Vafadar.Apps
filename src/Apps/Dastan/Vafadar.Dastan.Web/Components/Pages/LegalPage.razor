@@ -1,14 +1,17 @@
 @page "/terms"
 @page "/privacy"
+@page "/cookies"
 @page "/imprint"
 @inject LegalTexts Legal
 @inject Visitor Visitor
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
+@using System.Collections.Immutable
 
-@* A legal page of the site (step 18.3.4): the terms, what happens to what the site keeps about people, who is
-   responsible. The place is the site's, the words are the owner's: they come from a file, and where there is
-   none the page says that the text is not written – it does not make one up. *@
+@* A legal page of the site: who runs it, what happens to what it knows about people, what holds between the
+   site and who uses it, what it puts on a device. The text is shown in the language of the page when there is
+   one in it, and the other languages it is written in stand beside – German among them, because the site
+   answers to German law. Nothing of a text is markup. *@
 @if (_page is not null)
 {
     <PageTitle>@T[$"Legal_{_page}"] – @T["Site_Name"]</PageTitle>
@@ -17,42 +20,117 @@
         <h1>@T[$"Legal_{_page}"]</h1>
     </header>
 
-    @if (_blocks is null)
+    @if (_versions.Count > 1)
+    {
+        <nav class="legal-versions" aria-label="@T["Legal_Versions"]">
+            <ul role="list">
+                @foreach (var version in _versions)
+                {
+                    <li>
+                        <a href="@($"{_page}?text={version}")" lang="@version" hreflang="@version" aria-current="@(version == _text?.Language ? "true" : null)">@Name(version)</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+    @if (_text is null)
     {
         <p class="note" role="status">@T["Legal_NotWritten"]</p>
     }
     else
     {
-        <article class="legal" dir="auto">
-            @foreach (var block in _blocks)
+        @if (!_text.Missing.IsEmpty)
+        {
+            @* A text with a gap is not one to go public with: the page says so, to whoever sets the site up. *@
+            <p class="note" role="alert">@T["Legal_Gaps"]</p>
+        }
+        <article class="legal" lang="@_text.Language" dir="@(_text.Language == "fa" ? "rtl" : "ltr")">
+            @foreach (var block in _text.Blocks)
             {
-                if (block.IsHeading)
+                switch (block.Kind)
                 {
-                    <h2>@block.Text</h2>
-                }
-                else
-                {
-                    <p>@block.Text</p>
+                    case "h2":
+                        <h2>@Line(block.Lines[0])</h2>
+                        break;
+                    case "h3":
+                        <h3>@Line(block.Lines[0])</h3>
+                        break;
+                    case "ul":
+                        <ul>
+                            @foreach (var item in block.Lines)
+                            {
+                                <li>@Line(item)</li>
+                            }
+                        </ul>
+                        break;
+                    case "lines":
+                        <p class="lines">
+                            @foreach (var (line, index) in block.Lines.Select((line, index) => (line, index)))
+                            {
+                                @if (index > 0)
+                                {
+                                    <br />
+                                }
+                                @Line(line)
+                            }
+                        </p>
+                        break;
+                    default:
+                        <p>@Line(block.Lines[0])</p>
+                        break;
                 }
             }
         </article>
+    }
+
+    @if (_page == "cookies")
+    {
+        @* The one thing the site stores only with a yes is turned on and off where it is explained. *@
+        <OfflineControl />
     }
 }
 
 @code {
     private string? _page;
-    private IReadOnlyList<LegalBlock>? _blocks;
+    private LegalText? _text;
+    private IReadOnlyList<string> _versions = [];
+
+    /// <summary>Gets or sets the language of the text that is asked for, when it is not the language of the page.</summary>
+    [SupplyParameterFromQuery(Name = "text")]
+    public string? Text { get; set; }
 
     protected override void OnInitialized()
     {
         var page = Navigation.ToBaseRelativePath(Navigation.Uri).Split('?', '#')[0].Trim('/');
-        if (!Legal.IsOffered || !LegalTexts.Pages.Contains(page))
+        if (!LegalTexts.Pages.Contains(page))
         {
             Navigation.NotFound();
             return;
         }
 
         _page = page;
-        _blocks = Legal.Of(page, Visitor.Language.Tag);
+        _versions = Legal.Versions(page);
+
+        // The language that is asked for, else the language of the page, else English.
+        var wanted = new[] { Text, Visitor.Language.Tag, "en" }.OfType<string>().FirstOrDefault(language => _versions.Contains(language));
+        _text = wanted is null ? null : Legal.Of(page, wanted);
     }
+
+    private static string Name(string language) => language switch { "fa" => "فارسی", "de" => "Deutsch", _ => "English" };
+
+    private static RenderFragment Line(ImmutableArray<LegalInline> line) => __builder =>
+    {
+        foreach (var part in line)
+        {
+            if (part.Href is null)
+            {
+                <text>@part.Text</text>
+            }
+            else
+            {
+                <a href="@part.Href" dir="ltr">@part.Text</a>
+            }
+        }
+    };
 }

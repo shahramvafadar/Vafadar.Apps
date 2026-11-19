@@ -1,0 +1,184 @@
+These terms hold between you and the person who runs the site {{site}} ("Dastan", "the site", "we"). They say what the site offers, what you may and may not do on it, what we do about content that may not stay, and what you can do if you disagree. Please read them before you make an account.
+
+# 1. Who runs the site
+
+Dastan is run by {{operator.name}}, a private person, {{operator.street}}, {{operator.town}}, {{operator.country}}, e-mail {{operator.mail}}. Full details are in the legal notice at {{site}}/en/imprint.
+
+# 2. What the site is
+
+Dastan has two parts.
+
+- The public part: editorial pages about the stories, people, places and times of Iranian literature and history, with their sources. Everybody can read them, without an account.
+- The private area: people with an account can keep a reading position and a list of pages, name relations to other accounts, keep family trees and photographs, and decide who sees them.
+
+Dastan is a private, non-commercial project. It is free of charge and shows no advertising. It is offered as it is and as it is available: we do our best to keep it running and correct, but we do not promise that it is always reachable, that it keeps every function, or that it exists forever. We may change or end functions; section 13 says how you are told and what happens to your data.
+
+# 3. These terms and how the contract comes about
+
+Reading the public pages needs no contract. When you make an account and confirm that you have read these terms, a contract of use between you and us comes about on the basis of these terms. It is free of charge and runs for an indefinite time. The site notes which version of the terms you confirmed and when; the text of these terms stays available on this page, and you can save or print it.
+
+Terms of yours do not apply.
+
+# 4. Your account
+
+## Who can have one
+
+You can have an account if you are at least 16 years old and a natural person. You confirm your age when you register. One person keeps an account for themselves; accounts are not handed on, sold or shared.
+
+Where the site says so, a new account needs an invitation from somebody who already has an account.
+
+## Your name
+
+You choose a name. It need not be your real name. It must not pretend that you are somebody else, a company or an authority, must not insult anybody, and must not be an address of a website or an advertisement.
+
+## Your password and your recovery codes
+
+Choose a password you use nowhere else and keep it to yourself. Keep the recovery codes in a safe place. The site knows no e-mail address of yours and cannot reset a password: if you lose the password and all recovery codes, the account cannot be reached by anybody, and we cannot help. If you think somebody else knows your password, change it at once; that signs the account out everywhere.
+
+You answer for what is done with your account, unless you are not at fault.
+
+## Signing in through Google or Microsoft
+
+You can link your account to an account at Google or Microsoft and sign in through it. The terms and privacy rules of that company then apply between you and that company. We are not responsible for their service.
+
+# 5. What belongs to whom
+
+## The editorial pages
+
+The texts, images, maps and the design of the public part are protected by copyright. You may read them, link to them and quote from them as the law allows. Every other use needs our permission; the legal notice says more.
+
+## What you store
+
+What you store in your account – names, records, captions, notes, photographs – stays yours. You give us only the simple, non-exclusive permission, free of charge, to store it, to make the technical copies needed for that (for example smaller sizes of a photograph and backup copies), and to show it to exactly the people you chose, for as long as you keep it on the site. We do not use your content for anything else: not for advertising, not for presenting the site, not for training machines, and we do not pass it on. The permission ends when you remove the content or when your account is deleted; backup copies are deleted within the time named in the privacy notice.
+
+You assure that you may store and show what you store: that you hold the rights in photographs and texts or have the permission of who does, and that you respect the rights of the people named or shown (section 7).
+
+# 6. What must not be on the site
+
+You must not store, show or pass on through the site anything that breaks the law that applies or the rights of others. In particular:
+
+- Content that is a criminal offence, for example incitement to hatred or violence, threats, insult and defamation, depictions of violence that glorify it, symbols of banned organisations, or the approval of crimes.
+- Sexual depictions of minors in any form, and any content that sexualises children or young people. We report it to the police without exception.
+- Pornography, and depictions of nudity or sexual acts of real people.
+- Content that promotes terrorism or calls for it.
+- Content that harasses, stalks, exposes or humiliates a person, or that makes private matters of a person public against their will – including pictures, addresses, telephone numbers, documents and messages.
+- Pictures, texts or other works to which you do not hold the rights and which you may not use by law.
+- False statements of fact about people that can harm them, and forged or manipulated pictures of real people that are presented as real.
+- Advertising, offers of goods or services, appeals for donations, chain letters, and links to them.
+- Malware, and anything meant to disturb, overload or spy on the site or its users.
+
+You must also not:
+
+- make accounts by a program, make accounts for others, or use somebody else's account;
+- try to see what was not made visible to you, to get around a limit or a protection of the site, or to read out the site by a program beyond what a search engine does on the public pages;
+- collect data of other users or of people named in trees and on photographs, or use them for anything but your own family and personal purposes;
+- give notices or complaints you know to be false.
+
+# 7. Other people in your trees and on your photographs
+
+A family tree and a family album are about other people. You are responsible for the data about other people that you put on the site. Please keep to the following; these are duties under these terms.
+
+- Enter living people only if they know about it, or if you can assume, as a member of their family, that they agree. If somebody asks you to take them out or to correct something, do it without delay.
+- Enter about living people only what the fields of the site ask for: a name, years, and how people are related. Do not write into names, captions or notes anything about a living person's health, religion or belief, ethnic origin, political opinions, sexual life or orientation, criminal convictions, or anything comparable.
+- Upload a photograph that shows living people only if they agree to it being seen by the people you show it to. For children and young people, their parents or guardians must agree, and from the age of about 14 also the young person. Do not upload pictures of children who are not of your own family.
+- Tag only people who are really on the photograph. A tag shows only when the tagged person confirms it; a tagged person can remove the tag and object to the photograph.
+- Make a tree or a photograph visible to everybody only where the site lets you: a tree only when every living person in it has agreed in their own account; a photograph with tagged people only when each of them agreed. Do not get around this, for example by entering a living person as deceased or by not tagging somebody in order to publish.
+- Treat the memory of people who have died with respect, and respect the wishes of their close relatives.
+
+Somebody who is named or shown and does not agree can turn to us at any time (section 9); we then remove the data if the law requires it, also against your will.
+
+# 8. What we look at and what we do not
+
+We do not check what users store before it appears, and we do not search the private area for illegal content; we have no general duty to do so. We do not use programs that find or judge content automatically. We look at content when we get a notice (section 9), when an authority or a court orders it, or when we come across something ourselves while running the site.
+
+Every decision about content or an account is made by a person.
+
+# 9. Reporting content (notice and action)
+
+Anybody – with or without an account – can tell us that something on the site is illegal, violates their rights or breaks these terms: with the form at {{site}}/en/notice or by e-mail to {{operator.mail}}.
+
+A notice should say where the content is (the address of the page), why you think it is illegal or against the terms, and who you are (name and e-mail address), unless the notice concerns sexual abuse of children. It should say that you honestly believe your statements to be accurate and complete. You can also give a notice without your name; we may then not be able to answer you, and for some matters – such as copyright or your own personal rights – we need to know who is concerned.
+
+What we do:
+
+- The form shows at once a reference that confirms that your notice arrived.
+- A person examines the notice in good time, diligently, without arbitrariness and objectively, and considers the rights of everybody concerned – also the freedom of expression and of information.
+- We decide whether the content stays, is restricted or is removed, and tell you the decision and what you can do against it, if you left an e-mail address.
+- We tell the user who stored the content the reasons (section 11), but not who gave the notice, unless that is necessary and lawful.
+
+If somebody is in danger, call the police first.
+
+# 10. What we can do about a breach
+
+If content or behaviour breaks the law or these terms, we can, depending on how serious it is:
+
+- hide a photograph, so that only its owner sees it;
+- take a family tree back from the public, so that it cannot be public while the decision stands;
+- take the record of a person out of a tree if that person objects and the owner does not do it;
+- close an account.
+
+We choose the mildest measure that is enough. We close an account only for a serious breach – for example content under the first four points of section 6, or deliberate harm to others – or when somebody keeps breaking the terms after a restriction. Before we close an account for repeated breaches, an earlier decision shown in the account has said that this can follow, so that you had the chance to change the content and to answer us. We close an account without this only where it is necessary to prevent serious harm, where the law requires it, or where a hearing would defeat the purpose of the measure.
+
+An account we closed is treated like one its owner closed: nothing of it is shown, and it is deleted after 30 days unless we lift the decision before.
+
+We do not restrict anybody for giving a notice in good faith that turns out to be unfounded. Somebody who repeatedly gives notices that are obviously unfounded can, after a warning, find that we no longer deal with their notices for a reasonable time.
+
+# 11. You are told the reasons, and you can disagree
+
+When we restrict something of yours, we give you a statement of reasons. Because the site has no e-mail address of yours, you read it on the page of your account; for a closed account you read it after giving the name and the password on the sign-in page. It says:
+
+- what was restricted, where and for how long;
+- the facts and circumstances the decision rests on, and whether it followed a notice or our own look;
+- that no automated means were used;
+- the law, or the rule of these terms, the content is against, and why;
+- what you can do about it.
+
+If you disagree, write to {{operator.mail}} within six months and name the number of the decision. A person looks at it again, without undue delay, and tells you the result with reasons. If the complaint is justified, we lift the measure without delay. This is free of charge. If you gave a notice and disagree with what we decided on it, you can complain in the same way.
+
+Your right to go to court is not limited by any of this, at any time. You can also complain to the Digital Services Coordinator of the Member State you live in (in Germany: the Bundesnetzagentur) if you think we do not follow the Digital Services Act.
+
+# 12. Liability
+
+The site is free of charge. For that reason we are liable as follows.
+
+- We are liable without limit for damage we cause intentionally or by gross negligence, for injury to life, body or health, for what we fraudulently concealed, for a guarantee we gave, and under the Product Liability Act.
+- For damage caused by slight negligence we are liable only if we breached a duty whose fulfilment makes the proper performance of the contract possible in the first place and on which you may regularly rely (an essential duty), and then only for the damage that is typical for such a contract and could be foreseen.
+- Otherwise our liability is excluded. This also holds for people who act for us.
+
+We are not liable for content of users unless the law provides otherwise (Article 6 of Regulation (EU) 2022/2065), nor for the services of Google or Microsoft.
+
+Please keep your own copies of your photographs and of what matters to you. The site is not a place to keep the only copy of anything; you can get a copy of your data in your account at any time. If data are lost through our slight negligence, we are liable only for the effort of restoring them that would have been needed if you had kept copies as could be expected.
+
+# 13. How long the contract runs, and how it ends
+
+You can end the contract at any time, without notice and without reasons, by closing your account. For 30 days you can open it again by signing in; after that it is deleted with everything that belongs to it. Before closing, you can get a copy of your data in the account.
+
+We can end the contract with at least 30 days' notice, in particular if we stop running the site or a part of it. Because we cannot write to you, the notice is shown on the page of your account and, where the whole site is concerned, on its first page. During the notice period you can get a copy of your data.
+
+The right of either side to end the contract at once for an important reason stays; section 10 says when we close an account for a breach.
+
+# 14. Changes to these terms
+
+We may change these terms when the law, a court decision, the functions of the site or its security make it necessary, or when a change is only to your advantage. We do not change what the contract is essentially about without your agreement.
+
+We show the changed terms on this page and on the page of your account at least 30 days before they are to hold, with the date from which they hold, and ask you there to agree. If you agree, the new terms hold for you from that date. If you do not agree, the old terms continue to hold for you; in that case we may end the contract with the notice of section 13 when running the site under two sets of terms cannot reasonably be expected of us. Your silence is not agreement.
+
+# 15. Data protection
+
+How we process personal data is explained in the privacy notice at {{site}}/en/privacy, and what the site stores on your device at {{site}}/en/cookies. They are information the law requires, not part of the contract.
+
+# 16. Law, courts and disputes
+
+German law applies. If you are a consumer and live in another country, the protection of the mandatory rules of that country stays with you. The United Nations Convention on Contracts for the International Sale of Goods does not apply.
+
+Legal places of jurisdiction apply. If you are a consumer in the European Union, you can also sue at your place of residence.
+
+We are neither obliged nor willing to take part in dispute resolution proceedings before a consumer arbitration board.
+
+# 17. Final provisions
+
+If a provision of these terms is or becomes invalid, the rest stays valid; the law takes the place of the invalid provision.
+
+These terms exist in English, German and Persian. If the versions differ, the German version prevails.
+
+Version 2026-11-19, in force from 19 November 2026

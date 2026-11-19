@@ -129,3 +129,12 @@ A page may be kept by the device when it is public content and its address has n
 collection, and an address that carries what a visitor asked or the word of thanks after a form, are moments
 of one visitor. The parts of the site itself are known in whatever case an address is written. A page that is
 shown from what was kept carries the headers the site gave it.
+
+## Addendum of 2026-11-19: kept only after a yes (row 18.8.2, D-073)
+
+Keeping pages on a device is storage that the service a visitor asked for can do without, so it needs consent
+(§ 25 (1) TDDDG). The service worker is registered only for a visitor who turned reading without a connection
+on (the cookie `dastan.offline`, set by the form on the page of cookies); the page says so with
+`data-offline` on its root, the site marks an answer as one to keep only for such a visitor, and the script
+removes the worker and what it kept when the cookie is gone. Installing the site as an app stays possible
+without it; it then needs a connection.

@@ -278,3 +278,14 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - In the history of a family tree, with whom the tree is shared and who said a record is them is read by the
   owner of the tree only.
 - The copy of your data leaves out the code of an invitation that can still be used.
+- The site has its legal pages: terms of use, privacy notice, a page that lists everything the site stores on
+  your device, and the legal notice – in English, Persian and German. They are linked at the foot of every page.
+- The site stores on your device only what you asked for. Your language is remembered when you change it, not
+  when you merely open a page; a short note, shown once, says so. Pages are kept for reading without a
+  connection only after you turned that on – on the page "Cookies", where you also turn it off.
+- A new account confirms that the terms and the privacy notice were read. Accounts made before are asked once
+  on their page.
+- "Report content": anybody can tell who runs the site that something on it is against the law or the terms,
+  and is shown a reference at once. Pages with trees, photographs and people have a link "Report this page".
+- If who runs the site hides a photograph, takes a family tree back from the public or closes an account, the
+  owner reads what was done, why, on which ground, and what to do about it – on the page of the account.

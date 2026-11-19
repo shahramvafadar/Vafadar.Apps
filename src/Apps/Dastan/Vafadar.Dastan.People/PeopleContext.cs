@@ -32,6 +32,49 @@ public sealed class StoredVisitor
 
     /// <summary>Gets or sets when the visitor closed the account. It is deleted for good after the time of the store.</summary>
     public DateTime? ClosedAt { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether the account was closed by who runs the site and not by its visitor: only the operator opens it again.</summary>
+    public bool ClosedByOperator { get; set; }
+
+    /// <summary>Gets or sets the version of the terms and of the privacy notice the visitor said they read when the account was made.</summary>
+    public string? TermsVersion { get; set; }
+
+    /// <summary>Gets or sets when the visitor said so.</summary>
+    public DateTime? TermsAcceptedAt { get; set; }
+}
+
+/// <summary>
+/// A restriction who runs the site imposed on something of an account, with the statement of reasons its
+/// visitor reads (Article 17 of Regulation (EU) 2022/2065).
+/// </summary>
+public sealed class StoredRestriction
+{
+    /// <summary>Gets or sets the number of the restriction.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the account it concerns.</summary>
+    public required string Account { get; set; }
+
+    /// <summary>Gets or sets what it is about (<see cref="RestrictionKind"/>).</summary>
+    public int Kind { get; set; }
+
+    /// <summary>Gets or sets the photograph or the tree; nothing for the account.</summary>
+    public string? Target { get; set; }
+
+    /// <summary>Gets or sets the facts the decision rests on.</summary>
+    public required string Reason { get; set; }
+
+    /// <summary>Gets or sets the law or the rule of the terms it rests on.</summary>
+    public required string Ground { get; set; }
+
+    /// <summary>Gets or sets a value indicating whether it followed a notice.</summary>
+    public bool Noticed { get; set; }
+
+    /// <summary>Gets or sets when it was imposed.</summary>
+    public DateTime ImposedAt { get; set; }
+
+    /// <summary>Gets or sets when it was lifted, once it was.</summary>
+    public DateTime? LiftedAt { get; set; }
 }
 
 /// <summary>A code to get into an account whose password is lost. Only a value derived from it is kept; it is used once.</summary>
@@ -479,6 +522,9 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
     /// <summary>Gets which photographs stand in the albums.</summary>
     public DbSet<StoredAlbumPhoto> AlbumPhotos => Set<StoredAlbumPhoto>();
 
+    /// <summary>Gets the restrictions who runs the site imposed.</summary>
+    public DbSet<StoredRestriction> Restrictions => Set<StoredRestriction>();
+
     /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -492,7 +538,21 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             visitor.Property(item => item.NameKey).HasMaxLength(80);
             visitor.Property(item => item.Password).HasMaxLength(200);
             visitor.Property(item => item.Stamp).HasMaxLength(40);
+            visitor.Property(item => item.TermsVersion).HasMaxLength(20);
             visitor.HasIndex(item => item.NameKey).IsUnique();
+        });
+
+        modelBuilder.Entity<StoredRestriction>(restriction =>
+        {
+            restriction.HasKey(item => item.Number);
+            restriction.Property(item => item.Account).HasMaxLength(40);
+            restriction.Property(item => item.Target).HasMaxLength(40);
+            restriction.Property(item => item.Reason).HasMaxLength(2000);
+            restriction.Property(item => item.Ground).HasMaxLength(2000);
+            restriction.HasIndex(item => item.Account);
+
+            // A restriction goes with the account it concerns: what is deleted needs no reason any more.
+            restriction.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredRecoveryCode>(code =>

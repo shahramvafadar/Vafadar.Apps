@@ -2649,4 +2649,262 @@
   <data name="Photos_Problem_photo-pixels" xml:space="preserve">
     <value>تصویر بیش از ۵۰ میلیون پیکسل دارد. نسخهٔ کوچک‌تری از آن بیاورید.</value>
   </data>
+  <data name="Legal_cookies" xml:space="preserve">
+    <value>کوکی‌ها</value>
+  </data>
+  <data name="Legal_Versions" xml:space="preserve">
+    <value>این متن به زبان‌های دیگر</value>
+  </data>
+  <data name="Legal_Gaps" xml:space="preserve">
+    <value>این متن کامل نیست: هر جا جای خالی نشان داده شده، مشخصات گردانندهٔ سایت هنوز وارد نشده است. سایت هنوز عمومی نیست.</value>
+  </data>
+  <data name="Storage_Label" xml:space="preserve">
+    <value>آنچه این سایت روی دستگاه شما ذخیره می‌کند</value>
+  </data>
+  <data name="Storage_Text" xml:space="preserve">
+    <value>این سایت فقط چیزهایی را روی دستگاه شما ذخیره می‌کند که برای کارکردنش لازم است: زبان شما، انتخاب‌هایی که می‌کنید و ورود به حساب. شما را ردیابی نمی‌کند و تبلیغی نشان نمی‌دهد.</value>
+  </data>
+  <data name="Storage_More" xml:space="preserve">
+    <value>دقیقاً چه چیزهایی و تا چه مدت</value>
+  </data>
+  <data name="Storage_Read" xml:space="preserve">
+    <value>متوجه شدم</value>
+  </data>
+  <data name="Offline_Title" xml:space="preserve">
+    <value>خواندن بدون اتصال</value>
+  </data>
+  <data name="Offline_Lead" xml:space="preserve">
+    <value>اگر این را روشن کنید، این دستگاه صفحه‌های عمومی‌ای را که می‌خوانید همراه با تصویرهایشان نگه می‌دارد تا وقتی سایت در دسترس نیست دوباره بخوانیدشان. چیزی از حساب نگه داشته نمی‌شود، چیزی به جایی فرستاده نمی‌شود و هر وقت بخواهید می‌توانید خاموشش کنید؛ آنگاه آنچه دستگاه نگه داشته پاک می‌شود.</value>
+  </data>
+  <data name="Offline_IsOn" xml:space="preserve">
+    <value>روشن است: این دستگاه صفحه‌هایی را که می‌خوانید نگه می‌دارد.</value>
+  </data>
+  <data name="Offline_IsOff" xml:space="preserve">
+    <value>خاموش است: این دستگاه صفحه‌ای نگه نمی‌دارد.</value>
+  </data>
+  <data name="Offline_TurnOn" xml:space="preserve">
+    <value>صفحه‌هایی که می‌خوانم روی این دستگاه بماند</value>
+  </data>
+  <data name="Offline_TurnOff" xml:space="preserve">
+    <value>خاموش کن و آنچه مانده را پاک کن</value>
+  </data>
+  <data name="Account_Terms" xml:space="preserve">
+    <value>شرایط استفاده و اطلاعیهٔ حریم خصوصی را خوانده‌ام.</value>
+  </data>
+  <data name="Account_Problem_terms" xml:space="preserve">
+    <value>لطفاً شرایط استفاده و اطلاعیهٔ حریم خصوصی را بخوانید و تأیید کنید که خوانده‌اید.</value>
+  </data>
+  <data name="Account_Problem_closed-by-operator" xml:space="preserve">
+    <value>این حساب را گردانندهٔ سایت بسته است. دلیل‌ها در پایین آمده است.</value>
+  </data>
+  <data name="Notice_Link" xml:space="preserve">
+    <value>گزارش محتوا</value>
+  </data>
+  <data name="Notice_Title" xml:space="preserve">
+    <value>گزارش محتوا</value>
+  </data>
+  <data name="Notice_Lead" xml:space="preserve">
+    <value>اگر چیزی در این سایت خلاف قانون است، حق شما را زیر پا می‌گذارد یا قواعد سایت را می‌شکند، همین‌جا به ما بگویید. هر کسی می‌تواند این کار را بکند؛ به حساب نیاز ندارید.</value>
+  </data>
+  <data name="Notice_How_Title" xml:space="preserve">
+    <value>با گزارش شما چه می‌شود</value>
+  </data>
+  <data name="Notice_How" xml:space="preserve">
+    <value>هر گزارش را یک انسان می‌خواند؛ هیچ برنامه‌ای تصمیم نمی‌گیرد. در نخستین فرصت آن را بررسی می‌کنیم و تصمیم می‌گیریم که محتوا بماند، پنهان شود یا برداشته شود. اگر نشانی ایمیل بدهید، رسیدن گزارش را تأیید می‌کنیم و می‌گوییم چه تصمیمی گرفتیم و اگر موافق نیستید چه می‌توانید بکنید. به کسی که محتوا را گذاشته، هنگام محدودکردنش دلیل‌ها را می‌گوییم، اما نمی‌گوییم چه کسی گزارش داده است، مگر آنکه قانون لازم بداند.</value>
+  </data>
+  <data name="Notice_ByMail" xml:space="preserve">
+    <value>می‌توانید با ایمیل هم برای ما بنویسید:</value>
+  </data>
+  <data name="Notice_Urgent" xml:space="preserve">
+    <value>اگر کسی در خطر است، نخست با پلیس تماس بگیرید (در آلمان و اتحادیهٔ اروپا: ۱۱۲ یا ۱۱۰).</value>
+  </data>
+  <data name="Notice_Form_Title" xml:space="preserve">
+    <value>گزارش شما</value>
+  </data>
+  <data name="Notice_Address" xml:space="preserve">
+    <value>کجاست؟ نشانی صفحه</value>
+  </data>
+  <data name="Notice_Address_Hint" xml:space="preserve">
+    <value>نشانی را از نوار نشانی مرورگرتان رونویسی کنید؛ مثلاً https://dastan.online/fa/people/…</value>
+  </data>
+  <data name="Notice_Kind" xml:space="preserve">
+    <value>ایراد آن چیست</value>
+  </data>
+  <data name="Notice_Kind_privacy" xml:space="preserve">
+    <value>دادهٔ شخصی من یا کس دیگری را بی‌اجازه نشان می‌دهد</value>
+  </data>
+  <data name="Notice_Kind_image" xml:space="preserve">
+    <value>تصویر من یا کس دیگری را بی‌اجازه نشان می‌دهد</value>
+  </data>
+  <data name="Notice_Kind_copyright" xml:space="preserve">
+    <value>اثری را بدون داشتن حق آن به کار برده است (حق مؤلف)</value>
+  </data>
+  <data name="Notice_Kind_defamation" xml:space="preserve">
+    <value>به کسی توهین می‌کند یا دربارهٔ او چیزی نادرست می‌گوید</value>
+  </data>
+  <data name="Notice_Kind_hate" xml:space="preserve">
+    <value>به نفرت یا خشونت برمی‌انگیزد یا به شکل دیگری گفتار مجرمانه است</value>
+  </data>
+  <data name="Notice_Kind_minors" xml:space="preserve">
+    <value>به کودکان یا نوجوانان آسیب می‌زند</value>
+  </data>
+  <data name="Notice_Kind_violence" xml:space="preserve">
+    <value>کسی را تهدید می‌کند یا خشونت نشان می‌دهد</value>
+  </data>
+  <data name="Notice_Kind_other-law" xml:space="preserve">
+    <value>به شکل دیگری خلاف قانون است</value>
+  </data>
+  <data name="Notice_Kind_terms" xml:space="preserve">
+    <value>شرایط استفادهٔ این سایت را زیر پا می‌گذارد</value>
+  </data>
+  <data name="Notice_Explanation" xml:space="preserve">
+    <value>چرا چنین فکر می‌کنید؟</value>
+  </data>
+  <data name="Notice_Explanation_Hint" xml:space="preserve">
+    <value>بگویید دقیقاً چه چیزی ایراد دارد و چرا: کدام بخش صفحه، حق چه کسی، و اگر می‌دانید کدام قانون. هر چه روشن‌تر بنویسید، زودتر می‌توانیم تصمیم بگیریم. دست‌کم ۲۰ نویسه.</value>
+  </data>
+  <data name="Notice_Name" xml:space="preserve">
+    <value>نام شما (اختیاری)</value>
+  </data>
+  <data name="Notice_Mail" xml:space="preserve">
+    <value>نشانی ایمیل شما (اختیاری)</value>
+  </data>
+  <data name="Notice_Mail_Hint" xml:space="preserve">
+    <value>بدون نشانی ایمیل نمی‌توانیم رسیدن گزارش را تأیید کنیم یا بگوییم چه تصمیمی گرفتیم. برای برخی گزارش‌ها، مانند حق مؤلف یا حقوق خود شما، شاید لازم باشد بدانیم شما کیستید.</value>
+  </data>
+  <data name="Notice_GoodFaith" xml:space="preserve">
+    <value>صادقانه باور دارم که آنچه در این گزارش می‌گویم درست و کامل است.</value>
+  </data>
+  <data name="Notice_Privacy" xml:space="preserve">
+    <value>آنچه اینجا می‌نویسید را فقط برای رسیدگی به گزارش شما به کار می‌بریم.</value>
+  </data>
+  <data name="Notice_Send" xml:space="preserve">
+    <value>فرستادن گزارش</value>
+  </data>
+  <data name="Notice_Received_Title" xml:space="preserve">
+    <value>گزارش شما رسید</value>
+  </data>
+  <data name="Notice_Received" xml:space="preserve">
+    <value>سپاسگزاریم. شمارهٔ پیگیری گزارش شما {0} است. لطفاً آن را نگه دارید و اگر دربارهٔ این گزارش برای ما نوشتید، آن را بنویسید.</value>
+  </data>
+  <data name="Notice_Received_Next" xml:space="preserve">
+    <value>اگر نشانی ایمیل داده‌اید، پاسخ ما به همان نشانی می‌رسد. همین صفحه تأیید رسیدن گزارش شماست.</value>
+  </data>
+  <data name="Notice_Problem_address" xml:space="preserve">
+    <value>لطفاً بگویید محتوا کجاست: نشانی صفحه.</value>
+  </data>
+  <data name="Notice_Problem_kind" xml:space="preserve">
+    <value>لطفاً انتخاب کنید ایراد محتوا چیست.</value>
+  </data>
+  <data name="Notice_Problem_explanation" xml:space="preserve">
+    <value>لطفاً در دست‌کم ۲۰ و حداکثر ۴۰۰۰ نویسه توضیح دهید چرا چنین فکر می‌کنید.</value>
+  </data>
+  <data name="Notice_Problem_name" xml:space="preserve">
+    <value>نام بیش از اندازه بلند است.</value>
+  </data>
+  <data name="Notice_Problem_mail" xml:space="preserve">
+    <value>این یک نشانی ایمیل نیست.</value>
+  </data>
+  <data name="Notice_Problem_good-faith" xml:space="preserve">
+    <value>لطفاً تأیید کنید که گزارش شما به باور صادقانهٔ خودتان درست است.</value>
+  </data>
+  <data name="Notice_Problem_later" xml:space="preserve">
+    <value>از اتصال شما گزارش‌های زیادی رسیده است. لطفاً یک ساعت دیگر دوباره بکوشید یا با ایمیل بنویسید.</value>
+  </data>
+  <data name="Notice_Problem_full" xml:space="preserve">
+    <value>اکنون نمی‌توانیم با این فرم گزارش بیشتری بگیریم. لطفاً با ایمیل بنویسید.</value>
+  </data>
+  <data name="Restrictions_Title" xml:space="preserve">
+    <value>محدودیت‌های حساب شما</value>
+  </data>
+  <data name="Restrictions_Lead" xml:space="preserve">
+    <value>گردانندهٔ این سایت موردهای زیر را محدود کرده است. هر مورد می‌گوید چه چیزی محدود شده، چرا، و چه می‌توانید بکنید.</value>
+  </data>
+  <data name="Restrictions_Number" xml:space="preserve">
+    <value>تصمیم شمارهٔ {0}</value>
+  </data>
+  <data name="Restrictions_Kind_Photo" xml:space="preserve">
+    <value>یکی از عکس‌های شما پنهان شد</value>
+  </data>
+  <data name="Restrictions_Kind_Tree" xml:space="preserve">
+    <value>یکی از شجره‌نامه‌های شما دیگر عمومی نیست</value>
+  </data>
+  <data name="Restrictions_Kind_Account" xml:space="preserve">
+    <value>حساب شما بسته شد</value>
+  </data>
+  <data name="Restrictions_Effect" xml:space="preserve">
+    <value>یعنی چه</value>
+  </data>
+  <data name="Restrictions_Effect_Photo" xml:space="preserve">
+    <value>تا وقتی تصمیم برداشته نشده، در هر جا که این سایت در دسترس است، جز شما کسی عکس را نمی‌بیند. خودتان می‌توانید عکس را بردارید.</value>
+  </data>
+  <data name="Restrictions_Effect_Tree" xml:space="preserve">
+    <value>تا وقتی تصمیم برداشته نشده، در هر جا که این سایت در دسترس است، شجره‌نامه به عموم نشان داده نمی‌شود و نمی‌توان آن را عمومی کرد. شما و کسانی که با آن‌ها به اشتراک گذاشته‌اید همچنان آن را می‌بینید.</value>
+  </data>
+  <data name="Restrictions_Effect_Account" xml:space="preserve">
+    <value>کسی نمی‌تواند با این حساب وارد شود و چیزی از آن نشان داده نمی‌شود. حساب ۳۰ روز نگه داشته و سپس با هر چه به آن تعلق دارد پاک می‌شود، مگر آنکه تصمیم پیش از آن برداشته شود.</value>
+  </data>
+  <data name="Restrictions_Reason" xml:space="preserve">
+    <value>واقعیت‌ها</value>
+  </data>
+  <data name="Restrictions_Ground" xml:space="preserve">
+    <value>قانون یا قاعده‌ای از شرایط استفاده که تصمیم بر آن استوار است</value>
+  </data>
+  <data name="Restrictions_Origin" xml:space="preserve">
+    <value>چگونه پیش آمد</value>
+  </data>
+  <data name="Restrictions_Origin_Notice" xml:space="preserve">
+    <value>کسی دربارهٔ این محتوا گزارش داد و یکی از گردانندگان سایت آن را بررسی کرد.</value>
+  </data>
+  <data name="Restrictions_Origin_Own" xml:space="preserve">
+    <value>یکی از گردانندگان سایت به ابتکار خود محتوا را بررسی کرد.</value>
+  </data>
+  <data name="Restrictions_NoAutomation" xml:space="preserve">
+    <value>برای یافتن محتوا یا تصمیم‌گیری هیچ ابزار خودکاری به کار نرفته است.</value>
+  </data>
+  <data name="Restrictions_Redress" xml:space="preserve">
+    <value>اگر موافق نیستید</value>
+  </data>
+  <data name="Restrictions_Redress_Text" xml:space="preserve">
+    <value>تا شش ماه برای ما بنویسید و شمارهٔ تصمیم را ذکر کنید؛ یک انسان دوباره آن را بررسی می‌کند و به شما پاسخ می‌دهد. می‌توانید به دادگاه هم مراجعه کنید. نشانی ما در این صفحه است:</value>
+  </data>
+  <data name="Restrictions_Closed_Title" xml:space="preserve">
+    <value>این حساب بسته شده است</value>
+  </data>
+  <data name="Restrictions_Closed_Lead" xml:space="preserve">
+    <value>گردانندهٔ این سایت این حساب را بسته است. نمی‌توانید با آن وارد شوید.</value>
+  </data>
+  <data name="Tree_Change_operator-restricted" xml:space="preserve">
+    <value>گردانندهٔ سایت شجره‌نامه را از دید عموم برداشت</value>
+  </data>
+  <data name="Tree_Change_operator-lifted" xml:space="preserve">
+    <value>گردانندهٔ سایت محدودیت شجره‌نامه را برداشت</value>
+  </data>
+  <data name="Tree_Change_operator-person-removed" xml:space="preserve">
+    <value>گردانندهٔ سایت به درخواست یک نفر، او را از شجره‌نامه برداشت</value>
+  </data>
+  <data name="Announcement_Label" xml:space="preserve">
+    <value>پیامی از گردانندهٔ سایت</value>
+  </data>
+  <data name="Account_Said_terms-agreed" xml:space="preserve">
+    <value>سپاسگزاریم. موافقت شما ثبت شد.</value>
+  </data>
+  <data name="Account_TermsAsked_Title" xml:space="preserve">
+    <value>لطفاً شرایط استفاده و اطلاعیهٔ حریم خصوصی را بخوانید</value>
+  </data>
+  <data name="Account_TermsAsked_Lead" xml:space="preserve">
+    <value>شرایط استفاده یا اطلاعیهٔ حریم خصوصی از آنچه این حساب تأیید کرده تازه‌تر است. لطفاً آن‌ها را بخوانید و تأیید کنید که خوانده‌اید. سکوت شما به معنای موافقت نیست؛ اگر موافق نیستید، می‌توانید در پایین نسخه‌ای از داده‌هایتان بگیرید و حساب را ببندید.</value>
+  </data>
+  <data name="Account_TermsAsked_Send" xml:space="preserve">
+    <value>تأیید</value>
+  </data>
+  <data name="Restrictions_Repeat" xml:space="preserve">
+    <value>چه چیزی ممکن است در پی بیاید</value>
+  </data>
+  <data name="Restrictions_Repeat_Text" xml:space="preserve">
+    <value>اگر شرایط استفاده دوباره یا به شکلی جدی زیر پا گذاشته شود، حساب ممکن است بسته شود. می‌توانید محتوا را تغییر دهید یا بردارید و می‌توانید برای ما بنویسید.</value>
+  </data>
+  <data name="Notice_ThisPage" xml:space="preserve">
+    <value>گزارش این صفحه</value>
+  </data>
 </root>

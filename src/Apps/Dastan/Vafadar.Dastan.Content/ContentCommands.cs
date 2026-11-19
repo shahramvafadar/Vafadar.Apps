@@ -50,7 +50,7 @@ public static class ContentCommands
               none yet – those that were brought in before the site made sizes. The folder is the folder
               "media" inside the folder of the photographs. Says how many were made; changes no photograph.
 
-        """ + StoreCommands.Usage + EditorCommands.Usage + """
+        """ + StoreCommands.Usage + EditorCommands.Usage + OperatorCommands.Usage + """
 
         Exit code: 0 in order, 1 a content file cannot be used, 2 the command was not understood.
         """;
@@ -85,6 +85,7 @@ public static class ContentCommands
             ["reports", "forget", _, "--kept-days", _] => int.TryParse(words[4], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var days) && days <= 36500
                 ? ForgetReports(words[2], today.AddDays(-days).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), output)
                 : NotAsked(output),
+            ["notices" or "people", ..] => OperatorCommands.Run(words, output, time ?? TimeProvider.System) ?? NotAsked(output),
             ["store", "editor" or "editors" or "copy", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
             ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
             _ => NotAsked(output),

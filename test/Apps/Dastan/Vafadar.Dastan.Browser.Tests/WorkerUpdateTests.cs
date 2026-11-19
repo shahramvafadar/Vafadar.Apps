@@ -8,7 +8,7 @@ public sealed class WorkerUpdateTests(BrowserSite site) : IClassFixture<BrowserS
     [Fact]
     public async Task A_newer_worker_takes_over_an_open_page_at_once_and_removes_what_the_old_one_kept()
     {
-        var page = await site.Visitor();
+        var page = await site.Visitor(offline: true);
         await page.GotoAsync("/en/");
         await page.EvaluateAsync("() => navigator.serviceWorker.ready.then(() => new Promise(done => navigator.serviceWorker.controller ? done() : navigator.serviceWorker.addEventListener('controllerchange', () => done())))");
         Assert.Equal(["dastan-shell-1"], await page.EvaluateAsync<string[]>("caches.keys()"));

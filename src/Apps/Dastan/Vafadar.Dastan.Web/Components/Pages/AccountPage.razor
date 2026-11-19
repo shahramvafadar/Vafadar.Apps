@@ -48,6 +48,16 @@
     }
     else if (_info is null)
     {
+        @if (_closed is not null)
+        {
+            @* The account was closed by who runs the site: its owner, who just gave the name and the password,
+               reads why and what can be done about it. *@
+            <section class="card" id="closed" aria-labelledby="closed-title">
+                <h2 id="closed-title">@T["Restrictions_Closed_Title"]</h2>
+                <p role="alert">@T["Restrictions_Closed_Lead"]</p>
+                @Statement(_closed)
+            </section>
+        }
         @if (_arrived is { } arrived)
         {
             @* Somebody signed in through a provider and has no account yet (step 16.8): they choose its name. *@
@@ -76,6 +86,11 @@
                     <input id="external-age" name="age" type="checkbox" required />
                     <label for="external-age">@T["Account_Age"]</label>
                 </p>
+                <p class="tick">
+                    <input id="external-terms" name="terms" type="checkbox" required />
+                    <label for="external-terms">@T["Account_Terms"]</label>
+                </p>
+                <p class="meta"><a href="terms">@T["Legal_terms"]</a> · <a href="privacy">@T["Legal_privacy"]</a></p>
                     @* Not the note of the form with a password: this account has none (seen in a browser, step 18.2.2). *@
                     <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Account_Choose_Privacy"], Provider(arrived))</p>
                     @if (_deviceHolds)
@@ -169,6 +184,11 @@
                     <input id="register-age" name="age" type="checkbox" required />
                     <label for="register-age">@T["Account_Age"]</label>
                 </p>
+                <p class="tick">
+                    <input id="register-terms" name="terms" type="checkbox" required />
+                    <label for="register-terms">@T["Account_Terms"]</label>
+                </p>
+                <p class="meta"><a href="terms">@T["Legal_terms"]</a> · <a href="privacy">@T["Legal_privacy"]</a></p>
                 <p class="note">@T["Account_Register_Privacy"]</p>
                 @if (_deviceHolds)
                 {
@@ -250,6 +270,39 @@
             <input type="hidden" name="returnUrl" value="@_here" />
             <p><button type="submit" class="action">@T["Account_SignOut"]</button></p>
         </form>
+
+        @if (_termsAsked)
+        {
+            @* The terms or the privacy notice changed since this account said it read them, or it never said so:
+               nothing is agreed to by silence, so the page asks. *@
+            <section class="card" id="terms" aria-labelledby="terms-title">
+                <h2 id="terms-title">@T["Account_TermsAsked_Title"]</h2>
+                <p>@T["Account_TermsAsked_Lead"]</p>
+                <p><a href="terms">@T["Legal_terms"]</a> · <a href="privacy">@T["Legal_privacy"]</a></p>
+                <form method="post" action="@($"{AccountDesk.Root}/terms")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="tick">
+                        <input id="terms-again" name="terms" type="checkbox" required />
+                        <label for="terms-again">@T["Account_Terms"]</label>
+                    </p>
+                    <p><button type="submit" class="action">@T["Account_TermsAsked_Send"]</button></p>
+                </form>
+            </section>
+        }
+
+        @if (_restrictions.Count > 0)
+        {
+            @* What who runs the site restricted, with the reasons (Article 17 of the Digital Services Act). *@
+            <section class="card" id="restrictions" aria-labelledby="restrictions-title">
+                <h2 id="restrictions-title">@T["Restrictions_Title"]</h2>
+                <p>@T["Restrictions_Lead"]</p>
+                @foreach (var restriction in _restrictions)
+                {
+                    @Statement(restriction)
+                }
+            </section>
+        }
 
         <section id="follows" aria-labelledby="follows-title">
             <h2 id="follows-title">@T["Account_Follows_Title"]</h2>
@@ -465,9 +518,38 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked"];
+    private IReadOnlyList<RestrictionInfo> _restrictions = [];
+    private RestrictionInfo? _closed;
+    private bool _termsAsked;
+
+    // A statement of reasons, as the person it concerns reads it: what, why, on which ground, and what to do.
+    private RenderFragment Statement(RestrictionInfo restriction) => __builder =>
+    {
+        <article class="statement" aria-label="@string.Format(CultureInfo.CurrentCulture, T["Restrictions_Number"], Visitor.Number((int)restriction.Number))">
+            <h3>@T[$"Restrictions_Kind_{restriction.Kind}"] <span class="meta">– @string.Format(CultureInfo.CurrentCulture, T["Restrictions_Number"], Visitor.Number((int)restriction.Number)), @Visitor.Day(DateOnly.FromDateTime(restriction.At))</span></h3>
+            <dl>
+                <dt>@T["Restrictions_Effect"]</dt>
+                <dd>@T[$"Restrictions_Effect_{restriction.Kind}"]</dd>
+                <dt>@T["Restrictions_Reason"]</dt>
+                <dd dir="auto">@restriction.Reason</dd>
+                <dt>@T["Restrictions_Ground"]</dt>
+                <dd dir="auto">@restriction.Ground</dd>
+                <dt>@T["Restrictions_Origin"]</dt>
+                <dd>@T[restriction.Noticed ? "Restrictions_Origin_Notice" : "Restrictions_Origin_Own"] @T["Restrictions_NoAutomation"]</dd>
+                @if (restriction.Kind != RestrictionKind.Account)
+                {
+                    <dt>@T["Restrictions_Repeat"]</dt>
+                    <dd>@T["Restrictions_Repeat_Text"]</dd>
+                }
+                <dt>@T["Restrictions_Redress"]</dt>
+                <dd>@T["Restrictions_Redress_Text"] <a href="imprint">@T["Legal_imprint"]</a></dd>
+            </dl>
+        </article>
+    };
+
+    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked", "terms-agreed"];
     private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "providers"];
-    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in", "age", "invitation-needed"];
+    private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in", "age", "terms", "invitation-needed", "closed-by-operator"];
 
     private VisitorInfo? _info;
     private System.Collections.Immutable.ImmutableArray<string> _codes = [];
@@ -516,9 +598,16 @@
         _deviceHolds = !device.Positions.IsEmpty || !device.Kept.IsEmpty;
         using (var store = Desk.Open())
         {
+            if (Desk.Closed(Context) is { } number && store.Restriction(number) is { Kind: RestrictionKind.Account } statement)
+            {
+                _closed = statement;
+            }
+
             if (AccountDesk.Session(Context.User) is { } session)
             {
                 _info = store.Info(session.Id);
+                _restrictions = _info is null ? [] : store.Restrictions(session.Id);
+                _termsAsked = _info is not null && store.TermsOf(session.Id) != AccountDesk.TermsVersion;
                 _invitations = _info is null ? [] : store.Invitations(session.Id);
             }
             else

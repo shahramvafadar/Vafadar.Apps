@@ -27,6 +27,20 @@ public sealed class DastanOptions
     public string? Reports { get; set; }
 
     /// <summary>
+    /// Gets or sets a text who runs the site has to tell everybody who uses it, shown on every page until it is
+    /// taken out of the settings again: that the terms change, that the site or a part of it ends, that
+    /// something happened to its security. The site knows no mail address of its visitors, so this is how it
+    /// reaches them. Written by the operator in the languages of the site, as plain text.
+    /// </summary>
+    public string? Announcement { get; set; }
+
+    /// <summary>
+    /// Gets or sets the folder the notices about content are kept in (<see cref="NoticeDesk"/>). Empty, the page
+    /// for a notice names the mail address of who runs the site and has no form.
+    /// </summary>
+    public string? Notices { get; set; }
+
+    /// <summary>
     /// Gets or sets the file of the store of the visitors (step 16.1, D-050): their accounts and what belongs to
     /// them, in a database of its own beside the site. Empty, the site has no accounts and no page for one.
     /// </summary>
@@ -74,7 +88,7 @@ public sealed class DastanOptions
 public sealed class DastanLibrary
 {
     // The first part of an address that is no collection: a collection of that name could not be reached.
-    private static readonly string[] Taken = ["account", "compare", "media", "imprint", "people", "photo", "preferences", "preview.png", "privacy", "terms", "report", "saved", "search", "signin-google", "signin-microsoft", "trees", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
+    private static readonly string[] Taken = ["account", "compare", "cookies", "media", "imprint", "notice", "people", "photo", "preferences", "preview.png", "privacy", "terms", "report", "saved", "search", "signin-google", "signin-microsoft", "trees", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
 
     /// <summary>Returns whether a first part of an address belongs to the site itself, so that no collection can have that name.</summary>
     public static bool IsTaken(string name) => Taken.Contains(name, StringComparer.OrdinalIgnoreCase);

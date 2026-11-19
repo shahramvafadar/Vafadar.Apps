@@ -365,7 +365,15 @@
                         <text>: </text><bdi>@change.Subject</bdi>
                     }
                     @* The space stands inside the element: between two elements Razor leaves none. *@
-                    <span class="meta"> – <bdi>@(change.By ?? T["Tree_Change_Gone"].Value)</bdi>@T["Tree_And"]@Day(change.At)</span>
+                    @if (change.What.StartsWith("operator-", StringComparison.Ordinal))
+                    {
+                        @* What who runs the site did is by no account. *@
+                        <span class="meta"> – @Day(change.At)</span>
+                    }
+                    else
+                    {
+                        <span class="meta"> – <bdi>@(change.By ?? T["Tree_Change_Gone"].Value)</bdi>@T["Tree_And"]@Day(change.At)</span>
+                    }
                 </li>
             }
         </ul>
@@ -398,6 +406,8 @@
         </section>
     }
 }
+
+<ReportLink />
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.

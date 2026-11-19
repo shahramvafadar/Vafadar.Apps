@@ -109,7 +109,8 @@ public sealed partial class PeopleStore : IDisposable
     /// <param name="password">Its password.</param>
     /// <param name="invitation">The invitation it is made through, if any.</param>
     /// <param name="invitationNeeded">Whether no account is made without an invitation that can be used (a closed trial, D-068).</param>
-    public AccountResult Register(string name, string password, string? invitation = null, bool invitationNeeded = false)
+    /// <param name="terms">The version of the terms and the privacy notice the visitor said they read, when the site asks.</param>
+    public AccountResult Register(string name, string password, string? invitation = null, bool invitationNeeded = false, string? terms = null)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
@@ -136,12 +137,12 @@ public sealed partial class PeopleStore : IDisposable
             return new([.. problems]);
         }
 
-        return Create(written, PasswordHash.Derive(password), invitation, null, invitationNeeded);
+        return Create(written, PasswordHash.Derive(password), invitation, null, invitationNeeded, terms);
     }
 
     // Makes the account of a name that was looked at: with what is kept of a password, or without a password
     // and with the sign-in of a provider instead.
-    private AccountResult Create(string written, string password, string? invitation, StoredExternalLogin? login, bool invitationNeeded)
+    private AccountResult Create(string written, string password, string? invitation, StoredExternalLogin? login, bool invitationNeeded, string? terms)
     {
         var key = Key(written);
         if (_context.Visitors.AsNoTracking().Any(candidate => candidate.NameKey == key))
@@ -168,6 +169,8 @@ public sealed partial class PeopleStore : IDisposable
             Password = password,
             Stamp = NewStamp(),
             CreatedAt = _time.GetUtcNow().UtcDateTime,
+            TermsVersion = terms is { Length: > 0 and <= 20 } ? terms : null,
+            TermsAcceptedAt = terms is { Length: > 0 and <= 20 } ? _time.GetUtcNow().UtcDateTime : null,
         };
         _context.Visitors.Add(visitor);
         if (login is not null)
@@ -424,7 +427,7 @@ public sealed partial class PeopleStore : IDisposable
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
         var key = Key(name.Trim());
-        var visitor = _context.Visitors.SingleOrDefault(candidate => candidate.NameKey == key && candidate.ClosedAt != null);
+        var visitor = _context.Visitors.SingleOrDefault(candidate => candidate.NameKey == key && candidate.ClosedAt != null && !candidate.ClosedByOperator);
         try
         {
             // A closed account counts wrong passwords like an open one: it is not guessed open.

@@ -1,0 +1,74 @@
+Angaben gemäß § 5 des Digitale-Dienste-Gesetzes (DDG) und § 18 des Medienstaatsvertrags (MStV).
+
+# Wer diese Website betreibt
+
+| {{operator.name}}
+| {{operator.street}}
+| {{operator.town}}
+| {{operator.country}}
+
+Dastan wird von einer Privatperson betrieben. Es handelt sich nicht um ein Unternehmen; es besteht kein anderer Sitz als die oben genannte Anschrift, und es besteht keine Eintragung im Handelsregister oder in einem anderen Register.
+
+# Kontakt
+
+| E-Mail: {{operator.mail}}
+? | Telefon: {{operator.phone}}
+| Inhalte melden: {{site}}/en/notice (Formular in englischer und persischer Sprache)
+
+Wir lesen unsere E-Mails regelmäßig und antworten, so bald wir können. Sie können uns auf Englisch, Deutsch oder Persisch schreiben.
+
+# Verantwortlich für den Inhalt
+
+Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:
+
+{{operator.name}}, Anschrift wie oben.
+
+# Um welche Art von Dienst es sich handelt
+
+Dastan ist ein privates, nicht kommerzielles Projekt. Es ist unentgeltlich. Es zeigt keine Werbung, verkauft nichts, nimmt weder Spenden noch Provisionen entgegen und gibt keine Daten zu Werbezwecken weiter. Aus diesem Grund sind weder eine Umsatzsteuer-Identifikationsnummer noch eine Wirtschafts-Identifikationsnummer anzugeben.
+
+Dastan besteht aus zwei Teilen: aus redaktionellen Seiten über Geschichten, Personen und Orte der iranischen Literatur und Geschichte, die von der Redaktion verfasst und geprüft werden, und aus einem privaten Bereich, in dem Personen mit einem Konto Stammbäume und Fotografien aufbewahren und selbst entscheiden, wer sie sieht.
+
+# Kontaktstellen nach dem Gesetz über digitale Dienste (Digital Services Act)
+
+Die Verordnung (EU) 2022/2065 (Gesetz über digitale Dienste, Digital Services Act) verlangt von Diensten, die Inhalte ihrer Nutzer speichern, die Benennung von Kontaktstellen. Wir benennen sie unabhängig davon, ob die Verordnung auf einen privaten, unentgeltlichen Dienst wie diesen anwendbar ist.
+
+- Zentrale Kontaktstelle für die Behörden der Mitgliedstaaten, die Europäische Kommission und das Europäische Gremium für digitale Dienste (Art. 11): {{operator.mail}}. Sprachen: Deutsch und Englisch.
+- Zentrale Kontaktstelle für die Nutzer des Dienstes (Art. 12): {{operator.mail}} oder das Formular unter {{site}}/en/notice. Sprachen: Deutsch, Englisch und Persisch. Sie erreichen stets einen Menschen, niemals ein Programm.
+- Meldungen rechtswidriger Inhalte (Art. 16): das Formular unter {{site}}/en/notice oder per E-Mail. Das Verfahren ist in den Nutzungsbedingungen unter {{site}}/en/terms?text=de beschrieben.
+
+Dastan ist allenfalls ein Kleinstunternehmen im Sinne der Empfehlung 2003/361/EG. Die durchschnittliche Zahl seiner monatlich aktiven Nutzer in der Europäischen Union liegt weit unter 45 Millionen; wir teilen die Zahl dem Koordinator für digitale Dienste und der Kommission auf deren Verlangen mit (Art. 24 Abs. 3).
+
+Wenn Sie der Auffassung sind, dass diese Website das Gesetz über digitale Dienste nicht einhält, können Sie sich beim Koordinator für digitale Dienste des Mitgliedstaats beschweren, in dem Sie wohnen. In Deutschland ist dies die Bundesnetzagentur (https://www.dsc.bund.de).
+
+# Datenschutz
+
+Die oben genannte Person ist zugleich Verantwortlicher für die Verarbeitung personenbezogener Daten auf dieser Website. Alles Nähere dazu steht in der Datenschutzerklärung unter {{site}}/en/privacy?text=de; was die Website auf Ihrem Endgerät speichert, ist unter {{site}}/en/cookies?text=de aufgeführt.
+
+# Verbraucherstreitbeilegung
+
+Wir sind weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. Die Plattform der Europäischen Kommission zur Online-Streitbeilegung wurde am 20. Juli 2025 eingestellt.
+
+# Haftung für Inhalte
+
+Wir verfassen und prüfen die redaktionellen Seiten dieser Website mit Sorgfalt und nennen unsere Quellen. Dennoch können wir keine Gewähr dafür übernehmen, dass jede Aussage richtig, vollständig und aktuell ist; die Seiten weisen darauf hin, wo Quellen einander widersprechen oder wo etwas ungewiss ist. Wenn Sie einen Fehler finden, teilen Sie uns dies bitte über die Meldefunktion auf der Seite oder per E-Mail mit.
+
+Stammbäume, Fotografien und Texte im privaten Bereich sind Inhalte der Nutzer, die sie dort eingestellt haben. Nach Art. 6 der Verordnung (EU) 2022/2065 haften wir nicht für fremde Inhalte, die wir speichern, solange wir keine Kenntnis von ihrer Rechtswidrigkeit haben, und wir entfernen oder sperren sie unverzüglich, sobald wir davon Kenntnis erlangen. Wir sind nicht allgemein verpflichtet, die von Nutzern gespeicherten Inhalte zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen (Art. 8). Verpflichtungen zur Entfernung von Informationen oder zur Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben unberührt.
+
+# Haftung für Links
+
+Diese Website verlinkt auf Seiten Dritter, zum Beispiel auf Quellen. Auf diese Seiten haben wir keinen Einfluss, und wir sind für sie nicht verantwortlich; verantwortlich sind deren Anbieter. Wenn wir einen Link setzen, sehen wir uns die Seite an, auf die er führt. Eine fortlaufende Kontrolle der verlinkten Seiten ist uns ohne konkreten Anlass nicht möglich. Erfahren wir, dass eine verlinkte Seite gegen das Recht verstößt, entfernen wir den Link.
+
+# Urheberrecht
+
+Die Texte, Bilder, Karten, Zeichnungen und die Gestaltung der redaktionellen Seiten sind urheberrechtlich geschützt. Soweit eine Seite nichts anderes angibt, liegen die Rechte bei {{operator.name}} oder bei den Rechteinhabern, die beim Werk genannt sind. Sie dürfen die Seiten lesen, auf sie verlinken und im Rahmen der gesetzlichen Grenzen aus ihnen zitieren (§ 51 des Urheberrechtsgesetzes, UrhG). Jede andere Nutzung – das Vervielfältigen, das Veröffentlichen an anderer Stelle, die Nutzung für das Training von Maschinen im Sinne des § 44b Abs. 3 UrhG – bedarf unserer vorherigen Zustimmung.
+
+Was Nutzer in ihrem privaten Bereich speichern, bleibt ihres. Sie räumen der Website nur die Erlaubnis ein, die sie benötigt, um es den Personen zu zeigen, die sie ausgewählt haben; dies regeln die Nutzungsbedingungen.
+
+Wenn Sie der Auffassung sind, dass etwas auf dieser Website Ihr Urheberrecht verletzt, teilen Sie uns dies unter {{site}}/en/notice mit.
+
+# Sprachfassungen
+
+Dieses Impressum liegt in englischer, deutscher und persischer Sprache vor. Maßgeblich ist die deutsche Fassung.
+
+Stand: 19. November 2026

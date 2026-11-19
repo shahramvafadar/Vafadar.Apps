@@ -479,6 +479,50 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("Relationships");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredRestriction", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Account")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Ground")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ImposedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Kind")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("LiftedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Noticed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Target")
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("Account");
+
+                    b.ToTable("Restrictions");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredSavedPage", b =>
                 {
                     b.Property<long>("Number")
@@ -611,6 +655,9 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<DateTime?>("ClosedAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("ClosedByOperator")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
@@ -638,6 +685,13 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<string>("Stamp")
                         .IsRequired()
                         .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("TermsAcceptedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TermsVersion")
+                        .HasMaxLength(20)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -848,6 +902,15 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
                         .WithMany()
                         .HasForeignKey("To")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredRestriction", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Account")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

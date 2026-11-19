@@ -26,7 +26,7 @@ public sealed partial class PeopleStore
     /// taken from the provider. The account has no password until its visitor sets one, and gets recovery codes
     /// like every account.
     /// </summary>
-    public AccountResult RegisterWith(string name, string provider, string subject, string? invitation = null, bool invitationNeeded = false)
+    public AccountResult RegisterWith(string name, string provider, string subject, string? invitation = null, bool invitationNeeded = false, string? terms = null)
     {
         ArgumentNullException.ThrowIfNull(name);
         var written = name.Trim();
@@ -42,7 +42,7 @@ public sealed partial class PeopleStore
             return new(["login-taken"]);
         }
 
-        return Create(written, string.Empty, invitation, new StoredExternalLogin { Provider = provider, Key = key, VisitorId = string.Empty }, invitationNeeded);
+        return Create(written, string.Empty, invitation, new StoredExternalLogin { Provider = provider, Key = key, VisitorId = string.Empty }, invitationNeeded, terms);
     }
 
     /// <summary>

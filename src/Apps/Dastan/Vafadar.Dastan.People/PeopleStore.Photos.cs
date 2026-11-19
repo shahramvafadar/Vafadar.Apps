@@ -417,7 +417,9 @@ public sealed partial class PeopleStore
     {
         var shared = DateOnly.FromDateTime(photo.SharedAt);
         // A photograph that is held back is seen by its owner and the people it names – they are asked.
-        var scope = IsHeld(photo, tags)
+        var scope = IsRestricted(RestrictionKind.Photo, photo.Id)
+            ? AccessScope.OnlyMe(new AccountId(photo.Owner))
+            : IsHeld(photo, tags)
             ? AccessScope.Circle(new AccountId(photo.Owner), [.. tags.Where(tag => (TagState)tag.State != TagState.Removed).Select(tag => new AccountId(tag.Account))])
             : Scope(photo.Owner, (ScopeKind)photo.Scope, photo.Circle);
         var rule = new SharedMedia(photo.Id, scope, photo.Taken ?? shared, shared);

@@ -76,6 +76,9 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
     // A visitor may ask for several pages at the same time; their cookies are kept and sent one request at a time.
     private readonly Lock _jar = new();
 
+    /// <summary>Gets or sets the page the visitor says a form stood on, when it is another than the one the token was taken from.</summary>
+    public string? CameFrom { get; set; }
+
     /// <summary>Gets the cookies of this visitor.</summary>
     public Dictionary<string, string> Cookies { get; } = new(StringComparer.Ordinal);
 
@@ -107,11 +110,15 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
     {
         var form = await Open(from);
         var token = Regex.Match(form.Html, "name=\"__RequestVerificationToken\" value=\"([^\"]+)\"").Groups[1].Value;
-        return await Send(new HttpRequestMessage(HttpMethod.Post, address)
+        var request = new HttpRequestMessage(HttpMethod.Post, address)
         {
             Content = new FormUrlEncodedContent(
                 fields.Select(field => KeyValuePair.Create(field.Name, field.Value)).Append(KeyValuePair.Create("__RequestVerificationToken", token))),
-        });
+        };
+
+        // Like a browser, the visitor says which page the form stood on.
+        request.Headers.Referrer = new Uri(new Uri("http://localhost"), CameFrom ?? from);
+        return await Send(request);
     }
 
     /// <summary>Sends a form of the site that carries a file, with the token of the page it stands on.</summary>
@@ -141,6 +148,11 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
 
     private async Task<Page> Send(HttpRequestMessage request)
     {
+        if (CameFrom is not null && request.Headers.Referrer is null)
+        {
+            request.Headers.Referrer = new Uri(new Uri("http://localhost"), CameFrom);
+        }
+
         if (acceptLanguage is not null)
         {
             request.Headers.TryAddWithoutValidation("Accept-Language", acceptLanguage);

@@ -94,7 +94,7 @@ public sealed class ExternalSignInPagesTests : IDisposable
         await Follow(visitor, await visitor.Post($"{Forms}/external", Account, Fields(("provider", provider))));
 
     private static async Task<Page> Choose(Browser visitor, string name, string website = "") =>
-        await Follow(visitor, await visitor.Post($"{Forms}/external-register", Account, Fields(("name", name), ("age", "on"), ("website", website))));
+        await Follow(visitor, await visitor.Post($"{Forms}/external-register", Account, Fields(("name", name), ("age", "on"), ("terms", "on"), ("website", website))));
 
     private static async Task<Page> Send(Browser visitor, string form, params (string, string)[] fields) =>
         await Follow(visitor, await visitor.Post($"{Forms}/{form}", Account, Fields(fields)));
@@ -191,7 +191,7 @@ public sealed class ExternalSignInPagesTests : IDisposable
     public async Task A_name_somebody_has_is_said_and_the_visitor_chooses_another_without_signing_in_again()
     {
         var mina = _site.Visitor();
-        await mina.Post($"{Forms}/register", Account, Fields(("name", "Mina"), ("age", "on"), ("password", Password), ("again", Password), ("website", string.Empty)));
+        await mina.Post($"{Forms}/register", Account, Fields(("name", "Mina"), ("age", "on"), ("terms", "on"), ("password", Password), ("again", Password), ("website", string.Empty)));
         var visitor = _site.Visitor();
         await Through(visitor);
 
@@ -235,7 +235,7 @@ public sealed class ExternalSignInPagesTests : IDisposable
     public async Task An_account_with_a_password_adds_a_provider_and_takes_it_away_again()
     {
         var mina = _site.Visitor();
-        await mina.Post($"{Forms}/register", Account, Fields(("name", "Mina"), ("age", "on"), ("password", Password), ("again", Password), ("website", string.Empty)));
+        await mina.Post($"{Forms}/register", Account, Fields(("name", "Mina"), ("age", "on"), ("terms", "on"), ("password", Password), ("again", Password), ("website", string.Empty)));
 
         var before = await mina.Get(Account);
         var linked = await Through(mina);
@@ -247,7 +247,7 @@ public sealed class ExternalSignInPagesTests : IDisposable
 
         // The same sign-in is not added to a second account.
         var sara = _site.Visitor();
-        await sara.Post($"{Forms}/register", Account, Fields(("name", "Sara"), ("age", "on"), ("password", Password), ("again", Password), ("website", string.Empty)));
+        await sara.Post($"{Forms}/register", Account, Fields(("name", "Sara"), ("age", "on"), ("terms", "on"), ("password", Password), ("again", Password), ("website", string.Empty)));
         Assert.Contains("belongs to another account", (await Through(sara)).Main, StringComparison.Ordinal);
 
         var removed = await Send(mina, "unlink", ("provider", "test"));

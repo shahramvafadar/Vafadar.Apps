@@ -433,7 +433,7 @@ public sealed partial class PeopleStore
         }
     }
 
-    private void Record(string tree, string by, string what, string subject) =>
+    private void Record(string tree, string? by, string what, string subject) =>
         _context.TreeChanges.Add(new StoredTreeChange { Tree = tree, By = by, At = Now, What = what, Subject = subject });
 
     private DateTime Now => _time.GetUtcNow().UtcDateTime;

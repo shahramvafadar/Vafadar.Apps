@@ -95,10 +95,49 @@ public sealed class AccountDesk
     /// they did not say that they are 16 or older (D-061), or the site takes new accounts by invitation only
     /// and they have none that can be used (D-068). Nothing: they may go on.
     /// </summary>
-    public string? MayNotRegister(PeopleStore store, string? age, string? invitation)
+    public string? MayNotRegister(PeopleStore store, string? age, string? invitation, string? terms)
     {
         ArgumentNullException.ThrowIfNull(store);
-        return age != "on" ? "age" : InvitationOnly && !store.IsInvited(invitation) ? "invitation-needed" : null;
+        return age != "on" ? "age" : terms != "on" ? "terms" : InvitationOnly && !store.IsInvited(invitation) ? "invitation-needed" : null;
+    }
+
+    /// <summary>
+    /// The version of the terms and of the privacy notice a new account says it read. It changes when one of
+    /// the two changes in a way that matters to who uses the site, and is noted with the account.
+    /// </summary>
+    public const string TermsVersion = "2026-11-19";
+
+    private const string ClosedCookie = "dastan.visitor.closed";
+
+    /// <summary>
+    /// Hands the statement of reasons of an account that who runs the site closed to the page, for the visitor
+    /// who just proved to be its owner: its number, sealed for ten minutes in a cookie only this site reads.
+    /// </summary>
+    public void CarryClosed(HttpContext context, long restriction)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        var options = PreferenceCookie.Options(context);
+        options.MaxAge = TimeSpan.FromMinutes(10);
+        context.Response.Cookies.Append(ClosedCookie, _arrivals.Protect(restriction.ToString(System.Globalization.CultureInfo.InvariantCulture), TimeSpan.FromMinutes(10)), options);
+    }
+
+    /// <summary>Returns the number of the statement of reasons a request carries, or nothing.</summary>
+    public long? Closed(HttpContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        if (context.Request.Cookies[ClosedCookie] is not { Length: > 0 } carried)
+        {
+            return null;
+        }
+
+        try
+        {
+            return long.TryParse(_arrivals.Unprotect(carried), System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var number) ? number : null;
+        }
+        catch (System.Security.Cryptography.CryptographicException)
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -400,6 +439,7 @@ public static class AccountEndpoints
             [FromForm] string? website,
             [FromForm] string? invitation,
             [FromForm] string? age,
+            [FromForm] string? terms,
             [FromForm] string? returnUrl) =>
         {
             // Who came by an invitation and has to try again still has it.
@@ -424,12 +464,12 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
-            if (desk.MayNotRegister(store, age, invitation) is { } kept)
+            if (desk.MayNotRegister(store, age, invitation, terms) is { } kept)
             {
                 return Back(from, "register", kept);
             }
 
-            var made = store.Register(name ?? string.Empty, password ?? string.Empty, invitation, desk.InvitationOnly);
+            var made = store.Register(name ?? string.Empty, password ?? string.Empty, invitation, desk.InvitationOnly, AccountDesk.TermsVersion);
             if (!made.Done)
             {
                 return Back(from, "register", [.. made.Problems]);
@@ -458,11 +498,35 @@ public static class AccountEndpoints
             using var store = desk.Open();
             if (store.SignIn(name ?? string.Empty, password ?? string.Empty) is not { } session)
             {
+                // An account that who runs the site closed tells its owner why – the site has no other way to.
+                if (store.ClosedByOperator(name ?? string.Empty, password ?? string.Empty) is { } statement)
+                {
+                    desk.CarryClosed(context, statement.Number);
+                    return Back(returnUrl, "sign-in", "closed-by-operator");
+                }
+
                 return Back(returnUrl, "sign-in", "wrong");
             }
 
             await AccountDesk.SignIn(context, session).ConfigureAwait(false);
             return Said(returnUrl, "signed-in");
+        });
+
+        // The terms changed, or the account is older than the note of what it read: its visitor says so again.
+        forms.MapPost("/terms", (HttpContext context, AccountDesk desk, [FromForm] string? terms, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.Unauthorized();
+            }
+
+            if (terms != "on")
+            {
+                return Back(returnUrl, "terms", "terms");
+            }
+
+            using var store = desk.Open();
+            return store.AcceptTerms(session.Id, AccountDesk.TermsVersion) ? Said(returnUrl, "terms-agreed") : Results.Unauthorized();
         });
 
         forms.MapPost("/sign-out", async (HttpContext context, [FromForm] string? returnUrl) =>

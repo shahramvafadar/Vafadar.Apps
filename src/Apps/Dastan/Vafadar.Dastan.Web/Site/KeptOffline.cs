@@ -5,7 +5,9 @@ namespace Vafadar.Dastan.Web.Site;
 /// collections and comparisons, as a visitor who is not signed in was given them. The site says so with a
 /// header on the answer, and the service worker keeps only what carries it. A page of an account, of a person,
 /// of a family tree, a photograph, a search or a list is never marked – and neither is any page for a visitor
-/// who is signed in, whose name stands on every page.
+/// who is signed in, whose name stands on every page. And no page is marked for a visitor who did not agree
+/// to pages being kept on the device (<see cref="DeviceStorage"/>): keeping them is more than the site needs to
+/// work, and what is stored on a device beyond that needs a yes (§ 25 TDDDG).
 /// </summary>
 public static class KeptOffline
 {
@@ -30,7 +32,8 @@ public static class KeptOffline
                     // Asked when the answer is known: a page that was found, for somebody who is not signed in.
                     if (context.Response.StatusCode == StatusCodes.Status200OK
                         && context.Response.ContentType?.StartsWith("text/html", StringComparison.OrdinalIgnoreCase) == true
-                        && AccountDesk.Session(context.User) is null)
+                        && AccountDesk.Session(context.User) is null
+                        && DeviceStorage.KeepsOffline(context))
                     {
                         context.Response.Headers[Header] = Page;
                     }

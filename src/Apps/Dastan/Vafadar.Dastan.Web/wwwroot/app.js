@@ -1,12 +1,35 @@
-// The only script of the pages of Dastan (ADR 0007). It registers the service worker that shows a page for
-// "no connection", it says what the device keeps for that time and lets it be forgotten, and it moves a chart
-// that is drawn around a name so that the name is in sight (ADR 0008).
+// The only script of the pages of Dastan (ADR 0007). Where the visitor agreed to it, it registers the service
+// worker that keeps pages for a time without a connection; it says what the device keeps and lets it be
+// forgotten, and it moves a chart that is drawn around a name so that the name is in sight (ADR 0008).
 // No page needs it to show its content or to be used.
+//
+// Keeping pages on a device is more than the site needs to work, so nothing is kept without a yes
+// (§ 25 TDDDG): the page says whether the visitor gave it. Without it there is no worker, and a worker and what
+// it kept from a time when there was a yes are removed.
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch(() => {
-      // Without the worker the browser shows its own page when there is no connection.
-    });
+  window.addEventListener('load', async () => {
+    if (document.documentElement.dataset.offline === 'on') {
+      navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch(() => {
+        // Without the worker the browser shows its own page when there is no connection.
+      });
+      return;
+    }
+
+    try {
+      for (const worker of await navigator.serviceWorker.getRegistrations()) {
+        await worker.unregister();
+      }
+
+      if ('caches' in window) {
+        for (const name of await caches.keys()) {
+          if (name.startsWith('dastan-')) {
+            await caches.delete(name);
+          }
+        }
+      }
+    } catch {
+      // A browser that does not let a page ask keeps nothing the page could remove.
+    }
   });
 }
 

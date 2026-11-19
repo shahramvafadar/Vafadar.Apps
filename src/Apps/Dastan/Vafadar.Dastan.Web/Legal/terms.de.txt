@@ -1,0 +1,184 @@
+Diese Nutzungsbedingungen gelten zwischen Ihnen und der Person, die die Website {{site}} betreibt („Dastan“, „die Website“, „wir“). Sie regeln, was die Website anbietet, was Sie auf ihr tun dürfen und was nicht, wie wir mit Inhalten umgehen, die nicht bleiben dürfen, und was Sie tun können, wenn Sie nicht einverstanden sind. Bitte lesen Sie sie, bevor Sie ein Konto anlegen.
+
+# 1. Wer die Website betreibt
+
+Dastan wird betrieben von {{operator.name}}, einer Privatperson, {{operator.street}}, {{operator.town}}, {{operator.country}}, E-Mail {{operator.mail}}. Die vollständigen Angaben stehen im Impressum unter {{site}}/en/imprint?text=de.
+
+# 2. Was die Website ist
+
+Dastan besteht aus zwei Teilen.
+
+- Der öffentliche Teil: redaktionelle Seiten über die Geschichten, Personen, Orte und Zeiten der iranischen Literatur und Geschichte, mit ihren Quellen. Jeder kann sie lesen, ohne Konto.
+- Der private Bereich: Personen mit einem Konto können einen Lesestand und eine Liste von Seiten speichern, Beziehungen zu anderen Konten angeben, Stammbäume und Fotografien aufbewahren und entscheiden, wer sie sieht.
+
+Dastan ist ein privates, nicht kommerzielles Projekt. Es ist unentgeltlich und zeigt keine Werbung. Es wird so angeboten, wie es ist und wie es verfügbar ist: Wir bemühen uns nach Kräften, es in Betrieb und fehlerfrei zu halten, sagen aber nicht zu, dass es stets erreichbar ist, dass es jede Funktion beibehält oder dass es auf Dauer besteht. Wir dürfen Funktionen ändern oder einstellen; Abschnitt 13 regelt, wie Sie davon erfahren und was mit Ihren Daten geschieht.
+
+# 3. Diese Bedingungen und das Zustandekommen des Vertrags
+
+Das Lesen der öffentlichen Seiten erfordert keinen Vertrag. Wenn Sie ein Konto anlegen und bestätigen, dass Sie diese Bedingungen gelesen haben, kommt zwischen Ihnen und uns ein Nutzungsvertrag auf der Grundlage dieser Bedingungen zustande. Er ist unentgeltlich und läuft auf unbestimmte Zeit. Die Website hält fest, welche Fassung der Bedingungen Sie bestätigt haben und wann; der Text dieser Bedingungen bleibt auf dieser Seite abrufbar, und Sie können ihn speichern oder ausdrucken.
+
+Ihre eigenen Bedingungen finden keine Anwendung.
+
+# 4. Ihr Konto
+
+## Wer eines haben kann
+
+Sie können ein Konto haben, wenn Sie mindestens 16 Jahre alt und eine natürliche Person sind. Sie bestätigen Ihr Alter bei der Registrierung. Eine Person führt ein Konto für sich selbst; Konten werden nicht weitergegeben, verkauft oder geteilt.
+
+Soweit die Website dies angibt, erfordert ein neues Konto eine Einladung von jemandem, der bereits ein Konto hat.
+
+## Ihr Name
+
+Sie wählen einen Namen. Es muss nicht Ihr bürgerlicher Name sein. Er darf nicht vortäuschen, dass Sie jemand anderes, ein Unternehmen oder eine Behörde sind, darf niemanden beleidigen und darf weder die Adresse einer Website noch Werbung sein.
+
+## Ihr Passwort und Ihre Wiederherstellungscodes
+
+Wählen Sie ein Passwort, das Sie nirgendwo sonst verwenden, und halten Sie es geheim. Bewahren Sie die Wiederherstellungscodes an einem sicheren Ort auf. Die Website kennt keine E-Mail-Adresse von Ihnen und kann kein Passwort zurücksetzen: Wenn Sie das Passwort und alle Wiederherstellungscodes verlieren, kann niemand mehr auf das Konto zugreifen, und wir können nicht helfen. Wenn Sie annehmen, dass jemand anderes Ihr Passwort kennt, ändern Sie es sofort; dadurch wird das Konto überall abgemeldet.
+
+Sie stehen für das ein, was mit Ihrem Konto geschieht, es sei denn, Sie haben dies nicht zu vertreten.
+
+## Anmeldung über Google oder Microsoft
+
+Sie können Ihr Konto mit einem Konto bei Google oder Microsoft verknüpfen und sich darüber anmelden. Zwischen Ihnen und dem jeweiligen Unternehmen gelten dann dessen Bedingungen und Datenschutzbestimmungen. Für dessen Dienst sind wir nicht verantwortlich.
+
+# 5. Was wem gehört
+
+## Die redaktionellen Seiten
+
+Die Texte, Bilder, Karten und die Gestaltung des öffentlichen Teils sind urheberrechtlich geschützt. Sie dürfen sie lesen, auf sie verlinken und aus ihnen zitieren, soweit das Gesetz es erlaubt. Jede andere Nutzung bedarf unserer Zustimmung; Näheres steht im Impressum.
+
+## Was Sie speichern
+
+Was Sie in Ihrem Konto speichern – Namen, Einträge, Bildunterschriften, Anmerkungen, Fotografien –, bleibt Ihres. Sie räumen uns lediglich das einfache, nicht ausschließliche, unentgeltliche Recht ein, es zu speichern, die dafür erforderlichen technischen Vervielfältigungen anzufertigen (zum Beispiel kleinere Größen einer Fotografie und Sicherungskopien) und es genau den Personen zu zeigen, die Sie ausgewählt haben, und zwar so lange, wie Sie es auf der Website belassen. Wir nutzen Ihre Inhalte für nichts anderes: nicht für Werbung, nicht zur Darstellung der Website, nicht für das Training von Maschinen, und wir geben sie nicht weiter. Das Recht endet, wenn Sie den Inhalt entfernen oder wenn Ihr Konto gelöscht wird; Sicherungskopien werden innerhalb der in der Datenschutzerklärung genannten Frist gelöscht.
+
+Sie versichern, dass Sie das, was Sie speichern, speichern und zeigen dürfen: dass Sie die Rechte an Fotografien und Texten innehaben oder die Erlaubnis des Rechteinhabers besitzen und dass Sie die Rechte der genannten oder gezeigten Personen achten (Abschnitt 7).
+
+# 6. Was nicht auf der Website sein darf
+
+Sie dürfen über die Website nichts speichern, zeigen oder weitergeben, was gegen das anwendbare Recht oder gegen die Rechte anderer verstößt. Insbesondere:
+
+- Inhalte, die eine Straftat darstellen, zum Beispiel die Aufstachelung zu Hass oder Gewalt, Bedrohungen, Beleidigung und Verleumdung, gewaltverherrlichende Darstellungen von Gewalt, Kennzeichen verbotener Organisationen oder die Billigung von Straftaten.
+- Sexuelle Darstellungen Minderjähriger in jeder Form sowie jegliche Inhalte, die Kinder oder Jugendliche sexualisieren. Wir zeigen sie ausnahmslos bei der Polizei an.
+- Pornografie sowie Darstellungen von Nacktheit oder sexuellen Handlungen realer Personen.
+- Inhalte, die Terrorismus fördern oder dazu aufrufen.
+- Inhalte, die eine Person belästigen, ihr nachstellen, sie bloßstellen oder erniedrigen oder die private Angelegenheiten einer Person gegen deren Willen öffentlich machen – einschließlich Bildern, Anschriften, Telefonnummern, Dokumenten und Nachrichten.
+- Bilder, Texte oder andere Werke, an denen Sie nicht die Rechte innehaben und die Sie nicht kraft Gesetzes nutzen dürfen.
+- Unwahre Tatsachenbehauptungen über Personen, die diesen schaden können, sowie gefälschte oder manipulierte Bilder realer Personen, die als echt ausgegeben werden.
+- Werbung, Angebote von Waren oder Dienstleistungen, Spendenaufrufe, Kettenbriefe und Links darauf.
+- Schadsoftware sowie alles, was dazu bestimmt ist, die Website oder ihre Nutzer zu stören, zu überlasten oder auszuspähen.
+
+Sie dürfen außerdem nicht:
+
+- Konten durch ein Programm anlegen, Konten für andere anlegen oder das Konto eines anderen nutzen;
+- versuchen, etwas einzusehen, was Ihnen nicht sichtbar gemacht wurde, eine Beschränkung oder einen Schutz der Website zu umgehen oder die Website durch ein Programm in einem Umfang auszulesen, der über das hinausgeht, was eine Suchmaschine auf den öffentlichen Seiten tut;
+- Daten anderer Nutzer oder von Personen, die in Stammbäumen und auf Fotografien genannt sind, sammeln oder sie für etwas anderes als Ihre eigenen familiären und persönlichen Zwecke verwenden;
+- Meldungen oder Beschwerden abgeben, von denen Sie wissen, dass sie unzutreffend sind.
+
+# 7. Andere Personen in Ihren Stammbäumen und auf Ihren Fotografien
+
+Ein Stammbaum und ein Familienalbum handeln von anderen Menschen. Für die Daten über andere Personen, die Sie auf die Website stellen, sind Sie verantwortlich. Bitte halten Sie sich an das Folgende; es handelt sich um Pflichten aus diesen Bedingungen.
+
+- Tragen Sie lebende Personen nur ein, wenn sie davon wissen oder wenn Sie als Mitglied ihrer Familie davon ausgehen dürfen, dass sie einverstanden sind. Wenn jemand Sie auffordert, ihn herauszunehmen oder etwas zu berichtigen, tun Sie dies unverzüglich.
+- Tragen Sie über lebende Personen nur ein, wonach die Felder der Website fragen: einen Namen, Jahreszahlen und wie Personen miteinander verwandt sind. Schreiben Sie in Namen, Bildunterschriften oder Anmerkungen nichts über die Gesundheit, die Religion oder Weltanschauung, die ethnische Herkunft, die politischen Meinungen, das Sexualleben oder die sexuelle Orientierung, strafrechtliche Verurteilungen einer lebenden Person oder Vergleichbares.
+- Laden Sie eine Fotografie, die lebende Personen zeigt, nur hoch, wenn diese damit einverstanden sind, dass die Personen sie sehen, denen Sie sie zeigen. Bei Kindern und Jugendlichen müssen deren Eltern oder Sorgeberechtigte einverstanden sein, ab einem Alter von etwa 14 Jahren außerdem der oder die Jugendliche selbst. Laden Sie keine Bilder von Kindern hoch, die nicht Ihrer eigenen Familie angehören.
+- Markieren Sie nur Personen, die tatsächlich auf der Fotografie zu sehen sind. Eine Markierung wird erst angezeigt, wenn die markierte Person sie bestätigt; eine markierte Person kann die Markierung entfernen und der Fotografie widersprechen.
+- Machen Sie einen Stammbaum oder eine Fotografie nur dort für alle sichtbar, wo die Website es Ihnen ermöglicht: einen Stammbaum nur, wenn jede lebende Person darin in ihrem eigenen Konto eingewilligt hat; eine Fotografie mit markierten Personen nur, wenn jede von ihnen eingewilligt hat. Umgehen Sie dies nicht, etwa indem Sie eine lebende Person als verstorben eintragen oder jemanden nicht markieren, um veröffentlichen zu können.
+- Behandeln Sie das Andenken Verstorbener mit Respekt und achten Sie die Wünsche ihrer nahen Angehörigen.
+
+Wer genannt oder gezeigt wird und damit nicht einverstanden ist, kann sich jederzeit an uns wenden (Abschnitt 9); wir entfernen die Daten dann, wenn das Gesetz es verlangt, auch gegen Ihren Willen.
+
+# 8. Was wir prüfen und was nicht
+
+Wir prüfen nicht, was Nutzer speichern, bevor es erscheint, und wir durchsuchen den privaten Bereich nicht nach rechtswidrigen Inhalten; dazu sind wir nicht allgemein verpflichtet. Wir setzen keine Programme ein, die Inhalte automatisiert auffinden oder bewerten. Wir sehen uns Inhalte an, wenn wir eine Meldung erhalten (Abschnitt 9), wenn eine Behörde oder ein Gericht es anordnet oder wenn wir beim Betrieb der Website selbst auf etwas stoßen.
+
+Jede Entscheidung über Inhalte oder ein Konto trifft ein Mensch.
+
+# 9. Inhalte melden (Melde- und Abhilfeverfahren)
+
+Jedermann – mit oder ohne Konto – kann uns mitteilen, dass etwas auf der Website rechtswidrig ist, seine Rechte verletzt oder gegen diese Bedingungen verstößt: mit dem Formular unter {{site}}/en/notice (Formular in englischer und persischer Sprache) oder per E-Mail an {{operator.mail}}.
+
+Eine Meldung soll angeben, wo sich der Inhalt befindet (die Adresse der Seite), warum Sie ihn für rechtswidrig oder für einen Verstoß gegen die Bedingungen halten und wer Sie sind (Name und E-Mail-Adresse), es sei denn, die Meldung betrifft sexuellen Missbrauch von Kindern. Sie soll die Erklärung enthalten, dass Sie in gutem Glauben davon überzeugt sind, dass Ihre Angaben richtig und vollständig sind. Sie können eine Meldung auch ohne Ihren Namen abgeben; wir können Ihnen dann möglicherweise nicht antworten, und bei manchen Angelegenheiten – etwa beim Urheberrecht oder bei Ihren eigenen Persönlichkeitsrechten – müssen wir wissen, wer betroffen ist.
+
+Was wir tun:
+
+- Das Formular zeigt sofort ein Aktenzeichen an, das den Eingang Ihrer Meldung bestätigt.
+- Ein Mensch prüft die Meldung zeitnah, sorgfältig, frei von Willkür und objektiv und berücksichtigt die Rechte aller Betroffenen – auch die Meinungs- und Informationsfreiheit.
+- Wir entscheiden, ob der Inhalt bleibt, beschränkt oder entfernt wird, und teilen Ihnen die Entscheidung sowie Ihre Möglichkeiten, dagegen vorzugehen, mit, wenn Sie eine E-Mail-Adresse hinterlassen haben.
+- Dem Nutzer, der den Inhalt gespeichert hat, teilen wir die Gründe mit (Abschnitt 11), nicht aber, wer die Meldung abgegeben hat, es sei denn, dies ist erforderlich und rechtmäßig.
+
+Wenn jemand in Gefahr ist, rufen Sie zuerst die Polizei.
+
+# 10. Was wir bei einem Verstoß tun können
+
+Wenn Inhalte oder ein Verhalten gegen das Gesetz oder gegen diese Bedingungen verstoßen, können wir je nach Schwere:
+
+- eine Fotografie verbergen, sodass nur ihr Inhaber sie sieht;
+- einen Stammbaum aus der Öffentlichkeit zurücknehmen, sodass er nicht öffentlich sein kann, solange die Entscheidung besteht;
+- den Eintrag einer Person aus einem Stammbaum herausnehmen, wenn diese Person widerspricht und der Inhaber es nicht tut;
+- ein Konto schließen.
+
+Wir wählen das mildeste Mittel, das ausreicht. Ein Konto schließen wir nur bei einem schwerwiegenden Verstoß – zum Beispiel bei Inhalten nach den ersten vier Punkten des Abschnitts 6 oder bei vorsätzlicher Schädigung anderer – oder wenn jemand nach einer Beschränkung weiter gegen die Bedingungen verstößt. Bevor wir ein Konto wegen wiederholter Verstöße schließen, hat eine frühere, im Konto angezeigte Entscheidung darauf hingewiesen, dass dies folgen kann, sodass Sie Gelegenheit hatten, den Inhalt zu ändern und uns zu antworten. Ohne dies schließen wir ein Konto nur, soweit es zur Abwendung schwerer Schäden erforderlich ist, soweit das Gesetz es verlangt oder soweit eine Anhörung den Zweck der Maßnahme vereiteln würde.
+
+Ein von uns geschlossenes Konto wird behandelt wie eines, das sein Inhaber geschlossen hat: Nichts davon wird angezeigt, und es wird nach 30 Tagen gelöscht, sofern wir die Entscheidung nicht vorher aufheben.
+
+Wir beschränken niemanden deshalb, weil er in gutem Glauben eine Meldung abgegeben hat, die sich als unbegründet erweist. Wer wiederholt offensichtlich unbegründete Meldungen abgibt, muss nach vorheriger Warnung damit rechnen, dass wir seine Meldungen für einen angemessenen Zeitraum nicht mehr bearbeiten.
+
+# 11. Sie erfahren die Gründe und können widersprechen
+
+Wenn wir etwas von Ihnen beschränken, geben wir Ihnen eine Begründung. Weil die Website keine E-Mail-Adresse von Ihnen hat, lesen Sie sie auf der Seite Ihres Kontos; bei einem geschlossenen Konto lesen Sie sie, nachdem Sie auf der Anmeldeseite den Namen und das Passwort eingegeben haben. Sie gibt an:
+
+- was beschränkt wurde, wo und für wie lange;
+- die Tatsachen und Umstände, auf denen die Entscheidung beruht, und ob sie auf eine Meldung hin oder aufgrund unserer eigenen Prüfung ergangen ist;
+- dass keine automatisierten Mittel eingesetzt wurden;
+- gegen welches Gesetz oder gegen welche Regel dieser Bedingungen der Inhalt verstößt und warum;
+- was Sie dagegen tun können.
+
+Wenn Sie nicht einverstanden sind, schreiben Sie innerhalb von sechs Monaten an {{operator.mail}} und nennen Sie die Nummer der Entscheidung. Ein Mensch prüft sie unverzüglich erneut und teilt Ihnen das Ergebnis mit Begründung mit. Ist die Beschwerde begründet, heben wir die Maßnahme unverzüglich auf. Dies ist unentgeltlich. Wenn Sie eine Meldung abgegeben haben und mit unserer Entscheidung darüber nicht einverstanden sind, können Sie in gleicher Weise Beschwerde einlegen.
+
+Ihr Recht, die Gerichte anzurufen, wird durch nichts davon eingeschränkt, zu keiner Zeit. Sie können sich außerdem beim Koordinator für digitale Dienste des Mitgliedstaats beschweren, in dem Sie wohnen (in Deutschland: die Bundesnetzagentur), wenn Sie der Auffassung sind, dass wir das Gesetz über digitale Dienste (Verordnung (EU) 2022/2065) nicht einhalten.
+
+# 12. Haftung
+
+Die Website ist unentgeltlich. Aus diesem Grund haften wir wie folgt.
+
+- Wir haften unbeschränkt für Schäden, die wir vorsätzlich oder grob fahrlässig verursachen, für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit, für das, was wir arglistig verschwiegen haben, für eine von uns übernommene Garantie sowie nach dem Produkthaftungsgesetz (ProdHaftG).
+- Für leicht fahrlässig verursachte Schäden haften wir nur, wenn wir eine Pflicht verletzt haben, deren Erfüllung die ordnungsgemäße Durchführung des Vertrags überhaupt erst ermöglicht und auf deren Einhaltung Sie regelmäßig vertrauen dürfen (wesentliche Vertragspflicht, Kardinalpflicht), und dann nur für den vertragstypischen, vorhersehbaren Schaden.
+- Im Übrigen ist unsere Haftung ausgeschlossen. Dies gilt auch für Personen, die für uns handeln.
+
+Für Inhalte von Nutzern haften wir nicht, soweit das Gesetz nichts anderes bestimmt (Art. 6 der Verordnung (EU) 2022/2065), ebenso wenig für die Dienste von Google oder Microsoft.
+
+Bitte bewahren Sie eigene Kopien Ihrer Fotografien und all dessen auf, was Ihnen wichtig ist. Die Website ist kein Ort, um das einzige Exemplar von irgendetwas aufzubewahren; eine Kopie Ihrer Daten erhalten Sie jederzeit in Ihrem Konto. Gehen Daten durch unsere leichte Fahrlässigkeit verloren, haften wir nur für den Aufwand der Wiederherstellung, der erforderlich gewesen wäre, wenn Sie in zumutbarer Weise Kopien aufbewahrt hätten.
+
+# 13. Laufzeit und Beendigung des Vertrags
+
+Sie können den Vertrag jederzeit ohne Einhaltung einer Frist und ohne Angabe von Gründen beenden, indem Sie Ihr Konto schließen. 30 Tage lang können Sie es wieder öffnen, indem Sie sich anmelden; danach wird es mit allem, was dazu gehört, gelöscht. Vor dem Schließen können Sie im Konto eine Kopie Ihrer Daten erhalten.
+
+Wir können den Vertrag mit einer Frist von mindestens 30 Tagen kündigen, insbesondere wenn wir den Betrieb der Website oder eines Teils davon einstellen. Weil wir Ihnen nicht schreiben können, wird die Kündigung auf der Seite Ihres Kontos und, soweit die gesamte Website betroffen ist, auf ihrer Startseite angezeigt. Während der Kündigungsfrist können Sie eine Kopie Ihrer Daten erhalten.
+
+Das Recht jeder Seite, den Vertrag aus wichtigem Grund fristlos zu kündigen, bleibt unberührt; Abschnitt 10 regelt, wann wir ein Konto wegen eines Verstoßes schließen.
+
+# 14. Änderungen dieser Bedingungen
+
+Wir dürfen diese Bedingungen ändern, wenn das Gesetz, eine gerichtliche Entscheidung, die Funktionen der Website oder ihre Sicherheit dies erforderlich machen oder wenn eine Änderung ausschließlich zu Ihrem Vorteil ist. Den wesentlichen Gegenstand des Vertrags ändern wir nicht ohne Ihre Zustimmung.
+
+Wir zeigen die geänderten Bedingungen auf dieser Seite und auf der Seite Ihres Kontos mindestens 30 Tage, bevor sie gelten sollen, mit dem Datum an, ab dem sie gelten, und bitten Sie dort um Ihre Zustimmung. Wenn Sie zustimmen, gelten die neuen Bedingungen für Sie ab diesem Datum. Wenn Sie nicht zustimmen, gelten für Sie die alten Bedingungen fort; in diesem Fall dürfen wir den Vertrag mit der Frist des Abschnitts 13 kündigen, wenn uns der Betrieb der Website unter zwei verschiedenen Fassungen der Bedingungen nicht zugemutet werden kann. Ihr Schweigen gilt nicht als Zustimmung.
+
+# 15. Datenschutz
+
+Wie wir personenbezogene Daten verarbeiten, erläutert die Datenschutzerklärung unter {{site}}/en/privacy?text=de; was die Website auf Ihrem Endgerät speichert, steht unter {{site}}/en/cookies?text=de. Es handelt sich um gesetzlich vorgeschriebene Informationen, nicht um Bestandteile des Vertrags.
+
+# 16. Anwendbares Recht, Gerichtsstand und Streitigkeiten
+
+Es gilt deutsches Recht. Wenn Sie Verbraucher sind und in einem anderen Staat wohnen, bleibt Ihnen der Schutz der zwingenden Vorschriften dieses Staates erhalten. Das Übereinkommen der Vereinten Nationen über Verträge über den internationalen Warenkauf (UN-Kaufrecht) findet keine Anwendung.
+
+Es gelten die gesetzlichen Gerichtsstände. Wenn Sie Verbraucher in der Europäischen Union sind, können Sie auch an Ihrem Wohnsitz klagen.
+
+Wir sind weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+
+# 17. Schlussbestimmungen
+
+Ist oder wird eine Bestimmung dieser Bedingungen unwirksam, bleiben die übrigen Bestimmungen wirksam; an die Stelle der unwirksamen Bestimmung tritt die gesetzliche Regelung.
+
+Diese Bedingungen liegen in englischer, deutscher und persischer Sprache vor. Maßgeblich ist die deutsche Fassung.
+
+Fassung 2026-11-19, gültig ab 19. November 2026

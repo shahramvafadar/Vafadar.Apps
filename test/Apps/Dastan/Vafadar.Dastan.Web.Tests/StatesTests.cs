@@ -82,6 +82,7 @@ public sealed class StatesTests(DemoSite site) : IClassFixture<DemoSite>
         await visitor.ReadTo(1, language);
 
         // A form without the token of its page – what an expired page sends.
+        visitor.CameFrom = $"/{language}/{Story}";
         var refused = await visitor.Post("/preferences/reading", "/offline.html", ("collection", Story), ("level", "4"), ("returnUrl", $"/{language}/"));
         var page = await visitor.Open(refused.Response.Headers.Location!.OriginalString);
 

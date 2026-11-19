@@ -518,3 +518,14 @@ more than words: whoever holds its code makes an account with it, and the copy i
 passed on. The copy names such an invitation – its last day, that it is open – without the code; the code
 stays on the page of the account. A used or revoked invitation keeps its code, which opens nothing, and a
 photograph keeps the name of its file, by which the picture is found again.
+
+## Addendum of 2026-11-19: the terms an account read, and what the operator restricts (row 18.8, D-074)
+
+An account notes the version of the terms it said it read and when (`TermsVersion`, `TermsAcceptedAt`); the
+page of the account asks again when `AccountDesk.TermsVersion` is another. The store has a table of
+restrictions (`PeopleStore.Restrictions.cs`): a photograph that only its owner sees, a tree that is not
+public, an account closed by the operator (`ClosedByOperator`, which signing in does not open again) – each
+with the facts, the ground and whether it followed a notice, read by the person concerned as the statement
+of reasons. Because the site knows no mail address, the statement of a closed account is shown to whoever
+gives its name and its password: the number of the restriction is carried to the page in a sealed cookie
+for ten minutes. A line the operator writes into the history of a tree is by no account and names no person.

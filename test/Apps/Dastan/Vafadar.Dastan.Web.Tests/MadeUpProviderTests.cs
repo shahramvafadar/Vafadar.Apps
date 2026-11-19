@@ -57,7 +57,7 @@ public sealed class MadeUpProviderTests
         Assert.Contains("it opens only through a made-up provider (development only)", choosing, StringComparison.Ordinal);
         Assert.DoesNotContain("derived from the password", choosing, StringComparison.Ordinal);
 
-        await visitor.Post($"{Forms}/external-register", Account, [("name", "Made Up Visitor"), ("age", "on"), ("returnUrl", Account)]);
+        await visitor.Post($"{Forms}/external-register", Account, [("name", "Made Up Visitor"), ("age", "on"), ("terms", "on"), ("returnUrl", Account)]);
         Assert.Contains("Made Up Visitor", (await visitor.Get(Account)).Main, StringComparison.Ordinal);
     }
 

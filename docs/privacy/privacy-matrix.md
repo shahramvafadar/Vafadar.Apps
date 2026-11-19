@@ -211,3 +211,16 @@ Agreement is taken back by the person at any time and hides the tree with the ne
 died are named without anybody's agreement. The public page asks search engines to stay away; whether that
 changes, and whether naming people who have died needs a rule (relatives, recent deaths), is for the owner's
 legal review.
+
+Since row 18.8 (2026-11-19) the store of Dastan's visitors also keeps, for an account, the version of the terms
+its visitor said to have read and when; and the restrictions the operator imposed (a photograph hidden, a
+tree taken back from the public, the account closed) with the facts, the ground, whether a notice led to it,
+and the dates – read by the visitor concerned as the statement of reasons and deleted with the account. When
+the site is told a folder for them (`Dastan:Notices`) it keeps notices about content: the time, the address
+of the content, the kind of problem, the explanation, and the name and the mail address of who gave it when
+they said them – no address of a machine; a notice is removed a year after it was settled. On a device the
+site stores only what a function the visitor used needs (language when it is changed, colours, reading stage,
+saved list, sign-in, the token of forms, that the note about storage was read); pages are kept for reading
+without a connection only after the visitor turned that on. The complete list, the grounds and the periods are
+in the texts the site shows (`src/Apps/Dastan/Vafadar.Dastan.Web/Legal`) and in the records of processing
+(`src/Apps/Dastan/docs/legal/README.md`).

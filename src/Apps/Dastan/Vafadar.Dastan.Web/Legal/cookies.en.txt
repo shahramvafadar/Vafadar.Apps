@@ -1,0 +1,73 @@
+This page lists everything the site {{site}} stores on your device or reads from it, and says why. The rules for this are § 25 of the German Telecommunications Digital Services Data Protection Act (TDDDG) and Article 5 (3) of Directive 2002/58/EC; what happens to personal data is explained in the privacy notice at {{site}}/en/privacy.
+
+# In short
+
+- The site stores only what the function you use cannot do without. For that the law asks for no consent, and so the site shows no consent banner – only a short note, once, that leads here.
+- Nothing is stored for advertising, for statistics or for recognising you across sites. No other company stores or reads anything on your device through this site.
+- One thing is done only with your consent: keeping pages on your device so that you can read them without a connection. You turn it on and off at the end of this page.
+
+# What a cookie is
+
+A cookie is a small piece of text that a site asks your browser to keep and to send back with later requests. The site uses cookies and, with your consent, the storage of the browser for pages (the "cache" of a service worker). It uses no other storage of the browser, no fingerprinting, no tracking pixels and no advertising identifiers.
+
+All cookies of the site are its own (first-party cookies). They are sent only to this site, only over an encrypted connection, cannot be read by scripts in the page (HttpOnly), and are not sent along when another site makes your browser ask for something here in the background (SameSite=Lax).
+
+# Stored without consent because the function needs it
+
+Legal ground for storing and reading: § 25 (2) no. 2 TDDDG – the storage is strictly necessary to provide a service you expressly asked for. Each item is written only when you use the function it belongs to, and holds no more than the function needs.
+
+## Your choices on this device
+
+- "vafadar.language" – the language you chose, as two letters ("en" or "fa"). Written when you change the language on the site; used to open the site in that language the next time. Kept for one year after it was last written.
+- "vafadar.theme" – the colours you chose ("light" or "dark"). Written when you choose them; removed when you go back to "automatic". Kept for one year.
+- "dastan.reading." followed by the name of a collection – how far you said you have read in a story, as a number, so that pages do not tell you what comes later. Written when you choose a stage; removed when you go back to the beginning. Kept for one year. If you are signed in, this is kept with your account instead.
+- "dastan.saved" – the pages you put on your list, by their short names. Written when you save a page; kept for one year. If you are signed in, the list is kept with your account instead.
+- "dastan.notice" – that you have read the note about storage, so that it is not shown again; the value is the version of the note ("1"). Written when you press "Understood". Kept for one year.
+
+These hold no identifier of you or of your device: two visitors who made the same choices have the same values.
+
+## Signing in
+
+- "dastan.visitor.session" – keeps you signed in. It holds, encrypted, the reference to your account and a value that ends the sign-in everywhere when the password changes. Written when you sign in; removed when you sign out. Kept for 30 days after your last visit.
+- "dastan.visitor.codes" – takes your new recovery codes, encrypted, from the form to the one page that shows them. Kept for 5 minutes at most and removed when the page was shown.
+- "dastan.visitor.external" and "dastan.visitor.arriving" – while you sign in through Google or Microsoft: who the company said you are, encrypted, until you have chosen a name or are signed in. Kept for 10 minutes at most.
+- A cookie whose name begins with ".AspNetCore.Correlation." – while you sign in through Google or Microsoft: a random value that makes sure the answer of the company belongs to the request your browser made. Kept for 15 minutes at most and removed when you come back.
+- "dastan.visitor.closed" – only if you try to sign in to an account that the site closed: the number of the decision, encrypted, so that the next page can show you the reasons. Kept for 10 minutes.
+
+## Protection of forms
+
+- A cookie whose name begins with ".AspNetCore.Antiforgery." – a random value that makes sure a form sent in your name really comes from a page of this site (protection against cross-site request forgery). Written when a page with a form is shown. Kept until you close the browser.
+
+# Stored only with your consent
+
+Legal ground: your consent, § 25 (1) TDDDG. You can take it back at any time, as easily as you gave it, with the switch below.
+
+- "dastan.offline" – that you turned on reading without a connection (the value "on"). Kept for one year; removed when you turn it off.
+- The page storage of the browser, under the names "dastan-shell-1" and "dastan-read-1" – a small program of the site (a service worker) keeps the public pages you open, the style sheet, the font and the icon on your device, so that you can read them again without a connection. Only public pages are kept, never a page of the private area or anything of an account. The storage stays until you turn the function off; then the program is removed and the kept pages are deleted the next time you open a page of the site.
+
+Without this consent the site works in every respect; only reading without a connection does not.
+
+# What other companies store
+
+Nothing through this site. If you choose to sign in through Google or Microsoft, your browser goes to the pages of that company, which sets its own cookies there under its own rules:
+
+- Google: https://policies.google.com/technologies/cookies
+- Microsoft: https://www.microsoft.com/privacy/privacystatement
+
+? The network that brings the traffic to the site ({{network}}) can set a cookie that is strictly necessary to tell people from attacking programs.
+
+# How you remove or block what is stored
+
+You can delete the cookies and the stored pages of this site at any time in the settings of your browser, and you can tell the browser to accept none. Without cookies you can still read every public page; the choices listed above are then not remembered, and you cannot sign in, because signing in and the protection of forms need a cookie.
+
+Signing out removes the sign-in cookie. Closing your account removes nothing from your device by itself; delete the cookies in the browser if you want that.
+
+# Changes
+
+If the site begins to store something else, this page says so first, and the note about storage is shown again. If something should ever need consent, the site will ask before it is stored.
+
+# Language versions
+
+This page exists in English, German and Persian. If the versions differ, the German version prevails.
+
+Last updated: 19 November 2026

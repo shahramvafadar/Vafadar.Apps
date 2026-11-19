@@ -24,6 +24,8 @@
     <!-- The coasts of the earth for the drawing of the places (D-057): Natural Earth, public domain. -->
     <EmbeddedResource Include="Data\coasts.txt" LogicalName="Vafadar.Dastan.Web.Data.coasts.txt" />
     <EmbeddedResource Include="Data\waters.txt" LogicalName="Vafadar.Dastan.Web.Data.waters.txt" />
+    <!-- The legal texts of the site (LegalTexts): one file for a page and a language. -->
+    <EmbeddedResource Include="Legal\*.txt" LogicalName="Vafadar.Dastan.Web.Legal.%(Filename)%(Extension)" WithCulture="false" />
     <Content Include="..\content\**\*" LinkBase="content" CopyToPublishDirectory="PreserveNewest" CopyToOutputDirectory="Never" />
     <InternalsVisibleTo Include="Vafadar.Dastan.Web.Tests" />
   </ItemGroup>

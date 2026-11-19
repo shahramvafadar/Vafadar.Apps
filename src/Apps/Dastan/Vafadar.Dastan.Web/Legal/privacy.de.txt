@@ -1,0 +1,255 @@
+Diese Erklärung legt dar, welche personenbezogenen Daten diese Website verarbeitet, zu welchem Zweck, auf welcher Rechtsgrundlage, wie lange, wer sie erhält und welche Rechte Sie haben. Sie folgt den Art. 13 und 14 der Verordnung (EU) 2016/679 (Datenschutz-Grundverordnung, DSGVO). Sie gilt für die Website {{site}} mit allen ihren Seiten.
+
+# In Kürze
+
+- Dastan ist eine private, nicht kommerzielle Website. Sie zeigt keine Werbung und verwendet keine Analysewerkzeuge, kein Tracking, kein Profiling und keine Inhalte anderer Unternehmen, die von selbst geladen werden. Schriften, Skripte und Bilder stammen von der Website selbst.
+- Sie können jede öffentliche Seite ohne Konto lesen und ohne uns mitzuteilen, wer Sie sind.
+- Für ein Konto sind nur ein von Ihnen gewählter Name und ein Passwort erforderlich. Wir fragen weder nach einer E-Mail-Adresse noch nach einer Telefonnummer, einem Geburtsdatum oder einem bürgerlichen Namen.
+- Was Sie in Ihren privaten Bereich einstellen – Beziehungen, Stammbäume, Fotografien –, sehen nur die Personen, die Sie auswählen. Nichts davon ist öffentlich, es sei denn, Sie machen es selbst öffentlich, und bei anderen lebenden Personen nur, wenn diese einwilligen.
+- Die Website speichert auf Ihrem Endgerät nur, was sie für das benötigt, was Sie von ihr verlangen. Seiten werden zum Lesen ohne Verbindung nur vorgehalten, wenn Sie dies einschalten.
+- Sie können eine Kopie von allem erhalten, was die Website zu Ihrem Konto gespeichert hat, und Sie können das Konto schließen – selbst und jederzeit.
+
+# 1. Wer verantwortlich ist (Verantwortlicher)
+
+| {{operator.name}}
+| {{operator.street}}
+| {{operator.town}}
+| {{operator.country}}
+| E-Mail: {{operator.mail}}
+? | Telefon: {{operator.phone}}
+
+Die Website wird von dieser einen Privatperson betrieben. Ein Datenschutzbeauftragter ist nicht benannt, weil das Gesetz dies hier nicht verlangt (Art. 37 DSGVO, § 38 des Bundesdatenschutzgesetzes, BDSG). In allen Angelegenheiten des Datenschutzes schreiben Sie bitte an die oben genannte Anschrift.
+
+# 2. Woher die Daten stammen und ob Sie sie angeben müssen
+
+Die meisten Daten stammen von Ihnen: Sie geben sie ein, oder Ihr Browser sendet sie, wenn er eine Seite abruft. Daten über Sie können auch von einem anderen Nutzer stammen, der Sie in einem Stammbaum nennt oder auf einer Fotografie zeigt (Abschnitt 9), sowie von Google oder Microsoft, wenn Sie sich dafür entscheiden, sich über eines dieser Unternehmen anzumelden (Abschnitt 6).
+
+Weder ein Gesetz noch ein Vertrag verpflichtet Sie, uns Daten bereitzustellen. Ohne einen Namen und ein Passwort können Sie kein Konto haben; ohne Konto können Sie den privaten Bereich nicht nutzen. Alles andere auf der Website funktioniert auch ohne.
+
+# 3. Wenn Sie eine Seite öffnen
+
+## Was verarbeitet wird
+
+Um Ihnen eine Seite zu senden, muss der Server verarbeiten, was Ihr Browser mit jeder Anfrage übermittelt: die IP-Adresse Ihres Anschlusses, Datum und Uhrzeit, die Adresse der Seite, die Seite, von der Sie gekommen sind, soweit Ihr Browser sie mitteilt, sowie Art und Sprache Ihres Browsers.
+
+Das Programm der Website selbst schreibt nichts davon in eine Datei oder eine Datenbank. Es verwendet die IP-Adresse nur im Arbeitsspeicher, und zwar für zweierlei: um die Anfrage zu beantworten und um eine Stunde lang zu zählen, wie oft von einem Anschluss aus versucht wurde, sich zu registrieren, sich anzumelden oder einen Fehlerhinweis oder eine Meldung zu senden, damit niemand die Website überfluten oder Passwörter erraten kann. Der Zählerstand wird nicht gespeichert und ist nach Ablauf der Stunde oder bei einem Neustart der Website verschwunden.
+
+? Das Unternehmen, auf dessen Rechnern die Website betrieben wird ({{host}}), kann für kurze Zeit technische Aufzeichnungen über Verbindungen (Datum, Uhrzeit, IP-Adresse, Datenmenge) vorhalten, um sein Netz zu betreiben und zu schützen.
+? Der Datenverkehr zwischen Ihnen und der Website läuft über das Netz von {{network}}, das die Website vor Angriffen schützt und dafür die IP-Adresse und die technischen Daten jeder Anfrage verarbeitet.
+
+## Zweck und Rechtsgrundlage
+
+Die Auslieferung der von Ihnen angeforderten Seiten sowie die Sicherheit und Funktionsfähigkeit der Website. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO: unser berechtigtes Interesse am Betrieb einer sicheren und verfügbaren Website. Ohne diese Verarbeitung könnte Sie keine Seite erreichen. Bei Seiten für angemeldete Nutzer ist Rechtsgrundlage außerdem Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags).
+
+## Wie lange
+
+Die Website bewahrt von einer Anfrage nichts auf, sobald sie beantwortet ist, mit Ausnahme des oben beschriebenen Zählerstands im Arbeitsspeicher (höchstens eine Stunde).
+
+# 4. Was die Website auf Ihrem Endgerät speichert
+
+Die Website legt kleine Informationen auf Ihrem Endgerät ab (Cookies), und zwar nur dort, wo die von Ihnen genutzte Funktion sie benötigt: die Sprache und die Farben, die Sie gewählt haben, wie weit Sie gelesen haben, Ihre gemerkte Liste, Ihre Anmeldung und den Schutz von Formularen. Dies bedarf keiner Einwilligung nach § 25 Abs. 2 Nr. 2 des Telekommunikation-Digitale-Dienste-Datenschutz-Gesetzes (TDDDG), das Art. 5 Abs. 3 der Richtlinie 2002/58/EG umsetzt. Seiten werden auf Ihrem Endgerät zum Lesen ohne Verbindung nur vorgehalten, wenn Sie dies eingeschaltet haben (Einwilligung, § 25 Abs. 1 TDDDG); Sie können es jederzeit ausschalten.
+
+Jeder Eintrag ist mit Namen, Zweck und Speicherdauer unter {{site}}/en/cookies?text=de aufgeführt. Es gibt keine Cookies anderer Unternehmen, keine für Werbung und keine für Statistiken.
+
+# 5. Ein Konto
+
+## Was verarbeitet wird
+
+- Der Name, den Sie wählen. Es muss nicht Ihr bürgerlicher Name sein. Wer ein Konto hat und den Namen kennt, kann Sie um eine Beziehung anfragen; ihn sehen die Personen, mit denen Sie in einer Beziehung stehen, einen Stammbaum teilen oder gemeinsam markiert sind.
+- Ihr Passwort, ausschließlich als gesalzener Hashwert, der sich nicht in das Passwort zurückverwandeln lässt (PBKDF2).
+- Acht Wiederherstellungscodes, jeweils nur als Hashwert, und ob ein Code verwendet wurde.
+- Wann das Konto angelegt wurde; welche Fassung der Nutzungsbedingungen und dieser Erklärung Sie bestätigt haben und wann.
+- Wie viele falsche Passwörter in Folge eingegeben wurden und, nach fünf, bis wann die Anmeldung ausgesetzt ist (15 Minuten).
+- Wann das Konto geschlossen wurde, falls dies geschehen ist, und von wem (von Ihnen oder von der Website).
+- Ein Zufallswert, der das Konto überall abmeldet, wenn das Passwort geändert wird.
+- Auf Ihrem Endgerät: ein Cookie, das Sie bis zu 30 Tage lang angemeldet hält.
+
+## Zweck und Rechtsgrundlage
+
+Ihnen das Konto und den privaten Bereich bereitzustellen, diese zu sichern und nachweisen zu können, dass Sie den Bedingungen zugestimmt haben. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags, den Sie mit der Registrierung schließen); für den Schutz gegen das Erraten von Passwörtern und für den Nachweis Ihrer Zustimmung außerdem Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Sicherheit und daran, das Vereinbarte nachweisen zu können).
+
+## Wie lange
+
+Solange das Konto besteht. Wenn Sie es schließen, verschwindet es sofort von der Website, und Sie werden überall abgemeldet; 30 Tage lang können Sie es wieder öffnen, indem Sie sich anmelden. Nach 30 Tagen werden das Konto und alles, was dazu gehört, endgültig gelöscht (Abschnitt 12). Ein von der Website geschlossenes Konto wird in gleicher Weise aufbewahrt und gelöscht.
+
+## Keine E-Mail-Adresse
+
+Weil die Website keine E-Mail-Adresse von Ihnen kennt, kann sie Ihnen nichts zusenden, und niemand kann Ihr Passwort per E-Mail zurücksetzen. Wenn Sie das Passwort verlieren, können Sie mit einem Wiederherstellungscode ein neues festlegen. Wenn Sie beides verlieren, kann niemand – auch wir nicht – auf das Konto zugreifen; das ist so gewollt.
+
+# 6. Anmeldung über Google oder Microsoft
+
+Sie können sich statt mit einem Passwort über ein Konto anmelden, das Sie bei Google oder bei Microsoft haben. Von diesen Unternehmen wird nichts geladen und nichts an sie gesendet, bevor Sie die Schaltfläche betätigen.
+
+## Was geschieht, wenn Sie die Schaltfläche betätigen
+
+Ihr Browser wechselt zur Anmeldeseite des Unternehmens. Dort melden Sie sich an, und das Unternehmen bestätigt dieser Website, dass Sie es sind. Das Unternehmen erfährt dadurch, dass Sie diese Website nutzen, wann Sie sich bei ihr anmelden, sowie die technischen Daten Ihres Browsers. Die Website will nichts als eine Kennung, die für Ihr dortiges Konto steht. Von Google fordert sie allein diese an (der Scope "openid"). Microsoft gibt seine Kennung nur zusammen mit Basisdaten Ihres Profils heraus (etwa dem Namen und der E-Mail-Adresse); die Website übernimmt die Kennung und verwirft alles Übrige sofort, bevor irgendetwas gespeichert wird. Die Website fragt niemals nach Ihrem Bild, Ihren Kontakten oder dem Zugriff auf Ihre Dateien oder E-Mails.
+
+## Was die Website speichert
+
+Nur, um welches Unternehmen es sich handelte, und einen Hashwert dieser Kennung, damit sie Sie beim nächsten Mal wiedererkennt. Während der Anmeldung werden zwei kurzlebige Cookies gesetzt (siehe die Seite über Cookies).
+
+## Wer die Unternehmen sind
+
+- Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Datenschutzerklärung: https://policies.google.com/privacy
+- Microsoft Ireland Operations Limited, One Microsoft Place, South County Business Park, Leopardstown, Dublin 18, Irland. Datenschutzerklärung: https://www.microsoft.com/privacy/privacystatement
+
+Jedes Unternehmen ist für das, was es mit Ihren Daten tut, wenn Sie sich dort anmelden, selbst verantwortlich (eigenständiger Verantwortlicher). Beide können Daten in den Vereinigten Staaten von Amerika verarbeiten (Abschnitt 11).
+
+## Rechtsgrundlage und Dauer
+
+Art. 6 Abs. 1 lit. b DSGVO: Sie wählen diese Art der Anmeldung. Die Verknüpfung bleibt gespeichert, bis Sie sie in Ihrem Konto entfernen oder das Konto gelöscht wird.
+
+# 7. Was Sie in Ihrem Konto aufbewahren
+
+Je nachdem, was Sie nutzen, speichert die Website zu Ihrem Konto:
+
+- Wie weit Sie in einer Sammlung gelesen haben, und die Seiten, die Sie sich gemerkt haben.
+- Einladungen, die Sie erstellt haben: wann, bis wann sie gelten, ob und von wem sie verwendet wurden.
+- Ihre Beziehungen zu anderen Konten: wer wen angefragt hat, als was (zum Beispiel Elternteil, Geschwister, Freund), ob die Beziehung bestätigt wurde und wer sie sehen darf.
+- Ihre Kreise: ihre Namen und wer ihnen angehört.
+- Ihre Stammbäume: ihre Namen, wer sie sehen oder ändern darf, die Einträge der Personen darin (Abschnitt 9), die Verbindungen zwischen diesen Personen und den Verlauf der Änderungen.
+- Ihre Fotografien: die Bilddatei, ihre Größe und ihr Format, Ihre Bildunterschrift, das Aufnahmedatum, wenn Sie es angeben, wer sie sehen darf, in welchen Alben sie liegt und wer darauf markiert ist (Abschnitt 9).
+- Ihre Alben: ihre Namen, Ihre Anmerkungen und die Reihenfolge der Fotografien.
+
+Wenn Sie eine Fotografie hochladen (JPEG oder PNG), entfernt die Website die in der Datei verborgenen Informationen – etwa den Aufnahmeort, die Kamera und die Uhrzeit – und behält nur das Bild.
+
+## Zweck und Rechtsgrundlage
+
+Ihnen diese Funktionen bereitzustellen. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO. Soweit Sie etwas für alle sichtbar machen oder darin einwilligen, genannt oder gezeigt zu werden, ist Rechtsgrundlage Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie jederzeit mit Wirkung für die Zukunft widerrufen können; der Stammbaum oder die Fotografie wird dann sofort verborgen.
+
+## Wer es sieht
+
+Sie entscheiden für jede einzelne Sache: nur Sie, ein Kreis, die Personen, zu denen Sie eine bestätigte Beziehung haben, die Personen, mit denen Sie einen Stammbaum teilen, oder alle. Die Website hat keine Seite, die Konten öffentlich auflistet. Seiten des privaten Bereichs und öffentliche Stammbäume weisen Suchmaschinen an, sie nicht zu indexieren.
+
+## Wie lange
+
+Bis Sie es entfernen oder bis das Konto gelöscht wird.
+
+# 8. Fehlerhinweise und Meldungen
+
+## Einen Fehler auf einer redaktionellen Seite mitteilen
+
+Jede Aussage einer redaktionellen Seite kann als falsch gemeldet werden. Die Website speichert den Tag, die Seite und die Aussage, die Sprache und das, was Sie geschrieben haben – keinen Namen, keine IP-Adresse und kein Konto. Bitte schreiben Sie nichts über sich selbst oder über andere Personen in den Text. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (unser Interesse an richtigen Inhalten). Ein Fehlerhinweis wird 90 Tage, nachdem ein Mitglied der Redaktion ihn gesichtet hat, gelöscht.
+
+## Inhalte melden (Meldung)
+
+Mit dem Formular unter {{site}}/en/notice (Formular in englischer und persischer Sprache) kann jedermann uns mitteilen, dass etwas auf der Website gegen das Gesetz oder gegen die Nutzungsbedingungen verstößt. Die Website speichert den Zeitpunkt, die Adresse des Inhalts, die Art des Problems, Ihre Erläuterung und – nur wenn Sie sie angeben – Ihren Namen und Ihre E-Mail-Adresse. Wir verwenden dies, um die Meldung zu prüfen, zu entscheiden, Ihnen zu antworten und nachweisen zu können, wie wir mit ihr umgegangen sind. Demjenigen, der den Inhalt gespeichert hat, werden die Gründe einer Entscheidung mitgeteilt, nicht aber, wer die Meldung abgegeben hat, es sei denn, dies ist erforderlich und rechtmäßig.
+
+Rechtsgrundlage: Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit Art. 16 der Verordnung (EU) 2022/2065, soweit diese Verordnung auf uns anwendbar ist, und im Übrigen Art. 6 Abs. 1 lit. f DSGVO (unser Interesse an der Entfernung rechtswidriger Inhalte und am Schutz der betroffenen Personen). Eine Meldung wird ein Jahr, nachdem wir über sie entschieden haben, gelöscht; länger bewahren wir sie nur auf, solange ein Streit darüber andauert.
+
+## Entscheidungen über Inhalte und Konten
+
+Wenn wir eine Fotografie verbergen, einen Stammbaum aus der Öffentlichkeit zurücknehmen oder ein Konto schließen, speichern wir die Entscheidung beim Konto: worauf sie sich bezieht, die Tatsachen, die gesetzliche oder vertragliche Grundlage, ob sie auf eine Meldung hin ergangen ist, und das Datum. Die betroffene Person liest sie im Konto. Rechtsgrundlage: Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit Art. 17 der Verordnung (EU) 2022/2065, im Übrigen Art. 6 Abs. 1 lit. f DSGVO. Sie wird mit dem Konto gelöscht.
+
+# 9. Wenn jemand anderes Daten über Sie auf die Website gestellt hat
+
+Dieser Abschnitt richtet sich an Personen, die in einem Stammbaum eines Nutzers genannt oder auf einer Fotografie eines Nutzers gezeigt werden – gleich, ob sie ein Konto haben oder nicht (Informationen nach Art. 14 DSGVO).
+
+## Welche Daten
+
+In einem Stammbaum: ein Name, ein Geburtsjahr, ein Sterbejahr oder der Vermerk, dass die Person verstorben ist, und wie die Person mit anderen im Stammbaum verwandt ist. Auf einer Fotografie: Ihr Bildnis, die Bildunterschrift, das Datum und – nur wenn Sie ein Konto haben und markiert wurden – die Verknüpfung mit Ihrem Konto. Die Website hat keine Felder für Religion, Gesundheit, Herkunft, politische Meinung oder andere besonders geschützte Daten, und ihre Nutzungsbedingungen untersagen es, solche Daten über lebende Personen einzutragen.
+
+## Woher die Daten stammen
+
+Von dem Nutzer, der den Stammbaum angelegt oder die Fotografie hochgeladen hat. Die Website erhebt aus keiner anderen Quelle Daten über Sie.
+
+## Wer sie sieht
+
+Einen Stammbaum sehen nur sein Inhaber und die Konten, mit denen der Inhaber ihn teilt. Er wird nur öffentlich, wenn jede lebende Person, die er nennt, ein Konto hat und eingewilligt hat; ein Stammbaum, der eine lebende Person ohne Konto nennt, kann überhaupt nicht öffentlich gemacht werden. Eine Fotografie sehen die Personen, die ihr Inhaber ausgewählt hat. Wenn Sie ein Konto haben und markiert sind, wird die Markierung erst angezeigt, nachdem Sie sie bestätigt haben, und die Fotografie wird nur dann allen gezeigt, wenn jede markierte Person eingewilligt hat.
+
+## Zweck und Rechtsgrundlage
+
+Nutzer bewahren die Geschichte ihrer Familien und ihre Erinnerungen auf und teilen sie mit den Menschen, die ihnen nahestehen. Soweit ein Nutzer dies nur innerhalb der Familie und unter Freunden tut, ist die eigene Verarbeitung des Nutzers eine ausschließlich persönliche oder familiäre Tätigkeit, auf die die DSGVO keine Anwendung findet (Art. 2 Abs. 2 lit. c DSGVO). Soweit wir diese Daten für den Nutzer speichern und anzeigen, ist Rechtsgrundlage Art. 6 Abs. 1 lit. f DSGVO: das berechtigte Interesse des Nutzers und der Familie daran, Familiengeschichte festzuhalten und zu teilen, das wir gegen Ihre Interessen abwägen – deshalb sind Stammbäume und Fotografien standardmäßig privat und können nur mit Einwilligung öffentlich sein. Soweit Sie eingewilligt haben, öffentlich genannt oder gezeigt zu werden, ist Rechtsgrundlage Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).
+
+Gemeinsam mit dem Nutzer, der die Daten gespeichert hat, können wir für diese gemeinsam verantwortlich sein. Unabhängig von der Vereinbarung zwischen uns und dem Nutzer können Sie sich mit allen Ihren Rechten an uns wenden.
+
+## Ihr Widerspruchsrecht und Ihr Recht auf Entfernung der Daten
+
+Sie können jederzeit und ohne Angabe besonderer Gründe dagegen Widerspruch einlegen, auf dieser Website in einem Stammbaum genannt oder auf einer Fotografie gezeigt zu werden, und die Entfernung der Daten verlangen (Art. 17 und 21 DSGVO). Nutzen Sie das Formular unter {{site}}/en/notice oder schreiben Sie an {{operator.mail}}. Wir fordern den Nutzer auf, die Daten zu entfernen, und entfernen sie selbst, wenn der Nutzer dies nicht tut. Wenn Sie ein Konto haben, können Sie eine Markierung selbst entfernen, in Ihrem Konto einer Fotografie widersprechen und Ihre Einwilligung in einen öffentlichen Stammbaum widerrufen; dies wirkt jeweils sofort.
+
+## Wie lange
+
+Bis der Nutzer die Daten entfernt oder das Konto des Nutzers gelöscht wird oder bis wir sie auf Ihr Verlangen entfernen.
+
+## Verstorbene
+
+Das Datenschutzrecht gilt nicht für Verstorbene. Ihr Andenken und die Rechte ihrer Angehörigen werden durch andere Gesetze geschützt; wenn Sie der Auffassung sind, dass ein Eintrag oder ein Bild eines verstorbenen Angehörigen diese verletzt, teilen Sie uns dies auf demselben Weg mit.
+
+# 10. Wenn Sie uns schreiben
+
+Wenn Sie uns per E-Mail schreiben, verarbeiten wir Ihre Adresse, Ihren Namen, wenn Sie ihn angeben, und das, was Sie schreiben, um Ihnen zu antworten. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (unser Interesse an der Beantwortung von Anfragen) und Art. 6 Abs. 1 lit. c DSGVO, soweit Sie ein Recht ausüben, das Ihnen das Gesetz gibt. Wir löschen den Schriftwechsel, wenn die Angelegenheit erledigt ist, spätestens drei Jahre nach dem Ende des Jahres, in dem sie erledigt wurde (regelmäßige Verjährungsfrist, §§ 195, 199 des Bürgerlichen Gesetzbuchs, BGB), sofern das Gesetz uns nicht zu einer längeren Aufbewahrung verpflichtet. E-Mails sind nicht Ende-zu-Ende-verschlüsselt; bitte senden Sie nichts Vertrauliches.
+
+# 11. Wer Daten erhält
+
+## Andere Nutzer und die Öffentlichkeit
+
+Nur das, was Sie für sie sichtbar gemacht haben (Abschnitte 7 und 9).
+
+## Unternehmen, die für uns tätig sind (Auftragsverarbeiter)
+
+? - Hosting: {{host}}. Die Website und ihre Daten liegen auf Rechnern dieses Unternehmens, in unserem Auftrag und auf der Grundlage eines Vertrags nach Art. 28 DSGVO.
+? - Netz und Schutz vor Angriffen: {{network}}, in unserem Auftrag und auf der Grundlage eines Vertrags nach Art. 28 DSGVO.
+- Kein anderes Unternehmen verarbeitet für uns Daten der Website. Es gibt keinen Newsletter-Dienst, keinen Analysedienst, kein Werbenetzwerk und keinen Zahlungsdienst.
+
+## Unternehmen, die Sie wählen
+
+Google oder Microsoft, nur wenn Sie sich über diese anmelden (Abschnitt 6).
+
+## Behörden und Gerichte
+
+Nur soweit ein Gesetz uns dazu verpflichtet oder soweit es zur Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen erforderlich ist (Art. 6 Abs. 1 lit. c und f DSGVO). Erhalten wir Kenntnis von Informationen, die den Verdacht einer Straftat begründen, die eine Gefahr für das Leben oder die Sicherheit einer Person darstellt, müssen wir die Strafverfolgungsbehörden unterrichten (Art. 18 der Verordnung (EU) 2022/2065).
+
+## Länder außerhalb der Europäischen Union
+
+Die Daten der Website werden in der Europäischen Union gespeichert. Daten können in die Vereinigten Staaten von Amerika gelangen, wenn Sie sich über Google oder Microsoft anmelden und soweit ein oben genanntes, für uns tätiges Unternehmen einem Konzern aus den Vereinigten Staaten angehört. Für die Vereinigten Staaten hat die Europäische Kommission beschlossen, dass Unternehmen, die nach dem Datenschutzrahmen EU–USA (EU–US Data Privacy Framework) zertifiziert sind, ein angemessenes Schutzniveau bieten (Durchführungsbeschluss (EU) 2023/1795 vom 10. Juli 2023, Art. 45 DSGVO). Soweit ein Unternehmen nicht zertifiziert ist, gelten die Standardvertragsklauseln der Kommission (Art. 46 Abs. 2 lit. c DSGVO). Sie können von uns eine Kopie der Garantien verlangen.
+
+Wir verkaufen keine Daten und geben niemandem Daten zu Werbezwecken weiter.
+
+# 12. Löschung und Sicherungskopien
+
+Wenn etwas gelöscht wird – durch Sie, durch Ablauf einer oben genannten Frist oder zusammen mit dem Konto –, wird es aus der Datenbank und den Dateien der Website entfernt. Um die Website nach einem Ausfall wiederherstellen zu können, fertigen wir Sicherungskopien des gesamten Datenbestands an; ein gelöschter Eintrag kann in solchen Kopien bis zu 30 Tage verbleiben, danach wird die Kopie selbst gelöscht. Sicherungskopien werden zu nichts anderem als zur Wiederherstellung der Website verwendet.
+
+Wenn ein Konto gelöscht wird, wird alles mitgelöscht, was in den Abschnitten 5 bis 7 aufgeführt ist: Anmeldedaten, Beziehungen, Kreise, Stammbäume mit ihren Einträgen und ihrem Verlauf, Fotografien und ihre Dateien, Alben, Einladungen und Entscheidungen. Einträge, die Sie in den Stammbaum eines anderen geschrieben haben, bleiben in diesem Stammbaum, ohne Ihren Namen.
+
+# 13. Keine automatisierten Entscheidungen, kein Profiling
+
+Über Sie wird keine Entscheidung mit automatisierten Mitteln getroffen, und es wird kein Profil von Ihnen gebildet (Art. 22 DSGVO). Entscheidungen über Inhalte und Konten trifft ein Mensch.
+
+# 14. Kinder und Jugendliche
+
+Die Website richtet sich an Personen, die mindestens 16 Jahre alt sind; Sie bestätigen dies bei der Registrierung (Art. 8 DSGVO). Wir führen nicht wissentlich ein Konto einer jüngeren Person. Wenn Sie erfahren, dass ein Kind ein Konto hat, teilen Sie uns dies mit, und wir schließen es.
+
+# 15. Sicherheit
+
+Die Verbindung zur Website ist verschlüsselt (TLS). Passwörter und Wiederherstellungscodes werden nur als Hashwerte gespeichert. Cookies der Website können von Skripten nicht gelesen werden und werden nur über verschlüsselte Verbindungen gesendet. Formulare sind gegen Anfragen von anderen Websites geschützt. Die Website setzt eine strenge Content Security Policy und lädt nichts von anderen Domains. Der Zugriff auf den Server ist auf die Person beschränkt, die die Website betreibt. Kein System ist vollkommen sicher; wenn eine Verletzung der Sicherheit voraussichtlich ein hohes Risiko für Sie zur Folge hat, geben wir dies auf der Website bekannt, da wir Ihnen nicht schreiben können (Art. 34 DSGVO).
+
+# 16. Ihre Rechte
+
+Sie haben die folgenden Rechte. Ihre Ausübung ist unentgeltlich.
+
+- Auskunft (Art. 15 DSGVO): zu erfahren, ob wir Daten über Sie verarbeiten, und eine Kopie zu erhalten. In Ihrem Konto erhalten Sie über die Schaltfläche „A copy of your data“ sofort alles, was die Website zum Konto gespeichert hat, als Datei.
+- Berichtigung (Art. 16): unrichtige Daten berichtigen zu lassen. Das meiste können Sie im Konto selbst ändern.
+- Löschung (Art. 17): Daten löschen zu lassen. Sie können einzelne Dinge selbst entfernen und das Konto selbst schließen; schreiben Sie uns, wenn Sie wünschen, dass das Konto vor Ablauf der 30 Tage gelöscht wird.
+- Einschränkung der Verarbeitung (Art. 18): die Verarbeitung in den gesetzlich genannten Fällen einschränken zu lassen.
+- Datenübertragbarkeit (Art. 20): die Daten, die Sie uns bereitgestellt haben, in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten (die Kopie aus Ihrem Konto ist eine JSON-Datei) und sie einem anderen zu übermitteln.
+- Widerspruch (Art. 21): aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen eine Verarbeitung Widerspruch einzulegen, die auf Art. 6 Abs. 1 lit. f DSGVO beruht. Wir stellen die Verarbeitung dann ein, es sei denn, wir haben zwingende schutzwürdige Gründe, die Ihre Interessen überwiegen, oder benötigen die Daten für Rechtsansprüche.
+- Widerruf der Einwilligung (Art. 7 Abs. 3): jede Einwilligung jederzeit zu widerrufen, ebenso einfach, wie Sie sie erteilt haben. Was bis dahin geschehen ist, bleibt rechtmäßig.
+- Beschwerde (Art. 77): sich bei einer Datenschutzaufsichtsbehörde zu beschweren, insbesondere in dem Mitgliedstaat, in dem Sie wohnen oder arbeiten oder in dem nach Ihrer Auffassung gegen das Recht verstoßen wurde.
+
+? Die für uns zuständige Aufsichtsbehörde ist: {{authority}}
+
+## Wie Sie Ihre Rechte ausüben
+
+Was Sie im Konto selbst tun können, wirkt sofort. Für alles andere schreiben Sie an {{operator.mail}}. Wir antworten innerhalb eines Monats; in komplexen Fällen lässt das Gesetz bis zu zwei weitere Monate zu, und wir teilen Ihnen dies mit (Art. 12 Abs. 3 DSGVO).
+
+Weil die Website weder eine E-Mail-Adresse noch einen bürgerlichen Namen von Ihnen kennt, zeigt uns eine Nachricht allein nicht, dass ein Konto Ihres ist. Betrifft Ihr Anliegen ein Konto, können wir Sie deshalb bitten nachzuweisen, dass Sie darüber verfügen – zum Beispiel, indem Sie im Konto eine kleine Änderung vornehmen, die wir Ihnen nennen. Wir verlangen nicht mehr, als dafür erforderlich ist (Art. 12 Abs. 6 DSGVO). Wenn Sie in einem Stammbaum genannt oder auf einer Fotografie gezeigt werden und kein Konto haben, genügt es, uns mitzuteilen, wo, und glaubhaft zu machen, dass Sie diese Person sind.
+
+# 17. Änderungen dieser Erklärung
+
+Wir ändern diese Erklärung, wenn sich die Website oder das Recht ändert. Das Datum unten gibt an, wann sie zuletzt geändert wurde; es gilt stets die Fassung auf dieser Seite. Wenn eine Änderung für Personen mit einem Konto von Bedeutung ist, weist die Kontoseite darauf hin.
+
+# 18. Sprachfassungen
+
+Diese Erklärung liegt in englischer, deutscher und persischer Sprache vor. Maßgeblich ist die deutsche Fassung.
+
+Stand: 19. November 2026
