@@ -24,6 +24,17 @@ The branch `shahram/native-producer-4.19.0-candidate.11` requests installation 1
 The image is rolled out gradually. The first run on commit 5842e4fa received the earlier installation
 18.11.12328.437 and was refused before any native build, as requested; it qualifies nothing.
 
+Producer job 135550645721 on commit 6b6ee158 received the requested installation. The signed compiler
+qualified, both fresh native outputs have SHA-256
+`2648334b7bf285e697571c486dbeb2d729d9ba57f7f6b8be99661643e841c87c`, and the original schema
+qualification passed. The job then stopped at the diagnostic gate, because no inventory was recorded
+for tool set 14.52.37025, and raised the proposed inventory as notices (SHA-256
+`e7620eb221340da41f116fa1d775146b5b35379daaddc29eb012386ff45d210c`, verified after reassembly).
+Its 508 diagnostics at 503 sites in 160 official sources equal the inventory of tool set 14.51.36231 in
+every site, code, message, multiplicity and source binding; it is recorded as
+`windows.warnings.msvc-14.52.37025.baseline.json`. An inventory records drift only and accepts the
+safety of no warning. The job on commit ff0fcabd received the earlier installation again and was refused.
+
 ## Qualified 31 October hosted producer identity (D-683)
 
 Original native run41185441600/job124491318973 on e1cbb1be observes installer
