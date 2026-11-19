@@ -15,4 +15,10 @@
     <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Web\Vafadar.Dastan.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- A database of its own and the catcher of mail, for the journeys of an account. -->
+    <Compile Include="..\Databases\TestDatabase.cs" Link="Shared\TestDatabase.cs" />
+    <Compile Include="..\Databases\MailCatcher.cs" Link="Shared\MailCatcher.cs" />
+  </ItemGroup>
+
 </Project>

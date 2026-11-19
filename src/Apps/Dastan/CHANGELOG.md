@@ -323,3 +323,4 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The accounts of the editors are kept the same way as those of the visitors, in tables of their own. Nothing
   an editor sees has changed; an account of the tool is made again, like everything else of an earlier
   database.
+- What was wrong with a form is read out by a screen reader as a list again, on every page with a form.

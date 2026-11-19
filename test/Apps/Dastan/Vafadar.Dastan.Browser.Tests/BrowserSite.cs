@@ -17,7 +17,7 @@ namespace Vafadar.Dastan.Browser.Tests;
 /// project "test" that visits it. The browser is named by the environment variable <c>DASTAN_BROWSER</c>
 /// (<c>ws://127.0.0.1:53333/</c> for the container of <c>src/Apps/Dastan/compose.yaml</c>).
 /// </summary>
-public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
+public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
 {
     /// <summary>The name of the story in addresses.</summary>
     public const string Story = "story-rostam-sohrab";
@@ -45,9 +45,23 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// </summary>
     public bool NewerWorker { get; set; }
 
+    /// <summary>Gets the port the site listens on; 0 lets the system choose one.</summary>
+    protected virtual int Port => 0;
+
+    /// <summary>Gets the address the browser reaches the site at, once the site listens.</summary>
+    public string Address => _address;
+
+    /// <summary>Tells the site more than the demonstration needs: a site of its own kind says its settings here.</summary>
+    protected virtual void Settings(IWebHostBuilder builder)
+    {
+    }
+
     /// <inheritdoc />
-    protected override void ConfigureWebHost(IWebHostBuilder builder) =>
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
         builder.ConfigureServices(services => services.AddSingleton<IStartupFilter>(new LaterRelease(this)));
+        Settings(builder);
+    }
 
     /// <inheritdoc />
     public async ValueTask InitializeAsync()
@@ -61,7 +75,7 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
         // the connection to it carries the addresses of this machine with it, so the browser opens the site as
         // "localhost" – which is also what a browser needs to treat a site without a certificate as safe enough
         // for a service worker.
-        UseKestrel(options => options.Listen(IPAddress.Loopback, 0));
+        UseKestrel(options => options.Listen(IPAddress.Loopback, Port));
         StartServer();
         var port = new Uri(Services.GetRequiredService<IServer>().Features.Get<IServerAddressesFeature>()!.Addresses.First()).Port;
         _address = $"http://localhost:{port.ToString(CultureInfo.InvariantCulture)}";

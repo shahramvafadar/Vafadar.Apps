@@ -51,7 +51,7 @@
         <h2 id="add-title">@T["Trees_Add_Title"]</h2>
         @if (Form == "add" && Problem == "tree-name")
         {
-            <ul class="problems" role="alert"><li>@T["Trees_Problem_tree-name"]</li></ul>
+            <div class="problems" role="alert"><ul><li>@T["Trees_Problem_tree-name"]</li></ul></div>
         }
         <form method="post" action="@($"{TreeEndpoints.Root}/add")" class="account">
             <AntiforgeryToken />
