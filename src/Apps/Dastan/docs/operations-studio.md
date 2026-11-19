@@ -167,9 +167,10 @@ the level "Warning" and above – no name and no address. What the proxy and the
 * **Roles**, a page for an editor to change their own password, a record of who signed in when.
 * **Load.** Two editors changing the same record at the same moment are done one after the other: the later
   act replaces the record and the history shows both (tried by a test with eight acts at once).
-* **The container with its database.** Since the store moved to PostgreSQL (2026-11-19) the image was not
-  built and `eng/Check-Studio.ps1` was not run against it; that belongs to the end of step 19.3 of the
-  delivery plan. A copy by `pg_dump` was brought back once, on the development database (2026-11-19): a
+* **The container with its database.** Tried on the development machine on 2026-11-19, after the store moved
+  to PostgreSQL: the image built, `compose.studio.yaml` started the tool with its own database, the tables
+  were made by the command in the container, `eng/Check-Studio.ps1` passed, and the command listed the
+  editors there. No proxy with a certificate, no browser signed in to the container. A copy by `pg_dump` was brought back once, on the development database (2026-11-19): a
   collection was brought in, both schemas were copied, dropped and restored with `pg_restore --clean
   --if-exists`, and the collection written out afterwards was the same file byte for byte, with its history.
   Not on a server, and not with the files of the volume.

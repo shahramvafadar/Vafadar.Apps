@@ -67,7 +67,7 @@
                     <select id="release-number" name="Releasing.Number" required>
                         @foreach (var revision in _revisions)
                         {
-                            <option value="@revision.Number.ToString(CultureInfo.InvariantCulture)" selected="@(revision.Number == (_released ?? _revisions[0].Number))">@string.Format(CultureInfo.CurrentCulture, T["Release_Option"], Editor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))</option>
+                            <option value="@revision.Number.ToString(CultureInfo.InvariantCulture)" selected="@(revision.Number == (_released ?? _revisions[0].Number))">@string.Format(CultureInfo.CurrentCulture, T["Release_Option"], Editor.Number(revision.Number), Isolated(revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)))</option>
                         }
                     </select>
                 </p>
@@ -152,6 +152,10 @@
         _revisions = [.. Store.Revisions(Collection).Reverse()];
         _released = Store.Released(Collection);
     }
+
+    // A day inside the text of an option, which can hold no element: kept in its own order, left to right,
+    // by the marks of Unicode, so that a page that reads right to left does not turn its parts around.
+    private static string Isolated(string leftToRight) => $"⁦{leftToRight}⁩";
 
     private void Release()
     {

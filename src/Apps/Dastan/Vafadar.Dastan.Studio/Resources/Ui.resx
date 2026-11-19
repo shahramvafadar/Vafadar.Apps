@@ -352,7 +352,7 @@
     <value>Publish the next revision</value>
   </data>
   <data name="Publish_Lead" xml:space="preserve">
-    <value>This makes revision {0} out of what the store holds. Every statement has to be reviewed. The store keeps the revision as it is published; the command “store revision” writes it out for a site.</value>
+    <value>This makes revision {0} out of what the store holds. Every statement has to be reviewed. The store keeps the revision as it is published. Nobody sees it before it is released (above); the command “store revision” writes it out as files.</value>
   </data>
   <data name="Publish_On" xml:space="preserve">
     <value>Day of publication</value>
