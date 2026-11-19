@@ -25,6 +25,7 @@ earlier monetization model of the specification (MON-02 one-time Pro purchase, M
 | [10-bank-import-research.md](10-bank-import-research.md) | Initial German bank priorities and primary-source export research |
 | [18-native-storage-profile-delivery.md](18-native-storage-profile-delivery.md) | Current reduced native source/package/main-app qualification and explicit remaining security/platform gates |
 | [27-ai-openai-gemini-provider-plan.md](27-ai-openai-gemini-provider-plan.md) | Two-provider implementation plan, administrator switch, recovery, privacy and rollout gates |
+| [29-ai-feature-expansion-plan.md](29-ai-feature-expansion-plan.md) | Proposed AI feature order, existing local foundations, acceptance gates and cost assumptions |
 
 Ids: `ZCR-<area>-nn` for work items (areas GOV, SEC, LOC, IMP, QA, A11Y, ENT, BIL, ID, SYNC, SHR, TAX, AI, BANK, FX,
 LANG, REL) and `OD-nn` for open decisions. Open stories of enhancement ZEX continue under the ZCR ids named in the
