@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dastan – Syncfusion Diagram and Persian (step 19.2)</title>
+<style>
+@font-face { font-family: Vazirmatn; src: url("vazirmatn-nl-wght.woff2") format("woff2"); font-weight: 100 900; }
+body { margin: 0; font-family: Vazirmatn, sans-serif; background: #f4efe4; color: #1c1b19; }
+h1 { font-size: 1.1rem; margin: 12px 16px; }
+nav { margin: 0 16px 8px; display: flex; gap: 12px; flex-wrap: wrap; }
+#diagram { background: #fff; border-block: 1px solid #b8a98a; }
+/* Workaround, and the heart of this trial. The control places every line of text by the x of its LEFT edge and
+   leaves text-anchor at "start". In a right-to-left page "start" is the right edge, so each line is drawn one
+   whole line-width too far left, outside its card. The address chooses how that is put right:
+   ?fix=none   nothing: the bare behaviour of the control in a right-to-left page.
+   ?fix=ltr    the diagram is kept left to right (the control does not support RTL, and its arithmetic assumes
+               LTR). Texts stand in their cards, but every line has the base direction LTR, so mixed
+               Persian/Latin runs and closing punctuation stand at the wrong side.
+   ?fix=css    as ltr, and the texts get the Persian base direction by CSS, anchored by their "end" – which in
+               RTL is the left edge the control computed. Right in Chromium and Firefox; WebKit reorders the
+               lines of a wrapped text among each other and misplaces Latin lines, so this way is NOT usable.
+   (default)   "marks": as ltr, and src/main.ts wraps each Persian line in Unicode direction marks. This is the
+               way that holds in all three engines and in the exports. */
+html:not(.fix-none) #diagram { direction: ltr; }
+html.fix-css #diagram text { direction: rtl; text-anchor: end; }
+#exported { margin: 16px; }
+#exported img, #exported svg { max-width: 100%; border: 1px dashed #b8a98a; background: #fff; }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add("fix-" + (new URLSearchParams(location.search).get("fix") ?? "marks"));</script>
+<h1>نمودار Syncfusion و متن فارسی – گام ۱۹.۲</h1>
+<nav><a href="?case=family">شجره‌نامه</a><a href="?case=relations">چند رابطه میان دو نفر</a></nav>
+<div id="diagram"></div>
+<div id="exported"></div>
+<script src="main.js"></script>
+</body>
+</html>

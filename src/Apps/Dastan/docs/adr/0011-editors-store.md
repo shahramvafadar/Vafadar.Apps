@@ -1,5 +1,7 @@
 # 0011. The store of the editors: records with their history, beside the file – not in place of the site's input
 
+> Changed on 2026-11-19 (D-076, D-077): the store moves to PostgreSQL with records as relations ([0015](0015-postgresql.md)), and the accounts of the editors to ASP.NET Core Identity ([0016](0016-identity-and-mail.md)). That the public site never reads the working records still holds.
+
 * Status: Accepted (D-045)
 * Date: 2026-11-17
 * Step: 11.1 of the [delivery plan](../delivery-plan.md), section 12

@@ -21,6 +21,13 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0013](0013-private-space-rules.md) | The rules of private spaces as a library, checked by the acceptance examples of document 06, before anything is kept | Accepted for the accepted rules; nothing reaches it |
 | [0014](0014-visitor-accounts.md) | Accounts of visitors: a third store beside the site, a name and a password, recovery codes instead of mail, closing with thirty days to think again | Accepted (D-048 to D-050, D-055); not run in a container |
 | [0012](0012-visitor-reports.md) | Reports of visitors: a folder between the site and the tool – the statement, the words and the day, nothing about the visitor | Accepted |
+| [0015](0015-postgresql.md) | One PostgreSQL database with a schema for each part, and rules the database itself keeps | Accepted (D-076); step 19.3 |
+| [0016](0016-identity-and-mail.md) | Accounts on ASP.NET Core Identity with a confirmed mail address; mail through an outbox | Accepted (D-077); step 19.4 |
+| [0017](0017-node-profile.md) | Every node has a profile: a picture and the facts its kind needs | Accepted (D-078); step 19.5 |
+| [0018](0018-relationships.md) | Relationships are records of their own, and two people can have several | Accepted (D-078); step 19.6 |
+| [0019](0019-interactive-layer.md) | Pages from the server, and a layer of TypeScript in the browser | Accepted (D-079); step 19.7 |
+| [0020](0020-graph.md) | The graph: a contract of Dastan on Syncfusion EJ2 Diagram | Accepted (D-079); step 19.8 |
+| [0021](0021-timeline.md) | The timeline is a control of Dastan's own, with a calendar, deep time and the order of a telling | Accepted (D-079); step 19.9 |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),
 [0012](../../../../../docs/adr/0012-temporal-model.md) (stated time), [0013](../../../../../docs/adr/0013-web-library.md) (the web library).

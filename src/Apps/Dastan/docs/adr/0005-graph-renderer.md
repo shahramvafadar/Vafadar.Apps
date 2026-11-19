@@ -1,5 +1,7 @@
 # 0005. The renderer of the connections graph
 
+> Replaced on 2026-11-19 (D-079) by [0020](0020-graph.md): the graph is explored in the browser, on Syncfusion EJ2 Diagram behind a contract of Dastan. The still drawing of this decision stays as what a reader without a script sees.
+
 - Status: **Accepted by the owner on 2026-11-16** (decision D-035): the graphs of M0 are drawn by the server as
   SVG. The comparison below is kept as it was written before the decision.
 - Date: 2026-11-16

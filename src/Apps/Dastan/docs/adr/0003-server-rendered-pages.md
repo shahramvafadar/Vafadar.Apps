@@ -1,5 +1,7 @@
 # 0003. Pages are rendered on the server, without a live connection and without a script
 
+> Changed on 2026-11-19 by [0019](0019-interactive-layer.md): pages still come from the server and are complete without a script, and a layer of TypeScript in the browser takes over where a page is explored. "Without a script" no longer holds.
+
 - Status: Accepted (implemented and verified on 2026-11-16 for the pages of phase 4)
 - Date: 2026-11-16
 - Deciders: Shahram Vafadar

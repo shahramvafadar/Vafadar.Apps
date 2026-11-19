@@ -706,6 +706,31 @@ the tests that hold these.
 | 19.10 | **What follows from the new foundations** | The legal texts and the records of processing are written again for accounts with a mail address and the mail provider (row 18.8); the statement of reasons goes by mail too; SkiaSharp on a supported line with the image of the container tried; the README says where the product stands | The three languages of every legal text agree again; the documents name no rule that fell |
 | 19.11 | **Checked as the product is used** | Browser tests of Dastan run in CI; every journey of 19.1's table is walked once more on the final revision in Chromium, Firefox and WebKit; the app is installed on a real phone | The table of 19.1 has evidence in every row, and "built", "looked at" and "ready" are said apart |
 
+**Done on 2026-11-19: 19.1 and 19.2.** The contracts are ADRs 0015 to 0021 and the rules at the head of section 3 of `AGENTS.md`; the table is [foundations-trace.md](foundations-trace.md) – 101 requirements, rules and scenarios of documents 02, 06 and 14, of which 10 are contradicted by the code today, each with the step that ends it (the finer rules of the other product documents refine these and have no rows of their own). The trial of the control is `eng/spikes/diagram-persian`: Persian is shown, wrapped, laid out and exported right in Chromium, Firefox and WebKit at 360 and 1,280 pixels **with five things the product does itself**, written down in [ADR 0020](adr/0020-graph.md); the keyboard of the control is not usable as it comes and is ours to build; touch, a screen reader and thousands of nodes were not looked at and belong to 19.8. Seen in pictures of real browsers, of which the main ones were looked at by eye; the owner has not looked yet.
+
+**Added from the table of step 19.1** ([foundations-trace.md](foundations-trace.md)), which found what the
+product documents ask for and no step named. Nothing of it is left for later; each belongs to the step that
+builds its foundation, and that step is not done without it:
+
+* 19.3 also: an earlier revision can be shown (R-PUB-07) – revisions are kept, so the site can open one.
+* 19.4 also: mail about a relationship request, a tag and a request to agree, which an account can turn off
+  (R-PER-03, PRIV-007).
+* 19.5 also: what may be kept about a living person who was not asked, and about children (PRIV-003).
+* 19.6 also: guardianship and birth or adoptive parents as kinds (R-PER-02), blocking an account (PRIV-009),
+  and "see as somebody else" (PRIV-015).
+* 19.8 and 19.9 also: what was chosen is carried from the graph to the timeline to the gallery (R-EXP-05).
+* 19.9 also: search and "what held at this time" by a year before the common era, a period and deep time
+  (R-PUB-04); dates beside their conversion into the reader's calendar (R-TIME-05); a caption and a source
+  per place of a picture (R-MED-07); a gallery of a theme (R-MED-02); a memory that comes up again, said to
+  be one (SC-17).
+* 19.11 also: the app installed on Windows and on a phone, Safari itself and not only WebKit, somebody who
+  uses a screen reader, and somebody who sees the site for the first time (R-PLAT-01, R-PLAT-05).
+* 19.3 also closes what review 18.7 found and left: limits per hour counted by network and not by the exact
+  address, the version of a record that began at 1 again, and what the trial believes about its proxy.
+
+**Asked for by the product documents and not a foundation** – the owner decides whether they are built in
+this phase: posts (R-PER-08), and videos of visitors (R-MED-01, R-MED-03), which D-066 decided against.
+
 **Order.** 19.1 and 19.2 first, at the same time; 19.2 may change 19.8 and nothing else. Then 19.3 and 19.4
 together – accounts are written once, on the new database. Then 19.5 and 19.6, which give the graph what it
 shows. 19.7 before 19.8 and 19.9. 19.10 and 19.11 close the phase.

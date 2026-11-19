@@ -1,5 +1,7 @@
 # 0014. Accounts of visitors: a store of their own, a name and a password
 
+> Changed on 2026-11-19 (D-076 to D-078): accounts have a confirmed mail address and are kept by ASP.NET Core Identity ([0016](0016-identity-and-mail.md)) in PostgreSQL ([0015](0015-postgresql.md)); two accounts can have several relationships ([0018](0018-relationships.md)); a person of a tree has a profile ([0017](0017-node-profile.md)). The rules of consent, audiences, claims and closing still hold.
+
 * Status: Accepted (D-048 to D-050, D-055)
 * Date: 2026-11-18
 * Step: 16.1 of the [delivery plan](../delivery-plan.md)
