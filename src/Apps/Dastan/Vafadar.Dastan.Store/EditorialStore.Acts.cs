@@ -34,6 +34,15 @@ public enum ReviewAct
 /// <param name="Statement">The name of the statement: the identifier of a relation or an event, the key of a dated statement.</param>
 /// <param name="Label">The statement in the editors' words.</param>
 /// <param name="ReviewStatus">The state of its review, as the record says it.</param>
+/// <summary>
+/// The record an act was decided on, as who acts read it: an act that carries it is refused when the record
+/// is at another version by then – somebody changed it in between – or is no longer there.
+/// </summary>
+/// <param name="Group">The group of the record.</param>
+/// <param name="RecordId">Its identifier.</param>
+/// <param name="Version">The version that was read; 0 for a record that was not there.</param>
+public sealed record ReadRecord(string Group, string RecordId, int Version);
+
 public sealed record StatementState(string Group, string Record, string Statement, string Label, string ReviewStatus);
 
 // The acts of an editor on one record (step 11.2). Each act is tried on the whole collection: the collection as
@@ -63,7 +72,8 @@ public sealed partial class EditorialStore
     /// by the key of the statement. A language that is named keeps exactly the texts given for the statements
     /// the record has now; the texts of a statement that was taken out go with it.
     /// </param>
-    public ActResult Put(string collectionId, string group, JsonObject record, string by, string reason, IReadOnlyDictionary<string, JsonObject>? texts = null, IReadOnlyDictionary<string, JsonObject>? dated = null)
+    /// <param name="read">The record as who acts read it; the act is refused when it is at another version by then.</param>
+    public ActResult Put(string collectionId, string group, JsonObject record, string by, string reason, IReadOnlyDictionary<string, JsonObject>? texts = null, IReadOnlyDictionary<string, JsonObject>? dated = null, ReadRecord? read = null)
     {
         ArgumentNullException.ThrowIfNull(record);
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
@@ -154,7 +164,7 @@ public sealed partial class EditorialStore
             }
 
             return null;
-        });
+        }, read);
     }
 
     /// <summary>
@@ -170,7 +180,8 @@ public sealed partial class EditorialStore
     /// entity, and taking the thread out must not take the entity. Not named, the first record of that
     /// identifier in any group.
     /// </param>
-    public ActResult Remove(string collectionId, string recordId, string by, string reason, string? group = null)
+    /// <param name="read">The record as who acts read it; the act is refused when it is at another version by then.</param>
+    public ActResult Remove(string collectionId, string recordId, string by, string reason, string? group = null, ReadRecord? read = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(recordId);
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
@@ -200,7 +211,7 @@ public sealed partial class EditorialStore
             }
 
             return $"{recordId}: the collection holds no record of that name.";
-        });
+        }, read);
     }
 
     /// <summary>
@@ -214,7 +225,8 @@ public sealed partial class EditorialStore
     /// <param name="by">Who reviewed.</param>
     /// <param name="on">The day of the review.</param>
     /// <param name="note">What the statement was checked against, what is disputed, or why it is withdrawn.</param>
-    public ActResult Review(string collectionId, string statement, ReviewAct act, string by, DateOnly on, string? note = null)
+    /// <param name="read">The record of the statement as who reviews read it; the review is refused when it is at another version by then.</param>
+    public ActResult Review(string collectionId, string statement, ReviewAct act, string by, DateOnly on, string? note = null, ReadRecord? read = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(statement);
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
@@ -236,7 +248,7 @@ public sealed partial class EditorialStore
 
             found["review"] = review;
             return null;
-        });
+        }, read);
     }
 
     /// <summary>
@@ -402,7 +414,7 @@ public sealed partial class EditorialStore
     }
 
     // Tries an act on the collection as the store holds it and keeps the result when the readers accept it.
-    private ActResult Act(string collectionId, string by, string reason, Func<JsonObject, Dictionary<string, JsonObject>, string?> change)
+    private ActResult Act(string collectionId, string by, string reason, Func<JsonObject, Dictionary<string, JsonObject>, string?> change, ReadRecord? read = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
 
@@ -415,6 +427,21 @@ public sealed partial class EditorialStore
         if (Working(collectionId) is not var (root, translations))
         {
             return Refused($"{collectionId}: the store holds no collection of that name.");
+        }
+
+        // Under the lock of the collection nobody can come in between this look and what is kept.
+        if (read is not null)
+        {
+            var held = _context.Records.AsNoTracking()
+                .Where(record => record.CollectionId == collectionId && record.Group == read.Group && record.RecordId == read.RecordId)
+                .Select(record => new { record.Version, record.UpdatedBy })
+                .SingleOrDefault();
+            if ((held?.Version ?? 0) != read.Version)
+            {
+                return Refused(held is null
+                    ? $"{read.Group}/{read.RecordId} was taken out since you read it. Nothing was kept."
+                    : $"{read.Group}/{read.RecordId} was changed by {held.UpdatedBy} since you read it (it is at version {held.Version}; you read version {read.Version}). Nothing was kept: open the record again.");
+            }
         }
 
         if (change(root, translations) is { } refused)

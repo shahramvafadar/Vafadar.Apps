@@ -744,4 +744,43 @@
   <data name="Sizes_None" xml:space="preserve">
     <value>No smaller size was made: the image is small already, or it cannot be read.</value>
   </data>
+  <data name="Release_Title" xml:space="preserve">
+    <value>What the site shows</value>
+  </data>
+  <data name="Release_Lead" xml:space="preserve">
+    <value>A site that reads its collections from the database shows the revision named here from its next start on – the newest, or an earlier one again. Publishing a revision shows it to nobody.</value>
+  </data>
+  <data name="Release_Shown" xml:space="preserve">
+    <value>The site shows revision {0}.</value>
+  </data>
+  <data name="Release_None" xml:space="preserve">
+    <value>The site shows no revision of this collection.</value>
+  </data>
+  <data name="Release_Number" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="Release_Option" xml:space="preserve">
+    <value>Revision {0} of {1}</value>
+  </data>
+  <data name="Release_Submit" xml:space="preserve">
+    <value>Show this revision on the site</value>
+  </data>
+  <data name="Release_NeedsNumber" xml:space="preserve">
+    <value>Choose one of the published revisions.</value>
+  </data>
+  <data name="Withdraw_Submit" xml:space="preserve">
+    <value>Show no revision on the site</value>
+  </data>
+  <data name="Col_OnSite" xml:space="preserve">
+    <value>On the site</value>
+  </data>
+  <data name="Release_Mark" xml:space="preserve">
+    <value>shown</value>
+  </data>
+  <data name="Done_released" xml:space="preserve">
+    <value>The site shows this revision from its next start on.</value>
+  </data>
+  <data name="Done_withdrawn" xml:space="preserve">
+    <value>The site shows no revision of this collection from its next start on. What was published is still kept.</value>
+  </data>
 </root>

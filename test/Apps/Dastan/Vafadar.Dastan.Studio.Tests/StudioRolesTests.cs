@@ -58,6 +58,7 @@ public sealed class StudioRolesTests : IDisposable
         Assert.Equal(writes, stages.Html.Contains("name=\"_handler\" value=\"stages\"", StringComparison.Ordinal));
         Assert.Equal(writes, comparisons.Html.Contains("name=\"_handler\" value=\"add\"", StringComparison.Ordinal));
         Assert.Equal(publishes, revisions.Html.Contains("name=\"_handler\" value=\"publish\"", StringComparison.Ordinal));
+        Assert.Equal(publishes, revisions.Html.Contains("name=\"_handler\" value=\"release\"", StringComparison.Ordinal));
 
         // Who may not is told so, and still reads everything.
         Assert.Equal(!reviews, record.Text.Contains("Your account does not review.", StringComparison.Ordinal));

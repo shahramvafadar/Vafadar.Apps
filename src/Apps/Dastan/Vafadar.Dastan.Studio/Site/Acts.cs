@@ -91,6 +91,16 @@ public sealed class RemoveInput
     public string? Reason { get; set; }
 }
 
+/// <summary>What a publisher fills in to say which revision the site shows, or that it shows none.</summary>
+public sealed class ReleaseInput
+{
+    /// <summary>Gets or sets who says it.</summary>
+    public string? By { get; set; }
+
+    /// <summary>Gets or sets the number of the revision, as it was sent.</summary>
+    public string? Number { get; set; }
+}
+
 /// <summary>What an editor fills in to publish the next revision.</summary>
 public sealed class PublishInput
 {
