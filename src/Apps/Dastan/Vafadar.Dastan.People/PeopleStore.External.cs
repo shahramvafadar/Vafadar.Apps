@@ -125,7 +125,7 @@ public sealed partial class PeopleStore
 
     // The provider's identifier of a person is not kept: a hash of it finds the account again and tells nobody
     // who reads the store which account of the provider it is.
-    private static string LoginKey(string provider, string subject)
+    internal static string LoginKey(string provider, string subject)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(provider);
         ArgumentException.ThrowIfNullOrWhiteSpace(subject);

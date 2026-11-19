@@ -468,6 +468,9 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
     /// <summary>Gets the tokens of the accounts: what a link in a mail proves, kept as a hash until it is used or ends.</summary>
     public DbSet<Microsoft.AspNetCore.Identity.IdentityUserToken<string>> AccountTokens => Set<Microsoft.AspNetCore.Identity.IdentityUserToken<string>>();
 
+    /// <summary>Gets the providers the accounts can be signed in through, as Identity keeps them.</summary>
+    public DbSet<Microsoft.AspNetCore.Identity.IdentityUserLogin<string>> AccountLogins => Set<Microsoft.AspNetCore.Identity.IdentityUserLogin<string>>();
+
     /// <summary>Gets what belongs to the visitors in Dastan, by the identifier of their account.</summary>
     public DbSet<StoredVisitor> Visitors => Set<StoredVisitor>();
 
@@ -579,6 +582,9 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             login.Property(item => item.ProviderKey).HasMaxLength(200);
             login.Property(item => item.UserId).HasMaxLength(40);
             login.HasOne<VisitorAccount>().WithMany().HasForeignKey(item => item.UserId).OnDelete(DeleteBehavior.Cascade);
+
+            // An account has one sign-in of a provider: two links asked for at the same moment are one.
+            login.HasIndex(item => new { item.UserId, item.LoginProvider }).IsUnique();
         });
 
         modelBuilder.Entity<Microsoft.AspNetCore.Identity.IdentityUserClaim<string>>(claim =>

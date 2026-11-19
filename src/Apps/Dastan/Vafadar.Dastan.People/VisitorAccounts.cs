@@ -54,7 +54,7 @@ public sealed record ConfirmAnswer(bool Done, ImmutableArray<string> RecoveryCod
 /// stamps the sessions; the tokens of a link and the pause after wrong passwords are counted here by the clock
 /// of the store, so that they can be tried in a test, and are kept in Identity's tables.
 /// </summary>
-public sealed class VisitorAccounts
+public sealed partial class VisitorAccounts
 {
     /// <summary>How long the link that confirms an address can be used.</summary>
     public static readonly TimeSpan ConfirmationValidFor = TimeSpan.FromHours(24);
@@ -196,7 +196,7 @@ public sealed class VisitorAccounts
                 Id = account.Id, Name = written, NameKey = key, Password = string.Empty, Stamp = account.SecurityStamp!, CreatedAt = now,
                 TermsVersion = kept ? terms : null, TermsAcceptedAt = kept ? now : null,
             });
-            var token = NewToken(account.Id);
+            var token = NewToken(account.Id, ConfirmToken, ConfirmationValidFor);
             Put(step, AccountMail.Confirm(tongue, _site, address, written, account.Id, token, $"confirm:{account.Id}:{Hash(token)[..16]}"));
             _context.SaveChanges();
         }
@@ -240,16 +240,13 @@ public sealed class VisitorAccounts
         return _store.Guarded([PeopleStore.OfAccount(id)], () =>
         {
             _context.ChangeTracker.Clear();
-            var held = _context.AccountTokens.SingleOrDefault(candidate => candidate.UserId == id && candidate.LoginProvider == TokenProvider && candidate.Name == ConfirmToken);
             var account = _context.Accounts.SingleOrDefault(candidate => candidate.Id == id);
-            if (held?.Value is not { } value || account is null || account.EmailConfirmed || Read(value) is not var (hash, expires, _)
-                || expires < Now || !CryptographicOperations.FixedTimeEquals(Encoding.ASCII.GetBytes(hash), Encoding.ASCII.GetBytes(Hash(token))))
+            if (account is null || account.EmailConfirmed || Take(id, ConfirmToken, token) is null)
             {
                 return new ConfirmAnswer(false, []);
             }
 
             account.EmailConfirmed = true;
-            _context.AccountTokens.Remove(held);
             var codes = _store.NewCodes(id);
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
@@ -273,14 +270,13 @@ public sealed class VisitorAccounts
         _store.Guarded([PeopleStore.OfAccount(found.Id)], () =>
         {
             _context.ChangeTracker.Clear();
-            var held = _context.AccountTokens.AsNoTracking().SingleOrDefault(candidate => candidate.UserId == found.Id && candidate.LoginProvider == TokenProvider && candidate.Name == ConfirmToken);
-            if (held?.Value is { } value && Read(value) is var (_, _, sent) && sent + SendAgainAfter > Now)
+            if (SentLately(found.Id, ConfirmToken))
             {
                 return false;
             }
 
             var name = _context.Visitors.AsNoTracking().Where(visitor => visitor.Id == found.Id).Select(visitor => visitor.Name).Single();
-            var token = NewToken(found.Id);
+            var token = NewToken(found.Id, ConfirmToken, ConfirmationValidFor);
             Put(_context.Database.CurrentTransaction!, AccountMail.Confirm(found.Language, _site, found.Email!, name, found.Id, token, $"confirm:{found.Id}:{Hash(token)[..16]}"));
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
@@ -342,7 +338,7 @@ public sealed class VisitorAccounts
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
             return account.EmailConfirmed
-                ? new SignInAnswer(SignInOutcome.SignedIn, new VisitorSession(account.Id, visitor.Name, account.SecurityStamp!))
+                ? new SignInAnswer(SignInOutcome.SignedIn, new VisitorSession(account.Id, visitor.Name, visitor.Stamp))
                 : new SignInAnswer(SignInOutcome.Unconfirmed);
         });
     }
@@ -370,31 +366,53 @@ public sealed class VisitorAccounts
 
     // A token of a link: long and random, told once – in the mail – and kept as its hash with the moment it
     // ends and the moment it was sent. A new one takes the place of the one before.
-    private string NewToken(string id)
+    private string NewToken(string id, string purpose, TimeSpan validFor, string carries = "")
     {
         var token = Convert.ToHexStringLower(RandomNumberGenerator.GetBytes(32));
-        var value = string.Create(CultureInfo.InvariantCulture, $"{Hash(token)}|{(Now + ConfirmationValidFor).ToUnixTimeSeconds()}|{Now.ToUnixTimeSeconds()}");
-        if (_context.AccountTokens.SingleOrDefault(candidate => candidate.UserId == id && candidate.LoginProvider == TokenProvider && candidate.Name == ConfirmToken) is { } held)
+        var value = string.Create(CultureInfo.InvariantCulture, $"{Hash(token)}|{(Now + validFor).ToUnixTimeSeconds()}|{Now.ToUnixTimeSeconds()}|{Convert.ToBase64String(Encoding.UTF8.GetBytes(carries))}");
+        if (_context.AccountTokens.SingleOrDefault(candidate => candidate.UserId == id && candidate.LoginProvider == TokenProvider && candidate.Name == purpose) is { } held)
         {
             held.Value = value;
         }
         else
         {
-            _context.AccountTokens.Add(new IdentityUserToken<string> { UserId = id, LoginProvider = TokenProvider, Name = ConfirmToken, Value = value });
+            _context.AccountTokens.Add(new IdentityUserToken<string> { UserId = id, LoginProvider = TokenProvider, Name = purpose, Value = value });
         }
 
         return token;
     }
 
-    private static (string Hash, DateTimeOffset Expires, DateTimeOffset Sent)? Read(string value) =>
-        value.Split('|') is [var hash, var expires, var sent]
+    // Uses a token up: returns what it carries when it is the one that was told, for this purpose, and has not
+    // ended – and nothing otherwise. The row goes with the step it is used in.
+    private string? Take(string id, string purpose, string token)
+    {
+        var held = _context.AccountTokens.SingleOrDefault(candidate => candidate.UserId == id && candidate.LoginProvider == TokenProvider && candidate.Name == purpose);
+        if (held?.Value is not { } value || Read(value) is not var (hash, expires, _, carries)
+            || expires < Now || !CryptographicOperations.FixedTimeEquals(Encoding.ASCII.GetBytes(hash), Encoding.ASCII.GetBytes(Hash(token))))
+        {
+            return null;
+        }
+
+        _context.AccountTokens.Remove(held);
+        return carries;
+    }
+
+    // Whether a mail with a token of this purpose was sent so lately that the next one waits.
+    private bool SentLately(string id, string purpose) =>
+        _context.AccountTokens.AsNoTracking().SingleOrDefault(candidate => candidate.UserId == id && candidate.LoginProvider == TokenProvider && candidate.Name == purpose)?.Value is { } value
+        && Read(value) is var (_, _, sent, _) && sent + SendAgainAfter > Now;
+
+    private static (string Hash, DateTimeOffset Expires, DateTimeOffset Sent, string Carries)? Read(string value) =>
+        value.Split('|') is [var hash, var expires, var sent, var carries]
         && long.TryParse(expires, NumberStyles.None, CultureInfo.InvariantCulture, out var until) && long.TryParse(sent, NumberStyles.None, CultureInfo.InvariantCulture, out var at)
-            ? (hash, DateTimeOffset.FromUnixTimeSeconds(until), DateTimeOffset.FromUnixTimeSeconds(at))
+            ? (hash, DateTimeOffset.FromUnixTimeSeconds(until), DateTimeOffset.FromUnixTimeSeconds(at), Encoding.UTF8.GetString(Convert.FromBase64String(carries)))
             : null;
 
     private static string Hash(string token) => Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(token)));
 
     // The mail is written in the step of what it tells of: kept with it, or not at all.
+    private void Put(OutgoingMail mail) => Put(_context.Database.CurrentTransaction!, mail);
+
     private void Put(IDbContextTransaction step, OutgoingMail mail) =>
         MailOutbox.Put(_context.Database.GetDbConnection(), step.GetDbTransaction(), mail, Now.UtcDateTime);
 }

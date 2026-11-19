@@ -53,6 +53,102 @@ public static class AccountMail
                 ["If it was not you, there is nothing you need to do. Nothing about your account was told to anybody."]);
     }
 
+    /// <summary>The message with the link that sets a new password for one that was forgotten.</summary>
+    public static OutgoingMail ResetPassword(string language, string site, string to, string id, string token, string key)
+    {
+        var persian = IsPersian(language);
+        var link = $"{site}/{(persian ? "fa" : "en")}/account/reset?id={Uri.EscapeDataString(id)}&token={Uri.EscapeDataString(token)}";
+        return persian
+            ? Write(key, "reset-password", to, "fa", "گذرواژهٔ تازه برای حساب شما در داستان",
+                ["برای حساب شما در داستان گذرواژهٔ تازه خواسته شده است. برای گذاشتن گذرواژهٔ تازه این پیوند را باز کنید:"],
+                link,
+                ["این پیوند یک بار و تا یک ساعت کار می‌کند.", "اگر شما نخواسته‌اید، کاری لازم نیست بکنید: گذرواژهٔ شما همان است که بود."])
+            : Write(key, "reset-password", to, "en", "A new password for your Dastan account",
+                ["A new password was asked for your account on Dastan. To set one, open this link:"],
+                link,
+                ["The link works once, and for one hour.", "If you did not ask for it, there is nothing you need to do: your password is what it was."]);
+    }
+
+    /// <summary>The message that tells an account that its password changed.</summary>
+    public static OutgoingMail PasswordChanged(string language, string site, string to, string key)
+    {
+        var persian = IsPersian(language);
+        var link = $"{site}/{(persian ? "fa" : "en")}/account";
+        return persian
+            ? Write(key, "password-changed", to, "fa", "گذرواژهٔ حساب شما در داستان عوض شد",
+                ["گذرواژهٔ حساب شما در داستان عوض شد و حساب از همهٔ دستگاه‌ها خارج شد.", "اگر خودتان این کار را کرده‌اید، کاری لازم نیست. اگر نه، این‌جا با «گذرواژه را فراموش کرده‌ام» گذرواژهٔ تازه بگذارید:"],
+                link,
+                [])
+            : Write(key, "password-changed", to, "en", "The password of your Dastan account was changed",
+                ["The password of your account on Dastan was changed, and the account was signed out everywhere.", "If you did this, there is nothing to do. If you did not, set a new password here with \"I forgot my password\":"],
+                link,
+                []);
+    }
+
+    /// <summary>The message to a new address with the link that makes it the address of the account.</summary>
+    public static OutgoingMail ConfirmNewAddress(string language, string site, string to, string id, string token, string key)
+    {
+        var persian = IsPersian(language);
+        var link = $"{site}/{(persian ? "fa" : "en")}/account/address?id={Uri.EscapeDataString(id)}&token={Uri.EscapeDataString(token)}";
+        return persian
+            ? Write(key, "confirm-new-address", to, "fa", "نشانی تازهٔ حساب خود را در داستان تأیید کنید",
+                ["برای یک حساب در داستان خواسته شده است که این نشانی، نشانی ایمیل آن شود. برای این کار این پیوند را باز کنید:"],
+                link,
+                ["این پیوند یک بار و تا ۲۴ ساعت کار می‌کند.", "اگر شما نخواسته‌اید، کاری لازم نیست بکنید: بدون تأیید چیزی عوض نمی‌شود."])
+            : Write(key, "confirm-new-address", to, "en", "Confirm the new address of your Dastan account",
+                ["An account on Dastan asked for this address to become its mail address. To make it so, open this link:"],
+                link,
+                ["The link works once, and for 24 hours.", "If you did not ask for it, there is nothing you need to do: without the confirmation nothing changes."]);
+    }
+
+    /// <summary>The message to the address an account has, saying that another address was asked for.</summary>
+    public static OutgoingMail AddressChangeAsked(string language, string site, string to, string key)
+    {
+        var persian = IsPersian(language);
+        var link = $"{site}/{(persian ? "fa" : "en")}/account";
+        return persian
+            ? Write(key, "address-change-asked", to, "fa", "برای حساب شما در داستان نشانی ایمیل تازه خواسته شد",
+                ["برای حساب شما در داستان نشانی ایمیل دیگری خواسته شده است. تا آن نشانی تأیید نشود، چیزی عوض نمی‌شود.", "اگر شما نخواسته‌اید، کسی گذرواژهٔ شما را می‌داند: این‌جا گذرواژهٔ تازه بگذارید:"],
+                link,
+                [])
+            : Write(key, "address-change-asked", to, "en", "Another mail address was asked for your Dastan account",
+                ["Another mail address was asked for your account on Dastan. Nothing changes until that address is confirmed.", "If you did not ask for it, somebody knows your password: set a new one here:"],
+                link,
+                []);
+    }
+
+    /// <summary>The message to the address an account had, saying that it has another one now.</summary>
+    public static OutgoingMail AddressChanged(string language, string site, string to, string key)
+    {
+        var persian = IsPersian(language);
+        var link = $"{site}/{(persian ? "fa" : "en")}/notice";
+        return persian
+            ? Write(key, "address-changed", to, "fa", "نشانی ایمیل حساب شما در داستان عوض شد",
+                ["حساب شما در داستان اکنون نشانی ایمیل دیگری دارد و دیگر به این نشانی نامه‌ای نمی‌رود.", "اگر شما این کار را نکرده‌اید، از این راه به گردانندهٔ سایت بنویسید:"],
+                link,
+                [])
+            : Write(key, "address-changed", to, "en", "The mail address of your Dastan account was changed",
+                ["Your account on Dastan has another mail address now, and no more mail goes to this one.", "If you did not do this, write to who runs the site this way:"],
+                link,
+                []);
+    }
+
+    /// <summary>The message that tells an account that it was closed by its visitor, and until when it can be opened again.</summary>
+    public static OutgoingMail Closed(string language, string site, string to, string key)
+    {
+        var persian = IsPersian(language);
+        var link = $"{site}/{(persian ? "fa" : "en")}/account";
+        return persian
+            ? Write(key, "account-closed", to, "fa", "حساب شما در داستان بسته شد",
+                ["حساب شما در داستان بسته شد. دیگر جایی نشان داده نمی‌شود و پس از ۳۰ روز با هرچه به آن تعلق دارد پاک می‌شود.", "اگر پشیمان شدید، تا آن زمان می‌توانید این‌جا با نام و گذرواژه دوباره آن را باز کنید:"],
+                link,
+                [])
+            : Write(key, "account-closed", to, "en", "Your Dastan account was closed",
+                ["Your account on Dastan was closed. It is shown nowhere any more, and is deleted with everything that belongs to it after 30 days.", "If you change your mind, you can open it again until then, with your name and password, here:"],
+                link,
+                []);
+    }
+
     private static bool IsPersian(string language) => language.StartsWith("fa", StringComparison.OrdinalIgnoreCase);
 
     // The same words as plain text and as HTML: paragraphs, one link on a line of its own, paragraphs.

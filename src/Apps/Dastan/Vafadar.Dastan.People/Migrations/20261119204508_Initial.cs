@@ -898,10 +898,11 @@ namespace Vafadar.Dastan.People.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VisitorLogins_UserId",
+                name: "IX_VisitorLogins_UserId_LoginProvider",
                 schema: "identity",
                 table: "VisitorLogins",
-                column: "UserId");
+                columns: new[] { "UserId", "LoginProvider" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Visitors_NameKey",

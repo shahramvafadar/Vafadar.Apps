@@ -67,7 +67,8 @@ namespace Vafadar.Dastan.People.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "LoginProvider")
+                        .IsUnique();
 
                     b.ToTable("VisitorLogins", "identity");
                 });

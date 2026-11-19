@@ -492,6 +492,9 @@ public sealed partial class PeopleStore : IDisposable
                 .ExecuteUpdate(change => change.SetProperty(line => line.Subject, string.Empty));
         }
 
+        // The account goes with what belonged to it: Identity's row, and with it its tokens and its providers.
+        var ids = gone.Select(visitor => visitor.Id).ToList();
+        _context.Accounts.RemoveRange(_context.Accounts.Where(account => ids.Contains(account.Id)));
         _context.Visitors.RemoveRange(gone);
         ForgetDeclined();
         _context.SaveChanges();
@@ -519,7 +522,7 @@ public sealed partial class PeopleStore : IDisposable
 
     // A code is long and random, so one round of a hash keeps it safely; what is typed is read without its
     // hyphens and spaces and in capital letters.
-    private static string DeriveCode(string code)
+    internal static string DeriveCode(string code)
     {
         var typed = new string([.. code.Where(char.IsAsciiLetterOrDigit)]).ToUpperInvariant();
         return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(typed)));

@@ -12,7 +12,7 @@ using Vafadar.Dastan.People;
 namespace Vafadar.Dastan.People.Migrations
 {
     [DbContext(typeof(PeopleContext))]
-    [Migration("20261119203238_Initial")]
+    [Migration("20261119204508_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -70,7 +70,8 @@ namespace Vafadar.Dastan.People.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "LoginProvider")
+                        .IsUnique();
 
                     b.ToTable("VisitorLogins", "identity");
                 });
