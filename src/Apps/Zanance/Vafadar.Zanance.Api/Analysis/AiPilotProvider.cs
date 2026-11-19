@@ -112,7 +112,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     private static readonly AiProviderOutcome Unknown = new(AiProviderState.Unknown);
 
     /// <summary>Accepts only the fixed synthetic payload for the requested purpose.</summary>
-    internal static bool IsSynthetic(AiPurpose purpose, string digest) => purpose switch
+    internal static bool IsSynthetic(AiPurpose purpose, string digest) => AiPilotLocaleFixtures.Match(purpose, digest) is not null || purpose switch
     {
         AiPurpose.PeriodExplanation => digest == ReportDigest || digest == PlanDigest || FundingByDigest.ContainsKey(digest),
         AiPurpose.PeriodComparison => digest == ComparisonDigest || digest == AppComparisonDigest || digest == CategoryDigest || digest == ForecastDigest || digest == ForecastBaselineDigest || digest == SpendingQuestionDigest || digest == PlanQuestionDigest,
@@ -287,6 +287,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             task = "Synthetic selected EUR spending: previous gross 6000 with no refund, selected gross 20000 with refund 1000. One category contributes the whole net increase. Copy spending_change_minor=13000 and contributing_rows=1. Explain briefly in English that the refund offsets part of the increase. Do not invent a cause or use digits in the explanation.";
         if (digest == PlanQuestionDigest)
             task = "Synthetic EUR plan question: the selected month starts with a partly uncertain opening estimate, because an earlier amount is unknown. An outgoing plan precedes the incoming plan, producing the first projected negative balance on day 4. Copy first_day=4 and earlier_unknown_count=1. Explain briefly in English without digits, advice or certainty about the result.";
+        if (AiPilotLocaleFixtures.Match(offer.Purpose, digest) is { } locale) task = locale.Prompt;
         var expected = Expected(offer.Purpose, digest);
         var properties = expected.ToDictionary(f => f.Key, f => new { type = f.Value is bool ? "boolean" : "integer" });
         properties.Add("explanation", new { type = "string" });
@@ -408,6 +409,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             if (FundingByDigest.TryGetValue(digest, out var funding) && funding.Kind != AiFundingKind.BudgetLimit &&
                 explanation.Any(char.IsDigit)) return unpublished;
             if ((digest == ForecastDigest || digest == ForecastBaselineDigest || digest == SpendingQuestionDigest || digest == PlanQuestionDigest) && explanation.Any(char.IsDigit)) return unpublished;
+            if (AiPilotLocaleFixtures.Match(purpose, digest) is not null && explanation.Any(char.IsDigit)) return unpublished;
             AiProtocol.ValidateText(explanation);
             return new(AiProviderState.Completed, 1, explanation, metering);
         }
@@ -455,6 +457,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
 
     private static Dictionary<string, object> Expected(AiPurpose purpose, string digest)
     {
+        if (AiPilotLocaleFixtures.Match(purpose, digest) is { } locale) return new(locale.Facts, StringComparer.Ordinal);
         if (FundingByDigest.TryGetValue(digest, out var funding))
             return new() { ["difference_minor"] = (int)funding.Difference, ["alternative_minor"] = (int)funding.Alternative()!.Value };
         if (digest == SpendingQuestionDigest) return new() { ["spending_change_minor"] = 13000, ["contributing_rows"] = 1 };

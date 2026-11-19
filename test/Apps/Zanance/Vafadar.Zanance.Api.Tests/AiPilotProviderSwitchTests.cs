@@ -544,4 +544,138 @@ public sealed class AiPilotProviderSwitchTests
         private static HttpResponseMessage Json(string body) => new(HttpStatusCode.OK)
             { Content = new StringContent(body, Encoding.UTF8, "application/json") };
     }
+
+    /// <summary>Exercises the fixed, independently scoped multilingual corpus through both adapters.</summary>
+    [Fact]
+    public async Task Pilot_localizes_only_the_fixed_synthetic_corpus_for_both_adapters()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_PROVIDER_PILOT_CONNECTION");
+        if (connection is null) { Assert.Skip("Explicit isolated provider-pilot PostgreSQL fixture required."); return; }
+        var settings = new NpgsqlConnectionStringBuilder(connection);
+        Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
+        var factory = new Factory(connection);
+        var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-locale",
+            ["Analysis:ProviderPilot:openai:Project"] = "fixture-locale-openai",
+            ["Analysis:ProviderPilot:gemini:ApiKey"] = "fictional-locale",
+            ["Analysis:ProviderPilot:gemini:Project"] = "fixture-locale-gemini",
+        }).Build();
+        using var transport = new LocaleCorpusTransport();
+        var pilot = new AiPilotProvider(config, transport, clock);
+        var store = new AiRequestStore(factory, new UnconfiguredAiProvider(), new EphemeralDataProtectionProvider(), clock, pilot);
+        var fixtures = AiPilotLocaleFixtures.All.OrderBy(item => item.Payload.Language, StringComparer.Ordinal)
+            .ThenBy(item => item.Payload.Purpose).ToArray();
+        Assert.Equal(12, fixtures.Length);
+        Assert.Equal(12, fixtures.Select(item => AiProtocol.Digest(item.Payload)).Distinct().Count());
+        var actors = new Dictionary<string, ClaimsPrincipal>(StringComparer.Ordinal);
+        await using (var db = factory.CreateDbContext())
+        {
+            await db.Database.MigrateAsync(ct);
+            foreach (var locale in fixtures.Select(item => item.Payload.Language).Distinct(StringComparer.Ordinal))
+            {
+                var owner = "fictional-locale-" + locale;
+                var session = Guid.NewGuid();
+                db.Users.Add(new ServiceUser { Id = owner, UserName = owner, SecurityStamp = "fictional-locale-stamp" });
+                db.Sessions.Add(new DeviceSession { Id = session, UserId = owner, Generation = 1, ExpiresAt = clock.GetUtcNow().AddDays(1) });
+                actors.Add(locale, new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, owner),
+                    new Claim(ServiceHost.SessionClaim, session.ToString("D")), new Claim(ServiceHost.GenerationClaim, "1")], "synthetic")));
+            }
+            await db.SaveChangesAsync(ct);
+            foreach (var locale in actors.Keys)
+                await store.GrantAsync("fictional-locale-" + locale, "fictional-locale-credit-" + locale, false, 5, ct);
+        }
+
+        foreach (var item in fixtures)
+        {
+            var payload = item.Payload;
+            var actor = actors[payload.Language];
+            var comparison = payload.Purpose == AiPurpose.PeriodComparison;
+            if (comparison)
+            {
+                Assert.Equal(0, item.Facts["eur_spending_change"]);
+                Assert.Equal(2000, item.Facts["usd_spending_change"]);
+                Assert.Equal(-12000, item.Facts["eur_cash_flow_change"]);
+                Assert.Equal(5000, item.Facts["usd_cash_flow_change"]);
+                Assert.False(Assert.IsType<bool>(item.Facts["can_combine"]));
+            }
+            else Assert.Equal(0, item.Facts["net_expenses_minor"]);
+            var modified = payload with { Current = payload.Current with { UnreviewedCount = 1 } };
+            Assert.False(AiPilotProvider.IsSynthetic(payload.Purpose, AiProtocol.Digest(modified)));
+            foreach (var model in AiPilotProvider.Models(payload.Purpose))
+            {
+                var result = await Run(item, actor, model);
+                Assert.Equal(AiRequestState.Completed, result.State);
+                Assert.Equal(transport.Explanation, result.Text);
+                Assert.Equal(1L, result.ChargedUnits);
+            }
+        }
+
+        var sample = Assert.Single(fixtures, item => item.Payload.Language == "fa" && item.Payload.Purpose == AiPurpose.PeriodComparison);
+        transport.CombineCurrencies = true;
+        var refused = await Run(sample, actors["fa"], "gemini-4-hydrogen");
+        Assert.Equal(AiRequestState.Pending, refused.State);
+        Assert.Null(refused.Text);
+        Assert.Equal(25, transport.Creates);
+        await using var audit = factory.CreateDbContext();
+        Assert.Equal(24, await audit.Set<AiCreditRow>().CountAsync(row => row.Kind == AiCreditEvent.Settle, ct));
+
+        async Task<AiRequestResult> Run(AiPilotLocaleFixtures.Fixture fixture, ClaimsPrincipal actor, string model)
+        {
+            await using var db = factory.CreateDbContext();
+            await pilot.SelectModelAsync(db, fixture.Payload.Purpose, model, "fictional-locale-operator", ct);
+            transport.Fixture = fixture;
+            transport.Model = model;
+            var offer = await store.OfferAsync(actor, fixture.Payload.Purpose, ct);
+            Assert.Equal(model, offer.Model);
+            return await store.SubmitAsync(actor, new(Guid.NewGuid(), offer, fixture.Payload), ct);
+        }
+    }
+
+    private sealed class LocaleCorpusTransport : HttpMessageHandler, IHttpClientFactory
+    {
+        private static readonly IReadOnlyDictionary<string, (string Name, string Empty, string Comparison)> Locales =
+            new Dictionary<string, (string, string, string)>
+        {
+            ["en"] = ("English", "No activity was recorded in the supplied period.", "Refunds reduce net expenses in each currency separately."),
+            ["fa"] = ("Persian", "در بازهٔ ارائه‌شده فعالیتی ثبت نشده است.", "بازپرداخت‌ها هزینهٔ خالص هر ارز را جداگانه کاهش می‌دهند."),
+            ["de"] = ("German", "Im angegebenen Zeitraum wurde keine Aktivität erfasst.", "Erstattungen verringern die Nettoausgaben je Währung."),
+            ["es"] = ("Spanish", "No se registró actividad durante el período indicado.", "Los reembolsos reducen el gasto neto por separado en cada moneda."),
+            ["fr"] = ("French", "Aucune activité n’a été enregistrée pendant la période indiquée.", "Les remboursements réduisent les dépenses nettes séparément pour chaque devise."),
+            ["it"] = ("Italian", "Non è stata registrata alcuna attività nel periodo indicato.", "I rimborsi riducono le spese nette separatamente per ciascuna valuta."),
+        };
+
+        internal AiPilotLocaleFixtures.Fixture Fixture { get; set; } = null!;
+        internal string Model { get; set; } = "";
+        internal string Explanation { get; private set; } = "";
+        internal int Creates;
+        internal bool CombineCurrencies;
+        public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct)
+        {
+            Assert.Equal(HttpMethod.Post, request.Method);
+            using var body = await System.Text.Json.JsonDocument.ParseAsync(await request.Content!.ReadAsStreamAsync(ct), cancellationToken: ct);
+            Assert.Equal(Model, body.RootElement.GetProperty("model").GetString());
+            var input = body.RootElement.GetProperty("input").GetString();
+            var language = Locales[Fixture.Payload.Language];
+            Assert.Equal(Fixture.Prompt, input);
+            Assert.Contains($"in {language.Name}.", input, StringComparison.Ordinal);
+            Explanation = Fixture.Payload.Purpose == AiPurpose.PeriodComparison ? language.Comparison : language.Empty;
+            var output = new Dictionary<string, object>(Fixture.Facts) { ["explanation"] = Explanation };
+            if (CombineCurrencies) output["can_combine"] = true;
+            var text = System.Text.Json.JsonSerializer.Serialize(output);
+            var sequence = ++Creates;
+            var openAi = Model.StartsWith("gpt-", StringComparison.Ordinal);
+            object reply = openAi
+                ? new { id = $"resp_locale_{sequence}", status = "completed", model = Model, usage = new { input_tokens = 50, output_tokens = 30 },
+                    output = new[] { new { type = "message", content = new[] { new { type = "output_text", text } } } } }
+                : new { id = $"interaction_locale_{sequence}", status = "completed", model = Model,
+                    usage = new { total_input_tokens = 50, total_output_tokens = 30, total_thought_tokens = 10 },
+                    steps = new[] { new { type = "model_output", content = new[] { new { type = "text", text } } } } };
+            return new(HttpStatusCode.OK) { Content = System.Net.Http.Json.JsonContent.Create(reply) };
+        }
+    }
 }
