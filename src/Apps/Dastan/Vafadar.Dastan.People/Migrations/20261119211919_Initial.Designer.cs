@@ -12,7 +12,7 @@ using Vafadar.Dastan.People;
 namespace Vafadar.Dastan.People.Migrations
 {
     [DbContext(typeof(PeopleContext))]
-    [Migration("20261119205107_Initial")]
+    [Migration("20261119211919_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -803,6 +803,9 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
+
+                    b.Property<bool>("Notices")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");

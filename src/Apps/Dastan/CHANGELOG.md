@@ -313,3 +313,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Signing in through Google or Microsoft takes the mail address they confirmed as the address of the account.
   An address that already has an account makes no second one: sign in to it and add the provider there.
 - The accounts with a name and a password alone are gone; nothing of an earlier database is carried over.
+- The site tells you by mail when somebody asks something of you: to show a relationship, a tag on a
+  photograph, your agreement to a photograph or a family tree being shown to everybody. The message says who
+  asked and where to answer. You turn these messages off on the page of your account.
+- If who runs the site hides a photograph, takes a family tree back from the public or closes an account, the
+  reasons are mailed to the address of the account as well, and so is the end of such a decision.
+- An invitation can be mailed by the site to an address you name. The site uses the address for that one
+  message and does not keep it.

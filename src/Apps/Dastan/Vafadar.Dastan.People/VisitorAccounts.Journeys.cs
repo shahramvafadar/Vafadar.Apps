@@ -13,7 +13,8 @@ namespace Vafadar.Dastan.People;
 /// <param name="HasPassword">Whether it has a password; one that was made through a provider has none until its visitor sets one.</param>
 /// <param name="RecoveryCodesLeft">How many recovery codes are not used.</param>
 /// <param name="Providers">The providers it can be signed in through.</param>
-public sealed record AccountInfo(string Id, string Name, string Address, DateTime CreatedAt, bool HasPassword, int RecoveryCodesLeft, ImmutableArray<string> Providers);
+/// <param name="Notices">Whether the site mails it what somebody else asks of it.</param>
+public sealed record AccountInfo(string Id, string Name, string Address, DateTime CreatedAt, bool HasPassword, int RecoveryCodesLeft, ImmutableArray<string> Providers, bool Notices = true);
 
 /// <content>
 /// What an account does after it is one (step 19.4, ADR 0016): another password, a forgotten one, another
@@ -38,8 +39,30 @@ public sealed partial class VisitorAccounts
             : new AccountInfo(
                 id, visitor.Name, account.Email!, visitor.CreatedAt, account.PasswordHash is not null,
                 _context.RecoveryCodes.AsNoTracking().Count(code => code.VisitorId == id && code.UsedAt == null),
-                [.. _context.AccountLogins.AsNoTracking().Where(login => login.UserId == id).Select(login => login.LoginProvider).OrderBy(provider => provider)]);
+                [.. _context.AccountLogins.AsNoTracking().Where(login => login.UserId == id).Select(login => login.LoginProvider).OrderBy(provider => provider)],
+                account.Notices);
     }
+
+    /// <summary>
+    /// Turns the mail about what somebody else asks of an account – a relationship, a tag, an agreement – on
+    /// or off (PRIV-007). Returns whether there is such an open account. What concerns the account itself –
+    /// its password, its address, a decision of who runs the site – is mailed either way.
+    /// </summary>
+    public bool SetNotices(string id, bool on) =>
+        _store.Guarded([PeopleStore.OfAccount(id)], () =>
+        {
+            _context.ChangeTracker.Clear();
+            var account = _context.Accounts.SingleOrDefault(candidate => candidate.Id == id);
+            if (account is null || !_context.Visitors.AsNoTracking().Any(candidate => candidate.Id == id && candidate.ClosedAt == null))
+            {
+                return false;
+            }
+
+            account.Notices = on;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+            return true;
+        });
 
     /// <summary>
     /// Gives an account another password, proved by the one it has. Everybody who was signed in is signed out;

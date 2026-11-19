@@ -207,7 +207,7 @@ public sealed class AccountFollowsTests : IDisposable
         Assert.Equal("/en/account?said=invited#invite", made.Response.Headers.Location?.OriginalString);
         var page = await mina.Get("/en/account?said=invited");
         Assert.Contains("The invitation is made.", page.Main, StringComparison.Ordinal);
-        Assert.Contains("the site sends nothing to anybody", page.Main, StringComparison.Ordinal);
+        Assert.Contains("You pass it on yourself, or the site mails it to an address you name.", page.Main, StringComparison.Ordinal);
         var code = Assert.Single(await Invitations(mina));
         Assert.Contains($"http://localhost/en/account?invitation={code}", page.Main, StringComparison.Ordinal);
         Assert.Contains("can be used until ", page.Main, StringComparison.Ordinal);

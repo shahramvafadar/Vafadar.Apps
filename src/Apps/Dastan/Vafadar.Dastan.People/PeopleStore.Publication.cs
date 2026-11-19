@@ -35,7 +35,9 @@ public sealed partial class PeopleStore
     /// Asks to make a tree public. Only the owner can. From then on the accounts the tree names are asked, and
     /// the owner sees who stands in the way.
     /// </summary>
-    public bool AskPublication(string id, string tree)
+    public bool AskPublication(string id, string tree) => Guarded([OfTree(tree)], () => AskPublicationUnguarded(id, tree));
+
+    private bool AskPublicationUnguarded(string id, string tree)
     {
         var stored = _context.Trees.SingleOrDefault(candidate => candidate.Id == tree && candidate.Owner == id);
         if (stored is null || !IsOpen(id) || stored.PublicationAskedAt is not null)
@@ -47,6 +49,13 @@ public sealed partial class PeopleStore
         stored.PublicationAskedAt = Now;
         Record(tree, id, "publication-asked", stored.Name);
         Save();
+
+        // The accounts the tree names are asked – and told that they are.
+        foreach (var named in _context.Persons.AsNoTracking().Where(person => person.Tree == tree && person.Account != null && person.Account != id).Select(person => person.Account!).Distinct().ToList())
+        {
+            Tell(named, always: false, to => NoticeMail.PublicationAsked(to.Language, _site, to.Email!, NameOf(id), $"tree-publication-asked:{tree}:{named}:{Now:yyyyMMdd}"));
+        }
+
         return true;
     }
 

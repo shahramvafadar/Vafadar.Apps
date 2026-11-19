@@ -1651,7 +1651,7 @@
     <value>دعوت از دیگران</value>
   </data>
   <data name="Account_Invite_Lead" xml:space="preserve">
-    <value>دعوت‌نامه پیوندی است که خودتان به دست دیگری می‌رسانید؛ سایت برای کسی چیزی نمی‌فرستد. با آن یک نفر حساب می‌سازد و نه بیشتر: هیچ پیوندی میان شما دو نفر از آن پدید نمی‌آید. دعوت‌نامه ۱۴ روز اعتبار دارد.</value>
+    <value>دعوت‌نامه یک پیوند است. خودتان آن را به دست دیگری می‌رسانید، یا سایت آن را به نشانی‌ای که می‌گویید می‌فرستد. با آن یک نفر حساب می‌سازد و نه بیشتر: هیچ پیوندی میان شما دو نفر از آن پدید نمی‌آید. دعوت‌نامه ۱۴ روز اعتبار دارد.</value>
   </data>
   <data name="Account_Invite_Send" xml:space="preserve">
     <value>ساختن دعوت‌نامه</value>
@@ -3029,5 +3029,41 @@
   </data>
   <data name="Account_Link_Back" xml:space="preserve">
     <value>به صفحهٔ حساب</value>
+  </data>
+  <data name="Account_InviteByMail_Lead" xml:space="preserve">
+    <value>سایت دعوت‌نامه را با ایمیل بفرستد</value>
+  </data>
+  <data name="Account_InviteByMail_Address" xml:space="preserve">
+    <value>نشانی ایمیل کسی که دعوت می‌کنید</value>
+  </data>
+  <data name="Account_InviteByMail_Hint" xml:space="preserve">
+    <value>در نامه نام شما به‌عنوان فرستنده و پیوند دعوت می‌آید. سایت این نشانی را فقط برای همین یک نامه به کار می‌برد و نگهش نمی‌دارد. فقط کسانی را دعوت کنید که انتظار دارند از شما خبری بگیرند.</value>
+  </data>
+  <data name="Account_InviteByMail_Send" xml:space="preserve">
+    <value>فرستادن دعوت‌نامه</value>
+  </data>
+  <data name="Account_Said_invite-sent" xml:space="preserve">
+    <value>دعوت‌نامه به آن نشانی در راه است. در فهرست پایین هم هست و همان‌جا می‌توانید آن را پس بگیرید.</value>
+  </data>
+  <data name="Account_Notices_Title" xml:space="preserve">
+    <value>نامه‌های سایت</value>
+  </data>
+  <data name="Account_Notices_Lead" xml:space="preserve">
+    <value>وقتی کسی چیزی از شما می‌خواهد – نشان دادن یک رابطه، نشان‌کردن شما روی یک عکس، موافقت شما با نشان دادن چیزی به همه – سایت می‌تواند با ایمیل خبرتان کند. نامه فقط می‌گوید چه کسی خواسته است و کجا پاسخ دهید.</value>
+  </data>
+  <data name="Account_Notices_On" xml:space="preserve">
+    <value>وقتی کسی چیزی از من می‌خواهد با ایمیل خبرم کن</value>
+  </data>
+  <data name="Account_Notices_Always" xml:space="preserve">
+    <value>آنچه به خودِ حساب مربوط است همیشه فرستاده می‌شود: پیوندی که خودتان خواسته‌اید، تغییر گذرواژه یا نشانی، و تصمیم گردانندهٔ سایت دربارهٔ چیزی از شما.</value>
+  </data>
+  <data name="Account_Notices_Send" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
+  <data name="Account_Said_notices-on" xml:space="preserve">
+    <value>از این پس وقتی کسی چیزی از شما بخواهد، سایت با ایمیل خبرتان می‌کند.</value>
+  </data>
+  <data name="Account_Said_notices-off" xml:space="preserve">
+    <value>سایت دیگر وقتی کسی چیزی از شما بخواهد ایمیل نمی‌فرستد. همهٔ درخواست‌ها را همچنان در صفحه‌های خودتان می‌بینید.</value>
   </data>
 </root>

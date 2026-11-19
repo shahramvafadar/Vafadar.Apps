@@ -253,11 +253,11 @@ public sealed class OperatorCommandsTests : IDisposable
             zal = store.AddPerson(mina, tree, "Zal", 1870, 1950, deceased: true)!;
         }
 
-        var restricted = Run("people", "restrict", "tree", tree, "--people", People, "--reason", "It names a living person who objected.", "--ground", "Section 7 of the terms", "--noticed");
+        var restricted = Run("people", "restrict", "tree", tree, "--people", People, "--site", "https://dastan.test", "--reason", "It names a living person who objected.", "--ground", "Section 7 of the terms", "--noticed");
         Assert.Equal(ContentCommands.Done, restricted.Exit);
         Assert.Contains("restricted, decision no. 1.", restricted.Output, StringComparison.Ordinal);
-        Assert.Equal(ContentCommands.Done, Run("people", "restrict", "account", "Mina", "--people", People, "--reason", "Repeated breaches.", "--ground", "Section 10 of the terms").Exit);
-        Assert.Equal(ContentCommands.NotUsable, Run("people", "restrict", "photo", "no-such-photo", "--people", People, "--reason", "A reason.", "--ground", "A ground.").Exit);
+        Assert.Equal(ContentCommands.Done, Run("people", "restrict", "account", "Mina", "--people", People, "--site", "https://dastan.test", "--reason", "Repeated breaches.", "--ground", "Section 10 of the terms").Exit);
+        Assert.Equal(ContentCommands.NotUsable, Run("people", "restrict", "photo", "no-such-photo", "--people", People, "--site", "https://dastan.test", "--reason", "A reason.", "--ground", "A ground.").Exit);
         Assert.Equal(ContentCommands.NotUsable, Run("people", "restrictions", "--people", TestDatabase.Missing()).Exit);
 
         var standing = Run("people", "restrictions", "--people", People).Output;
@@ -277,8 +277,8 @@ public sealed class OperatorCommandsTests : IDisposable
             Assert.Equal(1, closed.Purge());
         }
 
-        Assert.Equal(ContentCommands.NotUsable, Run("people", "lift", "2", "--people", People).Exit);
-        Assert.Equal(ContentCommands.NotUnderstood, Run("people", "lift", "two", "--people", People).Exit);
+        Assert.Equal(ContentCommands.NotUsable, Run("people", "lift", "2", "--people", People, "--site", "https://dastan.test").Exit);
+        Assert.Equal(ContentCommands.NotUnderstood, Run("people", "lift", "two", "--people", People, "--site", "https://dastan.test").Exit);
         using var gone = PeopleStore.Open(People, _clock);
         Assert.Null(gone.SignIn("Mina", Password));
         Assert.Empty(gone.AllRestrictions());

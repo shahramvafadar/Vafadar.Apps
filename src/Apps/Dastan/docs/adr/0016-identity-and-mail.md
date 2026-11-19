@@ -119,8 +119,26 @@ terms) still say that an account needs no mail address. They are written again i
 the record of processing and the mail provider (the owner's decision). A site with these accounts is not
 shown to the public before that.
 
-**Not built yet:** the statement of reasons by mail and the mail about relationships, tags and requests
-(part five), invitations by mail (part five), the editors' accounts on Identity (part six), and the journeys
+**The mail about what others do, and invitations by mail (2026-11-19, part five).** The store writes a
+message in the step of what it tells of (`NoticeMail`):
+
+* *What somebody else asks of an account* – to show a relationship, a tag on a photograph, to agree to a
+  photograph or a family tree being shown to everybody (R-PER-03) – is told to the account in its language.
+  The message says who asked and where to answer, and carries nothing of what it is about: not the kind of
+  the relationship, no photograph, no name of a tree or of a person in it. An account turns these messages
+  off and on (PRIV-007, the page of the account; the choice is part of the copy of its data). A tag is told
+  once for a photograph, a request to agree once a day at most.
+* *What who runs the site decides* – a photograph hidden, a tree taken back, an account closed – is mailed
+  with the full statement of reasons, in the words of the page of the account, and so is the end of a
+  decision. These are always sent: an account that was closed cannot read its page. The commands
+  `people restrict` and `people lift` are told the address of the site (`--site`), which the link begins
+  with, and refuse an address that is none.
+* *An invitation* can be mailed by the site to an address its account names: one message, in the language
+  of the page it was asked on, with the name of who invites. The address is in that message and nowhere else
+  – the invitation does not know it – and the message is emptied when it was sent, like every other. It
+  counts against the open invitations of the account (ten), and a sender gets ten mails an hour.
+
+**Not built yet:** the editors' accounts on Identity (part six), and the journeys
 in a real browser with the mail read from the catcher as part of the tests (part seven) – by hand they were
 taken once, see the delivery plan. Not tried: a real client of Google or Microsoft, so what they really send
 as "the address they confirmed" is known from their documentation only.

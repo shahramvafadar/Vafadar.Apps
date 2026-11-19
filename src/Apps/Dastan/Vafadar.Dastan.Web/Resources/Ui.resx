@@ -1651,7 +1651,7 @@
     <value>Invite somebody</value>
   </data>
   <data name="Account_Invite_Lead" xml:space="preserve">
-    <value>An invitation is a link you pass on yourself – the site sends nothing to anybody. It makes an account for one person and nothing else: no connection between the two of you follows from it. It can be used for 14 days.</value>
+    <value>An invitation is a link. You pass it on yourself, or the site mails it to an address you name. It makes an account for one person and nothing else: no connection between the two of you follows from it. It can be used for 14 days.</value>
   </data>
   <data name="Account_Invite_Send" xml:space="preserve">
     <value>Make an invitation</value>
@@ -3029,5 +3029,41 @@
   </data>
   <data name="Account_Link_Back" xml:space="preserve">
     <value>To the account</value>
+  </data>
+  <data name="Account_InviteByMail_Lead" xml:space="preserve">
+    <value>Have the site mail an invitation</value>
+  </data>
+  <data name="Account_InviteByMail_Address" xml:space="preserve">
+    <value>Mail address of who you invite</value>
+  </data>
+  <data name="Account_InviteByMail_Hint" xml:space="preserve">
+    <value>The message names you as the sender and carries the link. The site uses the address for this one message and does not keep it. Invite only people who expect to hear from you.</value>
+  </data>
+  <data name="Account_InviteByMail_Send" xml:space="preserve">
+    <value>Mail the invitation</value>
+  </data>
+  <data name="Account_Said_invite-sent" xml:space="preserve">
+    <value>The invitation is on its way to the address. It is also in your list below, where you can take it back.</value>
+  </data>
+  <data name="Account_Notices_Title" xml:space="preserve">
+    <value>Mail from the site</value>
+  </data>
+  <data name="Account_Notices_Lead" xml:space="preserve">
+    <value>When somebody asks something of you – to show a relationship, a tag on a photograph, your agreement to something being shown to everybody – the site can tell you by mail. The message says who asked and where to answer, and nothing more.</value>
+  </data>
+  <data name="Account_Notices_On" xml:space="preserve">
+    <value>Mail me when somebody asks something of me</value>
+  </data>
+  <data name="Account_Notices_Always" xml:space="preserve">
+    <value>What concerns the account itself is always mailed: a link you asked for, a change of the password or the address, and a decision of who runs the site about something of yours.</value>
+  </data>
+  <data name="Account_Notices_Send" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Account_Said_notices-on" xml:space="preserve">
+    <value>The site mails you when somebody asks something of you.</value>
+  </data>
+  <data name="Account_Said_notices-off" xml:space="preserve">
+    <value>The site no longer mails you when somebody asks something of you. You still see every request on your pages.</value>
   </data>
 </root>

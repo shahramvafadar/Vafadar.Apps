@@ -227,6 +227,55 @@ public sealed class AccountMailPagesTests : IDisposable
         Assert.False(SignedIn(await there.Get(Account)));
     }
 
+    [Fact]
+    public async Task An_invitation_is_mailed_to_an_address_and_makes_an_account_for_who_opens_its_link()
+    {
+        using var closed = _site.WithWebHostBuilder(builder => builder.UseSetting("Dastan:InvitationOnly", "true"));
+        var mina = _site.Visitor();
+        await Ask(mina);
+        await mina.Follow(mina.Mailed(Address, "confirm-address")!, "confirm");
+        Assert.Contains($"action=\"{Forms}/invite-by-mail\"", (await mina.Get(Account)).Html, StringComparison.Ordinal);
+
+        Assert.Equal($"{Account}?form=invite&problem=mail#invite", To(await mina.Post($"{Forms}/invite-by-mail", Account, Fields(("mail", "no address")))));
+        Assert.Equal(HttpStatusCode.SeeOther, (await _site.Visitor().Post($"{Forms}/invite-by-mail", Account, Fields(("mail", "sara@example.org")))).Status);
+        Assert.Null(mina.Mailed("sara@example.org", "invitation"));
+
+        Assert.Equal("/fa/account?said=invite-sent#invite", To(await mina.Post($"{Forms}/invite-by-mail", "/fa/account", ("mail", "sara@example.org"), ("returnUrl", "/fa/account"))));
+        var mail = mina.Mailed("sara@example.org", "invitation")!;
+        Assert.Contains("«Mina» در داستان حساب دارد", mail, StringComparison.Ordinal);
+        var link = System.Text.RegularExpressions.Regex.Match(mail, @"https?://[^/\s]+(/fa/account\?invitation=[A-Z0-9]+)").Groups[1].Value;
+        Assert.NotEmpty(link);
+
+        // The site takes new accounts by invitation only: the link of the mail is the way in.
+        var sara = Browser.Of(closed);
+        Assert.Contains($"action=\"{Forms}/register\"", (await sara.Get(link)).Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"action=\"{Forms}/register\"", (await Browser.Of(closed).Get("/fa/account")).Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task An_account_turns_the_mail_about_what_others_ask_off_and_on()
+    {
+        var mina = _site.Visitor();
+        await Ask(mina);
+        await mina.Follow(mina.Mailed(Address, "confirm-address")!, "confirm");
+        var sara = _site.Visitor();
+        await Ask(sara, "Sara", "sara@example.org");
+        await sara.Follow(sara.Mailed("sara@example.org", "confirm-address")!, "confirm");
+        Assert.Contains("name=\"notices\" type=\"checkbox\" checked", (await sara.Get(Account)).Html, StringComparison.Ordinal);
+
+        // Off: a request of somebody else is on the page and in no mail.
+        Assert.Equal($"{Account}?said=notices-off#notices", To(await sara.Post($"{Forms}/notices", Account, Fields())));
+        Assert.DoesNotContain("name=\"notices\" type=\"checkbox\" checked", (await sara.Get(Account)).Html, StringComparison.Ordinal);
+        await mina.Post("/preferences/people/ask", "/en/account/people", ("name", "Sara"), ("kind", "friend"), ("returnUrl", "/en/account/people"));
+        Assert.Contains("Mina", (await sara.Get("/en/account/people")).Main, StringComparison.Ordinal);
+        Assert.Null(sara.Mailed("sara@example.org", "relationship-asked"));
+
+        // On again: the next one is mailed.
+        Assert.Equal($"{Account}?said=notices-on#notices", To(await mina.Post($"{Forms}/notices", Account, Fields(("notices", "on")))));
+        Assert.Equal($"{Account}?said=notices-on#notices", To(await sara.Post($"{Forms}/notices", Account, Fields(("notices", "on")))));
+        Assert.Equal(HttpStatusCode.SeeOther, (await _site.Visitor().Post($"{Forms}/notices", Account, Fields())).Status);
+    }
+
     [Theory]
     [InlineData("/en/account/confirm")]
     [InlineData("/en/account/reset?id=abc")]

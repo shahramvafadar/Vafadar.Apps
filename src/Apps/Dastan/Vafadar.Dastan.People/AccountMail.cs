@@ -152,7 +152,7 @@ public static class AccountMail
     private static bool IsPersian(string language) => language.StartsWith("fa", StringComparison.OrdinalIgnoreCase);
 
     // The same words as plain text and as HTML: paragraphs, one link on a line of its own, paragraphs.
-    private static OutgoingMail Write(string key, string kind, string to, string language, string subject, string[] before, string link, string[] after)
+    internal static OutgoingMail Write(string key, string kind, string to, string language, string subject, string[] before, string link, string[] after)
     {
         var text = string.Join("\n\n", [.. before, link, .. after, "Dastan"]);
         var direction = language == "fa" ? "rtl" : "ltr";

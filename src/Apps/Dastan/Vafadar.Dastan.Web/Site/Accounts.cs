@@ -852,6 +852,40 @@ public static class AccountEndpoints
             return store.Invite(session.Id) is null ? Back(returnUrl, "invite", "invitations") : Results.Redirect($"{Home(returnUrl)}?said=invited#invite");
         });
 
+        // The same invitation, mailed by the site to an address the account names (step 19.4): one message,
+        // and the address is kept for nothing else.
+        forms.MapPost("/invite-by-mail", (HttpContext context, AccountDesk desk, [FromForm] string? mail, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            if (!desk.Allows(context, "mail", AccountDesk.MailsPerHour))
+            {
+                return Back(returnUrl, "invite", "later");
+            }
+
+            using var store = desk.Open();
+            return store.InviteByMail(session.Id, mail ?? string.Empty, Tongue(returnUrl)) is var outcome and not "sent"
+                ? Back(returnUrl, "invite", outcome)
+                : Results.Redirect($"{Home(returnUrl)}?said=invite-sent#invite");
+        });
+
+        // Whether the site mails the account what somebody else asks of it (PRIV-007).
+        forms.MapPost("/notices", (HttpContext context, AccountDesk desk, [FromForm] string? notices, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            return store.Accounts.SetNotices(session.Id, notices == "on")
+                ? Results.Redirect($"{Home(returnUrl)}?said={(notices == "on" ? "notices-on" : "notices-off")}#notices")
+                : Results.BadRequest();
+        });
+
         forms.MapPost("/revoke", (HttpContext context, AccountDesk desk, [FromForm] string? code, [FromForm] string? returnUrl) =>
         {
             if (AccountDesk.Session(context.User) is not { } session)

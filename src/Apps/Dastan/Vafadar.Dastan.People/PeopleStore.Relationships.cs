@@ -117,6 +117,7 @@ public sealed partial class PeopleStore
             ChangedAt = now,
         });
         Save();
+        Tell(other.Id, always: false, to => NoticeMail.RelationshipAsked(to.Language, _site, to.Email!, NameOf(id), $"relationship-asked:{rule.Id}"));
         return "asked";
     }
 
