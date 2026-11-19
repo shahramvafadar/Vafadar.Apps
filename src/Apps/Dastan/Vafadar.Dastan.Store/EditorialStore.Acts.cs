@@ -104,6 +104,11 @@ public sealed partial class EditorialStore
 
             var records = root[group]!.AsArray();
             var place = Enumerable.Range(0, records.Count).Where(index => (string?)records[index]!["id"] == id).Cast<int?>().FirstOrDefault();
+            if (!WritesReviews && ReviewWritten(place is { } there ? records[there] : null, record) is { } reviewed)
+            {
+                return reviewed;
+            }
+
             if (dated is not null)
             {
                 static IEnumerable<string> Keys(JsonNode? entity) =>
@@ -386,6 +391,12 @@ public sealed partial class EditorialStore
     private ActResult Act(string collectionId, string by, string reason, Func<JsonObject, Dictionary<string, JsonObject>, string?> change)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
+
+        // One step of the store from what the act reads to what it keeps, and one act at a time – the store
+        // lets one writer in. An act keeps the whole collection as it read it: if another act were kept in
+        // between, this one would put that act's records back to what they were, under this editor's name.
+        using var step = _context.Database.BeginTransaction();
+        _context.ChangeTracker.Clear();
         if (Working(collectionId) is not var (root, translations))
         {
             return Refused($"{collectionId}: the store holds no collection of that name.");
@@ -403,7 +414,78 @@ public sealed partial class EditorialStore
         }
 
         var (added, changed, removed) = Keep(root, translations, by, reason);
+        step.Commit();
         return new ActResult([], added + changed + removed);
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the acts of this store may change what a review found – the
+    /// status of a statement and who reviewed it. A tool with accounts says no for an editor who is no
+    /// reviewer (GOV-002: writing and reviewing are kept apart): such an editor changes records, and a record
+    /// that is changed keeps the review it had or goes back to waiting for one.
+    /// </summary>
+    public bool WritesReviews { get; set; } = true;
+
+    private static readonly string[] Findings = ["reviewed", "disputed", "withdrawn"];
+
+    // What a record says about reviews, by where it says it: the status and the review of the record itself,
+    // of each of its statements with a date, of each period and event of a comparison.
+    private static Dictionary<string, (string? Status, string? Review)> Reviews(JsonNode? node)
+    {
+        var said = new Dictionary<string, (string?, string?)>(StringComparer.Ordinal);
+        Walk(node, string.Empty);
+        return said;
+
+        void Walk(JsonNode? at, string path)
+        {
+            switch (at)
+            {
+                case JsonObject record:
+                    if (record.ContainsKey("reviewStatus") || record.ContainsKey("review"))
+                    {
+                        said[path] = (record["reviewStatus"] is JsonValue status && status.TryGetValue<string>(out var written) ? written : record["reviewStatus"]?.ToJsonString(), record["review"]?.ToJsonString());
+                    }
+
+                    foreach (var (name, value) in record)
+                    {
+                        if (name is not ("reviewStatus" or "review"))
+                        {
+                            Walk(value, $"{path}/{name}");
+                        }
+                    }
+
+                    break;
+
+                case JsonArray rows:
+                    for (var index = 0; index < rows.Count; index++)
+                    {
+                        // A row is known by its key or its identifier, so that rows that change places stay themselves.
+                        var name = rows[index] is JsonObject row
+                            ? (row["key"] as JsonValue)?.ToString() ?? (row["id"] as JsonValue)?.ToString() ?? index.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                            : index.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                        Walk(rows[index], $"{path}[{name}]");
+                    }
+
+                    break;
+            }
+        }
+    }
+
+    // Whether a record, as it is to be kept, says something about a review that only a reviewer may say: a
+    // finding – reviewed, disputed, withdrawn – or who reviewed, that the record did not hold before.
+    private static string? ReviewWritten(JsonNode? before, JsonNode after)
+    {
+        var held = Reviews(before);
+        foreach (var (path, (status, review)) in Reviews(after))
+        {
+            var had = held.GetValueOrDefault(path);
+            if ((status is not null && Findings.Contains(status, StringComparer.Ordinal) && status != had.Status) || (review is not null && review != had.Review))
+            {
+                return "a review is recorded by a reviewer, with the form for it: this record says what a review found, or who reviewed, and did not before.";
+            }
+        }
+
+        return null;
     }
 
     private static ActResult Refused(string problem) => new([problem]);

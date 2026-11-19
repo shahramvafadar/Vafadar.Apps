@@ -161,7 +161,8 @@ public sealed partial class EditorialStore : IDisposable
         var now = _time.GetUtcNow().UtcDateTime;
         var (added, changed, removed) = (0, 0, 0);
 
-        using var transaction = _context.Database.BeginTransaction();
+        // Inside an act the step is the act's (Act); by itself – an import – it is its own.
+        using var transaction = _context.Database.CurrentTransaction is null ? _context.Database.BeginTransaction() : null;
         var collection = _context.Collections.Find(id);
         var isNew = collection is null;
 
@@ -275,7 +276,7 @@ public sealed partial class EditorialStore : IDisposable
         }
 
         _context.SaveChanges();
-        transaction.Commit();
+        transaction?.Commit();
         return (added, changed, removed);
     }
 
