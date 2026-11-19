@@ -45,7 +45,7 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
             var delivery = Header(request, "webhook-id");
             var timestamp = Header(request, "webhook-timestamp");
             var signature = Header(request, "webhook-signature");
-            if (!Verify(secret, delivery, timestamp, signature, body.Span, time.GetUtcNow()))
+            if (!Verify(provider, secret, delivery, timestamp, signature, body.Span))
                 return Results.BadRequest();
             try
             {
@@ -119,24 +119,42 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
     private static bool IsIdentifier(string? value) => value is { Length: > 0 and <= 250 } &&
         value.All(character => char.IsAsciiLetterOrDigit(character) || character is '_' or '-');
 
-    private static bool Verify(string secret, string? delivery, string? timestamp, string? signature, ReadOnlySpan<byte> body, DateTimeOffset now)
+    private bool Verify(string provider, string secret, string? delivery, string? timestamp, string? signature, ReadOnlySpan<byte> body)
     {
         if (!IsIdentifier(delivery) || timestamp is not { Length: > 0 and <= 20 } ||
             !long.TryParse(timestamp, NumberStyles.None, CultureInfo.InvariantCulture, out var seconds) ||
-            signature is not { Length: > 0 and <= 1024 } || !secret.StartsWith("whsec_", StringComparison.Ordinal) ||
-            secret.Length > 256) return false;
+            signature is not { Length: > 0 and <= 1024 }) return false;
+        var now = time.GetUtcNow();
         var current = now.ToUnixTimeSeconds();
         if (seconds < current - 300 || seconds > current + 300) return false;
+        var prefix = Encoding.ASCII.GetBytes($"{delivery}.{timestamp}.");
+        if (Matches(secret, signature, prefix, body, out var currentKeyUsable)) return true;
+        var section = $"Analysis:ProviderPilot:{provider}";
+        return currentKeyUsable && configuration[$"{section}:PreviousWebhookSecret"] is { } previous &&
+            previous != secret && ReadUtc(configuration[$"{section}:PreviousWebhookSecretFromUtc"], out var start) &&
+            ReadUtc(configuration[$"{section}:PreviousWebhookSecretUntilUtc"], out var deadline) &&
+            now >= start && now < deadline && deadline - start <= TimeSpan.FromHours(24) &&
+            Matches(previous, signature, prefix, body, out _);
+
+        static bool ReadUtc(string? value, out DateTimeOffset result) =>
+            DateTimeOffset.TryParseExact(value, "yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out result);
+    }
+
+    private static bool Matches(string secret, string signature, byte[] prefix, ReadOnlySpan<byte> body, out bool keyUsable)
+    {
+        keyUsable = false;
+        if (!secret.StartsWith("whsec_", StringComparison.Ordinal) || secret.Length > 256) return false;
         Span<byte> key = stackalloc byte[192];
         if (!Convert.TryFromBase64Chars(secret.AsSpan(6), key, out var keyLength) || keyLength == 0)
         {
             CryptographicOperations.ZeroMemory(key);
             return false;
         }
+        keyUsable = true;
         try
         {
             using var mac = IncrementalHash.CreateHMAC(HashAlgorithmName.SHA256, key[..keyLength]);
-            mac.AppendData(Encoding.ASCII.GetBytes($"{delivery}.{timestamp}."));
+            mac.AppendData(prefix);
             mac.AppendData(body);
             Span<byte> expected = stackalloc byte[32];
             mac.GetHashAndReset(expected);

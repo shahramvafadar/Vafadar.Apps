@@ -165,7 +165,11 @@ public sealed class AiPilotAdminTests
     [Fact]
     public Task Gemini_notice_recovers_only_the_original_input_reference() => RunPanelAsync(false, recoveryProvider: "gemini");
 
-    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, string? recoveryProvider = null)
+    /// <summary>Validates provider-specific signing-key overlap, expiry and revocation over the original receiver.</summary>
+    [Fact]
+    public Task Webhook_rotation_respects_provider_and_explicit_utc_overlap() => RunPanelAsync(false, exerciseRotation: true);
+
+    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, string? recoveryProvider = null, bool exerciseRotation = false)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
@@ -186,6 +190,11 @@ public sealed class AiPilotAdminTests
         using var recovery = recoveryProvider is null ? null : new RecoveryReplies(recoveryProvider);
         if (recovery is not null)
             builder.Configuration[AiPilotCompletionNotices.SecretSetting(recoveryProvider!)] = "whsec_" + Convert.ToBase64String(RecoveryReplies.SigningKey);
+        if (exerciseRotation)
+        {
+            builder.Configuration[AiPilotCompletionNotices.SecretSetting("openai")] = Secret(31);
+            builder.Configuration[AiPilotCompletionNotices.SecretSetting("gemini")] = Secret(32);
+        }
         builder.AddZananceService();
         builder.Logging.ClearProviders();
         builder.Services.RemoveAll<IHostedService>();
@@ -193,7 +202,7 @@ public sealed class AiPilotAdminTests
         using var replies = exerciseStatus ? new RetainedStatusReplies() : null;
         var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 19, 12, 0, 0, TimeSpan.Zero));
         builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>((IHttpClientFactory?)replies ?? (IHttpClientFactory?)recovery ?? noEgress));
-        if (exerciseStatus || recovery is not null) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
+        if (exerciseStatus || recovery is not null || exerciseRotation) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
         await using var app = builder.Build();
         await ServiceHost.MigrateAsync(app.Services);
         await using (var scope = app.Services.CreateAsyncScope())
@@ -212,6 +221,13 @@ public sealed class AiPilotAdminTests
             ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate is not null &&
                 Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(certificate.RawData)) == fingerprint,
         }) { BaseAddress = new Uri(address) };
+        if (exerciseRotation)
+        {
+            using var receiver = Browser();
+            await VerifyRotationAsync(app.Services, app.Configuration, receiver, clock, ct);
+            Assert.Equal(0, noEgress.Attempts);
+            return;
+        }
         if (recovery is not null)
         {
             using var callback = Browser();
@@ -546,6 +562,85 @@ public sealed class AiPilotAdminTests
             Assert.Equal(status, response.StatusCode);
         }
     }
+
+    private static async Task VerifyRotationAsync(IServiceProvider services, IConfiguration configuration, HttpClient receiver,
+        FakeTimeProvider clock, CancellationToken ct)
+    {
+        const string openai = "openai";
+        const string gemini = "gemini";
+        var start = clock.GetUtcNow().AddMinutes(1);
+        var end = start.AddMinutes(2);
+        Overlap(openai, 21, start, end);
+        Overlap(gemini, 22, start, end);
+        await Deliver(openai, "early", HttpStatusCode.BadRequest, 21);
+        await Deliver(openai, "without-overlap", HttpStatusCode.NoContent, 31);
+        clock.Advance(TimeSpan.FromMinutes(1));
+        await Deliver(openai, "rotated", HttpStatusCode.NoContent, 21);
+        await Deliver(openai, "rotated", HttpStatusCode.NoContent, 21, 31);
+        await Deliver(gemini, "wrong-provider", HttpStatusCode.BadRequest, 21);
+        await Deliver(gemini, "rotated", HttpStatusCode.NoContent, 22, 32);
+        Overlap(gemini, 22, start, start.AddHours(25));
+        await Deliver(gemini, "excessive", HttpStatusCode.BadRequest, 22);
+        Overlap(gemini, 22, start, end);
+        configuration["Analysis:ProviderPilot:gemini:PreviousWebhookSecretUntilUtc"] = null;
+        await Deliver(gemini, "no-deadline", HttpStatusCode.BadRequest, 22);
+        Overlap(gemini, 22, start, end);
+        configuration[AiPilotCompletionNotices.SecretSetting(gemini)] = "invalid-fixture-secret";
+        await Deliver(gemini, "invalid-current", HttpStatusCode.BadRequest, 22);
+        configuration[AiPilotCompletionNotices.SecretSetting(gemini)] = Secret(32);
+        configuration["Analysis:ProviderPilot:gemini:PreviousWebhookSecret"] = null;
+        await Deliver(gemini, "revoked", HttpStatusCode.BadRequest, 22);
+        await Deliver(gemini, "revoked", HttpStatusCode.NoContent, 32);
+        clock.Advance(TimeSpan.FromMinutes(2));
+        await Deliver(openai, "expired", HttpStatusCode.BadRequest, 21);
+        await Deliver(openai, "expired", HttpStatusCode.NoContent, 31);
+
+        await using var db = await services.GetRequiredService<IDbContextFactory<ServiceDbContext>>().CreateDbContextAsync(ct);
+        var inbox = await db.Set<AiPilotCompletionNoticeRow>().ToArrayAsync(ct);
+        Assert.Equal(3, inbox.Count(row => row.Provider == openai));
+        Assert.Equal(2, inbox.Count(row => row.Provider == gemini));
+        Assert.Equal(5, inbox.Length);
+        Assert.All(inbox, row => { Assert.Equal(0, row.Attempts); Assert.False(row.Handled); });
+        Assert.Empty(await db.Set<AiRequestRow>().ToArrayAsync(ct));
+        Assert.Empty(await db.Set<AiCreditRow>().ToArrayAsync(ct));
+
+        void Overlap(string provider, byte old, DateTimeOffset from, DateTimeOffset until)
+        {
+            var section = $"Analysis:ProviderPilot:{provider}";
+            configuration[$"{section}:PreviousWebhookSecret"] = Secret(old);
+            configuration[$"{section}:PreviousWebhookSecretFromUtc"] = Format(from);
+            configuration[$"{section}:PreviousWebhookSecretUntilUtc"] = Format(until);
+        }
+        async Task Deliver(string provider, string caseId, HttpStatusCode expected, params byte[] signers)
+        {
+            var stamp = clock.GetUtcNow().ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture);
+            var delivery = "fixture-delivery-" + caseId;
+            var body = System.Text.Json.JsonSerializer.Serialize(new
+            {
+                type = provider == openai ? "response.completed" : "interaction.completed",
+                data = new { id = "resp_fixture_" + caseId },
+            });
+            var signed = Encoding.UTF8.GetBytes($"{delivery}.{stamp}.{body}");
+            var signatures = string.Join(' ', signers.Select(value => "v1," +
+                Convert.ToBase64String(HMACSHA256.HashData(SigningBytes(value), signed))));
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"/analysis/pilot/{provider}/completions")
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json"),
+            };
+            request.Headers.Add("webhook-id", delivery);
+            request.Headers.Add("webhook-timestamp", stamp);
+            request.Headers.Add("webhook-signature", signatures);
+            using var response = await receiver.SendAsync(request, ct);
+            Assert.Equal(expected, response.StatusCode);
+        }
+
+        static string Format(DateTimeOffset time) =>
+            time.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", System.Globalization.CultureInfo.InvariantCulture);
+    }
+
+    private static byte[] SigningBytes(byte value) => Enumerable.Repeat(value, 32).ToArray();
+
+    private static string Secret(byte value) => "whsec_" + Convert.ToBase64String(SigningBytes(value));
 
     private static string Token(string html) => Capture(html, "name=\"__RequestVerificationToken\" value=\"([^\"]+)\"");
     private static string Capture(string html, string expression)
