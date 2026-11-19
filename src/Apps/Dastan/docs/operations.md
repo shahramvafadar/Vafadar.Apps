@@ -246,7 +246,8 @@ dotnet Vafadar.Dastan.Content.dll database grant tool dastan_tool --database env
 
 `Dastan__Database` then names `dastan_site`, `Studio__Store` names `dastan_tool`, and `DASTAN_DATABASE` of the
 commands stays the owner's. The site reads what was released and writes accounts, reports and notices; it
-cannot read a table of the editors, change a revision or make a table. The tool does the work of the editors,
+cannot read a table of the editors – their accounts lie in the schema `identity` beside those of the visitors,
+and each role is given its own tables there and none of the other's – change a revision or make a table. The tool does the work of the editors,
 adds revisions and releases, reads reports and notes them as looked at; it cannot reach what belongs to
 visitors and cannot change a revision that was published. `grant` is run again after an update that adds
 tables – it says the same for tables made later by the role that ran it, and asked twice it changes nothing.

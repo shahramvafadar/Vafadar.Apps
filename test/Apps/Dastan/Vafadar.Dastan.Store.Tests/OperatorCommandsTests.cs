@@ -193,6 +193,10 @@ public sealed class OperatorCommandsTests : IDisposable
 
                 Assert.Equal(1, editors.Publish(WorkingCopy.Collection, Today, "a publisher").Number);
                 Assert.Null(editors.Release(WorkingCopy.Collection, 1, "a publisher"));
+
+                // The accounts of the editors are the tool's too: one is made and signs in.
+                Assert.True(editors.AddEditor("Omid", Password).Done);
+                Assert.NotNull(editors.SignIn("Omid", Password));
             }
 
             // The site keeps an account, takes a report and a notice, and reads what was released.
@@ -209,6 +213,8 @@ public sealed class OperatorCommandsTests : IDisposable
             // And no more. The site: nothing of the editors, no change of what was published, no look at a report again.
             const string denied = Npgsql.PostgresErrorCodes.InsufficientPrivilege;
             Assert.Equal(denied, Refused(As(site), """select 1 from editorial."Records" """));
+            Assert.Equal(denied, Refused(As(site), """select 1 from identity."EditorAccounts" """));
+            Assert.Equal(denied, Refused(As(site), """update identity."EditorAccounts" set "Roles" = 'writer,reviewer,publisher'"""));
             Assert.Equal(denied, Refused(As(site), """update published."Revisions" set "By" = 'somebody'"""));
             Assert.Equal(denied, Refused(As(site), """delete from published."Releases" """));
             Assert.Equal(denied, Refused(As(site), """update delivery."Reports" set "Text" = 'changed'"""));
@@ -218,6 +224,8 @@ public sealed class OperatorCommandsTests : IDisposable
             // The tool: nothing of the visitors, a revision is never changed, a report is noted and not removed.
             Assert.Equal(denied, Refused(As(tool), """select 1 from personal."Visitors" """));
             Assert.Equal(denied, Refused(As(tool), """select 1 from identity."VisitorAccounts" """));
+            Assert.Equal(denied, Refused(As(tool), """select 1 from identity."VisitorTokens" """));
+            Assert.Equal(denied, Refused(As(tool), """select 1 from identity."VisitorLogins" """));
             Assert.Equal(denied, Refused(As(tool), """update published."Revisions" set "By" = 'somebody'"""));
             Assert.Equal(denied, Refused(As(tool), """delete from published."Releases" """));
             Assert.Equal(denied, Refused(As(tool), """delete from delivery."Reports" """));

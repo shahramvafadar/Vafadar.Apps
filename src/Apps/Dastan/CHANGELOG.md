@@ -320,3 +320,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   reasons are mailed to the address of the account as well, and so is the end of such a decision.
 - An invitation can be mailed by the site to an address you name. The site uses the address for that one
   message and does not keep it.
+- The accounts of the editors are kept the same way as those of the visitors, in tables of their own. Nothing
+  an editor sees has changed; an account of the tool is made again, like everything else of an earlier
+  database.

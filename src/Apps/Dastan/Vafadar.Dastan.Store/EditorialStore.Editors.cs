@@ -1,40 +1,24 @@
 using System.Collections.Immutable;
 using System.Globalization;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Vafadar.Core.Security;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Vafadar.Dastan.Store;
 
 /// <summary>
-/// An editor the store knows (step 11.7): a name and what proves the name. The password itself is not kept –
-/// only a value derived from it, from which it cannot be read back.
+/// An editor the store knows (step 11.7), as ASP.NET Core Identity keeps an account (step 19.4, ADR 0016): the
+/// name as the editor writes it – it is what an act is kept with – and as it is compared, what is kept of the
+/// password, the stamp every sign-in carries, and the count of wrong passwords. The accounts of the editors
+/// have tables of their own in the schema <c>identity</c>, apart from those of the visitors: an editor is
+/// made by the operator and is never a visitor's account under another name. An editor has no mail address.
 /// </summary>
-public sealed class StoredEditor
+public sealed class EditorAccount : IdentityUser
 {
-    /// <summary>Gets or sets the name as it is compared: without case.</summary>
-    public required string Id { get; set; }
-
-    /// <summary>Gets or sets the name as the editor writes it; it is what an act is kept with.</summary>
-    public required string Name { get; set; }
-
-    /// <summary>Gets or sets the value derived from the password, with how it was derived.</summary>
-    public required string Password { get; set; }
-
-    /// <summary>
-    /// Gets or sets a value that changes with the password and with the account being closed: whoever signed in
-    /// before is signed in no longer.
-    /// </summary>
-    public required string Stamp { get; set; }
-
     /// <summary>Gets or sets when the account was made.</summary>
     public DateTime CreatedAt { get; set; }
-
-    /// <summary>Gets or sets how often in a row a wrong password was given.</summary>
-    public int Failures { get; set; }
-
-    /// <summary>Gets or sets until when the account takes no password, after too many wrong ones.</summary>
-    public DateTime? LockedUntil { get; set; }
 
     /// <summary>Gets or sets when the account was closed; nothing for an account that is open.</summary>
     public DateTime? ClosedAt { get; set; }
@@ -108,17 +92,52 @@ public sealed partial class EditorialStore
     /// <summary>How long an account takes no password after too many wrong ones.</summary>
     public static readonly TimeSpan LockedFor = TimeSpan.FromMinutes(15);
 
+    /// <summary>
+    /// How many rounds what is kept of a password is derived with (PBKDF2 with HMAC-SHA-512). The number is
+    /// written into the value, so that it can be raised later without asking anybody for a new password.
+    /// </summary>
+    public const int PasswordRounds = 210_000;
+
+    private static readonly PasswordHasher<EditorAccount> Hasher = new(Microsoft.Extensions.Options.Options.Create(new PasswordHasherOptions { IterationCount = PasswordRounds }));
+
     // What a password is compared with when the name is unknown, so that an unknown name takes as long as a known one.
-    private static readonly string Nobody = Derive(Guid.NewGuid().ToString("N"));
+    private static readonly EditorAccount Nobody = new() { PasswordHash = Hasher.HashPassword(new EditorAccount(), Guid.NewGuid().ToString("N")) };
+
+    private UserManager<EditorAccount>? _editors;
+
+    // Identity's own keeper of accounts, on the context of the store. A name may be written in any script; the
+    // password has a length and nothing else is asked of it; an editor has no mail address.
+    private UserManager<EditorAccount> Accounts => _editors ??= new UserManager<EditorAccount>(
+        new UserOnlyStore<EditorAccount, StoreContext>(_context),
+        Microsoft.Extensions.Options.Options.Create(new IdentityOptions
+        {
+            User = { AllowedUserNameCharacters = string.Empty, RequireUniqueEmail = false },
+            Password = { RequiredLength = PasswordLength, RequireDigit = false, RequireLowercase = false, RequireUppercase = false, RequireNonAlphanumeric = false, RequiredUniqueChars = 1 },
+        }),
+        Hasher,
+        [new UserValidator<EditorAccount>()],
+        [new PasswordValidator<EditorAccount>()],
+        new Names(),
+        new IdentityErrorDescriber(),
+        null!,
+        NullLogger<UserManager<EditorAccount>>.Instance);
+
+    // A name is compared as the store always compared it.
+    private sealed class Names : ILookupNormalizer
+    {
+        public string? NormalizeName(string? name) => name is null ? null : Key(name.Trim());
+
+        public string? NormalizeEmail(string? email) => email?.Trim().Normalize().ToUpperInvariant();
+    }
 
     /// <summary>Returns the editors the store knows, by their name.</summary>
     public ImmutableArray<EditorInfo> Editors()
     {
-        var now = _time.GetUtcNow().UtcDateTime;
+        var now = _time.GetUtcNow();
         return
         [
-            .. _context.Editors.AsNoTracking().OrderBy(editor => editor.Id).AsEnumerable()
-                .Select(editor => new EditorInfo(editor.Name, editor.CreatedAt, editor.ClosedAt is not null, editor.LockedUntil > now ? editor.LockedUntil : null) { Roles = ReadRoles(editor.Roles) ?? EditorRoles.None }),
+            .. _context.Editors.AsNoTracking().OrderBy(editor => editor.NormalizedUserName).AsEnumerable()
+                .Select(editor => new EditorInfo(editor.UserName!, editor.CreatedAt, editor.ClosedAt is not null, editor.LockoutEnd > now ? editor.LockoutEnd.Value.UtcDateTime : null) { Roles = ReadRoles(editor.Roles) ?? EditorRoles.None }),
         ];
     }
 
@@ -157,7 +176,7 @@ public sealed partial class EditorialStore
     {
         ArgumentNullException.ThrowIfNull(name);
         var key = Key(name.Trim());
-        var editor = _context.Editors.AsNoTracking().SingleOrDefault(account => account.Id == key && account.ClosedAt == null);
+        var editor = _context.Editors.AsNoTracking().SingleOrDefault(account => account.NormalizedUserName == key && account.ClosedAt == null);
         return editor is null ? EditorRoles.None : ReadRoles(editor.Roles) ?? EditorRoles.None;
     }
 
@@ -214,10 +233,11 @@ public sealed partial class EditorialStore
     }
 
     // Remembers one try of a password, and forgets the oldest ones of the account beyond what is kept.
-    private void Tried(StoredEditor editor, DateTime at, bool succeeded)
+    private void Tried(EditorAccount editor, DateTime at, bool succeeded)
     {
-        _context.SignIns.Add(new EditorSignIn { EditorId = editor.Id, At = at, Succeeded = succeeded });
-        var old = _context.SignIns.Where(entry => entry.EditorId == editor.Id).OrderByDescending(entry => entry.Number).Skip(SignInsKept - 1).ToList();
+        var key = editor.NormalizedUserName!;
+        _context.SignIns.Add(new EditorSignIn { EditorId = key, At = at, Succeeded = succeeded });
+        var old = _context.SignIns.Where(entry => entry.EditorId == key).OrderByDescending(entry => entry.Number).Skip(SignInsKept - 1).ToList();
         _context.SignIns.RemoveRange(old);
     }
 
@@ -242,10 +262,27 @@ public sealed partial class EditorialStore
             return Refused(weak);
         }
 
-        _context.Editors.Add(new StoredEditor { Id = Key(written), Name = written, Password = Derive(password), Stamp = NewStamp(), Roles = RolesText(roles), CreatedAt = _time.GetUtcNow().UtcDateTime });
-        _context.SaveChanges();
+        // Identity makes the account: it checks the name once more, derives what is kept of the password and
+        // gives the account its stamp. Two who make the same name at the same moment: the database keeps one.
         _context.ChangeTracker.Clear();
-        return new ActResult([], 1);
+        var account = new EditorAccount { Id = Guid.NewGuid().ToString("N"), UserName = written, Roles = RolesText(roles), CreatedAt = _time.GetUtcNow().UtcDateTime, LockoutEnabled = true };
+        try
+        {
+            var made = Accounts.CreateAsync(account, password).GetAwaiter().GetResult();
+            return made.Succeeded
+                ? new ActResult([], 1)
+                : Refused(made.Errors.Any(error => error.Code == nameof(IdentityErrorDescriber.DuplicateUserName))
+                    ? $"{written}: the store already knows an editor of that name."
+                    : string.Join(" ", made.Errors.Select(error => error.Description)));
+        }
+        catch (DbUpdateException)
+        {
+            return Refused($"{written}: the store already knows an editor of that name.");
+        }
+        finally
+        {
+            _context.ChangeTracker.Clear();
+        }
     }
 
     /// <summary>Gives an editor another password. Whoever signed in with the old one is signed in no longer.</summary>
@@ -263,7 +300,7 @@ public sealed partial class EditorialStore
             return Refused(weak);
         }
 
-        (editor.Password, editor.Stamp, editor.Failures, editor.LockedUntil) = (Derive(password), NewStamp(), 0, null);
+        (editor.PasswordHash, editor.SecurityStamp, editor.AccessFailedCount, editor.LockoutEnd) = (Hasher.HashPassword(editor, password), NewStamp(), 0, null);
         _context.SaveChanges();
         _context.ChangeTracker.Clear();
         return new ActResult([], 1);
@@ -286,7 +323,7 @@ public sealed partial class EditorialStore
             return new ActResult([]);
         }
 
-        (editor.ClosedAt, editor.Stamp, editor.Failures, editor.LockedUntil) = (closed ? _time.GetUtcNow().UtcDateTime : null, NewStamp(), 0, null);
+        (editor.ClosedAt, editor.SecurityStamp, editor.AccessFailedCount, editor.LockoutEnd) = (closed ? _time.GetUtcNow().UtcDateTime : null, NewStamp(), 0, null);
         _context.SaveChanges();
         _context.ChangeTracker.Clear();
         return new ActResult([], 1);
@@ -301,9 +338,9 @@ public sealed partial class EditorialStore
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(password);
-        var now = _time.GetUtcNow().UtcDateTime;
+        var now = _time.GetUtcNow();
         var editor = Found(name);
-        var right = Matches(password, editor?.Password ?? Nobody);
+        var right = Hasher.VerifyHashedPassword(editor ?? Nobody, (editor ?? Nobody).PasswordHash ?? Nobody.PasswordHash!, password) != PasswordVerificationResult.Failed;
         if (editor is null)
         {
             return null;
@@ -316,19 +353,20 @@ public sealed partial class EditorialStore
             using var step = _context.Database.BeginTransaction();
             Lock("editors");
             _context.Entry(editor).Reload();
-            if (editor.ClosedAt is not null || editor.LockedUntil > now)
+            if (editor.ClosedAt is not null || editor.LockoutEnd > now)
             {
                 // A locked account does not count further and does not open for the right password either.
                 return null;
             }
 
-            Tried(editor, now, right);
+            // Counted by the clock of the store, in the columns Identity has for it: a pause can be tried in a test.
+            Tried(editor, now.UtcDateTime, right);
             if (!right)
             {
-                editor.Failures++;
-                if (editor.Failures >= FailuresAllowed)
+                editor.AccessFailedCount++;
+                if (editor.AccessFailedCount >= FailuresAllowed)
                 {
-                    (editor.Failures, editor.LockedUntil) = (0, now + LockedFor);
+                    (editor.AccessFailedCount, editor.LockoutEnd) = (0, now + LockedFor);
                 }
 
                 _context.SaveChanges();
@@ -336,10 +374,10 @@ public sealed partial class EditorialStore
                 return null;
             }
 
-            (editor.Failures, editor.LockedUntil) = (0, null);
+            (editor.AccessFailedCount, editor.LockoutEnd) = (0, null);
             _context.SaveChanges();
             step.Commit();
-            return new EditorSession(editor.Name, editor.Stamp);
+            return new EditorSession(editor.UserName!, editor.SecurityStamp!);
         }
         finally
         {
@@ -352,13 +390,13 @@ public sealed partial class EditorialStore
     {
         ArgumentNullException.ThrowIfNull(session);
         var key = Key(session.Name);
-        return _context.Editors.AsNoTracking().Any(editor => editor.Id == key && editor.Stamp == session.Stamp && editor.ClosedAt == null);
+        return _context.Editors.AsNoTracking().Any(editor => editor.NormalizedUserName == key && editor.SecurityStamp == session.Stamp && editor.ClosedAt == null);
     }
 
-    private StoredEditor? Found(string name)
+    private EditorAccount? Found(string name)
     {
         var key = Key(name.Trim());
-        return _context.Editors.SingleOrDefault(editor => editor.Id == key);
+        return _context.Editors.SingleOrDefault(editor => editor.NormalizedUserName == key);
     }
 
     private static string Key(string name) => name.Normalize().ToUpperInvariant();
@@ -369,10 +407,4 @@ public sealed partial class EditorialStore
         password.Length < PasswordLength ? $"a password has at least {PasswordLength} characters."
         : password.Length > 1000 ? "a password has at most 1000 characters."
         : null;
-
-    // What is kept of a password is derived as everywhere in these apps (PasswordHash of Vafadar.Core): the work
-    // is written into the value, so that it can be raised later without asking anybody for a new password.
-    private static string Derive(string password) => PasswordHash.Derive(password);
-
-    private static bool Matches(string password, string derived) => PasswordHash.Matches(password, derived);
 }

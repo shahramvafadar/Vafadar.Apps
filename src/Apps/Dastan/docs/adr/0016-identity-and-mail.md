@@ -138,7 +138,21 @@ message in the step of what it tells of (`NoticeMail`):
   – the invitation does not know it – and the message is emptied when it was sent, like every other. It
   counts against the open invitations of the account (ten), and a sender gets ten mails an hour.
 
-**Not built yet:** the editors' accounts on Identity (part six), and the journeys
+**The editors on Identity (2026-11-19, part six).** An editor is an `EditorAccount` – Identity's user – in
+the table `identity."EditorAccounts"`, made by Identity's `UserManager` with the command of the operator as
+before; the store's own code for passwords is gone. The name is what an act is kept with; an editor has no
+mail address, no token and no login of a provider, so the account has one table. Roles, closing and the list
+of the last sign-ins stay Dastan's. The pause after wrong passwords is counted by the clock of the store in
+Identity's columns, as for visitors. The tool keeps its own cookie. **Two kinds, never mixed, by the database
+too:** `database grant` gives the role of the site the tables of the visitors and the role of the tool the
+table of the editors – table by table in the schema they share – and a test asks each for the other's and is
+refused. Nothing an editor sees or types has changed.
+
+**What is kept of a password**, for both kinds: Identity's third form – PBKDF2 with HMAC-SHA-512, a salt per
+password, **210,000 rounds** (Identity's own default is 100,000; the number follows what OWASP names for this
+function and is written into the value, so it can be raised without asking anybody for a new password).
+
+**Not built yet:** the journeys
 in a real browser with the mail read from the catcher as part of the tests (part seven) – by hand they were
 taken once, see the delivery plan. Not tried: a real client of Google or Microsoft, so what they really send
 as "the address they confirmed" is known from their documentation only.

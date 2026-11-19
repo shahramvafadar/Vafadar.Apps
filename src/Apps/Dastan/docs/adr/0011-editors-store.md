@@ -295,7 +295,7 @@ The owner decided that the tool runs on a server and that editors sign in. Until
 editor typed and was guarded by where it ran. Now it can know who an editor is.
 
 **An editor is an account of the store.** A name – compared without case – and a password, of which the store
-keeps only a derived value (PBKDF2 with SHA-256, 600,000 rounds, a salt of its own for every account; the rounds
+keeps only a derived value (since step 19.4, [ADR 0016](0016-identity-and-mail.md): as ASP.NET Core Identity derives it, PBKDF2 with HMAC-SHA-512 and 210,000 rounds; before: PBKDF2 with SHA-256, 600,000 rounds, a salt of its own for every account; the rounds
 are written into the value, so that they can be raised later). A password has at least 12 characters. Considered
 and not chosen: signing in with a provider (Microsoft, Google) – it needs an app registered with the provider
 and an account of every editor there, which nobody asked for; it can replace the accounts later, because the
