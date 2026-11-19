@@ -59,6 +59,13 @@ internal sealed class JsonRecord
             return null;
         }
 
+        // An identifier stands in the address of its page: a sign that parts an address would lead elsewhere.
+        if (text is not null && text.IndexOfAny(['/', '\\', '?', '#', '%']) >= 0)
+        {
+            Problem($"{field} is an identifier and contains one of / \\ ? # %, which an address cannot carry in a name.");
+            return null;
+        }
+
         return text;
     }
 

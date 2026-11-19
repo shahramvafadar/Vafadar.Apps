@@ -605,3 +605,19 @@ a title changed and a first source added and then pointed to; a lane with the in
 a year corrected, a period added and one taken out with its Persian text; a period without a time and a key
 that is taken, refused with the form kept; a lane added and taken out with what translates it; an entity
 given its first other name, identifier and dated statement. Not looked at in a browser.
+
+## Addendum of 2026-11-19: writing and reviewing are kept apart in the store (steps 18.7.5 to 18.7.7)
+
+The tool showed the form of a review to reviewers only, and the form "change as text" – which takes a whole
+record – to writers. A record carries the status of its review and who reviewed, so a writer could write a
+review by hand. The store now refuses a record that says what a review found (reviewed, disputed, withdrawn)
+or who reviewed when it did not say so before and its editor is no reviewer; the tool tells the store what the
+editor of a request may do. Every form goes through the store, so none goes around it. A record with the
+review it has is kept by any editor.
+
+An act reads the whole collection, tries the change on it and keeps what differs. That is now one step of the
+store, one act at a time: before, an act that was kept while another was being tried was put back by that
+other one, under its editor's name. Publishing reads, numbers and keeps in one step as well.
+
+Without a sign-in the tool gives the page that signs in and the files a page is drawn with – known by their
+ending and by not being a page – and takes a request of 64 KB at most.

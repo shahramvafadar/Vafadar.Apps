@@ -127,7 +127,7 @@ public static partial class ComparisonSample
             texts.RemoveAll(translation => translation.Review != "reviewed");
         }
 
-        if (!Enum.TryParse<ComparisonFrame>(document.Frame, ignoreCase: true, out var frame) || !Enum.IsDefined(frame) || document.Frame.Any(char.IsDigit))
+        if (!Enum.TryParse<ComparisonFrame>(document.Frame, ignoreCase: true, out var frame) || !Enum.IsDefined(frame) || document.Frame.Any(letter => !char.IsAsciiLetter(letter)))
         {
             problems.Add($"frame has the unknown value \"{document.Frame}\".");
         }
@@ -183,7 +183,7 @@ public static partial class ComparisonSample
         ];
     }
 
-    [GeneratedRegex("^[a-z0-9]+(-[a-z0-9]+)*$", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"^[a-z0-9]+(-[a-z0-9]+)*\z", RegexOptions.CultureInvariant)]
     private static partial Regex AddressName();
 
     private static JsonSerializerOptions CreateOptions()
@@ -192,6 +192,10 @@ public static partial class ComparisonSample
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
+
+            // A null where a value has to stand is a file that cannot be read – refused here with its place,
+            // not met later as a failure of the program.
+            RespectNullableAnnotations = true,
         };
         foreach (var converter in TemporalJson.Converters)
         {
@@ -299,7 +303,7 @@ public static partial class ComparisonSample
 
     private static ReviewStatus Review(string name, string key, List<string> problems)
     {
-        if (Enum.TryParse<ReviewStatus>(name, ignoreCase: true, out var review) && Enum.IsDefined(review) && !name.Any(char.IsDigit))
+        if (Enum.TryParse<ReviewStatus>(name, ignoreCase: true, out var review) && Enum.IsDefined(review) && !name.Any(letter => !char.IsAsciiLetter(letter)))
         {
             return review;
         }
@@ -310,7 +314,7 @@ public static partial class ComparisonSample
 
     private static Source? ReadSource(SourceDocument source, List<string> problems)
     {
-        var known = Enum.TryParse<SourceKind>(source.Kind, ignoreCase: true, out var kind) && Enum.IsDefined(kind) && !source.Kind.Any(char.IsDigit);
+        var known = Enum.TryParse<SourceKind>(source.Kind, ignoreCase: true, out var kind) && Enum.IsDefined(kind) && !source.Kind.Any(letter => !char.IsAsciiLetter(letter));
         if (!known)
         {
             problems.Add($"kind of the source \"{source.Id}\" has the unknown value \"{source.Kind}\".");

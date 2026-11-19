@@ -553,7 +553,7 @@ public static class RecordForm
 
                 if (Pointing.TryGetValue(name, out var pointed) && context.Records.TryGetValue(pointed, out var records))
                 {
-                    return Of(FieldKind.Choice, With(records, text));
+                    return Of(FieldKind.Choice, With(records, text, unchosen: true));
                 }
 
                 return Of(text.Length > 70 || text.Contains('\n', StringComparison.Ordinal) ? FieldKind.LongText : FieldKind.Text);
@@ -637,8 +637,11 @@ public static class RecordForm
 
     // The values to choose from, with the value the record has when it is none of them – it stays choosable, and
     // the readers say what is wrong with it.
-    private static IReadOnlyList<FieldOption> With(IReadOnlyList<FieldOption> options, string current) =>
-        current.Length == 0 || options.Any(option => option.Value == current) ? options : [new FieldOption(current, current), .. options];
+    // A field that names another record and is empty stays empty until the editor chooses (unchosen): without an
+    // empty choice the list would show its first record, and a form sent without a look at it would name that
+    // record. A field with a few fixed values begins with the first of them, which is the usual one.
+    private static IReadOnlyList<FieldOption> With(IReadOnlyList<FieldOption> options, string current, bool unchosen = false) =>
+        (current.Length == 0 && !unchosen) || options.Any(option => option.Value == current) ? options : [new FieldOption(current, current.Length == 0 ? "–" : current), .. options];
 
     // What a field was filled in with: the node to write, or nothing for a text that was left empty – a field
     // without a text is a field the record does not have.
@@ -728,12 +731,14 @@ public static class RecordForm
 
     private static (JsonNode? Node, bool Present)? Number(FormField field, string text, List<string> problems)
     {
-        if (long.TryParse(text.Trim(), NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var whole))
+        // An editor who works in Persian writes Persian digits; a record holds a number.
+        var written = Vafadar.Core.Text.Digits.ToAscii(text.Trim());
+        if (long.TryParse(written, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var whole))
         {
             return (JsonValue.Create(whole), true);
         }
 
-        if (decimal.TryParse(text.Trim(), NumberStyles.Number, CultureInfo.InvariantCulture, out var number))
+        if (decimal.TryParse(written, NumberStyles.Number, CultureInfo.InvariantCulture, out var number))
         {
             return (JsonValue.Create(number), true);
         }

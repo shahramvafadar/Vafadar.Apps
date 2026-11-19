@@ -39,8 +39,8 @@ services:
       Dastan__InvitationOnly: ${DASTAN_INVITATION_ONLY:-false}
       # Who the site believes about how a visitor came: the networks Docker gives its containers. A tunnel or a
       # proxy in front of the site is named here by whoever sets it up.
-      Dastan__TrustedProxies__0: 172.16.0.0/12
-      Dastan__TrustedProxies__1: 192.168.0.0/16
+      # Narrower is better: the address of the proxy alone, where it is known (DASTAN_TRUSTED_PROXY).
+      Dastan__TrustedProxies__0: ${DASTAN_TRUSTED_PROXY:-172.16.0.0/12}
     volumes:
       - ${DASTAN_CONTENT:?name the folder of content in DASTAN_CONTENT}:/app/content:ro
       - dastan-trial-data:/data

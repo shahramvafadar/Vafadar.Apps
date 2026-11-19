@@ -50,6 +50,13 @@ public sealed class Visitor
     /// <summary>Returns a text in the language of the page, or in the language of the collection when it has no translation.</summary>
     public ResolvedText Text(LocalizedText text) => text.Resolve(Language.Tag, _source);
 
+    /// <summary>Returns a day as the page shows it: year, month and day, with Persian digits on a Persian page.</summary>
+    public string Day(DateOnly day)
+    {
+        var written = day.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+        return Language.Tag == "fa" ? Digits.ToPersian(written) : written;
+    }
+
     /// <summary>Returns a number as the page shows it: with Persian digits on a Persian page.</summary>
     public string Number(int value)
     {

@@ -409,7 +409,11 @@ public sealed class Catalogue
             Known("collection", info.Subject, ReadingLevel.Opening, "subject");
             foreach (var story in info.Stories)
             {
-                if (catalogue.Find(story) is { } arc && arc.Type != EntityTypes.StoryArc)
+                if (catalogue.Find(story) is not { } arc)
+                {
+                    problems.Add($"collection: the story {story} is not there.");
+                }
+                else if (arc.Type != EntityTypes.StoryArc)
                 {
                     problems.Add($"collection: {story} is no story.");
                 }

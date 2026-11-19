@@ -100,6 +100,9 @@ public static class PhotoEndpoints
 
             // What the file is is read from its content, and what an image says about where and with which
             // device it was made is taken out before it is kept (MediaIntake). Its name is made here.
+            // A picture is read whole into memory to be turned upright and made smaller. One at a time: several
+            // large ones at once would take more memory than the site has (ImageSizes.MostPixels).
+            using var one = Reading.EnterScope();
             var id = Guid.NewGuid().ToString("N");
             using var content = file.OpenReadStream();
             var (taken1, _) = MediaIntake.Take(Path.Combine(desk.PhotoFolder!, "in"), id, "file", null, content);
@@ -264,6 +267,9 @@ public static class PhotoEndpoints
                 : Results.BadRequest();
         });
     }
+
+    // Held while a photograph that arrives is read as a picture.
+    private static readonly Lock Reading = new();
 
     /// <summary>The longer side of the smaller size of a photograph, in pixels: enough for a card on a screen that draws two pixels for one.</summary>
     public const int SmallSide = PhotoSizes.SmallSide;

@@ -691,7 +691,8 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             login.Property(item => item.Provider).HasMaxLength(20);
             login.Property(item => item.Key).HasMaxLength(64);
             login.Property(item => item.VisitorId).HasMaxLength(40);
-            login.HasIndex(item => item.VisitorId);
+            // One sign-in of a provider for an account: the store holds to it, whoever asks at the same moment.
+            login.HasIndex(item => new { item.VisitorId, item.Provider }).IsUnique();
             login.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.VisitorId).OnDelete(DeleteBehavior.Cascade);
         });
 

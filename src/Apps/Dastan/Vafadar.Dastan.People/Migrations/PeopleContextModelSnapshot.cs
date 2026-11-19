@@ -155,7 +155,8 @@ namespace Vafadar.Dastan.People.Migrations
 
                     b.HasKey("Provider", "Key");
 
-                    b.HasIndex("VisitorId");
+                    b.HasIndex("VisitorId", "Provider")
+                        .IsUnique();
 
                     b.ToTable("ExternalLogins");
                 });

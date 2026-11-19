@@ -1,7 +1,7 @@
 // The service worker of Dastan (ADR 0007). It does two things when a page cannot be fetched: it shows a public
 // page the visitor has read on this device before (D-064), or else the page that says there is no connection.
 // It keeps the few files that page is made of, the public pages the site allows it to keep, and what such a
-// page is drawn with. It keeps nothing of an account and nothing of a private space, and with a connection
+// page is drawn with. It keeps no page of an account and nothing of a private space, and with a connection
 // everything goes to the network exactly as without it.
 
 // Changing a name makes browsers drop what an earlier worker kept.
@@ -44,7 +44,12 @@ async function marked(kept, path) {
   const main = page.indexOf('<main');
   const end = main < 0 ? -1 : page.indexOf('>', main);
   const note = path.startsWith('/fa/') ? KEPT.fa : KEPT.en;
-  return new Response(end < 0 ? page : page.slice(0, end + 1) + note + page.slice(end + 1), { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
+  // What the site said about the page – what it may load, where it may be shown – holds for the kept one.
+  const headers = new Headers(kept.headers);
+  headers.delete('Content-Length');
+  headers.delete('Content-Encoding');
+  headers.set('Content-Type', 'text/html; charset=utf-8');
+  return new Response(end < 0 ? page : page.slice(0, end + 1) + note + page.slice(end + 1), { headers });
 }
 
 // Keeps an answer of the network for later, and lets go of what was kept longest ago.

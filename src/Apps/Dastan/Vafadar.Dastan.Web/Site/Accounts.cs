@@ -111,8 +111,17 @@ public sealed class AccountDesk
         var day = _time.GetUtcNow().ToUnixTimeSeconds() / 86400;
         if (Interlocked.Exchange(ref _purgedOn, day) != day)
         {
-            store.Purge();
-            Sweep(store);
+            try
+            {
+                store.Purge();
+                Sweep(store);
+            }
+            catch (Exception failed) when (failed is Microsoft.EntityFrameworkCore.DbUpdateException or Microsoft.Data.Sqlite.SqliteException or IOException or UnauthorizedAccessException)
+            {
+                // Not done today yet: the next request tries again. The request that asked goes on – it did
+                // not come for this.
+                Interlocked.Exchange(ref _purgedOn, 0);
+            }
         }
 
         return store;
@@ -420,7 +429,7 @@ public static class AccountEndpoints
                 return Back(from, "register", kept);
             }
 
-            var made = store.Register(name ?? string.Empty, password ?? string.Empty, invitation);
+            var made = store.Register(name ?? string.Empty, password ?? string.Empty, invitation, desk.InvitationOnly);
             if (!made.Done)
             {
                 return Back(from, "register", [.. made.Problems]);
@@ -667,7 +676,11 @@ public static class AccountEndpoints
     internal static IResult Back(string? returnUrl, string form, params string[] problems)
     {
         // An invitation the visitor came by stays in the address.
-        var invitation = returnUrl?.IndexOf("?invitation=", StringComparison.Ordinal) is { } at and >= 0 ? "&" + returnUrl[(at + 1)..] : string.Empty;
+        const string mark = "?invitation=";
+        var code = returnUrl?.IndexOf(mark, StringComparison.Ordinal) is { } at and >= 0 ? returnUrl[(at + mark.Length)..] : string.Empty;
+        var end = code.IndexOfAny(['&', '#']);
+        code = end < 0 ? code : code[..end];
+        var invitation = code is { Length: > 0 and <= 40 } && code.All(char.IsAsciiLetterOrDigit) ? $"&invitation={code}" : string.Empty;
         return Results.Redirect($"{Home(returnUrl)}?form={form}&problem={string.Join(',', problems)}{invitation}#{form}");
     }
 }

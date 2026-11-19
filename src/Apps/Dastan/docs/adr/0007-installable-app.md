@@ -122,3 +122,10 @@ The page of the visitor's list has a section, hidden as it comes from the site, 
 shows when the cache `dastan-read-1` holds pages: how many, and a button that deletes the cache. Without
 script nothing is claimed there; the browser's own control for the data of a site does the same. Forgetting
 does not unregister the worker and does not touch the small cache of the page for "no connection".
+
+## Addendum of 2026-11-19: what may be kept is a plain page (step 18.7.8)
+
+A page may be kept by the device when it is public content and its address has no question: the search of a
+collection, and an address that carries what a visitor asked or the word of thanks after a form, are moments
+of one visitor. The parts of the site itself are known in whatever case an address is written. A page that is
+shown from what was kept carries the headers the site gave it.

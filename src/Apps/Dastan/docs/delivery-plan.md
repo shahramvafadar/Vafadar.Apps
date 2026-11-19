@@ -587,3 +587,56 @@ for a visitor; four things were made firmer.
 
 Not changed, and said here: the image of the tunnel is named without a version (`cloudflare/cloudflared:latest`)
 – which version to hold to is chosen when the tunnel is set up with the owner's account.
+
+### 18.7 – A review of everything built so far (2026-11-19)
+
+The owner asked for all the work on Dastan to be looked at once more, not only the last steps. Every source
+file of the seven projects was read by a reviewer that only reads – one each for the core, for the readers and
+the store of the editors with the command, for the store of the visitors, for the endpoints of the site, for
+its pages and texts, and for the tool of the editors – and each finding was looked up in the code before
+anything was changed. One finding was wrong and is not changed: a period that begins and ends in the same year
+has no length to draw on purpose (`ComparisonTests`). The two files of texts hold the same 878 keys, with the
+same places for values, and no page writes markup from what somebody typed.
+
+| # | What was found | State |
+| --- | --- | --- |
+| 18.7.1 | **A photograph kept more than its picture.** Of a JPEG only EXIF, XMP and the notes of an agency were left out; a comment, the list of further pictures, the credentials of a maker stayed, and so did everything after the end of the picture – a second picture with its own place, the short film a telephone hangs on. Of a PNG only five kinds of chunk were left out | **Mended** – of both only what the picture is drawn from is kept, up to its end ([ADR 0006](adr/0006-media-delivery.md), addendum). A JPEG or PNG that is cut off is refused. `ImageSizesTests`, three more cases |
+| 18.7.2 | **One invitation made any number of accounts** on a site by invitation only: the question "is it usable" and the account were two steps | **Mended** – one step of the store; `FirmerAccountsTests` |
+| 18.7.3 | **A password could be guessed without being counted** on the forms of somebody who is signed in (another password, new codes, a copy of the data, closing) and for a closed account; tries at the same moment were counted as one | **Mended** – one proof of a password for every act, counted by the store in one sentence ([ADR 0014](adr/0014-visitor-accounts.md), addendum). After five wrong ones every such form answers "wrong" for a quarter of an hour, the right password too |
+| 18.7.4 | The name of a deleted account stayed in the histories of trees it had been shown; a record ticked "has died" was named in a public tree although it is an open account that took its agreement back; an objection kept its place when its photograph was shown to fewer people; who had answered "that is not me" could not object later; an account could get two sign-ins of one provider | **Mended** – the same addendum; a unique index (migration `OneLoginOfAProvider`) |
+| 18.7.5 | **A writer could record a review.** The form "change as text" of the tool takes any record, with the status of a review and who reviewed (GOV-002) | **Mended** in the store, so that no form goes around it ([ADR 0011](adr/0011-editors-store.md), addendum); `FirmerStoreTests` |
+| 18.7.6 | **Two acts made close together put each other's records back** – an act keeps the whole collection as it read it – and two who publish could meet on one number | **Mended** – an act and a publication are one step of the store, one at a time |
+| 18.7.7 | In the tool: a page whose address ends like a file (`….png`) was given without a sign-in; anybody could send 250 MB to the form that signs in; "take out" took the first record of an identifier in any group; an identifier could hold `/`, `?`, `#`; Persian digits were refused in numbers and years; a new row named the first record of a list without the editor choosing; a file stayed when the store failed | **Mended** |
+| 18.7.8 | On the site: the search of a collection and addresses with a question were marked "may be kept by the device", and so were pages of people when the address was written with a capital; several large photographs at once could take all the memory; an address without its language and with a Persian letter failed (500); a kept page lost the headers of the site; the address a form names carried more than an invitation | **Mended** – `FirmerSiteTests` (23 cases) |
+| 18.7.9 | On the pages: a sentence about two people of a tree turned around when their names were of the other script (the child became the parent); the degrees of a parallel ran into the map on a Persian page; the font was fetched twice; days in Latin digits on Persian pages; marks of charts too small to press; buttons that stand once per photograph all called the same; the rows of the reading control drawn as chips; albums without their margin | **Mended** |
+| 18.7.10 | In the core: a series whose largest value is 3 (or 0.3, 30) failed its page; a view of a thread carried the stops that are not reached; a story named by the collection and not there was no problem; a tree with a link to nobody failed to be drawn; a draft of a relationship was visible to the other side | **Mended** – `QuantitySeriesTests`, `TreeShapeTests` |
+| 18.7.11 | In the readers and the command: a `null` in a comparison failed the program instead of being refused; a HEIC picture or a QuickTime film was taken as an MP4 video; a path with a control character failed the check; the command wrote days in the calendar of the machine; names of kinds accepted lists; a revision made from a file refused translations of withdrawn statements | **Mended** |
+
+**Found and not changed**, each with its reason:
+
+* *Limits can be passed by forms sent at the same moment* (photographs, tags, trees, circles, albums, open
+  invitations and requests per account; two claims of one account in a tree; two requests between the same two
+  accounts). Each is "count, then add" without a lock. They bound misuse, not money or privacy, and the trial
+  is among invited people; closing them means unique indexes and one more migration per rule.
+* *The limits per hour count by the exact address* – a visitor with many addresses (IPv6) has many budgets. To
+  count by network needs a decision about how wide a network is.
+* *The history of a tree names whom it was shared with and who claimed a record to everybody who may see the
+  tree*, while two comments say "the owner only" and "nobody else". The ADR says both; which holds is the
+  owner's to say.
+* *A copy of one's data holds invitation codes and the names of photograph files*, which are made from
+  identifiers of the store, although the text says it holds none.
+* *The version of a record begins at 1 again* when it is taken out and put back.
+* *Two files brought in for the same item and part at the same moment*: the second request fails (500), nothing
+  is left behind.
+* *An event with a calendar date or a place "in the world" passes the check and is shown nowhere* – only
+  events with a place in the order of the telling become steps. Whether that is meant is a question of the
+  model.
+* *Videos keep what they say about their making* (the docs promise the removal for images).
+* *In the core, not reachable today*: a tag of shared media is not tied to the account that may answer it; an
+  affiliation does not check whose permissions it carries; a comment about callouts that leave a timeline; the
+  label of a meridian west of −180.
+* `compose.trial.yaml` believes the networks Docker gives its containers about how a visitor came – with a
+  tunnel in the same Compose file there is no narrower name for it; the port is open to this machine only.
+
+Checked: 2,653 tests of Dastan, 328 of them the browser tests that are skipped without a browser; none failed.
+Not looked at in a browser: the changes to the pages (the browser of the development tool did not draw).

@@ -149,9 +149,9 @@ public sealed partial class ReportBox
     private static string Clean(string? text) =>
         new string([.. (text ?? string.Empty).ReplaceLineEndings("\n").Where(character => character == '\n' || !char.IsControl(character))]).Trim();
 
-    [GeneratedRegex(@"^evidence/(entity|relation|media)/[A-Za-z0-9._-]{1,120}$|^evidence/event/[A-Za-z0-9._-]{1,120}(/entity/[A-Za-z0-9._-]{1,120})?$")]
+    [GeneratedRegex(@"^evidence/(entity|relation|media)/[A-Za-z0-9._-]{1,120}\z|^evidence/event/[A-Za-z0-9._-]{1,120}(/entity/[A-Za-z0-9._-]{1,120})?\z")]
     private static partial Regex StatementForm();
 
-    [GeneratedRegex(@"^[A-Za-z0-9._-]{1,120}$")]
+    [GeneratedRegex(@"^[A-Za-z0-9._-]{1,120}\z")]
     private static partial Regex NameForm();
 }

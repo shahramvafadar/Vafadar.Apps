@@ -311,6 +311,10 @@ public sealed partial class EditorialStore
 
         try
         {
+            // The password was tried – that takes its time – before this step, which reads the account again
+            // and writes the count: tries made at the same moment are all counted.
+            using var step = _context.Database.BeginTransaction();
+            _context.Entry(editor).Reload();
             if (editor.ClosedAt is not null || editor.LockedUntil > now)
             {
                 // A locked account does not count further and does not open for the right password either.
@@ -327,11 +331,13 @@ public sealed partial class EditorialStore
                 }
 
                 _context.SaveChanges();
+                step.Commit();
                 return null;
             }
 
             (editor.Failures, editor.LockedUntil) = (0, null);
             _context.SaveChanges();
+            step.Commit();
             return new EditorSession(editor.Name, editor.Stamp);
         }
         finally

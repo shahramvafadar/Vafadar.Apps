@@ -134,7 +134,17 @@ public sealed class Projection
                             stop.Media is { } item ? _media.GetValueOrDefault(item) : null))
                         .TakeWhile(step => step.Entity is not null || step.Step is not null || step.Media is not null)
                         .ToImmutableArray();
-                    return new ThreadView(thread, steps, steps.Length < thread.Stops.Length);
+                    // The thread a view carries has the stops that are shown and no other: what is not
+                    // reached is not handed out, not even unread (the rule of this class).
+                    var shown = new DiscoveryThread
+                    {
+                        Id = thread.Id,
+                        Label = thread.Label,
+                        Summary = thread.Summary,
+                        Level = thread.Level,
+                        Stops = [.. thread.Stops.Take(steps.Length)],
+                    };
+                    return new ThreadView(shown, steps, steps.Length < thread.Stops.Length);
                 })
                 .Where(view => !view.Steps.IsEmpty),
         ];

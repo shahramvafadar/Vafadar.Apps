@@ -154,11 +154,12 @@ public sealed class SocialRelationship
     }
 
     /// <summary>
-    /// Returns whether a viewer may see the relationship. The two sides see it in every state; anybody else
+    /// Returns whether a viewer may see the relationship. Who wrote it sees it in every state; the other side
+    /// from the moment it is sent – a draft is not sent, and names somebody who was not asked –; anybody else
     /// only once it is accepted, and only when both sides allow that viewer.
     /// </summary>
     public bool IsVisibleTo(AccountId? viewer) =>
-        (viewer is { } account && IsParty(account))
+        (viewer is { } account && (account == From || (account == To && State != RelationshipState.Draft)))
         || (State == RelationshipState.Accepted && FromScope.Allows(viewer) && ToScope.Allows(viewer));
 
     private bool IsParty(AccountId account) => account == From || account == To;

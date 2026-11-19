@@ -267,3 +267,11 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   without a password; on a site that takes accounts by invitation only it says that an invitation is needed.
 - What opens a folded part of a page ("Change the album") is as high as a button.
 - A photograph of more than 50 million pixels is not taken, and the form says so.
+- A photograph you bring in keeps only its picture: comments, further pictures hidden in the same file and
+  anything hung on after the picture are left out.
+- A wrong password counts on every form that asks for one; after five in a row the account takes none for a
+  quarter of an hour.
+- On a site that takes accounts by invitation only, one invitation makes one account.
+- A sentence about two people of a family tree reads right when their names are in another script; days are
+  written in Persian digits on Persian pages; marks of charts are easier to press.
+- A chart of numbers no longer fails for some ranges of values.

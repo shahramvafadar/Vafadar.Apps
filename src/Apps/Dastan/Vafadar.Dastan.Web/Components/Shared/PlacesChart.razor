@@ -34,7 +34,7 @@
     {
         <g>
             <line class="map-grid" x1="@Em(Pad)" y1="@Em(Pad + line.At)" x2="@Em(Pad + Map.Width)" y2="@Em(Pad + line.At)" />
-            <text x="@Em(Pad - 0.3)" y="@Em(Pad + line.At + 0.25)" text-anchor="end" direction="@Visitor.Language.Direction"><tspan class="map-degrees">@Degrees(line.Degrees, "Position_North", "Position_South")</tspan></text>
+            <text x="@Em(Pad - 0.3)" y="@Em(Pad + line.At + 0.25)" text-anchor="@(Visitor.Language.IsRightToLeft ? "start" : "end")" direction="@Visitor.Language.Direction"><tspan class="map-degrees">@Degrees(line.Degrees, "Position_North", "Position_South")</tspan></text>
         </g>
     }
     @foreach (var mark in Map.Marks)
@@ -42,6 +42,8 @@
         var name = Visitor.Text(mark.Place.Place.Label).Value;
         <a class="map-mark @(mark.Place.Position.Precision == PositionPrecision.Exact ? null : "map-about")" href="@($"{Here}#place-{mark.Place.Place.Id}")">
             <title>@string.Format(CultureInfo.CurrentCulture, T["Places_Mark"], Visitor.Number(mark.Number), name)</title>
+            @* What is pressed is larger than what is seen: 44 pixels across. *@
+            <circle class="chart-hit" cx="@Em(Pad + mark.X)" cy="@Em(Pad + mark.Y)" r="1.375rem" />
             <circle cx="@Em(Pad + mark.X)" cy="@Em(Pad + mark.Y)" r="@Em(mark.Place.Position.Precision == PositionPrecision.CentreOfArea ? 1.3 : 0.85)" />
             <text x="@Em(Pad + mark.X)" y="@Em(Pad + mark.Y + 0.27)" text-anchor="middle"><tspan class="map-number">@Visitor.Number(mark.Number)</tspan></text>
         </a>

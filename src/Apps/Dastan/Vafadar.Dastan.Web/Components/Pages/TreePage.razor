@@ -244,9 +244,12 @@
                 <ul class="people" role="list">
                     @foreach (var link in _tree.Links)
                     {
-                        var said = string.Format(CultureInfo.CurrentCulture, T[$"Tree_Linked_{link.Kind}"], _tree.Person(link.From).Name, _tree.Person(link.To).Name);
+                        // The sentence runs as the page does. Each name stands by itself (the marks U+2068 and U+2069
+                        // do what <bdi> does): a name of another script must not turn the sentence around and make
+                        // the child the parent.
+                        var said = string.Format(CultureInfo.CurrentCulture, T[$"Tree_Linked_{link.Kind}"], $"\u2068{_tree.Person(link.From).Name}\u2069", $"\u2068{_tree.Person(link.To).Name}\u2069");
                         <li>
-                            <span dir="auto">@said</span>
+                            <span>@said</span>
                             <form method="post" action="@($"{TreeEndpoints.Root}/unlink")" class="save inline">
                                 <AntiforgeryToken />
                                 <input type="hidden" name="returnUrl" value="@_here" />

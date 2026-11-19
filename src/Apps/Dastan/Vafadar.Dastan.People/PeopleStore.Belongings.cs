@@ -211,16 +211,6 @@ public sealed partial class PeopleStore
         return stored is not null && stored.UsedOn is null && stored.RevokedAt is null && Today <= stored.LastDay && IsOpen(stored.By) ? stored : null;
     }
 
-    // An invitation is used for the account it led to. What that means is decided by the rule (PRIV-006): it
-    // made an account and nothing else – no relationship, no claim.
-    private void Use(StoredInvitation stored, string account)
-    {
-        if (Rule(stored).Use(new AccountId(account), Today) == ActOutcome.Done)
-        {
-            (stored.UsedBy, stored.UsedOn) = (account, Today);
-        }
-    }
-
     // The invitation as the rules of private spaces know it, brought to where the store says it stands.
     private static Invitation Rule(StoredInvitation stored)
     {

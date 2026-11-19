@@ -334,7 +334,7 @@ public sealed class SiteTests(DemoSite site) : IClassFixture<DemoSite>
         // the icon for a home screen, addressed from the root of the site.
         // Beside them the page names its own address and its address in each language (step 14.4).
         Assert.Equal(9, files.Count);
-        Assert.Contains("<link rel=\"preload\" href=\"/fonts/vazirmatn-nl-wght.woff2\" as=\"font\" type=\"font/woff2\" crossorigin", page.Html, StringComparison.Ordinal);
+        Assert.Contains("<link rel=\"preload\" href=\"fonts/vazirmatn-nl-wght.woff2\" as=\"font\" type=\"font/woff2\" crossorigin", page.Html, StringComparison.Ordinal);
         foreach (var file in files)
         {
             Assert.Equal(HttpStatusCode.OK, (await visitor.Get(new Uri(new Uri("http://localhost/fa/"), file).AbsolutePath)).Status);

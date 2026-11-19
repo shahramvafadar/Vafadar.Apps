@@ -65,6 +65,11 @@ public sealed partial class EditorialStore
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
+
+        // One step: what is read, the number and the revision. Two who publish at the same moment get two
+        // numbers, one after the other.
+        using var step = _context.Database.BeginTransaction();
+        _context.ChangeTracker.Clear();
         if (Working(collectionId) is not var (root, working))
         {
             return new PublishResult([$"{collectionId}: the store holds no collection of that name."]);
@@ -102,6 +107,7 @@ public sealed partial class EditorialStore
             At = _time.GetUtcNow().UtcDateTime,
         });
         _context.SaveChanges();
+        step.Commit();
         return new PublishResult([], number, new ExportedCollection(made.Json, written), made.Changes);
     }
 

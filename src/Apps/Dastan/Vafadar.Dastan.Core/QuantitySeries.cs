@@ -136,7 +136,8 @@ public sealed record SeriesChart(double Width, double Height, ImmutableArray<Ser
             power /= 10;
         }
 
-        return Steps.Select(step => step * power).First(step => step >= atLeast);
+        // Ten times the power stands after five times: between five tenths and one, one is the step.
+        return Steps.Append(10).Select(step => step * power).First(step => step >= atLeast);
     }
 
     private static IEnumerable<decimal> Lines(decimal from, decimal to, decimal step)

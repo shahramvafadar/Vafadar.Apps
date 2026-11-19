@@ -26,7 +26,7 @@ public sealed partial class PeopleStore
     /// taken from the provider. The account has no password until its visitor sets one, and gets recovery codes
     /// like every account.
     /// </summary>
-    public AccountResult RegisterWith(string name, string provider, string subject, string? invitation = null)
+    public AccountResult RegisterWith(string name, string provider, string subject, string? invitation = null, bool invitationNeeded = false)
     {
         ArgumentNullException.ThrowIfNull(name);
         var written = name.Trim();
@@ -42,7 +42,7 @@ public sealed partial class PeopleStore
             return new(["login-taken"]);
         }
 
-        return Create(written, string.Empty, invitation, new StoredExternalLogin { Provider = provider, Key = key, VisitorId = string.Empty });
+        return Create(written, string.Empty, invitation, new StoredExternalLogin { Provider = provider, Key = key, VisitorId = string.Empty }, invitationNeeded);
     }
 
     /// <summary>
@@ -58,7 +58,18 @@ public sealed partial class PeopleStore
         }
 
         _context.ExternalLogins.Add(new StoredExternalLogin { Provider = provider, Key = key, VisitorId = id });
-        Save();
+        try
+        {
+            Save();
+        }
+        catch (DbUpdateException)
+        {
+            // The same was asked twice at the same moment: the store keeps one sign-in of a provider for an
+            // account, and one account for a sign-in.
+            _context.ChangeTracker.Clear();
+            return false;
+        }
+
         return true;
     }
 
@@ -69,7 +80,7 @@ public sealed partial class PeopleStore
     public bool Unlink(string id, string provider)
     {
         var logins = _context.ExternalLogins.Where(candidate => candidate.VisitorId == id).ToList();
-        var login = logins.SingleOrDefault(candidate => candidate.Provider == provider);
+        var login = logins.FirstOrDefault(candidate => candidate.Provider == provider);
         var visitor = _context.Visitors.AsNoTracking().SingleOrDefault(candidate => candidate.Id == id && candidate.ClosedAt == null);
         if (login is null || visitor is null || (visitor.Password.Length == 0 && logins.Count == 1))
         {

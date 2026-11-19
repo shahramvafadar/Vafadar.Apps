@@ -88,6 +88,10 @@ public sealed class Editor
 
         // A tool without accounts runs on the machine of its one editor, who may do everything.
         Roles = !Accounts ? EditorRoles.All : Account is null ? EditorRoles.None : store.RolesOf(Account);
+
+        // Writing and reviewing are kept apart (GOV-002) where it cannot be gone around: the store of this
+        // request refuses a record that says what a review found when its editor is no reviewer.
+        store.WritesReviews = May(EditorRoles.Reviewer);
         Today = DateOnly.FromDateTime(time.GetLocalNow().DateTime);
     }
 

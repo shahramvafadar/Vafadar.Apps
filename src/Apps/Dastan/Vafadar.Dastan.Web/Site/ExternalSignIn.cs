@@ -212,7 +212,7 @@ public static class ExternalSignIn
                 return AccountEndpoints.Back(returnUrl, "external", kept);
             }
 
-            var made = store.RegisterWith(name ?? string.Empty, provider, subject, invitation);
+            var made = store.RegisterWith(name ?? string.Empty, provider, subject, invitation, desk.InvitationOnly);
             if (!made.Done)
             {
                 return AccountEndpoints.Back(returnUrl, "external", [.. made.Problems]);

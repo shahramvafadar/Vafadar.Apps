@@ -75,6 +75,15 @@ public sealed class StudioTimeFormTests : IDisposable
     }
 
     [Fact]
+    public async Task A_year_written_in_Persian_digits_is_the_year()
+    {
+        var page = await _desk.Fill(Work, "fields", [("f.dated[0].time.at.year", "۱۰۱۲"), .. WhoAndWhy]);
+
+        Assert.EndsWith("?done=changed", page.Arrived, StringComparison.Ordinal);
+        Assert.Equal(1012, (int)TimeOfTheWork()!["at"]!["year"]!);
+    }
+
+    [Fact]
     public async Task A_year_is_corrected_and_a_day_is_stated()
     {
         var page = await _desk.Fill(Work, "fields",

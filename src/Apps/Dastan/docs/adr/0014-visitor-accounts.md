@@ -479,3 +479,26 @@ the provider until a password is set; and on a site that takes accounts by invit
 somebody without an invitation and then refused – the page now says that an invitation is needed.
 
 Checked: `MadeUpProviderTests` (4 cases); seen in a browser in English and Persian.
+
+## Addendum of 2026-11-19: what a review of the accounts made firmer (steps 18.7.2 to 18.7.4)
+
+* **One proof of a password.** Signing in, another password, new recovery codes, a copy of the data, closing
+  an account and opening a closed one again ask the same question of the store. A wrong password is counted
+  wherever it is tried, in one sentence of the store, so that tries made at the same moment are all counted;
+  at the fifth in a row the account takes no password for a quarter of an hour – on every one of these forms,
+  the right password too. Before, only signing in and recovering counted, so that a sign-in left open on a
+  shared machine, or a closed account, could be guessed at without end. An account without a password proves
+  nothing and takes as long to refuse.
+* **An invitation that is needed is taken with the account.** On a site by invitation only the store is told
+  so; the account and the use of the invitation are one step, and of two forms with the same invitation one
+  makes an account. Where anybody may make an account, an invitation that cannot be used still stops nobody.
+* **A recovery code is used once**, also by two forms at the same moment. **An account has one sign-in of a
+  provider**: the store holds to it with a unique index.
+* **The name goes with the account** out of the histories of trees too: a line that says with whom a tree was
+  shared stays and names nobody once that account is deleted.
+* **An open account is asked.** "Has died" on a record is the owner's word for somebody without an account
+  (D-053). A record that is a confirmed, open account is asked itself, whatever the record says – otherwise
+  the tick would answer for somebody who took their agreement back.
+* **An objection takes a place while it holds something back**: one on a photograph that is not shown to
+  everybody any more cannot be found by who made it and is not counted. Somebody the owner named and who
+  answered "that is not me" is named by nothing and objects like anybody else.

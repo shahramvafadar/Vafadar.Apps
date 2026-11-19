@@ -185,7 +185,7 @@ public static class TimeForm
     {
         int? Whole(string part)
         {
-            var text = Sent(form, $"{path}.{name}.{part}");
+            var text = Vafadar.Core.Text.Digits.ToAscii(Sent(form, $"{path}.{name}.{part}"));
             if (text.Length == 0)
             {
                 return null;

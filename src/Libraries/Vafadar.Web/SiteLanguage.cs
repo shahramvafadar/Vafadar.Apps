@@ -114,7 +114,7 @@ internal sealed class SiteLanguageMiddleware
             if (first != language.Tag || end < 0)
             {
                 var rest = end < 0 ? "/" : path[end..];
-                context.Response.Redirect($"{request.PathBase}/{language.Tag}{rest}{request.QueryString}", permanent: true);
+                context.Response.Redirect($"{request.PathBase}/{language.Tag}{new PathString(rest).ToUriComponent()}{request.QueryString}", permanent: true);
                 return;
             }
 
@@ -146,7 +146,7 @@ internal sealed class SiteLanguageMiddleware
             // The answer depends on the visitor, so nothing between here and the visitor may reuse it for another.
             context.Response.Headers.Vary = "Accept-Language, Cookie";
             context.Response.Headers.CacheControl = "no-store";
-            context.Response.Redirect($"{request.PathBase}/{visitor.Tag}{path}{request.QueryString}", permanent: false);
+            context.Response.Redirect($"{request.PathBase}/{visitor.Tag}{new PathString(path).ToUriComponent()}{request.QueryString}", permanent: false);
             return;
         }
 

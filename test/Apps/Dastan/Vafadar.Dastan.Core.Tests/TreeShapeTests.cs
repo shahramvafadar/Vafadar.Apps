@@ -61,6 +61,23 @@ public sealed class TreeShapeTests
     }
 
     [Fact]
+    public void A_link_to_somebody_who_is_not_named_and_a_member_named_twice_do_not_stop_the_drawing()
+    {
+        // What a store that lost a person leaves behind: a link whose one end is not there any more.
+        var shape = new TreeShape(
+            [new("zal", 0, "Zal"), new("rostam", 1, "Rostam"), new("rostam", 1, "Rostam once more")],
+            [Link("zal", "rostam"), Link("nobody", "rostam"), Link("zal", "gone")],
+            [Link("zal", "gone")]);
+
+        var tree = TreeShapeLayout.Of(shape);
+
+        Assert.Equal(2, tree.Layers);
+        Assert.Equal((0, 1), (tree.Node("zal").Layer, tree.Node("rostam").Layer));
+        Assert.Equal(("zal", "rostam"), (Assert.Single(tree.Parentage).From, tree.Parentage[0].To));
+        Assert.Empty(tree.Partnerships);
+    }
+
+    [Fact]
     public void A_shape_is_laid_out_without_knowing_what_a_member_is()
     {
         var shape = new TreeShape(

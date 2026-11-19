@@ -110,7 +110,7 @@ public sealed class MomentAndCitationTests(DemoSite demo, PublishedSite publishe
 
     [Theory]
     [InlineData("en", "To cite this", "“Rostam”. Dastan, revision 3 of 2026-11-17.")]
-    [InlineData("fa", "برای استناد", "ویرایش ۳ به تاریخ 2026-11-17")]
+    [InlineData("fa", "برای استناد", "ویرایش ۳ به تاریخ ۲۰۲۶-۱۱-۱۷")]
     public async Task A_statement_of_a_published_site_is_cited_with_its_revision(string language, string title, string cited)
     {
         var page = await published.Visitor().Get($"/{language}/{Story}/evidence/entity/character-rostam");
