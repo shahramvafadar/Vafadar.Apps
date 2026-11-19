@@ -37,7 +37,7 @@ docker build -f src/Apps/Dastan/Dockerfile.studio -t dastan-studio .
 | `Studio__Keys` | The folder of the keys of the sign-in; without it everybody signs in again after a restart | `/data/keys` |
 | `AllowedHosts` | The names the tool is reached by, separated by `;`. A request by another name is refused | has to be given |
 | `Studio__TrustedProxies__0`, `__1`, … | The address or network of the proxy that is believed about how an editor came | has to be given |
-| `Studio__Reports` | The folder the site keeps the reports of its visitors in (`Dastan__Reports` of the site, [ADR 0012](adr/0012-visitor-reports.md)); the tool must be able to write to it, because it moves a report that was looked at into the folder `settled` inside it | not set: the tool has no page of reports |
+| `Studio__Reports` | `true`: the tool has a page of the reports of the visitors of the site ([ADR 0012](adr/0012-visitor-reports.md)). They lie in the database of the store (`Studio__Store`), in the table `delivery."Reports"` – so the site that takes them is told the same database | not set: the tool has no page of reports |
 | `Studio__Files` | The folder of the files of the collections (`content/samples`). With it the tool checks that the file of a media item exists, and editors can bring files in: they are kept in the folder `media` beside it, which the tool must be able to write to. On a server that is a folder of the volume, such as `/data/content/samples` – copy the folder `media` of the collections there first, or every change is refused for the files that are missing | not set: files are not looked for, and no file can be brought in |
 
 The tool answers a request from another machine only when it came by https. It learns that from the proxy

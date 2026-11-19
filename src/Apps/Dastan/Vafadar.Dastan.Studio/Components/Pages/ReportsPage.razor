@@ -101,14 +101,14 @@
 
     protected override void OnInitialized()
     {
-        if (string.IsNullOrWhiteSpace(Options.Value.Reports))
+        if (!Options.Value.Reports)
         {
-            // A tool that was not told the folder has no such page.
+            // A tool that was not told to show reports has no such page.
             Navigation.NotFound();
             return;
         }
 
-        _box = new ReportBox(Options.Value.Reports);
+        _box = new ReportBox(Options.Value.Store);
         Read();
     }
 

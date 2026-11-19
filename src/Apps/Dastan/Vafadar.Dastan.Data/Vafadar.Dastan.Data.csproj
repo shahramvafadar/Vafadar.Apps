@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <!-- Reading and writing images (D-056). The second package brings the library for a Linux container; it needs nothing of the system. -->
+    <!-- The reports of visitors and the notices about content lie in the database (ADR 0015). -->
+    <PackageReference Include="Npgsql" />
     <PackageReference Include="SkiaSharp" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" />
   </ItemGroup>

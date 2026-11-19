@@ -17,9 +17,9 @@ public sealed class StudioReportsTests : IDisposable
 
     public StudioReportsTests()
     {
-        _studio = new Studio(accounts: false) { Reports = _folder };
+        _studio = new Studio(accounts: false) { Reports = true };
         _desk = new Desk(_studio);
-        _box = new ReportBox(_folder);
+        _box = new ReportBox(_studio.Database);
     }
 
     public void Dispose()

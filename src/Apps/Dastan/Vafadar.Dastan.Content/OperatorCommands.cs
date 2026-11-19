@@ -18,18 +18,19 @@ internal static class OperatorCommands
 
     public const string Usage = """
 
-          notices <folder>
-              Lists the notices about content that wait for a decision, the oldest first.
+          notices <database>
+              Lists the notices about content that wait for a decision, the oldest first. The database is
+              named by its connection, or by the word env for the one in the variable DASTAN_DATABASE.
 
-          notices show <reference> <folder>
+          notices show <reference> <database>
               Shows one notice in full: where the content is, what is said to be wrong with it, and who
               gave it when they said so.
 
-          notices settle <reference> <folder> --decision <text>
+          notices settle <reference> <database> --decision <text>
               Notes what was decided on a notice and takes it out of the waiting ones. The decision is told
               to who gave the notice by mail, when they left an address: the command sends nothing.
 
-          notices forget <folder> [--kept-days <days>]
+          notices forget <database> [--kept-days <days>]
               Removes the settled notices that were decided more than a number of days ago (365 when none
               is named).
 
@@ -209,14 +210,37 @@ internal static class OperatorCommands
 
     private static string Kind(RestrictionKind kind) => kind switch { RestrictionKind.Photo => "photo", RestrictionKind.Tree => "tree", _ => "account" };
 
-    private static NoticeBox? Folder(string folder, TextWriter output)
+    private static NoticeBox? Folder(string database, TextWriter output) =>
+        Delivered(database, output) is { } connection ? new NoticeBox(connection) : null;
+
+    /// <summary>
+    /// Returns the connection of a database that has the tables of reports and notices, as a command was told
+    /// it (<see cref="Connection"/>); nothing, with the reason written, for one that is not named, cannot be
+    /// reached or lacks the tables.
+    /// </summary>
+    internal static string? Delivered(string database, TextWriter output)
     {
-        if (Directory.Exists(folder))
+        database = Connection(database);
+        if (string.IsNullOrWhiteSpace(database))
         {
-            return new NoticeBox(Path.GetFullPath(folder));
+            output.WriteLine("No database: set DASTAN_DATABASE to its connection and name it with the word env.");
+            return null;
         }
 
-        output.WriteLine($"{folder}: there is no such folder.");
+        try
+        {
+            if (Delivery.Missing(database) is not { } missing)
+            {
+                return database;
+            }
+
+            output.WriteLine(missing);
+        }
+        catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)
+        {
+            output.WriteLine($"The database cannot be reached: {failed.Message}");
+        }
+
         return null;
     }
 

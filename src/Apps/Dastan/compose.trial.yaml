@@ -33,8 +33,8 @@ services:
       Dastan__Database: Host=database;Database=dastan;Username=dastan;Password=${DASTAN_DB_PASSWORD:?set a password for the database in DASTAN_DB_PASSWORD}
       Dastan__Photos: /data/photos
       Dastan__Keys: /data/keys
-      # What visitors report about a statement (ADR 0012); the editors read the folder with their tool.
-      Dastan__Reports: /data/reports
+      # What visitors report about a statement (ADR 0012), kept in the database; the editors read it with their tool.
+      Dastan__Reports: "true"
       # Legal texts of the owner's own, in the place of the ones of the program: a folder of plain files on the
       # volume, for example /data/legal. Not set, the site shows its own texts.
       Dastan__Legal: ${DASTAN_LEGAL:-}
@@ -47,8 +47,8 @@ services:
       Dastan__Operator__Host: ${DASTAN_OPERATOR_HOST:-}
       Dastan__Operator__Network: ${DASTAN_OPERATOR_NETWORK:-}
       Dastan__Operator__Authority: ${DASTAN_OPERATOR_AUTHORITY:-}
-      # Notices about content (Article 16 of the Digital Services Act); read with the command "notices".
-      Dastan__Notices: /data/notices
+      # Notices about content (Article 16 of the Digital Services Act), kept in the database; read with the command "notices".
+      Dastan__Notices: "true"
       # What the operator has to tell everybody, on every page, until it is taken out again.
       Dastan__Announcement: ${DASTAN_ANNOUNCEMENT:-}
       Dastan__InvitationOnly: ${DASTAN_INVITATION_ONLY:-false}

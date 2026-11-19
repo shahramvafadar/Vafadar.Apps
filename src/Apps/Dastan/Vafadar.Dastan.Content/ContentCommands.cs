@@ -40,7 +40,7 @@ public static class ContentCommands
               history of the revisions before and what this one changes. Refuses a file in which a statement
               is not reviewed or a review is not recorded. Never over a file.
 
-          reports forget <folder> [--kept-days <n> | --looked-at-before <yyyy-MM-dd>]
+          reports forget <database> [--kept-days <n> | --looked-at-before <yyyy-MM-dd>]
               For whoever runs the site: deletes the reports of visitors that an editor looked at more than
               90 days ago – or another number of days, or before a day that is named. A report nobody has
               looked at is never deleted. Says how many were deleted. Nothing runs it by itself.
@@ -106,13 +106,12 @@ public static class ContentCommands
             return NotUnderstood;
         }
 
-        if (!Directory.Exists(folder))
+        if (OperatorCommands.Delivered(folder, output) is not { } database)
         {
-            output.WriteLine($"{folder}: there is no such folder.");
             return NotUsable;
         }
 
-        var forgotten = new ReportBox(folder).Forget(before);
+        var forgotten = new ReportBox(database).Forget(before);
         output.WriteLine($"Deleted {forgotten} report(s) that were looked at before {day}.");
         return 0;
     }

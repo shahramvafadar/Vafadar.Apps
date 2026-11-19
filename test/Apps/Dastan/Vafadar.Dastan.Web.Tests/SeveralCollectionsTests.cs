@@ -32,12 +32,13 @@ public sealed class TwoCollectionsSite : DemoSite
     public const string Retold = "story-retold";
 
     /// <summary>Gets the folder the reports of visitors are kept in.</summary>
-    public string Reports => Path.Combine(Path.GetDirectoryName(_content)!, "reports");
+    public string Reports => Vafadar.Dastan.Tests.TestDatabase.For(Path.Combine(Path.GetDirectoryName(_content)!, "reports", "site.db"));
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseSetting("Dastan:Content", _content);
-        builder.UseSetting("Dastan:Reports", Reports);
+        builder.UseSetting("Dastan:Reports", "true");
+        builder.UseSetting("Dastan:Database", Reports);
         if (Directory.Exists(_content))
         {
             return;

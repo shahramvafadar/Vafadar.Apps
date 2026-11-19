@@ -30,10 +30,11 @@ public sealed class StudioOptions
     public string Keys { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the folder the site keeps the reports of its visitors in (step 14.8). Empty, the tool shows
-    /// no reports.
+    /// Gets or sets a value indicating whether the tool shows the reports of the visitors of the site
+    /// (step 14.8). They lie in the database of the store, where a site that shares it keeps them. Off, the
+    /// tool has no page of reports.
     /// </summary>
-    public string Reports { get; set; } = string.Empty;
+    public bool Reports { get; set; }
 
     /// <summary>Gets the proxies in front of the tool that are believed about how an editor came.</summary>
     public IList<string> TrustedProxies { get; } = [];

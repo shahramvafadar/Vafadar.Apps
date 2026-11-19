@@ -1,5 +1,5 @@
-using System.Text.Json;
 using System.Text.RegularExpressions;
+using Npgsql;
 
 namespace Vafadar.Dastan.Data;
 
@@ -28,9 +28,9 @@ public sealed record VisitorReport(
     DateOnly? SettledOn = null);
 
 /// <summary>
-/// The folder the reports of visitors lie in: one small file each. The site writes into it and reads nothing
-/// back; the tool of the editors reads it and moves a report that was looked at into the folder <c>settled</c>.
-/// The two programs share nothing but this folder.
+/// The reports of visitors, in the table <c>delivery."Reports"</c> of the database (ADR 0015). The site writes
+/// into it and reads nothing back; the tool of the editors reads it and notes a report as looked at. The two
+/// programs share nothing but this table.
 /// </summary>
 public sealed partial class ReportBox
 {
@@ -40,17 +40,16 @@ public sealed partial class ReportBox
     /// <summary>The largest number of reports that wait: a box that is full takes no more until an editor has looked.</summary>
     public const int MostWaiting = 500;
 
-    private static readonly JsonSerializerOptions Format = new(JsonSerializerDefaults.Web) { WriteIndented = true };
-    private readonly string _folder;
+    private const string Columns = """ "Id", "On", "Collection", "Revision", "Language", "Statement", "Text", "SettledBy", "SettledOn" """;
+    private static readonly string Table = $"""{Delivery.Schema}."Reports" """;
+    private readonly string _connection;
 
-    /// <summary>Initializes a new instance of the <see cref="ReportBox"/> class for a folder; it is made when the first report comes.</summary>
-    public ReportBox(string folder)
+    /// <summary>Initializes a new instance of the <see cref="ReportBox"/> class for a database, by its connection.</summary>
+    public ReportBox(string connection)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(folder);
-        _folder = Path.GetFullPath(folder);
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        _connection = connection;
     }
-
-    private string Settled => Path.Combine(_folder, "settled");
 
     /// <summary>Returns whether a text names a statement: the address of the page of its sources inside a collection.</summary>
     public static bool IsStatement(string? statement) => statement is { Length: <= 300 } && StatementForm().IsMatch(statement);
@@ -70,26 +69,33 @@ public sealed partial class ReportBox
             throw new ArgumentException("That is no report.", nameof(text));
         }
 
-        Directory.CreateDirectory(_folder);
-        if (Directory.EnumerateFiles(_folder, "*.json").Take(MostWaiting).Count() >= MostWaiting)
+        using var database = Delivery.Open(_connection);
+        using var step = database.BeginTransaction();
+
+        // Counted and added under one lock: the box does not take one more than it may, however many write at once.
+        Delivery.Lock(database, "reports");
+        using (var waiting = Delivery.Command(database, $"""select count(*) from {Table} where "SettledOn" is null"""))
         {
-            return false;
+            if ((long)waiting.ExecuteScalar()! >= MostWaiting)
+            {
+                return false;
+            }
         }
 
-        var report = new VisitorReport(Guid.NewGuid().ToString("N"), today, collection, revision, language, statement, words);
-
-        // Written beside its place and then moved there, so that nobody reads half a report.
-        var file = Path.Combine(_folder, report.Id + ".json");
-        File.WriteAllText(file + ".part", JsonSerializer.Serialize(report, Format));
-        File.Move(file + ".part", file);
+        using var add = Delivery.Command(
+            database,
+            $"""insert into {Table} ("Id", "On", "Collection", "Revision", "Language", "Statement", "Text") values (@id, @on, @collection, @revision, @language, @statement, @text)""",
+            ("id", Guid.NewGuid().ToString("N")), ("on", today), ("collection", collection), ("revision", revision), ("language", language), ("statement", statement), ("text", words));
+        add.ExecuteNonQuery();
+        step.Commit();
         return true;
     }
 
-    /// <summary>Returns the reports nobody has looked at yet, the oldest first. A file that is no report is passed over.</summary>
-    public IReadOnlyList<VisitorReport> Waiting() => Read(_folder);
+    /// <summary>Returns the reports nobody has looked at yet, the oldest first.</summary>
+    public IReadOnlyList<VisitorReport> Waiting() => Read($"""where "SettledOn" is null order by "On", "Id" """);
 
     /// <summary>Returns the reports somebody has looked at, the newest first.</summary>
-    public IReadOnlyList<VisitorReport> Looked() => [.. Read(Settled).OrderByDescending(report => report.SettledOn).ThenByDescending(report => report.On)];
+    public IReadOnlyList<VisitorReport> Looked() => Read($"""where "SettledOn" is not null order by "SettledOn" desc, "On" desc, "Id" """);
 
     /// <summary>Notes that an editor has looked at a report and takes it out of those that wait. Returns <see langword="false"/> when no such report waits.</summary>
     public bool Settle(string id, string by, DateOnly today)
@@ -100,16 +106,10 @@ public sealed partial class ReportBox
             return false;
         }
 
-        var file = Path.Combine(_folder, id + ".json");
-        if (!File.Exists(file) || ReadOne(file) is not { } report)
-        {
-            return false;
-        }
-
-        Directory.CreateDirectory(Settled);
-        File.WriteAllText(Path.Combine(Settled, id + ".json"), JsonSerializer.Serialize(report with { SettledBy = by, SettledOn = today }, Format));
-        File.Delete(file);
-        return true;
+        // One statement: of two editors who note the same report at the same moment, one does and the other is told it no longer waits.
+        using var database = Delivery.Open(_connection);
+        using var settle = Delivery.Command(database, $"""update {Table} set "SettledBy" = @by, "SettledOn" = @on where "Id" = @id and "SettledOn" is null""", ("by", by), ("on", today), ("id", id));
+        return settle.ExecuteNonQuery() == 1;
     }
 
     /// <summary>
@@ -118,31 +118,32 @@ public sealed partial class ReportBox
     /// </summary>
     public int Forget(DateOnly lookedAtBefore)
     {
-        var forgotten = 0;
-        foreach (var report in Read(Settled).Where(report => report.SettledOn is { } looked && looked < lookedAtBefore))
-        {
-            File.Delete(Path.Combine(Settled, report.Id + ".json"));
-            forgotten++;
-        }
-
-        return forgotten;
+        using var database = Delivery.Open(_connection);
+        using var forget = Delivery.Command(database, $"""delete from {Table} where "SettledOn" < @before""", ("before", lookedAtBefore));
+        return forget.ExecuteNonQuery();
     }
 
-    private static List<VisitorReport> Read(string folder) => !Directory.Exists(folder)
-        ? []
-        : [.. Directory.EnumerateFiles(folder, "*.json").Select(ReadOne).OfType<VisitorReport>().OrderBy(report => report.On).ThenBy(report => report.Id, StringComparer.Ordinal)];
-
-    private static VisitorReport? ReadOne(string file)
+    private List<VisitorReport> Read(string which)
     {
-        try
+        using var database = Delivery.Open(_connection);
+        using var command = Delivery.Command(database, $"select {Columns} from {Table} {which}");
+        using var rows = command.ExecuteReader();
+        var reports = new List<VisitorReport>();
+        while (rows.Read())
         {
-            var report = JsonSerializer.Deserialize<VisitorReport>(File.ReadAllText(file), Format);
-            return report is { Id.Length: 32, Text.Length: > 0 and <= LongestText } && IsStatement(report.Statement) && Path.GetFileNameWithoutExtension(file) == report.Id ? report : null;
+            reports.Add(new VisitorReport(
+                rows.GetString(0),
+                rows.GetFieldValue<DateOnly>(1),
+                rows.GetString(2),
+                rows.IsDBNull(3) ? null : rows.GetInt32(3),
+                rows.GetString(4),
+                rows.GetString(5),
+                rows.GetString(6),
+                rows.IsDBNull(7) ? null : rows.GetString(7),
+                rows.IsDBNull(8) ? null : rows.GetFieldValue<DateOnly>(8)));
         }
-        catch (Exception unreadable) when (unreadable is JsonException or IOException or UnauthorizedAccessException)
-        {
-            return null;
-        }
+
+        return reports;
     }
 
     // What a visitor typed: without control characters, with line ends kept as they are read.

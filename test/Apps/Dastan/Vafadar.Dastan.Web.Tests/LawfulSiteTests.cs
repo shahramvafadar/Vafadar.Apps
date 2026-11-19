@@ -15,12 +15,12 @@ public sealed class NoticesSite : DemoSite
     public string People => Path.Combine(_folder, "people.db");
 
     /// <summary>Gets the folder the notices lie in.</summary>
-    public string Notices => Path.Combine(_folder, "notices");
+    public string Notices => TestDatabase.For(People);
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseSetting("Dastan:Database", TestDatabase.For(People));
-        builder.UseSetting("Dastan:Notices", Notices);
+        builder.UseSetting("Dastan:Notices", "true");
         builder.UseSetting("Dastan:Announcement", "The site moves on 1 December. <b>");
     }
 
@@ -202,7 +202,7 @@ public sealed class LawfulSiteTests : IDisposable
 
         Assert.Equal($"/fa/notice?problem={problem}#form", sent.Response.Headers.Location!.OriginalString);
         Assert.Contains("class=\"problems\"", (await visitor.Get($"/fa/notice?problem={problem}")).Html, StringComparison.Ordinal);
-        Assert.False(Directory.Exists(_site.Notices) && new NoticeBox(_site.Notices).Waiting().Count > 0);
+        Assert.Empty(new NoticeBox(_site.Notices).Waiting());
     }
 
     [Fact]
@@ -211,7 +211,7 @@ public sealed class LawfulSiteTests : IDisposable
         var sent = await _site.Visitor().Post("/preferences/report-content", "/en/notice", ("language", "en"), ("address", "https://dastan.online/en/x"), ("kind", "image"), ("explanation", "A long enough explanation of the matter."), ("good-faith", "on"), ("website", "https://spam.example"));
 
         Assert.Contains("problem=later", sent.Response.Headers.Location!.OriginalString, StringComparison.Ordinal);
-        Assert.False(Directory.Exists(_site.Notices) && new NoticeBox(_site.Notices).Waiting().Count > 0);
+        Assert.Empty(new NoticeBox(_site.Notices).Waiting());
     }
 
     [Fact]

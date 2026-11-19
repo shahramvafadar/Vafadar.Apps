@@ -12,9 +12,15 @@ public sealed class ReportingSite : DemoSite
     public string Folder { get; } = Path.Combine(Path.GetTempPath(), "dastan-site-reports-" + Guid.NewGuid().ToString("N"));
 
     /// <summary>Gets the reports that wait.</summary>
-    public IReadOnlyList<VisitorReport> Waiting => new ReportBox(Folder).Waiting();
+    public IReadOnlyList<VisitorReport> Waiting => new ReportBox(Database).Waiting();
 
-    protected override void ConfigureWebHost(IWebHostBuilder builder) => builder.UseSetting("Dastan:Reports", Folder);
+    public string Database => Vafadar.Dastan.Tests.TestDatabase.For(Path.Combine(Folder, "site.db"));
+
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
+    {
+        builder.UseSetting("Dastan:Reports", "true");
+        builder.UseSetting("Dastan:Database", Database);
+    }
 
     protected override void Dispose(bool disposing)
     {
@@ -81,10 +87,17 @@ public sealed class VisitorReportTests : IDisposable
         Assert.Equal((Story, "en", "evidence/entity/character-rostam", "The summary names the wrong father."), (report.Collection, report.Language, report.Statement, report.Text));
         Assert.Null(report.Revision);
 
-        // Nothing of the visitor is in the file: no address of the machine, no browser.
-        var file = File.ReadAllText(Assert.Single(Directory.GetFiles(_site.Folder)));
-        Assert.DoesNotContain("127.0.0.1", file, StringComparison.Ordinal);
-        Assert.DoesNotContain("localhost", file, StringComparison.Ordinal);
+        // Nothing of the visitor is in the row: no address of the machine, no browser.
+        using (var connection = new Npgsql.NpgsqlConnection(_site.Database))
+        {
+            connection.Open();
+            using var command = connection.CreateCommand();
+            command.CommandText = """select row_to_json(report)::text from delivery."Reports" report""";
+            var row = (string)command.ExecuteScalar()!;
+            Assert.DoesNotContain("127.0.0.1", row, StringComparison.Ordinal);
+            Assert.DoesNotContain("localhost", row, StringComparison.Ordinal);
+            Assert.DoesNotContain("Mozilla", row, StringComparison.Ordinal);
+        }
 
         var thanked = await visitor.Get($"{Rostam}?reported=thanks");
         Assert.Contains("Thank you. The editors will read it.", thanked.Main, StringComparison.Ordinal);

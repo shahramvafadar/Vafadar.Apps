@@ -8,8 +8,8 @@ using Vafadar.Web;
 namespace Vafadar.Dastan.Web.Site;
 
 /// <summary>
-/// Where a visitor reports an error (step 14.8, R-GOV-03). The site takes reports only when it was told a folder
-/// for them (<c>Dastan:Reports</c>); the editors read that folder with their tool. A report is the statement,
+/// Where a visitor reports an error (step 14.8, R-GOV-03). The site takes reports only when it was told to
+/// (<c>Dastan:Reports</c>) and keeps them in its database; the editors read them with their tool. A report is the statement,
 /// the words and the day: the site keeps nothing about who wrote it.
 /// </summary>
 public sealed class ReportDesk
@@ -34,9 +34,9 @@ public sealed class ReportDesk
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(environment);
         _time = time;
-        if (!string.IsNullOrWhiteSpace(options.Value.Reports))
+        if (options.Value.Reports)
         {
-            _box = new ReportBox(Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.Reports)));
+            _box = new ReportBox(options.Value.DeliveryDatabase("Dastan:Reports"));
         }
     }
 

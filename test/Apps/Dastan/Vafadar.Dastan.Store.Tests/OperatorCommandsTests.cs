@@ -18,11 +18,10 @@ public sealed class OperatorCommandsTests : IDisposable
     private readonly string _folder = Path.Combine(Path.GetTempPath(), "dastan-operator-" + Guid.NewGuid().ToString("N"));
     private readonly TestClock _clock = new(new DateTimeOffset(2026, 11, 19, 9, 0, 0, TimeSpan.Zero));
 
-    private string Notices => Path.Combine(_folder, "notices");
+    private string Notices => People;
 
     private string People => TestDatabase.For(Path.Combine(_folder, "people.db"));
 
-    public OperatorCommandsTests() => Directory.CreateDirectory(Notices);
 
     public void Dispose()
     {
@@ -66,7 +65,11 @@ public sealed class OperatorCommandsTests : IDisposable
         _clock.Advance(TimeSpan.FromDays(2));
         Assert.Contains("1 settled notice removed.", Run("notices", "forget", Notices).Output, StringComparison.Ordinal);
         Assert.Equal(ContentCommands.NotUsable, Run("notices", "show", reference, Notices).Exit);
-        Assert.Equal(ContentCommands.NotUsable, Run("notices", Path.Combine(_folder, "no-such-folder")).Exit);
+        // A database without the tables, and none at all: the command says what is missing and does nothing.
+        var early = Run("notices", TestDatabase.Empty());
+        Assert.Equal(ContentCommands.NotUsable, early.Exit);
+        Assert.Contains("database migrate", early.Output, StringComparison.Ordinal);
+        Assert.Equal(ContentCommands.NotUsable, Run("notices", TestDatabase.Missing()).Exit);
     }
 
     [Fact]

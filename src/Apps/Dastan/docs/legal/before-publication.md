@@ -16,7 +16,7 @@ and say that they are not complete.
 | `Dastan__Operator__Host` | Name and address of the company whose machines the site runs on | Privacy notice, section 11 |
 | `Dastan__Operator__Network` | Name and address of the company that carries the traffic, if there is one besides the host (for example Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA) | Privacy notice, cookies page |
 | `Dastan__Operator__Authority` | The data protection authority of the Land the owner lives in, with its address (list: https://www.bfdi.bund.de/DE/Service/Anschriften/Laender/Laender-node.html) | Privacy notice, section 16 |
-| `Dastan__Notices` | A folder on the volume for the notices about content | The form of the page `notice` |
+| `Dastan__Notices` | `true`: notices about content are taken with a form and kept in the database | The form of the page `notice` |
 
 Already in the program: the name (Shahram Vafadar), the site (https://dastan.online), the mail address
 (info@dastan.online) and, since the owner's word of 2026-11-19, the Land – Niedersachsen, Germany – with the

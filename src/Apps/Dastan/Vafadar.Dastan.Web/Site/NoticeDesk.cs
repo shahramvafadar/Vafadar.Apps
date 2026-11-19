@@ -32,9 +32,9 @@ public sealed class NoticeDesk
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(environment);
         _time = time;
-        if (!string.IsNullOrWhiteSpace(options.Value.Notices))
+        if (options.Value.Notices)
         {
-            _box = new NoticeBox(Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.Notices)));
+            _box = new NoticeBox(options.Value.DeliveryDatabase("Dastan:Notices"));
         }
     }
 

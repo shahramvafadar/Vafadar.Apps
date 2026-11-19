@@ -83,10 +83,14 @@ that schema – it has no model of the editors' tables and reads no other schema
 and does not start on a revision that was changed, on a database without the tables, or without anything
 released. So an earlier revision can be shown again (R-PUB-07) by releasing it.
 
-**Still owed by step 19.3:** a page of the tool for releasing (today a command), the comparisons from the
-database (they are still files), a role of the database for the site that may read `published` and no more,
-reports and notices as tables, the version an act read (two editors who open the same form – today the later
-one wins and the history shows both), limits per hour by network.
+What was owed after that part and is built: the page of the revisions in the tool says which revision the
+site shows and a publisher releases or withdraws there; a comparison is released the same way
+(`published.Comparisons`: the text as it was at that moment, with its hash) and a site that reads from the
+database reads its comparisons there; an act says which version of a record it was decided on and is refused,
+under the lock of the collection, when the record is at another by then; the versions of a record are counted
+through a time it was not there. Reports and notices are the tables `delivery."Reports"` and
+`delivery."Notices"`, reached by the site, the tool and the command with plain questions (`Vafadar.Dastan.Data`);
+`Dastan:Reports`, `Dastan:Notices` and `Studio:Reports` say whether, no longer where.
 
 **Seen on the way and not solved here.** The stores speak to the database synchronously. Under a burst of
 requests that all wait – as the tests of this step produce on purpose – the threads of the process ran out and

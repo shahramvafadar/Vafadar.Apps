@@ -27,7 +27,7 @@ public sealed class Studio : WebApplicationFactory<Program>
     private readonly bool _accounts;
 
     /// <summary>Gets the folder of the reports of visitors the tool is told, when a test has one.</summary>
-    internal string? Reports { get; init; }
+    internal bool Reports { get; init; }
 
     public Studio()
         : this(accounts: false)
@@ -69,6 +69,9 @@ public sealed class Studio : WebApplicationFactory<Program>
     /// <summary>Opens the store of the tool, beside the tool.</summary>
     internal EditorialStore Store() => _copy.Open(files: true);
 
+    /// <summary>Gets the connection of the database of the tool.</summary>
+    internal string Database => _copy.Database;
+
     /// <summary>Gets the clock of the tool.</summary>
     internal TestClock Clock => _copy.Clock;
 
@@ -82,9 +85,9 @@ public sealed class Studio : WebApplicationFactory<Program>
             builder.UseSetting("Studio:Accounts", "true");
         }
 
-        if (Reports is not null)
+        if (Reports)
         {
-            builder.UseSetting("Studio:Reports", Reports);
+            builder.UseSetting("Studio:Reports", "true");
         }
 
         // The tool runs by the clock of the test, as its store does.

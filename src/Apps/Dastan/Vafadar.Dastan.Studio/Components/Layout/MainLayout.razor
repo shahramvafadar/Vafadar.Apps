@@ -12,7 +12,7 @@
     <nav class="site-nav" aria-label="@T["Nav_Main"]">
         <a href="./">@T["Nav_Collections"]</a>
         <a href="comparisons">@T["Nav_Comparisons"]</a>
-        @if (!string.IsNullOrWhiteSpace(Options.Value.Reports))
+        @if (Options.Value.Reports)
         {
             <a href="reports">@T["Nav_Reports"]</a>
         }
