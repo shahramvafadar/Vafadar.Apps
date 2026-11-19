@@ -278,6 +278,7 @@ public sealed partial class EntryEditorViewModel
         IconKey = null;
         ForeignCurrency = Currencies.Euro.Code; ForeignEnabled = ShowDetails = ReimbursableEnabled = HasReimbursementDue = IsAggregated = false;
         Date = source.Request.Today; ReimbursementDue = Date.AddDays(30); AggregatedFrom = AggregatedTo = Date;
+        ClearLocalCategoryReview(); SetSuggestedRuleDraft(null);
         FixedKindText = CurrencyNotice = AccountNotice = RuleHint = RefundInfo = null;
         ReceiptNote = ReceiptSource = ReceiptUnitNotice = null; ReceiptSourceDirection = FlowDirection.LeftToRight; ReceiptChoices.Clear();
         AmountError = AccountError = ToAccountError = ToAmountError = FeeError = DestinationFeeError

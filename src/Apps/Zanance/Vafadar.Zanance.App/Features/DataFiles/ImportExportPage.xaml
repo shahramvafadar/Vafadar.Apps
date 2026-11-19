@@ -146,6 +146,14 @@
                                                     <Label Text="{Binding Title}" IsVisible="{Binding HasTitle}" />
                                                     <Label Text="{Binding Accounts}" />
                                                     <Label Text="{Binding Category}" Style="{StaticResource Secondary}" />
+                                                    <Label Text="{Binding CategoryHint}" Style="{StaticResource Secondary}"
+                                                           IsVisible="{Binding CategoryHint, Converter={StaticResource IsNotNullConverter}}" />
+                                                    <p:WrappingAction Text="{v:Translate CategoryReview_Use}" IsVisible="{Binding CanUseCategory}"
+                                                        Command="{Binding UseCsvCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
+                                                        CommandParameter="{Binding .}" />
+                                                    <p:WrappingAction Text="{v:Translate CategoryReview_Choose}" IsVisible="{Binding CanChooseCategory}"
+                                                        Command="{Binding ChooseCsvCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
+                                                        CommandParameter="{Binding .}" />
                                                     <Label Text="{v:Translate Import_ReviewedAmount}" Style="{StaticResource FieldLabel}"
                                                            IsVisible="{Binding Amount, Converter={StaticResource IsNotNullConverter}}" />
                                                     <p:AmountReadout AmountText="{Binding Amount}" CaptionStyle="{StaticResource FieldLabel}" />

@@ -44,7 +44,11 @@ public sealed record ImportMapping(
 /// <param name="AlreadyImported">The entry id exists already (own format re-import) – skipped (IO-10, AT-52).</param>
 /// <param name="PossibleDuplicate">Same account, date and amount exist – only a warning (IO-10, AT-53).</param>
 /// <param name="BeforeOpening">Dated before the account's opening date and therefore not in its balance (IO-12).</param>
-public sealed record ImportRow(int Line, LedgerEntry? Entry, string? Error, bool AlreadyImported, bool PossibleDuplicate, bool BeforeOpening);
+public sealed record ImportRow(int Line, LedgerEntry? Entry, string? Error, bool AlreadyImported, bool PossibleDuplicate, bool BeforeOpening)
+{
+    /// <summary>Optional generic-CSV local review; its candidate is separate from the interpreted draft category.</summary>
+    public LocalCategoryReview? CategoryReview { get; init; }
+}
 
 /// <summary>Reads CSV files: the app's own export (with ids, transfers and refunds) or any file with a column mapping.</summary>
 public static class CsvImport
@@ -224,7 +228,7 @@ public static class CsvImport
         IReadOnlyCollection<Category> categories,
         Func<Category, string> categoryName,
         IReadOnlyCollection<LedgerEntry> existing,
-        IReadOnlyCollection<CategoryRule>? rules = null)
+        IReadOnlyCollection<CategoryRule>? rules = null, bool reviewLocalCategories = false)
     {
         ArgumentNullException.ThrowIfNull(rows);
         ArgumentNullException.ThrowIfNull(mapping);
@@ -284,11 +288,18 @@ public static class CsvImport
                 : null;
 
             // Without a category in the file, a categorization rule may suggest one; imported rows stay unreviewed (F2-TX-04).
-            category ??= rules is null ? null : CategoryRules.Suggest(rules, byId, categoryKind, null, entry.Title) is { } rule ? byId[rule.CategoryId] : null;
+            LocalCategoryReview? categoryReview = null;
+            if (category is null)
+            {
+                var (rule, conflicting) = CategoryRules.Resolve(rules ?? [], byId, categoryKind, null, entry.Title);
+                if (rule is not null) category = byId[rule.CategoryId];
+                else if (reviewLocalCategories) categoryReview = LocalCategoryReview.Evaluate(categories, categoryKind, null, entry.Title, conflicting);
+            }
             entry.CategoryId = category?.Id ?? categories.FirstOrDefault(c => c.Kind == categoryKind && c.SystemKey == DefaultCategories.Uncategorized)?.Id;
 
             // Equal date and amount is only a hint: two real purchases can look the same (AT-53).
-            result.Add(new ImportRow(line, entry, null, false, existingKeys.Contains((date, entry.Amount, kind)), date < account.OpeningDate));
+            result.Add(new ImportRow(line, entry, null, false, existingKeys.Contains((date, entry.Amount, kind)), date < account.OpeningDate)
+                { CategoryReview = categoryReview });
         }
 
         return result;

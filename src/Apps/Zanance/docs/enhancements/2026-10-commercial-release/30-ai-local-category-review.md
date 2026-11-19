@@ -1,0 +1,15 @@
+# Local category review
+
+The new transaction editor, including the draft created by the existing on-device receipt reader, offers a local category candidate only when the form has no explicit decision and the existing rules do not confidently select a category. The longest existing matching rule still wins. Equal strongest rules that point to different categories display a conflict. In the absence of an explicit rule, the fixed taxonomy considers normalized whole words in the label and payee. An archived or wrong-kind category is ineligible, and multiple supported categories produce an explicit conflict instead of a guess.
+
+The preview shows one reason, including no match when the evidence is insufficient. The candidate stays separate until the user explicitly applies it to the draft. The original category controls remain editable. An accepted local candidate can open the existing rule editor with the literal field that supplied the signal and its proposed category. Both fields are editable and the existing explicit rule Add operation retains its original rights and write checks.
+
+Generic CSV review gives the recognized mapped category first priority, followed by an unambiguous existing rule. Other rows show the local result and let the reviewer apply the candidate, select a different eligible category, or leave the row uncategorized. The accepted category is the only field that can be rebound on the exact original reviewed row. The existing import confirmation, duplicates, linked history, writer and Undo workflow keep their original ownership. The app keeps owned-format and bank-preset interpretations under their existing source contracts.
+
+The review reads only local title/payee words and the already parsed merchant or CSV label. It makes no API request and has no model pricing or inference cost. No receipt image, OCR document, transaction text, or CSV is sent to a provider. All nine captions are localized in the six app languages.
+
+## Synthetic verification
+
+Eleven new host cases passed. They cover six localized spellings, conflicting or missing signals, stronger explicit rules, the existing receipt parser to editable rule draft, generic CSV suggestion and manual selection, mapped-category priority, exact category-only rebinding, and refusal of a modified monetary packet or owned-format edit. One isolated import committed exactly the three reviewed synthetic rows, with the original rule, optional manual choice and existing unreviewed status preserved. Other checks compared the original financial source without writing a transaction.
+
+The independent Windows review exercised the original entry and receipt drafts, native candidate adoption, the editable rule handoff and the native generic CSV draft button with no transaction or rule write. The receipt fixture used synthetic OCR text through the existing parser and did not repeat camera capture. The first CSV observer selected the wrong scrolling container before invoking Preview. It was corrected and the two accepted entry/receipt operations were not repeated.

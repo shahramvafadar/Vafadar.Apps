@@ -22,7 +22,7 @@ public sealed class ImportReadReview
 {
     private readonly CommercialFileAccess _access;
     private readonly string _path, _packet;
-    private readonly bool _reviewAccess;
+    private readonly bool _reviewAccess, _allowCategoryDraftEdits;
     private readonly Action? _validateNative;
     /// <summary>Gets rules read with this preview; later rule edits do not replace its accepted literal categories.</summary>
     public IReadOnlyList<CategoryRule> PreviewRules { get; }
@@ -39,9 +39,11 @@ public sealed class ImportReadReview
     /// <summary>Publishes only the already committed receipt before any fallible Changed observer.</summary>
     internal void AcceptCommittedRead(DataFileImportReceipt receipt) => AcceptedWork = receipt;
     /// <summary>Captures one actual opened file and coherent original read.</summary>
-    internal ImportReadReview(string path, CommercialFileAccess access, ImportReviewInputs inputs, bool reviewAccess = true, Action? validateNative = null, IReadOnlyList<CategoryRule>? previewRules = null)
+    internal ImportReadReview(string path, CommercialFileAccess access, ImportReviewInputs inputs, bool reviewAccess = true, Action? validateNative = null, IReadOnlyList<CategoryRule>? previewRules = null,
+        bool allowCategoryDraftEdits = false)
     {
         _validateNative = validateNative; PreviewRules = previewRules ?? [];
+        _allowCategoryDraftEdits = allowCategoryDraftEdits;
         _path = path; _access = access; _reviewAccess = reviewAccess; Inputs = inputs; _packet = JsonSerializer.Serialize(inputs, ImportReviewJson.Default.ImportReviewInputs);
         ConsumedIds = inputs.Journals.Select(j => JsonSerializer.Deserialize(j.StateJson, ImportLinkJson.Default.ImportLinkState)
             is { Version: 1 } state ? state : throw new InvalidOperationException("Unsupported import journal."))
@@ -55,8 +57,31 @@ public sealed class ImportReadReview
     public void Bind(IEnumerable<LedgerEntry> entries)
     {
         if (_entries is not null) throw new InvalidOperationException("The original import review is already bound.");
-        _entries = entries.ToDictionary(e => e.Id, e => JsonSerializer.Serialize(e, ImportLinkJson.Default.LedgerEntry));
+        _entries = entries.ToDictionary(e => e.Id, EntryPacket);
     }
+    /// <summary>Rebinds only an explicitly edited category on an otherwise byte-identical generic CSV draft row.</summary>
+    public void SelectCategory(LedgerEntry entry, Guid? categoryId)
+    {
+        ArgumentNullException.ThrowIfNull(entry);
+        EnsureCurrent();
+        if (!_allowCategoryDraftEdits || AcceptedWork is not null || _entries is null ||
+            entry.Kind is not (EntryKind.Expense or EntryKind.Income) ||
+            !_entries.TryGetValue(entry.Id, out var original) || original != EntryPacket(entry))
+            throw new ImportReviewChangedException("The original generic CSV row changed.");
+
+        var kind = entry.Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
+        if (categoryId is { } id && !Inputs.Categories.Any(category => category.Id == id && !category.IsArchived && category.Kind == kind))
+            throw new ImportReviewChangedException("The selected category is unavailable for the reviewed CSV row.");
+
+        var draft = entry.Copy();
+        draft.CategoryId = categoryId;
+        var packet = EntryPacket(draft);
+        entry.CategoryId = categoryId;
+        _entries[entry.Id] = packet;
+    }
+
+    private static string EntryPacket(LedgerEntry entry) => JsonSerializer.Serialize(entry, ImportLinkJson.Default.LedgerEntry);
+
     /// <summary>Rejects retired rights or a changed in-memory original packet without HTTP.</summary>
     public void EnsureCurrent()
     {
@@ -70,7 +95,7 @@ public sealed class ImportReadReview
         EnsureCurrent();
         if (_entries is null || _path != DatabaseFileIdentity.ConfiguredPath(db)) throw new ImportReviewChangedException("The reviewed import belongs to another file.");
         foreach (var entry in entries)
-            if (!_entries.TryGetValue(entry.Id, out var packet) || packet != JsonSerializer.Serialize(entry, ImportLinkJson.Default.LedgerEntry))
+            if (!_entries.TryGetValue(entry.Id, out var packet) || packet != EntryPacket(entry))
                 throw new ImportReviewChangedException("An accepted CSV row differs from its original review.");
         if (_packet != JsonSerializer.Serialize(current, ImportReviewJson.Default.ImportReviewInputs)) throw new ImportReviewChangedException("The import history changed; review it again.");
         EnsureCurrent();

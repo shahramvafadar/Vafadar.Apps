@@ -8739,4 +8739,31 @@ SHA-256 du XML original : {5}</value>
   <data name="Ai_ForecastNoShortfall" xml:space="preserve">
     <value>La trajectoire calculée reste à zéro ou au-dessus.</value>
   </data>
+  <data name="CategoryReview_Signal" xml:space="preserve">
+    <value>Suggestion : {0} · Le libellé correspond à cette catégorie.</value>
+  </data>
+  <data name="CategoryReview_NoMatch" xml:space="preserve">
+    <value>Aucune catégorie correspondante trouvée.</value>
+  </data>
+  <data name="CategoryReview_ConflictingRules" xml:space="preserve">
+    <value>Les règles correspondantes indiquent des catégories différentes.</value>
+  </data>
+  <data name="CategoryReview_ConflictingSignals" xml:space="preserve">
+    <value>Le libellé correspond à plusieurs catégories.</value>
+  </data>
+  <data name="CategoryReview_Use" xml:space="preserve">
+    <value>Utiliser la suggestion</value>
+  </data>
+  <data name="CategoryReview_Keep" xml:space="preserve">
+    <value>Conserver la catégorie actuelle</value>
+  </data>
+  <data name="CategoryReview_Choose" xml:space="preserve">
+    <value>Choisir une catégorie</value>
+  </data>
+  <data name="CategoryReview_Unassigned" xml:space="preserve">
+    <value>Laisser sans catégorie</value>
+  </data>
+  <data name="CategoryReview_DraftRule" xml:space="preserve">
+    <value>Ouvrir le brouillon modifiable de la règle</value>
+  </data>
 </root>

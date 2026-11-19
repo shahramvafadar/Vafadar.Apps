@@ -8762,4 +8762,31 @@ Original-XML SHA-256: {5}</value>
   <data name="Ai_ForecastNoShortfall" xml:space="preserve">
     <value>Der berechnete Verlauf bleibt bei null oder darüber.</value>
   </data>
+  <data name="CategoryReview_Signal" xml:space="preserve">
+    <value>Vorschlag: {0} · Die Bezeichnung passt zu dieser Kategorie.</value>
+  </data>
+  <data name="CategoryReview_NoMatch" xml:space="preserve">
+    <value>Keine passende Kategorie gefunden.</value>
+  </data>
+  <data name="CategoryReview_ConflictingRules" xml:space="preserve">
+    <value>Passende Regeln verweisen auf unterschiedliche Kategorien.</value>
+  </data>
+  <data name="CategoryReview_ConflictingSignals" xml:space="preserve">
+    <value>Die Bezeichnung passt zu mehreren Kategorien.</value>
+  </data>
+  <data name="CategoryReview_Use" xml:space="preserve">
+    <value>Vorschlag übernehmen</value>
+  </data>
+  <data name="CategoryReview_Keep" xml:space="preserve">
+    <value>Aktuelle Kategorie behalten</value>
+  </data>
+  <data name="CategoryReview_Choose" xml:space="preserve">
+    <value>Kategorie wählen</value>
+  </data>
+  <data name="CategoryReview_Unassigned" xml:space="preserve">
+    <value>Ohne Kategorie lassen</value>
+  </data>
+  <data name="CategoryReview_DraftRule" xml:space="preserve">
+    <value>Bearbeitbaren Regelentwurf öffnen</value>
+  </data>
 </root>

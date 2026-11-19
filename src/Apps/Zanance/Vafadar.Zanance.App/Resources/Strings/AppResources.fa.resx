@@ -8762,4 +8762,31 @@
   <data name="Ai_ForecastNoShortfall" xml:space="preserve">
     <value>مانده در مسیر محاسبه‌شده به زیر صفر نمی‌رسد.</value>
   </data>
+  <data name="CategoryReview_Signal" xml:space="preserve">
+    <value>پیشنهاد: {0} · متن با این دسته سازگار است.</value>
+  </data>
+  <data name="CategoryReview_NoMatch" xml:space="preserve">
+    <value>دستهٔ منطبقی پیدا نشد.</value>
+  </data>
+  <data name="CategoryReview_ConflictingRules" xml:space="preserve">
+    <value>قاعده‌های منطبق به دسته‌های متفاوت اشاره می‌کنند.</value>
+  </data>
+  <data name="CategoryReview_ConflictingSignals" xml:space="preserve">
+    <value>متن با بیش از یک دسته سازگار است.</value>
+  </data>
+  <data name="CategoryReview_Use" xml:space="preserve">
+    <value>استفاده از پیشنهاد</value>
+  </data>
+  <data name="CategoryReview_Keep" xml:space="preserve">
+    <value>حفظ دستهٔ فعلی</value>
+  </data>
+  <data name="CategoryReview_Choose" xml:space="preserve">
+    <value>انتخاب دسته</value>
+  </data>
+  <data name="CategoryReview_Unassigned" xml:space="preserve">
+    <value>بدون دسته بماند</value>
+  </data>
+  <data name="CategoryReview_DraftRule" xml:space="preserve">
+    <value>بازکردن پیش‌نویس قابل‌ویرایش قاعده</value>
+  </data>
 </root>

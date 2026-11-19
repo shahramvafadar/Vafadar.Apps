@@ -35,23 +35,41 @@ public static class CategoryRules
     /// Returns the rule for a payee and title: the longest matching text wins, so "Market Hall" beats "Market". Rules
     /// of archived categories are ignored.
     /// </summary>
-    public static CategoryRule? Suggest(IEnumerable<CategoryRule> rules, IReadOnlyDictionary<Guid, Category> categories, CategoryKind kind, string? payee, string? title)
+    public static CategoryRule? Suggest(IEnumerable<CategoryRule> rules, IReadOnlyDictionary<Guid, Category> categories, CategoryKind kind, string? payee, string? title) =>
+        Resolve(rules, categories, kind, payee, title).Rule;
+
+    /// <summary>Distinguishes a tie between different targets from an unambiguous longest rule.</summary>
+    public static (CategoryRule? Rule, bool Conflicting) Resolve(IEnumerable<CategoryRule> rules,
+        IReadOnlyDictionary<Guid, Category> categories, CategoryKind kind, string? payee, string? title)
     {
         ArgumentNullException.ThrowIfNull(rules);
         ArgumentNullException.ThrowIfNull(categories);
         var haystack = Normalize($"{payee} {title}");
         if (haystack.Length == 0)
         {
-            return null;
+            return (null, false);
         }
 
-        return rules
-            .Where(r => r.Kind == kind && categories.TryGetValue(r.CategoryId, out var category) && !category.IsArchived)
-            .Select(r => (Rule: r, Text: Normalize(r.Match)))
-            .Where(x => x.Text.Length >= MinLength && haystack.Contains(x.Text, StringComparison.CurrentCultureIgnoreCase))
-            .OrderByDescending(x => x.Text.Length)
-            .Select(x => x.Rule)
-            .FirstOrDefault();
+        CategoryRule? rule = null;
+        var length = 0;
+        var conflict = false;
+        foreach (var candidate in rules)
+        {
+            if (candidate.Kind != kind || !categories.TryGetValue(candidate.CategoryId, out var category) ||
+                category.IsArchived || category.Kind != kind) continue;
+            var pattern = Normalize(candidate.Match);
+            if (pattern.Length < MinLength || pattern.Length < length ||
+                !haystack.Contains(pattern, StringComparison.CurrentCultureIgnoreCase)) continue;
+            if (pattern.Length > length)
+            {
+                length = pattern.Length;
+                rule = candidate;
+                conflict = false;
+            }
+            else if (rule!.CategoryId != candidate.CategoryId)
+                conflict = true;
+        }
+        return conflict ? (null, true) : (rule, false);
     }
 
     // The same normalization as the transaction search: digits, Persian letter forms and half-spaces (SearchText).

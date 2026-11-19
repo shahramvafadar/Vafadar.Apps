@@ -33,7 +33,7 @@ public sealed partial class ZananceStore
         var rules = includeCategoryRules ? (await db.CategoryRules.AsNoTracking().ToListAsync(ct))
             .OrderBy(rule => rule.Match, StringComparer.CurrentCultureIgnoreCase).ToList() : [];
         ct.ThrowIfCancellationRequested(); validateNative?.Invoke();
-        var review = new ImportReadReview(path, access, inputs, reviewAccess, validateNative, rules);
+        var review = new ImportReadReview(path, access, inputs, reviewAccess, validateNative, rules, allowCategoryDraftEdits: includeCategoryRules);
         review.EnsureCurrent(); return review;
     }
 }

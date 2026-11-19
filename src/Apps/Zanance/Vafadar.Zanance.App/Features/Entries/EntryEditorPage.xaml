@@ -136,6 +136,14 @@
                             <Label Text="{Binding RuleHint}" Style="{StaticResource Secondary}" FontSize="13" VerticalOptions="Center" />
                             <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoSuggestionCommand}" Style="{StaticResource TextButton}" />
                         </Grid>
+                        <VerticalStackLayout Spacing="4" IsVisible="{Binding LocalCategoryHint, Converter={StaticResource IsNotNullConverter}}">
+                            <Label Text="{Binding LocalCategoryHint}" Style="{StaticResource Secondary}" />
+                            <p:WrappingAction Text="{v:Translate CategoryReview_Use}" Command="{Binding UseLocalCategoryCommand}"
+                                              IsVisible="{Binding CanAcceptLocalCategory}" />
+                            <p:WrappingAction Text="{v:Translate CategoryReview_Keep}" Command="{Binding DismissLocalCategoryCommand}" />
+                        </VerticalStackLayout>
+                        <p:WrappingAction Text="{v:Translate CategoryReview_DraftRule}" Command="{Binding OpenSuggestedRuleCommand}"
+                                          IsVisible="{Binding HasSuggestedRuleDraft}" />
                         <Label Text="{v:Translate Entry_Category}" Style="{StaticResource FieldLabel}" Margin="4,0" />
                         <FlexLayout x:Name="CategoryChoicesGroup" Wrap="Wrap" JustifyContent="Start" AlignItems="Start" BindableLayout.ItemsSource="{Binding Categories}">
                             <BindableLayout.ItemTemplate>

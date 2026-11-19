@@ -8731,4 +8731,31 @@ SHA-256 del XML original: {5}</value>
   <data name="Ai_ForecastNoShortfall" xml:space="preserve">
     <value>La trayectoria calculada se mantiene en cero o por encima.</value>
   </data>
+  <data name="CategoryReview_Signal" xml:space="preserve">
+    <value>Sugerencia: {0} · El texto coincide con esta categoría.</value>
+  </data>
+  <data name="CategoryReview_NoMatch" xml:space="preserve">
+    <value>No se encontró una categoría adecuada.</value>
+  </data>
+  <data name="CategoryReview_ConflictingRules" xml:space="preserve">
+    <value>Las reglas coincidentes apuntan a categorías distintas.</value>
+  </data>
+  <data name="CategoryReview_ConflictingSignals" xml:space="preserve">
+    <value>El texto coincide con más de una categoría.</value>
+  </data>
+  <data name="CategoryReview_Use" xml:space="preserve">
+    <value>Usar sugerencia</value>
+  </data>
+  <data name="CategoryReview_Keep" xml:space="preserve">
+    <value>Conservar la categoría actual</value>
+  </data>
+  <data name="CategoryReview_Choose" xml:space="preserve">
+    <value>Elegir categoría</value>
+  </data>
+  <data name="CategoryReview_Unassigned" xml:space="preserve">
+    <value>Dejar sin categoría</value>
+  </data>
+  <data name="CategoryReview_DraftRule" xml:space="preserve">
+    <value>Abrir el borrador editable de la regla</value>
+  </data>
 </root>

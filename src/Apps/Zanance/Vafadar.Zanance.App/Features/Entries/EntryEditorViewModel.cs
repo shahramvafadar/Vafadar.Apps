@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using Vafadar.Zanance.App.Features.Categories;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
@@ -96,11 +97,13 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private readonly Presentation.UndoService _undo;
     private readonly AssetEntryConfirmation _assetConfirmation;
     private readonly Data.Commerce.ReceiptWorkStore _receiptReader;
+    private readonly Interaction.IAppInteraction _interaction;
 
     public EntryEditorViewModel(ZananceStore store, Translator translator, ILocalizationService localization, TimeProvider time, Presentation.UndoService undo, AssetEntryConfirmation assetConfirmation, Interaction.IAppInteraction interaction, Data.Commerce.ReceiptWorkStore receiptReader)
     {
         _assetConfirmation = assetConfirmation;
         _receiptReader = receiptReader;
+        _interaction = interaction;
         _quick = new(store, translator, interaction);
         _undo = undo;
         _store = store;
@@ -752,6 +755,10 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
         {
             UpdateKindState();
             BuildCategories(null);
+            RuleHint = null;
+            _beforeSuggestion = null;
+            SetSuggestedRuleDraft(null);
+            SuggestCategory();
         }
     }
 
@@ -908,6 +915,8 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private void SelectCategory(CategoryChoice choice)
     {
         _categoryChosen = true;
+        ClearLocalCategoryReview();
+        SetSuggestedRuleDraft(null);
         RuleHint = null;
         foreach (var category in Categories)
         {
@@ -924,19 +933,89 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [ObservableProperty]
     public partial string? RuleHint { get; set; }
 
-    partial void OnPayeeChanged(string value) => SuggestCategory();
+    private LocalCategoryReview? _localCategoryReview;
+    private CategoryRuleDraft? _suggestedRuleDraft;
 
-    partial void OnEntryTitleChanged(string value) => SuggestCategory();
+    /// <summary>One local reason attached to the current transaction draft.</summary>
+    [ObservableProperty] public partial string? LocalCategoryHint { get; private set; }
+    /// <summary>Gets whether the current local candidate may be explicitly adopted in the category draft.</summary>
+    public bool CanAcceptLocalCategory => _localCategoryReview?.CategoryId is not null;
+    /// <summary>Gets whether an accepted candidate has an explicit editable rule draft.</summary>
+    public bool HasSuggestedRuleDraft => _suggestedRuleDraft is not null;
+
+    partial void OnPayeeChanged(string value) { SetSuggestedRuleDraft(null); SuggestCategory(); }
+
+    partial void OnEntryTitleChanged(string value) { SetSuggestedRuleDraft(null); SuggestCategory(); }
+
+    private void SetSuggestedRuleDraft(CategoryRuleDraft? draft)
+    {
+        if (Equals(_suggestedRuleDraft, draft)) return;
+        _suggestedRuleDraft = draft;
+        OnPropertyChanged(nameof(HasSuggestedRuleDraft));
+    }
+
+    private void ClearLocalCategoryReview()
+    {
+        _localCategoryReview = null;
+        LocalCategoryHint = null;
+        OnPropertyChanged(nameof(CanAcceptLocalCategory));
+    }
+
+    /// <summary>Adopts only the visible original candidate, without saving a transaction or rule.</summary>
+    [RelayCommand]
+    private void UseLocalCategory()
+    {
+        var captured = _localCategoryReview;
+        if (!IsFormEditable || captured?.CategoryId is not { } categoryId ||
+            Categories.SingleOrDefault(category => category.Id == categoryId) is not { } choice ||
+            FormReview is not { } source) return;
+        var kind = Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
+        // Propose a rule from the field that supplied the actual signal.
+        var match = (LocalCategoryReview.Evaluate(_categories.All, kind, Payee, null).CategoryId == categoryId
+            ? Payee : EntryTitle)?.Trim();
+        SelectCategory(choice);
+        if (match is { Length: >= CategoryRules.MinLength and <= 120 } && choice.IsSelected && ReferenceEquals(FormReview, source))
+            SetSuggestedRuleDraft(new(source.DatabasePath, categoryId, match));
+    }
+
+    /// <summary>Leaves the original category untouched and stops suggesting for the current form.</summary>
+    [RelayCommand]
+    private void DismissLocalCategory()
+    {
+        if (!IsFormEditable) return;
+        _categoryChosen = true;
+        ClearLocalCategoryReview();
+    }
+
+    /// <summary>Opens the original rule editor with editable fields after verifying the current transaction source.</summary>
+    [RelayCommand]
+    private async Task OpenSuggestedRuleAsync()
+    {
+        if (!IsFormEditable || _suggestedRuleDraft is not { } draft || FormReview is not { } source) return;
+        IsBusy = true;
+        try
+        {
+            await _store.ValidateEntryEditorSnapshotAsync(source);
+            if (!_formDeparted && ReferenceEquals(_suggestedRuleDraft, draft) && ReferenceEquals(FormReview, source))
+                await _interaction.NavigateAsync(AppRoutes.RulesRoute,
+                    new Dictionary<string, object> { [CategoryRuleDraft.QueryKey] = draft });
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (!_formDeparted && ReferenceEquals(FormReview, source)) await _interaction.ShowFailureAsync(error); }
+        finally { if (!_formDeparted) IsBusy = false; }
+    }
 
     private void SuggestCategory()
     {
-        if (_loading || _categoryChosen || !CanChangeKind || !(Kind is EntryKind.Expense or EntryKind.Income) || _categories is null)
+        if (_loading) return;
+        if (_categoryChosen || !CanChangeKind || !(Kind is EntryKind.Expense or EntryKind.Income) || _categories is null)
         {
+            if (_localCategoryReview is not null) ClearLocalCategoryReview();
             return;
         }
 
         var kind = Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
-        var rule = CategoryRules.Suggest(_rules, _categories.All.ToDictionary(c => c.Id), kind, Payee, EntryTitle);
+        var (rule, conflicting) = CategoryRules.Resolve(_rules, _categories.All.ToDictionary(c => c.Id), kind, Payee, EntryTitle);
         var current = Categories.FirstOrDefault(c => c.IsSelected)?.Id;
         if (rule is null)
         {
@@ -946,9 +1025,23 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
                 RuleHint = null;
             }
 
+            var selected = Categories.FirstOrDefault(category => category.IsSelected);
+            var hasText = !string.IsNullOrWhiteSpace(Payee) || !string.IsNullOrWhiteSpace(EntryTitle);
+            if (!_isNew || !hasText || selected is not null && _categories.Get(selected.Id)?.SystemKey != DefaultCategories.Uncategorized)
+            {
+                if (_localCategoryReview is not null) ClearLocalCategoryReview();
+                return;
+            }
+            var local = LocalCategoryReview.Evaluate(_categories.All, kind, Payee, EntryTitle, conflicting);
+            _localCategoryReview = local;
+            LocalCategoryHint = local.CategoryId is { } id
+                ? _translator.Format("CategoryReview_Signal", _categories.Name(id))
+                : _translator[$"CategoryReview_{local.Reason}"];
+            OnPropertyChanged(nameof(CanAcceptLocalCategory));
             return;
         }
 
+        if (_localCategoryReview is not null) ClearLocalCategoryReview();
         if (RuleHint is null)
         {
             _beforeSuggestion = current;

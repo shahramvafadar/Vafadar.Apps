@@ -8,6 +8,12 @@ using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Categories;
 
+/// <summary>Editable local proposal for the same data file, never a rule-write request.</summary>
+internal sealed record CategoryRuleDraft(string File, Guid CategoryId, string Match)
+{
+    internal const string QueryKey = "categoryRuleDraft";
+}
+
 /// <summary>A rule in the list.</summary>
 public sealed record RuleRow(Guid Id, string Match, string CategoryName);
 
@@ -53,6 +59,15 @@ public sealed partial class RulesViewModel(ZananceStore store, Translator transl
     /// <summary>Gets known writer acceptance independently of a later read or notification failure.</summary>
     public bool Accepted => Volatile.Read(ref _accepted) != 0;
     private string DisplayIdentity() => $"{localization.CurrentLanguage.CultureName}|{localization.CurrentCulture.Name}|{localization.CurrentCalendar}|{localization.CurrentDigits}|{localization.FormattingCultureName}";
+
+    internal void SetInitialDraft(CategoryRuleDraft draft)
+    {
+        if (_active || _originalFile is not null) return;
+        _originalFile = draft.File;
+        _categoryDraftInitialized = true;
+        _categoryDraftId = draft.CategoryId;
+        MatchText = draft.Match;
+    }
 
     partial void OnMatchTextChanged(string value) { if (!_publishing) Interlocked.Increment(ref _draftRevision); }
     partial void OnSelectedCategoryChanged(RuleCategory? value)

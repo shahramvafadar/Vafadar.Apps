@@ -8803,4 +8803,31 @@ Original XML SHA-256: {5}</value>
   <data name="Ai_ForecastNoShortfall" xml:space="preserve">
     <value>The calculated path stays at or above zero.</value>
   </data>
+  <data name="CategoryReview_Signal" xml:space="preserve">
+    <value>Suggested: {0} · The label matches this category.</value>
+  </data>
+  <data name="CategoryReview_NoMatch" xml:space="preserve">
+    <value>No category match found.</value>
+  </data>
+  <data name="CategoryReview_ConflictingRules" xml:space="preserve">
+    <value>Matching rules point to different categories.</value>
+  </data>
+  <data name="CategoryReview_ConflictingSignals" xml:space="preserve">
+    <value>The label matches more than one category.</value>
+  </data>
+  <data name="CategoryReview_Use" xml:space="preserve">
+    <value>Use suggestion</value>
+  </data>
+  <data name="CategoryReview_Keep" xml:space="preserve">
+    <value>Keep current category</value>
+  </data>
+  <data name="CategoryReview_Choose" xml:space="preserve">
+    <value>Choose category</value>
+  </data>
+  <data name="CategoryReview_Unassigned" xml:space="preserve">
+    <value>Leave uncategorized</value>
+  </data>
+  <data name="CategoryReview_DraftRule" xml:space="preserve">
+    <value>Open editable rule draft</value>
+  </data>
 </root>

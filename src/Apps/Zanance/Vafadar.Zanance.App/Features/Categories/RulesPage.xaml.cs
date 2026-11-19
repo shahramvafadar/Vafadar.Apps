@@ -1,6 +1,6 @@
 namespace Vafadar.Zanance.App.Features.Categories;
 
-public partial class RulesPage : ContentPage
+public partial class RulesPage : ContentPage, IQueryAttributable
 {
     private readonly RulesViewModel _viewModel;
     private AppShell? _ownerShell;
@@ -13,6 +13,13 @@ public partial class RulesPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+    }
+
+    /// <inheritdoc />
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue(CategoryRuleDraft.QueryKey, out var source) && source is CategoryRuleDraft draft)
+            _viewModel.SetInitialDraft(draft);
     }
 
     protected override async void OnAppearing()
