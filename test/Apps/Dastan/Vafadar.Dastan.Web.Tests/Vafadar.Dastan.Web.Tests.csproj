@@ -4,6 +4,8 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
     <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Web\Vafadar.Dastan.Web.csproj" />
+    <!-- The tests publish and release a collection as editors do; the site itself never uses the store. -->
+    <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Store\Vafadar.Dastan.Store.csproj" />
   </ItemGroup>
 
   <ItemGroup>

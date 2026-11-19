@@ -38,6 +38,8 @@ Settings are environment variables (two underscores for a level).
 | `Dastan__Audience` | `Public` (the default) or `LocalDemonstration`. A host never sets it: a demonstration shows what is not published |
 | `Dastan__TrustedProxies__0`, `__1`, … | The proxies the site believes when they say how a visitor came (`X-Forwarded-Proto`, `X-Forwarded-For`): an address or a network such as `10.0.0.0/8`. Not set, the site believes nobody – then it does not know that a visitor came by https, sets no `Secure` cookie and sends no HSTS. Name the proxy of the host and nothing wider |
 | `Dastan__Reports` | A folder for the reports of visitors, on a volume the user of the container may write to (step 14.8, [ADR 0012](adr/0012-visitor-reports.md)). The editors read it with their tool (`Studio__Reports`): on one machine the same folder, else it is carried over. Each report is a small file with the statement, the words and the day – nothing about the visitor | not set: the site offers no form for reports and takes none |
+| `Dastan__Published` | `true`: the site reads its collections from the published revisions of its database – for each collection the revision that was **released** (`store release`, see "Taking a revision back") – and not from the files in `samples/`. It needs `Dastan__Database`. The files of media still lie in the folder of content. A site without a released revision does not start and says so. Default: the files |
+| `Dastan__First` | For a site that reads from the database: the identifier of the collection a visitor enters first. Empty, the first by its identifier |
 | `Dastan__Database` | The connection of the PostgreSQL database of the site (step 19.3, [ADR 0015](adr/0015-postgresql.md)), as Npgsql reads it – `Host=…;Database=…;Username=…;Password=…`. With it the site has accounts of visitors and what belongs to them. The password is a secret: it is set where the site runs and never written into a file of the repository. The database is made with `--encoding=UTF8 --locale=C`, and its tables are made and brought up by the command `database migrate` – the site changes no table and does not start on a database that is behind | not set: no accounts, nothing kept about a visitor |
 | `Dastan__Photos` | A folder for the photographs of the visitors (step 16.5), on a volume that outlives the container, that the user of the container may write to and that **no web server shows**: a photograph is given only through the site, which asks who may see it. Needs `Dastan__People`. It is backed up together with the store of the visitors – one without the other is of no use | not set: the site has no photographs |
 | `DASTAN_LEGAL` (of `compose.trial.yaml`) | A folder with legal texts of the owner's own inside the container of the trial, on its volume – for example `/data/legal`; it becomes `Dastan__Legal` | not set: the texts of the program |
@@ -133,6 +135,19 @@ show the revision before: start a container with the folder of revision *n − 1
 and switch to it as in an update. The page "what changed" then shows the history up to *n − 1*; the correction is
 published as revision *n + 1*, which says in its history what it changed against *n*. The number *n* is not used
 again.
+
+**A site that reads from the database** (`Dastan__Published`) needs no folder of a revision. Publishing makes
+a revision and shows it to nobody; the site shows the revision that was released, and reads it when it starts:
+
+```powershell
+dotnet Vafadar.Dastan.Content.dll store revisions <collection> --store env                       # which exist, which is shown
+dotnet Vafadar.Dastan.Content.dll store release <collection> <number> --store env --by "<name>"  # the newest, or an earlier one again
+dotnet Vafadar.Dastan.Content.dll store withdraw <collection> --store env --by "<name>"          # the site shows none of it
+```
+
+Then start the site again. Every word is kept with who said it and when, and nothing that was published is
+removed. A revision is kept with the hash of its text; a site that finds a revision changed does not show it
+and does not start. The comparisons are still read from the folder `comparisons`.
 
 Taking the program back is the same with the image: the tag of the commit before.
 

@@ -75,9 +75,18 @@ names which, brought up to date in the same step as every act, publishing includ
 directly: a link to a record that is not there, the removal of a record that is named, a body that is no JSON
 or is another record's, and a write to a computed column are each refused.
 
-**Still owed by step 19.3:** the published revisions in a schema of their own that the site reads, reports and
-notices as tables, the version an act read (two editors who open the same form – today the later one wins and
-the history shows both), limits per hour by network, an earlier revision shown.
+The published revisions (`published`): `Revisions` – the file and the translations as `json`, with the
+SHA-256 of both – and `Releases`, to which a word is only ever added: a release names the revision the site
+shows from now on, a withdrawal names none, and the last word about a collection counts. Publishing releases
+nothing. A site told `Dastan:Published` reads the released revisions when it starts, with a plain question to
+that schema – it has no model of the editors' tables and reads no other schema of theirs – compares each hash
+and does not start on a revision that was changed, on a database without the tables, or without anything
+released. So an earlier revision can be shown again (R-PUB-07) by releasing it.
+
+**Still owed by step 19.3:** a page of the tool for releasing (today a command), the comparisons from the
+database (they are still files), a role of the database for the site that may read `published` and no more,
+reports and notices as tables, the version an act read (two editors who open the same form – today the later
+one wins and the history shows both), limits per hour by network.
 
 **Seen on the way and not solved here.** The stores speak to the database synchronously. Under a burst of
 requests that all wait – as the tests of this step produce on purpose – the threads of the process ran out and

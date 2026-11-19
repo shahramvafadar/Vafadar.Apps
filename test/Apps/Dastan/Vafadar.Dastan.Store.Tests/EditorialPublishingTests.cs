@@ -201,12 +201,66 @@ public sealed class EditorialPublishingTests : IDisposable
         Assert.Equal(ContentCommands.NotUnderstood, over);
         Assert.Contains("never writes over a file", refusal, StringComparison.Ordinal);
         Assert.Equal(ContentCommands.Done, listed);
-        Assert.Contains($"{Collection}: 1 revision published.", list, StringComparison.Ordinal);
+        Assert.Contains($"{Collection}: 1 revision published; the site shows none.", list, StringComparison.Ordinal);
         Assert.Contains("1  2026-11-17  by an editor  – The first publication.", list, StringComparison.Ordinal);
         Assert.Equal(ContentCommands.Done, written);
         Assert.Equal(File.ReadAllText(first), File.ReadAllText(again));
         Assert.Equal(ContentCommands.NotUsable, unknown);
         Assert.Contains("did not publish a revision 7", which, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void The_commands_release_a_revision_to_the_site_and_withdraw_it_and_the_list_says_which_is_shown()
+    {
+        Run("store", "import", _copy.Sample, "--store", _copy.Database, "--by", "an editor");
+        using (var store = _copy.Open(files: true))
+        {
+            foreach (var statement in store.Statements(Collection))
+            {
+                store.Review(Collection, statement.Statement, ReviewAct.Reviewed, "a reviewer", Today, null);
+            }
+
+            Assert.Empty(store.Publish(Collection, Today, "an editor").Problems);
+        }
+
+        // Publishing released nothing.
+        Assert.Equal(ContentCommands.NotUsable, Run("store", "withdraw", Collection, "--store", _copy.Database, "--by", "a publisher").Exit);
+        Assert.Equal(ContentCommands.NotUsable, Run("store", "release", Collection, "4", "--store", _copy.Database, "--by", "a publisher").Exit);
+        Assert.Equal(ContentCommands.NotUsable, Run("store", "release", "no-such-collection", "1", "--store", _copy.Database, "--by", "a publisher").Exit);
+
+        var (released, said) = Run("store", "release", Collection, "1", "--store", _copy.Database, "--by", "a publisher");
+        Assert.Equal(ContentCommands.Done, released);
+        Assert.Contains($"The site shows revision 1 of {Collection} when it is started next.", said, StringComparison.Ordinal);
+        Assert.Equal(ContentCommands.NotUsable, Run("store", "release", Collection, "1", "--store", _copy.Database, "--by", "a publisher").Exit);
+
+        var list = Run("store", "revisions", Collection, "--store", _copy.Database).Output;
+        Assert.Contains("1 revision published; the site shows revision 1.", list, StringComparison.Ordinal);
+        Assert.Contains("by an editor  (shown by the site)", list, StringComparison.Ordinal);
+
+        Assert.Equal(ContentCommands.Done, Run("store", "withdraw", Collection, "--store", _copy.Database, "--by", "a publisher").Exit);
+        Assert.Contains("the site shows none", Run("store", "revisions", Collection, "--store", _copy.Database).Output, StringComparison.Ordinal);
+
+        // Not asked for completely, nothing is said.
+        Assert.Equal(ContentCommands.NotUnderstood, Run("store", "release", Collection, "one", "--store", _copy.Database, "--by", "a publisher").Exit);
+        Assert.Equal(ContentCommands.NotUnderstood, Run("store", "release", Collection, "1", "--store", _copy.Database).Exit);
+        Assert.Equal(ContentCommands.NotUnderstood, Run("store", "withdraw", Collection, "--store", _copy.Database).Exit);
+    }
+
+    [Fact]
+    public void A_revision_is_kept_with_the_hash_of_what_was_published()
+    {
+        using var store = Reviewed();
+        Assert.Empty(store.Publish(Collection, Today, "an editor").Problems);
+
+        using var connection = new Npgsql.NpgsqlConnection(_copy.Database);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandText = """select "Json"::text, "Translations"::text, "Hash" from published."Revisions" """;
+        using var row = command.ExecuteReader();
+        Assert.True(row.Read());
+        Assert.Equal(store.Revision(Collection, 1)!.Json, row.GetString(0));
+        Assert.Equal(Vafadar.Dastan.Data.PublishedRevision.HashOf(row.GetString(0), row.GetString(1)), row.GetString(2));
+        Assert.Equal(64, row.GetString(2).Length);
     }
 
     [Theory]

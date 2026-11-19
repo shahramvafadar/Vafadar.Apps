@@ -208,6 +208,9 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     /// <summary>Gets the records as they are now.</summary>
     public DbSet<StoredRecord> Records => Set<StoredRecord>();
 
+    /// <summary>Gets what was said about which revision of a collection the site shows, one after the other.</summary>
+    public DbSet<StoredRelease> Releases => Set<StoredRelease>();
+
     /// <summary>Gets the links between the records: which record names which.</summary>
     public DbSet<RecordLink> Links => Set<RecordLink>();
 
@@ -294,13 +297,29 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
 
         modelBuilder.Entity<StoredRevision>(revision =>
         {
+            // What was published lies apart from the work of the editors (ADR 0015): the site reads this schema
+            // and no other of theirs.
+            revision.ToTable("Revisions", Vafadar.Dastan.Data.PublishedRevision.Schema);
             revision.HasKey(item => new { item.CollectionId, item.Number });
+            revision.Property(item => item.Hash).HasMaxLength(64);
             revision.Property(item => item.By).HasMaxLength(200);
 
             // A revision stays the text it was: json keeps what is written, character for character.
             revision.Property(item => item.Json).HasColumnType("json");
             revision.Property(item => item.Translations).HasColumnType("json");
             revision.HasOne<StoredCollection>().WithMany().HasForeignKey(item => item.CollectionId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<StoredRelease>(release =>
+        {
+            release.ToTable("Releases", Vafadar.Dastan.Data.PublishedRevision.Schema);
+            release.HasKey(item => item.Id);
+            release.Property(item => item.CollectionId).HasMaxLength(200);
+            release.Property(item => item.By).HasMaxLength(200);
+            release.HasIndex(item => new { item.CollectionId, item.Id });
+
+            // A release names a revision that was published; a withdrawal names none.
+            release.HasOne<StoredRevision>().WithMany().HasForeignKey(item => new { item.CollectionId, item.Number }).OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<StoredEditor>(editor =>

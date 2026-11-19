@@ -282,6 +282,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The work of the editors is kept in PostgreSQL too. Nothing an editor sees has changed; what two editors do to
   the same collection at the same moment is now done one after the other, so neither loses the other's change.
   A copy of the store is made with the database's own tool.
+- A site can show what the editors published straight from the database: the revision that was released, which
+  can be the newest or an earlier one again, and none after it was withdrawn.
 - The site has its legal pages: terms of use, privacy notice, a page that lists everything the site stores on
   your device, and the legal notice – in English, Persian and German. They are linked at the foot of every page.
 - The site stores on your device only what you asked for. Your language is remembered when you change it, not
