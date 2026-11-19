@@ -275,3 +275,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A sentence about two people of a family tree reads right when their names are in another script; days are
   written in Persian digits on Persian pages; marks of charts are easier to press.
 - A chart of numbers no longer fails for some ranges of values.
+- In the history of a family tree, with whom the tree is shared and who said a record is them is read by the
+  owner of the tree only.
+- The copy of your data leaves out the code of an invitation that can still be used.

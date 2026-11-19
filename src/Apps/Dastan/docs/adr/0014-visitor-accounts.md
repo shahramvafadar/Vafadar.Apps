@@ -502,3 +502,19 @@ Checked: `MadeUpProviderTests` (4 cases); seen in a browser in English and Persi
 * **An objection takes a place while it holds something back**: one on a photograph that is not shown to
   everybody any more cannot be found by who made it and is not counted. Somebody the owner named and who
   answered "that is not me" is named by nothing and objects like anybody else.
+
+## Addendum of 2026-11-19: who reads what of a history, and what a copy of one's data leaves out (D-070, D-071)
+
+This document said both that the history of a tree is shown to everybody who may see the tree and that a
+claim is not shown to the others; the code did the first. The owner decided: the lines that say with whom a
+tree is shared (`member-…`) and who said a record is them (`claim-…`) are read by the owner of the tree,
+like the list of members. Somebody else reads of them the lines they wrote themselves – who claimed a record
+sees that they did. Every other line – a person added, a link, a name – is read by everybody who may see the
+tree. Leaving the lines in without the names was the other way; a line that says "shared with somebody"
+tells little and raises the question.
+
+A copy of one's data holds what the account may see anyway, in words. An invitation that can still be used is
+more than words: whoever holds its code makes an account with it, and the copy is a file that is kept and
+passed on. The copy names such an invitation – its last day, that it is open – without the code; the code
+stays on the page of the account. A used or revoked invitation keeps its code, which opens nothing, and a
+photograph keeps the name of its file, by which the picture is found again.

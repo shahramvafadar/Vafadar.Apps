@@ -90,6 +90,8 @@ Acceptance of a product direction is not proof that an implementation exists or 
 | D-067 | A closed trial runs on the owner's machine behind a tunnel; anything public runs on a small server of its own | Explicit user answer on 2026-11-18 ("everything as proposed") to the list of what waited for the owner after phase 16 |
 | D-068 | The site starts as a closed trial for invited people; a legal review comes before registration is open to everybody | Explicit user answer on 2026-11-18 ("everything as proposed") to the list of what waited for the owner after phase 16 |
 | D-069 | The site is registered with Google and Microsoft by the owner as the last thing before it is deployed | Explicit user statement on 2026-11-18 |
+| D-070 | In the history of a family tree, the lines that say with whom the tree is shared and who said a record is them are read by the owner of the tree; anybody else who may see the tree reads of those lines only the ones they wrote themselves. Every other line is read by everybody who may see the tree, as before | Explicit user answer on 2026-11-19 ("both as proposed") to two questions the review of step 18.7 left open; of three options: as it was, the owner only, or the line without the name |
+| D-071 | A copy of one's data names an invitation that can still be used without its code; an invitation that was used or taken back keeps its code, and a photograph keeps the name of its file | The same answer; of three options: everything stays and the text is corrected, both are left out, or only what could still be used |
 
 ## Current proposals
 

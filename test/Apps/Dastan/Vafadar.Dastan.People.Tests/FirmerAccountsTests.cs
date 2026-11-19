@@ -234,4 +234,57 @@ public sealed class FirmerAccountsTests : IDisposable
         Assert.True(_store.WithdrawObjection(_sara, photo));
         Assert.NotNull(_store.Photo(null, photo));
     }
+
+    [Fact]
+    public void With_whom_a_tree_is_shared_and_who_claimed_a_record_is_read_by_its_owner()
+    {
+        var dara = _store.Register("Dara", Password).Session!.Id;
+        var tree = _store.AddTree(_mina, "The Rad family")!;
+        var record = _store.AddPerson(_mina, tree, "Sara Rad", 1990, null, deceased: false)!;
+        foreach (var (account, name) in new[] { (_sara, "Sara"), (dara, "Dara") })
+        {
+            Assert.Equal("asked", _store.Ask(_mina, name, "family"));
+            Assert.True(_store.Answer(account, _store.Relationships(account).Single().Id, accept: true));
+        }
+
+        Assert.True(_store.SetTreeMember(_mina, tree, _sara, TreeRole.Viewer));
+        Assert.True(_store.SetTreeMember(_mina, tree, dara, TreeRole.Editor));
+        Assert.Equal("claimed", _store.Claim(_sara, tree, record));
+        Assert.True(_store.ReviewClaim(_mina, tree, _store.Tree(_mina, tree)!.Claims.Single().Number, confirm: false));
+
+        string[] Lines(string viewer) => [.. _store.Tree(viewer, tree)!.History.Select(change => $"{change.By} {change.What} {change.Subject}")];
+
+        // The owner reads everything.
+        Assert.Equal(
+            ["Mina claim-refused Sara Rad", "Sara claim-made Sara Rad", "Mina member-editor Dara", "Mina member-viewer Sara", "Mina person-added Sara Rad", "Mina tree-made The Rad family"],
+            Lines(_mina));
+
+        // Dara, who may change the tree, reads what was done to it – not with whom it is shared, not who claimed.
+        Assert.Equal(["Mina person-added Sara Rad", "Mina tree-made The Rad family"], Lines(dara));
+
+        // Sara reads the same, and the line she wrote herself.
+        Assert.Equal(["Sara claim-made Sara Rad", "Mina person-added Sara Rad", "Mina tree-made The Rad family"], Lines(_sara));
+    }
+
+    [Fact]
+    public void A_copy_of_ones_data_names_an_invitation_that_can_still_be_used_without_its_code()
+    {
+        var open = _store.Invite(_mina)!;
+        var used = _store.Invite(_mina)!;
+        var revoked = _store.Invite(_mina)!;
+        Assert.True(_store.Register("Dara", Password, used).Done);
+        Assert.True(_store.Revoke(_mina, revoked));
+
+        var copy = _store.Export(_mina, Password)!;
+        var invitations = copy["invitations"]!.AsArray().ToDictionary(invitation => (string)invitation!["state"]!, invitation => (string?)invitation!["code"]);
+
+        Assert.Equal(3, invitations.Count);
+        Assert.Null(invitations["open"]);
+        Assert.Equal(used, invitations["used"]);
+        Assert.Equal(revoked, invitations["revoked"]);
+        Assert.DoesNotContain(open, copy.ToJsonString(), StringComparison.Ordinal);
+
+        // The code is where it was: on the page of the account.
+        Assert.Contains(_store.Invitations(_mina), invitation => invitation.Code == open);
+    }
 }
