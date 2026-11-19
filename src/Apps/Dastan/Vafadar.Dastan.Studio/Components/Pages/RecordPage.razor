@@ -458,9 +458,20 @@
             else
             {
                 var record = MediaForm.With(_record!.Body, part, language, file);
-                var result = record is null
-                    ? new ActResult([T["Files_OtherKind"]])
-                    : Store.Put(Collection, Group, record, by!, reason!);
+                ActResult result;
+                try
+                {
+                    result = record is null
+                        ? new ActResult([T["Files_OtherKind"]])
+                        : Store.Put(Collection, Group, record, by!, reason!);
+                }
+                catch
+                {
+                    // The store failed instead of refusing: the file is named by no record and does not stay.
+                    MediaIntake.Discard(file);
+                    throw;
+                }
+
                 if (Finished(result, by!, "changed"))
                 {
                     return;
@@ -552,7 +563,7 @@
         var reason = Reason(input.Reason, problems);
         if (problems.Count == 0)
         {
-            var result = Store.Remove(Collection, Record, by!, reason!);
+            var result = Store.Remove(Collection, Record, by!, reason!, Group);
             if (Finished(result, by!, "removed"))
             {
                 return;

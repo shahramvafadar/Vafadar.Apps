@@ -82,6 +82,23 @@ public sealed class QuantitySeriesTests
         Assert.All(chart.Years, line => Assert.InRange(line.At, 0, chart.Width));
     }
 
+    [Theory]
+    [InlineData(1, 3)]
+    [InlineData(0.1, 0.3)]
+    [InlineData(10, 30)]
+    [InlineData(0.01, 0.035)]
+    [InlineData(2, 3.9)]
+    public void Every_range_of_numbers_has_a_scale(double least, double most)
+    {
+        // A quarter of such a range lies between five tenths and one of a power of ten: the step is that one.
+        var chart = SeriesChart.Of(QuantitySeries.Of(City(Stated("a", "Titles", (decimal)least, 1000), Stated("b", "Titles", (decimal)most, 1001)), "en").Single());
+
+        Assert.InRange(chart.Values.Length, 3, 6);
+        Assert.Contains(chart.Values, line => line.Value == 0);
+        Assert.True(chart.Values[^1].Value >= (decimal)most);
+        Assert.All(chart.Marks, mark => Assert.InRange(mark.Y, 0, chart.Height));
+    }
+
     [Fact]
     public void Small_numbers_numbers_below_zero_and_equal_numbers_have_a_scale()
     {

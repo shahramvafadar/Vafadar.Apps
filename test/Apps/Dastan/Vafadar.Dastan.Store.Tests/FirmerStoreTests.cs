@@ -86,6 +86,22 @@ public sealed class FirmerStoreTests : IDisposable
     }
 
     [Fact]
+    public void A_record_is_taken_out_of_the_group_that_is_named_and_of_no_other()
+    {
+        using var store = _copy.Filled();
+        Assert.True(store.Put(Collection, "sources", NewSource(), "a writer", "A source.").Done);
+
+        // Named with another group, the source is not there: nothing is taken out.
+        var elsewhere = store.Remove(Collection, "src-new", "a writer", "A try.", "entities");
+        Assert.Equal(0, elsewhere.Changed);
+        Assert.NotNull(store.Record(Collection, "sources", "src-new"));
+        Assert.False(store.Remove(Collection, "src-new", "a writer", "A try.", "no-such-group").Done);
+
+        Assert.Equal(1, store.Remove(Collection, "src-new", "a writer", "Not needed.", "sources").Changed);
+        Assert.Null(store.Record(Collection, "sources", "src-new"));
+    }
+
+    [Fact]
     public void Two_who_publish_get_two_numbers_one_after_the_other()
     {
         using var first = _copy.Filled(files: true);

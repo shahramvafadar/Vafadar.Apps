@@ -161,14 +161,28 @@ public sealed partial class EditorialStore
     /// Takes a record out of a collection, with the texts that translate it. What still points to the record
     /// makes the collection unusable, and the act is refused with what points to it.
     /// </summary>
-    public ActResult Remove(string collectionId, string recordId, string by, string reason)
+    /// <param name="collectionId">The collection.</param>
+    /// <param name="recordId">The identifier of the record.</param>
+    /// <param name="by">Who takes it out.</param>
+    /// <param name="reason">Why.</param>
+    /// <param name="group">
+    /// The group the record is in. Named, only that group is looked in – a thread may have the identifier of an
+    /// entity, and taking the thread out must not take the entity. Not named, the first record of that
+    /// identifier in any group.
+    /// </param>
+    public ActResult Remove(string collectionId, string recordId, string by, string reason, string? group = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(recordId);
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
         ArgumentException.ThrowIfNullOrWhiteSpace(reason);
+        if (group is not null && !Groups.Contains(group))
+        {
+            return Refused($"{group}: a collection has no such group of records; it has {string.Join(", ", Groups)}.");
+        }
+
         return Act(collectionId, by, reason, (root, translations) =>
         {
-            foreach (var group in Groups)
+            foreach (var group in group is null ? Groups : [group])
             {
                 var records = root[group]!.AsArray();
                 if (records.FirstOrDefault(record => (string?)record!["id"] == recordId) is { } found)

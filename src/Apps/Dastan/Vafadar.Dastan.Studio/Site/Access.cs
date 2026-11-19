@@ -31,6 +31,9 @@ public static class StudioAccess
     private static readonly string[] Open = [SignInPath, "/preferences/theme", "/error", "/not-found", StudioHealth.Address];
     private static readonly string[] Drawn = [".css", ".js", ".svg", ".png", ".ico", ".woff2", ".webmanifest"];
 
+    // How long a request of somebody who has not signed in may be, in bytes: the form that signs in, with room.
+    private const long LongestUnsigned = 64 * 1024;
+
     /// <summary>Adds what signing in needs: the sign-in kept in a cookie, its keys, and the proxies that are believed.</summary>
     public static void AddStudioAccounts(this WebApplicationBuilder builder)
     {
@@ -125,9 +128,20 @@ public static class StudioAccess
         app.Use(async (context, next) =>
         {
             var path = context.Request.Path.Value ?? string.Empty;
-            if (context.User.Identity?.IsAuthenticated == true
+            var signedIn = context.User.Identity?.IsAuthenticated == true;
+
+            // A file a page is drawn with is known by its ending – and by not being a page: a record whose
+            // identifier ends in ".png" has a page, and that page is for who signed in.
+            var isPage = context.GetEndpoint()?.Metadata.GetMetadata<Microsoft.AspNetCore.Components.Endpoints.ComponentTypeMetadata>() is not null;
+            if (!signedIn && context.Features.Get<Microsoft.AspNetCore.Http.Features.IHttpMaxRequestBodySizeFeature>() is { IsReadOnly: false } size)
+            {
+                // Who has not signed in sends a name and a password, nothing as long as a video.
+                size.MaxRequestBodySize = LongestUnsigned;
+            }
+
+            if (signedIn
                 || Open.Contains(path, StringComparer.OrdinalIgnoreCase)
-                || Drawn.Any(kind => path.EndsWith(kind, StringComparison.OrdinalIgnoreCase)))
+                || (!isPage && Drawn.Any(kind => path.EndsWith(kind, StringComparison.OrdinalIgnoreCase))))
             {
                 await next(context).ConfigureAwait(false);
             }

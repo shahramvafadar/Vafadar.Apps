@@ -160,7 +160,18 @@
             else
             {
                 var record = MediaForm.New(id, Sent("label"), Sent("caption"), Sent("creator"), Sent("source"), Store.WorldId(Collection)!, Sent("rights"), Sent("statement"), Editor.Today, taken);
-                var result = Store.Put(Collection, "media", record, by!, reason!);
+                ActResult result;
+                try
+                {
+                    result = Store.Put(Collection, "media", record, by!, reason!);
+                }
+                catch
+                {
+                    // The store failed instead of refusing: the file is named by no record and does not stay.
+                    MediaIntake.Discard(taken);
+                    throw;
+                }
+
                 if (result.Done)
                 {
                     EditorName.Keep(Context, by!);
