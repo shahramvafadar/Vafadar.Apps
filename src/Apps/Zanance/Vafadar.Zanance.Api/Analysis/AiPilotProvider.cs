@@ -47,22 +47,26 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         => SaveSelectionAsync(db, AiPurpose.PeriodExplanation, provider, null, actor, ct);
 
     /// <summary>Selects an allowlisted model or disables just the selected purpose.</summary>
-    internal Task SelectModelAsync(ServiceDbContext db, AiPurpose purpose, string model, string actor, CancellationToken ct)
+    internal Task SelectModelAsync(ServiceDbContext db, AiPurpose purpose, string model, string actor, CancellationToken ct,
+        long? expectedRouteId = null)
     {
         var models = Models(purpose);
         if (models.Length == 0 || (model != "off" && !models.Contains(model, StringComparer.Ordinal)))
             throw new InvalidOperationException("Analysis pilot model is not allowed for this purpose.");
         return SaveSelectionAsync(db, purpose, model == "off" ? "off" : ModelProvider(model),
-            model == "off" ? null : model, actor, ct);
+            model == "off" ? null : model, actor, ct, expectedRouteId);
     }
 
-    private async Task SaveSelectionAsync(ServiceDbContext db, AiPurpose purpose, string provider, string? model, string actor, CancellationToken ct)
+    private async Task SaveSelectionAsync(ServiceDbContext db, AiPurpose purpose, string provider, string? model, string actor,
+        CancellationToken ct, long? expectedRouteId = null)
     {
         if (actor.Length is < 1 or > 256) throw new InvalidOperationException("Invalid analysis pilot operator.");
         var profile = Profile(purpose, provider, model);
         if (provider != "off" && profile is null) throw new InvalidOperationException("Analysis pilot provider is unavailable.");
         await using var transaction = await db.Database.BeginTransactionAsync(ct);
         await LockAsync(db, ct);
+        if (expectedRouteId is { } expected && ((await LatestAsync(db, purpose, ct))?.Id ?? 0) != expected)
+            throw new AiRefusal(409, "AiPilotSelectionChanged");
         db.Add(new AiPilotRouteRow { Purpose = purpose, Provider = provider, Model = model, Revision = profile?.Revision ?? "",
             Actor = actor, SelectedAt = time.GetUtcNow() });
         await db.SaveChangesAsync(ct);
@@ -72,11 +76,23 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     /// <summary>Reads the current default and quote terms without egress.</summary>
     internal async Task<(AiProviderOffer Offer, long RouteId)?> OfferAsync(ServiceDbContext db, AiPurpose purpose, CancellationToken ct)
     {
-        var selected = await db.Set<AiPilotRouteRow>().Where(r => r.Purpose == purpose).OrderByDescending(r => r.Id).FirstOrDefaultAsync(ct);
+        var selected = await LatestAsync(db, purpose, ct);
         var profile = selected is null ? null : Profile(purpose, selected.Provider, selected.Model);
         return profile is not null && selected!.Revision == profile.Revision
             ? (new(profile.Provider, profile.Model, 1), selected.Id) : null;
     }
+
+    /// <summary>Returns the recorded choice and readiness even if its provider credentials have become unavailable.</summary>
+    internal async Task<(string Model, long RouteId, bool Available)> SelectionAsync(ServiceDbContext db, AiPurpose purpose, CancellationToken ct)
+    {
+        var selected = await LatestAsync(db, purpose, ct);
+        if (selected is null || selected.Provider == "off") return ("off", selected?.Id ?? 0, true);
+        var model = selected.Model ?? (selected.Provider == "openai" ? "gpt-6.2-sol" : "gemini-4-hydrogen");
+        return (model, selected.Id, Profile(purpose, selected.Provider, selected.Model)?.Revision == selected.Revision);
+    }
+
+    private static Task<AiPilotRouteRow?> LatestAsync(ServiceDbContext db, AiPurpose purpose, CancellationToken ct) =>
+        db.Set<AiPilotRouteRow>().AsNoTracking().Where(r => r.Purpose == purpose).OrderByDescending(r => r.Id).FirstOrDefaultAsync(ct);
 
     /// <summary>Limits the fixed request and output to twenty accepted attempts per provider per pilot store.</summary>
     internal Task<bool> AtCapacityAsync(ServiceDbContext db, string provider, CancellationToken ct)

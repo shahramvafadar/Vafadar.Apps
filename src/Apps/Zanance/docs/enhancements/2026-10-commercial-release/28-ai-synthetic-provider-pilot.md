@@ -15,6 +15,16 @@ Gemini returned HTTP 400 for the initial request. The request with `thinking_lev
 
 Use a dedicated private service root and a loopback PostgreSQL instance whose database is named `zanance_ai_provider_pilot`. Supply the dedicated connection through `ConnectionStrings__Service` and the private directory through `Service__Root`. Set `ASPNETCORE_ENVIRONMENT` to `Integration`, set `Analysis__LocalQualification` and `Analysis__ProviderPilot__Enabled` to `true`, and choose a local HTTPS port with `Analysis__ProviderPilot__Port`. The synthetic pilot refuses a self-hosted deployment. Apply service migrations before selecting a provider.
 
+### Management panel
+
+Set `Analysis__ProviderPilot__OperatorUserId` to the immutable user ID of the existing confirmed operator account in the isolated pilot database. The panel is absent when that setting is empty. Use the approved local TLS identity and open `https://localhost:<pilot-port>/admin/analysis` on the service host. Sign in with that account. The local panel accepts the configured account only and refuses accounts with second-factor enrollment, because it does not implement a second-factor prompt. Its 15-minute browser session is separate from app bearer sessions. Changes are attributed to the original user ID in the selection audit.
+
+Under **Simple reports** or **Financial comparisons**, review **Current model**, select an allowlisted model or **Off**, and save that section. Each section changes independently. A stale form for a changed section asks the operator to review the latest selection, while an unchanged section can still be saved. The panel does not inspect customer data, start an analysis, or contact a model provider. Its synthetic acceptance uses fictitious accounts and model configuration in isolated PostgreSQL. Vendor calls, token usage and API cost for this panel test are all zero. The prior observed inference costs remain documented below.
+
+The real HTTPS forms were verified for sign-in, non-operator and anonymous refusal, invalid and stale forms, six audited changes, two independent Off transitions and sign-out. Edge rendered the signed-in panel at 1060 and 375 CSS pixels with the two labelled model controls. Published Standard rates were rechecked on 2026-11-19 and match the per-purpose table below.
+
+### Server command alternative
+
 Supply each dedicated provider project reference with `Analysis__ProviderPilot__openai__Project` or `Analysis__ProviderPilot__gemini__Project`. Inject the corresponding `Analysis__ProviderPilot__openai__ApiKey` or `Analysis__ProviderPilot__gemini__ApiKey` through the private process configuration. The OpenAI profile sends the configured project header by default. Set `Analysis__ProviderPilot__openai__SendProjectHeader=false` only for a key already scoped to the dedicated pilot project, and keep its separate project reference configured. Keep credentials outside Git, command arguments and logs. Keep the original project profiles available for pending requests.
 
 Run the following commands against the same isolated service configuration. Each successful command records a new selection in PostgreSQL under the local operator identity and exits without starting the listener or contacting a vendor.

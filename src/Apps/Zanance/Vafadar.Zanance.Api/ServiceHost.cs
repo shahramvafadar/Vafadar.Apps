@@ -149,6 +149,7 @@ public static class ServiceHost
             o.BearerTokenExpiration = TimeSpan.FromMinutes(15);
             o.RefreshTokenExpiration = TimeSpan.FromDays(14);
         });
+        Analysis.AiPilotAdmin.Add(builder.Services, pilot, builder.Configuration["Analysis:ProviderPilot:OperatorUserId"]);
         builder.Services.AddAuthorization();
         var protection = builder.Services.AddDataProtection().SetApplicationName("Vafadar.Zanance.Service")
             .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(root, "keys")));
@@ -201,7 +202,7 @@ public static class ServiceHost
                 {
                     var time = http.RequestServices.GetRequiredService<TimeProvider>().GetUtcNow();
                     var minute = DateTimeOffset.FromUnixTimeSeconds(time.ToUnixTimeSeconds() / 60 * 60);
-                    var lane = http.Request.Path.StartsWithSegments("/identity") ? "identity" :
+                    var lane = (http.Request.Path.StartsWithSegments("/identity") || http.Request.Path == Analysis.AiPilotAdmin.LoginPath) ? "identity" :
                         http.Request.Path.StartsWithSegments("/billing") ? "billing" : "service";
                     var partition = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(lane + ":" + http.Connection.RemoteIpAddress)));
                     var factory = http.RequestServices.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
@@ -258,6 +259,7 @@ public static class ServiceHost
         Sharing.HouseholdRoutes.Map(app);
         Billing.BillingModule.Map(app);
         Analysis.AiModule.Map(app);
+        Analysis.AiPilotAdmin.Map(app);
         Rates.MarketModule.Map(app);
     }
 }
