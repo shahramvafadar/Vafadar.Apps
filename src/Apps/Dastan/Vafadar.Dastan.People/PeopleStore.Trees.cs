@@ -100,7 +100,7 @@ public sealed partial class PeopleStore
     public const int HistoryShown = 100;
 
     /// <summary>Makes a tree for an account and returns its identifier, or <see langword="null"/> when the name is none or the account owns as many trees as it may.</summary>
-    public string? AddTree(string id, string name)
+    private string? AddTreeUnguarded(string id, string name)
     {
         if (!IsOpen(id) || Named(name) is not { } written || _context.Trees.Count(tree => tree.Owner == id) >= MostTrees)
         {
@@ -273,7 +273,7 @@ public sealed partial class PeopleStore
     /// account may not change the tree, the record says something impossible or the tree is full. A record says
     /// little on purpose: a name and, when they are known, the years of birth and of death (PRIV-003).
     /// </summary>
-    public string? AddPerson(string id, string tree, string name, int? born, int? died, bool deceased)
+    private string? AddPersonUnguarded(string id, string tree, string name, int? born, int? died, bool deceased)
     {
         if (Role(id, tree) < TreeRole.Editor || Named(name) is not { } written || !Lived(born, died)
             || _context.Persons.Count(person => person.Tree == tree) >= MostPeople)

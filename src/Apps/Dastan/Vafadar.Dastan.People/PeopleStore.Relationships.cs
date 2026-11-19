@@ -62,7 +62,7 @@ public sealed partial class PeopleStore
     /// <c>kind</c>, <c>unknown</c>, <c>self</c>, <c>exists</c> (the two have a request or a relationship already),
     /// <c>declined-lately</c>, <c>too-many</c>.
     /// </summary>
-    public string Ask(string id, string name, string kind)
+    private string AskUnguarded(string id, string name, string kind)
     {
         ArgumentNullException.ThrowIfNull(name);
         if (!IsOpen(id))
@@ -223,7 +223,7 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>Makes a circle. Returns its number, or <see langword="null"/> when the name is none, is taken or the account has as many circles as it may.</summary>
-    public long? AddCircle(string id, string name)
+    private long? AddCircleUnguarded(string id, string name)
     {
         ArgumentNullException.ThrowIfNull(name);
         var written = name.Trim();

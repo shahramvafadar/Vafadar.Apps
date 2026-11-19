@@ -75,7 +75,7 @@ public sealed partial class PeopleStore
     /// Keeps a photograph whose file was taken in. Returns whether it was kept; a caption that is too long or
     /// has control characters, a circle that is not the owner's and a full account keep nothing.
     /// </summary>
-    public bool AddPhoto(string id, string photo, PhotoFile file, string caption, DateOnly? taken, ScopeKind shown, long? circle = null)
+    private bool AddPhotoUnguarded(string id, string photo, PhotoFile file, string caption, DateOnly? taken, ScopeKind shown, long? circle = null)
     {
         ArgumentNullException.ThrowIfNull(file);
         ArgumentNullException.ThrowIfNull(caption);
@@ -168,7 +168,7 @@ public sealed partial class PeopleStore
     /// Says that a photograph shows somebody: the owner themselves, or an account the owner shows an accepted
     /// relationship with. The person answers; the owner's own tag needs no answer. Only the owner tags.
     /// </summary>
-    public bool TagPhoto(string id, string photo, string account)
+    private bool TagPhotoUnguarded(string id, string photo, string account)
     {
         if (!_context.Photos.AsNoTracking().Any(candidate => candidate.Id == photo && candidate.Owner == id) || !IsOpen(id)
             || _context.PhotoTags.AsNoTracking().Any(tag => tag.Photo == photo && tag.Account == account)
@@ -263,7 +263,7 @@ public sealed partial class PeopleStore
     /// owner shows the photograph to fewer people. Only for a photograph the account may see, of somebody else,
     /// that names the account not yet.
     /// </summary>
-    public bool ObjectToPhoto(string id, string photo)
+    private bool ObjectToPhotoUnguarded(string id, string photo)
     {
         var stored = _context.Photos.AsNoTracking().SingleOrDefault(candidate => candidate.Id == photo);
         if (stored is null || stored.Owner == id || stored.Scope != (int)ScopeKind.Public || !IsOpen(id) || !IsOpen(stored.Owner))

@@ -92,7 +92,7 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>Puts a page at the end of the list of an account. A full list lets its oldest page go.</summary>
-    public void Keep(string id, KeptPage page)
+    private void KeepUnguarded(string id, KeptPage page)
     {
         ArgumentNullException.ThrowIfNull(page);
         if (!IsOpen(id) || !Fits(page))
@@ -151,7 +151,7 @@ public sealed partial class PeopleStore
     /// nothing. Returns the code, or <see langword="null"/> when the account has as many open invitations as it
     /// may have.
     /// </summary>
-    public string? Invite(string id)
+    private string? InviteUnguarded(string id)
     {
         if (!IsOpen(id) || Invitations(id).Count(invitation => invitation.IsOpen) >= OpenInvitations)
         {
