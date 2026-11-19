@@ -20,6 +20,13 @@ public sealed class SiteLanguageOptions
 
     /// <summary>Gets or sets the name of the cookie that remembers the language of the last page a visitor opened.</summary>
     public string CookieName { get; set; } = "vafadar.language";
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the language is remembered only when the visitor chose it – came
+    /// to a page of one language from a page of another language of the same site – and not whenever a page is
+    /// opened. A site that stores on a device only what a visitor asked for sets this.
+    /// </summary>
+    public bool RememberOnlyChoice { get; set; }
 }
 
 /// <summary>The language of the current request.</summary>
@@ -83,6 +90,7 @@ internal sealed class SiteLanguageMiddleware
     private readonly SiteLanguage[] _languages;
     private readonly string[] _unlocalized;
     private readonly string _cookieName;
+    private readonly bool _onlyChoice;
 
     public SiteLanguageMiddleware(RequestDelegate next, IOptions<SiteLanguageOptions> options)
     {
@@ -97,6 +105,39 @@ internal sealed class SiteLanguageMiddleware
         _languages = [.. settings.Languages.Select(tag => new SiteLanguage(tag, CultureInfo.GetCultureInfo(tag, predefinedOnly: true)))];
         _unlocalized = [.. settings.UnlocalizedPaths];
         _cookieName = settings.CookieName;
+        _onlyChoice = settings.RememberOnlyChoice;
+    }
+
+    // Whether the visitor came to this page from a page of the same site in another of its languages: the link
+    // that changes the language. Who once chose a language has the cookie, and it then follows every change.
+    private bool CameFromAnotherLanguage(HttpRequest request, SiteLanguage language) =>
+        Referring(request) is { } from && from != language;
+
+    // The language of the page of this site a request came from, when it came from one: what a form that is
+    // sent to an address without a language answers in, without anything being kept on the device for it.
+    private SiteLanguage? Referring(HttpRequest request)
+    {
+        if (!Uri.TryCreate(request.Headers.Referer.ToString(), UriKind.Absolute, out var from)
+            || !string.Equals(from.Authority, request.Host.Value, StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var path = from.AbsolutePath;
+        var basePath = request.PathBase.Value ?? string.Empty;
+        if (basePath.Length > 0)
+        {
+            if (!path.StartsWith(basePath, StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            path = path[basePath.Length..];
+        }
+
+        var end = path.IndexOf('/', 1);
+        var first = path.Length > 1 ? path[1..(end < 0 ? path.Length : end)] : string.Empty;
+        return Array.Find(_languages, candidate => string.Equals(candidate.Tag, first, StringComparison.OrdinalIgnoreCase));
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -118,7 +159,8 @@ internal sealed class SiteLanguageMiddleware
                 return;
             }
 
-            if (HttpMethods.IsGet(request.Method) && request.Cookies[_cookieName] != language.Tag && !Path.HasExtension(path))
+            if (HttpMethods.IsGet(request.Method) && request.Cookies[_cookieName] != language.Tag && !Path.HasExtension(path)
+                && (!_onlyChoice || request.Cookies.ContainsKey(_cookieName) || CameFromAnotherLanguage(request, language)))
             {
                 context.Response.Cookies.Append(_cookieName, language.Tag, PreferenceCookie.Options(context));
             }
@@ -171,6 +213,13 @@ internal sealed class SiteLanguageMiddleware
 
     private SiteLanguage Choose(HttpContext context)
     {
+        // Nothing is kept on the device for it: the page a request came from says the language – for a form,
+        // and for the page a form sends the visitor on to, which a browser asks for in the name of the same page.
+        if (_onlyChoice && Referring(context.Request) is { } page)
+        {
+            return page;
+        }
+
         var saved = context.Request.Cookies[_cookieName];
         if (Array.Find(_languages, language => language.Tag == saved) is { } remembered)
         {

@@ -40,9 +40,15 @@ Settings are environment variables (two underscores for a level).
 | `Dastan__Reports` | A folder for the reports of visitors, on a volume the user of the container may write to (step 14.8, [ADR 0012](adr/0012-visitor-reports.md)). The editors read it with their tool (`Studio__Reports`): on one machine the same folder, else it is carried over. Each report is a small file with the statement, the words and the day – nothing about the visitor | not set: the site offers no form for reports and takes none |
 | `Dastan__People` | The file of the store of the visitors (step 16.1, [ADR 0014](adr/0014-visitor-accounts.md)): a SQLite database with their accounts, on a volume that outlives the container and that the user of the container may write to. The site makes the file and brings it to the form it knows when it starts. One container at a time may use it. It holds names and values derived from passwords: it is backed up and protected like a database, and never lies in a folder a web server shows. Set it together with `Dastan__Keys`, or everybody signs in again after each start | not set: the site has no accounts, no page for one, and keeps nothing |
 | `Dastan__Photos` | A folder for the photographs of the visitors (step 16.5), on a volume that outlives the container, that the user of the container may write to and that **no web server shows**: a photograph is given only through the site, which asks who may see it. Needs `Dastan__People`. It is backed up together with the store of the visitors – one without the other is of no use | not set: the site has no photographs |
-| `DASTAN_LEGAL` (of `compose.trial.yaml`) | The folder of the legal texts inside the container of the trial, on its volume – for example `/data/legal`; it becomes `Dastan__Legal`. The files are copied onto the volume by whoever runs the trial | not set: no legal pages |
+| `DASTAN_LEGAL` (of `compose.trial.yaml`) | A folder with legal texts of the owner's own inside the container of the trial, on its volume – for example `/data/legal`; it becomes `Dastan__Legal` | not set: the texts of the program |
+| `Dastan__Operator__Street`, `__Town`, `__Country` | The postal address of who runs the site (row 18.8, [legal/before-publication.md](legal/before-publication.md)): shown in the imprint, the privacy notice and the terms. Said to the running site, never written into the repository | not set: the legal pages show a gap and say that they are not complete |
+| `Dastan__Operator__Name`, `__Site`, `__Mail` | The name of the operator, the address of the site and the mail address the legal pages name | `Shahram Vafadar`, `https://dastan.online`, `info@dastan.online` |
+| `Dastan__Operator__Phone` | A telephone number for the imprint; optional | not set: the line is left out |
+| `Dastan__Operator__Host`, `__Network`, `__Authority` | Who hosts the site, who carries its traffic when that is somebody else, and the data protection authority that is competent, each with its address: named in the privacy notice | not set: the lines are left out |
+| `Dastan__Notices` | A folder for the notices about content (Article 16 of the Digital Services Act), on a volume the user of the container may write to. Read with the command `notices` | not set: the page `notice` names the mail address and has no form |
+| `Dastan__Announcement` | A text the operator has to tell everybody – changed terms, the end of a function, a breach of security – shown on every page as plain text until it is taken out again. The site knows no mail address of its visitors | not set |
 | `Dastan__SignIn__MadeUp` | For a developer's machine only (step 18.2.2): a made-up provider that asks nobody and says the visitor is whoever this value names, so that the forms after a sign-in through a provider can be looked at without a client of Google or Microsoft. It exists in the environment `Development` only; anywhere else it does nothing | not set |
-| `Dastan__Legal` | A folder with the legal texts of the site (step 18.3.4), read-only: a plain text file for each page and language – `terms.en.txt`, `terms.fa.txt`, `privacy.en.txt`, `imprint.en.txt`, … A line that begins with `#` is a heading, lines that follow each other are one paragraph, an empty line ends it; nothing in a file is taken as markup. A file that is missing or empty shows "this text is not written yet" on its page | not set: the site has no legal pages and names none |
+| `Dastan__Legal` | A folder with legal texts of the owner's own (step 18.3.4, row 18.8), read-only: a plain text file for a page and a language – `terms.en.txt`, `privacy.de.txt`, `cookies.fa.txt`, `imprint.en.txt`, … – stands in the place of the text of the program for that page and language. A line that begins with `#` is a heading, `##` a smaller one, `- ` an item of a list, `\| ` a line that keeps its end (an address); lines that follow each other are one paragraph; `{{operator.name}}`, `{{operator.street}}`, `{{operator.town}}`, `{{operator.country}}`, `{{operator.mail}}`, `{{operator.phone}}`, `{{site}}`, `{{host}}`, `{{network}}` and `{{authority}}` are filled in from the settings, and a line that begins with `?` is left out when its value is not said. Nothing in a file is taken as markup. An empty file shows "this text is not written yet" | not set: the texts of the program, in English, Persian and German |
 | `Dastan__InvitationOnly` | `true`: a new account needs an invitation of somebody who has an account (D-068) – the site of a closed trial. Make the first account before setting it | not set: anybody may make an account |
 | `Dastan__SignIn__Google__ClientId`, `Dastan__SignIn__Google__ClientSecret` | The client of the site at Google (step 16.8), for signing in through Google. The owner registers the site there with the address `https://<the site>/signin-google` to come back to, and enters both values into the environment of the container – the secret never into a file of the repository, a command line or a ticket. Needs `Dastan__People`. **Not tried against Google yet** | not set: no sign-in through Google is offered |
 | `Dastan__SignIn__Microsoft__ClientId`, `Dastan__SignIn__Microsoft__ClientSecret` | The same for Microsoft; the address to come back to is `https://<the site>/signin-microsoft`. **Not tried against Microsoft yet** | not set: no sign-in through Microsoft is offered |
@@ -192,6 +198,32 @@ dotnet Vafadar.Dastan.Content.dll photos sizes <Dastan__Photos>/media
 ```
 
 It says how many sizes it made, changes no photograph, and finds nothing to do when it is run again.
+
+## Notices about content, and restricting
+
+What the law asks of a site that keeps what others wrote, and how the operator does it, is in
+[legal/README.md](legal/README.md), section 4. The commands:
+
+```
+dotnet Vafadar.Dastan.Content.dll notices <Dastan__Notices>
+dotnet Vafadar.Dastan.Content.dll notices show <reference> <Dastan__Notices>
+dotnet Vafadar.Dastan.Content.dll notices settle <reference> <Dastan__Notices> --decision "<what was decided>"
+dotnet Vafadar.Dastan.Content.dll notices forget <Dastan__Notices> [--kept-days 365]
+
+dotnet Vafadar.Dastan.Content.dll people restrictions --people <Dastan__People>
+dotnet Vafadar.Dastan.Content.dll people restrict photo|tree|account <id or name> --people <Dastan__People> --reason "<the facts>" --ground "<the law or the section of the terms>" [--noticed]
+dotnet Vafadar.Dastan.Content.dll people lift <number> --people <Dastan__People>
+dotnet Vafadar.Dastan.Content.dll people persons <tree> --people <Dastan__People>
+dotnet Vafadar.Dastan.Content.dll people person remove <tree> <person> --people <Dastan__People>
+dotnet Vafadar.Dastan.Content.dll people forget <name> --people <Dastan__People>
+```
+
+A restricted photograph is seen by its owner only; a restricted tree is not public and cannot be made public;
+a closed account signs in nowhere and is deleted after 30 days like one its visitor closed. The person
+concerned reads the reason and the ground on the page of the account – the owner of a closed account after
+giving the name and the password on the sign-in page. `people forget` ends the 30 days of a closed account
+for somebody who asks to be deleted at once. The commands write into the store the site writes into: run them
+where the store lies, while few people are on the site.
 
 ## What the site keeps about visitors
 

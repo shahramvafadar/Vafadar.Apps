@@ -2,9 +2,9 @@
 @inject Visitor Visitor
 @inject DastanSite Site
 @inject AccountDesk Accounts
-@inject LegalTexts Legal
 @inject NavigationManager Navigation
 @inject IOptions<SiteLanguageOptions> Languages
+@inject IOptions<DastanOptions> Options
 @inject IStringLocalizer<Ui> T
 
 <PageAddress />
@@ -58,6 +58,27 @@
     </div>
 </header>
 
+@if (Options.Value.Announcement is { Length: > 0 } announcement)
+{
+    @* What who runs the site has to tell everybody: the site knows no address to write to. *@
+    <aside class="announcement" role="status" aria-label="@T["Announcement_Label"]">
+        <p dir="auto">@announcement</p>
+    </aside>
+}
+@if (!Visitor.HasSeenStorageNotice)
+{
+    @* Said once: what the site puts on this device. It asks for nothing – there is nothing to agree to, the
+       site stores only what it cannot work without – and it does not stand in the way of the page. *@
+    <aside class="storage-notice" aria-label="@T["Storage_Label"]">
+        <p>@T["Storage_Text"] <a href="cookies">@T["Storage_More"]</a></p>
+        <form method="post" action="/preferences/storage-note">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@ReturnUrl" />
+            <button type="submit" class="action secondary">@T["Storage_Read"]</button>
+        </form>
+    </aside>
+}
+
 <main id="content" tabindex="-1">
     @Body
 </main>
@@ -87,18 +108,16 @@
             <a href="@($"{Site.Collection}/revisions")">@T["Revisions_Link"]</a>
         </p>
     }
-    @if (Legal.IsOffered)
-    {
-        @* The legal pages stand at the foot of every page (step 18.3.4). *@
-        <nav class="legal-links" aria-label="@T["Legal_Links"]">
-            <ul role="list">
-                @foreach (var legal in LegalTexts.Pages)
-                {
-                    <li><a href="@legal">@T[$"Legal_{legal}"]</a></li>
-                }
-            </ul>
-        </nav>
-    }
+    @* The legal pages stand at the foot of every page: two steps from anywhere to who runs the site. *@
+    <nav class="legal-links" aria-label="@T["Legal_Links"]">
+        <ul role="list">
+            @foreach (var legal in LegalTexts.Pages)
+            {
+                <li><a href="@legal">@T[$"Legal_{legal}"]</a></li>
+            }
+            <li><a href="notice">@T["Notice_Link"]</a></li>
+        </ul>
+    </nav>
 </footer>
 
 @code {

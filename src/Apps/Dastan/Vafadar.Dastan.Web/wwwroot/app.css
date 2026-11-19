@@ -2094,6 +2094,77 @@ main details > summary {
   border-radius: 0.5rem;
 }
 
+/* What who runs the site tells everybody, on every page. */
+.announcement {
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--border);
+  background: var(--surface);
+  font-weight: 600;
+}
+
+.announcement p {
+  max-inline-size: var(--measure, 70ch);
+  margin: 0 auto;
+}
+
+/* A statement of reasons: what was restricted and why, as a list of questions and answers. */
+.statement {
+  margin-block: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.statement dt {
+  margin-block-start: var(--space-2);
+  font-weight: 600;
+}
+
+.statement dd {
+  margin-inline-start: 0;
+}
+
+/* The note about what the site stores on a device: said once, above the page, and never over it. */
+.storage-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-block-end: 1px solid var(--border);
+  background: var(--surface-raised);
+}
+
+.storage-notice p {
+  flex: 1 1 20rem;
+  margin: 0;
+}
+
+/* The other languages a legal text is written in. */
+.legal-versions ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin: 0 0 var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.legal-versions a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.legal-versions a[aria-current="true"] {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.legal h3 {
+  font-size: var(--step-0);
+}
+
 /* The legal pages at the foot of every page, and the text of one (step 18.3.4). */
 .legal-links ul {
   display: flex;

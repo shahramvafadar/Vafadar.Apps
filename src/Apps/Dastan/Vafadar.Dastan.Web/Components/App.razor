@@ -1,7 +1,7 @@
 @inject Visitor Visitor
 @inject DastanSite Site
 <!DOCTYPE html>
-<html lang="@Visitor.Language.Tag" dir="@Visitor.Language.Direction" data-theme="@ThemePreference.Attribute(Visitor.Theme)">
+<html lang="@Visitor.Language.Tag" dir="@Visitor.Language.Direction" data-theme="@ThemePreference.Attribute(Visitor.Theme)" data-offline="@(Visitor.KeepsOffline ? "on" : null)">
 
 <head>
     <meta charset="utf-8" />

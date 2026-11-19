@@ -2649,4 +2649,262 @@
   <data name="Photos_Problem_photo-pixels" xml:space="preserve">
     <value>The picture has more than 50 million pixels. Bring in a smaller copy of it.</value>
   </data>
+  <data name="Legal_cookies" xml:space="preserve">
+    <value>Cookies</value>
+  </data>
+  <data name="Legal_Versions" xml:space="preserve">
+    <value>This text in other languages</value>
+  </data>
+  <data name="Legal_Gaps" xml:space="preserve">
+    <value>This text is not complete: details of who runs the site are still missing where a gap is marked. The site is not public yet.</value>
+  </data>
+  <data name="Storage_Label" xml:space="preserve">
+    <value>What this site stores on your device</value>
+  </data>
+  <data name="Storage_Text" xml:space="preserve">
+    <value>This site stores only what it needs to work on your device – your language, choices you make, a sign-in. It does not track you and shows no advertising.</value>
+  </data>
+  <data name="Storage_More" xml:space="preserve">
+    <value>What exactly, and for how long</value>
+  </data>
+  <data name="Storage_Read" xml:space="preserve">
+    <value>Understood</value>
+  </data>
+  <data name="Offline_Title" xml:space="preserve">
+    <value>Reading without a connection</value>
+  </data>
+  <data name="Offline_Lead" xml:space="preserve">
+    <value>If you turn this on, this device keeps the public pages you read, with their images, so that you can read them again when the site cannot be reached. Nothing of an account is kept, nothing is sent anywhere, and you can turn it off at any time: what the device kept is then removed.</value>
+  </data>
+  <data name="Offline_IsOn" xml:space="preserve">
+    <value>It is turned on: this device keeps pages you read.</value>
+  </data>
+  <data name="Offline_IsOff" xml:space="preserve">
+    <value>It is turned off: this device keeps no pages.</value>
+  </data>
+  <data name="Offline_TurnOn" xml:space="preserve">
+    <value>Keep pages I read on this device</value>
+  </data>
+  <data name="Offline_TurnOff" xml:space="preserve">
+    <value>Turn it off and remove what was kept</value>
+  </data>
+  <data name="Account_Terms" xml:space="preserve">
+    <value>I have read the terms of use and the privacy notice.</value>
+  </data>
+  <data name="Account_Problem_terms" xml:space="preserve">
+    <value>Please read the terms of use and the privacy notice and say that you have.</value>
+  </data>
+  <data name="Account_Problem_closed-by-operator" xml:space="preserve">
+    <value>This account was closed by who runs the site. The reasons are below.</value>
+  </data>
+  <data name="Notice_Link" xml:space="preserve">
+    <value>Report content</value>
+  </data>
+  <data name="Notice_Title" xml:space="preserve">
+    <value>Report content</value>
+  </data>
+  <data name="Notice_Lead" xml:space="preserve">
+    <value>If something on this site is against the law, violates your rights or breaks the rules of the site, tell us here. Anybody can do this; you need no account.</value>
+  </data>
+  <data name="Notice_How_Title" xml:space="preserve">
+    <value>What happens with your notice</value>
+  </data>
+  <data name="Notice_How" xml:space="preserve">
+    <value>A person reads every notice – no program decides. We look at it as soon as we can and decide whether the content stays, is hidden or is removed. If you give a mail address, we confirm that your notice arrived and tell you what we decided and what you can do if you disagree. Whoever posted the content is told the reasons when we restrict it, but not who gave the notice, unless the law requires it.</value>
+  </data>
+  <data name="Notice_ByMail" xml:space="preserve">
+    <value>You can also write to us by mail:</value>
+  </data>
+  <data name="Notice_Urgent" xml:space="preserve">
+    <value>If somebody is in danger, call the police first (in Germany and the EU: 112 or 110).</value>
+  </data>
+  <data name="Notice_Form_Title" xml:space="preserve">
+    <value>Your notice</value>
+  </data>
+  <data name="Notice_Address" xml:space="preserve">
+    <value>Where is it? The address of the page</value>
+  </data>
+  <data name="Notice_Address_Hint" xml:space="preserve">
+    <value>Copy the address from the address bar of your browser, for example https://dastan.online/en/people/…</value>
+  </data>
+  <data name="Notice_Kind" xml:space="preserve">
+    <value>What is wrong with it</value>
+  </data>
+  <data name="Notice_Kind_privacy" xml:space="preserve">
+    <value>It shows personal data of mine or of somebody else without permission</value>
+  </data>
+  <data name="Notice_Kind_image" xml:space="preserve">
+    <value>It shows a picture of me or of somebody else without permission</value>
+  </data>
+  <data name="Notice_Kind_copyright" xml:space="preserve">
+    <value>It uses a work without the right to (copyright)</value>
+  </data>
+  <data name="Notice_Kind_defamation" xml:space="preserve">
+    <value>It insults somebody or says something false about them</value>
+  </data>
+  <data name="Notice_Kind_hate" xml:space="preserve">
+    <value>It incites hatred or violence, or is otherwise criminal speech</value>
+  </data>
+  <data name="Notice_Kind_minors" xml:space="preserve">
+    <value>It harms children or young people</value>
+  </data>
+  <data name="Notice_Kind_violence" xml:space="preserve">
+    <value>It threatens somebody or shows violence</value>
+  </data>
+  <data name="Notice_Kind_other-law" xml:space="preserve">
+    <value>It is against the law in another way</value>
+  </data>
+  <data name="Notice_Kind_terms" xml:space="preserve">
+    <value>It breaks the terms of use of this site</value>
+  </data>
+  <data name="Notice_Explanation" xml:space="preserve">
+    <value>Why do you think so?</value>
+  </data>
+  <data name="Notice_Explanation_Hint" xml:space="preserve">
+    <value>Say what exactly is wrong and why – which part of the page, whose rights, which law if you know it. The clearer you are, the faster we can decide. At least 20 characters.</value>
+  </data>
+  <data name="Notice_Name" xml:space="preserve">
+    <value>Your name (optional)</value>
+  </data>
+  <data name="Notice_Mail" xml:space="preserve">
+    <value>Your mail address (optional)</value>
+  </data>
+  <data name="Notice_Mail_Hint" xml:space="preserve">
+    <value>Without a mail address we cannot confirm your notice or tell you what we decided. For some notices – about copyright or your own rights – we may need to know who you are.</value>
+  </data>
+  <data name="Notice_GoodFaith" xml:space="preserve">
+    <value>I honestly believe that what I say in this notice is accurate and complete.</value>
+  </data>
+  <data name="Notice_Privacy" xml:space="preserve">
+    <value>We use what you write here only to deal with your notice.</value>
+  </data>
+  <data name="Notice_Send" xml:space="preserve">
+    <value>Send the notice</value>
+  </data>
+  <data name="Notice_Received_Title" xml:space="preserve">
+    <value>Your notice arrived</value>
+  </data>
+  <data name="Notice_Received" xml:space="preserve">
+    <value>Thank you. Your notice has the reference {0}. Please keep it and name it if you write to us about this notice.</value>
+  </data>
+  <data name="Notice_Received_Next" xml:space="preserve">
+    <value>If you gave a mail address, you will hear from us there. This page is the confirmation that your notice arrived.</value>
+  </data>
+  <data name="Notice_Problem_address" xml:space="preserve">
+    <value>Please say where the content is: the address of the page.</value>
+  </data>
+  <data name="Notice_Problem_kind" xml:space="preserve">
+    <value>Please choose what is wrong with the content.</value>
+  </data>
+  <data name="Notice_Problem_explanation" xml:space="preserve">
+    <value>Please explain in at least 20 and at most 4,000 characters why you think so.</value>
+  </data>
+  <data name="Notice_Problem_name" xml:space="preserve">
+    <value>The name is too long.</value>
+  </data>
+  <data name="Notice_Problem_mail" xml:space="preserve">
+    <value>This is not a mail address.</value>
+  </data>
+  <data name="Notice_Problem_good-faith" xml:space="preserve">
+    <value>Please confirm that your notice is accurate to your honest belief.</value>
+  </data>
+  <data name="Notice_Problem_later" xml:space="preserve">
+    <value>Too many notices came from your connection. Please try again in an hour, or write by mail.</value>
+  </data>
+  <data name="Notice_Problem_full" xml:space="preserve">
+    <value>We cannot take more notices with this form right now. Please write by mail.</value>
+  </data>
+  <data name="Restrictions_Title" xml:space="preserve">
+    <value>Restrictions on your account</value>
+  </data>
+  <data name="Restrictions_Lead" xml:space="preserve">
+    <value>Who runs this site has restricted the following. Each entry says what was restricted, why, and what you can do about it.</value>
+  </data>
+  <data name="Restrictions_Number" xml:space="preserve">
+    <value>decision no. {0}</value>
+  </data>
+  <data name="Restrictions_Kind_Photo" xml:space="preserve">
+    <value>A photograph of yours was hidden</value>
+  </data>
+  <data name="Restrictions_Kind_Tree" xml:space="preserve">
+    <value>A family tree of yours is no longer public</value>
+  </data>
+  <data name="Restrictions_Kind_Account" xml:space="preserve">
+    <value>Your account was closed</value>
+  </data>
+  <data name="Restrictions_Effect" xml:space="preserve">
+    <value>What it means</value>
+  </data>
+  <data name="Restrictions_Effect_Photo" xml:space="preserve">
+    <value>Nobody but you sees the photograph, everywhere this site is reachable, until the decision is lifted. You can remove the photograph yourself.</value>
+  </data>
+  <data name="Restrictions_Effect_Tree" xml:space="preserve">
+    <value>The tree is not shown to the public and cannot be made public, everywhere this site is reachable, until the decision is lifted. You and the people you shared it with still see it.</value>
+  </data>
+  <data name="Restrictions_Effect_Account" xml:space="preserve">
+    <value>Nobody can sign in with the account and nothing of it is shown. It is kept for 30 days and then deleted with everything that belongs to it, unless the decision is lifted before.</value>
+  </data>
+  <data name="Restrictions_Reason" xml:space="preserve">
+    <value>The facts</value>
+  </data>
+  <data name="Restrictions_Ground" xml:space="preserve">
+    <value>The law or the rule of the terms it rests on</value>
+  </data>
+  <data name="Restrictions_Origin" xml:space="preserve">
+    <value>How it came about</value>
+  </data>
+  <data name="Restrictions_Origin_Notice" xml:space="preserve">
+    <value>Somebody gave notice of the content, and a person who runs the site looked at it.</value>
+  </data>
+  <data name="Restrictions_Origin_Own" xml:space="preserve">
+    <value>A person who runs the site looked at the content on their own initiative.</value>
+  </data>
+  <data name="Restrictions_NoAutomation" xml:space="preserve">
+    <value>No automated means were used to find the content or to decide.</value>
+  </data>
+  <data name="Restrictions_Redress" xml:space="preserve">
+    <value>If you disagree</value>
+  </data>
+  <data name="Restrictions_Redress_Text" xml:space="preserve">
+    <value>Write to us within six months and name the number of the decision; a person looks at it again and answers you. You can also go to court. Our address is on the page</value>
+  </data>
+  <data name="Restrictions_Closed_Title" xml:space="preserve">
+    <value>This account was closed</value>
+  </data>
+  <data name="Restrictions_Closed_Lead" xml:space="preserve">
+    <value>Who runs this site closed this account. You cannot sign in with it.</value>
+  </data>
+  <data name="Tree_Change_operator-restricted" xml:space="preserve">
+    <value>Who runs the site took the tree back from the public</value>
+  </data>
+  <data name="Tree_Change_operator-lifted" xml:space="preserve">
+    <value>Who runs the site lifted the restriction on the tree</value>
+  </data>
+  <data name="Tree_Change_operator-person-removed" xml:space="preserve">
+    <value>Who runs the site took a person out of the tree, at that person’s request</value>
+  </data>
+  <data name="Announcement_Label" xml:space="preserve">
+    <value>A message from who runs the site</value>
+  </data>
+  <data name="Account_Said_terms-agreed" xml:space="preserve">
+    <value>Thank you. Your agreement is noted.</value>
+  </data>
+  <data name="Account_TermsAsked_Title" xml:space="preserve">
+    <value>Please read the terms and the privacy notice</value>
+  </data>
+  <data name="Account_TermsAsked_Lead" xml:space="preserve">
+    <value>The terms of use or the privacy notice are newer than what this account confirmed. Please read them and say that you have. Nothing is agreed to by your silence; if you do not agree, you can get a copy of your data and close the account below.</value>
+  </data>
+  <data name="Account_TermsAsked_Send" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Restrictions_Repeat" xml:space="preserve">
+    <value>What can follow</value>
+  </data>
+  <data name="Restrictions_Repeat_Text" xml:space="preserve">
+    <value>If the terms are broken again or seriously, the account can be closed. You can change or remove the content, and you can write to us.</value>
+  </data>
+  <data name="Notice_ThisPage" xml:space="preserve">
+    <value>Report this page</value>
+  </data>
 </root>

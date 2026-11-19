@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Vafadar.Dastan.Data\Vafadar.Dastan.Data.csproj" />
     <ProjectReference Include="..\Vafadar.Dastan.Store\Vafadar.Dastan.Store.csproj" />
+    <ProjectReference Include="..\Vafadar.Dastan.People\Vafadar.Dastan.People.csproj" />
   </ItemGroup>
 
 </Project>

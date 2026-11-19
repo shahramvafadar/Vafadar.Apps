@@ -1,0 +1,6 @@
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The way from content of a visitor to telling who runs the site that it may not stay (Article 16 of the
+   Digital Services Act): the form opens with the address of this page filled in – the page, without what a question hung on it. *@
+<p class="meta report-link"><a href="@($"notice?about={Uri.EscapeDataString(new Uri(Navigation.Uri).GetLeftPart(UriPartial.Path))}")" rel="nofollow">@T["Notice_ThisPage"]</a></p>

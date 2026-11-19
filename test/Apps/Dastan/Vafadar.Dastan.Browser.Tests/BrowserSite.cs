@@ -85,7 +85,7 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// <param name="readTo">The reading stage the visitor has already chosen, if any (0 is the first).</param>
     /// <param name="dark">Whether the device of the visitor asks for the dark appearance.</param>
     /// <param name="script">Whether the browser of the visitor runs scripts.</param>
-    public async Task<IPage> Visitor(int width = 360, int? readTo = null, bool dark = false, bool script = true)
+    public async Task<IPage> Visitor(int width = 360, int? readTo = null, bool dark = false, bool script = true, bool offline = false)
     {
         Assert.SkipWhen(_browser is null, "No browser: start the container of src/Apps/Dastan/compose.yaml and set DASTAN_BROWSER=ws://127.0.0.1:53333/.");
 
@@ -106,6 +106,12 @@ public sealed class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
             JavaScriptEnabled = script,
         });
         _windows.Enqueue(context);
+        if (offline)
+        {
+            // Somebody who turned reading without a connection on (row 18.8.2): only then the site has a worker.
+            await context.AddCookiesAsync([new Cookie { Name = "dastan.offline", Value = "on", Url = _address + "/" }]);
+        }
+
         if (readTo is { } level)
         {
             await context.AddCookiesAsync(

@@ -49,7 +49,7 @@ public sealed class PhotoPagesTests : IDisposable
     private async Task<Browser> Signed(string name)
     {
         var visitor = _site.Visitor();
-        var made = await visitor.Post("/preferences/account/register", Account, ("name", name), ("age", "on"), ("password", Password), ("again", Password), ("returnUrl", Account));
+        var made = await visitor.Post("/preferences/account/register", Account, ("name", name), ("age", "on"), ("terms", "on"), ("password", Password), ("again", Password), ("returnUrl", Account));
         Assert.Contains("said=welcome", made.Response.Headers.Location?.OriginalString, StringComparison.Ordinal);
         return visitor;
     }
@@ -84,7 +84,7 @@ public sealed class PhotoPagesTests : IDisposable
     {
         using var site = new AccountsSite();
         var visitor = site.Visitor();
-        await visitor.Post("/preferences/account/register", Account, ("name", "Mina"), ("age", "on"), ("password", Password), ("again", Password), ("returnUrl", Account));
+        await visitor.Post("/preferences/account/register", Account, ("name", "Mina"), ("age", "on"), ("terms", "on"), ("password", Password), ("again", Password), ("returnUrl", Account));
 
         Assert.Equal(HttpStatusCode.NotFound, (await visitor.Get(Photos)).Status);
         Assert.Equal(HttpStatusCode.NotFound, (await visitor.Get("/photo/0123456789abcdef0123456789abcdef")).Status);

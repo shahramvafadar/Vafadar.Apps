@@ -33,9 +33,22 @@ services:
       Dastan__Keys: /data/keys
       # What visitors report about a statement (ADR 0012); the editors read the folder with their tool.
       Dastan__Reports: /data/reports
-      # The legal texts (terms, privacy, imprint): a folder of plain files the owner puts onto the volume, for
-      # example /data/legal. Not set, the site has no such pages.
+      # Legal texts of the owner's own, in the place of the ones of the program: a folder of plain files on the
+      # volume, for example /data/legal. Not set, the site shows its own texts.
       Dastan__Legal: ${DASTAN_LEGAL:-}
+      # Who runs the site, for the imprint, the privacy notice and the terms (docs/legal/before-publication.md).
+      # Said in the environment of this machine, never in a file of the repository: an address is private.
+      Dastan__Operator__Street: ${DASTAN_OPERATOR_STREET:-}
+      Dastan__Operator__Town: ${DASTAN_OPERATOR_TOWN:-}
+      Dastan__Operator__Country: ${DASTAN_OPERATOR_COUNTRY:-}
+      Dastan__Operator__Phone: ${DASTAN_OPERATOR_PHONE:-}
+      Dastan__Operator__Host: ${DASTAN_OPERATOR_HOST:-}
+      Dastan__Operator__Network: ${DASTAN_OPERATOR_NETWORK:-}
+      Dastan__Operator__Authority: ${DASTAN_OPERATOR_AUTHORITY:-}
+      # Notices about content (Article 16 of the Digital Services Act); read with the command "notices".
+      Dastan__Notices: /data/notices
+      # What the operator has to tell everybody, on every page, until it is taken out again.
+      Dastan__Announcement: ${DASTAN_ANNOUNCEMENT:-}
       Dastan__InvitationOnly: ${DASTAN_INVITATION_ONLY:-false}
       # Who the site believes about how a visitor came: the networks Docker gives its containers. A tunnel or a
       # proxy in front of the site is named here by whoever sets it up.

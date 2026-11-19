@@ -1,0 +1,74 @@
+Information according to § 5 of the German Digital Services Act (Digitale-Dienste-Gesetz, DDG) and § 18 of the German Interstate Media Treaty (Medienstaatsvertrag, MStV).
+
+# Who runs this site
+
+| {{operator.name}}
+| {{operator.street}}
+| {{operator.town}}
+| {{operator.country}}
+
+Dastan is run by a private person. It is not a company, has no registered office other than the address above, and is entered in no commercial or other register.
+
+# Contact
+
+| E-mail: {{operator.mail}}
+? | Telephone: {{operator.phone}}
+| Report content: {{site}}/en/notice
+
+We read our mail regularly and answer as soon as we can. You can write to us in English, German or Persian.
+
+# Responsible for the content
+
+Responsible for the editorial content of this site within the meaning of § 18 (2) MStV:
+
+{{operator.name}}, address as above.
+
+# What kind of service this is
+
+Dastan is a private, non-commercial project. It is free of charge. It shows no advertising, sells nothing, takes no donations and no commission, and passes no data on for advertising. For this reason there is no value added tax identification number and no business identification number to state.
+
+Dastan has two parts: editorial pages about stories, people and places of Iranian literature and history, written and checked by its editors; and a private area in which people with an account keep family trees and photographs and decide themselves who sees them.
+
+# Contact points under the Digital Services Act
+
+Regulation (EU) 2022/2065 (Digital Services Act) asks services that store content of their users to name contact points. We name them whether or not the regulation applies to a private, free service like this one.
+
+- Single point of contact for the authorities of the Member States, the European Commission and the European Board for Digital Services (Article 11): {{operator.mail}}. Languages: German and English.
+- Single point of contact for users of the service (Article 12): {{operator.mail}}, or the form at {{site}}/en/notice. Languages: German, English and Persian. You always reach a person, never a program.
+- Notices about illegal content (Article 16): the form at {{site}}/en/notice, or by e-mail. The procedure is described in the terms of use at {{site}}/en/terms.
+
+Dastan is a micro enterprise at most within the meaning of Recommendation 2003/361/EC. Its average number of monthly active recipients in the European Union is far below 45 million; we tell the Digital Services Coordinator and the Commission the number when they ask for it (Article 24 (3)).
+
+If you think that this site does not follow the Digital Services Act, you can complain to the Digital Services Coordinator of the Member State you live in. In Germany that is the Bundesnetzagentur (https://www.dsc.bund.de).
+
+# Data protection
+
+The person named above is also the controller for the processing of personal data on this site. Everything about it is in the privacy notice at {{site}}/en/privacy, and what the site stores on your device is listed at {{site}}/en/cookies.
+
+# Consumer dispute resolution
+
+We are neither obliged nor willing to take part in dispute resolution proceedings before a consumer arbitration board. The online dispute resolution platform of the European Commission was closed on 20 July 2025.
+
+# Liability for content
+
+We write and check the editorial pages of this site with care and name our sources. Even so we cannot guarantee that every statement is correct, complete and up to date; the pages say where sources disagree or where something is uncertain. If you find a mistake, tell us with the report function on the page or by e-mail.
+
+Family trees, photographs and texts in the private area are content of the users who put them there. Under Article 6 of Regulation (EU) 2022/2065 we are not liable for content of others that we store as long as we do not know that it is illegal, and we remove or block it without delay once we learn that it is. We are under no general duty to monitor what users store or to search for signs of illegal activity (Article 8). Duties to remove or block the use of information under the general laws remain unaffected.
+
+# Liability for links
+
+This site links to pages of others, for example to sources. We have no influence on those pages and are not responsible for them; their providers are. When we set a link we look at the page it leads to. We cannot keep checking linked pages without a concrete reason. If we learn that a linked page breaks the law, we remove the link.
+
+# Copyright
+
+The texts, images, maps, drawings and the design of the editorial pages are protected by copyright. Unless a page says otherwise, the rights belong to {{operator.name}} or to the right holders named with the work. You may read the pages, link to them and quote from them within the limits of the law (§ 51 of the German Copyright Act). Any other use – copying, publishing elsewhere, using for the training of machines within the meaning of § 44b (3) of the German Copyright Act – needs our prior permission.
+
+What users store in their private area stays theirs. They give the site only the permission it needs to show it to the people they choose; the terms of use say so.
+
+If you think that something on this site infringes your copyright, tell us at {{site}}/en/notice.
+
+# Language versions
+
+This notice exists in English, German and Persian. If the versions differ, the German version prevails.
+
+Last updated: 19 November 2026

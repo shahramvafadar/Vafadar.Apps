@@ -83,7 +83,7 @@ public sealed partial class PeopleStore
     public bool Publish(string id, string tree)
     {
         var stored = _context.Trees.SingleOrDefault(candidate => candidate.Id == tree && candidate.Owner == id);
-        if (stored is null || !IsOpen(id) || stored.PublicationAskedAt is null || stored.PublishedAt is not null || !Blockers(tree).IsEmpty)
+        if (stored is null || !IsOpen(id) || stored.PublicationAskedAt is null || stored.PublishedAt is not null || IsRestricted(RestrictionKind.Tree, tree) || !Blockers(tree).IsEmpty)
         {
             _context.ChangeTracker.Clear();
             return false;
@@ -123,7 +123,7 @@ public sealed partial class PeopleStore
     public TreeView? PublicTree(string tree)
     {
         var stored = _context.Trees.AsNoTracking().SingleOrDefault(candidate => candidate.Id == tree && candidate.PublishedAt != null);
-        if (stored is null || !IsOpen(stored.Owner) || !Blockers(tree).IsEmpty || Tree(stored.Owner, tree) is not { } whole)
+        if (stored is null || !IsOpen(stored.Owner) || IsRestricted(RestrictionKind.Tree, tree) || !Blockers(tree).IsEmpty || Tree(stored.Owner, tree) is not { } whole)
         {
             return null;
         }

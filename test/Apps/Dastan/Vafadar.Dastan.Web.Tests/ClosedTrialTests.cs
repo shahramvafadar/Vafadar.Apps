@@ -18,7 +18,7 @@ public sealed class ClosedTrialTests : IDisposable
     public void Dispose() => _site.Dispose();
 
     private static Task<Page> Register(Browser visitor, string name, string from = Account, string age = "on", string invitation = "") =>
-        visitor.Post($"{Forms}/register", from, ("name", name), ("password", Password), ("again", Password), ("age", age), ("invitation", invitation), ("returnUrl", Account));
+        visitor.Post($"{Forms}/register", from, ("name", name), ("password", Password), ("again", Password), ("age", age), ("terms", "on"), ("invitation", invitation), ("returnUrl", Account));
 
     private static bool SignedIn(Page page) => page.Html.Contains($"action=\"{Forms}/sign-out\"", StringComparison.Ordinal);
 

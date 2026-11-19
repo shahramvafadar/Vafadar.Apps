@@ -1,0 +1,73 @@
+Diese Seite führt alles auf, was die Website {{site}} auf Ihrem Endgerät speichert oder von dort ausliest, und nennt den Grund dafür. Maßgeblich sind hierfür § 25 des Telekommunikation-Digitale-Dienste-Datenschutz-Gesetzes (TDDDG) und Art. 5 Abs. 3 der Richtlinie 2002/58/EG; was mit personenbezogenen Daten geschieht, erläutert die Datenschutzerklärung unter {{site}}/en/privacy?text=de.
+
+# In Kürze
+
+- Die Website speichert nur, was für die von Ihnen genutzte Funktion unerlässlich ist. Dafür verlangt das Gesetz keine Einwilligung; deshalb zeigt die Website kein Einwilligungsbanner – nur einmalig einen kurzen Hinweis, der hierher führt.
+- Es wird nichts für Werbung, für Statistiken oder dazu gespeichert, Sie über mehrere Websites hinweg wiederzuerkennen. Kein anderes Unternehmen speichert über diese Website etwas auf Ihrem Endgerät oder liest dort etwas aus.
+- Eines geschieht nur mit Ihrer Einwilligung: das Vorhalten von Seiten auf Ihrem Endgerät, damit Sie sie ohne Verbindung lesen können. Sie schalten dies am Ende dieser Seite ein und aus.
+
+# Was ein Cookie ist
+
+Ein Cookie ist ein kleines Stück Text, um dessen Aufbewahrung eine Website Ihren Browser bittet und das der Browser bei späteren Anfragen zurücksendet. Die Website verwendet Cookies und, mit Ihrer Einwilligung, den Speicher des Browsers für Seiten (den „Cache“ eines Service Workers). Sie verwendet keinen anderen Speicher des Browsers, kein Fingerprinting, keine Zählpixel und keine Werbekennungen.
+
+Alle Cookies der Website sind ihre eigenen (First-Party-Cookies). Sie werden nur an diese Website und nur über eine verschlüsselte Verbindung gesendet, können von Skripten in der Seite nicht gelesen werden (HttpOnly) und werden nicht mitgesendet, wenn eine andere Website Ihren Browser veranlasst, hier im Hintergrund etwas abzurufen (SameSite=Lax).
+
+# Ohne Einwilligung gespeichert, weil die Funktion es erfordert
+
+Rechtsgrundlage für das Speichern und Auslesen: § 25 Abs. 2 Nr. 2 TDDDG – die Speicherung ist unbedingt erforderlich, um einen von Ihnen ausdrücklich gewünschten Dienst zur Verfügung zu stellen. Jeder Eintrag wird erst geschrieben, wenn Sie die Funktion nutzen, zu der er gehört, und enthält nicht mehr, als die Funktion benötigt.
+
+## Ihre Einstellungen auf diesem Gerät
+
+- "vafadar.language" – die von Ihnen gewählte Sprache, als zwei Buchstaben ("en" oder "fa"). Wird geschrieben, wenn Sie auf der Website die Sprache wechseln; dient dazu, die Website beim nächsten Mal in dieser Sprache zu öffnen. Speicherdauer: ein Jahr ab dem letzten Schreiben.
+- "vafadar.theme" – die von Ihnen gewählten Farben ("light" oder "dark"). Wird geschrieben, wenn Sie sie wählen; wird entfernt, wenn Sie zur Einstellung „automatic“ zurückkehren. Speicherdauer: ein Jahr.
+- "dastan.reading.", gefolgt vom Namen einer Sammlung – wie weit Sie nach Ihrer Angabe in einer Geschichte gelesen haben, als Zahl, damit Seiten Ihnen nicht verraten, was später kommt. Wird geschrieben, wenn Sie einen Lesestand wählen; wird entfernt, wenn Sie zum Anfang zurückkehren. Speicherdauer: ein Jahr. Wenn Sie angemeldet sind, wird dies stattdessen bei Ihrem Konto gespeichert.
+- "dastan.saved" – die Seiten, die Sie auf Ihre Liste gesetzt haben, mit ihren Kurznamen. Wird geschrieben, wenn Sie eine Seite merken; Speicherdauer: ein Jahr. Wenn Sie angemeldet sind, wird die Liste stattdessen bei Ihrem Konto gespeichert.
+- "dastan.notice" – dass Sie den Hinweis zur Speicherung gelesen haben, damit er nicht erneut angezeigt wird; der Wert ist die Version des Hinweises ("1"). Wird geschrieben, wenn Sie die Schaltfläche „Understood“ betätigen. Speicherdauer: ein Jahr.
+
+Diese Einträge enthalten keine Kennung Ihrer Person oder Ihres Geräts: Zwei Besucher, die dieselben Einstellungen gewählt haben, haben dieselben Werte.
+
+## Anmeldung
+
+- "dastan.visitor.session" – hält Sie angemeldet. Enthält in verschlüsselter Form den Verweis auf Ihr Konto und einen Wert, der die Anmeldung überall beendet, wenn das Passwort geändert wird. Wird geschrieben, wenn Sie sich anmelden; wird entfernt, wenn Sie sich abmelden. Speicherdauer: 30 Tage ab Ihrem letzten Besuch.
+- "dastan.visitor.codes" – überträgt Ihre neuen Wiederherstellungscodes in verschlüsselter Form vom Formular zu der einen Seite, die sie anzeigt. Speicherdauer: höchstens 5 Minuten; wird entfernt, sobald die Seite angezeigt wurde.
+- "dastan.visitor.external" und "dastan.visitor.arriving" – während Sie sich über Google oder Microsoft anmelden: als wen das Unternehmen Sie ausgewiesen hat, in verschlüsselter Form, bis Sie einen Namen gewählt haben oder angemeldet sind. Speicherdauer: höchstens 10 Minuten.
+- Ein Cookie, dessen Name mit ".AspNetCore.Correlation." beginnt – während Sie sich über Google oder Microsoft anmelden: ein Zufallswert, der sicherstellt, dass die Antwort des Unternehmens zu der Anfrage gehört, die Ihr Browser gestellt hat. Speicherdauer: höchstens 15 Minuten; wird entfernt, wenn Sie zurückkehren.
+- "dastan.visitor.closed" – nur wenn Sie versuchen, sich bei einem Konto anzumelden, das die Website geschlossen hat: die Nummer der Entscheidung in verschlüsselter Form, damit die nächste Seite Ihnen die Gründe anzeigen kann. Speicherdauer: 10 Minuten.
+
+## Schutz von Formularen
+
+- Ein Cookie, dessen Name mit ".AspNetCore.Antiforgery." beginnt – ein Zufallswert, der sicherstellt, dass ein in Ihrem Namen abgesendetes Formular tatsächlich von einer Seite dieser Website stammt (Schutz vor Cross-Site-Request-Forgery). Wird geschrieben, wenn eine Seite mit einem Formular angezeigt wird. Speicherdauer: bis Sie den Browser schließen.
+
+# Nur mit Ihrer Einwilligung gespeichert
+
+Rechtsgrundlage: Ihre Einwilligung, § 25 Abs. 1 TDDDG. Sie können sie jederzeit widerrufen, ebenso einfach, wie Sie sie erteilt haben, mit dem Schalter unten.
+
+- "dastan.offline" – dass Sie das Lesen ohne Verbindung eingeschaltet haben (der Wert "on"). Speicherdauer: ein Jahr; wird entfernt, wenn Sie es ausschalten.
+- Der Seitenspeicher des Browsers unter den Namen "dastan-shell-1" und "dastan-read-1" – ein kleines Programm der Website (ein Service Worker) hält die öffentlichen Seiten, die Sie öffnen, das Stylesheet, die Schrift und das Symbol auf Ihrem Endgerät vor, damit Sie sie ohne Verbindung erneut lesen können. Es werden nur öffentliche Seiten vorgehalten, niemals eine Seite des privaten Bereichs oder irgendetwas aus einem Konto. Der Speicher bleibt bestehen, bis Sie die Funktion ausschalten; dann wird das Programm entfernt, und die vorgehaltenen Seiten werden gelöscht, sobald Sie das nächste Mal eine Seite der Website öffnen.
+
+Ohne diese Einwilligung funktioniert die Website in jeder Hinsicht; lediglich das Lesen ohne Verbindung ist dann nicht möglich.
+
+# Was andere Unternehmen speichern
+
+Über diese Website nichts. Wenn Sie sich dafür entscheiden, sich über Google oder Microsoft anzumelden, wechselt Ihr Browser zu den Seiten des jeweiligen Unternehmens, das dort nach seinen eigenen Regeln eigene Cookies setzt:
+
+- Google: https://policies.google.com/technologies/cookies
+- Microsoft: https://www.microsoft.com/privacy/privacystatement
+
+? Das Netzwerk, über das der Datenverkehr der Website läuft ({{network}}), kann ein Cookie setzen, das unbedingt erforderlich ist, um Menschen von angreifenden Programmen zu unterscheiden.
+
+# Wie Sie Gespeichertes entfernen oder blockieren
+
+Sie können die Cookies und die gespeicherten Seiten dieser Website jederzeit in den Einstellungen Ihres Browsers löschen, und Sie können den Browser anweisen, keine Cookies anzunehmen. Auch ohne Cookies können Sie jede öffentliche Seite lesen; die oben aufgeführten Einstellungen werden dann nicht gespeichert, und Sie können sich nicht anmelden, weil die Anmeldung und der Schutz von Formularen ein Cookie benötigen.
+
+Mit der Abmeldung wird das Anmelde-Cookie entfernt. Das Schließen Ihres Kontos entfernt für sich genommen nichts von Ihrem Endgerät; löschen Sie die Cookies im Browser, wenn Sie dies wünschen.
+
+# Änderungen
+
+Wenn die Website beginnt, etwas Weiteres zu speichern, gibt diese Seite dies vorher an, und der Hinweis zur Speicherung wird erneut angezeigt. Sollte jemals etwas einer Einwilligung bedürfen, fragt die Website, bevor es gespeichert wird.
+
+# Sprachfassungen
+
+Diese Seite liegt in englischer, deutscher und persischer Sprache vor. Maßgeblich ist die deutsche Fassung.
+
+Stand: 19. November 2026

@@ -37,6 +37,7 @@ public sealed class FirmerSiteTests(DemoSite demo, AccountsSite accounts) : ICla
     public async Task An_address_with_a_question_is_a_moment_of_one_visitor_and_is_not_kept()
     {
         var visitor = demo.Visitor();
+        await visitor.Post("/preferences/offline", "/en/cookies", ("answer", "on"), ("returnUrl", "/en/cookies"));
 
         Assert.Equal(KeptOffline.Page, Kept(await visitor.Get("/en/")));
         var asked = await visitor.Get("/en/?reported=thanks");

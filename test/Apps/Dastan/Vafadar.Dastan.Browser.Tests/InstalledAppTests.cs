@@ -20,7 +20,7 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
     [Fact]
     public async Task Without_a_connection_the_visitor_gets_the_page_that_says_so_and_nothing_of_the_story_from_a_store()
     {
-        var page = await site.Visitor(readTo: 2);
+        var page = await site.Visitor(readTo: 2, offline: true);
         await page.GotoAsync($"/en/{Story}/media/media-dastan-family-illustration");
         await Assertions.Expect(page.Locator(".media-figure img")).ToBeVisibleAsync();
 
@@ -77,6 +77,36 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
         Assert.EndsWith($"/fa/{Story}/story", page.Url, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public async Task The_site_keeps_nothing_on_a_device_until_its_visitor_turns_reading_without_a_connection_on()
+    {
+        var page = await site.Visitor(width: 412);
+        await page.GotoAsync($"/en/{Story}");
+
+        // Nobody asked for it: no worker, nothing kept.
+        await page.WaitForLoadStateAsync(LoadState.NetworkIdle);
+        Assert.Equal(0, await page.EvaluateAsync<int>("navigator.serviceWorker.getRegistrations().then(all => all.length)"));
+        Assert.Empty(await page.EvaluateAsync<string[]>("caches.keys()"));
+
+        // The note about storage is said once and leads to the page that lists everything.
+        await Assertions.Expect(page.Locator(".storage-notice")).ToBeVisibleAsync();
+        await page.Locator(".storage-notice a").ClickAsync();
+        await Assertions.Expect(page.Locator("h1")).ToHaveTextAsync("Cookies");
+
+        // Turned on, the worker takes over; turned off, it and what it kept are gone again.
+        await page.Locator("form[action='/preferences/offline'] button").ClickAsync();
+        await page.EvaluateAsync("() => navigator.serviceWorker.ready");
+        await Assertions.Expect(page.Locator("html")).ToHaveAttributeAsync("data-offline", "on");
+        await page.Locator("form[action='/preferences/offline'] button").ClickAsync();
+        await page.WaitForFunctionAsync("() => navigator.serviceWorker.getRegistrations().then(all => all.length === 0)");
+        await page.WaitForFunctionAsync("() => caches.keys().then(names => names.every(name => !name.startsWith('dastan-')))");
+        Assert.Null(await page.Locator("html").GetAttributeAsync("data-offline"));
+
+        // Read, the note is not shown again.
+        await page.Locator(".storage-notice button").ClickAsync();
+        await Assertions.Expect(page.Locator(".storage-notice")).ToHaveCountAsync(0);
+    }
+
     // --- Without the script ---
 
     [Fact]
@@ -119,7 +149,7 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
         // The question is put to the browser in its own language, and only Chromium has one for it.
         Assert.SkipUnless(BrowserSite.Engine == "chromium", "Only Chromium answers what it has against installing; Firefox and WebKit are not asked.");
 
-        var page = await site.Visitor(width: 1280);
+        var page = await site.Visitor(width: 1280, offline: true);
         await page.GotoAsync("/en/");
         await page.EvaluateAsync("navigator.serviceWorker.ready.then(() => true)");
         var session = await page.Context.NewCDPSessionAsync(page);

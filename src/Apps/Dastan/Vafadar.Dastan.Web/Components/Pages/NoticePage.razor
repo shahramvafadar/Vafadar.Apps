@@ -1,0 +1,112 @@
+@page "/notice"
+@inject NoticeDesk Desk
+@inject Visitor Visitor
+@inject IOptions<OperatorOptions> Operator
+@inject IStringLocalizer<Ui> T
+
+@* Telling who runs the site that something on it may not stay (Article 16 of the Digital Services Act). Open
+   to everybody, with or without an account. A person reads every notice; nothing is decided by a program. *@
+<PageTitle>@T["Notice_Title"] – @T["Site_Name"]</PageTitle>
+
+<header class="page-header">
+    <h1>@T["Notice_Title"]</h1>
+    <p class="lead">@T["Notice_Lead"]</p>
+</header>
+
+@if (Received is { Length: > 0 and <= 20 } reference && reference.All(letter => char.IsAsciiLetterOrDigit(letter) || letter == '-'))
+{
+    <section class="card" id="received" aria-labelledby="received-title">
+        <h2 id="received-title">@T["Notice_Received_Title"]</h2>
+        <p role="status">@string.Format(CultureInfo.CurrentCulture, T["Notice_Received"], reference)</p>
+        <p>@T["Notice_Received_Next"]</p>
+    </section>
+}
+
+<section class="card" aria-labelledby="how-title">
+    <h2 id="how-title">@T["Notice_How_Title"]</h2>
+    <p>@T["Notice_How"]</p>
+    @if (Operator.Value.Mail is { Length: > 0 } mail)
+    {
+        <p>@T["Notice_ByMail"] <a href="@($"mailto:{mail}")" dir="ltr">@mail</a></p>
+    }
+    <p class="note">@T["Notice_Urgent"]</p>
+</section>
+
+@if (Desk.TakesNotices)
+{
+    <section class="card" id="form" aria-labelledby="form-title">
+        <h2 id="form-title">@T["Notice_Form_Title"]</h2>
+        @if (_problems.Count > 0)
+        {
+            <ul class="problems" role="alert">
+                @foreach (var problem in _problems)
+                {
+                    <li>@T[$"Notice_Problem_{problem}"]</li>
+                }
+            </ul>
+        }
+        <form method="post" action="/preferences/report-content" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="language" value="@Visitor.Language.Tag" />
+            <p class="visually-hidden" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></p>
+            <p class="field">
+                <label for="notice-address">@T["Notice_Address"]</label>
+                <input id="notice-address" name="address" type="text" required maxlength="@NoticeBox.LongestLine" value="@About" dir="ltr" aria-describedby="notice-address-hint" />
+                <span class="meta" id="notice-address-hint">@T["Notice_Address_Hint"]</span>
+            </p>
+            <p class="field">
+                <label for="notice-kind">@T["Notice_Kind"]</label>
+                <select id="notice-kind" name="kind" required>
+                    <option value="">–</option>
+                    @foreach (var kind in NoticeBox.Kinds)
+                    {
+                        <option value="@kind">@T[$"Notice_Kind_{kind}"]</option>
+                    }
+                </select>
+            </p>
+            <p class="field">
+                <label for="notice-explanation">@T["Notice_Explanation"]</label>
+                <textarea id="notice-explanation" name="explanation" required minlength="20" maxlength="@NoticeBox.LongestExplanation" rows="8" dir="auto" aria-describedby="notice-explanation-hint"></textarea>
+                <span class="meta" id="notice-explanation-hint">@T["Notice_Explanation_Hint"]</span>
+            </p>
+            <p class="field">
+                <label for="notice-name">@T["Notice_Name"]</label>
+                <input id="notice-name" name="name" type="text" maxlength="@NoticeBox.LongestLine" autocomplete="name" dir="auto" />
+            </p>
+            <p class="field">
+                <label for="notice-mail">@T["Notice_Mail"]</label>
+                <input id="notice-mail" name="mail" type="email" maxlength="@NoticeBox.LongestLine" autocomplete="email" dir="ltr" aria-describedby="notice-mail-hint" />
+                <span class="meta" id="notice-mail-hint">@T["Notice_Mail_Hint"]</span>
+            </p>
+            <p class="tick">
+                <input id="notice-good-faith" name="good-faith" type="checkbox" required />
+                <label for="notice-good-faith">@T["Notice_GoodFaith"]</label>
+            </p>
+            <p class="note">@T["Notice_Privacy"] <a href="privacy">@T["Legal_privacy"]</a></p>
+            <p><button type="submit" class="action">@T["Notice_Send"]</button></p>
+        </form>
+    </section>
+}
+
+@code {
+    private static readonly string[] Known = ["address", "kind", "explanation", "name", "mail", "good-faith", "later", "full"];
+    private IReadOnlyList<string> _problems = [];
+
+    /// <summary>Gets or sets the address the notice is about, when a page led here.</summary>
+    [SupplyParameterFromQuery(Name = "about")]
+    public string? About { get; set; }
+
+    /// <summary>Gets or sets the reference of a notice that was just given.</summary>
+    [SupplyParameterFromQuery(Name = "received")]
+    public string? Received { get; set; }
+
+    /// <summary>Gets or sets what was wrong with a form that was sent.</summary>
+    [SupplyParameterFromQuery(Name = "problem")]
+    public string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _problems = [.. (Problem ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries).Where(Known.Contains).Distinct()];
+        About = About is { Length: > 0 and <= NoticeBox.LongestLine } && !About.Any(char.IsControl) ? About : null;
+    }
+}

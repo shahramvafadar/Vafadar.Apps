@@ -642,3 +642,30 @@ Not looked at in a browser: the changes to the pages (the browser of the develop
 | --- | --- | --- |
 | 18.7.12 | The history of a tree told everybody who may see the tree with whom it is shared and who claimed a record, while the list of members is the owner's and a claim is shown to two people | **Done** (D-070) – those lines are the owner's; somebody else reads the ones they wrote. `FirmerAccountsTests` |
 | 18.7.13 | A copy of one's data held the codes of invitations that can still be used – a key in a file that gets passed on | **Done** (D-071) – such an invitation is named without its code; the text of the page says so. `FirmerAccountsTests`, `OwnDataTests` |
+
+### 18.8 – The legal pages and what the law asks of the site (2026-11-19)
+
+The owner asked for the legal pages the site needs, complete, after research into the present law of the
+European Union and of Germany, with a notice about cookies; a lawyer reads them before the site is public.
+The site is personal: one private person runs it, no company. What was read is in
+[legal/research-eu-2026-11.md](legal/research-eu-2026-11.md) and
+[legal/research-de-2026-11.md](legal/research-de-2026-11.md); what follows from it, the records of processing,
+the measures, the procedures of the operator and the assessment of risk in [legal/README.md](legal/README.md);
+what the owner still has to say and sign in [legal/before-publication.md](legal/before-publication.md).
+
+| # | What | State |
+| --- | --- | --- |
+| 18.8.1 | **The texts**: terms of use, privacy notice (Articles 13 and 14 GDPR, with a section for people others name or show), a page of everything the site stores on a device, and the legal notice (§ 5 DDG, § 18 MStV, the contact points of the Digital Services Act) – in English, Persian and German, the German one authoritative. They are part of the program; what only the operator knows comes from `Dastan:Operator`, and a text with a gap says that it is not complete. A folder (`Dastan:Legal`) can put a text of the owner's own in the place of one | **Done** (D-072). `LegalPagesTests` – among them that the three languages of a text have the same structure |
+| 18.8.2 | **What is stored on a device** (§ 25 TDDDG): only what a function a visitor used needs. The language is remembered when the visitor changes it, not when a page is opened; a form answers in the language of the page it stood on without a cookie. A note said once leads to the page of cookies; there is no banner, since nothing needs consent – except keeping pages for reading without a connection, which is now done only after a yes and is turned off as easily (this changes D-064) | **Done** (D-073). `LawfulSiteTests`, `KeptOfflineTests` |
+| 18.8.3 | **Registration** asks for the words "I have read the terms and the privacy notice"; the account notes the version and the moment. An account that never said so, or said so for older terms, is asked on its page – nothing is agreed to by silence | **Done**. Migration `OperatorRestrictions` |
+| 18.8.4 | **Notice and action** (Article 16 DSA): the page `notice`, open to everybody, with a form that tells a reference at once; a link "Report this page" on the pages with content of visitors and "Report content" in the foot of every page. The operator reads, settles and forgets notices with the command | **Done** (D-074). `LawfulSiteTests`, `OperatorCommandsTests` |
+| 18.8.5 | **Restrictions with a statement of reasons** (Article 17 DSA): the operator hides a photograph, takes a tree back from the public or closes an account, by a command, with the facts and the ground; the person concerned reads them on the account page, the owner of a closed account after name and password; a restriction is lifted the same way. The record of a person is taken out of a tree for a person who objects (Articles 17, 21 GDPR); a closed account is deleted at once on request | **Done** (D-074). `OperatorRestrictionsTests` |
+| 18.8.6 | **A word to everybody**: `Dastan:Announcement` – how the operator of a site without mail addresses announces changed terms, the end of a function or a breach | **Done** |
+| 18.8.7 | **The record**: research with sources and what could not be verified, records of processing (Article 30), technical and organisational measures, procedures, a short assessment of risk, what the owner and the lawyer still have to do | **Done** |
+
+Checked: 2,689 tests of Dastan, none failed – 329 of them the browser tests, run in Chromium in the container
+of `compose.yaml` (skipped without a browser). The new pages were read in the browser of the development tool by
+their structure only; it did not draw, so nobody has looked at them. **Not done by the program and open**: the postal address and the other values
+of `Dastan:Operator`, the contracts with the host and the network provider, the mailbox, and the reading by a
+lawyer ([legal/before-publication.md](legal/before-publication.md)). No text makes a site free of every legal
+risk; the files say for each point what was verified and what was not.

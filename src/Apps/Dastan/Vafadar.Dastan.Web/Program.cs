@@ -40,6 +40,7 @@ builder.Services.Configure<SiteLanguageOptions>(options =>
 });
 
 builder.Services.Configure<DastanOptions>(builder.Configuration.GetSection("Dastan"));
+builder.Services.Configure<OperatorOptions>(builder.Configuration.GetSection("Dastan:Operator"));
 builder.Services.AddSingleton<DastanLibrary>();
 
 // The collection of a request is the one its address names (step 14.10).
@@ -50,6 +51,11 @@ builder.Services.AddSingleton<ReportDesk>();
 // The accounts of the visitors (step 16.1): there are some only where the site was told a file for their store.
 builder.Services.AddVisitorAccounts(builder.Configuration);
 builder.Services.AddSingleton<LegalTexts>();
+builder.Services.AddSingleton<NoticeDesk>();
+
+// The language of a visitor is kept on the device when the visitor chose it, not whenever a page is opened
+// (§ 25 TDDDG: only what the service a visitor asked for cannot do without).
+builder.Services.Configure<SiteLanguageOptions>(options => options.RememberOnlyChoice = true);
 
 // The keys of the forms outlive the process only where a folder for them is named (docs/operations.md).
 if (builder.Configuration["Dastan:Keys"] is { Length: > 0 } keys)
@@ -141,6 +147,8 @@ app.MapMediaFiles();
 app.MapSiteHealth();
 app.MapSearchEngineFiles();
 app.MapPreviewPicture();
+app.MapDeviceStorage();
+NoticeDesk.MapContentNotices(app);
 app.MapVisitorReports();
 app.MapSavedList();
 app.MapVisitorAccounts();

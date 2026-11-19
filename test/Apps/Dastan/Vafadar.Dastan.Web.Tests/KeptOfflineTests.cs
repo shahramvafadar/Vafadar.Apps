@@ -15,6 +15,14 @@ public sealed class KeptOfflineTests : IDisposable
 
     public void Dispose() => _site.Dispose();
 
+    // Somebody who said yes to pages being kept on the device (row 18.8): without it nothing is.
+    private async Task<Browser> Reader()
+    {
+        var visitor = _site.Visitor();
+        await visitor.Post("/preferences/offline", "/en/cookies", ("answer", "on"), ("returnUrl", "/en/cookies"));
+        return visitor;
+    }
+
     private static string? Kept(Page page) => page.Response.Headers.TryGetValues("Dastan-Keep", out var values) ? string.Join(',', values) : null;
 
     [Theory]
@@ -25,10 +33,11 @@ public sealed class KeptOfflineTests : IDisposable
     [InlineData("/en/compare/iran-china-rome")]
     public async Task A_public_page_may_be_kept_by_the_device_of_who_read_it(string address)
     {
-        var page = await _site.Visitor().Get(address);
+        var page = await (await Reader()).Get(address);
 
         Assert.Equal(HttpStatusCode.OK, page.Status);
         Assert.Equal("page", Kept(page));
+        Assert.Null(Kept(await _site.Visitor().Get(address)));
     }
 
     [Theory]
@@ -44,7 +53,7 @@ public sealed class KeptOfflineTests : IDisposable
     [InlineData("/app.css")]
     public async Task What_is_no_public_page_that_was_found_is_not_kept(string address)
     {
-        var page = await _site.Visitor().Get(address);
+        var page = await (await Reader()).Get(address);
 
         Assert.Null(Kept(page));
     }
@@ -52,8 +61,8 @@ public sealed class KeptOfflineTests : IDisposable
     [Fact]
     public async Task Nothing_is_kept_for_somebody_who_is_signed_in_and_nothing_of_their_private_spaces()
     {
-        var mina = _site.Visitor();
-        await mina.Post("/preferences/account/register", "/en/account", ("name", "Mina"), ("age", "on"), ("password", Password), ("again", Password), ("returnUrl", "/en/account"));
+        var mina = await Reader();
+        await mina.Post("/preferences/account/register", "/en/account", ("name", "Mina"), ("age", "on"), ("terms", "on"), ("password", Password), ("again", Password), ("returnUrl", "/en/account"));
         var id = System.Text.RegularExpressions.Regex.Match((await mina.Get("/en/account/people")).Html, "href=\"people/([a-f0-9]{32})\"").Groups[1].Value;
 
         // Her name stands on every page she is given: none of them is kept, public or not.
@@ -66,7 +75,7 @@ public sealed class KeptOfflineTests : IDisposable
         }
 
         // The page of a person is not kept for a stranger either.
-        var stranger = _site.Visitor();
+        var stranger = await Reader();
         Assert.Equal(HttpStatusCode.OK, (await stranger.Get($"/en/people/{id}")).Status);
         Assert.Null(Kept(await stranger.Get($"/en/people/{id}")));
         Assert.Equal("page", Kept(await stranger.Get($"/en/{Story}")));
