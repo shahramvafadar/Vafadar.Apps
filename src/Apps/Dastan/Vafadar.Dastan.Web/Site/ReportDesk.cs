@@ -8,8 +8,8 @@ using Vafadar.Web;
 namespace Vafadar.Dastan.Web.Site;
 
 /// <summary>
-/// Where a visitor reports an error (step 14.8, R-GOV-03). The site takes reports only when it was told a folder
-/// for them (<c>Dastan:Reports</c>); the editors read that folder with their tool. A report is the statement,
+/// Where a visitor reports an error (step 14.8, R-GOV-03). The site takes reports only when it was told to
+/// (<c>Dastan:Reports</c>) and keeps them in its database; the editors read them with their tool. A report is the statement,
 /// the words and the day: the site keeps nothing about who wrote it.
 /// </summary>
 public sealed class ReportDesk
@@ -17,7 +17,7 @@ public sealed class ReportDesk
     /// <summary>The address the form of a report is sent to. It has no language.</summary>
     public const string Address = "/report";
 
-    /// <summary>How many reports one address may send in an hour.</summary>
+    /// <summary>How many reports one sender (<see cref="Sender"/>) may send in an hour.</summary>
     public const int PerHour = 5;
 
     private readonly ReportBox? _box;
@@ -34,9 +34,9 @@ public sealed class ReportDesk
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(environment);
         _time = time;
-        if (!string.IsNullOrWhiteSpace(options.Value.Reports))
+        if (options.Value.Reports)
         {
-            _box = new ReportBox(Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.Reports)));
+            _box = new ReportBox(options.Value.DeliveryDatabase("Dastan:Reports"));
         }
     }
 
@@ -120,7 +120,7 @@ public static class ReportEndpoint
             // A program that fills in every field has filled in the one a person does not see: it is thanked and
             // nothing is kept.
             var outcome = string.IsNullOrEmpty(website)
-                ? desk.Take(context.Connection.RemoteIpAddress?.ToString() ?? "unknown", site.Collection, site.Revision?.Number, visitor.Language.Tag, statement!, words)
+                ? desk.Take(Sender.Of(context), site.Collection, site.Revision?.Number, visitor.Language.Tag, statement!, words)
                 : "thanks";
             var back = ReturnAddress.Safe(returnUrl);
             var end = back.IndexOf('#', StringComparison.Ordinal);

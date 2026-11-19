@@ -165,6 +165,15 @@ public sealed partial class EditorialStore : IDisposable
         var collection = _context.Collections.Find(id);
         var isNew = collection is null;
 
+        // A record that comes back after it was taken out goes on where its history ended: its versions are
+        // counted through, so that "version 2" names one state of it and not two.
+        var earlier = isNew
+            ? []
+            : _context.Changes.Where(change => change.CollectionId == id)
+                .GroupBy(change => new { change.Group, change.RecordId })
+                .Select(changes => new { changes.Key.Group, changes.Key.RecordId, Last = changes.Max(change => change.Version) })
+                .ToDictionary(last => (last.Group, last.RecordId), last => last.Last);
+
         // The records, group by group, against what the store holds.
         var held = _context.Records.Where(record => record.CollectionId == id).ToDictionary(record => (record.Group, record.RecordId));
         foreach (var group in Groups)
@@ -180,9 +189,9 @@ public sealed partial class EditorialStore : IDisposable
                     _context.Records.Add(new StoredRecord
                     {
                         CollectionId = id, Group = group, RecordId = recordId, Position = position, Body = body,
-                        Version = 1, UpdatedAt = now, UpdatedBy = by,
+                        Version = earlier.GetValueOrDefault((group, recordId)) + 1, UpdatedAt = now, UpdatedBy = by,
                     });
-                    Record(id, group, recordId, RecordChangeKind.Added, 1, by, now, reason, null, body);
+                    Record(id, group, recordId, RecordChangeKind.Added, earlier.GetValueOrDefault((group, recordId)) + 1, by, now, reason, null, body);
                     added++;
                 }
                 else

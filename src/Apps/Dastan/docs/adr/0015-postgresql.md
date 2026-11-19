@@ -83,10 +83,32 @@ that schema – it has no model of the editors' tables and reads no other schema
 and does not start on a revision that was changed, on a database without the tables, or without anything
 released. So an earlier revision can be shown again (R-PUB-07) by releasing it.
 
-**Still owed by step 19.3:** a page of the tool for releasing (today a command), the comparisons from the
-database (they are still files), a role of the database for the site that may read `published` and no more,
-reports and notices as tables, the version an act read (two editors who open the same form – today the later
-one wins and the history shows both), limits per hour by network.
+What was owed after that part and is built: the page of the revisions in the tool says which revision the
+site shows and a publisher releases or withdraws there; a comparison is released the same way
+(`published.Comparisons`: the text as it was at that moment, with its hash) and a site that reads from the
+database reads its comparisons there; an act says which version of a record it was decided on and is refused,
+under the lock of the collection, when the record is at another by then; the versions of a record are counted
+through a time it was not there. Reports and notices are the tables `delivery."Reports"` and
+`delivery."Notices"`, reached by the site, the tool and the command with plain questions (`Vafadar.Dastan.Data`);
+`Dastan:Reports`, `Dastan:Notices` and `Studio:Reports` say whether, no longer where.
+
+Who may do what: `database grant site|tool <role>` gives a role of the database what its program needs and
+takes the rest – the site reads `published`, writes `personal` and adds to `delivery`, and cannot read
+`editorial`; the tool works in `editorial`, adds to `published`, reads and settles in `delivery`, and cannot
+reach `personal`; neither changes a published revision. The limits per hour of the site count by the network
+of a connection (the first 64 bits of an IPv6 address) and no longer by the exact address.
+
+**Two points of the decision above were built otherwise than they were first written**, and are said here so
+that the text and the program agree. A limit per account is kept by a lock of the transaction for that
+account, taken before the count – not by a row of counters: the lock needs no second place that could
+disagree with the rows it counts. And an act carries the version of the *record* it read, checked under the
+lock of the collection – not a version of the whole collection: two editors who change different records of
+one collection at the same moment are both kept, which a version of the collection would refuse.
+
+**What of this decision belongs to later steps**, each named where it is built: the schema `identity` and
+the mail that waits in `delivery` (step 19.4, with the accounts – one account per name and per mail address
+and the single use of an invitation are written once, there); the two indexed numbers of a time in the
+telling (step 19.9, the first that asks "what held at this time").
 
 **Seen on the way and not solved here.** The stores speak to the database synchronously. Under a burst of
 requests that all wait – as the tests of this step produce on purpose – the threads of the process ran out and

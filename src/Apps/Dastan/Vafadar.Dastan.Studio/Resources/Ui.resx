@@ -352,7 +352,7 @@
     <value>Publish the next revision</value>
   </data>
   <data name="Publish_Lead" xml:space="preserve">
-    <value>This makes revision {0} out of what the store holds. Every statement has to be reviewed. The store keeps the revision as it is published; the command “store revision” writes it out for a site.</value>
+    <value>This makes revision {0} out of what the store holds. Every statement has to be reviewed. The store keeps the revision as it is published. Nobody sees it before it is released (above); the command “store revision” writes it out as files.</value>
   </data>
   <data name="Publish_On" xml:space="preserve">
     <value>Day of publication</value>
@@ -743,5 +743,68 @@
   </data>
   <data name="Sizes_None" xml:space="preserve">
     <value>No smaller size was made: the image is small already, or it cannot be read.</value>
+  </data>
+  <data name="Release_Title" xml:space="preserve">
+    <value>What the site shows</value>
+  </data>
+  <data name="Release_Lead" xml:space="preserve">
+    <value>A site that reads its collections from the database shows the revision named here from its next start on – the newest, or an earlier one again. Publishing a revision shows it to nobody.</value>
+  </data>
+  <data name="Release_Shown" xml:space="preserve">
+    <value>The site shows revision {0}.</value>
+  </data>
+  <data name="Release_None" xml:space="preserve">
+    <value>The site shows no revision of this collection.</value>
+  </data>
+  <data name="Release_Number" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="Release_Option" xml:space="preserve">
+    <value>Revision {0} of {1}</value>
+  </data>
+  <data name="Release_Submit" xml:space="preserve">
+    <value>Show this revision on the site</value>
+  </data>
+  <data name="Release_NeedsNumber" xml:space="preserve">
+    <value>Choose one of the published revisions.</value>
+  </data>
+  <data name="Withdraw_Submit" xml:space="preserve">
+    <value>Show no revision on the site</value>
+  </data>
+  <data name="Col_OnSite" xml:space="preserve">
+    <value>On the site</value>
+  </data>
+  <data name="Release_Mark" xml:space="preserve">
+    <value>shown</value>
+  </data>
+  <data name="Done_released" xml:space="preserve">
+    <value>The site shows this revision from its next start on.</value>
+  </data>
+  <data name="Done_withdrawn" xml:space="preserve">
+    <value>The site shows no revision of this collection from its next start on. What was published is still kept.</value>
+  </data>
+  <data name="ComparisonRelease_Lead" xml:space="preserve">
+    <value>A site that reads from the database shows a comparison as it was when it was released, from its next start on. What is changed afterwards is shown when the comparison is released again.</value>
+  </data>
+  <data name="ComparisonRelease_No" xml:space="preserve">
+    <value>The site does not show this comparison.</value>
+  </data>
+  <data name="ComparisonRelease_AsHeld" xml:space="preserve">
+    <value>The site shows this comparison as it is here.</value>
+  </data>
+  <data name="ComparisonRelease_Earlier" xml:space="preserve">
+    <value>The site shows this comparison as it was released; it was changed since.</value>
+  </data>
+  <data name="ComparisonRelease_Submit" xml:space="preserve">
+    <value>Show the comparison on the site as it is now</value>
+  </data>
+  <data name="ComparisonWithdraw_Submit" xml:space="preserve">
+    <value>Do not show the comparison on the site</value>
+  </data>
+  <data name="Done_comparisonreleased" xml:space="preserve">
+    <value>The site shows the comparison as it is now from its next start on.</value>
+  </data>
+  <data name="Done_comparisonwithdrawn" xml:space="preserve">
+    <value>The site does not show the comparison from its next start on.</value>
   </data>
 </root>

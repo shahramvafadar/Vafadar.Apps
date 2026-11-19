@@ -14,9 +14,9 @@
         <p class="lead">@T["Revisions_Lead"]</p>
     </header>
 
-    @if (Done == "published")
+    @if (Done is "published" or "released" or "withdrawn")
     {
-        <p class="done" role="status">@T["Done_published"]</p>
+        <p class="done" role="status">@T[$"Done_{Done}"]</p>
     }
 
     @if (_revisions.Count == 0)
@@ -33,6 +33,7 @@
                         <th scope="col">@T["Col_Published"]</th>
                         <th scope="col">@T["Col_By"]</th>
                         <th scope="col">@T["Col_Note"]</th>
+                        <th scope="col">@T["Col_OnSite"]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,11 +44,46 @@
                             <td><bdi dir="ltr">@revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)</bdi></td>
                             <td><bdi>@revision.By</bdi></td>
                             <td><bdi>@revision.Note</bdi></td>
+                            <td>@if (revision.Number == _released) { <strong>@T["Release_Mark"]</strong> }</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
+    }
+
+    @if (_revisions.Count > 0)
+    {
+        <section aria-labelledby="release">
+            <h2 id="release">@T["Release_Title"]</h2>
+            <p class="note">@T["Release_Lead"]</p>
+            <p role="status"><strong>@(_released is { } shown ? string.Format(CultureInfo.CurrentCulture, T["Release_Shown"], Editor.Number(shown)) : T["Release_None"])</strong></p>
+            <ActOutcome Problems="_releaseProblems" />
+            <Allowed Role="EditorRoles.Publisher">
+<form method="post" @formname="release" @onsubmit="Release" class="act" action="@($"{Collection}/revisions")">
+                <AntiforgeryToken />
+                <p class="field">
+                    <label for="release-number">@T["Release_Number"]</label>
+                    <select id="release-number" name="Releasing.Number" required>
+                        @foreach (var revision in _revisions)
+                        {
+                            <option value="@revision.Number.ToString(CultureInfo.InvariantCulture)" selected="@(revision.Number == (_released ?? _revisions[0].Number))">@string.Format(CultureInfo.CurrentCulture, T["Release_Option"], Editor.Number(revision.Number), Isolated(revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)))</option>
+                        }
+                    </select>
+                </p>
+                <WhoAndWhy Form="release" Model="Releasing" By="@(Releasing?.By ?? Editor.Name)" />
+                <p><button type="submit" class="action">@T["Release_Submit"]</button></p>
+            </form>
+                @if (_released is not null)
+                {
+<form method="post" @formname="withdraw" @onsubmit="Withdraw" class="act" action="@($"{Collection}/revisions")">
+                    <AntiforgeryToken />
+                    <WhoAndWhy Form="withdraw" Model="Withdrawing" By="@(Withdrawing?.By ?? Editor.Name)" />
+                    <p><button type="submit" class="action">@T["Withdraw_Submit"]</button></p>
+                </form>
+                }
+</Allowed>
+        </section>
     }
 
     var next = (_revisions.Count == 0 ? 0 : _revisions[0].Number) + 1;
@@ -77,6 +113,8 @@
     private bool _known;
     private List<RevisionInfo> _revisions = [];
     private List<string>? _problems;
+    private List<string>? _releaseProblems;
+    private int? _released;
 
     [CascadingParameter]
     private HttpContext Context { get; set; } = null!;
@@ -88,6 +126,14 @@
     /// <summary>Gets or sets what the form of a publication was filled with.</summary>
     [SupplyParameterFromForm(FormName = "publish")]
     public PublishInput? Publishing { get; set; }
+
+    /// <summary>Gets or sets what the form that releases a revision was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "release")]
+    public ReleaseInput? Releasing { get; set; }
+
+    /// <summary>Gets or sets what the form that withdraws the collection from the site was filled with.</summary>
+    [SupplyParameterFromForm(FormName = "withdraw")]
+    public ReleaseInput? Withdrawing { get; set; }
 
     /// <summary>Gets or sets the identifier of the collection in the address.</summary>
     [Parameter]
@@ -104,6 +150,59 @@
 
         // The newest revision first.
         _revisions = [.. Store.Revisions(Collection).Reverse()];
+        _released = Store.Released(Collection);
+    }
+
+    // A day inside the text of an option, which can hold no element: kept in its own order, left to right,
+    // by the marks of Unicode, so that a page that reads right to left does not turn its parts around.
+    private static string Isolated(string leftToRight) => $"⁦{leftToRight}⁩";
+
+    private void Release()
+    {
+        var input = Releasing ?? new ReleaseInput();
+        var problems = new List<string>();
+        var by = Editor.By(input.By);
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        if (!int.TryParse(input.Number, NumberStyles.None, CultureInfo.InvariantCulture, out var number) || _revisions.All(revision => revision.Number != number))
+        {
+            problems.Add(T["Release_NeedsNumber"]);
+        }
+
+        Said(problems, by, store => store.Release(Collection, number, by!), "released");
+    }
+
+    private void Withdraw()
+    {
+        var problems = new List<string>();
+        var by = Editor.By((Withdrawing ?? new ReleaseInput()).By);
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        Said(problems, by, store => store.Withdraw(Collection, by!), "withdrawn");
+    }
+
+    // Says a word about what the site shows; the store may refuse it, and then says why.
+    private void Said(List<string> problems, string? by, Func<EditorialStore, string?> say, string done)
+    {
+        if (problems.Count == 0)
+        {
+            if (say(Store) is not { } refused)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Collection}/revisions?done={done}");
+                return;
+            }
+
+            problems.Add(refused);
+        }
+
+        _releaseProblems = problems;
     }
 
     private void Publish()

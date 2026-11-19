@@ -28,6 +28,35 @@ public sealed class ComparisonStoreTests : IDisposable
     }
 
     [Fact]
+    public void A_comparison_is_released_to_the_site_as_it_is_at_that_moment_and_withdrawn_again()
+    {
+        using var store = _copy.Open();
+        Assert.True(store.ImportComparison(File, "an editor", "The first comparison.").Done);
+        Assert.Equal(ComparisonOnSite.No, store.ComparisonShown(Id));
+        Assert.NotNull(store.WithdrawComparison(Id, "a publisher"));
+        Assert.NotNull(store.ReleaseComparison("no-such-comparison", "a publisher"));
+
+        Assert.Null(store.ReleaseComparison(Id, "a publisher"));
+        Assert.Equal(ComparisonOnSite.AsHeld, store.ComparisonShown(Id));
+        Assert.NotNull(store.ReleaseComparison(Id, "a publisher"));
+
+        // Changed afterwards, the site still shows what was released, until it is released again.
+        var changed = JsonNode.Parse(System.IO.File.ReadAllText(File))!.AsObject();
+        changed["title"] = "Three lands side by side";
+        Assert.True(store.PutComparison(changed.ToJsonString(), new Dictionary<string, string> { ["fa"] = System.IO.File.ReadAllText(Persian) }, "a writer", "A plainer title.").Done);
+        Assert.Equal(ComparisonOnSite.Earlier, store.ComparisonShown(Id));
+        Assert.Contains("changed since", Run("store", "comparison", "list", "--store", _copy.Database).Output, StringComparison.Ordinal);
+        Assert.Equal(ContentCommands.Done, Run("store", "comparison", "release", Id, "--store", _copy.Database, "--by", "a publisher").Exit);
+        Assert.Equal(ComparisonOnSite.AsHeld, store.ComparisonShown(Id));
+        Assert.Equal(ContentCommands.NotUsable, Run("store", "comparison", "release", Id, "--store", _copy.Database, "--by", "a publisher").Exit);
+
+        Assert.Equal(ContentCommands.Done, Run("store", "comparison", "withdraw", Id, "--store", _copy.Database, "--by", "a publisher").Exit);
+        Assert.Equal(ComparisonOnSite.No, store.ComparisonShown(Id));
+        Assert.Equal(ContentCommands.NotUsable, Run("store", "comparison", "withdraw", Id, "--store", _copy.Database, "--by", "a publisher").Exit);
+        Assert.Equal(ContentCommands.NotUnderstood, Run("store", "comparison", "release", Id, "--store", _copy.Database).Exit);
+    }
+
+    [Fact]
     public void A_comparison_comes_in_with_its_translation_and_goes_out_as_it_went_in()
     {
         using var store = _copy.Open();

@@ -32,9 +32,9 @@ public sealed class NoticeDesk
         ArgumentNullException.ThrowIfNull(options);
         ArgumentNullException.ThrowIfNull(environment);
         _time = time;
-        if (!string.IsNullOrWhiteSpace(options.Value.Notices))
+        if (options.Value.Notices)
         {
-            _box = new NoticeBox(Path.GetFullPath(Path.Combine(environment.ContentRootPath, options.Value.Notices)));
+            _box = new NoticeBox(options.Value.DeliveryDatabase("Dastan:Notices"));
         }
     }
 
@@ -94,7 +94,7 @@ public sealed class NoticeDesk
                 return Results.Redirect($"{page}?problem={string.Join(',', problems)}#form");
             }
 
-            var taken = desk.Take(context.Connection.RemoteIpAddress?.ToString() ?? "unknown", tag, address!, kind!, explanation!, name, mail);
+            var taken = desk.Take(Sender.Of(context), tag, address!, kind!, explanation!, name, mail);
             return taken is "later" or "full"
                 ? Results.Redirect($"{page}?problem={taken}#form")
                 : Results.Redirect($"{page}?received={taken}#received");

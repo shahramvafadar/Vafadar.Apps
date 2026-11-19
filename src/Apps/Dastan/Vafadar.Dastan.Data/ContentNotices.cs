@@ -1,6 +1,6 @@
 using System.Globalization;
 using System.Security.Cryptography;
-using System.Text.Json;
+using Npgsql;
 
 namespace Vafadar.Dastan.Data;
 
@@ -34,9 +34,9 @@ public sealed record ContentNotice(
     string? Decision = null);
 
 /// <summary>
-/// The folder the notices about content lie in: one small file each. The site writes into it and reads nothing
-/// back; who runs the site reads it with the command, decides, answers by mail where an address was given, and
-/// settles the notice, which moves it into the folder <c>settled</c>.
+/// The notices about content, in the table <c>delivery."Notices"</c> of the database (ADR 0015). The site writes
+/// into it and reads nothing back; who runs the site reads it with the command, decides, answers by mail where
+/// an address was given, and settles the notice.
 /// </summary>
 public sealed class NoticeBox
 {
@@ -52,17 +52,16 @@ public sealed class NoticeBox
     /// <summary>The largest number of notices that wait: a box that is full takes no more, and the page says to write by mail.</summary>
     public const int MostWaiting = 1000;
 
-    private static readonly JsonSerializerOptions Format = new(JsonSerializerDefaults.Web) { WriteIndented = true };
-    private readonly string _folder;
+    private const string Columns = """ "Id", "ReceivedAt", "Language", "Address", "Kind", "Explanation", "Name", "Mail", "GoodFaith", "SettledAt", "Decision" """;
+    private static readonly string Table = $"""{Delivery.Schema}."Notices" """;
+    private readonly string _connection;
 
-    /// <summary>Initializes a new instance of the <see cref="NoticeBox"/> class for a folder; it is made when the first notice comes.</summary>
-    public NoticeBox(string folder)
+    /// <summary>Initializes a new instance of the <see cref="NoticeBox"/> class for a database, by its connection.</summary>
+    public NoticeBox(string connection)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(folder);
-        _folder = Path.GetFullPath(folder);
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        _connection = connection;
     }
-
-    private string Settled => Path.Combine(_folder, "settled");
 
     /// <summary>
     /// Returns what is wrong with a notice as it was written, by the names of the fields – nothing when it can
@@ -113,42 +112,48 @@ public sealed class NoticeBox
             throw new ArgumentException($"The notice cannot be kept: {string.Join(", ", problems)}.", nameof(address));
         }
 
-        Directory.CreateDirectory(_folder);
-        if (Directory.EnumerateFiles(_folder, "*.json").Take(MostWaiting).Count() >= MostWaiting)
+        using var database = Delivery.Open(_connection);
+        using var step = database.BeginTransaction();
+
+        // Counted and added under one lock: the box does not take one more than it may, however many write at once.
+        Delivery.Lock(database, "notices");
+        using (var waiting = Delivery.Command(database, $"""select count(*) from {Table} where "SettledAt" is null"""))
         {
-            return null;
+            if ((long)waiting.ExecuteScalar()! >= MostWaiting)
+            {
+                return null;
+            }
         }
 
         // The reference is told to who gave the notice and names it in every answer: short enough to be read out.
         var id = $"{now:yyyyMMdd}-{Convert.ToHexString(RandomNumberGenerator.GetBytes(4))}";
-        var notice = new ContentNotice(id, now, language, address.Trim(), kind, explanation.Trim(), Line(name), Line(mail), goodFaith);
-        var path = Path.Combine(_folder, id + ".json");
-        var arriving = path + ".part";
-        File.WriteAllText(arriving, JsonSerializer.Serialize(notice, Format));
-        File.Move(arriving, path);
+        using var add = Delivery.Command(
+            database,
+            $"""insert into {Table} ("Id", "ReceivedAt", "Language", "Address", "Kind", "Explanation", "Name", "Mail", "GoodFaith") values (@id, @at, @language, @address, @kind, @explanation, @name, @mail, @faith)""",
+            ("id", id), ("at", Utc(now)), ("language", language), ("address", address.Trim()), ("kind", kind), ("explanation", explanation.Trim()), ("name", Line(name)), ("mail", Line(mail)), ("faith", goodFaith));
+        add.ExecuteNonQuery();
+        step.Commit();
         return id;
     }
 
     /// <summary>Returns the notices that wait, the oldest first.</summary>
-    public IReadOnlyList<ContentNotice> Waiting() => Read(_folder);
+    public IReadOnlyList<ContentNotice> Waiting() => Read("""where "SettledAt" is null order by "ReceivedAt", "Id" """);
 
     /// <summary>Returns the notices that were settled, the oldest first.</summary>
-    public IReadOnlyList<ContentNotice> AllSettled() => Read(Settled);
+    public IReadOnlyList<ContentNotice> AllSettled() => Read("""where "SettledAt" is not null order by "ReceivedAt", "Id" """);
 
-    /// <summary>Notes what was decided about a notice and moves it to the settled ones. Returns whether there was such a notice waiting.</summary>
+    /// <summary>Notes what was decided about a notice and takes it out of those that wait. Returns whether there was such a notice waiting.</summary>
     public bool Settle(string id, string decision, DateTime now)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(decision);
-        if (!IsReference(id) || Path.Combine(_folder, id + ".json") is not { } path || !File.Exists(path))
+        if (!IsReference(id))
         {
             return false;
         }
 
-        var notice = JsonSerializer.Deserialize<ContentNotice>(File.ReadAllText(path), Format)!;
-        Directory.CreateDirectory(Settled);
-        File.WriteAllText(Path.Combine(Settled, id + ".json"), JsonSerializer.Serialize(notice with { SettledAt = now, Decision = decision.Trim() }, Format));
-        File.Delete(path);
-        return true;
+        using var database = Delivery.Open(_connection);
+        using var settle = Delivery.Command(database, $"""update {Table} set "SettledAt" = @at, "Decision" = @decision where "Id" = @id and "SettledAt" is null""", ("at", Utc(now)), ("decision", decision.Trim()), ("id", id));
+        return settle.ExecuteNonQuery() == 1;
     }
 
     /// <summary>
@@ -157,23 +162,13 @@ public sealed class NoticeBox
     /// </summary>
     public int Forget(DateTime settledBefore)
     {
-        if (!Directory.Exists(Settled))
-        {
-            return 0;
-        }
-
-        var forgotten = 0;
-        foreach (var file in Directory.EnumerateFiles(Settled, "*.json").ToList())
-        {
-            if (JsonSerializer.Deserialize<ContentNotice>(File.ReadAllText(file), Format) is { SettledAt: { } at } && at < settledBefore)
-            {
-                File.Delete(file);
-                forgotten++;
-            }
-        }
-
-        return forgotten;
+        using var database = Delivery.Open(_connection);
+        using var forget = Delivery.Command(database, $"""delete from {Table} where "SettledAt" < @before""", ("before", Utc(settledBefore)));
+        return forget.ExecuteNonQuery();
     }
+
+    // The database keeps a moment in universal time and takes no other.
+    private static DateTime Utc(DateTime moment) => moment.Kind == DateTimeKind.Utc ? moment : DateTime.SpecifyKind(moment, DateTimeKind.Utc);
 
     private static bool IsReference(string? id) =>
         id is { Length: 17 } && id[8] == '-' && id.All(letter => char.IsAsciiDigit(letter) || letter == '-' || (letter >= 'A' && letter <= 'F'))
@@ -181,8 +176,28 @@ public sealed class NoticeBox
 
     private static string? Line(string? written) => string.IsNullOrWhiteSpace(written) ? null : written.Trim();
 
-    private static IReadOnlyList<ContentNotice> Read(string folder) =>
-        !Directory.Exists(folder)
-            ? []
-            : [.. Directory.EnumerateFiles(folder, "*.json").Order(StringComparer.Ordinal).Select(file => JsonSerializer.Deserialize<ContentNotice>(File.ReadAllText(file), Format)!)];
+    private List<ContentNotice> Read(string which)
+    {
+        using var database = Delivery.Open(_connection);
+        using var command = Delivery.Command(database, $"select {Columns} from {Table} {which}");
+        using var rows = command.ExecuteReader();
+        var notices = new List<ContentNotice>();
+        while (rows.Read())
+        {
+            notices.Add(new ContentNotice(
+                rows.GetString(0),
+                rows.GetDateTime(1),
+                rows.GetString(2),
+                rows.GetString(3),
+                rows.GetString(4),
+                rows.GetString(5),
+                rows.IsDBNull(6) ? null : rows.GetString(6),
+                rows.IsDBNull(7) ? null : rows.GetString(7),
+                rows.GetBoolean(8),
+                rows.IsDBNull(9) ? null : rows.GetDateTime(9),
+                rows.IsDBNull(10) ? null : rows.GetString(10)));
+        }
+
+        return notices;
+    }
 }

@@ -53,6 +53,23 @@ public sealed class StudioComparisonFormTests : IDisposable
     private static JsonObject Lane(JsonObject file, string key) => file["lanes"]!.AsArray().Single(lane => (string?)lane!["key"] == key)!.AsObject();
 
     [Fact]
+    public async Task A_comparison_is_released_to_the_site_and_withdrawn_on_its_page()
+    {
+        var before = await _desk.Get(Page);
+        Assert.Contains("The site does not show this comparison.", before.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("name=\"_handler\" value=\"withdraw\"", before.Html, StringComparison.Ordinal);
+
+        var released = await _desk.Submit(Page, "release", ("Releasing.By", "a publisher"));
+        Assert.EndsWith("?done=comparisonreleased", released.Arrived, StringComparison.Ordinal);
+        Assert.Contains("The site shows this comparison as it is here.", released.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("name=\"_handler\" value=\"release\"", released.Html, StringComparison.Ordinal);
+
+        var withdrawn = await _desk.Submit(Page, "withdraw", ("Withdrawing.By", "a publisher"));
+        Assert.EndsWith("?done=comparisonwithdrawn", withdrawn.Arrived, StringComparison.Ordinal);
+        Assert.Contains("The site does not show this comparison.", withdrawn.Text, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task What_a_comparison_says_as_a_whole_is_a_form_and_sent_as_it_stands_changes_nothing()
     {
         var page = await _desk.Get(Page);

@@ -24,8 +24,11 @@ site into the store, and must not make the site keep anything about who wrote it
   characters, without control characters) and **the day**. Not the time of the day, no address of the
   visitor's machine, no browser, no name, no way to answer. The form says so, and says not to write anything
   personal.
-* **The site takes reports only when it was told a folder** (`Dastan:Reports`). Told none, it offers no form
-  and the address of the form answers "not found".
+* **The site takes reports only when it was told to** (`Dastan:Reports`). Not told, it offers no form
+  and the address of the form answers "not found". *Since step 19.3 (2026-11-19, [ADR 0015](0015-postgresql.md))
+  the reports are rows of the table `delivery."Reports"` of the database and no longer files of a folder; what
+  this decision says about a folder reads as that table. A full box stays full however many write at the same
+  moment, and of two editors who note the same report one does.*
 * **The form** stands on the page of the sources of a statement – the page a visitor reaches from any
   statement – and is sent without a script, with the token every form of the site carries.
 * **What is refused**: a report about a statement the visitor could not read at their reading position (it

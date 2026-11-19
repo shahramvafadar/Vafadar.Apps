@@ -286,6 +286,35 @@ public sealed class StudioActsTests : IDisposable
         Assert.Equal(2, Regex.Matches(published.Main, "<tr>").Count - 1);
     }
 
+    [Fact]
+    public async Task A_published_revision_is_shown_by_the_site_only_once_it_is_released_and_can_be_withdrawn()
+    {
+        var revisions = $"/en/{Collection}/revisions";
+        var before = await _desk.Get(revisions);
+        Assert.Contains("The site shows no revision of this collection.", before.Text, StringComparison.Ordinal);
+        Assert.DoesNotContain("name=\"_handler\" value=\"withdraw\"", before.Html, StringComparison.Ordinal);
+
+        // A revision that was never published is not released.
+        var unknown = await _desk.Submit(revisions, "release", ("Releasing.Number", "9"), ("Releasing.By", "a publisher"));
+        Assert.Null(unknown.Arrived);
+        Assert.Contains("Choose one of the published revisions.", unknown.Text, StringComparison.Ordinal);
+
+        var released = await _desk.Submit(revisions, "release", ("Releasing.Number", "1"), ("Releasing.By", "a publisher"));
+        Assert.EndsWith("revisions?done=released", released.Arrived, StringComparison.Ordinal);
+        Assert.Contains("The site shows revision 1.", released.Text, StringComparison.Ordinal);
+        Assert.Contains("<strong>shown</strong>", released.Main, StringComparison.Ordinal);
+
+        // The same word again says nothing new, and the store says so.
+        var again = await _desk.Submit(revisions, "release", ("Releasing.Number", "1"), ("Releasing.By", "a publisher"));
+        Assert.Null(again.Arrived);
+        Assert.Contains("is the one the site shows already", again.Text, StringComparison.Ordinal);
+
+        var withdrawn = await _desk.Submit(revisions, "withdraw", ("Withdrawing.By", "a publisher"));
+        Assert.EndsWith("revisions?done=withdrawn", withdrawn.Arrived, StringComparison.Ordinal);
+        Assert.Contains("The site shows no revision of this collection.", withdrawn.Text, StringComparison.Ordinal);
+        Assert.Equal(1, Regex.Matches(withdrawn.Main, "<tr>").Count - 1);
+    }
+
     // --- what guards an act ---
 
     [Fact]

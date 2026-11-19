@@ -106,7 +106,7 @@
         record["id"] = _id;
         if (problems.Count == 0)
         {
-            var result = Store.Put(Collection, Group, record, by!, reason!);
+            var result = Store.Put(Collection, Group, record, by!, reason!, read: new ReadRecord(Group, _id!, 0));
             if (result.Done)
             {
                 EditorName.Keep(Context, by!);

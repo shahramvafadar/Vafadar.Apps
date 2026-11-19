@@ -18,18 +18,19 @@ internal static class OperatorCommands
 
     public const string Usage = """
 
-          notices <folder>
-              Lists the notices about content that wait for a decision, the oldest first.
+          notices <database>
+              Lists the notices about content that wait for a decision, the oldest first. The database is
+              named by its connection, or by the word env for the one in the variable DASTAN_DATABASE.
 
-          notices show <reference> <folder>
+          notices show <reference> <database>
               Shows one notice in full: where the content is, what is said to be wrong with it, and who
               gave it when they said so.
 
-          notices settle <reference> <folder> --decision <text>
+          notices settle <reference> <database> --decision <text>
               Notes what was decided on a notice and takes it out of the waiting ones. The decision is told
               to who gave the notice by mail, when they left an address: the command sends nothing.
 
-          notices forget <folder> [--kept-days <days>]
+          notices forget <database> [--kept-days <days>]
               Removes the settled notices that were decided more than a number of days ago (365 when none
               is named).
 
@@ -38,6 +39,13 @@ internal static class OperatorCommands
               program knows. Run it before a new version of the site is started; the site itself changes
               no table. Wherever a command asks for a database, the word env stands for the connection in
               the variable DASTAN_DATABASE – a connection holds a password and is never typed as a word.
+
+          database grant site|tool <role> --database env
+              Gives a role of the database what the site or the tool of the editors needs, and takes from
+              it everything else: the site reads what was released and never the work of the editors; the
+              tool never reaches what belongs to visitors. The role is made beforehand by who runs the
+              database, with a password this program never sees; the connection here is the one of the
+              role that made the tables. Run it after "database migrate".
 
           people restrictions --people <database>
               Lists the restrictions that stand.
@@ -112,6 +120,31 @@ internal static class OperatorCommands
                 }
 
                 output.WriteLine("The database has the form this program knows.");
+                return ContentCommands.Done;
+
+            case ["database", "grant", var program, var role, "--database", var database]:
+                if (!DatabaseRoles.Programs.Contains(program) || !DatabaseRoles.IsName(role))
+                {
+                    return null;
+                }
+
+                if (string.IsNullOrWhiteSpace(Connection(database)))
+                {
+                    output.WriteLine("No database: set DASTAN_DATABASE to its connection and name it with the word env.");
+                    return ContentCommands.NotUsable;
+                }
+
+                try
+                {
+                    DatabaseRoles.Grant(Connection(database), program, role);
+                }
+                catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)
+                {
+                    output.WriteLine($"The role was given nothing: {failed.Message}");
+                    return ContentCommands.NotUsable;
+                }
+
+                output.WriteLine($"{role} may do in the database what the {program} does, and no more.");
                 return ContentCommands.Done;
 
             case ["people", "restrictions", "--people", var database]:
@@ -209,14 +242,37 @@ internal static class OperatorCommands
 
     private static string Kind(RestrictionKind kind) => kind switch { RestrictionKind.Photo => "photo", RestrictionKind.Tree => "tree", _ => "account" };
 
-    private static NoticeBox? Folder(string folder, TextWriter output)
+    private static NoticeBox? Folder(string database, TextWriter output) =>
+        Delivered(database, output) is { } connection ? new NoticeBox(connection) : null;
+
+    /// <summary>
+    /// Returns the connection of a database that has the tables of reports and notices, as a command was told
+    /// it (<see cref="Connection"/>); nothing, with the reason written, for one that is not named, cannot be
+    /// reached or lacks the tables.
+    /// </summary>
+    internal static string? Delivered(string database, TextWriter output)
     {
-        if (Directory.Exists(folder))
+        database = Connection(database);
+        if (string.IsNullOrWhiteSpace(database))
         {
-            return new NoticeBox(Path.GetFullPath(folder));
+            output.WriteLine("No database: set DASTAN_DATABASE to its connection and name it with the word env.");
+            return null;
         }
 
-        output.WriteLine($"{folder}: there is no such folder.");
+        try
+        {
+            if (Delivery.Missing(database) is not { } missing)
+            {
+                return database;
+            }
+
+            output.WriteLine(missing);
+        }
+        catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)
+        {
+            output.WriteLine($"The database cannot be reached: {failed.Message}");
+        }
+
         return null;
     }
 

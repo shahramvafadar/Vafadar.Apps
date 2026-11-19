@@ -12,7 +12,7 @@ using Vafadar.Dastan.Store;
 namespace Vafadar.Dastan.Store.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20261119182843_Initial")]
+    [Migration("20261119192200_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -199,6 +199,44 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.ToTable("RecordLinks", "editorial");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.ReleasedComparison", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Number"));
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("By")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ComparisonId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Hash")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<string>("Json")
+                        .HasColumnType("json");
+
+                    b.Property<string>("Translations")
+                        .HasColumnType("json");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("ComparisonId", "Number");
+
+                    b.ToTable("Comparisons", "published");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredCollection", b =>
                 {
                     b.Property<string>("Id")
@@ -299,6 +337,59 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.ToTable("Editors", "editorial");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredNotice", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(17)
+                        .HasColumnType("character varying(17)");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("Decision")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Explanation")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<bool>("GoodFaith")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Mail")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<DateTime>("ReceivedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("SettledAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SettledAt", "ReceivedAt");
+
+                    b.ToTable("Notices", "delivery");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredRecord", b =>
                 {
                     b.Property<string>("CollectionId")
@@ -395,6 +486,52 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.HasIndex("CollectionId", "Number");
 
                     b.ToTable("Releases", "published");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredReport", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<string>("Collection")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<DateOnly>("On")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("Revision")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SettledBy")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateOnly?>("SettledOn")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Statement")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SettledOn", "On");
+
+                    b.ToTable("Reports", "delivery");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredRevision", b =>

@@ -15,6 +15,48 @@ namespace Vafadar.Dastan.Store;
 public sealed record ComparisonSummary(string Id, string Title, ImmutableArray<string> Languages, int Version, DateTime UpdatedAt, string UpdatedBy);
 
 /// <summary>
+/// One word about a comparison on the site (ADR 0015): a release keeps the comparison as it was at that
+/// moment – its file, its translations and the hash of both – and a withdrawal keeps nothing of it. Words are
+/// only added; the last one about a comparison counts.
+/// </summary>
+public sealed class ReleasedComparison
+{
+    /// <summary>Gets or sets the number of the word, given by the database.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the identifier of the comparison.</summary>
+    public required string ComparisonId { get; set; }
+
+    /// <summary>Gets or sets the file of the comparison as it was released; nothing for a withdrawal.</summary>
+    public string? Json { get; set; }
+
+    /// <summary>Gets or sets its translations as they were released, as one JSON object by language; nothing for a withdrawal.</summary>
+    public string? Translations { get; set; }
+
+    /// <summary>Gets or sets the hash of both (<see cref="PublishedRevision.HashOf"/>); nothing for a withdrawal.</summary>
+    public string? Hash { get; set; }
+
+    /// <summary>Gets or sets who said it.</summary>
+    public required string By { get; set; }
+
+    /// <summary>Gets or sets when.</summary>
+    public DateTime At { get; set; }
+}
+
+/// <summary>What the site shows of a comparison.</summary>
+public enum ComparisonOnSite
+{
+    /// <summary>The site does not show it.</summary>
+    No,
+
+    /// <summary>The site shows it as the store holds it now.</summary>
+    AsHeld,
+
+    /// <summary>The site shows it as it was when it was released; the store holds something else since.</summary>
+    Earlier,
+}
+
+/// <summary>
 /// The comparisons in the store (step 12.6). A comparison is one document – its lanes with their periods and
 /// events are parts of it, not records of their own – with a document for every language it is translated into.
 /// It is kept like a record: tried by the readers of the site before it is kept, and every change with who,
@@ -57,6 +99,70 @@ public sealed partial class EditorialStore
                 JsonNode.Parse(file.Body)!.ToJsonString(Written),
                 documents.Where(document => document.Language.Length > 0)
                     .ToImmutableSortedDictionary(document => document.Language, document => JsonNode.Parse(document.Body)!.ToJsonString(Written), StringComparer.Ordinal));
+    }
+
+    /// <summary>
+    /// Says that the site shows a comparison from its next start on, as the store holds it at this moment. What
+    /// is changed afterwards is shown when it is released again. The site still decides by what the comparison
+    /// says about itself whether its audience may see it.
+    /// </summary>
+    /// <returns>Nothing when it was said; else why not.</returns>
+    public string? ReleaseComparison(string id, string by)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentException.ThrowIfNullOrWhiteSpace(by);
+        using var step = _context.Database.BeginTransaction();
+        Lock("comparisons");
+        if (Comparison(id) is not { } held)
+        {
+            return $"{id}: the store holds no comparison of that name.";
+        }
+
+        var (translations, hash) = Text(held);
+        if (LastWord(id)?.Hash == hash)
+        {
+            return $"{id}: the site shows it already as the store holds it.";
+        }
+
+        _context.ReleasedComparisons.Add(new ReleasedComparison { ComparisonId = id, Json = held.Json, Translations = translations, Hash = hash, By = by, At = _time.GetUtcNow().UtcDateTime });
+        _context.SaveChanges();
+        step.Commit();
+        return null;
+    }
+
+    /// <summary>Says that the site does not show a comparison any more.</summary>
+    /// <returns>Nothing when it was said; else why not.</returns>
+    public string? WithdrawComparison(string id, string by)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(id);
+        ArgumentException.ThrowIfNullOrWhiteSpace(by);
+        using var step = _context.Database.BeginTransaction();
+        Lock("comparisons");
+        if (LastWord(id)?.Hash is null)
+        {
+            return $"{id}: the site does not show it.";
+        }
+
+        _context.ReleasedComparisons.Add(new ReleasedComparison { ComparisonId = id, By = by, At = _time.GetUtcNow().UtcDateTime });
+        _context.SaveChanges();
+        step.Commit();
+        return null;
+    }
+
+    /// <summary>Returns what the site shows of a comparison.</summary>
+    public ComparisonOnSite ComparisonShown(string id) =>
+        LastWord(id)?.Hash is not { } shown ? ComparisonOnSite.No
+        : Comparison(id) is { } held && Text(held).Hash == shown ? ComparisonOnSite.AsHeld
+        : ComparisonOnSite.Earlier;
+
+    private ReleasedComparison? LastWord(string id) =>
+        _context.ReleasedComparisons.AsNoTracking().Where(word => word.ComparisonId == id).OrderByDescending(word => word.Number).FirstOrDefault();
+
+    // A comparison as the site is given it: its translations as one object by language, and the hash of both.
+    private static (string Translations, string Hash) Text(ExportedCollection comparison)
+    {
+        var translations = new JsonObject(comparison.Translations.Select(translation => KeyValuePair.Create(translation.Key, JsonNode.Parse(translation.Value)))).ToJsonString();
+        return (translations, PublishedRevision.HashOf(comparison.Json, translations));
     }
 
     /// <summary>Returns what was changed of a comparison – its file and its translations – the oldest change first.</summary>

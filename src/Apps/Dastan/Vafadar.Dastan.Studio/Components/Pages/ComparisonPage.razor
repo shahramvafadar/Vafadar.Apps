@@ -16,7 +16,7 @@
         <p class="lead"><bdi dir="ltr">@Id</bdi></p>
     </header>
 
-    @if (Done is "changed" or "unchanged" or "added")
+    @if (Done is "changed" or "unchanged" or "added" or "comparisonreleased" or "comparisonwithdrawn")
     {
         <p class="done" role="status">@T[$"Done_{Done}"]</p>
     }
@@ -88,6 +88,32 @@
 </Allowed>
         </section>
 
+        <section aria-labelledby="release">
+            <h2 id="release">@T["Release_Title"]</h2>
+            <p class="note">@T["ComparisonRelease_Lead"]</p>
+            <p role="status"><strong>@T[$"ComparisonRelease_{_shown}"]</strong></p>
+            <ActOutcome Problems="_releaseProblems" />
+            <Allowed Role="EditorRoles.Publisher">
+                @if (_shown != ComparisonOnSite.AsHeld)
+                {
+<form method="post" @formname="release" @onsubmit="Release" class="act" action="@Here">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="@Seen.Input" value="@_seen" />
+                    <WhoAndWhy Form="release" Model="Releasing" By="@(Releasing?.By ?? Editor.Name)" />
+                    <p><button type="submit" class="action">@T["ComparisonRelease_Submit"]</button></p>
+                </form>
+                }
+                @if (_shown != ComparisonOnSite.No)
+                {
+<form method="post" @formname="withdraw" @onsubmit="Withdraw" class="act" action="@Here">
+                    <AntiforgeryToken />
+                    <WhoAndWhy Form="withdraw" Model="Withdrawing" By="@(Withdrawing?.By ?? Editor.Name)" />
+                    <p><button type="submit" class="action">@T["ComparisonWithdraw_Submit"]</button></p>
+                </form>
+                }
+</Allowed>
+        </section>
+
         <section aria-labelledby="remove">
             <h2 id="remove">@T["Remove_Title"]</h2>
             <p class="note">@T["Comparison_RemoveLead"]</p>
@@ -150,6 +176,8 @@
     private JsonObject? _filled;
     private FormContext? _form;
     private List<string>? _removeProblems;
+    private List<string>? _releaseProblems;
+    private ComparisonOnSite _shown;
     private bool _sent;
     private string _seen = string.Empty;
 
@@ -176,7 +204,53 @@
     [SupplyParameterFromForm(FormName = "remove")]
     public RemoveInput? Removing { get; set; }
 
+    /// <summary>Gets or sets who releases the comparison to the site.</summary>
+    [SupplyParameterFromForm(FormName = "release")]
+    public ReleaseInput? Releasing { get; set; }
+
+    /// <summary>Gets or sets who withdraws the comparison from the site.</summary>
+    [SupplyParameterFromForm(FormName = "withdraw")]
+    public ReleaseInput? Withdrawing { get; set; }
+
     private string Here => $"comparisons/{Id}";
+
+    // A publisher releases what the page shows – a form that was opened before somebody changed the comparison
+    // would release something else than was looked at, and is not taken.
+    private void Release()
+    {
+        var problems = new List<string>();
+        if (!Seen.Holds(Context, _seen))
+        {
+            problems.Add(T["Act_Stale"]);
+        }
+
+        Said(problems, Editor.By((Releasing ?? new ReleaseInput()).By), by => Store.ReleaseComparison(Id, by), "comparisonreleased");
+    }
+
+    private void Withdraw() =>
+        Said([], Editor.By((Withdrawing ?? new ReleaseInput()).By), by => Store.WithdrawComparison(Id, by), "comparisonwithdrawn");
+
+    private void Said(List<string> problems, string? by, Func<string, string?> say, string done)
+    {
+        if (by is null)
+        {
+            problems.Add(T["Act_NeedsName"]);
+        }
+
+        if (problems.Count == 0)
+        {
+            if (say(by!) is not { } refused)
+            {
+                EditorName.Keep(Context, by!);
+                Navigation.NavigateTo($"{Here}?done={done}");
+                return;
+            }
+
+            problems.Add(refused);
+        }
+
+        _releaseProblems = problems;
+    }
 
     protected override void OnInitialized()
     {
@@ -193,6 +267,7 @@
         _form = _file is null ? null : ComparisonForm.Context(_file, Editor.Today);
         _seen = Seen.Of(_comparison is null ? [] : [_comparison.Json, .. _comparison.Translations.SelectMany(translation => new[] { translation.Key, translation.Value })]);
         _title = Store.Comparisons().FirstOrDefault(comparison => comparison.Id == Id)?.Title;
+        _shown = Store.ComparisonShown(Id);
     }
 
     // What a text area starts with: what was sent when the form comes back refused, else what the store holds.

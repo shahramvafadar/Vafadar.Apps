@@ -352,7 +352,7 @@
     <value>انتشار نسخهٔ بعدی</value>
   </data>
   <data name="Publish_Lead" xml:space="preserve">
-    <value>این کار از آنچه در ذخیره‌گاه هست نسخهٔ {0} را می‌سازد. همهٔ گزاره‌ها باید بازبینی شده باشند. ذخیره‌گاه نسخه را همان‌گونه که منتشر شد نگه می‌دارد؛ فرمان «store revision» آن را برای سایت می‌نویسد.</value>
+    <value>این کار از آنچه در ذخیره‌گاه هست نسخهٔ {0} را می‌سازد. همهٔ گزاره‌ها باید بازبینی شده باشند. ذخیره‌گاه نسخه را همان‌گونه که منتشر شد نگه می‌دارد. تا وقتی آزاد نشود (بالا) کسی آن را نمی‌بیند؛ فرمان «store revision» آن را به شکل فایل می‌نویسد.</value>
   </data>
   <data name="Publish_On" xml:space="preserve">
     <value>روز انتشار</value>
@@ -743,5 +743,68 @@
   </data>
   <data name="Sizes_None" xml:space="preserve">
     <value>هیچ اندازهٔ کوچک‌تری ساخته نشد: تصویر از پیش کوچک است یا خوانده نمی‌شود.</value>
+  </data>
+  <data name="Release_Title" xml:space="preserve">
+    <value>آنچه سایت نشان می‌دهد</value>
+  </data>
+  <data name="Release_Lead" xml:space="preserve">
+    <value>سایتی که مجموعه‌هایش را از پایگاه‌داده می‌خواند، از شروع بعدی‌اش نسخه‌ای را نشان می‌دهد که این‌جا نام برده می‌شود – تازه‌ترین نسخه، یا دوباره نسخه‌ای قدیمی‌تر. انتشار یک نسخه آن را به کسی نشان نمی‌دهد.</value>
+  </data>
+  <data name="Release_Shown" xml:space="preserve">
+    <value>سایت نسخهٔ {0} را نشان می‌دهد.</value>
+  </data>
+  <data name="Release_None" xml:space="preserve">
+    <value>سایت هیچ نسخه‌ای از این مجموعه را نشان نمی‌دهد.</value>
+  </data>
+  <data name="Release_Number" xml:space="preserve">
+    <value>نسخه</value>
+  </data>
+  <data name="Release_Option" xml:space="preserve">
+    <value>نسخهٔ {0} از {1}</value>
+  </data>
+  <data name="Release_Submit" xml:space="preserve">
+    <value>این نسخه روی سایت نشان داده شود</value>
+  </data>
+  <data name="Release_NeedsNumber" xml:space="preserve">
+    <value>یکی از نسخه‌های منتشرشده را انتخاب کنید.</value>
+  </data>
+  <data name="Withdraw_Submit" xml:space="preserve">
+    <value>هیچ نسخه‌ای روی سایت نشان داده نشود</value>
+  </data>
+  <data name="Col_OnSite" xml:space="preserve">
+    <value>روی سایت</value>
+  </data>
+  <data name="Release_Mark" xml:space="preserve">
+    <value>نشان داده می‌شود</value>
+  </data>
+  <data name="Done_released" xml:space="preserve">
+    <value>سایت از شروع بعدی‌اش این نسخه را نشان می‌دهد.</value>
+  </data>
+  <data name="Done_withdrawn" xml:space="preserve">
+    <value>سایت از شروع بعدی‌اش هیچ نسخه‌ای از این مجموعه را نشان نمی‌دهد. آنچه منتشر شده بود همچنان نگه داشته می‌شود.</value>
+  </data>
+  <data name="ComparisonRelease_Lead" xml:space="preserve">
+    <value>سایتی که از پایگاه‌داده می‌خواند، مقایسه را همان‌گونه نشان می‌دهد که هنگام آزادسازی بود، از شروع بعدی‌اش. آنچه پس از آن تغییر کند وقتی نشان داده می‌شود که مقایسه دوباره آزاد شود.</value>
+  </data>
+  <data name="ComparisonRelease_No" xml:space="preserve">
+    <value>سایت این مقایسه را نشان نمی‌دهد.</value>
+  </data>
+  <data name="ComparisonRelease_AsHeld" xml:space="preserve">
+    <value>سایت این مقایسه را همان‌گونه که این‌جاست نشان می‌دهد.</value>
+  </data>
+  <data name="ComparisonRelease_Earlier" xml:space="preserve">
+    <value>سایت این مقایسه را همان‌گونه که آزاد شد نشان می‌دهد؛ از آن پس تغییر کرده است.</value>
+  </data>
+  <data name="ComparisonRelease_Submit" xml:space="preserve">
+    <value>مقایسه همان‌گونه که اکنون هست روی سایت نشان داده شود</value>
+  </data>
+  <data name="ComparisonWithdraw_Submit" xml:space="preserve">
+    <value>مقایسه روی سایت نشان داده نشود</value>
+  </data>
+  <data name="Done_comparisonreleased" xml:space="preserve">
+    <value>سایت از شروع بعدی‌اش مقایسه را همان‌گونه که اکنون هست نشان می‌دهد.</value>
+  </data>
+  <data name="Done_comparisonwithdrawn" xml:space="preserve">
+    <value>سایت از شروع بعدی‌اش این مقایسه را نشان نمی‌دهد.</value>
   </data>
 </root>

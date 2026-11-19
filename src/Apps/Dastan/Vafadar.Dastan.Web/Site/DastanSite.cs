@@ -8,6 +8,20 @@ namespace Vafadar.Dastan.Web.Site;
 /// <summary>Where the collection lives and who the site shows it to.</summary>
 public sealed class DastanOptions
 {
+    /// <summary>
+    /// Returns the connection of the database for a part of the site that was switched on and keeps what it
+    /// takes there; a site that was told to take it and has no database, or no tables for it, does not start.
+    /// </summary>
+    internal string DeliveryDatabase(string setting)
+    {
+        if (string.IsNullOrWhiteSpace(Database))
+        {
+            throw new InvalidOperationException($"{setting} is kept in the database of the site, and no database is named: set Dastan:Database.");
+        }
+
+        return Vafadar.Dastan.Data.Delivery.Missing(Database) is { } missing ? throw new InvalidOperationException(missing) : Database;
+    }
+
     /// <summary>Gets or sets the folder of the collection, relative to the folder of the app.</summary>
     public string Content { get; set; } = "content";
 
@@ -17,7 +31,8 @@ public sealed class DastanOptions
     /// <summary>
     /// Gets or sets a value indicating whether the site reads its collections from the published revisions of
     /// its database (<see cref="Database"/>, ADR 0015) – for each collection the revision that was released –
-    /// and not from the files of the folder <c>samples</c>. The files of media stay in the folder of content.
+    /// and not from the files of the folder <c>samples</c> – and its comparisons from the ones that were released,
+    /// not from the folder <c>comparisons</c>. The files of media stay in the folder of content.
     /// A site that reads from the database shows what was released when it started.
     /// </summary>
     public bool Published { get; set; }
@@ -35,10 +50,10 @@ public sealed class DastanOptions
     public Audience Audience { get; set; } = Audience.Public;
 
     /// <summary>
-    /// Gets or sets the folder the reports of visitors are kept in (step 14.8). Empty, the site takes no reports
-    /// and offers no form for them.
+    /// Gets or sets a value indicating whether the site takes the reports of visitors (step 14.8) and keeps them
+    /// in its database (<see cref="Database"/>, ADR 0015). Off, the site offers no form for them.
     /// </summary>
-    public string? Reports { get; set; }
+    public bool Reports { get; set; }
 
     /// <summary>
     /// Gets or sets a text who runs the site has to tell everybody who uses it, shown on every page until it is
@@ -49,10 +64,11 @@ public sealed class DastanOptions
     public string? Announcement { get; set; }
 
     /// <summary>
-    /// Gets or sets the folder the notices about content are kept in (<see cref="NoticeDesk"/>). Empty, the page
-    /// for a notice names the mail address of who runs the site and has no form.
+    /// Gets or sets a value indicating whether the site takes notices about content with a form
+    /// (<see cref="NoticeDesk"/>) and keeps them in its database (<see cref="Database"/>). Off, the page for a
+    /// notice names the mail address of who runs the site and has no form.
     /// </summary>
-    public string? Notices { get; set; }
+    public bool Notices { get; set; }
 
     /// <summary>
     /// Gets or sets the connection of the PostgreSQL database of the site (ADR 0015), as Npgsql reads it. With
@@ -122,10 +138,11 @@ public sealed class DastanLibrary
         var reviewedOnly = Audience == Audience.Public;
 
         // A comparison that is not released to the audience of the site does not exist for it.
-        Comparisons =
-        [
-            .. ComparisonSample.LoadAll(Path.Combine(content, "comparisons"), reviewedOnly).Where(comparison => comparison.MayBeShownTo(Audience)),
-        ];
+        // A site that reads from the database reads its comparisons there too: the ones that were released.
+        var comparisons = settings.Published && !string.IsNullOrWhiteSpace(settings.Database)
+            ? [.. PublishedCollections.ReadComparisons(settings.Database).Select(released => ComparisonSample.Read(released.Json, released.Translations, reviewedOnly))]
+            : ComparisonSample.LoadAll(Path.Combine(content, "comparisons"), reviewedOnly);
+        Comparisons = [.. comparisons.Where(comparison => comparison.MayBeShownTo(Audience))];
 
         var samples = Path.Combine(content, "samples");
         if (settings.Published)

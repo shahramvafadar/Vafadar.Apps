@@ -343,7 +343,7 @@
 
         if (problems.Count == 0)
         {
-            var result = Store.Review(Collection, input.Statement!, act, by!, day!.Value, input.Note);
+            var result = Store.Review(Collection, input.Statement!, act, by!, day!.Value, input.Note, Read);
             if (Finished(result, by!, result.Changed == 0 ? "unchanged" : "reviewed"))
             {
                 return;
@@ -373,7 +373,7 @@
         if (problems.Count == 0)
         {
             // The record and its texts in the other languages in one act: they are tried together.
-            var result = Store.Put(Collection, Group, record, by!, reason!, texts, dated);
+            var result = Store.Put(Collection, Group, record, by!, reason!, texts, dated, Read);
             if (Finished(result, by!, result.Changed == 0 ? "unchanged" : "changed"))
             {
                 return;
@@ -416,7 +416,7 @@
 
         if (problems.Count == 0)
         {
-            var result = Store.Put(Collection, Group, record!, by!, reason!);
+            var result = Store.Put(Collection, Group, record!, by!, reason!, read: Read);
             if (Finished(result, by!, result.Changed == 0 ? "unchanged" : "changed"))
             {
                 return;
@@ -463,7 +463,7 @@
                 {
                     result = record is null
                         ? new ActResult([T["Files_OtherKind"]])
-                        : Store.Put(Collection, Group, record, by!, reason!);
+                        : Store.Put(Collection, Group, record, by!, reason!, read: Read);
                 }
                 catch
                 {
@@ -506,7 +506,7 @@
             }
             else
             {
-                var result = Store.Put(Collection, Group, MediaForm.WithSizes(_record!.Body, sizes), by!, reason!);
+                var result = Store.Put(Collection, Group, MediaForm.WithSizes(_record!.Body, sizes), by!, reason!, read: Read);
                 if (Finished(result, by!, "changed"))
                 {
                     return;
@@ -563,7 +563,7 @@
         var reason = Reason(input.Reason, problems);
         if (problems.Count == 0)
         {
-            var result = Store.Remove(Collection, Record, by!, reason!, Group);
+            var result = Store.Remove(Collection, Record, by!, reason!, Group, Read);
             if (Finished(result, by!, "removed"))
             {
                 return;
@@ -574,6 +574,10 @@
 
         _removeProblems = problems;
     }
+
+    // The record as this request read it: the store refuses an act when somebody changed the record between
+    // the look of this request and its own step.
+    private ReadRecord? Read => _record is null ? null : new ReadRecord(Group, Record, _record.Info.Version);
 
     // A form that was opened before somebody else changed what it shows is not kept over that change.
     private void Fresh(List<string> problems)

@@ -163,7 +163,7 @@
                 ActResult result;
                 try
                 {
-                    result = Store.Put(Collection, "media", record, by!, reason!);
+                    result = Store.Put(Collection, "media", record, by!, reason!, read: new ReadRecord("media", id, 0));
                 }
                 catch
                 {
