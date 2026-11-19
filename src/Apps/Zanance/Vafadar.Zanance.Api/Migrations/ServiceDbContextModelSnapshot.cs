@@ -285,6 +285,27 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AiPilotRoutes", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiPilotStatusCheckRow", b =>
+                {
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Attempt")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Actor")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<DateTimeOffset>("CheckedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("RequestId", "Attempt");
+
+                    b.ToTable("AiPilotStatusChecks", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiRequestRow", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2084,6 +2105,15 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiPilotStatusCheckRow", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.Analysis.AiRequestRow", null)
+                        .WithMany()
+                        .HasForeignKey("RequestId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("d32b98f2-968e-4824-a5df-30d07502e261"), entityTypeCount: 48)
+            : base(skipDetectChanges: false, modelId: new Guid("651f318c-4a3f-47b8-9827-95cf9c7a66dc"), entityTypeCount: 49)
         {
         }
 
@@ -27,6 +27,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var aiCreditRow = AiCreditRowEntityType.Create(this);
             var aiOfferRow = AiOfferRowEntityType.Create(this);
             var aiPilotRouteRow = AiPilotRouteRowEntityType.Create(this);
+            var aiPilotStatusCheckRow = AiPilotStatusCheckRowEntityType.Create(this);
             var aiRequestRow = AiRequestRowEntityType.Create(this);
             var billingCommandRow = BillingCommandRowEntityType.Create(this);
             var billingCustomerRow = BillingCustomerRowEntityType.Create(this);
@@ -77,6 +78,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             AiCreditRowEntityType.CreateForeignKey2(aiCreditRow, serviceUser);
             AiOfferRowEntityType.CreateForeignKey1(aiOfferRow, aiPilotRouteRow);
             AiOfferRowEntityType.CreateForeignKey2(aiOfferRow, serviceUser);
+            AiPilotStatusCheckRowEntityType.CreateForeignKey1(aiPilotStatusCheckRow, aiRequestRow);
             AiRequestRowEntityType.CreateForeignKey1(aiRequestRow, aiOfferRow);
             AiRequestRowEntityType.CreateForeignKey2(aiRequestRow, serviceUser);
             BillingCommandRowEntityType.CreateForeignKey1(billingCommandRow, billingCustomerRow);
@@ -131,6 +133,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             AiCreditRowEntityType.CreateAnnotations(aiCreditRow);
             AiOfferRowEntityType.CreateAnnotations(aiOfferRow);
             AiPilotRouteRowEntityType.CreateAnnotations(aiPilotRouteRow);
+            AiPilotStatusCheckRowEntityType.CreateAnnotations(aiPilotStatusCheckRow);
             AiRequestRowEntityType.CreateAnnotations(aiRequestRow);
             BillingCommandRowEntityType.CreateAnnotations(billingCommandRow);
             BillingCustomerRowEntityType.CreateAnnotations(billingCustomerRow);

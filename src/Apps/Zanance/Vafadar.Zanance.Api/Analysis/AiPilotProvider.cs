@@ -233,6 +233,10 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         return Outcome(profile, offer.Purpose, digest, result!.RootElement);
     }
 
+    /// <summary>Checks the original preserved route and known synthetic payload before reserving an operator lookup.</summary>
+    internal bool CanCheckStatus(AiPilotRouteRow route, AiOffer offer, string digest, string id) =>
+        ValidId(id) && Admit(route, offer) is not null && IsSynthetic(offer.Purpose, digest);
+
     /// <summary>Reads only the saved original execution and its matching vendor project.</summary>
     internal async Task<AiProviderOutcome> StatusAsync(AiPilotRouteRow route, AiOffer offer, string digest, string? id, CancellationToken ct)
     {

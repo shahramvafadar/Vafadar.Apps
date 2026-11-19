@@ -1,4 +1,6 @@
 using System.Net;
+using System.Net.Http.Json;
+using Microsoft.Extensions.Time.Testing;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +39,36 @@ public sealed class AiPilotAdminTests
         }
     }
 
+    private sealed class RetainedStatusReplies : HttpMessageHandler, IHttpClientFactory
+    {
+        internal int Attempts;
+        internal const string Unresolved = "fixture-unresolved-reference";
+        internal const string Resolved = "fixture-resolved-reference";
+
+        public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Null(request.Content);
+            var id = request.RequestUri!.Segments[^1];
+            Assert.Equal($"https://generativelanguage.googleapis.com/v1beta/interactions/{id}", request.RequestUri.AbsoluteUri);
+            Assert.Contains(id, new[] { Unresolved, Resolved });
+            Interlocked.Increment(ref Attempts);
+            if (id == Unresolved) return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound));
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = JsonContent.Create(new
+                {
+                    id, status = "completed", model = "gemini-4-hydrogen",
+                    usage = new { total_input_tokens = 17, total_output_tokens = 11, total_thought_tokens = 5 },
+                    steps = new[] { new { type = "model_output", content = new[] { new { type = "text",
+                        text = """{"spending_change_minor":13000,"contributing_rows":1,"explanation":"The recorded category accounts for the observed increase."}""" } } } }
+                })
+            });
+        }
+    }
+
     /// <summary>Verifies identity isolation, independent choices, stale form refusal and zero vendor requests.</summary>
     [Fact]
     public Task Operator_can_view_switch_and_disable_each_purpose_in_the_private_panel() => RunPanelAsync(false);
@@ -45,7 +77,11 @@ public sealed class AiPilotAdminTests
     [Fact]
     public Task Operator_sees_only_bounded_original_pending_metadata() => RunPanelAsync(true);
 
-    private static async Task RunPanelAsync(bool pendingOnly)
+    /// <summary>Verifies the real authenticated status action against a synthetic retained operation.</summary>
+    [Fact]
+    public Task Operator_checks_the_original_reference_with_durable_limits() => RunPanelAsync(false, exerciseStatus: true);
+
+    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
@@ -67,7 +103,10 @@ public sealed class AiPilotAdminTests
         builder.Logging.ClearProviders();
         builder.Services.RemoveAll<IHostedService>();
         var noEgress = new NoProviderTraffic();
-        builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>(noEgress));
+        using var replies = exerciseStatus ? new RetainedStatusReplies() : null;
+        var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 19, 12, 0, 0, TimeSpan.Zero));
+        builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>((IHttpClientFactory?)replies ?? noEgress));
+        if (exerciseStatus) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
         await using var app = builder.Build();
         await ServiceHost.MigrateAsync(app.Services);
         await using (var scope = app.Services.CreateAsyncScope())
@@ -86,6 +125,14 @@ public sealed class AiPilotAdminTests
             ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate is not null &&
                 Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(certificate.RawData)) == fingerprint,
         }) { BaseAddress = new Uri(address) };
+        if (replies is not null)
+        {
+            using var statusBrowser = Browser();
+            using var login = await SignIn(statusBrowser, OperatorEmail);
+            Assert.Equal(Panel, login.Headers.Location?.OriginalString);
+            await VerifyStatusChecksAsync(app.Services, statusBrowser, replies, clock, ct);
+            return;
+        }
         if (pendingOnly)
         {
             using var pendingBrowser = Browser();
@@ -237,6 +284,94 @@ public sealed class AiPilotAdminTests
             db.Add(offer);
             db.Add(request);
             return request;
+        }
+    }
+
+    private static async Task VerifyStatusChecksAsync(IServiceProvider services, HttpClient browser, RetainedStatusReplies replies,
+        FakeTimeProvider clock, CancellationToken ct)
+    {
+        const string member = "fictional-ai-member";
+        var purpose = AiPurpose.PeriodComparison;
+        var pilot = services.GetRequiredService<AiPilotProvider>();
+        var factory = services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
+        await using var db = await factory.CreateDbContextAsync(ct);
+        await pilot.SelectModelAsync(db, purpose, "gemini-4-hydrogen", OperatorId, ct);
+        var original = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
+        await pilot.SelectModelAsync(db, purpose, "off", OperatorId, ct);
+        var unresolved = Seed(RetainedStatusReplies.Unresolved);
+        var resolved = Seed(RetainedStatusReplies.Resolved);
+        var missing = Seed(null);
+        var unsupported = Seed("fixture-unsupported", new string('a', 64));
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+        var page = await browser.GetStringAsync(Panel + "/pending", ct);
+        var token = Token(page);
+        var start = clock.GetUtcNow();
+        using (var refusal = await Check(unresolved, includeToken: false))
+            Assert.Equal(HttpStatusCode.BadRequest, refusal.StatusCode);
+        await Expect(missing, "unavailable");
+        await Expect(unsupported, "unavailable");
+        Assert.Equal(0, replies.Attempts);
+        var concurrent = await Task.WhenAll(Check(unresolved), Check(unresolved));
+        Assert.Equal(new[] { "pending", "unavailable" }, concurrent.Select(reply => State(reply)).Order(StringComparer.Ordinal));
+        foreach (var reply in concurrent) reply.Dispose();
+        Assert.Equal(1, replies.Attempts);
+        clock.Advance(TimeSpan.FromSeconds(59));
+        await Expect(unresolved, "unavailable");
+        clock.Advance(TimeSpan.FromSeconds(1));
+        await Expect(unresolved, "pending");
+        clock.Advance(TimeSpan.FromMinutes(1));
+        await Expect(unresolved, "pending");
+        clock.Advance(TimeSpan.FromMinutes(1));
+        await Expect(unresolved, "unavailable");
+        Assert.Equal(3, replies.Attempts);
+        await Expect(resolved, "resolved");
+        await Expect(resolved, "unavailable");
+        Assert.Equal(4, replies.Attempts);
+
+        var audit = await db.Set<AiPilotStatusCheckRow>().Where(row => row.RequestId == unresolved).OrderBy(row => row.Attempt).ToArrayAsync(ct);
+        Assert.Equal(new[] { 1, 2, 3 }, audit.Select(row => row.Attempt));
+        Assert.Equal(new[] { start, start.AddMinutes(1), start.AddMinutes(2) }, audit.Select(row => row.CheckedAt));
+        Assert.Equal(4, await db.Set<AiPilotStatusCheckRow>().CountAsync(ct));
+        Assert.All(await db.Set<AiPilotStatusCheckRow>().ToListAsync(ct), row => Assert.Equal(OperatorId, row.Actor));
+        var originalRequest = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == unresolved, ct);
+        Assert.Equal(AiRequestState.Pending, originalRequest.State);
+        Assert.Equal(RetainedStatusReplies.Unresolved, originalRequest.VendorOperationId);
+        var completed = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == resolved, ct);
+        Assert.Equal(AiRequestState.Completed, completed.State);
+        Assert.Equal((17, 16), (completed.VendorInputTokens!.Value, completed.VendorOutputTokens!.Value));
+        Assert.Equal(1L, completed.ChargedUnits);
+        var settlement = Assert.Single(await db.Set<AiCreditRow>().Where(row => row.Kind != AiCreditEvent.Reserve).ToArrayAsync(ct));
+        Assert.Equal(resolved, settlement.RequestId);
+        Assert.Equal(AiCreditEvent.Settle, settlement.Kind);
+        var remaining = await browser.GetStringAsync(Panel + "/pending", ct);
+        Assert.DoesNotContain(resolved.ToString("D"), remaining, StringComparison.Ordinal);
+        Assert.Contains("Check limit reached", remaining, StringComparison.Ordinal);
+
+        Guid Seed(string? handle, string? digest = null)
+        {
+            var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = member, Purpose = purpose, Provider = original.Provider,
+                Model = original.Model!, MaximumUnits = 1, PilotRouteId = original.Id, ExpiresAt = clock.GetUtcNow().AddHours(1) };
+            var request = new AiRequestRow { Id = Guid.NewGuid(), UserId = member, State = AiRequestState.Pending, OfferId = offer.Id,
+                GiftedReserved = 1, CreatedAt = clock.GetUtcNow(), VendorOperationId = handle,
+                PayloadDigest = digest ?? AiProtocol.Digest(AiPilotProvider.SpendingQuestionFixture), ProtectedPayload = "fictional-protected" };
+            db.AddRange(offer, request, new AiCreditRow { Id = Guid.NewGuid(), UserId = member, RequestId = request.Id,
+                Kind = AiCreditEvent.Reserve, GiftedAvailable = -1, GiftedReserved = 1, CreatedAt = clock.GetUtcNow() });
+            return request.Id;
+        }
+        async Task<HttpResponseMessage> Check(Guid request, bool includeToken = true)
+        {
+            var fields = new Dictionary<string, string> { ["request"] = request.ToString("D") };
+            if (includeToken) fields["__RequestVerificationToken"] = token;
+            using var form = new FormUrlEncodedContent(fields);
+            return await browser.PostAsync(Panel + "/pending/check", form, ct);
+        }
+        static string State(HttpResponseMessage reply) => reply.Headers.Location!.OriginalString.Split('=')[^1];
+        async Task Expect(Guid request, string state)
+        {
+            using var reply = await Check(request);
+            Assert.Equal(HttpStatusCode.Redirect, reply.StatusCode);
+            Assert.Equal(state, State(reply));
         }
     }
 

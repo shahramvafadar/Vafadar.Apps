@@ -78,6 +78,19 @@ public sealed class AiPilotRouteRow
     public DateTimeOffset SelectedAt { get; set; }
 }
 
+/// <summary>Durable authorization of a single operator status lookup, recorded before provider I/O.</summary>
+public sealed class AiPilotStatusCheckRow
+{
+    /// <summary>Original accepted service request.</summary>
+    public Guid RequestId { get; set; }
+    /// <summary>One-based lookup number within the operator attempt budget.</summary>
+    public int Attempt { get; set; }
+    /// <summary>Original authenticated pilot operator.</summary>
+    public string Actor { get; set; } = "";
+    /// <summary>UTC time at which the lookup was reserved, even if the process stopped before I/O.</summary>
+    public DateTimeOffset CheckedAt { get; set; }
+}
+
 /// <summary>Append-only event types; no client can manufacture a purchased grant.</summary>
 public enum AiCreditEvent { PurchasedGrant, GiftedGrant, Reserve, Settle, Refund }
 /// <summary>Immutable credit journal outside personal/shared finance; purchased and gifted movements are independently traceable.</summary>
@@ -128,6 +141,11 @@ internal static class AiServiceModel
         request.Property(r => r.VendorOperationId).HasMaxLength(256);
         request.HasIndex(r => r.OfferId).IsUnique(); request.HasIndex(r => new { r.UserId, r.CreatedAt });
         request.HasOne<AiOfferRow>().WithMany().HasForeignKey(r => r.OfferId).OnDelete(DeleteBehavior.Restrict);
+        var statusCheck = model.Entity<AiPilotStatusCheckRow>(); statusCheck.ToTable("AiPilotStatusChecks");
+        statusCheck.HasKey(r => new { r.RequestId, r.Attempt });
+        statusCheck.Property(r => r.Actor).HasMaxLength(256);
+        statusCheck.HasOne<AiRequestRow>().WithMany().HasForeignKey(r => r.RequestId).OnDelete(DeleteBehavior.Restrict);
+
         var credit = model.Entity<AiCreditRow>(); credit.ToTable("AiCredits"); credit.HasKey(r => r.Id);
         credit.Property(r => r.UserId).HasMaxLength(256); credit.Property(r => r.GrantKey).HasMaxLength(64);
         credit.HasIndex(r => r.GrantKey).IsUnique();

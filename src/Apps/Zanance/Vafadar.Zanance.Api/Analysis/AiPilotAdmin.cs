@@ -89,6 +89,7 @@ internal static class AiPilotAdmin
         var operations = pages.MapGroup("").RequireAuthorization(new AuthorizeAttribute { AuthenticationSchemes = Scheme });
         operations.MapGet("", ShowAsync);
         operations.MapGet("/pending", PendingAsync);
+        operations.MapPost("/pending/check", CheckPendingAsync);
         operations.MapPost("/selection", SelectAsync);
         operations.MapPost("/logout", async (HttpContext http) =>
         {
@@ -172,7 +173,7 @@ internal static class AiPilotAdmin
             """);
     }
 
-    private static async Task<IResult> PendingAsync(HttpContext http, ServiceDbContext db, CancellationToken ct)
+    private static async Task<IResult> PendingAsync(HttpContext http, IAntiforgery csrf, ServiceDbContext db, CancellationToken ct)
     {
         const int pageSize = 50;
         // The queue reports original dispatch metadata only. It cannot create a lookup, a new dispatch or a credit movement.
@@ -181,31 +182,68 @@ internal static class AiPilotAdmin
                              where request.State == AiRequestState.Pending && offer.PilotRouteId != null
                              orderby request.CreatedAt, request.Id
                              select new { request.Id, offer.Purpose, offer.Provider, offer.Model, request.CreatedAt,
-                                 request.StatusCheckedAt, HasHandle = request.VendorOperationId != null })
+                                 request.StatusCheckedAt, HasHandle = request.VendorOperationId != null,
+                                 Checks = db.Set<AiPilotStatusCheckRow>().Count(check => check.RequestId == request.Id) })
             .Take(pageSize + 1).ToListAsync(ct);
+        var token = Token(http, csrf);
         var rows = string.Concat(pending.Take(pageSize).Select(item => $$"""
             <tr><td><code>{{item.Id:D}}</code></td><td>{{(item.Purpose == AiPurpose.PeriodExplanation ? "Simple report" : "Financial comparison")}}</td>
             <td>{{WebUtility.HtmlEncode(item.Provider)}} / {{WebUtility.HtmlEncode(item.Model)}}</td><td>{{Timestamp(item.CreatedAt)}}</td>
-            <td>{{Timestamp(item.StatusCheckedAt)}}</td><td>{{(item.HasHandle ? "Recorded" : "Missing")}}</td></tr>
+            <td>{{Timestamp(item.StatusCheckedAt)}}</td><td>{{(item.HasHandle ? "Recorded" : "Missing")}}</td><td>{{StatusAction(item.Id, item.HasHandle, item.Checks, token)}}</td></tr>
             """));
         var details = pending.Count == 0 ? "<p>No pending pilot requests.</p>" : $$"""
             <div class="table-scroll" tabindex="0" aria-label="Pending requests table"><table>
             <caption>Oldest requests first</caption>
             <thead><tr><th scope="col">Request</th><th scope="col">Task</th><th scope="col">Original route</th>
-            <th scope="col">Accepted (UTC)</th><th scope="col">Last status check (UTC)</th><th scope="col">Vendor reference</th></tr></thead>
+            <th scope="col">Accepted (UTC)</th><th scope="col">Last status check (UTC)</th><th scope="col">Vendor reference</th><th scope="col">Operator check</th></tr></thead>
             <tbody>{{rows}}</tbody></table></div>
             {{(pending.Count > pageSize ? "<p>Showing the oldest 50 requests. More are pending.</p>" : "")}}
             """;
         return Page(http, "Pending analysis requests", $$"""
             <header><a href="{{Panel}}">Analysis models</a></header>
             <main><h1>Pending analysis requests</h1>
-            <p>A missing vendor reference leaves the outcome unknown. This page shows saved status only.</p>
+            <p>Check status reads the original vendor reference. Up to three operator checks are allowed, at least one minute apart.</p>
+            {{StatusNotice(http.Request.Query["check"])}}
             {{details}}</main>
             """);
 
         static string Timestamp(DateTimeOffset? time) => time?.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture) ?? "—";
     }
 
+
+    private static async Task<IResult> CheckPendingAsync(HttpContext http, AiRequestStore store, CancellationToken ct)
+    {
+        var form = await http.Request.ReadFormAsync(ct);
+        if (!Guid.TryParseExact(Field(form, "request"), "D", out var request) || request == Guid.Empty)
+            return Results.BadRequest("Choose an original request.");
+        var state = await store.CheckPilotStatusAsync(http.User.FindFirstValue(ClaimTypes.NameIdentifier)!, request, ct);
+        var status = state switch
+        {
+            AiRequestState.Pending => "pending",
+            AiRequestState.Completed or AiRequestState.Refunded => "resolved",
+            _ => "unavailable",
+        };
+        return Results.Redirect(Panel + "/pending?check=" + status);
+    }
+
+    private static string StatusAction(Guid id, bool hasHandle, int attempts, string token)
+    {
+        if (!hasHandle) return "Unavailable without a reference";
+        if (attempts >= AiRequestStore.MaximumOperatorChecks) return "Check limit reached";
+        return $$"""
+            <form method="post" action="{{Panel}}/pending/check">{{token}}
+            <input type="hidden" name="request" value="{{id:D}}">
+            <button class="quiet" aria-label="Check status for request {{id:D}}">Check status</button></form>
+            """;
+    }
+
+    private static string StatusNotice(string? status) => status switch
+    {
+        "pending" => "<p class=\"notice\" role=\"status\">The request is still pending.</p>",
+        "resolved" => "<p class=\"notice\" role=\"status\">The original request now has a confirmed outcome.</p>",
+        "unavailable" => "<p class=\"notice\" role=\"status\">Status check unavailable. Check the saved reference, wait time and attempt limit.</p>",
+        _ => "",
+    };
 
     private static string Card(string key, string label, AiPurpose purpose, (string Model, long RouteId, bool Available) selection, string token)
     {

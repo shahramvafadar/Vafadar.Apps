@@ -13,6 +13,8 @@ namespace Vafadar.Zanance.Api.Analysis;
 internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory, IAiProvider provider,
     IDataProtectionProvider protection, TimeProvider time, AiPilotProvider? pilot = null)
 {
+    internal const int MaximumOperatorChecks = 3;
+    private static readonly TimeSpan OperatorStatusInterval = TimeSpan.FromMinutes(1);
     private const long MaximumUnits = 1_000_000_000_000;
     /// <summary>Reads local provider metadata/balance without transmitting a financial payload or granting credit.</summary>
     internal async Task<AiAvailability> AvailabilityAsync(ClaimsPrincipal actor, CancellationToken ct)
@@ -152,6 +154,51 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         }
         return await ReadAsync(actor, request, ct);
     }
+    /// <summary>Reserves at most one bounded status lookup for an existing synthetic pilot request.</summary>
+    internal async Task<AiRequestState?> CheckPilotStatusAsync(string actor, Guid request, CancellationToken ct)
+    {
+        if (pilot is null || string.IsNullOrWhiteSpace(actor) || actor.Length > 256 || request == Guid.Empty) return null;
+
+        string owner, digest, originalId;
+        AiOffer offer;
+        AiPilotRouteRow route;
+        {
+            await using var db = await factory.CreateDbContextAsync(ct);
+            await using var transaction = await db.Database.BeginTransactionAsync(ct);
+            var requestOwner = await db.Set<AiRequestRow>().Where(row => row.Id == request).Select(row => row.UserId).SingleOrDefaultAsync(ct);
+            if (requestOwner is null) return null;
+            owner = requestOwner;
+            // Share the original owner lock with normal status and settlement, without creating a user session.
+            await SyncRequestScope.LockOwnerAsync(db, owner, ct);
+            var row = await db.Set<AiRequestRow>().SingleOrDefaultAsync(item => item.Id == request && item.UserId == owner, ct);
+            if (row is not { State: AiRequestState.Pending, VendorOperationId: { Length: > 0 } handle }) return null;
+            var original = await db.Set<AiOfferRow>().SingleAsync(item => item.Id == row.OfferId, ct);
+            offer = Offer(original);
+            if (original.PilotRouteId is not { } routeId) return null;
+            route = await db.Set<AiPilotRouteRow>().SingleAsync(item => item.Id == routeId, ct);
+            if (!pilot.CanCheckStatus(route, offer, row.PayloadDigest, handle)) return null;
+            var now = time.GetUtcNow();
+            if (row.StatusCheckedAt is { } last && now - last < OperatorStatusInterval) return null;
+            var lastAttempt = await db.Set<AiPilotStatusCheckRow>().Where(item => item.RequestId == request)
+                .MaxAsync(item => (int?)item.Attempt, ct) ?? 0;
+            if (lastAttempt >= MaximumOperatorChecks) return null;
+            originalId = handle;
+            digest = row.PayloadDigest;
+            row.StatusCheckedAt = now;
+            db.Add(new AiPilotStatusCheckRow { RequestId = request, Attempt = lastAttempt + 1, Actor = actor, CheckedAt = now });
+            await db.SaveChangesAsync(ct);
+            await transaction.CommitAsync(ct);
+        }
+
+        AiProviderOutcome? outcome = null;
+        try { outcome = await pilot.StatusAsync(route, offer, digest, originalId, ct); }
+        catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
+        if (outcome is not null) await ApplyAsync(owner, request, outcome, CancellationToken.None);
+        await using var observation = await factory.CreateDbContextAsync(CancellationToken.None);
+        return await observation.Set<AiRequestRow>().Where(item => item.Id == request && item.UserId == owner)
+            .Select(item => (AiRequestState?)item.State).SingleOrDefaultAsync(CancellationToken.None);
+    }
+
     /// <summary>Closes an absent original id durably before a late packet can reserve; accepted work is never guessed canceled/refunded.</summary>
     internal async Task<AiRequestResult> CloseAsync(ClaimsPrincipal actor, Guid id, AiCloseRequest original, CancellationToken ct)
     {
