@@ -229,8 +229,9 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
 
         Assert.Contains("href=\"compare/iran-china-rome?scale=3\"", Choice(start, "Open further"), StringComparison.Ordinal);
         Assert.Contains("href=\"compare/iran-china-rome?scale=1\"", Choice(start, "Closer together"), StringComparison.Ordinal);
-        Assert.Equal("<span class=\"choice\" aria-disabled=\"true\">Closer together</span>", Choice(closest, "Closer together"));
-        Assert.Equal("<span class=\"choice\" aria-disabled=\"true\">Open further</span>", Choice(furthest, "Open further"));
+        // A step at its end is no link, and says so to who does not see that it is greyed.
+        Assert.Contains("<span class=\"choice\" aria-disabled=\"true\"><span aria-hidden=\"true\">Closer together</span><span class=\"visually-hidden\">Closer together (not possible here)</span></span>", closest.Html, StringComparison.Ordinal);
+        Assert.Contains("<span class=\"choice\" aria-disabled=\"true\"><span aria-hidden=\"true\">Open further</span><span class=\"visually-hidden\">Open further (not possible here)</span></span>", furthest.Html, StringComparison.Ordinal);
 
         // A step keeps what else the visitor chose; the default scale is not written into an address.
         Assert.Contains("href=\"compare/iran-china-rome?view=down&amp;scale=5\"", Choice(furthest, "Closer together"), StringComparison.Ordinal);

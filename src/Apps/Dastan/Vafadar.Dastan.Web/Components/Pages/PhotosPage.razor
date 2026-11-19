@@ -44,8 +44,8 @@
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
                             <input type="hidden" name="photo" value="@photo.Id" />
-                            <button type="submit" name="answer" value="approve">@T["Photos_Tag_Approve"]</button>
-                            <button type="submit" name="answer" value="remove">@T["Photos_Tag_Remove"]</button>
+                            <button type="submit" name="answer" value="approve">@T["Photos_Tag_Approve"]@For(photo)</button>
+                            <button type="submit" name="answer" value="remove">@T["Photos_Tag_Remove"]@For(photo)</button>
                         </form>
                     </li>
                 }
@@ -77,11 +77,11 @@
                             @if (agreed)
                             {
                                 <span class="meta">@T["Photos_Agreed"]</span>
-                                <button type="submit" name="answer" value="back">@T["Photos_Agree_Back"]</button>
+                                <button type="submit" name="answer" value="back">@T["Photos_Agree_Back"]@For(photo)</button>
                             }
                             else
                             {
-                                <button type="submit" name="answer" value="agree">@T["Photos_Agree"]</button>
+                                <button type="submit" name="answer" value="agree">@T["Photos_Agree"]@For(photo)</button>
                             }
                         </form>
                         @if (objected)
@@ -90,7 +90,7 @@
                                 <AntiforgeryToken />
                                 <input type="hidden" name="returnUrl" value="@_here" />
                                 <input type="hidden" name="photo" value="@photo.Id" />
-                                <button type="submit" name="answer" value="back">@T["Photos_Object_Back"]</button>
+                                <button type="submit" name="answer" value="back">@T["Photos_Object_Back"]@For(photo)</button>
                             </form>
                         }
                     </li>
@@ -162,7 +162,7 @@
                             <label for="@($"scope-{photo.Id}")">@T["Photos_Shown_Label"]</label>
                             @Audience($"scope-{photo.Id}", chosen)
                             <label><input name="confirmed" type="checkbox" checked="@(photo.Shown == ScopeKind.Public)" /> @T["Photos_Confirm_Short"]</label>
-                            <button type="submit">@T["People_Shown_Send"]</button>
+                            <button type="submit">@T["People_Shown_Send"]@For(photo)</button>
                         </form>
                         @if (photo.Held)
                         {
@@ -196,7 +196,7 @@
                                         <option value="@person.Id">@person.Name</option>
                                     }
                                 </select>
-                                <button type="submit">@T["Photos_Tag_Send"]</button>
+                                <button type="submit">@T["Photos_Tag_Send"]@For(photo)</button>
                             </form>
                         }
                         @if (free.Count > 0)
@@ -212,14 +212,14 @@
                                         <option value="@album.Number">@album.Name</option>
                                     }
                                 </select>
-                                <button type="submit">@T["Albums_Place_Send"]</button>
+                                <button type="submit">@T["Albums_Place_Send"]@For(photo)</button>
                             </form>
                         }
                         <form method="post" action="@($"{PhotoEndpoints.Root}/remove")" class="save">
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
                             <input type="hidden" name="photo" value="@photo.Id" />
-                            <button type="submit">@T["Photos_Remove"]</button>
+                            <button type="submit">@T["Photos_Remove"]@For(photo)</button>
                         </form>
                     </li>
                 }
@@ -263,8 +263,8 @@
                                         <input type="hidden" name="returnUrl" value="@_here" />
                                         <input type="hidden" name="album" value="@album.Number" />
                                         <input type="hidden" name="photo" value="@photo.Id" />
-                                        <button type="submit" name="answer" value="earlier" disabled="@(photo.Id == album.Photos[0].Id)">@T["Albums_Earlier"]</button>
-                                        <button type="submit" name="answer" value="later" disabled="@(photo.Id == album.Photos[^1].Id)">@T["Albums_Later"]</button>
+                                        <button type="submit" name="answer" value="earlier" disabled="@(photo.Id == album.Photos[0].Id)">@T["Albums_Earlier"]@For(photo)</button>
+                                        <button type="submit" name="answer" value="later" disabled="@(photo.Id == album.Photos[^1].Id)">@T["Albums_Later"]@For(photo)</button>
                                     </form>
                                 }
                                 <form method="post" action="@($"{PhotoEndpoints.Root}/album-take")" class="save">
@@ -272,7 +272,7 @@
                                     <input type="hidden" name="returnUrl" value="@_here" />
                                     <input type="hidden" name="album" value="@album.Number" />
                                     <input type="hidden" name="photo" value="@photo.Id" />
-                                    <button type="submit">@T["Albums_Take"]</button>
+                                    <button type="submit">@T["Albums_Take"]@For(photo)</button>
                                 </form>
                             </li>
                         }
@@ -413,6 +413,13 @@
     }
 
     // The picture with what its owner wrote about it; with whose it is, where it is not this visitor's own.
+    // A button that stands once for every photograph says, to who cannot see where it stands, which
+    // photograph it is for: by what the photograph is said to show.
+    private RenderFragment For(PhotoInfo photo) => __builder =>
+    {
+        <span class="visually-hidden"> – @(photo.Caption.Length > 0 ? photo.Caption : T["Photos_Alt"].Value)</span>
+    };
+
     private RenderFragment Picture(PhotoInfo photo, bool owner) => __builder =>
     {
         <figure>

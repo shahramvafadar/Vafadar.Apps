@@ -83,7 +83,7 @@
     {
         @* A public page says which revision it shows: a correction is a new revision, not a silent change. *@
         <p class="note">
-            @string.Format(CultureInfo.CurrentCulture, T["Published_Notice"], Visitor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))
+            @string.Format(CultureInfo.CurrentCulture, T["Published_Notice"], Visitor.Number(revision.Number), Visitor.Day(revision.PublishedOn))
             <a href="@($"{Site.Collection}/revisions")">@T["Revisions_Link"]</a>
         </p>
     }

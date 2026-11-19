@@ -886,7 +886,10 @@ main:focus {
   color: var(--text-muted);
 }
 
-.choice {
+/* A choice of a chart – a link, or a step that is not available. Not the rows of the reading control above,
+   which are a column of radio buttons. */
+a.choice,
+span.choice {
   display: inline-flex;
   align-items: center;
   min-block-size: 2.75rem;
@@ -1679,6 +1682,17 @@ main:has(> .stage) > :not(.stage) {
   stroke-width: 3px;
 }
 
+/* The numbers of the list are the numbers of the marks: in the digits of the page. */
+:lang(fa) .places-list {
+  list-style-type: persian;
+}
+
+/* What is pressed of a mark of a chart: larger than what is seen, and not seen itself. */
+.chart-hit {
+  fill: transparent;
+  stroke: none;
+}
+
 .places-list > li {
   margin-block-end: var(--space-4);
 }
@@ -2122,7 +2136,7 @@ main details > summary {
 }
 
 .album {
-  margin-block: var(--space-5);
+  margin-block: var(--space-6);
 }
 
 .photos {

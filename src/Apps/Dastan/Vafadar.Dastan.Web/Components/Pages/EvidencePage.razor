@@ -143,7 +143,7 @@
                     <a href="@($"{Site.Collection}/revisions")">@T["Revisions_Link"]</a>
                 </p>
             }
-            <p class="cite"><bdi>@string.Format(CultureInfo.CurrentCulture, T["Cite_Text"], _cited, T["Site_Name"], Visitor.Number(revision.Number), revision.PublishedOn.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture))</bdi></p>
+            <p class="cite"><bdi>@string.Format(CultureInfo.CurrentCulture, T["Cite_Text"], _cited, T["Site_Name"], Visitor.Number(revision.Number), Visitor.Day(revision.PublishedOn))</bdi></p>
             <p class="cite"><bdi dir="ltr">@_citeAddress</bdi></p>
             <p class="note">@T["Cite_Hint"]</p>
         </section>

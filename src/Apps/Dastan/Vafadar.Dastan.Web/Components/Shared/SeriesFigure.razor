@@ -33,6 +33,8 @@
             {
                 <a class="series-mark @(mark.Point.Quantity.IsApproximate ? "series-about" : null)" href="@($"{Here}#stated-{mark.Point.Statement.Key}")">
                     <title>@QuantityText.Of(mark.Point.Quantity, Visitor, T) – @TimeText.Of(mark.Point.Statement.Time!, Visitor, T)</title>
+                    @* What is pressed is larger than what is seen: 44 pixels across. *@
+                    <circle class="chart-hit" cx="@Em(Left + mark.X)" cy="@Em(Top + mark.Y)" r="1.375rem" />
                     <circle cx="@Em(Left + mark.X)" cy="@Em(Top + mark.Y)" r="0.4em" />
                 </a>
             }

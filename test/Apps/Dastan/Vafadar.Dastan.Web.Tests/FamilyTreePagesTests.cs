@@ -109,8 +109,11 @@ public sealed class FamilyTreePagesTests : IDisposable
         Assert.Contains("Parents: Zal, Rudabeh", tree.Main, StringComparison.Ordinal);
         Assert.Contains("Partner: Rudabeh", tree.Main, StringComparison.Ordinal);
         Assert.Contains("Children: Rostam", tree.Main, StringComparison.Ordinal);
-        Assert.Contains("Zal is a parent of Rostam", tree.Main, StringComparison.Ordinal);
-        Assert.Contains("Zal and Rudabeh are partners", tree.Main, StringComparison.Ordinal);
+        // Each name stands by itself inside the sentence (the marks U+2068 and U+2069), so that a name of
+        // another script does not turn the sentence around; the sentence itself runs as the page does.
+        Assert.Contains("⁨Zal⁩ is a parent of ⁨Rostam⁩", tree.Main, StringComparison.Ordinal);
+        Assert.Contains("⁨Zal⁩ and ⁨Rudabeh⁩ are partners", tree.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("<span dir=\"auto\">", tree.Html, StringComparison.Ordinal);
         Assert.Contains("people: 3", (await mina.Get(Trees)).Main, StringComparison.Ordinal);
 
         // Every change is there with who made it, the newest first.
