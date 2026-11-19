@@ -152,10 +152,19 @@ refused. Nothing an editor sees or types has changed.
 password, **210,000 rounds** (Identity's own default is 100,000; the number follows what OWASP names for this
 function and is written into the value, so it can be raised without asking anybody for a new password).
 
-**Not built yet:** the journeys
-in a real browser with the mail read from the catcher as part of the tests (part seven) – by hand they were
-taken once, see the delivery plan. Not tried: a real client of Google or Microsoft, so what they really send
-as "the address they confirmed" is known from their documentation only.
+**The journeys in a real browser (2026-11-19, part seven).** `AccountJourneyBrowserTests` run the site with a
+database of its own and with mail that really leaves by SMTP to the catcher; the browser fills in the forms
+as a person does, the test reads the mail from the catcher and opens the link exactly as it was written:
+making an account in English and Persian and without scripts, a link that is used up, a forgotten password,
+another address, and that the page of a link hands its address to no other page. The pages of an account
+are checked against the rules of accessibility a tool can decide, in both languages and both appearances.
+In Chromium, Firefox and WebKit. The check found a list of problems that was itself announced as an alert –
+which takes the list away from a screen reader – on every page with a form; the alert is the box around the
+list now.
+
+**Step 19.4 is built.** Not tried, and said in the delivery plan: a real client of Google or Microsoft; the
+look of a message in a mail program; a real mailbox and a sender with a domain (the owner's part). The
+browser tests run where a browser is named – on a developer's machine; in CI with step 19.11.
 
 ## Consequences
 

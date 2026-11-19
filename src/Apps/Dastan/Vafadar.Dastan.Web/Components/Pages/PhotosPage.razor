@@ -103,7 +103,7 @@
         <h2 id="add-title">@T["Photos_Add_Title"]</h2>
         @if (_form == "add" && _problem is not null)
         {
-            <ul class="problems" role="alert"><li>@T[$"Photos_Problem_{_problem}"]</li></ul>
+            <div class="problems" role="alert"><ul><li>@T[$"Photos_Problem_{_problem}"]</li></ul></div>
         }
         <form method="post" action="@($"{PhotoEndpoints.Root}/add")" enctype="multipart/form-data" class="account">
             <AntiforgeryToken />
@@ -144,7 +144,7 @@
         {
             @if (_form == "mine" && _problem is not null)
             {
-                <ul class="problems" role="alert"><li>@T[$"Photos_Problem_{_problem}"]</li></ul>
+                <div class="problems" role="alert"><ul><li>@T[$"Photos_Problem_{_problem}"]</li></ul></div>
             }
             @Years(_years, "account/photos", "mine")
             <ul class="photos" role="list">
@@ -234,7 +234,7 @@
         <p class="note">@T["Albums_Note"]</p>
         @if (_form == "albums" && _problem is not null)
         {
-            <ul class="problems" role="alert"><li>@T[$"Photos_Problem_{_problem}"]</li></ul>
+            <div class="problems" role="alert"><ul><li>@T[$"Photos_Problem_{_problem}"]</li></ul></div>
         }
         @foreach (var album in _albums)
         {

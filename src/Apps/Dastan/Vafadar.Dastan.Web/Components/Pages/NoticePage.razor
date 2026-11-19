@@ -38,12 +38,12 @@
         <h2 id="form-title">@T["Notice_Form_Title"]</h2>
         @if (_problems.Count > 0)
         {
-            <ul class="problems" role="alert">
+            <div class="problems" role="alert"><ul>
                 @foreach (var problem in _problems)
                 {
                     <li>@T[$"Notice_Problem_{problem}"]</li>
                 }
-            </ul>
+            </ul></div>
         }
         <form method="post" action="/preferences/report-content" class="account">
             <AntiforgeryToken />

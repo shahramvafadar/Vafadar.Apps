@@ -750,12 +750,12 @@
     {
         if (_form == form && _problems.Length > 0)
         {
-            <ul class="problems" role="alert">
+            <div class="problems" role="alert"><ul>
                 @foreach (var problem in _problems)
                 {
                     <li>@T[$"Account_Problem_{problem}"]</li>
                 }
-            </ul>
+            </ul></div>
         }
     };
 }
