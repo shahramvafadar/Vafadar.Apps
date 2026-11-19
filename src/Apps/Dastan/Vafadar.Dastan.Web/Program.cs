@@ -48,7 +48,7 @@ builder.Services.AddScoped(services => services.GetRequiredService<DastanLibrary
 builder.Services.TryAddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<ReportDesk>();
 
-// The accounts of the visitors (step 16.1): there are some only where the site was told a file for their store.
+// The accounts of the visitors (step 16.1): there are some only where the site was told its database.
 builder.Services.AddVisitorAccounts(builder.Configuration);
 builder.Services.AddSingleton<LegalTexts>();
 

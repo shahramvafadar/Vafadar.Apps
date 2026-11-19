@@ -1915,6 +1915,7 @@ main:has(> .stage) > :not(.stage) {
 }
 
 .account input[type="text"],
+.account input[type="email"],
 .account input[type="password"] {
   box-sizing: border-box;
   inline-size: 100%;

@@ -19,8 +19,9 @@ public sealed class ExternalSignInOptions
 /// Signing in through Google or Microsoft (step 16.8, D-048). A provider is offered only when the owner entered
 /// a client of it (<c>Dastan:SignIn:Google</c>, <c>Dastan:SignIn:Microsoft</c>: <c>ClientId</c> and
 /// <c>ClientSecret</c> – the secret from the environment or a file the owner keeps, never from the repository).
-/// The provider is asked for nothing but who it is: the site takes the identifier it gives and keeps a hash of
-/// it. No name, no mail address and no picture is asked for or kept; the visitor chooses the name of the account.
+/// The provider is asked who somebody is and for the mail address it confirmed, nothing else (ADR 0016): the
+/// site keeps a hash of the identifier, and the address as the address of the account. No name and no picture
+/// is asked for or kept; the visitor chooses the name of the account.
 /// </summary>
 public static class ExternalSignIn
 {
@@ -64,11 +65,12 @@ public static class ExternalSignIn
                 (options.ClientId, options.ClientSecret, options.SignInScheme) = (googleId, googleSecret, Arriving);
                 options.CallbackPath = "/signin-google";
 
-                // Asked for who it is, and for nothing about them.
+                // Asked for who it is and for the address it confirmed, and for nothing else about them.
                 options.Scope.Clear();
                 options.Scope.Add("openid");
+                options.Scope.Add("email");
                 options.SaveTokens = false;
-                KeepTheIdentifierOnly(options.ClaimActions, "sub", "id");
+                KeepWhoAndTheAddress(options.ClaimActions, ["sub", "id"], GoogleAddress);
             });
             authentication.Services.Configure<ExternalSignInOptions>(options => options.Providers.Add("google"));
         }
@@ -83,8 +85,9 @@ public static class ExternalSignIn
                 options.SaveTokens = false;
 
                 // Microsoft tells who somebody is only together with their profile. Of what it sends, the
-                // identifier is taken and everything else is dropped before anything is written down.
-                KeepTheIdentifierOnly(options.ClaimActions, "id");
+                // identifier and the address are taken and everything else is dropped before anything is
+                // written down.
+                KeepWhoAndTheAddress(options.ClaimActions, ["id"], MicrosoftAddress);
             });
             authentication.Services.Configure<ExternalSignInOptions>(options => options.Providers.Add("microsoft"));
         }
@@ -122,22 +125,47 @@ public static class ExternalSignIn
             // Checked here once more: outside development nobody is signed in by a setting, whatever asked.
             if (environment.IsDevelopment() && configuration["Dastan:SignIn:MadeUp"] is { Length: > 0 } subject)
             {
-                await Context.SignInAsync(Arriving, new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, subject)], MadeUp)), properties);
+                // Its address is as made up as it is: the setting itself when that is an address.
+                var mail = subject.Contains('@', StringComparison.Ordinal) ? subject : $"{subject}@example.org";
+                await Context.SignInAsync(Arriving, new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, subject), new Claim(ClaimTypes.Email, mail)], MadeUp)), properties);
             }
 
             Response.Redirect(properties.RedirectUri ?? "/");
         }
     }
 
-    // Of what a provider answers, only the identifier of the person becomes a claim – no name, no mail address.
-    private static void KeepTheIdentifierOnly(Microsoft.AspNetCore.Authentication.OAuth.Claims.ClaimActionCollection claims, params string[] keys)
+    // Of what a provider answers, the identifier of the person and the address it confirmed become claims – no
+    // name, no picture, nothing else.
+    private static void KeepWhoAndTheAddress(Microsoft.AspNetCore.Authentication.OAuth.Claims.ClaimActionCollection claims, string[] keys, Func<System.Text.Json.JsonElement, string?> address)
     {
         claims.Clear();
         foreach (var key in keys)
         {
             claims.MapJsonKey(ClaimTypes.NameIdentifier, key);
         }
+
+        claims.MapCustomJson(ClaimTypes.Email, address);
     }
+
+    private static string? Text(System.Text.Json.JsonElement user, string key) =>
+        user.ValueKind == System.Text.Json.JsonValueKind.Object && user.TryGetProperty(key, out var value) && value.ValueKind == System.Text.Json.JsonValueKind.String ? value.GetString() : null;
+
+    private static bool Says(System.Text.Json.JsonElement user, string key) =>
+        user.ValueKind == System.Text.Json.JsonValueKind.Object && user.TryGetProperty(key, out var value)
+        && (value.ValueKind == System.Text.Json.JsonValueKind.True || (value.ValueKind == System.Text.Json.JsonValueKind.String && string.Equals(value.GetString(), "true", StringComparison.OrdinalIgnoreCase)));
+
+    /// <summary>Returns the address Google says it confirmed; an address it did not confirm is none.</summary>
+    internal static string? GoogleAddress(System.Text.Json.JsonElement user) =>
+        Says(user, "email_verified") || Says(user, "verified_email") ? Text(user, "email") : null;
+
+    /// <summary>
+    /// Returns the address of a Microsoft account: its mailbox or, without one, the name it signs in with when
+    /// that is an address of its own – not the name of a guest in somebody else's directory.
+    /// </summary>
+    internal static string? MicrosoftAddress(System.Text.Json.JsonElement user) =>
+        Text(user, "mail") is { Length: > 0 } mail ? mail
+        : Text(user, "userPrincipalName") is { Length: > 0 } name && name.Contains('@', StringComparison.Ordinal) && !name.Contains("#EXT#", StringComparison.OrdinalIgnoreCase) ? name
+        : null;
 
     /// <summary>Maps the forms of signing in through a provider onto the forms of the account.</summary>
     public static void MapExternalSignIn(this RouteGroupBuilder forms)
@@ -177,26 +205,33 @@ public static class ExternalSignIn
             if (AccountDesk.Session(context.User) is { } signedIn)
             {
                 // Somebody who is signed in adds the provider to their account.
-                return store.Link(signedIn.Id, provider, subject)
+                return store.Accounts.Link(signedIn.Id, provider, subject)
                     ? AccountEndpoints.Said(returnUrl, "linked")
                     : AccountEndpoints.Back(returnUrl, "providers", "login-taken");
             }
 
-            if (store.SignInWith(provider, subject) is { } session)
+            if (store.Accounts.SignInWith(provider, subject) is { } session)
             {
                 await AccountDesk.SignIn(context, session).ConfigureAwait(false);
                 return AccountEndpoints.Said(returnUrl, "signed-in");
             }
 
-            // Nobody has this sign-in yet: the visitor chooses a name, and the account is made then.
+            // Nobody has this sign-in yet. An account needs an address somebody confirmed (ADR 0016): a
+            // provider that names none makes no account.
+            if (arrived.Principal.FindFirstValue(ClaimTypes.Email) is not { Length: > 0 } mail || !Data.MailOutbox.IsAddress(mail))
+            {
+                return AccountEndpoints.Back(returnUrl, "sign-in", "external-no-address");
+            }
+
+            // The visitor chooses a name, and the account is made then.
             arrived.Properties.Items.TryGetValue(InvitationItem, out var invitation);
-            desk.CarryArrival(context, provider, subject, invitation);
+            desk.CarryArrival(context, provider, subject, mail, invitation);
             return Results.Redirect($"{AccountEndpoints.Home(returnUrl)}?form=external#external");
         });
 
         forms.MapPost("/external-register", async (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? name, [FromForm] string? website, [FromForm] string? age, [FromForm] string? terms, [FromForm] string? returnUrl) =>
         {
-            if (desk.Arrival(context) is not var (provider, subject, invitation))
+            if (desk.Arrival(context) is not var (provider, subject, mail, invitation))
             {
                 return AccountEndpoints.Back(returnUrl, "sign-in", "external-failed");
             }
@@ -212,7 +247,7 @@ public static class ExternalSignIn
                 return AccountEndpoints.Back(returnUrl, "external", kept);
             }
 
-            var made = store.RegisterWith(name ?? string.Empty, provider, subject, invitation, desk.InvitationOnly, AccountDesk.TermsVersion);
+            var made = store.Accounts.RegisterWith(name ?? string.Empty, provider, subject, mail, AccountEndpoints.Tongue(returnUrl), invitation, desk.InvitationOnly, AccountDesk.TermsVersion);
             if (!made.Done)
             {
                 return AccountEndpoints.Back(returnUrl, "external", [.. made.Problems]);
@@ -233,7 +268,7 @@ public static class ExternalSignIn
             }
 
             using var store = desk.Open();
-            return store.Unlink(session.Id, provider ?? string.Empty) ? AccountEndpoints.Said(returnUrl, "unlinked") : AccountEndpoints.Back(returnUrl, "providers", "last-way-in");
+            return store.Accounts.Unlink(session.Id, provider ?? string.Empty) ? AccountEndpoints.Said(returnUrl, "unlinked") : AccountEndpoints.Back(returnUrl, "providers", "last-way-in");
         });
 
         forms.MapPost("/set-password", async (HttpContext context, AccountDesk desk, [FromForm] string? password, [FromForm] string? again, [FromForm] string? returnUrl) =>
@@ -249,7 +284,7 @@ public static class ExternalSignIn
             }
 
             using var store = desk.Open();
-            var set = store.SetPassword(session.Id, password ?? string.Empty);
+            var set = store.Accounts.SetPassword(session.Id, password ?? string.Empty);
             if (!set.Done)
             {
                 return set.Problems.Contains("wrong") ? Results.BadRequest() : AccountEndpoints.Back(returnUrl, "password", [.. set.Problems]);

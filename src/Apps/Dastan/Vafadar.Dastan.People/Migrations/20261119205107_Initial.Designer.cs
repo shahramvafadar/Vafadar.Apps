@@ -12,7 +12,7 @@ using Vafadar.Dastan.People;
 namespace Vafadar.Dastan.People.Migrations
 {
     [DbContext(typeof(PeopleContext))]
-    [Migration("20261119203238_Initial")]
+    [Migration("20261119205107_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -70,7 +70,8 @@ namespace Vafadar.Dastan.People.Migrations
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "LoginProvider")
+                        .IsUnique();
 
                     b.ToTable("VisitorLogins", "identity");
                 });
@@ -222,29 +223,6 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasIndex("Tree");
 
                     b.ToTable("Claims", "personal");
-                });
-
-            modelBuilder.Entity("Vafadar.Dastan.People.StoredExternalLogin", b =>
-                {
-                    b.Property<string>("Provider")
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
-
-                    b.Property<string>("Key")
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<string>("VisitorId")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
-
-                    b.HasKey("Provider", "Key");
-
-                    b.HasIndex("VisitorId", "Provider")
-                        .IsUnique();
-
-                    b.ToTable("ExternalLogins", "personal");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.People.StoredInvitation", b =>
@@ -757,12 +735,6 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("Failures")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("LockedUntil")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(80)
@@ -772,11 +744,6 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("Stamp")
                         .IsRequired()
@@ -948,15 +915,6 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasOne("Vafadar.Dastan.People.StoredTree", null)
                         .WithMany()
                         .HasForeignKey("Tree")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Vafadar.Dastan.People.StoredExternalLogin", b =>
-                {
-                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
-                        .WithMany()
-                        .HasForeignKey("VisitorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

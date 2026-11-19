@@ -1468,7 +1468,7 @@
     <value>Your account</value>
   </data>
   <data name="Account_Lead" xml:space="preserve">
-    <value>An account is yours on every device: your list and how far you have read follow you. It asks for a name and a password – no mail address and nothing else about you.</value>
+    <value>An account is yours on every device: your list and how far you have read follow you. It asks for a name, a mail address and a password – nothing else about you.</value>
   </data>
   <data name="Account_Signed" xml:space="preserve">
     <value>You are signed in as {0}.</value>
@@ -1510,7 +1510,7 @@
     <value>New here? Make an account</value>
   </data>
   <data name="Account_Register_Privacy" xml:space="preserve">
-    <value>The site keeps the name and a value derived from the password – never the password itself. It knows no mail address of yours: if you lose the password, only your recovery codes let you in again.</value>
+    <value>The site keeps the name, the mail address and a value derived from the password – never the password itself. Nobody else sees the address, and the site writes to it only about the account. If you lose the password, a link mailed to the address or one of your recovery codes lets you in again.</value>
   </data>
   <data name="Account_Register_Send" xml:space="preserve">
     <value>Make the account</value>
@@ -1519,7 +1519,7 @@
     <value>Lost the password?</value>
   </data>
   <data name="Account_Recover_Lead" xml:space="preserve">
-    <value>One of your recovery codes lets you choose a new password.</value>
+    <value>One of your recovery codes lets you choose a new password – the way in when you cannot read the mail of your address any more.</value>
   </data>
   <data name="Account_Recover_Send" xml:space="preserve">
     <value>Set the new password</value>
@@ -1528,7 +1528,7 @@
     <value>Closed your account?</value>
   </data>
   <data name="Account_Reopen_Lead" xml:space="preserve">
-    <value>A closed account is kept for 30 days. Until then its name and password open it again.</value>
+    <value>A closed account is kept for 30 days. Until then its name or mail address and its password open it again.</value>
   </data>
   <data name="Account_Reopen_Send" xml:space="preserve">
     <value>Open the account again</value>
@@ -2404,7 +2404,7 @@
     <value>Sign in through somebody else</value>
   </data>
   <data name="Account_External_Lead" xml:space="preserve">
-    <value>They only tell this site that it is you again. The site asks them for no name, no mail address and no picture, and keeps none. They learn that you use this site.</value>
+    <value>They tell this site that it is you again, and the mail address they confirmed for you – it becomes the address of your account. The site asks them for no name and no picture, and keeps none. They learn that you use this site.</value>
   </data>
   <data name="Account_External_Send" xml:space="preserve">
     <value>Sign in through {0}</value>
@@ -2644,7 +2644,7 @@
     <value>a made-up provider (development only)</value>
   </data>
   <data name="Account_Choose_Privacy" xml:space="preserve">
-    <value>The site keeps the name and that this account is opened through {0} – no password, no mail address and nothing else {0} knows about you. Until you set a password on the page of your account, it opens only through {0}.</value>
+    <value>The site keeps the name, the mail address {0} confirmed for you, and that this account is opened through {0} – no password and nothing else {0} knows about you. Until you set a password on the page of your account, it opens only through {0}.</value>
   </data>
   <data name="Photos_Problem_photo-pixels" xml:space="preserve">
     <value>The picture has more than 50 million pixels. Bring in a smaller copy of it.</value>
@@ -2906,5 +2906,128 @@
   </data>
   <data name="Notice_ThisPage" xml:space="preserve">
     <value>Report this page</value>
+  </data>
+  <data name="Account_Mail" xml:space="preserve">
+    <value>Mail address</value>
+  </data>
+  <data name="Account_Mail_Hint" xml:space="preserve">
+    <value>Nobody else sees it. The site writes to it only about your account: the link that opens it, a forgotten password, and a note when something about how the account is entered changes.</value>
+  </data>
+  <data name="Account_NameOrMail" xml:space="preserve">
+    <value>Name or mail address</value>
+  </data>
+  <data name="Account_Said_confirm-sent" xml:space="preserve">
+    <value>Look at your mail: a message with a link is on its way to the address you gave. The account opens when you open the link, which works for 24 hours. If no message arrives, look in the folder for unwanted mail.</value>
+  </data>
+  <data name="Account_Said_resend-sent" xml:space="preserve">
+    <value>If an account with that name or address waits for its address to be confirmed, the link was mailed to it once more. A new link is sent a few minutes after the one before at the earliest.</value>
+  </data>
+  <data name="Account_Said_forgot-sent" xml:space="preserve">
+    <value>If there is an account with that name or address, a mail with a link for a new password is on its way to its address. The link works once, and for one hour.</value>
+  </data>
+  <data name="Account_Said_address-sent" xml:space="preserve">
+    <value>A mail with a link is on its way to the new address. Your address changes when you open that link; until then everything stays as it is.</value>
+  </data>
+  <data name="Account_Said_address-changed" xml:space="preserve">
+    <value>The mail address of your account is changed. Every other device was signed out.</value>
+  </data>
+  <data name="Account_Said_signed-out-everywhere" xml:space="preserve">
+    <value>Every other device was signed out. This one stays signed in.</value>
+  </data>
+  <data name="Account_Problem_mail" xml:space="preserve">
+    <value>That is not a mail address.</value>
+  </data>
+  <data name="Account_Problem_unconfirmed" xml:space="preserve">
+    <value>The mail address of this account is not confirmed yet. Open the link in the mail that was sent to it – or have the link mailed once more below.</value>
+  </data>
+  <data name="Account_Problem_same" xml:space="preserve">
+    <value>That is the address the account has already.</value>
+  </data>
+  <data name="Account_Problem_link" xml:space="preserve">
+    <value>This link cannot be used: it was used already, it is older than it may be, or it is not complete. On the page of the account you can have a new one mailed.</value>
+  </data>
+  <data name="Account_Problem_external-no-address" xml:space="preserve">
+    <value>The provider named no mail address it confirmed, and an account needs one. You can make an account with a name, a mail address and a password instead.</value>
+  </data>
+  <data name="Account_Problem_address-has-account" xml:space="preserve">
+    <value>This mail address already has an account. Sign in to that account, and add the provider on its page.</value>
+  </data>
+  <data name="Account_Forgot_Title" xml:space="preserve">
+    <value>Forgot the password?</value>
+  </data>
+  <data name="Account_Forgot_Lead" xml:space="preserve">
+    <value>Have a link for a new password mailed to the address of your account.</value>
+  </data>
+  <data name="Account_Forgot_Send" xml:space="preserve">
+    <value>Mail me a link</value>
+  </data>
+  <data name="Account_Resend_Title" xml:space="preserve">
+    <value>No mail with the link?</value>
+  </data>
+  <data name="Account_Resend_Lead" xml:space="preserve">
+    <value>Have the link that opens a new account mailed once more.</value>
+  </data>
+  <data name="Account_Resend_Send" xml:space="preserve">
+    <value>Mail the link again</value>
+  </data>
+  <data name="Account_Address_Title" xml:space="preserve">
+    <value>Mail address</value>
+  </data>
+  <data name="Account_Address_Now" xml:space="preserve">
+    <value>The address of this account is {0}. Nobody else sees it.</value>
+  </data>
+  <data name="Account_Address_Lead" xml:space="preserve">
+    <value>Another address</value>
+  </data>
+  <data name="Account_NewMail" xml:space="preserve">
+    <value>New mail address</value>
+  </data>
+  <data name="Account_Address_Note" xml:space="preserve">
+    <value>A link goes to the new address, and the address you have now is told that a change was asked for. Nothing changes before you open the link.</value>
+  </data>
+  <data name="Account_Address_Send" xml:space="preserve">
+    <value>Mail the link to the new address</value>
+  </data>
+  <data name="Account_Sessions_Title" xml:space="preserve">
+    <value>Other devices</value>
+  </data>
+  <data name="Account_Sessions_Lead" xml:space="preserve">
+    <value>Signs this account out on every other device and browser. This one stays signed in.</value>
+  </data>
+  <data name="Account_Sessions_Send" xml:space="preserve">
+    <value>Sign out everywhere else</value>
+  </data>
+  <data name="Account_Confirm_Title" xml:space="preserve">
+    <value>Confirm your mail address</value>
+  </data>
+  <data name="Account_Confirm_Lead" xml:space="preserve">
+    <value>One step is left: this button confirms the address and opens your account.</value>
+  </data>
+  <data name="Account_Confirm_Send" xml:space="preserve">
+    <value>Confirm and open the account</value>
+  </data>
+  <data name="Account_Reset_Title" xml:space="preserve">
+    <value>A new password</value>
+  </data>
+  <data name="Account_Reset_Lead" xml:space="preserve">
+    <value>Choose the new password of your account. Every device is signed out, and you are signed in here.</value>
+  </data>
+  <data name="Account_Reset_Send" xml:space="preserve">
+    <value>Set the password</value>
+  </data>
+  <data name="Account_NewAddress_Title" xml:space="preserve">
+    <value>Confirm the new mail address</value>
+  </data>
+  <data name="Account_NewAddress_Lead" xml:space="preserve">
+    <value>This button makes this address the address of your account. Every other device is signed out.</value>
+  </data>
+  <data name="Account_NewAddress_Send" xml:space="preserve">
+    <value>Confirm the new address</value>
+  </data>
+  <data name="Account_Link_Missing" xml:space="preserve">
+    <value>This page is opened through the link of a mail. Without a complete link there is nothing to do here.</value>
+  </data>
+  <data name="Account_Link_Back" xml:space="preserve">
+    <value>To the account</value>
   </data>
 </root>

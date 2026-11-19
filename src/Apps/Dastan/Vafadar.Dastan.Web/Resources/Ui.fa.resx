@@ -1468,7 +1468,7 @@
     <value>حساب شما</value>
   </data>
   <data name="Account_Lead" xml:space="preserve">
-    <value>حساب شما روی هر دستگاهی با شماست: فهرست شما و جایی که تا آن خوانده‌اید همراهتان می‌آید. فقط یک نام و یک گذرواژه می‌خواهد؛ نه نشانی ایمیل و نه چیز دیگری دربارهٔ شما.</value>
+    <value>حساب شما روی هر دستگاهی با شماست: فهرست شما و جایی که تا آن خوانده‌اید همراهتان می‌آید. یک نام، یک نشانی ایمیل و یک گذرواژه می‌خواهد؛ نه چیز دیگری دربارهٔ شما.</value>
   </data>
   <data name="Account_Signed" xml:space="preserve">
     <value>با نام {0} وارد شده‌اید.</value>
@@ -1510,7 +1510,7 @@
     <value>تازه آمده‌اید؟ حساب بسازید</value>
   </data>
   <data name="Account_Register_Privacy" xml:space="preserve">
-    <value>سایت نام و مقداری را که از گذرواژه ساخته می‌شود نگه می‌دارد، نه خود گذرواژه را. نشانی ایمیلی از شما ندارد: اگر گذرواژه را گم کنید، فقط کدهای بازیابی شما را دوباره راه می‌دهند.</value>
+    <value>سایت نام، نشانی ایمیل و مقداری را که از گذرواژه ساخته می‌شود نگه می‌دارد، نه خود گذرواژه را. نشانی را هیچ‌کس دیگری نمی‌بیند و سایت فقط دربارهٔ خود حساب به آن نامه می‌نویسد. اگر گذرواژه را گم کنید، پیوندی که به این نشانی فرستاده می‌شود یا یکی از کدهای بازیابی شما را دوباره راه می‌دهد.</value>
   </data>
   <data name="Account_Register_Send" xml:space="preserve">
     <value>ساختن حساب</value>
@@ -1519,7 +1519,7 @@
     <value>گذرواژه را گم کرده‌اید؟</value>
   </data>
   <data name="Account_Recover_Lead" xml:space="preserve">
-    <value>با یکی از کدهای بازیابی می‌توانید گذرواژهٔ تازه‌ای بگذارید.</value>
+    <value>با یکی از کدهای بازیابی می‌توانید گذرواژهٔ تازه‌ای بگذارید – راهی برای وقتی که دیگر به ایمیل نشانی خود دسترسی ندارید.</value>
   </data>
   <data name="Account_Recover_Send" xml:space="preserve">
     <value>ثبت گذرواژهٔ تازه</value>
@@ -1528,7 +1528,7 @@
     <value>حساب خود را بسته‌اید؟</value>
   </data>
   <data name="Account_Reopen_Lead" xml:space="preserve">
-    <value>حساب بسته‌شده ۳۰ روز نگه داشته می‌شود. تا آن زمان با نام و گذرواژه‌اش دوباره باز می‌شود.</value>
+    <value>حسابِ بسته‌شده ۳۰ روز نگه داشته می‌شود. تا آن زمان، نام یا نشانی ایمیل و گذرواژه‌اش آن را دوباره باز می‌کند.</value>
   </data>
   <data name="Account_Reopen_Send" xml:space="preserve">
     <value>بازکردن دوبارهٔ حساب</value>
@@ -2404,7 +2404,7 @@
     <value>ورود از راه سرویسی دیگر</value>
   </data>
   <data name="Account_External_Lead" xml:space="preserve">
-    <value>آن‌ها فقط به این سایت می‌گویند که باز شما هستید. سایت از آن‌ها نام، نشانی ایمیل یا تصویر نمی‌خواهد و هیچ‌کدام را نگه نمی‌دارد. آن‌ها باخبر می‌شوند که شما از این سایت استفاده می‌کنید.</value>
+    <value>آن‌ها به این سایت می‌گویند که باز شما هستید، و نشانی ایمیلی را که برای شما تأیید کرده‌اند – همان نشانی حساب شما می‌شود. سایت از آن‌ها نام یا تصویر نمی‌خواهد و هیچ‌کدام را نگه نمی‌دارد. آن‌ها باخبر می‌شوند که شما از این سایت استفاده می‌کنید.</value>
   </data>
   <data name="Account_External_Send" xml:space="preserve">
     <value>ورود با {0}</value>
@@ -2644,7 +2644,7 @@
     <value>ارائه‌دهندهٔ ساختگی (فقط برای توسعه)</value>
   </data>
   <data name="Account_Choose_Privacy" xml:space="preserve">
-    <value>سایت نام را نگه می‌دارد و اینکه این حساب از راه {0} باز می‌شود – نه گذرواژه‌ای، نه نشانی ایمیلی و نه چیز دیگری که {0} دربارهٔ شما می‌داند. تا وقتی در صفحهٔ حسابتان گذرواژه‌ای نگذارید، حساب فقط از راه {0} باز می‌شود.</value>
+    <value>سایت نام را نگه می‌دارد، نشانی ایمیلی را که {0} برای شما تأیید کرده است، و اینکه این حساب از راه {0} باز می‌شود – نه گذرواژه‌ای و نه چیز دیگری که {0} دربارهٔ شما می‌داند. تا وقتی در صفحهٔ حسابتان گذرواژه‌ای نگذارید، حساب فقط از راه {0} باز می‌شود.</value>
   </data>
   <data name="Photos_Problem_photo-pixels" xml:space="preserve">
     <value>تصویر بیش از ۵۰ میلیون پیکسل دارد. نسخهٔ کوچک‌تری از آن بیاورید.</value>
@@ -2906,5 +2906,128 @@
   </data>
   <data name="Notice_ThisPage" xml:space="preserve">
     <value>گزارش این صفحه</value>
+  </data>
+  <data name="Account_Mail" xml:space="preserve">
+    <value>نشانی ایمیل</value>
+  </data>
+  <data name="Account_Mail_Hint" xml:space="preserve">
+    <value>هیچ‌کس دیگری آن را نمی‌بیند. سایت فقط دربارهٔ حساب شما به آن نامه می‌نویسد: پیوندی که حساب را باز می‌کند، گذرواژهٔ فراموش‌شده، و خبری هر بار که چیزی در راه ورود به حساب عوض شود.</value>
+  </data>
+  <data name="Account_NameOrMail" xml:space="preserve">
+    <value>نام یا نشانی ایمیل</value>
+  </data>
+  <data name="Account_Said_confirm-sent" xml:space="preserve">
+    <value>ایمیل خود را ببینید: نامه‌ای با یک پیوند به نشانی‌ای که دادید در راه است. حساب وقتی باز می‌شود که آن پیوند را باز کنید؛ پیوند ۲۴ ساعت کار می‌کند. اگر نامه‌ای نرسید، پوشهٔ هرزنامه را هم ببینید.</value>
+  </data>
+  <data name="Account_Said_resend-sent" xml:space="preserve">
+    <value>اگر حسابی با این نام یا نشانی منتظر تأیید نشانی‌اش باشد، پیوند بار دیگر برایش فرستاده شد. پیوند تازه زودتر از چند دقیقه پس از پیوند پیشین فرستاده نمی‌شود.</value>
+  </data>
+  <data name="Account_Said_forgot-sent" xml:space="preserve">
+    <value>اگر حسابی با این نام یا نشانی باشد، نامه‌ای با پیوندِ گذرواژهٔ تازه به نشانی‌اش در راه است. پیوند یک بار و تا یک ساعت کار می‌کند.</value>
+  </data>
+  <data name="Account_Said_address-sent" xml:space="preserve">
+    <value>نامه‌ای با یک پیوند به نشانی تازه در راه است. نشانی شما وقتی عوض می‌شود که آن پیوند را باز کنید؛ تا آن زمان همه‌چیز همان است که بود.</value>
+  </data>
+  <data name="Account_Said_address-changed" xml:space="preserve">
+    <value>نشانی ایمیل حساب شما عوض شد. حساب در همهٔ دستگاه‌های دیگر بسته شد.</value>
+  </data>
+  <data name="Account_Said_signed-out-everywhere" xml:space="preserve">
+    <value>حساب در همهٔ دستگاه‌های دیگر بسته شد. این دستگاه وارد می‌ماند.</value>
+  </data>
+  <data name="Account_Problem_mail" xml:space="preserve">
+    <value>این نشانی ایمیل نیست.</value>
+  </data>
+  <data name="Account_Problem_unconfirmed" xml:space="preserve">
+    <value>نشانی ایمیل این حساب هنوز تأیید نشده است. پیوندی را که به آن فرستاده شده باز کنید – یا پایین‌تر بخواهید پیوند بار دیگر فرستاده شود.</value>
+  </data>
+  <data name="Account_Problem_same" xml:space="preserve">
+    <value>این همان نشانی‌ای است که حساب هم‌اکنون دارد.</value>
+  </data>
+  <data name="Account_Problem_link" xml:space="preserve">
+    <value>این پیوند به کار نمی‌آید: پیش‌تر به کار رفته، از مهلتش گذشته یا کامل نیست. در صفحهٔ حساب می‌توانید بخواهید پیوند تازه‌ای فرستاده شود.</value>
+  </data>
+  <data name="Account_Problem_external-no-address" xml:space="preserve">
+    <value>این سرویس نشانی ایمیل تأییدشده‌ای نگفت و حساب به آن نیاز دارد. به‌جایش می‌توانید با نام، نشانی ایمیل و گذرواژه حساب بسازید.</value>
+  </data>
+  <data name="Account_Problem_address-has-account" xml:space="preserve">
+    <value>این نشانی ایمیل از پیش حساب دارد. به همان حساب وارد شوید و این سرویس را در صفحهٔ آن اضافه کنید.</value>
+  </data>
+  <data name="Account_Forgot_Title" xml:space="preserve">
+    <value>گذرواژه را فراموش کرده‌اید؟</value>
+  </data>
+  <data name="Account_Forgot_Lead" xml:space="preserve">
+    <value>بخواهید پیوندی برای گذرواژهٔ تازه به نشانی حسابتان فرستاده شود.</value>
+  </data>
+  <data name="Account_Forgot_Send" xml:space="preserve">
+    <value>پیوند را بفرست</value>
+  </data>
+  <data name="Account_Resend_Title" xml:space="preserve">
+    <value>نامهٔ پیوند نرسیده است؟</value>
+  </data>
+  <data name="Account_Resend_Lead" xml:space="preserve">
+    <value>بخواهید پیوندی که حساب تازه را باز می‌کند بار دیگر فرستاده شود.</value>
+  </data>
+  <data name="Account_Resend_Send" xml:space="preserve">
+    <value>پیوند را دوباره بفرست</value>
+  </data>
+  <data name="Account_Address_Title" xml:space="preserve">
+    <value>نشانی ایمیل</value>
+  </data>
+  <data name="Account_Address_Now" xml:space="preserve">
+    <value>نشانی این حساب {0} است. هیچ‌کس دیگری آن را نمی‌بیند.</value>
+  </data>
+  <data name="Account_Address_Lead" xml:space="preserve">
+    <value>نشانی دیگر</value>
+  </data>
+  <data name="Account_NewMail" xml:space="preserve">
+    <value>نشانی ایمیل تازه</value>
+  </data>
+  <data name="Account_Address_Note" xml:space="preserve">
+    <value>پیوندی به نشانی تازه فرستاده می‌شود و به نشانی کنونی خبر داده می‌شود که تغییری خواسته شده است. تا پیوند را باز نکنید چیزی عوض نمی‌شود.</value>
+  </data>
+  <data name="Account_Address_Send" xml:space="preserve">
+    <value>پیوند را به نشانی تازه بفرست</value>
+  </data>
+  <data name="Account_Sessions_Title" xml:space="preserve">
+    <value>دستگاه‌های دیگر</value>
+  </data>
+  <data name="Account_Sessions_Lead" xml:space="preserve">
+    <value>حساب را در همهٔ دستگاه‌ها و مرورگرهای دیگر می‌بندد. این یکی وارد می‌ماند.</value>
+  </data>
+  <data name="Account_Sessions_Send" xml:space="preserve">
+    <value>بستن حساب در همه‌جای دیگر</value>
+  </data>
+  <data name="Account_Confirm_Title" xml:space="preserve">
+    <value>تأیید نشانی ایمیل</value>
+  </data>
+  <data name="Account_Confirm_Lead" xml:space="preserve">
+    <value>یک گام مانده است: این دکمه نشانی را تأیید و حساب شما را باز می‌کند.</value>
+  </data>
+  <data name="Account_Confirm_Send" xml:space="preserve">
+    <value>تأیید و باز کردن حساب</value>
+  </data>
+  <data name="Account_Reset_Title" xml:space="preserve">
+    <value>گذرواژهٔ تازه</value>
+  </data>
+  <data name="Account_Reset_Lead" xml:space="preserve">
+    <value>گذرواژهٔ تازهٔ حسابتان را برگزینید. حساب در همهٔ دستگاه‌ها بسته می‌شود و این‌جا وارد می‌شوید.</value>
+  </data>
+  <data name="Account_Reset_Send" xml:space="preserve">
+    <value>گذاشتن گذرواژه</value>
+  </data>
+  <data name="Account_NewAddress_Title" xml:space="preserve">
+    <value>تأیید نشانی ایمیل تازه</value>
+  </data>
+  <data name="Account_NewAddress_Lead" xml:space="preserve">
+    <value>این دکمه این نشانی را نشانی حساب شما می‌کند. حساب در همهٔ دستگاه‌های دیگر بسته می‌شود.</value>
+  </data>
+  <data name="Account_NewAddress_Send" xml:space="preserve">
+    <value>تأیید نشانی تازه</value>
+  </data>
+  <data name="Account_Link_Missing" xml:space="preserve">
+    <value>این صفحه با پیوندِ یک نامه باز می‌شود. بدون پیوند کامل این‌جا کاری نیست.</value>
+  </data>
+  <data name="Account_Link_Back" xml:space="preserve">
+    <value>به صفحهٔ حساب</value>
   </data>
 </root>

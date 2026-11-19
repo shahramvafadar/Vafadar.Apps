@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Data;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.Web.Tests;
 
@@ -25,8 +26,7 @@ public class DemoSite : WebApplicationFactory<Program>
     public Catalogue Catalogue => _catalogue.Value;
 
     /// <summary>Returns a visitor with a browser of their own: own cookies, no automatic redirects.</summary>
-    public Browser Visitor(string? acceptLanguage = null) =>
-        new(CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, HandleCookies = false }), acceptLanguage);
+    public Browser Visitor(string? acceptLanguage = null) => Browser.Of(this, acceptLanguage);
 }
 
 /// <summary>The website as it runs for the public: the same collection, but not as a demonstration.</summary>
@@ -69,8 +69,51 @@ public sealed record Page(HttpStatusCode Status, string Html, HttpResponseMessag
 /// One visitor's browser as far as the tests need it: it keeps its own cookies, sends its language and fills in
 /// the forms of the site with the token the page gave it.
 /// </summary>
-public sealed class Browser(HttpClient client, string? acceptLanguage)
+public sealed class Browser(HttpClient client, string? acceptLanguage, Func<string?>? database = null)
 {
+    /// <summary>The address the form that makes an account is sent to.</summary>
+    public const string Registering = "/preferences/account/register";
+
+    /// <summary>Returns a visitor of a site with a browser of their own: own cookies, no automatic redirects.</summary>
+    public static Browser Of(WebApplicationFactory<Program> site, string? acceptLanguage = null)
+    {
+        ArgumentNullException.ThrowIfNull(site);
+        return new(
+            site.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, HandleCookies = false }),
+            acceptLanguage,
+            () => site.Services.GetRequiredService<Microsoft.Extensions.Configuration.IConfiguration>()["Dastan:Database"]);
+    }
+
+    /// <summary>
+    /// Returns the last mail of a kind the site wrote to an address, as the catcher of a developer would show
+    /// it: its text, or nothing when there is none. The kinds are those of <c>AccountMail</c>.
+    /// </summary>
+    public string? Mailed(string to, string kind)
+    {
+        using var connection = new Npgsql.NpgsqlConnection(database?.Invoke() ?? throw new InvalidOperationException("The site of this visitor has no database."));
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandText = """select "Text" from delivery."Mail" where lower("To") = lower(@to) and "Kind" = @kind order by "CreatedAt" desc, "Key" desc limit 1""";
+        command.Parameters.AddWithValue("to", to);
+        command.Parameters.AddWithValue("kind", kind);
+        return command.ExecuteScalar() as string;
+    }
+
+    /// <summary>Returns the link of a mail: the page it opens, with the language, and the identifier and the token it carries.</summary>
+    public static (string Page, string Id, string Token) LinkOf(string mail)
+    {
+        var link = Regex.Match(mail, @"https?://[^/\s]+(?<page>/(?:en|fa)/account/\w+)\?id=(?<id>[^&\s]+)&token=(?<token>\S+)");
+        Assert.True(link.Success, mail);
+        return (link.Groups["page"].Value, link.Groups["id"].Value, link.Groups["token"].Value);
+    }
+
+    /// <summary>Opens the link of a mail and sends the form of the page it leads to, with more fields when the form has some.</summary>
+    public Task<Page> Follow(string mail, string action, params (string Name, string Value)[] fields)
+    {
+        var (page, id, token) = LinkOf(mail);
+        return Post($"/preferences/account/{action}", $"{page}?id={id}&token={token}", [("id", id), ("token", token), ("returnUrl", page[..page.LastIndexOf('/')]), .. fields]);
+    }
+
     private readonly Dictionary<string, string> _paths = new(StringComparer.Ordinal);
 
     // A visitor may ask for several pages at the same time; their cookies are kept and sent one request at a time.
@@ -105,9 +148,24 @@ public sealed class Browser(HttpClient client, string? acceptLanguage)
         return page;
     }
 
-    /// <summary>Sends a form of the site, with the token of the page it stands on.</summary>
+    /// <summary>
+    /// Sends a form of the site, with the token of the page it stands on. The form that makes an account is
+    /// sent as a person would see it through when the test names no mail address – a test that is not about
+    /// the address: the visitor gives the made-up address of the name (<see cref="TestAccounts.MailOf"/>),
+    /// opens the link that was mailed to it and confirms, and the answer is the one of that last step. A test
+    /// that names an address does every step itself.
+    /// </summary>
     public async Task<Page> Post(string address, string from, params (string Name, string Value)[] fields)
     {
+        if (address == Registering && !fields.Any(field => field.Name == "mail"))
+        {
+            var to = TestAccounts.MailOf(fields.FirstOrDefault(field => field.Name == "name").Value ?? string.Empty);
+            var asked = await Post(address, from, [.. fields, ("mail", to)]);
+            return asked.Response.Headers.Location?.OriginalString.Contains("said=confirm-sent", StringComparison.Ordinal) == true && Mailed(to, "confirm-address") is { } mail
+                ? await Follow(mail, "confirm")
+                : asked;
+        }
+
         var form = await Open(from);
         var token = Regex.Match(form.Html, "name=\"__RequestVerificationToken\" value=\"([^\"]+)\"").Groups[1].Value;
         var request = new HttpRequestMessage(HttpMethod.Post, address)

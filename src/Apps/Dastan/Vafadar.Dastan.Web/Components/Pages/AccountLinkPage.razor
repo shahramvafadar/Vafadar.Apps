@@ -1,0 +1,118 @@
+@page "/account/confirm"
+@page "/account/reset"
+@page "/account/address"
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* Where the link of a mail about an account leads (step 19.4, ADR 0016): confirming the address of a new
+   account, a new password for a forgotten one, confirming another address. Opening the link changes nothing –
+   a program that follows the links of a mail uses none up; the page shows a form, and the form does it. The
+   page needs no script. *@
+<PageTitle>@T[$"Account_{_kind}_Title"] – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+@* The address of this page holds a token: no search engine, and no other site learns where a visitor came from. *@
+<HeadContent>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+</HeadContent>
+
+@if (Desk.IsOpen)
+{
+    <header class="page-header">
+        <h1>@T[$"Account_{_kind}_Title"]</h1>
+    </header>
+
+    @if (_problems.Length > 0)
+    {
+        <ul class="problems" role="alert">
+            @foreach (var problem in _problems)
+            {
+                <li>@T[$"Account_Problem_{problem}"]</li>
+            }
+        </ul>
+    }
+
+    @if (!AccountDesk.IsPrivate(Context))
+    {
+        <p class="note" role="alert">@T["Account_NeedsHttps"]</p>
+    }
+    else if (!_complete)
+    {
+        @if (_problems.Length == 0)
+        {
+            <p class="note">@T["Account_Link_Missing"]</p>
+        }
+        <p><a class="action secondary" href="account">@T["Account_Link_Back"]</a></p>
+    }
+    else
+    {
+        <p class="lead">@T[$"Account_{_kind}_Lead"]</p>
+        <form method="post" action="@($"{AccountDesk.Root}/{_action}")" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@_home" />
+            <input type="hidden" name="id" value="@Id" />
+            <input type="hidden" name="token" value="@Token" />
+            @if (_kind == "Reset")
+            {
+                <p class="field">
+                    <label for="reset-password">@T["Account_NewPassword"]</label>
+                    <input id="reset-password" name="password" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" aria-describedby="reset-password-hint" />
+                    <span class="meta" id="reset-password-hint">@T["Account_Password_Hint"]</span>
+                </p>
+                <p class="field">
+                    <label for="reset-again">@T["Account_Password_Again"]</label>
+                    <input id="reset-again" name="again" type="password" required minlength="@PeopleStore.PasswordLength" autocomplete="new-password" />
+                </p>
+            }
+            <p><button type="submit" class="action">@T[$"Account_{_kind}_Send"]</button></p>
+        </form>
+    }
+}
+
+@code {
+    // What the forms may answer with: nothing else of an address is turned into words of the page.
+    private static readonly string[] Known = ["later", "link", "password-short", "password-long", "password-differs"];
+
+    private string _kind = "Confirm";
+    private string _action = "confirm";
+    private string _home = AccountDesk.Page;
+    private string[] _problems = [];
+    private bool _complete;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Id { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Token { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Desk.IsOpen)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        var path = new Uri(Navigation.Uri).AbsolutePath;
+        (_kind, _action) = path.EndsWith("/reset", StringComparison.Ordinal) ? ("Reset", "reset")
+            : path.EndsWith("/address", StringComparison.Ordinal) ? ("NewAddress", "address-confirm")
+            : ("Confirm", "confirm");
+        _home = $"/{Visitor.Language.Tag}{AccountDesk.Page}";
+        _problems = [.. (Problem ?? string.Empty).Split(',').Where(problem => Known.Contains(problem, StringComparer.Ordinal)).Distinct()];
+
+        // A link is an identifier and a token, of letters and digits: anything else is no link of this site.
+        _complete = Plain(Id, 64) && Plain(Token, 128);
+    }
+
+    private static bool Plain(string? value, int longest) =>
+        value is { Length: > 0 } && value.Length <= longest && value.All(letter => char.IsAsciiLetterOrDigit(letter) || letter == '-');
+}

@@ -302,3 +302,14 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   and is shown a reference at once. Pages with trees, photographs and people have a link "Report this page".
 - If who runs the site hides a photograph, takes a family tree back from the public or closes an account, the
   owner reads what was done, why, on which ground, and what to do about it – on the page of the account.
+- An account has a mail address now. Making an account asks for a name, an address and a password; the
+  account opens when the link that is mailed to the address was opened, and the recovery codes are shown then.
+  Nobody else sees the address, and the site writes to it only about the account.
+- "Forgot the password?" mails a link that sets a new one. The recovery codes stay, for who cannot read the
+  mail of the address any more.
+- The page of the account shows its mail address, changes it – the new address confirms the change – and
+  signs the account out on every other device.
+- Signing in works with the name or with the mail address.
+- Signing in through Google or Microsoft takes the mail address they confirmed as the address of the account.
+  An address that already has an account makes no second one: sign in to it and add the provider there.
+- The accounts with a name and a password alone are gone; nothing of an earlier database is carried over.

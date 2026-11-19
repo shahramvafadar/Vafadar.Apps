@@ -36,7 +36,7 @@ All exist.
 | `Vafadar.Dastan.Web` | The website: pages, components, texts in English and Persian, media delivery | 4 |
 | `Vafadar.Dastan.Content` | The command of the writers and the editors: check, vocabulary, template, revision, store | 9 |
 | `Vafadar.Dastan.Studio` | The tool of the editors: pages that show what the store holds. Runs on the editors' machine only | 11 |
-| `Vafadar.Dastan.People` | The store of the visitors: their accounts and, with them, what belongs to one person ([ADR 0014](docs/adr/0014-visitor-accounts.md)). Used by the website only where it is told a file for it | 16 |
+| `Vafadar.Dastan.People` | The store of the visitors: their accounts and, with them, what belongs to one person ([ADR 0014](docs/adr/0014-visitor-accounts.md)). Used by the website only where it is told its database | 16 |
 | `Vafadar.Dastan.Store` | The store of the editors: the records of a collection with the history of their changes ([ADR 0011](docs/adr/0011-editors-store.md)). The website does not use it | 11 |
 
 Shared libraries written for Dastan and usable by other apps:

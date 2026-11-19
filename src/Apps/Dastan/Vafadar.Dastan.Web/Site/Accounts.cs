@@ -13,9 +13,9 @@ using Vafadar.Web;
 namespace Vafadar.Dastan.Web.Site;
 
 /// <summary>
-/// The accounts of the visitors on the site (step 16.1, D-048 to D-050). The site has accounts only when it was
-/// told a file for their store (<c>Dastan:People</c>): a database of its own beside the site, apart from the
-/// collections and from the store of the editors. Without it the site is what it was – no account, no page for one.
+/// The accounts of the visitors on the site (step 16.1, D-048 to D-050; on ASP.NET Core Identity with a
+/// confirmed mail address since step 19.4, ADR 0016). The site has accounts only when it was told its database
+/// (<c>Dastan:Database</c>). Without it the site is what it was – no account, no page for one.
 /// </summary>
 public sealed class AccountDesk
 {
@@ -37,11 +37,15 @@ public sealed class AccountDesk
     /// <summary>How many passwords and recovery codes one address may try in an hour, over all accounts.</summary>
     public const int AttemptsPerHour = 30;
 
+    /// <summary>How many mails with a link one address may ask for in an hour, over all accounts.</summary>
+    public const int MailsPerHour = 10;
+
     private const string IdClaim = "dastan.visitor.id";
     private const string StampClaim = "dastan.visitor.stamp";
 
     private readonly string? _file;
     private readonly string? _photos;
+    private readonly string? _site;
     private readonly TimeProvider _time;
     private readonly IDataProtector _codes;
     private readonly ITimeLimitedDataProtector _arrivals;
@@ -53,9 +57,13 @@ public sealed class AccountDesk
     private long _purgedOn;
 
     /// <summary>Initializes a new instance of the <see cref="AccountDesk"/> class and brings the store to the form this program knows.</summary>
-    public AccountDesk(IOptions<DastanOptions> options, IHostEnvironment environment, TimeProvider time, IDataProtectionProvider protection)
+    public AccountDesk(IOptions<DastanOptions> options, IOptions<OperatorOptions> who, IHostEnvironment environment, TimeProvider time, IDataProtectionProvider protection)
     {
         ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(who);
+
+        // A link in a mail begins with the address of the site, as who runs it entered it.
+        _site = who.Value.Site;
         ArgumentNullException.ThrowIfNull(environment);
         ArgumentNullException.ThrowIfNull(protection);
         _time = time;
@@ -153,7 +161,7 @@ public sealed class AccountDesk
     /// </summary>
     public PeopleStore Open()
     {
-        var store = PeopleStore.Open(_file ?? throw new InvalidOperationException("The site has no accounts."), _time);
+        var store = PeopleStore.Open(_file ?? throw new InvalidOperationException("The site has no accounts."), _time, _site);
         var day = _time.GetUtcNow().ToUnixTimeSeconds() / 86400;
         if (Interlocked.Exchange(ref _purgedOn, day) != day)
         {
@@ -252,19 +260,19 @@ public sealed class AccountDesk
     }
 
     /// <summary>
-    /// Hands a sign-in of a provider that has no account yet to the form on which the visitor chooses a name:
-    /// sealed for ten minutes in a cookie only this site can read.
+    /// Hands a sign-in of a provider that has no account yet to the form on which the visitor chooses a name,
+    /// with the mail address the provider confirmed: sealed for ten minutes in a cookie only this site can read.
     /// </summary>
-    public void CarryArrival(HttpContext context, string provider, string subject, string? invitation)
+    public void CarryArrival(HttpContext context, string provider, string subject, string mail, string? invitation)
     {
         ArgumentNullException.ThrowIfNull(context);
         var options = PreferenceCookie.Options(context);
         options.MaxAge = TimeSpan.FromMinutes(10);
-        context.Response.Cookies.Append(ExternalSignIn.PendingCookie, _arrivals.Protect($"{provider}\n{subject}\n{invitation}", TimeSpan.FromMinutes(10)), options);
+        context.Response.Cookies.Append(ExternalSignIn.PendingCookie, _arrivals.Protect($"{provider}\n{subject}\n{mail}\n{invitation}", TimeSpan.FromMinutes(10)), options);
     }
 
     /// <summary>Returns the sign-in of a provider a request carries, or nothing: none, not sealed by this site, or older than ten minutes.</summary>
-    public (string Provider, string Subject, string? Invitation)? Arrival(HttpContext context)
+    public (string Provider, string Subject, string Mail, string? Invitation)? Arrival(HttpContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         if (context.Request.Cookies[ExternalSignIn.PendingCookie] is not { Length: > 0 } carried)
@@ -274,7 +282,7 @@ public sealed class AccountDesk
 
         try
         {
-            return _arrivals.Unprotect(carried).Split('\n') is [var provider, var subject, var invitation] ? (provider, subject, invitation.Length > 0 ? invitation : null) : null;
+            return _arrivals.Unprotect(carried).Split('\n') is [var provider, var subject, var mail, var invitation] ? (provider, subject, mail, invitation.Length > 0 ? invitation : null) : null;
         }
         catch (System.Security.Cryptography.CryptographicException)
         {
@@ -435,11 +443,11 @@ public static class AccountEndpoints
                 : await next(invocation).ConfigureAwait(false);
         });
 
-        forms.MapPost("/register", async (
+        forms.MapPost("/register", (
             HttpContext context,
             AccountDesk desk,
-            DastanLibrary library,
             [FromForm] string? name,
+            [FromForm] string? mail,
             [FromForm] string? password,
             [FromForm] string? again,
             [FromForm] string? website,
@@ -475,18 +483,10 @@ public static class AccountEndpoints
                 return Back(from, "register", kept);
             }
 
-            var made = store.Register(name ?? string.Empty, password ?? string.Empty, invitation, desk.InvitationOnly, AccountDesk.TermsVersion);
-            if (!made.Done)
-            {
-                return Back(from, "register", [.. made.Problems]);
-            }
-
-            // The new account begins with what the device it was made on holds: the list and how far its
-            // visitor has read. The device keeps its own.
-            store.BringIn(made.Session!.Id, AccountState.Device(context, library));
-            await AccountDesk.SignIn(context, made.Session!).ConfigureAwait(false);
-            desk.Carry(context, made.RecoveryCodes);
-            return Said(returnUrl, "welcome");
+            // The account is one when the link that is mailed now was opened; until then nobody is signed in.
+            // An address that has an account already is answered in the same words: who has it is told by mail.
+            var problems = store.Accounts.Register(name ?? string.Empty, mail ?? string.Empty, password ?? string.Empty, Tongue(returnUrl), invitation, desk.InvitationOnly, AccountDesk.TermsVersion);
+            return problems.IsEmpty ? Said(returnUrl, "confirm-sent") : Back(from, "register", [.. problems]);
         });
 
         forms.MapPost("/sign-in", async (
@@ -502,7 +502,14 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
-            if (store.SignIn(name ?? string.Empty, password ?? string.Empty) is not { } session)
+            var answer = store.Accounts.SignIn(name ?? string.Empty, password ?? string.Empty);
+            if (answer.Outcome == SignInOutcome.Unconfirmed)
+            {
+                // Said after the right password only: the page offers to mail the link once more.
+                return Back(returnUrl, "sign-in", "unconfirmed");
+            }
+
+            if (answer.Session is not { } session)
             {
                 // An account that who runs the site closed tells its owner why – the site has no other way to.
                 if (store.ClosedByOperator(name ?? string.Empty, password ?? string.Empty) is { } statement)
@@ -561,7 +568,7 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
-            var recovered = store.Recover(name ?? string.Empty, code ?? string.Empty, password ?? string.Empty);
+            var recovered = store.Accounts.Recover(name ?? string.Empty, code ?? string.Empty, password ?? string.Empty);
             if (!recovered.Done)
             {
                 return Back(returnUrl, "recover", [.. recovered.Problems.Select(problem => problem == "wrong" ? "wrong-code" : problem)]);
@@ -584,7 +591,7 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
-            if (store.Reopen(name ?? string.Empty, password ?? string.Empty) is not { } session)
+            if (store.Accounts.Reopen(name ?? string.Empty, password ?? string.Empty) is not { } session)
             {
                 return Back(returnUrl, "reopen", "wrong-closed");
             }
@@ -613,7 +620,7 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
-            var changed = store.ChangePassword(session.Id, current ?? string.Empty, password ?? string.Empty);
+            var changed = store.Accounts.ChangePassword(session.Id, current ?? string.Empty, password ?? string.Empty);
             if (!changed.Done)
             {
                 return Back(returnUrl, "password", [.. changed.Problems.Select(Current)]);
@@ -632,7 +639,7 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
-            var renewed = store.NewRecoveryCodes(session.Id, current ?? string.Empty);
+            var renewed = store.Accounts.NewRecoveryCodes(session.Id, current ?? string.Empty);
             if (!renewed.Done)
             {
                 return Back(returnUrl, "codes", [.. renewed.Problems.Select(Current)]);
@@ -650,7 +657,7 @@ public static class AccountEndpoints
             }
 
             using var store = desk.Open();
-            var closed = store.Close(session.Id, current ?? string.Empty);
+            var closed = store.Accounts.Close(session.Id, current ?? string.Empty);
             if (!closed.Done)
             {
                 return Back(returnUrl, "close", [.. closed.Problems.Select(Current)]);
@@ -660,8 +667,143 @@ public static class AccountEndpoints
             return Said(returnUrl, "closed");
         });
 
+        MapLinks(forms);
+        MapAddress(forms);
         MapBelongings(forms);
         forms.MapExternalSignIn();
+    }
+
+    // What a mailed link leads to (step 19.4, ADR 0016). A link is opened with GET and changes nothing by
+    // that – a program that looks at the links of a mail uses none up; the page it shows sends its form here.
+    private static void MapLinks(RouteGroupBuilder forms)
+    {
+        forms.MapPost("/confirm", async (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? id, [FromForm] string? token, [FromForm] string? returnUrl) =>
+        {
+            if (!desk.Allows(context, "try", AccountDesk.AttemptsPerHour))
+            {
+                return Link(returnUrl, "confirm", id, token, "later");
+            }
+
+            using var store = desk.Open();
+            var answer = store.Accounts.Confirm(id ?? string.Empty, token ?? string.Empty);
+            if (answer is not { Done: true, Session: { } session })
+            {
+                return Link(returnUrl, "confirm", null, null, "link");
+            }
+
+            // The new account begins with what the device its address was confirmed on holds: the list and
+            // how far its visitor has read. The device keeps its own.
+            store.BringIn(session.Id, AccountState.Device(context, library));
+            await AccountDesk.SignIn(context, session).ConfigureAwait(false);
+            desk.Carry(context, answer.RecoveryCodes);
+            return Said(returnUrl, "welcome");
+        });
+
+        // The link once more, for an account that waits for its address. Who asks is told the same whether
+        // there is such an account or not.
+        forms.MapPost("/resend", (HttpContext context, AccountDesk desk, [FromForm] string? name, [FromForm] string? returnUrl) =>
+        {
+            if (!desk.Allows(context, "mail", AccountDesk.MailsPerHour))
+            {
+                return Back(returnUrl, "resend", "later");
+            }
+
+            using var store = desk.Open();
+            store.Accounts.SendConfirmationAgain(name ?? string.Empty);
+            return Said(returnUrl, "resend-sent");
+        });
+
+        forms.MapPost("/forgot", (HttpContext context, AccountDesk desk, [FromForm] string? name, [FromForm] string? returnUrl) =>
+        {
+            if (!desk.Allows(context, "mail", AccountDesk.MailsPerHour))
+            {
+                return Back(returnUrl, "forgot", "later");
+            }
+
+            using var store = desk.Open();
+            store.Accounts.ForgotPassword(name ?? string.Empty);
+            return Said(returnUrl, "forgot-sent");
+        });
+
+        forms.MapPost("/reset", async (HttpContext context, AccountDesk desk, [FromForm] string? id, [FromForm] string? token, [FromForm] string? password, [FromForm] string? again, [FromForm] string? returnUrl) =>
+        {
+            if (!desk.Allows(context, "try", AccountDesk.AttemptsPerHour))
+            {
+                return Link(returnUrl, "reset", id, token, "later");
+            }
+
+            if (password != again)
+            {
+                return Link(returnUrl, "reset", id, token, "password-differs");
+            }
+
+            using var store = desk.Open();
+            var reset = store.Accounts.ResetPassword(id ?? string.Empty, token ?? string.Empty, password ?? string.Empty);
+            if (!reset.Done)
+            {
+                // A password that is too short leaves the link as it was; a link that does not work is gone.
+                return reset.Problems.Contains("wrong") ? Link(returnUrl, "reset", null, null, "link") : Link(returnUrl, "reset", id, token, [.. reset.Problems]);
+            }
+
+            await AccountDesk.SignIn(context, reset.Session!).ConfigureAwait(false);
+            return Said(returnUrl, "password");
+        });
+
+        forms.MapPost("/address-confirm", async (HttpContext context, AccountDesk desk, [FromForm] string? id, [FromForm] string? token, [FromForm] string? returnUrl) =>
+        {
+            if (!desk.Allows(context, "try", AccountDesk.AttemptsPerHour))
+            {
+                return Link(returnUrl, "address", id, token, "later");
+            }
+
+            using var store = desk.Open();
+            if (store.Accounts.ConfirmNewAddress(id ?? string.Empty, token ?? string.Empty) is not { } session)
+            {
+                return Link(returnUrl, "address", null, null, "link");
+            }
+
+            await AccountDesk.SignIn(context, session).ConfigureAwait(false);
+            return Said(returnUrl, "address-changed");
+        });
+    }
+
+    // The address of an account, and its sessions: for a visitor who signed in.
+    private static void MapAddress(RouteGroupBuilder forms)
+    {
+        forms.MapPost("/address", (HttpContext context, AccountDesk desk, [FromForm] string? current, [FromForm] string? mail, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            if (!desk.Allows(context, "mail", AccountDesk.MailsPerHour))
+            {
+                return Back(returnUrl, "address", "later");
+            }
+
+            using var store = desk.Open();
+            var problems = store.Accounts.ChangeAddress(session.Id, current ?? string.Empty, mail ?? string.Empty);
+            return problems.IsEmpty ? Said(returnUrl, "address-sent") : Back(returnUrl, "address", [.. problems.Select(Current)]);
+        });
+
+        forms.MapPost("/sign-out-everywhere", async (HttpContext context, AccountDesk desk, [FromForm] string? returnUrl) =>
+        {
+            if (AccountDesk.Session(context.User) is not { } session)
+            {
+                return Results.BadRequest();
+            }
+
+            using var store = desk.Open();
+            if (store.Accounts.SignOutEverywhere(session.Id) is not { } kept)
+            {
+                return Results.BadRequest();
+            }
+
+            // This browser stays signed in; every other one has ended.
+            await AccountDesk.SignIn(context, kept).ConfigureAwait(false);
+            return Said(returnUrl, "signed-out-everywhere");
+        });
     }
 
     // More of what is for a visitor who signed in: what follows them, and their invitations.
@@ -742,6 +884,18 @@ public static class AccountEndpoints
     }
 
     internal static IResult Said(string? returnUrl, string what) => Results.Redirect($"{Home(returnUrl)}?said={what}");
+
+    // The language of the page a form came from: a mail about the account is written in it.
+    internal static string Tongue(string? returnUrl) => Home(returnUrl).StartsWith("/fa/", StringComparison.Ordinal) ? "fa" : "en";
+
+    // Back to the page of a mailed link, with what was wrong. The link itself is kept in the address only while
+    // it can still be used.
+    internal static IResult Link(string? returnUrl, string page, string? id, string? token, params string[] problems)
+    {
+        static bool Plain(string? value, int longest) => value is { Length: > 0 } && value.Length <= longest && value.All(letter => char.IsAsciiLetterOrDigit(letter) || letter == '-');
+        var link = Plain(id, 64) && Plain(token, 128) ? $"id={id}&token={token}&" : string.Empty;
+        return Results.Redirect($"{Home(returnUrl)}/{page}?{link}problem={string.Join(',', problems)}");
+    }
 
     internal static IResult Back(string? returnUrl, string form, params string[] problems)
     {

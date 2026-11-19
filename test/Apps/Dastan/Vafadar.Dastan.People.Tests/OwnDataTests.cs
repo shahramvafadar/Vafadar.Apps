@@ -136,7 +136,9 @@ public sealed class OwnDataTests : IDisposable
         {
             connection.Open();
             using var command = connection.CreateCommand();
-            command.CommandText = TestDatabase.Sql("select Password from Visitors union all select Stamp from Visitors union all select Code from RecoveryCodes union all select Id from Visitors union all select Id from Trees union all select Id from Persons");
+            command.CommandText =
+                """select "PasswordHash" from identity."VisitorAccounts" union all select "SecurityStamp" from identity."VisitorAccounts" union all """
+                + TestDatabase.Sql("select Stamp from Visitors union all select Code from RecoveryCodes union all select Id from Visitors union all select Id from Trees union all select Id from Persons");
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {

@@ -70,7 +70,7 @@ public sealed class ClosedTrialTests : IDisposable
         Assert.NotEmpty(code);
 
         using var closed = _site.WithWebHostBuilder(builder => builder.UseSetting("Dastan:InvitationOnly", "true"));
-        Browser Visitor() => new(closed.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false, HandleCookies = false }), null);
+        Browser Visitor() => Browser.Of(closed);
 
         // Without an invitation there is no form, and one that is sent all the same makes nothing.
         var stranger = Visitor();

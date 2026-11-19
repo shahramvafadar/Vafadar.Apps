@@ -55,6 +55,13 @@ public sealed class SiteMailTests : IDisposable
 
         var caught = Assert.Single(await MailCatcher.For(to));
         Assert.Equal("A note from the site", (string?)caught["Subject"]);
+
+        // The server has the message a moment before the pump has written down that it was sent.
+        for (var tries = 0; tries < 100 && new MailOutbox(database).Waiting().Count > 0; tries++)
+        {
+            await Task.Delay(100, TestContext.Current.CancellationToken);
+        }
+
         Assert.Empty(new MailOutbox(database).Waiting());
 
         // The pump of the site is the one the site was given, and a round with nothing due sends nothing.
