@@ -52,4 +52,32 @@ public sealed class EditorsAtTheSameMomentTests : IDisposable
         command.CommandText = $"""select count(*) - count(distinct "Position") from {EditorialStore.Schema}."Records" where "Group" = 'sources'""";
         Assert.Equal(0L, command.ExecuteScalar());
     }
+
+    [Fact]
+    public async Task Those_who_publish_at_the_same_moment_get_one_number_each_one_after_the_other()
+    {
+        var today = new DateOnly(2026, 11, 17);
+        using (var store = _copy.Filled(files: true))
+        {
+            foreach (var statement in store.Statements(Collection))
+            {
+                Assert.True(store.Review(Collection, statement.Statement, ReviewAct.Reviewed, "a reviewer", today.AddDays(-1), "Read against the text.").Done);
+            }
+        }
+
+        using var start = new ManualResetEventSlim();
+        var publishing = Enumerable.Range(0, Editors).Select(number => Task.Run(() =>
+        {
+            using var store = _copy.Open(files: true);
+            start.Wait();
+            return store.Publish(Collection, today, $"editor {number}");
+        })).ToArray();
+        start.Set();
+        var done = await Task.WhenAll(publishing);
+
+        Assert.All(done, result => Assert.Empty(result.Problems));
+        Assert.Equal(Enumerable.Range(1, Editors), done.Select(result => result.Number).Order());
+        using var after = _copy.Open();
+        Assert.Equal(Editors, after.Revisions(Collection).Length);
+    }
 }

@@ -67,8 +67,9 @@ public sealed partial class EditorialStore
         ArgumentException.ThrowIfNullOrWhiteSpace(by);
 
         // One step: what is read, the number and the revision. Two who publish at the same moment get two
-        // numbers, one after the other.
+        // numbers, one after the other – the lock of the collection, the one an act takes, makes the second wait.
         using var step = _context.Database.BeginTransaction();
+        Lock("collection:" + collectionId);
         _context.ChangeTracker.Clear();
         if (Working(collectionId) is not var (root, working))
         {
