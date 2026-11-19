@@ -14,6 +14,7 @@
     <!-- The reports of visitors lie in the database; the store of the editors makes its tables. -->
     <ProjectReference Include="..\..\..\..\src\Apps\Dastan\Vafadar.Dastan.Store\Vafadar.Dastan.Store.csproj" />
     <Compile Include="..\Databases\TestDatabase.cs" Link="Shared\TestDatabase.cs" />
+    <Compile Include="..\Databases\MailCatcher.cs" Link="Shared\MailCatcher.cs" />
   </ItemGroup>
 
 </Project>

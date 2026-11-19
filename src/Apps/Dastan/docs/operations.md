@@ -48,6 +48,7 @@ Settings are environment variables (two underscores for a level).
 | `Dastan__Operator__Phone` | A telephone number for the imprint; optional | not set: the line is left out |
 | `Dastan__Operator__Host`, `__Network`, `__Authority` | Who hosts the site, who carries its traffic when that is somebody else, and the data protection authority that is competent, each with its address: named in the privacy notice | not set: the lines are left out |
 | `Dastan__Notices` | `true`: the site takes notices about content (Article 16 of the Digital Services Act) with a form and keeps them in its database (`Dastan__Database`), in the table `delivery."Notices"`. Read with the command `notices` | not set: the page `notice` names the mail address and has no form |
+| `Dastan__Mail__Host`, `__Port`, `__Security`, `__User`, `__Password`, `__From`, `__FromName` | The SMTP server the mail of the site leaves by ([ADR 0016](adr/0016-identity-and-mail.md)): its name; its port (587); how the connection is protected – `StartTls` (the default, and a server that does not offer it is refused), `Tls` from the start, or `None` for a catcher on the same machine only; the name and the password the site signs in with, when the server asks; the address the mail comes from and the name beside it. **The password is a secret**: it is given by the environment of the server and is never written into a file of the repository, a command or a log. A message waits in the database (`delivery."Mail"`) and is sent by the site every few seconds; one that fails is tried again later and later and given up after eight tries. A site told a server without an address to send from, without a database or without the tables does not start | not set: the site sends no mail |
 | `Dastan__Announcement` | A text the operator has to tell everybody – changed terms, the end of a function, a breach of security – shown on every page as plain text until it is taken out again. The site knows no mail address of its visitors | not set |
 | `Dastan__SignIn__MadeUp` | For a developer's machine only (step 18.2.2): a made-up provider that asks nobody and says the visitor is whoever this value names, so that the forms after a sign-in through a provider can be looked at without a client of Google or Microsoft. It exists in the environment `Development` only; anywhere else it does nothing | not set |
 | `Dastan__Legal` | A folder with legal texts of the owner's own (step 18.3.4, row 18.8), read-only: a plain text file for a page and a language – `terms.en.txt`, `privacy.de.txt`, `cookies.fa.txt`, `imprint.en.txt`, … – stands in the place of the text of the program for that page and language. A line that begins with `#` is a heading, `##` a smaller one, `- ` an item of a list, `\| ` a line that keeps its end (an address); lines that follow each other are one paragraph; `{{operator.name}}`, `{{operator.street}}`, `{{operator.town}}`, `{{operator.country}}`, `{{operator.mail}}`, `{{operator.phone}}`, `{{site}}`, `{{host}}`, `{{network}}` and `{{authority}}` are filled in from the settings, and a line that begins with `?` is left out when its value is not said. Nothing in a file is taken as markup. An empty file shows "this text is not written yet" | not set: the texts of the program, in English, Persian and German |
@@ -263,6 +264,27 @@ Bringing it back, with the site stopped: `pg_restore --clean --if-exists -d dast
 the volume, then the site. Tried once on the development database (2026-11-19): a collection with its history
 and accounts were copied, both schemas dropped and restored, and the collection written out afterwards was
 the same file byte for byte. Not tried on a server, and not together with the volume of the files.
+
+## Mail
+
+What the site has to tell somebody leaves by SMTP through whatever service the settings name – which one is
+the owner's choice and changes no code. Before the site is public its sender needs a domain that receivers
+trust (SPF, DKIM, DMARC), set up where the domain is kept. The operator sees what waits and what failed,
+never what a message says:
+
+```
+dotnet Vafadar.Dastan.Content.dll mail env                          # what waits, what was given up, and why
+dotnet Vafadar.Dastan.Content.dll mail again <key> env              # try a message that was given up again
+dotnet Vafadar.Dastan.Content.dll mail forget env [--kept-days 30]  # remove the record of what left long ago
+```
+
+A message is kept with a key and is sent once however often it is handed over; once sent, its text is
+emptied – it may hold a link that opens an account – and the record that it left, and to which address, is
+kept for 30 days unless another number is named. If the site stops between the moment a server took a
+message and the moment that is written down, the message is sent once more, under the same identifier, so
+that a server knows it as the same. On a developer's machine `docker compose -f src/Apps/Dastan/compose.yaml
+up -d mail` starts a catcher that takes every message, sends none on and shows them at
+http://127.0.0.1:53480 (SMTP on port 53425, `Security` = `None`); the tests send there.
 
 ## Notices about content, and restricting
 

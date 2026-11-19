@@ -4,8 +4,8 @@ namespace Vafadar.Dastan.Data;
 
 /// <summary>
 /// The part of the database for what comes in from outside and waits for somebody (ADR 0015): the reports of
-/// visitors and the notices about content. The site writes there, the tool of the editors and the command of
-/// who runs the site read and settle. The tables are made by <c>database migrate</c>; nothing here makes them.
+/// visitors, the notices about content, and the mail that waits to be sent. The site writes there, the tool
+/// of the editors and the command of who runs the site read and settle. The tables are made by <c>database migrate</c>; nothing here makes them.
 /// </summary>
 public static class Delivery
 {
@@ -61,13 +61,13 @@ public static class Delivery
         try
         {
             using var database = Open(connection);
-            using var command = Command(database, $"""select 1 from {Schema}."Reports" limit 0; select 1 from {Schema}."Notices" limit 0""");
+            using var command = Command(database, $"""select 1 from {Schema}."Reports" limit 0; select 1 from {Schema}."Notices" limit 0; select 1 from {Schema}."Mail" limit 0""");
             command.ExecuteNonQuery();
             return null;
         }
         catch (PostgresException missing) when (missing.SqlState is PostgresErrorCodes.UndefinedTable or PostgresErrorCodes.InvalidSchemaName)
         {
-            return "The database has no tables for reports and notices. Run \"dotnet Vafadar.Dastan.Content.dll database migrate --database env\" with the connection in DASTAN_DATABASE, then start again.";
+            return "The database has no tables for reports, notices and mail. Run \"dotnet Vafadar.Dastan.Content.dll database migrate --database env\" with the connection in DASTAN_DATABASE, then start again.";
         }
     }
 }

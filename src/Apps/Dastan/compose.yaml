@@ -25,6 +25,20 @@ services:
   # The browser of the browser tests (decision 11 of the delivery plan): the official Playwright image, run as a
   # server the tests connect to. Its version is the version of the Microsoft.Playwright package in
   # Directory.Packages.props; a client and a server of different versions refuse each other.
+  # What catches the mail of a development machine and of the tests (ADR 0016): it takes every message by SMTP,
+  # sends none of them on, and shows them at http://127.0.0.1:53480. It keeps nothing when it is removed.
+  mail:
+    image: axllent/mailpit:v1.33.0@sha256:9b3a463be15354c0f0eba91697d80e3e0d8a5623ef0e627cacc836bc17fd5231
+    environment:
+      MP_MAX_MESSAGES: "2000"
+      # It asks nobody outside whether a newer version of it exists.
+      MP_DISABLE_VERSION_CHECK: "true"
+    ports:
+      # Reachable from this machine only: SMTP, and the page with its API.
+      - "127.0.0.1:53425:1025"
+      - "127.0.0.1:53480:8025"
+    mem_limit: 256m
+
   browser:
     image: mcr.microsoft.com/playwright:v1.64.1-noble
     init: true

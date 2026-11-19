@@ -42,6 +42,25 @@ visitors and the editors also each had their own code for passwords, stamps and 
 * **Nothing is carried over** (D-080). The legal texts and the records of processing are written again for
   accounts with an address (step 19.10).
 
+## What is built
+
+**The mail (2026-11-19, first part of step 19.4).** The outbox is the table `delivery."Mail"`
+(`MailOutbox` in `Vafadar.Dastan.Data`): a message has a key and is kept once; it can be written inside the
+transaction of what it tells of; what is due is taken with a lock of its row, so several senders never take
+the same message; a failure waits 1, 5, 30 minutes, 2, 6, 12, 24 hours and is given up at the eighth try; the
+text of a sent message is emptied and its record forgotten after 30 days. `SmtpMailSender` speaks SMTP with
+MailKit 4.18.2 (MIT) – plain text and HTML side by side, the language in the head, the same Message-ID on
+every try. The site sends every five seconds (`MailPump`) where `Dastan:Mail` names a server, and does not
+start with half of the settings. The operator lists, retries and forgets with the command `mail`. Mailpit
+1.33.0 (MIT), pinned by its digest, catches the mail of a development machine and of the tests, in Compose and
+in CI. "Never twice" holds for every hand-over and for every sender at the same moment; a site that stops
+between a server taking a message and that being written down sends it once more under the same identifier –
+said in the operations guide.
+
+**Not built yet:** everything that writes mail – the accounts on Identity, the journeys, the texts of the
+messages in both languages, invitations and statements of reasons by mail, the editors' accounts. The
+delivery plan lists the parts of step 19.4.
+
 ## Consequences
 
 The site sends mail, so it needs a sender with a domain that receivers trust (SPF, DKIM, DMARC) before it is

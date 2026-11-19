@@ -117,6 +117,30 @@ namespace Vafadar.Dastan.Store.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Mail",
+                schema: "delivery",
+                columns: table => new
+                {
+                    Key = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Kind = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    To = table.Column<string>(type: "character varying(320)", maxLength: 320, nullable: false),
+                    Language = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Subject = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    Text = table.Column<string>(type: "text", nullable: false),
+                    Html = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    NextTry = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Attempts = table.Column<int>(type: "integer", nullable: false),
+                    SentAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    GaveUpAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastError = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Mail", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Notices",
                 schema: "delivery",
                 columns: table => new
@@ -360,6 +384,13 @@ namespace Vafadar.Dastan.Store.Migrations
                 columns: new[] { "Kind", "DocumentId", "Number" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Mail_NextTry",
+                schema: "delivery",
+                table: "Mail",
+                column: "NextTry",
+                filter: "(\"SentAt\" IS NULL AND \"GaveUpAt\" IS NULL)");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notices_SettledAt_ReceivedAt",
                 schema: "delivery",
                 table: "Notices",
@@ -436,6 +467,10 @@ namespace Vafadar.Dastan.Store.Migrations
             migrationBuilder.DropTable(
                 name: "Editors",
                 schema: "editorial");
+
+            migrationBuilder.DropTable(
+                name: "Mail",
+                schema: "delivery");
 
             migrationBuilder.DropTable(
                 name: "Notices",
