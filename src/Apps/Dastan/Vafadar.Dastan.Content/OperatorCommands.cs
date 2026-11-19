@@ -16,6 +16,12 @@ internal static class OperatorCommands
     /// <summary>How many days a notice is kept after it was settled, when no other number is named.</summary>
     public const int NoticesKeptDays = 365;
 
+    /// <summary>
+    /// How many days the record of a message that was sent or given up is kept when nothing else is said: it
+    /// names an address, and is needed only to answer whether a message left.
+    /// </summary>
+    public const int MailKeptDays = 30;
+
     public const string Usage = """
 
           notices <database>
@@ -33,6 +39,17 @@ internal static class OperatorCommands
           notices forget <database> [--kept-days <days>]
               Removes the settled notices that were decided more than a number of days ago (365 when none
               is named).
+
+          mail <database>
+              Lists the mail that waits to be sent and the mail sending was given up for – its kind, its
+              address and what the last try failed with; never what a message says.
+
+          mail again <key> <database>
+              Lets a message that was given up be tried again, as often as a new one.
+
+          mail forget <database> [--kept-days <days>]
+              Removes the record of what was sent or given up more than a number of days ago (30 when none
+              is named). A message that waits is never removed.
 
           database migrate --database env
               Makes the tables of the site in its PostgreSQL database, or brings them to the form this
@@ -106,6 +123,65 @@ internal static class OperatorCommands
 
             case ["notices", "forget", var folder, "--kept-days", var written]:
                 return int.TryParse(written, NumberStyles.None, CultureInfo.InvariantCulture, out var days) && days <= 36500 ? Forget(folder, days, output, time) : null;
+
+            case ["mail", var database]:
+            {
+                if (Delivered(database, output) is not { } connection)
+                {
+                    return ContentCommands.NotUsable;
+                }
+
+                var outbox = new MailOutbox(connection);
+                var (waiting, givenUp) = (outbox.Waiting(), outbox.GivenUp());
+                output.WriteLine($"{waiting.Count} {(waiting.Count == 1 ? "message waits" : "messages wait")} to be sent; {givenUp.Count} {(givenUp.Count == 1 ? "was" : "were")} given up.");
+                foreach (var mail in waiting)
+                {
+                    output.WriteLine($"  waits     {mail.Key}  {mail.Kind}  to {mail.To}  tried {mail.Attempts}×{(mail.LastError is null ? null : $", last: {mail.LastError}")}  next {mail.NextTry:yyyy-MM-dd HH:mm} UTC");
+                }
+
+                foreach (var mail in givenUp)
+                {
+                    output.WriteLine($"  given up  {mail.Key}  {mail.Kind}  to {mail.To}  tried {mail.Attempts}×, last: {mail.LastError}  on {mail.GaveUpAt:yyyy-MM-dd HH:mm} UTC");
+                }
+
+                return ContentCommands.Done;
+            }
+
+            case ["mail", "again", var key, var database]:
+            {
+                if (Delivered(database, output) is not { } connection)
+                {
+                    return ContentCommands.NotUsable;
+                }
+
+                if (!new MailOutbox(connection).TryAgain(key, time.GetUtcNow().UtcDateTime))
+                {
+                    output.WriteLine($"{key}: no message of this key was given up.");
+                    return ContentCommands.NotUsable;
+                }
+
+                output.WriteLine($"{key}: it is tried again.");
+                return ContentCommands.Done;
+            }
+
+            case ["mail", "forget", _]:
+            case ["mail", "forget", _, "--kept-days", _]:
+            {
+                var kept = MailKeptDays;
+                if (words.Count == 5 && (!int.TryParse(words[4], NumberStyles.None, CultureInfo.InvariantCulture, out kept) || kept > 36500))
+                {
+                    return null;
+                }
+
+                if (Delivered(words[2], output) is not { } connection)
+                {
+                    return ContentCommands.NotUsable;
+                }
+
+                var forgotten = new MailOutbox(connection).Forget(time.GetUtcNow().UtcDateTime.AddDays(-kept));
+                output.WriteLine($"{forgotten} {(forgotten == 1 ? "message" : "messages")} that left or were given up more than {kept} days ago removed.");
+                return ContentCommands.Done;
+            }
 
             case ["database", "migrate", "--database", var database]:
                 try

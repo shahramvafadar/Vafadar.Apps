@@ -47,6 +47,15 @@ services:
       Dastan__Operator__Host: ${DASTAN_OPERATOR_HOST:-}
       Dastan__Operator__Network: ${DASTAN_OPERATOR_NETWORK:-}
       Dastan__Operator__Authority: ${DASTAN_OPERATOR_AUTHORITY:-}
+      # The server the mail of the site leaves by (ADR 0016). Without DASTAN_MAIL_HOST the site sends no mail. The
+      # password is entered into the environment of this machine by the owner – never into a file of the repository.
+      Dastan__Mail__Host: ${DASTAN_MAIL_HOST:-}
+      Dastan__Mail__Port: ${DASTAN_MAIL_PORT:-587}
+      Dastan__Mail__Security: ${DASTAN_MAIL_SECURITY:-StartTls}
+      Dastan__Mail__User: ${DASTAN_MAIL_USER:-}
+      Dastan__Mail__Password: ${DASTAN_MAIL_PASSWORD:-}
+      Dastan__Mail__From: ${DASTAN_MAIL_FROM:-}
+      Dastan__Mail__FromName: ${DASTAN_MAIL_FROM_NAME:-Dastan}
       # Notices about content (Article 16 of the Digital Services Act), kept in the database; read with the command "notices".
       Dastan__Notices: "true"
       # What the operator has to tell everybody, on every page, until it is taken out again.

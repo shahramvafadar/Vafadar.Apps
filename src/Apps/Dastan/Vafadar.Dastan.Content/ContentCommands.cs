@@ -85,7 +85,7 @@ public static class ContentCommands
             ["reports", "forget", _, "--kept-days", _] => int.TryParse(words[4], System.Globalization.NumberStyles.None, System.Globalization.CultureInfo.InvariantCulture, out var days) && days <= 36500
                 ? ForgetReports(words[2], today.AddDays(-days).ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture), output)
                 : NotAsked(output),
-            ["notices" or "people" or "database", ..] => OperatorCommands.Run(words, output, time ?? TimeProvider.System) ?? NotAsked(output),
+            ["notices" or "people" or "database" or "mail", ..] => OperatorCommands.Run(words, output, time ?? TimeProvider.System) ?? NotAsked(output),
             ["store", "editor" or "editors", ..] => EditorCommands.Run(words[1..], output, time ?? TimeProvider.System, secret) ?? NotAsked(output),
             ["store", ..] => StoreCommands.Run(words[1..], output, time ?? TimeProvider.System) ?? NotAsked(output),
             _ => NotAsked(output),

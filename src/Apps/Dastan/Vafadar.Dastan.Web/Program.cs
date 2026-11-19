@@ -51,6 +51,30 @@ builder.Services.AddSingleton<ReportDesk>();
 // The accounts of the visitors (step 16.1): there are some only where the site was told a file for their store.
 builder.Services.AddVisitorAccounts(builder.Configuration);
 builder.Services.AddSingleton<LegalTexts>();
+
+// The mail of the site (ADR 0016) is sent by a service of its own, where the site was told a server for it
+// and has the database the mail waits in. A site told a server and no address to send from does not start.
+if (builder.Configuration["Dastan:Mail:Host"] is { Length: > 0 })
+{
+    var mail = builder.Configuration.GetSection("Dastan:Mail").Get<Vafadar.Dastan.Data.MailOptions>()!;
+    if (!mail.CanSend)
+    {
+        throw new InvalidOperationException("Dastan:Mail:Host names a server for mail, and Dastan:Mail:From is no address to send from.");
+    }
+
+    if (string.IsNullOrWhiteSpace(builder.Configuration["Dastan:Database"]))
+    {
+        throw new InvalidOperationException("Mail waits in the database of the site before it is sent, and no database is named: set Dastan:Database.");
+    }
+
+    if (Vafadar.Dastan.Data.Delivery.Missing(builder.Configuration["Dastan:Database"]!) is { } missing)
+    {
+        throw new InvalidOperationException(missing);
+    }
+
+    builder.Services.AddSingleton<MailPump>();
+    builder.Services.AddHostedService(services => services.GetRequiredService<MailPump>());
+}
 builder.Services.AddSingleton<NoticeDesk>();
 
 // The language of a visitor is kept on the device when the visitor chose it, not whenever a page is opened

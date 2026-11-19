@@ -93,6 +93,49 @@ public sealed class StoredReport
     public DateOnly? SettledOn { get; set; }
 }
 
+/// <summary>A message that waits to be sent, or was, as the table keeps it (<see cref="Vafadar.Dastan.Data.MailOutbox"/>).</summary>
+public sealed class StoredMail
+{
+    /// <summary>Gets or sets what names the message for good.</summary>
+    public required string Key { get; set; }
+
+    /// <summary>Gets or sets what kind of message it is.</summary>
+    public required string Kind { get; set; }
+
+    /// <summary>Gets or sets the address it goes to.</summary>
+    public required string To { get; set; }
+
+    /// <summary>Gets or sets the language it is written in.</summary>
+    public required string Language { get; set; }
+
+    /// <summary>Gets or sets its subject.</summary>
+    public required string Subject { get; set; }
+
+    /// <summary>Gets or sets its body as plain text; emptied once it is sent.</summary>
+    public required string Text { get; set; }
+
+    /// <summary>Gets or sets its body as HTML; emptied once it is sent.</summary>
+    public string? Html { get; set; }
+
+    /// <summary>Gets or sets when it was handed over.</summary>
+    public DateTime CreatedAt { get; set; }
+
+    /// <summary>Gets or sets when it is tried next.</summary>
+    public DateTime NextTry { get; set; }
+
+    /// <summary>Gets or sets how often sending it was tried.</summary>
+    public int Attempts { get; set; }
+
+    /// <summary>Gets or sets when it was sent.</summary>
+    public DateTime? SentAt { get; set; }
+
+    /// <summary>Gets or sets when sending it was given up.</summary>
+    public DateTime? GaveUpAt { get; set; }
+
+    /// <summary>Gets or sets what the last try failed with, in a word.</summary>
+    public string? LastError { get; set; }
+}
+
 /// <summary>A notice about content as the table keeps it (<see cref="Vafadar.Dastan.Data.ContentNotice"/>).</summary>
 public sealed class StoredNotice
 {
@@ -279,6 +322,9 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     /// <summary>Gets the reports of visitors, as the table of them is made; they are read and written through <see cref="Vafadar.Dastan.Data.ReportBox"/>.</summary>
     public DbSet<StoredReport> Reports => Set<StoredReport>();
 
+    /// <summary>Gets the mail that waits to be sent, as the table of it is made; it is read and written through <see cref="Vafadar.Dastan.Data.MailOutbox"/>.</summary>
+    public DbSet<StoredMail> Mail => Set<StoredMail>();
+
     /// <summary>Gets the notices about content, as the table of them is made; they are read and written through <see cref="Vafadar.Dastan.Data.NoticeBox"/>.</summary>
     public DbSet<StoredNotice> Notices => Set<StoredNotice>();
 
@@ -425,6 +471,21 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             report.Property(item => item.Text).HasMaxLength(Vafadar.Dastan.Data.ReportBox.LongestText);
             report.Property(item => item.SettledBy).HasMaxLength(200);
             report.HasIndex(item => new { item.SettledOn, item.On });
+        });
+
+        modelBuilder.Entity<StoredMail>(mail =>
+        {
+            mail.ToTable("Mail", Vafadar.Dastan.Data.Delivery.Schema);
+            mail.HasKey(item => item.Key);
+            mail.Property(item => item.Key).HasMaxLength(100);
+            mail.Property(item => item.Kind).HasMaxLength(40);
+            mail.Property(item => item.To).HasMaxLength(Vafadar.Dastan.Data.MailOutbox.LongestAddress);
+            mail.Property(item => item.Language).HasMaxLength(40);
+            mail.Property(item => item.Subject).HasMaxLength(300);
+            mail.Property(item => item.LastError).HasMaxLength(200);
+
+            // What is due is found without reading what was sent long ago.
+            mail.HasIndex(item => item.NextTry).HasFilter("""("SentAt" IS NULL AND "GaveUpAt" IS NULL)""");
         });
 
         modelBuilder.Entity<StoredNotice>(notice =>

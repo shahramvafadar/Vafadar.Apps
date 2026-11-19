@@ -12,7 +12,7 @@ using Vafadar.Dastan.Store;
 namespace Vafadar.Dastan.Store.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20261119192200_Initial")]
+    [Migration("20261119194745_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -335,6 +335,66 @@ namespace Vafadar.Dastan.Store.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Editors", "editorial");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredMail", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("Attempts")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("GaveUpAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Html")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("LastError")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("NextTry")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("SentAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("To")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("character varying(320)");
+
+                    b.HasKey("Key");
+
+                    b.HasIndex("NextTry")
+                        .HasFilter("(\"SentAt\" IS NULL AND \"GaveUpAt\" IS NULL)");
+
+                    b.ToTable("Mail", "delivery");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredNotice", b =>

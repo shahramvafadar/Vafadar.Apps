@@ -78,6 +78,14 @@ public sealed class DastanOptions
     public string? Database { get; set; }
 
     /// <summary>
+    /// Gets the server the mail of the site leaves by (<c>Dastan:Mail</c>, ADR 0016): its name and port, how
+    /// the connection is protected, who the site signs in as, and the address it sends from. Without a server
+    /// the site sends no mail. The password is a secret: it is told to the running site and never written into
+    /// a file of the repository.
+    /// </summary>
+    public Vafadar.Dastan.Data.MailOptions Mail { get; } = new();
+
+    /// <summary>
     /// Gets or sets the folder the photographs of the visitors are kept in (step 16.5), on a volume no web
     /// server shows. Empty – or without <see cref="People"/> – the site has no photographs.
     /// </summary>

@@ -104,6 +104,57 @@ public sealed class OperatorCommandsTests : IDisposable
     }
 
     [Fact]
+    public void The_mail_that_waits_and_the_mail_that_was_given_up_is_listed_tried_again_and_forgotten()
+    {
+        var outbox = new MailOutbox(People);
+        var now = _clock.GetUtcNow().UtcDateTime;
+        outbox.Put(new OutgoingMail("confirm:1", "confirm-address", "mina@example.org", "en", "Confirm your address", "A link nobody else may read."), now);
+        outbox.Put(new OutgoingMail("confirm:2", "confirm-address", "sara@example.org", "en", "Confirm your address", "Another link."), now);
+
+        // One message cannot be sent, however often it is tried.
+        var refusing = new Refusing("sara@example.org");
+        for (var attempt = 0; attempt < MailOutbox.MostAttempts; attempt++)
+        {
+            outbox.Deliver(refusing, now.AddDays(attempt), "dastan.test");
+        }
+
+        outbox.Put(new OutgoingMail("confirm:3", "confirm-address", "omid@example.org", "en", "Confirm your address", "A third link."), now.AddDays(8));
+        _clock.Advance(TimeSpan.FromDays(8));
+
+        var listed = Run("mail", People);
+        Assert.Equal(ContentCommands.Done, listed.Exit);
+        Assert.Contains("1 message waits to be sent; 1 was given up.", listed.Output, StringComparison.Ordinal);
+        Assert.Contains("waits     confirm:3  confirm-address  to omid@example.org  tried 0×", listed.Output, StringComparison.Ordinal);
+        Assert.Contains($"given up  confirm:2  confirm-address  to sara@example.org  tried {MailOutbox.MostAttempts}×, last: InvalidOperationException", listed.Output, StringComparison.Ordinal);
+
+        // What a message says is never listed.
+        Assert.DoesNotContain("link", listed.Output, StringComparison.Ordinal);
+
+        Assert.Equal(ContentCommands.NotUsable, Run("mail", "again", "confirm:1", People).Exit);
+        Assert.Equal(ContentCommands.Done, Run("mail", "again", "confirm:2", People).Exit);
+        Assert.Contains("2 messages wait to be sent; 0 were given up.", Run("mail", People).Output, StringComparison.Ordinal);
+
+        // The record of what left is kept for a while and then removed; what waits is never removed.
+        Assert.Contains("0 messages that left", Run("mail", "forget", People).Output, StringComparison.Ordinal);
+        Assert.Contains("1 message that left", Run("mail", "forget", People, "--kept-days", "7").Output, StringComparison.Ordinal);
+        Assert.Equal(2, outbox.Waiting().Count);
+        Assert.Equal(ContentCommands.NotUnderstood, Run("mail", "forget", People, "--kept-days", "many").Exit);
+        Assert.Equal(ContentCommands.NotUsable, Run("mail", TestDatabase.Empty()).Exit);
+    }
+
+    // Sends to everybody but one address.
+    private sealed class Refusing(string address) : IMailSender
+    {
+        public void Send(OutgoingMail mail, string messageId)
+        {
+            if (mail.To == address)
+            {
+                throw new InvalidOperationException("The server refused the address.");
+            }
+        }
+    }
+
+    [Fact]
     public void The_site_and_the_tool_each_get_a_role_that_may_do_what_the_program_does_and_no_more()
     {
         var owner = People;

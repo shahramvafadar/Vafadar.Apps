@@ -84,6 +84,8 @@ public static partial class DatabaseRoles
             Run(database, $"""REVOKE INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA {schema} FROM "{role}" """, onlyIfHistory: schema);
         }
 
+        // Mail is handed over and marked as sent by whichever program tells somebody something.
+        Run(database, $"""GRANT SELECT, INSERT, UPDATE ON {delivery}."Mail" TO "{role}" """);
         step.Commit();
     }
 
