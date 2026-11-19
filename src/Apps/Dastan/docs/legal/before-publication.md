@@ -18,8 +18,16 @@ and say that they are not complete.
 | `Dastan__Operator__Authority` | The data protection authority of the Land the owner lives in, with its address (list: https://www.bfdi.bund.de/DE/Service/Anschriften/Laender/Laender-node.html) | Privacy notice, section 16 |
 | `Dastan__Notices` | A folder on the volume for the notices about content | The form of the page `notice` |
 
-Already in the program: the name (Shahram Vafadar), the site (https://dastan.online) and the mail address
-(info@dastan.online).
+Already in the program: the name (Shahram Vafadar), the site (https://dastan.online), the mail address
+(info@dastan.online) and, since the owner's word of 2026-11-19, the Land – Niedersachsen, Germany – with the
+authority that is competent there (Die Landesbeauftragte für den Datenschutz Niedersachsen, Hannover). The
+Land stands in the place of the town until the owner says the full address: the street is still a gap, so
+the pages keep saying that they are not complete. `Dastan__Operator__Town` then takes the postal code and the
+town.
+
+Confirmed by the owner on 2026-11-19 (D-075): the network provider of the trial stays for now and is decided
+again with the host; the age stays 16; info@dastan.online is the mailbox that is read; the site stays
+non-commercial.
 
 ## 2. What the owner does
 
