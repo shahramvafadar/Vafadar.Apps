@@ -30,7 +30,7 @@ public sealed partial class PeopleStore
     public const int LongestAlbumNote = 400;
 
     /// <summary>Makes an album. Returns its number, or <see langword="null"/> when the name is none, is taken or the account has as many as it may.</summary>
-    public long? AddAlbum(string id, string name, string note = "")
+    private long? AddAlbumUnguarded(string id, string name, string note = "")
     {
         if (!IsOpen(id) || Written(name, LongestAlbumName, required: true) is not { } written || Written(note, LongestAlbumNote, required: false) is not { } about)
         {

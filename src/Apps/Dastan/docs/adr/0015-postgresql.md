@@ -52,7 +52,9 @@ while one writer is let in at a time; the records of the editors were bodies of 
 
 The store of the visitors (`personal`). A database is made with `--encoding=UTF8 --locale=C`, so that text is
 compared and ordered by its code points, as the store always did; where names are shown in order, the site
-orders them for the language of the page. The other parts of this decision are open – the delivery plan,
+orders them for the language of the page. The rules of that store that count before they add are kept by locks of the transaction, one per account, tree,
+photograph or pair of accounts, taken in one order, with a test of requests at the same moment for each. The
+other parts of this decision are open – the delivery plan,
 step 19.3, says which.
 
 ## Consequences

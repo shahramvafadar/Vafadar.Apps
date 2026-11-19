@@ -23,7 +23,7 @@ public sealed partial class PeopleStore
     /// may not see the tree), <c>unknown</c>, <c>taken</c> (the record is somebody's already), <c>own</c> (the
     /// account has a record or a claim in this tree already), <c>nobody</c> (there is nobody else to confirm it).
     /// </summary>
-    public string Claim(string id, string tree, string person)
+    private string ClaimUnguarded(string id, string tree, string person)
     {
         if (Role(id, tree) == TreeRole.None)
         {
