@@ -68,9 +68,17 @@ public sealed class AiRequestRow
     public AiPilotDispatchStage? PilotDispatchStage { get; set; }
     /// <summary>Server time at which the one original create became possible.</summary>
     public DateTimeOffset? PilotDispatchClaimedAt { get; set; }
-    /// <summary>Actual vendor input usage recorded on an accepted completion.</summary>
+    /// <summary>Uncached Standard reference estimate, separate from the vendor invoice and customer debit.</summary>
+    public long? PilotMeteredCostMicros { get; set; }
+    /// <summary>Reference tariff used when the terminal vendor estimate was recorded.</summary>
+    public string? PilotMeteredTariff { get; set; }
+    /// <summary>Known input tokens served from cache, when the provider reports a valid count.</summary>
+    public int? VendorCachedInputTokens { get; set; }
+    /// <summary>Known thinking tokens already included in the stored billable output total.</summary>
+    public int? VendorThinkingTokens { get; set; }
+    /// <summary>Terminal input usage from the authenticated original vendor response.</summary>
     public int? VendorInputTokens { get; set; }
-    /// <summary>Actual vendor billable output usage recorded on an accepted completion.</summary>
+    /// <summary>Terminal billable output usage including thinking exactly once.</summary>
     public int? VendorOutputTokens { get; set; }
 }
 
@@ -173,6 +181,7 @@ internal static class AiServiceModel
         request.Property(r => r.ProtectedPayload).HasMaxLength(65536); request.Property(r => r.ProtectedText).HasMaxLength(65536);
         request.HasOne<ServiceUser>().WithMany().HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Restrict);
         request.Property(r => r.VendorOperationId).HasMaxLength(256);
+        request.Property(r => r.PilotMeteredTariff).HasMaxLength(64);
         request.HasIndex(r => r.OfferId).IsUnique(); request.HasIndex(r => new { r.UserId, r.CreatedAt });
         request.HasOne<AiOfferRow>().WithMany().HasForeignKey(r => r.OfferId).OnDelete(DeleteBehavior.Restrict);
         var statusCheck = model.Entity<AiPilotStatusCheckRow>(); statusCheck.ToTable("AiPilotStatusChecks");

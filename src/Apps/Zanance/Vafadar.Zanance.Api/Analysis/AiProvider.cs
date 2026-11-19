@@ -7,7 +7,13 @@ internal sealed record AiProviderOffer(string Provider, string Model, long Maxim
 /// <summary>Only a definitive provider outcome may spend/refund an original reservation.</summary>
 internal enum AiProviderState { Unknown, Completed, DefinitiveNoCharge }
 /// <summary>Provider-confirmed outcome, never guessed from HTTP timeout or a missing request lookup.</summary>
-internal sealed record AiProviderOutcome(AiProviderState State, long ChargedUnits = 0, string? Text = null, int? VendorInputTokens = null, int? VendorOutputTokens = null);
+internal sealed record AiProviderOutcome(AiProviderState State, long ChargedUnits = 0, string? Text = null, AiPilotUsage? Metering = null);
+/// <summary>Authenticated terminal usage and an uncached Standard reference estimate, independent of customer credit.</summary>
+internal sealed record AiPilotUsage(int Input, int Output, int? CachedInput, int? Thinking, long EstimateMicros)
+{
+    /// <summary>Reference tariff used for the persisted estimate.</summary>
+    internal const string Tariff = "standard-uncached-text-2026-11-19";
+}
 /// <summary>Replaceable owned adapter; Begin is called once per original id, and status must never submit again.</summary>
 internal interface IAiProvider
 {

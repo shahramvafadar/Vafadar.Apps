@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiRequestRow",
                 typeof(AiRequestRow),
                 baseEntityType,
-                propertyCount: 18,
+                propertyCount: 22,
                 foreignKeyCount: 2,
                 unnamedIndexCount: 2,
                 keyCount: 1);
@@ -101,6 +101,23 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 nullable: true);
             pilotDispatchStage.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
+            var pilotMeteredCostMicros = runtimeEntityType.AddProperty(
+                "PilotMeteredCostMicros",
+                typeof(long?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("PilotMeteredCostMicros", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<PilotMeteredCostMicros>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            pilotMeteredCostMicros.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var pilotMeteredTariff = runtimeEntityType.AddProperty(
+                "PilotMeteredTariff",
+                typeof(string),
+                propertyInfo: typeof(AiRequestRow).GetProperty("PilotMeteredTariff", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<PilotMeteredTariff>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 64);
+            pilotMeteredTariff.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
             var protectedPayload = runtimeEntityType.AddProperty(
                 "ProtectedPayload",
                 typeof(string),
@@ -150,6 +167,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 maxLength: 256);
             userId.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
+            var vendorCachedInputTokens = runtimeEntityType.AddProperty(
+                "VendorCachedInputTokens",
+                typeof(int?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("VendorCachedInputTokens", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<VendorCachedInputTokens>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            vendorCachedInputTokens.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
             var vendorInputTokens = runtimeEntityType.AddProperty(
                 "VendorInputTokens",
                 typeof(int?),
@@ -174,6 +199,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 fieldInfo: typeof(AiRequestRow).GetField("<VendorOutputTokens>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
             vendorOutputTokens.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var vendorThinkingTokens = runtimeEntityType.AddProperty(
+                "VendorThinkingTokens",
+                typeof(int?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("VendorThinkingTokens", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<VendorThinkingTokens>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            vendorThinkingTokens.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });

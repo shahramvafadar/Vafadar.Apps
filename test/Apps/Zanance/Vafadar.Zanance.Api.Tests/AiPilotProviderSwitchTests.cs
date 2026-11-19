@@ -423,4 +423,125 @@ public sealed class AiPilotProviderSwitchTests
         Assert.All(rows.Values, row => { Assert.Equal(AiRequestState.Pending, row.State); Assert.Null(row.VendorOperationId); });
         Assert.Equal(4, await observed.Set<AiCreditRow>().CountAsync(ct));
     }
+
+    /// <summary>Separates confirmed vendor usage from customer settlement for unpublishable original output.</summary>
+    [Fact]
+    public async Task Pilot_records_terminal_usage_without_settling_unusable_output()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_PROVIDER_PILOT_CONNECTION");
+        if (connection is null) { Assert.Skip("Explicit isolated provider-pilot PostgreSQL fixture required."); return; }
+        var settings = new NpgsqlConnectionStringBuilder(connection);
+        Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
+        var factory = new Factory(connection);
+        var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
+        const string owner = "fictional-metered-pilot";
+        var session = Guid.NewGuid();
+        await using (var db = factory.CreateDbContext())
+        {
+            await db.Database.MigrateAsync(ct);
+            Assert.False(db.Database.HasPendingModelChanges());
+            db.Users.Add(new ServiceUser { Id = owner, UserName = owner, SecurityStamp = "fictional-metered-stamp" });
+            db.Sessions.Add(new DeviceSession { Id = session, UserId = owner, Generation = 1, ExpiresAt = clock.GetUtcNow().AddDays(1) });
+            await db.SaveChangesAsync(ct);
+        }
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-metering-only",
+            ["Analysis:ProviderPilot:openai:Project"] = "fixture-metering-openai",
+            ["Analysis:ProviderPilot:gemini:ApiKey"] = "fictional-metering-only",
+            ["Analysis:ProviderPilot:gemini:Project"] = "fixture-metering-gemini",
+        }).Build();
+        using var transport = new MeteringTransport();
+        var pilot = new AiPilotProvider(config, transport, clock);
+        var store = new AiRequestStore(factory, new UnconfiguredAiProvider(), new EphemeralDataProtectionProvider(), clock, pilot);
+        var actor = new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, owner),
+            new Claim(ServiceHost.SessionClaim, session.ToString("D")), new Claim(ServiceHost.GenerationClaim, "1")], "synthetic"));
+        var payload = AiPilotProvider.ReportFixture;
+        await store.GrantAsync(owner, "fictional-metered-credits", false, 2, ct);
+        var report = await SelectAndQuote("gpt-6-luna");
+        var rejected = await store.SubmitAsync(actor, report, ct);
+        Assert.Equal(AiRequestState.Pending, rejected.State);
+        Assert.Null(rejected.Text);
+        await ExpectUsage(report.RequestId, (100, 50, 25, 20, 35));
+        var alternative = await SelectAndQuote("gemini-3.5-flash-lite");
+        var overLimit = await store.SubmitAsync(actor, alternative, ct);
+        Assert.Equal(AiRequestState.Pending, overLimit.State);
+        Assert.Null(overLimit.Text);
+        await ExpectUsage(alternative.RequestId, (48, 520, 8, 20, 1315));
+
+        var balance = (await store.AvailabilityAsync(actor, ct)).Balance;
+        Assert.Equal(new AiBalance(0, 0, 0, 2), balance);
+        clock.Advance(TimeSpan.FromSeconds(3));
+        var conflicting = await store.StatusAsync(actor, report.RequestId, ct);
+        Assert.Equal(AiRequestState.Pending, conflicting.State);
+        await ExpectUsage(report.RequestId, (100, 50, 25, 20, 35));
+        clock.Advance(TimeSpan.FromSeconds(3));
+        var resolved = await store.StatusAsync(actor, report.RequestId, ct);
+        Assert.Equal(AiRequestState.Completed, resolved.State);
+        Assert.Equal(1L, resolved.ChargedUnits);
+        await ExpectUsage(report.RequestId, (100, 50, 25, 20, 35));
+        Assert.Equal(new AiBalance(0, 0, 0, 1), (await store.AvailabilityAsync(actor, ct)).Balance);
+        Assert.Equal(2, transport.Creates);
+        Assert.Equal(2, transport.Reads);
+        await using var audit = factory.CreateDbContext();
+        var settlement = Assert.Single(await audit.Set<AiCreditRow>().Where(row => row.Kind == AiCreditEvent.Settle).ToArrayAsync(ct));
+        Assert.Equal(report.RequestId, settlement.RequestId);
+        Assert.Empty(await audit.Set<AiCreditRow>().Where(row => row.Kind == AiCreditEvent.Refund).ToArrayAsync(ct));
+
+        async Task<AiSubmission> SelectAndQuote(string model)
+        {
+            await using var db = factory.CreateDbContext();
+            await pilot.SelectModelAsync(db, payload.Purpose, model, "fictional-metering-operator", ct);
+            return new(Guid.NewGuid(), await store.OfferAsync(actor, payload.Purpose, ct), payload);
+        }
+        async Task ExpectUsage(Guid id, (int Input, int Output, int Cached, int Thinking, long Cost) expected)
+        {
+            await using var db = factory.CreateDbContext();
+            var row = await db.Set<AiRequestRow>().SingleAsync(item => item.Id == id, ct);
+            Assert.Equal(expected, (row.VendorInputTokens!.Value, row.VendorOutputTokens!.Value, row.VendorCachedInputTokens!.Value,
+                row.VendorThinkingTokens!.Value, row.PilotMeteredCostMicros!.Value));
+            Assert.Equal(AiPilotUsage.Tariff, row.PilotMeteredTariff);
+        }
+    }
+
+    private sealed class MeteringTransport : HttpMessageHandler, IHttpClientFactory
+    {
+        internal int Creates;
+        internal int Reads;
+        public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            if (request.Method == HttpMethod.Post)
+            {
+                Creates++;
+                return Task.FromResult(request.RequestUri!.Host == "api.openai.com"
+                    ? OpenAi(100, 76000)
+                    : Json("""{"id":"interaction_metered","status":"completed","model":"gemini-3.5-flash-lite","usage":{"total_input_tokens":48,"total_output_tokens":500,"total_thought_tokens":20,"total_cached_tokens":8},"steps":[{"type":"model_output","content":[{"type":"text","text":"{\"net_expenses_minor\":38000,\"explanation\":\"Recorded expenses less refunds are the shown net amount.\"}"}]}]}"""));
+            }
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Equal("https://api.openai.com/v1/responses/resp_metered", request.RequestUri!.AbsoluteUri);
+            return Task.FromResult(OpenAi(++Reads == 1 ? 101 : 100, 38000));
+        }
+
+        private static HttpResponseMessage OpenAi(int input, int value)
+        {
+            var text = System.Text.Json.JsonSerializer.Serialize(new
+            {
+                net_expenses_minor = value,
+                explanation = "Recorded expenses less refunds are the shown net amount.",
+            });
+            return new(HttpStatusCode.OK) { Content = System.Net.Http.Json.JsonContent.Create(new
+            {
+                id = "resp_metered", status = "completed", model = "gpt-6-luna",
+                usage = new { input_tokens = input, output_tokens = 50, input_tokens_details = new { cached_tokens = 25 },
+                    output_tokens_details = new { reasoning_tokens = 20 } },
+                output = new[] { new { type = "message", content = new[] { new { type = "output_text", text } } } },
+            }) };
+        }
+
+        private static HttpResponseMessage Json(string body) => new(HttpStatusCode.OK)
+            { Content = new StringContent(body, Encoding.UTF8, "application/json") };
+    }
 }

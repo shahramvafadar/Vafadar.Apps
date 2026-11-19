@@ -182,20 +182,20 @@ internal static class AiPilotAdmin
                              where request.State == AiRequestState.Pending && offer.PilotRouteId != null
                              orderby request.CreatedAt, request.Id
                              select new { request.Id, offer.Purpose, offer.Provider, offer.Model, request.CreatedAt,
-                                 request.StatusCheckedAt, request.PilotDispatchStage, HasHandle = request.VendorOperationId != null,
+                                 request.StatusCheckedAt, request.PilotDispatchStage, request.PilotMeteredCostMicros, HasHandle = request.VendorOperationId != null,
                                  Checks = db.Set<AiPilotStatusCheckRow>().Count(check => check.RequestId == request.Id) })
             .Take(pageSize + 1).ToListAsync(ct);
         var token = Token(http, csrf);
         var rows = string.Concat(pending.Take(pageSize).Select(item => $$"""
             <tr><td><code>{{item.Id:D}}</code></td><td>{{(item.Purpose == AiPurpose.PeriodExplanation ? "Simple report" : "Financial comparison")}}</td>
             <td>{{WebUtility.HtmlEncode(item.Provider)}} / {{WebUtility.HtmlEncode(item.Model)}}</td><td>{{Timestamp(item.CreatedAt)}}</td>
-            <td>{{Timestamp(item.StatusCheckedAt)}}</td><td>{{DispatchText(item.PilotDispatchStage)}}</td><td>{{(item.HasHandle ? "Recorded" : "Missing")}}</td><td>{{StatusAction(item.Id, item.HasHandle, item.Checks, token)}}</td></tr>
+            <td>{{Timestamp(item.StatusCheckedAt)}}</td><td>{{DispatchText(item.PilotDispatchStage)}}</td><td>{{(item.HasHandle ? "Recorded" : "Missing")}}</td><td>{{MeteredCost(item.PilotMeteredCostMicros)}}</td><td>{{StatusAction(item.Id, item.HasHandle, item.Checks, token)}}</td></tr>
             """));
         var details = pending.Count == 0 ? "<p>No pending pilot requests.</p>" : $$"""
             <div class="table-scroll" tabindex="0" aria-label="Pending requests table"><table>
             <caption>Oldest requests first</caption>
             <thead><tr><th scope="col">Request</th><th scope="col">Task</th><th scope="col">Original route</th>
-            <th scope="col">Accepted (UTC)</th><th scope="col">Last status check (UTC)</th><th scope="col">Dispatch</th><th scope="col">Vendor reference</th><th scope="col">Operator check</th></tr></thead>
+            <th scope="col">Accepted (UTC)</th><th scope="col">Last status check (UTC)</th><th scope="col">Dispatch</th><th scope="col">Vendor reference</th><th scope="col">Vendor estimate (USD)</th><th scope="col">Operator check</th></tr></thead>
             <tbody>{{rows}}</tbody></table></div>
             {{(pending.Count > pageSize ? "<p>Showing the oldest 50 requests. More are pending.</p>" : "")}}
             """;
@@ -206,6 +206,9 @@ internal static class AiPilotAdmin
             {{StatusNotice(http.Request.Query["check"])}}
             {{details}}</main>
             """);
+
+        static string MeteredCost(long? micros) => micros is { } amount
+            ? (amount / 1_000_000m).ToString("0.000000", CultureInfo.InvariantCulture) : "—";
 
         static string Timestamp(DateTimeOffset? time) => time?.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture) ?? "—";
     }

@@ -331,7 +331,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
 
     private async Task ApplyAsync(string owner, Guid id, AiProviderOutcome outcome, CancellationToken ct)
     {
-        if (outcome.State == AiProviderState.Unknown) return;
+        if (outcome.State == AiProviderState.Unknown && outcome.Metering is null) return;
         if (!Enum.IsDefined(outcome.State)) return;
         // Unusable or inconsistent provider evidence leaves the original reservation intact for actual reconciliation.
         if (outcome.ChargedUnits < 0 || outcome.State == AiProviderState.DefinitiveNoCharge && (outcome.ChargedUnits != 0 || outcome.Text is not null)) return;
@@ -341,6 +341,26 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         await SyncRequestScope.LockOwnerAsync(db, owner, ct);
         var row = await db.Set<AiRequestRow>().SingleAsync(r => r.Id == id && r.UserId == owner, ct);
         if (row.State != AiRequestState.Pending) return;
+        if (outcome.Metering is { } metering)
+        {
+            // Keep one terminal vendor observation even when the original customer result remains unusable.
+            if (row.PilotMeteredCostMicros is { } previous && (previous != metering.EstimateMicros ||
+                row.VendorInputTokens != metering.Input || row.VendorOutputTokens != metering.Output ||
+                row.VendorCachedInputTokens != metering.CachedInput || row.VendorThinkingTokens != metering.Thinking ||
+                row.PilotMeteredTariff != AiPilotUsage.Tariff)) return;
+            row.VendorInputTokens = metering.Input;
+            row.VendorOutputTokens = metering.Output;
+            row.VendorCachedInputTokens = metering.CachedInput;
+            row.VendorThinkingTokens = metering.Thinking;
+            row.PilotMeteredCostMicros = metering.EstimateMicros;
+            row.PilotMeteredTariff = AiPilotUsage.Tariff;
+        }
+        if (outcome.State == AiProviderState.Unknown)
+        {
+            await db.SaveChangesAsync(ct);
+            await transaction.CommitAsync(ct);
+            return;
+        }
         var maximum = checked(row.PurchasedReserved + row.GiftedReserved); if (outcome.ChargedUnits > maximum) return;
         var giftCost = Math.Min(row.GiftedReserved, outcome.ChargedUnits); var purchaseCost = outcome.ChargedUnits - giftCost;
         var giftRefund = row.GiftedReserved - giftCost; var purchaseRefund = row.PurchasedReserved - purchaseCost;
@@ -349,7 +369,6 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         {
             db.Add(Event(owner, id, AiCreditEvent.Settle, 0, 0, -purchaseCost, -giftCost, now));
             row.ProtectedText = Protector(owner, id).Protect(outcome.Text!); row.State = AiRequestState.Completed; row.ChargedUnits = outcome.ChargedUnits;
-            row.VendorInputTokens = outcome.VendorInputTokens; row.VendorOutputTokens = outcome.VendorOutputTokens;
         }
         else row.State = AiRequestState.Refunded;
         if (giftRefund != 0 || purchaseRefund != 0)

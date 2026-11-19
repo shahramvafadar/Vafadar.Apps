@@ -193,16 +193,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     internal async Task<long?> AvailableCostCeilingAsync(ServiceDbContext db, string owner, AiPilotRouteRow route, AiOffer offer, CancellationToken ct)
     {
         if (Admit(route, offer) is not { } profile) return null;
-        // Published Standard text rates on 2026-11-19, expressed in nano-USD per token.
-        var (input, output) = profile.Model switch
-        {
-            "gpt-6-luna" => (100L, 500L),
-            "gemini-3.5-flash-lite" => (300L, 2500L),
-            "gpt-6.2-sol" => (2000L, 10000L),
-            "gemini-4-hydrogen" => (1500L, 7500L),
-            _ => throw new InvalidOperationException("The model has no approved pilot tariff."),
-        };
-        var ceiling = (InputTokenLimit * input + profile.OutputLimit * output + 999) / 1000;
+        var ceiling = StandardEstimate(profile.Model, InputTokenLimit, profile.OutputLimit);
         if (ceiling > BudgetLimit("Request", LegacyCostCeilingMicros)) return null;
         var previous = from request in db.Set<AiRequestRow>()
                        join original in db.Set<AiOfferRow>().Where(item => item.PilotRouteId != null)
@@ -338,20 +329,30 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
 
     private static AiProviderOutcome Outcome(PilotProfile profile, AiPurpose purpose, string digest, JsonElement response)
     {
-        if (Text(response, "status") != "completed" || Text(response, "model") != profile.Model) return Unknown;
+        var status = Text(response, "status");
+        if (status is not ("completed" or "failed" or "incomplete" or "cancelled") || Text(response, "model") != profile.Model) return Unknown;
         var usage = Read(response, "usage");
         var openAi = profile.Provider == "openai";
         var input = Number(usage, openAi ? "input_tokens" : "total_input_tokens");
         var output = Number(usage, openAi ? "output_tokens" : "total_output_tokens");
-        var thought = openAi ? 0 : Number(usage, "total_thought_tokens") ?? 0;
-        if (input is null or < 1 or > InputTokenLimit || output is null or < 1 || output > profile.OutputLimit ||
-            thought < 0 || thought > profile.OutputLimit || output + thought > profile.OutputLimit) return Unknown;
+        var thinking = openAi ? Number(Read(usage, "output_tokens_details"), "reasoning_tokens") : Number(usage, "total_thought_tokens");
+        var cached = openAi ? Number(Read(usage, "input_tokens_details"), "cached_tokens") : Number(usage, "total_cached_tokens");
+        if (input is not (>= 0 and <= 1_000_000) || output is not (>= 0 and <= 1_000_000) ||
+            !openAi && thinking is < 0 or > 1_000_000) return Unknown;
+        var totalOutput = output.Value + (openAi ? 0 : thinking ?? 0);
+        var metering = new AiPilotUsage(input.Value, totalOutput, InRange(cached, input.Value), InRange(thinking, totalOutput),
+            StandardEstimate(profile.Model, input.Value, totalOutput));
+        var unpublished = Unknown with { Metering = metering };
+        if (status != "completed" || input is < 1 or > InputTokenLimit || totalOutput > profile.OutputLimit || output is < 1)
+            return unpublished;
+
+        static int? InRange(int? count, int total) => count >= 0 && count <= total ? count : null;
         var values = Array(response, openAi ? "output" : "steps")
             .Where(item => Text(item, "type") == (openAi ? "message" : "model_output"))
             .SelectMany(item => Array(item, "content"))
             .Where(item => Text(item, "type") == (openAi ? "output_text" : "text"))
             .Select(item => Text(item, "text")).ToArray();
-        if (values.Length != 1 || values[0] is not { } value) return Unknown;
+        if (values.Length != 1 || values[0] is not { } value) return unpublished;
         try
         {
             using var parsed = JsonDocument.Parse(value);
@@ -360,14 +361,28 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             if (root.ValueKind != JsonValueKind.Object || root.EnumerateObject().Count() != expected.Count + 1 ||
                 !expected.All(pair => pair.Value is int number ? Number(root, pair.Key) == number
                     : Read(root, pair.Key).ValueKind == JsonValueKind.False) ||
-                Text(root, "explanation") is not { } explanation) return Unknown;
+                Text(root, "explanation") is not { } explanation) return unpublished;
             if (FundingByDigest.TryGetValue(digest, out var funding) && funding.Kind != AiFundingKind.BudgetLimit &&
-                explanation.Any(char.IsDigit)) return Unknown;
-            if ((digest == ForecastDigest || digest == ForecastBaselineDigest || digest == SpendingQuestionDigest || digest == PlanQuestionDigest) && explanation.Any(char.IsDigit)) return Unknown;
+                explanation.Any(char.IsDigit)) return unpublished;
+            if ((digest == ForecastDigest || digest == ForecastBaselineDigest || digest == SpendingQuestionDigest || digest == PlanQuestionDigest) && explanation.Any(char.IsDigit)) return unpublished;
             AiProtocol.ValidateText(explanation);
-            return new(AiProviderState.Completed, 1, explanation, input, output + thought);
+            return new(AiProviderState.Completed, 1, explanation, metering);
         }
-        catch (Exception error) when (error is JsonException or ArgumentException) { return Unknown; }
+        catch (Exception error) when (error is JsonException or ArgumentException) { return unpublished; }
+    }
+
+    private static long StandardEstimate(string model, int input, int output)
+    {
+        // Published Standard text rates on 2026-11-19 in nano-USD per token; no cache discount is assumed.
+        var (inputRate, outputRate) = model switch
+        {
+            "gpt-6-luna" => (100L, 500L),
+            "gemini-3.5-flash-lite" => (300L, 2500L),
+            "gpt-6.2-sol" => (2000L, 10000L),
+            "gemini-4-hydrogen" => (1500L, 7500L),
+            _ => throw new InvalidOperationException("The model has no approved pilot tariff."),
+        };
+        return (input * inputRate + output * outputRate + 999) / 1000;
     }
 
     private PilotProfile? Admit(AiPilotRouteRow route, AiOffer offer)

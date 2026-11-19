@@ -375,6 +375,13 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.Property<int?>("PilotDispatchStage")
                         .HasColumnType("integer");
 
+                    b.Property<long?>("PilotMeteredCostMicros")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PilotMeteredTariff")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
                     b.Property<string>("ProtectedPayload")
                         .IsRequired()
                         .HasMaxLength(65536)
@@ -398,6 +405,9 @@ namespace Vafadar.Zanance.Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<int?>("VendorCachedInputTokens")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("VendorInputTokens")
                         .HasColumnType("integer");
 
@@ -406,6 +416,9 @@ namespace Vafadar.Zanance.Api.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.Property<int?>("VendorOutputTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("VendorThinkingTokens")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
