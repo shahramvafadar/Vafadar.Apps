@@ -44,7 +44,6 @@ public static partial class DatabaseRoles
         var may = program == "site"
             ? new Dictionary<string, string>
             {
-                [identity] = "SELECT, INSERT, UPDATE, DELETE",   // the accounts of the visitors
                 [personal] = "SELECT, INSERT, UPDATE, DELETE",   // what belongs to them
                 [published] = "SELECT",                          // what was released, and nothing of how it came to be
                 [delivery] = "SELECT, INSERT",                   // a report or a notice is written, and counted
@@ -87,9 +86,43 @@ public static partial class DatabaseRoles
             Run(database, $"""REVOKE INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA {schema} FROM "{role}" """, onlyIfHistory: schema);
         }
 
+        // The schema of the accounts holds two kinds that are never mixed (ADR 0016): the site is given the
+        // tables of the visitors, the tool those of the editors – table by table, so that neither program reads
+        // the accounts of the other. A table that is added later is given by running this command again.
+        var mine = program == "site" ? "Visitor" : "Editor";
+        Run(database, $"""GRANT USAGE ON SCHEMA {identity} TO "{role}" """);
+        foreach (var table in Names(database, $"select tablename from pg_tables where schemaname = '{identity}'").Where(name => name.StartsWith(mine, StringComparison.Ordinal)))
+        {
+            Run(database, $"""GRANT SELECT, INSERT, UPDATE, DELETE ON {identity}."{table}" TO "{role}" """);
+        }
+
+        foreach (var sequence in Names(database, $"select sequencename from pg_sequences where schemaname = '{identity}'").Where(name => name.StartsWith(mine, StringComparison.Ordinal)))
+        {
+            Run(database, $"""GRANT USAGE, SELECT ON SEQUENCE {identity}."{sequence}" TO "{role}" """);
+        }
+
         // Mail is handed over and marked as sent by whichever program tells somebody something.
         Run(database, $"""GRANT SELECT, INSERT, UPDATE ON {delivery}."Mail" TO "{role}" """);
         step.Commit();
+    }
+
+    // The names of tables or sequences as the database lists them – only names of letters, digits and
+    // underscores, as every name of these programs is: nothing else becomes a word of a command.
+    private static List<string> Names(NpgsqlConnection database, string sql)
+    {
+        using var command = database.CreateCommand();
+        command.CommandText = sql;
+        using var rows = command.ExecuteReader();
+        var names = new List<string>();
+        while (rows.Read())
+        {
+            if (rows.GetString(0) is { Length: > 0 } name && name.All(letter => char.IsAsciiLetterOrDigit(letter) || letter == '_'))
+            {
+                names.Add(name);
+            }
+        }
+
+        return names;
     }
 
     private static void Run(NpgsqlConnection database, string sql, string? onlyIfHistory = null)

@@ -18,6 +18,9 @@ namespace Vafadar.Dastan.Store.Migrations
             migrationBuilder.EnsureSchema(
                 name: "published");
 
+            migrationBuilder.EnsureSchema(
+                name: "identity");
+
             migrationBuilder.CreateTable(
                 name: "Collections",
                 schema: "editorial",
@@ -94,23 +97,26 @@ namespace Vafadar.Dastan.Store.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Editors",
-                schema: "editorial",
+                name: "EditorAccounts",
+                schema: "identity",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Password = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Stamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Failures = table.Column<int>(type: "integer", nullable: false),
-                    LockedUntil = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ClosedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Roles = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, defaultValue: "writer,reviewer,publisher")
+                    Roles = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false, defaultValue: "writer,reviewer,publisher"),
+                    UserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "boolean", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Editors", x => x.Id);
+                    table.PrimaryKey("PK_EditorAccounts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -315,6 +321,13 @@ namespace Vafadar.Dastan.Store.Migrations
                 columns: new[] { "Kind", "DocumentId", "Number" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_EditorAccounts_NormalizedUserName",
+                schema: "identity",
+                table: "EditorAccounts",
+                column: "NormalizedUserName",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RecordLinks_CollectionId_ToGroup_ToId",
                 schema: "editorial",
                 table: "RecordLinks",
@@ -377,8 +390,8 @@ namespace Vafadar.Dastan.Store.Migrations
                 schema: "editorial");
 
             migrationBuilder.DropTable(
-                name: "Editors",
-                schema: "editorial");
+                name: "EditorAccounts",
+                schema: "identity");
 
             migrationBuilder.DropTable(
                 name: "RecordLinks",

@@ -228,7 +228,7 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
     public DbSet<StoredRevision> Revisions => Set<StoredRevision>();
 
     /// <summary>Gets the accounts of the editors.</summary>
-    public DbSet<StoredEditor> Editors => Set<StoredEditor>();
+    public DbSet<EditorAccount> Editors => Set<EditorAccount>();
 
     /// <summary>Gets the times the password of an account was tried.</summary>
     public DbSet<EditorSignIn> SignIns => Set<EditorSignIn>();
@@ -338,14 +338,28 @@ public sealed class StoreContext(DbContextOptions<StoreContext> options) : DbCon
             released.HasIndex(item => new { item.ComparisonId, item.Number });
         });
 
-        modelBuilder.Entity<StoredEditor>(editor =>
+        // The accounts of the editors as Identity keeps them (ADR 0016), in the schema of the accounts and in
+        // a table of their own: nothing of it is shared with the accounts of the visitors, and the role of
+        // the database the site runs as is given no table of the editors.
+        modelBuilder.Entity<EditorAccount>(editor =>
         {
+            editor.ToTable("EditorAccounts", "identity");
             editor.HasKey(item => item.Id);
-            editor.Property(item => item.Id).HasMaxLength(200);
-            editor.Property(item => item.Name).HasMaxLength(200);
-            editor.Property(item => item.Password).HasMaxLength(200);
-            editor.Property(item => item.Stamp).HasMaxLength(40);
+            editor.Property(item => item.Id).HasMaxLength(40);
+            editor.Property(item => item.UserName).HasMaxLength(200);
+            editor.Property(item => item.NormalizedUserName).HasMaxLength(200);
+            editor.Property(item => item.SecurityStamp).HasMaxLength(40);
+            editor.Property(item => item.ConcurrencyStamp).HasMaxLength(40).IsConcurrencyToken();
             editor.Property(item => item.Roles).HasMaxLength(100).HasDefaultValue("writer,reviewer,publisher");
+            editor.HasIndex(item => item.NormalizedUserName).IsUnique();
+
+            // An editor has no mail address, no telephone and no second factor; what is not asked for has no column.
+            editor.Ignore(item => item.Email);
+            editor.Ignore(item => item.NormalizedEmail);
+            editor.Ignore(item => item.EmailConfirmed);
+            editor.Ignore(item => item.PhoneNumber);
+            editor.Ignore(item => item.PhoneNumberConfirmed);
+            editor.Ignore(item => item.TwoFactorEnabled);
         });
 
         modelBuilder.Entity<EditorSignIn>(entry =>

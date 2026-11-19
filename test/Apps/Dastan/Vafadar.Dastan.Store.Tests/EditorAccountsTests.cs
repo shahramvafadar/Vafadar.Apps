@@ -56,11 +56,16 @@ public sealed class EditorAccountsTests : IDisposable
         {
             connection.Open();
             using var command = connection.CreateCommand();
-            command.CommandText = Vafadar.Dastan.Tests.TestDatabase.Sql("select Password from Editors", EditorialStore.Schema);
+            command.CommandText = """select "PasswordHash" from identity."EditorAccounts" """;
             kept = (string)command.ExecuteScalar()!;
         }
 
-        Assert.StartsWith("pbkdf2-sha256$600000$", kept, StringComparison.Ordinal);
+        // What Identity keeps of a password (its third form): a mark, how it was derived – PBKDF2 with
+        // HMAC-SHA-512 and as many rounds as the store asks for – a salt of its own, and the derived value.
+        var derived = Convert.FromBase64String(kept);
+        Assert.Equal(0x01, derived[0]);
+        Assert.Equal(2u, System.Buffers.Binary.BinaryPrimitives.ReadUInt32BigEndian(derived.AsSpan(1)));
+        Assert.Equal((uint)EditorialStore.PasswordRounds, System.Buffers.Binary.BinaryPrimitives.ReadUInt32BigEndian(derived.AsSpan(5)));
         Assert.DoesNotContain(Password, kept, StringComparison.Ordinal);
     }
 

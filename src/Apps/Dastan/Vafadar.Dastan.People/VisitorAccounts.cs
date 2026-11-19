@@ -73,13 +73,22 @@ public sealed partial class VisitorAccounts
     private const string ConfirmToken = "confirm-address";
 
     // What is kept of a password nobody has, so that a name nobody has takes as long as a wrong password.
-    private static readonly VisitorAccount Nobody = new() { PasswordHash = new PasswordHasher<VisitorAccount>().HashPassword(new VisitorAccount(), Guid.NewGuid().ToString("N")) };
+    private static readonly VisitorAccount Nobody = new() { PasswordHash = NewHasher().HashPassword(new VisitorAccount(), Guid.NewGuid().ToString("N")) };
+
+    /// <summary>
+    /// How many rounds what is kept of a password is derived with (PBKDF2 with HMAC-SHA-512). The number is
+    /// written into the value, so that it can be raised later without asking anybody for a new password.
+    /// </summary>
+    public const int PasswordRounds = 210_000;
+
+    private static PasswordHasher<VisitorAccount> NewHasher() => new(Options.Create(new PasswordHasherOptions { IterationCount = PasswordRounds }));
+
 
     private readonly PeopleStore _store;
     private readonly PeopleContext _context;
     private readonly TimeProvider _time;
     private readonly string _site;
-    private readonly PasswordHasher<VisitorAccount> _hasher = new();
+    private readonly PasswordHasher<VisitorAccount> _hasher = NewHasher();
     private UserManager<VisitorAccount>? _manager;
 
     internal VisitorAccounts(PeopleStore store, PeopleContext context, TimeProvider time, string site) =>
