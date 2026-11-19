@@ -220,6 +220,9 @@ namespace Vafadar.Zanance.Api.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
+                    b.Property<long?>("PilotRouteId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Provider")
                         .IsRequired()
                         .HasMaxLength(64)
@@ -235,9 +238,42 @@ namespace Vafadar.Zanance.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PilotRouteId");
+
                     b.HasIndex("UserId", "ExpiresAt");
 
                     b.ToTable("AiOffers", (string)null);
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiPilotRouteRow", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Actor")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<string>("Revision")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
+                    b.Property<DateTimeOffset>("SelectedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AiPilotRoutes", (string)null);
                 });
 
             modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiRequestRow", b =>
@@ -285,6 +321,16 @@ namespace Vafadar.Zanance.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<int?>("VendorInputTokens")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("VendorOperationId")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<int?>("VendorOutputTokens")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -2021,6 +2067,11 @@ namespace Vafadar.Zanance.Api.Migrations
 
             modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiOfferRow", b =>
                 {
+                    b.HasOne("Vafadar.Zanance.Api.Analysis.AiPilotRouteRow", null)
+                        .WithMany()
+                        .HasForeignKey("PilotRouteId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")

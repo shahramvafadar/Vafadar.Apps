@@ -11,7 +11,7 @@ namespace Vafadar.Zanance.Api.Analysis;
 
 /// <summary>Actual identity-scoped append-only credits and once-only dispatch; independent from every financial ledger.</summary>
 internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory, IAiProvider provider,
-    IDataProtectionProvider protection, TimeProvider time)
+    IDataProtectionProvider protection, TimeProvider time, AiPilotProvider? pilot = null)
 {
     private const long MaximumUnits = 1_000_000_000_000;
     /// <summary>Reads local provider metadata/balance without transmitting a financial payload or granting credit.</summary>
@@ -19,7 +19,9 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     {
         await using var db = await factory.CreateDbContextAsync(ct);
         await using var scope = await OpenAsync(actor, db, ct);
-        var offer = provider.Offer(AiPurpose.PeriodExplanation); if (offer is not null) ValidateOffer(offer);
+        var offer = pilot is null ? provider.Offer(AiPurpose.PeriodExplanation)
+            : (await pilot.OfferAsync(db, AiPurpose.PeriodExplanation, ct))?.Offer;
+        if (offer is not null) ValidateOffer(offer);
         var balance = await BalanceAsync(db, scope.Owner, ct); await scope.CommitAsync(ct);
         return new(offer is not null, offer?.Provider, offer?.Model, balance);
     }
@@ -27,12 +29,15 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     internal async Task<AiOffer> OfferAsync(ClaimsPrincipal actor, AiPurpose purpose, CancellationToken ct)
     {
         if (!Enum.IsDefined(purpose)) throw new AiRefusal(422, "AiPurposeRefused");
-        var original = provider.Offer(purpose) ?? throw new AiRefusal(503, "AiProviderNotConfigured"); ValidateOffer(original);
         await using var db = await factory.CreateDbContextAsync(ct); await using var scope = await OpenAsync(actor, db, ct);
+        if (pilot is not null) await AiPilotProvider.LockAsync(db, ct);
+        var selection = pilot is null ? null : await pilot.OfferAsync(db, purpose, ct);
+        var original = (pilot is null ? provider.Offer(purpose) : selection?.Offer) ?? throw new AiRefusal(503, "AiProviderNotConfigured");
+        ValidateOffer(original);
         if (await db.Set<AiOfferRow>().CountAsync(r => r.UserId == scope.Owner && r.ExpiresAt > scope.Now, ct) >= 32)
             throw new AiRefusal(429, "AiOfferBound");
         var row = new AiOfferRow { Id = Guid.NewGuid(), UserId = scope.Owner, Provider = original.Provider, Model = original.Model,
-            Purpose = purpose, MaximumUnits = original.MaximumUnits, ExpiresAt = DateTimeOffset.FromUnixTimeMilliseconds(scope.Now.ToUnixTimeMilliseconds()).AddMinutes(5) };
+            Purpose = purpose, MaximumUnits = original.MaximumUnits, PilotRouteId = selection?.RouteId, ExpiresAt = DateTimeOffset.FromUnixTimeMilliseconds(scope.Now.ToUnixTimeMilliseconds()).AddMinutes(5) };
         db.Add(row); await scope.CommitAsync(ct); return Offer(row);
     }
     /// <summary>Persists literal consent/reservation before one original dispatch; existing ids query status only.</summary>
@@ -44,6 +49,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         if (encoded.Length > AiProtocol.MaximumPayloadBytes) throw new AiRefusal(413, "AiPayloadBound");
         var payload = JsonSerializer.Deserialize(encoded, AiJson.Default.AiPayload) ?? throw new AiRefusal(422, "AiConsentRefused");
         var digest = AiProtocol.Digest(payload); string owner; bool dispatch;
+        AiPilotRouteRow? admittedRoute = null;
         await using (var db = await factory.CreateDbContextAsync(ct))
         await using (var scope = await OpenAsync(actor, db, ct))
         {
@@ -64,11 +70,18 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                 if (!SameOffer(row, submission.Offer) || row.Purpose != payload.Purpose)
                     throw new AiRefusal(409, "AiOfferChanged");
                 if (await db.Set<AiRequestRow>().AnyAsync(r => r.OfferId == row.Id, ct)) throw new AiRefusal(409, "AiOfferAlreadyUsed");
-                var actual = provider.Offer(row.Purpose); if (actual is not null) ValidateOffer(actual);
+                if (pilot is not null) await AiPilotProvider.LockAsync(db, ct);
+                var selected = pilot is null ? null : await pilot.OfferAsync(db, row.Purpose, ct);
+                var actual = pilot is null ? provider.Offer(row.Purpose) : selected?.Offer;
+                if (actual is not null) ValidateOffer(actual);
                 var balance = await BalanceAsync(db, owner, ct);
                 var accepted = row.ExpiresAt > scope.Now && actual is not null && actual.Provider == row.Provider &&
-                    actual.Model == row.Model && actual.MaximumUnits == row.MaximumUnits &&
-                    checked(balance.PurchasedAvailable + balance.GiftedAvailable) >= row.MaximumUnits;
+                    actual.Model == row.Model && actual.MaximumUnits == row.MaximumUnits && row.PilotRouteId == selected?.RouteId &&
+                    (pilot is null ? checked(balance.PurchasedAvailable + balance.GiftedAvailable) >= row.MaximumUnits
+                        : AiPilotProvider.IsSynthetic(digest) && balance.GiftedAvailable >= row.MaximumUnits
+                            && !await pilot.AtCapacityAsync(db, row.Provider, ct));
+                if (accepted && selected is { } route)
+                    admittedRoute = await db.Set<AiPilotRouteRow>().SingleAsync(r => r.Id == route.RouteId, ct);
                 if (accepted && await db.Set<AiRequestRow>().CountAsync(r => r.UserId == owner && r.State == AiRequestState.Pending, ct) >= 16)
                     throw new AiRefusal(429, "AiPendingBound");
                 // A definitive unaccepted closure is durable too: late packets cannot charge after a later new consent.
@@ -85,7 +98,14 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         if (!dispatch) return await StatusAsync(actor, submission.RequestId, ct);
         // No database transaction/owner lock is held across provider I/O. Crash/timeout never permits a second Begin.
         AiProviderOutcome? outcome = null;
-        try { outcome = await provider.BeginAsync(ProviderKey(owner, submission.RequestId), submission.Offer, payload, ct); }
+        try
+        {
+            var operation = ProviderKey(owner, submission.RequestId);
+            outcome = admittedRoute is null
+                ? await provider.BeginAsync(operation, submission.Offer, payload, ct)
+                : await pilot!.BeginAsync(admittedRoute, submission.Offer, operation,
+                    handle => SaveVendorHandleAsync(owner, submission.RequestId, handle), ct);
+        }
         catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
         if (outcome is not null) await ApplyAsync(owner, submission.RequestId, outcome, CancellationToken.None);
         return await ReadAsync(actor, submission.RequestId, ct);
@@ -93,7 +113,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     /// <summary>Resolves only the original pending id; a missing provider lookup is never a refund or another dispatch.</summary>
     internal async Task<AiRequestResult> StatusAsync(ClaimsPrincipal actor, Guid request, CancellationToken ct)
     {
-        string owner; AiOffer? offer = null;
+        string owner; AiOffer? offer = null; long? pilotRouteId = null; string? vendorId = null;
+        AiPilotRouteRow? originalRoute = null;
         await using (var db = await factory.CreateDbContextAsync(ct))
         await using (var scope = await OpenAsync(actor, db, ct))
         {
@@ -102,14 +123,26 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             if (row.State == AiRequestState.Pending)
             {
                 if (row.StatusCheckedAt is { } last && scope.Now < last.AddSeconds(2)) throw new AiRefusal(429, "AiStatusTooSoon");
-                row.StatusCheckedAt = scope.Now; offer = Offer(await db.Set<AiOfferRow>().SingleAsync(r => r.Id == row.OfferId, ct));
+                row.StatusCheckedAt = scope.Now;
+                var original = await db.Set<AiOfferRow>().SingleAsync(r => r.Id == row.OfferId, ct);
+                offer = Offer(original);
+                pilotRouteId = original.PilotRouteId;
+                vendorId = row.VendorOperationId;
+                if (pilot is not null && pilotRouteId is { } routeId)
+                    originalRoute = await db.Set<AiPilotRouteRow>().SingleAsync(r => r.Id == routeId, ct);
             }
             await scope.CommitAsync(ct);
         }
         if (offer is not null)
         {
             AiProviderOutcome? outcome = null;
-            try { outcome = await provider.StatusAsync(ProviderKey(owner, request), offer, ct); }
+            try
+            {
+                if (pilotRouteId is null)
+                    outcome = await provider.StatusAsync(ProviderKey(owner, request), offer, ct);
+                else if (originalRoute is not null)
+                    outcome = await pilot!.StatusAsync(originalRoute, offer, vendorId, ct);
+            }
             catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
             if (outcome is not null) await ApplyAsync(owner, request, outcome, CancellationToken.None);
         }
@@ -142,6 +175,16 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         }
         return await ReadAsync(actor, id, ct);
     }
+    private async Task SaveVendorHandleAsync(string owner, Guid id, string handle)
+    {
+        await using var db = await factory.CreateDbContextAsync(CancellationToken.None);
+        // Update only the admitted pending owner request and never overwrite its original handle.
+        var updated = await db.Set<AiRequestRow>().Where(r => r.UserId == owner && r.Id == id &&
+            r.State == AiRequestState.Pending && r.VendorOperationId == null)
+            .ExecuteUpdateAsync(set => set.SetProperty(r => r.VendorOperationId, handle), CancellationToken.None);
+        if (updated != 1) throw new IOException("Original provider operation could not be recorded.");
+    }
+
     private async Task ApplyAsync(string owner, Guid id, AiProviderOutcome outcome, CancellationToken ct)
     {
         if (outcome.State == AiProviderState.Unknown) return;
@@ -162,6 +205,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         {
             db.Add(Event(owner, id, AiCreditEvent.Settle, 0, 0, -purchaseCost, -giftCost, now));
             row.ProtectedText = Protector(owner, id).Protect(outcome.Text!); row.State = AiRequestState.Completed; row.ChargedUnits = outcome.ChargedUnits;
+            row.VendorInputTokens = outcome.VendorInputTokens; row.VendorOutputTokens = outcome.VendorOutputTokens;
         }
         else row.State = AiRequestState.Refunded;
         if (giftRefund != 0 || purchaseRefund != 0)

@@ -18,6 +18,8 @@ public sealed class AiOfferRow
     public AiPurpose Purpose { get; set; }
     /// <summary>Original maximum consented credit units, unrelated to financial minor units.</summary>
     public long MaximumUnits { get; set; }
+    /// <summary>Original operator selection for an isolated provider pilot offer.</summary>
+    public long? PilotRouteId { get; set; }
     /// <summary>Server-time offer boundary; it never expires purchased credit.</summary>
     public DateTimeOffset ExpiresAt { get; set; }
 }
@@ -49,6 +51,27 @@ public sealed class AiRequestRow
     public DateTimeOffset CreatedAt { get; set; }
     /// <summary>Bounded original-status lookup time; never permission to submit again.</summary>
     public DateTimeOffset? StatusCheckedAt { get; set; }
+    /// <summary>Opaque original vendor execution ID, never returned to the client.</summary>
+    public string? VendorOperationId { get; set; }
+    /// <summary>Actual vendor input usage recorded on an accepted completion.</summary>
+    public int? VendorInputTokens { get; set; }
+    /// <summary>Actual vendor billable output usage recorded on an accepted completion.</summary>
+    public int? VendorOutputTokens { get; set; }
+}
+
+/// <summary>An audited local operator selection. An off row retires previous unaccepted quotes.</summary>
+public sealed class AiPilotRouteRow
+{
+    /// <summary>Database sequence used to order selections across instances.</summary>
+    public long Id { get; set; }
+    /// <summary>Fixed provider identifier or off.</summary>
+    public string Provider { get; set; } = "";
+    /// <summary>Approved transport and project reference.</summary>
+    public string Revision { get; set; } = "";
+    /// <summary>Account executing the private operator command.</summary>
+    public string Actor { get; set; } = "";
+    /// <summary>Server timestamp of the switch.</summary>
+    public DateTimeOffset SelectedAt { get; set; }
 }
 
 /// <summary>Append-only event types; no client can manufacture a purchased grant.</summary>
@@ -84,14 +107,19 @@ internal static class AiServiceModel
     /// <summary>Configures exact ownership/idempotence indexes; native append-only enforcement is added by its migration.</summary>
     internal static void Configure(ModelBuilder model)
     {
+        var route = model.Entity<AiPilotRouteRow>(); route.ToTable("AiPilotRoutes"); route.HasKey(r => r.Id);
+        route.Property(r => r.Provider).HasMaxLength(16); route.Property(r => r.Revision).HasMaxLength(64);
+        route.Property(r => r.Actor).HasMaxLength(256);
         var offer = model.Entity<AiOfferRow>(); offer.ToTable("AiOffers"); offer.HasKey(r => r.Id);
         offer.Property(r => r.UserId).HasMaxLength(256); offer.Property(r => r.Provider).HasMaxLength(64); offer.Property(r => r.Model).HasMaxLength(64);
         offer.HasIndex(r => new { r.UserId, r.ExpiresAt });
+        offer.HasOne<AiPilotRouteRow>().WithMany().HasForeignKey(r => r.PilotRouteId).OnDelete(DeleteBehavior.Restrict);
         offer.HasOne<ServiceUser>().WithMany().HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Restrict);
         var request = model.Entity<AiRequestRow>(); request.ToTable("AiRequests"); request.HasKey(r => r.Id);
         request.Property(r => r.UserId).HasMaxLength(256); request.Property(r => r.PayloadDigest).HasMaxLength(64);
         request.Property(r => r.ProtectedPayload).HasMaxLength(65536); request.Property(r => r.ProtectedText).HasMaxLength(65536);
         request.HasOne<ServiceUser>().WithMany().HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Restrict);
+        request.Property(r => r.VendorOperationId).HasMaxLength(256);
         request.HasIndex(r => r.OfferId).IsUnique(); request.HasIndex(r => new { r.UserId, r.CreatedAt });
         request.HasOne<AiOfferRow>().WithMany().HasForeignKey(r => r.OfferId).OnDelete(DeleteBehavior.Restrict);
         var credit = model.Entity<AiCreditRow>(); credit.ToTable("AiCredits"); credit.HasKey(r => r.Id);

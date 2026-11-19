@@ -22,9 +22,9 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiOfferRow",
                 typeof(AiOfferRow),
                 baseEntityType,
-                propertyCount: 7,
-                foreignKeyCount: 1,
-                unnamedIndexCount: 1,
+                propertyCount: 8,
+                foreignKeyCount: 2,
+                unnamedIndexCount: 2,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -61,6 +61,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 maxLength: 64);
             model0.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
+            var pilotRouteId = runtimeEntityType.AddProperty(
+                "PilotRouteId",
+                typeof(long?),
+                propertyInfo: typeof(AiOfferRow).GetProperty("PilotRouteId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiOfferRow).GetField("<PilotRouteId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            pilotRouteId.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
             var provider = runtimeEntityType.AddProperty(
                 "Provider",
                 typeof(string),
@@ -90,12 +98,25 @@ namespace Vafadar.Zanance.Api.CompiledModel
             runtimeEntityType.SetPrimaryKey(key);
 
             var index = runtimeEntityType.AddIndex(
+                new[] { pilotRouteId });
+
+            var index0 = runtimeEntityType.AddIndex(
                 new[] { userId, expiresAt });
 
             return runtimeEntityType;
         }
 
         public static RuntimeForeignKey CreateForeignKey1(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
+        {
+            var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("PilotRouteId") },
+                principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),
+                principalEntityType,
+                deleteBehavior: DeleteBehavior.Restrict);
+
+            return runtimeForeignKey;
+        }
+
+        public static RuntimeForeignKey CreateForeignKey2(RuntimeEntityType declaringEntityType, RuntimeEntityType principalEntityType)
         {
             var runtimeForeignKey = declaringEntityType.AddForeignKey(new[] { declaringEntityType.FindProperty("UserId") },
                 principalEntityType.FindKey(new[] { principalEntityType.FindProperty("Id") }),

@@ -7,7 +7,7 @@ internal sealed record AiProviderOffer(string Provider, string Model, long Maxim
 /// <summary>Only a definitive provider outcome may spend/refund an original reservation.</summary>
 internal enum AiProviderState { Unknown, Completed, DefinitiveNoCharge }
 /// <summary>Provider-confirmed outcome, never guessed from HTTP timeout or a missing request lookup.</summary>
-internal sealed record AiProviderOutcome(AiProviderState State, long ChargedUnits = 0, string? Text = null);
+internal sealed record AiProviderOutcome(AiProviderState State, long ChargedUnits = 0, string? Text = null, int? VendorInputTokens = null, int? VendorOutputTokens = null);
 /// <summary>Replaceable owned adapter; Begin is called once per original id, and status must never submit again.</summary>
 internal interface IAiProvider
 {

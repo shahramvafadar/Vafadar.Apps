@@ -86,6 +86,16 @@ public static class ServiceHost
             selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
             !File.Exists(Path.Combine(root, "production-hosting.marker"))))
             throw new InvalidOperationException("Local analysis qualification cannot activate a public provider.");
+        var pilot = builder.Configuration.GetValue<bool>("Analysis:ProviderPilot:Enabled");
+        if (pilot)
+        {
+            var db = new Npgsql.NpgsqlConnectionStringBuilder(connection);
+            if (!(analysis && builder.Environment.IsEnvironment("Integration") && selfHosted is null &&
+                db.Host == "127.0.0.1" && db.Database == "zanance_ai_provider_pilot"))
+                throw new InvalidOperationException("The analysis provider pilot requires its isolated local database.");
+            builder.WebHost.ConfigureKestrel(options =>
+                ListenLocalTls(options, builder.Configuration.GetValue<int>("Analysis:ProviderPilot:Port")));
+        }
         var market = builder.Configuration.GetValue<bool>("Market:LocalQualification");
         if (market && !(builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Integration") ||
             selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
@@ -116,7 +126,7 @@ public static class ServiceHost
         Directory.CreateDirectory(Path.Combine(root, "mailbox"));
         builder.Services.AddSingleton(storage);
         Billing.BillingModule.Add(builder.Services);
-        Analysis.AiModule.Add(builder.Services);
+        Analysis.AiModule.Add(builder.Services, pilot);
         Rates.MarketModule.Add(builder.Services, marketSource);
         builder.Services.AddSingleton<Sharing.IHouseholdDeletionLedger, Sharing.HouseholdDeletionLedger>();
         builder.Services.AddSingleton<Sharing.HouseholdRetirement>();

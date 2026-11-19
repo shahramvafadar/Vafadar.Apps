@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiRequestRow",
                 typeof(AiRequestRow),
                 baseEntityType,
-                propertyCount: 12,
+                propertyCount: 15,
                 foreignKeyCount: 2,
                 unnamedIndexCount: 2,
                 keyCount: 1);
@@ -125,6 +125,31 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 fieldInfo: typeof(AiRequestRow).GetField("<UserId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 256);
             userId.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var vendorInputTokens = runtimeEntityType.AddProperty(
+                "VendorInputTokens",
+                typeof(int?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("VendorInputTokens", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<VendorInputTokens>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            vendorInputTokens.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var vendorOperationId = runtimeEntityType.AddProperty(
+                "VendorOperationId",
+                typeof(string),
+                propertyInfo: typeof(AiRequestRow).GetProperty("VendorOperationId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<VendorOperationId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 256);
+            vendorOperationId.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var vendorOutputTokens = runtimeEntityType.AddProperty(
+                "VendorOutputTokens",
+                typeof(int?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("VendorOutputTokens", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<VendorOutputTokens>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            vendorOutputTokens.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var key = runtimeEntityType.AddKey(
                 new[] { id });

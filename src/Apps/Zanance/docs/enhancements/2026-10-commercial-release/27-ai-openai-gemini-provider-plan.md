@@ -56,3 +56,5 @@ Keep local qualification as-is. Add a separately reviewed, default-off server ac
 | 5. Controlled activation | Operator runbook documents setup, health without customer payload, switch, stop, rollback and pending drain. Admit each real-data profile separately only after its privacy, recovery, budget and customer pricing checks pass. If either adapter cannot recover an ambiguous accepted request, keep that profile in the synthetic lane until the gap is resolved. |
 
 Working estimate for phases 1–4 is 35–55 engineering hours, assuming both official endpoints provide usable recovery and project prerequisites are ready. An alternate regional endpoint, unresolved lost acknowledgement, external privacy review or public activation can extend that estimate. No implementation, deployment, account change or live model test was performed for this plan.
+
+See the [synthetic provider pilot](28-ai-synthetic-provider-pilot.md) for subsequent provider observations and the isolated operator switch.

@@ -10,10 +10,24 @@ if (args.Length > 0 && args[0] == "--merge-household-deletions")
     return;
 }
 
-// The operator switch is not a key/value configuration option; do not pass it to the host parser.
-var builder = WebApplication.CreateBuilder(args.Where(arg => arg != "--migrate").ToArray());
+// Operator actions are not key/value configuration options.
+var selectAnalysis = args.FirstOrDefault() == "--select-analysis-provider";
+if (selectAnalysis && (args.Length < 2 || args[1] is not ("openai" or "gemini" or "off") || args.Contains("--migrate")))
+    throw new InvalidOperationException("Choose openai, gemini or off for the isolated analysis pilot.");
+var hostArgs = selectAnalysis ? args[2..] : args.Where(arg => arg != "--migrate").ToArray();
+var builder = WebApplication.CreateBuilder(hostArgs);
 builder.AddZananceService(migrationOnly: args.Contains("--migrate", StringComparer.Ordinal));
 var app = builder.Build();
+if (selectAnalysis)
+{
+    var pilot = app.Services.GetService<Vafadar.Zanance.Api.Analysis.AiPilotProvider>()
+        ?? throw new InvalidOperationException("Isolated analysis pilot is disabled.");
+    var factory = app.Services.GetRequiredService<Microsoft.EntityFrameworkCore.IDbContextFactory<ServiceDbContext>>();
+    await using var db = await factory.CreateDbContextAsync();
+    await pilot.SelectAsync(db, args[1], Environment.UserName, CancellationToken.None);
+    Console.WriteLine("Analysis pilot selection: " + args[1]);
+    return;
+}
 if (args.Contains("--migrate", StringComparer.Ordinal))
 {
     await ServiceHost.MigrateAsync(app.Services);

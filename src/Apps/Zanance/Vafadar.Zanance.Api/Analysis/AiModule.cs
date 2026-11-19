@@ -12,9 +12,20 @@ namespace Vafadar.Zanance.Api.Analysis;
 /// <summary>Explicit local prerequisites only; no real model, pricing, purchase grant or public activation.</summary>
 internal static class AiModule
 {
-    /// <summary>Registers lazy closed provider and independently persisted credit/request coordination.</summary>
-    internal static void Add(IServiceCollection services)
-    { services.AddSingleton<IAiProvider, UnconfiguredAiProvider>(); services.AddSingleton<AiRequestStore>(); }
+    /// <summary>Registers the closed default and an optional isolated, synthetic-only transport.</summary>
+    internal static void Add(IServiceCollection services, bool pilotEnabled = false)
+    {
+        services.AddSingleton<IAiProvider, UnconfiguredAiProvider>();
+        services.AddSingleton<AiRequestStore>();
+        if (!pilotEnabled) return;
+        services.AddSingleton<AiPilotProvider>();
+        services.AddHttpClient(AiPilotProvider.Client, client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(25);
+            client.MaxResponseContentBufferSize = 64 * 1024;
+        }).ConfigurePrimaryHttpMessageHandler(() => new SocketsHttpHandler { AllowAutoRedirect = false, UseCookies = false })
+            .RemoveAllLoggers();
+    }
     /// <summary>Maps identity-scoped local qualification; no grant or arbitrary provider/url endpoint exists.</summary>
     internal static void Map(WebApplication app)
     {
