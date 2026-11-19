@@ -169,7 +169,12 @@ public sealed class AiPilotAdminTests
     [Fact]
     public Task Webhook_rotation_respects_provider_and_explicit_utc_overlap() => RunPanelAsync(false, exerciseRotation: true);
 
-    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, string? recoveryProvider = null, bool exerciseRotation = false)
+    /// <summary>Verifies the private operations view with an exact aggregate and no provider access.</summary>
+    [Fact]
+    public Task Operator_operations_shows_local_aggregate_without_accessing_providers() => RunPanelAsync(false, exerciseOperations: true);
+
+    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, string? recoveryProvider = null,
+        bool exerciseRotation = false, bool exerciseOperations = false)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
@@ -221,6 +226,17 @@ public sealed class AiPilotAdminTests
             ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate is not null &&
                 Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(certificate.RawData)) == fingerprint,
         }) { BaseAddress = new Uri(address) };
+        if (exerciseOperations)
+        {
+            using var view = Browser();
+            using var anonymousOperations = await view.GetAsync(Panel + "/operations", ct);
+            Assert.Equal(Panel + "/login", anonymousOperations.Headers.Location?.OriginalString);
+            using var signedIn = await SignIn(view, OperatorEmail);
+            Assert.Equal(Panel, signedIn.Headers.Location?.OriginalString);
+            await VerifyOperationsAsync(app.Services, app.Configuration, view, ct);
+            Assert.Equal(0, noEgress.Attempts);
+            return;
+        }
         if (exerciseRotation)
         {
             using var receiver = Browser();
@@ -641,6 +657,72 @@ public sealed class AiPilotAdminTests
     private static byte[] SigningBytes(byte value) => Enumerable.Repeat(value, 32).ToArray();
 
     private static string Secret(byte value) => "whsec_" + Convert.ToBase64String(SigningBytes(value));
+
+    private static async Task VerifyOperationsAsync(IServiceProvider services, IConfiguration settings, HttpClient client, CancellationToken ct)
+    {
+        var factory = services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
+        await using var db = await factory.CreateDbContextAsync(ct);
+        const string owner = "fictional-ai-member";
+        var now = new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero);
+        var route = new AiPilotRouteRow { Provider = "openai", Purpose = AiPurpose.PeriodExplanation, Model = "gpt-6-luna",
+            Revision = "fixture-operations-revision", Actor = OperatorId, SelectedAt = now };
+        db.Add(route);
+        await db.SaveChangesAsync(ct);
+        Seed(AiRequestState.Pending, route.Id, 461, null, AiPilotDispatchStage.Queued, null);
+        Seed(AiRequestState.Pending, route.Id, null, null, null, null);
+        Seed(AiRequestState.Pending, route.Id, 461, 35, AiPilotDispatchStage.Claimed, "resp_fixture_private");
+        Seed(AiRequestState.Completed, route.Id, 461, 0, AiPilotDispatchStage.Claimed, "resp_fixture_completed");
+        Seed(AiRequestState.NotAccepted, route.Id, null, null, null, null);
+        Seed(AiRequestState.Pending, null, null, null, null, null);
+        db.AddRange(new AiPilotCompletionNoticeRow { Provider = "openai", ResponseId = "resp_fixture_inbox_open",
+                DeliveryId = "fixture-delivery-open", ReceivedAt = now },
+            new AiPilotCompletionNoticeRow { Provider = "openai", ResponseId = "resp_fixture_inbox_exhausted",
+                DeliveryId = "fixture-delivery-exhausted", ReceivedAt = now, Attempts = 3 },
+            new AiPilotCompletionNoticeRow { Provider = "openai", ResponseId = "resp_fixture_inbox_handled",
+                DeliveryId = "fixture-delivery-handled", ReceivedAt = now, Attempts = 1, Handled = true });
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+        settings["Analysis:ProviderPilot:Budget:ProjectMicros"] = "123000";
+        using var response = await client.GetAsync(Panel + "/operations", ct);
+        response.EnsureSuccessStatusCode();
+        Assert.True(response.Headers.CacheControl?.NoStore);
+        var html = await response.Content.ReadAsStringAsync(ct);
+        var begin = html.IndexOf("<h2 id=\"openai-operations\">", StringComparison.Ordinal);
+        var end = html.IndexOf("</section>", begin, StringComparison.Ordinal);
+        var openAi = html.Substring(begin, end - begin);
+        Assert.Contains("<dt>Accepted requests</dt><dd>4</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Committed vendor ceiling (USD)</dt><dd>0.035175</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Observed Standard estimate (USD)</dt><dd>0.000035</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Requests with usage evidence</dt><dd>2</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Waiting to send</dt><dd>1</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Pending with a vendor reference</dt><dd>1</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Pending without a vendor reference after dispatch may have started</dt><dd>1</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Open completion notices</dt><dd>1</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Notices that reached the lookup limit</dt><dd>1</dd>", openAi, StringComparison.Ordinal);
+        Assert.Contains("<dt>Per provider including prior project revisions</dt><dd>0.123000</dd>", html, StringComparison.Ordinal);
+        Assert.Contains("<dt>Observed Standard estimate (USD)</dt><dd>Unavailable</dd>", html[(end + 10)..], StringComparison.Ordinal);
+        foreach (var prohibited in new[] { owner, "resp_fixture_", "fixture-sensitive-payload", "fixture-sensitive-output", "fixture-only" })
+            Assert.DoesNotContain(prohibited, html, StringComparison.Ordinal);
+
+        settings["Analysis:ProviderPilot:Budget:ProjectMicros"] = "invalid-budget";
+        Assert.Contains("<dt>Per provider including prior project revisions</dt><dd>Invalid setting</dd>",
+            await client.GetStringAsync(Panel + "/operations", ct), StringComparison.Ordinal);
+        Assert.Equal(6, await db.Set<AiRequestRow>().CountAsync(ct));
+        Assert.Equal(3, await db.Set<AiPilotCompletionNoticeRow>().CountAsync(ct));
+        Assert.Empty(await db.Set<AiCreditRow>().ToArrayAsync(ct));
+
+        void Seed(AiRequestState state, long? routeId, long? ceiling, long? estimate, AiPilotDispatchStage? stage, string? handle)
+        {
+            var completed = state == AiRequestState.Completed;
+            var refused = state == AiRequestState.NotAccepted;
+            var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = owner, Purpose = route.Purpose, Provider = route.Provider,
+                Model = route.Model!, MaximumUnits = 1, PilotRouteId = routeId, ExpiresAt = now.AddHours(1) };
+            db.AddRange(offer, new AiRequestRow { Id = Guid.NewGuid(), UserId = owner, OfferId = offer.Id, State = state,
+                CreatedAt = now, GiftedReserved = refused ? 0 : 1, ChargedUnits = completed ? 1 : 0, PayloadDigest = new('c', 64),
+                ProtectedPayload = "fixture-sensitive-payload", ProtectedText = completed ? "fixture-sensitive-output" : null,
+                PilotCostCeilingMicros = ceiling, PilotMeteredCostMicros = estimate, VendorOperationId = handle, PilotDispatchStage = stage });
+        }
+    }
 
     private static string Token(string html) => Capture(html, "name=\"__RequestVerificationToken\" value=\"([^\"]+)\"");
     private static string Capture(string html, string expression)

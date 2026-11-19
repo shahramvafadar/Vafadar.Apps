@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
@@ -195,11 +196,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         if (Admit(route, offer) is not { } profile) return null;
         var ceiling = StandardEstimate(profile.Model, InputTokenLimit, profile.OutputLimit);
         if (ceiling > BudgetLimit("Request", LegacyCostCeilingMicros)) return null;
-        var previous = from request in db.Set<AiRequestRow>()
-                       join original in db.Set<AiOfferRow>().Where(item => item.PilotRouteId != null)
-                           on request.OfferId equals original.Id
-                       where request.State != AiRequestState.NotAccepted
-                       select new { request.UserId, original.Provider, Cost = request.PilotCostCeilingMicros ?? LegacyCostCeilingMicros };
+        var previous = CommittedRequests(db);
 
         // Count retained ceilings even on completion, because vendor invoices are not reconciled here.
         var userCommitted = await previous.Where(item => item.UserId == owner).SumAsync(item => item.Cost, ct);
@@ -210,11 +207,57 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             ? ceiling : null;
     }
 
-    private long BudgetLimit(string scope, long maximum)
+    private static IQueryable<CommittedRequest> CommittedRequests(ServiceDbContext db) =>
+        from request in db.Set<AiRequestRow>()
+        join offer in db.Set<AiOfferRow>().Where(item => item.PilotRouteId != null)
+            on request.OfferId equals offer.Id
+        where request.State != AiRequestState.NotAccepted
+        select new CommittedRequest
+        {
+            UserId = request.UserId, Provider = offer.Provider, State = request.State, Stage = request.PilotDispatchStage,
+            HasHandle = request.VendorOperationId != null, Cost = request.PilotCostCeilingMicros ?? LegacyCostCeilingMicros,
+            Estimate = request.PilotMeteredCostMicros,
+        };
+
+    private sealed class CommittedRequest
     {
-        var value = configuration.GetValue<long?>($"Analysis:ProviderPilot:Budget:{scope}Micros") ?? maximum;
-        return value >= 0 && value <= maximum ? value
-            : throw new InvalidOperationException("The configured synthetic pilot budget is outside its approved bound.");
+        public required string UserId { get; init; }
+        public required string Provider { get; init; }
+        public AiRequestState State { get; init; }
+        public AiPilotDispatchStage? Stage { get; init; }
+        public bool HasHandle { get; init; }
+        public long Cost { get; init; }
+        public long? Estimate { get; init; }
+    }
+
+
+    /// <summary>Reports aggregate receipt, budget and dispatch health from the original admitted requests.</summary>
+    internal static Task<List<PilotOperations>> OperationsAsync(ServiceDbContext db, CancellationToken ct) =>
+        CommittedRequests(db).GroupBy(item => item.Provider).Select(group => new PilotOperations(group.Key, group.Count(),
+            group.Sum(item => item.Cost), group.Count(item => item.Estimate != null), group.Sum(item => item.Estimate),
+            group.Count(item => item.State == AiRequestState.Pending && !item.HasHandle && item.Stage == AiPilotDispatchStage.Queued),
+            group.Count(item => item.State == AiRequestState.Pending && item.HasHandle),
+            group.Count(item => item.State == AiRequestState.Pending && !item.HasHandle && item.Stage != AiPilotDispatchStage.Queued)))
+            .ToListAsync(ct);
+
+    /// <summary>Aggregate reconciliation evidence without request, customer or vendor operation identifiers.</summary>
+    internal sealed record PilotOperations(string Provider, int Accepted, long Committed, int Metered, long? Estimate,
+        int Queued, int PendingWithHandle, int PendingWithoutHandle);
+
+    /// <summary>Current synthetic budget settings. Invalid values leave admission closed.</summary>
+    internal (long? Request, long? User, long? Project) ReadBudgetLimits() =>
+        (ConfiguredBudget("Request", LegacyCostCeilingMicros), ConfiguredBudget("User", 4 * LegacyCostCeilingMicros),
+            ConfiguredBudget("Project", MaxAttemptsPerProvider * LegacyCostCeilingMicros));
+
+    private long BudgetLimit(string scope, long maximum) => ConfiguredBudget(scope, maximum)
+        ?? throw new InvalidOperationException("The configured synthetic pilot budget is outside its approved bound.");
+
+    private long? ConfiguredBudget(string scope, long maximum)
+    {
+        var literal = configuration[$"Analysis:ProviderPilot:Budget:{scope}Micros"];
+        if (literal is null) return maximum;
+        return long.TryParse(literal, NumberStyles.Integer, CultureInfo.InvariantCulture, out var value) && value >= 0 && value <= maximum
+            ? value : null;
     }
 
     /// <summary>Admits only the frozen project and exact synthetic input for a queued create.</summary>

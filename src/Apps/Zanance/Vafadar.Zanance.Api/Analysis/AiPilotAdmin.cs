@@ -89,6 +89,7 @@ internal static class AiPilotAdmin
         var operations = pages.MapGroup("").RequireAuthorization(new AuthorizeAttribute { AuthenticationSchemes = Scheme });
         operations.MapGet("", ShowAsync);
         operations.MapGet("/pending", PendingAsync);
+        operations.MapGet("/operations", OperationsAsync);
         operations.MapPost("/pending/check", CheckPendingAsync);
         operations.MapPost("/selection", SelectAsync);
         operations.MapPost("/logout", async (HttpContext http) =>
@@ -165,12 +166,57 @@ internal static class AiPilotAdmin
             http.Request.Query["saved"] == "comparison" ? "Comparison selection saved." : "";
         return Page(http, "Analysis models", $$"""
             <header><a href="{{Panel}}">Zanance management</a><form method="post" action="{{Panel}}/logout">{{token}}<button class="quiet">Sign out</button></form></header>
-            <main><h1>Analysis models</h1><p>Choose a model for each task in the synthetic pilot. Changes apply to new requests.</p><p><a href="{{Panel}}/pending">Pending requests</a></p>
+            <main><h1>Analysis models</h1><p>Choose a model for each task in the synthetic pilot. Changes apply to new requests.</p><p><a href="{{Panel}}/pending">Pending requests</a> · <a href="{{Panel}}/operations">Pilot operations</a></p>
             {{(message.Length == 0 ? "" : $"<p class=\"notice\" role=\"status\">{message}</p>")}}
             <div class="tasks">{{Card("report", "Simple reports", AiPurpose.PeriodExplanation, report, token)}}
             {{Card("comparison", "Financial comparisons", AiPurpose.PeriodComparison, comparison, token)}}</div>
             </main>
             """);
+    }
+
+    private static async Task<IResult> OperationsAsync(HttpContext http, AiPilotProvider pilot, ServiceDbContext db, CancellationToken ct)
+    {
+        var operations = await AiPilotProvider.OperationsAsync(db, ct);
+        var notices = await db.Set<AiPilotCompletionNoticeRow>().Where(item => !item.Handled)
+            .GroupBy(item => item.Provider).Select(group => new
+            {
+                Provider = group.Key,
+                Open = group.Count(item => item.Attempts < AiPilotCompletionNotices.MaximumLookups),
+                Exhausted = group.Count(item => item.Attempts >= AiPilotCompletionNotices.MaximumLookups),
+            }).ToListAsync(ct);
+        var limits = pilot.ReadBudgetLimits();
+        var providers = string.Concat(new[] { "openai", "gemini" }.Select(provider =>
+        {
+            var status = operations.SingleOrDefault(item => item.Provider == provider);
+            var inbox = notices.SingleOrDefault(item => item.Provider == provider);
+            return $$"""
+                <section aria-labelledby="{{provider}}-operations"><h2 id="{{provider}}-operations">{{(provider == "openai" ? "OpenAI" : "Gemini")}}</h2>
+                <dl>
+                <dt>Accepted requests</dt><dd>{{Count(status?.Accepted)}}</dd>
+                <dt>Committed vendor ceiling (USD)</dt><dd>{{Money(status?.Committed ?? 0)}}</dd>
+                <dt>Observed Standard estimate (USD)</dt><dd>{{(status is { Metered: > 0 } ? Money(status.Estimate) : "Unavailable")}}</dd>
+                <dt>Requests with usage evidence</dt><dd>{{Count(status?.Metered)}}</dd>
+                <dt>Waiting to send</dt><dd>{{Count(status?.Queued)}}</dd>
+                <dt>Pending with a vendor reference</dt><dd>{{Count(status?.PendingWithHandle)}}</dd>
+                <dt>Pending without a vendor reference after dispatch may have started</dt><dd>{{Count(status?.PendingWithoutHandle)}}</dd>
+                <dt>Open completion notices</dt><dd>{{Count(inbox?.Open)}}</dd>
+                <dt>Notices that reached the lookup limit</dt><dd>{{Count(inbox?.Exhausted)}}</dd>
+                </dl></section>
+                """;
+        }));
+        return Page(http, "Pilot operations", $$"""
+            <header><a href="{{Panel}}">Analysis models</a><a href="{{Panel}}/pending">Pending requests</a></header>
+            <main><h1>Pilot operations</h1><p>Saved status for the isolated synthetic pilot. Provider connectivity is untested by this page.</p>
+            <section aria-labelledby="budget-heading"><h2 id="budget-heading">Admission limits (USD)</h2>
+            <dl><dt>Per request</dt><dd>{{Money(limits.Request)}}</dd><dt>Per user</dt><dd>{{Money(limits.User)}}</dd>
+            <dt>Per provider including prior project revisions</dt><dd>{{Money(limits.Project)}}</dd></dl></section>
+            <div class="tasks">{{providers}}</div>
+            </main>
+            """);
+
+        static string Count(int? count) => (count ?? 0).ToString(CultureInfo.InvariantCulture);
+        static string Money(long? micros) => micros is { } amount
+            ? (amount / 1_000_000m).ToString("0.000000", CultureInfo.InvariantCulture) : "Invalid setting";
     }
 
     private static async Task<IResult> PendingAsync(HttpContext http, IAntiforgery csrf, ServiceDbContext db, CancellationToken ct)

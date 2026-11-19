@@ -12,7 +12,8 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
 {
     private const int MaximumBodyBytes = 8192;
     private const int MaximumNotices = 128;
-    private const int MaximumLookups = 3;
+    /// <summary>Number of authenticated status lookups allowed per signed notice.</summary>
+    internal const int MaximumLookups = 3;
     /// <summary>Configuration key for the explicitly registered provider signing secret.</summary>
     internal static string SecretSetting(string provider) => $"Analysis:ProviderPilot:{provider}:WebhookSecret";
 

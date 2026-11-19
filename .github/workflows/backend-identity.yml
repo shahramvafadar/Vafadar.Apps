@@ -263,7 +263,8 @@ jobs:
             OpenAi_notice_recovers_one_matching_claim_and_rejects_foreign_and_duplicate_results \
             Gemini_notice_recovers_only_the_original_input_reference \
             Webhook_rotation_respects_provider_and_explicit_utc_overlap \
-            Pilot_records_terminal_usage_without_settling_unusable_output
+            Pilot_records_terminal_usage_without_settling_unusable_output \
+            Operator_operations_shows_local_aggregate_without_accessing_providers
           do
             docker exec zanance-analysis-ci createdb -h 127.0.0.1 -U postgres zanance_ai_provider_pilot
             export ZANANCE_AI_ADMIN_TEST_ROOT="$ZANANCE_AI_QA_ROOT/$method"
