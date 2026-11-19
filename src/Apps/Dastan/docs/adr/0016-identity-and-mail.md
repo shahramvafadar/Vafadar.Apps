@@ -57,9 +57,35 @@ in CI. "Never twice" holds for every hand-over and for every sender at the same 
 between a server taking a message and that being written down sends it once more under the same identifier –
 said in the operations guide.
 
-**Not built yet:** everything that writes mail – the accounts on Identity, the journeys, the texts of the
-messages in both languages, invitations and statements of reasons by mail, the editors' accounts. The
-delivery plan lists the parts of step 19.4.
+**The accounts of visitors, in the store (2026-11-19, second part).** The tables of Identity lie in the
+schema `identity` (`VisitorAccounts`, `VisitorTokens`, `VisitorLogins`, `VisitorClaims`) and are part of the
+context of the visitors' store – so an account, what belongs to it in `personal`, the invitation it uses up
+and the mail that tells of it are one transaction. A name and a mail address each have a unique index.
+`store.Accounts` registers (name, address, password, the language of the page), confirms by the link, sends
+it again, and signs in by name or address. Identity's `UserManager` makes the account, checks the name, the
+address and the password and derives what is kept of it; its stamp is the stamp of the session.
+
+**Built otherwise than "Identity keeps tokens and lock-outs" may be read**, and said here: the token of a
+link and the pause after wrong passwords are *kept in Identity's tables* but *counted by the store* with its
+own clock – a token is 32 random bytes, kept as its SHA-256 with the moment it ends, used once; five wrong
+passwords set `LockoutEnd`. Identity's own token providers and lock-out read the clock of the machine and
+cannot be moved in a test, and their tokens depend on the keys of the forms; these depend on nothing but the
+database.
+
+**Whether an address has an account is told to nobody but who has the address.** Registering with an address
+that is taken answers as every registration does – "look at your mail" – and the mail goes to who has the
+address, once an hour at most, saying what was tried. For the same reason the recovery codes are shown when
+the address is confirmed, not when the form is sent. A name is public, so "that name is taken" is said.
+
+**The schema `delivery` has an owner of its own** (`DeliveryContext` in `Vafadar.Dastan.Data`, with its
+history of changes): the site depends on it for mail and must not depend on the store of the editors for a
+table. `database migrate` makes the three parts.
+
+**Not built yet:** the pages of the site still use the accounts without an address – they are moved in one
+piece once every journey exists in the store (another password, a forgotten one, another address, sign out
+everywhere, recovery codes, closing, Google and Microsoft through Identity's logins), so that the site never
+has two kinds of account; then the texts of the remaining mail, invitations and statements of reasons by
+mail, and the editors' accounts. The delivery plan lists the parts of step 19.4.
 
 ## Consequences
 

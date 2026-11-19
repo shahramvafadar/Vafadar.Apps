@@ -199,6 +199,7 @@ public sealed class OperatorCommandsTests : IDisposable
             using (var people = PeopleStore.Open(As(site), _clock))
             {
                 Assert.NotNull(people.Register("Mina", Password).Session);
+                Assert.Empty(people.Accounts.Register("Sara", "sara@example.org", Password, "en"));
             }
 
             Assert.True(new ReportBox(As(site)).Take("story-x", 1, "en", "evidence/entity/x", "A report.", Today));
@@ -216,6 +217,7 @@ public sealed class OperatorCommandsTests : IDisposable
 
             // The tool: nothing of the visitors, a revision is never changed, a report is noted and not removed.
             Assert.Equal(denied, Refused(As(tool), """select 1 from personal."Visitors" """));
+            Assert.Equal(denied, Refused(As(tool), """select 1 from identity."VisitorAccounts" """));
             Assert.Equal(denied, Refused(As(tool), """update published."Revisions" set "By" = 'somebody'"""));
             Assert.Equal(denied, Refused(As(tool), """delete from published."Releases" """));
             Assert.Equal(denied, Refused(As(tool), """delete from delivery."Reports" """));
