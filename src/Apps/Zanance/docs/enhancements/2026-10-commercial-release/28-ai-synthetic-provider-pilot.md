@@ -247,3 +247,21 @@ The synthetic adapter admits twelve additional exact payloads covering the six a
 The local PostgreSQL integration test used the real request store, operator routes and response validator with both synthetic transports. All 24 model/fixture pairs preserved the provided localized text and exact structured fields. Changing the source refused eligibility, and a response claiming that currencies can be combined remained pending without publication. This validates the app and adapter contract with fake provider responses. It does not qualify provider-generated prose, latency, refusal rates or production results. No live calls or charges occurred.
 
 A full live run would use twelve new requests per provider. Under the existing conservative uncached per-request bounds, the maximum total estimates are USD 0.088782 for OpenAI and USD 0.214122 at Gemini paid reference rates. Actual consumption and Free Tier treatment need separate evidence from the dedicated pilot projects. Rates rechecked 2026-11-20. See [OpenAI pricing](https://developers.openai.com/api/docs/pricing) and [Gemini pricing](https://aistudio.google.com/docs/pricing).
+
+
+### Live six-language results, 2026-11-20
+
+The opt-in `AiPilotLiveLocaleTests` ran the source-linked request store against isolated PostgreSQL and both dedicated provider projects. It sent each of the 24 model/locale pairs once, exclusively using the exact fictional corpus. Each request had its own original vendor reference. The same reference was used for follow-up. There were 24 local synthetic holds and 22 settlements. No prior successful case was repeated.
+
+| Model | Accepted / sent | Metered input / billable output tokens | Observed p50 / p95, seconds | Metered amount at Standard rates, USD |
+|---|---:|---:|---:|---:|
+| GPT-6 Luna | 6 / 6 | 660 / 360 | 35.25 / 38.35 | 0.000247 |
+| GPT-6.2 Sol | 6 / 6 | 1872 / 620 | 28.57 / 48.80 | 0.009944 |
+| Gemini 3.5 Flash-Lite | 6 / 6 | 426 / 183 | 38.28 / 39.30 | 0.000588 |
+| Gemini 4 Hydrogen | 4 / 6 | 2292 / 2806 | 43.18 / 55.02 | 0.024484 |
+
+Timings cover admission through the first locally observed accepted result, including the polling delay. The sample uses the nearest-rank p95, which is the maximum accepted time in each cohort of four or six. The two failed cases are excluded from those latency estimates. The Standard estimates are rounded up to whole microdollars per request. Metered calls total USD 0.010191 for OpenAI and USD 0.025072 at equivalent paid Gemini rates. The isolated Gemini project used Free Tier. Neither invoice nor usage for the two failures was established. See [OpenAI Luna](https://developers.openai.com/api/docs/models/gpt-6-luna), [OpenAI Sol](https://developers.openai.com/api/docs/models/gpt-6.2-sol), [Gemini Flash-Lite](https://aistudio.google.com/docs/pricing#gemini-3.5-flash-lite) and [Gemini Hydrogen](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen).
+
+Direct read-only diagnostics after the observer ended confirmed HTTP 200, matching original references and model, and `failed` without usage for both Persian and Italian Hydrogen comparisons. No recognized error category explained the cause. Those two cases remained locally pending with the original holds and no output. The observer's one passing test records evidence collection. The model-level acceptance was 22 of 24. The isolated fixture was retained for reconciliation without new creation.
+
+All accepted replies passed the exact structured checks. Manual review found the requested languages and no unsupported claims or cross-currency additions in those texts. The French Flash-Lite reply omitted French accent marks. This corpus covers the simple empty and financial period-comparison contracts. It does not qualify the full set of feature-specific tasks, sustained latency, customer use or real-data activation.
