@@ -88,6 +88,7 @@ internal static class AiPilotAdmin
         pages.MapPost("/login", LoginAsync);
         var operations = pages.MapGroup("").RequireAuthorization(new AuthorizeAttribute { AuthenticationSchemes = Scheme });
         operations.MapGet("", ShowAsync);
+        operations.MapGet("/pending", PendingAsync);
         operations.MapPost("/selection", SelectAsync);
         operations.MapPost("/logout", async (HttpContext http) =>
         {
@@ -163,13 +164,48 @@ internal static class AiPilotAdmin
             http.Request.Query["saved"] == "comparison" ? "Comparison selection saved." : "";
         return Page(http, "Analysis models", $$"""
             <header><a href="{{Panel}}">Zanance management</a><form method="post" action="{{Panel}}/logout">{{token}}<button class="quiet">Sign out</button></form></header>
-            <main><h1>Analysis models</h1><p>Choose a model for each task in the synthetic pilot. Changes apply to new requests.</p>
+            <main><h1>Analysis models</h1><p>Choose a model for each task in the synthetic pilot. Changes apply to new requests.</p><p><a href="{{Panel}}/pending">Pending requests</a></p>
             {{(message.Length == 0 ? "" : $"<p class=\"notice\" role=\"status\">{message}</p>")}}
             <div class="tasks">{{Card("report", "Simple reports", AiPurpose.PeriodExplanation, report, token)}}
             {{Card("comparison", "Financial comparisons", AiPurpose.PeriodComparison, comparison, token)}}</div>
             </main>
             """);
     }
+
+    private static async Task<IResult> PendingAsync(HttpContext http, ServiceDbContext db, CancellationToken ct)
+    {
+        const int pageSize = 50;
+        // The queue reports original dispatch metadata only. It cannot create a lookup, a new dispatch or a credit movement.
+        var pending = await (from request in db.Set<AiRequestRow>().AsNoTracking()
+                             join offer in db.Set<AiOfferRow>().AsNoTracking() on request.OfferId equals offer.Id
+                             where request.State == AiRequestState.Pending && offer.PilotRouteId != null
+                             orderby request.CreatedAt, request.Id
+                             select new { request.Id, offer.Purpose, offer.Provider, offer.Model, request.CreatedAt,
+                                 request.StatusCheckedAt, HasHandle = request.VendorOperationId != null })
+            .Take(pageSize + 1).ToListAsync(ct);
+        var rows = string.Concat(pending.Take(pageSize).Select(item => $$"""
+            <tr><td><code>{{item.Id:D}}</code></td><td>{{(item.Purpose == AiPurpose.PeriodExplanation ? "Simple report" : "Financial comparison")}}</td>
+            <td>{{WebUtility.HtmlEncode(item.Provider)}} / {{WebUtility.HtmlEncode(item.Model)}}</td><td>{{Timestamp(item.CreatedAt)}}</td>
+            <td>{{Timestamp(item.StatusCheckedAt)}}</td><td>{{(item.HasHandle ? "Recorded" : "Missing")}}</td></tr>
+            """));
+        var details = pending.Count == 0 ? "<p>No pending pilot requests.</p>" : $$"""
+            <div class="table-scroll" tabindex="0" aria-label="Pending requests table"><table>
+            <caption>Oldest requests first</caption>
+            <thead><tr><th scope="col">Request</th><th scope="col">Task</th><th scope="col">Original route</th>
+            <th scope="col">Accepted (UTC)</th><th scope="col">Last status check (UTC)</th><th scope="col">Vendor reference</th></tr></thead>
+            <tbody>{{rows}}</tbody></table></div>
+            {{(pending.Count > pageSize ? "<p>Showing the oldest 50 requests. More are pending.</p>" : "")}}
+            """;
+        return Page(http, "Pending analysis requests", $$"""
+            <header><a href="{{Panel}}">Analysis models</a></header>
+            <main><h1>Pending analysis requests</h1>
+            <p>A missing vendor reference leaves the outcome unknown. This page shows saved status only.</p>
+            {{details}}</main>
+            """);
+
+        static string Timestamp(DateTimeOffset? time) => time?.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture) ?? "—";
+    }
+
 
     private static string Card(string key, string label, AiPurpose purpose, (string Model, long RouteId, bool Available) selection, string token)
     {
@@ -217,6 +253,7 @@ internal static class AiPilotAdmin
             .tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:1rem;margin:1.5rem 0}.login{max-width:32rem}
             section,.notice{padding:1.25rem;border:1px solid GrayText;border-radius:.55rem}label{display:block;font-weight:600;margin-top:1rem}input,select,button{font:inherit;min-height:2.75rem}
             input,select{display:block;width:100%;padding:.4rem .55rem;margin-top:.25rem;border:1px solid GrayText;border-radius:.3rem}button{margin-top:1rem;padding:.4rem .85rem;border-radius:.3rem;border:1px solid transparent;background:#174a83;color:white;cursor:pointer}button.quiet{margin:0;background:transparent;color:inherit;border-color:GrayText}
+            .table-scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;text-align:left}caption{text-align:left;font-weight:600}th,td{padding:.5rem;border-bottom:1px solid GrayText}
             :focus-visible{outline:3px solid Highlight;outline-offset:3px}
             </style></head><body>{{content}}</body></html>
             """, "text/html; charset=utf-8", statusCode: status);

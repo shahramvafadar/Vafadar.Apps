@@ -23,6 +23,10 @@ Under **Simple reports** or **Financial comparisons**, review **Current model**,
 
 The real HTTPS forms were verified for sign-in, non-operator and anonymous refusal, invalid and stale forms, six audited changes, two independent Off transitions and sign-out. Edge rendered the signed-in panel at 1060 and 375 CSS pixels with the two labelled model controls. Published Standard rates were rechecked on 2026-11-19 and match the per-purpose table below.
 
+Use **Pending requests** to inspect the oldest 50 unresolved pilot requests and see when more are pending. The queue shows the original task and route after a model switch, accepted and last-check times in UTC, and whether the vendor reference is recorded. It exposes no account identity, aggregate, result, digest or vendor operation ID. Loading it does not query a vendor, alter a request or move credit. A missing reference indicates uncertainty; it is not evidence for another submission or a refund.
+
+The isolated HTTPS fixture covered anonymous refusal, the empty queue, oldest-first ordering, overflow, ordinary and completed request exclusion, the original route after Off, unchanged request and credit records, and zero model calls. PostgreSQL refused the first synthetic seed for violating the request bounds; the fixture then used the required reservation and terminal result fields. No prior selection tests were replayed.
+
 ### Server command alternative
 
 Supply each dedicated provider project reference with `Analysis__ProviderPilot__openai__Project` or `Analysis__ProviderPilot__gemini__Project`. Inject the corresponding `Analysis__ProviderPilot__openai__ApiKey` or `Analysis__ProviderPilot__gemini__ApiKey` through the private process configuration. The OpenAI profile sends the configured project header by default. Set `Analysis__ProviderPilot__openai__SendProjectHeader=false` only for a key already scoped to the dedicated pilot project, and keep its separate project reference configured. Keep credentials outside Git, command arguments and logs. Keep the original project profiles available for pending requests.

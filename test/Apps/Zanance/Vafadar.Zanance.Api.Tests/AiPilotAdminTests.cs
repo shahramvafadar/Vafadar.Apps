@@ -39,7 +39,13 @@ public sealed class AiPilotAdminTests
 
     /// <summary>Verifies identity isolation, independent choices, stale form refusal and zero vendor requests.</summary>
     [Fact]
-    public async Task Operator_can_view_switch_and_disable_each_purpose_in_the_private_panel()
+    public Task Operator_can_view_switch_and_disable_each_purpose_in_the_private_panel() => RunPanelAsync(false);
+
+    /// <summary>Verifies the bounded pending view without replaying accepted model selections.</summary>
+    [Fact]
+    public Task Operator_sees_only_bounded_original_pending_metadata() => RunPanelAsync(true);
+
+    private static async Task RunPanelAsync(bool pendingOnly)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
@@ -80,6 +86,19 @@ public sealed class AiPilotAdminTests
             ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate is not null &&
                 Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(certificate.RawData)) == fingerprint,
         }) { BaseAddress = new Uri(address) };
+        if (pendingOnly)
+        {
+            using var pendingBrowser = Browser();
+            using var anonymousQueue = await pendingBrowser.GetAsync(Panel + "/pending", ct);
+            Assert.Equal(Panel + "/login", anonymousQueue.Headers.Location?.OriginalString);
+            using var login = await SignIn(pendingBrowser, OperatorEmail);
+            Assert.Equal(Panel, login.Headers.Location?.OriginalString);
+            Assert.Contains("No pending pilot requests.", await pendingBrowser.GetStringAsync(Panel + "/pending", ct), StringComparison.Ordinal);
+            await VerifyPendingAsync(app.Services, pendingBrowser, ct);
+            Assert.Equal(0, noEgress.Attempts);
+            return;
+        }
+
         using var browser = Browser();
         using var member = Browser();
         using var anonymous = await browser.GetAsync(Panel, ct);
@@ -159,6 +178,65 @@ public sealed class AiPilotAdminTests
         {
             using var body = new FormUrlEncodedContent(fields.Select(field => new KeyValuePair<string, string>(field.Name, field.Value)));
             return await client.PostAsync(path, body, ct);
+        }
+    }
+
+    private static async Task VerifyPendingAsync(IServiceProvider services, HttpClient browser, CancellationToken ct)
+    {
+        const string memberId = "fictional-ai-member";
+        var factory = services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
+        await using var db = await factory.CreateDbContextAsync(ct);
+        var now = new DateTimeOffset(2026, 11, 19, 12, 0, 0, TimeSpan.Zero);
+        var original = new AiPilotRouteRow { Provider = "gemini", Purpose = AiPurpose.PeriodComparison,
+            Model = "gemini-4-hydrogen", Revision = "fictional-first", Actor = OperatorId, SelectedAt = now };
+        db.Add(original);
+        await db.SaveChangesAsync(ct);
+        db.Add(new AiPilotRouteRow { Provider = "off", Purpose = original.Purpose, Revision = "fictional-off",
+            Actor = OperatorId, SelectedAt = now.AddMinutes(1) });
+        var pending = Enumerable.Range(0, 52).Select(index => AddRequest(AiRequestState.Pending, original.Id, index)).ToArray();
+        var terminal = AddRequest(AiRequestState.Completed, original.Id, -2);
+        var ordinary = AddRequest(AiRequestState.Pending, null, -1);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        using var reply = await browser.GetAsync(Panel + "/pending", ct);
+        reply.EnsureSuccessStatusCode();
+        Assert.True(reply.Headers.CacheControl?.NoStore);
+        var html = await reply.Content.ReadAsStringAsync(ct);
+        Assert.Contains("Showing the oldest 50 requests.", html, StringComparison.Ordinal);
+        Assert.Equal(51, Regex.Matches(html, "<tr>", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1)).Count);
+        Assert.Contains("gemini / gemini-4-hydrogen", html, StringComparison.Ordinal);
+        Assert.Contains("2026-11-19 12:02:00", html, StringComparison.Ordinal);
+        Assert.Contains(">Recorded</td>", html, StringComparison.Ordinal);
+        Assert.Contains(">Missing</td>", html, StringComparison.Ordinal);
+        Assert.Contains(pending[0].Id.ToString("D"), html, StringComparison.Ordinal);
+        Assert.Contains(pending[49].Id.ToString("D"), html, StringComparison.Ordinal);
+        Assert.True(html.IndexOf(pending[0].Id.ToString("D"), StringComparison.Ordinal) <
+            html.IndexOf(pending[49].Id.ToString("D"), StringComparison.Ordinal));
+        Assert.DoesNotContain(pending[50].Id.ToString("D"), html, StringComparison.Ordinal);
+        Assert.DoesNotContain(terminal.Id.ToString("D"), html, StringComparison.Ordinal);
+        Assert.DoesNotContain(ordinary.Id.ToString("D"), html, StringComparison.Ordinal);
+        foreach (var hidden in new[] { memberId, "fictional-protected-aggregate", "fictional-protected-result", "fictional-vendor-reference", new string('a', 64) })
+            Assert.DoesNotContain(hidden, html, StringComparison.Ordinal);
+        var unchanged = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == pending[0].Id, ct);
+        Assert.Equal(pending[0].StatusCheckedAt, unchanged.StatusCheckedAt);
+        Assert.Equal(AiRequestState.Pending, unchanged.State);
+        Assert.Equal(54, await db.Set<AiRequestRow>().CountAsync(ct));
+        Assert.Equal(2, await db.Set<AiPilotRouteRow>().CountAsync(ct));
+        Assert.Empty(await db.Set<AiCreditRow>().ToArrayAsync(ct));
+
+        AiRequestRow AddRequest(AiRequestState state, long? route, int index)
+        {
+            var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = memberId, Purpose = AiPurpose.PeriodComparison,
+                Provider = "gemini", Model = "gemini-4-hydrogen", MaximumUnits = 1, PilotRouteId = route, ExpiresAt = now.AddHours(1) };
+            var request = new AiRequestRow { Id = Guid.NewGuid(), UserId = memberId, OfferId = offer.Id, State = state,
+                CreatedAt = now.AddSeconds(index), StatusCheckedAt = index == 0 ? now.AddMinutes(2) : null,
+                VendorOperationId = index == 0 ? "fictional-vendor-reference" : null, PayloadDigest = new('a', 64),
+                GiftedReserved = 1, ChargedUnits = state == AiRequestState.Completed ? 1 : 0,
+                ProtectedPayload = "fictional-protected-aggregate", ProtectedText = state == AiRequestState.Completed ? "fictional-protected-result" : null };
+            db.Add(offer);
+            db.Add(request);
+            return request;
         }
     }
 
