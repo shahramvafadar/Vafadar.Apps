@@ -1,4 +1,3 @@
-using Microsoft.Data.Sqlite;
 
 namespace Vafadar.Dastan.Store.Tests;
 
@@ -53,17 +52,16 @@ public sealed class EditorAccountsTests : IDisposable
         }
 
         string kept;
-        using (var connection = new SqliteConnection($"Data Source={_copy.Database};Pooling=False"))
+        using (var connection = new Npgsql.NpgsqlConnection(_copy.Database))
         {
             connection.Open();
             using var command = connection.CreateCommand();
-            command.CommandText = "select Password from Editors";
+            command.CommandText = Vafadar.Dastan.Tests.TestDatabase.Sql("select Password from Editors", EditorialStore.Schema);
             kept = (string)command.ExecuteScalar()!;
         }
 
         Assert.StartsWith("pbkdf2-sha256$600000$", kept, StringComparison.Ordinal);
         Assert.DoesNotContain(Password, kept, StringComparison.Ordinal);
-        Assert.DoesNotContain(Password, File.ReadAllText(_copy.Database, System.Text.Encoding.Latin1), StringComparison.Ordinal);
     }
 
     [Fact]

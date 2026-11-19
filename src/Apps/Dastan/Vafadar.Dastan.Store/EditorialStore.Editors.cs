@@ -314,6 +314,7 @@ public sealed partial class EditorialStore
             // The password was tried – that takes its time – before this step, which reads the account again
             // and writes the count: tries made at the same moment are all counted.
             using var step = _context.Database.BeginTransaction();
+            Lock("editors");
             _context.Entry(editor).Reload();
             if (editor.ClosedAt is not null || editor.LockedUntil > now)
             {

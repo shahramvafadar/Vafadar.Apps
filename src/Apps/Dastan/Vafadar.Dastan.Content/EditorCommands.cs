@@ -30,10 +30,9 @@ internal static class EditorCommands
               Closes an account – it signs in nowhere, what the editor did stays in the history – or opens
               it again.
 
-          store copy --store <database> --out <file>
-              Writes a copy of the whole store – collections, history, revisions and accounts – as it is at
-              this moment; the tool of the editors can run meanwhile. Never over a file. A store is brought
-              back by stopping the tool and putting a copy in the place of its file.
+          Wherever a command asks for a store, it is the connection of the PostgreSQL database; the word
+          env stands for the one in the variable DASTAN_DATABASE. A copy of a database is made with
+          pg_dump, and brought back with pg_restore (the operations guide says how).
         """;
 
     /// <summary>Runs a command of the accounts; <see langword="null"/> when it was not understood.</summary>
@@ -46,7 +45,7 @@ internal static class EditorCommands
         switch (words)
         {
             case ["editors", "--store", var database]:
-                using (var store = EditorialStore.Open(database, time))
+                using (var store = EditorialStore.Open(OperatorCommands.Connection(database), time))
                 {
                     var editors = store.Editors();
                     output.WriteLine($"{editors.Length} {(editors.Length == 1 ? "editor" : "editors")}.");
@@ -101,24 +100,6 @@ internal static class EditorCommands
 
                 return Said(output, database, time, $"{name}: has another password and is signed out everywhere.", store => store.SetPassword(name, password));
 
-            case ["copy", "--store", var database, "--out", var target]:
-                if (!File.Exists(database))
-                {
-                    output.WriteLine($"{database}: there is no store of that name.");
-                    return ContentCommands.NotUsable;
-                }
-
-                using (var store = EditorialStore.Open(database, time))
-                {
-                    if (store.CopyTo(target) is { } refused)
-                    {
-                        output.WriteLine(refused);
-                        return ContentCommands.NotUsable;
-                    }
-
-                    output.WriteLine($"{Path.GetFullPath(target)}: a copy of the store, {new FileInfo(target).Length:N0} bytes.");
-                    return ContentCommands.Done;
-                }
 
             case ["editor", "close" or "open", var name, "--store", var database]:
                 var closing = words[1] == "close";
@@ -149,7 +130,7 @@ internal static class EditorCommands
 
     private static int Said(TextWriter output, string database, TimeProvider time, string done, Func<EditorialStore, ActResult> act)
     {
-        using var store = EditorialStore.Open(database, time);
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
         var result = act(store);
         if (!result.Done)
         {

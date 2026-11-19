@@ -5,33 +5,35 @@ machine without accounts, or on a server for editors who sign in (D-046). This p
 public site is a different program with a different page: [operations](operations.md).
 
 The tool shows and changes **what is not published**. Everything here follows from that: it answers only who
-signed in, only over an encrypted connection, and its store is one file that somebody has to keep copies of.
+signed in, only over an encrypted connection, and its store is a database that somebody has to keep copies of.
 
 ## What runs
 
-One container of the image `src/Apps/Dastan/Dockerfile.studio`, built from the root of the repository:
+One container of the image and a PostgreSQL database ([ADR 0015](adr/0015-postgresql.md)). The image is `src/Apps/Dastan/Dockerfile.studio`, built from the root of the repository:
 
 ```powershell
 docker build -f src/Apps/Dastan/Dockerfile.studio -t dastan-studio .
 ```
 
-* The image holds the tool and, beside it, the command of the store (`/command`) – accounts are made with it
-  where the store lies. It holds nothing of a store and nothing of a collection.
-* The container runs as a user without rights, with a file system that cannot be written to – except `/data`,
-  the folder of the store.
-* **`/data` is a volume**: the store (`/data/editors.db`) and the keys of the sign-in (`/data/keys`). It is all
-  the tool keeps. A container without that volume starts with an empty store and forgets it when it is removed.
+* The image holds the tool and, beside it, the command of the store (`/command`) – accounts are made with it,
+  and the tables of the database. It holds nothing of a store and nothing of a collection.
+* **The store is a PostgreSQL database**, in the schema `editorial`. `compose.studio.yaml` starts one beside
+  the tool, reached by the tool only; a server may name another. A database is made with
+  `--encoding=UTF8 --locale=C`.
+* The container runs as a user without rights, with a file system that cannot be written to – except `/data`.
+* **`/data` is a volume**: the keys of the sign-in (`/data/keys`) and, where editors bring files in, those
+  files. Together with the database it is all the tool keeps.
 * The tool listens on port 8080 without encryption. **A proxy in front of it holds the certificate**; the tool
   is never reachable from outside but through that proxy.
-* One container. The store is one file with one program writing to it; two containers on the same volume are
-  not supported.
+* What two editors do to the same collection at the same moment is done one after the other by the database
+  itself (a lock per collection, held for one act). Two containers of the tool on one database were not tried.
 
 ## What it is told
 
 | Setting (environment variable) | Meaning | In the image |
 |---|---|---|
 | `Studio__Accounts` | The tool has accounts: nothing is shown to who has not signed in | `true` |
-| `Studio__Store` | The file of the store | `/data/editors.db` |
+| `Studio__Store` | The connection of the database of the store. It holds a password: it is given by the environment of the server and is never written into a file of the repository, into a command or into a log | has to be given |
 | `Studio__Keys` | The folder of the keys of the sign-in; without it everybody signs in again after a restart | `/data/keys` |
 | `AllowedHosts` | The names the tool is reached by, separated by `;`. A request by another name is refused | has to be given |
 | `Studio__TrustedProxies__0`, `__1`, … | The address or network of the proxy that is believed about how an editor came | has to be given |
@@ -45,15 +47,27 @@ is the sign of a missing `Studio__TrustedProxies`.
 
 ## The accounts
 
+**The tables come first.** The tool does not make or change them, and does not start on a database that lacks
+them – it says which command is missing. Once, and after every update that changes them:
+
+```powershell
+docker compose -f src/Apps/Dastan/compose.studio.yaml run --rm --entrypoint sh studio -c 'DASTAN_DATABASE="$Studio__Store" dotnet /command/Vafadar.Dastan.Content.dll database migrate --database env'
+```
+
+Where a command asks for a store (`--store`), the word `env` stands for the connection in the variable
+`DASTAN_DATABASE`, so that the password is never a word of a command. In the container that is
+`sh -c 'DASTAN_DATABASE="$Studio__Store" dotnet /command/Vafadar.Dastan.Content.dll …  --store env'`; the
+lines below show the command itself.
+
 An account is made by a command in the container – by whoever may run a command on the server. The tool has no
 page for it. The password is asked for and typed twice; it is never part of the command and is kept nowhere but
 as a value from which it cannot be read back.
 
 ```powershell
-docker exec -it <container> dotnet /command/Vafadar.Dastan.Content.dll store editor add "<name>" --store /data/editors.db
-docker exec -it <container> dotnet /command/Vafadar.Dastan.Content.dll store editor password "<name>" --store /data/editors.db
-docker exec -it <container> dotnet /command/Vafadar.Dastan.Content.dll store editor close "<name>" --store /data/editors.db
-docker exec    <container> dotnet /command/Vafadar.Dastan.Content.dll store editors --store /data/editors.db
+docker exec -it <container> dotnet /command/Vafadar.Dastan.Content.dll store editor add "<name>" --store env
+docker exec -it <container> dotnet /command/Vafadar.Dastan.Content.dll store editor password "<name>" --store env
+docker exec -it <container> dotnet /command/Vafadar.Dastan.Content.dll store editor close "<name>" --store env
+docker exec    <container> dotnet /command/Vafadar.Dastan.Content.dll store editors --store env
 ```
 
 * `-it` is needed where a password is typed: without a terminal the command makes no account and says so.
@@ -100,36 +114,36 @@ put a proxy with a certificate in front of the container.
 ## Copies of the store
 
 The store is the only place where the work of the editors lies before it is published. **Nothing makes copies
-of it by itself.**
+of it by itself.** A copy is made by the database's own tool, while the tool of the editors runs:
 
 ```powershell
-docker exec <container> dotnet /command/Vafadar.Dastan.Content.dll store copy --store /data/editors.db --out /data/copies/<day>.db
-docker cp <container>:/data/copies/<day>.db <a place that is not this server>
+docker compose -f src/Apps/Dastan/compose.studio.yaml exec -T studio-database pg_dump -U dastan -d dastan -n editorial -Fc > <a place that is not this server>/<day>.dump
 ```
 
-* `store copy` writes the whole store – collections, history, revisions, accounts – as it is at that moment.
-  The tool can run meanwhile. It never writes over a file.
+* The copy is the whole store – collections, history, revisions, accounts – as of one moment.
 * A copy holds what is not published and the derived passwords of the editors: keep it where the store itself
   could be kept, and nowhere public.
+* The files editors brought in lie in the volume `/data`, not in the database: copy that volume too.
 * A copy that stays on the same disk as the store is lost with it. Where the copies go, how often and for how
   long is not decided.
 
 ### Bringing a copy back
 
-Stop the tool, put the copy in the place of the file of the store with the user of the tool as its owner, start
-the tool. Everything done after the copy was made is gone.
+Stop the tool, put the copy in the place of the schema, start the tool. Everything done after the copy was
+made is gone.
 
 ```powershell
-docker compose stop studio
-docker run --rm --user root -v <the volume>:/data -v <folder of the copy>:/in:ro --entrypoint sh dastan-studio -c 'cp /in/<copy>.db /data/editors.db && chown $APP_UID /data/editors.db'
-docker compose start studio
+docker compose -f src/Apps/Dastan/compose.studio.yaml stop studio
+Get-Content <day>.dump -AsByteStream -Raw | docker compose -f src/Apps/Dastan/compose.studio.yaml exec -T studio-database pg_restore -U dastan -d dastan --clean --if-exists -n editorial
+docker compose -f src/Apps/Dastan/compose.studio.yaml start studio
 ```
 
 ## Updating
 
-Build the image of the new commit, start the container from it with the same volume. The tool brings the store
-to the form the new program knows when it starts – **make a copy of the store before**: an older program does
-not read a store a newer one has changed. Taking the program back is the image of the commit before, with the
+Build the image of the new commit, **make a copy of the store**, run `database migrate` of the new image (see
+"The accounts"), then start the container from it with the same volume. The tool itself never changes the
+tables; one that is started on a database that is behind stops and says so. An older program does not read a
+store a newer one has changed. Taking the program back is the image of the commit before, with the
 copy made before the update.
 
 ## What the tool keeps about editors
@@ -151,8 +165,11 @@ the level "Warning" and above – no name and no address. What the proxy and the
 * **Where copies of the store go, how often, for how long,** and a test of bringing one back on a real server.
   Putting a store into the volume as described above was done once, on the development machine.
 * **Roles**, a page for an editor to change their own password, a record of who signed in when.
-* **Load**, and two editors changing the same record at the same moment (the later act replaces the record; the
-  history shows both).
+* **Load.** Two editors changing the same record at the same moment are done one after the other: the later
+  act replaces the record and the history shows both (tried by a test with eight acts at once).
+* **The container with its database.** Since the store moved to PostgreSQL (2026-11-19) the image was not
+  built and `eng/Check-Studio.ps1` was not run against it; a copy made by `pg_dump` was not brought back.
+  Both belong to the end of step 19.3 of the delivery plan.
 * **An image registry.** The image was built and run locally; nothing was pushed anywhere.
 
 ## Comparisons
@@ -166,8 +183,7 @@ dotnet run --project $content -- store comparison export <id> --store <database>
 ```
 
 What `export` writes – the file and its translations beside it – is what a site is given in its folder
-`comparisons`. An update of the tool that brings new tables (here: the documents) applies them when the store
-is opened; make a copy of the store first (`store copy`).
+`comparisons`.
 
 ## What an account may do
 
@@ -184,6 +200,6 @@ password on the page `account` of the tool; a forgotten one is set anew with `st
 ## Files that editors bring in
 
 With `Studio__Files` set, the files editors bring in lie in the folder `media` beside it, on the volume. They
-are part of what has to be copied when the store is copied (`store copy` copies the store, not the files),
+are part of what has to be copied when the store is copied (a copy of the database does not hold the files),
 and part of what a site is given: beside a published revision, the folder `media` goes into the content
 folder of the site. A file that an item no longer names stays in that folder; nothing deletes it.

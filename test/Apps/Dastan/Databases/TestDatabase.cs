@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using Npgsql;
-using Vafadar.Dastan.People;
 
 namespace Vafadar.Dastan.Tests;
 
@@ -12,7 +11,7 @@ namespace Vafadar.Dastan.Tests;
 /// Without a server the tests that need one are skipped; where <c>DASTAN_POSTGRES_REQUIRED</c> is set – in CI –
 /// they fail instead, so that a missing server cannot pass for a green run.
 /// </summary>
-internal static class TestDatabase
+internal static partial class TestDatabase
 {
     private static readonly ConcurrentDictionary<string, string> Made = new(StringComparer.Ordinal);
     private static readonly Lock Gate = new();
@@ -65,11 +64,11 @@ internal static class TestDatabase
     /// Writes a plain question to the store as PostgreSQL reads it: the names of tables and columns are kept as
     /// the program writes them, so they stand in quotes, and a table lies in the schema of the store.
     /// </summary>
-    public static string Sql(string plain) =>
+    public static string Sql(string plain, string schema = "personal") =>
         System.Text.RegularExpressions.Regex.Replace(
             System.Text.RegularExpressions.Regex.Replace(plain, @"\b[A-Z][A-Za-z]+\b", name => $"\"{name.Value}\""),
             "from (\"[A-Za-z]+\")",
-            $"from {PeopleStore.Schema}.$1");
+            $"from {schema}.$1");
 
     /// <summary>Returns the connection of a fresh database that has no table yet, as one is before it is first brought to form.</summary>
     public static string Empty()
@@ -108,7 +107,7 @@ internal static class TestDatabase
                 Assert.Skip(message);
             }
 
-            PeopleStore.Migrate(Connection(name));
+            Migrate(Connection(name));
             NpgsqlConnection.ClearAllPools();
             AppDomain.CurrentDomain.ProcessExit += (_, _) => Clean();
             _template = name;

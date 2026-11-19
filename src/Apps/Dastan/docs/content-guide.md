@@ -203,11 +203,12 @@ dotnet run --project $content -- revision src/Apps/Dastan/content/samples/my-sto
 
 ## For the editors: the store
 
-The editors keep a collection in a store of their own ([ADR 0011](adr/0011-editors-store.md)): a database file
-that holds every record with the history of its changes. A writer does not need it – a writer hands over files.
+The editors keep a collection in a store of their own ([ADR 0011](adr/0011-editors-store.md)): a PostgreSQL
+database that holds every record with the history of its changes ([ADR 0015](adr/0015-postgresql.md)). A writer does not need it – a writer hands over files.
 
 ```powershell
-$store = "<a file outside the repository>/editors.db"
+$env:DASTAN_DATABASE = "<the connection of the database>"   # typed here, never written into a file of the repository
+$store = "env"                                               # the word that stands for that variable
 
 # Bring a working file in, with the translations beside it. Say who and why.
 dotnet run --project $content -- store import src/Apps/Dastan/content/samples/my-story.json --store $store --by "<name>" --reason "<why>"

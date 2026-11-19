@@ -64,52 +64,46 @@ public sealed partial class EditorialStore : IDisposable
     }
 
     /// <summary>Opens the store in a file, and brings its database to the form this program knows.</summary>
-    /// <param name="file">The file of the store; it is made when it does not exist.</param>
+    /// <param name="connection">The file of the store; it is made when it does not exist.</param>
     /// <param name="time">The clock; the system's when nothing is given.</param>
     /// <param name="samplesFolder">
     /// The folder in which the files of the collections lie (<c>content/samples</c>): the files a media item names
     /// are looked for from there when an act of an editor is tried. Not given, files are not looked for.
     /// </param>
-    /// <param name="migrate">
-    /// Whether the database is brought to the form this program knows. A tool that opens the store for every
-    /// request does it once, when it starts.
-    /// </param>
-    public static EditorialStore Open(string file, TimeProvider? time = null, string? samplesFolder = null, bool migrate = true)
+    public static EditorialStore Open(string connection, TimeProvider? time = null, string? samplesFolder = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(file);
-        var path = Path.GetFullPath(file);
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-
-        // Pooling is off: the file of a store is released when the store is closed, not when the process ends.
-        var options = new DbContextOptionsBuilder<StoreContext>().UseSqlite($"Data Source={path};Pooling=False").Options;
-        var context = new StoreContext(options);
-        if (migrate)
-        {
-            context.Database.Migrate();
-        }
-
-        return new EditorialStore(context, time ?? TimeProvider.System, samplesFolder is null ? null : Path.GetFullPath(samplesFolder));
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        return new EditorialStore(new StoreContext(Options(connection)), time ?? TimeProvider.System, samplesFolder is null ? null : Path.GetFullPath(samplesFolder));
     }
 
-    /// <summary>
-    /// Writes a copy of the whole store – collections, history, revisions and accounts – into a file, as the store
-    /// is at this moment. The store can be in use meanwhile: the copy is made by the database itself and is
-    /// complete. Never over a file.
-    /// </summary>
-    /// <returns>Nothing when the copy was written; else why it was not.</returns>
-    public string? CopyTo(string file)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(file);
-        var path = Path.GetFullPath(file);
-        if (File.Exists(path) || Directory.Exists(path))
-        {
-            return $"{path}: there already is a file of that name; a copy is never written over a file.";
-        }
+    /// <summary>The schema of the database the store lives in (ADR 0015): the working records of the editors.</summary>
+    public const string Schema = "editorial";
 
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-        _context.Database.ExecuteSql($"VACUUM INTO {path}");
-        return null;
+    /// <summary>Makes the schema of the store in a database, or brings it to the form this program knows.</summary>
+    public static void Migrate(string connection)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        using var context = new StoreContext(Options(connection));
+        context.Database.Migrate();
     }
+
+    /// <summary>Returns the changes of form a database still lacks; none for one this program can work on.</summary>
+    public static IReadOnlyList<string> Pending(string connection)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        using var context = new StoreContext(Options(connection));
+        return [.. context.Database.GetPendingMigrations()];
+    }
+
+    internal static DbContextOptions<StoreContext> Options(string connection) =>
+        new DbContextOptionsBuilder<StoreContext>().UseNpgsql(connection, npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", Schema)).Options;
+
+    // What two editors do to the same thing at the same moment is done one after the other (ADR 0015): the
+    // step that changes a collection, a comparison or the list of the editors first takes a lock of the
+    // database for it, held until the step ends. An act keeps a collection as it read it, so without the lock
+    // the later act would put the earlier one back under its own name.
+    private void Lock(string what) =>
+        _context.Database.ExecuteSql($"SELECT pg_advisory_xact_lock(hashtextextended({what}, 0))");
 
     /// <summary>Gets the identifiers of the collections in the store.</summary>
     public ImmutableArray<string> Collections => [.. _context.Collections.AsNoTracking().OrderBy(collection => collection.Id).Select(collection => collection.Id)];
@@ -163,6 +157,11 @@ public sealed partial class EditorialStore : IDisposable
 
         // Inside an act the step is the act's (Act); by itself – an import – it is its own.
         using var transaction = _context.Database.CurrentTransaction is null ? _context.Database.BeginTransaction() : null;
+        if (transaction is not null)
+        {
+            Lock("collection:" + id);
+        }
+
         var collection = _context.Collections.Find(id);
         var isNew = collection is null;
 

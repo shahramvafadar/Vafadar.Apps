@@ -122,6 +122,7 @@ public sealed partial class EditorialStore
         var now = _time.GetUtcNow().UtcDateTime;
         var changed = 0;
         using var transaction = _context.Database.BeginTransaction();
+        Lock("comparisons");
         _context.ChangeTracker.Clear();
         var held = _context.Documents.Where(document => document.Kind == ComparisonKind && document.DocumentId == id).ToDictionary(document => document.Language, StringComparer.Ordinal);
         if (!WritesReviews && ReviewWritten(held.TryGetValue(string.Empty, out var before) ? JsonNode.Parse(before.Body) : null, file) is { } reviewed)
