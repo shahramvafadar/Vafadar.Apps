@@ -78,7 +78,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                 var accepted = row.ExpiresAt > scope.Now && actual is not null && actual.Provider == row.Provider &&
                     actual.Model == row.Model && actual.MaximumUnits == row.MaximumUnits && row.PilotRouteId == selected?.RouteId &&
                     (pilot is null ? checked(balance.PurchasedAvailable + balance.GiftedAvailable) >= row.MaximumUnits
-                        : AiPilotProvider.IsSynthetic(digest) && balance.GiftedAvailable >= row.MaximumUnits
+                        : AiPilotProvider.IsSynthetic(row.Purpose, digest) && balance.GiftedAvailable >= row.MaximumUnits
                             && !await pilot.AtCapacityAsync(db, row.Provider, ct));
                 if (accepted && selected is { } route)
                     admittedRoute = await db.Set<AiPilotRouteRow>().SingleAsync(r => r.Id == route.RouteId, ct);

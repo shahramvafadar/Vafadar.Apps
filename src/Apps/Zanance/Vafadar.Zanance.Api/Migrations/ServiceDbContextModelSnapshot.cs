@@ -258,10 +258,17 @@ namespace Vafadar.Zanance.Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<string>("Model")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
+
                     b.Property<string>("Provider")
                         .IsRequired()
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)");
+
+                    b.Property<int>("Purpose")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Revision")
                         .IsRequired()
@@ -272,6 +279,8 @@ namespace Vafadar.Zanance.Api.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Purpose", "Id");
 
                     b.ToTable("AiPilotRoutes", (string)null);
                 });

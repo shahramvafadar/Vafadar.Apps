@@ -66,6 +66,10 @@ public sealed class AiPilotRouteRow
     public long Id { get; set; }
     /// <summary>Fixed provider identifier or off.</summary>
     public string Provider { get; set; } = "";
+    /// <summary>Work addressed by this selection. Existing rows belong to the period explanation.</summary>
+    public AiPurpose Purpose { get; set; }
+    /// <summary>Selected model. Null preserves the original provider-only pilot revisions.</summary>
+    public string? Model { get; set; }
     /// <summary>Approved transport and project reference.</summary>
     public string Revision { get; set; } = "";
     /// <summary>Account executing the private operator command.</summary>
@@ -110,6 +114,8 @@ internal static class AiServiceModel
         var route = model.Entity<AiPilotRouteRow>(); route.ToTable("AiPilotRoutes"); route.HasKey(r => r.Id);
         route.Property(r => r.Provider).HasMaxLength(16); route.Property(r => r.Revision).HasMaxLength(64);
         route.Property(r => r.Actor).HasMaxLength(256);
+        route.Property(r => r.Model).HasMaxLength(64);
+        route.HasIndex(r => new { r.Purpose, r.Id });
         var offer = model.Entity<AiOfferRow>(); offer.ToTable("AiOffers"); offer.HasKey(r => r.Id);
         offer.Property(r => r.UserId).HasMaxLength(256); offer.Property(r => r.Provider).HasMaxLength(64); offer.Property(r => r.Model).HasMaxLength(64);
         offer.HasIndex(r => new { r.UserId, r.ExpiresAt });

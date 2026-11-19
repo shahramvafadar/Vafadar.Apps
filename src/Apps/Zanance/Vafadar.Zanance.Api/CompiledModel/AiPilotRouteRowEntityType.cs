@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Vafadar.Zanance.Api.Analysis;
+using Vafadar.Zanance.Core.Analysis;
 
 #pragma warning disable 219, 612, 618
 #nullable disable
@@ -20,7 +21,8 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiPilotRouteRow",
                 typeof(AiPilotRouteRow),
                 baseEntityType,
-                propertyCount: 5,
+                propertyCount: 7,
+                unnamedIndexCount: 1,
                 keyCount: 1);
 
             var id = runtimeEntityType.AddProperty(
@@ -41,6 +43,15 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 maxLength: 256);
             actor.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
+            var model0 = runtimeEntityType.AddProperty(
+                "Model",
+                typeof(string),
+                propertyInfo: typeof(AiPilotRouteRow).GetProperty("Model", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotRouteRow).GetField("<Model>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true,
+                maxLength: 64);
+            model0.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
             var provider = runtimeEntityType.AddProperty(
                 "Provider",
                 typeof(string),
@@ -48,6 +59,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 fieldInfo: typeof(AiPilotRouteRow).GetField("<Provider>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 16);
             provider.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var purpose = runtimeEntityType.AddProperty(
+                "Purpose",
+                typeof(AiPurpose),
+                propertyInfo: typeof(AiPilotRouteRow).GetProperty("Purpose", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotRouteRow).GetField("<Purpose>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly));
+            purpose.SetSentinelFromProviderValue(0);
+            purpose.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var revision = runtimeEntityType.AddProperty(
                 "Revision",
@@ -68,6 +87,9 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var key = runtimeEntityType.AddKey(
                 new[] { id });
             runtimeEntityType.SetPrimaryKey(key);
+
+            var index = runtimeEntityType.AddIndex(
+                new[] { purpose, id });
 
             return runtimeEntityType;
         }
