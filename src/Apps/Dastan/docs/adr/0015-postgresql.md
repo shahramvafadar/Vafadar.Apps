@@ -20,10 +20,17 @@ while one writer is let in at a time; the records of the editors were bodies of 
   working records of collections), `published` (revisions as they were published), `personal` (what belongs
   to accounts: trees, people, relationships, photographs, choices) and `delivery` (mail that waits to be
   sent, notices, reports).
-* **Editorial records are relations**: nodes, the two ends and the kind of every relation, memberships of a
-  collection, media, sources and reviews have columns and foreign keys. What is asked for often has a typed
-  column; only what is rare and belongs to one kind is checked JSON (`jsonb`) with a version. No table of
-  "a record and its body".
+* **An editorial record keeps its written form, and the database knows what it says** (D-081, which changed
+  this point on 2026-11-19; it first read "no table of a record and its body"). The body of a record is the
+  record as the file of a collection writes it, in a column of the type `json` – checked by the database and
+  kept character for character, so a collection is written out as it came in (`jsonb` would reorder its
+  fields). What is asked for often – the kind, the name, the reading level, the state of the review – is a
+  column **the database computes from the body**, so a column can never say something else than its record.
+  Which record names which – the ends of a relation, the sources of a statement, the entities of an event,
+  what a media item shows, the stops of a thread – is a table of rows with foreign keys: a row cannot name a
+  record the collection does not have, and a record cannot go while another names it. Full normalisation was
+  the other choice; it would have made every new field of the content a change of tables and two descriptions
+  of one record to keep the same.
 * **A published revision stays the exact bytes it was**, with its hash, in `published` – the site reads the
   revision from there, and a revision can still be written out as the file of a collection and brought in
   from one. The site never reads `editorial`.
@@ -61,11 +68,22 @@ in favour of `pg_dump`. An act on a collection, a change of a comparison and a c
 editors each take a lock of the transaction first, so that acts of the same moment are done one after the
 other; a test lets eight editors put a record at once.
 
-**What this second part did not do, said plainly.** The tables of the editors are as they were: a record is a
-row with its group, its identifier, its place, its review status and its body as JSON, exactly as the
-collection file writes it. The sentence above – "no table of a record and its body" – is not met yet. The
-relations with typed columns (relation ends, memberships, media, sources), the published revisions in a schema
-of their own, and reports and notices as tables are the rest of step 19.3; the delivery plan names them.
+The records as D-081 decides them: bodies, headers, translations, revisions, documents and the "before" and
+"after" of every change are `json`; `Records` has the computed columns `Kind`, `Label`, `SpoilerLevel` and
+`ReviewStatus` and a check that a body is the record of its own identifier; `RecordLinks` holds which record
+names which, brought up to date in the same step as every act, publishing included. Tests ask the database
+directly: a link to a record that is not there, the removal of a record that is named, a body that is no JSON
+or is another record's, and a write to a computed column are each refused.
+
+**Still owed by step 19.3:** the published revisions in a schema of their own that the site reads, reports and
+notices as tables, the version an act read (two editors who open the same form – today the later one wins and
+the history shows both), limits per hour by network, an earlier revision shown.
+
+**Seen on the way and not solved here.** The stores speak to the database synchronously. Under a burst of
+requests that all wait – as the tests of this step produce on purpose – the threads of the process ran out and
+commands stood half sent for half a minute; the test projects now start with a wide pool. A site under real
+load would meet the same limit later. It belongs to step 19.11 (load), and is written here so that it is not
+found twice.
 
 ## Consequences
 

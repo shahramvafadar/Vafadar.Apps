@@ -21,7 +21,7 @@ namespace Vafadar.Dastan.Store.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Header = table.Column<string>(type: "text", nullable: false),
+                    Header = table.Column<string>(type: "json", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -45,8 +45,8 @@ namespace Vafadar.Dastan.Store.Migrations
                     By = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Reason = table.Column<string>(type: "text", nullable: true),
-                    Before = table.Column<string>(type: "text", nullable: true),
-                    After = table.Column<string>(type: "text", nullable: true)
+                    Before = table.Column<string>(type: "json", nullable: true),
+                    After = table.Column<string>(type: "json", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,7 +61,7 @@ namespace Vafadar.Dastan.Store.Migrations
                     Kind = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     DocumentId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Language = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    Body = table.Column<string>(type: "text", nullable: false),
+                    Body = table.Column<string>(type: "json", nullable: false),
                     Version = table.Column<int>(type: "integer", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
@@ -122,8 +122,8 @@ namespace Vafadar.Dastan.Store.Migrations
                     By = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Reason = table.Column<string>(type: "text", nullable: true),
-                    Before = table.Column<string>(type: "text", nullable: true),
-                    After = table.Column<string>(type: "text", nullable: true)
+                    Before = table.Column<string>(type: "json", nullable: true),
+                    After = table.Column<string>(type: "json", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -146,8 +146,11 @@ namespace Vafadar.Dastan.Store.Migrations
                     Group = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     RecordId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Position = table.Column<int>(type: "integer", nullable: false),
-                    Body = table.Column<string>(type: "text", nullable: false),
-                    ReviewStatus = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
+                    Body = table.Column<string>(type: "json", nullable: false),
+                    ReviewStatus = table.Column<string>(type: "text", nullable: true, computedColumnSql: "(\"Body\"::jsonb ->> 'reviewStatus')", stored: true),
+                    Kind = table.Column<string>(type: "text", nullable: true, computedColumnSql: "coalesce(\"Body\"::jsonb ->> 'type', \"Body\"::jsonb ->> 'kind')", stored: true),
+                    Label = table.Column<string>(type: "text", nullable: true, computedColumnSql: "coalesce(\"Body\"::jsonb ->> 'label', \"Body\"::jsonb ->> 'title')", stored: true),
+                    SpoilerLevel = table.Column<int>(type: "integer", nullable: true, computedColumnSql: "CASE WHEN jsonb_typeof(\"Body\"::jsonb -> 'spoilerLevel') = 'number' THEN (\"Body\"::jsonb ->> 'spoilerLevel')::numeric::integer END", stored: true),
                     Version = table.Column<int>(type: "integer", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
@@ -155,6 +158,7 @@ namespace Vafadar.Dastan.Store.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Records", x => new { x.CollectionId, x.Group, x.RecordId });
+                    table.CheckConstraint("CK_Records_Body_Names_Itself", "(\"Body\"::jsonb ->> 'id') = \"RecordId\"");
                     table.ForeignKey(
                         name: "FK_Records_Collections_CollectionId",
                         column: x => x.CollectionId,
@@ -172,8 +176,8 @@ namespace Vafadar.Dastan.Store.Migrations
                     CollectionId = table.Column<string>(type: "character varying(200)", nullable: false),
                     Number = table.Column<int>(type: "integer", nullable: false),
                     PublishedOn = table.Column<DateOnly>(type: "date", nullable: false),
-                    Json = table.Column<string>(type: "text", nullable: false),
-                    Translations = table.Column<string>(type: "text", nullable: false),
+                    Json = table.Column<string>(type: "json", nullable: false),
+                    Translations = table.Column<string>(type: "json", nullable: false),
                     Note = table.Column<string>(type: "text", nullable: true),
                     By = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -197,7 +201,7 @@ namespace Vafadar.Dastan.Store.Migrations
                 {
                     CollectionId = table.Column<string>(type: "character varying(200)", nullable: false),
                     Language = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    Body = table.Column<string>(type: "text", nullable: false),
+                    Body = table.Column<string>(type: "json", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedBy = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
@@ -213,6 +217,38 @@ namespace Vafadar.Dastan.Store.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RecordLinks",
+                schema: "editorial",
+                columns: table => new
+                {
+                    CollectionId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    FromGroup = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    FromId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Role = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Ordinal = table.Column<int>(type: "integer", nullable: false),
+                    ToGroup = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    ToId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecordLinks", x => new { x.CollectionId, x.FromGroup, x.FromId, x.Role, x.Ordinal });
+                    table.ForeignKey(
+                        name: "FK_RecordLinks_Records_CollectionId_FromGroup_FromId",
+                        columns: x => new { x.CollectionId, x.FromGroup, x.FromId },
+                        principalSchema: "editorial",
+                        principalTable: "Records",
+                        principalColumns: new[] { "CollectionId", "Group", "RecordId" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecordLinks_Records_CollectionId_ToGroup_ToId",
+                        columns: x => new { x.CollectionId, x.ToGroup, x.ToId },
+                        principalSchema: "editorial",
+                        principalTable: "Records",
+                        principalColumns: new[] { "CollectionId", "Group", "RecordId" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Changes_CollectionId_Group_RecordId_Version",
                 schema: "editorial",
@@ -224,6 +260,18 @@ namespace Vafadar.Dastan.Store.Migrations
                 schema: "editorial",
                 table: "DocumentChanges",
                 columns: new[] { "Kind", "DocumentId", "Number" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecordLinks_CollectionId_ToGroup_ToId",
+                schema: "editorial",
+                table: "RecordLinks",
+                columns: new[] { "CollectionId", "ToGroup", "ToId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Records_CollectionId_Group_Kind",
+                schema: "editorial",
+                table: "Records",
+                columns: new[] { "CollectionId", "Group", "Kind" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Records_CollectionId_Group_Position",
@@ -264,7 +312,7 @@ namespace Vafadar.Dastan.Store.Migrations
                 schema: "editorial");
 
             migrationBuilder.DropTable(
-                name: "Records",
+                name: "RecordLinks",
                 schema: "editorial");
 
             migrationBuilder.DropTable(
@@ -277,6 +325,10 @@ namespace Vafadar.Dastan.Store.Migrations
 
             migrationBuilder.DropTable(
                 name: "Translations",
+                schema: "editorial");
+
+            migrationBuilder.DropTable(
+                name: "Records",
                 schema: "editorial");
 
             migrationBuilder.DropTable(
