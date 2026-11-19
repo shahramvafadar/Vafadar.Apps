@@ -15,6 +15,9 @@ namespace Vafadar.Dastan.Store.Migrations
             migrationBuilder.EnsureSchema(
                 name: "editorial");
 
+            migrationBuilder.EnsureSchema(
+                name: "published");
+
             migrationBuilder.CreateTable(
                 name: "Collections",
                 schema: "editorial",
@@ -170,7 +173,7 @@ namespace Vafadar.Dastan.Store.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Revisions",
-                schema: "editorial",
+                schema: "published",
                 columns: table => new
                 {
                     CollectionId = table.Column<string>(type: "character varying(200)", nullable: false),
@@ -178,6 +181,7 @@ namespace Vafadar.Dastan.Store.Migrations
                     PublishedOn = table.Column<DateOnly>(type: "date", nullable: false),
                     Json = table.Column<string>(type: "json", nullable: false),
                     Translations = table.Column<string>(type: "json", nullable: false),
+                    Hash = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
                     Note = table.Column<string>(type: "text", nullable: true),
                     By = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -249,6 +253,30 @@ namespace Vafadar.Dastan.Store.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Releases",
+                schema: "published",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CollectionId = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Number = table.Column<int>(type: "integer", nullable: true),
+                    By = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Releases", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Releases_Revisions_CollectionId_Number",
+                        columns: x => new { x.CollectionId, x.Number },
+                        principalSchema: "published",
+                        principalTable: "Revisions",
+                        principalColumns: new[] { "CollectionId", "Number" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Changes_CollectionId_Group_RecordId_Version",
                 schema: "editorial",
@@ -286,6 +314,18 @@ namespace Vafadar.Dastan.Store.Migrations
                 columns: new[] { "CollectionId", "ReviewStatus" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Releases_CollectionId_Id",
+                schema: "published",
+                table: "Releases",
+                columns: new[] { "CollectionId", "Id" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Releases_CollectionId_Number",
+                schema: "published",
+                table: "Releases",
+                columns: new[] { "CollectionId", "Number" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SignIns_EditorId_Number",
                 schema: "editorial",
                 table: "SignIns",
@@ -316,8 +356,8 @@ namespace Vafadar.Dastan.Store.Migrations
                 schema: "editorial");
 
             migrationBuilder.DropTable(
-                name: "Revisions",
-                schema: "editorial");
+                name: "Releases",
+                schema: "published");
 
             migrationBuilder.DropTable(
                 name: "SignIns",
@@ -330,6 +370,10 @@ namespace Vafadar.Dastan.Store.Migrations
             migrationBuilder.DropTable(
                 name: "Records",
                 schema: "editorial");
+
+            migrationBuilder.DropTable(
+                name: "Revisions",
+                schema: "published");
 
             migrationBuilder.DropTable(
                 name: "Collections",

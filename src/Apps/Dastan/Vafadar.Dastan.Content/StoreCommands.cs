@@ -47,7 +47,14 @@ internal static class StoreCommands
               which a statement is not reviewed. Never over a file.
 
           store revisions <collection> --store <database>
-              Lists the revisions the store published.
+              Lists the revisions the store published, and says which one the site shows.
+
+          store release <collection> <number> --store <database> --by <name>
+              Says that a site that reads its collections from the database shows this revision from its
+              next start on – the newest, or an earlier one again. Publishing alone releases nothing.
+
+          store withdraw <collection> --store <database> --by <name>
+              Says that the site shows no revision of the collection any more. What was published stays kept.
 
           store revision <collection> <number> --store <database> --out <file>
               Writes a published revision again, as it was published. Never over a file.
@@ -87,6 +94,14 @@ internal static class StoreCommands
                 : null;
         }
 
+        if (words[0] == "release")
+        {
+            return words.Count >= 3 && int.TryParse(words[2], NumberStyles.None, CultureInfo.InvariantCulture, out var shown)
+                && Options(words.Skip(3).ToList()) is { } told && told.TryGetValue("--store", out var where) && told.TryGetValue("--by", out var who) && Only(told, "--store", "--by")
+                ? Said(words[1], where, output, time, store => store.Release(words[1], shown, who), $"The site shows revision {shown} of {words[1]} when it is started next.")
+                : null;
+        }
+
         if (Options(words.Skip(2).ToList()) is not { } given || !given.TryGetValue("--store", out var database))
         {
             return null;
@@ -99,6 +114,8 @@ internal static class StoreCommands
             "history" when Only(given, "--store", "--record") => History(words[1], database, given.GetValueOrDefault("--record"), output, time),
             "waiting" when Only(given, "--store") => Waiting(words[1], database, output, time),
             "revisions" when Only(given, "--store") => Revisions(words[1], database, output, time),
+            "withdraw" when given.TryGetValue("--by", out var withdrawer) && Only(given, "--store", "--by")
+                => Said(words[1], database, output, time, store => store.Withdraw(words[1], withdrawer), $"The site shows no revision of {words[1]} when it is started next. What was published stays kept."),
             "publish" when given.TryGetValue("--by", out var publisher) && given.TryGetValue("--out", out var revision) && given.TryGetValue("--date", out var dated)
                 && DateOnly.TryParseExact(dated, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var day)
                 && Only(given, "--store", "--by", "--date", "--out", "--note", "--files")
@@ -331,6 +348,26 @@ internal static class StoreCommands
         return WriteOut(result.Revision, target, output);
     }
 
+    // A word about what the site shows: said, or refused with the reason.
+    private static int Said(string collection, string database, TextWriter output, TimeProvider time, Func<EditorialStore, string?> say, string done)
+    {
+        using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
+        if (!store.Collections.Contains(collection))
+        {
+            output.WriteLine($"{collection}: the store holds no collection of that name.");
+            return ContentCommands.NotUsable;
+        }
+
+        if (say(store) is { } refused)
+        {
+            output.WriteLine(refused);
+            return ContentCommands.NotUsable;
+        }
+
+        output.WriteLine(done);
+        return ContentCommands.Done;
+    }
+
     private static int Revisions(string collection, string database, TextWriter output, TimeProvider time)
     {
         using var store = EditorialStore.Open(OperatorCommands.Connection(database), time);
@@ -341,10 +378,11 @@ internal static class StoreCommands
         }
 
         var revisions = store.Revisions(collection);
-        output.WriteLine($"{collection}: {revisions.Length} {(revisions.Length == 1 ? "revision" : "revisions")} published.");
+        var released = store.Released(collection);
+        output.WriteLine($"{collection}: {revisions.Length} {(revisions.Length == 1 ? "revision" : "revisions")} published; {(released is null ? "the site shows none" : $"the site shows revision {released}")}.");
         foreach (var revision in revisions)
         {
-            output.WriteLine($"  {revision.Number}  {revision.PublishedOn:yyyy-MM-dd}  by {revision.By}{(revision.Note is null ? null : $"  – {revision.Note}")}");
+            output.WriteLine($"  {revision.Number}  {revision.PublishedOn:yyyy-MM-dd}  by {revision.By}{(revision.Note is null ? null : $"  – {revision.Note}")}{(revision.Number == released ? "  (shown by the site)" : null)}");
         }
 
         return ContentCommands.Done;

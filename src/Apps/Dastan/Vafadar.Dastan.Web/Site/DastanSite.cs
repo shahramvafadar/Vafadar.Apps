@@ -15,6 +15,20 @@ public sealed class DastanOptions
     public string Sample { get; set; } = "shahnameh-pilot.json";
 
     /// <summary>
+    /// Gets or sets a value indicating whether the site reads its collections from the published revisions of
+    /// its database (<see cref="Database"/>, ADR 0015) – for each collection the revision that was released –
+    /// and not from the files of the folder <c>samples</c>. The files of media stay in the folder of content.
+    /// A site that reads from the database shows what was released when it started.
+    /// </summary>
+    public bool Published { get; set; }
+
+    /// <summary>
+    /// Gets or sets the identifier of the collection a visitor enters first, for a site that reads its
+    /// collections from the database. Empty, it is the first by its identifier.
+    /// </summary>
+    public string? First { get; set; }
+
+    /// <summary>
     /// Gets or sets who the site shows the collection to. The default is the public; a collection that is not
     /// approved for the public is then not shown at all. A local demonstration has to be asked for.
     /// </summary>
@@ -114,11 +128,44 @@ public sealed class DastanLibrary
         ];
 
         var samples = Path.Combine(content, "samples");
-        var first = Path.Combine(samples, settings.Sample);
-        IEnumerable<string> others = Directory.Exists(samples)
-            ? Directory.EnumerateFiles(samples, "*.json").Where(file => !PathsEqual(file, first) && IsCollection(file)).Order(StringComparer.Ordinal)
-            : [];
-        Collections = [.. new[] { first }.Concat(others).Select(file => new DastanSite(PilotSample.Load(file, reviewedOnly), Audience, content, Comparisons))];
+        if (settings.Published)
+        {
+            // What was released, as the database holds it; the files of media are looked for where they always lie.
+            if (string.IsNullOrWhiteSpace(settings.Database))
+            {
+                throw new InvalidOperationException("Dastan:Published asks for the collections of the database, and no database is named: set Dastan:Database.");
+            }
+
+            var released = PublishedCollections.Read(settings.Database);
+            if (released.IsEmpty)
+            {
+                throw new InvalidOperationException("The database holds no released revision: publish a collection and release it (\"store release\"), then start the site again.");
+            }
+
+            Collections =
+            [
+                .. released.OrderByDescending(revision => revision.Collection == settings.First).Select(revision => new DastanSite(
+                    PilotSample.Read(revision.Json, new PilotSampleOptions
+                    {
+                        SampleDirectory = samples,
+                        ContentRoot = content,
+                        ReviewRoot = Path.GetDirectoryName(content) ?? content,
+                        Translations = [.. revision.Translations],
+                        ReviewedTextsOnly = reviewedOnly,
+                    }),
+                    Audience,
+                    content,
+                    Comparisons)),
+            ];
+        }
+        else
+        {
+            var first = Path.Combine(samples, settings.Sample);
+            IEnumerable<string> others = Directory.Exists(samples)
+                ? Directory.EnumerateFiles(samples, "*.json").Where(file => !PathsEqual(file, first) && IsCollection(file)).Order(StringComparer.Ordinal)
+                : [];
+            Collections = [.. new[] { first }.Concat(others).Select(file => new DastanSite(PilotSample.Load(file, reviewedOnly), Audience, content, Comparisons))];
+        }
 
         var twice = Collections.GroupBy(site => site.Collection, StringComparer.Ordinal).FirstOrDefault(group => group.Count() > 1);
         if (twice is not null)

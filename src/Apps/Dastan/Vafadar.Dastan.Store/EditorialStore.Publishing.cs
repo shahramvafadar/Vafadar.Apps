@@ -23,6 +23,9 @@ public sealed class StoredRevision
     /// <summary>Gets or sets the translation documents published with it, as one JSON object by language.</summary>
     public required string Translations { get; set; }
 
+    /// <summary>Gets or sets the hash of the file and the translations as they were published (<see cref="PublishedRevision.HashOf"/>).</summary>
+    public required string Hash { get; set; }
+
     /// <summary>Gets or sets what the editors said about the revision.</summary>
     public string? Note { get; set; }
 
@@ -30,6 +33,28 @@ public sealed class StoredRevision
     public required string By { get; set; }
 
     /// <summary>Gets or sets when it was made.</summary>
+    public DateTime At { get; set; }
+}
+
+/// <summary>
+/// One word about which revision of a collection the site shows: a release names a published revision, a
+/// withdrawal names none. Words are only added; the last one about a collection counts.
+/// </summary>
+public sealed class StoredRelease
+{
+    /// <summary>Gets or sets the number of the word, given by the database.</summary>
+    public long Id { get; set; }
+
+    /// <summary>Gets or sets the collection.</summary>
+    public required string CollectionId { get; set; }
+
+    /// <summary>Gets or sets the revision the site shows from now on; nothing when the collection is withdrawn.</summary>
+    public int? Number { get; set; }
+
+    /// <summary>Gets or sets who said it.</summary>
+    public required string By { get; set; }
+
+    /// <summary>Gets or sets when.</summary>
     public DateTime At { get; set; }
 }
 
@@ -96,13 +121,15 @@ public sealed partial class EditorialStore
         }
 
         var written = translations.ToImmutableSortedDictionary(translation => translation.Key, translation => translation.Value.ToJsonString(Written), StringComparer.Ordinal);
+        var kept = new JsonObject(translations.Select(translation => KeyValuePair.Create(translation.Key, (JsonNode?)translation.Value.DeepClone()))).ToJsonString();
         _context.Revisions.Add(new StoredRevision
         {
             CollectionId = collectionId,
             Number = number,
             PublishedOn = publishedOn,
             Json = made.Json,
-            Translations = new JsonObject(translations.Select(translation => KeyValuePair.Create(translation.Key, (JsonNode?)translation.Value.DeepClone()))).ToJsonString(),
+            Translations = kept,
+            Hash = PublishedRevision.HashOf(made.Json, kept),
             Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim(),
             By = by,
             At = _time.GetUtcNow().UtcDateTime,
@@ -118,6 +145,57 @@ public sealed partial class EditorialStore
         .. _context.Revisions.AsNoTracking().Where(revision => revision.CollectionId == collectionId).OrderBy(revision => revision.Number)
             .Select(revision => new RevisionInfo(revision.Number, revision.PublishedOn, revision.Note, revision.By)),
     ];
+
+    /// <summary>
+    /// Says that the site shows a published revision of a collection from now on – the newest, or an earlier
+    /// one again. The site reads it when it starts. Publishing a revision does not release it: the two are
+    /// separate acts, so that a revision can be looked at before the public sees it.
+    /// </summary>
+    /// <returns>Nothing when it was said; else why not.</returns>
+    public string? Release(string collectionId, int number, string by)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
+        ArgumentException.ThrowIfNullOrWhiteSpace(by);
+        using var step = _context.Database.BeginTransaction();
+        Lock("collection:" + collectionId);
+        if (!_context.Revisions.Any(revision => revision.CollectionId == collectionId && revision.Number == number))
+        {
+            return $"{collectionId}: the store did not publish a revision {number}.";
+        }
+
+        if (Released(collectionId) == number)
+        {
+            return $"{collectionId}: revision {number} is the one the site shows already.";
+        }
+
+        _context.Releases.Add(new StoredRelease { CollectionId = collectionId, Number = number, By = by, At = _time.GetUtcNow().UtcDateTime });
+        _context.SaveChanges();
+        step.Commit();
+        return null;
+    }
+
+    /// <summary>Says that the site shows no revision of a collection any more. What was published stays kept.</summary>
+    /// <returns>Nothing when it was said; else why not.</returns>
+    public string? Withdraw(string collectionId, string by)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
+        ArgumentException.ThrowIfNullOrWhiteSpace(by);
+        using var step = _context.Database.BeginTransaction();
+        Lock("collection:" + collectionId);
+        if (Released(collectionId) is null)
+        {
+            return $"{collectionId}: the site shows no revision of it.";
+        }
+
+        _context.Releases.Add(new StoredRelease { CollectionId = collectionId, Number = null, By = by, At = _time.GetUtcNow().UtcDateTime });
+        _context.SaveChanges();
+        step.Commit();
+        return null;
+    }
+
+    /// <summary>Returns the number of the revision of a collection the site shows, or nothing when it shows none.</summary>
+    public int? Released(string collectionId) =>
+        _context.Releases.AsNoTracking().Where(release => release.CollectionId == collectionId).OrderByDescending(release => release.Id).Select(release => release.Number).FirstOrDefault();
 
     /// <summary>Returns a published revision as it was published, or nothing when the store did not publish it.</summary>
     public ExportedCollection? Revision(string collectionId, int number)

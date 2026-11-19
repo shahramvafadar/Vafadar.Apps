@@ -12,7 +12,7 @@ using Vafadar.Dastan.Store;
 namespace Vafadar.Dastan.Store.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20261119152242_Initial")]
+    [Migration("20261119182843_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -364,6 +364,39 @@ namespace Vafadar.Dastan.Store.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredRelease", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("By")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("CollectionId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int?>("Number")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CollectionId", "Id");
+
+                    b.HasIndex("CollectionId", "Number");
+
+                    b.ToTable("Releases", "published");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredRevision", b =>
                 {
                     b.Property<string>("CollectionId")
@@ -379,6 +412,11 @@ namespace Vafadar.Dastan.Store.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Hash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("Json")
                         .IsRequired()
@@ -396,7 +434,7 @@ namespace Vafadar.Dastan.Store.Migrations
 
                     b.HasKey("CollectionId", "Number");
 
-                    b.ToTable("Revisions", "editorial");
+                    b.ToTable("Revisions", "published");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredTranslation", b =>
@@ -456,6 +494,14 @@ namespace Vafadar.Dastan.Store.Migrations
                         .HasForeignKey("CollectionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.Store.StoredRelease", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.Store.StoredRevision", null)
+                        .WithMany()
+                        .HasForeignKey("CollectionId", "Number")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.Store.StoredRevision", b =>
