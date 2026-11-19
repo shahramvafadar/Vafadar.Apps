@@ -9,6 +9,21 @@ after its actual signed executable, two fresh outputs and complete package entri
 reviewed below; local baseline evidence alone is not hosted proof.
 [Current observed drift and unchanged gates](../../../src/Apps/Zanance/docs/quality/retired-billing-review-and-hosted-compiler-drift.md).
 
+## Producer request for MSVC 14.52.37025 (candidate.11)
+
+Hosted image `windows-2025-vs2026` 20261116.315 carries installation 18.12.12405.243 with the MSVC
+tool sets 14.29.30133, 14.44.35207 and 14.52.37025; the reviewed tool set 14.51.36231 is gone from it.
+`windows.compiler.acceptance.json` (schema 3) therefore names the tool set of every accepted compiler,
+and a host qualifies with exactly one reviewed tool set whose installed `cl.exe` has the reviewed bytes,
+file version and Microsoft signature. `inputs.lock.json` is unchanged: it keeps naming the first
+reviewed tool set, because its hash is bound into the qualified Android package, and it is no longer
+the source of the tool set that is used.
+
+The branch `shahram/native-producer-4.19.0-candidate.11` requests installation 18.12.12405.243 with
+`cl.exe` 19.52.37029.0 (SHA-256 `87b094e4fb3c646247b8eb515b5daa4fd73f991fe7cc42e98c0c9e3d3805d6fb`).
+The image is rolled out gradually. The first run on commit 5842e4fa received the earlier installation
+18.11.12328.437 and was refused before any native build, as requested; it qualifies nothing.
+
 ## Qualified 31 October hosted producer identity (D-683)
 
 Original native run41185441600/job124491318973 on e1cbb1be observes installer
