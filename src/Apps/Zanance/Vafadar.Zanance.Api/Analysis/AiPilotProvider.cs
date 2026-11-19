@@ -17,6 +17,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
 {
     private const int MaxAttemptsPerProvider = 20;
     private const int InputTokenLimit = 2048;
+    private const string GeminiOperationPrefix = "\nIgnore this opaque operation reference and do not repeat it: ";
     private const long LegacyCostCeilingMicros = 33_792;
     internal const string Client = "ZananceAnalysisPilot";
     internal static readonly AiPayload ReportFixture = new(1, AiPurpose.PeriodExplanation, "en",
@@ -260,6 +261,9 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             type = "object",
             properties, required = properties.Keys.ToArray(), additionalProperties = false
         };
+        if (profile.Provider == "gemini" &&
+            !string.IsNullOrWhiteSpace(configuration[AiPilotCompletionNotices.SecretSetting("gemini")]))
+            task += GeminiOperationPrefix + operation;
         object body = profile.Provider == "openai"
             ? new { model = profile.Model, input = task, max_output_tokens = profile.OutputLimit, background = true, store = true,
                 service_tier = "default", reasoning = new { effort = profile.Reasoning }, metadata = new { zanance_operation = operation },
@@ -276,25 +280,37 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         return Outcome(profile, offer.Purpose, digest, result!.RootElement);
     }
 
-    /// <summary>Reads one signed-notice candidate under the current dedicated OpenAI project.</summary>
-    internal async Task<JsonDocument?> RetrieveOpenAiNoticeAsync(string id, CancellationToken ct)
+    /// <summary>Reads a signed-notice candidate from the configured dedicated project.</summary>
+    internal async Task<JsonDocument?> RetrieveNoticeAsync(string provider, string id, CancellationToken ct)
     {
-        if (!ValidId(id) || !id.StartsWith("resp_", StringComparison.Ordinal) ||
-            Profile(AiPurpose.PeriodExplanation, "openai", "gpt-6-luna") is not { } profile) return null;
-        using var request = Request(profile, HttpMethod.Get, profile.Url + "/" + id);
+        if (!ValidId(id) || provider == "openai" && !id.StartsWith("resp_", StringComparison.Ordinal) ||
+            Profile(AiPurpose.PeriodExplanation, provider, provider == "openai" ? "gpt-6-luna" : "gemini-3.5-flash-lite") is not { } profile)
+            return null;
+        var suffix = provider == "gemini" ? "?include_input=true" : "";
+        using var request = Request(profile, HttpMethod.Get, profile.Url + "/" + id + suffix);
         return await SendAsync(request, ct);
     }
 
-    /// <summary>Extracts only the candidate immutable operation from an authenticated retrieval.</summary>
-    internal static string? RecoveredOperation(JsonElement response, string id) =>
-        Text(response, "id") == id && Text(response, "status") == "completed"
-            ? Text(Read(response, "metadata"), "zanance_operation") : null;
+    /// <summary>Extracts the immutable operation from authenticated metadata or the exact stored user input.</summary>
+    internal static string? RecoveredOperation(string provider, JsonElement response, string id)
+    {
+        if (Text(response, "id") != id || Text(response, "status") != "completed") return null;
+        if (provider == "openai") return Text(Read(response, "metadata"), "zanance_operation");
+        var input = Array(response, "steps").Where(item => Text(item, "type") == "user_input").Take(2).ToArray();
+        if (input.Length != 1 || Text(input[0], "status") != "done") return null;
+        var content = Array(input[0], "content").Take(2).ToArray();
+        if (content.Length != 1 || Text(content[0], "type") != "text" || Text(content[0], "text") is not { } text) return null;
+        var index = text.LastIndexOf(GeminiOperationPrefix, StringComparison.Ordinal);
+        if (index < 0) return null;
+        var operation = text[(index + GeminiOperationPrefix.Length)..];
+        return operation.Length == 64 && operation.All(char.IsAsciiHexDigitLower) ? operation : null;
+    }
 
     /// <summary>Revalidates model, route and content before consulting the original settlement policy.</summary>
-    internal AiProviderOutcome? RecoveredOpenAiOutcome(AiPilotRouteRow route, AiOffer offer, string digest, JsonElement response)
+    internal AiProviderOutcome? RecoveredNoticeOutcome(AiPilotRouteRow route, AiOffer offer, string digest, JsonElement response)
     {
-        if (offer.Provider != "openai" || Admit(route, offer) is not { } profile ||
-            !IsSynthetic(offer.Purpose, digest) || Text(response, "model") != profile.Model) return null;
+        if (Admit(route, offer) is not { } profile || !IsSynthetic(offer.Purpose, digest) ||
+            Text(response, "model") != profile.Model) return null;
         return Outcome(profile, offer.Purpose, digest, response);
     }
 

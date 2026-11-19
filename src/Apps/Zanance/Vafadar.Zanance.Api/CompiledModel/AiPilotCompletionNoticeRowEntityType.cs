@@ -12,23 +12,34 @@ using Vafadar.Zanance.Api.Analysis;
 namespace Vafadar.Zanance.Api.CompiledModel
 {
     [EntityFrameworkInternal]
-    public partial class AiPilotOpenAiNoticeRowEntityType
+    public partial class AiPilotCompletionNoticeRowEntityType
     {
         public static RuntimeEntityType Create(RuntimeModel model, RuntimeEntityType baseEntityType = null)
         {
             var runtimeEntityType = model.AddEntityType(
-                "Vafadar.Zanance.Api.Analysis.AiPilotOpenAiNoticeRow",
-                typeof(AiPilotOpenAiNoticeRow),
+                "Vafadar.Zanance.Api.Analysis.AiPilotCompletionNoticeRow",
+                typeof(AiPilotCompletionNoticeRow),
                 baseEntityType,
-                propertyCount: 6,
+                propertyCount: 7,
                 unnamedIndexCount: 1,
                 keyCount: 1);
+
+            var provider = runtimeEntityType.AddProperty(
+                "Provider",
+                typeof(string),
+                propertyInfo: typeof(AiPilotCompletionNoticeRow).GetProperty("Provider", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotCompletionNoticeRow).GetField("<Provider>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                valueGenerated: ValueGenerated.OnAdd,
+                afterSaveBehavior: PropertySaveBehavior.Throw,
+                maxLength: 16);
+            provider.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+            provider.AddAnnotation("Relational:DefaultValue", "openai");
 
             var responseId = runtimeEntityType.AddProperty(
                 "ResponseId",
                 typeof(string),
-                propertyInfo: typeof(AiPilotOpenAiNoticeRow).GetProperty("ResponseId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                fieldInfo: typeof(AiPilotOpenAiNoticeRow).GetField("<ResponseId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                propertyInfo: typeof(AiPilotCompletionNoticeRow).GetProperty("ResponseId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotCompletionNoticeRow).GetField("<ResponseId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 afterSaveBehavior: PropertySaveBehavior.Throw,
                 maxLength: 250);
             responseId.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
@@ -36,49 +47,49 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var attempts = runtimeEntityType.AddProperty(
                 "Attempts",
                 typeof(int),
-                propertyInfo: typeof(AiPilotOpenAiNoticeRow).GetProperty("Attempts", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                fieldInfo: typeof(AiPilotOpenAiNoticeRow).GetField("<Attempts>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                propertyInfo: typeof(AiPilotCompletionNoticeRow).GetProperty("Attempts", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotCompletionNoticeRow).GetField("<Attempts>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 sentinel: 0);
             attempts.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var checkedAt = runtimeEntityType.AddProperty(
                 "CheckedAt",
                 typeof(DateTimeOffset?),
-                propertyInfo: typeof(AiPilotOpenAiNoticeRow).GetProperty("CheckedAt", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                fieldInfo: typeof(AiPilotOpenAiNoticeRow).GetField("<CheckedAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                propertyInfo: typeof(AiPilotCompletionNoticeRow).GetProperty("CheckedAt", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotCompletionNoticeRow).GetField("<CheckedAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
             checkedAt.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var deliveryId = runtimeEntityType.AddProperty(
                 "DeliveryId",
                 typeof(string),
-                propertyInfo: typeof(AiPilotOpenAiNoticeRow).GetProperty("DeliveryId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                fieldInfo: typeof(AiPilotOpenAiNoticeRow).GetField("<DeliveryId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                propertyInfo: typeof(AiPilotCompletionNoticeRow).GetProperty("DeliveryId", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotCompletionNoticeRow).GetField("<DeliveryId>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 maxLength: 250);
             deliveryId.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var handled = runtimeEntityType.AddProperty(
                 "Handled",
                 typeof(bool),
-                propertyInfo: typeof(AiPilotOpenAiNoticeRow).GetProperty("Handled", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                fieldInfo: typeof(AiPilotOpenAiNoticeRow).GetField("<Handled>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                propertyInfo: typeof(AiPilotCompletionNoticeRow).GetProperty("Handled", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotCompletionNoticeRow).GetField("<Handled>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 sentinel: false);
             handled.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var receivedAt = runtimeEntityType.AddProperty(
                 "ReceivedAt",
                 typeof(DateTimeOffset),
-                propertyInfo: typeof(AiPilotOpenAiNoticeRow).GetProperty("ReceivedAt", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
-                fieldInfo: typeof(AiPilotOpenAiNoticeRow).GetField("<ReceivedAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                propertyInfo: typeof(AiPilotCompletionNoticeRow).GetProperty("ReceivedAt", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiPilotCompletionNoticeRow).GetField("<ReceivedAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 sentinel: new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)));
             receivedAt.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var key = runtimeEntityType.AddKey(
-                new[] { responseId });
+                new[] { provider, responseId });
             runtimeEntityType.SetPrimaryKey(key);
 
             var index = runtimeEntityType.AddIndex(
-                new[] { deliveryId },
+                new[] { provider, deliveryId },
                 unique: true);
 
             return runtimeEntityType;

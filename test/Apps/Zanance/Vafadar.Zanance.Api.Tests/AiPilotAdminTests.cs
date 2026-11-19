@@ -72,18 +72,21 @@ public sealed class AiPilotAdminTests
         }
     }
 
-    private sealed class OpenAiRecoveryReplies : HttpMessageHandler, IHttpClientFactory
+    private sealed class RecoveryReplies(string provider) : HttpMessageHandler, IHttpClientFactory
     {
         internal int Calls;
         internal const string Matched = "resp_fixture_op_matched";
         internal const string Foreign = "resp_fixture_op_foreign";
         internal string Correlation { get; set; } = "";
+        internal int CreateCalls;
+        private string? geminiInput;
         internal static readonly byte[] SigningKey = Enumerable.Repeat((byte)23, 32).ToArray();
 
         public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
 
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            if (provider == "gemini") return await GeminiAsync(request, cancellationToken);
             Interlocked.Increment(ref Calls);
             Assert.Equal(HttpMethod.Get, request.Method);
             Assert.Null(request.Content);
@@ -91,7 +94,7 @@ public sealed class AiPilotAdminTests
             var id = request.RequestUri!.Segments[^1];
             Assert.Contains(id, new[] { Matched, Foreign });
             Assert.Equal($"https://api.openai.com/v1/responses/{id}", request.RequestUri.AbsoluteUri);
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = JsonContent.Create(new
                 {
@@ -101,7 +104,43 @@ public sealed class AiPilotAdminTests
                     output = new[] { new { type = "message", content = new[] { new { type = "output_text",
                         text = """{"net_expenses_minor":38000,"explanation":"Recorded expenses less refunds are the shown net amount."}""" } } } }
                 })
-            });
+            };
+        }
+        private async Task<HttpResponseMessage> GeminiAsync(HttpRequestMessage request, CancellationToken ct)
+        {
+            Assert.Equal("fixture-only", Assert.Single(request.Headers.GetValues("x-goog-api-key")));
+            var uri = request.RequestUri!;
+            if (request.Method == HttpMethod.Post)
+            {
+                Interlocked.Increment(ref CreateCalls);
+                Assert.Equal("https://generativelanguage.googleapis.com/v1beta/interactions", uri.AbsoluteUri);
+                using var body = await System.Text.Json.JsonDocument.ParseAsync(await request.Content!.ReadAsStreamAsync(ct), cancellationToken: ct);
+                geminiInput = body.RootElement.GetProperty("input").GetString();
+                Assert.EndsWith(Correlation, geminiInput, StringComparison.Ordinal);
+                throw new TimeoutException("Fictional missing interaction acknowledgement.");
+            }
+            Interlocked.Increment(ref Calls);
+            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Null(request.Content);
+            var id = uri.Segments[^1];
+            Assert.Contains(id, new[] { Matched, Foreign });
+            Assert.Equal($"https://generativelanguage.googleapis.com/v1beta/interactions/{id}?include_input=true", uri.AbsoluteUri);
+            var expectedInput = Assert.IsType<string>(geminiInput);
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = JsonContent.Create(new
+                {
+                    id, status = "completed", model = "gemini-3.5-flash-lite",
+                    usage = new { total_input_tokens = 48, total_output_tokens = 11, total_thought_tokens = 3 },
+                    steps = new[]
+                    {
+                        new { type = "user_input", status = "done", content = new[] { new { type = "text",
+                            text = id == Matched ? expectedInput : expectedInput[..^64] + new string('f', 64) } } },
+                        new { type = "model_output", status = "done", content = new[] { new { type = "text",
+                            text = """{"net_expenses_minor":38000,"explanation":"Recorded expenses less refunds are the shown net amount."}""" } } },
+                    },
+                })
+            };
         }
     }
 
@@ -120,9 +159,13 @@ public sealed class AiPilotAdminTests
     /// <summary>Verifies signed receipt, authenticated lost-ID retrieval and durable duplicate refusal.</summary>
     [Fact]
     public Task OpenAi_notice_recovers_one_matching_claim_and_rejects_foreign_and_duplicate_results() =>
-        RunPanelAsync(false, exerciseRecovery: true);
+        RunPanelAsync(false, recoveryProvider: "openai");
 
-    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, bool exerciseRecovery = false)
+    /// <summary>Uses the signed notice and initial provider input to recover one original Gemini create.</summary>
+    [Fact]
+    public Task Gemini_notice_recovers_only_the_original_input_reference() => RunPanelAsync(false, recoveryProvider: "gemini");
+
+    private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, string? recoveryProvider = null)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
@@ -140,9 +183,9 @@ public sealed class AiPilotAdminTests
             ["Analysis:ProviderPilot:openai:Project"] = "fixture-openai", ["Analysis:ProviderPilot:openai:ApiKey"] = "fixture-only",
             ["Analysis:ProviderPilot:gemini:Project"] = "fixture-gemini", ["Analysis:ProviderPilot:gemini:ApiKey"] = "fixture-only",
         });
-        using var recovery = exerciseRecovery ? new OpenAiRecoveryReplies() : null;
+        using var recovery = recoveryProvider is null ? null : new RecoveryReplies(recoveryProvider);
         if (recovery is not null)
-            builder.Configuration["Analysis:ProviderPilot:openai:WebhookSecret"] = "whsec_" + Convert.ToBase64String(OpenAiRecoveryReplies.SigningKey);
+            builder.Configuration[AiPilotCompletionNotices.SecretSetting(recoveryProvider!)] = "whsec_" + Convert.ToBase64String(RecoveryReplies.SigningKey);
         builder.AddZananceService();
         builder.Logging.ClearProviders();
         builder.Services.RemoveAll<IHostedService>();
@@ -150,7 +193,7 @@ public sealed class AiPilotAdminTests
         using var replies = exerciseStatus ? new RetainedStatusReplies() : null;
         var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 19, 12, 0, 0, TimeSpan.Zero));
         builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>((IHttpClientFactory?)replies ?? (IHttpClientFactory?)recovery ?? noEgress));
-        if (exerciseStatus || exerciseRecovery) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
+        if (exerciseStatus || recovery is not null) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
         await using var app = builder.Build();
         await ServiceHost.MigrateAsync(app.Services);
         await using (var scope = app.Services.CreateAsyncScope())
@@ -172,7 +215,7 @@ public sealed class AiPilotAdminTests
         if (recovery is not null)
         {
             using var callback = Browser();
-            await VerifyOpenAiRecoveryAsync(app.Services, callback, recovery, clock, ct);
+            await VerifyRecoveryAsync(app.Services, callback, recovery, recoveryProvider!, clock, ct);
             return;
         }
         if (replies is not null)
@@ -425,8 +468,8 @@ public sealed class AiPilotAdminTests
         }
     }
 
-    private static async Task VerifyOpenAiRecoveryAsync(IServiceProvider services, HttpClient callback,
-        OpenAiRecoveryReplies replies, FakeTimeProvider clock, CancellationToken ct)
+    private static async Task VerifyRecoveryAsync(IServiceProvider services, HttpClient callback,
+        RecoveryReplies replies, string provider, FakeTimeProvider clock, CancellationToken ct)
     {
         const string owner = "fictional-ai-member";
         var pending = Guid.NewGuid();
@@ -435,46 +478,48 @@ public sealed class AiPilotAdminTests
         var factory = services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         var pilot = services.GetRequiredService<AiPilotProvider>();
         await using var db = await factory.CreateDbContextAsync(ct);
-        await pilot.SelectModelAsync(db, payload.Purpose, "gpt-6-luna", OperatorId, ct);
+        await pilot.SelectModelAsync(db, payload.Purpose, provider == "openai" ? "gpt-6-luna" : "gemini-3.5-flash-lite", OperatorId, ct);
         var original = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
         await pilot.SelectModelAsync(db, payload.Purpose, "off", OperatorId, ct);
-        Seed(pending);
-        Seed(other);
+        Seed(pending, provider == "gemini" ? AiPilotDispatchStage.Queued : AiPilotDispatchStage.Claimed);
+        Seed(other, AiPilotDispatchStage.Claimed);
         await db.SaveChangesAsync(ct);
         db.ChangeTracker.Clear();
 
         replies.Correlation = Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes($"zanance.analysis.v1\n{owner}\n{pending:N}")));
+        if (provider == "gemini") await services.GetRequiredService<AiRequestStore>().DrainPilotDispatchesAsync(ct);
+        Assert.Equal(provider == "gemini" ? 1 : 0, replies.CreateCalls);
         var now = clock.GetUtcNow();
-        await Send("fixture-delivery-stale", OpenAiRecoveryReplies.Matched, now.AddMinutes(-6), HttpStatusCode.BadRequest);
-        await Send("fixture-delivery-altered", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.BadRequest, alter: true);
-        Assert.Empty(await db.Set<AiPilotOpenAiNoticeRow>().ToArrayAsync(ct));
-        await Send("fixture-delivery-original", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.NoContent);
-        await Send("fixture-delivery-original", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.NoContent);
-        await Send("fixture-delivery-original", OpenAiRecoveryReplies.Foreign, now, HttpStatusCode.NoContent);
-        await Send("fixture-delivery-duplicate", OpenAiRecoveryReplies.Matched, now, HttpStatusCode.NoContent);
-        await Send("fixture-delivery-foreign", OpenAiRecoveryReplies.Foreign, now, HttpStatusCode.NoContent);
-        Assert.Equal(2, await db.Set<AiPilotOpenAiNoticeRow>().CountAsync(ct));
+        await Send("fixture-delivery-stale", RecoveryReplies.Matched, now.AddMinutes(-6), HttpStatusCode.BadRequest);
+        await Send("fixture-delivery-altered", RecoveryReplies.Matched, now, HttpStatusCode.BadRequest, alter: true);
+        Assert.Empty(await db.Set<AiPilotCompletionNoticeRow>().ToArrayAsync(ct));
+        await Send("fixture-delivery-original", RecoveryReplies.Matched, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-original", RecoveryReplies.Matched, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-original", RecoveryReplies.Foreign, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-duplicate", RecoveryReplies.Matched, now, HttpStatusCode.NoContent);
+        await Send("fixture-delivery-foreign", RecoveryReplies.Foreign, now, HttpStatusCode.NoContent);
+        Assert.Equal(2, await db.Set<AiPilotCompletionNoticeRow>().CountAsync(ct));
         Assert.Equal(0, replies.Calls);
 
-        var inbox = services.GetRequiredService<AiPilotOpenAiNotices>();
+        var inbox = services.GetRequiredService<AiPilotCompletionNotices>();
         await Task.WhenAll(inbox.DrainAsync(ct), inbox.DrainAsync(ct));
         Assert.Equal(2, replies.Calls);
         var accepted = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == pending, ct);
-        Assert.Equal((AiRequestState.Completed, OpenAiRecoveryReplies.Matched, 1L), (accepted.State, accepted.VendorOperationId, accepted.ChargedUnits));
+        Assert.Equal((AiRequestState.Completed, RecoveryReplies.Matched, 1L), (accepted.State, accepted.VendorOperationId, accepted.ChargedUnits));
         var untouched = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == other, ct);
         Assert.Equal(AiRequestState.Pending, untouched.State);
         Assert.Null(untouched.VendorOperationId);
         var settlement = Assert.Single(await db.Set<AiCreditRow>().ToArrayAsync(ct));
         Assert.Equal(AiCreditEvent.Settle, settlement.Kind);
         Assert.Equal(pending, settlement.RequestId);
-        Assert.All(await db.Set<AiPilotOpenAiNoticeRow>().ToArrayAsync(ct), row => { Assert.Equal(1, row.Attempts); Assert.True(row.Handled); });
+        Assert.All(await db.Set<AiPilotCompletionNoticeRow>().ToArrayAsync(ct), row => { Assert.Equal(1, row.Attempts); Assert.True(row.Handled); });
 
         clock.Advance(TimeSpan.FromMinutes(10));
-        await Send("fixture-delivery-new-signature", OpenAiRecoveryReplies.Matched, clock.GetUtcNow(), HttpStatusCode.NoContent);
+        await Send("fixture-delivery-new-signature", RecoveryReplies.Matched, clock.GetUtcNow(), HttpStatusCode.NoContent);
         await inbox.DrainAsync(ct);
         Assert.Equal(2, replies.Calls);
 
-        void Seed(Guid requestId)
+        void Seed(Guid requestId, AiPilotDispatchStage stage)
         {
             var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = owner, Purpose = payload.Purpose,
                 Provider = original.Provider, Model = original.Model!, MaximumUnits = 1, PilotRouteId = original.Id,
@@ -482,15 +527,15 @@ public sealed class AiPilotAdminTests
             db.AddRange(offer, new AiRequestRow { Id = requestId, UserId = owner, OfferId = offer.Id,
                 State = AiRequestState.Pending, CreatedAt = clock.GetUtcNow(), GiftedReserved = 1,
                 PayloadDigest = AiProtocol.Digest(payload), ProtectedPayload = "fictional-protected",
-                PilotDispatchStage = AiPilotDispatchStage.Claimed, PilotDispatchClaimedAt = clock.GetUtcNow() });
+                PilotDispatchStage = stage, PilotDispatchClaimedAt = stage == AiPilotDispatchStage.Claimed ? clock.GetUtcNow() : null });
         }
         async Task Send(string delivery, string id, DateTimeOffset timestamp, HttpStatusCode status, bool alter = false)
         {
             var stamp = timestamp.ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture);
-            var body = System.Text.Json.JsonSerializer.Serialize(new { type = "response.completed", data = new { id } });
-            var signature = Convert.ToBase64String(HMACSHA256.HashData(OpenAiRecoveryReplies.SigningKey,
+            var body = System.Text.Json.JsonSerializer.Serialize(new { type = provider == "openai" ? "response.completed" : "interaction.completed", data = new { id } });
+            var signature = Convert.ToBase64String(HMACSHA256.HashData(RecoveryReplies.SigningKey,
                 Encoding.UTF8.GetBytes($"{delivery}.{stamp}.{body}")));
-            using var request = new HttpRequestMessage(HttpMethod.Post, "/analysis/pilot/openai/completions")
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"/analysis/pilot/{provider}/completions")
             {
                 Content = new StringContent(alter ? body + " " : body, Encoding.UTF8, "application/json"),
             };

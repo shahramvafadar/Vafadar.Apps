@@ -106,9 +106,11 @@ public sealed class AiPilotStatusCheckRow
     public DateTimeOffset CheckedAt { get; set; }
 }
 
-/// <summary>Bounded receipt of an authenticated OpenAI completion notice in the isolated pilot.</summary>
-public sealed class AiPilotOpenAiNoticeRow
+/// <summary>Bounded receipt of an authenticated provider completion notice in the isolated pilot.</summary>
+public sealed class AiPilotCompletionNoticeRow
 {
+    /// <summary>Original provider namespace for the signed delivery and native reference.</summary>
+    public string Provider { get; set; } = "";
     /// <summary>Deduplicated native response ID. No payload or output is stored here.</summary>
     public string ResponseId { get; set; } = "";
     /// <summary>Signed delivery ID for replay refusal.</summary>
@@ -178,9 +180,10 @@ internal static class AiServiceModel
         statusCheck.Property(r => r.Actor).HasMaxLength(256);
         statusCheck.HasOne<AiRequestRow>().WithMany().HasForeignKey(r => r.RequestId).OnDelete(DeleteBehavior.Restrict);
 
-        var notice = model.Entity<AiPilotOpenAiNoticeRow>(); notice.ToTable("AiPilotOpenAiNotices");
-        notice.HasKey(r => r.ResponseId); notice.Property(r => r.ResponseId).HasMaxLength(250);
-        notice.Property(r => r.DeliveryId).HasMaxLength(250); notice.HasIndex(r => r.DeliveryId).IsUnique();
+        var notice = model.Entity<AiPilotCompletionNoticeRow>(); notice.ToTable("AiPilotOpenAiNotices");
+        notice.HasKey(r => new { r.Provider, r.ResponseId }); notice.Property(r => r.Provider).HasMaxLength(16).HasDefaultValue("openai");
+        notice.Property(r => r.ResponseId).HasMaxLength(250);
+        notice.Property(r => r.DeliveryId).HasMaxLength(250); notice.HasIndex(r => new { r.Provider, r.DeliveryId }).IsUnique();
 
         var credit = model.Entity<AiCreditRow>(); credit.ToTable("AiCredits"); credit.HasKey(r => r.Id);
         credit.Property(r => r.UserId).HasMaxLength(256); credit.Property(r => r.GrantKey).HasMaxLength(64);

@@ -3,7 +3,7 @@ using Npgsql;
 namespace Vafadar.Zanance.Api.Analysis;
 
 /// <summary>Continues only the isolated pilot's durable, never-claimed creates after service restart.</summary>
-internal sealed class AiPilotDispatchWorker(AiRequestStore store, AiPilotOpenAiNotices notices, ILogger<AiPilotDispatchWorker> logger) : BackgroundService
+internal sealed class AiPilotDispatchWorker(AiRequestStore store, AiPilotCompletionNotices notices, ILogger<AiPilotDispatchWorker> logger) : BackgroundService
 {
     private static readonly TimeSpan Interval = TimeSpan.FromSeconds(5);
 
