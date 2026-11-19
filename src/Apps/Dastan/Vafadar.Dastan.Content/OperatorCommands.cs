@@ -40,6 +40,13 @@ internal static class OperatorCommands
               no table. Wherever a command asks for a database, the word env stands for the connection in
               the variable DASTAN_DATABASE – a connection holds a password and is never typed as a word.
 
+          database grant site|tool <role> --database env
+              Gives a role of the database what the site or the tool of the editors needs, and takes from
+              it everything else: the site reads what was released and never the work of the editors; the
+              tool never reaches what belongs to visitors. The role is made beforehand by who runs the
+              database, with a password this program never sees; the connection here is the one of the
+              role that made the tables. Run it after "database migrate".
+
           people restrictions --people <database>
               Lists the restrictions that stand.
 
@@ -113,6 +120,31 @@ internal static class OperatorCommands
                 }
 
                 output.WriteLine("The database has the form this program knows.");
+                return ContentCommands.Done;
+
+            case ["database", "grant", var program, var role, "--database", var database]:
+                if (!DatabaseRoles.Programs.Contains(program) || !DatabaseRoles.IsName(role))
+                {
+                    return null;
+                }
+
+                if (string.IsNullOrWhiteSpace(Connection(database)))
+                {
+                    output.WriteLine("No database: set DASTAN_DATABASE to its connection and name it with the word env.");
+                    return ContentCommands.NotUsable;
+                }
+
+                try
+                {
+                    DatabaseRoles.Grant(Connection(database), program, role);
+                }
+                catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)
+                {
+                    output.WriteLine($"The role was given nothing: {failed.Message}");
+                    return ContentCommands.NotUsable;
+                }
+
+                output.WriteLine($"{role} may do in the database what the {program} does, and no more.");
                 return ContentCommands.Done;
 
             case ["people", "restrictions", "--people", var database]:

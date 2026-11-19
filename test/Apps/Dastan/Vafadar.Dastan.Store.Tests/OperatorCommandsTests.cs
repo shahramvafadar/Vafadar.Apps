@@ -104,6 +104,92 @@ public sealed class OperatorCommandsTests : IDisposable
     }
 
     [Fact]
+    public void The_site_and_the_tool_each_get_a_role_that_may_do_what_the_program_does_and_no_more()
+    {
+        var owner = People;
+        var suffix = Guid.NewGuid().ToString("N")[..10];
+        var (site, tool) = ($"dastan_site_{suffix}", $"dastan_tool_{suffix}");
+        string As(string role) => new Npgsql.NpgsqlConnectionStringBuilder(owner) { Username = role }.ConnectionString;
+
+        void Sql(string connection, string sql)
+        {
+            using var database = new Npgsql.NpgsqlConnection(connection);
+            database.Open();
+            using var command = database.CreateCommand();
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
+        }
+
+        string Refused(string connection, string sql) => Assert.Throws<Npgsql.PostgresException>(() => Sql(connection, sql)).SqlState;
+
+        // The roles are made by who runs the database; the command only grants.
+        Sql(owner, $"create role {site} login; create role {tool} login");
+        try
+        {
+            Assert.Equal(ContentCommands.Done, Run("database", "grant", "site", site, "--database", owner).Exit);
+            Assert.Equal(ContentCommands.Done, Run("database", "grant", "tool", tool, "--database", owner).Exit);
+            Assert.Equal(ContentCommands.Done, Run("database", "grant", "tool", tool, "--database", owner).Exit);
+
+            // The tool does the work of the editors with its role: a collection, a revision, a release.
+            using var copy = new WorkingCopy();
+            using (var editors = EditorialStore.Open(As(tool), _clock, copy.Samples))
+            {
+                Assert.Empty(editors.Import(copy.Sample, "an editor", "The first import.").Problems);
+                foreach (var statement in editors.Statements(WorkingCopy.Collection))
+                {
+                    Assert.True(editors.Review(WorkingCopy.Collection, statement.Statement, ReviewAct.Reviewed, "a reviewer", Today, "Read against the text.").Done);
+                }
+
+                Assert.Equal(1, editors.Publish(WorkingCopy.Collection, Today, "a publisher").Number);
+                Assert.Null(editors.Release(WorkingCopy.Collection, 1, "a publisher"));
+            }
+
+            // The site keeps an account, takes a report and a notice, and reads what was released.
+            using (var people = PeopleStore.Open(As(site), _clock))
+            {
+                Assert.NotNull(people.Register("Mina", Password).Session);
+            }
+
+            Assert.True(new ReportBox(As(site)).Take("story-x", 1, "en", "evidence/entity/x", "A report.", Today));
+            Assert.NotNull(new NoticeBox(As(site)).Take("en", "https://dastan.online/en/tree/abc", "image", "The photograph shows me and I never agreed.", null, null, goodFaith: true, _clock.GetUtcNow().UtcDateTime));
+            Sql(As(site), """select "Json" from published."Revisions"; select "Number" from published."Releases" """);
+
+            // And no more. The site: nothing of the editors, no change of what was published, no look at a report again.
+            const string denied = Npgsql.PostgresErrorCodes.InsufficientPrivilege;
+            Assert.Equal(denied, Refused(As(site), """select 1 from editorial."Records" """));
+            Assert.Equal(denied, Refused(As(site), """update published."Revisions" set "By" = 'somebody'"""));
+            Assert.Equal(denied, Refused(As(site), """delete from published."Releases" """));
+            Assert.Equal(denied, Refused(As(site), """update delivery."Reports" set "Text" = 'changed'"""));
+            Assert.Equal(denied, Refused(As(site), """delete from personal."__EFMigrationsHistory" """));
+            Assert.Equal(denied, Refused(As(site), "create table personal.more (id int)"));
+
+            // The tool: nothing of the visitors, a revision is never changed, a report is noted and not removed.
+            Assert.Equal(denied, Refused(As(tool), """select 1 from personal."Visitors" """));
+            Assert.Equal(denied, Refused(As(tool), """update published."Revisions" set "By" = 'somebody'"""));
+            Assert.Equal(denied, Refused(As(tool), """delete from published."Releases" """));
+            Assert.Equal(denied, Refused(As(tool), """delete from delivery."Reports" """));
+            Assert.True(new ReportBox(As(tool)).Settle(Assert.Single(new ReportBox(As(tool)).Waiting()).Id, "a reviewer", Today));
+
+            // What is not asked for completely is not done: a program that is none, a name that is no name of a role.
+            Assert.Equal(ContentCommands.NotUnderstood, Run("database", "grant", "everybody", site, "--database", owner).Exit);
+            Assert.Equal(ContentCommands.NotUnderstood, Run("database", "grant", "site", "Robert\"; drop role postgres; --", "--database", owner).Exit);
+            Assert.Equal(ContentCommands.NotUsable, Run("database", "grant", "site", "no_such_role_" + suffix, "--database", owner).Exit);
+        }
+        finally
+        {
+            // A role belongs to the whole server: it is taken out with everything it was given.
+            using var database = new Npgsql.NpgsqlConnection(owner);
+            database.Open();
+            foreach (var role in new[] { site, tool })
+            {
+                using var command = database.CreateCommand();
+                command.CommandText = $"drop owned by {role}; drop role {role}";
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+
+    [Fact]
     public void A_tree_and_an_account_are_restricted_with_their_reasons_listed_and_lifted()
     {
         string tree, zal;

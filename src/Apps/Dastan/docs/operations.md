@@ -227,8 +227,42 @@ makes the tables or brings them to the form the program knows, and is run before
 started. On a developer's machine and for the tests, `docker compose -f src/Apps/Dastan/compose.yaml up -d
 postgres` starts a PostgreSQL that keeps nothing (its data lies in memory) and answers this machine only; the
 tests make a database of their own for every test in it and are skipped without it – in CI, where
-`DASTAN_POSTGRES_REQUIRED` is set, they fail instead. **Backup**: `pg_dump` of the database together with the
-volume of the files; how both are brought back is tried and written here before step 19.3 is done.
+`DASTAN_POSTGRES_REQUIRED` is set, they fail instead.
+
+**The parts of the database.** `personal` (accounts and what belongs to them), `editorial` (the work of the
+editors), `published` (the revisions and comparisons that were released, and which of them the site shows) and
+`delivery` (reports of visitors, notices about content). One `database migrate` makes all of them.
+
+**Roles.** The role that runs `database migrate` owns the tables and may do everything; it is the role of the
+operator and of nobody else. The site and the tool of the editors each connect as a role of their own:
+
+```
+psql … -c "create role dastan_site login" -c "\password dastan_site"     # the password is typed, never written
+psql … -c "create role dastan_tool login" -c "\password dastan_tool"
+dotnet Vafadar.Dastan.Content.dll database grant site dastan_site --database env
+dotnet Vafadar.Dastan.Content.dll database grant tool dastan_tool --database env
+```
+
+`Dastan__Database` then names `dastan_site`, `Studio__Store` names `dastan_tool`, and `DASTAN_DATABASE` of the
+commands stays the owner's. The site reads what was released and writes accounts, reports and notices; it
+cannot read a table of the editors, change a revision or make a table. The tool does the work of the editors,
+adds revisions and releases, reads reports and notes them as looked at; it cannot reach what belongs to
+visitors and cannot change a revision that was published. `grant` is run again after an update that adds
+tables – it says the same for tables made later by the role that ran it, and asked twice it changes nothing.
+The Compose files of this repository start with one role for everything, which is enough for a development
+machine and a closed trial among invited people; a site for the public uses the two roles.
+
+**Backup.** `pg_dump -Fc` of the database, together with the volume of the files – the photographs without
+the database are of no use, and the database names files it does not hold:
+
+```
+docker compose -f src/Apps/Dastan/compose.trial.yaml exec -T database pg_dump -U dastan -d dastan -Fc > <a place that is not this server>/<day>.dump
+```
+
+Bringing it back, with the site stopped: `pg_restore --clean --if-exists -d dastan` fed with that file, then
+the volume, then the site. Tried once on the development database (2026-11-19): a collection with its history
+and accounts were copied, both schemas dropped and restored, and the collection written out afterwards was
+the same file byte for byte. Not tried on a server, and not together with the volume of the files.
 
 ## Notices about content, and restricting
 
