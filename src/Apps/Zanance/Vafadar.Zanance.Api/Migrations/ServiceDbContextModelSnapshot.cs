@@ -332,6 +332,12 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.Property<long?>("PilotCostCeilingMicros")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTimeOffset?>("PilotDispatchClaimedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int?>("PilotDispatchStage")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ProtectedPayload")
                         .IsRequired()
                         .HasMaxLength(65536)

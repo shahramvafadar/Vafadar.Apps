@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiRequestRow",
                 typeof(AiRequestRow),
                 baseEntityType,
-                propertyCount: 16,
+                propertyCount: 18,
                 foreignKeyCount: 2,
                 unnamedIndexCount: 2,
                 keyCount: 1);
@@ -84,6 +84,22 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 fieldInfo: typeof(AiRequestRow).GetField("<PilotCostCeilingMicros>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
             pilotCostCeilingMicros.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var pilotDispatchClaimedAt = runtimeEntityType.AddProperty(
+                "PilotDispatchClaimedAt",
+                typeof(DateTimeOffset?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("PilotDispatchClaimedAt", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<PilotDispatchClaimedAt>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            pilotDispatchClaimedAt.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var pilotDispatchStage = runtimeEntityType.AddProperty(
+                "PilotDispatchStage",
+                typeof(AiPilotDispatchStage?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("PilotDispatchStage", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<PilotDispatchStage>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            pilotDispatchStage.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var protectedPayload = runtimeEntityType.AddProperty(
                 "ProtectedPayload",

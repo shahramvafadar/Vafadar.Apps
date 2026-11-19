@@ -232,7 +232,7 @@ jobs:
           global-json-file: global.json
       - name: Prepare owned fictional PostgreSQL dependency
         run: |
-          docker run -d --name zanance-analysis-ci -p 127.0.0.1:55478:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_ai_d298 postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+          docker run -d --name zanance-analysis-ci -p 127.0.0.1:55478:5432 -p 127.0.0.1:55479:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_ai_d298 postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
           for attempt in $(seq 1 30); do
             if docker exec zanance-analysis-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_ai_d298; then break; fi
             sleep 1
@@ -248,6 +248,26 @@ jobs:
         run: ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -class '*AiHttpContinuationTests' -failSkips -result-xml TestResults/analysis-http.xml
       - name: Verify separate worker credit ownership and closed default provider
         run: ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -class '*AiConcurrentCreditTests' -failSkips -result-xml TestResults/analysis-workers.xml
+      - name: Verify optional pilot boundaries with fake providers
+        env:
+          ZANANCE_AI_PROVIDER_PILOT_CONNECTION: Host=127.0.0.1;Port=55479;Database=zanance_ai_provider_pilot;Username=postgres
+          ZANANCE_AI_ADMIN_TEST_CONNECTION: Host=127.0.0.1;Port=55479;Database=zanance_ai_provider_pilot;Username=postgres
+        run: |
+          for method in \
+            Switch_retires_quotes_but_pending_requests_keep_their_original_vendor \
+            Pilot_cost_budget_reserves_at_acceptance_and_rejects_concurrent_overrun \
+            Pilot_recovers_only_never_claimed_create_after_restart \
+            Operator_can_view_switch_and_disable_each_purpose_in_the_private_panel \
+            Operator_sees_only_bounded_original_pending_metadata \
+            Operator_checks_the_original_reference_with_durable_limits
+          do
+            docker exec zanance-analysis-ci createdb -h 127.0.0.1 -U postgres zanance_ai_provider_pilot
+            export ZANANCE_AI_ADMIN_TEST_ROOT="$ZANANCE_AI_QA_ROOT/$method"
+            mkdir -p "$ZANANCE_AI_ADMIN_TEST_ROOT"
+            printf '%s' 'Zanance synthetic admin panel' > "$ZANANCE_AI_ADMIN_TEST_ROOT/fixture.marker"
+            ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -method "*$method" -failSkips -result-xml "TestResults/analysis-$method.xml"
+            docker exec zanance-analysis-ci dropdb -h 127.0.0.1 -U postgres zanance_ai_provider_pilot
+          done
       - name: Upload bounded analysis reports only
         if: always()
         uses: actions/upload-artifact@v7

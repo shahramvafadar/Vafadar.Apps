@@ -225,6 +225,10 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             : throw new InvalidOperationException("The configured synthetic pilot budget is outside its approved bound.");
     }
 
+    /// <summary>Admits only the frozen project and exact synthetic input for a queued create.</summary>
+    internal bool CanBegin(AiPilotRouteRow route, AiOffer offer, string digest) =>
+        Admit(route, offer) is not null && IsSynthetic(offer.Purpose, digest);
+
     /// <summary>Submits the admitted synthetic operation once and saves the vendor ID before attempting settlement.</summary>
     internal async Task<AiProviderOutcome> BeginAsync(AiPilotRouteRow route, AiOffer offer, string operation,
         string digest, Func<string, Task> saveId, CancellationToken ct)

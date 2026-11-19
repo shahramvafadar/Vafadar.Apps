@@ -29,6 +29,14 @@ The isolated HTTPS fixture covered anonymous refusal, the empty queue, oldest-fi
 
 A separate HTTPS and PostgreSQL fixture tested the operator action with synthetic vendor responses. Two simultaneous forms reserved one attempt. Checks at 59 seconds and after the third attempt were refused. A missing reference and an unsupported digest did not use the transport. Three unknown responses kept the original request and reservation pending. A separate valid result used the same retained route and settled once. Four audit rows recorded the original operator and times. The transport accepted only GET for the two synthetic references, so the check incurred no vendor usage.
 
+### Original dispatch recovery
+
+An accepted synthetic request records a queued create in the same transaction as consent, the vendor cost ceiling and the single credit reservation. The original submission path and the background drain race on a conditional PostgreSQL update. Only the winner can send the original create. It records the durable claim and UTC time before touching the transport, and keeps the original route even when that model is subsequently switched Off for new work. A normal service restart can pick up a never-claimed request. A claimed create is never recovered by reissuing it, even if its receipt is lost. The user status path observes the original operation only, and earlier rows without a dispatch stage have no queue authority. Keep the pilot disabled when opening an old backup unless its outbound history has been reconciled independently.
+
+Two isolated store instances sharing PostgreSQL competed for an unclaimed request after reconstruction. The only synthetic POST observed its committed claim before the simulated lost receipt. An already claimed request and a previous-format pending request did not dispatch. A subsequent drain after advancing the clock by 30 days made no extra call or credit movement. The first test seed lacked the original gift grant and the existing wallet invariant refused it; the corrected fixture includes the grant and all three reservations.
+
+The general identity workflow formerly treated opt-in provider tests without their fixture as failures. The six fake-provider tests now belong to the isolated analysis workflow and each receives its own fresh fictional database. The live test remains explicitly opt-in. See the [original failed identity job](https://github.com/shahramvafadar/Vafadar.Apps/actions/runs/44631663207/job/135939590610).
+
 ### Synthetic vendor cost ceiling
 
 Before a new synthetic request is accepted, the same PostgreSQL lock used for route selection and pilot admission checks the monetary ceiling. The accepted row stores the uncached Standard ceiling in integer millionths of a US dollar, rounded up from 2048 input tokens and the output limit on the original model. The customer credit price is unchanged. Requests refused at the cost limit neither reserve customer credits nor call a vendor.

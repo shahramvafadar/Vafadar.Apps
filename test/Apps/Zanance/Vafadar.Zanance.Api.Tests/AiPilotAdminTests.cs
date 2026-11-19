@@ -21,6 +21,7 @@ using Vafadar.Zanance.Core.Analysis;
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Exercises the real operator forms over TLS against an isolated PostgreSQL database.</summary>
+[Trait("Qualification", "AiLocal")]
 public sealed class AiPilotAdminTests
 {
     private const string Panel = "/admin/analysis";

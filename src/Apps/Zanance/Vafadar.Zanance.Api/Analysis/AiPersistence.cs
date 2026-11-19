@@ -24,6 +24,15 @@ public sealed class AiOfferRow
     public DateTimeOffset ExpiresAt { get; set; }
 }
 
+/// <summary>The durable create boundary for newly admitted synthetic operations.</summary>
+public enum AiPilotDispatchStage
+{
+    /// <summary>No process has obtained permission to make the original create call.</summary>
+    Queued,
+    /// <summary>A process could have reached the vendor. This attempt may never be reclaimed.</summary>
+    Claimed,
+}
+
 /// <summary>Durable original dispatch intent and protected minimal payload; retries never replace its identity or consent.</summary>
 public sealed class AiRequestRow
 {
@@ -55,6 +64,10 @@ public sealed class AiRequestRow
     public string? VendorOperationId { get; set; }
     /// <summary>Frozen uncached Standard ceiling in millionths of a US dollar for an accepted synthetic dispatch.</summary>
     public long? PilotCostCeilingMicros { get; set; }
+    /// <summary>Null preserves the previous dispatch path; only new synthetic admissions enter the queue.</summary>
+    public AiPilotDispatchStage? PilotDispatchStage { get; set; }
+    /// <summary>Server time at which the one original create became possible.</summary>
+    public DateTimeOffset? PilotDispatchClaimedAt { get; set; }
     /// <summary>Actual vendor input usage recorded on an accepted completion.</summary>
     public int? VendorInputTokens { get; set; }
     /// <summary>Actual vendor billable output usage recorded on an accepted completion.</summary>

@@ -13,6 +13,7 @@ using Vafadar.Zanance.Core.Analysis;
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Exercises the original analysis store and durable operator selection against an isolated PostgreSQL fixture.</summary>
+[Trait("Qualification", "AiLocal")]
 public sealed class AiPilotProviderSwitchTests
 {
     private sealed class Factory(string connection) : IDbContextFactory<ServiceDbContext>
@@ -24,6 +25,7 @@ public sealed class AiPilotProviderSwitchTests
     {
         public List<(HttpMethod Method, string Host, string Path)> Calls { get; } = [];
         internal bool LoseGeminiAcknowledgement { get; set; }
+        internal Func<Task>? InspectBeforeCreate { get; set; }
         public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct)
@@ -35,6 +37,7 @@ public sealed class AiPilotProviderSwitchTests
 
         private async Task<HttpResponseMessage> BeginAsync(HttpRequestMessage request, CancellationToken ct)
         {
+            if (InspectBeforeCreate is { } observe) await observe();
             var input = await request.Content!.ReadAsStringAsync(ct);
             Assert.Contains("125000", input, StringComparison.Ordinal);
             Assert.Contains("Synthetic Zanance test", input, StringComparison.Ordinal);
@@ -336,5 +339,88 @@ public sealed class AiPilotProviderSwitchTests
         Assert.All(rows.Where(row => row.State == AiRequestState.NotAccepted), row => Assert.Null(row.PilotCostCeilingMicros));
         Assert.Equal(922, rows.Sum(row => row.PilotCostCeilingMicros));
         Assert.Equal(2, await verification.Set<AiCreditRow>().CountAsync(row => row.Kind == AiCreditEvent.Reserve, ct));
+    }
+
+    /// <summary>Two fresh stores recover only one never-claimed operation and preserve uncertain legacy and claimed work.</summary>
+    [Fact]
+    public async Task Pilot_recovers_only_never_claimed_create_after_restart()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_PROVIDER_PILOT_CONNECTION");
+        if (connection is null) { Assert.Skip("Explicit isolated provider-pilot PostgreSQL fixture required."); return; }
+        var settings = new NpgsqlConnectionStringBuilder(connection);
+        Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
+        var factory = new Factory(connection);
+        var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:gemini:ApiKey"] = "fictional-dispatch-fixture",
+            ["Analysis:ProviderPilot:gemini:Project"] = "fictional-dispatch-project",
+        }).Build();
+        using var transport = new Transport { LoseGeminiAcknowledgement = true };
+        var pilot = new AiPilotProvider(config, transport, clock);
+        const string owner = "fictional-dispatch-owner";
+        var queued = Guid.NewGuid();
+        var claimed = Guid.NewGuid();
+        var legacy = Guid.NewGuid();
+        var payload = AiPilotProvider.ReportFixture;
+        var session = Guid.NewGuid();
+        await using (var db = factory.CreateDbContext())
+        {
+            await db.Database.MigrateAsync(ct);
+            Assert.False(db.Database.HasPendingModelChanges());
+            db.Users.Add(new ServiceUser { Id = owner, UserName = owner, SecurityStamp = "fictional-dispatch-stamp" });
+            db.Sessions.Add(new DeviceSession { Id = session, UserId = owner, Generation = 1, ExpiresAt = clock.GetUtcNow().AddYears(1) });
+            await db.SaveChangesAsync(ct);
+            await pilot.SelectModelAsync(db, payload.Purpose, "gemini-3.5-flash-lite", "fictional-dispatch-operator", ct);
+            var original = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
+            await pilot.SelectModelAsync(db, payload.Purpose, "off", "fictional-dispatch-operator", ct);
+            db.Add(new AiCreditRow { Id = Guid.NewGuid(), UserId = owner, GrantKey = new string('b', 64),
+                Kind = AiCreditEvent.GiftedGrant, GiftedAvailable = 3, CreatedAt = clock.GetUtcNow().AddDays(-3) });
+            Seed(queued, AiPilotDispatchStage.Queued);
+            Seed(claimed, AiPilotDispatchStage.Claimed);
+            Seed(legacy, null);
+            await db.SaveChangesAsync(ct);
+
+            void Seed(Guid id, AiPilotDispatchStage? stage)
+            {
+                var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = owner, Provider = original.Provider, Model = original.Model!,
+                    Purpose = payload.Purpose, PilotRouteId = original.Id, MaximumUnits = 1, ExpiresAt = clock.GetUtcNow().AddDays(-1) };
+                db.AddRange(offer, new AiRequestRow { Id = id, UserId = owner, OfferId = offer.Id,
+                    PayloadDigest = AiProtocol.Digest(payload), ProtectedPayload = "fictional-protected-aggregate", CreatedAt = clock.GetUtcNow().AddDays(-2),
+                    State = AiRequestState.Pending, GiftedReserved = 1, PilotCostCeilingMicros = 1895,
+                    PilotDispatchStage = stage, PilotDispatchClaimedAt = stage == AiPilotDispatchStage.Claimed ? clock.GetUtcNow().AddDays(-2) : null },
+                    new AiCreditRow { Id = Guid.NewGuid(), UserId = owner, RequestId = id, Kind = AiCreditEvent.Reserve,
+                        GiftedAvailable = -1, GiftedReserved = 1, CreatedAt = clock.GetUtcNow().AddDays(-2) });
+            }
+        }
+
+        var actor = new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, owner),
+            new Claim(ServiceHost.SessionClaim, session.ToString("D")), new Claim(ServiceHost.GenerationClaim, "1")], "synthetic"));
+        var protection = new EphemeralDataProtectionProvider();
+        AiRequestStore FreshStore() => new(factory, new UnconfiguredAiProvider(), protection, clock, new AiPilotProvider(config, transport, clock));
+        Assert.Equal(AiRequestState.Pending, (await FreshStore().StatusAsync(actor, queued, ct)).State);
+        Assert.Empty(transport.Calls);
+        transport.InspectBeforeCreate = async () =>
+        {
+            await using var db = factory.CreateDbContext();
+            var saved = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == queued, ct);
+            Assert.Equal(AiPilotDispatchStage.Claimed, saved.PilotDispatchStage);
+            Assert.Equal(clock.GetUtcNow(), saved.PilotDispatchClaimedAt);
+            Assert.Null(saved.VendorOperationId);
+        };
+        await Task.WhenAll(FreshStore().DrainPilotDispatchesAsync(ct), FreshStore().DrainPilotDispatchesAsync(ct));
+        Assert.Equal((HttpMethod.Post, "generativelanguage.googleapis.com", "/v1beta/interactions"), Assert.Single(transport.Calls));
+
+        clock.Advance(TimeSpan.FromDays(30));
+        await FreshStore().DrainPilotDispatchesAsync(ct);
+        Assert.Single(transport.Calls);
+        await using var observed = factory.CreateDbContext();
+        var rows = await observed.Set<AiRequestRow>().ToDictionaryAsync(row => row.Id, ct);
+        Assert.Equal(AiPilotDispatchStage.Claimed, rows[queued].PilotDispatchStage);
+        Assert.Equal(AiPilotDispatchStage.Claimed, rows[claimed].PilotDispatchStage);
+        Assert.Null(rows[legacy].PilotDispatchStage);
+        Assert.All(rows.Values, row => { Assert.Equal(AiRequestState.Pending, row.State); Assert.Null(row.VendorOperationId); });
+        Assert.Equal(4, await observed.Set<AiCreditRow>().CountAsync(ct));
     }
 }

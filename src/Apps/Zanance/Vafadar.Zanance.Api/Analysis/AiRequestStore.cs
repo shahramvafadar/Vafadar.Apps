@@ -54,7 +54,6 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         if (encoded.Length > AiProtocol.MaximumPayloadBytes) throw new AiRefusal(413, "AiPayloadBound");
         var payload = JsonSerializer.Deserialize(encoded, AiJson.Default.AiPayload) ?? throw new AiRefusal(422, "AiConsentRefused");
         var digest = AiProtocol.Digest(payload); string owner; bool dispatch;
-        AiPilotRouteRow? admittedRoute = null;
         await using (var db = await factory.CreateDbContextAsync(ct))
         await using (var scope = await OpenAsync(actor, db, ct))
         {
@@ -88,7 +87,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                 long? pilotCostCeiling = null;
                 if (accepted && selected is { } route)
                 {
-                    admittedRoute = await db.Set<AiPilotRouteRow>().SingleAsync(r => r.Id == route.RouteId, ct);
+                    var admittedRoute = await db.Set<AiPilotRouteRow>().SingleAsync(r => r.Id == route.RouteId, ct);
                     pilotCostCeiling = await pilot!.AvailableCostCeilingAsync(db, owner, admittedRoute, submission.Offer, ct);
                     accepted = pilotCostCeiling is not null;
                 }
@@ -99,27 +98,82 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                 var purchased = accepted ? row.MaximumUnits - gifted : 0;
                 db.Add(new AiRequestRow { Id = submission.RequestId, UserId = owner, OfferId = row.Id, PayloadDigest = digest,
                     ProtectedPayload = Protector(owner, submission.RequestId).Protect(JsonSerializer.Serialize(payload, AiJson.Default.AiPayload)),
-                    PurchasedReserved = purchased, GiftedReserved = gifted, PilotCostCeilingMicros = pilotCostCeiling, State = accepted ? AiRequestState.Pending : AiRequestState.NotAccepted, CreatedAt = scope.Now });
+                    PurchasedReserved = purchased, GiftedReserved = gifted, PilotCostCeilingMicros = pilotCostCeiling,
+                    PilotDispatchStage = pilotCostCeiling.HasValue ? AiPilotDispatchStage.Queued : null,
+                    State = accepted ? AiRequestState.Pending : AiRequestState.NotAccepted, CreatedAt = scope.Now });
                 if (accepted) db.Add(Event(owner, submission.RequestId, AiCreditEvent.Reserve, -purchased, -gifted, purchased, gifted, scope.Now));
                 dispatch = accepted;
             }
             await scope.CommitAsync(ct);
         }
         if (!dispatch) return await StatusAsync(actor, submission.RequestId, ct);
+        if (pilot is not null)
+        {
+            await DispatchPilotAsync(submission.RequestId, ct);
+            return await ReadAsync(actor, submission.RequestId, ct);
+        }
         // No database transaction/owner lock is held across provider I/O. Crash/timeout never permits a second Begin.
         AiProviderOutcome? outcome = null;
         try
         {
             var operation = ProviderKey(owner, submission.RequestId);
-            outcome = admittedRoute is null
-                ? await provider.BeginAsync(operation, submission.Offer, payload, ct)
-                : await pilot!.BeginAsync(admittedRoute, submission.Offer, operation, digest,
-                    handle => SaveVendorHandleAsync(owner, submission.RequestId, handle), ct);
+            outcome = await provider.BeginAsync(operation, submission.Offer, payload, ct);
         }
         catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
         if (outcome is not null) await ApplyAsync(owner, submission.RequestId, outcome, CancellationToken.None);
         return await ReadAsync(actor, submission.RequestId, ct);
     }
+    /// <summary>Continues only synthetic requests committed before any process claimed their create.</summary>
+    internal async Task DrainPilotDispatchesAsync(CancellationToken ct)
+    {
+        if (pilot is null) return;
+        Guid[] pending;
+        await using (var db = await factory.CreateDbContextAsync(ct))
+            pending = await db.Set<AiRequestRow>().Where(row => row.PilotDispatchStage == AiPilotDispatchStage.Queued &&
+                    row.State == AiRequestState.Pending && row.VendorOperationId == null)
+                .OrderBy(row => row.CreatedAt).ThenBy(row => row.Id).Select(row => row.Id).Take(40).ToArrayAsync(ct);
+        foreach (var request in pending)
+            await DispatchPilotAsync(request, ct);
+    }
+
+    private async Task DispatchPilotAsync(Guid request, CancellationToken ct)
+    {
+        if (pilot is null) return;
+        string owner, digest;
+        AiOffer original;
+        AiPilotRouteRow route;
+        await using (var db = await factory.CreateDbContextAsync(ct))
+        {
+            // Read only the original dispatch metadata. The pilot maps the allowlisted digest to its own fixed synthetic input.
+            var pending = db.Set<AiRequestRow>().Where(row => row.Id == request && row.State == AiRequestState.Pending &&
+                row.PilotDispatchStage == AiPilotDispatchStage.Queued && row.VendorOperationId == null);
+            var metadata = await pending.Select(row => new { row.UserId, row.PayloadDigest, row.OfferId }).SingleOrDefaultAsync(ct);
+            if (metadata is null) return;
+            var offer = await db.Set<AiOfferRow>().AsNoTracking().SingleAsync(row => row.Id == metadata.OfferId, ct);
+            if (offer.PilotRouteId is not { } routeId) return;
+            route = await db.Set<AiPilotRouteRow>().AsNoTracking().SingleAsync(row => row.Id == routeId, ct);
+            original = Offer(offer);
+            digest = metadata.PayloadDigest;
+            owner = metadata.UserId;
+            if (!pilot.CanBegin(route, original, digest)) return;
+            // The standalone update is the committed boundary. A lost update response is ambiguous and may never allow a retry.
+            var now = time.GetUtcNow();
+            var claimed = await pending.ExecuteUpdateAsync(set => set
+                .SetProperty(row => row.PilotDispatchStage, AiPilotDispatchStage.Claimed)
+                .SetProperty(row => row.PilotDispatchClaimedAt, now), ct);
+            if (claimed != 1) return;
+        }
+
+        AiProviderOutcome? outcome = null;
+        try
+        {
+            outcome = await pilot.BeginAsync(route, original, ProviderKey(owner, request), digest,
+                handle => SaveVendorHandleAsync(owner, request, handle), ct);
+        }
+        catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
+        if (outcome is not null) await ApplyAsync(owner, request, outcome, CancellationToken.None);
+    }
+
     /// <summary>Resolves only the original pending id; a missing provider lookup is never a refund or another dispatch.</summary>
     internal async Task<AiRequestResult> StatusAsync(ClaimsPrincipal actor, Guid request, CancellationToken ct)
     {

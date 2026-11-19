@@ -19,6 +19,7 @@ internal static class AiModule
         services.AddSingleton<AiRequestStore>();
         if (!pilotEnabled) return;
         services.AddSingleton<AiPilotProvider>();
+        services.AddHostedService<AiPilotDispatchWorker>();
         services.AddHttpClient(AiPilotProvider.Client, client =>
         {
             client.Timeout = TimeSpan.FromSeconds(25);
