@@ -40,6 +40,12 @@ Use **Analysis models** to confirm the configured model and route availability f
 
 The isolated HTTPS/PostgreSQL test verified anonymous refusal, exact counts from accepted pilot requests, budget and legacy ceiling treatment, the distinction between unobserved and zero usage, no identifiers, and visible invalid configuration. There were no vendor calls, credit movements or data changes. The directly affected budget concurrency case was rerun after sharing the admission query with this view.
 
+### Application switch and Off
+
+The original Analysis commands and private journal were exercised against the pinned HTTPS service and isolated PostgreSQL. The application first quoted Luna, then the service switched the same task to Flash-Lite. Sending the old reviewed quote closed that request as NotAccepted without reserving credit or contacting a vendor. A fresh quote accepted one simulated Flash-Lite create. After the task was switched back to Luna and set Off, Continue read the original Flash-Lite handle once and settled that original result. Off prevented another quote. Re-enabling Luna admitted a newly reviewed request with one simulated Luna create and one settlement. The local financial fingerprint was unchanged.
+
+The test replaced the service's vendor transport with a closed fixture and observed exactly two simulated creates and one original status read. There were no external requests or vendor charges. It verifies the source-linked application commands and original TLS routes on the host. The native package and the separate public-provider and release checks still need their own evidence.
+
 ### Original dispatch recovery
 
 An accepted synthetic request records a queued create in the same transaction as consent, the vendor cost ceiling and the single credit reservation. The original submission path and the background drain race on a conditional PostgreSQL update. Only the winner can send the original create. It records the durable claim and UTC time before touching the transport, and keeps the original route even when that model is subsequently switched Off for new work. A normal service restart can pick up a never-claimed request. A claimed create is never recovered by reissuing it, even if its receipt is lost. The user status path observes the original operation only, and earlier rows without a dispatch stage have no queue authority. Keep the pilot disabled when opening an old backup unless its outbound history has been reconciled independently.

@@ -1,3 +1,5 @@
+using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting.Server;
@@ -120,15 +122,22 @@ public sealed class AiLiveApplicationFlowTests
     public Task Selected_question_reaches_the_selected_live_provider(AiQuestionIntent question, string model) =>
         RunAsync(true, model, false, question: question);
 
+    /// <summary>Exercises route changes through the original application commands and private TLS service without vendor traffic.</summary>
+    [Fact]
+    public Task Original_analysis_requotes_and_continues_after_switch_and_off() =>
+        RunAsync(false, "gpt-6-luna", false, exerciseSwitch: true);
+
     private static async Task RunAsync(bool comparison, string model, bool detailed, AiFundingKind? funding = null,
-        bool projection = false, bool baselineOnly = false, AiQuestionIntent? question = null)
+        bool projection = false, bool baselineOnly = false, AiQuestionIntent? question = null, bool exerciseSwitch = false)
     {
         var ct = TestContext.Current.CancellationToken;
-        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_CONNECTION");
+        var connection = Environment.GetEnvironmentVariable(exerciseSwitch
+            ? "ZANANCE_AI_APP_SWITCH_CONNECTION" : "ZANANCE_AI_APP_TEST_CONNECTION");
         if (connection is null) { Assert.Skip("Explicit isolated synthetic live application fixture required."); return; }
         var settings = new NpgsqlConnectionStringBuilder(connection);
-        Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
-        var root = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_ROOT")!;
+        Assert.Equal(("127.0.0.1", exerciseSwitch ? 55481 : 55479, "zanance_ai_provider_pilot"),
+            (settings.Host, settings.Port, settings.Database));
+        var root = Environment.GetEnvironmentVariable(exerciseSwitch ? "ZANANCE_AI_APP_SWITCH_ROOT" : "ZANANCE_AI_APP_TEST_ROOT")!;
         Assert.Equal("Zanance synthetic app analysis", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
         var lane = Path.Combine(root, question?.ToString() ?? (projection ? (baselineOnly ? "baseline" : model) : funding?.ToString() ?? (detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report"))));
         Directory.CreateDirectory(lane);
@@ -138,8 +147,18 @@ public sealed class AiLiveApplicationFlowTests
             ["ConnectionStrings:Service"] = connection, ["Service:Root"] = Path.Combine(lane, "service"),
             ["Analysis:LocalQualification"] = "true", ["Analysis:ProviderPilot:Enabled"] = "true",
         });
+        using var replies = exerciseSwitch ? new SwitchReplies() : null;
         builder.AddZananceService();
         builder.Logging.ClearProviders(); builder.Services.RemoveAll<IHostedService>();
+        if (replies is not null)
+        {
+            foreach (var provider in new[] { "openai", "gemini" })
+            {
+                builder.Configuration[$"Analysis:ProviderPilot:{provider}:ApiKey"] = "fictional-switch-transport";
+                builder.Configuration[$"Analysis:ProviderPilot:{provider}:Project"] = "fictional-switch-" + provider;
+            }
+            builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>(replies));
+        }
         await using var server = builder.Build();
         await ServiceHost.MigrateAsync(server.Services);
         var pilot = server.Services.GetRequiredService<AiPilotProvider>();
@@ -154,7 +173,7 @@ public sealed class AiLiveApplicationFlowTests
             var users = scope.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
             var user = new ServiceUser { Email = email, UserName = email, EmailConfirmed = true };
             Assert.True((await users.CreateAsync(user, fixturePassword)).Succeeded);
-            await serviceStore.GrantAsync(user.Id, $"synthetic-app-{model}-{scopeKey}", false, 1, ct);
+            await serviceStore.GrantAsync(user.Id, $"synthetic-app-{model}-{scopeKey}", false, exerciseSwitch ? 2 : 1, ct);
             await using var db = await factory.CreateDbContextAsync(ct);
             await pilot.SelectModelAsync(db, comparison ? AiPurpose.PeriodExplanation : AiPurpose.PeriodComparison, "off", "app-pilot", ct);
             await pilot.SelectModelAsync(db, purpose, model, "app-pilot", ct);
@@ -291,6 +310,13 @@ public sealed class AiLiveApplicationFlowTests
         Assert.DoesNotContain("Fictitious", vm.Disclosure, StringComparison.Ordinal);
         await vm.CheckProviderAsync(); Assert.True(vm.CanQuote, vm.Error);
         await vm.QuoteAsync(); Assert.True(vm.CanSend, vm.Error); Assert.Contains(model, vm.ProviderText, StringComparison.Ordinal);
+        if (replies is not null)
+        {
+            await VerifySwitchAsync();
+            vm.Retire();
+            return;
+        }
+
         local.Platform.Confirmations.Enqueue(false);
         await vm.SendAsync();
         Assert.False(journal.Written);
@@ -317,6 +343,95 @@ public sealed class AiLiveApplicationFlowTests
         Assert.NotNull(request.VendorOperationId);
         await File.WriteAllTextAsync(Path.Combine(lane, "usage.txt"), $"{model}|{request.VendorInputTokens}|{request.VendorOutputTokens}", ct);
         vm.Retire();
+
+        async Task VerifySwitchAsync()
+        {
+            Assert.NotNull(replies);
+            await SelectAsync("gemini-3.5-flash-lite");
+            local.Platform.Confirmations.Enqueue(true);
+            await vm.SendAsync();
+            await using var audit = await factory.CreateDbContextAsync(ct);
+            var requests = audit.Set<AiRequestRow>().AsNoTracking().Where(row => row.UserId == identity.Id);
+            var refused = await requests.SingleAsync(ct);
+            Assert.Equal(AiRequestState.NotAccepted, refused.State);
+            Assert.Equal(0L, refused.GiftedReserved);
+            Assert.Empty(replies.Calls);
+            Assert.False(vm.CanContinue);
+
+            await ReviewAndQuoteAsync("gemini-3.5-flash-lite");
+            local.Platform.Confirmations.Enqueue(true);
+            await vm.SendAsync();
+            Assert.True(vm.CanContinue, vm.Error);
+            var retained = await requests.SingleAsync(row => row.State == AiRequestState.Pending, ct);
+            Assert.Equal("interaction_app_switch", retained.VendorOperationId);
+
+            await SelectAsync("gpt-6-luna");
+            await SelectAsync("off");
+            local.Platform.Confirmations.Enqueue(true);
+            await vm.ContinueAsync();
+            Assert.False(vm.CanContinue, vm.Error);
+            Assert.False(string.IsNullOrWhiteSpace(vm.ResultText), vm.Error);
+            Assert.Equal(AiRequestState.Completed, (await requests.SingleAsync(row => row.Id == retained.Id, ct)).State);
+            await vm.CheckProviderAsync();
+            Assert.False(vm.CanQuote);
+
+            await SelectAsync("gpt-6-luna");
+            await ReviewAndQuoteAsync("gpt-6-luna");
+            local.Platform.Confirmations.Enqueue(true);
+            await vm.SendAsync();
+            Assert.False(vm.CanContinue, vm.Error);
+            var completed = await requests.Where(row => row.State == AiRequestState.Completed).ToArrayAsync(ct);
+            Assert.Equal(2, completed.Length);
+            Assert.All(completed, row => Assert.Equal(1L, row.ChargedUnits));
+            Assert.Contains(completed, row => row.VendorOperationId == "resp_app_switch");
+            Assert.Equal(2, await audit.Set<AiCreditRow>().CountAsync(row => row.UserId == identity.Id && row.Kind == AiCreditEvent.Settle, ct));
+            Assert.Equal(new[] { "gemini-create", "gemini-original-read", "openai-create" }, replies.Calls);
+            Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(local));
+        }
+
+        async Task SelectAsync(string selection)
+        {
+            await using var db = await factory.CreateDbContextAsync(ct);
+            await pilot.SelectModelAsync(db, purpose, selection, "app-pilot-switch", ct);
+        }
+
+        async Task ReviewAndQuoteAsync(string selected)
+        {
+            await vm.ReviewAsync();
+            await vm.CheckProviderAsync();
+            Assert.True(vm.CanQuote, vm.Error);
+            await vm.QuoteAsync();
+            Assert.True(vm.CanSend, vm.Error);
+            Assert.Contains(selected, vm.ProviderText, StringComparison.Ordinal);
+        }
+    }
+
+    private sealed class SwitchReplies : HttpMessageHandler, IHttpClientFactory
+    {
+        internal List<string> Calls { get; } = [];
+
+        public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            const string gemini = "https://generativelanguage.googleapis.com/v1beta/interactions";
+            var route = (request.Method.Method, request.RequestUri!.AbsoluteUri) switch
+            {
+                ("POST", gemini) => "gemini-create",
+                ("GET", gemini + "/interaction_app_switch") => "gemini-original-read",
+                ("POST", "https://api.openai.com/v1/responses") => "openai-create",
+                _ => throw new InvalidOperationException("Unexpected synthetic provider operation."),
+            };
+            Calls.Add(route);
+            var body = route switch
+            {
+                "gemini-create" => """{"id":"interaction_app_switch","status":"in_progress","model":"gemini-3.5-flash-lite"}""",
+                "gemini-original-read" => """{"id":"interaction_app_switch","status":"completed","model":"gemini-3.5-flash-lite","usage":{"total_input_tokens":60,"total_output_tokens":48},"steps":[{"type":"model_output","content":[{"type":"text","text":"{\"net_expenses_minor\":38000,\"explanation\":\"Refunds lower recorded expenses.\"}"}]}]}""",
+                _ => """{"id":"resp_app_switch","status":"completed","model":"gpt-6-luna","usage":{"input_tokens":45,"output_tokens":42},"output":[{"type":"message","content":[{"type":"output_text","text":"{\"net_expenses_minor\":38000,\"explanation\":\"Refunds lower recorded expenses.\"}"}]}]}""",
+            };
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            { Content = new StringContent(body, Encoding.UTF8, "application/json") });
+        }
     }
 
     private sealed class Runtime(LocalSyncPeer peer, IPersonalSyncTokenStore tokens, IAiPrivateStorage journal, string user) : IAiRuntime
