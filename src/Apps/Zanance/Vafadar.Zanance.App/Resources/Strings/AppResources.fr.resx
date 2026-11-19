@@ -8718,4 +8718,25 @@ SHA-256 du XML original : {5}</value>
   <data name="Ai_FundingDraftValue" xml:space="preserve">
     <value>Autre montant à examiner dans le brouillon : {0}.</value>
   </data>
+  <data name="Ai_ExplainForecast" xml:space="preserve">
+    <value>Expliquer la prévision</value>
+  </data>
+  <data name="Ai_ForecastBaseline" xml:space="preserve">
+    <value>Scénario de référence</value>
+  </data>
+  <data name="Ai_ForecastScenario" xml:space="preserve">
+    <value>Scénario sélectionné</value>
+  </data>
+  <data name="Ai_ForecastAssumptions" xml:space="preserve">
+    <value>La prévision repose sur les éléments saisis et les plans. Les montants inconnus sont exclus du solde. Jusqu’à {0} événements par trajectoire.</value>
+  </data>
+  <data name="Ai_ForecastBalances" xml:space="preserve">
+    <value>Solde initial : {0} · Solde final : {1} · Minimum : {2} le {3} · Montants inconnus : {4}</value>
+  </data>
+  <data name="Ai_ForecastFirstShortfall" xml:space="preserve">
+    <value>Premier solde négatif le {0} : {1}.</value>
+  </data>
+  <data name="Ai_ForecastNoShortfall" xml:space="preserve">
+    <value>La trajectoire calculée reste à zéro ou au-dessus.</value>
+  </data>
 </root>

@@ -76,7 +76,43 @@ public sealed class AiLiveApplicationFlowTests
         AiProtocol.Validate(original with { Funding = noDates });
     }
 
-    private static async Task RunAsync(bool comparison, string model, bool detailed, AiFundingKind? funding = null)
+    /// <summary>Checks the original calculator's separate crossing and minimum, scenario flags and unknown balance limits.</summary>
+    [Fact]
+    public void Forecast_contract_keeps_first_shortfall_and_scenario_unknowns()
+    {
+        var packet = AiPilotProvider.ForecastFixture;
+        var forecast = packet.Forecast!;
+        Assert.Equal(new DateOnly(2026, 11, 5), forecast.Baseline.FirstShortfallOn);
+        Assert.Equal(-5000, forecast.Baseline.FirstShortfallBalance);
+        Assert.Equal(new DateOnly(2026, 11, 10), forecast.Baseline.MinimumOn);
+        Assert.Equal(-11000, forecast.Baseline.Minimum);
+        Assert.Equal(18000, forecast.Baseline.Closing);
+        var scenario = forecast.Scenario!;
+        Assert.Null(scenario.FirstShortfallOn);
+        Assert.Equal(24000, scenario.Closing);
+        Assert.Equal(1, scenario.UnknownCount);
+        Assert.Contains(scenario.Events, item => item.Moved && item.On.Day == 13);
+        Assert.Contains(scenario.Events, item => item.Excluded && item.Effect == -6000);
+        Assert.Throws<ArgumentException>(() => AiProtocol.Validate(packet with
+        { Forecast = forecast with { Scenario = scenario with { UnknownCount = 0 } } }));
+        Assert.False(AiPilotProvider.IsSynthetic(packet.Purpose, AiProtocol.Digest(packet with
+        { Forecast = forecast with { Scenario = scenario with { Closing = 24001 } } })));
+    }
+
+    /// <summary>Qualifies the new forecast comparison with actual application disclosure and the chosen live adapter.</summary>
+    [Theory]
+    [InlineData("gpt-6.2-sol")]
+    [InlineData("gemini-4-hydrogen")]
+    public Task Forecast_scenario_reaches_the_selected_live_provider(string model) =>
+        RunAsync(true, model, true, projection: true);
+
+    /// <summary>Qualifies the first shortfall explanation without a scenario.</summary>
+    [Fact]
+    public Task Forecast_baseline_reaches_the_selected_live_provider() =>
+        RunAsync(true, "gpt-6.2-sol", true, projection: true, baselineOnly: true);
+
+    private static async Task RunAsync(bool comparison, string model, bool detailed, AiFundingKind? funding = null,
+        bool projection = false, bool baselineOnly = false)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_CONNECTION");
@@ -85,7 +121,7 @@ public sealed class AiLiveApplicationFlowTests
         Assert.Equal(("127.0.0.1", 55479, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
         var root = Environment.GetEnvironmentVariable("ZANANCE_AI_APP_TEST_ROOT")!;
         Assert.Equal("Zanance synthetic app analysis", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
-        var lane = Path.Combine(root, funding?.ToString() ?? (detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report")));
+        var lane = Path.Combine(root, projection ? (baselineOnly ? "baseline" : model) : funding?.ToString() ?? (detailed ? (comparison ? "categories" : "plans") : (comparison ? "comparison" : "report")));
         Directory.CreateDirectory(lane);
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions { EnvironmentName = "Integration", ApplicationName = typeof(ServiceHost).Assembly.FullName });
         builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
@@ -101,7 +137,7 @@ public sealed class AiLiveApplicationFlowTests
         var serviceStore = server.Services.GetRequiredService<AiRequestStore>();
         var factory = server.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         var purpose = comparison ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation;
-        var scopeKey = funding is AiFundingKind.BudgetSuggestion or AiFundingKind.Goal ? $"{funding}-qualified" : funding?.ToString() ?? "period";
+        var scopeKey = projection ? (baselineOnly ? "forecast-baseline" : "forecast") : funding is AiFundingKind.BudgetSuggestion or AiFundingKind.Goal ? $"{funding}-qualified" : funding?.ToString() ?? "period";
         var email = $"synthetic-{model}-{scopeKey}@example.invalid";
         const string fixturePassword = "Fictional-App-Analysis-9!";
         await using (var scope = server.Services.CreateAsyncScope())
@@ -123,14 +159,14 @@ public sealed class AiLiveApplicationFlowTests
         var identity = await login.SignInAsync(email, fixturePassword, ct);
         using var local = new FlowFixture();
         // The app derives an equally long preceding period, October 2–31, from this November selection.
-        var fixture = funding is { } kind ? AiPilotProvider.FundingFixtures[kind] : detailed ? (comparison ? AiPilotProvider.CategoryFixture : AiPilotProvider.PlanFixture)
+        var fixture = projection ? (baselineOnly ? AiPilotProvider.ForecastBaselineFixture : AiPilotProvider.ForecastFixture) : funding is { } kind ? AiPilotProvider.FundingFixtures[kind] : detailed ? (comparison ? AiPilotProvider.CategoryFixture : AiPilotProvider.PlanFixture)
             : (comparison ? AiPilotProvider.ComparisonFixture : AiPilotProvider.ReportFixture);
         var localAccounts = new List<Guid>();
         await using (var db = await local.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct))
         {
             foreach (var totals in fixture.Current.Totals)
             {
-                var account = new Account { Name = "Fictitious private account " + totals.CurrencyCode, CurrencyCode = totals.CurrencyCode, OpeningDate = new(2026, 1, 1) };
+                var account = new Account { Name = "Fictitious private account " + totals.CurrencyCode, CurrencyCode = totals.CurrencyCode, OpeningDate = new(2026, 1, 1), OpeningBalance = projection ? 10000 : 0 };
                 db.Add(account);
                 localAccounts.Add(account.Id);
                 AddPeriod(account.Id, fixture.Current, totals);
@@ -158,14 +194,16 @@ public sealed class AiLiveApplicationFlowTests
             var store = local.Services.GetRequiredService<AiSnapshotStore>();
             var scope = await store.AccountsAsync(ct);
             var packet = AiPeriodHandoff.Capture(scope.File, fixture.Current.From, fixture.Current.To, fixture.Current.ConfirmedOnly, localAccounts)!;
-            var reportRows = fixture.Report?.Categories?.Count ?? fixture.Report?.Plans?.Count ?? 1;
+            var reportRows = fixture.Forecast is { } forecast ? forecast.Baseline.Events.Count + (forecast.Scenario?.Events.Count ?? 0)
+                : fixture.Report?.Categories?.Count ?? fixture.Report?.Plans?.Count ?? 1;
             vm.SetInitialPeriod(packet with
             {
-                ComparePrevious = comparison,
+                ComparePrevious = comparison && !projection,
                 CompareFrom = fixture.Previous?.From,
                 CompareTo = fixture.Previous?.To,
                 Report = fixture.Report,
                 Funding = fixture.Funding,
+                Forecast = fixture.Forecast,
                 OpenDraftAsync = funding.HasValue ? () => { draftsOpened++; return Task.CompletedTask; } : null,
                 ReportLabels = Enumerable.Range(1, reportRows).Select(i => $"Fictitious private label {i}").ToArray(),
                 ValidateReportAsync = () => reportSourceCurrent ? Task.CompletedTask

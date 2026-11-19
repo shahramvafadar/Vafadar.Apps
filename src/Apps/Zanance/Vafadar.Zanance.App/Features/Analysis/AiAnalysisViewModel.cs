@@ -114,7 +114,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     public bool CanCheckProvider => OwnsPresentation && Loaded && !HasPendingOperation && runtime.NetworkAvailable;
     /// <summary>Gets whether metadata-only original terms can be requested.</summary>
     public bool CanQuote => OwnsPresentation && !HasPendingOperation && review is not null && metadataReady && remote is not null &&
-        availability is { } status && (review.Selection.ComparePrevious ? status.ComparisonConfigured ?? status.Configured : status.Configured) && !Pending;
+        availability is { } status && ((review.Selection.ComparePrevious || review.Selection.Forecast is not null) ? status.ComparisonConfigured ?? status.Configured : status.Configured) && !Pending;
     /// <summary>Gets whether current literal terms and actual available quantities permit a request attempt; the service rechecks authority.</summary>
     public bool CanSend => CanQuote && offer is not null && availability is not null &&
         checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= offer.MaximumUnits;
@@ -229,7 +229,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         if (!OwnsPresentation || !Loaded || HasPendingOperation || scope is null) return;
         var original = epoch;
         var selection = new AiSelection(scope.File, Accounts.Where(a => a.Selected).Select(a => a.Id).ToArray(), From, To, ConfirmedOnly, ComparePrevious,
-            local.CurrentLanguage.CultureName.Split('-')[0], detailedPeriod?.CompareFrom, detailedPeriod?.CompareTo, detailedPeriod?.Report, detailedPeriod?.Funding);
+            local.CurrentLanguage.CultureName.Split('-')[0], detailedPeriod?.CompareFrom, detailedPeriod?.CompareTo, detailedPeriod?.Report, detailedPeriod?.Funding, detailedPeriod?.Forecast);
         readingSource = true; operationActive = true;
         try
         {
@@ -256,7 +256,9 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             if (detailedPeriod?.ValidateReportAsync is { } validateReport) { await validateReport(); Validate(original); }
             var payload = prepared.Payload; var summary = Period(payload.Current);
             if (payload.Previous is not null) summary += Environment.NewLine + Period(payload.Previous);
-            if (payload.Funding is { } funding)
+            if (payload.Forecast is { } forecast && detailedPeriod is { } projection)
+                summary = ForecastSummary(payload.Current, forecast, projection.ReportLabels);
+            else if (payload.Funding is { } funding)
             {
                 var label = detailedPeriod?.ReportLabels.FirstOrDefault();
                 summary = (label is null ? string.Empty : label + Environment.NewLine) + FundingSummary(funding);
@@ -529,6 +531,44 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         catch (Exception error) when (error is not OutOfMemoryException)
         { if (OwnsPresentation && version == epoch) SetError(FailureKey(error)); }
         finally { readingSource = operationActive = false; IsBusy = false; Refresh(); }
+    }
+
+    private string ForecastSummary(AiPeriod period, AiForecastFacts forecast, IReadOnlyList<string> localLabels)
+    {
+        var preview = new List<string>
+        {
+            text.Format("Forecast_Basis", Day(period.From), Day(period.To)),
+            text.Format("Ai_ForecastAssumptions", N(AiProtocol.MaximumReportRows)),
+        };
+        Add("Ai_ForecastBaseline", forecast.Baseline, 0);
+        if (forecast.Scenario is { } scenario) Add("Ai_ForecastScenario", scenario, forecast.Baseline.Events.Count);
+        return string.Join(Environment.NewLine, preview);
+
+        void Add(string heading, AiForecastPath path, int offset)
+        {
+            preview.Add(text[heading]);
+            preview.Add(text.Format("Ai_ForecastBalances", Money(path.Opening), Money(path.Closing),
+                Money(path.Minimum), Day(path.MinimumOn), N(path.UnknownCount)));
+            preview.Add(path.FirstShortfallOn is { } first && path.FirstShortfallBalance is { } balance
+                ? text.Format("Ai_ForecastFirstShortfall", Day(first), Money(balance)) : text["Ai_ForecastNoShortfall"]);
+            for (var index = 0; index < path.Events.Count; index++)
+            {
+                var item = path.Events[index];
+                var label = localLabels[offset + index];
+                if (string.IsNullOrWhiteSpace(label)) label = text["Forecast_RecordedEntry"];
+                var assumption = item.Excluded ? text["Forecast_LeftOut"]
+                    : item.Moved && item.AssumedAmount ? text["Forecast_DateAndAmountAssumed"]
+                    : item.Moved ? text["Forecast_DateAssumed"]
+                    : item.AssumedAmount ? text["Forecast_AmountAssumed"]
+                    : item.Source == Core.Forecasts.ForecastSource.OverduePlan ? text["Forecast_OverdueAssumed"] : null;
+                var amount = item.Effect is { } value ? MoneyText.Format(value, forecast.Currency, local.CurrentCulture,
+                    showPlus: true, approximate: item.Estimated) : text["Plan_AmountUnknown"];
+                preview.Add($"[{index + 1}] {label} · {Day(item.On)} · {amount}" +
+                    (assumption is null ? "" : " · " + assumption));
+            }
+        }
+        string Day(DateOnly day) => dates.Format(day, DateFormatStyle.Long);
+        string Money(long value) => MoneyText.Format(value, forecast.Currency, local.CurrentCulture);
     }
 
     private string FundingSummary(AiFundingFacts facts)

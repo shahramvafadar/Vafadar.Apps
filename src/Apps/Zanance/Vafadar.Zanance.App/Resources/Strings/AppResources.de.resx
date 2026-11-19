@@ -8741,4 +8741,25 @@ Original-XML SHA-256: {5}</value>
   <data name="Ai_FundingDraftValue" xml:space="preserve">
     <value>Alternativer Betrag für den Entwurf: {0}.</value>
   </data>
+  <data name="Ai_ExplainForecast" xml:space="preserve">
+    <value>Prognose erklären</value>
+  </data>
+  <data name="Ai_ForecastBaseline" xml:space="preserve">
+    <value>Ausgangsszenario</value>
+  </data>
+  <data name="Ai_ForecastScenario" xml:space="preserve">
+    <value>Ausgewähltes Szenario</value>
+  </data>
+  <data name="Ai_ForecastAssumptions" xml:space="preserve">
+    <value>Grundlage sind erfasste Posten und Pläne. Unbekannte Beträge gehen nicht in den Saldo ein. Bis zu {0} Ereignisse je Verlauf.</value>
+  </data>
+  <data name="Ai_ForecastBalances" xml:space="preserve">
+    <value>Anfangssaldo: {0} · Endsaldo: {1} · Tiefststand: {2} am {3} · Unbekannte Beträge: {4}</value>
+  </data>
+  <data name="Ai_ForecastFirstShortfall" xml:space="preserve">
+    <value>Erster negativer Saldo am {0}: {1}.</value>
+  </data>
+  <data name="Ai_ForecastNoShortfall" xml:space="preserve">
+    <value>Der berechnete Verlauf bleibt bei null oder darüber.</value>
+  </data>
 </root>

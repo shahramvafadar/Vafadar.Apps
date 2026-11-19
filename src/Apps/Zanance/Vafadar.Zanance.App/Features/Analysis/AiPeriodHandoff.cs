@@ -10,7 +10,8 @@ internal sealed record AiPeriodHandoff(string File, DateOnly From, DateOnly To, 
     internal bool ComparePrevious { get; init; }
     internal AiReportDetails? Report { get; init; }
     internal AiFundingFacts? Funding { get; init; }
-    internal bool IsDetailed => Report is not null || Funding is not null;
+    internal AiForecastFacts? Forecast { get; init; }
+    internal bool IsDetailed => Report is not null || Funding is not null || Forecast is not null;
     internal Func<Task>? OpenDraftAsync { get; init; }
     internal DateOnly? CompareFrom { get; init; }
     internal DateOnly? CompareTo { get; init; }

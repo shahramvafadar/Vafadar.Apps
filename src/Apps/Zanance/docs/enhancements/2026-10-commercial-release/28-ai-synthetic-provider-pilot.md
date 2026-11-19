@@ -134,3 +134,20 @@ The first suggestion response multiplied the minor-unit amounts, so the service 
 
 
 A focused local check covered signed carry, exact draft arithmetic, currency/scope refusal and a goal with no future contribution dates. The independent Windows fixture used original native buttons for the three explanations, Review, and Open editable draft. It observed the budget overrun, the same budget suggestion editor on return, and the original monetary goal editor, with an unchanged local financial fingerprint. The first suggestion navigation refused the all-accounts sentinel. The correction reuses the suggestion calculator's empty-scope meaning. The accepted budget-limit case was not repeated. An isolated WinUI title-bar error was recorded when closing the review window after the three receipts.
+
+
+## Forecast and plan scenario explanations, 2026-11-19
+
+Each eligible Forecast currency card opens the existing Analysis preview with its actual payment-account scope, as-of date, horizon and projected end-of-day path. It shows the first negative day and balance separately from the absolute minimum. Relevant outgoing and unknown events are shown with signed amounts or unknown status, including classifications for overdue, estimated, moved, changed-amount and excluded items. The selected what-if is compared with a fresh baseline calculated from the same frozen original inputs. Unknown amounts do not change the numeric path and remain visible even if that path has no negative day. The bounded version 4 input has no prior ledger period and includes up to twelve anonymous events per path. Original event names stay in the local review. Back returns to the existing Forecast with its original scenario and row actions.
+
+The exact original file, finance source, advanced-forecast right, selected date and calendar are rechecked before preview or transmission. Analysis does not change a plan, create a payment or save a forecast. The synthetic pilot uses the existing Financial comparisons selection. It allows the exact reference and comparison fixtures only. Local captions are available in all six app languages; the live fixtures used English.
+
+The focused calculator/protocol check distinguishes a first negative balance of −5000 from the later minimum of −11000. Moving the earlier expense behind planned income and excluding another brings the modeled closing balance from 18000 to 24000, and removes the negative path while one amount remains unknown. The native Windows fixture verified the original Forecast button and local preview in both states with a frozen currency and no changes to the financial fingerprint. The live app-model checks passed via the pinned isolated service with one baseline request and one comparison per provider. Previously accepted report and funding flows were not replayed.
+
+| Fixture | Model | Standard USD per million input / output | Observed input / billable output tokens | Estimated charge | Paid equivalent |
+|---|---|---:|---:|---:|---:|
+| Baseline | GPT-6.2 Sol | 2.00 / 10.00 | 161 / 90 | USD 0.001222 | USD 0.001222 |
+| Selected scenario | GPT-6.2 Sol | 2.00 / 10.00 | 201 / 97 | USD 0.001372 | USD 0.001372 |
+| Selected scenario | Gemini 4 Hydrogen | 1.50 / 7.50 | 387 / 465 | USD 0 (Free Tier) | USD 0.004068 |
+
+The usage estimates include reasoning or thinking in output. No invoice was checked. See [OpenAI](https://developers.openai.com/api/docs/models/gpt-6.2-sol) and [Gemini](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen).

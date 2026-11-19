@@ -8730,4 +8730,25 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Ai_FundingDraftValue" xml:space="preserve">
     <value>Importo alternativo da esaminare nella bozza: {0}.</value>
   </data>
+  <data name="Ai_ExplainForecast" xml:space="preserve">
+    <value>Spiega la previsione</value>
+  </data>
+  <data name="Ai_ForecastBaseline" xml:space="preserve">
+    <value>Scenario di riferimento</value>
+  </data>
+  <data name="Ai_ForecastScenario" xml:space="preserve">
+    <value>Scenario selezionato</value>
+  </data>
+  <data name="Ai_ForecastAssumptions" xml:space="preserve">
+    <value>Si basa su voci registrate e piani. Gli importi sconosciuti sono esclusi dal saldo. Fino a {0} eventi per andamento.</value>
+  </data>
+  <data name="Ai_ForecastBalances" xml:space="preserve">
+    <value>Saldo iniziale: {0} · Saldo finale: {1} · Minimo: {2} il {3} · Importi sconosciuti: {4}</value>
+  </data>
+  <data name="Ai_ForecastFirstShortfall" xml:space="preserve">
+    <value>Primo saldo negativo il {0}: {1}.</value>
+  </data>
+  <data name="Ai_ForecastNoShortfall" xml:space="preserve">
+    <value>Il percorso calcolato resta a zero o sopra.</value>
+  </data>
 </root>

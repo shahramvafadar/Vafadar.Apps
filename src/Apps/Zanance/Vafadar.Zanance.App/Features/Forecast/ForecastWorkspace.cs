@@ -89,6 +89,13 @@ public sealed partial class ForecastWorkspace(ForecastWorkStore reader, ZananceS
         catch (OperationCanceledException) when (!Current()) { }
         finally { NotifyState(); }
     }
+    /// <summary>Revalidates a frozen read-only explanation even after Analysis covers the original Forecast page.</summary>
+    internal async Task ValidateExplanationSourceAsync(ForecastReadSnapshot reviewed)
+    {
+        await reader.ValidateAsync(reviewed);
+        reviewed.Demand(CommercialFeature.AdvancedForecast);
+    }
+
     /// <summary>Revalidates original source/access after a native prompt before changing the process-local draft.</summary>
     public async Task ValidateAnalysisAsync(ForecastReadSnapshot reviewed)
     { await ValidatePublicationAsync(reviewed); reviewed.Demand(CommercialFeature.AdvancedForecast); }

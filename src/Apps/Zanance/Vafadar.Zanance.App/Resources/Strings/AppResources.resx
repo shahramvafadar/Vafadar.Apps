@@ -8782,4 +8782,25 @@ Original XML SHA-256: {5}</value>
   <data name="Ai_FundingDraftValue" xml:space="preserve">
     <value>Alternative amount to review in the draft: {0}.</value>
   </data>
+  <data name="Ai_ExplainForecast" xml:space="preserve">
+    <value>Explain forecast</value>
+  </data>
+  <data name="Ai_ForecastBaseline" xml:space="preserve">
+    <value>Baseline</value>
+  </data>
+  <data name="Ai_ForecastScenario" xml:space="preserve">
+    <value>Selected scenario</value>
+  </data>
+  <data name="Ai_ForecastAssumptions" xml:space="preserve">
+    <value>Based on recorded items and plans. Unknown amounts are omitted from the balance. Up to {0} events per path.</value>
+  </data>
+  <data name="Ai_ForecastBalances" xml:space="preserve">
+    <value>Opening: {0} · Closing: {1} · Lowest: {2} on {3} · Unknown amounts: {4}</value>
+  </data>
+  <data name="Ai_ForecastFirstShortfall" xml:space="preserve">
+    <value>First negative balance on {0}: {1}.</value>
+  </data>
+  <data name="Ai_ForecastNoShortfall" xml:space="preserve">
+    <value>The calculated path stays at or above zero.</value>
+  </data>
 </root>

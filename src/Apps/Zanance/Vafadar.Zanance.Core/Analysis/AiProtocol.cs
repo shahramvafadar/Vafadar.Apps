@@ -23,7 +23,8 @@ public sealed record AiPeriod(DateOnly From, DateOnly To, int AccountCount, bool
 /// <summary>The exact minimal payload previewed before any service/provider financial request.</summary>
 public sealed record AiPayload(int Version, AiPurpose Purpose, string Language, AiPeriod Current, AiPeriod? Previous,
     [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiReportDetails? Report = null,
-    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiFundingFacts? Funding = null);
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiFundingFacts? Funding = null,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] AiForecastFacts? Forecast = null);
 
 /// <summary>An anonymous top-level category's net spending in two explicitly shown periods.</summary>
 public sealed record AiCategoryChange(long Current, long Previous);
@@ -117,10 +118,11 @@ public static class AiProtocol
     public static void Validate(AiPayload payload)
     {
         ArgumentNullException.ThrowIfNull(payload);
-        if (payload.Version != (payload.Funding is not null ? 3 : payload.Report is null ? 1 : 2) || !Enum.IsDefined(payload.Purpose) || payload.Language is not ("en" or "fa" or "de" or "es" or "fr" or "it"))
+        if (payload.Version != (payload.Forecast is not null ? 4 : payload.Funding is not null ? 3 : payload.Report is null ? 1 : 2) || !Enum.IsDefined(payload.Purpose) || payload.Language is not ("en" or "fa" or "de" or "es" or "fr" or "it"))
             throw new ArgumentException("Unsupported analysis contract.");
         Period(payload.Current);
-        if (payload.Purpose == AiPurpose.PeriodComparison)
+        if (payload.Forecast is { } forecast) ValidateForecast(payload, forecast);
+        else if (payload.Purpose == AiPurpose.PeriodComparison)
         {
             if (payload.Previous is null) throw new ArgumentException("Explicit comparison period required.");
             Period(payload.Previous);
@@ -148,6 +150,39 @@ public static class AiProtocol
             text.Any(c => char.IsControl(c) && c is not '\r' and not '\n' and not '\t' || c is >= '\u202A' and <= '\u202E' or >= '\u2066' and <= '\u2069'))
             throw new ArgumentException("Provider text is invalid.");
     }
+    private static void ValidateForecast(AiPayload payload, AiForecastFacts forecast)
+    {
+        if (payload.Report is not null || payload.Funding is not null || payload.Previous is not null ||
+            payload.Purpose != AiPurpose.PeriodComparison || payload.Current.ConfirmedOnly || payload.Current.Totals.Count != 1 ||
+            payload.Current.Totals[0].CurrencyCode != forecast.Currency)
+            throw new ArgumentException("Invalid forecast scope.");
+
+        ValidatePath(forecast.Baseline, scenario: false);
+        if (forecast.Scenario is { } scenario)
+        {
+            if (scenario.Opening != forecast.Baseline.Opening) throw new ArgumentException("Forecast opening scope differs.");
+            ValidatePath(scenario, scenario: true);
+        }
+
+        void ValidatePath(AiForecastPath path, bool scenario)
+        {
+            ArgumentNullException.ThrowIfNull(path);
+            if (path.Minimum > path.Closing || !Within(path.MinimumOn) ||
+                path.UnknownCount < 0 || path.UnknownCount > path.EventCount || path.Events is null ||
+                path.Events.Count > MaximumReportRows || path.Events.Count > path.EventCount ||
+                path.Events.Count(item => item is { Effect: null, Excluded: false }) > path.UnknownCount ||
+                (path.Minimum < 0
+                    ? path.FirstShortfallOn is not { } first || !Within(first) || first > path.MinimumOn ||
+                        path.FirstShortfallBalance is not < 0 || path.FirstShortfallBalance < path.Minimum
+                    : path.FirstShortfallOn is not null || path.FirstShortfallBalance is not null) ||
+                path.Events.Any(item => item is null || !Enum.IsDefined(item.Source) || item.On < payload.Current.From ||
+                    item.On > payload.Current.To && !(item.Excluded && item.Moved) ||
+                    !scenario && (item.Excluded || item.Moved || item.AssumedAmount)))
+                throw new ArgumentException("Invalid forecast path.");
+        }
+        bool Within(DateOnly day) => day >= payload.Current.From && day <= payload.Current.To;
+    }
+
     private static void ValidateFunding(AiPayload payload, AiFundingFacts facts)
     {
         if (payload.Purpose != AiPurpose.PeriodExplanation || payload.Report is not null || payload.Current.Totals.Count != 1 ||

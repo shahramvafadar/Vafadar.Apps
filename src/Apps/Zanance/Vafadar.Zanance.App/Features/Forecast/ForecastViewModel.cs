@@ -6,6 +6,9 @@ using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Analysis;
+using Vafadar.Zanance.Core.Commerce;
+using Vafadar.Zanance.App.Features.Analysis;
 using Vafadar.Zanance.Core.Forecasts;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
@@ -54,6 +57,9 @@ public sealed record ForecastCard(
 {
     /// <summary>Gets a value indicating whether planned items change the balance; without any the path is a flat line.</summary>
     public bool HasItems => Rows.Count > 0;
+
+    /// <summary>Gets whether this currency has an explicit advanced forecast explanation.</summary>
+    public bool CanExplain { get; init; }
 }
 
 /// <summary>
@@ -245,7 +251,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                 warning,
                 forecast.IsIncomplete ? _translator.Format("Forecast_Incomplete", forecast.UnknownCount) : null,
                 [.. forecast.Path.Select(p => new PathPoint(p.Date.ToDateTime(TimeOnly.MinValue), (double)MoneyText.ToDecimal(p.Balance, currency)))],
-                rows));
+                rows) { CanExplain = review.Permission(CommercialFeature.AdvancedForecast) == FeaturePermission.Allowed });
         }
         await Workspace.ValidatePublicationAsync(review); RequireCurrent();
         void Publish(Action action) { RequireCurrent(); review.EnsurePublicationAccess(); action(); RequireCurrent(); }
@@ -253,6 +259,61 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         Publish(() => _planCurrencies = planCurrencies); Publish(() => HasScenario = hasScenario);
         Publish(() => BasisText = basisText); Publish(() => UnreviewedText = unreviewedText);
         Publish(() => Cards.ReplaceAll(cards)); Publish(() => Snapshots.ReplaceAll(snapshots)); Publish(() => HasSnapshots = snapshots.Length > 0);
+    }
+
+    [RelayCommand]
+    private async Task ExplainForecastAsync(ForecastCard card)
+    {
+        if (!CanInteract || !card.CanExplain || !Cards.Any(item => ReferenceEquals(item, card)) ||
+            Workspace.Review is not { } review || Workspace.Forecasts.SingleOrDefault(item => item.CurrencyCode == card.CurrencyCode) is not { } shown)
+            return;
+
+        var revision = _revision;
+        var day = Workspace.BaseDate;
+        var horizonIndex = Workspace.HorizonIndex;
+        var calendar = Workspace.Calendar;
+        var hasScenario = HasScenario;
+        var token = _lifetime.Token;
+        bool Current() => OwnsFrame && revision == _revision && ReferenceEquals(Workspace.Review, review) &&
+            Cards.Any(item => ReferenceEquals(item, card)) && !token.IsCancellationRequested;
+        async Task ValidateSourceAsync()
+        {
+            if (day != Today || calendar != Presentation.Calendars.ToPeriod(_localization.CurrentCalendar))
+                throw new InvalidOperationException("The original forecast dates changed.");
+            await Workspace.ValidateExplanationSourceAsync(review);
+            if (day != Today || calendar != Presentation.Calendars.ToPeriod(_localization.CurrentCalendar))
+                throw new InvalidOperationException("The original forecast dates changed.");
+        }
+
+        IsBusy = true;
+        try
+        {
+            await Workspace.ValidateAnalysisAsync(review);
+            if (!Current()) return;
+            var baseline = hasScenario
+                ? await Task.Run(() => review.Compute(horizonIndex, new ForecastScenario(), calendar, day)
+                    .Single(item => item.CurrencyCode == card.CurrencyCode), token)
+                : shown;
+            if (!Current()) return;
+            var (reference, labels) = AiForecastEvidence.Project(baseline);
+            var (scenario, scenarioLabels) = hasScenario ? AiForecastEvidence.Project(shown) : (null, []);
+            var ids = review.Accounts.Where(a => a.IncludeInTotals && !a.IsArchived && a.UsableForPayments
+                && a.CurrencyCode == card.CurrencyCode).Select(a => a.Id);
+            var horizon = review.Horizon(horizonIndex, calendar, day);
+            if (AiPeriodHandoff.Capture(review.DatabasePath, day, horizon, false, ids) is not { } period) return;
+            var packet = period with
+            {
+                Forecast = new(card.CurrencyCode, reference, scenario),
+                ReportLabels = Array.AsReadOnly(labels.Concat(scenarioLabels).ToArray()),
+                ValidateReportAsync = ValidateSourceAsync,
+            };
+            await ValidateSourceAsync();
+            if (Current()) await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false));
+        }
+        catch (OperationCanceledException) when (!Current()) { }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        { if (Current()) Workspace.ReportAnalysisFailure(error); }
+        finally { IsBusy = false; }
     }
 
     private SnapshotRow[] PrepareSnapshots(ForecastReadSnapshot? review) => (review?.Snapshots ?? []).Select(snapshot =>

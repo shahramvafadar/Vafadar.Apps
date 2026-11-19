@@ -19,7 +19,7 @@ public sealed record AiAccountScope(string File, IReadOnlyList<AiAccount> Accoun
 /// <summary>Exact read-only disclosure inputs, independent from UI language/calendar presentation.</summary>
 public sealed record AiSelection(string File, IReadOnlyList<Guid> AccountIds, DateOnly From, DateOnly To,
     bool ConfirmedOnly, bool ComparePrevious, string Language, DateOnly? CompareFrom = null, DateOnly? CompareTo = null,
-    AiReportDetails? Report = null, AiFundingFacts? Funding = null);
+    AiReportDetails? Report = null, AiFundingFacts? Funding = null, AiForecastFacts? Forecast = null);
 
 /// <summary>Original file/rights/minimal source digest and immutable aggregate payload; no raw notes or blobs retained.</summary>
 public sealed class AiReview
@@ -96,11 +96,19 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         return selection with
         {
             AccountIds = Array.AsReadOnly(selection.AccountIds.Order().ToArray()),
+            Forecast = selection.Forecast is { } forecast ? forecast with
+            {
+                Baseline = FreezePath(forecast.Baseline),
+                Scenario = forecast.Scenario is { } scenario ? FreezePath(scenario) : null,
+            } : null,
             Report = selection.Report is { } report ? new(
                 report.Categories is null ? null : Array.AsReadOnly(report.Categories.ToArray()),
                 report.Plans is null ? null : Array.AsReadOnly(report.Plans.ToArray())) : null,
         };
     }
+    private static AiForecastPath FreezePath(AiForecastPath path) =>
+        path with { Events = Array.AsReadOnly(path.Events.ToArray()) };
+
     private static async Task<AiSourceFrame> ReadAsync(ZananceDbContext db, AiSelection selection, CancellationToken ct)
     {
         if (DatabaseFileIdentity.ConfiguredPath(db) != selection.File) throw new InvalidOperationException("Original analysis file required.");
@@ -137,8 +145,9 @@ public sealed class AiSnapshotStore(IDbContextFactory<ZananceDbContext> factory,
         }
         var current = Period(selection.From, selection.To);
         var previous = selection.ComparePrevious ? Period(PreviousFrom(selection), selection.CompareTo ?? selection.From.AddDays(-1)) : null;
-        var result = new AiPayload(selection.Funding is not null ? 3 : selection.Report is null ? 1 : 2, selection.ComparePrevious ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation,
-            selection.Language, current, previous, selection.Report, selection.Funding);
+        var result = new AiPayload(selection.Forecast is not null ? 4 : selection.Funding is not null ? 3 : selection.Report is null ? 1 : 2,
+            selection.ComparePrevious || selection.Forecast is not null ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation,
+            selection.Language, current, previous, selection.Report, selection.Funding, selection.Forecast);
         AiProtocol.Validate(result); return result;
     }
     private static DateOnly PreviousFrom(AiSelection selection) =>

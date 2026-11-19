@@ -8741,4 +8741,25 @@
   <data name="Ai_FundingDraftValue" xml:space="preserve">
     <value>مبلغ جایگزین برای بررسی در پیش‌نویس: {0}.</value>
   </data>
+  <data name="Ai_ExplainForecast" xml:space="preserve">
+    <value>توضیح پیش‌بینی</value>
+  </data>
+  <data name="Ai_ForecastBaseline" xml:space="preserve">
+    <value>مبنای بدون فرض</value>
+  </data>
+  <data name="Ai_ForecastScenario" xml:space="preserve">
+    <value>سناریوی انتخاب‌شده</value>
+  </data>
+  <data name="Ai_ForecastAssumptions" xml:space="preserve">
+    <value>بر اساس موارد ثبت‌شده و برنامه‌ها. مبلغ‌های نامعلوم در مانده لحاظ نشده‌اند. تا {0} رویداد برای هر مسیر.</value>
+  </data>
+  <data name="Ai_ForecastBalances" xml:space="preserve">
+    <value>ماندهٔ آغاز: {0} · ماندهٔ پایان: {1} · کمترین مانده: {2} در {3} · مبالغ نامعلوم: {4}</value>
+  </data>
+  <data name="Ai_ForecastFirstShortfall" xml:space="preserve">
+    <value>اولین ماندهٔ منفی در {0} برابر {1} است.</value>
+  </data>
+  <data name="Ai_ForecastNoShortfall" xml:space="preserve">
+    <value>مانده در مسیر محاسبه‌شده به زیر صفر نمی‌رسد.</value>
+  </data>
 </root>
