@@ -151,6 +151,20 @@ Merge commit 49130231:
   after the change; it does not show the ordinary native lane on the new installation.
 * "Official Android slices and stock cipher suite", job 135576005079, succeeded with the unchanged lock.
 
+Commit 2f8eaed5 (documentation only):
+
+* "Windows reproducibility and actual protected persistence", job 135586343849, received installation
+  18.12.12405.243 with tool set 14.52.37025 and completed the ordinary native lane: compiler qualification
+  and refusal fixtures, two equal fresh outputs with the diagnostic gate inside each build, every pinned
+  entry of candidate.11 reproduced, diagnostic refusals, fresh-process reopening of the production
+  assemblies and the protected reference and tenfold workloads. The Android job 135586344156 succeeded.
+  With this, both workflows have run the new variant on the new installation on commits of main.
+* "Windows build" succeeded again on the later main commits defd7c34 (job 135588260980) and d5b96d91
+  (job 135610736324); the installation those two jobs received was not read.
+* Not observed: a complete CI workflow. "Libraries and tests" was cancelled on 49130231 and 2f8eaed5 by later
+  pushes to main and was still running on defd7c34 and d5b96d91 when last checked. Those tests do not use
+  the Windows native package.
+
 ## Limits
 
 * The development machine has no Visual Studio C++ tools. Locally only the syntax of the scripts, the
