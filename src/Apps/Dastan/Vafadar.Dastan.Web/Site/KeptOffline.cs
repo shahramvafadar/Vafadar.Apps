@@ -21,7 +21,9 @@ public static class KeptOffline
         ArgumentNullException.ThrowIfNull(app);
         return app.Use((context, next) =>
         {
-            if (HttpMethods.IsGet(context.Request.Method) && IsPublicContent(context.Request.Path))
+            // An address with a question – what somebody searched for, the word of thanks after a form – is a
+            // moment of one visitor and not a page: it is not kept.
+            if (HttpMethods.IsGet(context.Request.Method) && !context.Request.QueryString.HasValue && IsPublicContent(context.Request.Path))
             {
                 context.Response.OnStarting(() =>
                 {
@@ -43,11 +45,17 @@ public static class KeptOffline
 
     /// <summary>
     /// Returns whether a path, without its language, is a page of public content: the start page, a page of a
-    /// collection or of a comparison. Every other first part of an address is something of the site itself.
+    /// collection or of a comparison. Every other first part of an address is something of the site itself,
+    /// in whatever case it is written – the site finds its pages without looking at the case. The search of a
+    /// collection is not such a page: what it shows is what somebody asked.
     /// </summary>
     public static bool IsPublicContent(PathString path)
     {
-        var first = (path.Value ?? string.Empty).Split('/', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-        return first is null || first == "compare" || (!DastanLibrary.IsTaken(first) && !first.StartsWith('_') && !first.Contains('.', StringComparison.Ordinal));
+        var parts = (path.Value ?? string.Empty).Split('/', StringSplitOptions.RemoveEmptyEntries);
+        var first = parts.FirstOrDefault();
+        return first is null
+            || string.Equals(first, "compare", StringComparison.OrdinalIgnoreCase)
+            || (!DastanLibrary.IsTaken(first) && !first.StartsWith('_') && !first.Contains('.', StringComparison.Ordinal)
+                && !parts.Skip(1).Any(part => string.Equals(part, "search", StringComparison.OrdinalIgnoreCase)));
     }
 }

@@ -676,7 +676,11 @@ public static class AccountEndpoints
     internal static IResult Back(string? returnUrl, string form, params string[] problems)
     {
         // An invitation the visitor came by stays in the address.
-        var invitation = returnUrl?.IndexOf("?invitation=", StringComparison.Ordinal) is { } at and >= 0 ? "&" + returnUrl[(at + 1)..] : string.Empty;
+        const string mark = "?invitation=";
+        var code = returnUrl?.IndexOf(mark, StringComparison.Ordinal) is { } at and >= 0 ? returnUrl[(at + mark.Length)..] : string.Empty;
+        var end = code.IndexOfAny(['&', '#']);
+        code = end < 0 ? code : code[..end];
+        var invitation = code is { Length: > 0 and <= 40 } && code.All(char.IsAsciiLetterOrDigit) ? $"&invitation={code}" : string.Empty;
         return Results.Redirect($"{Home(returnUrl)}?form={form}&problem={string.Join(',', problems)}{invitation}#{form}");
     }
 }

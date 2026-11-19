@@ -324,19 +324,48 @@ public static partial class MediaIntake
         }
     }
 
-    // A JPEG is a row of segments; APP1 holds EXIF and XMP, APP13 the notes of an agency. They are left out.
+    // A JPEG is a row of segments and scans, up to the marker that ends it. What the picture is drawn from is
+    // kept – its tables, its frames, its scans, the colours it is meant in – and nothing else: not what an
+    // application wrote beside it (EXIF and XMP, the notes of an agency, a list of further pictures, the
+    // credentials of a maker, a comment), and nothing that follows the end of the picture – a second picture, a
+    // short film a telephone hung on. A file that is not built that way to its end is not a JPEG to be kept.
     private static byte[] JpegWithoutMetadata(byte[] image)
     {
         using var cleaned = new MemoryStream(image.Length);
         cleaned.Write(image, 0, 2);
         var at = 2;
-        while (at + 4 <= image.Length && image[at] == 0xFF)
+        while (true)
         {
-            var marker = image[at + 1];
-            if (marker == 0xDA)
+            if (at + 2 > image.Length || image[at] != 0xFF)
             {
-                // The picture itself begins: everything from here on is kept as it is.
-                break;
+                throw new InvalidDataException();
+            }
+
+            // Bytes that fill the room before a marker.
+            while (at + 2 < image.Length && image[at + 1] == 0xFF)
+            {
+                at++;
+            }
+
+            var marker = image[at + 1];
+            if (marker == 0xD9)
+            {
+                // The end of the picture. What a file holds after it is not the picture.
+                cleaned.Write(image, at, 2);
+                return cleaned.ToArray();
+            }
+
+            if (marker is 0x01 or (>= 0xD0 and <= 0xD7))
+            {
+                // A marker that stands alone.
+                cleaned.Write(image, at, 2);
+                at += 2;
+                continue;
+            }
+
+            if (at + 4 > image.Length)
+            {
+                throw new InvalidDataException();
             }
 
             var length = BinaryPrimitives.ReadUInt16BigEndian(image.AsSpan(at + 2));
@@ -345,19 +374,71 @@ public static partial class MediaIntake
                 throw new InvalidDataException();
             }
 
-            if (marker is not (0xE1 or 0xED))
+            if (JpegKeeps(marker, image.AsSpan(at + 4, length - 2)))
             {
                 cleaned.Write(image, at, 2 + length);
             }
 
             at += 2 + length;
-        }
+            if (marker != 0xDA)
+            {
+                continue;
+            }
 
-        cleaned.Write(image, at, image.Length - at);
-        return cleaned.ToArray();
+            // A scan: the picture itself, up to the next marker that is one – in a scan a byte of 255 is
+            // followed by a zero, and the scan is cut into parts by the markers that restart it.
+            var from = at;
+            while (true)
+            {
+                var next = Array.IndexOf(image, (byte)0xFF, at);
+                if (next < 0 || next + 1 >= image.Length)
+                {
+                    throw new InvalidDataException();
+                }
+
+                var after = image[next + 1];
+                if (after == 0x00 || after is >= 0xD0 and <= 0xD7)
+                {
+                    at = next + 2;
+                }
+                else if (after == 0xFF)
+                {
+                    at = next + 1;
+                }
+                else
+                {
+                    at = next;
+                    break;
+                }
+            }
+
+            cleaned.Write(image, from, at - from);
+        }
     }
 
-    // A PNG is a row of chunks; the texts, the time and the EXIF chunk are left out.
+    // Which segment of a JPEG belongs to the picture. Of what applications write, three are needed to draw it
+    // right: the first (JFIF: how dense the picture is), the colours it is meant in (an ICC profile, which
+    // shares its number with the list of further pictures – told apart by its name), and the note of Adobe
+    // that says how the colours are stored. A comment is no part of the picture.
+    private static bool JpegKeeps(byte marker, ReadOnlySpan<byte> body) => marker switch
+    {
+        0xE0 or 0xEE => true,
+        0xE2 => body.StartsWith("ICC_PROFILE\0"u8),
+        >= 0xE1 and <= 0xEF => false,
+        0xFE => false,
+        _ => true,
+    };
+
+    // The chunks of a PNG a picture is drawn from: the picture and its palette, what is see-through, the
+    // colours it is meant in, how dense it is, and the frames of a moving one. Every other chunk – a text, the
+    // time, EXIF, the credentials of a maker, what a program kept for itself – says something about the making.
+    private static readonly HashSet<string> PngKept = new(StringComparer.Ordinal)
+    {
+        "IHDR", "PLTE", "IDAT", "IEND", "tRNS", "gAMA", "cHRM", "sRGB", "iCCP", "cICP", "sBIT", "bKGD", "pHYs", "hIST", "sPLT", "acTL", "fcTL", "fdAT",
+    };
+
+    // A PNG is a row of chunks up to the one that ends it; only those a picture is drawn from are kept, and
+    // nothing that follows the end.
     private static byte[] PngWithoutMetadata(byte[] image)
     {
         using var cleaned = new MemoryStream(image.Length);
@@ -372,15 +453,20 @@ public static partial class MediaIntake
             }
 
             var type = Encoding.ASCII.GetString(image, at + 4, 4);
-            if (type is not ("tEXt" or "iTXt" or "zTXt" or "eXIf" or "tIME"))
+            if (PngKept.Contains(type))
             {
                 cleaned.Write(image, at, 12 + (int)length);
             }
 
             at += 12 + (int)length;
+            if (type == "IEND")
+            {
+                return cleaned.ToArray();
+            }
         }
 
-        return cleaned.ToArray();
+        // No chunk ended the picture: the file is cut off.
+        throw new InvalidDataException();
     }
 
     private static bool WebpHasMetadata(byte[] image)
