@@ -97,7 +97,7 @@ of this file that says otherwise**:
   galleries): the catalogue record and the link to the holder. Never pass its `MediaItem` to a page, never load
   anything from the holder's server, and add a field to the reference only if a visitor may see it.
 * Visitors have accounts in a third store ([ADR 0014](docs/adr/0014-visitor-accounts.md),
-  `Vafadar.Dastan.People`, the setting `Dastan:People`). It references neither the collections' readers nor the
+  `Vafadar.Dastan.People`, the setting `Dastan:Database` – a PostgreSQL database since step 19.3). It references neither the collections' readers nor the
   store of the editors, and nothing of it reaches a collection. An account is a name and what is kept of a
   password – never add a field about the person (a mail address, a real name, an address of a machine) without a
   decision of the owner and a line in the privacy matrix. A site without the setting must behave as it did

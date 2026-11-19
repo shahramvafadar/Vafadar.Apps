@@ -1,4 +1,5 @@
 using Vafadar.Dastan.Core.Personal;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.People.Tests;
 
@@ -20,7 +21,7 @@ public sealed class PhotoObjectionTests : IDisposable
 
     public PhotoObjectionTests()
     {
-        _store = PeopleStore.Open(Path.Combine(_folder, "people.db"), _clock);
+        _store = PeopleStore.Open(TestDatabase.For(Path.Combine(_folder, "people.db")), _clock);
         _mina = _store.Register("Mina", Password).Session!.Id;
         _sara = _store.Register("Sara", Password).Session!.Id;
         _dara = _store.Register("Dara", Password).Session!.Id;

@@ -38,7 +38,7 @@ Settings are environment variables (two underscores for a level).
 | `Dastan__Audience` | `Public` (the default) or `LocalDemonstration`. A host never sets it: a demonstration shows what is not published |
 | `Dastan__TrustedProxies__0`, `__1`, … | The proxies the site believes when they say how a visitor came (`X-Forwarded-Proto`, `X-Forwarded-For`): an address or a network such as `10.0.0.0/8`. Not set, the site believes nobody – then it does not know that a visitor came by https, sets no `Secure` cookie and sends no HSTS. Name the proxy of the host and nothing wider |
 | `Dastan__Reports` | A folder for the reports of visitors, on a volume the user of the container may write to (step 14.8, [ADR 0012](adr/0012-visitor-reports.md)). The editors read it with their tool (`Studio__Reports`): on one machine the same folder, else it is carried over. Each report is a small file with the statement, the words and the day – nothing about the visitor | not set: the site offers no form for reports and takes none |
-| `Dastan__People` | The file of the store of the visitors (step 16.1, [ADR 0014](adr/0014-visitor-accounts.md)): a SQLite database with their accounts, on a volume that outlives the container and that the user of the container may write to. The site makes the file and brings it to the form it knows when it starts. One container at a time may use it. It holds names and values derived from passwords: it is backed up and protected like a database, and never lies in a folder a web server shows. Set it together with `Dastan__Keys`, or everybody signs in again after each start | not set: the site has no accounts, no page for one, and keeps nothing |
+| `Dastan__Database` | The connection of the PostgreSQL database of the site (step 19.3, [ADR 0015](adr/0015-postgresql.md)), as Npgsql reads it – `Host=…;Database=…;Username=…;Password=…`. With it the site has accounts of visitors and what belongs to them. The password is a secret: it is set where the site runs and never written into a file of the repository. The database is made with `--encoding=UTF8 --locale=C`, and its tables are made and brought up by the command `database migrate` – the site changes no table and does not start on a database that is behind | not set: no accounts, nothing kept about a visitor |
 | `Dastan__Photos` | A folder for the photographs of the visitors (step 16.5), on a volume that outlives the container, that the user of the container may write to and that **no web server shows**: a photograph is given only through the site, which asks who may see it. Needs `Dastan__People`. It is backed up together with the store of the visitors – one without the other is of no use | not set: the site has no photographs |
 | `DASTAN_LEGAL` (of `compose.trial.yaml`) | A folder with legal texts of the owner's own inside the container of the trial, on its volume – for example `/data/legal`; it becomes `Dastan__Legal` | not set: the texts of the program |
 | `Dastan__Operator__Street`, `__Town`, `__Country` | The postal address of who runs the site (row 18.8, [legal/before-publication.md](legal/before-publication.md)): shown in the imprint, the privacy notice and the terms. Said to the running site, never written into the repository | not set: the legal pages show a gap and say that they are not complete |
@@ -199,6 +199,22 @@ dotnet Vafadar.Dastan.Content.dll photos sizes <Dastan__Photos>/media
 
 It says how many sizes it made, changes no photograph, and finds nothing to do when it is run again.
 
+## The database
+
+The site keeps what belongs to accounts in PostgreSQL ([ADR 0015](adr/0015-postgresql.md)). The commands of
+the operator read its connection from the variable `DASTAN_DATABASE`, named with the word `env`:
+
+```
+dotnet Vafadar.Dastan.Content.dll database migrate --database env
+```
+
+makes the tables or brings them to the form the program knows, and is run before a new version of the site is
+started. On a developer's machine and for the tests, `docker compose -f src/Apps/Dastan/compose.yaml up -d
+postgres` starts a PostgreSQL that keeps nothing (its data lies in memory) and answers this machine only; the
+tests make a database of their own for every test in it and are skipped without it – in CI, where
+`DASTAN_POSTGRES_REQUIRED` is set, they fail instead. **Backup**: `pg_dump` of the database together with the
+volume of the files; how both are brought back is tried and written here before step 19.3 is done.
+
 ## Notices about content, and restricting
 
 What the law asks of a site that keeps what others wrote, and how the operator does it, is in
@@ -210,12 +226,12 @@ dotnet Vafadar.Dastan.Content.dll notices show <reference> <Dastan__Notices>
 dotnet Vafadar.Dastan.Content.dll notices settle <reference> <Dastan__Notices> --decision "<what was decided>"
 dotnet Vafadar.Dastan.Content.dll notices forget <Dastan__Notices> [--kept-days 365]
 
-dotnet Vafadar.Dastan.Content.dll people restrictions --people <Dastan__People>
-dotnet Vafadar.Dastan.Content.dll people restrict photo|tree|account <id or name> --people <Dastan__People> --reason "<the facts>" --ground "<the law or the section of the terms>" [--noticed]
-dotnet Vafadar.Dastan.Content.dll people lift <number> --people <Dastan__People>
-dotnet Vafadar.Dastan.Content.dll people persons <tree> --people <Dastan__People>
-dotnet Vafadar.Dastan.Content.dll people person remove <tree> <person> --people <Dastan__People>
-dotnet Vafadar.Dastan.Content.dll people forget <name> --people <Dastan__People>
+dotnet Vafadar.Dastan.Content.dll people restrictions --people env
+dotnet Vafadar.Dastan.Content.dll people restrict photo|tree|account <id or name> --people env --reason "<the facts>" --ground "<the law or the section of the terms>" [--noticed]
+dotnet Vafadar.Dastan.Content.dll people lift <number> --people env
+dotnet Vafadar.Dastan.Content.dll people persons <tree> --people env
+dotnet Vafadar.Dastan.Content.dll people person remove <tree> <person> --people env
+dotnet Vafadar.Dastan.Content.dll people forget <name> --people env
 ```
 
 A restricted photograph is seen by its owner only; a restricted tree is not public and cannot be made public;
@@ -227,7 +243,7 @@ where the store lies, while few people are on the site.
 
 ## What the site keeps about visitors
 
-Without `Dastan__People` nothing on its own: no database, no file, no account. With it, the accounts of the
+Without `Dastan__Database` nothing on its own: no database, no file, no account. With it, the accounts of the
 visitors: for each a name the visitor chose, a value derived from the password, the hashes of the recovery codes,
 when the account was made, how often the password was wrong and when it was closed – no mail address and no
 address of a machine; for an account that is signed in through Google or Microsoft, which of them and a hash

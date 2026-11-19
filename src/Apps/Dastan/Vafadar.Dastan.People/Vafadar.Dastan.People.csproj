@@ -10,7 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <!-- The accounts move to ASP.NET Core Identity in step 19.4 (ADR 0016). Named already, so that everything that
+         uses the store gets one version of EF Core: the tools of the design time ask for a newer one than Npgsql
+         brings, and do not pass theirs on. -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" PrivateAssets="all" />
   </ItemGroup>
 

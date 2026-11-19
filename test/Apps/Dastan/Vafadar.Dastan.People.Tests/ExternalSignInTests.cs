@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.People.Tests;
 
@@ -15,7 +15,7 @@ public sealed class ExternalSignInTests : IDisposable
     private readonly TestClock _clock = new(new DateTimeOffset(2026, 11, 18, 9, 0, 0, TimeSpan.Zero));
     private readonly PeopleStore _store;
 
-    public ExternalSignInTests() => _store = PeopleStore.Open(File, _clock);
+    public ExternalSignInTests() => _store = PeopleStore.Open(TestDatabase.For(File), _clock);
 
     private string File => Path.Combine(_folder, "people.db");
 
@@ -165,11 +165,11 @@ public sealed class ExternalSignInTests : IDisposable
         var mina = _store.RegisterWith("Mina", "google", Subject).Session!;
 
         var kept = new List<string>();
-        using (var connection = new SqliteConnection($"Data Source={File};Pooling=False"))
+        using (var connection = new Npgsql.NpgsqlConnection(TestDatabase.For(File)))
         {
             connection.Open();
             using var command = connection.CreateCommand();
-            command.CommandText = "select Provider || ' ' || Key || ' ' || VisitorId from ExternalLogins union all select Password from Visitors";
+            command.CommandText = TestDatabase.Sql("select Provider || ' ' || Key || ' ' || VisitorId from ExternalLogins union all select Password from Visitors");
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {

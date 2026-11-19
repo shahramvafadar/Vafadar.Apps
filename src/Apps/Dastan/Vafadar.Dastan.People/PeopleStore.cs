@@ -80,22 +80,42 @@ public sealed partial class PeopleStore : IDisposable
 
     private PeopleStore(PeopleContext context, TimeProvider time) => (_context, _time) = (context, time);
 
-    /// <summary>Opens the store in a file, making or bringing it to the form this program knows.</summary>
-    public static PeopleStore Open(string file, TimeProvider? time = null, bool migrate = true)
+    /// <summary>The schema of the database the store lives in (ADR 0015): what belongs to accounts.</summary>
+    public const string Schema = "personal";
+
+    /// <summary>
+    /// Opens the store in a database of PostgreSQL. The database has the form this program knows already:
+    /// bringing it there is an act of its own (<see cref="Migrate"/>), done by who runs the site and not by a
+    /// site that starts.
+    /// </summary>
+    /// <param name="connection">The connection of the database, as Npgsql reads it.</param>
+    /// <param name="time">The clock; the system's when nothing is given.</param>
+    public static PeopleStore Open(string connection, TimeProvider? time = null)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(file);
-        var path = Path.GetFullPath(file);
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-
-        // Pooling is off: the file of a store is released when the store is closed, not when the process ends.
-        var context = new PeopleContext(new DbContextOptionsBuilder<PeopleContext>().UseSqlite($"Data Source={path};Pooling=False").Options);
-        if (migrate)
-        {
-            context.Database.Migrate();
-        }
-
-        return new PeopleStore(context, time ?? TimeProvider.System);
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        return new PeopleStore(new PeopleContext(Options(connection)), time ?? TimeProvider.System);
     }
+
+    /// <summary>Makes the schema of the store in a database, or brings it to the form this program knows.</summary>
+    public static void Migrate(string connection)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        using var context = new PeopleContext(Options(connection));
+        context.Database.Migrate();
+    }
+
+    /// <summary>Returns the changes of form a database still lacks; none for one this program can work on.</summary>
+    public static IReadOnlyList<string> Pending(string connection)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(connection);
+        using var context = new PeopleContext(Options(connection));
+        return [.. context.Database.GetPendingMigrations()];
+    }
+
+    // The history of the changes of form lies in the schema of the store, so that each part of the database
+    // keeps its own (ADR 0015).
+    internal static DbContextOptions<PeopleContext> Options(string connection) =>
+        new DbContextOptionsBuilder<PeopleContext>().UseNpgsql(connection, npgsql => npgsql.MigrationsHistoryTable("__EFMigrationsHistory", Schema)).Options;
 
     /// <inheritdoc />
     public void Dispose() => _context.Dispose();

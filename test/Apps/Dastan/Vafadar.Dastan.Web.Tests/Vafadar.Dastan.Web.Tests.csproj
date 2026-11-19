@@ -14,4 +14,8 @@
     <Compile Include="..\Vafadar.Dastan.Data.Tests\RealImages.cs" Link="Shared\RealImages.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\Databases\TestDatabase.cs" Link="Shared\TestDatabase.cs" />
+  </ItemGroup>
+
 </Project>

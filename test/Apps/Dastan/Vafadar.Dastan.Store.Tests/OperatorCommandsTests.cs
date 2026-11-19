@@ -1,6 +1,7 @@
 using Vafadar.Dastan.Content;
 using Vafadar.Dastan.Data;
 using Vafadar.Dastan.People;
+using Vafadar.Dastan.Tests;
 
 namespace Vafadar.Dastan.Store.Tests;
 
@@ -19,13 +20,12 @@ public sealed class OperatorCommandsTests : IDisposable
 
     private string Notices => Path.Combine(_folder, "notices");
 
-    private string People => Path.Combine(_folder, "people.db");
+    private string People => TestDatabase.For(Path.Combine(_folder, "people.db"));
 
     public OperatorCommandsTests() => Directory.CreateDirectory(Notices);
 
     public void Dispose()
     {
-        Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
         if (Directory.Exists(_folder))
         {
             Directory.Delete(_folder, recursive: true);
@@ -70,6 +70,37 @@ public sealed class OperatorCommandsTests : IDisposable
     }
 
     [Fact]
+    public void A_database_is_brought_to_form_by_the_command_and_its_connection_is_never_a_word_of_it()
+    {
+        var empty = TestDatabase.Empty();
+
+        // A database without the tables is not worked on, and nothing makes them by the way.
+        var early = Run("people", "restrictions", "--people", empty);
+        Assert.Equal(ContentCommands.NotUsable, early.Exit);
+        Assert.Contains("database migrate", early.Output, StringComparison.Ordinal);
+
+        Assert.Equal(ContentCommands.Done, Run("database", "migrate", "--database", empty).Exit);
+        Assert.Equal(ContentCommands.Done, Run("database", "migrate", "--database", empty).Exit);
+        Assert.Contains("0 restrictions stand.", Run("people", "restrictions", "--people", empty).Output, StringComparison.Ordinal);
+
+        // The word "env" stands for the variable; without the variable the command says so and does nothing.
+        var before = Environment.GetEnvironmentVariable("DASTAN_DATABASE");
+        try
+        {
+            Environment.SetEnvironmentVariable("DASTAN_DATABASE", null);
+            Assert.Equal(ContentCommands.NotUsable, Run("people", "restrictions", "--people", "env").Exit);
+            Environment.SetEnvironmentVariable("DASTAN_DATABASE", empty);
+            Assert.Equal(ContentCommands.Done, Run("people", "restrictions", "--people", "env").Exit);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("DASTAN_DATABASE", before);
+        }
+
+        Assert.Equal(ContentCommands.NotUsable, Run("database", "migrate", "--database", "Host=127.0.0.1;Port=1;Timeout=2").Exit);
+    }
+
+    [Fact]
     public void A_tree_and_an_account_are_restricted_with_their_reasons_listed_and_lifted()
     {
         string tree, zal;
@@ -85,8 +116,7 @@ public sealed class OperatorCommandsTests : IDisposable
         Assert.Contains("restricted, decision no. 1.", restricted.Output, StringComparison.Ordinal);
         Assert.Equal(ContentCommands.Done, Run("people", "restrict", "account", "Mina", "--people", People, "--reason", "Repeated breaches.", "--ground", "Section 10 of the terms").Exit);
         Assert.Equal(ContentCommands.NotUsable, Run("people", "restrict", "photo", "no-such-photo", "--people", People, "--reason", "A reason.", "--ground", "A ground.").Exit);
-        Assert.Equal(ContentCommands.NotUsable, Run("people", "restrictions", "--people", Path.Combine(_folder, "no-such.db")).Exit);
-        Assert.False(File.Exists(Path.Combine(_folder, "no-such.db")));
+        Assert.Equal(ContentCommands.NotUsable, Run("people", "restrictions", "--people", TestDatabase.Missing()).Exit);
 
         var standing = Run("people", "restrictions", "--people", People).Output;
         Assert.Contains("2 restrictions stand.", standing, StringComparison.Ordinal);
