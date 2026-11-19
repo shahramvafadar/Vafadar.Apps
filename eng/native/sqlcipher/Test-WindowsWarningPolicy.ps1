@@ -11,7 +11,7 @@ $manifest = Get-Content (Join-Path $root 'candidate/manifest.json') -Raw -Encodi
 $tools = $manifest.compiler.toolsVersion
 $baseline = Get-Content (Get-ReviewedWindowsWarningBaselinePath -InputLock $inputLock -ToolsVersion $tools) -Raw -Encoding UTF8 | ConvertFrom-Json
 # The recorded inventory of each compiler tool set: occurrences, distinct sites and warning-bearing sources.
-$recorded = @{ '14.51.36231' = @(508,503,160) }
+$recorded = @{ '14.51.36231' = @(508,503,160); '14.52.37025' = @(508,503,160) }
 if (-not $recorded.ContainsKey($tools)) { throw 'No recorded diagnostic inventory totals for this compiler tool set.' }
 $totals = $recorded[$tools]
 $lines = @(Get-Content (Join-Path $root 'build.log') -Encoding UTF8)
