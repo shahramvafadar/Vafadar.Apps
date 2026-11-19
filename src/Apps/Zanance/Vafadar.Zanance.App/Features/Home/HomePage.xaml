@@ -327,6 +327,14 @@
                 </VerticalStackLayout>
 
                 <!-- Sections the user can hide and reorder (§21.5); balance and attention stay on top (DASH-03) -->
+                <Border Style="{StaticResource Card}" IsVisible="{Binding HasAnalysisPeriod}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding ScopeText}" Style="{StaticResource Secondary}" />
+                        <p:WrappingAction Text="{v:Translate Ai_ExplainPeriodFromReport}" Command="{Binding ExplainHomePeriodCommand}" />
+                        <p:WrappingAction Text="{v:Translate Ai_ComparePeriodFromReport}" Command="{Binding CompareHomePeriodCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
                 <VerticalStackLayout x:Name="BudgetSection" Spacing="0">
                     <!-- Budget remaining (only when a budget exists) -->
                     <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasBudget}">

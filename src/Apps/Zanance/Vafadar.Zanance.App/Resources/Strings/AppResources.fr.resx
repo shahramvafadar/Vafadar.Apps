@@ -8673,4 +8673,10 @@ SHA-256 du XML original : {5}</value>
   <data name="Ai_ConfirmCancelAction" xml:space="preserve">
     <value>Annuler</value>
   </data>
+  <data name="Ai_ExplainPeriodFromReport" xml:space="preserve">
+    <value>Expliquez cette période avec l’IA</value>
+  </data>
+  <data name="Ai_ComparePeriodFromReport" xml:space="preserve">
+    <value>Comparez avec la période précédente avec l’IA</value>
+  </data>
 </root>

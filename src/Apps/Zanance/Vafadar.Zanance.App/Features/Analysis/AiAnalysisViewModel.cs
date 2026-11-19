@@ -33,6 +33,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     IDateFormatter dates, TimeProvider time, IAppInteraction interaction, IAiRuntime runtime) : ViewModelBase
 {
     private AiAccountScope? scope;
+    private AiPeriodHandoff? initialPeriod;
     private AiReview? review;
     private AiOffer? offer;
     private IAiRemote? remote;
@@ -50,6 +51,11 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private bool OwnsPresentation => active && !rootRetired && (ownsRoot?.Invoke() ?? true);
     /// <summary>Only the actual original native root may own this analysis page.</summary>
     internal void BindRootOwner(Func<bool> owner) => ownsRoot = owner;
+    /// <summary>Captures the source route before its first load, without reviewing or sending anything.</summary>
+    internal void SetInitialPeriod(AiPeriodHandoff period)
+    {
+        if (!Loaded && !rootRetired) initialPeriod = period;
+    }
     /// <summary>Root replacement permanently retires the old disclosure and private connection.</summary>
     internal void RetireRoot() { rootRetired = true; Retire(); }
     /// <summary>Pending source reads permit cancellation by Back; native disclosure/submission keeps its owner.</summary>
@@ -101,7 +107,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Explicit metadata check is separate from local preparation.</summary>
     public bool CanCheckProvider => OwnsPresentation && Loaded && !HasPendingOperation && runtime.NetworkAvailable;
     /// <summary>Gets whether metadata-only original terms can be requested.</summary>
-    public bool CanQuote => OwnsPresentation && !HasPendingOperation && review is not null && metadataReady && remote is not null && availability?.Configured == true && !Pending;
+    public bool CanQuote => OwnsPresentation && !HasPendingOperation && review is not null && metadataReady && remote is not null &&
+        availability is { } status && (review.Selection.ComparePrevious ? status.ComparisonConfigured ?? status.Configured : status.Configured) && !Pending;
     /// <summary>Gets whether current literal terms and actual available quantities permit a request attempt; the service rechecks authority.</summary>
     public bool CanSend => CanQuote && offer is not null && availability is not null &&
         checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= offer.MaximumUnits;
@@ -162,7 +169,18 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             Summary = Disclosure = ResultText = ResultStatus = ResultSnapshot = ShareStatus = BalanceText = null; ProviderText = text["Ai_NoProvider"];
             Validate(original);
             var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); Validate(original);
-            if (oldFile is not null && oldFile != current.File)
+            var incoming = initialPeriod;
+            if (incoming is not null)
+            {
+                if (incoming.File != current.File || incoming.Accounts.Any(id => current.Accounts.All(account => account.Id != id)))
+                    throw new InvalidOperationException("The original report scope is no longer available.");
+                selected = incoming.Accounts.ToHashSet();
+                Reset(From, incoming.From, value => From = value);
+                Reset(To, incoming.To, value => To = value);
+                Reset(ConfirmedOnly, incoming.ConfirmedOnly, value => ConfirmedOnly = value);
+                Reset(ComparePrevious, incoming.ComparePrevious, value => ComparePrevious = value);
+            }
+            else if (oldFile is not null && oldFile != current.File)
             {
                 // D-963: only our own default changes advance the expected revision. A nested draft edit
                 // or root retirement must stop before the next default or account publication.
@@ -176,11 +194,12 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             // Build restored choices before their callbacks become live; restoring a selection is not a new user edit.
             var replacement = current.Accounts.Select(account => new AiAccountChoice(account,
                 () => { if (OwnsPresentation && originalChoices == choiceEpoch) Invalidate(); })
-                { Selected = current.File == oldFile && selected.Contains(account.Id) }).ToArray();
+                { Selected = (incoming is not null || current.File == oldFile) && selected.Contains(account.Id) }).ToArray();
             Validate(original); scope = current; choiceEpoch = originalChoices;
             Accounts.Clear(); Validate(original);
             foreach (var account in replacement) { Accounts.Add(account); Validate(original); }
             Loaded = true; Validate(original);
+            if (ReferenceEquals(initialPeriod, incoming)) initialPeriod = null;
 
             void Reset<T>(T before, T value, Action<T> publish)
             {
@@ -270,8 +289,9 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             var status = await opened.AvailabilityAsync(CancellationToken.None); Validate(version);
             var saved = await opened.ReadAsync(CancellationToken.None); Validate(version);
             // Stage one coherent metadata snapshot before the first binding callback.
-            var destination = status.Configured || saved is not null ? opened.Destination : null; Validate(version);
-            var provider = status.Configured ? destination : text["Ai_NoProvider"];
+            var configured = status.Configured || status.ComparisonConfigured == true;
+            var destination = configured || saved is not null ? opened.Destination : null; Validate(version);
+            var provider = configured ? destination : text["Ai_NoProvider"];
             var balance = BalanceCaption(status.Balance);
             var snapshot = saved is null ? null : destination + Environment.NewLine + JsonSerializer.Serialize(saved.Submission, AiJson.Default.AiSubmission);
             var result = saved?.Result?.Text; var state = saved is null ? null : RecordStatus(saved); Validate(version);

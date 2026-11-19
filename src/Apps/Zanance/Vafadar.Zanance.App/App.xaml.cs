@@ -221,6 +221,8 @@ public partial class App : Application
             throw new InvalidOperationException("Independent menu review identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "ai-native" && AppInfo.Current.PackageName != "pro.vafadar.zanance.aireview")
             throw new InvalidOperationException("Independent analysis installation required before startup.");
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "ai-period-handoff" && AppInfo.Current.PackageName != "pro.vafadar.zanance.aiperiodreview")
+            throw new InvalidOperationException("Independent analysis period installation required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "bank-csv-native" && AppInfo.Current.PackageName != "pro.vafadar.zanance.bankcsvreview")
             throw new InvalidOperationException("Independent bank CSV installation required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "accountant-native" && AppInfo.Current.PackageName != "pro.vafadar.zanance.accountantreview")

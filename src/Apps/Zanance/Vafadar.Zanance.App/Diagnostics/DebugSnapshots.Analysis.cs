@@ -23,6 +23,67 @@ namespace Vafadar.Zanance.App.Diagnostics;
 
 internal static partial class DebugSnapshots
 {
+    /// <summary>Exercises only the new native Home and Reports shortcuts in an independent offline review.</summary>
+    private static async Task ReviewAiPeriodHandoffAsync(App app, IServiceProvider services, string folder)
+    {
+        if (AppInfo.Current.PackageName != "pro.vafadar.zanance.aiperiodreview") throw new IOException("Independent period fixture required.");
+        var evidence = Path.Combine(folder, "period-native.json");
+        if (File.Exists(evidence)) throw new IOException("Completed native period cases must not be replayed.");
+        var store = services.GetRequiredService<ZananceStore>();
+        if (!(await store.GetAccountsAsync()).Any())
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            foreach (var currency in new[] { "EUR", "USD" })
+            {
+                var account = new Account { Name = "Fictitious " + currency, CurrencyCode = currency, OpeningDate = today.AddDays(-45) };
+                await store.SaveAccountAsync(account);
+                await store.SaveEntryAsync(new LedgerEntry { AccountId = account.Id, Date = today, Kind = EntryKind.Income, Amount = 2500, Review = ReviewState.Confirmed });
+            }
+            await store.UpdateSettingsAsync(settings => { settings.OnboardingCompleted = true; settings.ReportCurrencyCode = "EUR"; });
+        }
+        var before = await HouseholdFinancialFingerprintAsync(services);
+        app.ShowCurrentProfile();
+        var shell = app.Windows[0].Page as AppShell ?? throw new IOException("Original review Shell unavailable.");
+        var text = services.GetRequiredService<Translator>();
+        var observations = new List<object>();
+        foreach (var home in new[] { true, false })
+        {
+            await shell.GoToAsync(home ? "//home" : AppShell.ReportsRoute);
+            foreach (var compare in new[] { false, true })
+            {
+                var source = shell.CurrentPage;
+                if (source is Features.Home.HomePage homePage) await homePage.PendingPublication;
+                else if (source is Features.Reports.ReportsPage reportPage) await reportPage.PendingPublication;
+                else throw new IOException("Original period page unavailable.");
+                var caption = text[compare ? "Ai_ComparePeriodFromReport" : "Ai_ExplainPeriodFromReport"];
+                var target = VisualDescendants(source).OfType<WrappingAction>().Single(a => a.Text == caption);
+                if (app.Windows[0].Handler?.PlatformView is Microsoft.UI.Xaml.Window { Content: Microsoft.UI.Xaml.UIElement root }) root.UpdateLayout();
+                for (var attempt = 0; attempt < 100 && (!Visible(target) || target.Height <= 0); attempt++)
+                    await Task.Delay(40);
+                await ScrollToViewIfNeededAsync(FindScrollView(source)!, target);
+                var original = VisualDescendants(target).OfType<Button>().Single();
+                var native = original.Handler?.PlatformView as NativeButton;
+                if (!Visible(target) || native is not { IsEnabled: true, ActualHeight: > 0 })
+                    throw new IOException($"Original analysis action not available on {source.GetType().Name} (visible {Visible(target)}, height {target.Height}, native height {native?.ActualHeight}, enabled {native?.IsEnabled}).");
+                // A hidden WinUI capture window can defer the framework's cached peer; bind a peer to this exact original button.
+                var peer = FrameworkElementAutomationPeer.CreatePeerForElement(native) ?? new ButtonAutomationPeer(native);
+                if (peer.GetPattern(PatternInterface.Invoke) is not IInvokeProvider invoke)
+                    throw new IOException("The original button has no native Invoke pattern.");
+                observations.Add(native); observations.Add(peer); observations.Add(invoke);
+                invoke.Invoke();
+                for (var attempt = 0; attempt < 120 && shell.CurrentPage?.BindingContext is not AiAnalysisViewModel { Loaded: true }; attempt++)
+                    await Task.Delay(50);
+                if (shell.CurrentPage?.BindingContext is not AiAnalysisViewModel { Loaded: true } vm ||
+                    vm.ComparePrevious != compare || vm.Accounts.Count(a => a.Selected) != (home ? 2 : 1) ||
+                    vm.Disclosure is not null || vm.ResultText is not null || vm.NetworkEnabled)
+                    throw new IOException("Native period selection or local-only draft guard failed.");
+                await shell.GoToAsync("..");
+            }
+        }
+        if (before != await HouseholdFinancialFingerprintAsync(services)) throw new IOException("Period navigation changed financial data.");
+        await File.WriteAllTextAsync(evidence, JsonSerializer.Serialize(new { Actions = 4, FinancialSourceUnchanged = true, ProviderCalls = 0 }));
+    }
+
     /// <summary>Actual aggregate page and native Cancel, independent fictitious finance/effects; no provider/network/credit operation.</summary>
     private static async Task ReviewAiAsync(App app, IServiceProvider services, string folder)
     {

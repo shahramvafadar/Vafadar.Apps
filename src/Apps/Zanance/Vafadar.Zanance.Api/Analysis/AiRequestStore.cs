@@ -22,8 +22,11 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         var offer = pilot is null ? provider.Offer(AiPurpose.PeriodExplanation)
             : (await pilot.OfferAsync(db, AiPurpose.PeriodExplanation, ct))?.Offer;
         if (offer is not null) ValidateOffer(offer);
+        var comparison = pilot is null ? provider.Offer(AiPurpose.PeriodComparison)
+            : (await pilot.OfferAsync(db, AiPurpose.PeriodComparison, ct))?.Offer;
+        if (comparison is not null) ValidateOffer(comparison);
         var balance = await BalanceAsync(db, scope.Owner, ct); await scope.CommitAsync(ct);
-        return new(offer is not null, offer?.Provider, offer?.Model, balance);
+        return new(offer is not null, offer?.Provider, offer?.Model, balance, comparison is not null);
     }
     /// <summary>Issues metadata-only original consent terms, without receiving or forwarding personal financial content.</summary>
     internal async Task<AiOffer> OfferAsync(ClaimsPrincipal actor, AiPurpose purpose, CancellationToken ct)

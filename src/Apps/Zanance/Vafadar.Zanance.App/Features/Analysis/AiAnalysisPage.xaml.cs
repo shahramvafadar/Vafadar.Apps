@@ -1,11 +1,12 @@
 namespace Vafadar.Zanance.App.Features.Analysis;
 
 /// <summary>Original aggregate disclosure lifetime; departure retires publication without erasing private intent.</summary>
-public partial class AiAnalysisPage : ContentPage
+public partial class AiAnalysisPage : ContentPage, IQueryAttributable
 {
     private readonly AiAnalysisViewModel model;
     private AppShell? ownerShell;
     private bool rootRetired;
+    private bool scopeReceived;
     /// <summary>Retires only this actual page, including its pending local source read.</summary>
     internal void RetirePublication() => model.Retire();
     /// <summary>A replaced root cannot reactivate original consent or a private remote.</summary>
@@ -26,6 +27,15 @@ public partial class AiAnalysisPage : ContentPage
     }
     /// <summary>Constructs native controls without database/network work.</summary>
     public AiAnalysisPage(AiAnalysisViewModel model) { InitializeComponent(); BindingContext = this.model = model; }
+    /// <inheritdoc />
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (!scopeReceived && query.TryGetValue(AiPeriodHandoff.QueryKey, out var value) && value is AiPeriodHandoff period)
+        {
+            scopeReceived = true;
+            model.SetInitialPeriod(period);
+        }
+    }
     /// <inheritdoc />
     protected override async void OnAppearing() { base.OnAppearing(); await Presentation.Failures.GuardAsync(RefreshForNavigationAsync); }
     /// <inheritdoc />

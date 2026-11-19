@@ -218,6 +218,12 @@ internal static partial class DebugSnapshots
     private static async Task RunAsync(App app, IServiceProvider services, string folder)
     {
 #if WINDOWS
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "ai-period-handoff")
+        {
+            await app.WaitForStartupAsync();
+            await ReviewAiPeriodHandoffAsync(app, services, folder);
+            return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "import-preview" or "import-page-arrival")
         {
             await app.WaitForStartupAsync();

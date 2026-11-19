@@ -638,6 +638,18 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
         finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
     }
+
+    [RelayCommand] private Task ExplainReportAsync() => OpenReportAnalysisAsync(false);
+    [RelayCommand] private Task CompareReportAsync() => OpenReportAnalysisAsync(true);
+
+    private Task OpenReportAnalysisAsync(bool compare)
+    {
+        if (!CanRunCommands || !ShowOverview || _workspace.Review is not { } review) return Task.CompletedTask;
+        var ids = LedgerCalculator.InScope(_accounts, ScopeIds()).Where(a =>
+            string.Equals(a.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase)).Select(a => a.Id);
+        var period = Analysis.AiPeriodHandoff.Capture(review.DatabasePath, _from, _to, ConfirmedOnly, ids);
+        return period is null ? Task.CompletedTask : NavigateReportAsync(new(AppRoutes.AnalysisRoute, period.Query(compare)));
+    }
     private async Task NavigateFrozenAsync(ReportNavigation target)
     {
         // The app keeps a source-bound incoming tab scope until the recipient leaves it normally.

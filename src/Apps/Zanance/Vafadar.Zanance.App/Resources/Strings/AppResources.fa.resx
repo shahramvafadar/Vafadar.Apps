@@ -8696,4 +8696,10 @@
   <data name="Ai_ConfirmCancelAction" xml:space="preserve">
     <value>انصراف</value>
   </data>
+  <data name="Ai_ExplainPeriodFromReport" xml:space="preserve">
+    <value>توضیح این دوره با هوش مصنوعی</value>
+  </data>
+  <data name="Ai_ComparePeriodFromReport" xml:space="preserve">
+    <value>مقایسه با دورهٔ قبل با هوش مصنوعی</value>
+  </data>
 </root>

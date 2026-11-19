@@ -20,13 +20,16 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         new(new(2026, 10, 1), new(2026, 10, 31), 2, true, [new("EUR", 119000, 0, 45000, 1000), new("USD", 59000, 1000, 12000, 2000)], 0));
     private static readonly string ReportDigest = AiProtocol.Digest(ReportFixture);
     private static readonly string ComparisonDigest = AiProtocol.Digest(ComparisonFixture);
+    // The app compares an equally long preceding period. Keep the original server-only fixture readable too.
+    private static readonly string AppComparisonDigest = AiProtocol.Digest(ComparisonFixture with
+        { Previous = ComparisonFixture.Previous! with { From = new(2026, 10, 2) } });
     private static readonly AiProviderOutcome Unknown = new(AiProviderState.Unknown);
 
     /// <summary>Accepts only the fixed synthetic payload for the requested purpose.</summary>
     internal static bool IsSynthetic(AiPurpose purpose, string digest) => purpose switch
     {
         AiPurpose.PeriodExplanation => digest == ReportDigest,
-        AiPurpose.PeriodComparison => digest == ComparisonDigest,
+        AiPurpose.PeriodComparison => digest == ComparisonDigest || digest == AppComparisonDigest,
         _ => false,
     };
 
@@ -108,7 +111,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         if (Admit(route, offer) is not { } profile) return Unknown;
         var comparison = offer.Purpose == AiPurpose.PeriodComparison;
         var task = comparison
-            ? "Synthetic Zanance test. Compare recorded October and November results, all amounts in minor units. EUR October: income 119000, income reversals 0, expenses 45000, refunds 1000. EUR November: income 125000, income reversals 5000, expenses 41000, refunds 3000. USD October: income 59000, income reversals 1000, expenses 12000, refunds 2000. USD November: income 60000, income reversals 0, expenses 17000, refunds 2000. Net spending is expenses minus refunds. Net cash flow is income minus income reversals minus net spending. Give November minus October changes in net spending and net cash flow separately by currency. No exchange rate is supplied; set can_combine to whether one converted total can be computed. Explain the changes briefly in English without advice."
+            ? "Synthetic Zanance test. Compare recorded previous-period and November results, all amounts in minor units. EUR previous period: income 119000, income reversals 0, expenses 45000, refunds 1000. EUR November: income 125000, income reversals 5000, expenses 41000, refunds 3000. USD previous period: income 59000, income reversals 1000, expenses 12000, refunds 2000. USD November: income 60000, income reversals 0, expenses 17000, refunds 2000. Net spending is expenses minus refunds. Net cash flow is income minus income reversals minus net spending. Give November minus previous-period changes in net spending and net cash flow separately by currency. No exchange rate is supplied; set can_combine to whether one converted total can be computed. Explain the changes briefly in English without advice."
             : "Synthetic Zanance test. November recorded totals in EUR minor units: income 125000, expenses 41000, refunds 3000. Give net_expenses_minor = expenses minus refunds, and a one-sentence explanation in English. No other information.";
         var expected = Expected(offer.Purpose);
         var properties = expected.ToDictionary(f => f.Key, f => new { type = f.Value is bool ? "boolean" : "integer" });

@@ -281,6 +281,11 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     Task Presentation.IThemeAware.RefreshThemeAsync() => LoadAsync();
 
     private bool _publicationRetired;
+    private Analysis.AiPeriodHandoff? _analysisPeriod;
+    private int _analysisPeriodIndex;
+
+    /// <summary>Whether the displayed Home period has any accounts to review in Analysis.</summary>
+    [ObservableProperty] public partial bool HasAnalysisPeriod { get; private set; }
 
     /// <summary>Gets the profile layout from the same validated snapshot as the original financial sections.</summary>
     internal string? CapturedHomeLayout { get; private set; }
@@ -495,6 +500,10 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
         await operation.ValidateAsync();
         RequireCurrentPublication();
         if (snapshot.PeriodIndex != PeriodIndex) return false;
+        _analysisPeriod = Analysis.AiPeriodHandoff.Capture(snapshot.DatabasePath, from, to, false,
+            LedgerCalculator.InScope(allAccounts, null).Select(account => account.Id));
+        _analysisPeriodIndex = snapshot.PeriodIndex;
+        HasAnalysisPeriod = HasEntries && _analysisPeriod is not null;
         TemplateNavigation.Publish(templateReview);
         // Publish complete rows together: clearing first makes MAUI disconnect unchanged native template controls (D-353).
         var quickTemplates = TemplateNavigation.Items.Select(template =>
@@ -663,6 +672,13 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
 
     [RelayCommand]
     private Task OpenReportsAsync() => Shell.Current.GoToAsync(AppShell.ReportsRoute);
+
+    [RelayCommand] private Task ExplainHomePeriodAsync() => OpenHomeAnalysisAsync(false);
+    [RelayCommand] private Task CompareHomePeriodAsync() => OpenHomeAnalysisAsync(true);
+
+    private Task OpenHomeAnalysisAsync(bool compare) => !_publicationRetired && Loading.IsReady && HasAnalysisPeriod && _analysisPeriodIndex == PeriodIndex &&
+        _analysisPeriod is { } period && Shell.Current is { CurrentPage: HomePage page } shell && ReferenceEquals(page.BindingContext, this)
+        ? shell.GoToAsync(AppRoutes.AnalysisRoute, period.Query(compare)) : Task.CompletedTask;
 
     private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states,
         DateOnly today, Core.Commerce.PlanWorkPolicy work)

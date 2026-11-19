@@ -20,6 +20,7 @@ public sealed class ReportNavigation
     private static object Copy(object value) => value switch
     {
         string or Guid or DateOnly or DateTime or DateTimeOffset or bool or int or long or decimal or Enum => value,
+        Analysis.AiPeriodHandoff => value,
         IEnumerable<Guid> ids => ids.ToArray(),
         _ => throw new ArgumentException("The original report route contains an unsupported mutable value.", nameof(value)),
     };

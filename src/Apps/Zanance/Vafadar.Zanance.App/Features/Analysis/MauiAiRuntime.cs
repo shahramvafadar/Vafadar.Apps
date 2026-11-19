@@ -42,25 +42,8 @@ internal sealed class MauiAiRuntime(PersonalSyncLifetime lifetime, AppLockServic
         {
             using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, access.Cancellation);
             var user = await transport.BillingIdentityAsync(linked.Token) ?? throw new InvalidOperationException("AiIdentityRequired"); access.Validate();
-            return new Remote(transport, new AiClient(transport, storage, user, originalFile, access.Validate), access);
+            return new AiConnectedRemote(transport, storage, user, originalFile, new(access.Validate, access.Cancellation));
         }
         catch { transport.Dispose(); throw; }
-    }
-    private sealed class Remote(PersonalSyncTransport transport, AiClient client, PersonalSyncAccess access) : IAiRemote
-    {
-        public string Destination => transport.Peer.Address.AbsoluteUri;
-        public Task<AiAvailability> AvailabilityAsync(CancellationToken ct) => Work(client.AvailabilityAsync, ct);
-        public Task<AiClientRecord?> ReadAsync(CancellationToken ct) => Work(client.ReadAsync, ct);
-        public Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct) => Work(token => client.OfferAsync(purpose, token), ct);
-        public Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct) =>
-            Work(token => client.SubmitAsync(offer, payload, recheck, token), ct);
-        public Task<AiRequestResult> ContinueAsync(CancellationToken ct) => Work(client.ContinueAsync, ct);
-        public Task<AiRequestResult> CloseAsync(CancellationToken ct) => Work(client.CloseAsync, ct);
-        private async Task<T> Work<T>(Func<CancellationToken, Task<T>> work, CancellationToken ct)
-        {
-            access.Validate(); using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, access.Cancellation);
-            var result = await work(linked.Token); access.Validate(); return result;
-        }
-        public void Dispose() => transport.Dispose();
     }
 }

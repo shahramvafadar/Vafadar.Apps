@@ -8737,4 +8737,10 @@ Original XML SHA-256: {5}</value>
     <value>Cancel</value>
     <comment>Concise negative action for analysis native confirmations; the complete warning remains in the message and other dialogs keep their original cancel resource.</comment>
   </data>
+  <data name="Ai_ExplainPeriodFromReport" xml:space="preserve">
+    <value>Explain this period with AI</value>
+  </data>
+  <data name="Ai_ComparePeriodFromReport" xml:space="preserve">
+    <value>Compare with the previous period using AI</value>
+  </data>
 </root>

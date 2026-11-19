@@ -43,8 +43,11 @@ internal static class AiModule
             catch (Exception error) when (error is IOException or UnauthorizedAccessException)
             { return Results.Json(new { Code = "AiOriginalStateUnavailable" }, statusCode: 503); }
         });
-        group.MapGet("/availability", async (ClaimsPrincipal actor, AiRequestStore store, CancellationToken ct) =>
-            Results.Json(await store.AvailabilityAsync(actor, ct), AiJson.Default.AiAvailability));
+        group.MapGet("/availability", async (ClaimsPrincipal actor, HttpRequest request, AiRequestStore store, CancellationToken ct) =>
+        {
+            var status = await store.AvailabilityAsync(actor, ct);
+            return Results.Json(request.Query["purposes"] == "1" ? status : status with { ComparisonConfigured = null }, AiJson.Default.AiAvailability);
+        });
         group.MapPost("/offers", async (ClaimsPrincipal actor, HttpRequest request, AiRequestStore store, CancellationToken ct) =>
         {
             var body = await ReadAsync(request, AiJson.Default.AiOfferRequest, ct);

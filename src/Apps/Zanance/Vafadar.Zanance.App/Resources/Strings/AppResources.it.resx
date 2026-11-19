@@ -8685,4 +8685,10 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Ai_ConfirmCancelAction" xml:space="preserve">
     <value>Annulla</value>
   </data>
+  <data name="Ai_ExplainPeriodFromReport" xml:space="preserve">
+    <value>Spiega questo periodo con l’IA</value>
+  </data>
+  <data name="Ai_ComparePeriodFromReport" xml:space="preserve">
+    <value>Confronta con il periodo precedente usando l’IA</value>
+  </data>
 </root>

@@ -30,7 +30,8 @@ public sealed record AiOffer(Guid Id, string Provider, string Model, AiPurpose P
 public sealed record AiBalance(long PurchasedAvailable, long GiftedAvailable, long PurchasedReserved, long GiftedReserved);
 
 /// <summary>Explicitly unavailable until a separately approved actual provider and credit pricing are configured.</summary>
-public sealed record AiAvailability(bool Configured, string? Provider, string? Model, AiBalance Balance);
+public sealed record AiAvailability(bool Configured, string? Provider, string? Model, AiBalance Balance,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] bool? ComparisonConfigured = null);
 
 /// <summary>Metadata-only request; no financial content is sent to obtain a cost/destination offer.</summary>
 public sealed record AiOfferRequest(AiPurpose Purpose);

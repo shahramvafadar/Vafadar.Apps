@@ -2,6 +2,8 @@
 
 Reviewed on 2026-11-19 against the product specification and the main-branch implementation. This is planning only. The browser operator panel and vendor routing are isolated synthetic pilot features. The existing Analysis screen already previews bounded personal period aggregates, supports manual sharing, and implements offer, consent, submission and follow-up. Completing that screen's synthetic journey through the current hosted adapters is the next step. See the [product specification](../../spec/Zanance-Product-Specification.md), [local analysis implementation](15-ai-local-delivery.md), [provider plan](27-ai-openai-gemini-provider-plan.md) and [pilot evidence](28-ai-synthetic-provider-pilot.md).
 
+See the [application-flow and period-shortcut evidence](28-ai-synthetic-provider-pilot.md#application-flow-and-period-shortcuts-2026-11-19) for progress against priorities 0 and 1.
+
 ## Recommended sequence
 
 | Order | Area | Proposed user experience | Existing implementation to reuse | Estimate |

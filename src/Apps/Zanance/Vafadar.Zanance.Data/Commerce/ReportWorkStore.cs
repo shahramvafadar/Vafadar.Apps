@@ -72,7 +72,7 @@ public sealed class ReportReadReview
     private readonly TimeProvider _time;
     private readonly string _packet;
     /// <summary>Retains the exact opened file for native and original contribution-writer validation.</summary>
-    internal readonly string DatabasePath;
+    public string DatabasePath { get; }
     /// <summary>Captures original financial inputs before any analytical or native export await.</summary>
     internal ReportReadReview(string path, CommercialFileAccess access, TimeProvider time, DateOnly day, ReportInputs inputs)
     { DatabasePath = path; _access = access; _time = time; Day = day; Inputs = inputs; _packet = JsonSerializer.Serialize(inputs); }

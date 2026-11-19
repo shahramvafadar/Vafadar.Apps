@@ -16,5 +16,6 @@
     <Content Include="ThirdPartyNotices.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <InternalsVisibleTo Include="Vafadar.Zanance.Sync.Tests" />
     <InternalsVisibleTo Include="Vafadar.Zanance.Api.Tests" />
+    <InternalsVisibleTo Include="Vafadar.Zanance.App.Tests" />
   </ItemGroup>
 </Project>

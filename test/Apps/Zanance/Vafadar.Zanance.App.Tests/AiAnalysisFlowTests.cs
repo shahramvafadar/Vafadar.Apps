@@ -78,6 +78,45 @@ public sealed partial class AiAnalysisFlowTests
     }
     private static async Task Review(AiAnalysisViewModel vm)
     { Assert.Single(vm.Accounts).Selected = true; await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure); }
+
+    /// <summary>The period shortcut only seeds a local draft and retains a frozen account scope.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    public async Task Period_handoff_preserves_exact_scope_without_implicit_review_or_disclosure(bool comparison)
+    {
+        using var f = new FlowFixture(); var runtime = new Runtime(); var vm = await Model(f, runtime);
+        var source = await f.Services.GetRequiredService<AiSnapshotStore>().AccountsAsync(Ct);
+        var ids = new[] { Assert.Single(source.Accounts).Id };
+        var handoff = AiPeriodHandoff.Capture(source.File, new(2026, 10, 1), new(2026, 10, 15), false, ids)!;
+        var route = new Vafadar.Zanance.App.Features.Reports.ReportNavigation("analysis", handoff.Query(comparison));
+        ids[0] = Guid.NewGuid();
+        vm.Retire();
+        vm.SetInitialPeriod(Assert.IsType<AiPeriodHandoff>(route.CopyQuery()[AiPeriodHandoff.QueryKey]));
+        await vm.LoadAsync();
+        Assert.True(vm.Loaded); Assert.True(Assert.Single(vm.Accounts).Selected);
+        Assert.Equal(comparison, vm.ComparePrevious); Assert.False(vm.ConfirmedOnly);
+        Assert.Equal(new DateOnly(2026, 10, 1), vm.From); Assert.Equal(new DateOnly(2026, 10, 15), vm.To);
+        Assert.Null(vm.Disclosure); Assert.Equal(0, runtime.Opens);
+        await vm.ReviewAsync();
+        var payload = JsonSerializer.Deserialize(vm.Disclosure!, AiJson.Default.AiPayload)!;
+        Assert.Equal(comparison ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation, payload.Purpose);
+        if (comparison) Assert.Equal(new DateOnly(2026, 9, 16), payload.Previous!.From);
+        Assert.Equal(0, runtime.Opens);
+    }
+
+    /// <summary>A report from a replaced file or account cannot silently widen the scope.</summary>
+    [Theory, InlineData(false), InlineData(true)]
+    public async Task Period_handoff_refuses_replaced_file_or_missing_account(bool replaceFile)
+    {
+        using var f = new FlowFixture(); var runtime = new Runtime(); var vm = await Model(f, runtime);
+        var source = await f.Services.GetRequiredService<AiSnapshotStore>().AccountsAsync(Ct);
+        var file = replaceFile ? source.File + ".different" : source.File;
+        var account = replaceFile ? Assert.Single(source.Accounts).Id : Guid.NewGuid();
+        vm.Retire();
+        vm.SetInitialPeriod(AiPeriodHandoff.Capture(file, new(2026, 10, 1), new(2026, 10, 15), true, [account])!);
+        await vm.LoadAsync();
+        Assert.False(vm.Loaded); Assert.NotNull(vm.Error);
+        Assert.Null(vm.Disclosure); Assert.Equal(0, runtime.Opens);
+    }
     [Theory][InlineData("en")][InlineData("fa")][InlineData("de")][InlineData("es")][InlineData("fr")][InlineData("it")]
     public async Task Explicit_manual_share_uses_exact_minimal_review_and_never_opens_a_provider(string language)
     {

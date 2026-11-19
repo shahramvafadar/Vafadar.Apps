@@ -130,6 +130,8 @@
 
             <!-- ================= R1 · Period overview ================= -->
             <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowOverview}">
+                <p:WrappingAction Text="{v:Translate Ai_ExplainPeriodFromReport}" Command="{Binding ExplainReportCommand}" />
+                <p:WrappingAction Text="{v:Translate Ai_ComparePeriodFromReport}" Command="{Binding CompareReportCommand}" />
                 <!-- K05 surplus and K06 rate -->
                 <Border Style="{StaticResource Card}">
                     <VerticalStackLayout Spacing="4">

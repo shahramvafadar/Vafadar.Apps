@@ -8,7 +8,7 @@ public sealed partial class PersonalSyncTransport
 {
     /// <summary>Reads only provider metadata/wallet under the same original pinned rotating identity session.</summary>
     public Task<AiAvailability> AnalysisAvailabilityAsync(string expectedUser, CancellationToken ct = default) =>
-        AnalysisAsync<AiOfferRequest, AiAvailability>(expectedUser, HttpMethod.Get, "analysis/availability", null, null, AiJson.Default.AiAvailability, ct);
+        AnalysisAsync<AiOfferRequest, AiAvailability>(expectedUser, HttpMethod.Get, "analysis/availability?purposes=1", null, null, AiJson.Default.AiAvailability, ct);
     /// <summary>Obtains an original metadata-only cost/destination offer; no financial aggregate is sent.</summary>
     public Task<AiOffer> AnalysisOfferAsync(string expectedUser, AiPurpose purpose, CancellationToken ct = default) =>
         AnalysisAsync(expectedUser, HttpMethod.Post, "analysis/offers", new AiOfferRequest(purpose), AiJson.Default.AiOfferRequest, AiJson.Default.AiOffer, ct);
