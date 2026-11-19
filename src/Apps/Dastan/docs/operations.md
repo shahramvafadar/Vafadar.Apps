@@ -298,8 +298,8 @@ dotnet Vafadar.Dastan.Content.dll notices settle <reference> env --decision "<wh
 dotnet Vafadar.Dastan.Content.dll notices forget env [--kept-days 365]
 
 dotnet Vafadar.Dastan.Content.dll people restrictions --people env
-dotnet Vafadar.Dastan.Content.dll people restrict photo|tree|account <id or name> --people env --reason "<the facts>" --ground "<the law or the section of the terms>" [--noticed]
-dotnet Vafadar.Dastan.Content.dll people lift <number> --people env
+dotnet Vafadar.Dastan.Content.dll people restrict photo|tree|account <id or name> --people env --site https://<the site> --reason "<the facts>" --ground "<the law or the section of the terms>" [--noticed]
+dotnet Vafadar.Dastan.Content.dll people lift <number> --people env --site https://<the site>
 dotnet Vafadar.Dastan.Content.dll people persons <tree> --people env
 dotnet Vafadar.Dastan.Content.dll people person remove <tree> <person> --people env
 dotnet Vafadar.Dastan.Content.dll people forget <name> --people env

@@ -400,6 +400,34 @@
                 <input type="hidden" name="returnUrl" value="@_here" />
                 <p><button type="submit" class="action secondary">@T["Account_Invite_Send"]</button></p>
             </form>
+            <details open="@(_form == "invite" && (_problems.Contains("mail") || _problems.Contains("later")))">
+                <summary>@T["Account_InviteByMail_Lead"]</summary>
+                <form method="post" action="@($"{AccountDesk.Root}/invite-by-mail")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="invite-mail">@T["Account_InviteByMail_Address"]</label>
+                        <input id="invite-mail" name="mail" type="email" required maxlength="@LongestAddress" autocomplete="off" dir="ltr" aria-describedby="invite-mail-hint" />
+                        <span class="meta" id="invite-mail-hint">@T["Account_InviteByMail_Hint"]</span>
+                    </p>
+                    <p><button type="submit" class="action secondary">@T["Account_InviteByMail_Send"]</button></p>
+                </form>
+            </details>
+        </section>
+
+        <section id="notices" aria-labelledby="notices-title">
+            <h2 id="notices-title">@T["Account_Notices_Title"]</h2>
+            <p>@T["Account_Notices_Lead"]</p>
+            <form method="post" action="@($"{AccountDesk.Root}/notices")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <p class="tick">
+                    <input id="notices-on" name="notices" type="checkbox" checked="@_info.Notices" />
+                    <label for="notices-on">@T["Account_Notices_On"]</label>
+                </p>
+                <p class="note">@T["Account_Notices_Always"]</p>
+                <p><button type="submit" class="action secondary">@T["Account_Notices_Send"]</button></p>
+            </form>
         </section>
 
         @if (_providers.Count > 0 || !_info.Providers.IsEmpty)
@@ -620,7 +648,7 @@
         </article>
     };
 
-    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked", "terms-agreed", "confirm-sent", "resend-sent", "forgot-sent", "address-sent", "address-changed", "signed-out-everywhere"];
+    private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked", "terms-agreed", "confirm-sent", "resend-sent", "forgot-sent", "address-sent", "address-changed", "signed-out-everywhere", "invite-sent", "notices-on", "notices-off"];
     private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "providers", "forgot", "resend", "address"];
     private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in", "age", "terms", "invitation-needed", "closed-by-operator", "mail", "unconfirmed", "same", "external-no-address", "address-has-account"];
 

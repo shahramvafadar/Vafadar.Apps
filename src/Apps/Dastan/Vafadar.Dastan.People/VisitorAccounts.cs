@@ -22,6 +22,12 @@ public sealed class VisitorAccount : IdentityUser
 {
     /// <summary>Gets or sets the language the site writes to the visitor in, by its tag: the one of the page the account was made on.</summary>
     public string Language { get; set; } = "en";
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the site mails the visitor what somebody else asks of them – a
+    /// relationship, a tag, an agreement (PRIV-007). What concerns the account itself is always mailed.
+    /// </summary>
+    public bool Notices { get; set; } = true;
 }
 
 /// <summary>What came of a try to sign in.</summary>

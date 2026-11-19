@@ -122,7 +122,10 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>Changes who may see a photograph. Only its owner can; it holds for every way to the photograph at once.</summary>
-    public bool SharePhoto(string id, string photo, ScopeKind shown, long? circle = null)
+    public bool SharePhoto(string id, string photo, ScopeKind shown, long? circle = null) =>
+        Guarded([OfPhoto(photo)], () => SharePhotoUnguarded(id, photo, shown, circle));
+
+    private bool SharePhotoUnguarded(string id, string photo, ScopeKind shown, long? circle)
     {
         var stored = _context.Photos.SingleOrDefault(candidate => candidate.Id == photo);
         if (stored is null || !IsOpen(id) || !Enum.IsDefined(shown) || !OwnsCircle(id, shown, circle)
@@ -143,6 +146,17 @@ public sealed partial class PeopleStore
         }
 
         Save();
+        if (shown == ScopeKind.Public)
+        {
+            // Who is on the photograph is asked (PRIV-013) – and told that they are, once a day at most.
+            foreach (var asked in _context.PhotoTags.AsNoTracking()
+                .Where(tag => tag.Photo == photo && tag.Account != id && tag.State == (int)TagState.Approved && !tag.Everybody)
+                .Select(tag => tag.Account).ToList())
+            {
+                Tell(asked, always: false, to => NoticeMail.EverybodyAsked(to.Language, _site, to.Email!, NameOf(id), $"photo-everybody-asked:{photo}:{asked}:{Now:yyyyMMdd}"));
+            }
+        }
+
         return true;
     }
 
@@ -180,6 +194,12 @@ public sealed partial class PeopleStore
 
         _context.PhotoTags.Add(new StoredPhotoTag { Photo = photo, Account = account, State = (int)(account == id ? TagState.Approved : TagState.Proposed) });
         Save();
+        if (account != id)
+        {
+            // Told once for a photograph: a tag that is taken back and put on again does not write again.
+            Tell(account, always: false, to => NoticeMail.Tagged(to.Language, _site, to.Email!, NameOf(id), $"photo-tagged:{photo}:{account}"));
+        }
+
         return true;
     }
 

@@ -53,6 +53,11 @@ public sealed partial class PeopleStore
     public long? Restrict(RestrictionKind kind, string target, string reason, string ground, bool noticed)
     {
         ArgumentNullException.ThrowIfNull(target);
+        return Guarded(["restrictions"], () => RestrictUnguarded(kind, target, reason, ground, noticed));
+    }
+
+    private long? RestrictUnguarded(RestrictionKind kind, string target, string reason, string ground, bool noticed)
+    {
         var (why, rule) = (reason?.Trim() ?? string.Empty, ground?.Trim() ?? string.Empty);
         if (why.Length is 0 or > LongestReason || rule.Length is 0 or > LongestReason)
         {
@@ -99,11 +104,18 @@ public sealed partial class PeopleStore
 
         Save();
         _restricted = null;
+
+        // The statement of reasons goes to the address of the account too (Article 17 of the Digital Services
+        // Act): an account that was closed cannot read it on its page without giving its password first.
+        var told = new RestrictionInfo(stored.Number, kind, stored.Target, why, rule, noticed, stored.ImposedAt);
+        Tell(account, always: true, to => NoticeMail.Restricted(to.Language, _site, to.Email!, told, $"restricted:{stored.Number}"));
         return stored.Number;
     }
 
     /// <summary>Lifts a restriction. An account that was closed by it is opened again. Returns whether there was one to lift.</summary>
-    public bool Lift(long number)
+    public bool Lift(long number) => Guarded(["restrictions"], () => LiftUnguarded(number));
+
+    private bool LiftUnguarded(long number)
     {
         var stored = _context.Restrictions.SingleOrDefault(candidate => candidate.Number == number && candidate.LiftedAt == null);
         if (stored is null)
@@ -125,6 +137,8 @@ public sealed partial class PeopleStore
 
         Save();
         _restricted = null;
+        var lifted = new RestrictionInfo(stored.Number, (RestrictionKind)stored.Kind, stored.Target, stored.Reason, stored.Ground, stored.Noticed, stored.ImposedAt);
+        Tell(stored.Account, always: true, to => NoticeMail.Lifted(to.Language, _site, to.Email!, lifted, $"restriction-lifted:{stored.Number}"));
         return true;
     }
 

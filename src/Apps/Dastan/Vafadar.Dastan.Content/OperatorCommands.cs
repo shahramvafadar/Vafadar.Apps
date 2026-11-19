@@ -67,17 +67,19 @@ internal static class OperatorCommands
           people restrictions --people <database>
               Lists the restrictions that stand.
 
-          people restrict photo <photo> --people <database> --reason <text> --ground <text> [--noticed]
-          people restrict tree <tree> --people <database> --reason <text> --ground <text> [--noticed]
-          people restrict account <name> --people <database> --reason <text> --ground <text> [--noticed]
+          people restrict photo <photo> --people <database> --site <address> --reason <text> --ground <text> [--noticed]
+          people restrict tree <tree> --people <database> --site <address> --reason <text> --ground <text> [--noticed]
+          people restrict account <name> --people <database> --site <address> --reason <text> --ground <text> [--noticed]
               Takes a photograph out of everybody's sight but its owner's, takes a tree back from the
               public, or closes an account. The reason (the facts) and the ground (the law or the rule of
-              the terms) are shown to the person concerned as the statement of reasons; --noticed says the
-              decision followed a notice. Stop the site first, or run the command where the site's store
-              lies while few people are on it: both write into the same file.
+              the terms) are shown to the person concerned as the statement of reasons, on the page of the
+              account and in a mail to its address; --noticed says the decision followed a notice. --site
+              is the address of the site, such as https://dastan.online: the link in that mail begins
+              with it.
 
-          people lift <number> --people <database>
-              Lifts a restriction; an account that was closed by it is opened again.
+          people lift <number> --people <database> --site <address>
+              Lifts a restriction; an account that was closed by it is opened again. The account is told
+              by mail.
 
           people forget <name> --people <database>
               Ends the 30 days a closed account is kept, for somebody who closed the account and asks
@@ -239,29 +241,29 @@ internal static class OperatorCommands
                     return ContentCommands.Done;
                 });
 
-            case ["people", "restrict", "photo" or "tree" or "account", _, "--people", _, "--reason", _, "--ground", _]:
-            case ["people", "restrict", "photo" or "tree" or "account", _, "--people", _, "--reason", _, "--ground", _, "--noticed"]:
-                var (target, store0, reason, ground) = (words[3], words[5], words[7], words[9]);
+            case ["people", "restrict", "photo" or "tree" or "account", _, "--people", _, "--site", _, "--reason", _, "--ground", _]:
+            case ["people", "restrict", "photo" or "tree" or "account", _, "--people", _, "--site", _, "--reason", _, "--ground", _, "--noticed"]:
+                var (target, store0, reason, ground) = (words[3], words[5], words[9], words[11]);
                 var kind = words[2] switch { "photo" => RestrictionKind.Photo, "tree" => RestrictionKind.Tree, _ => RestrictionKind.Account };
-                return People(store0, output, time, store =>
+                return People(store0, output, time, site: words[7], act: store =>
                 {
-                    if (store.Restrict(kind, target, reason, ground, noticed: words.Count == 11) is not { } number)
+                    if (store.Restrict(kind, target, reason, ground, noticed: words.Count == 13) is not { } number)
                     {
                         output.WriteLine($"{target}: there is no such {words[2]}, or the reason or the ground is missing or longer than {PeopleStore.LongestReason} characters.");
                         return ContentCommands.NotUsable;
                     }
 
-                    output.WriteLine($"{target}: restricted, decision no. {number}. The person concerned reads the statement of reasons on the page of the account{(kind == RestrictionKind.Account ? ", after giving the name and the password" : null)}.");
+                    output.WriteLine($"{target}: restricted, decision no. {number}. The person concerned reads the statement of reasons on the page of the account{(kind == RestrictionKind.Account ? ", after giving the name and the password" : null)}, and it is mailed to the address of the account.");
                     return ContentCommands.Done;
                 });
 
-            case ["people", "lift", var written, "--people", var database]:
+            case ["people", "lift", var written, "--people", var database, "--site", var address]:
                 if (!long.TryParse(written, NumberStyles.None, CultureInfo.InvariantCulture, out var lifted))
                 {
                     return null;
                 }
 
-                return People(database, output, time, store =>
+                return People(database, output, time, site: address, act: store =>
                 {
                     if (!store.Lift(lifted))
                     {
@@ -411,8 +413,15 @@ internal static class OperatorCommands
     internal static string Connection(string written) =>
         written == "env" ? Environment.GetEnvironmentVariable("DASTAN_DATABASE") ?? string.Empty : written;
 
-    private static int People(string database, TextWriter output, TimeProvider time, Func<PeopleStore, int> act)
+    private static int People(string database, TextWriter output, TimeProvider time, Func<PeopleStore, int> act, string? site = null)
     {
+        // What a command mails links to the site: an address that is none would mail a link that leads nowhere.
+        if (site is not null && !(Uri.TryCreate(site, UriKind.Absolute, out var where) && where.Scheme is "https" or "http" && where.PathAndQuery == "/"))
+        {
+            output.WriteLine($"{site}: this is not the address of a site, such as https://dastan.online.");
+            return ContentCommands.NotUsable;
+        }
+
         database = Connection(database);
         if (string.IsNullOrWhiteSpace(database))
         {
@@ -429,7 +438,7 @@ internal static class OperatorCommands
                 return ContentCommands.NotUsable;
             }
 
-            using var store = PeopleStore.Open(database, time);
+            using var store = PeopleStore.Open(database, time, site);
             return act(store);
         }
         catch (Exception failed) when (failed is System.Data.Common.DbException or ArgumentException or System.Net.Sockets.SocketException or TimeoutException)

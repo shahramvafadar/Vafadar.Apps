@@ -60,10 +60,11 @@ public sealed partial class PeopleStore : IDisposable
 
     private readonly PeopleContext _context;
     private readonly TimeProvider _time;
+    private readonly string _site;
 
     private PeopleStore(PeopleContext context, TimeProvider time, string site)
     {
-        (_context, _time) = (context, time);
+        (_context, _time, _site) = (context, time, site.TrimEnd('/'));
         Accounts = new VisitorAccounts(this, context, time, site);
     }
 

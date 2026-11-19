@@ -34,7 +34,7 @@ and says that it is not complete.
 | DSA Art. 11, 12 | Contact points for authorities and for users | Page `imprint` |
 | DSA Art. 14 | Terms that say what is restricted and how moderation works | Page `terms`, sections 6–11 |
 | DSA Art. 16 | A way for anybody to give notice of illegal content, with a confirmation and a decision | Page `notice` with a form (`Dastan:Notices`), a reference at once; the operator reads with `notices`, decides, answers by mail |
-| DSA Art. 17 | A statement of reasons to the user concerned | `people restrict …` records the facts and the ground; the user reads it on the account page, the owner of a closed account after giving name and password |
+| DSA Art. 17 | A statement of reasons to the user concerned | `people restrict …` records the facts and the ground; the user reads it on the account page – the owner of a closed account after giving name and password – and it is mailed to the address of the account (step 19.4) |
 | DSA Art. 18 | Report suspicion of crimes against life or safety | Procedure 4.6 |
 | DSA Art. 24 (3) | Tell the coordinator the number of active recipients on request | Procedure 4.7 |
 | §§ 305 ff. BGB | Terms are standard terms: no surprising clauses, no exclusion of liability for intent, gross negligence, life and health; reasons and a hearing before content or an account is restricted | `terms` sections 10–14; registration notes the version read (`TermsVersion`); changed terms are agreed to by an act on the account page, never by silence |
@@ -116,7 +116,7 @@ The commands are those of `Vafadar.Dastan.Content` ([operations.md](../operation
 
 ### 4.2 Restricting (Art. 17 DSA)
 
-`people restrict photo|tree|account <target> --people <store> --reason "<facts>" --ground "<law or section of the terms>" [--noticed]`
+`people restrict photo|tree|account <target> --people <store> --site <address of the site> --reason "<facts>" --ground "<law or section of the terms>" [--noticed]`
 
 * The reason states the facts so that the user can understand and answer: what, where, why it is a problem.
   Never name who gave the notice.
@@ -124,8 +124,10 @@ The commands are those of `Vafadar.Dastan.Content` ([operations.md](../operation
 * The mildest measure first. Close an account only for a serious breach or after a restriction that said so;
   otherwise restrict the content, which gives the user the hearing the courts ask for (BGH III ZR 179/20).
 * The user reads the statement on the account page; the owner of a closed account after name and password.
+  The same statement is mailed to the address of the account, with the number of the decision; `--site` is
+  what the link in that mail begins with.
 * A complaint by mail within six months is looked at again by a person; if it is justified:
-  `people lift <number> --people <store>`.
+  `people lift <number> --people <store> --site <address of the site>`. The account is told by mail.
 
 ### 4.3 Somebody is named in a tree or shown on a photograph and objects (Art. 17, 21 GDPR)
 

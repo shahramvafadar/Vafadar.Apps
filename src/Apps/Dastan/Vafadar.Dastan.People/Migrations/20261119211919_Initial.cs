@@ -25,6 +25,7 @@ namespace Vafadar.Dastan.People.Migrations
                 {
                     Id = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Language = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Notices = table.Column<bool>(type: "boolean", nullable: false),
                     UserName = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true),
                     Email = table.Column<string>(type: "character varying(320)", maxLength: 320, nullable: true),

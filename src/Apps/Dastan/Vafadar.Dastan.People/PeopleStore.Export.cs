@@ -51,6 +51,7 @@ public sealed partial class PeopleStore
             {
                 ["name"] = visitor.Name,
                 ["mailAddress"] = _context.Accounts.AsNoTracking().Where(account => account.Id == id).Select(account => account.Email).SingleOrDefault(),
+                ["mailAboutWhatOthersAsk"] = _context.Accounts.AsNoTracking().Where(account => account.Id == id).Select(account => account.Notices).SingleOrDefault(),
                 ["createdAt"] = Stamp(visitor.CreatedAt),
                 ["recoveryCodesLeft"] = _context.RecoveryCodes.AsNoTracking().Count(code => code.VisitorId == id && code.UsedAt == null),
                 ["signInThrough"] = new JsonArray([.. _context.AccountLogins.AsNoTracking().Where(login => login.UserId == id).Select(login => login.LoginProvider).OrderBy(provider => provider).AsEnumerable().Select(provider => (JsonNode)provider)]),

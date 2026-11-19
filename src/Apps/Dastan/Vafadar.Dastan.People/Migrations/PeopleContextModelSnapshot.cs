@@ -801,6 +801,9 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("character varying(80)");
 
+                    b.Property<bool>("Notices")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
