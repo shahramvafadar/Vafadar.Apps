@@ -8,8 +8,9 @@ namespace Vafadar.Dastan.People;
 
 /// <content>
 /// A copy of what the store holds about an account, for its visitor to take away (step 16.7, D-055). It holds
-/// what the account may see anyway, in words: no password and nothing derived from one, no recovery code, and
-/// other accounts by their names only.
+/// what the account may see anyway, in words: no password and nothing derived from one, no recovery code, no
+/// code of an invitation that can still be used (D-071), and other accounts by their names only. A photograph
+/// is named with the name of its file, by which the picture is found again.
 /// </content>
 public sealed partial class PeopleStore
 {
@@ -51,7 +52,10 @@ public sealed partial class PeopleStore
             ["invitations"] = new JsonArray([.. Invitations(id)
                 .Select(invitation => (JsonNode)new JsonObject
                 {
-                    ["code"] = invitation.Code,
+                    // An invitation that can still be used is a key: whoever holds its code makes an account
+                    // with it. A copy of one's data is a file that gets passed on and kept – it names such an
+                    // invitation without its code (D-071). The code stays on the page of the account.
+                    ["code"] = invitation.State == InvitationState.Open && !invitation.RunOut ? null : invitation.Code,
                     ["lastDay"] = invitation.LastDay.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                     ["state"] = invitation.RunOut ? "run out" : invitation.State.ToString().ToLowerInvariant(),
                 })]),

@@ -620,11 +620,6 @@ same places for values, and no page writes markup from what somebody typed.
   is among invited people; closing them means unique indexes and one more migration per rule.
 * *The limits per hour count by the exact address* – a visitor with many addresses (IPv6) has many budgets. To
   count by network needs a decision about how wide a network is.
-* *The history of a tree names whom it was shared with and who claimed a record to everybody who may see the
-  tree*, while two comments say "the owner only" and "nobody else". The ADR says both; which holds is the
-  owner's to say.
-* *A copy of one's data holds invitation codes and the names of photograph files*, which are made from
-  identifiers of the store, although the text says it holds none.
 * *The version of a record begins at 1 again* when it is taken out and put back.
 * *Two files brought in for the same item and part at the same moment*: the second request fails (500), nothing
   is left behind.
@@ -640,3 +635,10 @@ same places for values, and no page writes markup from what somebody typed.
 
 Checked: 2,653 tests of Dastan, 328 of them the browser tests that are skipped without a browser; none failed.
 Not looked at in a browser: the changes to the pages (the browser of the development tool did not draw).
+
+**Decided by the owner on 2026-11-19 and built** – two things the review had left as questions:
+
+| # | What | State |
+| --- | --- | --- |
+| 18.7.12 | The history of a tree told everybody who may see the tree with whom it is shared and who claimed a record, while the list of members is the owner's and a claim is shown to two people | **Done** (D-070) – those lines are the owner's; somebody else reads the ones they wrote. `FirmerAccountsTests` |
+| 18.7.13 | A copy of one's data held the codes of invitations that can still be used – a key in a file that gets passed on | **Done** (D-071) – such an invitation is named without its code; the text of the page says so. `FirmerAccountsTests`, `OwnDataTests` |

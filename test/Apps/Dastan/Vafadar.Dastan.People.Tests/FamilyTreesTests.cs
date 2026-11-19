@@ -221,7 +221,8 @@ public sealed class FamilyTreesTests : IDisposable
         _store.RemovePerson(_dara, _tree, sohrab);
         _store.RenameTree(_mina, _tree, "The family of Zal");
 
-        var history = _store.Tree(_dara, _tree)!.History;
+        // Read by the owner, who reads every line; with whom the tree is shared is not said to others (D-070).
+        var history = _store.Tree(_mina, _tree)!.History;
 
         Assert.Equal(
             [

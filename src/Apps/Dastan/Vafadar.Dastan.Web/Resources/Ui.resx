@@ -2182,7 +2182,7 @@
     <value>A copy of your data</value>
   </data>
   <data name="Account_Export_Lead" xml:space="preserve">
-    <value>Get everything the site keeps about your account as one file: your list and reading positions, invitations, relationships and circles, the family trees you own, and your photographs by what you wrote about them (the pictures themselves are on the page of your photographs). Trees of others are named, not copied. No password is in it.</value>
+    <value>Get everything the site keeps about your account as one file: your list and reading positions, invitations, relationships and circles, the family trees you own, and your photographs by what you wrote about them (the pictures themselves are on the page of your photographs). Trees of others are named, not copied. No password is in it, and no code of an invitation that can still be used.</value>
   </data>
   <data name="Account_Export_Send" xml:space="preserve">
     <value>Get the file</value>

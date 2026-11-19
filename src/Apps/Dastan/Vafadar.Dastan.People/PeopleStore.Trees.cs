@@ -148,7 +148,16 @@ public sealed partial class PeopleStore
         var links = _context.Kinships.AsNoTracking().Where(link => link.Tree == tree).OrderBy(link => link.Number).ToList();
         var people = _context.Persons.AsNoTracking().Where(person => person.Tree == tree).ToList();
         var members = info.Role != TreeRole.Owner ? [] : _context.TreeMembers.AsNoTracking().Where(member => member.Tree == tree).ToList();
-        var changes = _context.TreeChanges.AsNoTracking().Where(change => change.Tree == tree).OrderByDescending(change => change.Number).Take(HistoryShown).ToList();
+        // The history is read by everybody who may see the tree – but the lines that say with whom it is shared
+        // and who said a record is them are the owner's, like the list of members and a claim that waits
+        // (D-070). Somebody else reads of those lines the ones they wrote themselves.
+        var history = _context.TreeChanges.AsNoTracking().Where(change => change.Tree == tree);
+        if (info.Role != TreeRole.Owner)
+        {
+            history = history.Where(change => change.By == viewer || !(change.What.StartsWith("member-") || change.What.StartsWith("claim-")));
+        }
+
+        var changes = history.OrderByDescending(change => change.Number).Take(HistoryShown).ToList();
         var claims = _context.Claims.AsNoTracking().Where(claim => claim.Tree == tree).OrderBy(claim => claim.Number).ToList();
         var names = Names(members.Select(member => member.Account)
             .Concat(changes.Select(change => change.By).OfType<string>())
@@ -172,8 +181,8 @@ public sealed partial class PeopleStore
             [.. members.Where(member => names.ContainsKey(member.Account)).Select(member => new TreeMember(names[member.Account], (TreeRole)member.Role)).OrderBy(member => member.Account.Name, StringComparer.CurrentCultureIgnoreCase)],
             [.. changes.Select(change => new TreeChange(change.At, change.By is { } by && names.TryGetValue(by, out var account) ? account.Name : null, change.What, change.Subject))])
         {
-            // A claim that waits is shown to who made it and to who is to answer it. That one was made, refused
-            // or taken back stands in the history, which everybody who may see the tree reads.
+            // A claim that waits is shown to who made it and to who is to answer it, and to nobody else who
+            // sees the tree; the lines of the history about it are the owner's and the claimant's (D-070).
             Claims =
             [
                 .. claims.Where(claim => names.ContainsKey(claim.Account))
