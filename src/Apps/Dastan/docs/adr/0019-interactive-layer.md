@@ -45,10 +45,11 @@ takes its place.
 
 * *The build.* The sources lie in `Vafadar.Dastan.Web/Scripts/src` as TypeScript. The build of the site
   checks them with the compiler of TypeScript (`tsc --noEmit`, strict) and makes them into one file,
-  `wwwroot/app.js`, with esbuild; both come from `Scripts/package-lock.json` with exact versions
+  `app.js`, with esbuild; both come from `Scripts/package-lock.json` with exact versions
   (esbuild 0.28.2, MIT; TypeScript 7.0.2, Apache-2.0) and are tools of the build – nothing of them is in the
   file that is served. `npm ci` runs without the install scripts of packages (`Scripts/.npmrc`), and the
-  tools are fetched into `obj/` beside the other files of a build. A build needs Node. The image of the
+  tools are fetched into `obj/scripts` and the file is made there, beside the other files of a build; the
+  site serves it as a file of its own, as if it lay in `wwwroot`. A build needs Node. The image of the
   container builds the file in a stage of its own from a Node image and hands it to the stage that
   publishes the site (`BuildDastanScripts=false` there); the image that runs holds no Node and no sources.
 * *The one script* the site had is those sources now, unchanged in what it does: the worker for reading
@@ -78,10 +79,11 @@ takes its place.
   of the page; the script has no texts of its own and so cannot say something the page would not.
 * **What is said aloud is said by the script.** The panel lies closed in every page; that it waits, and that
   it failed, is announced by the script that shows it, so a page that never opens it announces nothing.
-* **The file of the script is kept in the repository, and held to its sources.** The repository refuses a
-  commit while a file of the sources is hidden by an ignore rule, and a file that is made is such a file;
-  so `wwwroot/app.js` is kept, as the bytes the bundler wrote. Every build makes it again; on the build
-  server a file that differs from what its sources make stops the build, so it cannot go stale unnoticed.
+* **Nothing that is made is in the repository, and nothing that is made lies among the sources.** The
+  repository refuses a commit while a file below `src` is hidden by an ignore rule – a source that is hidden
+  is missing on the build server – so the tools and the script are made in `obj/`, where files of a build
+  belong, and named to the site from there. A script that is kept beside its sources could differ from them
+  without anybody noticing; one that every build makes cannot.
 
 **Not built here:** the addresses of the data of a graph and of a timeline come with their controls (steps
 19.8 and 19.9), each with its test against the page; the browser tests in CI are step 19.11.
