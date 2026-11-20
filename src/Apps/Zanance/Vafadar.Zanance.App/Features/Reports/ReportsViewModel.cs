@@ -732,7 +732,9 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         public Task<bool> ConfirmAsync() => owner._lock.ConfirmAsync(owner._translator["Lock_ConfirmExport"]);
         public async Task<string> WriteAsync(byte[] document)
         {
-            var path = Path.Combine(FileSystem.CacheDirectory, $"zanance-report-{Guid.NewGuid():N}.pdf");
+            var directory = Path.Combine(FileSystem.CacheDirectory, AttachmentCache.ReportDirectoryName);
+            Directory.CreateDirectory(directory);
+            var path = Path.Combine(directory, $"zanance-report-{Guid.NewGuid():N}.pdf");
             try { await File.WriteAllBytesAsync(path, document); return path; }
             catch { File.Delete(path); throw; }
         }

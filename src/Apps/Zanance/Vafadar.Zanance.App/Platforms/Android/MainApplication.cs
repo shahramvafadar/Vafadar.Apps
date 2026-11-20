@@ -11,5 +11,10 @@ public class MainApplication : MauiApplication
     {
     }
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override MauiApp CreateMauiApp()
+    {
+        // Private portable backups are staged by MAUI under the restricted internal provider path.
+        Microsoft.Maui.Storage.FileProvider.TemporaryLocation = Microsoft.Maui.Storage.FileProviderLocation.Internal;
+        return MauiProgram.CreateMauiApp();
+    }
 }

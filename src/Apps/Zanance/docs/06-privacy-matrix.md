@@ -46,6 +46,26 @@ readable by anyone who obtains it. First-run restore creates no extra account an
 | DF-22 | Receipt reading | Transient original recognition bytes, compact metadata-free stored photos and unsaved source/total suggestions | On-device Android ML Kit, Windows OCR; iOS scaffold unqualified | D-324/D-325/D-473/D-503/D-525 qualify finite digital/image/scanned/cold-reread cases; D-597/D-598 original emulator camera total only, clipped header/footer unaccepted | No automatic financial Save. Offline Android omits INTERNET; online editions may permit native SDK diagnostics. Full corpus/merchant/camera/iOS and exact traffic acceptance remain open. |
 | DF-19 | Syncfusion license validation | License key compiled into the app (build secret via `eng/AppSecrets.targets`, never tracked) | Local check | Implemented – verified (offline validation test `Vafadar.SyncfusionLicense.Tests`) | Confirm no network call in the release build (none possible without INTERNET on Android). Syncfusion's usage telemetry is switched off at startup (`Telemetry.Disable()`), also for builds with cloud backup |
 
+### Android file sharing
+
+The Android file provider accepts five internal cache subdirectories for explicit attachment
+viewing, CSV export, accountant ZIP export, report PDF export and private backup staging.
+The manifest provider remains non-exported and recipients receive a grant for the chosen file.
+Camera capture retains its separate provider. The report cache moves its temporary PDFs to
+the dedicated report directory, and startup cleanup still handles older PDF copies.
+[MAUI file-sharing guidance](https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/data/share?view=net-maui-10.0)
+
+The exact signed offline APK `bcb67d90` packaged those five paths and the original camera
+path. From a fresh Android 16 emulator with one synthetic zero-opening account, the actual
+system chooser delivered an empty-ledger CSV (283 bytes) and one explicitly unprotected
+synthetic portable backup (27,296 bytes) to a local receiver. Each receipt records its grant
+root, byte count and digest. No external service, financial action or restore was used.
+Both packages and the owned emulator were retired after guest settings restoration.
+Strict Android and Windows builds and the report-cache cleanup regression passed.
+PDF, ZIP and attachment opening were checked at the packaged path and source level in this
+revision. Their handoffs were not exercised again. Evidence is in
+`artifacts/restricted-android-share-review`.
+
 ## Permissions
 
 iOS: `NSFaceIDUsageDescription` (app lock) and `NSCameraUsageDescription` (receipt photos, D-38), localised in `Platforms/iOS/*.lproj/InfoPlist.strings`; notifications use the system authorisation dialog. Windows: no capability beyond `runFullTrust` (files only, no camera). Android manifest:

@@ -52,6 +52,23 @@ public sealed class AttachmentCacheTests
         Assert.Equal(new byte[] { 4, 6 }, File.ReadAllBytes(other));
     }
 
+    /// <summary>Only report outputs in the new provider directory are cleaned up.</summary>
+    [Fact]
+    public void Cleanup_retires_report_exports_without_touching_unrelated_files()
+    {
+        using var directory = new OwnedDirectory();
+        var reports = Directory.CreateDirectory(Path.Combine(directory.Root, AttachmentCache.ReportDirectoryName)).FullName;
+        var report = Path.Combine(reports, "zanance-report-test.pdf");
+        var unrelated = Path.Combine(reports, "unrelated.pdf");
+        File.WriteAllBytes(report, [1]);
+        File.WriteAllBytes(unrelated, [2]);
+
+        AttachmentCache.Clear(directory.Root);
+
+        Assert.False(File.Exists(report));
+        Assert.Equal(new byte[] { 2 }, File.ReadAllBytes(unrelated));
+    }
+
     private sealed class OwnedDirectory : IDisposable
     {
         internal string Root { get; } = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "Zanance-CameraCache-" + Guid.NewGuid().ToString("N"))).FullName;

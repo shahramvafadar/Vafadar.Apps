@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="attachments" path="attachments/" />
+    <cache-path name="csv_exports" path="csv-export-v1/" />
+    <cache-path name="accountant_exports" path="accountant-export-v1/" />
+    <cache-path name="report_exports" path="report-export/" />
+    <!-- MAUI 10.0.120's internal staging directory for shares from private storage. -->
+    <cache-path name="backup_share" path="2203693cc04e0be7f4f024d5f9499e13/" />
+</paths>

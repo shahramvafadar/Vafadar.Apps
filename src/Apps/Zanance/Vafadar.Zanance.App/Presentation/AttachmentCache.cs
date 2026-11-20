@@ -6,6 +6,9 @@ internal static class AttachmentCache
     /// <summary>Gets the private FileProvider directory used for transient camera originals.</summary>
     internal const string CameraDirectoryName = "camera";
 
+    /// <summary>Gets the cache subdirectory the Android file provider allows for report exports.</summary>
+    internal const string ReportDirectoryName = "report-export";
+
     // These original export patterns are local temporary copies, never the user's chosen destination.
     private static readonly string[] SharedFilePatterns = ["zanance-export-*.csv", "zanance-holdings-*.csv", "zanance-report-*.pdf"];
 
@@ -18,6 +21,14 @@ internal static class AttachmentCache
             if (Directory.Exists(attachments)) Directory.Delete(attachments, recursive: true);
             foreach (var file in SharedFilePatterns.SelectMany(pattern => Directory.EnumerateFiles(cacheRoot, pattern)))
                 File.Delete(file);
+
+            var reports = Path.Combine(cacheRoot, ReportDirectoryName);
+            if (Directory.Exists(reports) && (File.GetAttributes(reports) & FileAttributes.ReparsePoint) == 0)
+            {
+                foreach (var file in Directory.EnumerateFiles(reports, "zanance-report-*.pdf"))
+                    if ((File.GetAttributes(file) & FileAttributes.ReparsePoint) == 0)
+                        File.Delete(file);
+            }
 
             // Android can terminate the owner while the external camera is writing. Its finally block
             // cannot run then (D-596); a new startup retires only that adapter's original opaque JPEGs.
