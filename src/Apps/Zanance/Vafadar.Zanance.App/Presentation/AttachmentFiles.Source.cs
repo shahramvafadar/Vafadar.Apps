@@ -2,6 +2,23 @@ namespace Vafadar.Zanance.App.Presentation;
 
 internal static partial class AttachmentFiles
 {
+    /// <summary>Uses the established extension mapping when the picker supplies no specific media type.</summary>
+    internal static string ResolveContentType(string name, string? contentType)
+    {
+        const string binary = "application/octet-stream";
+        if (!string.IsNullOrWhiteSpace(contentType) && !string.Equals(contentType, binary, StringComparison.OrdinalIgnoreCase))
+            return contentType;
+
+        return Path.GetExtension(name).ToLowerInvariant() switch
+        {
+            ".jpg" or ".jpeg" => "image/jpeg",
+            ".png" => "image/png",
+            ".heic" => "image/heic",
+            ".pdf" => "application/pdf",
+            _ => binary,
+        };
+    }
+
     /// <summary>The encoded source-file limit, before preparing the much smaller stored photo.</summary>
     internal const int MaxSourceBytes = 64 * 1024 * 1024;
 

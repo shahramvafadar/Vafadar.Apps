@@ -1491,6 +1491,15 @@ available. Only that incomplete transfer was retried. Both owned emulators were 
 remains under `artifacts/ai-classical-api36-pdf`. No build, earlier image OCR or successful
 financial operation was repeated.
 
+A picker response without a specific media type now uses the existing extension mapping for
+JPEG, PNG, HEIC and PDF. This sends recognized image extensions through the existing photo
+preparation path. A stored attachment with a generic media type uses the resolved type for
+viewing and local OCR without changing its stored metadata or bytes. Five focused resolver
+cases and one synthetic SQLite-backed stored PDF reread passed. Strict Windows and Android builds
+passed. Signed offline APK e40e828 passed the signature, identity, offline manifest and static
+16 KiB alignment checks. Native coverage for a picker
+that supplies a generic media type remains open.
+
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
 deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate

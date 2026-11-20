@@ -40,6 +40,7 @@ public sealed class ReceiptWorkFlowTests
         internal TextLayoutResult Document = new("Fictitious shop\nTOTAL EUR 24.50");
         internal int Picked, Unlocked, Read;
         internal byte[]? Recognition;
+        internal string? RecognizedContentType;
         internal Func<Task>? DuringPick, DuringRead, DuringAlert, DuringOpen;
         internal bool AllowUnlock = true;
         internal List<string> Alerts = [];
@@ -47,7 +48,7 @@ public sealed class ReceiptWorkFlowTests
         public async Task<ReceiptPickedFile?> PickAsync() { Picked++; if (DuringPick is not null) await DuringPick(); return File; }
         public Task RunWhenUnlockedAsync(Func<Task> action) { Unlocked++; return AllowUnlock ? action() : Task.CompletedTask; }
         public async Task<TextLayoutResult> ReadAsync(byte[] data, string contentType)
-        { Read++; Recognition = data; if (DuringRead is not null) await DuringRead(); return Document; }
+        { Read++; Recognition = data; RecognizedContentType = contentType; if (DuringRead is not null) await DuringRead(); return Document; }
         public async Task AlertAsync(string title, string message, string cancel)
         { Alerts.Add(message); if (DuringAlert is not null) { var action = DuringAlert; DuringAlert = null; await action(); } }
         public async Task OpenEditorAsync(ReceiptDraft draft) { if (DuringOpen is not null) await DuringOpen(); Drafts.Add(draft); }
@@ -60,13 +61,14 @@ public sealed class ReceiptWorkFlowTests
             shared ? new(Scope, member, host) : null));
     private static ReceiptReadingSession Session(FlowFixture f, ServiceProvider p, Native native) =>
         new(p.GetRequiredService<ReceiptWorkStore>(), native, f.Translator, f.Time);
-    private static async Task<(LedgerEntry Entry, EntryAttachment Attachment)> SeedAsync(FlowFixture f)
+    private static async Task<(LedgerEntry Entry, EntryAttachment Attachment)> SeedAsync(FlowFixture f,
+        string fileName = "Original stored receipt.jpg", string contentType = "image/jpeg")
     {
         var account = new Account { Name = "Original receipt account", CurrencyCode = "EUR", OpeningDate = new(2026, 10, 1), OpeningBalance = 10000 };
         await f.Store.SaveAccountAsync(account, Ct);
         var entry = new LedgerEntry { AccountId = account.Id, Kind = EntryKind.Expense, Date = new(2026, 10, 9), Amount = 9876, Title = "Original recorded expense" };
         Assert.True((await f.Store.SaveEntryAsync(entry, Ct)).Succeeded);
-        var attachment = new EntryAttachment { EntryId = entry.Id, FileName = "Original stored receipt.jpg", ContentType = "image/jpeg", Data = [7, 8, 9] };
+        var attachment = new EntryAttachment { EntryId = entry.Id, FileName = fileName, ContentType = contentType, Data = [7, 8, 9] };
         await f.Store.AddAttachmentAsync(attachment, Ct); return (entry, attachment);
     }
 
@@ -100,6 +102,26 @@ public sealed class ReceiptWorkFlowTests
             Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
         }
         finally { AiFeatures.Current = preference; }
+    }
+
+    /// <summary>Legacy generic MIME metadata must not block local PDF rereading or alter the stored attachment.</summary>
+    [Fact]
+    public async Task Legacy_binary_pdf_passes_a_specific_type_to_the_local_reader_without_rewriting_storage()
+    {
+        using var f = new FlowFixture();
+        var original = await SeedAsync(f, "Original scanned invoice.PDF", "application/octet-stream");
+        using var provider = Provider(f, new Access());
+        var native = new Native();
+        var session = Session(f, provider, native);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+
+        await session.ReadAttachmentAsync(original.Entry.Id, original.Attachment.Id);
+
+        Assert.Equal(1, native.Read);
+        Assert.Equal("application/pdf", native.RecognizedContentType);
+        Assert.Equal(original.Attachment.Data, native.Recognition);
+        Assert.Equal(24.50m, Assert.Single(native.Drafts).Suggestion.Amount);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Theory]
     [InlineData("en")][InlineData("fa")][InlineData("de")][InlineData("es")][InlineData("fr")][InlineData("it")]

@@ -7,6 +7,18 @@ namespace Vafadar.Zanance.App.Tests;
 [Trait("AT", "AT-171")]
 public sealed class CameraSourceBoundsTests
 {
+    /// <summary>Generic picker metadata still enters the established photo or PDF handling.</summary>
+    [Theory]
+    [InlineData("Invoice.PDF", "application/octet-stream", "application/pdf")]
+    [InlineData("Receipt.PNG", "application/octet-stream", "image/png")]
+    [InlineData("Receipt.jpeg", null, "image/jpeg")]
+    [InlineData("Unknown.bin", "application/octet-stream", "application/octet-stream")]
+    [InlineData("Specific.pdf", "image/jpeg", "image/jpeg")]
+    public void Generic_picker_content_type_uses_known_extension_only(string name, string? reported, string expected)
+    {
+        Assert.Equal(expected, AttachmentFiles.ResolveContentType(name, reported));
+    }
+
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
     /// <summary>Two original admissible lengths grow past the same original byte ceiling before the real file read.</summary>

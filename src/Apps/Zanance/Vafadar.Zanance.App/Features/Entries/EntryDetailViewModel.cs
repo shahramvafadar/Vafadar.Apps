@@ -509,7 +509,7 @@ public sealed partial class EntryDetailViewModel(
                 { var bytes = image.Data; preview = ImageSource.FromStream(() => new MemoryStream(bytes)); }
                 var size = info.Size >= 1024 * 1024 ? $"{info.Size / 1024d / 1024d:0.0} MB" : $"{Math.Max(1, info.Size / 1024)} KB";
                 state.Attachments.Add(new(info.Id, info.FileName, $"\u2066\u200E{size} · {dates.Format(DateOnly.FromDateTime(info.CreatedAt.LocalDateTime), DateFormatStyle.Short)}\u200E\u2069", preview)
-                { CanRead = entry.Kind == EntryKind.Expense && DocumentReader.CanRead(info.ContentType) });
+                { CanRead = entry.Kind == EntryKind.Expense && DocumentReader.CanRead(AttachmentFiles.ResolveContentType(info.FileName, info.ContentType)) });
             }
         }
         state.HasAttachments = state.Attachments.Count > 0;

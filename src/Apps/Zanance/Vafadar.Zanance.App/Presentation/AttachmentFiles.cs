@@ -35,7 +35,7 @@ internal static partial class AttachmentFiles
         }
 
         await using var stream = await file.OpenReadAsync();
-        return await PrepareAsync(file.FileName, string.IsNullOrEmpty(file.ContentType) ? Guess(file.FileName) : file.ContentType,
+        return await PrepareAsync(file.FileName, ResolveContentType(file.FileName, file.ContentType),
             await ReadSourceAsync(stream), forRecognition);
     }
 
@@ -76,7 +76,7 @@ internal static partial class AttachmentFiles
         Directory.CreateDirectory(folder);
         // Imported profiles may retain the same attachment id. Each explicit open owns a new cache file,
         // rather than overwriting a pending viewer's copy from another profile or revision.
-        var fileName = attachment.FileName; var contentType = attachment.ContentType;
+        var fileName = attachment.FileName; var contentType = ResolveContentType(fileName, attachment.ContentType);
         var path = Path.Combine(folder, $"{attachment.Id:N}-{Guid.NewGuid():N}{Path.GetExtension(fileName)}");
         var bytes = attachment.Data.ToArray(); var dispatched = false; var created = false;
         try
@@ -97,14 +97,5 @@ internal static partial class AttachmentFiles
             if (created && !dispatched && File.Exists(path)) File.Delete(path);
         }
     }
-
-    private static string Guess(string name) => Path.GetExtension(name).ToLowerInvariant() switch
-    {
-        ".jpg" or ".jpeg" => "image/jpeg",
-        ".png" => "image/png",
-        ".heic" => "image/heic",
-        ".pdf" => "application/pdf",
-        _ => "application/octet-stream",
-    };
 
 }

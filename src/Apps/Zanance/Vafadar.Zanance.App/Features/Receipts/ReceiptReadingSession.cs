@@ -47,7 +47,8 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             var reviewed = await reader.CaptureAsync(entryId, attachmentId);
             RequireCurrent();
             var file = reviewed.Attachment is { } original
-                ? new ReceiptPickedFile(original.FileName, original.ContentType, original.Data) : await runtime.PickAsync();
+                ? new ReceiptPickedFile(original.FileName, AttachmentFiles.ResolveContentType(original.FileName, original.ContentType), original.Data)
+                : await runtime.PickAsync();
             if (file is null) return;
             RequireCurrent();
             await reader.ValidateAsync(reviewed);
