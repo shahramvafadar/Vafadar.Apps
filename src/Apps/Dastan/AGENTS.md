@@ -60,9 +60,9 @@ of this file that says otherwise**:
   ([ADR 0019](docs/adr/0019-interactive-layer.md)). "No script" is no longer a rule; "nothing is sent to a
   browser that its visitor may not see" is, as before.
   The script is TypeScript in `Vafadar.Dastan.Web/Scripts/src`; the build of the site checks and bundles it
-  into `wwwroot/app.js` (needs Node; tools pinned in `Scripts/package-lock.json`, never an install script of a
-  package). The file is made by the build and kept in the repository: never edit it by hand, and commit it
-  together with the sources it was made from – the build server refuses one that differs. Data for the browser has an address below
+  into `app.js` (needs Node; tools pinned in `Scripts/package-lock.json`, never an install script of a
+  package). What is made lies in `obj/scripts` and is in no repository: there is no `wwwroot/app.js` to
+  edit. Data for the browser has an address below
   the page it belongs to and is answered by the code of that page from the same projection – with a test
   that holds the answer against the page of the same visitor. The script has no texts of its own.
 * **The graph** is Syncfusion EJ2 Diagram behind `DastanGraph` ([ADR 0020](docs/adr/0020-graph.md)); no type

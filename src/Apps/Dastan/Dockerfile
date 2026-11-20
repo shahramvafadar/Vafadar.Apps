@@ -19,7 +19,7 @@ RUN node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json && node build
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /repo
 COPY . .
-COPY --from=scripts /site/wwwroot/app.js src/Apps/Dastan/Vafadar.Dastan.Web/wwwroot/app.js
+COPY --from=scripts /site/wwwroot/ src/Apps/Dastan/Vafadar.Dastan.Web/wwwroot/
 
 # The repository names two local package folders for other apps; they have to exist, and stay empty here.
 RUN mkdir -p artifacts/native-sqlcipher/feed artifacts/maui-core/feed \
