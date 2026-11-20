@@ -128,6 +128,7 @@ jobs:
 
       - name: Verify the signed App Bundle
         id: bundle
+        shell: bash
         run: |
           shopt -s nullglob
           bundles=("$RUNNER_TEMP"/publish/*-Signed.aab)
@@ -137,6 +138,13 @@ jobs:
           fi
           java eng/maui/VerifyAndroidBundle.java "${bundles[0]}" "$RUNNER_TEMP/upload.keystore"
           python eng/maui/verify-android-bundle-elf.py "${bundles[0]}"
+          bundletool=$(dotnet msbuild "$APP_PROJECT" -nologo -v:q \
+            -p:Configuration=Release -p:TargetFramework=net10.0-android \
+            -p:VafadarMauiTargetFrameworks=net10.0-android \
+            -t:_ResolveMonoAndroidSdks -getProperty:AndroidBundleToolJarPath)
+          test -f "$bundletool" || { echo "::error::could not resolve the Android SDK bundletool"; exit 1; }
+          java -jar "$bundletool" dump manifest --bundle="${bundles[0]}" | \
+            python eng/maui/verify-android-bundle-manifest.py pro.vafadar.zanance "$APP_VERSION" "$APP_BUILD_NUMBER"
           printf 'path=%s\n' "${bundles[0]}" >> "$GITHUB_OUTPUT"
 
       - name: Remove keystore
