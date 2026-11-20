@@ -12,7 +12,7 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
     AiRequestStore store, TimeProvider time)
 {
     private const int MaximumBodyBytes = 8192;
-    private const int MaximumNotices = 128;
+    private const int MaximumActiveNotices = 128;
     /// <summary>Number of authenticated status lookups allowed per signed notice.</summary>
     internal const int MaximumLookups = 3;
     /// <summary>Configuration key for the explicitly registered provider signing secret.</summary>
@@ -76,7 +76,8 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
         await AiPilotProvider.LockAsync(db, ct);
         var queue = db.Set<AiPilotCompletionNoticeRow>();
         if (await queue.AnyAsync(item => item.Provider == provider && (item.ResponseId == response || item.DeliveryId == delivery), ct)) return true;
-        if (await queue.CountAsync(item => item.Provider == provider, ct) >= MaximumNotices) return false;
+        // Retained completion and exhaustion receipts still deduplicate but do not consume active capacity.
+        if (await Active(queue, provider).CountAsync(ct) >= MaximumActiveNotices) return false;
         db.Add(new AiPilotCompletionNoticeRow { Provider = provider, ResponseId = response, DeliveryId = delivery, ReceivedAt = time.GetUtcNow() });
         await db.SaveChangesAsync(ct);
         await tx.CommitAsync(ct);
@@ -96,8 +97,8 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
         var now = time.GetUtcNow();
         var cutoff = now.AddMinutes(-1);
         await using var db = await factory.CreateDbContextAsync(ct);
-        var due = db.Set<AiPilotCompletionNoticeRow>().Where(item => item.Provider == provider && !item.Handled && item.Attempts < MaximumLookups &&
-            (item.CheckedAt == null || item.CheckedAt <= cutoff));
+        var due = Active(db.Set<AiPilotCompletionNoticeRow>(), provider)
+            .Where(item => item.CheckedAt == null || item.CheckedAt <= cutoff);
         var candidates = await due.OrderBy(item => item.ReceivedAt).ThenBy(item => item.ResponseId)
             .Select(item => item.ResponseId).Take(8).ToArrayAsync(ct);
         foreach (var id in candidates)
@@ -121,6 +122,9 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
                     .ExecuteUpdateAsync(set => set.SetProperty(item => item.Handled, true), ct);
         }
     }
+
+    private static IQueryable<AiPilotCompletionNoticeRow> Active(IQueryable<AiPilotCompletionNoticeRow> rows, string provider) =>
+        rows.Where(item => item.Provider == provider && !item.Handled && item.Attempts < MaximumLookups);
 
     private static string? Header(HttpRequest request, string key) => request.Headers.TryGetValue(key, out var value) &&
         value.Count == 1 ? value[0] : null;

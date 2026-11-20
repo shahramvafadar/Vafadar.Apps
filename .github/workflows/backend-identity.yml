@@ -271,7 +271,8 @@ jobs:
             Pilot_localizes_only_the_fixed_synthetic_corpus_for_both_adapters \
             Notice_binding_rolls_back_with_settlement_and_recovers_an_existing_handle \
             Create_refusal_records_only_bounded_HTTP_status_and_keeps_original_reservation \
-            Original_synthetic_vendor_deletion_is_bound_to_the_frozen_route_and_receipt
+            Original_synthetic_vendor_deletion_is_bound_to_the_frozen_route_and_receipt \
+            Webhook_capacity_counts_only_notices_that_can_still_be_checked
           do
             docker exec zanance-analysis-ci createdb -h 127.0.0.1 -U postgres zanance_ai_provider_pilot
             export ZANANCE_AI_ADMIN_TEST_ROOT="$ZANANCE_AI_QA_ROOT/$method"

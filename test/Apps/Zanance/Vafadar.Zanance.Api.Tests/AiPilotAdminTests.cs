@@ -180,8 +180,12 @@ public sealed class AiPilotAdminTests
     [Fact]
     public Task Operator_operations_shows_local_aggregate_without_accessing_providers() => RunPanelAsync(false, exerciseOperations: true);
 
+    /// <summary>Verifies active capacity independently of retained completion and exhaustion receipts.</summary>
+    [Fact]
+    public Task Webhook_capacity_counts_only_notices_that_can_still_be_checked() => RunPanelAsync(false, exerciseCapacity: true);
+
     private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, string? recoveryProvider = null,
-        bool exerciseRotation = false, bool exerciseOperations = false, bool recoveryFailure = false)
+        bool exerciseRotation = false, bool exerciseOperations = false, bool recoveryFailure = false, bool exerciseCapacity = false)
     {
         var ct = TestContext.Current.CancellationToken;
         var connection = Environment.GetEnvironmentVariable(recoveryFailure
@@ -191,7 +195,7 @@ public sealed class AiPilotAdminTests
         var dbSettings = new NpgsqlConnectionStringBuilder(connection);
         Assert.Equal(("127.0.0.1", "zanance_ai_provider_pilot"), (dbSettings.Host, dbSettings.Database));
         var expectedPort = recoveryFailure ? (recoveryProvider == "openai" ? 55484 : 55485) : 55479;
-        Assert.True(dbSettings.Port == expectedPort || pendingOnly && dbSettings.Port == 55480);
+        Assert.True(dbSettings.Port == expectedPort || pendingOnly && dbSettings.Port == 55480 || exerciseCapacity && dbSettings.Port == 55488);
         var rootKey = recoveryFailure ? "ZANANCE_AI_FAILURE_NOTICE_ROOT_" + recoveryProvider!.ToUpperInvariant() : "ZANANCE_AI_ADMIN_TEST_ROOT";
         var root = Environment.GetEnvironmentVariable(rootKey)!;
         Assert.Equal("Zanance synthetic admin panel", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
@@ -207,7 +211,7 @@ public sealed class AiPilotAdminTests
         using var recovery = recoveryProvider is null ? null : new RecoveryReplies(recoveryProvider, recoveryFailure);
         if (recovery is not null)
             builder.Configuration[AiPilotCompletionNotices.SecretSetting(recoveryProvider!)] = "whsec_" + Convert.ToBase64String(RecoveryReplies.SigningKey);
-        if (exerciseRotation)
+        if (exerciseRotation || exerciseCapacity)
         {
             builder.Configuration[AiPilotCompletionNotices.SecretSetting("openai")] = Secret(31);
             builder.Configuration[AiPilotCompletionNotices.SecretSetting("gemini")] = Secret(32);
@@ -219,7 +223,7 @@ public sealed class AiPilotAdminTests
         using var replies = exerciseStatus ? new RetainedStatusReplies() : null;
         var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 19, 12, 0, 0, TimeSpan.Zero));
         builder.Services.Replace(ServiceDescriptor.Singleton<IHttpClientFactory>((IHttpClientFactory?)replies ?? (IHttpClientFactory?)recovery ?? noEgress));
-        if (exerciseStatus || recovery is not null || exerciseRotation) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
+        if (exerciseStatus || recovery is not null || exerciseRotation || exerciseCapacity) builder.Services.Replace(ServiceDescriptor.Singleton<TimeProvider>(clock));
         await using var app = builder.Build();
         await ServiceHost.MigrateAsync(app.Services);
         await using (var scope = app.Services.CreateAsyncScope())
@@ -246,6 +250,13 @@ public sealed class AiPilotAdminTests
             using var signedIn = await SignIn(view, OperatorEmail);
             Assert.Equal(Panel, signedIn.Headers.Location?.OriginalString);
             await VerifyOperationsAsync(app.Services, app.Configuration, view, ct);
+            Assert.Equal(0, noEgress.Attempts);
+            return;
+        }
+        if (exerciseCapacity)
+        {
+            using var receiver = Browser();
+            await VerifyCapacityAsync(app.Services, receiver, clock, ct);
             Assert.Equal(0, noEgress.Attempts);
             return;
         }
@@ -605,6 +616,59 @@ public sealed class AiPilotAdminTests
             request.Headers.Add("webhook-signature", "v1," + signature);
             using var response = await callback.SendAsync(request, ct);
             Assert.Equal(status, response.StatusCode);
+        }
+    }
+
+    private static async Task VerifyCapacityAsync(IServiceProvider services, HttpClient receiver, FakeTimeProvider clock, CancellationToken ct)
+    {
+        var factory = services.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
+        await using (var seed = await factory.CreateDbContextAsync(ct))
+        {
+            seed.AddRange(Enumerable.Range(0, 255).Select(index => new AiPilotCompletionNoticeRow
+            {
+                Provider = "openai", ResponseId = $"resp_capacity_{index}", DeliveryId = $"fixture-capacity-{index}",
+                ReceivedAt = clock.GetUtcNow().AddDays(-1),
+                Handled = index < 64, Attempts = index is >= 64 and < 128 ? AiPilotCompletionNotices.MaximumLookups : 0,
+                CheckedAt = index is >= 64 and < 128 ? clock.GetUtcNow().AddDays(-1) : null,
+            }));
+            await seed.SaveChangesAsync(ct);
+        }
+
+        await Deliver("openai", 255, 31, HttpStatusCode.NoContent);
+        await Deliver("openai", 256, 31, HttpStatusCode.ServiceUnavailable);
+        await Deliver("openai", 0, 31, HttpStatusCode.NoContent);
+        await Deliver("openai", 64, 31, HttpStatusCode.NoContent);
+        await Deliver("gemini", 256, 32, HttpStatusCode.NoContent);
+
+        await using var audit = await factory.CreateDbContextAsync(ct);
+        var rows = await audit.Set<AiPilotCompletionNoticeRow>().ToArrayAsync(ct);
+        Assert.Equal(128, rows.Count(row => row.Provider == "openai" && !row.Handled && row.Attempts < AiPilotCompletionNotices.MaximumLookups));
+        Assert.Equal(64, rows.Count(row => row.Provider == "openai" && row.Handled));
+        Assert.Equal(64, rows.Count(row => row.Provider == "openai" && row.Attempts == AiPilotCompletionNotices.MaximumLookups));
+        Assert.Single(rows, row => row.Provider == "gemini");
+        Assert.Empty(await audit.Set<AiRequestRow>().ToArrayAsync(ct));
+        Assert.Empty(await audit.Set<AiCreditRow>().ToArrayAsync(ct));
+
+        async Task Deliver(string provider, int index, byte signer, HttpStatusCode expected)
+        {
+            var stamp = clock.GetUtcNow().ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture);
+            var delivery = $"fixture-capacity-{index}";
+            var body = System.Text.Json.JsonSerializer.Serialize(new
+            {
+                type = provider == "openai" ? "response.completed" : "interaction.completed",
+                data = new { id = $"resp_capacity_{index}" },
+            });
+            var signature = Convert.ToBase64String(HMACSHA256.HashData(SigningBytes(signer),
+                Encoding.UTF8.GetBytes($"{delivery}.{stamp}.{body}")));
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"/analysis/pilot/{provider}/completions")
+            {
+                Content = new StringContent(body, Encoding.UTF8, "application/json"),
+            };
+            request.Headers.Add("webhook-id", delivery);
+            request.Headers.Add("webhook-timestamp", stamp);
+            request.Headers.Add("webhook-signature", "v1," + signature);
+            using var response = await receiver.SendAsync(request, ct);
+            Assert.Equal(expected, response.StatusCode);
         }
     }
 
