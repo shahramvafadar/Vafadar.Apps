@@ -198,20 +198,28 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             await ApplyAsync(originalRequest.UserId, originalRequest.Id, observed, CancellationToken.None);
             return true;
         }
-        var candidates = await (from request in requests.AsNoTracking()
-                                join offer in offers.AsNoTracking() on request.OfferId equals offer.Id
-                                where request.State == AiRequestState.Pending && request.PilotDispatchStage == AiPilotDispatchStage.Claimed &&
-                                    request.VendorOperationId == null
-                                select new { request.Id, request.UserId, request.PayloadDigest, Offer = offer })
-            .OrderBy(item => item.Id).Take(21).ToListAsync(ct);
-        if (candidates.Count is 0 or > 20) return true;
+        static IQueryable<AiRequestRow> Unbound(IQueryable<AiRequestRow> rows) => rows.AsNoTracking().Where(request =>
+            request.State == AiRequestState.Pending && request.PilotDispatchStage == AiPilotDispatchStage.Claimed &&
+            request.VendorOperationId == null);
+
+        if (!await Unbound(requests).AnyAsync(request => offers.Any(offer => offer.Id == request.OfferId), ct)) return true;
         using var recovered = await pilot.RetrieveNoticeAsync(providerName, responseId, ct);
         if (recovered is null) return false;
         var value = recovered.RootElement;
         var operation = AiPilotProvider.RecoveredOperation(providerName, value, responseId);
-        if (operation is not { Length: 64 }) return false;
-        var original = candidates.SingleOrDefault(item => ProviderKey(item.UserId, item.Id) == operation);
-        if (original is null) return true;
+        if (operation is not { Length: 64 } || !operation.All(char.IsAsciiHexDigitLower)) return false;
+
+        // Use the same UTF-8 format as dispatch and return only exact, eligible matches.
+        var correlated = requests.FromSql($"""
+            SELECT * FROM "AiRequests"
+            WHERE encode(sha256(convert_to({ProviderKeyPrefix} || "UserId" || {"\n"} || replace("Id"::text, '-', ''), 'UTF8')), 'hex') = {operation}
+            """);
+        var matches = await (from request in Unbound(correlated)
+                             join offer in offers.AsNoTracking() on request.OfferId equals offer.Id
+                             select new { request.Id, request.UserId, request.PayloadDigest, Offer = offer }).Take(2).ToArrayAsync(ct);
+        if (matches.Length == 0) return true;
+        if (matches.Length != 1) return false;
+        var original = matches[0];
         var route = await db.Set<AiPilotRouteRow>().AsNoTracking().SingleAsync(item => item.Id == original.Offer.PilotRouteId, ct);
         var outcome = pilot.RecoveredNoticeOutcome(route, Offer(original.Offer), original.PayloadDigest, value);
         if (outcome is null) return true;
@@ -443,8 +451,10 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     private async Task<SyncRequestScope> OpenAsync(ClaimsPrincipal actor, ServiceDbContext db, CancellationToken ct) =>
         await SyncRequestScope.OpenAsync(actor, db, time, ct) ?? throw new AiRefusal(401, "AiIdentityRequired");
     // Stable per-identity operation namespace also survives ordinary service restoration; providers must prove idempotence.
+    private const string ProviderKeyPrefix = "zanance.analysis.v1\n";
+
     /// <summary>Derives the same opaque request reference for dispatch, recovery and retention.</summary>
-    internal static string ProviderKey(string owner, Guid id) => Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes("zanance.analysis.v1\n" + owner + "\n" + id.ToString("N"))));
+    internal static string ProviderKey(string owner, Guid id) => Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(ProviderKeyPrefix + owner + "\n" + id.ToString("N"))));
     private IDataProtector Protector(string owner, Guid id) => protection.CreateProtector("zanance.analysis.v1", owner, id.ToString("N"));
     // PostgreSQL stores microseconds; original in-flight pre-canonicalization offers may have one finer tick.
     // This comparison never extends the stored server deadline or changes destination/model/cost consent.

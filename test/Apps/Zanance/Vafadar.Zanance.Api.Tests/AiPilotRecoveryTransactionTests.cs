@@ -34,9 +34,10 @@ public sealed class AiPilotRecoveryTransactionTests
             ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-transaction-key",
             ["Analysis:ProviderPilot:openai:Project"] = "fixture-notice-transaction",
         }).Build();
-        const string owner = "fictional-recovery-tx-owner";
+        const string owner = "fictional-recovery-tx-ä-owner";
         var lost = Guid.NewGuid();
         var earlier = Guid.NewGuid();
+        var otherRequests = Enumerable.Range(0, 21).Select(_ => Guid.NewGuid()).ToArray();
         using var transport = new Replies(Convert.ToHexStringLower(
             SHA256.HashData(Encoding.UTF8.GetBytes($"zanance.analysis.v1\n{owner}\n{lost:N}"))));
         var pilot = new AiPilotProvider(config, transport, clock);
@@ -49,6 +50,13 @@ public sealed class AiPilotRecoveryTransactionTests
             var route = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
             Seed(lost, null);
             Seed(earlier, "resp_fixture_earlier");
+            for (var i = 0; i < 2; i++)
+            {
+                var otherOwner = $"fictional-recovery-other-{i}";
+                db.Users.Add(new ServiceUser { Id = otherOwner, UserName = otherOwner, SecurityStamp = "fictional-other-stamp" });
+                foreach (var request in otherRequests.Skip(i * 11).Take(11))
+                    Seed(request, null, otherOwner);
+            }
             await db.SaveChangesAsync(ct);
             await db.Database.ExecuteSqlRawAsync("""
                 CREATE FUNCTION fixture_reject_original_settlement() RETURNS trigger LANGUAGE plpgsql AS $$
@@ -62,12 +70,12 @@ public sealed class AiPilotRecoveryTransactionTests
                 FOR EACH ROW EXECUTE FUNCTION fixture_reject_original_settlement();
                 """, ct);
 
-            void Seed(Guid id, string? handle)
+            void Seed(Guid id, string? handle, string requestOwner = owner)
             {
-                var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = owner, Provider = route.Provider,
+                var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = requestOwner, Provider = route.Provider,
                     Model = route.Model!, Purpose = route.Purpose, PilotRouteId = route.Id, MaximumUnits = 1,
                     ExpiresAt = clock.GetUtcNow().AddHours(1) };
-                db.AddRange(offer, new AiRequestRow { Id = id, UserId = owner, OfferId = offer.Id,
+                db.AddRange(offer, new AiRequestRow { Id = id, UserId = requestOwner, OfferId = offer.Id,
                     CreatedAt = clock.GetUtcNow(), State = AiRequestState.Pending, GiftedReserved = 1,
                     VendorOperationId = handle, PayloadDigest = AiProtocol.Digest(AiPilotProvider.ReportFixture),
                     ProtectedPayload = "fictional-protected", PilotDispatchStage = AiPilotDispatchStage.Claimed,
@@ -106,6 +114,12 @@ public sealed class AiPilotRecoveryTransactionTests
         Assert.Equal("resp_fixture_earlier", requests[earlier].VendorOperationId);
         Assert.Equal(AiPilotVendorStatus.Failed, requests[earlier].PilotVendorStatus);
         Assert.Null(requests[earlier].PilotMeteredCostMicros);
+        Assert.All(otherRequests, request =>
+        {
+            Assert.Equal(AiRequestState.Pending, requests[request].State);
+            Assert.Null(requests[request].VendorOperationId);
+            Assert.Null(requests[request].PilotVendorStatus);
+        });
         var settlement = Assert.Single(await audit.Set<AiCreditRow>().ToArrayAsync(ct));
         Assert.Equal((lost, AiCreditEvent.Settle), (settlement.RequestId!.Value, settlement.Kind));
 
