@@ -1444,6 +1444,11 @@ phone/iOS, current customer-export corpus and release acceptance remain open.
 
 ## D-298 Optional analysis gate
 
+The device-wide AI switch was checked on an owned Android 16 debug fixture. The native switch stayed
+off across a process restart, hid Analysis and receipt scanning, and restored both entries when
+re-enabled. Manual transaction actions remained available. Two focused tests checked persistence
+and refusal of retired sharing and provider actions. [AI opt-out evidence](enhancements/2026-10-commercial-release/29-ai-feature-expansion-plan.md#shared-contracts-and-acceptance)
+
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
 deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate

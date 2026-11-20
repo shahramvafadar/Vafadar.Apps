@@ -932,6 +932,12 @@ Original files are read only. No automatic payment, upload, raw-file retention o
 
 ## D-298 Optional aggregate analysis
 
+The AI features switch defaults to on and is stored as an app-installation preference outside the
+financial profile and its portable backups. Turning it off hides the optional AI entry points and
+prevents new disclosure, receipt recognition and category suggestions. Enabling it still requires
+the original separate consent for every disclosure. The switch does not delete retained requests,
+recall data already shared or act as a promise about independent SDK diagnostics in an online build.
+
 Before explicit consent, account choices and coherent calculations stay local. Only selected currency totals,
 exact dates, account counts, confirmation scope, language and unreviewed counts enter the disclosed packet;
 no names, transaction ids, payees, notes, documents, device security or sync ciphertext. Shared sources are
