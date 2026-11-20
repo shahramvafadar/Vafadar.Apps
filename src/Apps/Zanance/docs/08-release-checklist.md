@@ -222,7 +222,9 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations
 - [x] Golden data AT-62 exact in en/fa/de (calculation and display tests: separators per language, Persian digits)
 - [ ] Upgrade from every earlier test build keeps data (AT-60) – integration test for the first schema passes; re-check with real test builds
-- [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57) – fresh-install integration test passes; device check pending
+- [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57). The
+  [fresh Android emulator review](07-acceptance-test-plan.md#at-57-password-protected-restore-on-a-fresh-android-installation)
+  restored the protected fixture and retained its balance after a cold reopen. The protected physical round trip remains open.
 - [ ] No known critical bug in balances, conversion, double counting, restore or data exposure (Q-01)
 - [ ] Complete reference Android performance acceptance (Q-02). With 10,000 entries, 20 accounts and 100 plans, the
   five-sample warm Home median was 751 ms against the approximate 2,000-ms target. The process-cold launch was

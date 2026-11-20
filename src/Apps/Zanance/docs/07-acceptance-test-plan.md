@@ -4790,6 +4790,32 @@ PID10005/three profiles/APK/OS match after exact owned cleanup and phone release
 unprotected same-phone independent reinstall evidence, not another phone, protected-password/iOS,
 whole QA-01, power-loss/ANR/A11Y/provider/store/release acceptance. See quality/physical-portable-fresh-install.md.
 
+## AT-57 password-protected restore on a fresh Android installation
+
+On 2026-11-20, the original fictional D-403 database and portable preferences were reused from
+the retained, hash-matched export. The host replaced the historical device label with a
+fictional label and wrapped the package using the production `BackupEncryption` source. Host
+decryption recovered the complete prepared package byte for byte. The encrypted fixture SHA-256
+is `3b0c127ce3bbd75bebc35118e44ad5fe6513895e0c4e2025230b5d176c2878f6`.
+
+The existing strict offline x64 Release APK (`46d1694a848cf913717107b7ca8bf87a9664623d29b1195b28c6065f1d0e1bd5`)
+was installed once on a fresh Android 35 emulator with 16,384-byte pages. The native first-run
+picker selected the hash-matched encrypted file before account creation. The wrong password
+produced an inline refusal. The correct password displayed one account, one transaction and
+one plan. After one replacement confirmation, Home displayed EUR 35.00 and the original cash
+account. Transactions retained the dated EUR 2.00 expense with its category and account; All
+plans showed the original EUR 9.00 once plan. One cold reopen in a new process retained Home
+and its balance. No new account, transaction or plan was entered.
+
+An early observation captured the startup cover and an input immediately after dismissing the
+keyboard produced no visible result. Only the pending native action continued after the layout
+settled. Privileged test captures exposed synthetic input in a password-classified node.
+Retained XML was redacted and checked before the emulator was retired. Local evidence is in
+`artifacts/zpr`. The original export digest was unchanged. The scope covers password-protected
+restore on this fresh emulator, the named visible values and their cold persistence. Physical
+password-protected restore, OEM transfer, encrypted export on Android and full restored-row
+comparison remain separate.
+
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
 
 The retained D-401 candidate qualifies one card purchase60 and Checking-to-Card payment90, with
