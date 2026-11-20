@@ -62,7 +62,26 @@ public sealed partial class PeopleStore
     public bool ObjectToPhoto(string id, string photo) => Guarded([OfPhoto(photo)], () => ObjectToPhotoUnguarded(id, photo));
 
     /// <summary>Asks another account for a relationship and says what came of it.</summary>
-    public string Ask(string id, string name, string kind) => Guarded(OfPair(id, name), () => AskUnguarded(id, name, kind));
+    public string Ask(string id, string name, string kind, RelationshipTerms? terms = null) => Guarded(OfPair(id, name), () => AskUnguarded(id, name, kind, terms ?? RelationshipTerms.None, replaces: null));
+
+    /// <summary>
+    /// Asks the other side of an accepted relationship to call it something else – another kind, another
+    /// direction, context or time. The relationship holds as it is until the other side agrees; then the new
+    /// one takes its place, with the audience each side had chosen. Returns <c>asked</c>, or why not – like
+    /// <see cref="Ask"/>, and <c>refused</c> for a relationship that is not this account's or not accepted,
+    /// <c>same</c> when nothing would change.
+    /// </summary>
+    public string AskChange(string id, string relationship, string kind, RelationshipTerms? terms = null)
+    {
+        var stored = _context.Relationships.AsNoTracking().SingleOrDefault(candidate => candidate.Id == relationship);
+        if (stored is null || (stored.From != id && stored.To != id))
+        {
+            return "refused";
+        }
+
+        var other = _context.Visitors.AsNoTracking().Where(visitor => visitor.Id == (stored.From == id ? stored.To : stored.From)).Select(visitor => visitor.Name).SingleOrDefault();
+        return other is null ? "refused" : Guarded(OfPair(id, other), () => AskUnguarded(id, other, kind, terms ?? RelationshipTerms.None, relationship));
+    }
 
     /// <summary>Makes a circle. Returns its number, or nothing when the name is not a name, is taken, or the account has as many circles as it may.</summary>
     public long? AddCircle(string id, string name) => Guarded([OfAccount(id)], () => AddCircleUnguarded(id, name));

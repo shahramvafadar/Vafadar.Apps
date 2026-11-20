@@ -66,14 +66,16 @@ public static class PersonTime
         return Years(born) is not var (earliest, _) || Years(died) is not var (_, latest) || earliest <= latest;
     }
 
-    private static CalendarPosition? First(TemporalExpression? time) => time switch
+    /// <summary>Returns the earliest position of a calendar a time names; nothing for a time that names none.</summary>
+    public static CalendarPosition? First(TemporalExpression? time) => time switch
     {
         Occurrence { At: CalendarPosition at } => at,
         OccurrenceWindow { Earliest: CalendarPosition earliest } => earliest,
         _ => null,
     };
 
-    private static CalendarPosition? Last(TemporalExpression? time) => time switch
+    /// <summary>Returns the latest position of a calendar a time names; nothing for a time that names none.</summary>
+    public static CalendarPosition? Last(TemporalExpression? time) => time switch
     {
         Occurrence { At: CalendarPosition at } => at,
         OccurrenceWindow { Latest: CalendarPosition latest } => latest,
@@ -95,4 +97,47 @@ public static class PersonTime
                 return (position.ProlepticYear, position.ProlepticYear);
         }
     }
+
+    /// <summary>
+    /// Returns the calendar some times are written in, when all that name a position are written in one;
+    /// nothing when they are written in two, or name none.
+    /// </summary>
+    public static CalendarSystem? Calendar(params TemporalExpression?[] times)
+    {
+        ArgumentNullException.ThrowIfNull(times);
+        var calendars = times.SelectMany(time => new[] { First(time), Last(time) }).Where(position => position is not null).Select(position => position!.Calendar).Distinct().ToList();
+        return calendars.Count == 1 ? calendars[0] : null;
+    }
+
+    /// <summary>
+    /// Returns a time as years on an axis of its own calendar: each position as the year it lies in, written
+    /// as a year of the common era with the same number. It serves to compare times of one calendar with a
+    /// year of that calendar – year against year – by rules that count years of the common era.
+    /// </summary>
+    public static TemporalExpression? AsYears(TemporalExpression? time) => time switch
+    {
+        Occurrence { At: CalendarPosition at } => new Occurrence(Axis(at.ProlepticYear)),
+        OccurrenceWindow { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(Axis(earliest.ProlepticYear), Axis(latest.ProlepticYear)),
+        _ => time,
+    };
+
+    /// <summary>
+    /// Returns a time as the common era can say it: a position of the common era as it is, a position of
+    /// another calendar as the years of the common era it can lie in – a time known only to lie between two.
+    /// </summary>
+    public static TemporalExpression? InCommonEra(TemporalExpression? time) => time switch
+    {
+        Occurrence { At: CalendarPosition { Calendar: not CalendarSystem.Gregorian and not CalendarSystem.Julian } at } => Between(Axis(Common(at).Earliest), Axis(Common(at).Latest)),
+        OccurrenceWindow { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } when earliest.Calendar is not (CalendarSystem.Gregorian or CalendarSystem.Julian) || latest.Calendar is not (CalendarSystem.Gregorian or CalendarSystem.Julian) =>
+            Between(Axis(Common(earliest).Earliest), Axis(Common(latest).Latest)),
+        _ => time,
+    };
+
+    private static TemporalExpression Between(CalendarPosition earliest, CalendarPosition latest) =>
+        earliest == latest ? new Occurrence(earliest) : new OccurrenceWindow(earliest, latest);
+
+    // A year on the axis of the common era, by its number counted through the year before the first.
+    private static CalendarPosition Axis(int proleptic) => proleptic >= 1
+        ? CalendarPosition.OfYear(CalendarSystem.Gregorian, Era.CommonEra, proleptic)
+        : CalendarPosition.OfYear(CalendarSystem.Gregorian, Era.BeforeCommonEra, 1 - proleptic);
 }

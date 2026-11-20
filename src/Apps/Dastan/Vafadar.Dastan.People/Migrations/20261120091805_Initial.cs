@@ -131,6 +131,38 @@ namespace Vafadar.Dastan.People.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Affiliations",
+                schema: "personal",
+                columns: table => new
+                {
+                    Number = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Account = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Organisation = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    OrganisationKey = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Role = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    Since = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Until = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Graduated = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    FindableScope = table.Column<int>(type: "integer", nullable: false),
+                    FindableCircle = table.Column<long>(type: "bigint", nullable: true),
+                    DatesScope = table.Column<int>(type: "integer", nullable: false),
+                    DatesCircle = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Affiliations", x => x.Number);
+                    table.ForeignKey(
+                        name: "FK_Affiliations_Visitors_Account",
+                        column: x => x.Account,
+                        principalSchema: "personal",
+                        principalTable: "Visitors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Albums",
                 schema: "personal",
                 columns: table => new
@@ -147,6 +179,34 @@ namespace Vafadar.Dastan.People.Migrations
                     table.ForeignKey(
                         name: "FK_Albums_Visitors_Owner",
                         column: x => x.Owner,
+                        principalSchema: "personal",
+                        principalTable: "Visitors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Blocks",
+                schema: "personal",
+                columns: table => new
+                {
+                    By = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Blocked = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blocks", x => new { x.By, x.Blocked });
+                    table.ForeignKey(
+                        name: "FK_Blocks_Visitors_Blocked",
+                        column: x => x.Blocked,
+                        principalSchema: "personal",
+                        principalTable: "Visitors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Blocks_Visitors_By",
+                        column: x => x.By,
                         principalSchema: "personal",
                         principalTable: "Visitors",
                         principalColumn: "Id",
@@ -291,6 +351,12 @@ namespace Vafadar.Dastan.People.Migrations
                     From = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     To = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Kind = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Reversed = table.Column<bool>(type: "boolean", nullable: false),
+                    Context = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    ContextKey = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Since = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Until = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Replaces = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
                     State = table.Column<int>(type: "integer", nullable: false),
                     FromScope = table.Column<int>(type: "integer", nullable: false),
                     FromCircle = table.Column<long>(type: "bigint", nullable: true),
@@ -660,7 +726,9 @@ namespace Vafadar.Dastan.People.Migrations
                     Tree = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Kind = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     From = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    To = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
+                    To = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Since = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Until = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -689,6 +757,18 @@ namespace Vafadar.Dastan.People.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Affiliations_Account",
+                schema: "personal",
+                table: "Affiliations",
+                column: "Account");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Affiliations_OrganisationKey",
+                schema: "personal",
+                table: "Affiliations",
+                column: "OrganisationKey");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AlbumPhotos_Photo",
                 schema: "personal",
                 table: "AlbumPhotos",
@@ -699,6 +779,12 @@ namespace Vafadar.Dastan.People.Migrations
                 schema: "personal",
                 table: "Albums",
                 column: "Owner");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blocks_Blocked",
+                schema: "personal",
+                table: "Blocks",
+                column: "Blocked");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CircleMembers_Member",
@@ -890,7 +976,15 @@ namespace Vafadar.Dastan.People.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Affiliations",
+                schema: "personal");
+
+            migrationBuilder.DropTable(
                 name: "AlbumPhotos",
+                schema: "personal");
+
+            migrationBuilder.DropTable(
+                name: "Blocks",
                 schema: "personal");
 
             migrationBuilder.DropTable(

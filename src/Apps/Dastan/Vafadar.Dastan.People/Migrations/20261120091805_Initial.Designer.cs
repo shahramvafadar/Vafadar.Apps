@@ -12,7 +12,7 @@ using Vafadar.Dastan.People;
 namespace Vafadar.Dastan.People.Migrations
 {
     [DbContext(typeof(PeopleContext))]
-    [Migration("20261120083141_Initial")]
+    [Migration("20261120091805_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -98,6 +98,69 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("VisitorTokens", "identity");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredAffiliation", b =>
+                {
+                    b.Property<long>("Number")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Number"));
+
+                    b.Property<string>("Account")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long?>("DatesCircle")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("DatesScope")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("FindableCircle")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("FindableScope")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Graduated")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
+
+                    b.Property<string>("Organisation")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("character varying(160)");
+
+                    b.Property<string>("OrganisationKey")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("character varying(160)");
+
+                    b.Property<string>("Role")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("Since")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
+
+                    b.Property<string>("Until")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
+
+                    b.HasKey("Number");
+
+                    b.HasIndex("Account");
+
+                    b.HasIndex("OrganisationKey");
+
+                    b.ToTable("Affiliations", "personal");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredAlbum", b =>
                 {
                     b.Property<long>("Number")
@@ -145,6 +208,26 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasIndex("Photo");
 
                     b.ToTable("AlbumPhotos", "personal");
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredBlock", b =>
+                {
+                    b.Property<string>("By")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Blocked")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("By", "Blocked");
+
+                    b.HasIndex("Blocked");
+
+                    b.ToTable("Blocks", "personal");
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.People.StoredCircle", b =>
@@ -282,6 +365,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<string>("Since")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
+
                     b.Property<string>("To")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -291,6 +378,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Until")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
 
                     b.HasKey("Number");
 
@@ -523,6 +614,15 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<DateTime>("ChangedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Context")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("ContextKey")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -542,6 +642,17 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
+                    b.Property<string>("Replaces")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<bool>("Reversed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Since")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
+
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
@@ -555,6 +666,10 @@ namespace Vafadar.Dastan.People.Migrations
 
                     b.Property<int>("ToScope")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Until")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
 
                     b.HasKey("Id");
 
@@ -871,6 +986,15 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredAffiliation", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Account")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredAlbum", b =>
                 {
                     b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
@@ -891,6 +1015,21 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasOne("Vafadar.Dastan.People.StoredPhoto", null)
                         .WithMany()
                         .HasForeignKey("Photo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredBlock", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Blocked")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("By")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -28,6 +28,14 @@ public sealed partial class PeopleStore
 
         return Guarded([OfAccount(id)], () =>
         {
+            // The address of somebody who blocked this account gets nothing from it, and the account is not
+            // told (PRIV-009): the answer is the one of a message that was sent.
+            var owner = _context.Accounts.AsNoTracking().Where(account => account.NormalizedEmail == to.ToUpperInvariant()).Select(account => account.Id).SingleOrDefault();
+            if (owner is not null && Blocks(owner, id))
+            {
+                return "sent";
+            }
+
             if (InviteUnguarded(id) is not { } code)
             {
                 return "invitations";

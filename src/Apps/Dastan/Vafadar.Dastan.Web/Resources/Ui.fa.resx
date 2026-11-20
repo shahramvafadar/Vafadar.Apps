@@ -1765,7 +1765,7 @@
     <value>فرستادن درخواست</value>
   </data>
   <data name="People_Ask_Note" xml:space="preserve">
-    <value>او درخواست شما را در صفحهٔ خودش می‌بیند؛ سایت چیزی برایش نمی‌فرستد. تا او نپذیرد چیزی به کسی نشان داده نمی‌شود، و نپذیرفتن حق اوست.</value>
+    <value>با ایمیل به او خبر داده می‌شود، مگر آن را خاموش کرده باشد، و درخواست شما را در صفحهٔ خودش می‌بیند. تا او نپذیرد چیزی به کسی نشان داده نمی‌شود، و نپذیرفتن حق اوست. با یک نفر می‌توانید چند رابطه نشان دهید – دوستی که همکار هم هست.</value>
   </data>
   <data name="People_Kind_friend" xml:space="preserve">
     <value>دوست</value>
@@ -1825,7 +1825,7 @@
     <value>لطفاً نسبت خود را برگزینید.</value>
   </data>
   <data name="People_Problem_exists" xml:space="preserve">
-    <value>میان شما دو نفر از پیش درخواست یا رابطه‌ای هست.</value>
+    <value>میان شما دو نفر همین رابطه، یا درخواستی برای آن، از پیش هست.</value>
   </data>
   <data name="People_Problem_declined-lately" xml:space="preserve">
     <value>این حساب به‌تازگی درخواست شما را نپذیرفته است. پس از ۳۰ روز می‌توانید دوباره درخواست کنید.</value>
@@ -1942,7 +1942,7 @@
     <value>پیوند میان دو فرد متفاوت است.</value>
   </data>
   <data name="Trees_Problem_link-exists" xml:space="preserve">
-    <value>این دو از پیش همین پیوند را دارند.</value>
+    <value>این دو از پیش پیوند دارند: دو نفر در خانواده یک نقش دارند.</value>
   </data>
   <data name="Trees_Problem_link-loop" xml:space="preserve">
     <value>با این پیوند کسی نیای خودش می‌شود.</value>
@@ -3275,5 +3275,290 @@
   </data>
   <data name="Tree_Change_person-described" xml:space="preserve">
     <value>نوشتن نمایهٔ رکورد</value>
+  </data>
+  <data name="People_Kind_parent" xml:space="preserve">
+    <value>پدر یا مادر</value>
+  </data>
+  <data name="People_Kind_parent-mine" xml:space="preserve">
+    <value>فرزند</value>
+  </data>
+  <data name="People_Kind_adoptive-parent" xml:space="preserve">
+    <value>پدر یا مادرخوانده</value>
+  </data>
+  <data name="People_Kind_adoptive-parent-mine" xml:space="preserve">
+    <value>فرزندخوانده</value>
+  </data>
+  <data name="People_Kind_guardian" xml:space="preserve">
+    <value>سرپرست</value>
+  </data>
+  <data name="People_Kind_guardian-mine" xml:space="preserve">
+    <value>تحت سرپرستی</value>
+  </data>
+  <data name="People_Kind_sibling" xml:space="preserve">
+    <value>خواهر یا برادر</value>
+  </data>
+  <data name="People_Kind_teammate" xml:space="preserve">
+    <value>هم‌تیمی</value>
+  </data>
+  <data name="People_Kind_neighbour" xml:space="preserve">
+    <value>همسایه</value>
+  </data>
+  <data name="People_Ask_Place" xml:space="preserve">
+    <value>کجا – محل کار، مدرسه، تیم (اگر چیزی می‌افزاید)</value>
+  </data>
+  <data name="People_Ask_When" xml:space="preserve">
+    <value>از کی تا کی</value>
+  </data>
+  <data name="People_Ask_Since" xml:space="preserve">
+    <value>از سال</value>
+  </data>
+  <data name="People_Ask_Until" xml:space="preserve">
+    <value>تا سال</value>
+  </data>
+  <data name="People_Ask_Calendar" xml:space="preserve">
+    <value>تقویم این سال‌ها</value>
+  </data>
+  <data name="People_Held_And" xml:space="preserve">
+    <value>، </value>
+  </data>
+  <data name="People_Held_Span" xml:space="preserve">
+    <value>{0} تا {1}</value>
+  </data>
+  <data name="People_Held_Since" xml:space="preserve">
+    <value>از {0}</value>
+  </data>
+  <data name="People_Held_Until" xml:space="preserve">
+    <value>تا {0}</value>
+  </data>
+  <data name="People_Instead" xml:space="preserve">
+    <value>{0} – به‌جای: {1}</value>
+  </data>
+  <data name="People_Change" xml:space="preserve">
+    <value>نام دیگری بر آن بگذارید</value>
+  </data>
+  <data name="People_Change_Note" xml:space="preserve">
+    <value>از طرف مقابل پرسیده می‌شود. تا او نپذیرد، رابطه همان می‌ماند که هست.</value>
+  </data>
+  <data name="People_Change_Send" xml:space="preserve">
+    <value>درخواست تغییر</value>
+  </data>
+  <data name="People_Said_change-asked" xml:space="preserve">
+    <value>تغییر درخواست شد. تا او نپذیرد، رابطه همان می‌ماند که هست.</value>
+  </data>
+  <data name="People_Problem_terms" xml:space="preserve">
+    <value>محل یک سطر تا ۱۲۰ نویسه است؛ سال عددی از ۱ تا ۹۹۹۹ است و «تا» پیش از «از» نیست.</value>
+  </data>
+  <data name="People_Problem_excluded" xml:space="preserve">
+    <value>میان شما دو نفر از پیش رابطهٔ دیگری از همین گروه هست: در هر زمان یک نقش خانوادگی و یک پلهٔ دوستی. می‌توانید بخواهید نام همان رابطه عوض شود.</value>
+  </data>
+  <data name="People_Problem_same" xml:space="preserve">
+    <value>رابطه همین حالا همین نام را دارد.</value>
+  </data>
+  <data name="Person_Block_Title" xml:space="preserve">
+    <value>مسدود کردن این حساب</value>
+  </data>
+  <data name="Person_Block_Note" xml:space="preserve">
+    <value>حسابِ مسدودشده نمی‌تواند از شما رابطه بخواهد، شما را نشان کند، دعوتتان کند یا صفحه‌تان را پیدا کند. هرچه شما دو نفر با هم نشان می‌دهید همان لحظه پایان می‌یابد. به آن حساب خبری داده نمی‌شود.</value>
+  </data>
+  <data name="Person_Block" xml:space="preserve">
+    <value>مسدود کن</value>
+  </data>
+  <data name="Person_Blocked_Title" xml:space="preserve">
+    <value>شما این حساب را مسدود کرده‌اید</value>
+  </data>
+  <data name="Person_Blocked_Note" xml:space="preserve">
+    <value>نمی‌تواند از شما چیزی بخواهد، نشانتان کند، دعوتتان کند یا پیدایتان کند. برداشتن مسدودی چیزی را که با آن پایان یافت برنمی‌گرداند.</value>
+  </data>
+  <data name="Person_Unblock" xml:space="preserve">
+    <value>برداشتن مسدودی</value>
+  </data>
+  <data name="People_Blocked_Title" xml:space="preserve">
+    <value>حساب‌هایی که مسدود کرده‌اید</value>
+  </data>
+  <data name="People_Blocked_Note" xml:space="preserve">
+    <value>نمی‌توانند از شما چیزی بخواهند، نشانتان کنند، دعوتتان کنند یا پیدایتان کنند، و خبردار نمی‌شوند.</value>
+  </data>
+  <data name="People_Said_blocked" xml:space="preserve">
+    <value>حساب مسدود شد. آنچه شما دو نفر با هم نشان می‌دادید پایان یافت.</value>
+  </data>
+  <data name="People_Said_unblocked" xml:space="preserve">
+    <value>مسدودی برداشته شد.</value>
+  </data>
+  <data name="People_Problem_blocked" xml:space="preserve">
+    <value>شما این حساب را مسدود کرده‌اید. پیش از درخواست، مسدودی را بردارید.</value>
+  </data>
+  <data name="Affiliations_Title" xml:space="preserve">
+    <value>جاهایی که بوده‌اید</value>
+  </data>
+  <data name="Affiliations_Lead" xml:space="preserve">
+    <value>مدرسه، دانشگاه، محل کار، تیم: کجا بودید، آن‌جا چه بودید و کی. تا خودتان نگویید چیزی از آن به کسی نشان داده نمی‌شود، و این‌که دیگران بتوانند شما را از راه یک جا پیدا کنند انتخاب شماست – جدا از این‌که ببینند کی.</value>
+  </data>
+  <data name="Affiliations_Mine_Title" xml:space="preserve">
+    <value>جاهای شما</value>
+  </data>
+  <data name="Affiliations_None" xml:space="preserve">
+    <value>هنوز جایی ثبت نکرده‌اید.</value>
+  </data>
+  <data name="Affiliations_Shown_Note" xml:space="preserve">
+    <value>هر که جایی را در صفحهٔ شما ببیند، می‌تواند شما را از راه آن هم پیدا کند. تاریخ‌ها هرگز به کسانی بیش از خودِ آن جا نشان داده نمی‌شوند.</value>
+  </data>
+  <data name="Affiliations_Findable" xml:space="preserve">
+    <value>چه کسی این جا را می‌بیند و می‌تواند شما را از راه آن پیدا کند</value>
+  </data>
+  <data name="Affiliations_Dates" xml:space="preserve">
+    <value>چه کسی زمانش را می‌بیند – و می‌تواند شما را با یک سال پیدا کند</value>
+  </data>
+  <data name="Affiliations_Change" xml:space="preserve">
+    <value>تغییر یا حذف</value>
+  </data>
+  <data name="Affiliations_Save" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
+  <data name="Affiliations_Remove" xml:space="preserve">
+    <value>حذف این جا</value>
+  </data>
+  <data name="Affiliations_Add_Title" xml:space="preserve">
+    <value>ثبت یک جا</value>
+  </data>
+  <data name="Affiliations_Add_Note" xml:space="preserve">
+    <value>نام را همان‌طور بنویسید که مردم می‌شناسند: کسانی که همین نام را بنویسند از راه همین جا پیدا می‌شوند.</value>
+  </data>
+  <data name="Affiliations_Add_Send" xml:space="preserve">
+    <value>ثبت</value>
+  </data>
+  <data name="Affiliations_Place" xml:space="preserve">
+    <value>نام آن جا</value>
+  </data>
+  <data name="Affiliations_Role" xml:space="preserve">
+    <value>آن‌جا چه بودید (اگر بخواهید)</value>
+  </data>
+  <data name="Affiliations_Graduated_Year" xml:space="preserve">
+    <value>سال فارغ‌التحصیلی، اگر بوده</value>
+  </data>
+  <data name="Affiliations_Graduated" xml:space="preserve">
+    <value>فارغ‌التحصیل {0}</value>
+  </data>
+  <data name="Affiliations_Find_Title" xml:space="preserve">
+    <value>یافتن افراد از راه یک جا</value>
+  </data>
+  <data name="Affiliations_Find_Note" xml:space="preserve">
+    <value>کسانی را پیدا می‌کنید که خودشان خواسته‌اند شما از راه این جا پیدایشان کنید. با هم پیدا شدن کسی را هم‌کلاسی یا دوست نمی‌کند: می‌توانید از او بپرسید، و تصمیم با اوست.</value>
+  </data>
+  <data name="Affiliations_Find_Year" xml:space="preserve">
+    <value>یک سال (اگر می‌دانید)</value>
+  </data>
+  <data name="Affiliations_Find_Question" xml:space="preserve">
+    <value>دربارهٔ آن سال چه</value>
+  </data>
+  <data name="Affiliations_Question_during" xml:space="preserve">
+    <value>در آن سال آن‌جا بود</value>
+  </data>
+  <data name="Affiliations_Question_entered" xml:space="preserve">
+    <value>در آن سال آغاز کرد</value>
+  </data>
+  <data name="Affiliations_Question_graduated" xml:space="preserve">
+    <value>در آن سال فارغ‌التحصیل شد</value>
+  </data>
+  <data name="Affiliations_Find_Send" xml:space="preserve">
+    <value>جست‌وجو</value>
+  </data>
+  <data name="Affiliations_Found_Title" xml:space="preserve">
+    <value>افراد در: {0}</value>
+  </data>
+  <data name="Affiliations_Found_None" xml:space="preserve">
+    <value>کسی که بتوانید پیدا کنید نیست.</value>
+  </data>
+  <data name="Affiliations_Found_Note" xml:space="preserve">
+    <value>هر نام به صفحهٔ آن حساب می‌رود.</value>
+  </data>
+  <data name="Affiliations_Possibly" xml:space="preserve">
+    <value>شاید – داده‌ها آن را باز می‌گذارند</value>
+  </data>
+  <data name="Affiliations_Said_added" xml:space="preserve">
+    <value>ثبت شد. تا انتخاب نکنید چه کسی ببیند، به کسی نشان داده نمی‌شود.</value>
+  </data>
+  <data name="Affiliations_Said_changed" xml:space="preserve">
+    <value>ذخیره شد.</value>
+  </data>
+  <data name="Affiliations_Said_shown" xml:space="preserve">
+    <value>ذخیره شد.</value>
+  </data>
+  <data name="Affiliations_Said_removed" xml:space="preserve">
+    <value>حذف شد.</value>
+  </data>
+  <data name="Affiliations_Problem_affiliation" xml:space="preserve">
+    <value>هر جا نامی ۱ تا ۱۶۰ نویسه‌ای در یک سطر می‌خواهد؛ نقش شما تا ۱۲۰ نویسه. سال عددی از ۱ تا ۹۹۹۹ است، پایان پیش از آغاز نیست و کسی پیش از آغاز فارغ‌التحصیل نمی‌شود. یک جا با یک نقش یک بار ثبت می‌شود، و می‌توانید ۴۰ جا ثبت کنید.</value>
+  </data>
+  <data name="Person_Affiliations" xml:space="preserve">
+    <value>جاهایی که بوده است</value>
+  </data>
+  <data name="Tree_Link_adoptive-parent" xml:space="preserve">
+    <value>پدر یا مادرخواندهٔ</value>
+  </data>
+  <data name="Tree_Link_guardian" xml:space="preserve">
+    <value>سرپرستِ</value>
+  </data>
+  <data name="Tree_Linked_adoptive-parent" xml:space="preserve">
+    <value>{0} پدر یا مادرخواندهٔ {1} است</value>
+  </data>
+  <data name="Tree_Linked_guardian" xml:space="preserve">
+    <value>{0} سرپرستِ {1} است</value>
+  </data>
+  <data name="Tree_Link_When" xml:space="preserve">
+    <value>سرپرستی: از کی تا کی</value>
+  </data>
+  <data name="Trees_Problem_link-time" xml:space="preserve">
+    <value>فقط سرپرستی می‌گوید از کی تا کی؛ سال عددی از ۱ تا ۹۹۹۹ است و «تا» پیش از «از» نیست.</value>
+  </data>
+  <data name="SeeAs_Title" xml:space="preserve">
+    <value>این صفحه را به چشم دیگری ببینید</value>
+  </data>
+  <data name="SeeAs_Note" xml:space="preserve">
+    <value>صفحه با همان قاعده‌ها دوباره کشیده می‌شود، برای بیننده‌ای که برمی‌گزینید.</value>
+  </data>
+  <data name="SeeAs_Label" xml:space="preserve">
+    <value>به چشمِ</value>
+  </data>
+  <data name="SeeAs_public" xml:space="preserve">
+    <value>همگان – کسی بدون حساب</value>
+  </data>
+  <data name="SeeAs_Send" xml:space="preserve">
+    <value>ببین</value>
+  </data>
+  <data name="SeeAs_Now_public" xml:space="preserve">
+    <value>صفحه‌تان را آن‌طور می‌بینید که همگان می‌بینند.</value>
+  </data>
+  <data name="SeeAs_Now_circle" xml:space="preserve">
+    <value>صفحه‌تان را آن‌طور می‌بینید که حلقهٔ {0} می‌بیند.</value>
+  </data>
+  <data name="SeeAs_Now_account" xml:space="preserve">
+    <value>صفحه‌تان را آن‌طور می‌بینید که {0} می‌بیند.</value>
+  </data>
+  <data name="SeeAs_OtherSide" xml:space="preserve">
+    <value>از هر رابطه این‌جا همان را می‌بینید که خودتان اجازه داده‌اید ببینند؛ طرف دیگرِ رابطه می‌تواند آن را از آن‌ها پنهان نگه دارد، و دانستنش با خودِ اوست. عکس‌های دیگران هم به همین دلیل نیامده‌اند.</value>
+  </data>
+  <data name="SeeAs_Back" xml:space="preserve">
+    <value>بازگشت به نمای خودتان</value>
+  </data>
+  <data name="SeeAs_Tree_Title" xml:space="preserve">
+    <value>این شجره‌نامه را به چشم دیگری ببینید</value>
+  </data>
+  <data name="SeeAs_Tree_Note" xml:space="preserve">
+    <value>شجره‌نامه با حساب‌ها هم‌رسانی می‌شود، نه با حلقه‌ها: حلقه همان را از آن می‌بیند که همگان می‌بینند.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_public" xml:space="preserve">
+    <value>این شجره‌نامه را آن‌طور می‌بینید که همگان می‌بینند.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_circle" xml:space="preserve">
+    <value>این شجره‌نامه را آن‌طور می‌بینید که حلقهٔ {0} می‌بیند – یعنی مانند همگان.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_account" xml:space="preserve">
+    <value>این شجره‌نامه را آن‌طور می‌بینید که {0} می‌بیند.</value>
+  </data>
+  <data name="SeeAs_Tree_None_public" xml:space="preserve">
+    <value>چیزی نمی‌بینند: شجره‌نامه همگانی نیست و صفحه‌اش به آن‌ها می‌گوید «پیدا نشد».</value>
+  </data>
+  <data name="SeeAs_Tree_None_account" xml:space="preserve">
+    <value>این حساب چیزی نمی‌بیند: شجره‌نامه با آن هم‌رسانی نشده و صفحه‌اش می‌گوید «پیدا نشد».</value>
   </data>
 </root>

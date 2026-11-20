@@ -177,6 +177,7 @@ app.MapVisitorReports();
 app.MapSavedList();
 app.MapVisitorAccounts();
 app.MapPeople();
+app.MapAffiliations();
 app.MapTrees();
 app.MapPhotos();
 app.MapRazorComponents<App>();

@@ -156,7 +156,7 @@ public sealed class FamilyTreePagesTests : IDisposable
 
     [Theory]
     [InlineData("parent", "same", "A link is between two different people.")]
-    [InlineData("parent", "exists", "These two are linked like this already.")]
+    [InlineData("parent", "exists", "These two are linked already: two people hold one role in a family.")]
     [InlineData("parent", "loop", "That would make somebody their own ancestor.")]
     [InlineData("cousin", "kind", "Please choose what the two are to each other.")]
     public async Task A_link_that_cannot_be_says_why(string kind, string problem, string said)

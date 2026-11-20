@@ -1,0 +1,43 @@
+@using Vafadar.Dastan.People
+@inject IStringLocalizer<Ui> T
+
+@* The choice of whom to look as (step 19.6, PRIV-015): everybody, one of the circles of the account, or an
+   account it shows a relationship with. A plain form that asks the same page again with the choice in its
+   address; no script. *@
+<form method="get" action="@Address" class="account">
+    <p class="field">
+        <label for="see-as">@T["SeeAs_Label"]</label>
+        <select id="see-as" name="as">
+            <option value="public" selected="@(Chosen == "public")">@T["SeeAs_public"]</option>
+            @foreach (var circle in Circles)
+            {
+                var value = $"circle-{circle.Number}";
+                <option value="@value" selected="@(Chosen == value)">@string.Format(CultureInfo.CurrentCulture, T["People_Scope_circle"], circle.Name)</option>
+            }
+            @foreach (var person in Known)
+            {
+                var value = $"account-{person.Id}";
+                <option value="@value" selected="@(Chosen == value)">@person.Name</option>
+            }
+        </select>
+    </p>
+    <p><button type="submit" class="action secondary">@T["SeeAs_Send"]</button></p>
+</form>
+
+@code {
+    /// <summary>Gets or sets the address of the page, as a link of the page writes it.</summary>
+    [Parameter, EditorRequired]
+    public string Address { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the circles of the account.</summary>
+    [Parameter]
+    public IReadOnlyList<CircleInfo> Circles { get; set; } = [];
+
+    /// <summary>Gets or sets the accounts the account shows an accepted relationship with.</summary>
+    [Parameter]
+    public IReadOnlyList<PersonRef> Known { get; set; } = [];
+
+    /// <summary>Gets or sets what is chosen now, when the page is looked at as somebody.</summary>
+    [Parameter]
+    public string? Chosen { get; set; }
+}

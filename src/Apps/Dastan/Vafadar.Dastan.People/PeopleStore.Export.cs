@@ -70,11 +70,27 @@ public sealed partial class PeopleStore
                     ["lastDay"] = invitation.LastDay.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                     ["state"] = invitation.RunOut ? "run out" : invitation.State.ToString().ToLowerInvariant(),
                 })]),
+            ["affiliations"] = new JsonArray([.. Affiliations(id)
+                .Select(affiliation => (JsonNode)new JsonObject
+                {
+                    ["place"] = affiliation.Terms.Organisation,
+                    ["as"] = affiliation.Terms.Role,
+                    ["since"] = affiliation.Terms.Since is { } since ? JsonNode.Parse(PersonTime.Write(since)!) : null,
+                    ["until"] = affiliation.Terms.Until is { } until ? JsonNode.Parse(PersonTime.Write(until)!) : null,
+                    ["graduated"] = affiliation.Terms.Graduated is { } graduated ? JsonNode.Parse(PersonTime.Write(graduated)!) : null,
+                    ["foundBy"] = affiliation.Findable.ToString().ToLowerInvariant(),
+                    ["datesSeenBy"] = affiliation.Dates.ToString().ToLowerInvariant(),
+                })]),
+            ["blocked"] = new JsonArray([.. Blocked(id).Select(person => (JsonNode)person.Name)]),
             ["relationships"] = new JsonArray([.. Relationships(id)
                 .Select(relationship => (JsonNode)new JsonObject
                 {
                     ["with"] = relationship.Other.Name,
                     ["kind"] = relationship.Kind,
+                    ["theyHoldTheRole"] = RelationshipCatalogue.Find(relationship.Kind) is { Directed: true } ? relationship.Terms.OtherHolds : null,
+                    ["context"] = relationship.Terms.Context,
+                    ["since"] = relationship.Terms.Since is { } since ? JsonNode.Parse(PersonTime.Write(since)!) : null,
+                    ["until"] = relationship.Terms.Until is { } until ? JsonNode.Parse(PersonTime.Write(until)!) : null,
                     ["state"] = relationship.State.ToString().ToLowerInvariant(),
                     ["askedByMe"] = relationship.AskedByMe,
                     ["shownTo"] = relationship.Shown switch
@@ -149,7 +165,23 @@ public sealed partial class PeopleStore
                 ["account"] = person.Account?.Name,
             })]),
         ["links"] = new JsonArray([.. tree.Links
-            .Select(link => (JsonNode)new JsonObject { ["kind"] = link.Kind, ["from"] = tree.Person(link.From).Name, ["to"] = tree.Person(link.To).Name })]),
+            .Select(link =>
+            {
+                var written = new JsonObject { ["kind"] = link.Kind, ["from"] = tree.Person(link.From).Name, ["to"] = tree.Person(link.To).Name };
+
+                // A link says a time only where it has one: a guardianship from when until when.
+                if (link.Since is { } since)
+                {
+                    written["since"] = JsonNode.Parse(PersonTime.Write(since)!);
+                }
+
+                if (link.Until is { } until)
+                {
+                    written["until"] = JsonNode.Parse(PersonTime.Write(until)!);
+                }
+
+                return (JsonNode)written;
+            })]),
         ["sharedWith"] = new JsonArray([.. tree.Members
             .Select(member => (JsonNode)new JsonObject { ["account"] = member.Account.Name, ["role"] = member.Role.ToString().ToLowerInvariant() })]),
         ["history"] = new JsonArray([.. tree.History

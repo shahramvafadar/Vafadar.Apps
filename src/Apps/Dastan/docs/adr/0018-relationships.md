@@ -38,3 +38,53 @@ colleague. The product documents say the opposite, and life does.
 ## Consequences
 
 The tests that held "one relationship per pair" are replaced. Ending one relationship leaves the others.
+
+## What is built
+
+**Step 19.6, 2026-11-20 – in five parts.**
+
+* *Records of their own.* A relationship has its kind (`RelationshipCatalogue` in `Vafadar.Dastan.Core`:
+  thirteen kinds), for a kind with a direction who holds the role, where it holds (words, up to 120
+  characters), and from when until when (expressions of `Vafadar.Temporal`). Between the same two accounts
+  several stand side by side; the same kind in the same place is there once.
+* *What excludes what.* Two groups: **family** – family, parent, adoptive parent, guardian, sibling, partner –
+  and **friendship** – friend, close friend. Two people hold one kind of a group at a time; colleague,
+  classmate, teammate, neighbour and "another kind" are free. A child has a parent by birth, an adoptive
+  parent and a guardian in different people.
+* *Called something else.* Changing a relationship is asking the other side: the request names the
+  relationship it would replace, the relationship holds as it is until the other side agrees, and then the
+  new one takes its place with the audience each side had chosen. Declined or taken back, nothing changed.
+* *Each by itself.* Each relationship is agreed to, shown and ended alone. Ending one leaves the others; only
+  when the last one between two accounts ends do they leave each other's circles and trees.
+* *Blocking.* An account blocks another: what the two showed ends at once – relationships, requests, circles,
+  shared trees, tags on each other's photographs. The blocked account asks and reads what a wrong name gets
+  ("no such account"), does not find the page of the account, is not found through a place, and an invitation
+  by mail to the address of somebody who blocked it reads as sent and is not. It is told nothing. Taking a
+  block back restores nothing.
+* *Affiliations.* An account states where it was, what it was there, since when, until when and when it
+  graduated. Who sees the place and may find the account through it, and who sees when, are two choices; the
+  dates never reach more people than the place. A search by a place and – if wanted – a year with one of
+  three questions (was there during, began in, graduated in) is answered by `AffiliationSearch` of step 15.2,
+  which is thereby used for the first time. Nobody and nobody-you-may-find read alike.
+* *Seen as somebody else.* An account looks at its own page and at a tree of its own as the public, as one of
+  its circles or as an account it shows a relationship with – drawn by the scopes that draw the real page.
+* *The links of a tree* are parent (by birth), adoptive parent, guardian and partner; a guardianship can say
+  from when until when; two records are linked once.
+
+**Decided while building, and different from what the decision may be read as:**
+
+* **The context of a relationship and the place of an affiliation are words, not nodes.** Two accounts are
+  found through the same place when they write the same name, compared without case and outer spaces.
+  Pointing at an entity of a published collection would need the store of the people to know the published
+  collections, which it does not; nothing in this step needs it.
+* **A year is compared in the calendar it is asked in.** The rules of step 15.2 count years of the common era
+  only. An affiliation written in the calendar of the question is compared year against year, exactly; one
+  written in another calendar is brought over as the years it can lie in, and the answer may be "possibly" –
+  shown as such, never as a plain yes.
+* **A look as a circle or as a named account shows of a relationship what the account itself lets them see,**
+  not what the other side lets them see: that is the other side's choice and is not told to anybody, and the
+  page of the look says so. For the same reason it leaves out photographs of others. A look as the public is
+  exact – what everybody sees, the account may see too.
+* **A tree is shared with accounts, not with circles:** looked at as a circle, a tree is what the public sees.
+* **Blocking does not hide what is public.** A blocked account that signs out sees what everybody sees.
+* **Not built here:** the drawing that keeps every relationship apart is the graph of step 19.8.

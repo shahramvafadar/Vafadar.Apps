@@ -99,7 +99,7 @@ public sealed partial class PeopleStore
         }
 
         return IsChild(record) && _context.Kinships.AsNoTracking()
-            .Where(link => link.Tree == record.Tree && link.Kind == "parent" && link.To == record.Id)
+            .Where(link => link.Tree == record.Tree && (link.Kind == "parent" || link.Kind == "adoptive-parent" || link.Kind == "guardian") && link.To == record.Id)
             .Join(_context.Persons.AsNoTracking(), link => link.From, parent => parent.Id, (_, parent) => parent.Account)
             .Any(parent => parent == id);
     }

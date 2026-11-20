@@ -38,7 +38,7 @@ public static partial class TreeEndpoints
             return null;
         }
 
-        var parentage = tree.Links.Where(link => link.Kind == "parent").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
+        var parentage = tree.Links.Where(link => PeopleStore.IsParentage(link.Kind)).Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
         var partnerships = tree.Links.Where(link => link.Kind == "partner").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
         var rows = TreeShape.Generations(tree.People.Select(person => person.Id), parentage, partnerships);
         return TreeShapeLayout.Of(new TreeShape([.. tree.People.Select(person => new TreeShapeMember(person.Id, rows[person.Id], person.Name))], parentage, partnerships));
@@ -175,8 +175,13 @@ public static partial class TreeEndpoints
 
         forms.MapPost("/link", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? kind, [FromForm] string? from, [FromForm] string? to, [FromForm] string? returnUrl) =>
         {
+            if (!Time(context.Request.Form, "since", out var since) || !Time(context.Request.Form, "until", out var until))
+            {
+                return Back(returnUrl, "links", "link-time");
+            }
+
             using var store = desk.Open();
-            return store.Link(Me(context), tree ?? string.Empty, kind ?? string.Empty, from ?? string.Empty, to ?? string.Empty) switch
+            return store.Link(Me(context), tree ?? string.Empty, kind ?? string.Empty, from ?? string.Empty, to ?? string.Empty, since, until) switch
             {
                 "done" => Said(returnUrl, "linked", "links"),
                 "refused" => Results.BadRequest(),
@@ -272,7 +277,7 @@ public static partial class TreeEndpoints
     // the calendar that was chosen, exact or about – or a year and a latest year for a time that is only known
     // to lie between two – or the statement that it is not known. Nothing in the fields is a time nobody stated;
     // fields that contradict each other are refused rather than read one way or the other.
-    private static bool Time(IFormCollection form, string field, out TemporalExpression? time)
+    internal static bool Time(IFormCollection form, string field, out TemporalExpression? time)
     {
         time = null;
         string? Of(string part) => form[part.Length == 0 ? field : $"{field}-{part}"].ToString() is { } written && !string.IsNullOrWhiteSpace(written) ? written.Trim() : null;
@@ -293,7 +298,8 @@ public static partial class TreeEndpoints
             return false;
         }
 
-        var (calendar, era) = Of("calendar") == "solar-hijri" ? (CalendarSystem.SolarHijri, Era.SolarHijri) : (CalendarSystem.Gregorian, Era.CommonEra);
+        // A form with several times can ask for their calendar once, in a field of that name.
+        var (calendar, era) = (Of("calendar") ?? form["calendar"].ToString()) == "solar-hijri" ? (CalendarSystem.SolarHijri, Era.SolarHijri) : (CalendarSystem.Gregorian, Era.CommonEra);
         var about = Of("about") is not null;
         CalendarPosition As(CalendarPosition position) => about ? position.Approximately() : position;
         try

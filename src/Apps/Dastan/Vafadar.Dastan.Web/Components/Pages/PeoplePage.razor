@@ -20,6 +20,7 @@
         <p class="lead">@T["People_Lead"]</p>
         <p class="actions">
             <a class="action secondary" href="@($"people/{_me.Id}")">@T["People_Page_Link"]</a>
+            <a class="action secondary" href="account/affiliations">@T["Affiliations_Title"]</a>
             <a class="action secondary" href="account">@T["Account_Title"]</a>
         </p>
     </header>
@@ -37,7 +38,7 @@
                 @foreach (var request in _waiting)
                 {
                     <li>
-                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @T[$"People_Kind_{request.Kind}"]</span></span>
+                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @Called(request)</span></span>
                         <form method="post" action="@($"{PeopleEndpoints.Root}/answer")" class="save inline">
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
@@ -59,7 +60,7 @@
                 @foreach (var request in _asked)
                 {
                     <li>
-                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @T[$"People_Kind_{request.Kind}"]</span></span>
+                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @Called(request)</span></span>
                         <form method="post" action="@($"{PeopleEndpoints.Root}/cancel")" class="save inline">
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
@@ -74,6 +75,7 @@
 
     <section id="mine" aria-labelledby="mine-title">
         <h2 id="mine-title">@T["People_Mine_Title"]</h2>
+        @Problems("mine")
         @if (_accepted.Count == 0)
         {
             <p class="note">@T["People_None"]</p>
@@ -86,7 +88,7 @@
                 {
                     var chosen = relationship.Shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{relationship.Circle}", _ => "private" };
                     <li>
-                        <span><a href="@($"people/{relationship.Other.Id}")" dir="auto">@relationship.Other.Name</a> <span class="meta">– @T[$"People_Kind_{relationship.Kind}"]</span></span>
+                        <span><a href="@($"people/{relationship.Other.Id}")" dir="auto">@relationship.Other.Name</a> <span class="meta">– @Called(relationship)</span></span>
                         <form method="post" action="@($"{PeopleEndpoints.Root}/show")" class="save inline">
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
@@ -106,13 +108,46 @@
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
                             <input type="hidden" name="relationship" value="@relationship.Id" />
-                            <button type="submit">@T["People_End"]<span class="visually-hidden"> – @relationship.Other.Name</span></button>
+                            <button type="submit">@T["People_End"]<span class="visually-hidden"> – @relationship.Other.Name, @PeopleEndpoints.Called(relationship.Kind, relationship.Terms, T)</span></button>
                         </form>
+                        <details class="change">
+                            <summary>@T["People_Change"]<span class="visually-hidden"> – @relationship.Other.Name, @PeopleEndpoints.Called(relationship.Kind, relationship.Terms, T)</span></summary>
+                            <form method="post" action="@($"{PeopleEndpoints.Root}/change")" class="account">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="relationship" value="@relationship.Id" />
+                                @Fields($"change-{relationship.Id}", relationship)
+                                <p class="note">@T["People_Change_Note"]</p>
+                                <p><button type="submit" class="action secondary">@T["People_Change_Send"]</button></p>
+                            </form>
+                        </details>
                     </li>
                 }
             </ul>
         }
     </section>
+
+    @if (_blocked.Count > 0)
+    {
+        <section id="blocked" aria-labelledby="blocked-title">
+            <h2 id="blocked-title">@T["People_Blocked_Title"]</h2>
+            <p class="note">@T["People_Blocked_Note"]</p>
+            <ul class="people" role="list">
+                @foreach (var person in _blocked)
+                {
+                    <li>
+                        <span><a href="@($"people/{person.Id}")" dir="auto">@person.Name</a></span>
+                        <form method="post" action="@($"{PeopleEndpoints.Root}/unblock")" class="save inline">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="account" value="@person.Id" />
+                            <button type="submit">@T["Person_Unblock"]<span class="visually-hidden"> – @person.Name</span></button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
 
     <section id="ask" aria-labelledby="ask-title">
         <h2 id="ask-title">@T["People_Ask_Title"]</h2>
@@ -124,15 +159,7 @@
                 <label for="ask-name">@T["People_Ask_Name"]</label>
                 <input id="ask-name" name="name" type="text" required maxlength="@PeopleStore.LongestName" autocomplete="off" dir="auto" />
             </p>
-            <p class="field">
-                <label for="ask-kind">@T["People_Ask_Kind"]</label>
-                <select id="ask-kind" name="kind" required>
-                    @foreach (var kind in PeopleStore.RelationshipKinds)
-                    {
-                        <option value="@kind">@T[$"People_Kind_{kind}"]</option>
-                    }
-                </select>
-            </p>
+            @Fields("ask", null)
             <p class="note">@T["People_Ask_Note"]</p>
             <p><button type="submit" class="action secondary">@T["People_Ask_Send"]</button></p>
         </form>
@@ -158,7 +185,7 @@
                         <input type="hidden" name="circle" value="@circle.Number" />
                         <fieldset>
                             <legend>@T["People_Circle_Members"]</legend>
-                            @foreach (var relationship in _accepted)
+                            @foreach (var relationship in _accepted.DistinctBy(accepted => accepted.Other.Id))
                             {
                                 var box = $"circle-{circle.Number}-{relationship.Other.Id}";
                                 <p class="tick">
@@ -192,14 +219,15 @@
 
 @code {
     // What the forms may answer with: nothing else of an address is turned into words of the page.
-    private static readonly string[] Sayings = ["asked", "accepted", "declined", "cancelled", "ended", "shown", "circle", "circle-set", "circle-removed"];
-    private static readonly string[] Forms = ["ask", "circles"];
-    private static readonly string[] Known = ["later", "unknown", "self", "kind", "exists", "declined-lately", "too-many", "circle-name"];
+    private static readonly string[] Sayings = ["asked", "change-asked", "blocked", "unblocked", "accepted", "declined", "cancelled", "ended", "shown", "circle", "circle-set", "circle-removed"];
+    private static readonly string[] Forms = ["ask", "mine", "circles"];
+    private static readonly string[] Known = ["later", "unknown", "self", "kind", "terms", "exists", "excluded", "same", "blocked", "declined-lately", "too-many", "circle-name"];
 
     private VisitorSession? _me;
     private List<RelationshipInfo> _waiting = [];
     private List<RelationshipInfo> _asked = [];
     private List<RelationshipInfo> _accepted = [];
+    private IReadOnlyList<PersonRef> _blocked = [];
     private IReadOnlyList<CircleInfo> _circles = [];
     private string? _said;
     private string? _form;
@@ -243,6 +271,7 @@
         _waiting = [.. all.Where(relationship => relationship.State == RelationshipState.Requested && !relationship.AskedByMe)];
         _asked = [.. all.Where(relationship => relationship.State == RelationshipState.Requested && relationship.AskedByMe)];
         _accepted = [.. all.Where(relationship => relationship.State == RelationshipState.Accepted)];
+        _blocked = store.Blocked(session.Id);
         _circles = store.Circles(session.Id);
     }
 
@@ -255,5 +284,60 @@
                 <li>@T[$"People_Problem_{_problem}"]</li>
             </ul></div>
         }
+    };
+    // What the other side is, with where and when: "colleague, The Zabol Press, since 2010" – and, for a request
+    // to call a relationship something else, what it is called now.
+    private string Called(RelationshipInfo relationship)
+    {
+        var called = PeopleEndpoints.Called(relationship.Kind, relationship.Terms, T) + Held(relationship.Terms);
+        return relationship.Replaces is { } replaces && _accepted.FirstOrDefault(accepted => accepted.Id == replaces) is { } now
+            ? string.Format(CultureInfo.CurrentCulture, T["People_Instead"], called, PeopleEndpoints.Called(now.Kind, now.Terms, T) + Held(now.Terms))
+            : called;
+    }
+
+    private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
+
+    private static string? Year(Vafadar.Temporal.TemporalExpression? time, string calendar) => TreeEndpoints.Fields(time, calendar).Year?.ToString(CultureInfo.InvariantCulture);
+
+    // The fields that say what a relationship is: the same for a new one and for one that is to be called
+    // something else.
+    private RenderFragment Fields(string id, RelationshipInfo? relationship) => __builder =>
+    {
+        var chosen = relationship is null ? null : PeopleEndpoints.Choice(relationship.Kind, relationship.Terms);
+        var terms = relationship?.Terms ?? RelationshipTerms.None;
+        var calendar = terms.Since is not null || terms.Until is not null
+            ? TreeEndpoints.Fields(terms.Since ?? terms.Until, TreeEndpoints.CalendarOf(Visitor.Language.Tag)).Calendar
+            : TreeEndpoints.CalendarOf(Visitor.Language.Tag);
+        <p class="field">
+            <label for="@($"{id}-kind")">@T["People_Ask_Kind"]</label>
+            <select id="@($"{id}-kind")" name="kind" required>
+                @foreach (var choice in PeopleEndpoints.Choices())
+                {
+                    <option value="@choice.Value" selected="@(choice.Value == chosen)">@T[$"People_Kind_{choice.Value}"]</option>
+                }
+            </select>
+        </p>
+        <p class="field">
+            <label for="@($"{id}-place")">@T["People_Ask_Place"]</label>
+            <input id="@($"{id}-place")" name="place" type="text" maxlength="@PeopleStore.LongestContext" value="@terms.Context" autocomplete="off" dir="auto" />
+        </p>
+        <details class="finer" open="@(terms.Since is not null || terms.Until is not null)">
+            <summary>@T["People_Ask_When"]</summary>
+            <p class="field">
+                <label for="@($"{id}-since")">@T["People_Ask_Since"]</label>
+                <input id="@($"{id}-since")" name="since" type="text" inputmode="numeric" maxlength="4" value="@Year(terms.Since, calendar)" autocomplete="off" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="@($"{id}-until")">@T["People_Ask_Until"]</label>
+                <input id="@($"{id}-until")" name="until" type="text" inputmode="numeric" maxlength="4" value="@Year(terms.Until, calendar)" autocomplete="off" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="@($"{id}-calendar")">@T["People_Ask_Calendar"]</label>
+                <select id="@($"{id}-calendar")" name="calendar">
+                    <option value="gregorian" selected="@(calendar == "gregorian")">@T["Tree_Calendar_gregorian"]</option>
+                    <option value="solar-hijri" selected="@(calendar == "solar-hijri")">@T["Tree_Calendar_solar-hijri"]</option>
+                </select>
+            </p>
+        </details>
     };
 }
