@@ -46,6 +46,7 @@ services:
       Dastan__Operator__Phone: ${DASTAN_OPERATOR_PHONE:-}
       Dastan__Operator__Host: ${DASTAN_OPERATOR_HOST:-}
       Dastan__Operator__Network: ${DASTAN_OPERATOR_NETWORK:-}
+      Dastan__Operator__Mailer: ${DASTAN_OPERATOR_MAILER:-}
       Dastan__Operator__Authority: ${DASTAN_OPERATOR_AUTHORITY:-}
       # The server the mail of the site leaves by (ADR 0016). Without DASTAN_MAIL_HOST the site sends no mail. The
       # password is entered into the environment of this machine by the owner – never into a file of the repository.

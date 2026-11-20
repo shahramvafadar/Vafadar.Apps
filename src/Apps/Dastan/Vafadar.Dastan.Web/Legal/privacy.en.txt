@@ -4,7 +4,7 @@ This notice says which personal data this site processes, why, on which legal gr
 
 - Dastan is a private, non-commercial site. It shows no advertising and uses no analytics, no tracking, no profiling and no content of other companies that loads by itself. Fonts, scripts and images come from the site itself.
 - You can read every public page without an account and without telling us who you are.
-- An account needs only a name you choose and a password. We ask for no e-mail address, no telephone number, no date of birth and no real name.
+- An account needs a name you choose, an e-mail address and a password. The address is shown to nobody; we use it to confirm that it is yours, to let you set a new password, and to tell you what concerns your account. We ask for no telephone number, no date of birth and no real name.
 - What you put into your private area – relations, family trees, photographs – is seen only by the people you choose. Nothing of it is public unless you make it public yourself, and for other living people only when they agree.
 - The site stores on your device only what it needs for what you ask of it. Keeping pages for reading without a connection is done only when you turn it on.
 - You can get a copy of everything the site keeps about your account, and you can close the account, yourself and at any time.
@@ -56,8 +56,11 @@ Every item, with its name, purpose and lifetime, is listed at {{site}}/en/cookie
 ## What is processed
 
 - The name you choose. It need not be your real name. Somebody who has an account and knows the name can ask you for a relation; the people you are related to, share a tree with or are tagged with see it.
-- Your password, only as a salted hash that cannot be turned back into the password (PBKDF2).
+- Your e-mail address, and whether and when you confirmed it. It is shown to no other user and is part of nothing public. An account whose address is not confirmed can do nothing but confirm it.
+- Your password, only as a salted hash that cannot be turned back into the password (PBKDF2 with HMAC-SHA-512, 210,000 rounds).
 - Eight recovery codes, each only as a hash, and whether a code was used.
+- For a link we mail you – to confirm an address, to set a new password, to change the address – only a hash of the secret in the link and the moment it ends. A link works once: 24 hours to confirm an address, one hour to set a new password.
+- The language in which the site writes to you, and whether you want to be told by mail what other users ask of you.
 - When the account was made; which version of the terms of use and of this notice you confirmed, and when.
 - How many wrong passwords were given in a row and, after five, until when sign-in is paused (15 minutes).
 - When the account was closed, if it was, and by whom (you or the site).
@@ -70,11 +73,11 @@ Giving you the account and the private area, keeping them safe, and showing that
 
 ## How long
 
-As long as the account exists. When you close it, it disappears from the site at once and you are signed out everywhere; for 30 days you can open it again by signing in. After 30 days the account and everything that belongs to it is deleted for good (section 12). An account closed by the site is kept and deleted in the same way.
+As long as the account exists. When you close it, it disappears from the site at once and you are signed out everywhere; for 30 days you can open it again by signing in. After 30 days the account and everything that belongs to it is deleted for good (section 12). An account closed by the site is kept and deleted in the same way. A mail we send you is kept until it has been handed over for sending; then its text is emptied, and the record that it was sent (to which address, when, of which kind) is deleted after 30 days. A mail that cannot be handed over is tried again for about two days and then given up.
 
-## No e-mail address
+## Your e-mail address and the mail we send
 
-Because the site knows no e-mail address of yours, it cannot send you anything, and nobody can reset your password by e-mail. If you lose the password, a recovery code lets you set a new one. If you lose both, nobody – we neither – can get into the account; this is deliberate.
+We send mail only about your account: the link that confirms your address; a link to set a new password when you ask for one; a note to the old and to the new address when the address is changed; a note when the password or the way of signing in changes; and, when we close or restrict your account or something of yours, the decision with its reasons. If another user asks you for a relation, tags you on a photograph or asks for your agreement, we tell you so by mail, without saying what it is about; you can turn these messages off on the page of your account. We send no newsletter and no advertising. A link in a mail leads to this site and nowhere else, and opening it changes nothing until you press the button on the page it leads to. If you lose the password, a mailed link or a recovery code lets you set a new one. Whether an address has an account is told to nobody but the person who has the address. Legal ground: Article 6 (1) (b) GDPR; for the messages about what other users ask of you, Article 6 (1) (f) GDPR (the interest in your knowing what concerns you), to which you object by turning them off.
 
 # 6. Signing in through Google or Microsoft
 
@@ -82,11 +85,11 @@ You can sign in through an account you have at Google or at Microsoft instead of
 
 ## What happens when you press the button
 
-Your browser goes to the sign-in page of the company. There you sign in and the company tells this site that it is you. The company thereby learns that you use this site, when you sign in to it, and the technical data of your browser. The site wants nothing but an identifier that stands for your account there. From Google it asks for that alone (the scope "openid"). Microsoft gives its identifier only together with basic data of your profile (such as the name and the e-mail address); the site takes the identifier and drops everything else at once, before anything is stored. The site never asks for your picture, your contacts or access to your files or mail.
+Your browser goes to the sign-in page of the company. There you sign in and the company tells this site that it is you. The company thereby learns that you use this site, when you sign in to it, and the technical data of your browser. The site asks for two things: an identifier that stands for your account there, and the e-mail address the company has confirmed for you. From Google it asks with the scopes "openid" and "email" and takes the address only when Google says that it has verified it. From Microsoft it takes the address of your mailbox or, where there is none, the address you sign in with. With your first sign-in the site makes an account with that address. Everything else a company sends (such as the name) is dropped at once, before anything is stored. The site never asks for your picture, your contacts or access to your files or mail.
 
 ## What the site keeps
 
-Only which company it was and a hash of that identifier, so that it recognises you the next time. During the sign-in two short-lived cookies are set (see the cookies page).
+Which company it was and a hash of that identifier, so that it recognises you the next time, and the e-mail address as the address of your account (section 5). During the sign-in two short-lived cookies are set (see the cookies page).
 
 ## Who the companies are
 
@@ -189,6 +192,7 @@ Only what you made visible to them (sections 7 and 9).
 
 ? - Hosting: {{host}}. The site and its data are kept on machines of this company, on our behalf and under a contract according to Article 28 GDPR.
 ? - Network and protection against attacks: {{network}}, on our behalf and under a contract according to Article 28 GDPR.
+? - Sending mail: {{mailer}}. The mail of the site (section 5) leaves through this company, on our behalf and under a contract according to Article 28 GDPR. It receives the address a message goes to, and the message.
 - No other company processes data of the site for us. There is no newsletter service, no analytics service, no advertising network and no payment service.
 
 ## Companies you choose
@@ -242,7 +246,7 @@ You have the following rights. They cost nothing.
 
 What you can do yourself in the account takes effect at once. For everything else write to {{operator.mail}}. We answer within one month; in complicated cases the law allows up to two more months, and we tell you so (Article 12 (3) GDPR).
 
-Because the site knows no e-mail address and no real name of yours, a message alone does not show us that an account is yours. If your request concerns an account, we may therefore ask you to show that you control it – for example by making a small change in the account that we name. We ask for nothing more than is needed for that (Article 12 (6) GDPR). If you are named in a tree or shown on a photograph and have no account, it is enough to tell us where and to make it credible that you are that person.
+If your request concerns an account, we answer to the e-mail address of that account, or ask you to write to us from it, so that nobody else is given the data of an account. We ask for nothing more than is needed for that (Article 12 (6) GDPR). If you are named in a tree or shown on a photograph and have no account, it is enough to tell us where and to make it credible that you are that person.
 
 # 17. Changes to this notice
 

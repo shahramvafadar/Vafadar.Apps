@@ -4,7 +4,7 @@ Diese Erklärung legt dar, welche personenbezogenen Daten diese Website verarbei
 
 - Dastan ist eine private, nicht kommerzielle Website. Sie zeigt keine Werbung und verwendet keine Analysewerkzeuge, kein Tracking, kein Profiling und keine Inhalte anderer Unternehmen, die von selbst geladen werden. Schriften, Skripte und Bilder stammen von der Website selbst.
 - Sie können jede öffentliche Seite ohne Konto lesen und ohne uns mitzuteilen, wer Sie sind.
-- Für ein Konto sind nur ein von Ihnen gewählter Name und ein Passwort erforderlich. Wir fragen weder nach einer E-Mail-Adresse noch nach einer Telefonnummer, einem Geburtsdatum oder einem bürgerlichen Namen.
+- Für ein Konto sind ein von Ihnen gewählter Name, eine E-Mail-Adresse und ein Passwort erforderlich. Die Adresse wird niemandem angezeigt; wir verwenden sie, um zu bestätigen, dass sie Ihnen gehört, damit Sie ein neues Passwort festlegen können, und um Ihnen mitzuteilen, was Ihr Konto betrifft. Wir fragen weder nach einer Telefonnummer noch nach einem Geburtsdatum oder einem bürgerlichen Namen.
 - Was Sie in Ihren privaten Bereich einstellen – Beziehungen, Stammbäume, Fotografien –, sehen nur die Personen, die Sie auswählen. Nichts davon ist öffentlich, es sei denn, Sie machen es selbst öffentlich, und bei anderen lebenden Personen nur, wenn diese einwilligen.
 - Die Website speichert auf Ihrem Endgerät nur, was sie für das benötigt, was Sie von ihr verlangen. Seiten werden zum Lesen ohne Verbindung nur vorgehalten, wenn Sie dies einschalten.
 - Sie können eine Kopie von allem erhalten, was die Website zu Ihrem Konto gespeichert hat, und Sie können das Konto schließen – selbst und jederzeit.
@@ -56,8 +56,11 @@ Jeder Eintrag ist mit Namen, Zweck und Speicherdauer unter {{site}}/en/cookies?t
 ## Was verarbeitet wird
 
 - Der Name, den Sie wählen. Es muss nicht Ihr bürgerlicher Name sein. Wer ein Konto hat und den Namen kennt, kann Sie um eine Beziehung anfragen; ihn sehen die Personen, mit denen Sie in einer Beziehung stehen, einen Stammbaum teilen oder gemeinsam markiert sind.
-- Ihr Passwort, ausschließlich als gesalzener Hashwert, der sich nicht in das Passwort zurückverwandeln lässt (PBKDF2).
+- Ihre E-Mail-Adresse sowie ob und wann Sie sie bestätigt haben. Sie wird keinem anderen Nutzer angezeigt und ist nicht Teil von etwas Öffentlichem. Ein Konto, dessen Adresse nicht bestätigt ist, kann nichts anderes tun, als sie zu bestätigen.
+- Ihr Passwort, ausschließlich als gesalzener Hashwert, der sich nicht in das Passwort zurückverwandeln lässt (PBKDF2 mit HMAC-SHA-512, 210.000 Runden).
 - Acht Wiederherstellungscodes, jeweils nur als Hashwert, und ob ein Code verwendet wurde.
+- Zu einem Link, den wir Ihnen per E-Mail senden – um eine Adresse zu bestätigen, ein neues Passwort festzulegen oder die Adresse zu ändern –, nur einen Hashwert des Geheimnisses im Link und den Zeitpunkt, zu dem er abläuft. Ein Link funktioniert einmal: 24 Stunden lang zur Bestätigung einer Adresse, eine Stunde lang für ein neues Passwort.
+- Die Sprache, in der die Website Ihnen schreibt, und ob Sie per E-Mail erfahren möchten, was andere Nutzer von Ihnen erbitten.
 - Wann das Konto angelegt wurde; welche Fassung der Nutzungsbedingungen und dieser Erklärung Sie bestätigt haben und wann.
 - Wie viele falsche Passwörter in Folge eingegeben wurden und, nach fünf, bis wann die Anmeldung ausgesetzt ist (15 Minuten).
 - Wann das Konto geschlossen wurde, falls dies geschehen ist, und von wem (von Ihnen oder von der Website).
@@ -70,11 +73,11 @@ Ihnen das Konto und den privaten Bereich bereitzustellen, diese zu sichern und n
 
 ## Wie lange
 
-Solange das Konto besteht. Wenn Sie es schließen, verschwindet es sofort von der Website, und Sie werden überall abgemeldet; 30 Tage lang können Sie es wieder öffnen, indem Sie sich anmelden. Nach 30 Tagen werden das Konto und alles, was dazu gehört, endgültig gelöscht (Abschnitt 12). Ein von der Website geschlossenes Konto wird in gleicher Weise aufbewahrt und gelöscht.
+Solange das Konto besteht. Wenn Sie es schließen, verschwindet es sofort von der Website, und Sie werden überall abgemeldet; 30 Tage lang können Sie es wieder öffnen, indem Sie sich anmelden. Nach 30 Tagen werden das Konto und alles, was dazu gehört, endgültig gelöscht (Abschnitt 12). Ein von der Website geschlossenes Konto wird in gleicher Weise aufbewahrt und gelöscht. Eine E-Mail an Sie wird aufbewahrt, bis sie zum Versand übergeben wurde; dann wird ihr Text geleert, und der Vermerk, dass sie versandt wurde (an welche Adresse, wann, welcher Art), wird nach 30 Tagen gelöscht. Eine E-Mail, die sich nicht übergeben lässt, wird etwa zwei Tage lang erneut versucht und dann aufgegeben.
 
-## Keine E-Mail-Adresse
+## Ihre E-Mail-Adresse und die E-Mails, die wir senden
 
-Weil die Website keine E-Mail-Adresse von Ihnen kennt, kann sie Ihnen nichts zusenden, und niemand kann Ihr Passwort per E-Mail zurücksetzen. Wenn Sie das Passwort verlieren, können Sie mit einem Wiederherstellungscode ein neues festlegen. Wenn Sie beides verlieren, kann niemand – auch wir nicht – auf das Konto zugreifen; das ist so gewollt.
+Wir senden E-Mails ausschließlich zu Ihrem Konto: den Link, mit dem Sie Ihre Adresse bestätigen; einen Link zum Festlegen eines neuen Passworts, wenn Sie ihn anfordern; eine Mitteilung an die alte und an die neue Adresse, wenn die Adresse geändert wird; eine Mitteilung, wenn sich das Passwort oder die Art der Anmeldung ändert; und, wenn wir Ihr Konto oder etwas von Ihnen schließen oder beschränken, die Entscheidung mit ihrer Begründung. Wenn ein anderer Nutzer Sie um eine Beziehung anfragt, Sie auf einer Fotografie markiert oder Sie um Ihre Zustimmung bittet, teilen wir Ihnen dies per E-Mail mit, ohne zu sagen, worum es geht; diese Mitteilungen können Sie auf der Seite Ihres Kontos abschalten. Wir versenden keinen Newsletter und keine Werbung. Ein Link in einer E-Mail führt auf diese Website und nirgendwohin sonst, und sein Öffnen ändert nichts, bis Sie auf der Seite, zu der er führt, die Schaltfläche betätigen. Wenn Sie das Passwort verlieren, können Sie mit einem per E-Mail gesandten Link oder mit einem Wiederherstellungscode ein neues festlegen. Ob zu einer Adresse ein Konto besteht, erfährt niemand außer der Person, der die Adresse gehört. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO; für die Mitteilungen über das, was andere Nutzer von Ihnen erbitten, Art. 6 Abs. 1 lit. f DSGVO (das Interesse daran, dass Sie erfahren, was Sie betrifft), dem Sie widersprechen, indem Sie sie abschalten.
 
 # 6. Anmeldung über Google oder Microsoft
 
@@ -82,11 +85,11 @@ Sie können sich statt mit einem Passwort über ein Konto anmelden, das Sie bei 
 
 ## Was geschieht, wenn Sie die Schaltfläche betätigen
 
-Ihr Browser wechselt zur Anmeldeseite des Unternehmens. Dort melden Sie sich an, und das Unternehmen bestätigt dieser Website, dass Sie es sind. Das Unternehmen erfährt dadurch, dass Sie diese Website nutzen, wann Sie sich bei ihr anmelden, sowie die technischen Daten Ihres Browsers. Die Website will nichts als eine Kennung, die für Ihr dortiges Konto steht. Von Google fordert sie allein diese an (der Scope "openid"). Microsoft gibt seine Kennung nur zusammen mit Basisdaten Ihres Profils heraus (etwa dem Namen und der E-Mail-Adresse); die Website übernimmt die Kennung und verwirft alles Übrige sofort, bevor irgendetwas gespeichert wird. Die Website fragt niemals nach Ihrem Bild, Ihren Kontakten oder dem Zugriff auf Ihre Dateien oder E-Mails.
+Ihr Browser wechselt zur Anmeldeseite des Unternehmens. Dort melden Sie sich an, und das Unternehmen bestätigt dieser Website, dass Sie es sind. Das Unternehmen erfährt dadurch, dass Sie diese Website nutzen, wann Sie sich bei ihr anmelden, sowie die technischen Daten Ihres Browsers. Die Website fordert zweierlei an: eine Kennung, die für Ihr dortiges Konto steht, und die E-Mail-Adresse, die das Unternehmen für Sie bestätigt hat. Von Google fordert sie dies mit den Scopes "openid" und "email" an und übernimmt die Adresse nur, wenn Google angibt, sie überprüft zu haben. Von Microsoft übernimmt sie die Adresse Ihres Postfachs oder, wenn es keines gibt, die Adresse, mit der Sie sich anmelden. Bei Ihrer ersten Anmeldung legt die Website ein Konto mit dieser Adresse an. Alles Übrige, was ein Unternehmen sendet (etwa den Namen), wird sofort verworfen, bevor irgendetwas gespeichert wird. Die Website fragt niemals nach Ihrem Bild, Ihren Kontakten oder dem Zugriff auf Ihre Dateien oder E-Mails.
 
 ## Was die Website speichert
 
-Nur, um welches Unternehmen es sich handelte, und einen Hashwert dieser Kennung, damit sie Sie beim nächsten Mal wiedererkennt. Während der Anmeldung werden zwei kurzlebige Cookies gesetzt (siehe die Seite über Cookies).
+Um welches Unternehmen es sich handelte und einen Hashwert dieser Kennung, damit sie Sie beim nächsten Mal wiedererkennt, sowie die E-Mail-Adresse als Adresse Ihres Kontos (Abschnitt 5). Während der Anmeldung werden zwei kurzlebige Cookies gesetzt (siehe die Seite über Cookies).
 
 ## Wer die Unternehmen sind
 
@@ -189,6 +192,7 @@ Nur das, was Sie für sie sichtbar gemacht haben (Abschnitte 7 und 9).
 
 ? - Hosting: {{host}}. Die Website und ihre Daten liegen auf Rechnern dieses Unternehmens, in unserem Auftrag und auf der Grundlage eines Vertrags nach Art. 28 DSGVO.
 ? - Netz und Schutz vor Angriffen: {{network}}, in unserem Auftrag und auf der Grundlage eines Vertrags nach Art. 28 DSGVO.
+? - E-Mail-Versand: {{mailer}}. Die E-Mails der Website (Abschnitt 5) werden über dieses Unternehmen versandt, in unserem Auftrag und auf der Grundlage eines Vertrags nach Art. 28 DSGVO. Es erhält die Adresse, an die eine Nachricht geht, und die Nachricht.
 - Kein anderes Unternehmen verarbeitet für uns Daten der Website. Es gibt keinen Newsletter-Dienst, keinen Analysedienst, kein Werbenetzwerk und keinen Zahlungsdienst.
 
 ## Unternehmen, die Sie wählen
@@ -242,7 +246,7 @@ Sie haben die folgenden Rechte. Ihre Ausübung ist unentgeltlich.
 
 Was Sie im Konto selbst tun können, wirkt sofort. Für alles andere schreiben Sie an {{operator.mail}}. Wir antworten innerhalb eines Monats; in komplexen Fällen lässt das Gesetz bis zu zwei weitere Monate zu, und wir teilen Ihnen dies mit (Art. 12 Abs. 3 DSGVO).
 
-Weil die Website weder eine E-Mail-Adresse noch einen bürgerlichen Namen von Ihnen kennt, zeigt uns eine Nachricht allein nicht, dass ein Konto Ihres ist. Betrifft Ihr Anliegen ein Konto, können wir Sie deshalb bitten nachzuweisen, dass Sie darüber verfügen – zum Beispiel, indem Sie im Konto eine kleine Änderung vornehmen, die wir Ihnen nennen. Wir verlangen nicht mehr, als dafür erforderlich ist (Art. 12 Abs. 6 DSGVO). Wenn Sie in einem Stammbaum genannt oder auf einer Fotografie gezeigt werden und kein Konto haben, genügt es, uns mitzuteilen, wo, und glaubhaft zu machen, dass Sie diese Person sind.
+Betrifft Ihr Anliegen ein Konto, antworten wir an die E-Mail-Adresse dieses Kontos oder bitten Sie, uns von ihr aus zu schreiben, damit niemand anderes die Daten eines Kontos erhält. Wir verlangen nicht mehr, als dafür erforderlich ist (Art. 12 Abs. 6 DSGVO). Wenn Sie in einem Stammbaum genannt oder auf einer Fotografie gezeigt werden und kein Konto haben, genügt es, uns mitzuteilen, wo, und glaubhaft zu machen, dass Sie diese Person sind.
 
 # 17. Änderungen dieser Erklärung
 

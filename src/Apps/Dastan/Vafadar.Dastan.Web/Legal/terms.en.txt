@@ -31,9 +31,9 @@ Where the site says so, a new account needs an invitation from somebody who alre
 
 You choose a name. It need not be your real name. It must not pretend that you are somebody else, a company or an authority, must not insult anybody, and must not be an address of a website or an advertisement.
 
-## Your password and your recovery codes
+## Your e-mail address, your password and your recovery codes
 
-Choose a password you use nowhere else and keep it to yourself. Keep the recovery codes in a safe place. The site knows no e-mail address of yours and cannot reset a password: if you lose the password and all recovery codes, the account cannot be reached by anybody, and we cannot help. If you think somebody else knows your password, change it at once; that signs the account out everywhere.
+Give an e-mail address that is yours and that you read: the account works only after you have confirmed it, and what concerns the account is sent there. Choose a password you use nowhere else and keep it to yourself. Keep the recovery codes in a safe place. If you lose the password, a link mailed to your address or a recovery code lets you set a new one; if you lose the password, the access to the address and all recovery codes, the account cannot be reached by anybody, and we cannot help. If you think somebody else knows your password, change it at once; this signs the account out everywhere.
 
 You answer for what is done with your account, unless you are not at fault.
 
@@ -125,7 +125,7 @@ We do not restrict anybody for giving a notice in good faith that turns out to b
 
 # 11. You are told the reasons, and you can disagree
 
-When we restrict something of yours, we give you a statement of reasons. Because the site has no e-mail address of yours, you read it on the page of your account; for a closed account you read it after giving the name and the password on the sign-in page. It says:
+When we restrict something of yours, we give you a statement of reasons. We send it to the e-mail address of your account, and you read it on the page of your account as well; for a closed account you read it there after showing on the sign-in page that the account is yours. It says:
 
 - what was restricted, where and for how long;
 - the facts and circumstances the decision rests on, and whether it followed a notice or our own look;

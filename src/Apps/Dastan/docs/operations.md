@@ -318,9 +318,10 @@ where the store lies, while few people are on the site.
 
 Without `Dastan__Database` nothing on its own: no database, no file, no account. With it, the accounts of the
 visitors: for each a name the visitor chose, a value derived from the password, the hashes of the recovery codes,
-when the account was made, how often the password was wrong and when it was closed – no mail address and no
-address of a machine; for an account that is signed in through Google or Microsoft, which of them and a hash
-of the identifier it gives the person – no name, mail address or picture of theirs, and no token; and what the visitor keeps with the account: reading positions, a list, invitations,
+the mail address and whether it is confirmed, when the account was made, how often the password was wrong and
+when it was closed – no address of a machine; for an account that is signed in through Google or Microsoft, which of them and a hash
+of the identifier it gives the person, with the mail address it confirmed as the address of the account – no
+name or picture of theirs, and no token; and what the visitor keeps with the account: reading positions, a list, invitations,
 relationships and circles, family trees with records of people, and – with `Dastan__Photos` – photographs
 (the [privacy matrix](../../../../docs/privacy/privacy-matrix.md) lists each). A closed account is deleted for good thirty days later, by the first request of a day
 (the site must be visited for it; a site nobody opens deletes nothing). Its log goes to the output of the container and holds what

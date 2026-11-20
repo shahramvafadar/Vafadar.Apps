@@ -7,7 +7,7 @@ Shahnameh, Rostam and Sohrab.
 
 | | |
 |---|---|
-| Status | **The first milestone, M0, is built**: all seven phases of the [delivery plan](docs/delivery-plan.md) are done. What each acceptance condition was checked with, and what was not checked, is in the [acceptance record](docs/acceptance.md). It is a local demonstration; nothing is published, and what a public pilot still needs is listed in the delivery plan. |
+| Status | **Built and tried on a developer's machine; nothing is published.** The first milestone, M0 (a local discovery slice), is done ([acceptance record](docs/acceptance.md)). Since then, by the phases of the [delivery plan](docs/delivery-plan.md): the store and the tool of the editors, PostgreSQL, accounts with a confirmed mail address (ASP.NET Core Identity), a private area with relationships, family trees and photographs, profiles of nodes, a layer of TypeScript, a graph that can be moved (Syncfusion EJ2 Diagram behind a contract of Dastan's own) and a timeline of Dastan's own with the calendar, deep time and the order of a telling. **Not ready for the public**, and the plan says why, step by step: no real mailbox and no sender with a domain, no client at Google or Microsoft, no key of the licence of the graph in a running site, nothing looked at on a real phone or with a screen reader, no full run of CI seen, and the texts of the collection are drafts that no editor has approved. "Built", "looked at in a browser" and "ready" are said apart in every step of the plan. |
 | First milestone | M0 – a runnable local discovery slice ([acceptance](docs/acceptance.md)) |
 | Platform | ASP.NET Core Blazor Web App on .NET 10; evergreen browsers; installable |
 | Interface languages | English and Persian first (right to left); German and others later |
@@ -36,7 +36,7 @@ All exist.
 | `Vafadar.Dastan.Web` | The website: pages, components, texts in English and Persian, media delivery | 4 |
 | `Vafadar.Dastan.Content` | The command of the writers and the editors: check, vocabulary, template, revision, store | 9 |
 | `Vafadar.Dastan.Studio` | The tool of the editors: pages that show what the store holds. Runs on the editors' machine only | 11 |
-| `Vafadar.Dastan.People` | The store of the visitors: their accounts and, with them, what belongs to one person ([ADR 0014](docs/adr/0014-visitor-accounts.md)). Used by the website only where it is told its database | 16 |
+| `Vafadar.Dastan.People` | The store of the visitors: their accounts – on ASP.NET Core Identity, with a confirmed mail address ([ADR 0016](docs/adr/0016-identity-and-mail.md)) – and, with them, what belongs to one person. Used by the website only where it is told its database | 16, 19 |
 | `Vafadar.Dastan.Store` | The store of the editors: the records of a collection with the history of their changes ([ADR 0011](docs/adr/0011-editors-store.md)). The website does not use it | 11 |
 
 Shared libraries written for Dastan and usable by other apps:
@@ -166,7 +166,10 @@ only.
 |---|---|---|---|
 | `Vafadar.Dastan.Web/wwwroot/fonts/vazirmatn-nl-wght.woff2` | The font Vazirmatn 33.003, variable weight, without Latin letters – unchanged (`Vazirmatn-NL[wght].woff2`, SHA-256 `cdef5578…bbf5`) | SIL Open Font License 1.1, `wwwroot/fonts/vazirmatn-OFL.txt` | Release v33.003 of <https://github.com/rastikerdar/vazirmatn> |
 | `Vafadar.Dastan.Web/Data/coasts.txt`, `Data/waters.txt` | The coasts of the earth, and its rivers and the shores of its lakes: Natural Earth 1:50m, written as text with positions rounded to a hundredth of a degree (step 17.2) | Public domain | naturalearthdata.com, from the repository `nvkelso/natural-earth-vector` on 2026-11-18 |
-| (package) `SkiaSharp`, `SkiaSharp.NativeAssets.Linux.NoDependencies` 4.154.1 | Reading and writing images (step 17.3); restored by the build, not in the repository | MIT | nuget.org, published by Microsoft |
+| (package) `SkiaSharp`, `SkiaSharp.NativeAssets.Linux.NoDependencies` 4.155.2 | Reading and writing images (step 17.3); restored by the build, not in the repository. Not a newer one: 4.156.2 and 4.157.0 end the process on a file that is no image ([ADR 0006](docs/adr/0006-media-delivery.md)) | MIT | nuget.org, published by Microsoft |
+| (package of npm) `@syncfusion/ej2-diagrams` 35.2.12 | The control behind the graph ([ADR 0020](docs/adr/0020-graph.md)); bundled into `graph.js` by the build, not in the repository. Its count of use is switched off | The licence of Syncfusion (Essential Studio, community licence of the owner); the key is a setting, not in the repository | npmjs.com, published by Syncfusion |
+| (packages of npm) `typescript` 7.0.2, `esbuild` 0.28.2 | The tools that check and bundle the scripts of the site ([ADR 0019](docs/adr/0019-interactive-layer.md)); used by the build, in no page | Apache-2.0, MIT | npmjs.com |
+| (package) `MailKit` 4.18.2 | Sending the mail of the site by SMTP ([ADR 0016](docs/adr/0016-identity-and-mail.md)) | MIT | nuget.org |
 
 ## Services
 

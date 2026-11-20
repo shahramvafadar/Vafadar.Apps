@@ -114,8 +114,14 @@ gone – from the store, its tables and its tests; the site never had two kinds 
 * *A mail is written in the language of the page* the form was sent from; later mail in the language of the
   account.
 
-**What is true until step 19.10 and must not go public:** the legal texts of the program (privacy notice,
-terms) still say that an account needs no mail address. They are written again in step 19.10, together with
+**Written again in step 19.10 (2026-11-20):** the privacy notice and the terms, in English, German and Persian,
+say what an account is now – a name, a confirmed mail address, a password –, which mail the site sends and for
+how long it keeps it, what it asks of Google and Microsoft, and that a statement of reasons is mailed; the
+company that sends the mail is named from a setting (`Dastan__Operator__Mailer`), and the record of processing
+has the mail as an activity of its own. What follows was true until then.
+
+**What was true until step 19.10:** the legal texts of the program (privacy notice,
+terms) still said that an account needs no mail address. They are written again in step 19.10, together with
 the record of processing and the mail provider (the owner's decision). A site with these accounts is not
 shown to the public before that.
 

@@ -40,6 +40,13 @@ public sealed class OperatorOptions
     /// <summary>Gets or sets who carries the traffic of the site to its machine, when somebody other than the host does: the name and the address of the company.</summary>
     public string? Network { get; set; }
 
+    /// <summary>
+    /// Gets or sets who sends the mail of the site on its behalf (ADR 0016): the name and the address of the
+    /// company the site hands its mail to. Left out, the privacy notice names no such company – which is right
+    /// only where the operator's own machine sends the mail.
+    /// </summary>
+    public string? Mailer { get; set; }
+
     /// <summary>Gets or sets the authority for data protection that is competent for the operator, with its address.</summary>
     public string? Authority { get; set; }
 }
@@ -101,6 +108,7 @@ public sealed partial class LegalTexts
             ["site"] = named.Site,
             ["host"] = named.Host,
             ["network"] = named.Network,
+            ["mailer"] = named.Mailer,
             ["authority"] = named.Authority,
         };
     }
