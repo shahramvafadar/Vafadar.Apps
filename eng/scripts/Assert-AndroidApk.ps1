@@ -37,6 +37,9 @@ $identity = @($badging | Select-String -Pattern "^package: name='([^']+)'")
 if ($identity.Count -ne 1 -or $identity[0].Matches[0].Groups[1].Value -cne $properties.ApplicationId) {
     throw 'The APK manifest package differs from the producing Android project.'
 }
+if ($badging -cmatch '^testOnly=') {
+    throw 'The APK is marked testOnly and requires a test installation.'
+}
 if ($Configuration -eq 'Release' -and ($badging -cmatch '^application-debuggable(?:\s|$)')) {
     throw 'The Release APK is debuggable.'
 }

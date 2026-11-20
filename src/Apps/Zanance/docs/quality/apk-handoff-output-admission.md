@@ -98,3 +98,15 @@ The original complete dual-ABI Release APK passes the new checks with its exact
 previous digest. No app was rebuilt or installed. This checks required ZIP
 members, without validating every assembly inside each store. The before and
 after receipts and the signed negative fixture remain in `artifacts/zhc`.
+
+## Test-only installation flag
+
+The APK handoff now rejects the SDK badging marker for `android:testOnly`. An SDK-compiled
+synthetic manifest with this flag, the expected package ID and an existing managed payload
+was packaged and signed with a disposable local key. The original verifier accepted that
+fixture. The corrected verifier refuses it before any installer advice. The SDK emitted no
+test-only marker for a second manifest with the flag explicitly false. The retained complete
+offline dual-ABI APK passed with its unchanged digest.
+
+The fixtures exercised package verification and did not run on a device. The signed negative
+fixture and verifier receipts are in `artifacts/zto`.
