@@ -267,3 +267,67 @@ forms sent at the same moment could pass.
 | SC-04 | Whether a shared event of a comparison is one record linked from several lanes. | [The format of a comparison](comparison-format.md) and `ComparisonTests`. |
 | acceptance.md against ADR 0021 | acceptance.md says "about" and "between two years" are "drawn as such"; ADR 0021 says the chart "drew a window as a point with a mark". R-TIME-02 follows the ADR here. | The comparison page with a period "between two years", in a browser. |
 | The detailed rules | About 150 identifiers of the families DOM-, TIME-, MED-, GOV-, PUB-, VIS-, FLOW-, SCREEN-, TASK- and PILOT- (documents 03, 04, 05, 07, 15, 16, 18) refine the rows above and have no rows here. | Each of those documents against this table, before step 19.11 calls the table complete. |
+
+## Where the rows stand at the end of phase 19 (step 19.11, 2026-11-20)
+
+The table above says where each row stood when the phase began and is left as it was written. This section
+says where the rows that were open then stand now. Three words are kept apart:
+
+* **built** – the code is there and its tests pass (3126 tests on the last revision, of them 375 in Chromium;
+  the tests in a browser also in Firefox and WebKit, see the end of this section);
+* **looked at** – somebody looked at the page in a real browser by eye. This was done by the builder for a few
+  pages, named below; the owner has not looked at any of it yet;
+* **ready** – fit for the public. **No row is ready**: nothing was tried on a real phone, with a screen reader,
+  with a real mailbox, with a client at Google or Microsoft or by a visitor who was watched, and the texts of
+  the collection are drafts no editor has approved.
+
+A row that is not named here stands as the table above says.
+
+| Row | Now | Evidence | Looked at | What is still open |
+|---|---|---|---|---|
+| R-PUB-02, R-DOM-02, R-EXP-02 | built – every node has a profile with a picture or a drawing in its place and the facts of its kind; a person of a tree has days, places, a note and a picture (19.5, ADR 0017) | `NodeProfileBrowserTests`, `PersonProfilesTests`, `TreePersonPagesTests`, `TreePersonBrowserTests`, `ProfileDataTests` | the profile of a person of a tree and the panel of a profile | – |
+| R-PUB-03 | built – "what held" answers for a year, a stretch of years and a depth of time (19.9) | `MomentPageTests`, `DeepTimeTests`, `AskedTimeTests` | no | – |
+| R-PUB-04 | built – the search takes a year before the common era, a period and a depth of time, by the one reader of a time (19.9) | `AskedTimeTests`, `FindingTests`, `DeepTimeTests` | no | – |
+| R-PUB-05, SC-04 | built – a comparison is moved and made larger and smaller in the browser; what is counted on another axis has a view of its own (19.9) | `TimelineBrowserTests`, `TimelineViewsTests`, `ComparisonPageTests` | the comparison of Iran, China and Rome, in English and Persian | whether a shared event is one record linked from several lanes is still not said |
+| R-PUB-07 | unchanged – an earlier revision cannot be shown | – | – | in no step |
+| R-PUB-08 | built – the list or the table stays beside every drawing, and the still drawing stays without a script (19.8, 19.9) | `GraphBrowserTests`, `TimelineBrowserTests` (without a script) | yes, both | a person with a screen reader |
+| R-PUB-09 | not recorded, as before | – | – | the words of the empty pages were not read for this |
+| R-DOM-04, PRIV-007 | built – two accounts can have several relationships, each agreed to by itself; a changed kind asks the other side again (19.6, ADR 0018) | `SeveralRelationshipsTests`, `SeveralRelationshipsPagesTests`, `RelationshipsBrowserTests`, `AtTheSameMomentTests` | no | – |
+| R-DOM-05, R-PER-06, R-PER-07, PRIV-010, PRIV-011, SC-12 | built – affiliations of an account have a store, a page and a search with what each side shows (19.6) | `AffiliationsTests`, `AffiliationPagesTests`, `SeenAsTests`, `SeenAsPagesTests` | no | between real people |
+| R-DOM-07 | built in part – a statement with a time is on the timeline of its name and of the collection whether or not a telling names it (19.9); an event of a telling with a date of its own is still refused by the reader of a collection | `TimelineOfANameTests`, `TimelinePageTests` | no | an event that is both a step and dated |
+| R-TIME-01 | built – a person of a tree has a time as the library says it: a day, a year, "about", a window (19.5) | `PersonProfilesTests` | yes | – |
+| R-TIME-02, R-TIME-03, SC-05, SC-06 | built – a window is drawn as a window, what lasted with what is known of its ends, an open end as open and an end nobody states as not stated (19.9) | `TimelineViewsTests`, `TimelineBrowserTests` (measured against the axis) | yes, a made-up comparison with every kind of end | the still chart of the server still draws a window as a point |
+| R-TIME-04, SC-07 | built – deep time has an axis of its own and is asked for and written with its meaning; the fault at the lowest number is ended (19.9) | `AskedTimeTests`, `DeepTimeTests`, `TimelineBrowserTests`, `ComparisonPageTests` | yes | the still chart draws the calendar only |
+| R-TIME-05, SC-08 | built – a date exact to the day is shown as written and converted beside it; what is not exact enough is not converted (19.9) | `CalendarConversionTests`, `CalendarPagesTests` | no | a choice of the calendar by the reader |
+| R-STORY-03 | built in part – the order inside the world can be said (a position of its own) and has a view of its own on a timeline; the page of a story shows the order of the telling as before | `TimelineViewsTests` | no | the page of a story on the new control |
+| R-PER-02 | built – several partners, parents by birth, adoptive parents and guardians, a guardianship with its time (19.6, 19.8) | `FamilyTreesTests`, `GraphDataTests`, `TreePersonPagesTests` | no | – |
+| R-PER-03, R-PER-04 | built – an account has a confirmed mail address; a request, a tag and an invitation are told by mail (19.4, ADR 0016) | `AccountsWithMailTests`, `NoticeMailTests`, `AccountJourneyBrowserTests` (the mail really sent to a catcher) | the pages of an account | a real mailbox, a sender with a domain |
+| R-PER-08 | unchanged – no posts | – | – | in no step |
+| R-PLAT-01 | built in part, as before – no installation was observed | `InstalledAppTests` | no | a real phone: the owner's |
+| R-PLAT-05 | built in part – the rules a tool decides pass on the new pages too, and the graph and the timeline have their own keyboard | axe in `GraphBrowserTests`, `TimelineBrowserTests`, `AccountJourneyBrowserTests` | – | a phone, a screen reader, a visitor who is watched |
+| R-EXP-03 | built – the graph and the timeline are moved, zoomed, selected and opened in the browser (19.7, 19.8, 19.9); the page of a story keeps its chart of links | `GraphBrowserTests`, `GraphSizeBrowserTests`, `TimelineBrowserTests`, `ProfilePanelBrowserTests` | yes | the page of a story |
+| R-EXP-05, SC-16 | built in part – a chosen card of a graph leads to its timeline and its pictures, a time leads from "what held" to its gallery and back, the view of a timeline is kept in the address (19.9) | `GraphBrowserTests`, `TimelineOfANameTests`, `GalleryOfATimeTests`, `TimelineBrowserTests` | no | filters of the search are not carried to another view |
+| R-MED-02, R-MED-04, SC-18 | built – an item has the time it shows apart from the time it was made, and the gallery of a time shows what shows that time (19.9) | `MediaShownTimeTests`, `GalleryOfATimeTests` | no | themes; a picture in several places (R-MED-07) |
+| R-MED-01, R-MED-03, SC-17, SC-19 | unchanged – visitors have no videos (D-066) | – | – | in no step |
+| PRIV-003 | built in part – a record of a person holds more now, and a child (under 18) is described only by who may (19.5); no rule for guardians of an account | `PersonProfilesTests` | no | children with accounts are in no step |
+| PRIV-009 | built – an account can block another (19.6) | `BlockingTests` | no | between real people |
+| PRIV-015 | not built, as before (ADR 0013) | – | – | – |
+| PRIV-016, SC-13 | built in part – a drawing of a graph is saved as SVG and PNG; there is no graph across accounts (19.8) | `GraphBrowserTests` (the saved pictures) | no | a saved file opened in another program |
+
+**Accounts, the stores and the tool of the editors** (the rows of steps 19.3 and 19.4 that were not open above) stand as their steps
+say in the delivery plan, with their tests.
+
+**The last walk, in three browsers.** On the last revision the tests in a browser were run whole in Chromium
+(375 of 375), in Firefox (372, and 3 that are not asked of it: installing, and the page for "no connection") and in WebKit (374, and 1 that is not asked of it: installing) – none failed. They walk every journey that has a row with a test in a browser
+above. What a test cannot see – whether a page looks right – was looked at by eye for the pages named in the
+column "Looked at", in Chromium only.
+
+**In CI.** The workflow has a job for each of the three engines that runs these tests (`dastan-browser`). It
+has not been seen to run: every run on `main` since 2026-11-19 was cancelled by a later push of the other app
+of the repository, because a run of a branch is cancelled when a newer one begins. Whether that rule stays for
+`main` is the owner's decision.
+
+**The owner's, before anything is called ready:** a real phone (installing, touch with two fingers on the graph
+and the timeline), a screen reader, Safari itself, a mailbox and a sender with a domain, the company that sends
+the mail and a contract with it, clients at Google and Microsoft, the key of the licence of the graph, a
+lawyer's reading of the legal texts, and the approval of the texts of the collection by an editor.

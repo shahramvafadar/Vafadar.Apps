@@ -113,7 +113,7 @@ dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Browser.Tests
 docker compose -f src/Apps/Dastan/compose.yaml down
 ```
 
-Without `DASTAN_BROWSER` the tests are skipped and say so; that is what happens in CI, which has no container. The
+Without `DASTAN_BROWSER` the tests are skipped and say so; that is what happens in the job "Libraries and tests" of CI. The job `dastan-browser` of CI starts the same container on the runner and runs them, once for each engine. The
 version of the container and the version of the package `Microsoft.Playwright` in `Directory.Packages.props` have
 to be the same.
 
