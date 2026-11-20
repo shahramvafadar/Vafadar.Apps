@@ -1469,6 +1469,20 @@ chooser. It continued the same open chooser using the actual TextView without in
 again. Two focused host cases covered new and attached receipts with AI off, and a third covered
 deterministic CSV category review. Evidence remains under `artifacts/ai-classical-fallback-native`.
 
+The same signed APK on Android 7 reached the original file picker with AI off. The synthetic
+image-only PDF was visible under internal storage, but the native picker did not return it in this
+fixture. The picker was canceled, Home returned and the ledger stayed empty. This observation
+covers original picker entry and cancellation. Complete Android 7 selection and OCR for this
+workflow remain open. Evidence remains under `artifacts/ai-classical-api24-pdf`.
+
+On Android 16, the same signed APK and identical image-only PDF completed the original picker and
+local OCR path with AI off. The PDF consisted of a single raster image with no text layer. The
+receipt editor showed EUR 42.75, then the original Cancel and Discard controls left the ledger
+empty. The first file transfer was refused while the new emulator's shared storage was becoming
+available. Only that incomplete transfer was retried. Both owned emulators were retired. Evidence
+remains under `artifacts/ai-classical-api36-pdf`. No build, earlier image OCR or successful
+financial operation was repeated.
+
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
 deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate
