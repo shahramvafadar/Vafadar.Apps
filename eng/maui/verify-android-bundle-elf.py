@@ -1,7 +1,7 @@
-"""Check the 16 KiB load alignment of 64-bit native libraries in an Android bundle."""
+"""Check the 16 KiB load alignment of 64-bit native libraries in an Android bundle or APK."""
 
+import argparse
 import struct
-import sys
 import zipfile
 
 PAGE_SIZE = 16 * 1024
@@ -39,23 +39,31 @@ def check_library(bundle, entry, machine):
             raise ValueError("no load segments")
 
 
-def check_bundle(path):
-    """Check each 64-bit Android library under a bundle module's native library directory."""
+def check_archive(path, apk):
+    """Check each 64-bit library in the archive's native library directories."""
     checked = 0
     with zipfile.ZipFile(path) as bundle:
         for entry in bundle.infolist():
             parts = entry.filename.split("/")
-            if len(parts) != 4 or parts[1] != "lib" or not parts[3].endswith(".so") or parts[2] not in MACHINES:
+            if not apk:
+                if len(parts) != 4:
+                    continue
+                parts = parts[1:]
+            if len(parts) != 3 or parts[0] != "lib" or not parts[2].endswith(".so") or parts[1] not in MACHINES:
                 continue
             try:
-                check_library(bundle, entry, MACHINES[parts[2]])
+                check_library(bundle, entry, MACHINES[parts[1]])
             except (ValueError, struct.error) as error:
                 raise SystemExit(f"{entry.filename}: {error}") from None
             checked += 1
     if checked == 0:
-        raise SystemExit("Bundle contains no Android 64-bit native libraries to check.")
+        raise SystemExit("Archive contains no Android 64-bit native libraries to check.")
     print(f"Verified 16 KiB ELF load alignment for {checked} native libraries.")
 
 
 if __name__ == "__main__":
-    check_bundle(sys.argv[1])
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--apk", action="store_true", help="check a directly installable APK")
+    parser.add_argument("archive")
+    arguments = parser.parse_args()
+    check_archive(arguments.archive, arguments.apk)

@@ -38,6 +38,12 @@ if ($Configuration -eq 'Release') {
     if (!(Test-Path -LiteralPath $zipalign -PathType Leaf)) { throw "APK verification tool unavailable: $zipalign" }
     $null = & $zipalign -c -P 16 4 $apk.FullName 2>&1
     if ($LASTEXITCODE -ne 0) { throw 'The Release APK failed the Android SDK 16 KiB archive alignment check.' }
+
+    # Compressed libraries are skipped by zipalign, but their ELF load segments still require alignment.
+    $python = (Get-Command python -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
+    $elfVerifier = Join-Path $PSScriptRoot '../maui/verify-android-bundle-elf.py'
+    $elfResult = & $python $elfVerifier --apk $apk.FullName 2>&1
+    if ($LASTEXITCODE -ne 0) { throw "The Release APK failed 16 KiB ELF load alignment verification. $elfResult" }
 }
 
 $badging = @(& $aapt2 dump badging $apk.FullName 2>&1)
