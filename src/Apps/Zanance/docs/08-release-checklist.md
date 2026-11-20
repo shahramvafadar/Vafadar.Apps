@@ -1449,6 +1449,12 @@ off across a process restart, hid Analysis and receipt scanning, and restored bo
 re-enabled. Manual transaction actions remained available. Two focused tests checked persistence
 and refusal of retired sharing and provider actions. [AI opt-out evidence](enhancements/2026-10-commercial-release/29-ai-feature-expansion-plan.md#shared-contracts-and-acceptance)
 
+A focused application-source test held a synthetic provider availability response, switched AI
+off and back on, then released the original response. The retired screen did not read the
+private request record, publish the late response or permit quoting, continuing or sending.
+Reopening the screen started a fresh review. The test used a simulated provider and made
+zero external requests.
+
 The signed Offline Release APK `83c07516` passed the package, signature, network permission,
 and static 16 KiB ZIP and ELF alignment checks. On a fresh Android 16 x64 emulator, its native
 switch hid Analysis in More. The original emulator stopped answering both guest and console

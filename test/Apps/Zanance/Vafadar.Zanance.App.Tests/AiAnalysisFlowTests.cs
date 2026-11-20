@@ -108,6 +108,45 @@ public sealed partial class AiAnalysisFlowTests
         Assert.Null(vm.Disclosure);
     }
 
+    /// <summary>Re-enabling AI cannot revive a provider check already pending when AI was disabled.</summary>
+    [Fact]
+    public async Task Turning_off_AI_retires_a_pending_provider_check()
+    {
+        using var f = new FlowFixture();
+        var runtime = new Runtime();
+        var vm = await Model(f, runtime);
+        await Review(vm);
+
+        var originalProvider = vm.ProviderText;
+        var response = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        runtime.Remote.DuringAvailability = () => response.Task;
+        var pending = vm.CheckProviderAsync();
+        try
+        {
+            Assert.Equal(1, runtime.Opens);
+            Assert.False(pending.IsCompleted);
+            runtime.Features.Enabled = false;
+            runtime.Features.Enabled = true;
+        }
+        finally
+        {
+            response.SetResult();
+        }
+
+        await pending.WaitAsync(Ct);
+        Assert.Equal(0, runtime.Remote.RecordReads);
+        Assert.Equal(originalProvider, vm.ProviderText);
+        Assert.Null(vm.BalanceText);
+        Assert.Null(vm.ResultText);
+        Assert.False(vm.CanQuote);
+        Assert.False(vm.CanContinue);
+        Assert.False(vm.CanSend);
+
+        await vm.ActivateAsync();
+        Assert.True(vm.CanCheckProvider);
+        Assert.Null(vm.Disclosure);
+    }
+
     /// <summary>The period shortcut only seeds a local draft and retains a frozen account scope.</summary>
     [Theory, InlineData(false), InlineData(true)]
     public async Task Period_handoff_preserves_exact_scope_without_implicit_review_or_disclosure(bool comparison)
