@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Vafadar.Zanance.Api.Analysis;
 
@@ -107,7 +108,14 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
             if (claimed != 1) continue;
             bool handled;
             try { handled = await store.RecoverPilotNoticeAsync(provider, id, ct); }
-            catch (Exception error) when (error is IOException or HttpRequestException or TimeoutException) { continue; }
+            catch (Exception error) when (!ct.IsCancellationRequested && (error is IOException or HttpRequestException or
+                TimeoutException or OperationCanceledException or NpgsqlException { IsTransient: true } or
+                DbUpdateException { InnerException: NpgsqlException { IsTransient: true } } or
+                InvalidOperationException { InnerException: DbUpdateException { InnerException: NpgsqlException { IsTransient: true } } }))
+            {
+                // The lookup claim is durable. A later tick can retry it without interrupting other notices.
+                continue;
+            }
             if (handled)
                 await db.Set<AiPilotCompletionNoticeRow>().Where(item => item.Provider == provider && item.ResponseId == id)
                     .ExecuteUpdateAsync(set => set.SetProperty(item => item.Handled, true), ct);

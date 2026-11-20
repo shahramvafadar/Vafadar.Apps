@@ -33,6 +33,7 @@ public sealed class AiPilotRecoveryTransactionTests
         {
             ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-transaction-key",
             ["Analysis:ProviderPilot:openai:Project"] = "fixture-notice-transaction",
+            ["Analysis:ProviderPilot:openai:WebhookSecret"] = "fixture-signed-inbox-only",
         }).Build();
         const string owner = "fictional-recovery-tx-ä-owner";
         var lost = Guid.NewGuid();
@@ -50,6 +51,13 @@ public sealed class AiPilotRecoveryTransactionTests
             var route = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
             Seed(lost, null);
             Seed(earlier, "resp_fixture_earlier");
+            db.AddRange(
+                new AiPilotCompletionNoticeRow { Provider = "openai", ResponseId = "resp_fixture_lost", DeliveryId = "fixture-lost",
+                    ReceivedAt = clock.GetUtcNow().AddSeconds(-2) },
+                new AiPilotCompletionNoticeRow { Provider = "openai", ResponseId = "resp_fixture_timeout", DeliveryId = "fixture-timeout",
+                    ReceivedAt = clock.GetUtcNow().AddSeconds(-1) },
+                new AiPilotCompletionNoticeRow { Provider = "openai", ResponseId = "resp_fixture_earlier", DeliveryId = "fixture-earlier",
+                    ReceivedAt = clock.GetUtcNow() });
             for (var i = 0; i < 2; i++)
             {
                 var otherOwner = $"fictional-recovery-other-{i}";
@@ -62,7 +70,7 @@ public sealed class AiPilotRecoveryTransactionTests
                 CREATE FUNCTION fixture_reject_original_settlement() RETURNS trigger LANGUAGE plpgsql AS $$
                 BEGIN
                     IF NEW."Kind" = 3 THEN
-                        RAISE EXCEPTION 'Fictional settlement interruption';
+                        RAISE EXCEPTION 'Fictional settlement interruption' USING ERRCODE = '40001';
                     END IF;
                     RETURN NEW;
                 END $$;
@@ -83,8 +91,9 @@ public sealed class AiPilotRecoveryTransactionTests
             }
         }
 
-        var store = NewStore();
-        await Assert.ThrowsAsync<DbUpdateException>(() => store.RecoverPilotNoticeAsync("openai", "resp_fixture_lost", ct));
+        var inbox = new AiPilotCompletionNotices(config, factory, NewStore(), clock);
+        await inbox.DrainAsync(ct);
+        Assert.Equal(new[] { "resp_fixture_lost", "resp_fixture_timeout", "resp_fixture_earlier" }, transport.Calls);
         await using (var db = factory.CreateDbContext())
         {
             var rolledBack = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == lost, ct);
@@ -93,19 +102,30 @@ public sealed class AiPilotRecoveryTransactionTests
             Assert.Null(rolledBack.PilotVendorStatus);
             Assert.Null(rolledBack.PilotMeteredCostMicros);
             Assert.Empty(await db.Set<AiCreditRow>().ToArrayAsync(ct));
+            var notices = await db.Set<AiPilotCompletionNoticeRow>().ToDictionaryAsync(item => item.ResponseId, ct);
+            Assert.All(notices.Values, notice => Assert.Equal(1, notice.Attempts));
+            Assert.False(notices["resp_fixture_lost"].Handled);
+            Assert.False(notices["resp_fixture_timeout"].Handled);
+            Assert.True(notices["resp_fixture_earlier"].Handled);
             await db.Database.ExecuteSqlRawAsync("""
                 DROP TRIGGER "FixtureSettlementInterrupt" ON "AiCredits";
                 DROP FUNCTION fixture_reject_original_settlement();
                 """, ct);
         }
 
-        var restarted = NewStore();
-        Assert.True(await restarted.RecoverPilotNoticeAsync("openai", "resp_fixture_lost", ct));
-        Assert.True(await restarted.RecoverPilotNoticeAsync("openai", "resp_fixture_lost", ct));
-        Assert.True(await restarted.RecoverPilotNoticeAsync("openai", "resp_fixture_earlier", ct));
-        Assert.True(await restarted.RecoverPilotNoticeAsync("openai", "resp_fixture_earlier", ct));
-        Assert.Equal(new[] { "resp_fixture_lost", "resp_fixture_lost", "resp_fixture_earlier" }, transport.Calls);
+        var restarted = new AiPilotCompletionNotices(config, factory, NewStore(), clock);
+        await restarted.DrainAsync(ct);
+        Assert.Equal(3, transport.Calls.Count);
+        clock.Advance(TimeSpan.FromMinutes(1));
+        await restarted.DrainAsync(ct);
+        await restarted.DrainAsync(ct);
+        Assert.Equal(new[] { "resp_fixture_lost", "resp_fixture_timeout", "resp_fixture_earlier", "resp_fixture_lost", "resp_fixture_timeout" }, transport.Calls);
         await using var audit = factory.CreateDbContext();
+        var finalNotices = await audit.Set<AiPilotCompletionNoticeRow>().ToDictionaryAsync(item => item.ResponseId, ct);
+        Assert.True(finalNotices["resp_fixture_lost"].Handled);
+        Assert.Equal(2, finalNotices["resp_fixture_lost"].Attempts);
+        Assert.False(finalNotices["resp_fixture_timeout"].Handled);
+        Assert.Equal(2, finalNotices["resp_fixture_timeout"].Attempts);
         var requests = await audit.Set<AiRequestRow>().ToDictionaryAsync(row => row.Id, ct);
         Assert.Equal(AiRequestState.Completed, requests[lost].State);
         Assert.Equal("resp_fixture_lost", requests[lost].VendorOperationId);
@@ -144,6 +164,8 @@ public sealed class AiPilotRecoveryTransactionTests
             Assert.Equal("https://api.openai.com/v1/responses/" + handle, request.RequestUri.AbsoluteUri);
             Assert.Equal("fixture-notice-transaction", Assert.Single(request.Headers.GetValues("OpenAI-Project")));
             Calls.Add(handle);
+            if (handle == "resp_fixture_timeout")
+                throw new TaskCanceledException("Fictional HTTP client timeout.");
             var body = handle switch
             {
                 "resp_fixture_lost" => JsonSerializer.Serialize(new
