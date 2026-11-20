@@ -387,12 +387,19 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         (offer.Provider != "openai" || id.StartsWith("resp_", StringComparison.Ordinal));
 
     /// <summary>Sends one deletion and accepts only a receipt for the original stored result.</summary>
-    internal async Task<bool> DeleteResultAsync(AiPilotRouteRow route, AiOffer offer, string digest, string id, CancellationToken ct)
+    internal async Task<bool> DeleteResultAsync(AiPilotRouteRow route, AiOffer offer, string operation, string digest, string id, CancellationToken ct)
     {
         if (!CanDeleteResult(route, offer, digest, id) || Admit(route, offer) is not { } profile) return false;
         using var request = Request(profile, HttpMethod.Delete, profile.Url + "/" + id);
         if (profile.Provider == "openai")
         {
+            // Authorization to delete also requires evidence that this stored handle belongs to the original request.
+            using var lookup = Request(profile, HttpMethod.Get, profile.Url + "/" + id);
+            using var original = await SendAsync(lookup, ct);
+            if (original is null || Text(original.RootElement, "status") != "completed" ||
+                Text(original.RootElement, "model") != profile.Model ||
+                RecoveredOperation(profile.Provider, original.RootElement, id) != operation) return false;
+
             using var receipt = await SendAsync(request, ct);
             return receipt is not null && Text(receipt.RootElement, "id") == id &&
                 Text(receipt.RootElement, "object") == "response.deleted" &&

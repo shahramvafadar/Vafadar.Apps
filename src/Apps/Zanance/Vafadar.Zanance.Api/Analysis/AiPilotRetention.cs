@@ -18,7 +18,7 @@ internal sealed class AiPilotRetention(IDbContextFactory<ServiceDbContext> facto
 
         AiPilotRouteRow route;
         AiOffer offer;
-        string handle, digest;
+        string handle, digest, operation;
         await using (var db = await factory.CreateDbContextAsync(ct))
         await using (var transaction = await db.Database.BeginTransactionAsync(ct))
         {
@@ -37,6 +37,7 @@ internal sealed class AiPilotRetention(IDbContextFactory<ServiceDbContext> facto
             route = await db.Set<AiPilotRouteRow>().AsNoTracking().SingleAsync(row => row.Id == routeId, ct);
             offer = new(frozen.Id, frozen.Provider, frozen.Model, frozen.Purpose, frozen.MaximumUnits, frozen.ExpiresAt);
             handle = originalHandle;
+            operation = AiRequestStore.ProviderKey(owner, request);
             digest = original.PayloadDigest;
             if (!pilot.CanDeleteResult(route, offer, digest, handle)) return AiPilotDeletionResult.Refused;
             db.Add(new AiPilotDeletionRow { RequestId = request, StartedAt = time.GetUtcNow(), Actor = actor });
@@ -47,7 +48,7 @@ internal sealed class AiPilotRetention(IDbContextFactory<ServiceDbContext> facto
         // A lost reply can follow a successful deletion. Never replay the destructive command or infer it from absence.
         try
         {
-            if (!await pilot.DeleteResultAsync(route, offer, digest, handle, ct)) return AiPilotDeletionResult.Unconfirmed;
+            if (!await pilot.DeleteResultAsync(route, offer, operation, digest, handle, ct)) return AiPilotDeletionResult.Unconfirmed;
         }
         catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException)
         {

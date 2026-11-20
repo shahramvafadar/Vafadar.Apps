@@ -1,5 +1,7 @@
 using System.Net;
 using System.Text;
+using System.Security.Cryptography;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Time.Testing;
@@ -21,7 +23,8 @@ public sealed class AiPilotRetentionTests
         var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_RETENTION_TEST_CONNECTION");
         if (connection is null) { Assert.Skip("Explicit isolated retention PostgreSQL fixture required."); return; }
         var settings = new NpgsqlConnectionStringBuilder(connection);
-        Assert.Equal(("127.0.0.1", 55483, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
+        Assert.Equal(("127.0.0.1", "zanance_ai_provider_pilot"), (settings.Host, settings.Database));
+        Assert.Contains(settings.Port, new[] { 55479, 55483 });
         var factory = new Factory(connection);
         var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
         var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
@@ -37,7 +40,7 @@ public sealed class AiPilotRetentionTests
         const string owner = "fictional-retention-owner";
         const string actor = "fictional-retention-operator";
 
-        Guid openAi, gemini, foreign, missing, pending;
+        Guid openAi, gemini, foreign, missing, pending, contradictory;
         await using (var db = factory.CreateDbContext())
         {
             await db.Database.MigrateAsync(ct);
@@ -48,6 +51,13 @@ public sealed class AiPilotRetentionTests
             var first = await SelectAsync("gpt-6-luna");
             openAi = Seed(first, "resp_fixture_retention");
             foreign = Seed(first, "resp_fixture_unmatched");
+            contradictory = Seed(first, "resp_fixture_contradictory");
+            transport.Operations.Add("resp_fixture_retention", Operation(openAi));
+            transport.Operations.Add("resp_fixture_unmatched", Operation(foreign));
+            transport.Operations.Add("resp_fixture_contradictory", Operation(foreign));
+
+            string Operation(Guid request) => Convert.ToHexStringLower(SHA256.HashData(
+                Encoding.UTF8.GetBytes($"zanance.analysis.v1\n{owner}\n{request:N}")));
             var next = await SelectAsync("gemini-3.5-flash-lite");
             gemini = Seed(next, "interaction_fixture_retention");
             missing = Seed(next, "interaction_fixture_missing");
@@ -97,6 +107,10 @@ public sealed class AiPilotRetentionTests
         config["Analysis:ProviderPilot:openai:Project"] = "fixture-retention-openai";
         Assert.Empty(transport.Calls);
 
+        Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(contradictory, actor, ct));
+        Assert.Empty(transport.Calls);
+        Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(contradictory, actor, ct));
+
         var concurrent = await Task.WhenAll(retention.DeleteAsync(openAi, actor, ct), retention.DeleteAsync(openAi, actor, ct));
         Assert.Contains(AiPilotDeletionResult.Confirmed, concurrent);
         Assert.All(concurrent, result => Assert.NotEqual(AiPilotDeletionResult.Refused, result));
@@ -107,12 +121,14 @@ public sealed class AiPilotRetentionTests
         Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(missing, actor, ct));
         Assert.Equal(new[] { "resp_fixture_retention", "interaction_fixture_retention", "resp_fixture_unmatched", "interaction_fixture_missing" }, transport.Calls);
 
+        Assert.Equal(new[] { "resp_fixture_contradictory", "resp_fixture_retention", "resp_fixture_unmatched" }, transport.Reads);
         await using var audit = factory.CreateDbContext();
         var rows = await audit.Set<AiRequestRow>().ToDictionaryAsync(row => row.Id, ct);
         var receipts = await audit.Set<AiPilotDeletionRow>().ToDictionaryAsync(row => row.RequestId, ct);
         Assert.NotNull(receipts[openAi].ConfirmedAt);
         Assert.NotNull(receipts[gemini].ConfirmedAt);
         Assert.Null(receipts[foreign].ConfirmedAt);
+        Assert.Null(receipts[contradictory].ConfirmedAt);
         Assert.Null(receipts[missing].ConfirmedAt);
         Assert.DoesNotContain(pending, receipts.Keys);
         Assert.Null(rows[pending].ProtectedText);
@@ -125,7 +141,7 @@ public sealed class AiPilotRetentionTests
             Assert.Equal(1L, row.ChargedUnits);
         });
         var credits = audit.Set<AiCreditRow>();
-        Assert.Equal(9, await credits.CountAsync(ct));
+        Assert.Equal(11, await credits.CountAsync(ct));
         Assert.Empty(await credits.Where(row => row.Kind == AiCreditEvent.Refund).ToArrayAsync(ct));
     }
 
@@ -137,13 +153,15 @@ public sealed class AiPilotRetentionTests
     private sealed class Replies : HttpMessageHandler, IHttpClientFactory
     {
         internal List<string> Calls { get; } = [];
+        internal List<string> Reads { get; } = [];
+        internal Dictionary<string, string> Operations { get; } = [];
         internal Func<string, Task>? BeforeSend { get; set; }
 
         public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Assert.Equal(HttpMethod.Delete, request.Method);
+            Assert.Contains(request.Method, new[] { HttpMethod.Get, HttpMethod.Delete });
             var uri = request.RequestUri!;
             var handle = uri.Segments[^1];
             if (handle.StartsWith("resp_", StringComparison.Ordinal))
@@ -158,11 +176,23 @@ public sealed class AiPilotRetentionTests
                 Assert.Equal("/v1beta/interactions/" + handle, uri.AbsolutePath);
                 Assert.True(request.Headers.Contains("x-goog-api-key"));
             }
+            if (request.Method == HttpMethod.Get)
+            {
+                Reads.Add(handle);
+                await BeforeSend!(handle);
+                return Json(JsonSerializer.Serialize(new
+                {
+                    id = handle, model = "gpt-6-luna", status = "completed",
+                    metadata = new { zanance_operation = Operations[handle] },
+                }));
+            }
+
             Calls.Add(handle);
             await BeforeSend!(handle);
             return handle switch
             {
                 "resp_fixture_retention" => Json("""{"id":"resp_fixture_retention","object":"response.deleted","deleted":true}"""),
+                "resp_fixture_contradictory" => Json("""{"id":"resp_fixture_contradictory","object":"response.deleted","deleted":true}"""),
                 "resp_fixture_unmatched" => Json("""{"id":"resp_other","object":"response.deleted","deleted":true}"""),
                 "interaction_fixture_retention" => new HttpResponseMessage(HttpStatusCode.NoContent),
                 "interaction_fixture_missing" => new HttpResponseMessage(HttpStatusCode.NotFound),

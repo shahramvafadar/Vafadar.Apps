@@ -443,7 +443,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     private async Task<SyncRequestScope> OpenAsync(ClaimsPrincipal actor, ServiceDbContext db, CancellationToken ct) =>
         await SyncRequestScope.OpenAsync(actor, db, time, ct) ?? throw new AiRefusal(401, "AiIdentityRequired");
     // Stable per-identity operation namespace also survives ordinary service restoration; providers must prove idempotence.
-    private static string ProviderKey(string owner, Guid id) => Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes("zanance.analysis.v1\n" + owner + "\n" + id.ToString("N"))));
+    /// <summary>Derives the same opaque request reference for dispatch, recovery and retention.</summary>
+    internal static string ProviderKey(string owner, Guid id) => Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes("zanance.analysis.v1\n" + owner + "\n" + id.ToString("N"))));
     private IDataProtector Protector(string owner, Guid id) => protection.CreateProtector("zanance.analysis.v1", owner, id.ToString("N"));
     // PostgreSQL stores microseconds; original in-flight pre-canonicalization offers may have one finer tick.
     // This comparison never extends the stored server deadline or changes destination/model/cost consent.

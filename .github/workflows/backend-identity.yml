@@ -254,6 +254,7 @@ jobs:
           ZANANCE_AI_ADMIN_TEST_CONNECTION: Host=127.0.0.1;Port=55479;Database=zanance_ai_provider_pilot;Username=postgres
           ZANANCE_AI_RECOVERY_TX_CONNECTION: Host=127.0.0.1;Port=55479;Database=zanance_ai_provider_pilot;Username=postgres
           ZANANCE_AI_CREATE_REFUSAL_CONNECTION: Host=127.0.0.1;Port=55479;Database=zanance_ai_provider_pilot;Username=postgres
+          ZANANCE_AI_RETENTION_TEST_CONNECTION: Host=127.0.0.1;Port=55479;Database=zanance_ai_provider_pilot;Username=postgres
         run: |
           for method in \
             Switch_retires_quotes_but_pending_requests_keep_their_original_vendor \
@@ -269,7 +270,8 @@ jobs:
             Operator_operations_shows_local_aggregate_without_accessing_providers \
             Pilot_localizes_only_the_fixed_synthetic_corpus_for_both_adapters \
             Notice_binding_rolls_back_with_settlement_and_recovers_an_existing_handle \
-            Create_refusal_records_only_bounded_HTTP_status_and_keeps_original_reservation
+            Create_refusal_records_only_bounded_HTTP_status_and_keeps_original_reservation \
+            Original_synthetic_vendor_deletion_is_bound_to_the_frozen_route_and_receipt
           do
             docker exec zanance-analysis-ci createdb -h 127.0.0.1 -U postgres zanance_ai_provider_pilot
             export ZANANCE_AI_ADMIN_TEST_ROOT="$ZANANCE_AI_QA_ROOT/$method"
