@@ -111,3 +111,24 @@ all viewers/OCR/camera/import variants, OS scaling/TalkBack speech, general ANR/
 providers/store accounts/expert review and release remain separate. Continue ready development under
 D-386; inspect the remaining entry-editor attachment handoff/detail actions before general runtime
 or accessibility work. Hosted exact-head CI is a separate single check, not inferred from this batch.
+
+## Viewer staging and detached attachment bytes
+
+An explicit viewer refusal used to leave the staged copy in the private cache until startup cleanup.
+The source-linked refusal case reproduced one leftover PDF before the fix. The staging path now clears
+its detached write buffer in a finally block and removes its own file when the native viewer returns
+false. It retains the file for an accepted handoff or an exception after possible dispatch so a viewer
+can complete its read. The detail command also clears detached reads after retirement, comparison,
+or handoff. This covers those copies in memory and the app-owned staging file.
+
+All 26 selected AttachmentCache and EntryAttachmentFlow tests passed. Strict Windows and the signed
+offline Android build passed. APK SHA256
+3bae72789fcabd14d60308fc5fbd1d6e50e13e8a44ed7f0c9b28af031cc4f65c was verified after installation.
+
+In a fresh API 36 x64 emulator the original Transactions screen saved one fictitious expense of
+EUR 2.47 and attached one fictitious PDF through Android DocumentsUI. The original attachment action
+opened that PDF in Android's viewer, which rendered the merchant and total from the fixture. The
+first observer expected the wrong resumed-activity field. The same open viewer was verified using
+topResumedActivity without reopening it. Back returned to the same app process and the attachment
+was still present. The disposable package, guest files and emulator were retired. No physical device
+or real user data was used. The explicit false case is covered by the source-linked test.

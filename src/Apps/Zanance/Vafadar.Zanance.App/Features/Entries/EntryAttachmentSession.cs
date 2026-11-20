@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
@@ -46,7 +47,11 @@ public sealed class EntryAttachmentSession(ZananceStore store)
         var review = _review ?? throw new InvalidOperationException("Reopen the original attachment detail.");
         var revision = _revision;
         var value = await store.ReadReviewedAttachmentAsync(review, id);
-        if (!Current(review, revision)) throw new InvalidOperationException("The original attachment detail retired.");
+        if (!Current(review, revision))
+        {
+            CryptographicOperations.ZeroMemory(value.Data);
+            throw new InvalidOperationException("The original attachment detail retired.");
+        }
         return value;
     }
 

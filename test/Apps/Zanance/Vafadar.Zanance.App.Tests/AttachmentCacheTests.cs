@@ -1,4 +1,5 @@
 using Vafadar.Zanance.App.Presentation;
+using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.App.Tests;
 
@@ -6,6 +7,47 @@ namespace Vafadar.Zanance.App.Tests;
 [Trait("AT", "AT-171")]
 public sealed class AttachmentCacheTests
 {
+    [Fact]
+    public async Task A_viewer_that_refuses_the_file_leaves_no_unneeded_private_copy()
+    {
+        using var directory = new OwnedDirectory();
+        var attachment = new EntryAttachment { FileName = "Synthetic.pdf", ContentType = "application/pdf", Data = [1, 2, 3] };
+
+        var accepted = await AttachmentFiles.StageForViewerAsync(directory.Root, attachment, async path =>
+        {
+            Assert.Equal(attachment.Data, await File.ReadAllBytesAsync(path, TestContext.Current.CancellationToken));
+            return false;
+        }, mayOpen: null);
+
+        Assert.False(accepted);
+        Assert.Empty(Directory.EnumerateFileSystemEntries(directory.Root));
+        Assert.Equal(new byte[] { 1, 2, 3 }, attachment.Data);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task A_viewer_that_has_or_may_have_accepted_keeps_its_verified_copy(bool interrupted)
+    {
+        using var directory = new OwnedDirectory();
+        var attachment = new EntryAttachment { FileName = "Synthetic.pdf", ContentType = "application/pdf", Data = [7, 4] };
+        string? retained = null;
+        var approved = false;
+        var work = AttachmentFiles.StageForViewerAsync(directory.Root, attachment, async path =>
+        {
+            Assert.True(approved);
+            Assert.Equal(attachment.Data, await File.ReadAllBytesAsync(path, TestContext.Current.CancellationToken));
+            retained = path;
+            if (interrupted) throw new IOException("The native handoff did not report an outcome.");
+            return true;
+        }, () => Task.FromResult(approved = true));
+
+        if (interrupted) await Assert.ThrowsAsync<IOException>(() => work);
+        else Assert.True(await work);
+        Assert.Equal(retained, Assert.Single(Directory.EnumerateFiles(directory.Root)));
+        Assert.Equal(new byte[] { 7, 4 }, attachment.Data);
+    }
+
     /// <summary>A new Android process removes only its renderer's abandoned cache files.</summary>
     [Fact]
     public void Interrupted_pdf_cleanup_preserves_other_files_and_nested_directories()

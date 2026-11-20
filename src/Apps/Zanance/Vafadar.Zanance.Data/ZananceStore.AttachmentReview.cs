@@ -44,7 +44,16 @@ public sealed partial class ZananceStore
         review.Validate(db, await EntryAttachmentReview.ReadAsync(db, review.Inputs.Entry.Id, ct));
         var value = await db.Attachments.AsNoTracking().SingleOrDefaultAsync(a => a.Id == id && a.EntryId == review.Inputs.Entry.Id, ct)
             ?? throw new InvalidOperationException("The original attachment is unavailable.");
-        review.EnsureCurrent(); return value;
+        try
+        {
+            review.EnsureCurrent();
+            return value;
+        }
+        catch
+        {
+            CryptographicOperations.ZeroMemory(value.Data);
+            throw;
+        }
     }
 
     /// <summary>Adds one selected document only to its original unchanged entry, with current correction rights.</summary>

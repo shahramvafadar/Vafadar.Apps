@@ -1,9 +1,43 @@
+using System.Security.Cryptography;
 using Vafadar.Zanance.App.Security;
+using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.App.Presentation;
 
 internal static partial class AttachmentFiles
 {
+    /// <summary>Writes a private viewer copy and asks its original owner before opening it.</summary>
+    internal static async Task<bool> StageForViewerAsync(string folder, EntryAttachment attachment,
+        Func<string, Task<bool>> open, Func<Task<bool>>? mayOpen)
+    {
+        Directory.CreateDirectory(folder);
+        // Imported profiles may retain the same attachment id. Each open owns a new cache file.
+        var path = Path.Combine(folder, $"{attachment.Id:N}-{Guid.NewGuid():N}{Path.GetExtension(attachment.FileName)}");
+        var bytes = attachment.Data.ToArray();
+        var keep = false;
+        var created = false;
+        try
+        {
+            try
+            {
+                await using var output = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None, 81920, useAsync: true);
+                created = true;
+                await output.WriteAsync(bytes);
+            }
+            finally { CryptographicOperations.ZeroMemory(bytes); }
+            if (mayOpen is not null && !await mayOpen()) return false;
+            // A throwing native handoff might already have dispatched the file. Keep it for
+            // normal startup cleanup unless the viewer explicitly declines it.
+            keep = true;
+            keep = await open(path);
+            return keep;
+        }
+        finally
+        {
+            if (created && !keep && File.Exists(path)) File.Delete(path);
+        }
+    }
+
     /// <summary>Uses the known platform suffix for missing extensions and for converted representations.</summary>
     internal static string NormalizePickedName(string? displayName, string? extension, bool converted = false)
     {

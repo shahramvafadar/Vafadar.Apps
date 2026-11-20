@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
@@ -559,16 +560,21 @@ public sealed partial class EntryDetailViewModel(
         var revision = _revision; var attachmentRevision = _attachmentRevision;
         bool Current() => Owns(owner, revision) && attachmentRevision == _attachmentRevision && ReferenceEquals(owner.Displayed, source);
         var attachment = await _attachments.ReadAsync(row.Id);
-        if (!Current()) return;
-        var opened = await AttachmentFiles.OpenAsync(attachment, async () =>
+        try
         {
-            if (!Current()) return false;
-            await store.ValidateEntryDetailSnapshotAsync(source);
-            var current = await _attachments.ReadAsync(row.Id);
-            return Current() && current.Data.AsSpan().SequenceEqual(attachment.Data);
-        });
-        if (!opened && Current())
-            await interaction.AlertAsync(translator["Attachment_Title"], translator["Attachment_OpenFailed"], translator["Common_Ok"]);
+            if (!Current()) return;
+            var opened = await AttachmentFiles.OpenAsync(attachment, async () =>
+            {
+                if (!Current()) return false;
+                await store.ValidateEntryDetailSnapshotAsync(source);
+                var current = await _attachments.ReadAsync(row.Id);
+                try { return Current() && current.Data.AsSpan().SequenceEqual(attachment.Data); }
+                finally { CryptographicOperations.ZeroMemory(current.Data); }
+            });
+            if (!opened && Current())
+                await interaction.AlertAsync(translator["Attachment_Title"], translator["Attachment_OpenFailed"], translator["Common_Ok"]);
+        }
+        finally { CryptographicOperations.ZeroMemory(attachment.Data); }
     }));
 
     private Task DeleteAttachmentAsync(AttachmentRow row) => RunOriginalAsync(async owner =>
