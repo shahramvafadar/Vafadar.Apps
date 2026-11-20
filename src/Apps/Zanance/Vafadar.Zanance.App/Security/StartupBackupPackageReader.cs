@@ -36,7 +36,7 @@ internal static class StartupBackupPackageReader
                 ct.ThrowIfCancellationRequested();
                 if (count == 0) break;
                 if (buffer.Length + count > maximumBytes) throw new IOException("Portable recovery file exceeds its bound.");
-                await buffer.WriteAsync(chunk.AsMemory(0, count), ct).ConfigureAwait(false);
+                Append(buffer, chunk.AsSpan(0, count));
             }
             ct.ThrowIfCancellationRequested();
             return buffer.ToArray();
@@ -44,7 +44,23 @@ internal static class StartupBackupPackageReader
         finally
         {
             CryptographicOperations.ZeroMemory(chunk);
-            if (buffer.TryGetBuffer(out var owned)) CryptographicOperations.ZeroMemory(owned.AsSpan());
+            CryptographicOperations.ZeroMemory(buffer.GetBuffer());
+        }
+    }
+
+    /// <summary>Appends to the owned accumulator and clears the former backing array if it grows.</summary>
+    internal static void Append(MemoryStream buffer, ReadOnlySpan<byte> bytes)
+    {
+        var previous = buffer.GetBuffer();
+        try
+        {
+            buffer.Write(bytes);
+        }
+        finally
+        {
+            // MemoryStream copies the data on growth, leaving the superseded allocation intact.
+            if (!ReferenceEquals(previous, buffer.GetBuffer()))
+                CryptographicOperations.ZeroMemory(previous);
         }
     }
 }

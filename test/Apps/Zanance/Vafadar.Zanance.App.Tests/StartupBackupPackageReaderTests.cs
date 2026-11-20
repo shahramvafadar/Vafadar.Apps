@@ -14,6 +14,24 @@ public sealed class StartupBackupPackageReaderTests
         Assert.Equal(original, result); Assert.NotSame(original, result); Assert.True(source.CanRead);
     }
 
+    /// <summary>Growing the accumulator retains the read data only in its current allocation.</summary>
+    [Fact]
+    public void Growing_the_accumulator_clears_earlier_storage_after_copying()
+    {
+        using var buffer = new MemoryStream(4);
+        StartupBackupPackageReader.Append(buffer, [1, 2]);
+        var initial = buffer.GetBuffer();
+        StartupBackupPackageReader.Append(buffer, [3, 4]);
+        Assert.Same(initial, buffer.GetBuffer());
+        Assert.Equal(new byte[] { 1, 2, 3, 4 }, initial);
+
+        StartupBackupPackageReader.Append(buffer, [5, 6]);
+
+        Assert.NotSame(initial, buffer.GetBuffer());
+        Assert.All(initial, value => Assert.Equal((byte)0, value));
+        Assert.Equal(new byte[] { 1, 2, 3, 4, 5, 6 }, buffer.ToArray());
+    }
+
     /// <summary>Already retired input does not even invoke the provider's first native read.</summary>
     [Fact]
     public async Task Retired_request_never_starts_a_provider_read()

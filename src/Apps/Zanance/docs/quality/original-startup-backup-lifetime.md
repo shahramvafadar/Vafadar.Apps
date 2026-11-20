@@ -54,6 +54,18 @@ cumulative cap and clears temporary chunk/MemoryStream copies on every exit. The
 package is independent owned memory. Empty input retains its original interpretation;
 original protected portable validation decides whether it is a valid backup.
 
+The reader also clears its superseded managed buffer after each growth of the accumulator.
+Both startup recovery and normal portable preview use that reader. The focused regression keeps
+a reference to the previous allocation across growth and verifies that it is zeroed and the new
+buffer still contains the complete input. The caller-owned result remains available for the
+original validation and cleanup. This verification covers the reader's own managed buffers.
+All ten focused reader cases and the strict Windows and offline Android builds passed.
+On an isolated Android 16 guest with signed APK `5737608c`, the native picker opened the
+retained D-403 synthetic file once through its read-only provider pipe. The normal portable
+preview showed one account, one transaction and one plan. Cancel cleared the preview and Back
+returned to Welcome on the same boot and app process. The run required no restore or ledger
+write. Evidence is retained under `artifacts/xbw-native`.
+
 ## Focused evidence
 
 Nine distinct actual-stream cases pass on the production reader: independent complete
