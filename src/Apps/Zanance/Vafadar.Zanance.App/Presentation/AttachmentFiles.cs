@@ -77,14 +77,18 @@ internal static partial class AttachmentFiles
     public static void ClearCache(string? resetProfileId = null)
     {
         AttachmentCache.Clear(FileSystem.CacheDirectory);
-#if ANDROID
-        if (resetProfileId is null) return;
+        if (resetProfileId is not null) ClearBackupShares(resetProfileId);
+    }
 
-        AttachmentCache.ClearBackupShares(FileSystem.CacheDirectory, resetProfileId);
+    /// <summary>Removes only temporary portable-backup shares for a reset or deleted profile.</summary>
+    internal static void ClearBackupShares(string profileId)
+    {
+#if ANDROID
+        AttachmentCache.ClearBackupShares(FileSystem.CacheDirectory, profileId);
         // Older Android versions of Zanance let MAUI prefer its app-specific external cache.
         var legacyCache = Android.App.Application.Context.ExternalCacheDir?.AbsolutePath;
         if (!string.IsNullOrEmpty(legacyCache))
-            AttachmentCache.ClearBackupShares(legacyCache, resetProfileId);
+            AttachmentCache.ClearBackupShares(legacyCache, profileId);
 #endif
     }
 

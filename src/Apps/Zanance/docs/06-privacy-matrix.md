@@ -86,11 +86,13 @@ signed AAB `885f79b6` passed the manifest, compiled storage policy, 16 KiB ELF a
 checks. A development certificate signed this bundle. These checks required no repeated
 native handoffs or Play submission. Bundle evidence is in `artifacts/restricted-share-bundle`.
 
-After a confirmed Android profile reset, Zanance attempts to retire temporary copies made for
-sharing that profile's portable backups. It matches the backup filename identity inside the
-sharing cache, including the older app-specific external cache. Focused tests cover Main and
-secondary profiles and verify that other profiles' staged copies and original backups remain.
-Copies saved by recipients are outside the app's control.
+When an Android profile is reset or an inactive profile is deleted, Zanance attempts to retire
+temporary copies made for sharing that profile's portable backups. It matches the backup filename
+identity inside the sharing cache, including the older app-specific external cache. The cache
+cleanup preserves other profiles' staged copies and files outside the cache. Profile deletion
+still follows its separate rules for on-device backups. A protected deletion that resumes after
+an interruption uses the original profile identity. Copies saved by recipients are outside
+the app's control.
 
 ## Permissions
 

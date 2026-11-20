@@ -134,12 +134,14 @@ public sealed class ProfileTests
         var otherPath = Location(f).Path;
         Assert.Throws<InvalidOperationException>(() => profiles.Delete(other));
         Assert.Throws<InvalidOperationException>(() => profiles.Delete(main));
+        Assert.Empty(runtime.ClearedBackupShares);
         Assert.True(await profiles.SwitchToAsync(main));
         var backupDir = f.Directory.Combine("backups"); Directory.CreateDirectory(backupDir);
         var owned = Path.Combine(backupDir, $"pro.vafadar.zanance~{other.Id}_fictitious.vbak");
         var retained = Path.Combine(backupDir, "pro.vafadar.zanance_main.vbak");
         await File.WriteAllTextAsync(owned, "Fictitious", Ct); await File.WriteAllTextAsync(retained, "Fictitious", Ct);
         profiles.Delete(other); Assert.False(File.Exists(otherPath)); Assert.False(File.Exists(owned));
+        Assert.Equal(other.Id, Assert.Single(runtime.ClearedBackupShares));
         Assert.True(File.Exists(retained)); Assert.True(File.Exists(Location(f).Path)); Assert.Single(profiles.All);
     }
 
@@ -303,6 +305,7 @@ public sealed class ProfileTests
     private sealed class ProfileRuntime(FlowFixture fixture) : IProfileRuntime
     {
         internal int ExclusiveRuns, LockReloads, AuthenticationCalls, UndoDismissals;
+        internal List<string> ClearedBackupShares { get; } = [];
         internal bool AuthenticationAllowed = true, FailMigration;
         internal Action? DuringAuthentication;
         internal Func<Task>? DuringPreparation;
@@ -323,5 +326,6 @@ public sealed class ProfileTests
         public Task<bool> AuthenticateAsync(string reason) { Assert.True(_exclusive); AuthenticationCalls++; DuringAuthentication?.Invoke(); return Task.FromResult(AuthenticationAllowed); }
         public Task ReloadLockAsync() { Assert.False(_exclusive); LockReloads++; return Task.CompletedTask; }
         public void DismissUndo() => UndoDismissals++;
+        public void ClearBackupShares(string profileId) => ClearedBackupShares.Add(profileId);
     }
 }

@@ -64,6 +64,8 @@ internal sealed class MauiProfileRuntime(IServiceProvider services, AutoPostProc
     public void FinishDatabaseTransition(bool accepted, DatabaseAccessGate.ExclusiveLease owner) =>
         ProtectedSession?.FinishSwitch(accepted, owner);
     /// <inheritdoc />
+    public void ClearBackupShares(string profileId) => AttachmentFiles.ClearBackupShares(profileId);
+    /// <inheritdoc />
     public async Task<bool> AuthenticateAsync(string reason) => await appLock.Authenticator.AuthenticateAsync(reason) == AuthenticationOutcome.Success;
     /// <inheritdoc />
     public Task ReloadLockAsync() => appLock.ReloadAsync();

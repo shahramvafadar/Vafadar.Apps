@@ -158,9 +158,13 @@ public sealed partial class ProfileService(
                 }
             }
 
+            ClearRetiredBackupShares(profile.Id);
             Changed?.Invoke(this, EventArgs.Empty);
         }
     }
+
+    /// <summary>Retires temporary shares after the original profile has been removed from the catalogue.</summary>
+    internal void ClearRetiredBackupShares(string profileId) => runtime.ClearBackupShares(profileId);
 
     private static bool HasProtectedProfileState(string original)
     {

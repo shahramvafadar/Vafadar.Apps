@@ -31,6 +31,9 @@ public interface IProfileRuntime
     /// <summary>Retires tentative/previous protected keys after the actual publication decision; plaintext hosts own none.</summary>
     void FinishDatabaseTransition(bool accepted, Vafadar.Data.DatabaseAccessGate.ExclusiveLease owner) { }
 
+    /// <summary>Retires platform sharing-cache copies belonging to the deleted profile.</summary>
+    void ClearBackupShares(string profileId) { }
+
     /// <summary>Confirms the destination profile's device lock; unavailable authentication fails.</summary>
     Task<bool> AuthenticateAsync(string reason);
 

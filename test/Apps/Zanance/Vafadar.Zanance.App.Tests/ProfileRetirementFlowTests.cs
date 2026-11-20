@@ -47,6 +47,7 @@ public sealed class ProfileRetirementFlowTests
         using var fixture = new Fixture(); await fixture.InitializeAsync(); fixture.Persistence.Fail = true;
         await Assert.ThrowsAsync<IOException>(() => fixture.Profiles.DeleteAsync(fixture.Work, Ct));
         Assert.Single(fixture.Profiles.All); Assert.True(File.Exists(fixture.Candidate)); Assert.True(File.Exists(fixture.TargetKey));
+        Assert.Empty(fixture.Runtime.ClearedBackupShares);
         Assert.Contains(await fixture.Identities.ReadAsync(Ct), row => row.ProfileId == fixture.Identity.ProfileId);
         fixture.Persistence.Fail = false;
         using (var owner = await fixture.Location.Access.AcquireExclusiveAsync(Ct))
@@ -56,6 +57,7 @@ public sealed class ProfileRetirementFlowTests
         using (var owner = await fixture.Location.Access.AcquireExclusiveAsync(Ct))
             await fixture.Host.ResumePendingAsync(fixture.Profiles, fixture.Location, owner, Ct);
         Assert.Equal(2, fixture.Persistence.Writes);
+        Assert.Equal(fixture.Work.Id, Assert.Single(fixture.Runtime.ClearedBackupShares));
     }
 
     [Fact, Trait("AT", "AT-236")]
@@ -237,10 +239,12 @@ public sealed class ProfileRetirementFlowTests
     private sealed class Runtime : IProfileRuntime
     {
         internal int ExclusiveRuns;
+        internal List<string> ClearedBackupShares { get; } = [];
         public async Task RunExclusiveAsync(Func<Task> action) { ExclusiveRuns++; await action(); }
         public Task MigrateAsync(DatabaseAccessGate.ExclusiveLease owner) => throw new NotSupportedException();
         public Task<bool> AuthenticateAsync(string reason) => throw new NotSupportedException();
         public Task ReloadLockAsync() => throw new NotSupportedException();
         public void DismissUndo() { }
+        public void ClearBackupShares(string profileId) => ClearedBackupShares.Add(profileId);
     }
 }

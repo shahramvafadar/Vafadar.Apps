@@ -152,6 +152,8 @@ public sealed class ProtectedProfileRetirementHost(
         {
             if (recovery is not null) await recovery.RemoveRetiredAsync(state, journal, ct);
             await remove(state, journal, ct);
+            // Run before the durable artifact checkpoint so an interrupted retirement can finish cleanup.
+            profiles.ClearRetiredBackupShares(state.LegacyProfileId);
         }
         public Task RetireIdentityAsync(ProfileRetirementCheckpoint state, CancellationToken ct) =>
             new SqliteDatabaseIdentityCatalogue(identityPath, owner.Validate).RetireAsync(state, journal, durability, async token =>
