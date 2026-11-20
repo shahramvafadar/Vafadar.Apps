@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
@@ -238,7 +239,9 @@ public static class AiProtocol
             AiFundingKind.BudgetSuggestion => facts.Observed > 0 && facts.Baseline >= facts.Observed &&
                 (Int128)facts.Baseline - facts.Observed == facts.Difference && facts.Existing is null or >= 0 &&
                 facts.PeriodCount is >= 1 and <= 4 && facts.Carry is null && facts.PlannedContribution is null &&
-                facts.RequiredContribution is null && facts.Unfunded is null,
+                facts.RequiredContribution is null && facts.Unfunded is null &&
+                Currencies.TryGet(facts.Currency, out var currency) &&
+                facts.Baseline == BudgetSuggestions.RoundUp(facts.Observed, currency.MinorFactor),
             AiFundingKind.Goal => facts.Baseline > 0 && facts.Difference > 0 && facts.Unfunded is >= 0 &&
                 (Int128)facts.Baseline - Math.Max(0, facts.Observed) == facts.Difference && facts.PeriodCount is >= 0 &&
                 facts.Existing is null && facts.Carry is null && facts.PlannedContribution is null or >= 0 &&
