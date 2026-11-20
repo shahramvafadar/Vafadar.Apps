@@ -22,7 +22,7 @@ Diagram.Inject(PrintAndExport);
 interface Picture { source: string; sizes: string | null; words: string; }
 interface GraphNode {
   id: string; name: string; address: string; profile: string; nameLanguage?: string; kind?: string;
-  picture?: Picture; lines: string[]; row?: number; place?: number; expandable: boolean;
+  picture?: Picture; lines: string[]; row?: number; place?: number; expandable: boolean; timeline?: string; gallery?: string;
 }
 interface GraphEdge {
   id: string; from: string; to: string; role: string; label: string; directed: boolean;
@@ -290,6 +290,19 @@ class DastanGraph {
     const open = this.host.querySelector<HTMLButtonElement>('[data-graph-profile]');
     if (open) {
       open.disabled = !node;
+    }
+
+    // What is chosen is carried on: to its timeline and to its pictures, where it has any (R-EXP-05).
+    for (const [name, address] of [['timeline', node?.timeline], ['gallery', node?.gallery]] as const) {
+      const on = this.host.querySelector<HTMLAnchorElement>(`[data-graph-${name}]`);
+      if (on) {
+        on.hidden = !address;
+        if (address) {
+          on.href = here(address);
+        } else {
+          on.removeAttribute('href');
+        }
+      }
     }
 
     if (!said) {

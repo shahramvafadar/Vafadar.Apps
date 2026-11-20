@@ -2711,3 +2711,15 @@ dastan-timeline > .tlv-still > :not(.stage),
   max-inline-size: var(--measure);
   margin-inline: auto;
 }
+
+/* The ways on from what is chosen in a graph (R-EXP-05): links that look like the buttons beside them. */
+.graph-tools .graph-on:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--accent);
+}

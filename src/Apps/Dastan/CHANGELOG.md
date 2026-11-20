@@ -363,3 +363,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A picture can say the time it shows, apart from the time it was made. The gallery of a collection can be asked
   for a time – a year, a stretch or a depth of time – and shows what shows that time, whenever it was made;
   what was only made in that time is listed apart.
+- A date that is exact to the day is shown as it was written and, beside it, in the calendar of the page –
+  Solar Hijri on a Persian page, Gregorian otherwise – and is said to be converted.
+- A card that is chosen in a graph offers its timeline and its pictures; every name with dated statements has a
+  timeline of its own.

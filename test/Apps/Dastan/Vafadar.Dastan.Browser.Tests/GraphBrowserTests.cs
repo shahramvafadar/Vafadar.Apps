@@ -229,6 +229,11 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         await Assertions.Expect(said).ToContainTextAsync(names["character-rostam"]);
         await Assertions.Expect(host.Locator("[data-graph-profile]")).ToBeEnabledAsync();
 
+        // What is chosen is carried on (R-EXP-05): to its pictures, where a picture shows it – and to nothing it does not have.
+        await Assertions.Expect(host.Locator("[data-graph-gallery]")).ToBeVisibleAsync();
+        Assert.EndsWith($"/{language}/{Story}/entity/character-rostam/gallery", await host.Locator("[data-graph-gallery]").EvaluateAsync<string>("link => link.href"), StringComparison.Ordinal);
+        await Assertions.Expect(host.Locator("[data-graph-timeline]")).ToBeHiddenAsync();
+
         // An arrow goes to the card that stands in its direction – and moves no card.
         var before = (await Seen(host)).GetProperty("cards").GetRawText();
         await page.Keyboard.PressAsync("ArrowUp");
@@ -262,6 +267,7 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         await page.Keyboard.PressAsync("Escape");
         Assert.Equal(JsonValueKind.Null, (await Seen(host)).GetProperty("chosen").ValueKind);
         await Assertions.Expect(said).ToBeEmptyAsync();
+        await Assertions.Expect(host.Locator("[data-graph-gallery]")).ToBeHiddenAsync();
 
         // Tab leaves the drawing, in both directions.
         await page.Keyboard.PressAsync("Tab");

@@ -1,4 +1,5 @@
 @page "/{Collection}/timeline"
+@page "/{Collection}/entity/{Subject}/timeline"
 @using System.Collections.Immutable
 @using Vafadar.Temporal
 @inject Visitor Visitor
@@ -12,18 +13,32 @@
    position is asked of the projection; a later statement does not exist for this page. *@
 @if (_story is { } story)
 {
-    var title = string.Format(CultureInfo.CurrentCulture, T["Timeline_Title"], Visitor.Text(story.Label).Value);
+    var title = string.Format(CultureInfo.CurrentCulture, T["Timeline_Title"], Visitor.Text((_of ?? story).Label).Value);
     <PageTitle>@title – @T["Site_Name"]</PageTitle>
 
     <header class="page-header">
-        <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], Visitor.Text(story.Label).Value)</a></p>
-        <h1>@title</h1>
-        <p class="lead">@T["Timeline_Lead"]</p>
+        @if (_of is { } of)
+        {
+            @* The timeline of one name (R-EXP-05): what was chosen elsewhere – in a graph, on a page – carried here. *@
+            <p class="meta"><a href="@($"{Site.Collection}/entity/{of.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], Visitor.Text(of.Label).Value)</a></p>
+            <h1>@title</h1>
+            <p class="lead">@T["Timeline_LeadOf"]</p>
+            <p class="actions">
+                <a class="action secondary" href="@($"{Site.Collection}/timeline")">@T["Timeline_All"]</a>
+                <a class="action secondary" href="@($"{Site.Collection}/entity/{of.Id}/connections")">@T["Timeline_Connections"]</a>
+            </p>
+        }
+        else
+        {
+            <p class="meta"><a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], Visitor.Text(story.Label).Value)</a></p>
+            <h1>@title</h1>
+            <p class="lead">@T["Timeline_Lead"]</p>
+        }
     </header>
 
     @if (_timeline is { } timeline)
     {
-        <ComparisonView Comparison="timeline" Address="@($"{Site.Collection}/timeline")" State="_state" LongNames="true"
+        <ComparisonView Comparison="timeline" Address="@_page" State="_state" LongNames="true"
                         SourceAddress="@(source => EvidenceAddress.Source(Site.Collection, source.Id, _here))" />
     }
     else
@@ -44,6 +59,8 @@
     private const string MadeLane = "timeline-made";
 
     private Entity? _story;
+    private Entity? _of;
+    private string _page = string.Empty;
     private Comparison? _timeline;
     private ChartState _state = new();
     private string _here = string.Empty;
@@ -52,6 +69,10 @@
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
     public string Collection { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the entity whose timeline is asked for, if the address names one.</summary>
+    [Parameter]
+    public string? Subject { get; set; }
 
     /// <summary>Gets or sets the direction of the chart in the address.</summary>
     [SupplyParameterFromQuery(Name = "view")]
@@ -89,7 +110,20 @@
         _story = overview.Subject;
         _continues = projection.StoryContinues;
         _state = ChartState.Read(View, Scale, From, To, Events, Lanes);
-        _here = $"{Site.Collection}/timeline{_state.Query()}";
+        // An entity the visitor has not read to and one that does not exist are the same page: not found.
+        if (Subject is not null)
+        {
+            _of = Subject.Length == 0 || Subject.Any(char.IsWhiteSpace) ? null : projection.Find(new EntityId(Subject));
+            if (_of is null)
+            {
+                _story = null;
+                Navigation.NotFound();
+                return;
+            }
+        }
+
+        _page = _of is null ? $"{Site.Collection}/timeline" : $"{Site.Collection}/entity/{_of.Id}/timeline";
+        _here = $"{_page}{_state.Query()}";
         _timeline = Build(projection);
     }
 
@@ -102,6 +136,16 @@
     private Comparison? Build(Projection projection)
     {
         var view = projection.Timeline();
+        if (_of is { } only)
+        {
+            // Of one name: what is stated about it, and the pictures that show it.
+            view = view with
+            {
+                Subjects = [.. view.Subjects.Where(subject => subject.Id == only.Id)],
+                Made = [.. view.Made.Where(item => item.DepictedEntities.Contains(only.Id))],
+            };
+        }
+
         var lanes = ImmutableArray.CreateBuilder<ComparisonLane>();
         foreach (var subject in view.Subjects)
         {

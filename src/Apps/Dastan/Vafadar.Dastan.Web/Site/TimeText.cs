@@ -160,18 +160,34 @@ public static class TimeText
         ArgumentNullException.ThrowIfNull(visitor);
         ArgumentNullException.ThrowIfNull(text);
 
+        // The date as it was written – and beside it, where it is exact enough for that, the same day in the
+        // calendar the reader of the page reads in, said to be converted (ADR 0021, R-TIME-05).
+        var written = Written(position, visitor, text);
+        return CalendarConversion.To(position, CalendarConversion.Of(visitor.Language.Tag)) is { } converted
+            ? string.Format(CultureInfo.CurrentCulture, text["Date_Converted"], written, Written(converted, visitor, text))
+            : written;
+    }
+
+    private static string Written(CalendarPosition position, Visitor visitor, IStringLocalizer<Ui> text)
+    {
         var year = visitor.Number(position.Year);
 
-        // The months of the common era have names in both languages of the site. A month of another calendar is
-        // written as its number rather than under a name the site has not been given.
-        var named = position.Era is Era.CommonEra or Era.BeforeCommonEra;
+        // The months of the common era and of the two Hijri calendars have names in both languages of the site.
+        // A month of any other count is written as its number rather than under a name it does not have.
+        var months = position.Era switch
+        {
+            Era.CommonEra or Era.BeforeCommonEra => "Month_",
+            Era.SolarHijri or Era.BeforeSolarHijri => "SolarMonth_",
+            Era.LunarHijri or Era.BeforeLunarHijri => "LunarMonth_",
+            _ => null,
+        };
         var date = position switch
         {
-            { Month: { } month, Day: { } day } when named =>
-                string.Format(CultureInfo.CurrentCulture, text["Date_Day"], visitor.Number(day), text[$"Month_{month.ToString(CultureInfo.InvariantCulture)}"], year),
+            { Month: { } month, Day: { } day } when months is not null =>
+                string.Format(CultureInfo.CurrentCulture, text["Date_Day"], visitor.Number(day), text[months + month.ToString(CultureInfo.InvariantCulture)], year),
             { Month: { } month, Day: { } day } => $"{year}/{visitor.Number(month)}/{visitor.Number(day)}",
-            { Month: { } month } when named =>
-                string.Format(CultureInfo.CurrentCulture, text["Date_Month"], text[$"Month_{month.ToString(CultureInfo.InvariantCulture)}"], year),
+            { Month: { } month } when months is not null =>
+                string.Format(CultureInfo.CurrentCulture, text["Date_Month"], text[months + month.ToString(CultureInfo.InvariantCulture)], year),
             { Month: { } month } => $"{year}/{visitor.Number(month)}",
             _ => year,
         };
