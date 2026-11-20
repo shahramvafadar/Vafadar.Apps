@@ -1776,3 +1776,30 @@ successful close, a cancelled request with no bytes written, and an actual close
 All three selected tests, the strict Windows build, standard test clean, and the signed
 offline Android build passed. No native Save, ledger operation, or recovery enrolment was
 repeated.
+
+### Android destination ownership
+
+The original Android request retains the destination from the chooser callback through
+the provider open, write, flush and close. A competing Save is refused while that request
+owns the destination. If a deadline ends the caller before the chooser returns, its
+original callback or the destruction of its activity clears the pending request.
+
+The adapter admits a content URI with a transient external write grant. It opens the
+asset descriptor on a worker using Android's cancellation signal and the requesting
+activity's lifetime. Activity destruction cancels the outstanding request. A provider
+that has already written, flushed and closed a file can still report completion.
+
+Three new cases on an owned Android 16 emulator exercised the source-linked adapter with
+a separate provider process and synthetic bytes. Actual activity destruction cancelled
+a held provider open without a destination return. An overlapping request was refused
+while the original open was held, and the first request completed exactly one write.
+A result without the transient write grant was refused before the provider was opened.
+
+The first readback observer could not read the fixture's saved file through its content
+resolver. A readback-only update of that fixture retained the same UID and verified the
+four exact bytes in the existing file. The accepted write and two refusal cases were not
+repeated. The native calls were exercised through two independent packages on an emulator.
+Evidence is under `artifacts/android-recovery-save-owner/native`.
+Both test packages and their emulator were retired. The final signed offline Android
+Release package passed verification with SHA-256
+`f00fc07ec97bf069143d5ea33e0eab13ec619535fa40a03bb34eea75d43e68d1`.
