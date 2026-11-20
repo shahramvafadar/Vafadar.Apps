@@ -590,6 +590,27 @@ returned to an empty All plans list. The all-time transaction list remained empt
 process 2723 showed the original account and EUR 0.00. No plan or payment was saved. The emulator
 was retired and local evidence retained in `artifacts/at72-holiday-plan`.
 
+## AT-72 Android monthly skip policy and inclusive end date
+
+The retained signed Offline Release APK `722093c6` ran in Advanced mode on an owned Android 16
+x86-64 emulator. With one synthetic zero-opening account, the original New plan editor selected
+Monthly, Gregorian day 31, and **Skip months without this day**. Its first due date was
+December 31, 2026.
+
+With **On a date** set to March 31, 2027, the complete **Next dates** preview showed December 31,
+January 31, and March 31 in order. February had no row. Changing only the end date to March 30
+on the same draft left exactly the first two rows. Cancel and Discard returned to an empty
+**All plans** list in the same process. No plan was saved and no payment or ledger operation
+was invoked.
+
+The local install receipt initially failed after APK verification. The installed APK was
+verified in place and launched once. The observer then corrected its platform caption and
+control-class checks and enabled Monthly before opening the repeat options. The original
+attempts and final native captures are retained in `artifacts/monthly-skip-date-end-native`.
+The fixture package, final on-device XML and owned emulator were removed. This covers the
+Gregorian draft preview and discard on the emulator. It leaves saved-plan
+execution, equivalent calendar cases and physical-device acceptance open.
+
 ## AT-72 validation of the enabled second monthly day
 
 The original plan editor distinguishes turning the optional second day off from leaving it on
