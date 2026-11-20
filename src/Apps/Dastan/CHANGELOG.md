@@ -374,3 +374,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   longer leave somebody in a circle or a tree of an account they show nothing with, and two links made at the
   same moment can no longer make somebody their own ancestor. The command `people repair` puts right what the
   earlier version could have left behind.
+- An account made through Microsoft, or through any provider that only names a mail address, is an account
+  once you have opened the link the site mails to the address you wrote – not before, whichever way you come.
+  You can have the mail again or correct the address. Nothing tells anybody whether an address has an account.

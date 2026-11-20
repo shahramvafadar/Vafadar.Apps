@@ -29,9 +29,23 @@ public sealed class ExternalSite : DemoSite
     /// <summary>Gets or sets the mail address the provider says it confirmed. Nothing: one of its own for each identifier; empty: it names none.</summary>
     public string? Mail { get; set; }
 
+    /// <summary>Gets or sets a value indicating whether the provider says it verified the address, as Google does – or only names one, as Microsoft does.</summary>
+    public bool Proves { get; set; } = true;
+
+    /// <summary>Gets the port of a catcher of mail the site sends its mail to while it runs. Nothing: the mail waits in the outbox.</summary>
+    public int? MailPort { get; init; }
+
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseSetting("Dastan:Database", TestDatabase.For(File));
+        if (MailPort is { } port)
+        {
+            builder.UseSetting("Dastan:Mail:Host", MailCatcher.Host);
+            builder.UseSetting("Dastan:Mail:Port", port.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            builder.UseSetting("Dastan:Mail:Security", "None");
+            builder.UseSetting("Dastan:Mail:From", "no-reply@dastan.test");
+        }
+
         builder.ConfigureServices(services =>
         {
             services.AddSingleton(this);
@@ -63,6 +77,10 @@ public sealed class ExternalSite : DemoSite
                 if ((site.Mail ?? $"{subject}@example.org") is { Length: > 0 } mail)
                 {
                     said.AddClaim(new(ClaimTypes.Email, mail));
+                    if (site.Proves)
+                    {
+                        said.AddClaim(new(ExternalSignIn.AddressProven, "true"));
+                    }
                 }
 
                 await Context.SignInAsync(ExternalSignIn.Arriving, new ClaimsPrincipal(said), properties);

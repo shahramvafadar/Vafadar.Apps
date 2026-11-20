@@ -85,7 +85,7 @@ Sie können sich statt mit einem Passwort über ein Konto anmelden, das Sie bei 
 
 ## Was geschieht, wenn Sie die Schaltfläche betätigen
 
-Ihr Browser wechselt zur Anmeldeseite des Unternehmens. Dort melden Sie sich an, und das Unternehmen bestätigt dieser Website, dass Sie es sind. Das Unternehmen erfährt dadurch, dass Sie diese Website nutzen, wann Sie sich bei ihr anmelden, sowie die technischen Daten Ihres Browsers. Die Website fordert zweierlei an: eine Kennung, die für Ihr dortiges Konto steht, und die E-Mail-Adresse, die das Unternehmen für Sie bestätigt hat. Von Google fordert sie dies mit den Scopes "openid" und "email" an und übernimmt die Adresse nur, wenn Google angibt, sie überprüft zu haben. Von Microsoft übernimmt sie die Adresse Ihres Postfachs oder, wenn es keines gibt, die Adresse, mit der Sie sich anmelden. Bei Ihrer ersten Anmeldung legt die Website ein Konto mit dieser Adresse an. Alles Übrige, was ein Unternehmen sendet (etwa den Namen), wird sofort verworfen, bevor irgendetwas gespeichert wird. Die Website fragt niemals nach Ihrem Bild, Ihren Kontakten oder dem Zugriff auf Ihre Dateien oder E-Mails.
+Ihr Browser wechselt zur Anmeldeseite des Unternehmens. Dort melden Sie sich an, und das Unternehmen bestätigt dieser Website, dass Sie es sind. Das Unternehmen erfährt dadurch, dass Sie diese Website nutzen, wann Sie sich bei ihr anmelden, sowie die technischen Daten Ihres Browsers. Die Website fordert zweierlei an: eine Kennung, die für Ihr dortiges Konto steht, und die E-Mail-Adresse, die das Unternehmen für Sie bestätigt hat. Von Google fordert sie dies mit den Scopes "openid" und "email" an und übernimmt die Adresse nur, wenn Google angibt, sie überprüft zu haben. Mit einer Adresse, die Google überprüft hat, legt Ihre erste Anmeldung sofort ein Konto mit dieser Adresse an. Von Microsoft übernimmt die Website die Adresse Ihres Postfachs oder, wenn es keines gibt, die Adresse, mit der Sie sich anmelden, nur als Vorschlag für das Formular: Microsoft sagt nicht, dass eine solche Adresse Ihnen gehört. Sie geben die Adresse selbst an, die Website sendet einen Link dorthin, und das Konto besteht, sobald Sie diesen Link geöffnet haben; bis dahin ist niemand angemeldet, auch nicht über Microsoft. Alles Übrige, was ein Unternehmen sendet (etwa den Namen), wird sofort verworfen, bevor irgendetwas gespeichert wird. Die Website fragt niemals nach Ihrem Bild, Ihren Kontakten oder dem Zugriff auf Ihre Dateien oder E-Mails.
 
 ## Was die Website speichert
 
@@ -256,4 +256,4 @@ Wir ändern diese Erklärung, wenn sich die Website oder das Recht ändert. Das 
 
 Diese Erklärung liegt in englischer, deutscher und persischer Sprache vor. Maßgeblich ist die deutsche Fassung.
 
-Stand: 19. November 2026
+Stand: 20. November 2026

@@ -60,7 +60,27 @@
                 @Statement(_closed)
             </section>
         }
-        @if (_arrived is { } arrived)
+        @if (_arrived is { } waitsThrough && _waiting)
+        {
+            @* The account of this sign-in waits for its address to be confirmed (step 20.3): nobody is signed in;
+               who came can have the mail once more, or correct the address it goes to. *@
+            <section id="external-waiting" aria-labelledby="external-waiting-title">
+                <h2 id="external-waiting-title">@T["Account_Waiting_Title"]</h2>
+                <p>@string.Format(CultureInfo.CurrentCulture, T["Account_Waiting_Lead"], Provider(waitsThrough))</p>
+                @Problems("external-waiting")
+                <form method="post" action="@($"{AccountDesk.Root}/external-waiting")" class="account">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="returnUrl" value="@_here" />
+                    <p class="field">
+                        <label for="external-waiting-mail">@T["Account_Waiting_Mail"]</label>
+                        <input id="external-waiting-mail" name="mail" type="email" maxlength="@LongestAddress" autocomplete="email" dir="ltr" aria-describedby="external-waiting-mail-hint" />
+                        <span class="meta" id="external-waiting-mail-hint">@T["Account_Waiting_Mail_Hint"]</span>
+                    </p>
+                    <p><button type="submit" class="action">@T["Account_Waiting_Send"]</button></p>
+                </form>
+            </section>
+        }
+        else if (_arrived is { } arrived)
         {
             @* Somebody signed in through a provider and has no account yet (step 16.8): they choose its name. *@
             <section id="external" aria-labelledby="external-title">
@@ -84,6 +104,16 @@
                         <input id="external-name" name="name" type="text" required minlength="@PeopleStore.ShortestName" maxlength="@PeopleStore.LongestName" autocomplete="username" dir="auto" aria-describedby="external-name-hint" />
                         <span class="meta" id="external-name-hint">@T["Account_Name_Hint"]</span>
                     </p>
+                    @if (!_arrivedProven)
+                    {
+                        @* The provider named an address at most, and proved none (step 20.3): the visitor writes the
+                           address, and the account is one when they opened the link that is mailed there. *@
+                        <p class="field">
+                            <label for="external-mail">@T["Account_Mail"]</label>
+                            <input id="external-mail" name="mail" type="email" required maxlength="@LongestAddress" autocomplete="email" dir="ltr" value="@_arrivedMail" aria-describedby="external-mail-hint" />
+                            <span class="meta" id="external-mail-hint">@string.Format(CultureInfo.CurrentCulture, T["Account_Choose_Mail_Hint"], Provider(arrived))</span>
+                        </p>
+                    }
                     <p class="tick">
                     <input id="external-age" name="age" type="checkbox" required />
                     <label for="external-age">@T["Account_Age"]</label>
@@ -94,7 +124,7 @@
                 </p>
                 <p class="meta"><a href="terms">@T["Legal_terms"]</a> · <a href="privacy">@T["Legal_privacy"]</a></p>
                     @* Not the note of the form with a password: this account has none (seen in a browser, step 18.2.2). *@
-                    <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Account_Choose_Privacy"], Provider(arrived))</p>
+                    <p class="note">@string.Format(CultureInfo.CurrentCulture, T[_arrivedProven ? "Account_Choose_Privacy" : "Account_Choose_Privacy_Mail"], Provider(arrived))</p>
                     @if (_deviceHolds)
                     {
                         <p class="note">@T["Account_Register_Adopts"]</p>
@@ -650,7 +680,7 @@
     };
 
     private static readonly string[] Sayings = ["welcome", "signed-in", "signed-out", "recovered", "reopened", "password", "codes", "closed", "brought", "invited", "revoked", "linked", "unlinked", "terms-agreed", "confirm-sent", "resend-sent", "forgot-sent", "address-sent", "address-changed", "signed-out-everywhere", "invite-sent", "notices-on", "notices-off"];
-    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "providers", "forgot", "resend", "address"];
+    private static readonly string[] Forms = ["sign-in", "register", "recover", "reopen", "password", "codes", "close", "invite", "export", "external", "external-waiting", "providers", "forgot", "resend", "address"];
     private static readonly string[] Known = ["later", "name-length", "name-letters", "password-short", "password-long", "password-differs", "taken", "wrong", "wrong-code", "wrong-closed", "wrong-current", "invitations", "external-failed", "login-taken", "last-way-in", "age", "terms", "invitation-needed", "closed-by-operator", "mail", "unconfirmed", "same", "external-no-address", "address-has-account"];
 
     // The longest mail address there is (RFC 5321); a name is shorter.
@@ -668,6 +698,9 @@
     private IList<string> _providers = [];
     private string? _arrived;
     private bool _arrivedInvited;
+    private bool _arrivedProven;
+    private string _arrivedMail = string.Empty;
+    private bool _waiting;
     private string _here = AccountDesk.Page;
 
     [CascadingParameter]
@@ -721,6 +754,8 @@
                 var arrival = Desk.Arrival(Context);
                 _arrived = arrival?.Provider;
                 _arrivedInvited = arrival is { Invitation: var carried } && store.IsInvited(carried);
+                (_arrivedProven, _arrivedMail) = arrival is { } came ? (came.Proven, came.Mail) : (false, string.Empty);
+                _waiting = arrival is { } waits && store.Accounts.Waits(waits.Provider, waits.Subject);
             }
         }
 

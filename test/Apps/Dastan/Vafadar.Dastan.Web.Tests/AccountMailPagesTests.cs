@@ -299,18 +299,20 @@ public sealed class AccountMailPagesTests : IDisposable
     }
 
     [Fact]
-    public async Task A_provider_that_names_no_address_makes_no_account_and_an_address_that_has_one_is_linked_from_inside()
+    public async Task A_provider_that_names_no_address_asks_for_one_and_an_address_that_has_an_account_is_linked_from_inside()
     {
         using var site = new ExternalSite();
         var mina = site.Visitor();
         await mina.Post(Browser.Registering, Account, Fields(("name", "Mina"), ("age", "on"), ("terms", "on"), ("password", Password), ("again", Password)));
 
-        // The provider names no address it confirmed.
+        // The provider names no address: the form asks the visitor for one (step 20.3; UnprovenAddressPagesTests
+        // walks what follows), and nobody is signed in.
         site.Mail = string.Empty;
         var silent = site.Visitor();
-        var refused = await silent.Open((await silent.Post($"{Forms}/external", Account, Fields(("provider", "test")))).Response.Headers.Location!.OriginalString);
-        Assert.Contains("named no mail address", refused.Main, StringComparison.Ordinal);
-        Assert.DoesNotContain($"action=\"{Forms}/external-register\"", refused.Html, StringComparison.Ordinal);
+        var asked = await silent.Open((await silent.Post($"{Forms}/external", Account, Fields(("provider", "test")))).Response.Headers.Location!.OriginalString);
+        Assert.Contains("name=\"mail\" type=\"email\" required", asked.Html, StringComparison.Ordinal);
+        Assert.Contains($"action=\"{Forms}/external-register\"", asked.Html, StringComparison.Ordinal);
+        Assert.False(SignedIn(asked));
 
         // The provider names the address of Mina's account: no second account, and nobody is signed in.
         site.Mail = TestAccounts.MailOf("Mina");

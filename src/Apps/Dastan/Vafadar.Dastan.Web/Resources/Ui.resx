@@ -3822,4 +3822,25 @@
   <data name="Timeline_Connections" xml:space="preserve">
     <value>Its connections</value>
   </data>
+  <data name="Account_Choose_Mail_Hint" xml:space="preserve">
+    <value>{0} does not prove that an address is yours. Write the address you read: the link that opens the account is mailed there, and nobody else sees it.</value>
+  </data>
+  <data name="Account_Choose_Privacy_Mail" xml:space="preserve">
+    <value>The site keeps the name, the mail address you confirm, and that this account is opened through {0} – no password and nothing else {0} knows about you. The account is yours when you have opened the link that is mailed to you; until then nobody is signed in.</value>
+  </data>
+  <data name="Account_Waiting_Title" xml:space="preserve">
+    <value>Confirm your mail address</value>
+  </data>
+  <data name="Account_Waiting_Lead" xml:space="preserve">
+    <value>Your account through {0} waits for its mail address: a link was mailed to the address you gave. Open it and the account is yours. Until then nobody is signed in.</value>
+  </data>
+  <data name="Account_Waiting_Mail" xml:space="preserve">
+    <value>Another mail address</value>
+  </data>
+  <data name="Account_Waiting_Mail_Hint" xml:space="preserve">
+    <value>Only if the address you gave was wrong. Leave it empty to have the link mailed once more to the address you gave. A new link is sent a few minutes after the one before at the earliest.</value>
+  </data>
+  <data name="Account_Waiting_Send" xml:space="preserve">
+    <value>Mail the link</value>
+  </data>
 </root>

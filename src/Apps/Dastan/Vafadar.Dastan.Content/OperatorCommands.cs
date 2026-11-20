@@ -86,6 +86,15 @@ internal static class OperatorCommands
               for it to be deleted at once. The site deletes it the next time somebody opens a page of
               an account.
 
+          people addresses --people <database>
+              Lists the open accounts whose mail address counts as confirmed while nothing says
+              how it was confirmed, with the providers they can be signed in through.
+
+          people addresses ask <provider> --people <database> --site <address>
+              Asks those of them that can be signed in through the provider to confirm the address
+              anew: the link is mailed, every sign-in of the account ends, and it is an account
+              again when the link was opened. Nothing of the account is removed.
+
           people repair --people <database> [--change]
               Counts who is in a circle or a tree of an account they show no accepted relationship
               with, and names the trees in which somebody is their own ancestor. With --change the
@@ -290,6 +299,28 @@ internal static class OperatorCommands
                     }
 
                     output.WriteLine($"{name}: the account is deleted the next time the site deletes what was closed.");
+                    return ContentCommands.Done;
+                });
+
+            case ["people", "addresses", "--people", var store1]:
+                return People(store1, output, time, store =>
+                {
+                    // Accounts whose address counts as confirmed and of which nothing says how (ADR 0016, step 20.3).
+                    var found = store.Accounts.WithoutProof();
+                    output.WriteLine($"{found.Count} {(found.Count == 1 ? "account" : "accounts")} without a record of how the address was confirmed.");
+                    foreach (var (name, providers) in found)
+                    {
+                        output.WriteLine($"  {name}  {string.Join(", ", providers)}");
+                    }
+
+                    return ContentCommands.Done;
+                });
+
+            case ["people", "addresses", "ask", var provider, "--people", var store2, "--site", var address2]:
+                return People(store2, output, time, site: address2, act: store =>
+                {
+                    var asked = store.Accounts.AskForProof(provider);
+                    output.WriteLine($"{asked} {(asked == 1 ? "account was" : "accounts were")} asked to confirm the address anew: the link is mailed, and until it is opened nobody is signed in to them.");
                     return ContentCommands.Done;
                 });
 

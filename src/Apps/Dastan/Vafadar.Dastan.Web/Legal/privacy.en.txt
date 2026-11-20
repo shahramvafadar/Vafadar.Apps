@@ -85,7 +85,7 @@ You can sign in through an account you have at Google or at Microsoft instead of
 
 ## What happens when you press the button
 
-Your browser goes to the sign-in page of the company. There you sign in and the company tells this site that it is you. The company thereby learns that you use this site, when you sign in to it, and the technical data of your browser. The site asks for two things: an identifier that stands for your account there, and the e-mail address the company has confirmed for you. From Google it asks with the scopes "openid" and "email" and takes the address only when Google says that it has verified it. From Microsoft it takes the address of your mailbox or, where there is none, the address you sign in with. With your first sign-in the site makes an account with that address. Everything else a company sends (such as the name) is dropped at once, before anything is stored. The site never asks for your picture, your contacts or access to your files or mail.
+Your browser goes to the sign-in page of the company. There you sign in and the company tells this site that it is you. The company thereby learns that you use this site, when you sign in to it, and the technical data of your browser. The site asks for two things: an identifier that stands for your account there, and the e-mail address the company has confirmed for you. From Google it asks with the scopes "openid" and "email" and takes the address only when Google says that it has verified it. With an address Google has verified, your first sign-in makes an account with that address at once. From Microsoft the site takes the address of your mailbox or, where there is none, the address you sign in with, only as a proposal for the form: Microsoft does not say that such an address is yours. You write the address yourself, the site mails a link to it, and the account exists once you have opened that link; until then nobody is signed in, also not through Microsoft. Everything else a company sends (such as the name) is dropped at once, before anything is stored. The site never asks for your picture, your contacts or access to your files or mail.
 
 ## What the site keeps
 
@@ -256,4 +256,4 @@ We change this notice when the site or the law changes. The date below says when
 
 This notice exists in English, German and Persian. If the versions differ, the German version prevails.
 
-Last updated: 19 November 2026
+Last updated: 20 November 2026

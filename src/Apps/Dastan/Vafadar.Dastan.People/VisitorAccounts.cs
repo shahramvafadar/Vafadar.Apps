@@ -28,6 +28,16 @@ public sealed class VisitorAccount : IdentityUser
     /// relationship, a tag, an agreement (PRIV-007). What concerns the account itself is always mailed.
     /// </summary>
     public bool Notices { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets how the address of the account was confirmed (ADR 0016, step 20.3): <c>mail</c> – by a link
+    /// the site mailed to it – or <c>provider:</c> and the name of a provider that said it had verified it.
+    /// Nothing: confirmed before this was written down, by a way nobody can name any more.
+    /// </summary>
+    public string? AddressProof { get; set; }
+
+    /// <summary>The proof of an address that was confirmed by a link the site mailed to it.</summary>
+    public const string ProvenByMail = "mail";
 }
 
 /// <summary>What came of a try to sign in.</summary>
@@ -263,7 +273,7 @@ public sealed partial class VisitorAccounts
                 return new ConfirmAnswer(false, []);
             }
 
-            account.EmailConfirmed = true;
+            (account.EmailConfirmed, account.AddressProof) = (true, VisitorAccount.ProvenByMail);
             var codes = _store.NewCodes(id);
             _context.SaveChanges();
             _context.ChangeTracker.Clear();

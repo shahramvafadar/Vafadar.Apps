@@ -177,3 +177,46 @@ browser tests run where a browser is named – on a developer's machine; in CI w
 The site sends mail, so it needs a sender with a domain that receivers trust (SPF, DKIM, DMARC) before it is
 public – the owner's part. The store of the visitors loses its own code for passwords. The rules of Dastan –
 invitations, claims, consent, circles, publication – stay Dastan's and are not Identity's.
+
+## Added in step 20.3 (2026-11-20): who somebody is at a provider is not that an address is theirs
+
+A review of the source found that an account made through Microsoft took the field `mail` of the answer or,
+without one, a name to sign in with that looks like an address, and counted it as confirmed. Neither says
+that there is such a mailbox or that it is the visitor's. Signing in through a provider did not ask whether
+the address of the account was confirmed, and a visitor who came with an address that has an account was told
+so. Reproduced by a test that failed (`UnprovenAddressTests`), then changed:
+
+* **Two things.** Who somebody is at a provider – the provider and its identifier of the person – finds the
+  account of a sign-in. An address never finds an account and never joins two.
+* **Proven or named.** A provider carries a claim that the address is proven only when it says it verified
+  it: Google, with `email_verified`. Microsoft never does; what it names is put into the form as a proposal.
+  Where a provider names nothing, the visitor writes the address.
+* **An address that is not proven is confirmed by a mail of the site**, like the address of an account with
+  a password: the account is made, the link goes through the outbox, and the answer carries no sign-in and no
+  codes. The codes come with the confirmation.
+* **No sign-in before that – by no way.** Signing in through the provider answers "this account waits";
+  a cookie of the account does not hold (`PeopleStore.Holds` asks for the confirmed address on every request
+  that checks a sign-in); the password, where there is one, was refused already.
+* **Who waits** can have the mail once more or correct the address. Only who signs in at the provider comes
+  to that form, so nobody else moves the address of an account that is not confirmed. A new link takes the
+  place of the one before: a link that went to a mistyped address opens nothing afterwards.
+* **Nothing is said about an address.** An address that has an account makes no second one, whether it is
+  written at the first form or as a correction; its holder is told that somebody tried, and who wrote it reads
+  the words of a mail that was sent. Only with an address a provider verified is the visitor told that it has
+  an account – they have that address.
+* **How an address was confirmed is written down** (`AddressProof`): `mail`, or `provider:` and its name.
+  A password set with a recovery code no longer marks the address as confirmed – the codes are given with the
+  confirmation and say nothing about a mailbox.
+* **What was there before.** When the store is brought up, an account that never had a provider is written
+  down as confirmed by mail – nothing else was possible. An account with a provider stays without a record;
+  nobody can say any more which way it went. `people addresses` lists these, and `people addresses ask
+  microsoft` asks those of them that can be signed in through Microsoft to confirm anew: the link is mailed,
+  every sign-in ends, nothing of the account is removed. Nobody is asked twice, and no evidence is invented.
+  No account was ever made through Microsoft – no client exists – so the list of a real store is empty.
+
+**Shown by tests:** a name to sign in with, no address, and an address the provider did not verify
+(`UnprovenAddressPagesTests`, both cases of the form); coming back twice before confirming; correcting and
+sending again; an address that has an account, at the form and as a correction, with the same words and the
+mail to its holder; a link that is old or was replaced; a page of an account and an early sign-in; an account
+that was confirmed before; the list and the asking. The mail of the journey is really sent to the catcher and
+opened from there. **Not shown:** a real provider and a real mailbox – no client exists; that is the owner's.

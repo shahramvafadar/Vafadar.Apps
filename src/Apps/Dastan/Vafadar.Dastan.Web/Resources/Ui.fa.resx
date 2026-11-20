@@ -3822,4 +3822,25 @@
   <data name="Timeline_Connections" xml:space="preserve">
     <value>پیوندهایش</value>
   </data>
+  <data name="Account_Choose_Mail_Hint" xml:space="preserve">
+    <value>{0} ثابت نمی‌کند که یک نشانی مال شماست. نشانی ایمیلی را بنویسید که خودتان می‌خوانید: پیوندی که حساب را باز می‌کند به همان‌جا فرستاده می‌شود و کس دیگری آن را نمی‌بیند.</value>
+  </data>
+  <data name="Account_Choose_Privacy_Mail" xml:space="preserve">
+    <value>سایت نام، نشانی ایمیلی که تأیید می‌کنید و این را که این حساب از راه {0} باز می‌شود نگه می‌دارد – نه گذرواژه‌ای و نه چیز دیگری که {0} دربارهٔ شما می‌داند. حساب وقتی مال شماست که پیوندِ فرستاده‌شده را باز کرده باشید؛ تا آن زمان کسی وارد نمی‌شود.</value>
+  </data>
+  <data name="Account_Waiting_Title" xml:space="preserve">
+    <value>نشانی ایمیل خود را تأیید کنید</value>
+  </data>
+  <data name="Account_Waiting_Lead" xml:space="preserve">
+    <value>حساب شما از راه {0} منتظر تأیید نشانی ایمیلش است: پیوندی به نشانی‌ای که داده بودید فرستاده شده است. آن را باز کنید تا حساب مال شما شود. تا آن زمان کسی وارد نمی‌شود.</value>
+  </data>
+  <data name="Account_Waiting_Mail" xml:space="preserve">
+    <value>نشانی ایمیل دیگر</value>
+  </data>
+  <data name="Account_Waiting_Mail_Hint" xml:space="preserve">
+    <value>فقط اگر نشانی‌ای که داده بودید نادرست بود. اگر خالی بگذارید، پیوند یک بار دیگر به همان نشانی فرستاده می‌شود. پیوند تازه زودتر از چند دقیقه پس از قبلی فرستاده نمی‌شود.</value>
+  </data>
+  <data name="Account_Waiting_Send" xml:space="preserve">
+    <value>پیوند را بفرست</value>
+  </data>
 </root>

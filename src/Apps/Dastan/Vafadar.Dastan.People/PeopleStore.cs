@@ -116,7 +116,9 @@ public sealed partial class PeopleStore : IDisposable
     public bool Holds(VisitorSession session)
     {
         ArgumentNullException.ThrowIfNull(session);
-        return _context.Visitors.AsNoTracking().Any(visitor => visitor.Id == session.Id && visitor.Stamp == session.Stamp && visitor.ClosedAt == null);
+        // An account whose address is not confirmed is none (ADR 0016): no sign-in of it holds, however it was made.
+        return _context.Visitors.AsNoTracking().Any(visitor => visitor.Id == session.Id && visitor.Stamp == session.Stamp && visitor.ClosedAt == null)
+            && _context.Accounts.AsNoTracking().Any(account => account.Id == session.Id && account.EmailConfirmed);
     }
 
     /// <summary>
