@@ -126,9 +126,17 @@ was retired. No account or transaction was entered. The x64 example declares INT
 disabled Wi-Fi isolated the launch. The emulator reported 4096-byte kernel pages. The install and launch
 receipts and native hierarchy are retained in `artifacts/zsi`.
 
+The identical four x64 split files, verified against their saved digests, also installed in one session
+on the official API 35 experimental page-size image. The default SDK manager only found ordinary images.
+A fresh configuration pointed to the already installed experimental image, without copying guest data.
+The guest reported 16384 bytes through `getconf PAGE_SIZE` and 4 KiB kernel mappings in `smaps`. The same
+app process passed preparation and displayed its native Welcome screen with airplane mode on and Wi-Fi
+off. The emulator was retired. The app was neither rebuilt nor re-signed, and no account or transaction
+was entered. The record is in `artifacts/zs16`.
+
 Local evidence also includes the earlier device specifications, source digests, split signature and alignment
-receipts, and native-entry comparisons. Play signing, ARM64 installation and execution on a device with
-16 KiB pages remain separate acceptance checks. See the
+receipts, and native-entry comparisons. Play signing, ARM64 installation and a device with a real 16 KiB
+kernel remain separate acceptance checks. See the
 [Android bundletool guide](https://developer.android.com/tools/bundletool).
 
 ## iOS (after the Android version is complete)
