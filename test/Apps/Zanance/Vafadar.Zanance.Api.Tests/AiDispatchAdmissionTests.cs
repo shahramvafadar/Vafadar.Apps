@@ -23,6 +23,9 @@ public sealed class AiDispatchAdmissionTests
     [InlineData("interrupted")]
     [InlineData("legacy")]
     [InlineData("legacy-accepted")]
+    [InlineData("pending-missing")]
+    [InlineData("pending-not-accepted")]
+    [InlineData("pending-after-journal-regression")]
     public async Task Analysis_continuation_respects_durable_source_admission(string scenario)
     {
         var ct = TestContext.Current.CancellationToken;
@@ -50,6 +53,9 @@ public sealed class AiDispatchAdmissionTests
             if (accepted is { } existing && existing.RequestId == id)
                 return Results.Json(new AiRequestResult(id, AiProtocol.Digest(existing.Payload), AiRequestState.Completed, 1,
                     "Synthetic result.", new(0, 0, 0, 0)), AiJson.Default.AiRequestResult);
+            if (scenario == "pending-not-accepted" && delivered is { } pending && pending.RequestId == id)
+                return Results.Json(new AiRequestResult(id, AiProtocol.Digest(pending.Payload), AiRequestState.NotAccepted,
+                    0, null, new(0, 0, 0, 0)), AiJson.Default.AiRequestResult);
             return Results.NotFound();
         });
         server.MapPost("/analysis/requests/{id:guid}/close", (Guid id, AiCloseRequest request) =>
@@ -64,6 +70,9 @@ public sealed class AiDispatchAdmissionTests
             if (Interlocked.Increment(ref posts) == 1 && scenario == "interrupted")
                 return Results.StatusCode(StatusCodes.Status503ServiceUnavailable);
             delivered = submission!;
+            if (scenario.StartsWith("pending-", StringComparison.Ordinal) && posts == 1)
+                return Results.Json(new AiRequestResult(delivered.RequestId, AiProtocol.Digest(delivered.Payload),
+                    AiRequestState.Pending, 0, null, new(0, 0, 8, 0)), AiJson.Default.AiRequestResult);
             return Results.Json(new AiRequestResult(delivered.RequestId, AiProtocol.Digest(delivered.Payload),
                 AiRequestState.NotAccepted, 0, null, new(0, 0, 0, 0)), AiJson.Default.AiRequestResult);
         });
@@ -83,6 +92,8 @@ public sealed class AiDispatchAdmissionTests
             if (scenario == "legacy-accepted") accepted = originalSubmission;
             journal.Value = JsonSerializer.Serialize(new AiClientRecord(1, originalSubmission, null), AiClientJson.Default.AiClientRecord);
         }
+        else if (scenario.StartsWith("pending-", StringComparison.Ordinal))
+            Assert.Equal(AiRequestState.Pending, (await client.SubmitAsync(offer, payload, () => Task.CompletedTask, ct)).State);
         else if (scenario == "rejected")
             await Assert.ThrowsAsync<InvalidOperationException>(() =>
                 client.SubmitAsync(offer, payload, () => throw new InvalidOperationException("Original source changed."), ct));
@@ -91,7 +102,31 @@ public sealed class AiDispatchAdmissionTests
         var original = Assert.IsType<AiClientRecord>(await client.ReadAsync(ct));
         var resumed = new AiClient(transport, journal, Owner, scope, () => { });
 
-        if (scenario == "interrupted")
+        if (scenario.StartsWith("pending-", StringComparison.Ordinal))
+        {
+            if (scenario == "pending-after-journal-regression")
+                journal.Value = JsonSerializer.Serialize(original with { Result = null }, AiClientJson.Default.AiClientRecord);
+            var raw = journal.Value;
+            foreach (var close in new[] { false, true })
+            {
+                Task<AiRequestResult> Recover() => close ? resumed.CloseAsync(original, ct) : resumed.ContinueAsync(original, ct);
+                if (scenario == "pending-not-accepted")
+                    await Assert.ThrowsAsync<InvalidDataException>(Recover);
+                else
+                    Assert.Equal(HttpStatusCode.NotFound, (await Assert.ThrowsAsync<PersonalSyncHttpException>(Recover)).Status);
+                Assert.Equal(raw, journal.Value);
+            }
+            Assert.Equal(1, posts);
+            Assert.Equal(0, closes);
+
+            accepted = original.Submission;
+            var recovered = await resumed.ContinueAsync(original, ct);
+            Assert.Equal(AiRequestState.Completed, recovered.State);
+            Assert.Equal(original.Submission.RequestId, recovered.RequestId);
+            Assert.Equal(1, posts);
+            Assert.Equal(0, closes);
+        }
+        else if (scenario == "interrupted")
         {
             Assert.True(original.DispatchPermitted);
             var statusOnly = original with { DispatchPermitted = null };
@@ -121,7 +156,7 @@ public sealed class AiDispatchAdmissionTests
             Assert.Equal(AiRequestState.NotAccepted, (await resumed.CloseAsync(ct)).State);
             Assert.Equal(1, closes);
         }
-        Assert.Equal(scenario == "interrupted" ? 2 : 1, statusReads);
+        Assert.Equal(scenario.StartsWith("pending-", StringComparison.Ordinal) ? 3 : scenario == "interrupted" ? 2 : 1, statusReads);
     }
 
     /// <summary>A replaced journal entry is refused before a status, closure or aggregate request.</summary>

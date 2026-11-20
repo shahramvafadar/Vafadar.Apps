@@ -96,6 +96,7 @@ public sealed partial class AiAnalysisFlowTests
     [InlineData(null, false, "Ai_OutcomeUnknown", "Ai_StatusOnlyConfirm")]
     [InlineData(true, false, "Ai_OutcomeUnknown", "Ai_ContinueConfirm")]
     [InlineData(null, true, "Ai_Pending", "Ai_StatusOnlyConfirm")]
+    [InlineData(true, true, "Ai_Pending", "Ai_StatusOnlyConfirm")]
     public async Task Retained_analysis_discloses_only_known_status_and_dispatch_authority(
         bool? dispatchPermitted, bool acceptedPending, string statusKey, string confirmKey)
     {
@@ -114,6 +115,11 @@ public sealed partial class AiAnalysisFlowTests
         await model.CheckProviderAsync();
         Assert.Equal(f.Translator[statusKey], model.ResultStatus);
         Assert.True(model.CanContinue);
+        if (acceptedPending)
+        {
+            await model.CloseAsync();
+            Assert.Empty(f.Platform.ConfirmationDialogs);
+        }
         Assert.False(model.CanSend);
         await model.ContinueAsync(); // The fixture cancels the actual confirmation.
         Assert.Equal(f.Translator[confirmKey], Assert.Single(f.Platform.ConfirmationDialogs).Message);

@@ -23,6 +23,10 @@ public sealed record AiClientRecord(int Version, AiSubmission Submission, AiRequ
     /// <summary>The final source recheck decision. Null marks a journal saved before this decision was recorded.</summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public bool? DispatchPermitted { get; init; }
+
+    /// <summary>Only a source-reviewed request without a known service receipt can be retried.</summary>
+    [JsonIgnore]
+    public bool CanRetryDispatch => DispatchPermitted == true && Result is null;
 }
 
 /// <summary>The service has no original request and the journal cannot establish dispatch authority.</summary>
@@ -89,7 +93,7 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         }
         finally { semaphore.Release(); }
     }
-    /// <summary>Checks status first. Only a durably admitted packet absent at the service can be retried.</summary>
+    /// <summary>Checks status first. Only a durably admitted packet with no confirmed receipt can be retried.</summary>
     public Task<AiRequestResult> ContinueAsync(CancellationToken ct = default) => ContinueCoreAsync(null, ct);
 
     /// <summary>Continues the exact displayed request within the authority shown at confirmation.</summary>
@@ -102,18 +106,23 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         {
             var state = await ReadAsync(ct) ?? throw new InvalidOperationException("Original analysis request required.");
             ValidateRetainedRequest(state, expected);
-            if (state.Result is { State: not AiRequestState.Pending } final) return final;
+            var wasAccepted = state.Result?.State == AiRequestState.Pending || expected?.Result?.State == AiRequestState.Pending;
+            if (state.Result is { State: not AiRequestState.Pending } final)
+            {
+                ValidateProgress(wasAccepted, final);
+                return final;
+            }
             AiRequestResult result;
             try { result = await transport.AnalysisStatusAsync(expectedUser, state.Submission.RequestId, ct); }
-            catch (PersonalSyncHttpException missing) when (missing.Status == HttpStatusCode.NotFound)
+            catch (PersonalSyncHttpException missing) when (missing.Status == HttpStatusCode.NotFound && !wasAccepted)
             {
-                if (state.DispatchPermitted != true || (expected is not null && expected.DispatchPermitted != true))
+                if (!state.CanRetryDispatch || (expected is not null && !expected.CanRetryDispatch))
                     throw new AiSourceReviewRequiredException();
                 // This explicitly confirmed continuation may publish the same original packet if it never arrived.
                 // The service serializes the original id; it never invokes the provider twice for an existing request.
                 verifyAccess(); result = await transport.AnalysisSubmitAsync(expectedUser, state.Submission, ct);
             }
-            verifyAccess(); Validate(state.Submission, result);
+            verifyAccess(); Validate(state.Submission, result); ValidateProgress(wasAccepted, result);
             await SaveAsync(state with { Result = result }, ct); return result;
         }
         finally { semaphore.Release(); }
@@ -131,12 +140,29 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         {
             var state = await ReadAsync(ct) ?? throw new InvalidOperationException("Original analysis request required.");
             ValidateRetainedRequest(state, expected);
-            if (state.Result is { State: not AiRequestState.Pending } final) return final;
-            var result = await transport.AnalysisCloseAsync(expectedUser, state.Submission.RequestId,
-                new(state.Submission.Offer, AiProtocol.Digest(state.Submission.Payload)), ct);
-            verifyAccess(); Validate(state.Submission, result); await SaveAsync(state with { Result = result }, ct); return result;
+            var wasAccepted = state.Result?.State == AiRequestState.Pending || expected?.Result?.State == AiRequestState.Pending;
+            if (state.Result is { State: not AiRequestState.Pending } final)
+            {
+                ValidateProgress(wasAccepted, final);
+                return final;
+            }
+
+            // An older caller may still request closure while an accepted receipt is already known.
+            var result = wasAccepted
+                ? await transport.AnalysisStatusAsync(expectedUser, state.Submission.RequestId, ct)
+                : await transport.AnalysisCloseAsync(expectedUser, state.Submission.RequestId,
+                    new(state.Submission.Offer, AiProtocol.Digest(state.Submission.Payload)), ct);
+            verifyAccess(); Validate(state.Submission, result); ValidateProgress(wasAccepted, result);
+            await SaveAsync(state with { Result = result }, ct); return result;
         }
         finally { semaphore.Release(); }
+    }
+
+    private static void ValidateProgress(bool wasAccepted, AiRequestResult updated)
+    {
+        // A missing or restored service record cannot undo a previously confirmed reservation.
+        if (wasAccepted && updated.State == AiRequestState.NotAccepted)
+            throw new InvalidDataException("The accepted analysis request was reported as unaccepted.");
     }
 
     private static void ValidateRetainedRequest(AiClientRecord current, AiClientRecord? expected)

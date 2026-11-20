@@ -7923,7 +7923,7 @@ Massimo: {3} unità di credito; offerta valida fino al {4}.</value>
     <value>Addebito confermato: {0} unità di credito. È stata restituita solo la parte inutilizzata della prenotazione originale; non è un movimento finanziario.</value>
   </data>
   <data name="Ai_Pending" xml:space="preserve">
-    <value>La richiesta originale è in attesa o ha esito sconosciuto. I crediti restano riservati. Continua o chiudi questa precisa richiesta prima di avviarne un’altra; un timeout non è un rimborso né il permesso di addebitare di nuovo.</value>
+    <value>Il servizio ha accettato questa richiesta e i crediti restano riservati. Controlla lo stato per sapere se è stato confermato un risultato o un rimborso.</value>
   </data>
   <data name="Ai_LocalReviewPending" xml:space="preserve">
     <value>La verifica finale dei dati non è stata registrata. Chiudi questa richiesta salvata prima di controllare di nuovo i dati attuali.</value>

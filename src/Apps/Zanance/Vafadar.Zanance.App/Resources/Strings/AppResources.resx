@@ -7963,7 +7963,7 @@ Maximum: {3} credit units; offer valid through {4}.</value>
     <value>Confirmed charge: {0} credit units. Only the unused original reservation was returned; this is not a financial-ledger entry.</value>
   </data>
   <data name="Ai_Pending" xml:space="preserve">
-    <value>The original request is pending or its outcome is unknown. Its credit remains reserved. Continue or close this exact request before starting another; a timeout is neither a refund nor permission to charge again.</value>
+    <value>The service accepted this request and the credits remain reserved. Check its status to see when a result or refund is confirmed.</value>
   </data>
   <data name="Ai_LocalReviewPending" xml:space="preserve">
     <value>The final source review was not recorded. Close this saved request before reviewing the current data again.</value>

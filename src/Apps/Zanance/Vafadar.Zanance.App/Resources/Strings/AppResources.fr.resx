@@ -7911,7 +7911,7 @@ Maximum : {3} unités de crédit ; offre valable jusqu’au {4}.</value>
     <value>Débit confirmé : {0} unités de crédit. Seule la partie inutilisée de la réservation initiale a été rendue ; ce n’est pas une écriture financière.</value>
   </data>
   <data name="Ai_Pending" xml:space="preserve">
-    <value>La demande d’origine est en attente ou son résultat est inconnu. Les crédits restent réservés. Continuez ou fermez cette demande exacte avant d’en créer une autre ; un délai dépassé n’est ni un remboursement ni une autorisation de débiter à nouveau.</value>
+    <value>Le service a accepté cette demande et les crédits restent réservés. Vérifiez son état pour savoir si un résultat ou un remboursement a été confirmé.</value>
   </data>
   <data name="Ai_LocalReviewPending" xml:space="preserve">
     <value>La vérification finale des données n’a pas été enregistrée. Clôturez cette demande avant de vérifier à nouveau les données actuelles.</value>

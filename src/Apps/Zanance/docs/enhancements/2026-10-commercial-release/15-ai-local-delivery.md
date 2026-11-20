@@ -142,14 +142,18 @@ cached historical balances cannot overwrite current authoritative wallet metadat
 Service states are Pending, Completed, Refunded and NotAccepted. A timeout/unknown outcome retains reservation;
 only definitive original provider evidence settles actual charge or refunds. Not-found at a provider is Unknown.
 An explicit continuation checks status first. It can send the exact saved packet and ID when the service has no
-request and the journal records a successful final source review. A refused or interrupted review leaves a
+request, no service receipt has been confirmed, and the journal records a successful final source review. A refused or interrupted review leaves a
 staged record with an explicit negative marker. Older records without a marker can still recover service status. If the service has no record
 of a staged or older request, the user can close the original and review the current data again.
 The Analysis page distinguishes a staged request, an unknown outcome and a confirmed pending result.
 When the displayed record lacks dispatch authority, the confirmation offers a status check only.
 The client compares the displayed ID, exact offer and payload digest with the saved record while
 holding the original operation gate. A later journal update cannot turn that confirmation into
-authority to resend or close a different request.
+authority to resend or close a different request. Once the client has an accepted pending receipt,
+the page offers status only and disables Close. A later not-found or NotAccepted response
+cannot authorize a resend, erase the confirmed receipt or make the request eligible for
+closure. A stale closure caller receives a status lookup when the request is already known
+to be accepted.
 Metadata-only close creates a durable unaccepted closure, so a late original packet cannot start
 later; accepted work is neither recalled nor guessed refunded. A single immutable offer cannot authorize two
 requests. A trusted receipt/gift port is internal only, globally deduplicates the original grant identity and
@@ -192,6 +196,20 @@ final backup policy remain actual Mac work. Official platform reference:
   opening a confirmation. The corrected observer used the actual scroll view. Receipts
   are under `artifacts/analysis-retained-native`. The strict Windows build and the
   signed offline Android package passed.
+- Three additional loopback TLS cases reproduced an accepted receipt followed by a missing
+  status, an inconsistent NotAccepted response, or a journal read that had lost the confirmed
+  receipt still visible to the user. Recovery checked only the original status and preserved
+  the journal on each refusal. A later valid result was recovered for the same ID. No case
+  sent a second aggregate or called the closure endpoint. Five related application cases
+  verified the state-dependent native confirmation text and that accepted requests cannot
+  open the closure confirmation. The isolated Windows review verified the disabled native
+  Close button and the status-only confirmation, then canceled it. That check also exposed
+  the older caption suggesting closure. The corrected caption was verified at the native
+  text control without opening the confirmation again. All six locale resources parsed.
+  No external provider or ledger was used. Retained evidence is under
+  `artifacts/analysis-accepted-recovery`. Strict Windows and Android builds passed. The
+  final signed offline APK passed the package verification and has SHA-256
+  `b12b3c69920387c13242d253a15ffc6f7ee0e3f448f3102d5111be0b213d6351`.
 - The original delivery recorded 34 distinct focused cases and 23 existing resource completeness and usage cases across six languages.
   Historical3753 complete-suite cases and unrelated successful billing/sync/cipher/bank/accountant checks were
   not replayed or added to a fictitious current total.

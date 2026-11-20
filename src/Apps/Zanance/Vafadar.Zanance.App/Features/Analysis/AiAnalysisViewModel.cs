@@ -193,6 +193,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= offer.MaximumUnits;
     /// <summary>Gets whether an existing private original request needs explicit continuation or closure.</summary>
     public bool CanContinue => OwnsPresentation && !HasPendingOperation && metadataReady && remote is not null && Pending;
+    /// <summary>Only a request without a confirmed service receipt can be closed as unaccepted.</summary>
+    public bool CanCloseOriginal => CanContinue && retained is { Result: null };
     private bool Pending => retained is not null && (retained.Result is null || retained.Result.State == AiRequestState.Pending);
     partial void OnFromChanged(DateOnly value) => Invalidate();
     partial void OnToChanged(DateOnly value) => Invalidate();
@@ -570,18 +572,18 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     }
     /// <summary>Explicitly continues only the retained original consent; absence may replay that identical packet, not a new request.</summary>
     [RelayCommand] public Task ContinueAsync() => ContinueCoreAsync(false);
-    /// <summary>Explicitly closes an unaccepted id; a dispatched request stays pending until actual provider resolution.</summary>
+    /// <summary>Explicitly closes an original id whose acceptance has not been confirmed.</summary>
     [RelayCommand] public Task CloseAsync() => ContinueCoreAsync(true);
     private async Task ContinueCoreAsync(bool close)
     {
-        if (!CanContinue || remote is not { } connection || retained is not { } record) return;
+        if (!(close ? CanCloseOriginal : CanContinue) || remote is not { } connection || retained is not { } record) return;
         var version = epoch; var presentation = frameEpoch; var disclosure = NativeDisclosure(); operationActive = true;
         try
         {
             StartOperation(version); ValidateDisclosure(disclosure);
             // D-984: keep the full retained-request warning and use a concise native action.
             var key = close ? "Ai_ConfirmCloseAction" : "Ai_ConfirmContinueAction";
-            var message = close ? "Ai_CloseConfirm" : record.DispatchPermitted == true ? "Ai_ContinueConfirm" : "Ai_StatusOnlyConfirm";
+            var message = close ? "Ai_CloseConfirm" : record.CanRetryDispatch ? "Ai_ContinueConfirm" : "Ai_StatusOnlyConfirm";
             if (!await interaction.ConfirmAsync(text["Ai_Title"], text[message], text[key], text["Ai_ConfirmCancelAction"])) return;
             ValidateDisclosure(disclosure); Validate(version); if (!close && !await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); Validate(version);
             var result = close ? await connection.CloseAsync(record, CancellationToken.None) : await connection.ContinueAsync(record, CancellationToken.None);
@@ -641,7 +643,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     {
         if (saved is null || saved.Version != original.Version || saved.Result is null ||
             JsonSerializer.Serialize(saved.Submission, AiJson.Default.AiSubmission) != JsonSerializer.Serialize(original.Submission, AiJson.Default.AiSubmission) ||
-            original.Result is { State: not AiRequestState.Pending } && saved.Result != original.Result)
+            (original.Result is { State: not AiRequestState.Pending } && saved.Result != original.Result) ||
+            (original.Result?.State == AiRequestState.Pending && saved.Result.State == AiRequestState.NotAccepted))
             throw new InvalidDataException("Original analysis follow-up differs from its returned outcome.");
         // The same pending request may genuinely advance while its status is being persisted.
         return saved;
@@ -835,6 +838,6 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
                 throw new InvalidOperationException("Original analysis disclosure changed.");
         }
     }
-    private void Refresh() { if (detailedPeriod?.Funding is not null) OnPropertyChanged(nameof(CanOpenFundingDraft)); OnPropertyChanged(nameof(HasPendingOperation)); OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanShare)); OnPropertyChanged(nameof(CanCheckProvider)); OnPropertyChanged(nameof(CanQuote)); OnPropertyChanged(nameof(CanSend)); OnPropertyChanged(nameof(CanContinue)); }
+    private void Refresh() { if (detailedPeriod?.Funding is not null) OnPropertyChanged(nameof(CanOpenFundingDraft)); OnPropertyChanged(nameof(HasPendingOperation)); OnPropertyChanged(nameof(CanLeave)); OnPropertyChanged(nameof(CanShare)); OnPropertyChanged(nameof(CanCheckProvider)); OnPropertyChanged(nameof(CanQuote)); OnPropertyChanged(nameof(CanSend)); OnPropertyChanged(nameof(CanContinue)); OnPropertyChanged(nameof(CanCloseOriginal)); }
     private static DateOnly FirstDay(TimeProvider clock) { var date = DateOnly.FromDateTime(clock.GetLocalNow().Date); return new(date.Year, date.Month, 1); }
 }

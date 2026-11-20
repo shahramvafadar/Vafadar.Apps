@@ -7934,7 +7934,7 @@ Höchstens {3} Guthabeneinheiten; Angebot gültig bis {4}.</value>
     <value>Bestätigter Verbrauch: {0} Guthabeneinheiten. Nur der ungenutzte Teil der ursprünglichen Reservierung wurde zurückgegeben; keine Finanzbuchung.</value>
   </data>
   <data name="Ai_Pending" xml:space="preserve">
-    <value>Die ursprüngliche Anfrage ist offen oder ihr Ausgang unklar. Guthaben bleibt reserviert. Setzen Sie genau diese Anfrage fort oder schließen Sie sie vor einer neuen. Ein Timeout ist weder Erstattung noch Erlaubnis für eine erneute Belastung.</value>
+    <value>Der Dienst hat diese Anfrage angenommen. Die Guthabeneinheiten bleiben reserviert. Prüfe den Status, um zu erfahren, ob ein Ergebnis oder eine Erstattung bestätigt wurde.</value>
   </data>
   <data name="Ai_LocalReviewPending" xml:space="preserve">
     <value>Die abschließende Prüfung der Daten wurde nicht gespeichert. Schließen Sie diese Anfrage, bevor Sie die aktuellen Daten erneut prüfen.</value>

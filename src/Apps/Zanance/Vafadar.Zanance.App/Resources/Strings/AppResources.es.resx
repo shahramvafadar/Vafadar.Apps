@@ -7903,7 +7903,7 @@ Máximo: {3} unidades de crédito; oferta válida hasta {4}.</value>
     <value>Cargo confirmado: {0} unidades de crédito. Solo se devolvió la parte no utilizada de la reserva original; no es un asiento financiero.</value>
   </data>
   <data name="Ai_Pending" xml:space="preserve">
-    <value>La solicitud original está pendiente o se desconoce su resultado. Sus créditos siguen reservados. Continúa o cierra esta solicitud exacta antes de iniciar otra; un timeout no es un reembolso ni permiso para volver a cobrar.</value>
+    <value>El servicio ha aceptado esta solicitud y los créditos siguen reservados. Consulta el estado para saber si se ha confirmado un resultado o un reembolso.</value>
   </data>
   <data name="Ai_LocalReviewPending" xml:space="preserve">
     <value>No se registró la revisión final de los datos. Cierra esta solicitud guardada antes de revisar los datos actuales de nuevo.</value>
