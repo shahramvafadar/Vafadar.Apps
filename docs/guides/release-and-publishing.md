@@ -81,6 +81,8 @@ the handoff.
    configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
    that bundle. The bundle must explicitly request uncompressed native libraries with 16 KiB ZIP alignment
    for the APKs generated from it. See [Android page size guidance](https://developer.android.com/guide/practices/page-sizes#bundletool).
+   The Android SDK validates the bundle structure before upload. The base module must contain one
+   nonempty primary DEX and one nonempty managed assembly store for every base native ABI.
    Each base ABI must contain the qualified SQLCipher bytes, and the included manifest and notices must
    match the reviewed native package. The base manifest must contain the permanent package ID, requested display version and build number,
    with debug and test-only flags off. Both editions must declare minimum API 24 for Android 7
@@ -110,6 +112,10 @@ Future improvement: upload directly to the Play internal track from the workflow
 service account), so no artifact is needed.
 
 ### Local split APK evidence
+
+The retained dual-ABI bundle `d589e442` also passed the SDK structure validation and the
+base DEX and assembly-store checks without changing its SHA-256. The focused CI tests reject
+missing, empty or duplicate required entries and a store that appears only in another module.
 
 The local signed release bundle `d589e4428d7545a4f9c044173c95d114d2d4ecf8cac749b7f89c7bbc2c55c031`
 explicitly requests `PAGE_ALIGNMENT_16K` and preserves the SDK's 35 uncompressed asset patterns.

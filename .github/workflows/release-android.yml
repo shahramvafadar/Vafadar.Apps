@@ -150,11 +150,14 @@ jobs:
           java eng/maui/VerifyAndroidBundle.java "${bundles[0]}" "$RUNNER_TEMP/zanance-signing/upload.keystore"
           python eng/maui/verify-android-bundle-elf.py "${bundles[0]}"
           python eng/maui/verify-android-bundle-sqlcipher.py "${bundles[0]}" eng/native/sqlcipher/android.package.contents.json
+          python eng/maui/verify-android-bundle-managed-payload.py "${bundles[0]}"
           bundletool=$(dotnet msbuild "$APP_PROJECT" -nologo -v:q \
             -p:Configuration=Release -p:TargetFramework=net10.0-android \
             -p:VafadarMauiTargetFrameworks=net10.0-android \
             -t:_ResolveMonoAndroidSdks -getProperty:AndroidBundleToolJarPath)
           test -f "$bundletool" || { echo "::error::could not resolve the Android SDK bundletool"; exit 1; }
+          java -jar "$bundletool" validate --bundle="${bundles[0]}" >/dev/null
+          echo "Verified Android App Bundle structure."
           java -jar "$bundletool" dump config --bundle="${bundles[0]}" | python -c '
           import json, sys
           native = json.load(sys.stdin).get("optimizations", {}).get("uncompressNativeLibraries", {})
