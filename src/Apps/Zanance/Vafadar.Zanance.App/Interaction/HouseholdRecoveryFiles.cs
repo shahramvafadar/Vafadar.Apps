@@ -12,15 +12,43 @@ internal static class HouseholdRecoveryFiles
     /// <summary>Reads at most one bounded user-selected file, without creating a draft or keeping a plaintext password/key.</summary>
     internal static async Task<byte[]?> PickAsync(string title, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
+#if ANDROID
+        byte[]? bytes = null;
+        try
+        {
+            await AndroidDocumentPicker.UseAsync(title, null, async (input, _, _) =>
+            {
+                bytes = await Task.Run(() => ReadEncryptedAsync(input, ct), ct);
+            }, ct.ThrowIfCancellationRequested);
+            ct.ThrowIfCancellationRequested();
+            var accepted = bytes;
+            bytes = null;
+            return accepted;
+        }
+        finally
+        {
+            if (bytes is not null) CryptographicOperations.ZeroMemory(bytes);
+        }
+#else
         var selected = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = title });
         ct.ThrowIfCancellationRequested(); if (selected is null) return null;
-        await using var stream = await selected.OpenReadAsync(); using var buffer = new MemoryStream();
+        await using var stream = await selected.OpenReadAsync();
+        return await ReadEncryptedAsync(stream, ct);
+#endif
+    }
+
+    private static async Task<byte[]> ReadEncryptedAsync(Stream stream, CancellationToken ct)
+    {
+        using var buffer = new MemoryStream();
         var piece = new byte[4096];
         try
         {
             while (true)
             {
-                var read = await stream.ReadAsync(piece, ct); if (read == 0) break;
+                var read = await stream.ReadAsync(piece, ct);
+                ct.ThrowIfCancellationRequested();
+                if (read == 0) break;
                 if (buffer.Length > 32768 - read) throw new InvalidDataException("The selected recovery file exceeds its bound.");
                 await buffer.WriteAsync(piece.AsMemory(0, read), ct);
             }

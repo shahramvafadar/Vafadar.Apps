@@ -1621,6 +1621,22 @@ the body was scrolled to inspect the same result. No import was approved and Tra
 remained empty. The fresh emulator was retired. Evidence is under
 `artifacts/csv-native-stream-preview`.
 
+## Android household recovery-file transport
+
+The Android household recovery picker reads the selected stream directly using its temporary URI
+grant. It retains the 32 KiB input limit and the encrypted-package header check. Cancellation
+after a late native read refuses the bytes and clears the temporary buffers. No persistent URI
+grant or copy to a picker cache is needed. Strict Windows and Android builds passed. The signed
+offline APK `72d5d447` passed package, signature, manifest and static alignment checks.
+
+An independent Android 16 package compiled the actual recovery-file adapter and picker. One
+native selection of the retained, encrypted 3,807-byte fictitious kit arrived from a non-seekable
+provider with its exact digest. The isolated package omitted XML documentation diagnostics for
+references outside its linked sources after an initial compile refusal. Product builds retained
+their normal strict checks. The owned emulator was retired. Evidence is under
+`artifacts/household-kit-stream-native`. This qualification covers transport. Decryption,
+connected household recovery, membership changes and physical acceptance remain separate.
+
 ## D-299 reference-source release gates
 
 Keep a live provider, explicit source/coverage/redistribution licence, cost/entitlement policy and public route
