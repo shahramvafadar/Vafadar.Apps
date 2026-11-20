@@ -45,3 +45,28 @@ notification record in `native-terminal.json`.
 The test installation and its named emulator were removed. The original
 emulator settings matched at shutdown, and the shared ADB server was
 preserved.
+
+## Delivery on Android 7 without a runtime notification prompt
+
+One owned Android 7 (API 24) x86-64 emulator ran the retained signed Offline
+Release APK `e7cf917b`. The installed bytes matched the archived APK. In Plans,
+one synthetic plan with an unknown amount and automatic posting disabled was
+saved with a same-day reminder for November 20 at 18:45 local time.
+
+Alarm Manager registered one Zanance `RTC_WAKEUP` at 18:45:00.001 for
+`ScheduledAlarmReceiver` with an inexact window of 2 minutes 47.708 seconds.
+Its pending intent request code and the active notification ID both read
+`1833922215`, under UID `10062`. The final empty sample was at 18:44:56.
+Android's creation timestamp was 18:45:00.140, and the observer saw the
+notification at 18:45:08. Its private body was “A financial item needs your
+attention.” The original app process and boot remained active, and
+Transactions was empty after delivery.
+
+Android capped the requested display size. The setup observer continued from
+the existing account draft after correcting the density. The Plans observer
+then used the accessible Add plan button and the time shown by Android's
+native clock picker. There was one successful plan save and one actual delivery.
+No notification permission, clock or idle settings were changed. The original
+display geometry was restored and the disposable package and emulator were
+retired. Evidence is under `artifacts/api24-plans-reminder-delivery`.
+Reminder taps and timing across other devices or idle modes remain open.
