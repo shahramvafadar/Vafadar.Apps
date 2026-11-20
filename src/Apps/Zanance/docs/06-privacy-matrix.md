@@ -94,6 +94,21 @@ still follows its separate rules for on-device backups. A protected deletion tha
 an interruption uses the original profile identity. Copies saved by recipients are outside
 the app's control.
 
+On successful Android startup, the app also removes portable backup copies from the current
+internal staging cache and its legacy app-specific external staging cache when both the copy
+and its staging directory are older than 24 hours. The directory age protects older backups
+that have just been offered again. The retained backup directory and arbitrary files outside
+the original staging layout are excluded.
+
+On an isolated Android 16 guest, the signed offline APK `4c3e53f2` removed two expired
+internal staging copies after publishing Welcome. An old file in a new staging directory, a
+recent file in an old directory, a foreign backup, a file outside the expected layout and a
+retained backup kept their hashes and metadata. The initial seeded fixture had a root-owned
+app files directory and startup refused access. After restoring only that directory's app
+ownership, mode and SELinux label, one native Retry completed in the same process. The native
+comparison covers internal expiry; the earlier app-created external copy was exercised for
+profile reset. No recipient or transaction was involved.
+
 The signed offline APK `2d05d89f` was exercised through the Profiles screen on an isolated
 Android 16 guest. Three fictitious files were seeded in the internal sharing cache using
 the exact new secondary profile identity. Cancelling its first deletion confirmation kept

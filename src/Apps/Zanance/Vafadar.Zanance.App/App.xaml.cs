@@ -457,9 +457,8 @@ public partial class App : Application
             if (cleanStartupAttachments)
             {
                 // Offered exports can outlive the chooser. Prune expired copies off the UI thread after startup.
-                var cache = FileSystem.CacheDirectory;
                 var time = _services.GetRequiredService<TimeProvider>();
-                _ = Task.Run(() => Presentation.AttachmentCache.ClearExpiredDataShares(cache, time.GetUtcNow()));
+                _ = Task.Run(() => Presentation.AttachmentFiles.ClearExpiredShares(time.GetUtcNow()));
             }
             if (_isInForeground)
                 _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();

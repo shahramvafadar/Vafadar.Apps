@@ -136,6 +136,42 @@ public sealed class AttachmentCacheTests
         }
     }
 
+    /// <summary>Both the backup copy and its staging directory must age past the retention cutoff.</summary>
+    [Fact]
+    public void Expired_backup_shares_keep_recent_staging_and_original_backups()
+    {
+        using var directory = new OwnedDirectory();
+        var now = new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero);
+        var staging = Directory.CreateDirectory(Path.Combine(directory.Root, "2203693cc04e0be7f4f024d5f9499e13")).FullName;
+        const string main = "pro.vafadar.zanance_20261117T121314Z.vbak";
+        const string secondary = "pro.vafadar.zanance~176785fa415a4e0586e0911be87a13f2_20261117T121314Z.vbak";
+        var expiredMain = Write(staging, main, -25, -25);
+        var expiredSecondary = Write(staging, secondary, -25, -25);
+        var newlySharedOldBackup = Write(staging, main, -1, -25);
+        var exactCutoff = Write(staging, main, -25, -24);
+        var foreign = Write(staging, "pro.vafadar.other_20261117T121314Z.vbak", -25, -25);
+        var invalidProfile = Write(staging, "pro.vafadar.zanance~invalid_20261117T121314Z.vbak", -25, -25);
+        var original = Write(directory.Root, main, -25, -25, "backups");
+        var outsideStaging = Write(staging, main, -25, -25, "not-an-opaque-share");
+
+        AttachmentCache.ClearExpiredBackupShares(directory.Root, now);
+
+        Assert.False(Directory.Exists(Path.GetDirectoryName(expiredMain)));
+        Assert.False(Directory.Exists(Path.GetDirectoryName(expiredSecondary)));
+        foreach (var retained in new[] { newlySharedOldBackup, exactCutoff, foreign, invalidProfile, original, outsideStaging })
+            Assert.Equal(new byte[] { 7 }, File.ReadAllBytes(retained));
+
+        string Write(string root, string name, int folderAge, int fileAge, string? folder = null)
+        {
+            var child = Directory.CreateDirectory(Path.Combine(root, folder ?? Guid.NewGuid().ToString("N"))).FullName;
+            var path = Path.Combine(child, name);
+            File.WriteAllBytes(path, [7]);
+            File.SetLastWriteTimeUtc(path, now.UtcDateTime.AddHours(fileAge));
+            Directory.SetLastWriteTimeUtc(child, now.UtcDateTime.AddHours(folderAge));
+            return path;
+        }
+    }
+
     private sealed class OwnedDirectory : IDisposable
     {
         internal string Root { get; } = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "Zanance-CameraCache-" + Guid.NewGuid().ToString("N"))).FullName;

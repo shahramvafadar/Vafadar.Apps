@@ -27,13 +27,13 @@ internal static class AttachmentCache
         var cutoff = now.UtcDateTime.AddHours(-24);
         var csvRoot = Path.Combine(cacheRoot, CsvSharePreparation.DirectoryName);
         var zipRoot = Path.Combine(cacheRoot, AccountantExportDirectoryName);
-        ClearExpiredShares(zipRoot, cutoff, IsAccountantExportName);
+        ClearShares(zipRoot, cutoff, IsAccountantExportName);
         try
         {
             if (!IsOrdinaryDirectory(csvRoot)) return;
             foreach (var child in Directory.EnumerateDirectories(csvRoot))
                 if (Guid.TryParseExact(Path.GetFileName(child), "N", out _))
-                    ClearExpiredShares(child, cutoff, CsvSharePreparation.IsOwnedFileName, removeEmptyDirectory: true);
+                    ClearShares(child, cutoff, CsvSharePreparation.IsOwnedFileName, removeEmptyDirectory: true);
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {
@@ -41,7 +41,7 @@ internal static class AttachmentCache
         }
     }
 
-    private static void ClearExpiredShares(string directory, DateTime cutoff, Func<string, bool> ownsName, bool removeEmptyDirectory = false)
+    private static void ClearShares(string directory, DateTime? cutoff, Func<string, bool> ownsName, bool removeEmptyDirectory = false)
     {
         try
         {
@@ -52,7 +52,8 @@ internal static class AttachmentCache
                 if (!ownsName(Path.GetFileName(file))) continue;
                 try
                 {
-                    if ((File.GetAttributes(file) & FileAttributes.ReparsePoint) == 0 && File.GetLastWriteTimeUtc(file) < cutoff)
+                    if ((File.GetAttributes(file) & FileAttributes.ReparsePoint) == 0
+                        && (cutoff is null || File.GetLastWriteTimeUtc(file) < cutoff.Value))
                     {
                         File.Delete(file);
                         removed = true;
@@ -81,6 +82,32 @@ internal static class AttachmentCache
     {
         if (profileId.Length != 0 && !Guid.TryParseExact(profileId, "N", out _)) return;
         var expectedSet = profileId.Length == 0 ? ZananceApp.AppId : $"{ZananceApp.AppId}~{profileId}";
+        VisitBackupShareDirectories(cacheRoot, child => ClearShares(child, null,
+            name => BackupFileName.TryParse(name, out var set, out _) && set == expectedSet));
+    }
+
+    /// <summary>Expires old Android staging copies without touching saved backups or newly offered shares.</summary>
+    internal static void ClearExpiredBackupShares(string cacheRoot, DateTimeOffset now)
+    {
+        var cutoff = now.UtcDateTime.AddHours(-24);
+        VisitBackupShareDirectories(cacheRoot, child =>
+        {
+            // A fresh staging directory can contain an older file copied with its original timestamp.
+            if (Directory.GetLastWriteTimeUtc(child) < cutoff)
+                ClearShares(child, cutoff, IsZananceBackupName, removeEmptyDirectory: true);
+        });
+    }
+
+    private static bool IsZananceBackupName(string name)
+    {
+        if (!BackupFileName.TryParse(name, out var set, out _)) return false;
+        var prefix = ZananceApp.AppId + "~";
+        return set == ZananceApp.AppId
+            || (set.StartsWith(prefix, StringComparison.Ordinal) && Guid.TryParseExact(set[prefix.Length..], "N", out _));
+    }
+
+    private static void VisitBackupShareDirectories(string cacheRoot, Action<string> visit)
+    {
         var staging = Path.Combine(cacheRoot, BackupShareDirectoryName);
         try
         {
@@ -90,13 +117,8 @@ internal static class AttachmentCache
                 try
                 {
                     // The SDK creates an opaque child directory for each offered share.
-                    if (!Guid.TryParseExact(Path.GetFileName(child), "N", out _) || !IsOrdinaryDirectory(child)) continue;
-                    foreach (var file in Directory.EnumerateFiles(child, "*.vbak"))
-                    {
-                        if (BackupFileName.TryParse(Path.GetFileName(file), out var set, out _) && set == expectedSet
-                            && (File.GetAttributes(file) & FileAttributes.ReparsePoint) == 0)
-                            File.Delete(file);
-                    }
+                    if (Guid.TryParseExact(Path.GetFileName(child), "N", out _) && IsOrdinaryDirectory(child))
+                        visit(child);
                 }
                 catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
                 {
