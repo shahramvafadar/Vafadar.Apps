@@ -109,8 +109,16 @@ jobs:
         shell: pwsh
         run: ./eng/maui/Ensure-ConfigurationMetrics.ps1
 
-      - name: Restore upload keystore
-        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/upload.keystore"
+      - name: Prepare temporary bundle signing files
+        shell: bash
+        run: |
+          umask 077
+          signing="$RUNNER_TEMP/zanance-signing"
+          mkdir "$signing"
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$signing/upload.keystore"
+          # The Android SDK does not support env: passwords when signing an AAB.
+          printf '%s\n' "$ANDROID_KEYSTORE_PASSWORD" > "$signing/store.pass"
+          printf '%s\n' "$ANDROID_KEY_PASSWORD" > "$signing/key.pass"
 
       - name: Publish
         run: >
@@ -123,10 +131,10 @@ jobs:
           -p:ZananceBillingEnabled=false
           -p:ZananceBillingSandbox=false
           -p:AndroidKeyStore=true
-          -p:AndroidSigningKeyStore="$RUNNER_TEMP/upload.keystore"
+          -p:AndroidSigningKeyStore="$RUNNER_TEMP/zanance-signing/upload.keystore"
           -p:AndroidSigningKeyAlias="$ANDROID_KEY_ALIAS"
-          -p:AndroidSigningStorePass=env:ANDROID_KEYSTORE_PASSWORD
-          -p:AndroidSigningKeyPass=env:ANDROID_KEY_PASSWORD
+          -p:AndroidSigningStorePass="file:$RUNNER_TEMP/zanance-signing/store.pass"
+          -p:AndroidSigningKeyPass="file:$RUNNER_TEMP/zanance-signing/key.pass"
           --output "$RUNNER_TEMP/publish"
 
       - name: Verify the signed App Bundle
@@ -139,7 +147,7 @@ jobs:
             echo "::error::expected exactly one signed App Bundle"
             exit 1
           fi
-          java eng/maui/VerifyAndroidBundle.java "${bundles[0]}" "$RUNNER_TEMP/upload.keystore"
+          java eng/maui/VerifyAndroidBundle.java "${bundles[0]}" "$RUNNER_TEMP/zanance-signing/upload.keystore"
           python eng/maui/verify-android-bundle-elf.py "${bundles[0]}"
           bundletool=$(dotnet msbuild "$APP_PROJECT" -nologo -v:q \
             -p:Configuration=Release -p:TargetFramework=net10.0-android \
@@ -154,9 +162,15 @@ jobs:
             python eng/maui/verify-android-bundle-manifest.py pro.vafadar.zanance "$APP_VERSION" "$APP_BUILD_NUMBER" "$edition"
           printf 'path=%s\n' "${bundles[0]}" >> "$GITHUB_OUTPUT"
 
-      - name: Remove keystore
+      - name: Remove temporary bundle signing files
         if: always()
-        run: rm -f "$RUNNER_TEMP/upload.keystore"
+        shell: bash
+        run: |
+          signing="$RUNNER_TEMP/zanance-signing"
+          if [[ -d "$signing" ]]; then
+            rm -f "$signing/upload.keystore" "$signing/store.pass" "$signing/key.pass"
+            rmdir "$signing"
+          fi
 
       # NOTE: artifacts of a public repository can be downloaded by any signed-in GitHub user.
       # Keep the retention short; upload to Google Play and delete the artifact afterwards.

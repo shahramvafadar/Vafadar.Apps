@@ -62,6 +62,8 @@ Each app is versioned independently.
 2. GitHub → Actions → **Release (Android)** → *Run workflow*: choose the app, enter the display version and the next
    build number. Google Play caps the Android version code at 2100000000. The workflow verifies the allowed range; check the last used code in Play Console before choosing the next one.
 3. Approve the `production` environment deployment.
+   AAB signing uses temporary restricted password files because the Android SDK does not support the
+   `env:` password prefix for bundles. The keystore and password files are removed after verification or failure.
 4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
    configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
    that bundle. The base manifest must contain the permanent package ID, requested display version and build number,
@@ -88,9 +90,17 @@ Although the 13 native libraries in the input AAB are compressed, the generated 
 without compression. Each starts at a 16 KiB offset, and each library's SHA-256 matches the input.
 AAB compression alone does not predict how libraries will be carried in APK splits.
 
-The input bundle was unchanged. Local evidence includes the device specification, source digest, split
-signature and alignment receipts, and native-entry comparisons. Play signing, ARM64 output, installation and
-execution on a device with 16 KiB pages remain separate acceptance checks. See the
+A separate strict ARM64 Release build used the offline configuration and a disposable upload key with
+`file:` password inputs, with no real store or provider credential. The signed AAB SHA-256 is
+`3d63d62a911e1311dc00fb8f43e73a1035dc739ee2db6c6b0ffb72cb0b6a916c`.
+The workflow verifiers accepted its upload certificate, release identity, absence of network permissions and
+all 204 ELF libraries. Its four locally generated ARM64/API 36 splits passed signature checks and
+`zipalign -c -P 16 4`. The master APK retained the offline permissions policy, package and version, and all
+204 libraries in the ARM64 split were stored at 16 KiB offsets with SHA-256 values equal to the AAB entries.
+
+The x64 input bundle was unchanged. Local evidence includes the device specifications, source digests, split
+signature and alignment receipts, and native-entry comparisons. Play signing, installation and execution on a
+device with 16 KiB pages remain separate acceptance checks. See the
 [Android bundletool guide](https://developer.android.com/tools/bundletool).
 
 ## iOS (after the Android version is complete)
