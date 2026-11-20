@@ -306,7 +306,9 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Verify Google package/certificate registration matches the installed APK; a changed debug certificate can
   require owner console configuration, independently of the phone model.
 - [ ] English UI + German formats + Gregorian + German holidays + Latin digits; retain choices after restart and
-  restore, with state-holiday coverage explicitly excluded. Repeat Persian RTL and native pickers.
+  restore, with state-holiday coverage explicitly excluded. Repeat Persian RTL and native pickers on the physical
+  device. [Android 16 emulator evidence](07-acceptance-test-plan.md#at-74-android-native-regional-preferences)
+  covers regional restart and synthetic restore.
 
 Local automated/rendered checks and CI do not close these physical-device or provider gates.
 
