@@ -360,3 +360,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - A timeline can be moved and made larger and smaller: with the mouse, a finger, the keyboard or its buttons.
   It shows what is known as it is known – a window in which something happened as a window, an end that is
   open as open – and times that lie very far back, and the order of a telling, have views of their own.
+- A picture can say the time it shows, apart from the time it was made. The gallery of a collection can be asked
+  for a time – a year, a stretch or a depth of time – and shows what shows that time, whenever it was made;
+  what was only made in that time is listed apart.

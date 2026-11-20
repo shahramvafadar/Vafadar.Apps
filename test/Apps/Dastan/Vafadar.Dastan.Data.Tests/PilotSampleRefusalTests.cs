@@ -429,7 +429,7 @@ public sealed class PilotSampleRefusalTests
     {
         var problems = SampleFiles.Problems(sample => sample.Record("media", "media-met-452419")[field] = "2026-11-15");
 
-        Assert.Equal([$"media-met-452419: {field} is not read by this reader; of an item only the creation date is."], problems);
+        Assert.Equal([$"media-met-452419: {field} is not read by this reader; of an item only the creation date and the time it shows are."], problems);
     }
 
     // --- When an item was made ---

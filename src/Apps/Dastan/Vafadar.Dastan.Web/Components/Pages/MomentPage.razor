@@ -108,6 +108,9 @@
                 </nav>
             }
 
+            @* What was chosen is carried on (R-EXP-05): the same time, as a gallery of what shows it. *@
+            <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/gallery?time={Uri.EscapeDataString(_time)}")">@T["Moment_Pictures"]</a></p>
+
             @if (relations.IsEmpty && statements.IsEmpty)
             {
                 <p class="note" role="status">@T[_held is null ? "Moment_Nothing" : "Moment_NothingTime"]</p>
@@ -155,6 +158,7 @@
     private MomentView? _moment;
     private HeldInTime? _held;
     private bool _saysWhen;
+    private string _time = string.Empty;
     private bool _invalid;
     private bool _before;
     private bool _continues;
@@ -208,6 +212,7 @@
                     break;
                 case { } asked:
                     _held = projection.Held(asked, present);
+                    _time = asked.Written;
                     _here = $"{Site.Collection}/at?time={Uri.EscapeDataString(asked.Written)}";
                     return;
                 default:
@@ -231,6 +236,7 @@
         }
 
         _moment = projection.At(year);
+        _time = new AskedTime.Years(year, year).Written;
         _here = Address(year);
     }
 

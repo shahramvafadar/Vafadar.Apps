@@ -94,6 +94,14 @@ public sealed class MediaItem
     /// <summary>Gets when the item was made. It is the time of the item, never of the story it shows.</summary>
     public required TemporalExpression Created { get; init; }
 
+    /// <summary>
+    /// Gets the time the item shows, where it shows a time of the world (ADR 0021, R-MED-04): a painting of
+    /// 1850 of a battle of 1020 was made in 1850 and shows 1020. It is apart from <see cref="Created"/> and is
+    /// never guessed from it; an item that says nothing of it shows no stated time. A step of a telling an item
+    /// shows is not a time of the world – that is <see cref="DepictedEvents"/>.
+    /// </summary>
+    public TemporalExpression? Shows { get; init; }
+
     /// <summary>Gets the entities the item shows.</summary>
     public ImmutableArray<EntityId> DepictedEntities { get; init; } = [];
 

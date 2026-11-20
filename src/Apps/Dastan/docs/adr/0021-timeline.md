@@ -119,6 +119,25 @@ cut; a drawing with the role of a picture may not hold links (the frame carries 
 and a made-up comparison with every kind of beginning and end, deep time and a telling. **Not looked at:** a
 phone, touch with two fingers, a screen reader.
 
-**Not built yet (the next parts of the step):** the page of a story on the control (it keeps its own chart of
-the telling, opened by links); the time a picture shows and the gallery of a period; calendars shown side by
-side; what was chosen carried from view to view.
+### Part 3 (2026-11-20): the time a picture shows, and the gallery of a time
+
+* **A picture has two times** (R-MED-04): when it was made (`creationDate`, as before) and, apart from it, the
+  time it shows (`depictedTime`, new and optional): a date of a calendar, a window, a depth of time. It is
+  never guessed from the time the item was made, and a step of a telling is refused there – what an item
+  shows of a telling are its events, as before. The page of an item says both times, each under its name.
+* **The gallery of a time** (R-MED-02): `/{collection}/gallery?time=…`, asked for with the form of the gallery
+  and read by the one reader of a time. It shows what *shows* that time, whenever it was made – a painting of
+  1850 of an event of 1020 is found at 1020, and is marked as a later picture as on every page – and says
+  "may show this time" where what an item shows is less than exact or reaches out of the time. What was only
+  *made* in the time is named apart, under its own heading, so that neither is taken for the other. An item
+  that is only named with the institution that holds it is found by the time it shows too, as a reference.
+  What is no time leaves the gallery whole and says so; a reader finds nothing they have not read to.
+* **The timeline of a collection** has a lane for what the pictures show, beside the lane for when they were
+  made.
+* **Carried on** (R-EXP-05, the first piece): "what held at this time" leads to the pictures of that same time,
+  and the gallery of a time leads back to what held in it – the time goes with the reader, in the address.
+
+**Not built:** themes of a gallery (R-MED-02 names them; the vocabulary has no kind for a theme yet, and none is
+made up here); a picture in several places with a caption of its own in each (R-MED-07); the time a photograph
+of an account shows (it has the day it was taken and the day it was brought in); calendars shown side by side
+(R-TIME-05); carrying a chosen node from the graph to the timeline; the page of a story on the control.

@@ -146,6 +146,9 @@ public enum GalleryRule
 
     /// <summary>The items that depict the event.</summary>
     DepictsEvent = 2,
+
+    /// <summary>The items that show a time that was asked for: a year, a stretch of years or a depth of time (ADR 0021).</summary>
+    ShowsTime = 3,
 }
 
 /// <summary>How the items of a gallery are ordered.</summary>
@@ -191,6 +194,9 @@ public sealed record MediaReference(
     ImmutableArray<EventId> DepictedEvents)
 {
     /// <summary>Gets the title the holding institution gives the work.</summary>
+    /// <summary>Gets the time the item shows, where it shows a time of the world.</summary>
+    public Vafadar.Temporal.TemporalExpression? Shows { get; init; }
+
     public string? CatalogueTitle { get; init; }
 
     /// <summary>Gets the number the holding institution gives the work.</summary>
@@ -219,6 +225,18 @@ public sealed record GalleryView(
     /// </summary>
     public ImmutableArray<MediaReference> References { get; init; } = [];
 
+    /// <summary>Gets the time that was asked for, for <see cref="GalleryRule.ShowsTime"/>.</summary>
+    public AskedTime? Time { get; init; }
+
+    /// <summary>
+    /// Gets the items that were made in the time that was asked for and do not show it – or do not say what
+    /// time they show. They are named apart: a picture made in a time is no picture of that time.
+    /// </summary>
+    public ImmutableArray<MediaItem> MadeThen { get; init; } = [];
+
+    /// <summary>Gets the items that only may show the time: what they show is less than exact, or reaches out of it.</summary>
+    public ImmutableHashSet<MediaId> Possibly { get; init; } = [];
+
     /// <summary>
     /// Returns the gallery with the items of one kind only, or in another order. An item whose time of making
     /// cannot be placed among the years stands after the others, in the order of the editors.
@@ -238,11 +256,11 @@ public sealed record GalleryView(
                 : references.OrderBy(item => Made(item.Created) is null).ThenByDescending(item => Made(item.Created));
         }
 
-        return this with { Order = order, Items = [.. items], References = [.. references] };
+        return this with { Order = order, Items = [.. items], References = [.. references], MadeThen = [.. MadeThen.Where(item => kind is null || item.Kind == kind)] };
     }
 
     /// <summary>Gets whether the gallery has nothing to show and nothing to refer to.</summary>
-    public bool IsEmpty => Items.IsEmpty && References.IsEmpty;
+    public bool IsEmpty => Items.IsEmpty && References.IsEmpty && MadeThen.IsEmpty;
 }
 
 /// <summary>One media item with what it shows.</summary>

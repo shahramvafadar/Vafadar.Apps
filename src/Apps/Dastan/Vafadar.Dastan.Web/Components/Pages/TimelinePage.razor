@@ -175,6 +175,28 @@
             });
         }
 
+        // The time a picture shows is another time than the one it was made in (ADR 0021, R-MED-04): a lane of its own.
+        if (view.Made.Any(item => item.Shows is not null))
+        {
+            lanes.Add(new ComparisonLane
+            {
+                Key = "timeline-shown",
+                Label = LocalizedText.Of(Visitor.Language.Tag, T["Timeline_Shown"]),
+                Periods = [],
+                Events =
+                [
+                    .. view.Made.Where(item => item.Shows is not null).Select(item => new ComparisonEvent
+                    {
+                        Key = "shown-" + item.Id.Value,
+                        Label = item.Label,
+                        Time = item.Shows!,
+                        Sources = item.Sources,
+                        Review = ReviewStatus.SourcedReviewPending,
+                    }),
+                ],
+            });
+        }
+
         if (lanes.Count == 0)
         {
             return null;

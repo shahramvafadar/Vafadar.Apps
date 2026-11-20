@@ -3696,4 +3696,40 @@
   <data name="Timeline_Unplaced" xml:space="preserve">
     <value>رسم نشده‌اند، چون زمانشان روی هیچ‌یک از این محورها جایی ندارد:</value>
   </data>
+  <data name="Media_ShowsTime" xml:space="preserve">
+    <value>زمانی که نشان می‌دهد</value>
+  </data>
+  <data name="Media_ShowsNote" xml:space="preserve">
+    <value>زمانی که تصویر نشان می‌دهد – جدا از زمانی که ساخته شده است.</value>
+  </data>
+  <data name="Gallery_Time" xml:space="preserve">
+    <value>تصویرهای یک زمان</value>
+  </data>
+  <data name="Gallery_TitleTime" xml:space="preserve">
+    <value>تصویرهای {0}</value>
+  </data>
+  <data name="Gallery_LeadTime" xml:space="preserve">
+    <value>آنچه این زمان را نشان می‌دهد، هر زمان که ساخته شده باشد. تصویری که نمی‌گوید چه زمانی را نشان می‌دهد این‌جا شمرده نمی‌شود.</value>
+  </data>
+  <data name="Gallery_EmptyTime" xml:space="preserve">
+    <value>این‌جا چیزی این زمان را نشان نمی‌دهد.</value>
+  </data>
+  <data name="Gallery_Possibly" xml:space="preserve">
+    <value>شاید این زمان را نشان دهد</value>
+  </data>
+  <data name="Gallery_MadeThen" xml:space="preserve">
+    <value>ساخته‌شده در این زمان</value>
+  </data>
+  <data name="Gallery_MadeThenNote" xml:space="preserve">
+    <value>این‌ها در این زمان ساخته شده‌اند. آن را نشان نمی‌دهند، یا نمی‌گویند چه زمانی را نشان می‌دهند.</value>
+  </data>
+  <data name="Timeline_Shown" xml:space="preserve">
+    <value>آنچه تصویرها نشان می‌دهند</value>
+  </data>
+  <data name="Moment_Pictures" xml:space="preserve">
+    <value>تصویرهای این زمان</value>
+  </data>
+  <data name="Gallery_WhatHeld" xml:space="preserve">
+    <value>آنچه در این زمان برقرار بود</value>
+  </data>
 </root>

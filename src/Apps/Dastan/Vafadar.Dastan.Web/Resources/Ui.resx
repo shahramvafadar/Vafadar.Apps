@@ -3696,4 +3696,40 @@
   <data name="Timeline_Unplaced" xml:space="preserve">
     <value>Not drawn, because their time has no place on any of these axes:</value>
   </data>
+  <data name="Media_ShowsTime" xml:space="preserve">
+    <value>Shows the time</value>
+  </data>
+  <data name="Media_ShowsNote" xml:space="preserve">
+    <value>The time the picture shows – another time than the one it was made in.</value>
+  </data>
+  <data name="Gallery_Time" xml:space="preserve">
+    <value>Pictures of a time</value>
+  </data>
+  <data name="Gallery_TitleTime" xml:space="preserve">
+    <value>Pictures of {0}</value>
+  </data>
+  <data name="Gallery_LeadTime" xml:space="preserve">
+    <value>What shows this time, whenever it was made. A picture that does not say what time it shows is not counted here.</value>
+  </data>
+  <data name="Gallery_EmptyTime" xml:space="preserve">
+    <value>Nothing here shows this time.</value>
+  </data>
+  <data name="Gallery_Possibly" xml:space="preserve">
+    <value>may show this time</value>
+  </data>
+  <data name="Gallery_MadeThen" xml:space="preserve">
+    <value>Made in this time</value>
+  </data>
+  <data name="Gallery_MadeThenNote" xml:space="preserve">
+    <value>These were made in this time. They do not show it, or do not say what time they show.</value>
+  </data>
+  <data name="Timeline_Shown" xml:space="preserve">
+    <value>What the pictures show</value>
+  </data>
+  <data name="Moment_Pictures" xml:space="preserve">
+    <value>Pictures of this time</value>
+  </data>
+  <data name="Gallery_WhatHeld" xml:space="preserve">
+    <value>What held in this time</value>
+  </data>
 </root>
