@@ -112,6 +112,25 @@ actual Windows navigation lifecycle with a programmatic Back route. Android
 system Back and a connected provider were outside the run. The source and two
 receipts are retained under `artifacts/analysis-metadata-native-back`.
 
+Android 16 system Back was exercised separately on an owned x86-64 emulator
+with a signed, independent Debug package. In the availability case, one
+Android Back cancelled the held read, returned to Home, left AI enabled and
+preserved the financial fingerprint. The introductory reminder offer had
+covered the first pending screen. The device observer dismissed it with
+Not now and continued the original read in the same process.
+
+The initial quote case reached Home but failed the combined lifecycle check.
+One no-reset diagnostic update retained the earlier receipt and synthetic
+account and ran only the unfinished quote case. It observed cancellation,
+no busy or Send state, and no submission. The compound check still failed and
+the probe recorded a null current-page reference while Android was returning. A subsequent
+read of the same process's native hierarchy showed selected Home, an enabled
+New expense action and no Analysis surface. The quote's full post-test
+financial fingerprint was not reached. There was no vendor transport in the
+fixture. Both signed review builds and the original failed observations remain
+under `artifacts/analysis-back-android36`. The guest and its review package
+were retired.
+
 - Define a small versioned input and output contract for each approved task. Keep calculations, exact dates, sign and currency semantics in Core. Map model-generated facts to permitted source references so the app can open the original local view. Render output as text. Validate its schema, references, totals and bounds, including zero or insufficient data.
 - Use the current manager selection and Off control for simple and reasoning tasks. Extend the administrator's per-task selections as new distinct tasks are qualified. Treat content such as a note or OCR line as data. A task receives only the selected period, filtered scope, permitted fields and exact destination disclosed to the user. Avoid silent provider fallback. Wait for separate privacy, retention, recovery, budget and commercial gates before sending genuine data.
 - Qualify on a fixed set of synthetic cases for each task. Include refunds, transfers, incomplete or stale inputs, currency separation, date boundaries and the six supported languages. Confirm visible source links, offline continuity, per-request bounds, denial and failure without ledger changes, exact continuation after switching provider and stale suggestion refusal. Use a deterministic baseline before adding an AI dependency, and retain a separate measured quality and cost report for each task.
