@@ -47,6 +47,11 @@ public partial class PlansPage : ContentPage
         _viewModel.SetActive(true);
         return PendingPublication = _viewModel.LoadAsync();
     }
+
+    /// <summary>Rechecks the system permission only for the still-foreground plan centre.</summary>
+    internal Task RefreshReminderPermissionAsync(Func<bool> isForeground) =>
+        _viewModel.RefreshReminderPermissionAsync(() => _publicationActive && !_shellRetired
+            && ReferenceEquals(Shell.Current?.CurrentPage, this) && isForeground());
     /// <summary>Retires source, retained rows and native permission continuations on actual departure.</summary>
     internal void RetirePublication() { _publicationActive = false; _viewModel.SetActive(false); }
     /// <summary>Prevents a replaced native root from publishing or navigating through old row objects.</summary>

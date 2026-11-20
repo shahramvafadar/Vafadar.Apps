@@ -493,9 +493,20 @@ public partial class App : Application
             lifetimePublished = NativeAccessLifecycle.Queue(
                 () => _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume(),
                 action => Dispatcher.Dispatch(async () => await action()),
-                () => _services.GetRequiredService<AppLockService>().ResumeAsync());
+                ResumeAccessAsync);
         // D-1037: a failed lifetime publication still updates the cover, without starting new foreground work.
         if (lifetimePublished) RunForegroundWork();
+    }
+
+    private async Task ResumeAccessAsync()
+    {
+        var access = _services.GetRequiredService<AppLockService>();
+        await access.ResumeAsync();
+#if ANDROID
+        bool CanRefreshPlans() => _isInForeground && !access.IsLocked;
+        if (CanRefreshPlans() && Windows.FirstOrDefault()?.Page is AppShell { CurrentPage: Features.Plans.PlansPage plans })
+            await plans.RefreshReminderPermissionAsync(CanRefreshPlans);
+#endif
     }
 
     // Due plan occurrences are recorded whenever the app comes to the foreground, then reminders are rebuilt;

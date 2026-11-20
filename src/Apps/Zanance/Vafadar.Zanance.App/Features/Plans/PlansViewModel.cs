@@ -73,11 +73,13 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
     private readonly ReminderService _reminders;
     private PlanCenterReadSnapshot? _published;
     private PlanRow[] _publishedRows = [];
+    private bool _publishedWantsReminders;
     private string? _originalFile;
     private bool _active = true;
     private long _revision;
     private CancellationTokenSource _lifetime = new();
     private TaskCompletionSource? _permissionIdle;
+    private long _permissionRead;
 
     /// <summary>Gets the original complete loading/error/Retry owner.</summary>
     [ObservableProperty, NotifyPropertyChangedFor(nameof(CanInteract))]
@@ -190,7 +192,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
                 Publish(() => UnreviewedCount = source!.UnreviewedCount); Publish(() => HasNoPlans = result.HasNoPlans);
                 Publish(() => RemindersOff = remindersOff); Publish(() => EmptyText = _translator[result.EmptyKey]);
                 Publish(() => IsEmpty = rows.Length == 0); Publish(() => Feedback = null);
-                _publishedRows = rows; _published = source;
+                _publishedRows = rows; _publishedWantsReminders = result.WantsReminders; _published = source;
             });
             OnPropertyChanged(nameof(CanInteract)); await pending;
         }
@@ -346,6 +348,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
         var source = _published; var owner = Loading; var revision = _revision; var segment = SegmentIndex; var day = Today; var display = DisplayIdentity();
         bool Current() => Owns(source, owner, revision, segment, day, display, requireIdle: false);
         if (!Current() || IsPermissionBusy || !RemindersOff) return;
+        _permissionRead++;
         var idle = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously); _permissionIdle = idle;
         try
         {
@@ -361,6 +364,20 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
             try { IsPermissionBusy = false; }
             finally { if (ReferenceEquals(_permissionIdle, idle)) _permissionIdle = null; idle.TrySetResult(); }
         }
+    }
+
+    /// <summary>Refreshes the system permission on foreground return without reloading the current plan rows.</summary>
+    internal async Task RefreshReminderPermissionAsync(Func<bool> isForeground)
+    {
+        var source = _published; var owner = Loading; var revision = _revision; var segment = SegmentIndex; var day = Today; var display = DisplayIdentity();
+        bool Current() => isForeground() && Owns(source, owner, revision, segment, day, display);
+        if (!Current() || !_publishedWantsReminders || !_reminders.Scheduler.IsSupported) return;
+        var read = ++_permissionRead;
+        var enabled = await _reminders.Scheduler.AreEnabledAsync();
+        // An explicit Turn on or a newer resume owns permission feedback after it starts.
+        if (read != _permissionRead || !Current()) return;
+        source!.EnsureCurrent();
+        RemindersOff = !enabled;
     }
 
     [RelayCommand]

@@ -54,3 +54,38 @@ The test package and its isolated emulator were removed after verification.
 The emulator's settings matched the initial snapshot before shutdown. The
 shared ADB server was preserved, and standard Windows and Android build
 cleanup passed.
+
+## Android 7 App info and external notification changes
+
+On API 24, Android exposed Zanance's notification control through App info.
+After the system block changed outside the app, the original Plans page
+continued to show the previous state. Leaving and re-entering Plans made
+the same saved reminder show the warning. The Android foreground return now
+reads the permission for the still-current Plans view, without loading its
+plan list again. A pending explicit Turn on action retains its own result.
+
+The first corrected package displayed the warning on return from the system
+block. Its Turn on action still dismissed the warning without opening App
+info. Android reported the package's importance as NONE. Since a request
+can report success when no Android runtime permission applies, reminder
+permission now comes from a fresh status read after the request.
+
+The final signed Offline Release APK `44bfa6bb` was installed over the same
+Android 7 x86-64 fixture with the package UID, data path and first-install
+timestamp preserved. With the system still blocked, Plans displayed Turn on.
+Turn on and Open settings reached Zanance's App info. Android's own notification
+screen showed Block all enabled. Turning that setting off and pressing Back
+returned directly to the same Plans page with its warning cleared.
+
+The original plan still had its November 27 due date and the reminder for
+November 24 at 09:00. Its pending alarm still used request code `1127156057`
+and UID `10062`; Android reported a 1 ms difference from the first timestamp.
+The observer initially expected a separate App info screen after Back and
+continued from the returned Plans view. The one synthetic plan save was
+preserved through both upgrades. Transactions remained empty.
+
+Two focused permission cases passed with the system state and request result
+disagreeing in either direction. Strict Windows and signed Android Release
+builds passed. The disposable package and emulator were retired after
+restoring display geometry and deleting the hash-checked capture. Evidence is
+under `artifacts/api24-plans-settings-return`.

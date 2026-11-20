@@ -21,6 +21,22 @@ public sealed class ReminderFlowTests
     private static readonly Guid ScopeId = Guid.Parse("11111111-2222-3333-4444-555555555555");
 
     [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public async Task Permission_request_uses_the_system_state_after_the_request(bool requestResult, bool systemEnabled)
+    {
+        using var f = new FlowFixture();
+        var native = new NativeScheduler { Enabled = false };
+        native.PermissionRequest = () => { native.Enabled = systemEnabled; return requestResult; };
+        using var service = new ReminderService(native, f.Store, f.Services.GetRequiredService<PlanStore>(),
+            f.Services.GetRequiredService<GoalStore>(), f.Services.GetRequiredService<HoldingStore>(),
+            f.Preferences, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time);
+
+        Assert.Equal(systemEnabled, await service.EnsurePermissionAsync());
+        Assert.Equal(1, native.PermissionRequests);
+    }
+
+    [Theory]
     [InlineData("missing", 0), InlineData("one", 1), InlineData("empty", 0), InlineData("plus", 6), InlineData("inactive", 6)]
     public async Task Actual_delivery_filters_before_grouping_without_modifying_complete_financial_rows(string access, int count)
     {
@@ -322,6 +338,8 @@ public sealed class ReminderFlowTests
         public event EventHandler<SnoozeRequest>? SnoozeRequested { add { } remove { } }
         public bool IsSupported => true;
         internal bool Enabled = true;
+        internal Func<bool>? PermissionRequest;
+        internal int PermissionRequests;
         internal int Replacements;
         internal IReadOnlyList<ReminderNotification> Pending = [];
         internal List<ReminderNotification> Shown = [];
@@ -329,7 +347,11 @@ public sealed class ReminderFlowTests
         internal List<(string Hour, string Tomorrow)> Labels = [];
         public void SetSnoozeActions(string oneHour, string tomorrow) => Labels.Add((oneHour, tomorrow));
         public Task<bool> AreEnabledAsync() => Task.FromResult(Enabled);
-        public Task<bool> RequestPermissionAsync() => Task.FromResult(Enabled);
+        public Task<bool> RequestPermissionAsync()
+        {
+            PermissionRequests++;
+            return Task.FromResult(PermissionRequest?.Invoke() ?? Enabled);
+        }
         public async Task ReplaceAllAsync(IReadOnlyList<ReminderNotification> reminders)
         {
             Replacements++; Pending = reminders.ToArray(); if (OnReplace is not null) await OnReplace();

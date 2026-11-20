@@ -410,7 +410,12 @@ public sealed class ReminderService(
             return false;
         }
 
-        return await scheduler.AreEnabledAsync() || await scheduler.RequestPermissionAsync();
+        if (await scheduler.AreEnabledAsync()) return true;
+
+        // Android can report a successful request when no runtime permission applies, even if
+        // the user blocked all notifications in App info. The OS setting decides what can be delivered.
+        await scheduler.RequestPermissionAsync();
+        return await scheduler.AreEnabledAsync();
     }
 
     // Each original current period has its own threshold cache. New-work rights affect delivery, never financial inputs.
