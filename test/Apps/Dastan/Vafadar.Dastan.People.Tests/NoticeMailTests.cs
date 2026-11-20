@@ -159,7 +159,7 @@ public sealed class NoticeMailTests : IDisposable
     [Fact]
     public void Who_a_tree_names_is_told_that_it_is_to_be_public_in_their_language()
     {
-        var dara = _store.Accounts.RegisterWith("Dara", "made-up", "subject-of-dara", "dara@example.org", "fa").Session!.Id;
+        var dara = _store.Accounts.RegisterWith("Dara", "made-up", "subject-of-dara", "dara@example.org", "fa", proven: true).Session!.Id;
         Friends();
         Assert.Equal("asked", _store.Ask(_mina, "Dara", "family"));
         Assert.True(_store.Answer(dara, _store.Relationships(dara)[0].Id, accept: true));

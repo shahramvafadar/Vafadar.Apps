@@ -260,19 +260,20 @@ public sealed class AccountDesk
     }
 
     /// <summary>
-    /// Hands a sign-in of a provider that has no account yet to the form on which the visitor chooses a name,
-    /// with the mail address the provider confirmed: sealed for ten minutes in a cookie only this site can read.
+    /// Hands a sign-in of a provider that has no account yet – or whose account waits for its address – to the
+    /// form the visitor comes to, with the mail address the provider named and whether the provider verified
+    /// it: sealed for ten minutes in a cookie only this site can read.
     /// </summary>
-    public void CarryArrival(HttpContext context, string provider, string subject, string mail, string? invitation)
+    public void CarryArrival(HttpContext context, string provider, string subject, string mail, bool proven, string? invitation)
     {
         ArgumentNullException.ThrowIfNull(context);
         var options = PreferenceCookie.Options(context);
         options.MaxAge = TimeSpan.FromMinutes(10);
-        context.Response.Cookies.Append(ExternalSignIn.PendingCookie, _arrivals.Protect($"{provider}\n{subject}\n{mail}\n{invitation}", TimeSpan.FromMinutes(10)), options);
+        context.Response.Cookies.Append(ExternalSignIn.PendingCookie, _arrivals.Protect($"{provider}\n{subject}\n{mail}\n{(proven ? "proven" : string.Empty)}\n{invitation}", TimeSpan.FromMinutes(10)), options);
     }
 
     /// <summary>Returns the sign-in of a provider a request carries, or nothing: none, not sealed by this site, or older than ten minutes.</summary>
-    public (string Provider, string Subject, string Mail, string? Invitation)? Arrival(HttpContext context)
+    public (string Provider, string Subject, string Mail, bool Proven, string? Invitation)? Arrival(HttpContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
         if (context.Request.Cookies[ExternalSignIn.PendingCookie] is not { Length: > 0 } carried)
@@ -282,7 +283,9 @@ public sealed class AccountDesk
 
         try
         {
-            return _arrivals.Unprotect(carried).Split('\n') is [var provider, var subject, var mail, var invitation] ? (provider, subject, mail, invitation.Length > 0 ? invitation : null) : null;
+            return _arrivals.Unprotect(carried).Split('\n') is [var provider, var subject, var mail, var proven, var invitation]
+                ? (provider, subject, mail, proven == "proven" && mail.Length > 0, invitation.Length > 0 ? invitation : null)
+                : null;
         }
         catch (System.Security.Cryptography.CryptographicException)
         {

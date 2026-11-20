@@ -51,6 +51,7 @@ Settings are environment variables (two underscores for a level).
 | `Dastan__Mail__Host`, `__Port`, `__Security`, `__User`, `__Password`, `__From`, `__FromName` | The SMTP server the mail of the site leaves by ([ADR 0016](adr/0016-identity-and-mail.md)): its name; its port (587); how the connection is protected – `StartTls` (the default, and a server that does not offer it is refused), `Tls` from the start, or `None` for a catcher on the same machine only; the name and the password the site signs in with, when the server asks; the address the mail comes from and the name beside it. **The password is a secret**: it is given by the environment of the server and is never written into a file of the repository, a command or a log. A message waits in the database (`delivery."Mail"`) and is sent by the site every few seconds; one that fails is tried again later and later and given up after eight tries. A site told a server without an address to send from, without a database or without the tables does not start | not set: the site sends no mail |
 | `Dastan__Announcement` | A text the operator has to tell everybody – changed terms, the end of a function, a breach of security – shown on every page as plain text until it is taken out again. The site knows no mail address of its visitors | not set |
 | `Dastan__SignIn__MadeUp` | For a developer's machine only (step 18.2.2): a made-up provider that asks nobody and says the visitor is whoever this value names, so that the forms after a sign-in through a provider can be looked at without a client of Google or Microsoft. It exists in the environment `Development` only; anywhere else it does nothing | not set |
+| `Dastan__SignIn__MadeUpProves` | With the made-up provider only: `false` makes it name an address without proving it, as Microsoft does, to try the way of an address that still has to be confirmed by mail (step 20.3). Not set, it proves its address, as Google does. |
 | `Dastan__Legal` | A folder with legal texts of the owner's own (step 18.3.4, row 18.8), read-only: a plain text file for a page and a language – `terms.en.txt`, `privacy.de.txt`, `cookies.fa.txt`, `imprint.en.txt`, … – stands in the place of the text of the program for that page and language. A line that begins with `#` is a heading, `##` a smaller one, `- ` an item of a list, `\| ` a line that keeps its end (an address); lines that follow each other are one paragraph; `{{operator.name}}`, `{{operator.street}}`, `{{operator.town}}`, `{{operator.country}}`, `{{operator.mail}}`, `{{operator.phone}}`, `{{site}}`, `{{host}}`, `{{network}}` and `{{authority}}` are filled in from the settings, and a line that begins with `?` is left out when its value is not said. Nothing in a file is taken as markup. An empty file shows "this text is not written yet" | not set: the texts of the program, in English, Persian and German |
 | `Dastan__InvitationOnly` | `true`: a new account needs an invitation of somebody who has an account (D-068) – the site of a closed trial. Make the first account before setting it | not set: anybody may make an account |
 | `Dastan__SignIn__Google__ClientId`, `Dastan__SignIn__Google__ClientSecret` | The client of the site at Google (step 16.8), for signing in through Google. The owner registers the site there with the address `https://<the site>/signin-google` to come back to and the scopes `openid` and `email` – the site asks for who somebody is and for the address Google confirmed, which becomes the address of the account (step 19.4) – and enters both values into the environment of the container – the secret never into a file of the repository, a command line or a ticket. Needs `Dastan__Database`. **Not tried against Google yet** | not set: no sign-in through Google is offered |
@@ -306,7 +307,19 @@ dotnet Vafadar.Dastan.Content.dll people persons <tree> --people env
 dotnet Vafadar.Dastan.Content.dll people person remove <tree> <person> --people env
 dotnet Vafadar.Dastan.Content.dll people forget <name> --people env
 dotnet Vafadar.Dastan.Content.dll people repair --people env [--change]
+dotnet Vafadar.Dastan.Content.dll people addresses --people env
+dotnet Vafadar.Dastan.Content.dll people addresses ask <provider> --people env --site https://<the site>
 ```
+
+`people addresses` lists the open accounts whose mail address counts as confirmed while nothing says how it
+was confirmed (ADR 0016). Since step 20.3 every account records that – by a link the site mailed, or by a
+provider that said it had verified the address. An account made before that through a provider has no such
+record; one that never had a provider is written down as confirmed by mail when the store is brought up.
+`people addresses ask microsoft` asks the accounts of the list that can be signed in through Microsoft to
+confirm the address anew: the link is mailed to the address, every sign-in of the account ends, and the
+account – with everything of it – is an account again when the link was opened. Nobody is asked twice. An
+account without a record that is signed in through Google only is left as it is: Google's word was taken
+only when it said it had verified the address.
 
 `people repair` looks for what two requests at the same moment could leave behind before every act took its
 locks (ADR 0022): somebody in a circle or a tree of an account they show no accepted relationship with, and

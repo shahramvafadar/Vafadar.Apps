@@ -34,7 +34,7 @@ internal static class TestAccounts
             return new([password.Length > 1000 ? "password-long" : "password-short"]);
         }
 
-        var made = store.Accounts.RegisterWith(name, Provider, "subject of " + MailOf(name), MailOf(name), "en", invitation, invitationNeeded, terms);
+        var made = store.Accounts.RegisterWith(name, Provider, "subject of " + MailOf(name), MailOf(name), "en", invitation, invitationNeeded, terms, proven: true);
         if (!made.Done)
         {
             // The made-up sign-in and address stand for the name: taken, they mean the name is.

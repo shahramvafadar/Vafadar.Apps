@@ -633,6 +633,7 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             account.Property(item => item.Email).HasMaxLength(Vafadar.Dastan.Data.MailOutbox.LongestAddress);
             account.Property(item => item.NormalizedEmail).HasMaxLength(Vafadar.Dastan.Data.MailOutbox.LongestAddress);
             account.Property(item => item.Language).HasMaxLength(20);
+            account.Property(item => item.AddressProof).HasMaxLength(60);
             account.Property(item => item.ConcurrencyStamp).IsConcurrencyToken();
             account.HasIndex(item => item.NormalizedUserName).IsUnique();
             account.HasIndex(item => item.NormalizedEmail).IsUnique();

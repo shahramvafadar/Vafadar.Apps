@@ -281,6 +281,11 @@ public sealed class OperatorCommandsTests : IDisposable
         Assert.Equal(ContentCommands.Done, repaired.Exit);
         Assert.Contains("0 places in a tree taken out", repaired.Output, StringComparison.Ordinal);
         Assert.Contains("0 trees in which somebody is their own ancestor", repaired.Output, StringComparison.Ordinal);
+
+        // Every account of this store was made with a record of how its address was confirmed: nobody is listed, nobody asked.
+        Assert.Contains("0 accounts without a record", Run("people", "addresses", "--people", People).Output, StringComparison.Ordinal);
+        Assert.Contains("0 accounts were asked", Run("people", "addresses", "ask", "microsoft", "--people", People, "--site", "https://dastan.test").Output, StringComparison.Ordinal);
+        Assert.Equal(ContentCommands.NotUsable, Run("people", "addresses", "ask", "microsoft", "--people", People, "--site", "not an address").Exit);
         Assert.Equal(ContentCommands.Done, Run("people", "person", "remove", tree, zal, "--people", People).Exit);
         Assert.Equal(ContentCommands.NotUsable, Run("people", "person", "remove", tree, zal, "--people", People).Exit);
 

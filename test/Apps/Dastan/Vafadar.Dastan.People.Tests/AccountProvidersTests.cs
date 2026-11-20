@@ -40,12 +40,24 @@ public sealed class AccountProvidersTests : IDisposable
         return (long)command.ExecuteScalar()!;
     }
 
+    // Confirms the address of an account with the link that was mailed to it.
+    private bool Confirm(string address)
+    {
+        using var connection = new Npgsql.NpgsqlConnection(_database);
+        connection.Open();
+        using var command = connection.CreateCommand();
+        command.CommandText = """select "Text" from delivery."Mail" where "To" = @to and "Kind" = 'confirm-address' order by "CreatedAt" desc limit 1""";
+        command.Parameters.AddWithValue("to", address);
+        var link = System.Text.RegularExpressions.Regex.Match((string)command.ExecuteScalar()!, @"confirm\?id=([0-9a-f]+)&token=([0-9a-f]+)");
+        return link.Success && _store.Accounts.Confirm(link.Groups[1].Value, link.Groups[2].Value).Done;
+    }
+
     [Fact]
     public void A_first_sign_in_through_a_provider_makes_an_account_with_the_address_the_provider_confirmed()
     {
         Assert.Null(_store.Accounts.SignInWith("google", "subject-1"));
 
-        var made = _store.Accounts.RegisterWith("Mina", "google", "subject-1", "mina@example.org", "fa", terms: "2026-11-19");
+        var made = _store.Accounts.RegisterWith("Mina", "google", "subject-1", "mina@example.org", "fa", terms: "2026-11-19", proven: true);
 
         Assert.True(made.Done);
         Assert.Equal(PeopleStore.RecoveryCodeCount, made.RecoveryCodes.Length);
@@ -67,14 +79,14 @@ public sealed class AccountProvidersTests : IDisposable
     [Fact]
     public void What_cannot_be_such_an_account_is_said()
     {
-        Assert.True(_store.Accounts.RegisterWith("Mina", "google", "subject-1", "mina@example.org", "en").Done);
+        Assert.True(_store.Accounts.RegisterWith("Mina", "google", "subject-1", "mina@example.org", "en", proven: true).Done);
 
-        Assert.Equal(["login-taken"], _store.Accounts.RegisterWith("Sara", "google", "subject-1", "sara@example.org", "en").Problems);
-        Assert.Equal(["address-has-account"], _store.Accounts.RegisterWith("Sara", "microsoft", "subject-9", "MINA@example.org", "en").Problems);
-        Assert.Equal(["taken"], _store.Accounts.RegisterWith("mina", "google", "subject-2", "sara@example.org", "en").Problems);
-        Assert.Equal(["name-length"], _store.Accounts.RegisterWith("Sa", "google", "subject-2", "sara@example.org", "en").Problems);
-        Assert.Equal(["mail"], _store.Accounts.RegisterWith("Sara", "google", "subject-2", "nothing", "en").Problems);
-        Assert.Equal(["invitation-needed"], _store.Accounts.RegisterWith("Sara", "google", "subject-2", "sara@example.org", "en", invitationNeeded: true).Problems);
+        Assert.Equal(["login-taken"], _store.Accounts.RegisterWith("Sara", "google", "subject-1", "sara@example.org", "en", proven: true).Problems);
+        Assert.Equal(["address-has-account"], _store.Accounts.RegisterWith("Sara", "microsoft", "subject-9", "MINA@example.org", "en", proven: true).Problems);
+        Assert.Equal(["taken"], _store.Accounts.RegisterWith("mina", "google", "subject-2", "sara@example.org", "en", proven: true).Problems);
+        Assert.Equal(["name-length"], _store.Accounts.RegisterWith("Sa", "google", "subject-2", "sara@example.org", "en", proven: true).Problems);
+        Assert.Equal(["mail"], _store.Accounts.RegisterWith("Sara", "google", "subject-2", "nothing", "en", proven: true).Problems);
+        Assert.Equal(["invitation-needed"], _store.Accounts.RegisterWith("Sara", "google", "subject-2", "sara@example.org", "en", invitationNeeded: true, proven: true).Problems);
         Assert.Equal(1L, Count("""select count(*) from identity."VisitorAccounts" """));
     }
 
@@ -82,11 +94,12 @@ public sealed class AccountProvidersTests : IDisposable
     public void An_address_that_has_an_account_is_reached_by_signing_in_to_it_and_linking_the_provider_there()
     {
         Assert.Empty(_store.Accounts.Register("Mina", "mina@example.org", Password, "en"));
+        Assert.True(Confirm("mina@example.org"));
         var account = _store.Accounts.Proves("Mina", Password)!;
 
         // The provider confirms the same address: that signs nobody in and makes nothing.
         Assert.Null(_store.Accounts.SignInWith("google", "subject-1"));
-        Assert.Equal(["address-has-account"], _store.Accounts.RegisterWith("Mina Two", "google", "subject-1", "mina@example.org", "en").Problems);
+        Assert.Equal(["address-has-account"], _store.Accounts.RegisterWith("Mina Two", "google", "subject-1", "mina@example.org", "en", proven: true).Problems);
 
         // Signed in to the account, its visitor links the provider; from then on it signs in.
         Assert.True(_store.Accounts.Link(account, "google", "subject-1"));
@@ -95,14 +108,14 @@ public sealed class AccountProvidersTests : IDisposable
         Assert.Equal(account, _store.Accounts.SignInWith("google", "subject-1")!.Id);
 
         // A sign-in belongs to one account.
-        Assert.True(_store.Accounts.RegisterWith("Sara", "microsoft", "subject-7", "sara@example.org", "en").Done);
+        Assert.True(_store.Accounts.RegisterWith("Sara", "microsoft", "subject-7", "sara@example.org", "en", proven: true).Done);
         Assert.False(_store.Accounts.Link(account, "microsoft", "subject-7"));
     }
 
     [Fact]
     public void An_account_never_loses_its_last_way_in()
     {
-        var made = _store.Accounts.RegisterWith("Mina", "google", "subject-1", "mina@example.org", "en");
+        var made = _store.Accounts.RegisterWith("Mina", "google", "subject-1", "mina@example.org", "en", proven: true);
         var id = made.Session!.Id;
 
         // Its only provider stays while it has no password.
@@ -134,7 +147,7 @@ public sealed class AccountProvidersTests : IDisposable
         {
             using var store = PeopleStore.Open(_database, _clock, "https://dastan.test");
             start.Wait();
-            return store.Accounts.RegisterWith($"Mina {number}", "google", "subject-1", "mina@example.org", "en");
+            return store.Accounts.RegisterWith($"Mina {number}", "google", "subject-1", "mina@example.org", "en", proven: true);
         })).ToArray();
         start.Set();
         var made = await Task.WhenAll(asking);

@@ -229,7 +229,7 @@ public sealed partial class VisitorAccounts
                 }
 
                 var old = account.Email!;
-                (account.Email, account.NormalizedEmail, account.EmailConfirmed) = (address, new Keys().NormalizeEmail(address), true);
+                (account.Email, account.NormalizedEmail, account.EmailConfirmed, account.AddressProof) = (address, new Keys().NormalizeEmail(address), true, VisitorAccount.ProvenByMail);
                 Put(AccountMail.AddressChanged(account.Language, _site, old, $"address-changed:{id}:{Now.ToUnixTimeSeconds()}"));
                 var session = Renew(visitor);
                 _context.SaveChanges();
@@ -287,8 +287,10 @@ public sealed partial class VisitorAccounts
                 return new AccountResult(["wrong"]);
             }
 
-            // Who holds a code of the account has shown to be its visitor: the address counts as theirs too.
-            (account.PasswordHash, account.AccessFailedCount, account.LockoutEnd, account.EmailConfirmed) = (_hasher.HashPassword(account, password), 0, null, true);
+            // Who holds a code of the account has shown to be its visitor. That says nothing about the address:
+            // the codes are given when the address is confirmed, and an account that was asked to confirm it
+            // anew (step 20.3) stays asked.
+            (account.PasswordHash, account.AccessFailedCount, account.LockoutEnd) = (_hasher.HashPassword(account, password), 0, null);
             Put(AccountMail.PasswordChanged(account.Language, _site, account.Email!, $"password-changed:{account.Id}:{Now.ToUnixTimeSeconds()}"));
             var session = Renew(visitor);
             _context.SaveChanges();

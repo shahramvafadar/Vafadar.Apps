@@ -39,6 +39,12 @@ public static class ExternalSignIn
     /// </summary>
     public const string MadeUp = "made-up";
 
+    /// <summary>
+    /// The claim a provider carries when it says it has verified that the address is the visitor's (ADR 0016,
+    /// step 20.3). An address without it is only a proposal: the visitor confirms it by a mail of the site.
+    /// </summary>
+    public const string AddressProven = "dastan:address-proven";
+
     private const string ProviderItem = "dastan.provider";
     private const string InvitationItem = "dastan.invitation";
 
@@ -70,7 +76,7 @@ public static class ExternalSignIn
                 options.Scope.Add("openid");
                 options.Scope.Add("email");
                 options.SaveTokens = false;
-                KeepWhoAndTheAddress(options.ClaimActions, ["sub", "id"], GoogleAddress);
+                KeepWhoAndTheAddress(options.ClaimActions, ["sub", "id"], GoogleAddress, proven: true);
             });
             authentication.Services.Configure<ExternalSignInOptions>(options => options.Providers.Add("google"));
         }
@@ -87,7 +93,7 @@ public static class ExternalSignIn
                 // Microsoft tells who somebody is only together with their profile. Of what it sends, the
                 // identifier and the address are taken and everything else is dropped before anything is
                 // written down.
-                KeepWhoAndTheAddress(options.ClaimActions, ["id"], MicrosoftAddress);
+                KeepWhoAndTheAddress(options.ClaimActions, ["id"], MicrosoftAddress, proven: false);
             });
             authentication.Services.Configure<ExternalSignInOptions>(options => options.Providers.Add("microsoft"));
         }
@@ -127,16 +133,24 @@ public static class ExternalSignIn
             {
                 // Its address is as made up as it is: the setting itself when that is an address.
                 var mail = subject.Contains('@', StringComparison.Ordinal) ? subject : $"{subject}@example.org";
-                await Context.SignInAsync(Arriving, new ClaimsPrincipal(new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, subject), new Claim(ClaimTypes.Email, mail)], MadeUp)), properties);
+                // It proves its address like a provider that verifies – unless the setting says that it only
+                // names one, to try the way of an address that still has to be confirmed.
+                var said = new ClaimsIdentity([new Claim(ClaimTypes.NameIdentifier, subject), new Claim(ClaimTypes.Email, mail)], MadeUp);
+                if (!string.Equals(configuration["Dastan:SignIn:MadeUpProves"], "false", StringComparison.OrdinalIgnoreCase))
+                {
+                    said.AddClaim(new Claim(AddressProven, "true"));
+                }
+
+                await Context.SignInAsync(Arriving, new ClaimsPrincipal(said), properties);
             }
 
             Response.Redirect(properties.RedirectUri ?? "/");
         }
     }
 
-    // Of what a provider answers, the identifier of the person and the address it confirmed become claims – no
-    // name, no picture, nothing else.
-    private static void KeepWhoAndTheAddress(Microsoft.AspNetCore.Authentication.OAuth.Claims.ClaimActionCollection claims, string[] keys, Func<System.Text.Json.JsonElement, string?> address)
+    // Of what a provider answers, the identifier of the person and an address become claims – no name, no
+    // picture, nothing else – and, for a provider whose address is one it verified, that it is proven.
+    private static void KeepWhoAndTheAddress(Microsoft.AspNetCore.Authentication.OAuth.Claims.ClaimActionCollection claims, string[] keys, Func<System.Text.Json.JsonElement, string?> address, bool proven)
     {
         claims.Clear();
         foreach (var key in keys)
@@ -145,6 +159,10 @@ public static class ExternalSignIn
         }
 
         claims.MapCustomJson(ClaimTypes.Email, address);
+        if (proven)
+        {
+            claims.MapCustomJson(AddressProven, user => address(user) is { Length: > 0 } ? "true" : null);
+        }
     }
 
     private static string? Text(System.Text.Json.JsonElement user, string key) =>
@@ -159,8 +177,10 @@ public static class ExternalSignIn
         Says(user, "email_verified") || Says(user, "verified_email") ? Text(user, "email") : null;
 
     /// <summary>
-    /// Returns the address of a Microsoft account: its mailbox or, without one, the name it signs in with when
-    /// that is an address of its own – not the name of a guest in somebody else's directory.
+    /// Returns an address Microsoft names for an account: its mailbox or, without one, the name it signs in
+    /// with when that looks like an address of its own – not the name of a guest in somebody else's directory.
+    /// Neither says that there is such a mailbox or that it is the visitor's: it is put into the form as a
+    /// proposal, and the visitor confirms what they send by a mail of the site.
     /// </summary>
     internal static string? MicrosoftAddress(System.Text.Json.JsonElement user) =>
         Text(user, "mail") is { Length: > 0 } mail ? mail
@@ -216,26 +236,54 @@ public static class ExternalSignIn
                 return AccountEndpoints.Said(returnUrl, "signed-in");
             }
 
-            // Nobody has this sign-in yet. An account needs an address somebody confirmed (ADR 0016): a
-            // provider that names none makes no account.
-            if (arrived.Principal.FindFirstValue(ClaimTypes.Email) is not { Length: > 0 } mail || !Data.MailOutbox.IsAddress(mail))
+            arrived.Properties.Items.TryGetValue(InvitationItem, out var invitation);
+            var named = arrived.Principal.FindFirstValue(ClaimTypes.Email) is { Length: > 0 } address && Data.MailOutbox.IsAddress(address) ? address : string.Empty;
+            if (store.Accounts.Waits(provider, subject))
             {
-                return AccountEndpoints.Back(returnUrl, "sign-in", "external-no-address");
+                // The account of this sign-in still waits for its address to be confirmed: nobody is signed
+                // in, and who came – who made it – can have the mail once more or correct the address.
+                desk.CarryArrival(context, provider, subject, string.Empty, proven: false, invitation: null);
+                return Results.Redirect($"{AccountEndpoints.Home(returnUrl)}?form=external-waiting#external-waiting");
             }
 
-            // The visitor chooses a name, and the account is made then.
-            arrived.Properties.Items.TryGetValue(InvitationItem, out var invitation);
-            desk.CarryArrival(context, provider, subject, mail, invitation);
+            // Nobody has this sign-in yet. The visitor chooses a name, and the account is made then – at once
+            // with an address the provider verified, and otherwise when the visitor has confirmed the address
+            // they send (ADR 0016).
+            var proven = named.Length > 0 && arrived.Principal.FindFirstValue(AddressProven) == "true";
+            desk.CarryArrival(context, provider, subject, named, proven, invitation);
             return Results.Redirect($"{AccountEndpoints.Home(returnUrl)}?form=external#external");
         });
 
-        forms.MapPost("/external-register", async (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? name, [FromForm] string? website, [FromForm] string? age, [FromForm] string? terms, [FromForm] string? returnUrl) =>
+        // Who waits for the mail asks for it once more, or corrects the address it goes to. Only who signs in at
+        // the provider comes here, so nobody else moves the address of an account that is not confirmed.
+        forms.MapPost("/external-waiting", (HttpContext context, AccountDesk desk, [FromForm] string? mail, [FromForm] string? returnUrl) =>
         {
-            if (desk.Arrival(context) is not var (provider, subject, mail, invitation))
+            if (desk.Arrival(context) is not var (provider, subject, _, _, _))
             {
                 return AccountEndpoints.Back(returnUrl, "sign-in", "external-failed");
             }
 
+            if (!desk.Allows(context, "mail", AccountDesk.MailsPerHour))
+            {
+                return AccountEndpoints.Back(returnUrl, "external-waiting", "later");
+            }
+
+            using var store = desk.Open();
+            return store.Accounts.ConfirmWaiting(provider, subject, mail) == "mail"
+                ? AccountEndpoints.Back(returnUrl, "external-waiting", "mail")
+                : AccountEndpoints.Said(returnUrl, "confirm-sent");
+        });
+
+        forms.MapPost("/external-register", async (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? name, [FromForm] string? mail, [FromForm] string? website, [FromForm] string? age, [FromForm] string? terms, [FromForm] string? returnUrl) =>
+        {
+            if (desk.Arrival(context) is not var (provider, subject, carried, proven, invitation))
+            {
+                return AccountEndpoints.Back(returnUrl, "sign-in", "external-failed");
+            }
+
+            // An address the provider verified is the address; any other is what the visitor writes into the
+            // form, and nothing of the form counts as proven.
+            var address = proven ? carried : (mail ?? string.Empty).Trim();
             if (!string.IsNullOrEmpty(website) || !desk.Allows(context, "register", AccountDesk.RegistrationsPerHour))
             {
                 return AccountEndpoints.Back(returnUrl, "external", "later");
@@ -247,13 +295,20 @@ public static class ExternalSignIn
                 return AccountEndpoints.Back(returnUrl, "external", kept);
             }
 
-            var made = store.Accounts.RegisterWith(name ?? string.Empty, provider, subject, mail, AccountEndpoints.Tongue(returnUrl), invitation, desk.InvitationOnly, AccountDesk.TermsVersion);
+            var made = store.Accounts.RegisterWith(name ?? string.Empty, provider, subject, address, AccountEndpoints.Tongue(returnUrl), invitation, desk.InvitationOnly, AccountDesk.TermsVersion, proven);
             if (!made.Done)
             {
                 return AccountEndpoints.Back(returnUrl, "external", [.. made.Problems]);
             }
 
             desk.ForgetArrival(context);
+            if (made.Session is null)
+            {
+                // The account is one when the link that is mailed now was opened; until then nobody is signed
+                // in. An address that has an account is answered in the same words.
+                return AccountEndpoints.Said(returnUrl, "confirm-sent");
+            }
+
             store.BringIn(made.Session!.Id, AccountState.Device(context, library));
             await AccountDesk.SignIn(context, made.Session!).ConfigureAwait(false);
             desk.Carry(context, made.RecoveryCodes);

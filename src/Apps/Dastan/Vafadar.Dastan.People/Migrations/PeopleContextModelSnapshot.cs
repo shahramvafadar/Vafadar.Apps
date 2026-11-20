@@ -907,6 +907,10 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("AddressProof")
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
