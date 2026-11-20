@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.RegularExpressions;
 using Vafadar.Core.Text;
 using Vafadar.Zanance.Core.Money;
@@ -37,6 +38,10 @@ public static partial class AiQuestionParser
     public static AiQuestion? Interpret(string? question)
     {
         if (string.IsNullOrWhiteSpace(question) || question.Length > 240) return null;
+        // Dates and counts belong to the explicit review controls; this vocabulary cannot resolve a written numeric scope.
+        foreach (var rune in question.EnumerateRunes())
+            if (Rune.IsNumber(rune)) return null;
+
         var folded = SearchText.Fold(question);
         var spending = Has(Spending) && Has(Change);
         var plans = Has(Plans) && Has(Shortfall);

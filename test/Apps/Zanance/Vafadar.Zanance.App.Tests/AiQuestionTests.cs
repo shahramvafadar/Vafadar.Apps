@@ -28,6 +28,31 @@ public sealed class AiQuestionTests
         Assert.Equal(new AiQuestion(AiQuestionIntent.PlanShortfall, "EUR", true), AiQuestionParser.Interpret(forecast));
     }
 
+    /// <summary>Do not silently replace a written date or count with the selected scope.</summary>
+    [Theory]
+    [InlineData("Why did EUR spending rise from 2026-10-01 to 2026-10-15?")]
+    [InlineData("چرا هزینه‌های EUR در ۲۹ مهر افزایش یافت؟")]
+    [InlineData("Welche EUR-Zahlungen verursachen in 3 Tagen einen Fehlbetrag?")]
+    [InlineData("Quels paiements en EUR causent un déficit le １２ novembre ?")]
+    public async Task Question_with_an_unhandled_numeric_scope_requires_clarification(string questionText)
+    {
+        Assert.Null(AiQuestionParser.Interpret(questionText));
+        using var f = new FlowFixture();
+        var store = f.Services.GetRequiredService<AiSnapshotStore>();
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        var vm = new AiAnalysisViewModel(store, f.Translator, f.Localization, new DateFormatter(f.Localization),
+            f.Time, f.Platform, new LocalRuntime());
+        await vm.LoadAsync();
+        vm.QuestionText = questionText;
+        var dates = (vm.From, vm.To);
+        await vm.ApplyQuestionCommand.ExecuteAsync(null);
+        await vm.ReviewAsync();
+        Assert.Equal(dates, (vm.From, vm.To));
+        Assert.Equal(f.Translator["AiQuestion_Clarify"], vm.QuestionStatus);
+        Assert.Null(vm.Disclosure);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
     [Fact]
     public async Task Selected_question_refuses_mixed_scope_and_source_changes_without_writing()
     {
