@@ -1,6 +1,6 @@
 namespace Vafadar.Zanance.App.Features.Reports;
 
-public partial class PeriodReviewPage : ContentPage
+public partial class PeriodReviewPage : ContentPage, IQueryAttributable
 {
     private readonly PeriodReviewViewModel _viewModel;
     private AppShell? _ownerShell;
@@ -13,6 +13,14 @@ public partial class PeriodReviewPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;
+    }
+
+    /// <inheritdoc />
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query.TryGetValue("periodReviewReminder", out var value) &&
+            value is Core.Reminders.PeriodReviewReminderLink reminder)
+            _viewModel.SetReminderSource(reminder);
     }
 
     protected override async void OnAppearing()

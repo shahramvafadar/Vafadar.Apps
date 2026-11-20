@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Zanance.Core.Reminders;
+using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Tests;
 
@@ -66,7 +68,6 @@ public sealed class AppLinkTests
     [InlineData("plans", "//plans", null)]
     [InlineData("goals", "//insights/goals", null)]
     [InlineData("budget", "//insights/budget", null)]
-    [InlineData("review", "review", null)]
     public async Task Supported_links_open_their_drafts_only_after_secure_startup_and_never_write_money(string link, string route, string? kind)
     {
         using var f = new FlowFixture(); var setup = AppLockTests.Create(f); var router = new AppLinkRouter(setup.Lock, f.Platform, f.Services.GetRequiredService<Vafadar.Zanance.Data.PlanStore>(), f.Services.GetRequiredService<Vafadar.Zanance.Data.GoalStore>(), f.Store);
@@ -87,12 +88,53 @@ public sealed class AppLinkTests
     [InlineData("occurrence|7b8f33d0-4fea-4d6a-9b87-bfaf0eb2c3b3|2026-02-30")]
     [InlineData("plan|00000000-0000-0000-0000-000000000000")]
     [InlineData("goal|invalid")]
+    [InlineData("review")]
     [InlineData("review|unexpected")]
     [InlineData("//settings")]
     public async Task Malformed_or_unsupported_links_are_not_queued_or_navigated(string link)
     {
         using var f = new FlowFixture(); var setup = AppLockTests.Create(f); var router = new AppLinkRouter(setup.Lock, f.Platform, f.Services.GetRequiredService<Vafadar.Zanance.Data.PlanStore>(), f.Services.GetRequiredService<Vafadar.Zanance.Data.GoalStore>(), f.Store);
         await router.OpenAsync(link); await setup.Lock.StartAsync(); Assert.Empty(f.Platform.Routes);
+    }
+
+    [Fact, Trait("AT", "AT-80")]
+    public async Task Period_review_opens_only_for_the_original_file_after_unlock()
+    {
+        using var original = new FlowFixture();
+        using var current = new FlowFixture();
+        var plans = current.Services.GetRequiredService<PlanStore>();
+        var foreign = await original.Services.GetRequiredService<PlanStore>().GetWorkSnapshotAsync(TestContext.Current.CancellationToken);
+        var local = await plans.GetWorkSnapshotAsync(TestContext.Current.CancellationToken);
+        var setup = AppLockTests.Create(current);
+        var router = new AppLinkRouter(setup.Lock, current.Platform, plans,
+            current.Services.GetRequiredService<GoalStore>(), current.Store);
+        await AppLockTests.EnableDeviceAsync(current);
+        await setup.Lock.StartAsync();
+        await router.OpenAsync(PeriodReviewReminderLink.Format(foreign.ReminderScope));
+        await router.OpenAsync(PeriodReviewReminderLink.Format(local.ReminderScope));
+        Assert.Empty(current.Platform.Routes);
+
+        await setup.Lock.UnlockedAsync();
+
+        var opened = Assert.Single(current.Platform.Routes);
+        Assert.Equal(AppRoutes.ReviewRoute, opened.Route);
+        Assert.Equal(local.ReminderScope, Assert.IsType<PeriodReviewReminderLink>(opened.Parameters!["periodReviewReminder"]).Scope);
+        Assert.Empty(await current.Store.GetEntriesAsync(cancellationToken: TestContext.Current.CancellationToken));
+    }
+
+    [Fact]
+    public async Task Period_review_read_refuses_a_source_switch_after_navigation_resolves()
+    {
+        using var previous = new FlowFixture();
+        using var next = new FlowFixture();
+        var plans = await previous.Services.GetRequiredService<PlanStore>().GetWorkSnapshotAsync(TestContext.Current.CancellationToken);
+        var reminder = Assert.IsType<PeriodReviewReminderLink>(PeriodReviewReminderLink.Parse(PeriodReviewReminderLink.Format(plans.ReminderScope)));
+
+        Assert.True(await previous.Store.IsPeriodReviewReminderCurrentAsync(reminder, TestContext.Current.CancellationToken));
+        var attemptedRead = false;
+        await Assert.ThrowsAsync<InvalidOperationException>(() => next.Store.ReadPeriodReviewAsync(
+            _ => { attemptedRead = true; return true; }, TestContext.Current.CancellationToken, reminder));
+        Assert.False(attemptedRead);
     }
 
     [Fact, Trait("AT", "AT-80")]

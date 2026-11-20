@@ -7,6 +7,7 @@ using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Reports;
 using Vafadar.Zanance.Core.Settings;
@@ -68,13 +69,21 @@ internal sealed partial class PeriodReviewReadJson : JsonSerializerContext;
 
 public sealed partial class ZananceStore
 {
+    /// <summary>Checks the notification's source before routing to the current review, without loading a ledger.</summary>
+    public async Task<bool> IsPeriodReviewReminderCurrentAsync(PeriodReviewReminderLink link, CancellationToken cancellationToken = default)
+    {
+        await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
+        return DatabaseFileIdentity.ReminderScope(DatabaseFileIdentity.ConfiguredPath(db)) == link.Scope;
+    }
+
     /// <summary>Reads the original complete checklist inputs on a worker under one captured actual-file lease.</summary>
     public async Task<PeriodReviewReadSnapshot> ReadPeriodReviewAsync(Func<string, bool>? acceptsFile = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default, PeriodReviewReminderLink? reminder = null)
     {
         await using var db = await contextFactory.CreateDbContextAsync(cancellationToken);
         var path = DatabaseFileIdentity.ConfiguredPath(db);
-        if (acceptsFile?.Invoke(path) == false)
+        if ((reminder is not null && DatabaseFileIdentity.ReminderScope(path) != reminder.Scope) ||
+            acceptsFile?.Invoke(path) == false)
             throw new InvalidOperationException("The original period review cannot follow another file.");
         return await Task.Run(async () =>
         {

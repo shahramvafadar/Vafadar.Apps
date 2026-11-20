@@ -299,7 +299,8 @@ public sealed class ReminderService(
             new ReminderNotification(reminder.Id, translator["App_Name"],
                 settings.NotificationsShowDetails
                     ? translator.Format("Reminder_ReviewDetails", dates.Format(reminder.PeriodFirst, DateFormatStyle.MonthYear))
-                    : translator["Reminder_ReviewGeneric"], reminder.NotifyAt, "review")));
+                    : translator["Reminder_ReviewGeneric"], reminder.NotifyAt,
+                PeriodReviewReminderLink.Format(snapshot.ReminderScope))));
 
         var snoozes = new List<SnoozedReminder>();
         foreach (var saved in ReminderSnoozes.Deserialize(preferences.Get(SnoozeKey)).Take(ReminderSnoozes.MaxSnoozes))

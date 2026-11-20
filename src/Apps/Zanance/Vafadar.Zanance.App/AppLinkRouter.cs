@@ -34,6 +34,19 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
 
     private Func<Task>? Resolve(string link)
     {
+        if (PeriodReviewReminderLink.Parse(link) is { } periodReminder)
+        {
+            return ResolveAsync;
+            async Task ResolveAsync()
+            {
+                if (!await store.IsPeriodReviewReminderCurrentAsync(periodReminder)) return;
+                if (appLock.RetainCurrentDestinationIfLocked(ResolveAsync)) return;
+                // A delayed tap can open the current period only in the file that scheduled it.
+                await interaction.NavigateAsync(AppRoutes.ReviewRoute,
+                    new Dictionary<string, object> { ["periodReviewReminder"] = periodReminder });
+            }
+        }
+
         if (BudgetReminderLink.Parse(link) is { } budgetReminder)
         {
             return ResolveAsync;
@@ -113,8 +126,6 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
                 "plans" => "//plans",
                 "goals" => AppRoutes.GoalsRoute,
                 "budget" => AppRoutes.BudgetRoute,
-                // A delayed tap opens the current review; it never completes an older period.
-                "review" => AppRoutes.ReviewRoute,
                 _ => null,
             };
         }

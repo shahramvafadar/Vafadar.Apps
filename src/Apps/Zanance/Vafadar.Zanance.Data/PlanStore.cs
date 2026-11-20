@@ -59,7 +59,7 @@ public sealed partial class PlanStore(IDbContextFactory<ZananceDbContext> contex
             Access = access,
             SelectionRevision = stored?.Revision,
             SelectionStamp = StoredResourceSelection.Capture(stored), InputStamp = PlanWorkSnapshot.CaptureInputs(schedules, states),
-            ReminderScope = Convert.ToHexStringLower(System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path))),
+            ReminderScope = DatabaseFileIdentity.ReminderScope(path),
         };
     }
 

@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Plugin.LocalNotification;
 using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.Core.Accounts;
+using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Diagnostics;
@@ -65,7 +66,8 @@ internal static class DebugReviewReminders
         var permission = await reminders.EnsurePermissionAsync();
         var before = await store.GetSettingsAsync();
         await reminders.RefreshAsync();
-        var pending = (await LocalNotificationCenter.Current.GetPendingNotificationList()).Where(n => n.ReturningData == "review").ToList();
+        var pending = (await LocalNotificationCenter.Current.GetPendingNotificationList())
+            .Where(n => PeriodReviewReminderLink.Parse(n.ReturningData) is not null).ToList();
         var after = await store.GetSettingsAsync();
         var passed = permission && (after.ReviewReminderEnabled ? pending.Count > 0 : pending.Count == 0)
             && pending.All(n => n.Schedule?.NotifyTime?.Hour == 9 && n.Title == "Zanance"
@@ -85,7 +87,7 @@ internal static class DebugReviewReminders
             // A queued refresh cancels pending ids, including a just-expedited request with that same id. Give the
             // diagnostic its own id so ordinary queue rebuilds cannot clear the delivered tap target.
             await reminders.Scheduler.ShowAsync(new ReminderNotification(first.NotificationId ^ 0x2000_0000, first.Title ?? string.Empty,
-                first.Description ?? string.Empty, null, "review"));
+                first.Description ?? string.Empty, null, first.ReturningData));
         }
         await Shell.Current.GoToAsync(AppShell.SettingsRoute);
     }

@@ -111,3 +111,36 @@ Private receipts retain original source/post markers, exact notification records
 and native process-start events, ready route status/native captions, strict build/package proof,
 cleanup observer refusal/history classification and final preservation/hash-removal proof.
 No private fixture source or credentials are uploaded.
+
+## Period review remains with the profile that scheduled the reminder
+
+New period-review notifications carry the original local file's opaque identity.
+A tap resolves it after the app lock and the original review page checks it
+again before reading checklist inputs. A legacy unscoped notification has no
+source to verify and no longer navigates. The scheduler replaces pending
+notifications during its normal refresh. The review still opens the current
+period for its original profile.
+
+The pre-change host run failed three cases where eligible accounts generated
+unscoped review notifications. The corrected host run passed 50 selected link
+and reminder cases, including an unlock with foreign and local sources queued,
+and a source switch after resolving the route. The Windows build had no
+warnings or errors.
+
+Signed Offline Release APK
+`045e3d295c5ca3ea5460d5118d57abc380e56e6a9ddd84a1b7135e81bdee9aef` ran
+on one owned Android 16 x86-64 emulator. Under UID 10216, the November review
+alarm for December 1 used Android request ID 1219868079. Its real notification
+arrived while Main was open. After switching to the second synthetic profile,
+tapping that same notification left the profile and its Home screen selected.
+Returning to Main, a separate January 1 alarm with request ID 2031965749
+delivered the notification that opened **Review of December 2026**. Both cases
+used the original app process and boot. Setup used only zero-opening accounts.
+The profile-name observer resumed from the existing synthetic draft after an
+unexpected duplicate character. No transaction or review completion was saved.
+
+The isolated guest clock was advanced into each already scheduled delivery
+window. This is routing evidence rather than normal-time punctuality evidence.
+The original clock, automatic-time setting and display geometry were restored
+before retiring the disposable package and emulator. Neither physical phone
+was used. Local receipts are in `artifacts/android-period-review-link`.

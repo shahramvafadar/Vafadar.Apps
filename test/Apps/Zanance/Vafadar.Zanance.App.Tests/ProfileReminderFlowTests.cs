@@ -24,7 +24,8 @@ public sealed class ProfileReminderFlowTests
         if (rights != "inactive") f.Data.Enable(rights == "free" ? ProductPlan.Free : rights == "pro" ? ProductPlan.Pro : ProductPlan.Plus);
         if (rights == "unknown") f.Data.Preferences.Set("profiles.work.catalogue", "Fictitious unreadable original");
         var before = await f.RowsAsync(); await f.Service.RefreshAsync();
-        var review = f.Native.Pending.Where(n => n.Link == "review").ToArray(); Assert.Equal(expected != 0, review.Length != 0);
+        var review = f.Native.Pending.Where(n => PeriodReviewReminderLink.Parse(n.Link) is not null).ToArray();
+        Assert.Equal(expected != 0, review.Length != 0);
         Assert.Equal(expected != 0, (await f.Data.Plans.GetWorkSnapshotAsync(Ct)).CanRemindPeriodReview);
         Assert.All(review, n => { Assert.Equal(9, n.NotifyAt!.Value.Hour); Assert.Equal(f.Data.Flow.Translator["Reminder_ReviewGeneric"], n.Body); Assert.False(n.CanSnooze); });
         Assert.Equal(before, await f.RowsAsync()); Assert.Empty(f.Native.Shown);
@@ -37,7 +38,9 @@ public sealed class ProfileReminderFlowTests
         await using var f = new Fixture(); await f.SeedAsync(); f.Data.Enable(ProductPlan.Plus);
         f.Data.Flow.Localization.SetLanguage(f.Data.Flow.Localization.SupportedLanguages.First(l => l.CultureName == language));
         var before = await f.RowsAsync(); await f.Service.RefreshAsync();
-        var notification = f.Native.Pending.First(n => n.Link == "review");
+        var notification = f.Native.Pending.First(n => PeriodReviewReminderLink.Parse(n.Link) is not null);
+        Assert.Equal((await f.Data.Plans.GetWorkSnapshotAsync(Ct)).ReminderScope,
+            PeriodReviewReminderLink.Parse(notification.Link)!.Scope);
         Assert.Equal(new DateTime(2026, 10, 10, 9, 0, 0, DateTimeKind.Local), notification.NotifyAt);
         Assert.Equal("Zanance", notification.Title); Assert.Equal(f.Data.Flow.Translator["Reminder_ReviewGeneric"], notification.Body);
         Assert.DoesNotContain("Fictitious", notification.Body); Assert.Equal(before, await f.RowsAsync());

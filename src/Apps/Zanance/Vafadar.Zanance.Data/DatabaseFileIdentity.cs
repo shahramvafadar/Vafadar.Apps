@@ -6,6 +6,10 @@ namespace Vafadar.Zanance.Data;
 /// <summary>Retains the original configured SQLite target independently of native connection reporting aliases.</summary>
 internal static class DatabaseFileIdentity
 {
+    /// <summary>Encodes the original local file identity without exposing its configured path.</summary>
+    internal static string ReminderScope(string path) => Convert.ToHexStringLower(
+        System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(path)));
+
     /// <summary>Reads the actual connection's configured file without opening it, changing aliases or guessing another profile.</summary>
     internal static string ConfiguredPath(ZananceDbContext db)
     {

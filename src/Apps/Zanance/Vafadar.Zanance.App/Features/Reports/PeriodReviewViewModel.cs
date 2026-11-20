@@ -8,6 +8,7 @@ using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.Core.Budgets;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Core.Reports;
 using Vafadar.Zanance.Data;
 
@@ -41,6 +42,7 @@ public sealed partial class PeriodReviewViewModel(
     private PeriodReviewState? _state;
     private PeriodReviewReadSnapshot? _published;
     private string? _originalFile;
+    private PeriodReviewReminderLink? _reminder;
     private DateOnly _publishedDay;
     private string? _publishedDisplay;
     private volatile bool _active;
@@ -71,6 +73,9 @@ public sealed partial class PeriodReviewViewModel(
     private DateOnly Today => DateOnly.FromDateTime(time.GetLocalNow().DateTime);
     private PeriodCalendar Calendar => Presentation.Calendars.ToPeriod(localization.CurrentCalendar);
     private string DisplayIdentity() => $"{localization.CurrentLanguage.CultureName}|{localization.CurrentCulture.Name}|{localization.CurrentCalendar}|{localization.CurrentDigits}|{localization.FormattingCultureName}";
+
+    /// <summary>Retains the notification's source until this review page is retired.</summary>
+    internal void SetReminderSource(PeriodReviewReminderLink reminder) => _reminder ??= reminder;
 
     /// <summary>Retires actual row/read/write owners across departure, retained tabs and root replacement.</summary>
     public void SetActive(bool active)
@@ -104,7 +109,7 @@ public sealed partial class PeriodReviewViewModel(
             var pending = owner.RunAsync(async () =>
             {
                 _published = null; RequireCurrent();
-                source = await store.ReadPeriodReviewAsync(path => { RequireCurrent(); _originalFile ??= path; return _originalFile == path; }, token);
+                source = await store.ReadPeriodReviewAsync(path => { RequireCurrent(); _originalFile ??= path; return _originalFile == path; }, token, _reminder);
                 RequireCurrent();
                 prepared = await Task.Run(() => Prepare(source, day, calendar), token); RequireCurrent();
                 await store.ValidatePeriodReviewAsync(source, token); RequireCurrent();

@@ -12,6 +12,7 @@ using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Plans;
+using Vafadar.Zanance.Core.Reminders;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
 
@@ -109,7 +110,7 @@ internal static partial class DebugSnapshots
         foreach (var language in languages)
         {
             await SetLanguageAsync(app, localization, language); await reminders.RefreshAsync();
-            if (scheduler.Pending.Count != 1 || scheduler.Pending.Any(n => n.Link == "review"))
+            if (scheduler.Pending.Count != 1 || scheduler.Pending.Any(n => PeriodReviewReminderLink.Parse(n.Link) is not null))
                 throw new InvalidOperationException("Original Free plan/reminder policy changed.");
             var vm = new ProfilesViewModel(profiles, translator, services.GetRequiredService<Interaction.IAppInteraction>(), services.GetRequiredService<Interaction.IAppFlowHost>());
             var page = new ProfilesPage(vm, localization); ProfileNativeReads.Add(page);
