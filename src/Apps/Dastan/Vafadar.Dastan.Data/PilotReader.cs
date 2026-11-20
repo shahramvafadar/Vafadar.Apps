@@ -802,7 +802,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         switch (kind?.Value)
         {
             case FactValue.Time:
-                time = ReadTime(record, "time is not a time of the calendar: a fact of a profile is not dated by a place in the story.");
+                time = ReadTime(record, "time is a place in a telling: a fact of a profile is not dated by a place in the story.");
                 said = time is not null;
                 record.Absent("entityId", "this fact says a time.");
                 record.Absent("text", "this fact says a time.");
@@ -861,7 +861,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var sources = Ids(record, "sourceIds", required: false);
         var level = record.IsStated("spoilerLevel") ? Level(record) : ofEntity;
         var timed = record.IsStated("time");
-        var time = timed ? ReadTime(record, "time is not a time of the calendar: a name is not dated by a place in the story.") : null;
+        var time = timed ? ReadTime(record, "time is a place in a telling: a name is not dated by a place in the story.") : null;
         record.Finish();
         if (name is null || language is null || !kindKnown || level is null || (timed && time is null))
         {
@@ -911,7 +911,8 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             record.Problem($"time cannot be read: {refused.Message}");
         }
 
-        if (time is Occurrence { At: not CalendarPosition })
+        // A year of a calendar and a depth of time are times of the world (ADR 0021); a place in a telling is not.
+        if (time is Occurrence { At: NarrativePosition })
         {
             record.Problem(refusal);
             time = null;
@@ -939,7 +940,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var quantified = record.Child("quantity", required: false) is { } stated;
         var quantity = quantified ? ReadQuantity(record.Child("quantity", required: false)!) : null;
         var timed = record.IsStated("time");
-        var time = timed ? ReadTime(record, "time is not a time of the calendar: a statement with a date is not a step of the story.") : null;
+        var time = timed ? ReadTime(record, "time is a place in a telling: a statement with a date is not a step of the story.") : null;
         if (!timed && !quantified)
         {
             record.Problem("time is missing.");
@@ -1020,7 +1021,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
 
         // When a relation held: only for what is said of the world outside the story, and as a time of the calendar.
         var timed = record.IsStated("time");
-        var time = timed ? ReadTime(record, "time is not a time of the calendar: a relation is not dated by a place in the story.") : null;
+        var time = timed ? ReadTime(record, "time is a place in a telling: a relation is not dated by a place in the story.") : null;
         if (timed && scope is not null && scope.Kind != RelationScopeKind.OutsideTheStory)
         {
             record.Problem("time dates a relation of the story; only a relation with the scope outside_the_story says when it held.");

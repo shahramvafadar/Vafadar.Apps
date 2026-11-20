@@ -4,6 +4,7 @@
 @inject DastanSite Site
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
 @if (_known)
 {
@@ -74,7 +75,14 @@
     [SupplyParameterFromQuery(Name = "place")]
     public string? Place { get; set; }
 
-    /// <summary>Gets or sets the year of the common era the hits take part in something.</summary>
+    /// <summary>
+    /// Gets or sets the time the hits take part in something, as the visitor typed it: a year, a stretch of
+    /// years or a depth of time (ADR 0021).
+    /// </summary>
+    [SupplyParameterFromQuery(Name = "time")]
+    public string? Time { get; set; }
+
+    /// <summary>Gets or sets a year of the common era, as an address of before step 19.9 says it.</summary>
     [SupplyParameterFromQuery(Name = "year")]
     public string? Year { get; set; }
 
@@ -93,11 +101,16 @@
 
         // The projection searches what this visitor may see and nothing else (ADR 0002).
         // What the address says beside the name is a choice of the form or nothing: a kind that is none, a place
-        // the visitor may not see and a year that is no year are not asked for.
+        // the visitor may not see and a time that is no time are not asked for. The time is read by the one reader
+        // of the site (ADR 0021): a year before the common era, a stretch and a depth of time among it.
         _filter = new SearchFilter(
             Enum.GetValues<EntityNature>().Cast<EntityNature?>().FirstOrDefault(nature => string.Equals(nature.ToString(), Kind, StringComparison.OrdinalIgnoreCase) && Kind!.All(char.IsAsciiLetter)),
             Place is { Length: > 0 } place && !place.Any(char.IsWhiteSpace) && projection.Find(new EntityId(place)) is { Type.Nature: EntityNature.Place } found ? found.Id : null,
-            int.TryParse(Year, NumberStyles.None, CultureInfo.InvariantCulture, out var number) && number is >= 1 and <= 9999 ? new YearOfEra(Vafadar.Temporal.Era.CommonEra, number) : null);
+            Year: null)
+        {
+            Time = AskedTime.Read(string.IsNullOrWhiteSpace(Time) ? Year : Time),
+            Present = Clock.GetUtcNow().Year,
+        };
         _hits = projection.Search(_query, _filter, MostHits);
     }
 }

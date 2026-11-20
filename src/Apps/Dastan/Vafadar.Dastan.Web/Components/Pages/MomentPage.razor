@@ -4,16 +4,20 @@
 @inject DastanSite Site
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
 @* One year of a collection (step 14.2, R-PUB-03): the relations of the world that held then, and what is stated
-   of its entities for that year. The year is asked for with a form that asks for a page, so it works without a
-   script. Only what the visitor may see at the reading position is asked of the projection. *@
+   of its entities for that year – and, by the one reader of a time of the site (step 19.9, ADR 0021), the same
+   for a stretch of years and for a depth of time. The time is asked for with a form that asks for a page, so it
+   works without a script. Only what the visitor may see at the reading position is asked of the projection. *@
 @if (_subject is { } subject)
 {
     var name = Visitor.Text(subject.Label).Value;
     var title = _moment is { } shown
         ? string.Format(CultureInfo.CurrentCulture, T["Moment_TitleYear"], name, Written(shown.Year))
-        : string.Format(CultureInfo.CurrentCulture, T["Moment_Title"], name);
+        : _held is { } asked
+            ? string.Format(CultureInfo.CurrentCulture, T["Moment_TitleTime"], name, TimeText.Of(asked.Asked, Visitor, T))
+            : string.Format(CultureInfo.CurrentCulture, T["Moment_Title"], name);
     <PageTitle>@title – @T["Site_Name"]</PageTitle>
 
     <header class="page-header">
@@ -22,7 +26,7 @@
         <p class="lead">@T["Moment_Lead"]</p>
     </header>
 
-    @if (_years is not { } years)
+    @if (!_saysWhen)
     {
         @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
         <p class="note" role="status">
@@ -39,7 +43,7 @@
             <div class="search-row">
                 <p class="field">
                     <label for="moment-year">@T["Moment_Year"]</label>
-                    <input type="number" id="moment-year" name="year" value="@_moment?.Year.Number.ToString(CultureInfo.InvariantCulture)" min="1" max="9999" step="1" required inputmode="numeric" dir="ltr" />
+                    <input type="number" id="moment-year" name="year" value="@_moment?.Year.Number.ToString(CultureInfo.InvariantCulture)" min="1" max="@AskedTime.FurthestYear" step="1" required inputmode="numeric" dir="ltr" />
                 </p>
                 <p class="field">
                     <label for="moment-era">@T["Moment_Era"]</label>
@@ -50,41 +54,63 @@
                 </p>
                 <button type="submit" class="action">@T["Moment_Show"]</button>
             </div>
-            <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Moment_Range"], Written(years.First), Written(years.Last))</p>
+            @if (_years is { } covered)
+            {
+                <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Moment_Range"], Written(covered.First), Written(covered.Last))</p>
+            }
+        </form>
+
+        <form class="search moment-form" method="get" action="@($"{Site.Collection}/at")">
+            <div class="search-row">
+                <p class="field">
+                    <label for="moment-time">@T["Moment_Time"]</label>
+                    <input type="text" id="moment-time" name="time" value="@_held?.Asked.Written" maxlength="80" required autocomplete="off" dir="ltr" aria-describedby="moment-time-how" />
+                    <span class="meta" id="moment-time-how">@T["Search_Year_How"]</span>
+                </p>
+                <button type="submit" class="action">@T["Moment_Show"]</button>
+            </div>
         </form>
 
         @if (_invalid)
         {
-            <p class="note" role="alert">@T["Moment_Invalid"]</p>
+            <p class="note" role="alert">@T[string.IsNullOrWhiteSpace(Time) ? "Moment_Invalid" : "Moment_InvalidTime"]</p>
         }
 
-        @if (_moment is not { } moment)
+        @if (_moment is null && _held is null)
         {
             @if (!_invalid)
             {
                 <p class="note" role="status">@T["Moment_Choose"]</p>
             }
-            <p class="actions"><a class="action secondary" href="@Address(years.First)">@string.Format(CultureInfo.CurrentCulture, T["Moment_First"], Written(years.First))</a></p>
+            @if (_years is { } from)
+            {
+                <p class="actions"><a class="action secondary" href="@Address(from.First)">@string.Format(CultureInfo.CurrentCulture, T["Moment_First"], Written(from.First))</a></p>
+            }
         }
         else
         {
-            var where = moment.Relations.Where(held => held.Edge.To.Type.Nature == EntityNature.Place).ToList();
-            var other = moment.Relations.Where(held => held.Edge.To.Type.Nature != EntityNature.Place).ToList();
+            var relations = _moment?.Relations ?? _held!.Relations;
+            var statements = _moment?.Stated ?? _held!.Stated;
+            var where = relations.Where(held => held.Edge.To.Type.Nature == EntityNature.Place).ToList();
+            var other = relations.Where(held => held.Edge.To.Type.Nature != EntityNature.Place).ToList();
 
-            <nav class="actions" aria-label="@T["Moment_Steps"]">
-                @if (moment.Earlier is { } earlier)
-                {
-                    <a class="action secondary" rel="prev" href="@Address(earlier)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Earlier"], Written(earlier))</a>
-                }
-                @if (moment.Later is { } later)
-                {
-                    <a class="action secondary" rel="next" href="@Address(later)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Later"], Written(later))</a>
-                }
-            </nav>
-
-            @if (moment.IsEmpty)
+            @if (_moment is { } moment)
             {
-                <p class="note" role="status">@T["Moment_Nothing"]</p>
+                <nav class="actions" aria-label="@T["Moment_Steps"]">
+                    @if (moment.Earlier is { } earlier)
+                    {
+                        <a class="action secondary" rel="prev" href="@Address(earlier)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Earlier"], Written(earlier))</a>
+                    }
+                    @if (moment.Later is { } later)
+                    {
+                        <a class="action secondary" rel="next" href="@Address(later)">@string.Format(CultureInfo.CurrentCulture, T["Moment_Later"], Written(later))</a>
+                    }
+                </nav>
+            }
+
+            @if (relations.IsEmpty && statements.IsEmpty)
+            {
+                <p class="note" role="status">@T[_held is null ? "Moment_Nothing" : "Moment_NothingTime"]</p>
             }
             else
             {
@@ -92,12 +118,12 @@
                 @Held("where", T["Moment_Where"], where)
                 @Held("held", T["Moment_Held"], other)
 
-                @if (!moment.Stated.IsEmpty)
+                @if (!statements.IsEmpty)
                 {
                     <section aria-labelledby="stated">
                         <h2 id="stated">@T["Moment_Stated"]</h2>
                         <dl class="facts stated">
-                            @foreach (var stated in moment.Stated)
+                            @foreach (var stated in statements)
                             {
                                 <dt>
                                     <a href="@($"{Site.Collection}/entity/{stated.Entity.Id}#stated-{stated.Statement.Key}")"><Loc Text="stated.Entity.Label" /></a>:
@@ -127,6 +153,8 @@
     private Entity? _subject;
     private YearsCovered? _years;
     private MomentView? _moment;
+    private HeldInTime? _held;
+    private bool _saysWhen;
     private bool _invalid;
     private bool _before;
     private bool _continues;
@@ -139,6 +167,10 @@
     /// <summary>Gets or sets the year in the address.</summary>
     [SupplyParameterFromQuery(Name = "year")]
     public string? Year { get; set; }
+
+    /// <summary>Gets or sets a time in the address as a visitor typed it: a year, a stretch of years or a depth of time.</summary>
+    [SupplyParameterFromQuery(Name = "time")]
+    public string? Time { get; set; }
 
     /// <summary>Gets or sets the era of the year in the address: <c>bce</c> for the time before the common era.</summary>
     [SupplyParameterFromQuery(Name = "era")]
@@ -157,19 +189,47 @@
         _years = projection.Years();
         _before = Era == "bce";
         _here = $"{Site.Collection}/at";
-        if (_years is null || string.IsNullOrWhiteSpace(Year))
+        var present = Clock.GetUtcNow().Year;
+        _saysWhen = projection.SaysWhen(present);
+        if (!_saysWhen)
         {
             return;
         }
 
-        // The address is written by anybody: a year is a whole number of an era, nothing else.
-        if (!int.TryParse(Year, NumberStyles.None, CultureInfo.InvariantCulture, out var number) || number is < 1 or > 9999 || Era is not (null or "" or "ce" or "bce"))
+        YearOfEra year;
+        if (!string.IsNullOrWhiteSpace(Time))
         {
+            // What a visitor typed is read by the one reader of the site; what is no time is said to be none.
+            switch (AskedTime.Read(Time))
+            {
+                case AskedTime.Years { IsOneYear: true } one:
+                    year = one.First;
+                    _before = year.Era == Vafadar.Temporal.Era.BeforeCommonEra;
+                    break;
+                case { } asked:
+                    _held = projection.Held(asked, present);
+                    _here = $"{Site.Collection}/at?time={Uri.EscapeDataString(asked.Written)}";
+                    return;
+                default:
+                    _invalid = true;
+                    return;
+            }
+        }
+        else if (string.IsNullOrWhiteSpace(Year))
+        {
+            return;
+        }
+        else if (!int.TryParse(Year, NumberStyles.None, CultureInfo.InvariantCulture, out var number) || number is < 1 or > AskedTime.FurthestYear || Era is not (null or "" or "ce" or "bce"))
+        {
+            // The address is written by anybody: a year is a whole number of an era, nothing else.
             _invalid = true;
             return;
         }
+        else
+        {
+            year = new YearOfEra(_before ? Vafadar.Temporal.Era.BeforeCommonEra : Vafadar.Temporal.Era.CommonEra, number);
+        }
 
-        var year = new YearOfEra(_before ? Vafadar.Temporal.Era.BeforeCommonEra : Vafadar.Temporal.Era.CommonEra, number);
         _moment = projection.At(year);
         _here = Address(year);
     }

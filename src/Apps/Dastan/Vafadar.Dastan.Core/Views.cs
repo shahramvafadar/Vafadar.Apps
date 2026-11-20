@@ -326,8 +326,17 @@ public sealed record SearchHit(Entity Entity, string Name, string Language);
 /// <param name="Year">A year in which the hit takes part in a relation that held or may have held, or for which something is stated of it.</param>
 public sealed record SearchFilter(EntityNature? Nature = null, EntityId? Place = null, YearOfEra? Year = null)
 {
+    /// <summary>
+    /// Gets a time the hit takes part in something that held or may have held, or for which something is stated
+    /// of it: a year, a stretch of years or a depth of time, as a visitor asked for it (ADR 0021).
+    /// </summary>
+    public AskedTime? Time { get; init; }
+
+    /// <summary>Gets the year of the common era the visitor asks in; a depth of time is counted from it.</summary>
+    public int Present { get; init; }
+
     /// <summary>Gets a value indicating whether the filter lets everything through.</summary>
-    public bool IsEmpty => Nature is null && Place is null && Year is null;
+    public bool IsEmpty => Nature is null && Place is null && Year is null && Time is null;
 }
 
 /// <summary>What a collection has with a time of the calendar, as far as the visitor may see it.</summary>

@@ -247,6 +247,9 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
     [InlineData("?from=+300&to=400")]
     [InlineData("?from=early&to=late")]
     [InlineData("?from=-10000&to=300")]
+    [InlineData("?from=-2147483648&to=300")]
+    [InlineData("?from=-300&to=2147483648")]
+    [InlineData("?from=-99999999999999999999&to=300")]
     public async Task A_stretch_of_time_that_cannot_be_read_is_not_a_choice(string query)
     {
         var page = await Open(query);
