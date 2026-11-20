@@ -261,7 +261,9 @@ independent work and overall goal remain active. Broader gates stay open.
   [grouped notification](07-acceptance-test-plan.md#android-grouped-reminder-for-two-occurrences-sharing-an-adjusted-date)
   delivered and opened Plans with both original dates still visible. A separate
   [pending-group replacement case](07-acceptance-test-plan.md#android-pending-group-replacement-after-skipping-one-occurrence)
-  verified removal of the old alarm and delivery only to the remaining occurrence. The matching physical-device cases remain open.
+  verified removal of the old alarm and delivery only to the remaining occurrence.
+  A separate [forced Doze case](07-acceptance-test-plan.md#android-grouped-reminder-during-forced-doze)
+  delivered the grouped notification while Android still reported deep idle. Physical-device and OEM cases remain open.
 
 ## Privacy and security
 

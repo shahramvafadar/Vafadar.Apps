@@ -699,6 +699,30 @@ the single actual Skip. The fixture, alarms, delivered record and native
 destination evidence are retained under `artifacts/at72-shrink-reminder`.
 Physical-device, Doze and delayed broadcast races remain separate.
 
+### Android grouped reminder during forced Doze
+
+A fresh owned Android 16 x64 emulator with 4096-byte pages reused the signed
+Offline Release APK `7e70152c`. The synthetic November 21 and 22 occurrences
+shared a November 23 due date and a grouped reminder at 09:07 on November 20.
+The original AlarmManager request `126705161` belonged to UID `10216`.
+The observer used the [official Doze test procedure](https://developer.android.com/training/monitoring-device-state/doze-standby#test_doze).
+Android confirmed forced deep `IDLE` before the deadline. The device clock
+was unchanged.
+
+The last empty sample was at 09:08:32. Android recorded one generic private
+notification at 09:08:38.387 and the first active sample at 09:08:44 matched
+the original alarm key while deep idle remained `IDLE`. The observer then
+restored the original battery flags and active state. The notification
+remained available, the delivered alarm was absent from the pending queue,
+and the ledger was empty. No notification tap, Skip, restart or financial
+action was repeated. The immediate post-uninstall observation still saw
+transient state. A subsequent read confirmed package and notification
+absence without another uninstall. The owned emulator was retired.
+
+Evidence remains under `artifacts/at72-group-doze`. This qualifies one
+grouped delivery during forced deep Doze on the emulator. Natural long-idle,
+OEM power management and physical-device delivery remain separate.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.
