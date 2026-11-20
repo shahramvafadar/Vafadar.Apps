@@ -87,6 +87,11 @@ public sealed class GraphDataTests(DemoSite site) : IClassFixture<DemoSite>
             var rows = graph["nodes"]!.AsArray().ToDictionary(node => (string)node!["id"]!, node => (int)node!["row"]!);
             Assert.All(graph["edges"]!.AsArray().Where(edge => (string?)edge!["role"] == "parent"), edge => Assert.Equal(rows[(string)edge!["from"]!] + 1, rows[(string)edge["to"]!]));
             Assert.Contains(0, rows.Values);
+
+            // Everybody has a place of their own in the row: no two cards of a row stand on one another.
+            var places = graph["nodes"]!.AsArray().Select(node => ((int)node!["row"]!, (double)node["place"]!)).ToList();
+            Assert.Equal(places.Count, places.Distinct().Count());
+            Assert.All(places.GroupBy(place => place.Item1), row => Assert.All(row.OrderBy(place => place.Item2).Zip(row.OrderBy(place => place.Item2).Skip(1)), pair => Assert.True(pair.Second.Item2 - pair.First.Item2 >= 1)));
         }
 
         Assert.True((bool)near!["more"]!["above"]!);

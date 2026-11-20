@@ -46,6 +46,14 @@ public sealed record GraphNode(string Id, string Name, string Address, string Pr
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public int? Row { get; init; }
 
+    /// <summary>
+    /// Gets where the node stands in its row, counted in cards from the beginning of the row. The rows and the
+    /// places of a family are decided by the layout of Dastan – the same that draws the still picture of the
+    /// page – and not by the control that draws the graph (ADR 0020).
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public double? Place { get; init; }
+
     /// <summary>Gets a value indicating whether the page offers to open the relations of the node.</summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public bool Expandable { get; init; }
@@ -97,11 +105,11 @@ public static class GraphDataEndpoints
         ArgumentNullException.ThrowIfNull(family);
         ArgumentNullException.ThrowIfNull(visitor);
         ArgumentNullException.ThrowIfNull(site);
-        var top = family.Members.IsEmpty ? 0 : family.Members.Min(member => member.Generation);
+        var placed = FamilyTreeLayout.Of(family, words => visitor.Text(words).Value).Nodes.ToDictionary(node => node.Entity.Id);
         return new(
             "family",
             around.Value,
-            [.. family.Members.Select(member => Node(member.Entity, visitor, site, text) with { Row = member.Generation - top })],
+            [.. family.Members.Select(member => Node(member.Entity, visitor, site, text) with { Row = placed[member.Entity.Id].Layer, Place = placed[member.Entity.Id].Place })],
             [
                 .. family.Parentage.Select(edge => Edge(edge, "parent", directed: true, visitor, site, text)),
                 .. family.Partnerships.Select(edge => Edge(edge, "partner", directed: false, visitor, site, text)),
@@ -133,12 +141,7 @@ public static class GraphDataEndpoints
         ArgumentNullException.ThrowIfNull(tree);
         ArgumentNullException.ThrowIfNull(visitor);
         ArgumentNullException.ThrowIfNull(text);
-        var rows = TreeEndpoints.Placement(tree) is null
-            ? System.Collections.Immutable.ImmutableDictionary<string, int>.Empty
-            : TreeShape.Generations(
-                tree.People.Select(person => person.Id),
-                [.. tree.Links.Where(link => PeopleStore.IsParentage(link.Kind)).Select(link => new TreeShapeLink(link.From, link.To))],
-                [.. tree.Links.Where(link => link.Kind == "partner").Select(link => new TreeShapeLink(link.From, link.To))]);
+        var placed = (TreeEndpoints.Placement(tree)?.Nodes ?? []).ToDictionary(node => node.Id, StringComparer.Ordinal);
         return new(
             "family",
             null,
@@ -152,7 +155,8 @@ public static class GraphDataEndpoints
                             ? new($"{PhotoEndpoints.File}/{picture.Id}", null, picture.Caption.Length > 0 ? picture.Caption : text["Photos_Alt"])
                             : null,
                         Lines = years.Length > 0 ? [years] : [],
-                        Row = rows.TryGetValue(person.Id, out var row) ? row : null,
+                        Row = placed.TryGetValue(person.Id, out var where) ? where.Layer : null,
+                        Place = placed.TryGetValue(person.Id, out var along) ? along.Place : null,
                     };
                 }),
             ],
