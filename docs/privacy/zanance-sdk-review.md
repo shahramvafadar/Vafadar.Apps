@@ -88,6 +88,25 @@ The dynamic receiver permission is an AndroidX app-private receiver boundary, no
 reject ACCESS_NETWORK_STATE, location, camera, storage, advertising-id, exact alarms and every unknown permission.
 Adding a future permission requires a deliberate policy and privacy review; never silently expand the allowlist.
 
+### Offline sign-in component boundary
+
+The signed offline APK `9cf6c14f` still registered two exported Microsoft sign-in activities
+even though it had no OAuth client. The offline Release overlay now removes both declarations.
+The APK handoff verifier rejects them on a Zanance offline build. The old signed APK fails this
+check, and signed offline APK `3af08d29` passes. Comparing the two packaged manifests showed
+the same permission declarations and the same names and export flags for the other 26
+components. The offline APK has neither INTERNET nor ACCESS_NETWORK_STATE.
+
+The configured-cloud build evaluation with a fictional client excluded the offline overlay.
+No cloud sign-in was attempted. The corrected signed APK reached the original first-run setup
+on a fresh Android 16 emulator before creating an account. The evidence transport briefly
+disconnected after the XML pull. The same device and boot later confirmed the original XML
+hash without relaunching the app. The guest settings were restored and the package and owned
+emulator were retired. Local evidence is under `artifacts/offline-sign-in-component-review`.
+This covers the APK declarations and startup only. Cloud sign-in, the final store bundle and
+runtime traffic acceptance are separate.
+
+
 ```powershell
 ./eng/tests/AndroidPrivacy.Tests.ps1
 ./eng/scripts/Build-AndroidApk.ps1 -Offline -Output artifacts/android-offline

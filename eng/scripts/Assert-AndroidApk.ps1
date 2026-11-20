@@ -73,6 +73,15 @@ if ($Offline -and ($badging -cmatch "^uses-permission(?:-sdk-\d+)?: name='androi
     throw 'The offline APK requests a network permission.'
 }
 
+if ($Offline -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {
+    # Check the merged APK because the SDK can register login activities without an OAuth client.
+    $manifest = @(& $aapt2 dump xmltree $apk.FullName --file AndroidManifest.xml 2>&1)
+    if ($LASTEXITCODE -ne 0) { throw 'The offline APK component declarations could not be read.' }
+    if ($manifest -cmatch ':name\(0x[0-9a-f]+\)="(?:[\w.]+\.BrowserTabActivity|microsoft\.identity\.client\.AuthenticationActivity)"') {
+        throw 'The offline Zanance APK registers a Microsoft sign-in activity.'
+    }
+}
+
 # The current Android SDK embeds one managed assembly store per packaged ABI.
 # A valid APK signature also covers packages from which a required store was omitted.
 if ($properties._AndroidUseAssemblyStore -eq 'true') {
