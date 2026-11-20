@@ -104,7 +104,7 @@ internal static class AndroidDocumentPicker
             var filters = mimeTypes ?? ["*/*"];
             contentType = filters.SelectMany(filter => resolver.GetStreamTypes(uri, filter) ?? []).FirstOrDefault()
                 ?? throw new IOException("The selected virtual document offers no supported format.");
-            var fileName = GetName(name, contentType);
+            var fileName = GetName(name, contentType, converted: true);
             var asset = resolver.OpenTypedAssetFileDescriptor(uri, contentType, null)
                 ?? throw new IOException("The selected document is unavailable.");
             try
@@ -124,10 +124,10 @@ internal static class AndroidDocumentPicker
         return (selectedName, contentType, input, null);
     }
 
-    private static string GetName(string? displayName, string? contentType)
+    private static string GetName(string? displayName, string? contentType, bool converted = false)
     {
         var extension = Android.Webkit.MimeTypeMap.Singleton?.GetExtensionFromMimeType(contentType);
-        return AttachmentFiles.NormalizePickedName(displayName, extension);
+        return AttachmentFiles.NormalizePickedName(displayName, extension, converted);
     }
 
     /// <summary>Completes the exact native request, swallowing any late callback from a retired owner.</summary>

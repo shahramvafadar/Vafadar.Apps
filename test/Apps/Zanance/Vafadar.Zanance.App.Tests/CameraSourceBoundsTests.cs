@@ -31,6 +31,16 @@ public sealed class CameraSourceBoundsTests
         Assert.Equal(expected, AttachmentFiles.NormalizePickedName(supplied, extension));
     }
 
+    /// <summary>A virtual provider export uses the known suffix of its delivered representation.</summary>
+    [Theory]
+    [InlineData("Invoice.gdoc", "pdf", "Invoice.pdf")]
+    [InlineData("Receipt", "pdf", "Receipt.pdf")]
+    [InlineData("Original.gdoc", null, "Original.gdoc")]
+    public void Converted_document_names_match_the_delivered_format(string supplied, string? extension, string expected)
+    {
+        Assert.Equal(expected, AttachmentFiles.NormalizePickedName(supplied, extension, converted: true));
+    }
+
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
     /// <summary>Two original admissible lengths grow past the same original byte ceiling before the real file read.</summary>

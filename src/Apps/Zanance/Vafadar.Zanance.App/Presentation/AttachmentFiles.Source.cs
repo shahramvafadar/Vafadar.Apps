@@ -2,14 +2,14 @@ namespace Vafadar.Zanance.App.Presentation;
 
 internal static partial class AttachmentFiles
 {
-    /// <summary>Preserves an existing suffix or fills in the known platform suffix for a provider's display name.</summary>
-    internal static string NormalizePickedName(string? displayName, string? extension)
+    /// <summary>Uses the known platform suffix for missing extensions and for converted representations.</summary>
+    internal static string NormalizePickedName(string? displayName, string? extension, bool converted = false)
     {
         var name = Path.GetFileName(displayName?.Replace('\\', '/'));
         if (string.IsNullOrWhiteSpace(name) || name is "." or "..")
             name = "Attachment";
 
-        return !Path.HasExtension(name) && !string.IsNullOrEmpty(extension)
+        return !string.IsNullOrEmpty(extension) && (converted || !Path.HasExtension(name))
             ? Path.ChangeExtension(name, extension)
             : name;
     }

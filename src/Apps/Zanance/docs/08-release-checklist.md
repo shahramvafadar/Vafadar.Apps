@@ -1542,6 +1542,19 @@ showed EUR 42.75. Cancel and Discard left the transaction view empty. The owned 
 retired. Evidence is under `artifacts/receipt-virtual-native`. This check made no product change
 and did not repeat the previous pipe or ordinary-provider qualification.
 
+The Android picker now uses the typed representation's known suffix for a converted virtual
+document. This keeps a provider's source name from labelling a PDF as an unrelated format.
+Ordinary selections continue to keep their existing suffixes. Three new host cases cover a
+different source suffix, a missing suffix and a representation with no known suffix.
+
+With signed Offline Release APK `b5a84f03` on a fresh Android 16 emulator, the first-run
+backup picker selected a synthetic `Virtual_Invoice.gdoc` with one typed PDF open and displayed
+`Virtual_Invoice.pdf`. The restore screen refused the PDF as an invalid backup. Cancel
+cleared the selection and Back returned to setup before account creation. No restore,
+transaction, receipt recognition or network request was made. Strict Windows and Android
+builds passed. Both temporary packages and the owned emulator were retired. Evidence is
+retained under `artifacts/android-virtual-document-name-review`.
+
 The same signed APK `75b05718` completed its new native picker path on Android 7 (API 24).
 With AI off, one long press selected the original synthetic raster PDF in Android's internal
 storage and the system Open action returned it to Zanance. The editable amount was EUR 42.75.
