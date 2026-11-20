@@ -364,7 +364,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | Scenario | Requirement | Evidence and remaining device acceptance |
 |---|---|---|
 | AT-73 | Discover and restore connected backups from previous profiles/installations; optional protection | Library regressions cover all-set discovery, foreign-app exclusion, unchanged set retention, protected/unprotected preference restore and old packages. Rendered destination empty/error/files and device-file fallback. Real Google/OneDrive account flows, upload/download/delete and fresh-phone recovery remain AT-59 device acceptance. |
-| AT-74 | Language independent of regional display | English + German numeric formats; Persian RTL with Latin/Persian digits; explicit choices survive language/restart; invalid saved choices fall back; converted-calendar numeric order and date field order. Onboarding/settings examples and help checked in en/fa/de, light/dark, 360/412/wide. Android native pickers and device acceptance remain pending. |
+| AT-74 | Language independent of regional display | English + German numeric formats; Persian RTL with Latin/Persian digits; explicit choices survive language/restart; invalid saved choices fall back; converted-calendar numeric order and date field order. Onboarding/settings examples and help checked in en/fa/de, light/dark, 360/412/wide. [Android 16 native pickers and restart](#at-74-android-native-regional-preferences) verify the tested settings and Persian RTL. The regional restore and physical-device cases remain open. |
 
 
 ## AT-75 - Independent encryption feasibility (D-68 / SEC-01)
@@ -551,6 +551,14 @@ On the Android 7 (API 24) x86_64 emulator, the original APK exposed the syntheti
 Android 12 and earlier now keep the existing secure-window protection active regardless of the stored preference. Settings shows a checked, disabled switch with a localized explanation. On Android 13 and later the original foreground screenshot choice and live Overview protection still apply.
 
 The signed APK `d72991d4` was installed without clearing the disposable profile and retained UID 10062. Foreground capture at Home returned zero bytes. The settings switch was checked and disabled with the English explanation present. In actual Overview the Zanance card had a blank interior (all 59,475 sampled pixels matched). Selecting the original card returned to the loaded Home and original synthetic balance in process 3731. Strict Windows and Android builds passed, along with signed APK alignment verification. Display settings were restored and the test emulator was retired. The Android 7 result is scoped to the tested emulator.
+
+## AT-74 Android native regional preferences
+
+The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.
+
+One cold process restart (2971 to 5743) preserved the English Home label and `0,00 EUR`. Settings retained the Gregorian default, German format, Latin digits and German holiday choice. Selecting Persian in the native picker mirrored the shell (Home moved from the left to the right) and retained the explicit German format, holiday region and Latin digit choice. The unsaved calendar followed the Persian language default as designed. Selecting Gregorian explicitly and then Persian digits through their native pickers produced `۱.۲۳۴,۵۶`, with German separators and the German holiday region retained.
+
+The observer initially swiped outside the setup scroll container and expected the earlier wording of the Germany disclosure. The recorded hierarchy identified the actual scroll bounds and current disclosure. No successful selection, account creation or restart was repeated. The scoped test did not run a regional backup restore or physical-device check.
 
 ## AT-76 - Build-specific SDK and Android permission boundaries (D-69 / SEC-09)
 
