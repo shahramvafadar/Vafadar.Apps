@@ -299,29 +299,50 @@ public sealed partial class BackupViewModel : ViewModelBase
     [RelayCommand]
     private async Task OpenLocalAsync(LocalBackup backup)
     {
-        if (!CanUseBackupTools) return;
+        if (!CanUseBackupTools || _pendingWorkspaceOwner is not { } sourceOwner) return;
+        var rows = LocalBackups;
+        if (backup.DeviceOnly)
+            rows = SafetyBackups.Any(row => ReferenceEquals(row, backup)) ? SafetyBackups : AutomaticBackups;
+        if (!rows.Any(row => ReferenceEquals(row, backup))) return;
+
         var owner = Restore.CapturePreparationOwner();
+        var restoreOnly = IsRestoreOnly;
+        var language = _localization.CurrentLanguage.CultureName;
         var share = _translator["Backup_Share"];
         var restore = _translator["Backup_Restore"];
-        var choice = IsRestoreOnly || backup.DeviceOnly ? restore : await DialogPage.DisplayActionSheetAsync(backup.Title, _translator["Common_Cancel"], null, share, restore);
-        if (!owner.IsCurrent) return;
-        if (choice == share)
+        var canShare = !restoreOnly && !backup.DeviceOnly;
+        void Current()
         {
-            await ShareAsync(backup.File);
+            CheckCreationFrame(owner);
+            CheckCreationFrame(sourceOwner);
+            if (!ReferenceEquals(sourceOwner, _pendingWorkspaceOwner) || !rows.Any(row => ReferenceEquals(row, backup))
+                || IsRestoreOnly != restoreOnly || _localization.CurrentLanguage.CultureName != language)
+                throw new OperationCanceledException("The original local backup selection retired.", owner.Token);
         }
-        else if (choice == restore)
+
+        BeginWorkspaceCommand();
+        try
         {
-            try
+            Current();
+            var choice = canShare
+                ? await _workspaceRuntime.ChooseAsync(backup.Title, _translator["Common_Cancel"], share, restore)
+                : restore;
+            Current();
+            if (canShare && choice == share)
             {
-                await using var stream = await (backup.DeviceOnly ? _safety : _local).OpenReadAsync(backup.File.Id, owner.Token);
-                owner.EnsureCurrent(); await Restore.PrepareAsync(stream, backup.Title, owner);
+                await _creationRuntime.ShareAsync(backup.File);
+                return;
             }
-            catch (Exception ex) when (ex is not OutOfMemoryException && !owner.IsCurrent) { }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException or InvalidOperationException)
-            {
-                RestoreError = _translator["Backup_Error_Storage"];
-            }
+            if (choice != restore) return;
+            await using var stream = await (backup.DeviceOnly ? _safety : _local).OpenReadAsync(backup.File.Id, owner.Token);
+            Current();
+            await Restore.PrepareAsync(stream, backup.Title, owner);
         }
+        catch (OperationCanceledException) { }
+        catch (Exception ex) when (ex is not OutOfMemoryException && !IsOriginalDestinationCurrent(Current)) { }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or BackupException or InvalidOperationException)
+        { RestoreError = _translator["Backup_Error_Storage"]; }
+        finally { EndWorkspaceCommand(); }
     }
 
     [RelayCommand]
@@ -356,16 +377,6 @@ public sealed partial class BackupViewModel : ViewModelBase
         {
             RestoreError = _translator["Backup_Error_Storage"];
         }
-    }
-
-    private async Task ShareAsync(BackupFileInfo file)
-    {
-        var path = Path.Combine(FileSystem.AppDataDirectory, "backups", file.FileName);
-        await Share.Default.RequestAsync(new ShareFileRequest
-        {
-            Title = _translator["Backup_ShareTitle"],
-            File = new ShareFile(path, "application/octet-stream"),
-        });
     }
 
     private string FormatTime(DateTimeOffset value) =>

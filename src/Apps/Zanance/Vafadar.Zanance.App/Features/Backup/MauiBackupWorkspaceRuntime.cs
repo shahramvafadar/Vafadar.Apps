@@ -16,8 +16,8 @@ public sealed class MauiBackupWorkspaceRuntime(IServiceProvider services, Vafada
     public Task<bool> ConfirmAsync(string title, string message, string accept, string cancel) =>
         originalPage().DisplayAlertAsync(title, message, accept, cancel);
     /// <inheritdoc />
-    public async Task<string?> ChooseAsync(string title, string cancel, string restore, string delete) =>
-        await originalPage().DisplayActionSheetAsync(title, cancel, null, restore, delete);
+    public async Task<string?> ChooseAsync(string title, string cancel, string first, string second) =>
+        await originalPage().DisplayActionSheetAsync(title, cancel, null, first, second);
     /// <inheritdoc />
     public IExternalSignInService SignIn(ExternalIdentityProvider provider) => services.GetRequiredKeyedService<IExternalSignInService>(provider);
     /// <inheritdoc />

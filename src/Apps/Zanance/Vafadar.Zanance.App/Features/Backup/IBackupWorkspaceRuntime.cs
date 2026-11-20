@@ -13,8 +13,8 @@ public interface IBackupWorkspaceRuntime
         backup.DiscoverBackupsAsync(storage, cancellationToken);
     /// <summary>Offers the original explicit destination disclosure.</summary>
     Task<bool> ConfirmAsync(string title, string message, string accept, string cancel);
-    /// <summary>Offers only the original selected backup's restore/delete actions.</summary>
-    Task<string?> ChooseAsync(string title, string cancel, string restore, string delete);
+    /// <summary>Offers the two explicit actions for the original selected backup.</summary>
+    Task<string?> ChooseAsync(string title, string cancel, string first, string second);
     /// <summary>Gets the already configured original native provider service.</summary>
     IExternalSignInService SignIn(ExternalIdentityProvider provider);
     /// <summary>Gets the already configured original storage adapter.</summary>

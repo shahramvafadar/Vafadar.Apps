@@ -118,3 +118,22 @@ and page-specific compact title change. Current changed-control geometry and pre
 uncovered loading/native Toolbar assertions are qualified without repeating destination,
 backup, financial or actual Retry operations. [D-685 evidence](original-backup-source-cover-os-text.md)
 records both original defects, retained successes and exact continuation/restoration.
+
+## Local backup row ownership
+
+The selected local backup now keeps its original workspace publication, row instance,
+file source, page and disclosure language through the action sheet. The workspace
+serializes the operation until its share or preview finishes. The adapter checks the
+original context again before sharing and after opening a stream for preview. Automatic
+and pre-restore safety copies go directly to their device-only preview. Portable shares
+use the existing native sharing adapter.
+
+A focused fixture compiled the original command body from the preceding and changed
+files, using synthetic row, source, chooser and storage adapters. Seven cases failed
+with the preceding body: a foreign row, replaced workspace, source, row or language,
+entry into restore-only mode, and a competing choice. All nine passed after the change,
+including the existing direct automatic and safety preview controls. The fixture
+observed calls and used a borrowed synthetic stream without opening a native chooser
+or restoring data. Evidence is under `artifacts/local-backup-selection-ownership`.
+The strict Windows build and signed offline Android Release package passed. The
+APK SHA-256 is `ac658c65ff4d63c32cfece0c65a51107ae9e27bed3da7c0edcfd8b5097d7717a`.
