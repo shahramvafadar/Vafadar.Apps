@@ -221,7 +221,8 @@ independent work and overall goal remain active. Broader gates stay open.
   and the actual file path supplied (D-66); installation and physical-device acceptance are checked separately.
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations
 - [x] AT-62 golden calculations, checking-only forecast and representative amount formatting in all six app languages
-  are covered by automated tests. [Acceptance record](07-acceptance-test-plan.md)
+  are covered by automated tests. The signed Android Release also displayed the gross and net reference spending
+  with distinct labels. [Native report evidence](07-acceptance-test-plan.md#at-62-android-report-labels-for-gross-and-net-spending)
 - [ ] Upgrade from every earlier test build keeps data (AT-60). The first-schema integration test passes.
   A [direct Android upgrade from the retained D-320 build](07-acceptance-test-plan.md#at-60-direct-upgrade-from-the-retained-d-320-android-apk)
   preserved one named synthetic account and its balance. A [direct upgrade from D-554 with a retained ledger](07-acceptance-test-plan.md#at-60-direct-upgrade-with-a-retained-legacy-ledger)

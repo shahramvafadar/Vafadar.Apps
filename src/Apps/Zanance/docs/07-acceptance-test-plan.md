@@ -514,6 +514,24 @@ passed after addressing separate build prerequisites. Scoped local evidence is u
 This is an app-PIN check using fictitious data. OS device-credential authentication and
 physical tap acceptance were outside this run.
 
+## AT-62 Android report labels for gross and net spending
+
+The signed offline Android Release APK `64b0c491` ran on a disposable Android 16
+x86-64 emulator. One synthetic EUR 992.37 expense and one linked EUR 20.00 refund
+produced the reference gross and net spending totals. The original Reports screen
+showed the gross category chart and its EUR 992.37 total, the EUR 20.00 refund,
+and the EUR 972.37 category amount below the new **Expenses (net)** heading.
+The English overview explicitly labels the same subtraction as **Net spending**.
+
+The first expense observer hit a clipped title field. Its input was corrected on
+the same unsaved draft. The first report observer selected only clickable text,
+so the remaining tab tap used the observed native parent of the Reports label.
+The expense and refund were each submitted once. Strict Windows and Android Release
+builds passed, and the six resource files were checked for the existing localized
+heading and the two overview placeholders. The native inspection covered English
+and the reference spending totals. The wider reference ledger is covered by the
+separate calculation tests. Evidence is under `artifacts/report-net-label-native`.
+
 ## AT-69 Android restart during the first app PIN penalty
 
 The signed Offline Release APK `9803b374` ran on a disposable Android 16 x86-64

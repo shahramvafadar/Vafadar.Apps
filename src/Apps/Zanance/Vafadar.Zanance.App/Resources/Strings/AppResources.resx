@@ -4143,7 +4143,7 @@ Holding quantity: follow a weight or number of items, not their price. A rise in
     <value>Converted: ≈ {0}</value>
   </data>
   <data name="Report_SpendingLine" xml:space="preserve">
-    <value>Spending (expenses {0} − refunds {1})</value>
+    <value>Net spending (expenses {0} − refunds {1})</value>
   </data>
   <data name="Report_TransfersBetween" xml:space="preserve">
     <value>Transfers between your accounts</value>

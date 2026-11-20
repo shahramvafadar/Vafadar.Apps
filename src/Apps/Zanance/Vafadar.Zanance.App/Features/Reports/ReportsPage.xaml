@@ -262,6 +262,8 @@
                             </VerticalStackLayout>
                         </Grid>
                         <Label Text="{Binding RefundsText}" TextColor="{DynamicResource RefundText}" IsVisible="{Binding RefundsText, Converter={StaticResource IsNotNullConverter}}" />
+                        <Label Text="{v:Translate Report_NetExpense}" Style="{StaticResource SectionHeader}"
+                               IsVisible="{Binding CategoryRows.Count, Converter={StaticResource IsPositiveConverter}}" />
                         <VerticalStackLayout BindableLayout.ItemsSource="{Binding CategoryRows}">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate x:DataType="local:CategoryReportRow">
