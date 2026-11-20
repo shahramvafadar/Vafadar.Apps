@@ -18,6 +18,12 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
         try
         {
             using var origin = CaptureOrigin();
+            var invalidated = origin.Invalidated;
+            void RequireCurrent()
+            {
+                if (!origin.IsCurrent)
+                    throw new OperationCanceledException("The original receipt source retired.");
+            }
             return await ReceiptSourceChooser.RunAsync<ReceiptPickedFile?>(translator, interaction, PermissionPrompts.CanTakePhoto,
 #if ANDROID
                 showLatinImageHelp: true,
@@ -27,7 +33,8 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
                 origin, appLock.RunWhenUnlockedAsync, appLock.RetainCurrentDestinationIfLocked,
                 async () => Convert(await PermissionPrompts.TakePhotoAsync(translator) is { } photo
                     ? await AttachmentFiles.FromCameraAsync(translator["Camera_PhotoName"], photo) : null),
-                async () => Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], forRecognition: true)),
+                async () => Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], RequireCurrent,
+                    forRecognition: true, ct: invalidated)),
                 null, discard: file =>
                 {
                     if (file is null) return;

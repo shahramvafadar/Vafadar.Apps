@@ -95,7 +95,7 @@ public sealed class CameraSourceBoundsTests
     public async Task Nonseekable_source_keeps_the_original_bound_and_caller_ownership()
     {
         using var source = new NonseekableSource(AttachmentFiles.MaxSourceBytes + 1L);
-        await Assert.ThrowsAsync<InvalidDataException>(() => AttachmentFiles.ReadSourceAsync(source));
+        await Assert.ThrowsAsync<InvalidDataException>(() => AttachmentFiles.ReadSourceAsync(source, TestContext.Current.CancellationToken));
         Assert.InRange(source.BytesRead, AttachmentFiles.MaxSourceBytes + 1L, AttachmentFiles.MaxSourceBytes + 81920L);
         Assert.False(source.Disposed);
     }
@@ -109,16 +109,29 @@ public sealed class CameraSourceBoundsTests
         byte[] content = [0xff, 0xd8, 0xff, 0xd9];
         using var source = new ObservedAttachmentSource(content, fail);
         if (fail)
-            await Assert.ThrowsAsync<IOException>(() => AttachmentFiles.ReadSourceAsync(source));
+            await Assert.ThrowsAsync<IOException>(() => AttachmentFiles.ReadSourceAsync(source, TestContext.Current.CancellationToken));
         else
-            Assert.Equal(content, await AttachmentFiles.ReadSourceAsync(source));
+            Assert.Equal(content, await AttachmentFiles.ReadSourceAsync(source, TestContext.Current.CancellationToken));
 
         Assert.Equal(2, source.Reads);
         Assert.True(source.LastChunk.Span.IndexOfAnyExcept((byte)0) < 0);
         Assert.True(source.CanRead);
     }
 
-    private sealed class ObservedAttachmentSource(byte[] content, bool fail) : MemoryStream(content, writable: false)
+    [Fact]
+    public async Task Retired_picker_refuses_a_provider_chunk_returned_after_cancellation()
+    {
+        using var cancellation = new CancellationTokenSource();
+        using var source = new ObservedAttachmentSource([1, 2, 3, 4], false, cancellation.Cancel);
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() => AttachmentFiles.ReadSourceAsync(source, cancellation.Token));
+
+        Assert.Equal(1, source.Reads);
+        Assert.True(source.LastChunk.Span.IndexOfAnyExcept((byte)0) < 0);
+        Assert.True(source.CanRead);
+    }
+
+    private sealed class ObservedAttachmentSource(byte[] content, bool fail, Action? afterRead = null) : MemoryStream(content, writable: false)
     {
         internal Memory<byte> LastChunk { get; private set; }
         internal int Reads { get; private set; }
@@ -128,7 +141,9 @@ public sealed class CameraSourceBoundsTests
             LastChunk = buffer;
             if (++Reads == 2 && fail)
                 throw new IOException("The provider stopped after returning part of the attachment.");
-            return base.ReadAsync(buffer, cancellationToken);
+            var result = base.ReadAsync(buffer, cancellationToken);
+            afterRead?.Invoke();
+            return result;
         }
     }
 

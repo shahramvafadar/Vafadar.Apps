@@ -175,3 +175,23 @@ followed by clearing and no editor. All data were synthetic. The earlier Android
 receipt and financial acceptance interactions were not repeated.
 Strict Windows and Android Release builds passed. The signed offline Android APK
 SHA256 is 5a552e93e4ff7174445a60dd9772cda6518524f0690c7327e73cc16de59b94c7.
+
+## File picker ownership before opening the stream
+
+The receipt and detail attachment routes now validate the original page before
+opening the returned provider stream, after open, and after preparation. The
+receipt route also passes its existing retirement token to the provider-open
+dispatch and bounded stream reader. A retired chooser still waits for its
+original native result to release the exclusive picker. Its result cannot open a
+provider when original ownership has already retired. A completed but rejected
+preparation clears the owned compact buffer and any separate recognition original.
+
+All 58 selected attachment, picker source and camera bounds tests passed. A
+synthetic stream returned one in-flight chunk while cancelling the original
+selection. The real bounded reader rejected the late chunk, requested no second
+read, cleared its scratch buffer and kept stream disposal with the original
+caller. The initial strict test build required forwarding the xUnit cancellation
+token in three existing test calls. No prior native selection or financial action
+was replayed.
+Strict Windows and Android Release builds passed. The signed offline Android APK
+SHA256 is cd7b477f1171c5124393d01626bb050a8c877d3a32fb935d874b5f5cab64c3b1.

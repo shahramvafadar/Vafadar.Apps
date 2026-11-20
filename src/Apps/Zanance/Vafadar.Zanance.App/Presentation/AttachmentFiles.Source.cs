@@ -79,8 +79,8 @@ internal static partial class AttachmentFiles
     }
 
     /// <summary>Reads a picked/captured source with an encoded-byte bound, including non-seekable picker streams.</summary>
-    internal static Task<byte[]> ReadSourceAsync(Stream stream) =>
-        BoundedPrivateFileReader.ReadAsync(stream, MaxSourceBytes, CancellationToken.None,
+    internal static Task<byte[]> ReadSourceAsync(Stream stream, CancellationToken ct = default) =>
+        BoundedPrivateFileReader.ReadAsync(stream, MaxSourceBytes, ct,
             static () => new InvalidDataException("The source file is too large."));
 
 }

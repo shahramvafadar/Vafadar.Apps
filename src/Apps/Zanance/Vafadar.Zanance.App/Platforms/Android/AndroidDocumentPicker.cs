@@ -20,8 +20,9 @@ internal static class AndroidDocumentPicker
 
     /// <summary>Uses the selected document within its read grant and closes its stream before releasing the picker.</summary>
     internal static async Task UseAsync(string title, string[]? mimeTypes, Func<Stream, string, string?, Task> use,
-        Action? validateOwner = null, string[]? virtualMimeTypes = null)
+        Action? validateOwner = null, string[]? virtualMimeTypes = null, CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
         if (!PickerOwner.Wait(0))
             throw new InvalidOperationException("An attachment picker is already open.");
 
@@ -47,7 +48,11 @@ internal static class AndroidDocumentPicker
             // MAUI's generic picker copies to a physical path first. Its copy can query Position
             // on a provider pipe and it runs before the app can apply its byte limit.
             validateOwner?.Invoke();
-            var document = await Task.Run(() => Open(activity, uri, virtualMimeTypes ?? mimeTypes));
+            var document = await Task.Run(() =>
+            {
+                ct.ThrowIfCancellationRequested();
+                return Open(activity, uri, virtualMimeTypes ?? mimeTypes);
+            }, ct);
             using var asset = document.Asset;
             using var input = document.Input;
             validateOwner?.Invoke();

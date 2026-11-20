@@ -18,35 +18,71 @@ internal static partial class AttachmentFiles
 {
     private const float MaxEdge = 1600;
 
-    public static async Task<PreparedAttachment?> PickAsync(string title, bool forRecognition = false)
+    /// <summary>Reads and prepares the selection only while the original command and page still own it.</summary>
+    public static async Task<PreparedAttachment?> PickAsync(string title, Action validateOwner,
+        bool forRecognition = false, CancellationToken ct = default)
     {
-#if ANDROID
-        PreparedAttachment? prepared = null;
-        await AndroidDocumentPicker.UseAsync(title, ["application/pdf", "image/*"], async (input, name, contentType) =>
+        void Current()
         {
-            var bytes = await Task.Run(() => ReadSourceAsync(input));
-            prepared = await PrepareAsync(name, ResolveContentType(name, contentType), bytes, forRecognition);
-        });
-        return prepared;
-#else
-        var file = await FilePicker.Default.PickAsync(new PickOptions
-        {
-            PickerTitle = title,
-            FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-            {
-                [DevicePlatform.iOS] = ["public.image", "com.adobe.pdf"],
-                [DevicePlatform.WinUI] = [".jpg", ".jpeg", ".png", ".heic", ".pdf"],
-            }),
-        });
-        if (file is null)
-        {
-            return null;
+            ct.ThrowIfCancellationRequested();
+            validateOwner();
         }
 
-        await using var stream = await file.OpenReadAsync();
-        return await PrepareAsync(file.FileName, ResolveContentType(file.FileName, file.ContentType),
-            await ReadSourceAsync(stream), forRecognition);
+        Current();
+        PreparedAttachment? prepared = null;
+        try
+        {
+#if ANDROID
+            await AndroidDocumentPicker.UseAsync(title, ["application/pdf", "image/*"], async (input, name, contentType) =>
+            {
+                prepared = await PrepareSelectedAsync(input, name, contentType);
+            }, Current, ct: ct);
+#else
+            var file = await FilePicker.Default.PickAsync(new PickOptions
+            {
+                PickerTitle = title,
+                FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+                {
+                    [DevicePlatform.iOS] = ["public.image", "com.adobe.pdf"],
+                    [DevicePlatform.WinUI] = [".jpg", ".jpeg", ".png", ".heic", ".pdf"],
+                }),
+            });
+            if (file is null) return null;
+
+            Current();
+            await using (var stream = await file.OpenReadAsync())
+                prepared = await PrepareSelectedAsync(stream, file.FileName, file.ContentType);
 #endif
+            Current();
+            var selected = prepared;
+            prepared = null;
+            return selected;
+        }
+        finally
+        {
+            if (prepared is not null)
+            {
+                CryptographicOperations.ZeroMemory(prepared.Data);
+                if (prepared.RecognitionData is { } original && !ReferenceEquals(original, prepared.Data))
+                    CryptographicOperations.ZeroMemory(original);
+            }
+        }
+
+        async Task<PreparedAttachment> PrepareSelectedAsync(Stream input, string name, string? contentType)
+        {
+            Current();
+            var bytes = await Task.Run(() => ReadSourceAsync(input, ct), ct);
+            try
+            {
+                Current();
+                return await PrepareAsync(name, ResolveContentType(name, contentType), bytes, forRecognition);
+            }
+            catch
+            {
+                CryptographicOperations.ZeroMemory(bytes);
+                throw;
+            }
+        }
     }
 
     /// <summary>Prepares a camera photo for storage, retaining the transient original only for recognition.</summary>
