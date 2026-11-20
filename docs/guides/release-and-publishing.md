@@ -75,8 +75,11 @@ Each app is versioned independently.
    checks the full-domain exclusions in every packaged configuration, including the default. Android and OEM
    transfer behavior still require their separate acceptance checks.
    Without a cloud-backup client ID, the bundle must omit INTERNET. A cloud-backup
-   bundle must request INTERNET without an SDK cap. Both editions must omit ACCESS_NETWORK_STATE. This workflow
-   leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size acceptance need their own checks. Download the
+   bundle must request INTERNET without an SDK cap. Both editions must omit ACCESS_NETWORK_STATE. The verifier
+   requires the exact OneDrive browser callback for the configured Entra client and rejects an MSAL callback when
+   no Entra client is configured. A correctly packaged callback still requires an actual Microsoft sign-in check.
+   This workflow leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size
+   acceptance need their own checks. Download the
    verified `.aab` artifact, upload it in Play Console, then **delete the artifact** (artifacts of public
    repositories are downloadable by any signed-in GitHub user; the workflow keeps them only 3 days).
 5. Tag the commit: `git tag zanance/v1.2.0 && git push origin zanance/v1.2.0`.
