@@ -244,6 +244,8 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] D-62 device acceptance: fresh install → choose theme/experience or restore an existing backup; cancel and return
   without losing the draft; restore protected and unprotected files without an extra account. For each released cloud
   provider, upload/restore with protection on and off, with a real OAuth client. Windows checks do not close this gate.
+  [Android account-draft evidence](#d-62-android-account-draft-after-cancelled-restore) covers returning from a valid
+  backup preview on the actual third onboarding step.
 
 - [ ] D-64 receipt acceptance (AT-71, ZCR-QA-05): physical Android/iOS camera and file selection, EXIF, skew,
   missing/conflicting totals, currency/unit review, stored-image reread, cancel/error and explicit-save checks on
@@ -1638,6 +1640,17 @@ that served a non-seekable pipe. Zanance made one stream open. The original firs
 showed one account, one transaction and one plan. Cancel cleared the preview and Back returned
 to Welcome. No replacement or account creation occurred. The owned emulator was retired.
 Evidence is under `artifacts/backup-native-stream-preview`.
+
+### D-62 Android account draft after cancelled restore
+
+On a fresh Android 16 emulator, the retained signed offline APK `722093c6` reached the third
+onboarding step. The native account form held the unsaved name `PendingDraft` and opening
+amount `47.25`. The backup action on that step opened the original system picker. A single
+read through the retained D-403 provider pipe showed one account, one transaction and one plan.
+Cancel cleared the backup preview. Back returned to step three in the original process and boot,
+where both unsaved field values exactly matched the pre-preview capture. No account creation,
+replacement or financial write was initiated. The disposable packages and emulator were removed,
+and evidence remains under `artifacts/onboarding-restore-draft-native`.
 
 ## Covered Android startup recovery from a provider stream
 
