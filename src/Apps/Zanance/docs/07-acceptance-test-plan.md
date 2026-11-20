@@ -4813,8 +4813,29 @@ settled. Privileged test captures exposed synthetic input in a password-classifi
 Retained XML was redacted and checked before the emulator was retired. Local evidence is in
 `artifacts/zpr`. The original export digest was unchanged. The scope covers password-protected
 restore on this fresh emulator, the named visible values and their cold persistence. Physical
-password-protected restore, OEM transfer, encrypted export on Android and full restored-row
-comparison remain separate.
+password-protected restore, OEM transfer and full restored-row comparison remain separate.
+
+### AT-57 native encrypted export and local handoff
+
+The same offline APK ran on a separate fresh Android 35 emulator. One new zero-opening
+fictional account was required to enter the normal Backup screen. No ledger or plan entry
+was written. The native password-protection switch was on by default. With a matching
+synthetic password and confirmation, one Create backup file action opened the original
+Android share sheet. The selected local review app accepted one read-only content grant
+from Zanance and stored the encrypted file without access to Zanance's private storage.
+
+The received file is 27,333 bytes, SHA-256
+`a200802065e94a6f5113b263cf33512e34b098448f3421cb1cbc1090844a9ee1`.
+The digest matched the host copy. The production decryptor opened it in memory. Its manifest
+reported one account, zero transactions and zero plans, and both payload checksums and
+lengths matched. The app displayed Backup created and cleared both submitted password fields.
+The observer recovered a fresh hierarchy after an early Android dump returned no root.
+Retained XML masked synthetic input; no plaintext backup was retained. The disposable
+emulator and test signing files were retired. Local evidence is in `artifacts/zpb`.
+
+This is native encrypted creation and handoff evidence. The separate fresh-install review
+used the protected D-403 payload. No real cloud provider, physical device or common-payload
+physical round trip was exercised.
 
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
 
