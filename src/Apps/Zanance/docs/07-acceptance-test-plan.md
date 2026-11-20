@@ -552,6 +552,26 @@ Android 12 and earlier now keep the existing secure-window protection active reg
 
 The signed APK `d72991d4` was installed without clearing the disposable profile and retained UID 10062. Foreground capture at Home returned zero bytes. The settings switch was checked and disabled with the English explanation present. In actual Overview the Zanance card had a blank interior (all 59,475 sampled pixels matched). Selecting the original card returned to the loaded Home and original synthetic balance in process 3731. Strict Windows and Android builds passed, along with signed APK alignment verification. Display settings were restored and the test emulator was retired. The Android 7 result is scoped to the tested emulator.
 
+## AT-72 Android working-day and public-holiday preview
+
+The retained signed Offline Release APK `d72991d4` ran in Advanced mode on an owned Android 16
+x64 emulator. An independent zero-opening account and Germany's nationwide holiday calendar were
+selected during setup. The original date picker selected Friday, December 25, 2026, and the
+original Monthly option anchored the draft on day 25.
+
+With **Next working day** and public-holiday adjustment off, the preview kept December 25 and
+moved Sunday, April 25, 2027, to Monday, April 26. Turning on **Also move off public holidays**
+moved the first preview date to Monday, December 28, 2026, after the two public holidays and
+the Sunday. The following dates stayed January 25 and February 25, 2027, and the summary kept day
+25. The app showed that the Germany calendar excludes local holidays and workplace substitutes.
+The holiday expectation follows the [Bundesbank's 2026 nationwide calendar](https://www.bundesbank.de/resource/blob/764518/84d26dc9e3e0cc1e6e3042290df060ff/472B63F073F071307366337C94F8C870/feiertage-in-deutschland-1-data.pdf).
+
+One attempt to read the preview included unlabeled layout nodes. The dated rows were verified
+from the same stored hierarchy without repeating the switch input. Original Cancel and Discard
+returned to an empty All plans list. The all-time transaction list remained empty and the same
+process 2723 showed the original account and EUR 0.00. No plan or payment was saved. The emulator
+was retired and local evidence retained in `artifacts/at72-holiday-plan`.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.

@@ -254,6 +254,8 @@ independent work and overall goal remain active. Broader gates stay open.
   draft cancellation must not post or alter balances. The original saved Plans reminder delivered after a permission
   grant on the owned Android 16 emulator, inside the recorded inexact alarm window. This case supplies evidence
   for the permission-return and delivery path on that fixture. [D1241 delivery evidence](quality/plans-saved-reminder-delivery-after-grant-d1241.md)
+  [Native Android holiday and weekend preview](07-acceptance-test-plan.md#at-72-android-working-day-and-public-holiday-preview)
+  records the expected working-day changes and draft cancellation. The matching physical-device case remains open.
 
 ## Privacy and security
 
