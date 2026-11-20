@@ -123,6 +123,17 @@ notifications, boot completion, the two Android biometric declarations and the p
 dynamic receiver permission. The fixture was compiled for static inspection only and was never
 signed or installed. The original and corrected results are in `artifacts/zpv`.
 
+The signed AAB base-manifest check and the APK audit now read the same Zanance permission policy.
+The AAB check requires unrestricted declarations for the required permissions of the selected
+edition. A decoded synthetic manifest with a conditional contacts permission passed the previous
+AAB check and now fails. The focused fixtures also cover internet permission in an offline bundle,
+restricted network permission for cloud backup, a valid synthetic cloud permission set and a missing
+notification permission. All 20 existing APK policy cases passed against the shared policy. The already
+signed ARM64 Offline AAB (SHA-256
+`3d63d62a911e1311dc00fb8f43e73a1035dc739ee2db6c6b0ffb72cb0b6a916c`)
+and complete dual-ABI Offline APK passed their respective new checks. Local receipts are in
+`artifacts/zba`. These checks cover manifest declarations. Runtime behavior is reviewed separately.
+
 ## Store declarations and remaining gates
 
 * Android Offline: verify the exact submitted Release artifact has no INTERNET. OS backups and user shares are

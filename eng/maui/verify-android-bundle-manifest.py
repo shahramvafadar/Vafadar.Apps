@@ -1,12 +1,15 @@
 """Verify upload identity from the bundletool-decoded base manifest."""
 
+import json
 import os
+from pathlib import Path
 import sys
 from xml.etree import ElementTree
 
 ANDROID = "{http://schemas.android.com/apk/res/android}"
 # Google Play's mobile submission requirement effective 2026-08-31.
 PLAY_MIN_TARGET_SDK = 36
+PERMISSION_POLICY = Path(__file__).resolve().parents[1] / "modules" / "zanance-android-permissions.json"
 
 
 def verify_msal_redirect(application, entra_client_id):
@@ -87,22 +90,23 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
 
     if edition not in ("offline", "cloud-backup"):
         raise SystemExit("Unknown Android bundle edition.")
+    policy = json.loads(PERMISSION_POLICY.read_text(encoding="utf-8"))
+    required = set(policy["required"] + policy["editions"][edition])
+    allowed = required | set(policy["optional"])
     permissions = [element for element in manifest if element.tag.startswith("uses-permission")]
-    names = {element.get(ANDROID + "name") for element in permissions}
-    if "android.permission.ACCESS_NETWORK_STATE" in names:
-        raise SystemExit("Release bundle requests ACCESS_NETWORK_STATE.")
-    if edition == "offline" and "android.permission.INTERNET" in names:
-        raise SystemExit("Offline release bundle requests INTERNET.")
-    if edition == "cloud-backup" and not any(
-        element.tag == "uses-permission"
-        and element.get(ANDROID + "name") == "android.permission.INTERNET"
-        and element.get(ANDROID + "maxSdkVersion") is None
+    names = {element.get(ANDROID + "name", "") for element in permissions}
+    if unexpected := names - allowed:
+        raise SystemExit("Unexpected bundle permissions: " + ", ".join(sorted(unexpected)))
+    unrestricted = {
+        element.get(ANDROID + "name")
         for element in permissions
-    ):
-        raise SystemExit("Cloud backup release bundle lacks unrestricted INTERNET.")
+        if element.tag == "uses-permission" and element.get(ANDROID + "maxSdkVersion") is None
+    }
+    if missing := required - unrestricted:
+        raise SystemExit("Missing unrestricted bundle permissions: " + ", ".join(sorted(missing)))
     verify_msal_redirect(applications[0], entra_client_id)
     print(f"Verified bundle package, version, target API {target_sdk}, release flags, backup policy bindings, "
-          "edition network permissions and MSAL redirect configuration.")
+          "edition permissions and MSAL redirect configuration.")
 
 
 if __name__ == "__main__":

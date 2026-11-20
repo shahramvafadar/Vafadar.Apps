@@ -1,0 +1,21 @@
+{
+  "required": [
+    "android.permission.POST_NOTIFICATIONS",
+    "android.permission.RECEIVE_BOOT_COMPLETED"
+  ],
+  "optional": [
+    "android.permission.USE_BIOMETRIC",
+    "android.permission.USE_FINGERPRINT",
+    "pro.vafadar.zanance.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+  ],
+  "editions": {
+    "offline": [],
+    "cloud-backup": [
+      "android.permission.INTERNET"
+    ],
+    "billing": [
+      "android.permission.INTERNET",
+      "com.android.vending.BILLING"
+    ]
+  }
+}

@@ -1,4 +1,7 @@
 # Permission policy is separate from APK inspection so forbidden capabilities can be regression-tested.
+$permissionPolicy = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'zanance-android-permissions.json') -Raw -ErrorAction Stop |
+    ConvertFrom-Json -AsHashtable
+
 function Assert-ZananceAndroidPrivacy {
     <#
     .SYNOPSIS
@@ -12,19 +15,16 @@ function Assert-ZananceAndroidPrivacy {
         [bool]$Debuggable)
     if ($Package -ne 'pro.vafadar.zanance') { throw 'The Zanance application package is required.' }
     if ($Debuggable) { throw 'A non-debuggable Release APK is required.' }
-    $allowed = @('android.permission.POST_NOTIFICATIONS', 'android.permission.RECEIVE_BOOT_COMPLETED',
-        'android.permission.USE_BIOMETRIC', 'android.permission.USE_FINGERPRINT',
-        'pro.vafadar.zanance.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION')
-    if ($Variant -in @('Cloud', 'Billing')) { $allowed += 'android.permission.INTERNET' }
-    if ($Variant -eq 'Billing') { $allowed += 'com.android.vending.BILLING' }
-    $unexpected = @($Permissions | Where-Object { $_ -notin $allowed })
+    $edition = switch ($Variant) {
+        Offline { 'offline' }
+        Cloud { 'cloud-backup' }
+        Billing { 'billing' }
+    }
+    $required = $permissionPolicy.required + $permissionPolicy.editions[$edition]
+    $allowed = $required + $permissionPolicy.optional
+    $unexpected = @($Permissions | Where-Object { $_ -cnotin $allowed })
     if ($unexpected.Count -gt 0) { throw ('Unexpected permissions: ' + ($unexpected -join ', ')) }
-    if ($Variant -in @('Cloud', 'Billing') -and 'android.permission.INTERNET' -notin $Permissions) {
-        throw 'The selected online variant must declare INTERNET; check the build configuration.'
-    }
-    if ($Variant -eq 'Billing' -and 'com.android.vending.BILLING' -notin $Permissions) { throw 'The Billing variant must declare its store permission.' }
-    foreach ($required in @('android.permission.POST_NOTIFICATIONS', 'android.permission.RECEIVE_BOOT_COMPLETED')) {
-        if ($required -notin $Permissions) { throw ('Missing reminder permission: ' + $required) }
-    }
+    $missing = @($required | Where-Object { $_ -cnotin $Permissions })
+    if ($missing.Count -gt 0) { throw ('Missing required permissions: ' + ($missing -join ', ')) }
 }
 Export-ModuleMember -Function Assert-ZananceAndroidPrivacy
