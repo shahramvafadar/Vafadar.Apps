@@ -40,3 +40,29 @@ foreach ($case in $cases) {
     if ($passed -ne $case.Pass) { throw ('Privacy policy regression: ' + $case.Name) }
 }
 "PASS: $($cases.Count) Android privacy policy cases (AT-76)."
+
+if (!$BillingOnly) {
+    $minimum = "minSdkVersion:'24'"
+    $target = "targetSdkVersion:'36'"
+    $notifications = "uses-permission: name='android.permission.POST_NOTIFICATIONS'"
+    $boot = "uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'"
+    $release = @($minimum, $target, $notifications, $boot)
+    $handoffs = @(
+        @{ Lines = $release },
+        @{ Lines = @($target, $notifications, $boot); Failure = 'minimum API 24' },
+        @{ Lines = @("minSdkVersion:'26'", $target, $notifications, $boot); Failure = 'minimum API 24' },
+        @{ Lines = $release + "maxSdkVersion:'36'"; Failure = 'must not declare a maximum SDK' },
+        @{ Lines = @($minimum, "targetSdkVersion:'35'", $notifications, $boot); Failure = 'must target Android API 36' },
+        @{ Lines = @($minimum, $target, "$notifications maxSdkVersion='35'", $boot); Failure = 'Missing required permissions: android.permission.POST_NOTIFICATIONS' },
+        @{ Lines = $release + "uses-permission-sdk-23: name='android.permission.READ_CONTACTS'"; Failure = 'Unexpected permissions: android.permission.READ_CONTACTS' }
+    )
+    foreach ($handoff in $handoffs) {
+        $failure = $null
+        try { Assert-ZananceAndroidReleaseBadging -Badging $handoff.Lines -Offline }
+        catch { $failure = $_.Exception.Message }
+        if ((!$handoff.Failure -and $failure) -or ($handoff.Failure -and (!$failure -or !$failure.Contains($handoff.Failure)))) {
+            throw "Release badging regression. Expected '$($handoff.Failure)', received '$failure'."
+        }
+    }
+    "PASS: $($handoffs.Count) Zanance Release badging cases."
+}

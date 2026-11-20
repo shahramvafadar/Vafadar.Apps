@@ -7,10 +7,6 @@ import sys
 from xml.etree import ElementTree
 
 ANDROID = "{http://schemas.android.com/apk/res/android}"
-# Keep the qualified Android 7 installation floor in both release editions.
-MIN_SUPPORTED_SDK = 24
-# Google Play's mobile submission requirement effective 2026-08-31.
-PLAY_MIN_TARGET_SDK = 36
 PERMISSION_POLICY = Path(__file__).resolve().parents[1] / "modules" / "zanance-android-permissions.json"
 
 
@@ -97,15 +93,18 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
     if len(sdk_elements) != 1:
         raise SystemExit("Expected exactly one uses-sdk in the base manifest.")
     sdk = sdk_elements[0]
-    if sdk.get(ANDROID + "minSdkVersion") != str(MIN_SUPPORTED_SDK):
-        raise SystemExit(f"Bundle must declare Android minimum API {MIN_SUPPORTED_SDK}.")
+    policy = json.loads(PERMISSION_POLICY.read_text(encoding="utf-8"))
+    minimum_sdk = policy["minimumSdk"]
+    minimum_target = policy["playMinimumTargetSdk"]
+    if sdk.get(ANDROID + "minSdkVersion") != str(minimum_sdk):
+        raise SystemExit(f"Bundle must declare Android minimum API {minimum_sdk}.")
     if ANDROID + "maxSdkVersion" in sdk.attrib:
         raise SystemExit("Bundle must not declare android:maxSdkVersion.")
     target_sdk = sdk.get(ANDROID + "targetSdkVersion", "")
     if not target_sdk.isascii() or not target_sdk.isdecimal():
         raise SystemExit("Bundle does not declare a numeric android:targetSdkVersion.")
-    if int(target_sdk) < PLAY_MIN_TARGET_SDK:
-        raise SystemExit(f"Bundle targets API {target_sdk}; Google Play requires API {PLAY_MIN_TARGET_SDK} or higher.")
+    if int(target_sdk) < minimum_target:
+        raise SystemExit(f"Bundle targets API {target_sdk}; Google Play requires API {minimum_target} or higher.")
 
     applications = manifest.findall("application")
     if len(applications) != 1:
@@ -126,7 +125,6 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
 
     if edition not in ("offline", "cloud-backup"):
         raise SystemExit("Unknown Android bundle edition.")
-    policy = json.loads(PERMISSION_POLICY.read_text(encoding="utf-8"))
     required = set(policy["required"] + policy["editions"][edition])
     allowed = required | set(policy["optional"])
     permissions = [element for element in manifest if element.tag.startswith("uses-permission")]
@@ -148,7 +146,7 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
             raise SystemExit("Offline bundle registers a Microsoft sign-in activity.")
     verify_msal_redirect(application, entra_client_id)
     verify_file_provider_bindings(application, package)
-    print(f"Verified bundle package, version, minimum API {MIN_SUPPORTED_SDK}, target API {target_sdk}, "
+    print(f"Verified bundle package, version, minimum API {minimum_sdk}, target API {target_sdk}, "
           "release flags, backup policy bindings, edition permissions, MSAL redirect configuration "
           "and file-provider bindings.")
 

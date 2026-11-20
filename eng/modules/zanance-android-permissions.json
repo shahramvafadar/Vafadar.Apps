@@ -1,4 +1,6 @@
 {
+  "minimumSdk": 24,
+  "playMinimumTargetSdk": 36,
   "required": [
     "android.permission.POST_NOTIFICATIONS",
     "android.permission.RECEIVE_BOOT_COMPLETED"

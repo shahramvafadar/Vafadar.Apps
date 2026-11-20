@@ -73,6 +73,11 @@ if ($Offline -and ($badging -cmatch "^uses-permission(?:-sdk-\d+)?: name='androi
     throw 'The offline APK requests a network permission.'
 }
 
+if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {
+    Import-Module (Join-Path $PSScriptRoot '../modules/AndroidPrivacy.psm1')
+    Assert-ZananceAndroidReleaseBadging -Badging $badging -Offline:$Offline
+}
+
 if ($Offline -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {
     # Check the merged APK because the SDK can register login activities without an OAuth client.
     $manifest = @(& $aapt2 dump xmltree $apk.FullName --file AndroidManifest.xml 2>&1)

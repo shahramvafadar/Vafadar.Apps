@@ -62,8 +62,8 @@ For a direct Android handoff, run `eng/scripts/Build-AndroidApk.ps1`. The script
 full path, package ID and SHA-256 after the Android SDK verifies the APK signature and its
 manifest matches the producing project's package ID, version code and display version. Each attempt publishes to a fresh staging directory.
 Only its verified signed APK replaces the same-named handoff file in the output directory.
-A failed or empty publish leaves the prior handoff in place. Release handoffs reject debuggable APKs and verify both 16 KiB ZIP alignment and the ELF load alignment of ARM64 and x64 libraries. With
-`-Offline`, both INTERNET and ACCESS_NETWORK_STATE must be absent. Device installation and
+A failed or empty publish leaves the prior handoff in place. Release handoffs reject debuggable APKs and verify both 16 KiB ZIP alignment and the ELF load alignment of ARM64 and x64 libraries. Zanance Release APKs also check minimum API 24, target API 36 or higher, and the absence of a maximum SDK filter. With
+`-Offline`, the APK must match the required and allowed permissions in the shared Android policy. Device installation and
 signer continuity with the installed app are separate checks.
 
 1. Update `CHANGELOG.md` of the app and merge to `main`.
@@ -79,7 +79,8 @@ signer continuity with the installed app are separate checks.
    with debug and test-only flags off. Both editions must declare minimum API 24 for Android 7
    without a maximum SDK filter. The decoded base manifest must declare a numeric target SDK of at least 36,
    the [Google Play mobile submission minimum](https://support.google.com/googleplay/android-developer/answer/11926878)
-   effective 31 August 2026. Recheck that policy before each release and update `PLAY_MIN_TARGET_SDK` when it changes.
+   effective 31 August 2026. Recheck that policy before each release and update `playMinimumTargetSdk` in
+   [the shared Android policy](../../eng/modules/zanance-android-permissions.json) when it changes.
    Both editions must retain `allowBackup=false` and reference Zanance's legacy backup and modern data extraction
    rules from the base manifest. The verifier resolves both resources from the bundle's base resource table and
    checks the full-domain exclusions in every packaged configuration, including the default. Android and OEM
