@@ -31,6 +31,17 @@ public sealed record GraphNode(string Id, string Name, string Address, string Pr
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? NameLanguage { get; init; }
 
+    /// <summary>
+    /// Gets the address of the timeline of the node, where something of it has a time: what is chosen in a
+    /// graph is carried on to the timeline (R-EXP-05).
+    /// </summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Timeline { get; init; }
+
+    /// <summary>Gets the address of the gallery of the node, where a picture or a video shows it.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Gallery { get; init; }
+
     /// <summary>Gets what the node is, in the words of the page.</summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? Kind { get; init; }
@@ -254,6 +265,9 @@ public static class GraphDataEndpoints
         var card = visitor.Projection.Profile(entity.Id)!.Card.Select(line => text[$"Fact_{line.Kind.Key}"].Value).ToHashSet(StringComparer.Ordinal);
         return new(entity.Id.Value, profile.Name, profile.Address, profile.Address + ProfileDataEndpoints.Ending)
         {
+            // The ways on are offered only where they lead to something: a timeline with a statement, a gallery with a picture.
+            Timeline = !entity.Dated.IsEmpty ? profile.Address + "/timeline" : null,
+            Gallery = visitor.Projection.Gallery(entity.Id) is { IsEmpty: false } ? profile.Address + "/gallery" : null,
             NameLanguage = profile.NameLanguage,
             Kind = profile.Kind,
             Picture = profile.Picture,

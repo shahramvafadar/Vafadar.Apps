@@ -3732,4 +3732,94 @@
   <data name="Gallery_WhatHeld" xml:space="preserve">
     <value>آنچه در این زمان برقرار بود</value>
   </data>
+  <data name="Date_Converted" xml:space="preserve">
+    <value>{0} (تبدیل‌شده: {1})</value>
+  </data>
+  <data name="SolarMonth_1" xml:space="preserve">
+    <value>فروردین</value>
+  </data>
+  <data name="SolarMonth_2" xml:space="preserve">
+    <value>اردیبهشت</value>
+  </data>
+  <data name="SolarMonth_3" xml:space="preserve">
+    <value>خرداد</value>
+  </data>
+  <data name="SolarMonth_4" xml:space="preserve">
+    <value>تیر</value>
+  </data>
+  <data name="SolarMonth_5" xml:space="preserve">
+    <value>مرداد</value>
+  </data>
+  <data name="SolarMonth_6" xml:space="preserve">
+    <value>شهریور</value>
+  </data>
+  <data name="SolarMonth_7" xml:space="preserve">
+    <value>مهر</value>
+  </data>
+  <data name="SolarMonth_8" xml:space="preserve">
+    <value>آبان</value>
+  </data>
+  <data name="SolarMonth_9" xml:space="preserve">
+    <value>آذر</value>
+  </data>
+  <data name="SolarMonth_10" xml:space="preserve">
+    <value>دی</value>
+  </data>
+  <data name="SolarMonth_11" xml:space="preserve">
+    <value>بهمن</value>
+  </data>
+  <data name="SolarMonth_12" xml:space="preserve">
+    <value>اسفند</value>
+  </data>
+  <data name="LunarMonth_1" xml:space="preserve">
+    <value>محرم</value>
+  </data>
+  <data name="LunarMonth_2" xml:space="preserve">
+    <value>صفر</value>
+  </data>
+  <data name="LunarMonth_3" xml:space="preserve">
+    <value>ربیع‌الاول</value>
+  </data>
+  <data name="LunarMonth_4" xml:space="preserve">
+    <value>ربیع‌الثانی</value>
+  </data>
+  <data name="LunarMonth_5" xml:space="preserve">
+    <value>جمادی‌الاول</value>
+  </data>
+  <data name="LunarMonth_6" xml:space="preserve">
+    <value>جمادی‌الثانی</value>
+  </data>
+  <data name="LunarMonth_7" xml:space="preserve">
+    <value>رجب</value>
+  </data>
+  <data name="LunarMonth_8" xml:space="preserve">
+    <value>شعبان</value>
+  </data>
+  <data name="LunarMonth_9" xml:space="preserve">
+    <value>رمضان</value>
+  </data>
+  <data name="LunarMonth_10" xml:space="preserve">
+    <value>شوال</value>
+  </data>
+  <data name="LunarMonth_11" xml:space="preserve">
+    <value>ذی‌القعده</value>
+  </data>
+  <data name="LunarMonth_12" xml:space="preserve">
+    <value>ذی‌الحجه</value>
+  </data>
+  <data name="Graph_Timeline" xml:space="preserve">
+    <value>روی خط زمان</value>
+  </data>
+  <data name="Graph_Gallery" xml:space="preserve">
+    <value>تصویرهایش</value>
+  </data>
+  <data name="Timeline_LeadOf" xml:space="preserve">
+    <value>آنچه دربارهٔ این نام با زمان گفته شده، و تصویرهایی که آن را نشان می‌دهند.</value>
+  </data>
+  <data name="Timeline_All" xml:space="preserve">
+    <value>خط زمان همهٔ مجموعه</value>
+  </data>
+  <data name="Timeline_Connections" xml:space="preserve">
+    <value>پیوندهایش</value>
+  </data>
 </root>

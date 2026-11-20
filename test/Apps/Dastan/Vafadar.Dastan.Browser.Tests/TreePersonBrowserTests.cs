@@ -95,7 +95,8 @@ public sealed class TreePersonBrowserTests(AccountsBrowserSite site) : IClassFix
         Assert.Equal(1, await page.Locator(".profile .kind-drawing").CountAsync());
         var facts = await page.Locator(".profile .profile-facts").InnerTextAsync();
         Assert.Contains(language == "fa" ? "۱۲۵۰" : "1250", facts, StringComparison.Ordinal);
-        Assert.Contains(language == "fa" ? "۱۳۲۹/۱/۱۲" : "1329/1/12", facts, StringComparison.Ordinal);
+        // The day as it was written, with the name of its month – and, on a page of another calendar, converted beside it.
+        Assert.Contains(language == "fa" ? "۱۲ فروردین ۱۳۲۹" : "12 Farvardin 1329 SH (converted: 1 April 1950 CE)", facts, StringComparison.Ordinal);
         Assert.Contains(language == "fa" ? "دانسته نیست" : "Not known", facts, StringComparison.Ordinal);
         await Fits(page, width);
         await BreaksNoRule(page);

@@ -137,7 +137,29 @@ phone, touch with two fingers, a screen reader.
 * **Carried on** (R-EXP-05, the first piece): "what held at this time" leads to the pictures of that same time,
   and the gallery of a time leads back to what held in it – the time goes with the reader, in the address.
 
+### Part 4 (2026-11-20): a date in the calendar of the reader, and what is chosen carried on
+
+* **A date is shown as it was written and, beside it, converted** (R-TIME-05, `CalendarConversion`): on a
+  Persian page in the Solar Hijri calendar, on any other in the Gregorian – "22 Bahman 1357 SH (converted: 11
+  February 1979 CE)". Only a date that is exact enough is converted: stated to the day, in a calendar the
+  record names, among Gregorian, Solar Hijri and Lunar Hijri (the Lunar by the calendar of Umm al-Qura where
+  it reaches, by the tabular count before and after). A year or a month of one calendar is no year or month of
+  another and stays as written; a date whose calendar the source does not say is given none; nothing is
+  converted before the Hijri calendars begin. The record itself is never changed.
+* **The months of the two Hijri calendars have their names** in both languages, where a date of them was written
+  as numbers before.
+* **The calendar a reader reads in is the calendar of the language of the page.** A choice of the reader – a
+  Persian reader who wants Gregorian dates beside, or the other way round – is not built; it would be a
+  preference like the theme.
+* **What is chosen in a graph is carried on** (R-EXP-05): the card that is chosen offers its timeline and its
+  pictures, where it has any – links beside the tools, which the answer of the graph names and which are not
+  offered where they would lead to nothing. **The timeline of one name** is a page of its own
+  (`/{collection}/entity/{id}/timeline`): what is stated about that name with a time and the pictures that
+  show it, with the way to its connections and to the timeline of the whole collection; the choices of the
+  chart stay with the name.
+
 **Not built:** themes of a gallery (R-MED-02 names them; the vocabulary has no kind for a theme yet, and none is
 made up here); a picture in several places with a caption of its own in each (R-MED-07); the time a photograph
-of an account shows (it has the day it was taken and the day it was brought in); calendars shown side by side
-(R-TIME-05); carrying a chosen node from the graph to the timeline; the page of a story on the control.
+of an account shows (it has the day it was taken and the day it was brought in); the page of a story on the
+control (it keeps its own chart of the telling); a choice of the calendar by the reader; carrying filters – a
+kind, a stretch of time – from the search to the graph.

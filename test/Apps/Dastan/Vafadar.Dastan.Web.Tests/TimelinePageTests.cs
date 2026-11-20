@@ -106,6 +106,67 @@ public class DatedSite : DemoSite
 /// The timeline of a collection (step 9.4): what of it has a time of the calendar, as the chart and the table of
 /// a comparison – and never a statement of a later reading stage.
 /// </summary>
+/// <summary>
+/// The timeline of one name (step 19.9, R-EXP-05): what is chosen elsewhere – in a graph, on a page – is carried
+/// to the timeline, which then shows what is stated about that name and the pictures that show it.
+/// </summary>
+public sealed class TimelineOfANameTests(DatedSite site) : IClassFixture<DatedSite>
+{
+    private const string Story = "story-rostam-sohrab";
+
+    [Theory]
+    [InlineData("en", "Shahnameh in time")]
+    [InlineData("fa", "در گذر زمان")]
+    public async Task A_name_has_a_timeline_of_what_is_stated_about_it(string language, string title)
+    {
+        var page = await site.Visitor().Get($"/{language}/{Story}/entity/work-shahnameh/timeline");
+
+        Assert.Equal(System.Net.HttpStatusCode.OK, page.Status);
+        Assert.Contains(title, page.Main, StringComparison.Ordinal);
+        Assert.Contains("id=\"item-work-written\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/entity/work-shahnameh\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/timeline\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/entity/work-shahnameh/connections\"", page.Html, StringComparison.Ordinal);
+
+        // The choices of the chart stay with the name: a step of the chart does not lead back to the whole collection.
+        Assert.Contains($"href=\"{Story}/entity/work-shahnameh/timeline?view=across", page.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain($"href=\"{Story}/timeline?view=", page.Html, StringComparison.Ordinal);
+
+        // The pictures of others are not on it.
+        Assert.DoesNotContain("id=\"item-media-", page.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_name_nothing_is_dated_of_says_so_and_a_name_that_is_none_is_not_found()
+    {
+        var visitor = site.Visitor();
+        var nothing = await visitor.Get($"/en/{Story}/entity/character-rostam/timeline");
+        Assert.Equal(System.Net.HttpStatusCode.OK, nothing.Status);
+        Assert.DoesNotContain("dastan-timeline", nothing.Html, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/timeline\"", nothing.Html, StringComparison.Ordinal);
+
+        // Somebody the reader has not read to, and nobody at all: the same answer.
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, (await visitor.Get($"/en/{Story}/entity/character-nobody/timeline")).Status);
+        Assert.Equal((await visitor.Get($"/en/{Story}/entity/character-sohrab")).Status, (await visitor.Get($"/en/{Story}/entity/character-sohrab/timeline")).Status);
+    }
+
+    [Fact]
+    public async Task A_graph_offers_the_timeline_of_a_node_that_has_one()
+    {
+        var visitor = site.Visitor();
+        var page = await visitor.Get($"/en/{Story}/entity/work-shahnameh/connections.json");
+        if (page.Status != System.Net.HttpStatusCode.OK)
+        {
+            // The work has no connections at this stage: the address of the graph answers as its page does.
+            Assert.Equal((await visitor.Get($"/en/{Story}/entity/work-shahnameh/connections")).Status, page.Status);
+            return;
+        }
+
+        var node = System.Text.Json.Nodes.JsonNode.Parse(page.Html)!["nodes"]!.AsArray().Single(found => (string?)found!["id"] == "work-shahnameh")!;
+        Assert.Equal($"{Story}/entity/work-shahnameh/timeline", (string?)node["timeline"]);
+    }
+}
+
 public sealed class TimelinePageTests(DemoSite site, DatedSite dated) : IClassFixture<DemoSite>, IClassFixture<DatedSite>
 {
     private const string Story = "story-rostam-sohrab";

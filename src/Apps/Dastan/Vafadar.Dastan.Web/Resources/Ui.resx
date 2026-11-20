@@ -3732,4 +3732,94 @@
   <data name="Gallery_WhatHeld" xml:space="preserve">
     <value>What held in this time</value>
   </data>
+  <data name="Date_Converted" xml:space="preserve">
+    <value>{0} (converted: {1})</value>
+  </data>
+  <data name="SolarMonth_1" xml:space="preserve">
+    <value>Farvardin</value>
+  </data>
+  <data name="SolarMonth_2" xml:space="preserve">
+    <value>Ordibehesht</value>
+  </data>
+  <data name="SolarMonth_3" xml:space="preserve">
+    <value>Khordad</value>
+  </data>
+  <data name="SolarMonth_4" xml:space="preserve">
+    <value>Tir</value>
+  </data>
+  <data name="SolarMonth_5" xml:space="preserve">
+    <value>Mordad</value>
+  </data>
+  <data name="SolarMonth_6" xml:space="preserve">
+    <value>Shahrivar</value>
+  </data>
+  <data name="SolarMonth_7" xml:space="preserve">
+    <value>Mehr</value>
+  </data>
+  <data name="SolarMonth_8" xml:space="preserve">
+    <value>Aban</value>
+  </data>
+  <data name="SolarMonth_9" xml:space="preserve">
+    <value>Azar</value>
+  </data>
+  <data name="SolarMonth_10" xml:space="preserve">
+    <value>Dey</value>
+  </data>
+  <data name="SolarMonth_11" xml:space="preserve">
+    <value>Bahman</value>
+  </data>
+  <data name="SolarMonth_12" xml:space="preserve">
+    <value>Esfand</value>
+  </data>
+  <data name="LunarMonth_1" xml:space="preserve">
+    <value>Muharram</value>
+  </data>
+  <data name="LunarMonth_2" xml:space="preserve">
+    <value>Safar</value>
+  </data>
+  <data name="LunarMonth_3" xml:space="preserve">
+    <value>Rabi al-Awwal</value>
+  </data>
+  <data name="LunarMonth_4" xml:space="preserve">
+    <value>Rabi al-Thani</value>
+  </data>
+  <data name="LunarMonth_5" xml:space="preserve">
+    <value>Jumada al-Ula</value>
+  </data>
+  <data name="LunarMonth_6" xml:space="preserve">
+    <value>Jumada al-Thani</value>
+  </data>
+  <data name="LunarMonth_7" xml:space="preserve">
+    <value>Rajab</value>
+  </data>
+  <data name="LunarMonth_8" xml:space="preserve">
+    <value>Shaban</value>
+  </data>
+  <data name="LunarMonth_9" xml:space="preserve">
+    <value>Ramadan</value>
+  </data>
+  <data name="LunarMonth_10" xml:space="preserve">
+    <value>Shawwal</value>
+  </data>
+  <data name="LunarMonth_11" xml:space="preserve">
+    <value>Dhu al-Qadah</value>
+  </data>
+  <data name="LunarMonth_12" xml:space="preserve">
+    <value>Dhu al-Hijjah</value>
+  </data>
+  <data name="Graph_Timeline" xml:space="preserve">
+    <value>On the timeline</value>
+  </data>
+  <data name="Graph_Gallery" xml:space="preserve">
+    <value>Its pictures</value>
+  </data>
+  <data name="Timeline_LeadOf" xml:space="preserve">
+    <value>What is stated about this name with a time, and the pictures that show it.</value>
+  </data>
+  <data name="Timeline_All" xml:space="preserve">
+    <value>The timeline of the whole collection</value>
+  </data>
+  <data name="Timeline_Connections" xml:space="preserve">
+    <value>Its connections</value>
+  </data>
 </root>

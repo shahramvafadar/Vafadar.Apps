@@ -70,6 +70,27 @@ public sealed class GraphDataTests(DemoSite site) : IClassFixture<DemoSite>
             Assert.Equal($"{Story}/entity/{(string)node["id"]!}", (string?)node["address"]);
             Assert.Equal($"{Story}/entity/{(string)node["id"]!}/profile.json", (string?)node["profile"]);
             Assert.True(node["lines"]!.AsArray().Count <= 3);
+
+            // The ways on from a node (R-EXP-05) are offered only where they lead to something.
+            if ((string?)node["gallery"] is { } gallery)
+            {
+                Assert.Equal($"{Story}/entity/{(string)node["id"]!}/gallery", gallery);
+                var pictures = await visitor.Get($"/{language}/{gallery}");
+                Assert.Equal(HttpStatusCode.OK, pictures.Status);
+                Assert.Matches("media-(card|reference)\" id=", pictures.Html);
+            }
+            else
+            {
+                Assert.DoesNotMatch("media-(card|reference)\" id=", (await visitor.Get($"/{language}/{Story}/entity/{(string)node["id"]!}/gallery")).Html);
+            }
+
+            // Nothing of the collection of the demonstration has a date: no node offers a timeline.
+            Assert.Null(node["timeline"]);
+        }
+
+        if (readTo == 4 && entity == "character-rostam")
+        {
+            Assert.Contains(nodes, node => node!["gallery"] is not null);
         }
     }
 
