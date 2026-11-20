@@ -115,7 +115,8 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
         var file = await visitor.Get($"/{address.Split('/')[1]}/{Regex.Match(script.Value, "src=\"([^\"]+)\"").Groups[1].Value}");
         Assert.Equal(HttpStatusCode.OK, file.Status);
         Assert.Equal("text/javascript", file.Response.Content.Headers.ContentType!.MediaType);
-        Assert.Contains("navigator.serviceWorker.register('/service-worker.js', { scope: '/' })", file.Html, StringComparison.Ordinal);
+        // The file is built from TypeScript and made small (ADR 0019): it still registers the worker of the site.
+        Assert.Contains("navigator.serviceWorker.register(\"/service-worker.js\",{scope:\"/\"})", file.Html, StringComparison.Ordinal);
     }
 
     [Fact]

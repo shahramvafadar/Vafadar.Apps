@@ -7,13 +7,23 @@
 # The image holds the program and nothing of a collection: what the site shows is a folder that is mounted when
 # the container is started (/app/content, read-only). What is sent to the build is named in Dockerfile.dockerignore.
 
+# The script of the site is built from its TypeScript in a stage of its own (ADR 0019): the compiler and the
+# bundler come from the lock file, are used here and are not in the image that runs.
+FROM node:24-bookworm-slim AS scripts
+WORKDIR /site/Scripts
+COPY src/Apps/Dastan/Vafadar.Dastan.Web/Scripts/package.json src/Apps/Dastan/Vafadar.Dastan.Web/Scripts/package-lock.json src/Apps/Dastan/Vafadar.Dastan.Web/Scripts/.npmrc ./
+RUN npm ci
+COPY src/Apps/Dastan/Vafadar.Dastan.Web/Scripts/ ./
+RUN node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json && node build.mjs
+
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /repo
 COPY . .
+COPY --from=scripts /site/wwwroot/app.js src/Apps/Dastan/Vafadar.Dastan.Web/wwwroot/app.js
 
 # The repository names two local package folders for other apps; they have to exist, and stay empty here.
 RUN mkdir -p artifacts/native-sqlcipher/feed artifacts/maui-core/feed \
-    && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Web -c Release -o /site -p:ContinuousIntegrationBuild=true \
+    && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Web -c Release -o /site -p:ContinuousIntegrationBuild=true -p:BuildDastanScripts=false \
     && dotnet publish src/Apps/Dastan/Vafadar.Dastan.Content -c Release -o /command -p:ContinuousIntegrationBuild=true
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS site

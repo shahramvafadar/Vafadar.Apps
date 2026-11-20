@@ -226,6 +226,50 @@ public sealed class TreePersonPagesTests : IDisposable
     }
 
     [Fact]
+    public async Task The_address_of_the_profile_of_a_person_gives_what_the_page_shows_to_who_may_see_it()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var tree = await Tree(mina);
+        var zal = await Person(mina, tree, "Zal", ("born", "1250"), ("born-calendar", "solar-hijri"), ("born-about", "yes"), ("died", "1950"));
+        var living = await Person(mina, tree, "Somebody living", ("born", "1980"));
+        var photo = await Bring(mina, "private");
+        await Send(mina, tree, zal, "person-describe", ("person", Id(zal)), ("bornAt", "Zabol"), ("about", "He raised Rostam."), ("picture", photo));
+
+        // The account that may see the tree gets the words of the page, and nothing keeps the answer.
+        var answer = await mina.Get($"{zal}/profile.json");
+        var data = System.Text.Json.Nodes.JsonNode.Parse(answer.Html)!;
+        var profile = Regex.Replace(Regex.Replace(Profile(await mina.Get(zal)), "<[^>]+>", " "), "\\s+", " ");
+        Assert.Equal((HttpStatusCode.OK, "no-store"), (answer.Status, answer.Response.Headers.CacheControl?.ToString()));
+        Assert.Equal(("Zal", $"account/trees/{Id(tree)}/person/{Id(zal)}", "He raised Rostam."), ((string?)data["name"], (string?)data["address"], (string?)data["summary"]!["text"]));
+        Assert.Equal(($"/photo/{photo}", "Zal in the garden"), ((string?)data["picture"]!["source"], (string?)data["picture"]!["words"]));
+        var written = string.Join(" ", data["facts"]!.AsArray().Select(fact => $"{(string)fact!["label"]!} {string.Join(" ", fact["values"]!.AsArray().Select(value => (string)value!["text"]!))}"));
+        Assert.Contains(written, profile, StringComparison.Ordinal);
+        Assert.Contains("Born about 1250 SH Born in Zabol Died 1950 CE Died in Not known", written, StringComparison.Ordinal);
+
+        // Of somebody who lives and was not asked: the name, the years, and why there is nothing else.
+        var asked = System.Text.Json.Nodes.JsonNode.Parse((await mina.Get($"{living}/profile.json")).Html)!;
+        Assert.Equal(["Born", "Died"], asked["facts"]!.AsArray().Select(fact => (string)fact!["label"]!));
+        Assert.Contains("has not been asked", (string?)asked["note"], StringComparison.Ordinal);
+
+        // Who may not see the tree gets what its page gives them: nothing – signed in or not, private or public.
+        var open = $"/en/trees/{Id(tree)}/person/{Id(zal)}";
+        Assert.Equal((HttpStatusCode.NotFound, string.Empty), ((await sara.Get($"{zal}/profile.json")).Status, (await sara.Get($"{zal}/profile.json")).Html));
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get($"{zal}/profile.json")).Status);
+        Assert.Equal(HttpStatusCode.NotFound, (await mina.Get($"{open}/profile.json")).Status);
+        Assert.Equal(HttpStatusCode.NotFound, (await mina.Get($"{tree}/person/{new string('a', 32)}/profile.json")).Status);
+
+        // Made public, everybody gets it – with the picture only when that photograph is public.
+        await Send(mina, tree, tree, "person-remove", ("person", Id(living)));
+        await Send(mina, tree, tree, "publication", ("act", "ask"));
+        await Send(mina, tree, tree, "publication", ("act", "publish"));
+        var everybody = System.Text.Json.Nodes.JsonNode.Parse((await _site.Visitor().Get($"{open}/profile.json")).Html)!;
+        Assert.Equal(("Zal", $"trees/{Id(tree)}/person/{Id(zal)}"), ((string?)everybody["name"], (string?)everybody["address"]));
+        Assert.Null(everybody["picture"]);
+        Assert.Contains((string)everybody["noPicture"]!, Regex.Replace(Profile(await _site.Visitor().Get(open)), "<[^>]+>", " "), StringComparison.Ordinal);
+    }
+
+    [Fact]
     public async Task The_page_of_a_person_exists_for_nobody_who_may_not_see_the_tree()
     {
         var mina = await Signed("Mina");

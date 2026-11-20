@@ -103,8 +103,13 @@ public sealed class KeptOfflineTests : IDisposable
 
         var script = await visitor.Get($"/en/{address}");
 
-        Assert.Contains("caches.delete('dastan-read-1')", script.Html, StringComparison.Ordinal);
-        Assert.Contains("document.querySelector('[data-kept-pages]')", script.Html, StringComparison.Ordinal);
+        // The script is built from TypeScript and made small (ADR 0019): what it does is tried in a browser; here
+        // it is the script of the site, it names the cache of the read pages and the place on the page, and it
+        // forgets by deleting that cache.
+        Assert.Equal(System.Net.HttpStatusCode.OK, script.Status);
+        Assert.Contains("\"dastan-read-1\"", script.Html, StringComparison.Ordinal);
+        Assert.Contains("[data-kept-pages]", script.Html, StringComparison.Ordinal);
+        Assert.Contains("caches.delete(", script.Html, StringComparison.Ordinal);
     }
 
     [Fact]

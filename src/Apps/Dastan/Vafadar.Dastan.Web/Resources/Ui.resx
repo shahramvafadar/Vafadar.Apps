@@ -3561,4 +3561,19 @@
   <data name="SeeAs_Tree_None_account" xml:space="preserve">
     <value>This account sees nothing: the tree is not shared with it, and its page answers "not found".</value>
   </data>
+  <data name="Profile_Peek" xml:space="preserve">
+    <value>Look at the profile</value>
+  </data>
+  <data name="Profile_Panel_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Profile_Panel_Wait" xml:space="preserve">
+    <value>The profile is being fetched …</value>
+  </data>
+  <data name="Profile_Panel_Failed" xml:space="preserve">
+    <value>The profile could not be fetched. Its page shows it:</value>
+  </data>
+  <data name="Profile_Panel_Open" xml:space="preserve">
+    <value>Open the page</value>
+  </data>
 </root>

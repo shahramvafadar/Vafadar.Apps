@@ -83,6 +83,23 @@
     @Body
 </main>
 
+@* The panel of a profile (ADR 0019): empty and closed in every page; the script of the site opens it where a
+   page offers a look at a node and fills it from the address of that profile. A page without the script never
+   shows it. *@
+<dialog id="profile-panel" class="profile-panel" aria-labelledby="profile-panel-name">
+    <div class="profile-panel-head">
+        <h2 id="profile-panel-name"></h2>
+        <form method="dialog"><button type="submit" class="action secondary">@T["Profile_Panel_Close"]</button></form>
+    </div>
+    <p class="meta" data-panel-kind></p>
+    @* What the panel says while it waits and when it failed is said aloud by the script that shows it: a page
+       that never opens the panel announces nothing. *@
+    <p class="note" data-panel-wait>@T["Profile_Panel_Wait"]</p>
+    <p class="note" data-panel-failed hidden>@T["Profile_Panel_Failed"]</p>
+    <div data-panel-body></div>
+    <p class="actions"><a class="action" data-panel-open href="">@T["Profile_Panel_Open"]</a></p>
+</dialog>
+
 <footer class="site-footer">
     @if (Visitor.Projection is { } projection)
     {
