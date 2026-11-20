@@ -79,7 +79,9 @@ the handoff.
    `env:` password prefix for bundles. The keystore and password files are removed after verification or failure.
 4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
    configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
-   that bundle. Each base ABI must contain the qualified SQLCipher bytes, and the included manifest and notices must
+   that bundle. The bundle must explicitly request uncompressed native libraries with 16 KiB ZIP alignment
+   for the APKs generated from it. See [Android page size guidance](https://developer.android.com/guide/practices/page-sizes#bundletool).
+   Each base ABI must contain the qualified SQLCipher bytes, and the included manifest and notices must
    match the reviewed native package. The base manifest must contain the permanent package ID, requested display version and build number,
    with debug and test-only flags off. Both editions must declare minimum API 24 for Android 7
    without a maximum SDK filter. The decoded base manifest must declare a numeric target SDK of at least 36,
@@ -108,6 +110,14 @@ Future improvement: upload directly to the Play internal track from the workflow
 service account), so no artifact is needed.
 
 ### Local split APK evidence
+
+The local signed release bundle `d589e4428d7545a4f9c044173c95d114d2d4ecf8cac749b7f89c7bbc2c55c031`
+explicitly requests `PAGE_ALIGNMENT_16K` and preserves the SDK's 35 uncompressed asset patterns.
+The workflow's new configuration check rejects the earlier bundle with no explicit request.
+Four local splits per ABI passed the Android SDK ZIP alignment check. All 204 native libraries
+for each of ARM64 and x64 were stored without compression, began at 16 KiB boundaries and
+matched the AAB bytes. These splits were unsigned local inspection outputs. Play signing,
+distribution and installation still require their release acceptance checks.
 
 On 20 November 2026, the Android SDK's bundletool 1.17.0 generated four split APKs from the retained Zanance x64 AAB
 (SHA-256 `151179293cfef173fb438cbf30630acfec12daf13f41e2f506189fcba28`). The synthetic device specification

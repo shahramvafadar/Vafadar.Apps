@@ -27,6 +27,11 @@
     <SelfContained Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">true</SelfContained>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <!-- Explicitly request 16 KiB ZIP alignment for native libraries in splits generated from the AAB. -->
+    <AndroidBundleConfigurationFile>$(RepoRoot)eng/maui/zanance-play-bundle-config.json</AndroidBundleConfigurationFile>
+  </PropertyGroup>
+
   <!-- D-300: compile the measured cold-start path in addition to the SDK's default profiles.
        This is method metadata only; the recorder and its environment are never shipped. -->
   <ItemGroup Condition="'$(Configuration)' == 'Release' and $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
