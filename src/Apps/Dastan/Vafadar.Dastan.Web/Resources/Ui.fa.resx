@@ -3843,4 +3843,61 @@
   <data name="Account_Waiting_Send" xml:space="preserve">
     <value>پیوند را بفرست</value>
   </data>
+  <data name="Place_Choice_Title" xml:space="preserve">
+    <value>یکی از این‌هاست؟</value>
+  </data>
+  <data name="Place_Choice_Note" xml:space="preserve">
+    <value>این مدخل‌های مجموعه‌های این سایت به این نام شناخته می‌شوند. اگر یکی را انتخاب کنید، گفتهٔ شما به همان اشاره می‌کند: اگر نام آن جا عوض شود درست می‌ماند و با جای دیگری که همین نام را دارد یکی گرفته نمی‌شود. نام به‌تنهایی چیزی را تعیین نمی‌کند؛ شما تعیین می‌کنید.</value>
+  </data>
+  <data name="Place_Choice_In" xml:space="preserve">
+    <value>در مجموعهٔ «{0}»</value>
+  </data>
+  <data name="Place_Choice_And" xml:space="preserve">
+    <value>، </value>
+  </data>
+  <data name="Place_Choice_Page" xml:space="preserve">
+    <value>صفحهٔ آن را باز کن</value>
+  </data>
+  <data name="Place_Choice_None" xml:space="preserve">
+    <value>هیچ‌کدام؛ فقط همان نوشتهٔ خودم بماند</value>
+  </data>
+  <data name="Place_Choice_Gone" xml:space="preserve">
+    <value>همان مدخلی که به آن اشاره می‌کند بماند (اکنون منتشر نیست)</value>
+  </data>
+  <data name="Place_Stated_As" xml:space="preserve">
+    <value>ثبت‌شده با نام</value>
+  </data>
+  <data name="Place_Gone_Note" xml:space="preserve">
+    <value>مدخلی که این گفته به آن اشاره می‌کند اکنون منتشر نیست. تا وقتی دوباره منتشر شود، نوشتهٔ خود شما نشان داده می‌شود.</value>
+  </data>
+  <data name="Affiliations_Look_Note" xml:space="preserve">
+    <value>نخست آن جا را میان دانشگاه‌ها، شرکت‌ها، باشگاه‌ها و سازمان‌های مجموعه‌های این سایت بجویید. اگر میان آن‌ها نبود، در فرم زیر با نوشتهٔ خودتان ثبتش کنید.</value>
+  </data>
+  <data name="Affiliations_Look_Label" xml:space="preserve">
+    <value>جست‌وجوی جا با نام آن</value>
+  </data>
+  <data name="Affiliations_Look_Send" xml:space="preserve">
+    <value>بجوی</value>
+  </data>
+  <data name="Affiliations_Look_None" xml:space="preserve">
+    <value>هیچ مدخلی در مجموعه‌ها با نام «{0}» شناخته نمی‌شود. گفتهٔ شما با نوشتهٔ خودتان ثبت می‌شود.</value>
+  </data>
+  <data name="Affiliations_Find_Entry" xml:space="preserve">
+    <value>جا</value>
+  </data>
+  <data name="Affiliations_Find_Words" xml:space="preserve">
+    <value>به‌جای آن با نوشته جست‌وجو کن</value>
+  </data>
+  <data name="Affiliations_Find_Entries" xml:space="preserve">
+    <value>این جست‌وجو نوشتهٔ افراد را مقایسه می‌کند. مدخل‌هایی از مجموعه‌ها هم به این نام شناخته می‌شوند؛ بپرسید چه کسانی یکی از آن‌ها را انتخاب کرده‌اند، با هر نامی که نوشته باشند:</value>
+  </data>
+  <data name="Affiliations_Find_Entry_Note" xml:space="preserve">
+    <value>کسانی نشان داده می‌شوند که این مدخل را برای گفتهٔ خود انتخاب کرده‌اند، با هر نامی که نوشته باشند؛ همچنین هر جا ویراستاران گفته باشند مدخلی از مجموعه‌ای دیگر همین جا است. کسی که فقط نامی را نوشته، میان آن‌ها نیست.</value>
+  </data>
+  <data name="Entity_WhoWasHere" xml:space="preserve">
+    <value>کسانی که می‌گویند این‌جا بوده‌اند</value>
+  </data>
+  <data name="People_Look_Note" xml:space="preserve">
+    <value>همکار، هم‌کلاسی و هم‌تیمی در جایی با هم بوده‌اند. می‌توانید آن جا را میان مدخل‌های مجموعه‌های این سایت بجویید، یا در فرم زیر با نوشتهٔ خودتان بنویسید.</value>
+  </data>
 </root>

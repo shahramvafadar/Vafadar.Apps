@@ -2228,6 +2228,33 @@ main:has(> .stage) > :not(.stage) {
   font-weight: 400;
 }
 
+/* The entries a form offers for a place (step 20.4): each choice is a row of its own – the button, what the
+   entry is, and below it the link to its page – so that a long name wraps and the button keeps its size. */
+.place-choice .tick {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding-block: var(--space-2);
+}
+
+.place-choice .tick input {
+  flex: none;
+  margin-block-start: 0.2rem;
+}
+
+.place-choice .tick label {
+  flex: 1 1 12rem;
+  min-inline-size: 0;
+}
+
+.place-choice .tick .place-page {
+  flex: 0 0 100%;
+  padding-inline-start: calc(1.25rem + var(--space-2));
+}
+
+.account.look {
+  margin-block-end: var(--space-3);
+}
+
 .circle {
   margin-block: var(--space-4);
   padding-block-end: var(--space-3);

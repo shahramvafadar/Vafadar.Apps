@@ -1,6 +1,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Core.Personal;
 using Vafadar.Dastan.People;
 using Vafadar.Dastan.Web.Resources;
@@ -35,7 +36,7 @@ public static class PeopleEndpoints
                 : await next(invocation).ConfigureAwait(false);
         });
 
-        forms.MapPost("/ask", (HttpContext context, AccountDesk desk, [FromForm] string? name, [FromForm] string? kind, [FromForm] string? place, [FromForm] string? returnUrl) =>
+        forms.MapPost("/ask", (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? name, [FromForm] string? kind, [FromForm] string? place, [FromForm] string? returnUrl) =>
         {
             // Asking by name could be used to try names: an address asks only so often.
             if (!desk.Allows(context, "ask", AccountDesk.AttemptsPerHour))
@@ -43,7 +44,7 @@ public static class PeopleEndpoints
                 return Back(returnUrl, "ask", "later");
             }
 
-            if (Terms(context.Request.Form, kind, place) is not var (chosen, terms))
+            if (Terms(context.Request.Form, kind, place, library.Institutions, kept: null) is not var (chosen, terms))
             {
                 return Back(returnUrl, "ask", "terms");
             }
@@ -55,14 +56,17 @@ public static class PeopleEndpoints
 
         // An accepted relationship is to be called something else (ADR 0018): asked of the other side, and
         // nothing changes until they agree.
-        forms.MapPost("/change", (HttpContext context, AccountDesk desk, [FromForm] string? relationship, [FromForm] string? kind, [FromForm] string? place, [FromForm] string? returnUrl) =>
+        forms.MapPost("/change", (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? relationship, [FromForm] string? kind, [FromForm] string? place, [FromForm] string? returnUrl) =>
         {
-            if (Terms(context.Request.Form, kind, place) is not var (chosen, terms))
+            using var store = desk.Open();
+
+            // A relationship may keep the entry it points at, also while that entry is not published.
+            var kept = store.Relationships(Me(context)).FirstOrDefault(mine => mine.Id == relationship)?.Terms.Place;
+            if (Terms(context.Request.Form, kind, place, library.Institutions, kept) is not var (chosen, terms))
             {
                 return Back(returnUrl, "mine", "terms");
             }
 
-            using var store = desk.Open();
             return store.AskChange(Me(context), relationship ?? string.Empty, chosen, terms) switch
             {
                 "asked" => Said(returnUrl, "change-asked", "mine"),
@@ -176,10 +180,20 @@ public static class PeopleEndpoints
     /// Returns where and when a relationship holds, as a page writes it after the kind: "The Zabol Press,
     /// 2010 to 2018" – and nothing when a relationship says neither.
     /// </summary>
-    public static string Held(RelationshipTerms terms, IStringLocalizer<Ui> text, Visitor visitor)
+    /// <param name="terms">What the two state.</param>
+    /// <param name="text">The words of the interface.</param>
+    /// <param name="visitor">Who reads.</param>
+    /// <param name="places">
+    /// The places of the collections. With them, a relationship that points at an entry is written with what
+    /// the entry is called today (step 20.4); without them, and while the entry is not published, with the
+    /// words the two wrote.
+    /// </param>
+    public static string Held(RelationshipTerms terms, IStringLocalizer<Ui> text, Visitor visitor, Institutions? places = null)
     {
         ArgumentNullException.ThrowIfNull(terms);
         ArgumentNullException.ThrowIfNull(text);
+        ArgumentNullException.ThrowIfNull(visitor);
+        var where = places?.Find(terms.Place) is { } place ? visitor.Text(place.Entity.Label).Value : terms.Context;
         var (since, until) = (TreeEndpoints.Short(terms.Since, visitor, text), TreeEndpoints.Short(terms.Until, visitor, text));
         var time = (since, until) switch
         {
@@ -188,17 +202,20 @@ public static class PeopleEndpoints
             (null, { } to) => string.Format(CultureInfo.CurrentCulture, text["People_Held_Until"], to),
             _ => null,
         };
-        return string.Join(text["People_Held_And"], new[] { terms.Context, time }.Where(part => part is not null));
+        return string.Join(text["People_Held_And"], new[] { where, time }.Where(part => part is not null));
     }
 
     // What a form says about a relationship: the kind – with its direction, for a kind that has one – where it
     // holds, and from when until when. Nothing when a time is none.
-    private static (string Kind, RelationshipTerms Terms)? Terms(IFormCollection form, string? kind, string? place)
+    private static (string Kind, RelationshipTerms Terms)? Terms(IFormCollection form, string? kind, string? place, Institutions places, EntityReference? kept)
     {
         var chosen = kind ?? string.Empty;
         var mine = chosen.EndsWith(Mine, StringComparison.Ordinal);
+
+        // The entry of a collection the place is, when the form names one (step 20.4): one the page offered.
         return TreeEndpoints.Time(form, "since", out var since) && TreeEndpoints.Time(form, "until", out var until)
-            ? (mine ? chosen[..^Mine.Length] : chosen, new RelationshipTerms(!mine, place, since, until))
+            && AffiliationEndpoints.Chosen(form, places, kept, out var entry)
+            ? (mine ? chosen[..^Mine.Length] : chosen, new RelationshipTerms(!mine, place, since, until, entry))
             : null;
     }
 

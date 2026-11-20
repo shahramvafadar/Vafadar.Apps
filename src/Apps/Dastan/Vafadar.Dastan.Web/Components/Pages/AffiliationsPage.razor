@@ -4,6 +4,7 @@
 @using Vafadar.Dastan.People
 @inject Visitor Visitor
 @inject AccountDesk Desk
+@inject DastanLibrary Library
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -47,11 +48,15 @@
                 {
                     var when = AffiliationEndpoints.When(affiliation.Terms, T, Visitor);
                     <li id="@($"affiliation-{affiliation.Number}")">
-                        <p><strong dir="auto">@affiliation.Terms.Organisation</strong>@if (affiliation.Terms.Role is { } role)
+                        <p><PlaceName Words="@affiliation.Terms.Organisation" Reference="affiliation.Terms.Institution" />@if (affiliation.Terms.Role is { } role)
                             {
                                 <span class="meta"> – <bdi>@role</bdi></span>
                             }
                         </p>
+                        @if (affiliation.Terms.Institution is not null && Library.Institutions.Find(affiliation.Terms.Institution) is null)
+                        {
+                            <p class="note">@T["Place_Gone_Note"]</p>
+                        }
                         @if (when.Length > 0)
                         {
                             <p class="meta">@when</p>
@@ -70,13 +75,14 @@
                             </p>
                             <p><button type="submit" class="action secondary">@T["People_Shown_Send"]<span class="visually-hidden"> – @affiliation.Terms.Organisation</span></button></p>
                         </form>
-                        <details>
+                        <details open="@(_for == affiliation.Number)">
                             <summary>@T["Affiliations_Change"]<span class="visually-hidden"> – @affiliation.Terms.Organisation</span></summary>
+                            @Look($"look-{affiliation.Number}", affiliation.Number, _for == affiliation.Number ? _at : affiliation.Terms.Organisation, $"affiliation-{affiliation.Number}")
                             <form method="post" action="@($"{AffiliationEndpoints.Root}/change")" class="account">
                                 <AntiforgeryToken />
                                 <input type="hidden" name="returnUrl" value="@_here" />
                                 <input type="hidden" name="affiliation" value="@affiliation.Number" />
-                                @Fields($"change-{affiliation.Number}", affiliation.Terms)
+                                @Fields($"change-{affiliation.Number}", affiliation.Terms, _for == affiliation.Number ? _candidates : [])
                                 <p><button type="submit" class="action secondary">@T["Affiliations_Save"]</button></p>
                             </form>
                             <form method="post" action="@($"{AffiliationEndpoints.Root}/remove")" class="save">
@@ -95,10 +101,12 @@
     <section id="add" aria-labelledby="add-title">
         <h2 id="add-title">@T["Affiliations_Add_Title"]</h2>
         @Problems("add")
+        <p class="note">@T["Affiliations_Look_Note"]</p>
+        @Look("look", null, _for is null ? _at : null, "add")
         <form method="post" action="@($"{AffiliationEndpoints.Root}/add")" class="account">
             <AntiforgeryToken />
             <input type="hidden" name="returnUrl" value="@_here" />
-            @Fields("add", null)
+            @Fields("add", _for is null && _at is not null ? new AffiliationTerms(_at) : null, _for is null ? _candidates : [])
             <p class="note">@T["Affiliations_Add_Note"]</p>
             <p><button type="submit" class="action secondary">@T["Affiliations_Add_Send"]</button></p>
         </form>
@@ -108,10 +116,23 @@
         <h2 id="find-title">@T["Affiliations_Find_Title"]</h2>
         <p class="note">@T["Affiliations_Find_Note"]</p>
         <form method="get" action="@AffiliationEndpoints.Page.TrimStart('/')" class="account">
-            <p class="field">
-                <label for="find-place">@T["Affiliations_Place"]</label>
-                <input id="find-place" name="place" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@_place" autocomplete="off" dir="auto" />
-            </p>
+            @if (_entry is { } entry)
+            {
+                @* The search is for an entry of a collection: who chose it, under whatever name they wrote. *@
+                <input type="hidden" name="entity" value="@entry.Reference.Write()" />
+                <p class="field">
+                    @T["Affiliations_Find_Entry"]: <a href="@($"{entry.Reference.Collection}/entity/{entry.Reference.Entity}")"><Loc Text="entry.Entity.Label" /></a>
+                    <span class="meta"> – <TypeName Type="entry.Entity.Type" /> – @string.Format(CultureInfo.CurrentCulture, T["Place_Choice_In"], Visitor.Text(entry.Collection.Label).Value)</span>
+                    <span class="meta"> – <a href="account/affiliations#find">@T["Affiliations_Find_Words"]</a></span>
+                </p>
+            }
+            else
+            {
+                <p class="field">
+                    <label for="find-place">@T["Affiliations_Place"]</label>
+                    <input id="find-place" name="place" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@_place" autocomplete="off" dir="auto" />
+                </p>
+            }
             <p class="field">
                 <label for="find-year">@T["Affiliations_Find_Year"]</label>
                 <input id="find-year" name="year" type="text" inputmode="numeric" maxlength="4" value="@(_year is null ? null : Year)" autocomplete="off" dir="ltr" />
@@ -140,7 +161,26 @@
         }
         else if (_found is not null)
         {
-            <h3 id="found">@string.Format(CultureInfo.CurrentCulture, T["Affiliations_Found_Title"], _place)</h3>
+            <h3 id="found">@string.Format(CultureInfo.CurrentCulture, T["Affiliations_Found_Title"], _entry is { } at ? Visitor.Text(at.Entity.Label).Value : _place)</h3>
+            @if (_entry is null && !_entries.IsEmpty)
+            {
+                @* The words find statements of the same words. An entry of a collection finds who chose it,
+                   whatever they wrote – the two are different questions, and the page says so. *@
+                <p class="note" id="entries">@T["Affiliations_Find_Entries"]</p>
+                <ul class="names" role="list" aria-labelledby="entries">
+                    @foreach (var place in _entries)
+                    {
+                        <li>
+                            <a href="@Asked(place.Reference)"><Loc Text="place.Entity.Label" /></a>
+                            <span class="meta"> – <TypeName Type="place.Entity.Type" /> – @string.Format(CultureInfo.CurrentCulture, T["Place_Choice_In"], Visitor.Text(place.Collection.Label).Value)</span>
+                        </li>
+                    }
+                </ul>
+            }
+            else if (_entry is not null)
+            {
+                <p class="note">@T["Affiliations_Find_Entry_Note"]</p>
+            }
             @if (_found.Count == 0)
             {
                 @* The same words whether nobody states the place or nobody lets this visitor find them there (PRIV-012). *@
@@ -156,6 +196,10 @@
                         <li>
                             <span>
                                 <a href="@($"people/{found.Person.Id}")" dir="auto">@found.Person.Name</a>
+                                @if (_entry is not null && found.Shown.Terms.Organisation is { Length: > 0 } stated)
+                                {
+                                    <span class="meta"> – <bdi>@stated</bdi></span>
+                                }
                                 @if (found.Role is { } role)
                                 {
                                     <span class="meta"> – <bdi>@role</bdi></span>
@@ -188,6 +232,11 @@
     private IReadOnlyList<FoundThrough>? _found;
     private bool _later;
     private string? _place;
+    private Institution? _entry;
+    private System.Collections.Immutable.ImmutableArray<Institution> _entries = [];
+    private System.Collections.Immutable.ImmutableArray<Institution> _candidates = [];
+    private string? _at;
+    private long? _for;
     private YearOfEra? _year;
     private AttendanceQuestion _question;
     private string _calendar = "gregorian";
@@ -209,6 +258,18 @@
 
     [SupplyParameterFromQuery]
     private string? Place { get; set; }
+
+    /// <summary>Gets or sets the entry of a collection a search asks about, as <c>collection/entity</c>.</summary>
+    [SupplyParameterFromQuery]
+    private string? Entity { get; set; }
+
+    /// <summary>Gets or sets the words a form looks for a place by, among the entries of the collections.</summary>
+    [SupplyParameterFromQuery]
+    private string? At { get; set; }
+
+    /// <summary>Gets or sets the affiliation the place is looked for, when it is one that exists already.</summary>
+    [SupplyParameterFromQuery]
+    private long? For { get; set; }
 
     [SupplyParameterFromQuery]
     private string? Year { get; set; }
@@ -242,16 +303,55 @@
         _question = Question switch { "entered" => AttendanceQuestion.EnteredIn, "graduated" => AttendanceQuestion.GraduatedIn, _ => AttendanceQuestion.AttendedDuring };
         _year = AffiliationEndpoints.Year(Year, _calendar);
         _place = Place is { Length: > 0 and <= PeopleStore.LongestOrganisation } place && !place.Any(char.IsControl) ? place.Trim() : null;
+        _entry = Entity is { Length: <= EntityReference.Longest } ? Library.Institutions.Find(EntityReference.Read(Entity)) : null;
+        _at = At is { Length: > 0 and <= PeopleStore.LongestOrganisation } at && !at.Any(char.IsControl) && at.Trim() is { Length: > 0 } words ? words : null;
         using var store = Desk.Open();
         _mine = store.Affiliations(session.Id);
         _circles = store.Circles(session.Id);
-        if (_place is { Length: > 0 })
+        _for = _at is not null && _mine.Any(mine => mine.Number == For) ? For : null;
+        _candidates = _at is null ? [] : Library.Institutions.Search(_at);
+        if (_entry is not null)
         {
             // Asking place after place could be used to try them all: an address asks only so often.
             _later = !Desk.Allows(Context, "find", AffiliationEndpoints.SearchesPerHour);
+
+            // The same place in another collection, as the editors state it, is the same place here.
+            _found = _later ? null : store.FindThrough(session.Id, Library.Institutions.Same(_entry.Reference), _year, _question);
+        }
+        else if (_place is { Length: > 0 })
+        {
+            _later = !Desk.Allows(Context, "find", AffiliationEndpoints.SearchesPerHour);
             _found = _later ? null : store.FindThrough(session.Id, _place, _year, _question);
+            _entries = _later ? [] : Library.Institutions.Search(_place);
         }
     }
+
+    // The search for who chose an entry, with the year that is asked about already.
+    private string Asked(EntityReference entry) =>
+        $"account/affiliations?entity={Uri.EscapeDataString(entry.Write())}"
+        + (_year is null ? null : $"&year={Uri.EscapeDataString(Year!.Trim())}&question={Question}&calendar={_calendar}")
+        + "#find";
+
+    // The form that looks for a place among the entries of the collections: it asks this page again, which
+    // then offers what it found in the form below. Looking changes nothing.
+    private RenderFragment Look(string id, long? affiliation, string? words, string anchor) => __builder =>
+    {
+        <form method="get" action="@($"{AffiliationEndpoints.Page.TrimStart('/')}#{anchor}")" class="account look">
+            @if (affiliation is { } number)
+            {
+                <input type="hidden" name="for" value="@number" />
+            }
+            <p class="field">
+                <label for="@($"{id}-at")">@T["Affiliations_Look_Label"]</label>
+                <input id="@($"{id}-at")" name="at" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@words" autocomplete="off" dir="auto" />
+            </p>
+            <p><button type="submit" class="action secondary">@T["Affiliations_Look_Send"]</button></p>
+        </form>
+        @if (_at is not null && _for == affiliation && _candidates.IsEmpty)
+        {
+            <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Affiliations_Look_None"], _at)</p>
+        }
+    };
 
     private static string? Written(Vafadar.Temporal.TemporalExpression? time, string calendar) => TreeEndpoints.Fields(time, calendar).Year?.ToString(CultureInfo.InvariantCulture);
 
@@ -270,7 +370,7 @@
     };
 
     // The fields that say what an affiliation is: the same for a new one and for one that is changed.
-    private RenderFragment Fields(string id, AffiliationTerms? terms) => __builder =>
+    private RenderFragment Fields(string id, AffiliationTerms? terms, System.Collections.Immutable.ImmutableArray<Institution> candidates) => __builder =>
     {
         var first = terms?.Since ?? terms?.Until ?? terms?.Graduated;
         var calendar = first is null ? TreeEndpoints.CalendarOf(Visitor.Language.Tag) : TreeEndpoints.Fields(first, "gregorian").Calendar;
@@ -278,6 +378,7 @@
             <label for="@($"{id}-place")">@T["Affiliations_Place"]</label>
             <input id="@($"{id}-place")" name="place" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@terms?.Organisation" autocomplete="off" dir="auto" />
         </p>
+        <PlaceChoice Id="@id" Found="candidates" Current="terms?.Institution" />
         <p class="field">
             <label for="@($"{id}-role")">@T["Affiliations_Role"]</label>
             <input id="@($"{id}-role")" name="role" type="text" maxlength="@PeopleStore.LongestRole" value="@terms?.Role" autocomplete="off" dir="auto" />

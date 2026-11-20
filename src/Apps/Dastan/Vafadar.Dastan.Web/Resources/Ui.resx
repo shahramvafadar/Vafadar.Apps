@@ -3843,4 +3843,61 @@
   <data name="Account_Waiting_Send" xml:space="preserve">
     <value>Mail the link</value>
   </data>
+  <data name="Place_Choice_Title" xml:space="preserve">
+    <value>Is it one of these?</value>
+  </data>
+  <data name="Place_Choice_Note" xml:space="preserve">
+    <value>These entries of the collections of this site go by that name. If you choose one, your statement points at it: it stays right when the place gets another name, and it is not taken for another place of the same name. A name alone decides nothing – you do.</value>
+  </data>
+  <data name="Place_Choice_In" xml:space="preserve">
+    <value>in the collection “{0}”</value>
+  </data>
+  <data name="Place_Choice_And" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="Place_Choice_Page" xml:space="preserve">
+    <value>Open its page</value>
+  </data>
+  <data name="Place_Choice_None" xml:space="preserve">
+    <value>None of these – keep only my words</value>
+  </data>
+  <data name="Place_Choice_Gone" xml:space="preserve">
+    <value>Keep the entry it points at (it is not published at the moment)</value>
+  </data>
+  <data name="Place_Stated_As" xml:space="preserve">
+    <value>stated as</value>
+  </data>
+  <data name="Place_Gone_Note" xml:space="preserve">
+    <value>The entry this points at is not published at the moment. Your own words are shown until it is.</value>
+  </data>
+  <data name="Affiliations_Look_Note" xml:space="preserve">
+    <value>First look for the place among the universities, companies, clubs and organisations of the collections of this site. If it is not among them, you state it in your own words below.</value>
+  </data>
+  <data name="Affiliations_Look_Label" xml:space="preserve">
+    <value>Look for a place by its name</value>
+  </data>
+  <data name="Affiliations_Look_Send" xml:space="preserve">
+    <value>Look for it</value>
+  </data>
+  <data name="Affiliations_Look_None" xml:space="preserve">
+    <value>No entry of the collections goes by “{0}”. Your statement stands in your own words.</value>
+  </data>
+  <data name="Affiliations_Find_Entry" xml:space="preserve">
+    <value>Place</value>
+  </data>
+  <data name="Affiliations_Find_Words" xml:space="preserve">
+    <value>Search by words instead</value>
+  </data>
+  <data name="Affiliations_Find_Entries" xml:space="preserve">
+    <value>This search compares the words people wrote. Entries of the collections go by that name too – ask who chose one of them, whatever name they wrote:</value>
+  </data>
+  <data name="Affiliations_Find_Entry_Note" xml:space="preserve">
+    <value>Shown is who chose this entry for their statement, whatever name they wrote – also where the editors state that an entry of another collection is the same place. Who only wrote a name in words is not among them.</value>
+  </data>
+  <data name="Entity_WhoWasHere" xml:space="preserve">
+    <value>People who state they were here</value>
+  </data>
+  <data name="People_Look_Note" xml:space="preserve">
+    <value>Colleagues, classmates and team-mates were somewhere. You can look for that place among the entries of the collections of this site, or write it in your own words below.</value>
+  </data>
 </root>

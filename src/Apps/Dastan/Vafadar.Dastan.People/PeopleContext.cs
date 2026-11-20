@@ -171,6 +171,13 @@ public sealed class StoredRelationship
     /// <summary>Gets or sets the context as it is compared: without case and outer spaces; empty for none.</summary>
     public string ContextKey { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Gets or sets the entity of a collection the context is, as <c>EntityReference</c> writes it – or nothing
+    /// when the two only wrote words (step 20.4). Where it is set, the relationship is compared by it and not
+    /// by the words.
+    /// </summary>
+    public string? ContextInstitution { get; set; }
+
     /// <summary>Gets or sets from when the relationship holds, when that is stated: an expression of time as <see cref="PersonTime"/> writes it.</summary>
     public string? Since { get; set; }
 
@@ -219,6 +226,13 @@ public sealed class StoredAffiliation
 
     /// <summary>Gets or sets the name of the place as it is compared: without case.</summary>
     public required string OrganisationKey { get; set; }
+
+    /// <summary>
+    /// Gets or sets the entity of a collection the place is, as <c>EntityReference</c> writes it – or nothing
+    /// when the account only wrote words. The words stay beside it: what the place was called when it was
+    /// stated.
+    /// </summary>
+    public string? Institution { get; set; }
 
     /// <summary>Gets or sets what the person was there.</summary>
     public string? Role { get; set; }
@@ -738,6 +752,7 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             relationship.Property(item => item.Kind).HasMaxLength(40);
             relationship.Property(item => item.Context).HasMaxLength(PeopleStore.LongestContext);
             relationship.Property(item => item.ContextKey).HasMaxLength(PeopleStore.LongestContext);
+            relationship.Property(item => item.ContextInstitution).HasMaxLength(Vafadar.Dastan.Core.EntityReference.Longest);
             relationship.Property(item => item.Since).HasMaxLength(600);
             relationship.Property(item => item.Until).HasMaxLength(600);
             relationship.Property(item => item.Replaces).HasMaxLength(40);
@@ -762,6 +777,8 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             affiliation.Property(item => item.Account).HasMaxLength(40);
             affiliation.Property(item => item.Organisation).HasMaxLength(PeopleStore.LongestOrganisation);
             affiliation.Property(item => item.OrganisationKey).HasMaxLength(PeopleStore.LongestOrganisation);
+            affiliation.Property(item => item.Institution).HasMaxLength(Vafadar.Dastan.Core.EntityReference.Longest);
+            affiliation.HasIndex(item => item.Institution);
             affiliation.Property(item => item.Role).HasMaxLength(PeopleStore.LongestRole);
             affiliation.Property(item => item.Since).HasMaxLength(600);
             affiliation.Property(item => item.Until).HasMaxLength(600);

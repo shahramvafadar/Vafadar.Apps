@@ -13,7 +13,11 @@ namespace Vafadar.Dastan.People;
 /// <param name="Context">Where it holds, in words: the employer, the school, the team; nothing for nowhere in particular.</param>
 /// <param name="Since">From when it holds, when that is stated.</param>
 /// <param name="Until">Until when it held, when that is stated.</param>
-public sealed record RelationshipTerms(bool OtherHolds = false, string? Context = null, TemporalExpression? Since = null, TemporalExpression? Until = null)
+/// <param name="Place">
+/// The entity of a collection the context is, when one was chosen (step 20.4, ADR 0023). Two relationships of
+/// one kind are then told apart by it and not by the words: colleagues at two employers of one name are two.
+/// </param>
+public sealed record RelationshipTerms(bool OtherHolds = false, string? Context = null, TemporalExpression? Since = null, TemporalExpression? Until = null, Vafadar.Dastan.Core.EntityReference? Place = null)
 {
     /// <summary>Nothing beside the kind.</summary>
     public static readonly RelationshipTerms None = new();
@@ -123,6 +127,11 @@ public sealed partial class PeopleStore
 
         var contextKey = Key(context.Value ?? string.Empty);
 
+        // What two relationships are compared by: the entity where one was chosen, the words otherwise. The
+        // mark keeps an entity apart from words that happen to read like its reference.
+        var place = terms.Place?.Write();
+        var where = Where(place, contextKey);
+
         var key = Key(name.Trim());
         var other = _context.Visitors.AsNoTracking().SingleOrDefault(visitor => visitor.NameKey == key && visitor.ClosedAt == null);
         if (other is null)
@@ -161,7 +170,7 @@ public sealed partial class PeopleStore
             }
 
             var holds = asked.Directed && (replaced.From == id ? replaced.Reversed : !replaced.Reversed);
-            if (replaced.Kind == kind && replaced.ContextKey == contextKey && holds == reversed && replaced.Since == PersonTime.Write(terms.Since) && replaced.Until == PersonTime.Write(terms.Until) && replaced.Context == context.Value)
+            if (replaced.Kind == kind && Where(replaced) == where && holds == reversed && replaced.Since == PersonTime.Write(terms.Since) && replaced.Until == PersonTime.Write(terms.Until) && replaced.Context == context.Value)
             {
                 return "same";
             }
@@ -175,17 +184,17 @@ public sealed partial class PeopleStore
             return "exists";
         }
 
-        if (standing.Any(stored => stored.Kind == kind && stored.ContextKey == contextKey))
+        if (standing.Any(stored => stored.Kind == kind && Where(stored) == where))
         {
             return "exists";
         }
 
-        if (standing.Any(stored => RelationshipCatalogue.Find(stored.Kind) is { } has && RelationshipCatalogue.Exclude(asked, contextKey, has, stored.ContextKey)))
+        if (standing.Any(stored => RelationshipCatalogue.Find(stored.Kind) is { } has && RelationshipCatalogue.Exclude(asked, where, has, Where(stored))))
         {
             return "excluded";
         }
 
-        if (between.Any(stored => stored.From == id && stored.Kind == kind && stored.ContextKey == contextKey && (RelationshipState)stored.State == RelationshipState.Rejected && stored.ChangedAt > now - AskAgainAfter))
+        if (between.Any(stored => stored.From == id && stored.Kind == kind && Where(stored) == where && (RelationshipState)stored.State == RelationshipState.Rejected && stored.ChangedAt > now - AskAgainAfter))
         {
             return "declined-lately";
         }
@@ -206,6 +215,7 @@ public sealed partial class PeopleStore
             Reversed = reversed,
             Context = context.Value,
             ContextKey = contextKey,
+            ContextInstitution = place,
             Since = PersonTime.Write(terms.Since),
             Until = PersonTime.Write(terms.Until),
             Replaces = replaces,
@@ -482,7 +492,12 @@ public sealed partial class PeopleStore
         RelationshipCatalogue.Find(stored.Kind) is { Directed: true } && (stored.From == side ? stored.Reversed : !stored.Reversed),
         stored.Context,
         PersonTime.Read(stored.Since),
-        PersonTime.Read(stored.Until));
+        PersonTime.Read(stored.Until),
+        Vafadar.Dastan.Core.EntityReference.Read(stored.ContextInstitution));
+
+    private static string Where(string? institution, string contextKey) => institution is null ? contextKey : "@" + institution;
+
+    private static string Where(StoredRelationship stored) => Where(stored.ContextInstitution, stored.ContextKey);
 
     // Whether two accounts show a relationship that was accepted – other than one that is about to go.
     private bool Know(string one, string other, string? except = null) =>

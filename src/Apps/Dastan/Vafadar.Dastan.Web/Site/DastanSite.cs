@@ -226,6 +226,18 @@ public sealed class DastanLibrary
     public ImmutableArray<Comparison> Comparisons { get; }
 
     /// <summary>
+    /// Gets the places of the collections that people can have been at (step 20.4, ADR 0023), read from what
+    /// a visitor who has read nothing may see of each collection: a place that only a later stage of a story
+    /// shows is none a private statement can point at – pointing at it would say that it exists.
+    /// </summary>
+    public Institutions Institutions => _institutions ??= new(Collections
+        .Select(site => (site.Collection, Projection: site.At(new ReadingLevel(0))))
+        .Where(read => read.Projection is not null)
+        .Select(read => (read.Collection, read.Projection!)));
+
+    private Institutions? _institutions;
+
+    /// <summary>
     /// Returns the other collections of the site that are about the same world (step 14.11): another edition
     /// of the same work, another telling of the same story. Each is a collection of its own.
     /// </summary>

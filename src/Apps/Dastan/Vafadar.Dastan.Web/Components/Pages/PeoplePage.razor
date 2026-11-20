@@ -3,6 +3,7 @@
 @using Vafadar.Dastan.People
 @inject Visitor Visitor
 @inject AccountDesk Desk
+@inject DastanLibrary Library
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -110,8 +111,9 @@
                             <input type="hidden" name="relationship" value="@relationship.Id" />
                             <button type="submit">@T["People_End"]<span class="visually-hidden"> – @relationship.Other.Name, @PeopleEndpoints.Called(relationship.Kind, relationship.Terms, T)</span></button>
                         </form>
-                        <details class="change">
+                        <details class="change" open="@(_for == relationship.Id)">
                             <summary>@T["People_Change"]<span class="visually-hidden"> – @relationship.Other.Name, @PeopleEndpoints.Called(relationship.Kind, relationship.Terms, T)</span></summary>
+                            @Look($"look-{relationship.Id}", relationship.Id, _for == relationship.Id ? _at : relationship.Terms.Context, "mine")
                             <form method="post" action="@($"{PeopleEndpoints.Root}/change")" class="account">
                                 <AntiforgeryToken />
                                 <input type="hidden" name="returnUrl" value="@_here" />
@@ -152,6 +154,8 @@
     <section id="ask" aria-labelledby="ask-title">
         <h2 id="ask-title">@T["People_Ask_Title"]</h2>
         @Problems("ask")
+        <p class="note">@T["People_Look_Note"]</p>
+        @Look("look", null, _for is null ? _at : null, "ask")
         <form method="post" action="@($"{PeopleEndpoints.Root}/ask")" class="account">
             <AntiforgeryToken />
             <input type="hidden" name="returnUrl" value="@_here" />
@@ -246,6 +250,14 @@
     [SupplyParameterFromQuery]
     private string? Problem { get; set; }
 
+    /// <summary>Gets or sets the words a form looks for a place by, among the entries of the collections.</summary>
+    [SupplyParameterFromQuery]
+    private string? At { get; set; }
+
+    /// <summary>Gets or sets the relationship the place is looked for, when it is one that exists already.</summary>
+    [SupplyParameterFromQuery]
+    private string? For { get; set; }
+
     protected override void OnInitialized()
     {
         if (!Desk.IsOpen)
@@ -273,7 +285,35 @@
         _accepted = [.. all.Where(relationship => relationship.State == RelationshipState.Accepted)];
         _blocked = store.Blocked(session.Id);
         _circles = store.Circles(session.Id);
+        _at = At is { Length: > 0 and <= PeopleStore.LongestContext } at && !at.Any(char.IsControl) && at.Trim() is { Length: > 0 } words ? words : null;
+        _for = _at is not null && _accepted.Any(relationship => relationship.Id == For) ? For : null;
+        _candidates = _at is null ? [] : Library.Institutions.Search(_at);
     }
+
+    private string? _at;
+    private string? _for;
+    private System.Collections.Immutable.ImmutableArray<Institution> _candidates = [];
+
+    // The form that looks for a place among the entries of the collections: it asks this page again, which
+    // then offers what it found in the form below. Looking changes nothing.
+    private RenderFragment Look(string id, string? relationship, string? words, string anchor) => __builder =>
+    {
+        <form method="get" action="@($"{PeopleEndpoints.Page.TrimStart('/')}#{anchor}")" class="account look">
+            @if (relationship is not null)
+            {
+                <input type="hidden" name="for" value="@relationship" />
+            }
+            <p class="field">
+                <label for="@($"{id}-at")">@T["Affiliations_Look_Label"]</label>
+                <input id="@($"{id}-at")" name="at" type="text" required maxlength="@PeopleStore.LongestContext" value="@words" autocomplete="off" dir="auto" />
+            </p>
+            <p><button type="submit" class="action secondary">@T["Affiliations_Look_Send"]</button></p>
+        </form>
+        @if (_at is not null && _for == relationship && _candidates.IsEmpty)
+        {
+            <p class="note" role="status">@string.Format(CultureInfo.CurrentCulture, T["Affiliations_Look_None"], _at)</p>
+        }
+    };
 
     // What was wrong with a form, said above it.
     private RenderFragment Problems(string form) => __builder =>
@@ -295,7 +335,7 @@
             : called;
     }
 
-    private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
+    private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor, Library.Institutions) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
 
     private static string? Year(Vafadar.Temporal.TemporalExpression? time, string calendar) => TreeEndpoints.Fields(time, calendar).Year?.ToString(CultureInfo.InvariantCulture);
 
@@ -305,6 +345,7 @@
     {
         var chosen = relationship is null ? null : PeopleEndpoints.Choice(relationship.Kind, relationship.Terms);
         var terms = relationship?.Terms ?? RelationshipTerms.None;
+        var looked = _at is not null && _for == relationship?.Id;
         var calendar = terms.Since is not null || terms.Until is not null
             ? TreeEndpoints.Fields(terms.Since ?? terms.Until, TreeEndpoints.CalendarOf(Visitor.Language.Tag)).Calendar
             : TreeEndpoints.CalendarOf(Visitor.Language.Tag);
@@ -319,8 +360,9 @@
         </p>
         <p class="field">
             <label for="@($"{id}-place")">@T["People_Ask_Place"]</label>
-            <input id="@($"{id}-place")" name="place" type="text" maxlength="@PeopleStore.LongestContext" value="@terms.Context" autocomplete="off" dir="auto" />
+            <input id="@($"{id}-place")" name="place" type="text" maxlength="@PeopleStore.LongestContext" value="@(looked && relationship is null ? _at : terms.Context)" autocomplete="off" dir="auto" />
         </p>
+        <PlaceChoice Id="@id" Found="@(looked ? _candidates : [])" Current="terms.Place" />
         <details class="finer" open="@(terms.Since is not null || terms.Until is not null)">
             <summary>@T["People_Ask_When"]</summary>
             <p class="field">
