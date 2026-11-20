@@ -72,7 +72,7 @@ public sealed class AiPilotAdminTests
         }
     }
 
-    private sealed class RecoveryReplies(string provider) : HttpMessageHandler, IHttpClientFactory
+    private sealed class RecoveryReplies(string provider, bool failed) : HttpMessageHandler, IHttpClientFactory
     {
         internal int Calls;
         internal const string Matched = "resp_fixture_op_matched";
@@ -98,8 +98,8 @@ public sealed class AiPilotAdminTests
             {
                 Content = JsonContent.Create(new
                 {
-                    id, status = "completed", model = "gpt-6-luna",
-                    usage = new { input_tokens = 17, output_tokens = 11 },
+                    id, status = failed ? "failed" : "completed", model = "gpt-6-luna",
+                    usage = failed ? null : new { input_tokens = 17, output_tokens = 11 },
                     metadata = new { zanance_operation = id == Matched ? Correlation : new string('f', 64) },
                     output = new[] { new { type = "message", content = new[] { new { type = "output_text",
                         text = """{"net_expenses_minor":38000,"explanation":"Recorded expenses less refunds are the shown net amount."}""" } } } }
@@ -130,8 +130,8 @@ public sealed class AiPilotAdminTests
             {
                 Content = JsonContent.Create(new
                 {
-                    id, status = "completed", model = "gemini-3.5-flash-lite",
-                    usage = new { total_input_tokens = 48, total_output_tokens = 11, total_thought_tokens = 3 },
+                    id, status = failed ? "failed" : "completed", model = "gemini-3.5-flash-lite",
+                    usage = failed ? null : new { total_input_tokens = 48, total_output_tokens = 11, total_thought_tokens = 3 },
                     steps = new[]
                     {
                         new { type = "user_input", status = "done", content = new[] { new { type = "text",
@@ -165,6 +165,13 @@ public sealed class AiPilotAdminTests
     [Fact]
     public Task Gemini_notice_recovers_only_the_original_input_reference() => RunPanelAsync(false, recoveryProvider: "gemini");
 
+    /// <summary>Recovers a failed operation with a lost initial handle without charging or resending.</summary>
+    [Theory]
+    [InlineData("openai")]
+    [InlineData("gemini")]
+    public Task Failure_notice_recovers_only_the_original_failed_operation(string provider) =>
+        RunPanelAsync(false, recoveryProvider: provider, recoveryFailure: true);
+
     /// <summary>Validates provider-specific signing-key overlap, expiry and revocation over the original receiver.</summary>
     [Fact]
     public Task Webhook_rotation_respects_provider_and_explicit_utc_overlap() => RunPanelAsync(false, exerciseRotation: true);
@@ -174,15 +181,19 @@ public sealed class AiPilotAdminTests
     public Task Operator_operations_shows_local_aggregate_without_accessing_providers() => RunPanelAsync(false, exerciseOperations: true);
 
     private static async Task RunPanelAsync(bool pendingOnly, bool exerciseStatus = false, string? recoveryProvider = null,
-        bool exerciseRotation = false, bool exerciseOperations = false)
+        bool exerciseRotation = false, bool exerciseOperations = false, bool recoveryFailure = false)
     {
         var ct = TestContext.Current.CancellationToken;
-        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_CONNECTION");
+        var connection = Environment.GetEnvironmentVariable(recoveryFailure
+            ? "ZANANCE_AI_FAILURE_NOTICE_CONNECTION_" + recoveryProvider!.ToUpperInvariant()
+            : "ZANANCE_AI_ADMIN_TEST_CONNECTION");
         if (connection is null) { Assert.Skip("Explicit isolated admin PostgreSQL fixture required."); return; }
         var dbSettings = new NpgsqlConnectionStringBuilder(connection);
         Assert.Equal(("127.0.0.1", "zanance_ai_provider_pilot"), (dbSettings.Host, dbSettings.Database));
-        Assert.True(dbSettings.Port == 55479 || pendingOnly && dbSettings.Port == 55480);
-        var root = Environment.GetEnvironmentVariable("ZANANCE_AI_ADMIN_TEST_ROOT")!;
+        var expectedPort = recoveryFailure ? (recoveryProvider == "openai" ? 55484 : 55485) : 55479;
+        Assert.True(dbSettings.Port == expectedPort || pendingOnly && dbSettings.Port == 55480);
+        var rootKey = recoveryFailure ? "ZANANCE_AI_FAILURE_NOTICE_ROOT_" + recoveryProvider!.ToUpperInvariant() : "ZANANCE_AI_ADMIN_TEST_ROOT";
+        var root = Environment.GetEnvironmentVariable(rootKey)!;
         Assert.Equal("Zanance synthetic admin panel", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
         var builder = WebApplication.CreateBuilder(new WebApplicationOptions { EnvironmentName = "Integration", ApplicationName = typeof(ServiceHost).Assembly.FullName });
         builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
@@ -193,7 +204,7 @@ public sealed class AiPilotAdminTests
             ["Analysis:ProviderPilot:openai:Project"] = "fixture-openai", ["Analysis:ProviderPilot:openai:ApiKey"] = "fixture-only",
             ["Analysis:ProviderPilot:gemini:Project"] = "fixture-gemini", ["Analysis:ProviderPilot:gemini:ApiKey"] = "fixture-only",
         });
-        using var recovery = recoveryProvider is null ? null : new RecoveryReplies(recoveryProvider);
+        using var recovery = recoveryProvider is null ? null : new RecoveryReplies(recoveryProvider, recoveryFailure);
         if (recovery is not null)
             builder.Configuration[AiPilotCompletionNotices.SecretSetting(recoveryProvider!)] = "whsec_" + Convert.ToBase64String(RecoveryReplies.SigningKey);
         if (exerciseRotation)
@@ -248,7 +259,7 @@ public sealed class AiPilotAdminTests
         if (recovery is not null)
         {
             using var callback = Browser();
-            await VerifyRecoveryAsync(app.Services, callback, recovery, recoveryProvider!, clock, ct);
+            await VerifyRecoveryAsync(app.Services, callback, recovery, recoveryProvider!, recoveryFailure, clock, ct);
             return;
         }
         if (replies is not null)
@@ -503,7 +514,7 @@ public sealed class AiPilotAdminTests
     }
 
     private static async Task VerifyRecoveryAsync(IServiceProvider services, HttpClient callback,
-        RecoveryReplies replies, string provider, FakeTimeProvider clock, CancellationToken ct)
+        RecoveryReplies replies, string provider, bool failed, FakeTimeProvider clock, CancellationToken ct)
     {
         const string owner = "fictional-ai-member";
         var pending = Guid.NewGuid();
@@ -539,13 +550,26 @@ public sealed class AiPilotAdminTests
         await Task.WhenAll(inbox.DrainAsync(ct), inbox.DrainAsync(ct));
         Assert.Equal(2, replies.Calls);
         var accepted = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == pending, ct);
-        Assert.Equal((AiRequestState.Completed, RecoveryReplies.Matched, 1L), (accepted.State, accepted.VendorOperationId, accepted.ChargedUnits));
+        Assert.Equal(failed ? (AiRequestState.Pending, RecoveryReplies.Matched, 0L) : (AiRequestState.Completed, RecoveryReplies.Matched, 1L),
+            (accepted.State, accepted.VendorOperationId, accepted.ChargedUnits));
+        if (failed)
+        {
+            Assert.Equal(AiPilotVendorStatus.Failed, accepted.PilotVendorStatus);
+            Assert.Null(accepted.ProtectedText);
+            Assert.Null(accepted.PilotMeteredCostMicros);
+            Assert.Equal(1L, accepted.GiftedReserved);
+        }
         var untouched = await db.Set<AiRequestRow>().SingleAsync(row => row.Id == other, ct);
         Assert.Equal(AiRequestState.Pending, untouched.State);
         Assert.Null(untouched.VendorOperationId);
-        var settlement = Assert.Single(await db.Set<AiCreditRow>().ToArrayAsync(ct));
-        Assert.Equal(AiCreditEvent.Settle, settlement.Kind);
-        Assert.Equal(pending, settlement.RequestId);
+        var movements = await db.Set<AiCreditRow>().ToArrayAsync(ct);
+        if (failed) Assert.Empty(movements);
+        else
+        {
+            var settlement = Assert.Single(movements);
+            Assert.Equal(AiCreditEvent.Settle, settlement.Kind);
+            Assert.Equal(pending, settlement.RequestId);
+        }
         Assert.All(await db.Set<AiPilotCompletionNoticeRow>().ToArrayAsync(ct), row => { Assert.Equal(1, row.Attempts); Assert.True(row.Handled); });
 
         clock.Advance(TimeSpan.FromMinutes(10));
@@ -566,7 +590,8 @@ public sealed class AiPilotAdminTests
         async Task Send(string delivery, string id, DateTimeOffset timestamp, HttpStatusCode status, bool alter = false)
         {
             var stamp = timestamp.ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture);
-            var body = System.Text.Json.JsonSerializer.Serialize(new { type = provider == "openai" ? "response.completed" : "interaction.completed", data = new { id } });
+            var resource = provider == "openai" ? "response" : "interaction";
+            var body = System.Text.Json.JsonSerializer.Serialize(new { type = resource + (failed ? ".failed" : ".completed"), data = new { id } });
             var signature = Convert.ToBase64String(HMACSHA256.HashData(RecoveryReplies.SigningKey,
                 Encoding.UTF8.GetBytes($"{delivery}.{stamp}.{body}")));
             using var request = new HttpRequestMessage(HttpMethod.Post, $"/analysis/pilot/{provider}/completions")

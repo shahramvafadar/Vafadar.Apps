@@ -329,7 +329,8 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     /// <summary>Extracts the immutable operation from authenticated metadata or the exact stored user input.</summary>
     internal static string? RecoveredOperation(string provider, JsonElement response, string id)
     {
-        if (Text(response, "id") != id || Text(response, "status") != "completed") return null;
+        // The signed event only wakes lookup. The authenticated original supplies terminal status and binding.
+        if (Text(response, "id") != id || Text(response, "status") is not ("completed" or "failed")) return null;
         if (provider == "openai") return Text(Read(response, "metadata"), "zanance_operation");
         var input = Array(response, "steps").Where(item => Text(item, "type") == "user_input").Take(2).ToArray();
         if (input.Length != 1 || Text(input[0], "status") != "done") return null;

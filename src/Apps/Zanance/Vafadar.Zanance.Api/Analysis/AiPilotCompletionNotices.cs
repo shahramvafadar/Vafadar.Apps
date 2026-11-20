@@ -52,7 +52,11 @@ internal sealed class AiPilotCompletionNotices(IConfiguration configuration, IDb
             {
                 using var document = JsonDocument.Parse(body, new JsonDocumentOptions { MaxDepth = 12 });
                 var json = document.RootElement;
-                if (Text(json, "type") != (provider == "openai" ? "response.completed" : "interaction.completed")) return Results.NoContent();
+                var type = Text(json, "type");
+                var supported = provider == "openai"
+                    ? type is "response.completed" or "response.failed"
+                    : type is "interaction.completed" or "interaction.failed";
+                if (!supported) return Results.NoContent();
                 if (!json.TryGetProperty("data", out var data) || Text(data, "id") is not { } response ||
                     !IsIdentifier(response) || provider == "openai" && !response.StartsWith("resp_", StringComparison.Ordinal))
                     return Results.BadRequest();
