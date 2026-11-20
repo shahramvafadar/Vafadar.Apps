@@ -14,8 +14,11 @@ on:
 permissions:
   contents: read
 
+# A newer run of a branch or pull request cancels the older one. On main every push keeps a run of its own
+# (owner decision of 2026-11-20): with one group for main, a run that waits is cancelled by the next push even
+# when cancel-in-progress is off, and then no commit of main is ever seen to pass.
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ${{ github.ref == 'refs/heads/main' && format('ci-main-{0}', github.run_id) || format('ci-{0}', github.ref) }}
   cancel-in-progress: true
 
 env:

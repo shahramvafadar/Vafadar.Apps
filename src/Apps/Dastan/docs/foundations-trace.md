@@ -324,8 +324,9 @@ column "Looked at", in Chromium only.
 
 **In CI.** The workflow has a job for each of the three engines that runs these tests (`dastan-browser`). It
 has not been seen to run: every run on `main` since 2026-11-19 was cancelled by a later push of the other app
-of the repository, because a run of a branch is cancelled when a newer one begins. Whether that rule stays for
-`main` is the owner's decision.
+of the repository, because a run of a branch was cancelled when a newer one began. On 2026-11-20 the owner
+decided that every push to `main` keeps a run of its own; the first run after that is the first that can show
+whether the job passes.
 
 **The owner's, before anything is called ready:** a real phone (installing, touch with two fingers on the graph
 and the timeline), a screen reader, Safari itself, a mailbox and a sender with a domain, the company that sends

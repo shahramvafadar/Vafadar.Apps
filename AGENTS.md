@@ -3647,8 +3647,9 @@ dotnet ef migrations add <Name> --project src/Apps/Zanance/Vafadar.Zanance.Data 
   changed screens were checked in the running app (section 9), the documentation is updated (section 10), and the
   commit is pushed.
 * Check CI (GitHub Actions) once after pushing – one background check after 15–18 minutes – and report the result.
-  **Poll the GitHub API sparingly** (unauthenticated: 60 requests per hour). Newer pushes cancel older CI runs; that is
-  expected.
+  **Poll the GitHub API sparingly** (unauthenticated: 60 requests per hour). In the `CI` workflow every push
+  to `main` keeps a run of its own (owner decision of 2026-11-20); a newer run cancels the older one only for other
+  branches and pull requests, and in the other workflows.
 * Visual Studio may be open on the solution; its background restore can race command-line builds (NETSDK1005,
   APT2126, locked files). Retry once; `Build-AndroidApk.ps1` already does.
 
