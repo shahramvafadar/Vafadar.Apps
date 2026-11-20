@@ -325,7 +325,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-35 | Snooze notification | REM-04 | Manual | S10 | Verified (unit: snooze repeats the reminder with its own id, never changes the due date, ends when the occurrence closes; moving a due date moves the reminder); device check pending |
 | AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Verified (unit: settled or skipped occurrences have no reminder; taps only open the occurrence) |
 | AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | [Physical post-reboot delivery](quality/physical-paired-reminder-preparation.md#terminal-outcome1november2026) verified both original reminders within their unchanged one-hour window. The precision failure and intervening launch remain recorded. Travel and DST device acceptance remain separate. |
-| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | [Native notification record](quality/plans-saved-reminder-delivery-after-grant-d1241.md) verified generic text on the saved-plan delivery. Locked-screen rendering, optional detailed presentation and tapping under the lock remain separate. |
+| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | [Android SystemUI lock-screen rendering](#at-38-generic-reminder-on-the-android-lock-screen) verified the generic default and absence of fixture details. Device-credential and app-lock tap behavior, optional detail and physical acceptance remain separate. |
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung no/zero/exact/exceeded/refund/cold/deletion scope; broader device/platform gates remain |
 | AT-40 | Total and sub-category limits | BUD-02 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung independent total/category/refund and category-only scope; other hierarchy/platform variants remain |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
@@ -394,6 +394,29 @@ accessibility root. The same launch continued. Device-side SHA-256 matched the r
 The disposable AVD was retired. Native captures and the receipt are in `artifacts/zdr`.
 This covers one native validation and discard sequence. Storage-write failure and physical-device
 acceptance remain separate.
+
+## AT-38 generic reminder on the Android lock screen
+
+A fresh Android 16 x86_64 emulator installed the existing offline Release APK `9f1c9df4`.
+One zero-opening account and one synthetic due-day reminder with an unknown amount and
+automatic posting disabled were created through the original UI. That reminder was set for
+05:00 local time with Android notification permission granted for the fixture. The screen was
+asleep before delivery and Android reported an active keyguard. At 05:02:12, the observer
+found the sole active Zanance notification, ID 744530283. The screen woke without unlocking
+the keyguard. Android SystemUI showed the Zanance title and “A financial item needs your
+attention.” It did not show the separate test plan name, account name or amount status.
+
+The removable fixture used swipe keyguard without a device credential. The original AVD had
+keyguard disabled. After enabling it and cycling screen sleep, the observer verified
+`showing=true`, `occluded=false`, `secure=false`. SystemUI was configured to show notification
+content, so the generic result was attributable to the displayed notice rather than an
+OS setting that hid all text. The initial form scroll and a clipped time input did not alter
+the eventual fixture. The final pending alarm, active notification, keyguard state and SystemUI
+hierarchy are retained in `artifacts/zlk`. No timed save, notification tap, credential or
+financial write was repeated. The original settings were verified before the AVD was retired.
+
+This covers default lock-screen presentation on the test emulator. Device-credential and
+app-lock tap behavior, the optional details setting and physical-device acceptance remain open.
 
 ## AT-76 - Build-specific SDK and Android permission boundaries (D-69 / SEC-09)
 
