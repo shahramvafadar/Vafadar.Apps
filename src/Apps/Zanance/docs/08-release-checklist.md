@@ -224,7 +224,10 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Upgrade from every earlier test build keeps data (AT-60) – integration test for the first schema passes; re-check with real test builds
 - [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57) – fresh-install integration test passes; device check pending
 - [ ] No known critical bug in balances, conversion, double counting, restore or data exposure (Q-01)
-- [ ] Performance measured on the reference device with 10,000 entries (Q-02) and recorded – calculation budget test with 10,000 entries, 20 accounts and 100 plans passes
+- [ ] Complete reference Android performance acceptance (Q-02). With 10,000 entries, 20 accounts and 100 plans, the
+  five-sample warm Home median was 751 ms against the approximate 2,000-ms target. The process-cold launch was
+  7,434 ms against the selected 6,000-ms target. Two actual search result draws and the 100,000-entry stress
+  measurements are recorded with their original workload limits. [D1219 performance evidence](quality/current-performance-acceptance-d1219.md)
 - [ ] Deviations in spec Section 31.3 accepted by the owner or resolved
 
 - [ ] D-62 device acceptance: fresh install → choose theme/experience or restore an existing backup; cancel and return
@@ -237,7 +240,9 @@ independent work and overall goal remain active. Broader gates stay open.
 
 - [ ] D-65 device acceptance (AT-72): new/existing plans, monthly anchors in Gregorian/Persian/Hijri, short months,
   count/end date, custom rules, debt/receivable creation, actual repayment versus estimate and reminder permission;
-  draft cancellation must not post or alter balances. Windows fixture checks do not close this gate.
+  draft cancellation must not post or alter balances. The original saved Plans reminder delivered after a permission
+  grant on the owned Android 16 emulator, inside the recorded inexact alarm window. This case supplies evidence
+  for the permission-return and delivery path on that fixture. [D1241 delivery evidence](quality/plans-saved-reminder-delivery-after-grant-d1241.md)
 
 ## Privacy and security
 
@@ -249,7 +254,11 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Cloud variant, Windows: Google opens the default browser, the page "Sign-in complete" appears after consent, and the app shows the account; the files `%LOCALAPPDATA%\…\google\google.token` and `msal\msal.cache` are DPAPI-protected and removed or emptied on disconnect; a firewall prompt does not appear for the `127.0.0.1` listener
 - [x] `INTERNET` permission removed if no online feature ships (D-20) – the offline build's merged manifest declares only notifications, boot and biometric (USE_BIOMETRIC / USE_FINGERPRINT from AndroidX Biometric); re-checked 2026-09-29 with the cloud libraries referenced
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
-- [ ] Android Auto Backup disclosed (D-16); decision re-checked
+- [ ] Android Auto Backup disclosed (D-16); decision re-checked against the release edition. The Android framework
+  positive restore control covered nine domains, and the empty-extraction result was classified for that transport.
+  Samsung Smart Switch transferred the two helper apps with no private payload in either; the Samsung positive
+  data-transfer control remains open. [Framework evidence](quality/empty-policy-and-current-s24-d1235.md) ·
+  [Samsung evidence](quality/samsung-oem-transfer-result-d1233.md)
 - [x] No financial data, notes, tokens or passwords in logs (SEC-04) – code review 2026-09-29: only `Debug.WriteLine` (removed from release builds) and the debug logger in Debug builds
 - [x] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview always protected (Android API 33+ recents exclusion and secure background flags, iOS cover; D-63). Foreground screenshots may be allowed on Android. Device check pending
 
@@ -1402,11 +1411,15 @@ phone/iOS, current customer-export corpus and release acceptance remain open.
 
 ## D-298 Optional analysis gate
 
-The local provider-neutral boundary does not select or enable a live model. Keep actual provider/privacy/retention,
-licence/costs, unit packages/prices, trusted consumable verification, original provider idempotence/status contract,
-public routing and genuine device/Mac checks open. No API-key workflow or subscription-implied credits. Default
-service/provider remain closed and current commercial limits inactive. Manual native sharing is readable disclosure,
-not integrated AI or a result guarantee. Local/native/package evidence is in15-ai-local-delivery.md.
+The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
+The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
+deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate
+native evidence. See the [pilot receipts](enhancements/2026-10-commercial-release/28-ai-synthetic-provider-pilot.md)
+and [privacy review](06-privacy-matrix.md#df-13-synthetic-analysis-and-release-review).
+
+Production analysis and credit sales remain inactive. Keep actual provider privacy, contract, retention and
+deletion, supported recovery, unit packages/prices and trusted consumable verification, public routing, and
+genuine device/Mac checks open. Manual native sharing discloses the reviewed packet to the selected recipient.
 
 ## D-299 reference-source release gates
 
