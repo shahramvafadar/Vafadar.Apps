@@ -108,8 +108,17 @@ all five fictitious files. Confirming returned to Welcome in the same process an
 internally staged copy. The copy bearing another profile identity and the original file in the
 backup directory retained their hashes and metadata. The fixture's legacy external copies stayed
 present. The parent of those copies was visible in the app's mount namespace but had mode 0775
-and UID/GID 1023, outside the app UID and groups. This fixture therefore did not establish deletion
-of copies created by the app in its external cache. That case remains open.
+and UID/GID 1023, outside the app UID and groups. The separate app-created case below covers that gap.
+
+On a fresh Android 16 guest, the older signed offline APK `9cf6c14f` used the original Backup
+screen to create and share a fictitious local backup. The native chooser displayed its filename
+and was dismissed without selecting a recipient. The app-owned copy in the legacy external cache
+matched the original backup's SHA-256. An in-place upgrade to the same-signer `2d05d89f` kept the
+original install time, UID and both files. Confirming the Settings reset once returned to the
+first-run Welcome screen in the same upgraded process. The staged copy was absent and the original
+backup retained its hash, ownership, mode and modification time. No transactions were posted and
+neither physical phone was used. This case covers an app-created legacy cache copy during Main
+reset. It does not establish recipient retention, Samsung transfer behavior or all release editions.
 
 On an isolated Android 16 x86-64 guest, the signed offline APK
 `2d05d89f72061910a4547d9fb772dcd729bc7e966c92a3536af998f02865f743` was installed once
