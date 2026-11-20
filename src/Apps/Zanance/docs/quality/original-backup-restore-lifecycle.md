@@ -185,3 +185,19 @@ and establish no new native navigation or physical-device acceptance.
 
 The strict Windows build and standard test clean passed. The offline signed Android
 artifact has SHA-256 `ac90bc9d64309c9c1528f9f8b98b09a58cf56b5c4ec776c2fb1aea10f7fad51b`.
+
+## Portable input after a target change
+
+A new source-linked test holds the first read of a synthetic 100,000-byte stream and changes
+the real local database publication away from its captured path and back. The frame token
+stays live. The previous code made three provider reads before refusing the obsolete publication.
+
+The portable reader now checks the captured target after each read, before copying any
+late bytes or issuing another read. The Android picker receives the frame token and checks
+the same captured target before opening the returned document. The new test passed with
+exactly one read and no resulting selection, preview action or primary restore. All 31
+selected restore ownership and startup reader tests passed. The new case exercises the
+managed read path with a synthetic provider stream.
+
+The strict Windows build, standard test clean, and signed offline Android build passed.
+The Android artifact has SHA-256 `437fa3dc9125d74d29d7cc9b49d43f7c867fd7d7b8c3aea0af35d663f65caea0`.

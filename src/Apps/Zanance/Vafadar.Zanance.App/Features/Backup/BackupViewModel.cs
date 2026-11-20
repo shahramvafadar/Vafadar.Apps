@@ -333,7 +333,11 @@ public sealed partial class BackupViewModel : ViewModelBase
         {
 #if ANDROID
             await AndroidDocumentPicker.UseAsync(_translator["Backup_PickFile"], null,
-                (stream, name, _) => Restore.PrepareAsync(stream, name, owner), owner.EnsureCurrent);
+                (stream, name, _) => Restore.PrepareAsync(stream, name, owner), () =>
+                {
+                    owner.EnsureCurrent();
+                    owner.SourceValidation();
+                }, ct: owner.Token);
 #else
             var result = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = _translator["Backup_PickFile"] });
             owner.EnsureCurrent();

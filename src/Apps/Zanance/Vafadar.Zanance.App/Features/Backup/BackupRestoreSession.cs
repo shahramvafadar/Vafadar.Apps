@@ -87,7 +87,7 @@ public sealed partial class BackupRestoreSession : ViewModelBase
         byte[]? loaded = null;
         try
         {
-            loaded = await StartupBackupPackageReader.ReadPortableAsync(stream, owner.Token);
+            loaded = await StartupBackupPackageReader.ReadPortableAsync(stream, owner.Token, source);
             owner.EnsureCurrent(); source();
             ClearSelection(); _sourceValidation = source; _package = loaded; loaded = null;
             PickedName = name; NeedsPassword = BackupEncryption.IsEncrypted(_package);

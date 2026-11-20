@@ -15,10 +15,11 @@ internal static class StartupBackupPackageReader
     }
 
     /// <summary>Uses the normal portable format envelope limit without applying the startup safety-copy limit.</summary>
-    internal static Task<byte[]> ReadPortableAsync(Stream input, CancellationToken ct) =>
-        ReadCoreAsync(input, ct, int.MaxValue);
+    internal static Task<byte[]> ReadPortableAsync(Stream input, CancellationToken ct, Action validateSource) =>
+        ReadCoreAsync(input, ct, int.MaxValue, validateSource);
 
-    private static Task<byte[]> ReadCoreAsync(Stream input, CancellationToken ct, long maximumBytes) =>
+    private static Task<byte[]> ReadCoreAsync(Stream input, CancellationToken ct, long maximumBytes,
+        Action? validateSource = null) =>
         BoundedPrivateFileReader.ReadAsync(input, maximumBytes, ct,
-            static () => new IOException("Portable recovery file exceeds its bound."));
+            static () => new IOException("Portable recovery file exceeds its bound."), validateSource);
 }

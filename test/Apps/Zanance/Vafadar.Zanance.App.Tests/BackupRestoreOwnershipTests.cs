@@ -200,10 +200,41 @@ public sealed class BackupRestoreOwnershipTests
     {
         internal readonly TaskCompletionSource Entered = new(TaskCreationOptions.RunContinuationsAsynchronously);
         internal readonly TaskCompletionSource Release = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        internal int Reads { get; private set; }
         internal CancellationToken ActualToken { get; private set; }
         public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken ct = default)
-        { ActualToken = ct; Entered.TrySetResult(); await Release.Task.WaitAsync(ct); return await base.ReadAsync(buffer, ct); }
+        { Reads++; ActualToken = ct; Entered.TrySetResult(); await Release.Task.WaitAsync(ct); return await base.ReadAsync(buffer, ct); }
     }
+
+    [Fact]
+    public async Task A_target_replaced_during_provider_read_stops_before_the_next_read()
+    {
+        using var f = new FlowFixture();
+        await f.Store.GetSettingsAsync(Ct);
+        var backup = Service(f);
+        var location = f.Services.GetRequiredService<Vafadar.Data.LocalDatabaseLocation<ZananceDbContext>>();
+        var originalPath = location.Path;
+        var runtime = new Runtime(backup, new Owner(), "none") { SourceGuard = location.CaptureValidation };
+        var session = new BackupRestoreSession(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time);
+        using var stream = new HeldRead(new byte[100_000]);
+        var pending = session.PrepareAsync(stream, "Abandoned provider input.zanbak");
+        await stream.Entered.Task.WaitAsync(Ct);
+        try
+        {
+            using var maintenance = await location.Access.AcquireExclusiveAsync(Ct);
+            location.MoveTo(f.Directory.Combine("unopened-target.db"), maintenance);
+            location.MoveTo(originalPath, maintenance);
+        }
+        finally { stream.Release.TrySetResult(); }
+        await pending;
+
+        Assert.Equal(1, stream.Reads);
+        Assert.False(stream.ActualToken.IsCancellationRequested);
+        Assert.Null(session.PickedName);
+        Assert.False(session.CanCheck);
+        Assert.Equal(0, runtime.Primary);
+    }
+
     [Fact]
     public async Task Actual_selected_stream_cancels_on_departure_and_an_old_owner_cannot_borrow_native_return()
     {
