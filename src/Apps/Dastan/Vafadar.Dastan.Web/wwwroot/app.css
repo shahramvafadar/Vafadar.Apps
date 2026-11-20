@@ -2446,3 +2446,89 @@ main details > summary {
   color: var(--text);
   font: inherit;
 }
+
+/* The graph that can be moved (ADR 0020, step 19.8). Without its script the element is nothing but the still
+   drawing it holds: it and the place of the still drawing take no part in the layout. Once the script has
+   drawn, the element is a column of its tools and of one of the two drawings. */
+dastan-graph,
+.graph-still:not([hidden]) {
+  display: contents;
+}
+
+dastan-graph[data-state="live"],
+dastan-graph[data-state="still"] {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+dastan-graph[data-state="still"] .graph-still {
+  display: flex;
+  flex: 1;
+  overflow: auto;
+}
+
+.graph-tools:not([hidden]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-block-end: 1px solid var(--border);
+}
+
+.graph-tools-live:not([hidden]) {
+  display: contents;
+}
+
+.graph-tools button {
+  min-block-size: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.graph-tools button:disabled {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.graph-live:not([hidden]) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+/* The drawing itself is laid out from left to right in every language (the control has no other way); the
+   texts in it are given their direction line by line. */
+.graph-canvas {
+  position: relative;
+  flex: 1;
+  min-block-size: 24rem;
+  direction: ltr;
+}
+
+.graph-canvas:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.graph-keys {
+  margin: 0;
+  padding: var(--space-2);
+}
+
+/* What is chosen in the drawing is said to a reader who hears the page; it is written in the list of the page. */
+.graph-said {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

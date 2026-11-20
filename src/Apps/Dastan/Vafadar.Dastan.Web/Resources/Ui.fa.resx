@@ -3576,4 +3576,31 @@
   <data name="Profile_Panel_Open" xml:space="preserve">
     <value>باز کردن صفحه</value>
   </data>
+  <data name="Graph_Larger" xml:space="preserve">
+    <value>بزرگ‌تر</value>
+  </data>
+  <data name="Graph_Smaller" xml:space="preserve">
+    <value>کوچک‌تر</value>
+  </data>
+  <data name="Graph_Whole" xml:space="preserve">
+    <value>همهٔ نمودار</value>
+  </data>
+  <data name="Graph_Profile" xml:space="preserve">
+    <value>باز کردن نمایه</value>
+  </data>
+  <data name="Graph_SaveSvg" xml:space="preserve">
+    <value>ذخیره به‌صورت SVG</value>
+  </data>
+  <data name="Graph_SavePng" xml:space="preserve">
+    <value>ذخیره به‌صورت PNG</value>
+  </data>
+  <data name="Graph_ToStill" xml:space="preserve">
+    <value>نمایش نمودار ایستا</value>
+  </data>
+  <data name="Graph_ToLive" xml:space="preserve">
+    <value>نمایش نمودار جابه‌جاشدنی</value>
+  </data>
+  <data name="Graph_Keys" xml:space="preserve">
+    <value>در نمودار: کلیدهای جهت از یک کارت به کارت کناری می‌روند، Enter نمایهٔ کارت را باز می‌کند، + و − نمودار را بزرگ‌تر و کوچک‌تر می‌کنند، 0 همهٔ آن را نشان می‌دهد و Escape کارت را رها می‌کند. فهرست همین صفحه همین را با واژه می‌گوید.</value>
+  </data>
 </root>

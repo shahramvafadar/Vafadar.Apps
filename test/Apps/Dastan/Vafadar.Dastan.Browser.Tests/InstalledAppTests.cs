@@ -214,7 +214,7 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
 
         // The rules of WCAG 2.1 at the levels A and AA that axe can decide: names, roles, contrast, language,
         // headings, landmarks, the structure of lists and tables.
-        var result = await page.RunAxe(new AxeRunOptions
+        var result = await page.RunAxe(BrowserSite.PageOfDastan, new AxeRunOptions
         {
             RunOnly = new RunOnlyOptions { Type = "tag", Values = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"] },
         });

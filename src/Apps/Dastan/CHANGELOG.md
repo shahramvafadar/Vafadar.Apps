@@ -350,3 +350,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   when until when.
 - In a list, a card offers a look at the profile: it opens beside the list, shows what the page of the node
   shows, and leads on to the page. Without a script the list is as before.
+- A family, the connections of a name and a family tree of yours can be moved, made larger and smaller, walked
+  with the arrow keys and saved as a picture (SVG or PNG). Choosing a card and pressing Enter opens its profile
+  beside the drawing. The still drawing is still there: one press shows it, and it is what you see without a
+  script.

@@ -52,7 +52,8 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
     [Fact]
     public async Task With_the_keyboard_alone_a_visitor_skips_to_the_content_and_opens_and_closes_a_row_of_the_graph()
     {
-        var page = await site.Visitor(width: 360);
+        // The still drawing, which is the drawing where the script of the graph does not run (ADR 0020).
+        var page = await site.Visitor(width: 360, script: false);
         await page.GotoAsync($"/en/{Story}/entity/character-rostam/connections");
         var boxes = await page.Locator("svg.graph foreignObject").CountAsync();
 

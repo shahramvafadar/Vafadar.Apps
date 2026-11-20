@@ -1,0 +1,47 @@
+@* A graph of a page (ADR 0020): the still drawing of the server, and around it what the script of the graph
+   needs to draw the same graph as one that can be moved, made larger and smaller, walked with the keyboard and
+   saved as a picture. The page is complete without the script: then this is the still drawing and nothing else.
+   The script asks the address of the graph, which answers what this page shows to this visitor – asked with
+   what the page was asked with – and takes the place of the still drawing once it has drawn. *@
+@inject NavigationManager Navigation
+@inject IConfiguration Configuration
+@inject IStringLocalizer<Ui> T
+
+<dastan-graph data-source="@(Source + new Uri(Navigation.Uri).Query)" data-script="@Assets["graph.js"]"
+              data-font="@Assets["fonts/vazirmatn-nl-wght.woff2"]" data-key="@Configuration["Dastan:Syncfusion:Key"]">
+    <div class="graph-tools" data-graph-tools hidden>
+        <span class="graph-tools-live" data-graph-live-tools>
+            <button type="button" data-graph-in>@T["Graph_Larger"]</button>
+            <button type="button" data-graph-out>@T["Graph_Smaller"]</button>
+            <button type="button" data-graph-fit>@T["Graph_Whole"]</button>
+            <button type="button" data-graph-profile disabled>@T["Graph_Profile"]</button>
+            <button type="button" data-graph-svg>@T["Graph_SaveSvg"]</button>
+            <button type="button" data-graph-png>@T["Graph_SavePng"]</button>
+            <button type="button" data-graph-to-still>@T["Graph_ToStill"]</button>
+        </span>
+        <button type="button" data-graph-to-live hidden>@T["Graph_ToLive"]</button>
+    </div>
+    <div class="graph-still" data-graph-still>@ChildContent</div>
+    <div class="graph-live" data-graph-live hidden>
+        <div class="graph-canvas" data-graph-canvas tabindex="0" role="application" aria-label="@Label" aria-describedby="@_help" dir="ltr"></div>
+        <p class="meta graph-keys" id="@_help">@T["Graph_Keys"]</p>
+        <p class="graph-said" data-graph-said aria-live="polite"></p>
+    </div>
+</dastan-graph>
+
+@code {
+    // A page has one graph; the same page is the same text every time it is asked for.
+    private const string _help = "graph-keys";
+
+    /// <summary>Gets or sets the still drawing.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = null!;
+
+    /// <summary>Gets or sets the address of the graph, from the language of the page on and without what the page was asked with.</summary>
+    [Parameter, EditorRequired]
+    public string Source { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the name of the drawing for screen readers.</summary>
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+}

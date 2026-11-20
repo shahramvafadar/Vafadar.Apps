@@ -1,4 +1,5 @@
-// Builds the scripts of the Dastan website from their TypeScript (ADR 0019): app.js, the script of every page.
+// Builds the scripts of the Dastan website from their TypeScript (ADR 0019): app.js, the script of every page,
+// and graph.js, the drawing of a graph (ADR 0020), which only a page with a graph asks for.
 // Each is one file, which the site serves under a name that changes with its content. Started by the build of
 // the site, which says where the sources lie and where the files go; without that: the sources beside this
 // file, and wwwroot of the site.
@@ -11,7 +12,7 @@ const sources = resolve(process.argv[2] ?? join(here, 'src'));
 const files = resolve(process.argv[3] ?? join(here, '..', 'wwwroot'));
 
 await build({
-  entryPoints: { app: join(sources, 'app.ts') },
+  entryPoints: { app: join(sources, 'app.ts'), graph: join(sources, 'graph.ts') },
   outdir: files,
   bundle: true,
   format: 'iife',

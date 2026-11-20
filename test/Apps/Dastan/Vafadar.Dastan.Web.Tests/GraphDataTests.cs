@@ -73,6 +73,36 @@ public sealed class GraphDataTests(DemoSite site) : IClassFixture<DemoSite>
         }
     }
 
+    [Theory]
+    [InlineData("family", "?up=1&down=0")]
+    [InlineData("family", "")]
+    [InlineData("connections", "?open=character-tahmineh")]
+    public async Task A_page_with_a_graph_names_the_address_of_its_graph_and_the_script_that_draws_it(string view, string query)
+    {
+        var visitor = site.Visitor();
+        await visitor.ReadTo(4);
+        var page = await visitor.Get($"/en/{Story}/entity/character-rostam/{view}{query}");
+
+        // The address is the one of the page with ".json", asked with what the page was asked with; the still
+        // drawing lies inside, and what the script shows is hidden until it has drawn.
+        var host = Regex.Match(page.Html, "<dastan-graph[^>]*>");
+        Assert.True(host.Success);
+        Assert.Contains($"data-source=\"{Story}/entity/character-rostam/{view}.json{WebUtility.HtmlEncode(query)}\"", host.Value, StringComparison.Ordinal);
+        Assert.Matches("data-script=\"graph(\\.[a-z0-9]+)?\\.js\"", host.Value);
+        Assert.DoesNotContain("data-key", host.Value, StringComparison.Ordinal);
+        Assert.Matches("<div class=\"graph-tools\"[^>]* hidden", page.Html);
+        Assert.Matches("<div class=\"graph-live\"[^>]* hidden", page.Html);
+        Assert.Matches("(?s)<div class=\"graph-still\"[^>]*>.*?<svg", page.Html);
+        Assert.Equal(HttpStatusCode.OK, (await visitor.Get("/" + Regex.Match(host.Value, "data-script=\"([^\"]+)\"").Groups[1].Value)).Status);
+
+        // Pictures the page made itself are allowed, and nothing else beyond the site.
+        var policy = Assert.Single(page.Response.Headers.GetValues("Content-Security-Policy"));
+        Assert.Equal("default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' blob: data:", policy);
+
+        // A page without a graph has nothing of it.
+        Assert.DoesNotContain("dastan-graph", (await visitor.Get($"/en/{Story}")).Html, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task A_family_says_its_rows_and_whether_the_page_offers_to_open_further()
     {

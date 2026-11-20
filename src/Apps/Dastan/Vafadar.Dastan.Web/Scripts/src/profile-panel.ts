@@ -112,7 +112,7 @@ function drawn(profile: Profile): HTMLElement[] {
 export function offerProfiles(): void {
   const panel = document.querySelector<HTMLDialogElement>('#profile-panel');
   const offers = document.querySelectorAll<HTMLElement>('[data-profile-peek]');
-  if (!panel || typeof panel.showModal !== 'function' || offers.length === 0) {
+  if (!panel || typeof panel.showModal !== 'function') {
     return;
   }
 
@@ -140,15 +140,14 @@ export function offerProfiles(): void {
     }
   });
 
-  const show = async (button: HTMLButtonElement): Promise<void> => {
-    const address = button.dataset['profile'];
+  const show = async (address: string | undefined, called: string): Promise<void> => {
     if (!address) {
       return;
     }
 
     asked?.abort();
     asked = new AbortController();
-    name.textContent = button.dataset['name'] ?? '';
+    name.textContent = called;
     name.removeAttribute('lang');
     kind.textContent = '';
     body.replaceChildren();
@@ -181,7 +180,13 @@ export function offerProfiles(): void {
     const button = offer.querySelector<HTMLButtonElement>('button[data-profile]');
     if (button) {
       offer.hidden = false;
-      button.addEventListener('click', () => void show(button));
+      button.addEventListener('click', () => void show(button.dataset['profile'], button.dataset['name'] ?? ''));
     }
   }
+
+  // A drawing of the page (the graph, ADR 0020) asks for the profile of what was chosen in it.
+  document.addEventListener('dastan:profile', event => {
+    const wanted = (event as CustomEvent<{ address?: string; name?: string }>).detail;
+    void show(wanted?.address, wanted?.name ?? '');
+  });
 }

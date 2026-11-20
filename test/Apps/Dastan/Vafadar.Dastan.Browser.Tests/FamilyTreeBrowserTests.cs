@@ -195,7 +195,8 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
     [Fact]
     public async Task A_name_of_the_tree_leads_to_its_page_and_the_keyboard_reaches_it()
     {
-        var page = await site.Visitor(width: 412, readTo: 4);
+        // The still drawing, which is the drawing where the script of the graph does not run (ADR 0020).
+        var page = await site.Visitor(width: 412, readTo: 4, script: false);
         await page.GotoAsync($"/en/{Sohrab}");
         var name = page.Locator(".tree a.graph-name[href$='/entity/character-tahmineh']");
 
@@ -305,7 +306,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
         await page.GotoAsync($"/{language}/{view}");
         await page.EvaluateAsync("document.fonts.ready");
 
-        var result = await page.RunAxe(new AxeRunOptions
+        var result = await page.RunAxe(BrowserSite.PageOfDastan, new AxeRunOptions
         {
             RunOnly = new RunOnlyOptions { Type = "tag", Values = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"] },
         });

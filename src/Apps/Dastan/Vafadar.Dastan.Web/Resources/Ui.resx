@@ -3576,4 +3576,31 @@
   <data name="Profile_Panel_Open" xml:space="preserve">
     <value>Open the page</value>
   </data>
+  <data name="Graph_Larger" xml:space="preserve">
+    <value>Larger</value>
+  </data>
+  <data name="Graph_Smaller" xml:space="preserve">
+    <value>Smaller</value>
+  </data>
+  <data name="Graph_Whole" xml:space="preserve">
+    <value>The whole drawing</value>
+  </data>
+  <data name="Graph_Profile" xml:space="preserve">
+    <value>Open the profile</value>
+  </data>
+  <data name="Graph_SaveSvg" xml:space="preserve">
+    <value>Save as SVG</value>
+  </data>
+  <data name="Graph_SavePng" xml:space="preserve">
+    <value>Save as PNG</value>
+  </data>
+  <data name="Graph_ToStill" xml:space="preserve">
+    <value>Show the still drawing</value>
+  </data>
+  <data name="Graph_ToLive" xml:space="preserve">
+    <value>Show the drawing that can be moved</value>
+  </data>
+  <data name="Graph_Keys" xml:space="preserve">
+    <value>In the drawing: the arrow keys go from one card to the next, Enter opens the profile of the card, + and − make the drawing larger and smaller, 0 shows the whole of it, and Escape lets go of the card. The list on this page says the same in words.</value>
+  </data>
 </root>

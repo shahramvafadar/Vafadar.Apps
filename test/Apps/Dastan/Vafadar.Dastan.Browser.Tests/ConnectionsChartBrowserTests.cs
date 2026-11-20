@@ -58,7 +58,8 @@ public sealed class ConnectionsChartBrowserTests(BrowserSite site) : IClassFixtu
     [Fact]
     public async Task A_side_of_the_stage_opens_the_chart_a_step_further_and_closes_it_again_and_the_stage_stays_on_the_screen()
     {
-        var page = await site.Visitor(width: 412, readTo: 4);
+        // The still drawing, which is the drawing where the script of the graph does not run (ADR 0020).
+        var page = await site.Visitor(width: 412, readTo: 4, script: false);
         await page.GotoAsync($"/en/{Rostam}");
         var boxes = await page.Locator("svg.flow foreignObject").CountAsync();
 
