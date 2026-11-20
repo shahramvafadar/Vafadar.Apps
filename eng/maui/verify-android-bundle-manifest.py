@@ -49,6 +49,35 @@ def verify_msal_redirect(application, entra_client_id):
         raise SystemExit("MSAL redirect filter differs from the configured browser callback.")
 
 
+def verify_file_provider_bindings(application, package):
+    """Keep camera capture and file sharing bound to their own scoped cache resources."""
+    providers = application.findall("provider")
+    for suffix, name, resource in (
+        ("camera", f"{package}.CameraFileProvider", "@xml/camera_paths"),
+        ("fileProvider", "microsoft.maui.essentials.fileProvider",
+         "@xml/microsoft_maui_essentials_fileprovider_file_paths"),
+    ):
+        authority = f"{package}.{suffix}"
+        matches = [
+            provider for provider in providers
+            if provider.get(ANDROID + "name") == name
+            or authority in provider.get(ANDROID + "authorities", "").split(";")
+        ]
+        if len(matches) != 1:
+            raise SystemExit(f"Expected one Android {suffix} provider.")
+        provider = matches[0]
+        if provider.get(ANDROID + "name") != name or provider.get(ANDROID + "authorities") != authority:
+            raise SystemExit(f"Bundle {suffix} provider name or authority differs from the release contract.")
+        if provider.get(ANDROID + "exported") != "false" or provider.get(ANDROID + "grantUriPermissions") != "true":
+            raise SystemExit(f"Bundle {suffix} must be non-exported and support explicit URI grants.")
+        bindings = [
+            item.get(ANDROID + "resource") for item in provider.findall("meta-data")
+            if item.get(ANDROID + "name") == "android.support.FILE_PROVIDER_PATHS"
+        ]
+        if bindings != [resource]:
+            raise SystemExit(f"Bundle {suffix} must bind only {resource}.")
+
+
 def verify_manifest(manifest, package, display_version, build_number, edition, entra_client_id):
     """Require the requested release identity, Play target SDK and edition policy."""
     if manifest.tag != "manifest":
@@ -111,8 +140,9 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
                for name in activity_names):
             raise SystemExit("Offline bundle registers a Microsoft sign-in activity.")
     verify_msal_redirect(application, entra_client_id)
+    verify_file_provider_bindings(application, package)
     print(f"Verified bundle package, version, target API {target_sdk}, release flags, backup policy bindings, "
-          "edition permissions and MSAL redirect configuration.")
+          "edition permissions, MSAL redirect configuration and file-provider bindings.")
 
 
 if __name__ == "__main__":

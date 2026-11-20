@@ -8,8 +8,14 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-/** Verifies the compiled rules referenced by the release manifest's OD-10 backup policy. */
-class VerifyAndroidBackupRules {
+/** Verifies the packaged backup exclusions and the two file providers' cache scopes. */
+class VerifyAndroidStorageRules {
+    private static final Map<String, String> SHARING_PATHS = Map.of(
+        "attachments", "attachments/",
+        "csv_exports", "csv-export-v1/",
+        "accountant_exports", "accountant-export-v1/",
+        "report_exports", "report-export/",
+        "backup_share", "2203693cc04e0be7f4f024d5f9499e13/");
     private static final Set<String> DOMAINS = Set.of(
         "root", "file", "database", "sharedpref", "external",
         "device_root", "device_file", "device_database", "device_sharedpref");
@@ -22,8 +28,10 @@ class VerifyAndroidBackupRules {
             }
             verifyResource(archive, table, args[1], "backup_rules");
             verifyResource(archive, table, args[1], "data_extraction_rules");
+            verifyResource(archive, table, args[1], "camera_paths");
+            verifyResource(archive, table, args[1], "microsoft_maui_essentials_fileprovider_file_paths");
         }
-        System.out.println("Verified packaged legacy, cloud-backup and device-transfer exclusions.");
+        System.out.println("Verified packaged backup exclusions and scoped camera and sharing paths.");
     }
 
     private static ZipEntry requireEntry(ZipFile archive, String name) throws IOException {
@@ -58,8 +66,40 @@ class VerifyAndroidBackupRules {
                 throw new IOException("Unexpected compiled resource path for xml/" + ruleName + ".");
             }
             try (var input = archive.getInputStream(requireEntry(archive, "base/" + path))) {
-                verifyRules(Resources.XmlNode.parseFrom(input), ruleName);
+                var node = Resources.XmlNode.parseFrom(input);
+                switch (ruleName) {
+                    case "camera_paths" -> verifyCachePaths(node, ruleName, Map.of("camera", "camera/"));
+                    case "microsoft_maui_essentials_fileprovider_file_paths" -> verifyCachePaths(node, ruleName, SHARING_PATHS);
+                    default -> verifyRules(node, ruleName);
+                }
             }
+        }
+    }
+
+    private static void verifyCachePaths(Resources.XmlNode node, String resource, Map<String, String> expected)
+        throws IOException {
+        var remaining = new HashMap<>(expected);
+        for (var child : requireElement(node, "paths").getChildList()) {
+            var path = child.getElement();
+            if (!child.hasElement() || !path.getName().equals("cache-path") || !path.getNamespaceUri().isEmpty()
+                || path.getChildCount() != 0 || path.getAttributeCount() != 2) {
+                throw new IOException("Unexpected file access scope in xml/" + resource + ".");
+            }
+            var attributes = new HashMap<String, String>();
+            for (var attribute : path.getAttributeList()) {
+                if (!attribute.getNamespaceUri().isEmpty() || attribute.hasCompiledItem()) {
+                    throw new IOException("Expected literal cache path attributes in xml/" + resource + ".");
+                }
+                attributes.put(attribute.getName(), attribute.getValue());
+            }
+            var name = attributes.get("name");
+            var value = attributes.get("path");
+            if (name == null || value == null || !value.equals(remaining.remove(name))) {
+                throw new IOException("Unexpected or duplicate cache path in xml/" + resource + ".");
+            }
+        }
+        if (!remaining.isEmpty()) {
+            throw new IOException("Missing approved cache paths in xml/" + resource + ".");
         }
     }
 

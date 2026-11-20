@@ -161,7 +161,7 @@ jobs:
           fi
           java -jar "$bundletool" dump manifest --bundle="${bundles[0]}" | \
             python eng/maui/verify-android-bundle-manifest.py pro.vafadar.zanance "$APP_VERSION" "$APP_BUILD_NUMBER" "$edition"
-          java --class-path "$bundletool" eng/maui/VerifyAndroidBackupRules.java "${bundles[0]}" pro.vafadar.zanance
+          java --class-path "$bundletool" eng/maui/VerifyAndroidStorageRules.java "${bundles[0]}" pro.vafadar.zanance
           printf 'path=%s\n' "${bundles[0]}" >> "$GITHUB_OUTPUT"
 
       - name: Remove temporary bundle signing files

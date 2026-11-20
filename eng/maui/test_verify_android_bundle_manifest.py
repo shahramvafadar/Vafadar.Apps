@@ -16,7 +16,17 @@ BASE_MANIFEST = """<manifest xmlns:android="http://schemas.android.com/apk/res/a
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application android:allowBackup="false" android:fullBackupContent="@xml/backup_rules"
-        android:dataExtractionRules="@xml/data_extraction_rules" />
+        android:dataExtractionRules="@xml/data_extraction_rules">
+        <provider android:name="pro.vafadar.zanance.CameraFileProvider" android:authorities="pro.vafadar.zanance.camera"
+            android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/camera_paths" />
+        </provider>
+        <provider android:name="microsoft.maui.essentials.fileProvider" android:authorities="pro.vafadar.zanance.fileProvider"
+            android:exported="false" android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/microsoft_maui_essentials_fileprovider_file_paths" />
+        </provider>
+    </application>
 </manifest>"""
 
 
@@ -60,6 +70,20 @@ class BundlePermissionTests(unittest.TestCase):
         })
         result = self.verify("cloud-backup")
         self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_provider_binding_rejects_public_sharing_provider(self):
+        provider = self.manifest.findall("application/provider")[1]
+        provider.set(ANDROID + "exported", "true")
+        result = self.verify("offline")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn(b"fileProvider must be non-exported", result.stderr)
+
+    def test_provider_binding_rejects_camera_using_sharing_paths(self):
+        metadata = self.manifest.find("application/provider/meta-data")
+        metadata.set(ANDROID + "resource", "@xml/microsoft_maui_essentials_fileprovider_file_paths")
+        result = self.verify("offline")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn(b"camera must bind only @xml/camera_paths", result.stderr)
 
     def test_sdk_qualified_unexpected_permission_fails(self):
         self.add_permission("android.permission.READ_CONTACTS", tag="uses-permission-sdk-23")

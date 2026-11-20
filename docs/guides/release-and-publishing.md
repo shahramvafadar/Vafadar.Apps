@@ -83,6 +83,10 @@ signer continuity with the installed app are separate checks.
    rules from the base manifest. The verifier resolves both resources from the bundle's base resource table and
    checks the full-domain exclusions in every packaged configuration, including the default. Android and OEM
    transfer behavior still require their separate acceptance checks.
+   The camera and sharing providers must remain non-exported and bind to their own scoped
+   XML resources. The verifier also checks the compiled paths in every packaged configuration.
+   The camera provider can use only its camera subdirectory, and the sharing provider can use
+   only the five approved internal cache subdirectories.
    Without a cloud-backup client ID, the bundle must omit INTERNET. A cloud-backup
    bundle must request INTERNET without an SDK cap. Both editions must omit ACCESS_NETWORK_STATE. The verifier
    requires the exact OneDrive browser callback for the configured Entra client and rejects an MSAL callback when

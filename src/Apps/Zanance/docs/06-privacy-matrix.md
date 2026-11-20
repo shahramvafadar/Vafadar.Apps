@@ -78,6 +78,14 @@ same unchanged screen was used to finish the report path. Both fixture source di
 at cleanup. The temporary packages and emulator were retired. Evidence is in
 `artifacts/restricted-share-document-review`.
 
+The Play workflow verifies both provider bindings in the decoded base manifest and checks
+the compiled camera and sharing paths in every packaged configuration. Two manifest
+regressions cover an exported sharing provider and a camera provider bound to sharing paths.
+The previous signed AAB `ab1ff5de` was rejected for its broad sharing paths. A new locally
+signed AAB `885f79b6` passed the manifest, compiled storage policy, 16 KiB ELF and SQLCipher
+checks. A development certificate signed this bundle. These checks required no repeated
+native handoffs or Play submission. Bundle evidence is in `artifacts/restricted-share-bundle`.
+
 ## Permissions
 
 iOS: `NSFaceIDUsageDescription` (app lock) and `NSCameraUsageDescription` (receipt photos, D-38), localised in `Platforms/iOS/*.lproj/InfoPlist.strings`; notifications use the system authorisation dialog. Windows: no capability beyond `runFullTrust` (files only, no camera). Android manifest:
