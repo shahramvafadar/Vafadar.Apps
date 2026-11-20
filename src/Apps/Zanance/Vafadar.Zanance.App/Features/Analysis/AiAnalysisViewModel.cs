@@ -126,6 +126,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private CancellationTokenSource? visible;
     private Func<bool>? ownsRoot;
     private CancellationToken featureSession;
+    private CancellationTokenRegistration featureRetirement;
     private bool OwnsPresentation => active && !featureSession.IsCancellationRequested && !rootRetired && (ownsRoot?.Invoke() ?? true);
     /// <summary>Only the actual original native root may own this analysis page.</summary>
     internal void BindRootOwner(Func<bool> owner) => ownsRoot = owner;
@@ -225,6 +226,9 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Stops pending native/network publication into a departed profile/form while preserving private continuation.</summary>
     public void Retire()
     {
+        // A cancellation callback can retire its own registration.
+        featureRetirement.Unregister();
+        featureRetirement = default;
         // Detach before any callback/disposal can reenter retirement or adopt a newer connection.
         var detached = remote; remote = null; metadataReady = false;
         local.Changed -= OnLanguageChanged; frameEpoch++; active = false;
@@ -232,6 +236,39 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         try { Loaded = false; choiceEpoch++; Invalidate(); }
         finally { detached?.Dispose(); Refresh(); }
     }
+    private void RetireDisabledFeature(CancellationToken original)
+    {
+        if (!active || featureSession != original) return;
+        availability = null;
+        retained = null;
+        // Clear all private display values before any binding callback can expose a partial retirement.
+        stagingMetadata = true;
+        try
+        {
+            Summary = Disclosure = ShareStatus = ResultSnapshot = ResultText = ResultStatus = BalanceText = null;
+            ProviderText = text["Ai_NoProvider"];
+        }
+        finally { stagingMetadata = false; }
+
+        try { Retire(); }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            // A presentation callback must not reject a device-wide privacy change.
+        }
+        foreach (var field in new[]
+        {
+            nameof(Summary), nameof(Disclosure), nameof(ShareStatus), nameof(ResultSnapshot),
+            nameof(ResultText), nameof(ResultStatus), nameof(BalanceText), nameof(ProviderText),
+        })
+        {
+            try { OnPropertyChanged(field); }
+            catch (Exception error) when (error is not OutOfMemoryException)
+            {
+                // Keep withdrawing the remaining display fields even if one binding fails.
+            }
+        }
+    }
+
     /// <summary>Loads actual account choices only, with no HTTP, automatic selection, settings write or model run.</summary>
     [RelayCommand] public async Task LoadAsync()
     {
@@ -245,6 +282,9 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         readingSource = true; operationActive = true; metadataReady = false;
         try
         {
+            featureRetirement.Unregister();
+            featureRetirement = feature.Register(() => RetireDisabledFeature(feature));
+            Validate(original);
             StartOperation(original); Loaded = false; Validate(original);
             remote?.Dispose(); remote = null; availability = null; retained = null; offer = null; review = null;
             Summary = Disclosure = ResultText = ResultStatus = ResultSnapshot = ShareStatus = BalanceText = null; ProviderText = text["Ai_NoProvider"];

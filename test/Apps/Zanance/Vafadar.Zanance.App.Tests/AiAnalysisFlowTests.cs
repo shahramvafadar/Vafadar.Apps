@@ -22,7 +22,7 @@ public sealed partial class AiAnalysisFlowTests
         internal AiBalance Balance = new(100, 0, 0, 0);
         internal bool LoseSubmissionResponse, FailRecordRead;
         internal Action? AfterSubmission;
-        internal int Submissions, Continues, Closes, RecordReads;
+        internal int Submissions, Continues, Closes, RecordReads, Disposals;
         internal Func<Task>? DuringAvailability;
         public string Destination => "https://localhost/fictional-ai-fixture";
         public async Task<AiAvailability> AvailabilityAsync(CancellationToken ct)
@@ -52,7 +52,7 @@ public sealed partial class AiAnalysisFlowTests
             var result = new AiRequestResult(original.Submission.RequestId, AiProtocol.Digest(original.Submission.Payload), AiRequestState.NotAccepted, 0, null, Balance);
             Record = original with { Result = result }; return Task.FromResult(result);
         }
-        public void Dispose() { }
+        public void Dispose() => Disposals++;
     }
     private sealed class Runtime : IAiRuntime
     {
@@ -106,6 +106,49 @@ public sealed partial class AiAnalysisFlowTests
         Assert.True(vm.Loaded);
         Assert.True(vm.CanCheckProvider);
         Assert.Null(vm.Disclosure);
+    }
+
+    [Fact]
+    public async Task Turning_off_AI_unpublishes_the_original_result_without_erasing_the_saved_request()
+    {
+        using var fixture = new FlowFixture();
+        var runtime = new Runtime();
+        var model = await Model(fixture, runtime);
+        await Review(model);
+        var payload = JsonSerializer.Deserialize(model.Disclosure!, AiJson.Default.AiPayload)!;
+        var offer = await runtime.Remote.OfferAsync(payload.Purpose, Ct);
+        var id = Guid.NewGuid();
+        const string originalResult = "Fictitious existing result";
+        var retained = new AiClientRecord(1, new(id, offer, payload),
+            new(id, AiProtocol.Digest(payload), AiRequestState.Completed, 3, originalResult, runtime.Remote.Balance));
+        runtime.Remote.Record = retained;
+        await model.CheckProviderAsync();
+        Assert.Equal(originalResult, model.ResultText);
+        Assert.NotNull(model.ResultSnapshot);
+
+        runtime.Features.Enabled = false;
+
+        Assert.Null(model.ResultSnapshot);
+        Assert.Null(model.ResultText);
+        Assert.Null(model.ResultStatus);
+        Assert.Null(model.BalanceText);
+        Assert.Null(model.Disclosure);
+        Assert.Null(model.Summary);
+        Assert.Equal(1, runtime.Remote.Disposals);
+        Assert.Same(retained, runtime.Remote.Record);
+        Assert.Equal(1, runtime.Remote.RecordReads);
+
+        runtime.Features.Enabled = true;
+        Assert.Null(model.ResultText);
+        Assert.False(model.CanShare);
+        await model.ActivateAsync();
+        Assert.Null(model.ResultSnapshot);
+        Assert.Equal(1, runtime.Remote.RecordReads);
+
+        await model.CheckProviderAsync();
+        Assert.Equal(originalResult, model.ResultText);
+        Assert.Equal(2, runtime.Remote.RecordReads);
+        Assert.Equal(0, runtime.Remote.Submissions);
     }
 
     /// <summary>Re-enabling AI cannot revive a provider check already pending when AI was disabled.</summary>

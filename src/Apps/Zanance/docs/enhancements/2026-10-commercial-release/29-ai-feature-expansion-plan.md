@@ -71,6 +71,17 @@ label. Only synthetic zero-opening accounts were set up. No ledger, provider or 
 command was used. The disposable emulator was retired. Evidence is under
 `artifacts/ai-opt-out-profile-scope`.
 
+Turning AI off also retires an already-open Analysis presentation. A synthetic
+regression exposed a prior completed result and request snapshot that stayed
+bound until the next account load. The retired feature session now clears the
+on-screen result, snapshot, wallet balance and local disclosure preview, and
+releases the active connection. The durable private request remains available
+after re-enabling and explicitly checking the provider. Re-enabling alone makes
+no read or submission. All 85 selected analysis flow and publication tests
+passed with synthetic effects and zero external provider requests.
+Strict Windows and Android Release builds passed. Signed offline Android APK
+SHA256: 76c9e3201f750adff97b69730690ddc786b1f0281782783c716dc34e7a509bd4.
+
 - Define a small versioned input and output contract for each approved task. Keep calculations, exact dates, sign and currency semantics in Core. Map model-generated facts to permitted source references so the app can open the original local view. Render output as text. Validate its schema, references, totals and bounds, including zero or insufficient data.
 - Use the current manager selection and Off control for simple and reasoning tasks. Extend the administrator's per-task selections as new distinct tasks are qualified. Treat content such as a note or OCR line as data. A task receives only the selected period, filtered scope, permitted fields and exact destination disclosed to the user. Avoid silent provider fallback. Wait for separate privacy, retention, recovery, budget and commercial gates before sending genuine data.
 - Qualify on a fixed set of synthetic cases for each task. Include refunds, transfers, incomplete or stale inputs, currency separation, date boundaries and the six supported languages. Confirm visible source links, offline continuity, per-request bounds, denial and failure without ledger changes, exact continuation after switching provider and stale suggestion refusal. Use a deterministic baseline before adding an AI dependency, and retain a separate measured quality and cost report for each task.
