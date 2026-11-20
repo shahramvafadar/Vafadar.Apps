@@ -1,0 +1,83 @@
+@* The choice of a form between the entries of the collections that go by some words and none of them
+   (step 20.4, ADR 0023). A name finds entries and decides nothing: two entries of one name are two choices,
+   each with what tells it apart – its kind, its collection, its other and earlier names – and the visitor
+   picks one or says that it is none of them. Nothing is chosen for them. No script. *@
+@using Vafadar.Dastan.Core
+@inject Visitor Visitor
+@inject DastanLibrary Library
+@inject IStringLocalizer<Ui> T
+
+@if (_shown.Count > 0 || Current is not null)
+{
+    <fieldset class="place-choice">
+        <legend>@T["Place_Choice_Title"]</legend>
+        <p class="note">@T["Place_Choice_Note"]</p>
+        @for (var index = 0; index < _shown.Count; index++)
+        {
+            var place = _shown[index];
+            var id = $"{Id}-entry-{index}";
+            <p class="tick">
+                <input id="@id" name="institution" type="radio" value="@place.Reference.Write()" checked="@(place.Reference == Current)" required />
+                <label for="@id">
+                    <strong><Loc Text="place.Entity.Label" /></strong>
+                    <span class="meta"> – <TypeName Type="place.Entity.Type" /> – @string.Format(CultureInfo.CurrentCulture, T["Place_Choice_In"], Visitor.Text(place.Collection.Label).Value)</span>
+                    @if (place.Seat is { } seat)
+                    {
+                        <span class="meta"> – <Loc Text="seat.Label" /></span>
+                    }
+                    @if (!place.Entity.Names.IsEmpty)
+                    {
+                        <span class="meta"> – @T["Names_Title"]: @foreach (var (name, at) in place.Entity.Names.Select((name, at) => (name, at)))
+                            {
+                                @(at > 0 ? T["Place_Choice_And"] : string.Empty)<span lang="@name.Language" dir="auto">@name.Name</span>
+                            }
+                        </span>
+                    }
+                </label>
+                <span class="meta place-page"><a href="@($"{place.Reference.Collection}/entity/{place.Reference.Entity}")">@T["Place_Choice_Page"]<span class="visually-hidden"> – @Visitor.Text(place.Entity.Label).Value</span></a></span>
+            </p>
+        }
+        @if (_gone)
+        {
+            @* The statement points at an entry that is not published at the moment. It may keep the link: the
+               entry may come back, and the words say what was meant meanwhile. *@
+            <p class="tick">
+                <input id="@($"{Id}-entry-kept")" name="institution" type="radio" value="@Current!.Write()" checked required />
+                <label for="@($"{Id}-entry-kept")">@T["Place_Choice_Gone"]</label>
+            </p>
+        }
+        <p class="tick">
+            <input id="@($"{Id}-entry-none")" name="institution" type="radio" value="@AffiliationEndpoints.OnlyWords" required />
+            <label for="@($"{Id}-entry-none")">@T["Place_Choice_None"]</label>
+        </p>
+    </fieldset>
+}
+
+@code {
+    private List<Institution> _shown = [];
+    private bool _gone;
+
+    /// <summary>Gets or sets what the identifiers of the choices begin with: unique on the page.</summary>
+    [Parameter, EditorRequired]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the entries that were found by the words of the visitor.</summary>
+    [Parameter]
+    public System.Collections.Immutable.ImmutableArray<Institution> Found { get; set; } = [];
+
+    /// <summary>Gets or sets the entry the statement points at already, when it points at one.</summary>
+    [Parameter]
+    public EntityReference? Current { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _shown = [.. Found.IsDefault ? [] : Found];
+        var current = Library.Institutions.Find(Current);
+        if (current is not null && !_shown.Contains(current))
+        {
+            _shown.Insert(0, current);
+        }
+
+        _gone = Current is not null && current is null;
+    }
+}

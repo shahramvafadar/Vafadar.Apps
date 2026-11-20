@@ -59,12 +59,12 @@ public sealed class RelationshipsBrowserTests(AccountsBrowserSite site) : IClass
 
         // Mina asks twice: a friend – and a colleague, with where and since when.
         await mina.GotoAsync(people);
-        var ask = mina.Locator("#ask form");
+        var ask = mina.Locator("#ask form[method=post]");
         await ask.Locator("[name=name]").FillAsync(saraName);
         await ask.Locator("[name=kind]").SelectOptionAsync("friend");
         await ask.Locator("button[type=submit]").ClickAsync();
         await BrowserSite.Arrived(mina, new Regex(@"/account/people\?said=asked$"));
-        ask = mina.Locator("#ask form");
+        ask = mina.Locator("#ask form[method=post]");
         await ask.Locator("[name=name]").FillAsync(saraName);
         await ask.Locator("[name=kind]").SelectOptionAsync("colleague");
         await ask.Locator("[name=place]").FillAsync("نشر زابل");
@@ -124,7 +124,7 @@ public sealed class RelationshipsBrowserTests(AccountsBrowserSite site) : IClass
 
         // A place, shown to everybody, and found through by the other.
         await sara.GotoAsync($"/{language}/account/affiliations");
-        var add = sara.Locator("#add form");
+        var add = sara.Locator("#add form[method=post]");
         await add.Locator("[name=place]").FillAsync("مدرسهٔ کابل");
         await add.Locator("[name=since]").FillAsync("1377");
         await add.Locator("[name=until]").FillAsync("1381");

@@ -377,3 +377,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - An account made through Microsoft, or through any provider that only names a mail address, is an account
   once you have opened the link the site mails to the address you wrote – not before, whichever way you come.
   You can have the mail again or correct the address. Nothing tells anybody whether an address has an account.
+- Where you were: when you state a university, a company, a club or an organisation, you can look for it among
+  the entries of the collections and choose one – or none, and keep your own words. A place you chose stays the
+  same place when it gets another name and is not taken for another place of the same name; people are found
+  through the entry, whatever name each wrote, and never through a name alone. You can state several times at one
+  place, and the years between them count as not there. The same choice exists for where two people were
+  colleagues, classmates or team-mates. The published collection holds no such place yet.

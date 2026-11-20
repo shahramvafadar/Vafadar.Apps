@@ -279,7 +279,10 @@ its page lists them. A name that two entities share joins nothing: they stay two
 | `spoilerLevel` | Optional: the stage from which the name may be shown, when the name itself gives something away; without it the name is shown with its entity |
 
 `identifiers` – optional – lists what the entity is called in the catalogues of others. Naming an identifier
-does not take over what that catalogue states.
+does not take over what that catalogue states. For a university, a company, a club or another organisation an
+`exact` identifier does one thing more: an entity of another collection of the site that carries the same
+identifier of the same catalogue, also as `exact`, is the same place for people who state that they were there
+([ADR 0023](adr/0023-institutions.md)). Nothing else makes two entities one place – not a name.
 
 | Field | Meaning |
 |---|---|

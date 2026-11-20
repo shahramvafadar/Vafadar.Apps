@@ -23,6 +23,9 @@ public static class AffiliationEndpoints
     /// <summary>The address the forms are sent to. It has no language.</summary>
     public const string Root = "/preferences/affiliations";
 
+    /// <summary>What a form names as the place when it is none of the entries it was offered: the words stand alone.</summary>
+    public const string OnlyWords = "none";
+
     /// <summary>How often an address may ask who was at a place, in an hour: a search is no way to try every place.</summary>
     public const int SearchesPerHour = 60;
 
@@ -57,18 +60,21 @@ public static class AffiliationEndpoints
                 : await next(invocation).ConfigureAwait(false);
         });
 
-        forms.MapPost("/add", (HttpContext context, AccountDesk desk, [FromForm] string? place, [FromForm] string? role, [FromForm] string? returnUrl) =>
+        forms.MapPost("/add", (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] string? place, [FromForm] string? role, [FromForm] string? returnUrl) =>
         {
             using var store = desk.Open();
-            return Terms(context.Request.Form, place, role) is { } terms && store.AddAffiliation(Me(context), terms) is not null
+            return Terms(context.Request.Form, place, role, library.Institutions, kept: null) is { } terms && store.AddAffiliation(Me(context), terms) is not null
                 ? Said(returnUrl, "added", "mine")
                 : Back(returnUrl, "add", "affiliation");
         });
 
-        forms.MapPost("/change", (HttpContext context, AccountDesk desk, [FromForm] long? affiliation, [FromForm] string? place, [FromForm] string? role, [FromForm] string? returnUrl) =>
+        forms.MapPost("/change", (HttpContext context, AccountDesk desk, DastanLibrary library, [FromForm] long? affiliation, [FromForm] string? place, [FromForm] string? role, [FromForm] string? returnUrl) =>
         {
             using var store = desk.Open();
-            return affiliation is { } number && Terms(context.Request.Form, place, role) is { } terms && store.ChangeAffiliation(Me(context), number, terms)
+
+            // An affiliation may keep the entry it points at, also while that entry is not published.
+            var kept = store.Affiliations(Me(context)).FirstOrDefault(mine => mine.Number == affiliation)?.Terms.Institution;
+            return affiliation is { } number && Terms(context.Request.Form, place, role, library.Institutions, kept) is { } terms && store.ChangeAffiliation(Me(context), number, terms)
                 ? Said(returnUrl, "changed", "mine")
                 : Back(returnUrl, "mine", "affiliation");
         });
@@ -92,11 +98,29 @@ public static class AffiliationEndpoints
     // The filter of the group has seen that somebody signed in.
     private static string Me(HttpContext context) => AccountDesk.Session(context.User)!.Id;
 
-    // What a form says about an affiliation; nothing when a time is none.
-    private static AffiliationTerms? Terms(IFormCollection form, string? place, string? role) =>
+    // What a form says about an affiliation; nothing when a time is none or the entry it names is none.
+    private static AffiliationTerms? Terms(IFormCollection form, string? place, string? role, Institutions places, EntityReference? kept) =>
         TreeEndpoints.Time(form, "since", out var since) && TreeEndpoints.Time(form, "until", out var until) && TreeEndpoints.Time(form, "graduated", out var graduated)
-            ? new AffiliationTerms(place ?? string.Empty, role, since, until, graduated)
+            && Chosen(form, places, kept, out var institution)
+            ? new AffiliationTerms(place ?? string.Empty, role, since, until, graduated, institution)
             : null;
+
+    /// <summary>
+    /// Reads the entry of a collection a form names as the place (step 20.4, ADR 0023): none – the words stand
+    /// alone –, a place of the directory, or the entry the statement points at already. Anything else is no
+    /// choice the page offered, and the form is refused: a statement points at nothing a visitor made up.
+    /// </summary>
+    internal static bool Chosen(IFormCollection form, Institutions places, EntityReference? kept, out EntityReference? chosen)
+    {
+        chosen = null;
+        var written = form["institution"].ToString();
+        if (written.Length == 0 || written == OnlyWords)
+        {
+            return true;
+        }
+
+        return written.Length <= EntityReference.Longest && EntityReference.TryRead(written, out chosen) && (chosen == kept || places.Find(chosen) is not null);
+    }
 
     // The page of the affiliations in the language the form came from, and nowhere else.
     private static string Home(string? returnUrl)

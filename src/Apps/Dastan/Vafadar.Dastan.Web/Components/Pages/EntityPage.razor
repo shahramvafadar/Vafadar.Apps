@@ -1,6 +1,8 @@
 @page "/{Collection}/entity/{Id}"
 @inject Visitor Visitor
 @inject DastanSite Site
+@inject DastanLibrary Library
+@inject AccountDesk Desk
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -43,6 +45,12 @@
             <a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Entity_Collection"], Visitor.Text(story.Label).Value)</a>
         </p>
         <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
+        @if (Desk.IsOpen && Library.Institutions.Find(new EntityReference(Site.Collection, overview.Entity.Id)) is not null)
+        {
+            @* A place people can have been at: who signed in may ask who states to have been here and lets
+               them know (step 20.4). The page itself names nobody. *@
+            <p class="meta"><a rel="nofollow" href="@($"account/affiliations?entity={Uri.EscapeDataString($"{Site.Collection}/{overview.Entity.Id}")}#find")">@T["Entity_WhoWasHere"]</a></p>
+        }
         <SaveControl Kind="SavedKind.Entity" Id="@overview.Entity.Id.Value" />
     </header>
 

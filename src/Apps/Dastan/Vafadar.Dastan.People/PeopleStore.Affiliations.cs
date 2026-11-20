@@ -12,7 +12,11 @@ namespace Vafadar.Dastan.People;
 /// <param name="Since">From when, when that is stated.</param>
 /// <param name="Until">Until when, when that is stated.</param>
 /// <param name="Graduated">When the person graduated, when one is recorded. A statement of its own, not the end of the attendance.</param>
-public sealed record AffiliationTerms(string Organisation, string? Role = null, TemporalExpression? Since = null, TemporalExpression? Until = null, TemporalExpression? Graduated = null);
+/// <param name="Institution">
+/// The entity of a collection the place is, when the account chose one (step 20.4, ADR 0023). Without it the
+/// words stand alone – allowed, and found by nobody who asks for an entity.
+/// </param>
+public sealed record AffiliationTerms(string Organisation, string? Role = null, TemporalExpression? Since = null, TemporalExpression? Until = null, TemporalExpression? Graduated = null, EntityReference? Institution = null);
 
 /// <summary>An affiliation as its account sees it.</summary>
 /// <param name="Number">The number of the affiliation in the store.</param>
@@ -56,14 +60,18 @@ public sealed partial class PeopleStore
     /// <summary>
     /// States an affiliation. It is shown to nobody else until its account says so. Returns its number, or
     /// nothing when it says something impossible – no name, a text that is too long, a time that is none or an
-    /// end before the beginning – when the account states the same place with the same role already, or has as
-    /// many as it may.
+    /// end before the beginning – when the account has stated exactly this already, or has as many as it may.
+    /// <para>
+    /// Somebody is at one place more than once: a stretch at a place is a statement of its own (step 20.4).
+    /// "Exactly this" is the same place, the same role and the same times – a form that is sent twice makes
+    /// one statement. Two stretches with different times are two, and what lies between them is no attendance.
+    /// </para>
     /// </summary>
     public long? AddAffiliation(string id, AffiliationTerms terms) => Guarded([OfAccount(id)], () =>
     {
         if (!IsOpen(id) || Read(terms) is not { } read
             || _context.Affiliations.Count(stored => stored.Account == id) >= MostAffiliations
-            || _context.Affiliations.AsNoTracking().Any(stored => stored.Account == id && stored.OrganisationKey == read.Key && stored.Role == read.Role))
+            || Stated(id, read, terms, except: null))
         {
             return (long?)null;
         }
@@ -80,8 +88,7 @@ public sealed partial class PeopleStore
     public bool ChangeAffiliation(string id, long number, AffiliationTerms terms) => Guarded([OfAccount(id)], () =>
     {
         var stored = _context.Affiliations.SingleOrDefault(candidate => candidate.Number == number && candidate.Account == id);
-        if (stored is null || Read(terms) is not { } read
-            || _context.Affiliations.AsNoTracking().Any(other => other.Account == id && other.Number != number && other.OrganisationKey == read.Key && other.Role == read.Role))
+        if (stored is null || Read(terms) is not { } read || Stated(id, read, terms, except: number))
         {
             _context.ChangeTracker.Clear();
             return false;
@@ -92,6 +99,16 @@ public sealed partial class PeopleStore
         Save();
         return true;
     });
+
+    // Whether the account states exactly this already: the same place – the same entity or, where none is
+    // named on either side, the same words – with the same role and the same times.
+    private bool Stated(string id, (string Organisation, string Key, string? Role) read, AffiliationTerms terms, long? except)
+    {
+        var (institution, since, until, graduated) = (terms.Institution?.Write(), PersonTime.Write(terms.Since), PersonTime.Write(terms.Until), PersonTime.Write(terms.Graduated));
+        return _context.Affiliations.AsNoTracking().Any(other => other.Account == id && other.Number != except
+            && other.Institution == institution && (institution != null || other.OrganisationKey == read.Key)
+            && other.Role == read.Role && other.Since == since && other.Until == until && other.Graduated == graduated);
+    }
 
     /// <summary>Removes an affiliation.</summary>
     public bool RemoveAffiliation(string id, long number)
@@ -158,11 +175,44 @@ public sealed partial class PeopleStore
             return [];
         }
 
-        var stored = _context.Affiliations.AsNoTracking().Where(candidate => candidate.OrganisationKey == key && candidate.Account != viewer).ToList();
+        return Found(viewer, _context.Affiliations.AsNoTracking().Where(candidate => candidate.OrganisationKey == key && candidate.Account != viewer).ToList(), InWords, year, question);
+    }
+
+    // What the rules are told a place is when it was only written in words: they ask for an entity, and the
+    // words of an account are none. Nothing is found by this name – it stands for "the place of these words".
+    private static readonly EntityId InWords = new("place-in-words");
+
+    /// <summary>
+    /// Returns who a viewer may find through a place that is an entity of a collection (step 20.4, ADR 0023):
+    /// the open accounts whose affiliation points at it, under the same rules as
+    /// <see cref="FindThrough(string, string, YearOfEra?, AttendanceQuestion)"/>. An affiliation that only names
+    /// the place in words is not among them, however alike the words are: a name does not make a place.
+    /// </summary>
+    /// <param name="viewer">The account that asks.</param>
+    /// <param name="place">
+    /// The entity, with every entity the editors say is the same one in another collection. The store does
+    /// not know the collections: who asks says which references are one place.
+    /// </param>
+    /// <param name="year">The year that is asked about, or nothing for any time.</param>
+    /// <param name="question">What the year is asked of the attendance.</param>
+    public IReadOnlyList<FoundThrough> FindThrough(string viewer, IReadOnlyCollection<EntityReference> place, YearOfEra? year = null, AttendanceQuestion question = AttendanceQuestion.AttendedDuring)
+    {
+        ArgumentNullException.ThrowIfNull(place);
+        if (!IsOpen(viewer) || place.Count == 0)
+        {
+            return [];
+        }
+
+        var written = place.Select(reference => reference.Write()).Distinct(StringComparer.Ordinal).ToList();
+        return Found(viewer, _context.Affiliations.AsNoTracking().Where(candidate => candidate.Institution != null && written.Contains(candidate.Institution) && candidate.Account != viewer).ToList(), place.First().Entity, year, question);
+    }
+
+    // Who of those that state a place a viewer may find there, and with which answer to a year.
+    private List<FoundThrough> Found(string viewer, List<StoredAffiliation> stored, EntityId place, YearOfEra? year, AttendanceQuestion question)
+    {
         var apart = _context.Blocks.AsNoTracking().Where(block => block.By == viewer || block.Blocked == viewer).AsEnumerable().Select(block => block.By == viewer ? block.Blocked : block.By).ToHashSet(StringComparer.Ordinal);
         var names = Names(stored.Select(candidate => candidate.Account));
         var asked = new AccountId(viewer);
-        var place = new EntityId("place");
         var open = stored.Where(candidate => names.ContainsKey(candidate.Account) && !apart.Contains(candidate.Account)).ToList();
 
         // One record of the rules for each affiliation, with its times as the rules can count them.
@@ -224,7 +274,7 @@ public sealed partial class PeopleStore
     }
 
     private static AffiliationTerms Terms(StoredAffiliation stored) =>
-        new(stored.Organisation, stored.Role, PersonTime.Read(stored.Since), PersonTime.Read(stored.Until), PersonTime.Read(stored.Graduated));
+        new(stored.Organisation, stored.Role, PersonTime.Read(stored.Since), PersonTime.Read(stored.Until), PersonTime.Read(stored.Graduated), EntityReference.Read(stored.Institution));
 
     // The attendance as the rules ask for it: something that lasted, from what is stated of its beginning to
     // what is stated of its end; a time that is not stated at all answers no year.
@@ -267,5 +317,5 @@ public sealed partial class PeopleStore
     }
 
     private static void Write(StoredAffiliation stored, (string Organisation, string Key, string? Role) read, AffiliationTerms terms) =>
-        (stored.Role, stored.Since, stored.Until, stored.Graduated) = (read.Role, PersonTime.Write(terms.Since), PersonTime.Write(terms.Until), PersonTime.Write(terms.Graduated));
+        (stored.Role, stored.Since, stored.Until, stored.Graduated, stored.Institution) = (read.Role, PersonTime.Write(terms.Since), PersonTime.Write(terms.Until), PersonTime.Write(terms.Graduated), terms.Institution?.Write());
 }

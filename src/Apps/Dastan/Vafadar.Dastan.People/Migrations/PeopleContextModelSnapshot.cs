@@ -127,6 +127,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(600)
                         .HasColumnType("character varying(600)");
 
+                    b.Property<string>("Institution")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
                     b.Property<string>("Organisation")
                         .IsRequired()
                         .HasMaxLength(160)
@@ -152,6 +156,8 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasKey("Number");
 
                     b.HasIndex("Account");
+
+                    b.HasIndex("Institution");
 
                     b.HasIndex("OrganisationKey");
 
@@ -617,6 +623,10 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<string>("Context")
                         .HasMaxLength(120)
                         .HasColumnType("character varying(120)");
+
+                    b.Property<string>("ContextInstitution")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("ContextKey")
                         .IsRequired()

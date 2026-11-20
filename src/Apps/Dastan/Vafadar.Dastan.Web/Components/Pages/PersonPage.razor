@@ -3,6 +3,7 @@
 @using Vafadar.Dastan.People
 @inject Visitor Visitor
 @inject AccountDesk Desk
+@inject DastanLibrary Library
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
 
@@ -64,7 +65,7 @@
                 @foreach (var shown in _profile.Affiliations)
                 {
                     var when = shown.DatesShown ? AffiliationEndpoints.When(shown.Terms, T, Visitor) : string.Empty;
-                    <li><span dir="auto">@shown.Terms.Organisation</span>@if (shown.Terms.Role is { } role)
+                    <li><PlaceName Words="@shown.Terms.Organisation" Reference="shown.Terms.Institution" />@if (shown.Terms.Role is { } role)
                         {
                             <span class="meta"> – <bdi>@role</bdi></span>
                         }
@@ -268,5 +269,5 @@
         }
     }
 
-    private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
+    private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor, Library.Institutions) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
 }

@@ -29,6 +29,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0020](0020-graph.md) | The graph: a contract of Dastan on Syncfusion EJ2 Diagram | Accepted (D-079); step 19.8 |
 | [0021](0021-timeline.md) | The timeline is a control of Dastan's own, with a calendar, deep time and the order of a telling | Accepted (D-079); step 19.9 |
 | [0022](0022-locks.md) | Every act that looks before it writes holds the locks of what it looks at, in one order | Accepted; step 20.2 |
+| [0023](0023-institutions.md) | A place somebody was at is an entity of a collection when they choose one, and a time there is a stretch of its own | Accepted; step 20.4 |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),
 [0012](../../../../../docs/adr/0012-temporal-model.md) (stated time), [0013](../../../../../docs/adr/0013-web-library.md) (the web library).

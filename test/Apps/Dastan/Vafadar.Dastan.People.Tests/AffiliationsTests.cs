@@ -205,11 +205,13 @@ public sealed class AffiliationsTests : IDisposable
     {
         var number = At(_mina, School, 1998, 2002, role: "student");
 
-        Assert.Null(_store.AddAffiliation(_mina, new("school of kabul", "student")));
+        // The same place, role and times once more is the same statement, however the place is written; another
+        // time at the same place in the same role is a stretch of its own (step 20.4, InstitutionsTests).
+        Assert.Null(_store.AddAffiliation(_mina, new("school of kabul", "student", Year(1998), Year(2002))));
         Assert.NotNull(_store.AddAffiliation(_mina, new(School, "teacher", Year(2010))));
         Assert.False(_store.ChangeAffiliation(_sara, number, new("Somewhere else")));
         Assert.False(_store.RemoveAffiliation(_sara, number));
-        Assert.False(_store.ChangeAffiliation(_mina, number, new(School, "teacher")));
+        Assert.False(_store.ChangeAffiliation(_mina, number, new(School, "teacher", Year(2010))));
 
         Assert.True(_store.ChangeAffiliation(_mina, number, new("Kabul Books", "typesetter", Year(2003))));
 
