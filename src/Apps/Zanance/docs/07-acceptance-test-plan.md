@@ -676,6 +676,29 @@ retired. The staged packet, alarm, native record, tap receipt and terminal
 checks are retained under `artifacts/at72-shared-reminder`. Physical-device,
 Doze, snooze and cancellation before delivery remain separate.
 
+### Android pending group replacement after skipping one occurrence
+
+An independent fixture on the retained signed APK `7e70152c` scheduled the
+same pair of original dates for 08:58 on a fresh owned Android 16 x64 emulator
+with 4096-byte pages. Before any Skip, AlarmManager reported the grouped
+request `126705161` at 08:57:59.999. One native Skip acted on the visible
+original November 21 row. At 08:56:31 only the November 22 request
+`1665900913` remained pending with the same deadline and UID `10216`.
+Neither request had published a notification before the scheduled time.
+
+At 08:58:31 no notification was active. The first active observation at
+08:58:43 and Android's record both matched only the replacement request.
+The private generic text remained in use. Tapping that real notification once
+opened the November 22 due item directly and showed its adjusted November 23
+deadline. The ledger stayed empty. Android removed the opened notification,
+and the owned emulator was retired. No product rebuild or repeat Skip was
+needed. The observer initially assumed an exact epoch instead of admitting the
+recorded one-millisecond difference. A retained Home capture name also needed
+a fresh observation after an XML parse retry. Both observer refusals preceded
+the single actual Skip. The fixture, alarms, delivered record and native
+destination evidence are retained under `artifacts/at72-shrink-reminder`.
+Physical-device, Doze and delayed broadcast races remain separate.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.
