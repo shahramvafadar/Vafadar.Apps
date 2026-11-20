@@ -1620,8 +1620,9 @@ in a different app process on the same boot, Home still showed EUR 35.00, Transa
 the named EUR 2.00 expense and Plans retained the EUR 9.00 occurrence marked Skipped.
 The original backup digest stayed equal. The owned emulator was retired. Evidence remains under
 `artifacts/zanance-16k-legacy-restore`. No financial source was recreated or posted. This verifies
-the observed portable restore and persistence in userspace simulation. Password-protected
-recovery in this environment, whole-database equality and hardware page-size acceptance remain open.
+the observed portable restore and persistence in userspace simulation. A separate build in the same
+page-size simulation also passed [password-protected first-run restore and cold reopen](07-acceptance-test-plan.md#at-57-password-protected-restore-on-a-fresh-android-installation).
+Whole-database equality in the 16 KiB simulation and physical ARM64 page-size acceptance remain open.
 
 ## Android backup preview from a provider stream
 
