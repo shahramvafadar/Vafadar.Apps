@@ -137,7 +137,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     }
     /// <summary>Root replacement permanently retires the old disclosure and private connection.</summary>
     internal void RetireRoot() { rootRetired = true; Retire(); }
-    /// <summary>Pending source reads permit cancellation by Back; native disclosure/submission keeps its owner.</summary>
+    /// <summary>Cancellable reads permit Back. Native disclosure and submission keep their owner.</summary>
     public bool CanLeave => !operationActive || readingSource || featureSession.IsCancellationRequested;
     /// <summary>Actual appearance does not silently retry a visible failed source.</summary>
     internal Task ActivateAsync() => OwnsPresentation || rootRetired ? Task.CompletedTask : LoadAsync();
@@ -442,7 +442,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     {
         if (!CanCheckProvider || scope is null || visible is not { } owner) return;
         var cancellation = owner.Token;
-        var version = epoch; var originalFile = scope.File; operationActive = true; metadataReady = false; IAiRemote? opened = null;
+        var version = epoch; var originalFile = scope.File; readingSource = operationActive = true; metadataReady = false; IAiRemote? opened = null;
         try
         {
             StartOperation(version); offer = null;
@@ -511,7 +511,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     {
         if (!CanQuote || remote is null || review is null || visible is not { } owner) return;
         var cancellation = owner.Token;
-        var version = epoch; var original = review; var connection = remote; operationActive = true;
+        var version = epoch; var original = review; var connection = remote; readingSource = operationActive = true;
         try
         {
             // D-979: beginning a replacement quote revokes earlier terms before any busy/binding callback.

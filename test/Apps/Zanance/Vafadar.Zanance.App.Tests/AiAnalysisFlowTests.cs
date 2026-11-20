@@ -90,11 +90,11 @@ public sealed partial class AiAnalysisFlowTests
     private static async Task Review(AiAnalysisViewModel vm)
     { Assert.Single(vm.Accounts).Selected = true; await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure); }
 
-    /// <summary>Retiring the original page cancels connected reads even while AI stays enabled.</summary>
+    /// <summary>Back can retire connected reads even while AI stays enabled.</summary>
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public async Task Retiring_analysis_page_cancels_its_provider_metadata_read(bool quote)
+    public async Task Analysis_back_cancels_pending_provider_metadata_read(bool quote)
     {
         using var fixture = new FlowFixture();
         var runtime = new Runtime();
@@ -120,7 +120,9 @@ public sealed partial class AiAnalysisFlowTests
         try
         {
             Assert.False(pending.IsCompleted);
-            model.RetireRoot();
+            Assert.True(model.HasPendingOperation);
+            Assert.True(model.CanLeave);
+            model.Retire();
             Assert.True(runtime.Features.Enabled);
             Assert.True(received.IsCancellationRequested);
             await pending.WaitAsync(TimeSpan.FromSeconds(5), Ct);
