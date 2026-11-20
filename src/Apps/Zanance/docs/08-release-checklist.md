@@ -1537,6 +1537,16 @@ showed EUR 42.75. Cancel and Discard left the transaction view empty. The owned 
 retired. Evidence is under `artifacts/receipt-virtual-native`. This check made no product change
 and did not repeat the previous pipe or ordinary-provider qualification.
 
+The same signed APK `75b05718` completed its new native picker path on Android 7 (API 24).
+With AI off, one long press selected the original synthetic raster PDF in Android's internal
+storage and the system Open action returned it to Zanance. The editable amount was EUR 42.75.
+Cancel and Discard left the transaction view empty. The initial picker observer clicked before
+the drawer finished closing and later expected the visual uppercase label instead of the
+accessibility label for Open. Both were resolved in the same picker without repeating the
+selection. The owned emulator stopped. Automatic deletion of its disposable AVD was refused
+before execution. Captures and its path are retained in `artifacts/receipt-picker-api24-native`.
+The build and the successful Android 16 checks were not repeated.
+
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
 deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate
