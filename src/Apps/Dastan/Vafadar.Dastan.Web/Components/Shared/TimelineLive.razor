@@ -1,0 +1,64 @@
+@* DastanTimeline (ADR 0021): the still chart of the server, and around it what the script of the timeline needs
+   to draw the same statements as views that are moved and made larger and smaller in the browser – one view for
+   each axis something is counted on: the calendar, a depth of time, the order of a telling. The statements stand
+   in the page as data – in an attribute of the element, so the content of a page holds no script of any kind –
+   written by the server in the words of the table below; the script draws them and asks for nothing. Without
+   the script this is the still chart and nothing else. *@
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
+
+<dastan-timeline data-script="@Assets["timeline.js"]" data-timeline="@_data">
+    <div class="tlv-live" data-timeline-live hidden>
+        <p class="tlv-tools">
+            <button type="button" data-timeline-to-still>@T["Timeline_ToStill"]</button>
+        </p>
+        <template data-timeline-view>
+            <section class="tlv-view">
+                <h2 class="tlv-title" data-view-title></h2>
+                <p class="tlv-tools">
+                    <button type="button" data-view-earlier>@T["Timeline_Earlier"]</button>
+                    <button type="button" data-view-later>@T["Timeline_Later"]</button>
+                    <button type="button" data-view-in>@T["Graph_Larger"]</button>
+                    <button type="button" data-view-out>@T["Graph_Smaller"]</button>
+                    <button type="button" data-view-whole>@T["Timeline_Whole"]</button>
+                </p>
+                <div class="tlv-frame" data-view-frame tabindex="0" role="group" dir="ltr"></div>
+            </section>
+        </template>
+        <div data-timeline-views></div>
+        <p class="meta tlv-keys">@T["Timeline_Keys"] @T["Timeline_Legend"]</p>
+        @if (!Timeline.Unplaced.IsEmpty)
+        {
+            <p class="note">
+                @T["Timeline_Unplaced"]
+                @foreach (var item in Timeline.Unplaced)
+                {
+                    <a class="chart-unplaced" href="@($"{Here}#item-{item.Key}")"><Loc Text="item.Label" /></a>
+                }
+            </p>
+        }
+    </div>
+    <p class="tlv-tools" data-timeline-to-live-row hidden><button type="button" data-timeline-to-live>@T["Timeline_ToLive"]</button></p>
+    <div class="tlv-still" data-timeline-still>@ChildContent</div>
+</dastan-timeline>
+
+@code {
+    private string _data = "{}";
+
+    /// <summary>Gets or sets the still chart, its tools and its notes.</summary>
+    [Parameter, EditorRequired]
+    public RenderFragment ChildContent { get; set; } = null!;
+
+    /// <summary>Gets or sets the timeline as views.</summary>
+    [Parameter, EditorRequired]
+    public Timeline Timeline { get; set; } = null!;
+
+    /// <summary>Gets or sets the address of the page, to which the rows of its table belong.</summary>
+    [Parameter, EditorRequired]
+    public string Here { get; set; } = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        _data = TimelineData.Of(Timeline, Visitor, T, Here).ToJson();
+    }
+}

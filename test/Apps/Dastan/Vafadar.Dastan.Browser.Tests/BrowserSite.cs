@@ -108,7 +108,7 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// <param name="script">Whether the browser of the visitor runs scripts.</param>
     /// <param name="offline">Whether the visitor turned reading without a connection on.</param>
     /// <param name="graph">
-    /// Whether the script that draws a graph (ADR 0020) reaches the visitor. A test of the still drawing – which
+    /// Whether the scripts that draw a graph (ADR 0020) and a timeline (ADR 0021) reach the visitor. A test of the still drawing – which
     /// is what a page first answers with, and what stays where that script does not arrive – says nothing and
     /// gets the still drawing for as long as it looks; a test of the drawing that moves asks for it.
     /// </param>
@@ -135,7 +135,7 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
         _windows.Enqueue(context);
         if (!graph)
         {
-            await context.RouteAsync(new System.Text.RegularExpressions.Regex(@"/graph(\.[a-z0-9]+)?\.js$"), route => route.AbortAsync());
+            await context.RouteAsync(new System.Text.RegularExpressions.Regex(@"/(graph|timeline)(\.[a-z0-9]+)?\.js$"), route => route.AbortAsync());
         }
 
         if (offline)

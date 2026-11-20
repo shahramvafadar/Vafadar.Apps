@@ -246,7 +246,7 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
     [InlineData("?from=-300")]
     [InlineData("?from=+300&to=400")]
     [InlineData("?from=early&to=late")]
-    [InlineData("?from=-10000&to=300")]
+    [InlineData("?from=-1000001&to=300")]
     [InlineData("?from=-2147483648&to=300")]
     [InlineData("?from=-300&to=2147483648")]
     [InlineData("?from=-99999999999999999999&to=300")]
@@ -290,7 +290,7 @@ public sealed class ComparisonPageTests(DemoSite site) : IClassFixture<DemoSite>
     public async Task A_side_that_cannot_be_opened_or_closed_further_says_so_and_is_no_link()
     {
         var narrow = await Open("?view=across&from=1&to=100");
-        var early = await Open("?view=across&from=-9999&to=-9000&scale=0");
+        var early = await Open("?view=across&from=-1000000&to=-999000&scale=0");
 
         // A century is one step: closing it would leave nothing.
         Assert.Contains("<span class=\"stage-step\" aria-disabled=\"true\" title=\"Earlier years: close a step (not possible here)\">", Side(narrow, "Earlier years"), StringComparison.Ordinal);
