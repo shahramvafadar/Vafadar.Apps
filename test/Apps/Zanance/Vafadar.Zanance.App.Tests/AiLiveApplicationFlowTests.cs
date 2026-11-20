@@ -99,8 +99,9 @@ public sealed class AiLiveApplicationFlowTests
         Assert.Contains(scenario.Events, item => item.Excluded && item.Effect == -6000);
         Assert.Throws<ArgumentException>(() => AiProtocol.Validate(packet with
         { Forecast = forecast with { Scenario = scenario with { UnknownCount = 0 } } }));
-        Assert.False(AiPilotProvider.IsSynthetic(packet.Purpose, AiProtocol.Digest(packet with
-        { Forecast = forecast with { Scenario = scenario with { Closing = 24001 } } })));
+        Assert.Throws<ArgumentException>(() => AiProtocol.Digest(packet with
+        { Forecast = forecast with { Scenario = scenario with { Closing = 24001 } } }));
+        Assert.False(AiPilotProvider.IsSynthetic(packet.Purpose, AiProtocol.Digest(packet with { Language = "de" })));
     }
 
     /// <summary>Qualifies the new forecast comparison with actual application disclosure and the chosen live adapter.</summary>

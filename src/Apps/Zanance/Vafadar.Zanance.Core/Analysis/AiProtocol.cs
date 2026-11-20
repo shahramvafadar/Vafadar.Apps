@@ -180,8 +180,47 @@ public static class AiProtocol
                     item.On > payload.Current.To && !(item.Excluded && item.Moved) ||
                     !scenario && (item.Excluded || item.Moved || item.AssumedAmount)))
                 throw new ArgumentException("Invalid forecast path.");
+
+            // A bounded excerpt does not contain enough information to reconstruct the path.
+            if (path.Events.Count == path.EventCount)
+                ValidateCompleteForecastPath(payload.Current, path);
         }
         bool Within(DateOnly day) => day >= payload.Current.From && day <= payload.Current.To;
+    }
+
+    private static void ValidateCompleteForecastPath(AiPeriod period, AiForecastPath path)
+    {
+        var active = path.Events.Where(item => !item.Excluded).ToArray();
+        var deltas = active.Where(item => item.Effect.HasValue).GroupBy(item => item.On)
+            .ToDictionary(day => day.Key, day => day.Aggregate((Int128)0, (sum, item) => sum + item.Effect!.Value));
+        var balance = (Int128)path.Opening;
+        var minimum = (Int128)long.MaxValue;
+        var minimumOn = period.From;
+        DateOnly? firstShortfallOn = null;
+        long? firstShortfallBalance = null;
+        for (var dayNumber = period.From.DayNumber; dayNumber <= period.To.DayNumber; dayNumber++)
+        {
+            var date = DateOnly.FromDayNumber(dayNumber);
+            balance += deltas.GetValueOrDefault(date);
+            if (balance < long.MinValue || balance > long.MaxValue)
+                throw new ArgumentException("Forecast balance is out of range.");
+
+            if (balance < minimum)
+            {
+                minimum = balance;
+                minimumOn = date;
+            }
+            if (balance < 0 && firstShortfallOn is null)
+            {
+                firstShortfallOn = date;
+                firstShortfallBalance = (long)balance;
+            }
+        }
+
+        if (path.Closing != balance || path.Minimum != minimum || path.MinimumOn != minimumOn ||
+            path.FirstShortfallOn != firstShortfallOn || path.FirstShortfallBalance != firstShortfallBalance ||
+            path.UnknownCount != active.Count(item => item.Effect is null))
+            throw new ArgumentException("Forecast summary differs from its complete event list.");
     }
 
     private static void ValidateFunding(AiPayload payload, AiFundingFacts facts)

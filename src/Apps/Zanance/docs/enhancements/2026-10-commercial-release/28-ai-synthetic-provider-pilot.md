@@ -301,6 +301,10 @@ The focused calculator/protocol check distinguishes a first negative balance of 
 The usage estimates include reasoning or thinking in output. No invoice was checked. See [OpenAI](https://developers.openai.com/api/docs/models/gpt-6.2-sol) and [Gemini](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen).
 
 
+### Forecast contract consistency, 2026-11-20
+
+For complete event lists, the shared validator checks the closing balance, dated minimum, first negative day and balance, and count of unknown active effects against the supplied path events. It groups all effects for the same day before testing the balance. Excluded events do not affect balances or the unknown count. Bounded excerpts still receive the original structural validation because omitted events can affect the path. Five new synthetic cases admitted contradictory summaries before the change and refused them after it. The focused local pilot contract also checks the original synthetic fixture and refusal of an otherwise valid payload outside the exact pilot fixtures. The local checks used no vendor requests and generated no inference charges.
+
 ## Questions about selected data, 2026-11-19
 
 The Analysis page interprets two bounded questions locally in the six app languages: what drove a change in spending, and which plans contribute to a projected shortfall. An unsupported question, multiple currencies or mismatched account scope requires clarification before a preview. A recognized question shows its source and date/account scope for review. The original words, account names and contributing category or plan labels stay local.
