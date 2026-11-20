@@ -966,7 +966,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     private void UseLocalCategory()
     {
         var captured = _localCategoryReview;
-        if (!Analysis.AiFeatures.Current.Enabled || !IsFormEditable || captured?.CategoryId is not { } categoryId ||
+        if (!IsFormEditable || captured?.CategoryId is not { } categoryId ||
             Categories.SingleOrDefault(category => category.Id == categoryId) is not { } choice ||
             FormReview is not { } source) return;
         var kind = Kind == EntryKind.Income ? CategoryKind.Income : CategoryKind.Expense;
@@ -991,13 +991,12 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
     [RelayCommand]
     private async Task OpenSuggestedRuleAsync()
     {
-        var feature = Analysis.AiFeatures.Current.Capture();
-        if (feature.IsCancellationRequested || !IsFormEditable || _suggestedRuleDraft is not { } draft || FormReview is not { } source) return;
+        if (!IsFormEditable || _suggestedRuleDraft is not { } draft || FormReview is not { } source) return;
         IsBusy = true;
         try
         {
             await _store.ValidateEntryEditorSnapshotAsync(source);
-            if (!feature.IsCancellationRequested && !_formDeparted && ReferenceEquals(_suggestedRuleDraft, draft) && ReferenceEquals(FormReview, source))
+            if (!_formDeparted && ReferenceEquals(_suggestedRuleDraft, draft) && ReferenceEquals(FormReview, source))
                 await _interaction.NavigateAsync(AppRoutes.RulesRoute,
                     new Dictionary<string, object> { [CategoryRuleDraft.QueryKey] = draft });
         }
@@ -1028,8 +1027,7 @@ public sealed partial class EntryEditorViewModel : ViewModelBase, IQueryAttribut
 
             var selected = Categories.FirstOrDefault(category => category.IsSelected);
             var hasText = !string.IsNullOrWhiteSpace(Payee) || !string.IsNullOrWhiteSpace(EntryTitle);
-            if (!Analysis.AiFeatures.Current.Enabled || !_isNew || !hasText ||
-                selected is not null && _categories.Get(selected.Id)?.SystemKey != DefaultCategories.Uncategorized)
+            if (!_isNew || !hasText || selected is not null && _categories.Get(selected.Id)?.SystemKey != DefaultCategories.Uncategorized)
             {
                 if (_localCategoryReview is not null) ClearLocalCategoryReview();
                 return;

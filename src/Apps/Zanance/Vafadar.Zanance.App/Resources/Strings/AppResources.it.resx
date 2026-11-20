@@ -8824,7 +8824,7 @@ SHA-256 dell’XML originale: {5}</value>
     <value>Funzionalità IA</value>
   </data>
   <data name="Settings_AiFeaturesHint" xml:space="preserve">
-    <value>Disattiva questa opzione per nascondere le analisi IA e interrompere le nuove richieste, il riconoscimento delle ricevute e i suggerimenti locali di categoria su questo dispositivo.</value>
+    <value>Disattiva questa opzione per nascondere le analisi IA e interrompere le nuove richieste all’IA su questo dispositivo. La scansione locale delle ricevute e le funzioni basate su regole restano disponibili.</value>
   </data>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>Le funzionalità IA sono disattivate. Puoi riattivarle nelle impostazioni.</value>

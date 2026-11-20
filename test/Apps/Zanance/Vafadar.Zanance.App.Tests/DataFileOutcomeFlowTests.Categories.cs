@@ -1,10 +1,43 @@
+using Vafadar.Zanance.App.Features.Analysis;
 using Vafadar.Zanance.Core.Categories;
 using Vafadar.Zanance.Core.Ledger;
 
 namespace Vafadar.Zanance.App.Tests;
 
+[Collection("Classical feature preference")]
 public sealed partial class DataFileOutcomeFlowTests
 {
+    /// <summary>AI opt-out leaves deterministic CSV suggestions and their explicit draft action available.</summary>
+    [Fact]
+    public async Task AI_opt_out_preserves_rule_based_csv_category_review()
+    {
+        using var f = new FlowFixture();
+        var files = new Files();
+        await LedgerAsync(f, files);
+        await f.Store.EnsureDefaultCategoriesAsync(Ct);
+        files.Picked = new("fictitious-fallback.csv", "date;amount;title\r\n2026-10-09;-9.25;Fictitious supermarket\r\n");
+        var (_, _, _, vm) = Create(f, new(), files);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+
+        var preference = AiFeatures.Current;
+        try
+        {
+            AiFeatures.Current = new(false, _ => { });
+            await vm.LoadAsync();
+            await vm.PickCommand.ExecuteAsync(null);
+            await vm.PreviewCommand.ExecuteAsync(null);
+
+            var row = Assert.Single(vm.LedgerPreviewRows);
+            var food = f.Translator["Category_Food"];
+            Assert.True(row.CanUseCategory);
+            Assert.Contains(food, row.CategoryHint);
+            vm.UseCsvCategoryCommand.Execute(row);
+            Assert.Equal(food, Assert.Single(vm.LedgerPreviewRows).Category);
+            Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        }
+        finally { AiFeatures.Current = preference; }
+    }
+
     /// <summary>An open picker cannot apply a category after its original displayed row has been replaced.</summary>
     [Fact]
     public async Task Category_picker_retires_when_the_displayed_csv_row_is_rebuilt()

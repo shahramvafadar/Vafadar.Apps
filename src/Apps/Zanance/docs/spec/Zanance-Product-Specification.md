@@ -884,7 +884,7 @@ Quick-entry widgets, shortcuts, saved filters, a customizable dashboard, a dark 
 
 **F2-AI-09:** AI failure, lack of connectivity, exhausted quota, or revoked access must not damage the financial ledger. Record consent status, transmitted data, and the recipient in the Privacy Matrix.
 
-**F2-AI-10:** Provide one device-wide AI switch in Settings → Privacy & security. The choice applies to all local profiles and survives an app restart. When off, hide Analysis and its shortcuts and prevent new model requests, manual AI sharing, receipt recognition and optional local category suggestions. Leave manual work and explicitly defined category rules available. Turning AI back on must not replay previously started work.
+**F2-AI-10:** Provide one device-wide AI switch in Settings → Privacy & security. The choice applies to all local profiles and survives an app restart. When off, hide Analysis and its shortcuts and prevent new model requests and manual AI sharing. Keep the established on-device receipt OCR, deterministic category matching, manual work and explicit rules available under their existing access rules. Turning AI back on must not replay previously started work.
 
 ---
 

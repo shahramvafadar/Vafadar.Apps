@@ -21,14 +21,12 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
     public Task ReadAttachmentAsync(Guid entryId, Guid attachmentId, Func<bool>? isCurrent = null) => RunAsync(entryId, attachmentId, isCurrent);
     private async Task RunAsync(Guid? entryId, Guid? attachmentId, Func<bool>? isCurrent)
     {
-        var feature = Analysis.AiFeatures.Current.Capture();
-        if (IsBusy || feature.IsCancellationRequested) return;
+        if (IsBusy) return;
         ReceiptReadOrigin? origin = null;
-        CancellationTokenSource? lifetime = null;
         var completed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         CancellationTokenRegistration retirement = default;
         var publishing = false;
-        bool Current() => !feature.IsCancellationRequested && origin?.IsCurrent == true && isCurrent?.Invoke() != false;
+        bool Current() => origin?.IsCurrent == true && isCurrent?.Invoke() != false;
         void RequireCurrent()
         {
             if (!Current()) throw new OperationCanceledException("The original receipt presentation retired.");
@@ -36,8 +34,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
         try
         {
             origin = runtime.CaptureOrigin();
-            lifetime = CancellationTokenSource.CreateLinkedTokenSource(origin.Invalidated, feature);
-            retirement = lifetime.Token.Register(() =>
+            retirement = origin.Invalidated.Register(() =>
             {
                 // Own navigation may retire the source page before its original native Task completes.
                 if (!Volatile.Read(ref publishing)) completed.TrySetResult();
@@ -105,7 +102,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
         }
         finally
         {
-            retirement.Dispose(); lifetime?.Dispose(); origin?.Dispose(); IsBusy = false;
+            retirement.Dispose(); origin?.Dispose(); IsBusy = false;
         }
 
         async Task QueueAsync(Func<Task<bool>> stage)

@@ -2,7 +2,6 @@
 <ContentPage
     x:Class="Vafadar.Zanance.App.Features.DataFiles.ImportExportPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:ai="clr-namespace:Vafadar.Zanance.App.Features.Analysis"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
@@ -148,22 +147,10 @@
                                                     <Label Text="{Binding Accounts}" />
                                                     <Label Text="{Binding Category}" Style="{StaticResource Secondary}" />
                                                     <Label Text="{Binding CategoryHint}" Style="{StaticResource Secondary}"
-                                                           IsVisible="{Binding CategoryHint, Converter={StaticResource IsNotNullConverter}}">
-                                                        <Label.Triggers>
-                                                            <DataTrigger TargetType="Label" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
-                                                                <Setter Property="IsVisible" Value="False" />
-                                                            </DataTrigger>
-                                                        </Label.Triggers>
-                                                    </Label>
+                                                           IsVisible="{Binding CategoryHint, Converter={StaticResource IsNotNullConverter}}" />
                                                     <p:WrappingAction Text="{v:Translate CategoryReview_Use}" IsVisible="{Binding CanUseCategory}"
                                                         Command="{Binding UseCsvCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
-                                                        CommandParameter="{Binding .}">
-                                                        <p:WrappingAction.Triggers>
-                                                            <DataTrigger TargetType="p:WrappingAction" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
-                                                                <Setter Property="IsVisible" Value="False" />
-                                                            </DataTrigger>
-                                                        </p:WrappingAction.Triggers>
-                                                    </p:WrappingAction>
+                                                        CommandParameter="{Binding .}" />
                                                     <p:WrappingAction Text="{v:Translate CategoryReview_Choose}" IsVisible="{Binding CanChooseCategory}"
                                                         Command="{Binding ChooseCsvCategoryCommand, Source={RelativeSource AncestorType={x:Type local:ImportExportViewModel}}, x:DataType=local:ImportExportViewModel}"
                                                         CommandParameter="{Binding .}" />

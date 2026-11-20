@@ -8835,7 +8835,7 @@ Original-XML SHA-256: {5}</value>
     <value>KI-Funktionen</value>
   </data>
   <data name="Settings_AiFeaturesHint" xml:space="preserve">
-    <value>Deaktivieren, um KI-Analysen auszublenden und neue Anfragen, die Belegerkennung und lokale Kategorievorschläge auf diesem Gerät zu stoppen.</value>
+    <value>Deaktivieren, um KI-Analysen auszublenden und neue KI-Anfragen auf diesem Gerät zu stoppen. Belege lassen sich weiterhin lokal scannen, und regelbasierte Funktionen bleiben verfügbar.</value>
   </data>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>KI-Funktionen sind deaktiviert. Du kannst sie in den Einstellungen wieder aktivieren.</value>

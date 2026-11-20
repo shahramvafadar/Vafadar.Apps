@@ -73,8 +73,8 @@ generic text; names and amounts appear only if you turn on "Show names and amoun
 ## Reading receipts
 
 You can turn off **AI features** in Settings → Privacy & security. This applies to all profiles on
-the current installation and disables receipt recognition, optional category suggestions, and
-Analysis, including its sharing actions. You can still enter transactions and attach receipt files manually.
+the current installation and disables Analysis, including its sharing actions. The established
+on-device receipt OCR, rule-based categorization, manual entries and receipt attachments remain available.
 This setting does not delete earlier records or recall information already shared.
 
 If you choose "Read" on a receipt photo or PDF file, the text is read on your device. The text of a digital PDF is taken

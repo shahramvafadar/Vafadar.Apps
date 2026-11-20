@@ -2,7 +2,6 @@
 <ContentPage
     x:Class="Vafadar.Zanance.App.Features.Entries.EntryEditorPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:ai="clr-namespace:Vafadar.Zanance.App.Features.Analysis"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:v="http://vafadar.pro/schemas/maui"
@@ -138,24 +137,13 @@
                             <Button Grid.Column="1" Text="{v:Translate Common_Undo}" Command="{Binding UndoSuggestionCommand}" Style="{StaticResource TextButton}" />
                         </Grid>
                         <VerticalStackLayout Spacing="4" IsVisible="{Binding LocalCategoryHint, Converter={StaticResource IsNotNullConverter}}">
-                            <VerticalStackLayout.Triggers>
-                                <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </VerticalStackLayout.Triggers>
                             <Label Text="{Binding LocalCategoryHint}" Style="{StaticResource Secondary}" />
                             <p:WrappingAction Text="{v:Translate CategoryReview_Use}" Command="{Binding UseLocalCategoryCommand}"
                                               IsVisible="{Binding CanAcceptLocalCategory}" />
                             <p:WrappingAction Text="{v:Translate CategoryReview_Keep}" Command="{Binding DismissLocalCategoryCommand}" />
                         </VerticalStackLayout>
                         <p:WrappingAction Text="{v:Translate CategoryReview_DraftRule}" Command="{Binding OpenSuggestedRuleCommand}"
-                                          IsVisible="{Binding HasSuggestedRuleDraft}">
-                            <p:WrappingAction.Triggers>
-                                <DataTrigger TargetType="p:WrappingAction" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                            </p:WrappingAction.Triggers>
-                        </p:WrappingAction>
+                                          IsVisible="{Binding HasSuggestedRuleDraft}" />
                         <Label Text="{v:Translate Entry_Category}" Style="{StaticResource FieldLabel}" Margin="4,0" />
                         <FlexLayout x:Name="CategoryChoicesGroup" Wrap="Wrap" JustifyContent="Start" AlignItems="Start" BindableLayout.ItemsSource="{Binding Categories}">
                             <BindableLayout.ItemTemplate>

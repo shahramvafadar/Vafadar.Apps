@@ -934,7 +934,8 @@ Original files are read only. No automatic payment, upload, raw-file retention o
 
 The AI features switch defaults to on and is stored as an app-installation preference outside the
 financial profile and its portable backups. Turning it off hides the optional AI entry points and
-prevents new disclosure, receipt recognition and category suggestions. Enabling it still requires
+prevents new AI disclosures. Existing on-device receipt OCR (DF-22) and fixed category rules and
+matching remain available. Enabling AI still requires
 the original separate consent for every disclosure. The switch does not delete retained requests,
 recall data already shared or act as a promise about independent SDK diagnostics in an online build.
 

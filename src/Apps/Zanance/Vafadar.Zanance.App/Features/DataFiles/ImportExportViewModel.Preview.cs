@@ -65,8 +65,7 @@ public sealed partial class ImportExportViewModel
     [RelayCommand]
     private void UseCsvCategory(ImportPreviewLine? line)
     {
-        if (!Analysis.AiFeatures.Current.Enabled || line?.CanUseCategory != true ||
-            GetEditableRow(line) is not { Entry: { } entry, CategoryReview.CategoryId: { } category } ||
+        if (line?.CanUseCategory != true || GetEditableRow(line) is not { Entry: { } entry, CategoryReview.CategoryId: { } category } ||
             _ledgerRead is not { } review) return;
         ApplyDraftCategory(review, entry, category);
     }
@@ -177,8 +176,7 @@ public sealed partial class ImportExportViewModel
                     ? MoneyText.Format(original, currency, culture) : null, status)
             {
                 CategoryHint = hint,
-                CanChooseCategory = !_ownFormat && !IsBankPreset && !row.AlreadyImported &&
-                    (category is not null || !Analysis.AiFeatures.Current.Enabled),
+                CanChooseCategory = category is not null && !row.AlreadyImported,
                 CanUseCategory = category?.CategoryId is { } proposed && proposed != entry.CategoryId && !row.AlreadyImported,
             });
         }

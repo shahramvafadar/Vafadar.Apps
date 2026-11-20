@@ -8876,7 +8876,7 @@ Original XML SHA-256: {5}</value>
     <value>AI features</value>
   </data>
   <data name="Settings_AiFeaturesHint" xml:space="preserve">
-    <value>Turn off to hide AI analysis and stop new requests, receipt recognition and local category suggestions on this device.</value>
+    <value>Turn off to hide AI analysis and stop new AI requests on this device. On-device receipt scanning and rule-based features still work.</value>
   </data>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>AI features are off. You can turn them on in Settings.</value>

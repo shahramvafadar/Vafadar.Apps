@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Documents;
+using Vafadar.Zanance.App.Features.Analysis;
 using Vafadar.Zanance.App.Features.Receipts;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Commerce;
@@ -11,8 +12,13 @@ using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Tests;
 
+/// <summary>Isolates tests that temporarily replace the app-wide feature preference.</summary>
+[CollectionDefinition("Classical feature preference", DisableParallelization = true)]
+public sealed class ClassicalFeaturePreferenceCollection;
+
 /// <summary>Actual shared receipt application source, original parser and real isolated source/file/access validation.</summary>
 [Trait("AT", "AT-171")]
+[Collection("Classical feature preference")]
 public sealed class ReceiptWorkFlowTests
 {
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
@@ -62,6 +68,38 @@ public sealed class ReceiptWorkFlowTests
         Assert.True((await f.Store.SaveEntryAsync(entry, Ct)).Succeeded);
         var attachment = new EntryAttachment { EntryId = entry.Id, FileName = "Original stored receipt.jpg", ContentType = "image/jpeg", Data = [7, 8, 9] };
         await f.Store.AddAttachmentAsync(attachment, Ct); return (entry, attachment);
+    }
+
+    /// <summary>The original local receipt parser remains available for both receipt entry points when AI is off.</summary>
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task AI_opt_out_preserves_local_receipt_recognition(bool stored)
+    {
+        using var f = new FlowFixture();
+        using var provider = Provider(f, new Access());
+        var native = new Native();
+        var session = Session(f, provider, native);
+        var original = stored ? await SeedAsync(f) : default;
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+
+        var preference = AiFeatures.Current;
+        try
+        {
+            AiFeatures.Current = new(false, _ => { });
+            if (stored)
+                await session.ReadAttachmentAsync(original.Entry.Id, original.Attachment.Id);
+            else
+                await session.PickAsync();
+
+            Assert.Equal(stored ? 0 : 1, native.Picked);
+            Assert.Equal(1, native.Read);
+            Assert.Equal(stored ? original.Attachment.Data : native.File!.RecognitionData, native.Recognition);
+            Assert.Equal(24.50m, Assert.Single(native.Drafts).Suggestion.Amount);
+            Assert.Null(session.Error);
+            Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        }
+        finally { AiFeatures.Current = preference; }
     }
     [Theory]
     [InlineData("en")][InlineData("fa")][InlineData("de")][InlineData("es")][InlineData("fr")][InlineData("it")]

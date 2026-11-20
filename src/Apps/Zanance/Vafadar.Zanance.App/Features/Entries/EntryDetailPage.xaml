@@ -2,7 +2,6 @@
 <ContentPage
     x:Class="Vafadar.Zanance.App.Features.Entries.EntryDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:ai="clr-namespace:Vafadar.Zanance.App.Features.Analysis"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
@@ -109,13 +108,7 @@
                                         <!-- The original file name keeps its own width; receipt actions cannot consume its column. -->
                                         <Button Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource TextButton}" Text="{v:Translate Receipt_Read}" IsVisible="{Binding CanRead}"
                                                 Command="{Binding ReadReceiptCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"
-                                                CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Name}">
-                                            <Button.Triggers>
-                                                <DataTrigger TargetType="Button" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
-                                                    <Setter Property="IsVisible" Value="False" />
-                                                </DataTrigger>
-                                            </Button.Triggers>
-                                        </Button>
+                                                CommandParameter="{Binding .}" SemanticProperties.Hint="{Binding Name}" />
                                         <!-- The file name as hint: a screen reader hears which file Read or Delete acts on -->
                                         <Button Grid.Row="2" Grid.ColumnSpan="2" Text="{v:Translate Common_Delete}" Style="{StaticResource TextButton}" TextColor="{DynamicResource ExpenseText}"
                                                 Command="{Binding DeleteAttachmentCommand, Source={RelativeSource AncestorType={x:Type local:EntryDetailViewModel}}, x:DataType=local:EntryDetailViewModel}"

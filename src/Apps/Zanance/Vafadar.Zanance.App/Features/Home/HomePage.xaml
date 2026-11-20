@@ -127,7 +127,7 @@
                                         SemanticProperties.Description="{v:Translate Entry_NewTransfer}" ToolTipProperties.Text="{v:Translate Entry_NewTransfer}" />
                             </Grid>
                             <!-- A receipt photo or PDF, read on the device; neutral, because it is a way to add an expense -->
-                            <Grid IsVisible="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                            <Grid Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="Receipt" FontSize="20" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>

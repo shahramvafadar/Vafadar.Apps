@@ -1456,8 +1456,18 @@ requests. After recovery using the same AVD and installed APK, the off choice pe
 scanning was absent, and the manual expense editor opened. The first system Back input did not
 return to Home. The editor's own Cancel action closed the same unsaved draft.
 Re-enabling restored Analysis and receipt scanning. The ledger remained empty. Evidence is retained
-under `artifacts/ai-opt-out-release-native`. Physical, multi-profile and connected-edition native
+under `artifacts/ai-opt-out-release-native`. These packages predate the owner's clarification that
+the switch must leave on-device receipt OCR and deterministic category matching available.
+Physical, multi-profile and connected-edition native
 acceptance remain open.
+
+After the clarification, signed Offline Release APK `7118d497` kept the receipt action available
+with AI off on a fresh Android 16 emulator. The original Android file picker opened a synthetic
+receipt image and local OCR exposed the EUR 23.45 total as an editable draft. Cancel and Discard
+left the ledger empty. The first observer expected an access notice and then a Button in the
+chooser. It continued the same open chooser using the actual TextView without invoking scanning
+again. Two focused host cases covered new and attached receipts with AI off, and a third covered
+deterministic CSV category review. Evidence remains under `artifacts/ai-classical-fallback-native`.
 
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
