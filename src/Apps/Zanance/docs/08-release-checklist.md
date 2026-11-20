@@ -1458,8 +1458,7 @@ return to Home. The editor's own Cancel action closed the same unsaved draft.
 Re-enabling restored Analysis and receipt scanning. The ledger remained empty. Evidence is retained
 under `artifacts/ai-opt-out-release-native`. These packages predate the owner's clarification that
 the switch must leave on-device receipt OCR and deterministic category matching available.
-Physical, multi-profile and connected-edition native
-acceptance remain open.
+That run covered one offline emulator profile.
 
 After the clarification, signed Offline Release APK `7118d497` kept the receipt action available
 with AI off on a fresh Android 16 emulator. The original Android file picker opened a synthetic
@@ -1556,6 +1555,17 @@ one synthetic extensionless document through the system chooser. It verified the
 PDF name, application/pdf type and exact byte digest. The owned Android fixture was retired.
 No ledger, receipt OCR or financial action was used for this check. Evidence is under
 `artifacts/receipt-extensionless-native`.
+
+A separate Android 16 run used signed Personal Sync APK `8d5dee1c` with no guest default
+network. Turning AI off in the original Main profile also showed Off after creating and
+opening a second fictitious local profile. That profile still offered the original receipt
+command. Re-enabling AI there showed On after switching back to the original Main account.
+No sign-in or financial posting was used. The first onboarding observer needed a scroll to
+reach the account field underneath connected setup options and continued without repeating
+either earlier Next action. The original guest network state was restored after stopping the
+app and the emulator was retired. Evidence is under `artifacts/ai-opt-out-connected-profiles-native`.
+This qualifies the device-wide switch across two local profiles in the connected edition.
+Live connected behavior and physical-device acceptance remain open.
 
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
