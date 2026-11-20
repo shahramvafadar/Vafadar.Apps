@@ -571,6 +571,28 @@ Local redacted captures and button bounds are under `artifacts/at69-pin-ime-nati
 This records touch reachability at the tested viewport. Minimum target size over all
 layouts, physical devices and iOS remain separate.
 
+### AT-69 Active app PIN delay across an Android reboot
+
+The retained signed Offline Release APK `6abbe156` ran on a disposable Android 16
+x86-64 emulator with one synthetic zero-opening account. The original PIN settings
+enabled a generated app PIN once. Five rejected submissions triggered the 60-second
+penalty. After it elapsed naturally, one additional rejection triggered the 120-second
+penalty. No clock adjustment was used.
+
+The emulator rebooted once with that second penalty active. The boot ID changed and
+the installed package UID stayed the same. After a normal launch, one nonmatching
+submission on the original lock screen showed 79 seconds remaining, 41.12 seconds
+after the reboot request. The app stayed covered. No screenshot or capture included
+the PIN value, and no real device credential or financial entry was used.
+
+The setup observer initially missed an account field clipped by the small viewport,
+and a navigation swipe initially began outside the scroll area. Verification resumed
+from the same setup and PIN save after using the visible bounds. The original display
+geometry was restored, the remote capture was hash-checked and removed, and the fixture
+package and emulator were retired. Redacted evidence is under
+`artifacts/at69-pin-active-device-reboot`. This verifies the active second penalty
+after an Android reboot on the tested emulator. Physical-device and iOS checks remain open.
+
 ## AT-70 Android live recent-apps privacy
 
 The original signed offline APK `3f96f091` ran on Android 16 x86_64 with 4096-byte pages.
