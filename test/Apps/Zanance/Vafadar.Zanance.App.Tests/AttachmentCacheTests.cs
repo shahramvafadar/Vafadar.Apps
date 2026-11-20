@@ -6,6 +6,29 @@ namespace Vafadar.Zanance.App.Tests;
 [Trait("AT", "AT-171")]
 public sealed class AttachmentCacheTests
 {
+    /// <summary>A new Android process removes only its renderer's abandoned cache files.</summary>
+    [Fact]
+    public void Interrupted_pdf_cleanup_preserves_other_files_and_nested_directories()
+    {
+        using var directory = new OwnedDirectory();
+        const string id = "3ea174e30e5b490d9bae5e809f426cc2";
+        var abandoned = Path.Combine(directory.Root, $"render-{id}.pdf");
+        var partial = Path.Combine(directory.Root, $"render-{Guid.NewGuid():N}.pdf");
+        var nested = Directory.CreateDirectory(Path.Combine(directory.Root, "nested")).FullName;
+        string[] untouched = [Path.Combine(directory.Root, "render-4BA174E30E5B490D9BAE5E809F426CC2.pdf"),
+            Path.Combine(directory.Root, "render-owner.pdf"), Path.Combine(directory.Root, $"render-{id}.bak"),
+            Path.Combine(nested, $"render-{id}.pdf")];
+        File.WriteAllBytes(abandoned, [1, 2]);
+        File.WriteAllBytes(partial, []);
+        foreach (var file in untouched) File.WriteAllBytes(file, [7]);
+
+        AttachmentCache.ClearInterruptedPdfRenders(directory.Root);
+
+        Assert.False(File.Exists(abandoned));
+        Assert.False(File.Exists(partial));
+        foreach (var file in untouched) Assert.Equal(new byte[] { 7 }, File.ReadAllBytes(file));
+    }
+
     /// <summary>A terminated capture cannot run its finally block; the next startup removes its raw original.</summary>
     [Theory]
     [InlineData(false)]

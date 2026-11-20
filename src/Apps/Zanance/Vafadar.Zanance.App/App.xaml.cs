@@ -36,6 +36,9 @@ public partial class App : Application
 
         // Copies of opened receipts do not outlive the session that opened them (F2-TX-04).
         Presentation.AttachmentFiles.ClearCache();
+#if ANDROID
+        Presentation.AttachmentCache.ClearInterruptedPdfRenders(FileSystem.CacheDirectory);
+#endif
 
         // Light or dark theme (UX-08, D-22). Colors are dynamic resources; screens with computed colors recolor in place
         // (IThemeAware). The shell is not rebuilt: in "System" the device may turn dark on its own while an editor is

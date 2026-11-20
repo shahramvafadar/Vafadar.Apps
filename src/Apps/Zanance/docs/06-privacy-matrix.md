@@ -203,6 +203,22 @@ the compact copy is requested. The document reader clears the images it receives
 photo normalizer and scanned-PDF renderer after recognition, including unread pages if OCR
 fails partway through. This covers those managed byte arrays.
 
+Android's scanned-PDF renderer opens its private staging copy as a seekable file descriptor
+and unlinks the pathname before rendering. The kernel releases the unlinked file when
+the last descriptor closes, including when the app process exits. App startup also retires
+exact renderer-generated PDF names left in the private cache by an earlier process that
+exited before unlinking, including staging copies from older app versions.
+
+Ten focused filesystem cases passed, including removal of complete and partial renderer
+staging files and preservation of unrelated names and nested files. On an owned Android 16
+x86-64 emulator, signed Offline Release APK `e7cf917b` read a synthetic image-only PDF
+with AI off after the unlink change. The editable amount was EUR 42.75. Cancel and Discard
+left Transactions empty, and the fixture and emulator were retired. The first transfer
+failed before a file was created and succeeded when storage was ready. The test continued
+from its existing More screen after correcting a swipe outside the visible viewport.
+No process termination was induced during rendering. Evidence is retained under
+`artifacts/receipt-pdf-staging-android`.
+
 The camera, attachment picker and portable-backup reader clear their temporary stream
 chunks and current or superseded accumulation arrays, including on a read failure. Each
 successful reader returns a separate owned array containing the original bytes. The attachment

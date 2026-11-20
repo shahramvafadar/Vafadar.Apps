@@ -106,16 +106,24 @@ public static class PdfPageImages
 #if ANDROID
     private static List<byte[]> RenderAndroid(byte[] pdf, int maxPages, int? selected = null, Action<int>? observe = null)
     {
-        // PdfRenderer needs a seekable file descriptor; the copy lives in the app's cache only while rendering.
+        // PdfRenderer needs a seekable descriptor. Unlink the private path before rendering so an interrupted
+        // render cannot leave the complete PDF behind in the app cache.
         var path = Path.Combine(Android.App.Application.Context.CacheDir!.AbsolutePath, $"render-{Guid.NewGuid():N}.pdf");
+        var fileCreated = false;
         try
         {
-            File.WriteAllBytes(path, pdf);
+            using (var staging = new FileStream(path, FileMode.CreateNew, FileAccess.Write))
+            {
+                fileCreated = true;
+                staging.Write(pdf);
+            }
 
             // Dispose only releases the .NET handles; the renderer, its pages and the descriptor are closed explicitly.
             using var descriptor = Android.OS.ParcelFileDescriptor.Open(new Java.IO.File(path), Android.OS.ParcelFileMode.ReadOnly)!;
             try
             {
+                File.Delete(path);
+                fileCreated = false;
                 using var renderer = new Android.Graphics.Pdf.PdfRenderer(descriptor);
                 try
                 {
@@ -150,7 +158,7 @@ public static class PdfPageImages
         }
         finally
         {
-            File.Delete(path);
+            if (fileCreated) File.Delete(path);
         }
     }
 #endif

@@ -41,6 +41,14 @@ internal static class AttachmentCache
         }
     }
 
+    /// <summary>Retires renderer staging files left by a previous Android process before new reads can start.</summary>
+    internal static void ClearInterruptedPdfRenders(string cacheRoot) =>
+        ClearShares(cacheRoot, null, name =>
+            name.Length == 43 && name.StartsWith("render-", StringComparison.Ordinal)
+            && name.EndsWith(".pdf", StringComparison.Ordinal)
+            && Guid.TryParseExact(name.AsSpan(7, 32), "N", out var id)
+            && name.AsSpan(7, 32).SequenceEqual(id.ToString("N")));
+
     private static void ClearShares(string directory, DateTime? cutoff, Func<string, bool> ownsName, bool removeEmptyDirectory = false)
     {
         try
