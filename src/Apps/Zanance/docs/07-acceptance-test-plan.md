@@ -328,7 +328,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-38 | Notification on lock screen | REM-05 | Manual | S10 | [Android SystemUI lock-screen rendering](#at-38-generic-reminder-on-the-android-lock-screen) verified the generic default and absence of fixture details. [Warm Plans notification tap under the app PIN](#at-61-warm-plans-notification-tap-under-the-app-pin) verified the retained due item on the emulator. Android device credential, optional detail and physical acceptance remain separate. |
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung no/zero/exact/exceeded/refund/cold/deletion scope; broader device/platform gates remain |
 | AT-40 | Total and sub-category limits | BUD-02 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung independent total/category/refund and category-only scope; other hierarchy/platform variants remain |
-| AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
+| AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit + bounded native Android | S7 | Verified (unit). [Identical second-day comparison](#at-41-monthly-equivalent-for-an-identical-second-day) also qualified the Budget and Reports values on the signed Android APK. |
 | AT-42 | Forecast with settled occurrence | FOR-03 | Unit | S9 | Verified (unit) |
 | AT-43 | Unknown amount / missing rate | FOR-05 | Unit + scoped physical | S9 | Unit verified; D-466 original physical unknown amount and explicit temporary assumption/cold isolation; D-486 fixes the reproduced legacy missing-destination conversion and qualifies original x64 native warnings/saved SQLite snapshots; physical missing-rate and other platform variants remain separate |
 | AT-44 | Month-end positive, mid-period negative | FOR-08 | Unit + scoped physical | S9 | Unit verified; D-466 original Samsung end150/minimum-50, temporary end130/minimum-70 and saved scenario/cold/native deletion; wider platform/variant acceptance remains |
@@ -551,6 +551,24 @@ On the Android 7 (API 24) x86_64 emulator, the original APK exposed the syntheti
 Android 12 and earlier now keep the existing secure-window protection active regardless of the stored preference. Settings shows a checked, disabled switch with a localized explanation. On Android 13 and later the original foreground screenshot choice and live Overview protection still apply.
 
 The signed APK `d72991d4` was installed without clearing the disposable profile and retained UID 10062. Foreground capture at Home returned zero bytes. The settings switch was checked and disabled with the English explanation present. In actual Overview the Zanance card had a blank interior (all 59,475 sampled pixels matched). Selecting the original card returned to the loaded Home and original synthetic balance in process 3731. Strict Windows and Android builds passed, along with signed APK alignment verification. Display settings were restored and the test emulator was retired. The Android 7 result is scoped to the tested emulator.
+
+## AT-41 monthly equivalent for an identical second day
+
+Every two months, a fixed day 15 and a second day 15 create one scheduled occurrence. The
+approximate annual frequency previously doubled the normalized amount even though the dates
+were already collapsed. The monthly equivalent now uses one anchor when both fixed days
+match in the rule calendar. A distinct day 20 still counts separately. Regression cases
+cover Gregorian, Persian and Hijri rules. In each calendar the 100 EUR fixture normalizes to
+50 EUR per month for matching days and 100 EUR per month for distinct days. The schedule and
+generated dates are preserved.
+
+The signed Android APK `31b85482` restored one synthetic EUR 100 plan with matching day 20
+anchors every two months and no ledger entries. November Budget showed a single EUR 100 due
+item and a EUR 50 monthly equivalent. Reports showed one open occurrence, EUR 100 planned,
+EUR 50 per month and EUR 600 over the next 12 months. The observer selected the Reports tab
+using its actual clickable owner and scrolled to the visible row after an earlier clipped
+capture. No plan or payment was created through the editor. Strict Windows and Android builds
+passed with six selected Core cases. The owned emulator was retired.
 
 ## AT-72 Android working-day and public-holiday preview
 

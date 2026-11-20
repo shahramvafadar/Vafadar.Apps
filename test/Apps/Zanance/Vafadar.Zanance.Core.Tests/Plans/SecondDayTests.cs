@@ -43,4 +43,25 @@ public sealed class SecondDayTests
 
         Assert.Equal([new DateOnly(2027, 3, 21), new DateOnly(2027, 4, 4)], Recurrence.Next(rule, new DateOnly(2027, 3, 1), 2).Select(d => d.Date));
     }
+
+    [Theory]
+    [InlineData(PeriodCalendar.Gregorian, 2027)]
+    [InlineData(PeriodCalendar.Persian, 1406)]
+    [InlineData(PeriodCalendar.Hijri, 1448)]
+    public void An_identical_fixed_second_day_does_not_double_monthly_commitments(PeriodCalendar calendar, int year)
+    {
+        var start = PeriodMath.ToDate(year, 1, 15, calendar);
+        var rule = new RecurrenceRule
+        {
+            Frequency = Frequency.Monthly, Interval = 2, Calendar = calendar, Start = start, SecondDay = 15,
+        };
+        var plan = new Schedule { Name = "Synthetic commitment", Amount = 10_000, Rule = rule };
+
+        Assert.Equal(PeriodMath.ToDate(year, 3, 15, calendar), Recurrence.Next(rule, start, 2)[1].Date);
+        Assert.Equal(5_000, BudgetPlanning.MonthlyEquivalent(plan));
+
+        rule.SecondDay = 20;
+        Assert.Equal(PeriodMath.ToDate(year, 1, 20, calendar), Recurrence.Next(rule, start, 2)[1].Date);
+        Assert.Equal(10_000, BudgetPlanning.MonthlyEquivalent(plan));
+    }
 }

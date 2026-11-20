@@ -116,7 +116,9 @@ public static class Recurrence
         {
             Frequency.Daily => 365.25m / interval,
             Frequency.Weekly => 365.25m / 7 / interval,
-            Frequency.Monthly => (rule.SecondDay is null ? 12m : 24m) / interval,
+            // Candidates collapses identical fixed days in every month of the rule calendar.
+            Frequency.Monthly => (rule.SecondDay is { } second
+                && (rule.DayRule != MonthDayRule.SpecificDay || second != DayOf(rule.Start, rule.Calendar)) ? 24m : 12m) / interval,
             Frequency.Yearly => 1m / interval,
             _ => 0,
         };
