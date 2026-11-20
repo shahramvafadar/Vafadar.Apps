@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Vafadar.Zanance.App.Features.Analysis;
 using Vafadar.Zanance.App.Features.Reports;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Data;
@@ -50,6 +51,35 @@ public sealed class ReportWorkspaceBoundaryTests
     {
         using var f = new FlowFixture(); await SeedAsync(f); var work = Work(f); await PublishAsync(work); var scope = "R1/EUR"; var old = Assert.IsType<ReportCommandLease>(work.CaptureCommand(() => scope));
         scope = "R2/USD"; Assert.False(old.IsCurrent); await Assert.ThrowsAsync<InvalidOperationException>(old.ValidateAsync); Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+    /// <summary>Re-enabling AI does not restore a report command whose source validation was already waiting.</summary>
+    [Fact]
+    public async Task Report_command_cannot_resume_after_its_AI_session_retires()
+    {
+        using var f = new FlowFixture();
+        await SeedAsync(f);
+        var factory = new GateFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var work = Gated(f, factory);
+        await PublishAsync(work);
+        var features = new AiFeatures(true, _ => { });
+        var session = features.Capture();
+        var command = Assert.IsType<ReportCommandLease>(work.CaptureCommand(() => "R1/EUR", () => !session.IsCancellationRequested));
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        factory.Before = async ct => { entered.TrySetResult(); await release.Task.WaitAsync(ct); };
+
+        var validation = command.ValidateAsync();
+        await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        features.Enabled = false;
+        features.Enabled = true;
+        release.SetResult();
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() => validation);
+        Assert.False(command.IsCurrent);
+        Assert.True(work.CanInteract);
+        var currentSession = features.Capture();
+        await Assert.IsType<ReportCommandLease>(
+            work.CaptureCommand(() => "R1/EUR", () => !currentSession.IsCancellationRequested)).ValidateAsync();
     }
     /// <summary>Actual protected source changes cover old authority and retain explicit current-page Retry.</summary>
     [Fact]

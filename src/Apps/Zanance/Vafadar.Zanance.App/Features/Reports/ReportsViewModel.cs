@@ -670,12 +670,15 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private Task OpenReportAnalysisAsync(bool compare)
     {
-        if (!Analysis.AiFeatures.Current.Enabled || !CanRunCommands || !ShowOverview || _workspace.Review is not { } review)
+        var feature = Analysis.AiFeatures.Current.Capture();
+        if (feature.IsCancellationRequested || !CanRunCommands || !ShowOverview || _workspace.Review is not { } review)
             return Task.CompletedTask;
         var ids = LedgerCalculator.InScope(_accounts, ScopeIds()).Where(a =>
             string.Equals(a.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase)).Select(a => a.Id);
         var period = Analysis.AiPeriodHandoff.Capture(review.DatabasePath, _from, _to, ConfirmedOnly, ids);
-        return period is null ? Task.CompletedTask : NavigateReportAsync(new(AppRoutes.AnalysisRoute, period.Query(compare)));
+        // The original AI session can retire while the report source is being revalidated.
+        return period is null ? Task.CompletedTask
+            : NavigateReportAsync(new(AppRoutes.AnalysisRoute, period.Query(compare)), () => !feature.IsCancellationRequested);
     }
     private async Task NavigateFrozenAsync(ReportNavigation target)
     {

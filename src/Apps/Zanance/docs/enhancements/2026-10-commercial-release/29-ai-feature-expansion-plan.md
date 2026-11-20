@@ -44,6 +44,12 @@ reader handled a newly selected receipt and a stored attachment and presented th
 for review. The generic CSV preview kept deterministic category suggestions editable. All three
 checks preserved the input financial data and made no provider requests.
 
+The Reports overview's explain and compare commands retain the AI session from the original
+tap across report-source validation. Turning AI off retires the pending command, even when
+the user turns it back on before validation finishes. A focused host test holds the real
+report source validation, retires the original session and verifies that a new session can
+validate the same report. This test covers the report command lease and uses no provider.
+
 - Define a small versioned input and output contract for each approved task. Keep calculations, exact dates, sign and currency semantics in Core. Map model-generated facts to permitted source references so the app can open the original local view. Render output as text. Validate its schema, references, totals and bounds, including zero or insufficient data.
 - Use the current manager selection and Off control for simple and reasoning tasks. Extend the administrator's per-task selections as new distinct tasks are qualified. Treat content such as a note or OCR line as data. A task receives only the selected period, filtered scope, permitted fields and exact destination disclosed to the user. Avoid silent provider fallback. Wait for separate privacy, retention, recovery, budget and commercial gates before sending genuine data.
 - Qualify on a fixed set of synthetic cases for each task. Include refunds, transfers, incomplete or stale inputs, currency separation, date boundaries and the six supported languages. Confirm visible source links, offline continuity, per-request bounds, denial and failure without ledger changes, exact continuation after switching provider and stale suggestion refusal. Use a deterministic baseline before adding an AI dependency, and retain a separate measured quality and cost report for each task.
