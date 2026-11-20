@@ -63,6 +63,9 @@ public sealed record ProfileView(PersonRef Person, ImmutableArray<ShownRelations
 {
     /// <summary>Gets a value indicating whether the viewer blocks this account.</summary>
     public bool Blocked { get; init; }
+
+    /// <summary>Gets the places the account says it was at, as far as the viewer may see them.</summary>
+    public ImmutableArray<ShownAffiliation> Affiliations { get; init; } = [];
 }
 
 /// <content>
@@ -392,6 +395,20 @@ public sealed partial class PeopleStore
             }
         }
 
+        foreach (var affiliation in _context.Affiliations.Where(candidate => candidate.FindableCircle == circle || candidate.DatesCircle == circle))
+        {
+            if (affiliation.FindableCircle == circle)
+            {
+                (affiliation.FindableScope, affiliation.FindableCircle) = ((int)ScopeKind.Private, null);
+            }
+
+            // The dates never go further than the affiliation.
+            if (affiliation.DatesCircle == circle || affiliation.FindableScope == (int)ScopeKind.Private)
+            {
+                (affiliation.DatesScope, affiliation.DatesCircle) = ((int)ScopeKind.Private, null);
+            }
+        }
+
         foreach (var photo in _context.Photos.Where(candidate => candidate.Circle == circle))
         {
             (photo.Scope, photo.Circle) = ((int)ScopeKind.Private, null);
@@ -435,6 +452,7 @@ public sealed partial class PeopleStore
                 .ThenBy(shown => shown.Terms.Context, StringComparer.CurrentCultureIgnoreCase)])
         {
             Blocked = viewer is not null && Blocks(viewer, id),
+            Affiliations = AffiliationsShown(account, id),
         };
     }
 

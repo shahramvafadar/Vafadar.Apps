@@ -205,6 +205,49 @@ public sealed class StoredRelationship
     public DateTime ChangedAt { get; set; }
 }
 
+/// <summary>That an account was at a place – a school, an employer – and who may see and find it there (PRIV-010).</summary>
+public sealed class StoredAffiliation
+{
+    /// <summary>Gets or sets the number of the affiliation.</summary>
+    public long Number { get; set; }
+
+    /// <summary>Gets or sets the account.</summary>
+    public required string Account { get; set; }
+
+    /// <summary>Gets or sets the name of the place, as it was written.</summary>
+    public required string Organisation { get; set; }
+
+    /// <summary>Gets or sets the name of the place as it is compared: without case.</summary>
+    public required string OrganisationKey { get; set; }
+
+    /// <summary>Gets or sets what the person was there.</summary>
+    public string? Role { get; set; }
+
+    /// <summary>Gets or sets from when: an expression of time as <see cref="PersonTime"/> writes it.</summary>
+    public string? Since { get; set; }
+
+    /// <summary>Gets or sets until when.</summary>
+    public string? Until { get; set; }
+
+    /// <summary>Gets or sets when the person graduated, when one is recorded.</summary>
+    public string? Graduated { get; set; }
+
+    /// <summary>Gets or sets who sees the affiliation and may find the account through the place (<c>ScopeKind</c>).</summary>
+    public int FindableScope { get; set; }
+
+    /// <summary>Gets or sets the circle, when the affiliation is shown to one.</summary>
+    public long? FindableCircle { get; set; }
+
+    /// <summary>Gets or sets who sees when (<c>ScopeKind</c>).</summary>
+    public int DatesScope { get; set; }
+
+    /// <summary>Gets or sets the circle, when the dates are shown to one.</summary>
+    public long? DatesCircle { get; set; }
+
+    /// <summary>Gets or sets when it was stated.</summary>
+    public DateTime CreatedAt { get; set; }
+}
+
 /// <summary>That one account blocks another (PRIV-009).</summary>
 public sealed class StoredBlock
 {
@@ -519,6 +562,9 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
     /// <summary>Gets the circles.</summary>
     public DbSet<StoredCircle> Circles => Set<StoredCircle>();
 
+    /// <summary>Gets the places the accounts say they were at.</summary>
+    public DbSet<StoredAffiliation> Affiliations => Set<StoredAffiliation>();
+
     /// <summary>Gets which account blocks which.</summary>
     public DbSet<StoredBlock> Blocks => Set<StoredBlock>();
 
@@ -701,6 +747,21 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             circle.Property(item => item.Name).HasMaxLength(80);
             circle.HasIndex(item => item.Owner);
             circle.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Owner).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<StoredAffiliation>(affiliation =>
+        {
+            affiliation.HasKey(item => item.Number);
+            affiliation.Property(item => item.Account).HasMaxLength(40);
+            affiliation.Property(item => item.Organisation).HasMaxLength(PeopleStore.LongestOrganisation);
+            affiliation.Property(item => item.OrganisationKey).HasMaxLength(PeopleStore.LongestOrganisation);
+            affiliation.Property(item => item.Role).HasMaxLength(PeopleStore.LongestRole);
+            affiliation.Property(item => item.Since).HasMaxLength(600);
+            affiliation.Property(item => item.Until).HasMaxLength(600);
+            affiliation.Property(item => item.Graduated).HasMaxLength(600);
+            affiliation.HasIndex(item => item.Account);
+            affiliation.HasIndex(item => item.OrganisationKey);
+            affiliation.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Account).OnDelete(DeleteBehavior.Cascade);
         });
 
         // A block goes with either of its accounts.

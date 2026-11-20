@@ -3387,4 +3387,109 @@
   <data name="People_Problem_blocked" xml:space="preserve">
     <value>You block this account. Take the block back before you ask.</value>
   </data>
+  <data name="Affiliations_Title" xml:space="preserve">
+    <value>Where you were</value>
+  </data>
+  <data name="Affiliations_Lead" xml:space="preserve">
+    <value>Schools, universities, employers, teams: where you were, what you were there and when. Nothing of it is shown to anybody until you say so, and whether people may find you through a place is your choice – apart from whether they may see when.</value>
+  </data>
+  <data name="Affiliations_Mine_Title" xml:space="preserve">
+    <value>Your places</value>
+  </data>
+  <data name="Affiliations_None" xml:space="preserve">
+    <value>You have stated no place yet.</value>
+  </data>
+  <data name="Affiliations_Shown_Note" xml:space="preserve">
+    <value>Who sees a place on your page may also find you through it. The dates are never shown to more people than the place.</value>
+  </data>
+  <data name="Affiliations_Findable" xml:space="preserve">
+    <value>Who sees this place and may find you through it</value>
+  </data>
+  <data name="Affiliations_Dates" xml:space="preserve">
+    <value>Who sees when – and may find you by a year</value>
+  </data>
+  <data name="Affiliations_Change" xml:space="preserve">
+    <value>Change or remove</value>
+  </data>
+  <data name="Affiliations_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Affiliations_Remove" xml:space="preserve">
+    <value>Remove this place</value>
+  </data>
+  <data name="Affiliations_Add_Title" xml:space="preserve">
+    <value>State a place</value>
+  </data>
+  <data name="Affiliations_Add_Note" xml:space="preserve">
+    <value>Write the name as people know it: others who write the same name are found through the same place.</value>
+  </data>
+  <data name="Affiliations_Add_Send" xml:space="preserve">
+    <value>State the place</value>
+  </data>
+  <data name="Affiliations_Place" xml:space="preserve">
+    <value>The name of the place</value>
+  </data>
+  <data name="Affiliations_Role" xml:space="preserve">
+    <value>What you were there (if you like)</value>
+  </data>
+  <data name="Affiliations_Graduated_Year" xml:space="preserve">
+    <value>Year of graduation, if there was one</value>
+  </data>
+  <data name="Affiliations_Graduated" xml:space="preserve">
+    <value>graduated {0}</value>
+  </data>
+  <data name="Affiliations_Find_Title" xml:space="preserve">
+    <value>Find people through a place</value>
+  </data>
+  <data name="Affiliations_Find_Note" xml:space="preserve">
+    <value>You find who chose to be found by you through this place. Being found together makes nobody a classmate or a friend: you can ask them, and they decide.</value>
+  </data>
+  <data name="Affiliations_Find_Year" xml:space="preserve">
+    <value>A year (if you know one)</value>
+  </data>
+  <data name="Affiliations_Find_Question" xml:space="preserve">
+    <value>What about that year</value>
+  </data>
+  <data name="Affiliations_Question_during" xml:space="preserve">
+    <value>was there during the year</value>
+  </data>
+  <data name="Affiliations_Question_entered" xml:space="preserve">
+    <value>began there in the year</value>
+  </data>
+  <data name="Affiliations_Question_graduated" xml:space="preserve">
+    <value>graduated in the year</value>
+  </data>
+  <data name="Affiliations_Find_Send" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Affiliations_Found_Title" xml:space="preserve">
+    <value>People at: {0}</value>
+  </data>
+  <data name="Affiliations_Found_None" xml:space="preserve">
+    <value>Nobody you may find.</value>
+  </data>
+  <data name="Affiliations_Found_Note" xml:space="preserve">
+    <value>A name leads to the page about that account.</value>
+  </data>
+  <data name="Affiliations_Possibly" xml:space="preserve">
+    <value>possibly – the records leave it open</value>
+  </data>
+  <data name="Affiliations_Said_added" xml:space="preserve">
+    <value>The place is stated. It is shown to nobody until you choose who sees it.</value>
+  </data>
+  <data name="Affiliations_Said_changed" xml:space="preserve">
+    <value>Saved.</value>
+  </data>
+  <data name="Affiliations_Said_shown" xml:space="preserve">
+    <value>Saved.</value>
+  </data>
+  <data name="Affiliations_Said_removed" xml:space="preserve">
+    <value>The place is removed.</value>
+  </data>
+  <data name="Affiliations_Problem_affiliation" xml:space="preserve">
+    <value>A place needs a name of 1 to 160 characters in one line; what you were there has up to 120. A year is a number from 1 to 9999, the end is not before the beginning, and nobody graduates before they begin. The same place with the same role is stated once, and you can state 40 places.</value>
+  </data>
+  <data name="Person_Affiliations" xml:space="preserve">
+    <value>Where they were</value>
+  </data>
 </root>

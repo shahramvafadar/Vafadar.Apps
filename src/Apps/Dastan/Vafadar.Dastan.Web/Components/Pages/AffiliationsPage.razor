@@ -1,0 +1,316 @@
+@page "/account/affiliations"
+@using Vafadar.Dastan.Core
+@using Vafadar.Dastan.Core.Personal
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* The places somebody was at – a school, a university, an employer, a team – and finding people through a
+   place (step 19.6, ADR 0018, PRIV-010 to PRIV-012). An affiliation is shown to nobody until its account
+   says so; who may find the account through the place and who may see when are two choices. A search shows
+   who lets this visitor find them, and says the same when there is nobody and when there is nobody this
+   visitor may find. Every form is sent to an address of its own (AffiliationEndpoints). No script. *@
+<PageTitle>@T["Affiliations_Title"] – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+@if (_me is not null)
+{
+    <header class="page-header">
+        <h1>@T["Affiliations_Title"]</h1>
+        <p class="lead">@T["Affiliations_Lead"]</p>
+        <p class="actions">
+            <a class="action secondary" href="account/people">@T["People_Link"]</a>
+            <a class="action secondary" href="account">@T["Account_Title"]</a>
+        </p>
+    </header>
+
+    @if (_said is not null)
+    {
+        <p class="note" role="status">@T[$"Affiliations_Said_{_said}"]</p>
+    }
+
+    <section id="mine" aria-labelledby="mine-title">
+        <h2 id="mine-title">@T["Affiliations_Mine_Title"]</h2>
+        @Problems("mine")
+        @if (_mine.Count == 0)
+        {
+            <p class="note">@T["Affiliations_None"]</p>
+        }
+        else
+        {
+            <p class="note">@T["Affiliations_Shown_Note"]</p>
+            <ul class="tree-people" role="list">
+                @foreach (var affiliation in _mine)
+                {
+                    var when = AffiliationEndpoints.When(affiliation.Terms, T, Visitor);
+                    <li id="@($"affiliation-{affiliation.Number}")">
+                        <p><strong dir="auto">@affiliation.Terms.Organisation</strong>@if (affiliation.Terms.Role is { } role)
+                            {
+                                <span class="meta"> – <bdi>@role</bdi></span>
+                            }
+                        </p>
+                        @if (when.Length > 0)
+                        {
+                            <p class="meta">@when</p>
+                        }
+                        <form method="post" action="@($"{AffiliationEndpoints.Root}/show")" class="account">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="affiliation" value="@affiliation.Number" />
+                            <p class="field">
+                                <label for="@($"findable-{affiliation.Number}")">@T["Affiliations_Findable"]</label>
+                                @Audience($"findable-{affiliation.Number}", "findable", affiliation.Findable, affiliation.FindableCircle)
+                            </p>
+                            <p class="field">
+                                <label for="@($"dates-{affiliation.Number}")">@T["Affiliations_Dates"]</label>
+                                @Audience($"dates-{affiliation.Number}", "dates", affiliation.Dates, affiliation.DatesCircle)
+                            </p>
+                            <p><button type="submit" class="action secondary">@T["People_Shown_Send"]<span class="visually-hidden"> – @affiliation.Terms.Organisation</span></button></p>
+                        </form>
+                        <details>
+                            <summary>@T["Affiliations_Change"]<span class="visually-hidden"> – @affiliation.Terms.Organisation</span></summary>
+                            <form method="post" action="@($"{AffiliationEndpoints.Root}/change")" class="account">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="affiliation" value="@affiliation.Number" />
+                                @Fields($"change-{affiliation.Number}", affiliation.Terms)
+                                <p><button type="submit" class="action secondary">@T["Affiliations_Save"]</button></p>
+                            </form>
+                            <form method="post" action="@($"{AffiliationEndpoints.Root}/remove")" class="save">
+                                <AntiforgeryToken />
+                                <input type="hidden" name="returnUrl" value="@_here" />
+                                <input type="hidden" name="affiliation" value="@affiliation.Number" />
+                                <button type="submit">@T["Affiliations_Remove"]<span class="visually-hidden"> – @affiliation.Terms.Organisation</span></button>
+                            </form>
+                        </details>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section id="add" aria-labelledby="add-title">
+        <h2 id="add-title">@T["Affiliations_Add_Title"]</h2>
+        @Problems("add")
+        <form method="post" action="@($"{AffiliationEndpoints.Root}/add")" class="account">
+            <AntiforgeryToken />
+            <input type="hidden" name="returnUrl" value="@_here" />
+            @Fields("add", null)
+            <p class="note">@T["Affiliations_Add_Note"]</p>
+            <p><button type="submit" class="action secondary">@T["Affiliations_Add_Send"]</button></p>
+        </form>
+    </section>
+
+    <section id="find" aria-labelledby="find-title">
+        <h2 id="find-title">@T["Affiliations_Find_Title"]</h2>
+        <p class="note">@T["Affiliations_Find_Note"]</p>
+        <form method="get" action="@_here.TrimStart('/')" class="account">
+            <p class="field">
+                <label for="find-place">@T["Affiliations_Place"]</label>
+                <input id="find-place" name="place" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@_place" autocomplete="off" dir="auto" />
+            </p>
+            <p class="field">
+                <label for="find-year">@T["Affiliations_Find_Year"]</label>
+                <input id="find-year" name="year" type="text" inputmode="numeric" maxlength="4" value="@(_year is null ? null : Year)" autocomplete="off" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="find-question">@T["Affiliations_Find_Question"]</label>
+                <select id="find-question" name="question">
+                    <option value="during" selected="@(_question == AttendanceQuestion.AttendedDuring)">@T["Affiliations_Question_during"]</option>
+                    <option value="entered" selected="@(_question == AttendanceQuestion.EnteredIn)">@T["Affiliations_Question_entered"]</option>
+                    <option value="graduated" selected="@(_question == AttendanceQuestion.GraduatedIn)">@T["Affiliations_Question_graduated"]</option>
+                </select>
+            </p>
+            <p class="field">
+                <label for="find-calendar">@T["People_Ask_Calendar"]</label>
+                <select id="find-calendar" name="calendar">
+                    <option value="gregorian" selected="@(_calendar == "gregorian")">@T["Tree_Calendar_gregorian"]</option>
+                    <option value="solar-hijri" selected="@(_calendar == "solar-hijri")">@T["Tree_Calendar_solar-hijri"]</option>
+                </select>
+            </p>
+            <p><button type="submit" class="action">@T["Affiliations_Find_Send"]</button></p>
+        </form>
+
+        @if (_later)
+        {
+            <div class="problems" role="alert"><ul><li>@T["People_Problem_later"]</li></ul></div>
+        }
+        else if (_found is not null)
+        {
+            <h3 id="found">@string.Format(CultureInfo.CurrentCulture, T["Affiliations_Found_Title"], _place)</h3>
+            @if (_found.Count == 0)
+            {
+                @* The same words whether nobody states the place or nobody lets this visitor find them there (PRIV-012). *@
+                <p class="note">@T["Affiliations_Found_None"]</p>
+            }
+            else
+            {
+                <p class="note">@T["Affiliations_Found_Note"]</p>
+                <ul class="people" role="list">
+                    @foreach (var found in _found)
+                    {
+                        var when = found.Shown.DatesShown ? AffiliationEndpoints.When(found.Shown.Terms, T, Visitor) : string.Empty;
+                        <li>
+                            <span>
+                                <a href="@($"people/{found.Person.Id}")" dir="auto">@found.Person.Name</a>
+                                @if (found.Role is { } role)
+                                {
+                                    <span class="meta"> – <bdi>@role</bdi></span>
+                                }
+                                @if (when.Length > 0)
+                                {
+                                    <span class="meta"> – @when</span>
+                                }
+                                @if (found.Holding == Holding.Possibly)
+                                {
+                                    <span class="meta"> – @T["Affiliations_Possibly"]</span>
+                                }
+                            </span>
+                        </li>
+                    }
+                </ul>
+            }
+        }
+    </section>
+}
+
+@code {
+    // What the forms may answer with: nothing else of an address is turned into words of the page.
+    private static readonly string[] Sayings = ["added", "changed", "shown", "removed"];
+    private static readonly string[] Forms = ["mine", "add"];
+
+    private VisitorSession? _me;
+    private IReadOnlyList<AffiliationInfo> _mine = [];
+    private IReadOnlyList<CircleInfo> _circles = [];
+    private IReadOnlyList<FoundThrough>? _found;
+    private bool _later;
+    private string? _place;
+    private YearOfEra? _year;
+    private AttendanceQuestion _question;
+    private string _calendar = "gregorian";
+    private string? _said;
+    private string? _form;
+    private string _here = AffiliationEndpoints.Page;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Place { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Year { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Question { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Calendar { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Desk.IsOpen)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        if (AccountDesk.Session(Context.User) is not { } session)
+        {
+            // Who is not signed in is shown where to sign in.
+            Navigation.NavigateTo($"/{Visitor.Language.Tag}{AccountDesk.Page}");
+            return;
+        }
+
+        _me = session;
+        _here = $"/{Visitor.Language.Tag}{AffiliationEndpoints.Page}";
+        _said = Sayings.Contains(Said, StringComparer.Ordinal) ? Said : null;
+        _form = Forms.Contains(Form, StringComparer.Ordinal) && Problem == "affiliation" ? Form : null;
+        _calendar = Calendar == "solar-hijri" || (Calendar is null && TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "solar-hijri") ? "solar-hijri" : "gregorian";
+        _question = Question switch { "entered" => AttendanceQuestion.EnteredIn, "graduated" => AttendanceQuestion.GraduatedIn, _ => AttendanceQuestion.AttendedDuring };
+        _year = AffiliationEndpoints.Year(Year, _calendar);
+        _place = Place is { Length: > 0 and <= PeopleStore.LongestOrganisation } place && !place.Any(char.IsControl) ? place.Trim() : null;
+        using var store = Desk.Open();
+        _mine = store.Affiliations(session.Id);
+        _circles = store.Circles(session.Id);
+        if (_place is { Length: > 0 })
+        {
+            // Asking place after place could be used to try them all: an address asks only so often.
+            _later = !Desk.Allows(Context, "find", AffiliationEndpoints.SearchesPerHour);
+            _found = _later ? null : store.FindThrough(session.Id, _place, _year, _question);
+        }
+    }
+
+    private static string? Written(Vafadar.Temporal.TemporalExpression? time, string calendar) => TreeEndpoints.Fields(time, calendar).Year?.ToString(CultureInfo.InvariantCulture);
+
+    // The choice of an audience: nobody else, one of the circles of the account, everybody.
+    private RenderFragment Audience(string id, string name, ScopeKind shown, long? circle) => __builder =>
+    {
+        var chosen = shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{circle}", _ => "private" };
+        <select id="@id" name="@name">
+            <option value="private" selected="@(chosen == "private")">@T["People_Scope_private"]</option>
+            @foreach (var one in _circles)
+            {
+                <option value="@($"circle-{one.Number}")" selected="@(chosen == $"circle-{one.Number}")">@string.Format(CultureInfo.CurrentCulture, T["People_Scope_circle"], one.Name)</option>
+            }
+            <option value="public" selected="@(chosen == "public")">@T["People_Scope_public"]</option>
+        </select>
+    };
+
+    // The fields that say what an affiliation is: the same for a new one and for one that is changed.
+    private RenderFragment Fields(string id, AffiliationTerms? terms) => __builder =>
+    {
+        var first = terms?.Since ?? terms?.Until ?? terms?.Graduated;
+        var calendar = first is null ? TreeEndpoints.CalendarOf(Visitor.Language.Tag) : TreeEndpoints.Fields(first, "gregorian").Calendar;
+        <p class="field">
+            <label for="@($"{id}-place")">@T["Affiliations_Place"]</label>
+            <input id="@($"{id}-place")" name="place" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@terms?.Organisation" autocomplete="off" dir="auto" />
+        </p>
+        <p class="field">
+            <label for="@($"{id}-role")">@T["Affiliations_Role"]</label>
+            <input id="@($"{id}-role")" name="role" type="text" maxlength="@PeopleStore.LongestRole" value="@terms?.Role" autocomplete="off" dir="auto" />
+        </p>
+        <p class="field">
+            <label for="@($"{id}-since")">@T["People_Ask_Since"]</label>
+            <input id="@($"{id}-since")" name="since" type="text" inputmode="numeric" maxlength="4" value="@Written(terms?.Since, calendar)" autocomplete="off" dir="ltr" />
+        </p>
+        <p class="field">
+            <label for="@($"{id}-until")">@T["People_Ask_Until"]</label>
+            <input id="@($"{id}-until")" name="until" type="text" inputmode="numeric" maxlength="4" value="@Written(terms?.Until, calendar)" autocomplete="off" dir="ltr" />
+        </p>
+        <p class="field">
+            <label for="@($"{id}-graduated")">@T["Affiliations_Graduated_Year"]</label>
+            <input id="@($"{id}-graduated")" name="graduated" type="text" inputmode="numeric" maxlength="4" value="@Written(terms?.Graduated, calendar)" autocomplete="off" dir="ltr" />
+        </p>
+        <p class="field">
+            <label for="@($"{id}-calendar")">@T["People_Ask_Calendar"]</label>
+            <select id="@($"{id}-calendar")" name="calendar">
+                <option value="gregorian" selected="@(calendar == "gregorian")">@T["Tree_Calendar_gregorian"]</option>
+                <option value="solar-hijri" selected="@(calendar == "solar-hijri")">@T["Tree_Calendar_solar-hijri"]</option>
+            </select>
+        </p>
+    };
+
+    // What was wrong with a form, said above it.
+    private RenderFragment Problems(string form) => __builder =>
+    {
+        if (_form == form)
+        {
+            <div class="problems" role="alert"><ul>
+                <li>@T["Affiliations_Problem_affiliation"]</li>
+            </ul></div>
+        }
+    };
+}

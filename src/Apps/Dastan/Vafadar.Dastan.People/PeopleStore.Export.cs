@@ -70,6 +70,17 @@ public sealed partial class PeopleStore
                     ["lastDay"] = invitation.LastDay.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
                     ["state"] = invitation.RunOut ? "run out" : invitation.State.ToString().ToLowerInvariant(),
                 })]),
+            ["affiliations"] = new JsonArray([.. Affiliations(id)
+                .Select(affiliation => (JsonNode)new JsonObject
+                {
+                    ["place"] = affiliation.Terms.Organisation,
+                    ["as"] = affiliation.Terms.Role,
+                    ["since"] = affiliation.Terms.Since is { } since ? JsonNode.Parse(PersonTime.Write(since)!) : null,
+                    ["until"] = affiliation.Terms.Until is { } until ? JsonNode.Parse(PersonTime.Write(until)!) : null,
+                    ["graduated"] = affiliation.Terms.Graduated is { } graduated ? JsonNode.Parse(PersonTime.Write(graduated)!) : null,
+                    ["foundBy"] = affiliation.Findable.ToString().ToLowerInvariant(),
+                    ["datesSeenBy"] = affiliation.Dates.ToString().ToLowerInvariant(),
+                })]),
             ["blocked"] = new JsonArray([.. Blocked(id).Select(person => (JsonNode)person.Name)]),
             ["relationships"] = new JsonArray([.. Relationships(id)
                 .Select(relationship => (JsonNode)new JsonObject

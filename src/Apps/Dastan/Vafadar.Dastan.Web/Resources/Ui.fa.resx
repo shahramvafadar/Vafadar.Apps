@@ -3387,4 +3387,109 @@
   <data name="People_Problem_blocked" xml:space="preserve">
     <value>شما این حساب را مسدود کرده‌اید. پیش از درخواست، مسدودی را بردارید.</value>
   </data>
+  <data name="Affiliations_Title" xml:space="preserve">
+    <value>جاهایی که بوده‌اید</value>
+  </data>
+  <data name="Affiliations_Lead" xml:space="preserve">
+    <value>مدرسه، دانشگاه، محل کار، تیم: کجا بودید، آن‌جا چه بودید و کی. تا خودتان نگویید چیزی از آن به کسی نشان داده نمی‌شود، و این‌که دیگران بتوانند شما را از راه یک جا پیدا کنند انتخاب شماست – جدا از این‌که ببینند کی.</value>
+  </data>
+  <data name="Affiliations_Mine_Title" xml:space="preserve">
+    <value>جاهای شما</value>
+  </data>
+  <data name="Affiliations_None" xml:space="preserve">
+    <value>هنوز جایی ثبت نکرده‌اید.</value>
+  </data>
+  <data name="Affiliations_Shown_Note" xml:space="preserve">
+    <value>هر که جایی را در صفحهٔ شما ببیند، می‌تواند شما را از راه آن هم پیدا کند. تاریخ‌ها هرگز به کسانی بیش از خودِ آن جا نشان داده نمی‌شوند.</value>
+  </data>
+  <data name="Affiliations_Findable" xml:space="preserve">
+    <value>چه کسی این جا را می‌بیند و می‌تواند شما را از راه آن پیدا کند</value>
+  </data>
+  <data name="Affiliations_Dates" xml:space="preserve">
+    <value>چه کسی زمانش را می‌بیند – و می‌تواند شما را با یک سال پیدا کند</value>
+  </data>
+  <data name="Affiliations_Change" xml:space="preserve">
+    <value>تغییر یا حذف</value>
+  </data>
+  <data name="Affiliations_Save" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
+  <data name="Affiliations_Remove" xml:space="preserve">
+    <value>حذف این جا</value>
+  </data>
+  <data name="Affiliations_Add_Title" xml:space="preserve">
+    <value>ثبت یک جا</value>
+  </data>
+  <data name="Affiliations_Add_Note" xml:space="preserve">
+    <value>نام را همان‌طور بنویسید که مردم می‌شناسند: کسانی که همین نام را بنویسند از راه همین جا پیدا می‌شوند.</value>
+  </data>
+  <data name="Affiliations_Add_Send" xml:space="preserve">
+    <value>ثبت</value>
+  </data>
+  <data name="Affiliations_Place" xml:space="preserve">
+    <value>نام آن جا</value>
+  </data>
+  <data name="Affiliations_Role" xml:space="preserve">
+    <value>آن‌جا چه بودید (اگر بخواهید)</value>
+  </data>
+  <data name="Affiliations_Graduated_Year" xml:space="preserve">
+    <value>سال فارغ‌التحصیلی، اگر بوده</value>
+  </data>
+  <data name="Affiliations_Graduated" xml:space="preserve">
+    <value>فارغ‌التحصیل {0}</value>
+  </data>
+  <data name="Affiliations_Find_Title" xml:space="preserve">
+    <value>یافتن افراد از راه یک جا</value>
+  </data>
+  <data name="Affiliations_Find_Note" xml:space="preserve">
+    <value>کسانی را پیدا می‌کنید که خودشان خواسته‌اند شما از راه این جا پیدایشان کنید. با هم پیدا شدن کسی را هم‌کلاسی یا دوست نمی‌کند: می‌توانید از او بپرسید، و تصمیم با اوست.</value>
+  </data>
+  <data name="Affiliations_Find_Year" xml:space="preserve">
+    <value>یک سال (اگر می‌دانید)</value>
+  </data>
+  <data name="Affiliations_Find_Question" xml:space="preserve">
+    <value>دربارهٔ آن سال چه</value>
+  </data>
+  <data name="Affiliations_Question_during" xml:space="preserve">
+    <value>در آن سال آن‌جا بود</value>
+  </data>
+  <data name="Affiliations_Question_entered" xml:space="preserve">
+    <value>در آن سال آغاز کرد</value>
+  </data>
+  <data name="Affiliations_Question_graduated" xml:space="preserve">
+    <value>در آن سال فارغ‌التحصیل شد</value>
+  </data>
+  <data name="Affiliations_Find_Send" xml:space="preserve">
+    <value>جست‌وجو</value>
+  </data>
+  <data name="Affiliations_Found_Title" xml:space="preserve">
+    <value>افراد در: {0}</value>
+  </data>
+  <data name="Affiliations_Found_None" xml:space="preserve">
+    <value>کسی که بتوانید پیدا کنید نیست.</value>
+  </data>
+  <data name="Affiliations_Found_Note" xml:space="preserve">
+    <value>هر نام به صفحهٔ آن حساب می‌رود.</value>
+  </data>
+  <data name="Affiliations_Possibly" xml:space="preserve">
+    <value>شاید – داده‌ها آن را باز می‌گذارند</value>
+  </data>
+  <data name="Affiliations_Said_added" xml:space="preserve">
+    <value>ثبت شد. تا انتخاب نکنید چه کسی ببیند، به کسی نشان داده نمی‌شود.</value>
+  </data>
+  <data name="Affiliations_Said_changed" xml:space="preserve">
+    <value>ذخیره شد.</value>
+  </data>
+  <data name="Affiliations_Said_shown" xml:space="preserve">
+    <value>ذخیره شد.</value>
+  </data>
+  <data name="Affiliations_Said_removed" xml:space="preserve">
+    <value>حذف شد.</value>
+  </data>
+  <data name="Affiliations_Problem_affiliation" xml:space="preserve">
+    <value>هر جا نامی ۱ تا ۱۶۰ نویسه‌ای در یک سطر می‌خواهد؛ نقش شما تا ۱۲۰ نویسه. سال عددی از ۱ تا ۹۹۹۹ است، پایان پیش از آغاز نیست و کسی پیش از آغاز فارغ‌التحصیل نمی‌شود. یک جا با یک نقش یک بار ثبت می‌شود، و می‌توانید ۴۰ جا ثبت کنید.</value>
+  </data>
+  <data name="Person_Affiliations" xml:space="preserve">
+    <value>جاهایی که بوده است</value>
+  </data>
 </root>
