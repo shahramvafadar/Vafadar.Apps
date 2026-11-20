@@ -319,6 +319,70 @@ public sealed partial class AiAnalysisFlowTests
         Assert.Null(vm.Disclosure);
     }
 
+    /// <summary>Only ordinary page return may reuse a detailed draft from its original AI session.</summary>
+    [Theory]
+    [InlineData("visible")]
+    [InlineData("departed")]
+    [InlineData("ordinary")]
+    public async Task Analysis_detailed_scope_is_retired_by_opt_out(string scenario)
+    {
+        using var f = new FlowFixture();
+        var runtime = new Runtime();
+        var account = new Account { Name = "Fictitious zero-opening metadata", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1) };
+        await f.Store.SaveAccountAsync(account, Ct);
+        var store = f.Services.GetRequiredService<AiSnapshotStore>();
+        var source = await store.AccountsAsync(Ct);
+        var model = new AiAnalysisViewModel(store, f.Translator, f.Localization, new DateFormatter(f.Localization), f.Time, f.Platform, runtime);
+        var from = new DateOnly(2026, 8, 1);
+        var to = new DateOnly(2026, 8, 15);
+        var handoff = AiPeriodHandoff.Capture(source.File, from, to, false, [account.Id])! with
+        {
+            Funding = AiFundingFacts.Limit("EUR", 1000, 200, 300, 800),
+        };
+        model.SetInitialPeriod(handoff);
+        await model.LoadAsync();
+        Assert.True(Assert.Single(model.Accounts).Selected);
+        Assert.False(model.CanEditScope);
+
+        if (scenario != "visible") model.Retire();
+        if (scenario != "ordinary")
+        {
+            runtime.Features.Enabled = false;
+            runtime.Features.Enabled = true;
+        }
+        await model.ActivateAsync();
+
+        Assert.True(model.Loaded);
+        bool reuse = scenario == "ordinary";
+        Assert.Equal(reuse, Assert.Single(model.Accounts).Selected);
+        Assert.Equal(!reuse, model.CanEditScope);
+        Assert.Equal(!reuse, model.ConfirmedOnly);
+        var today = DateOnly.FromDateTime(f.Time.GetLocalNow().Date);
+        Assert.Equal(reuse ? from : new DateOnly(today.Year, today.Month, 1), model.From);
+        Assert.Equal(reuse ? to : today, model.To);
+        Assert.Null(model.Disclosure);
+        Assert.Equal(0, runtime.Opens);
+    }
+
+    /// <summary>Opting out drops the old local question before a new AI session is opened.</summary>
+    [Fact]
+    public async Task Analysis_local_question_is_retired_by_opt_out()
+    {
+        using var f = new FlowFixture();
+        var runtime = new Runtime();
+        var store = f.Services.GetRequiredService<AiSnapshotStore>();
+        var model = new AiAnalysisViewModel(store, f.Translator, f.Localization, new DateFormatter(f.Localization), f.Time, f.Platform, runtime);
+        await model.LoadAsync();
+        model.QuestionText = "Why did spending rise?";
+        runtime.Features.Enabled = false;
+        Assert.Empty(model.QuestionText);
+        runtime.Features.Enabled = true;
+        await model.ActivateAsync();
+        Assert.Empty(model.QuestionText);
+        Assert.True(model.CanEditQuestionComparison);
+        Assert.Equal(0, runtime.Opens);
+    }
+
     /// <summary>The period shortcut only seeds a local draft and retains a frozen account scope.</summary>
     [Theory, InlineData(false), InlineData(true)]
     public async Task Period_handoff_preserves_exact_scope_without_implicit_review_or_disclosure(bool comparison)

@@ -35,6 +35,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private AiAccountScope? scope;
     private AiPeriodHandoff? initialPeriod, detailedPeriod;
     private AiQuestion? question;
+    private bool resetFeatureDraft;
 
     /// <summary>Original question text, retained locally and never included in disclosure.</summary>
     [ObservableProperty] public partial string QuestionText { get; set; } = string.Empty;
@@ -241,12 +242,14 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private void RetireDisabledFeature(CancellationToken original)
     {
         if (!active || featureSession != original) return;
+        ForgetFeatureDraft();
         availability = null;
         retained = null;
         // Clear all private display values before any binding callback can expose a partial retirement.
         stagingMetadata = true;
         try
         {
+            QuestionText = string.Empty; QuestionStatus = null;
             Summary = Disclosure = ShareStatus = ResultSnapshot = ResultText = ResultStatus = BalanceText = null;
             ProviderText = text["Ai_NoProvider"];
         }
@@ -261,6 +264,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         {
             nameof(Summary), nameof(Disclosure), nameof(ShareStatus), nameof(ResultSnapshot),
             nameof(ResultText), nameof(ResultStatus), nameof(BalanceText), nameof(ProviderText),
+            nameof(QuestionText), nameof(QuestionStatus), nameof(CanEditScope),
+            nameof(CanEditQuestionConfirmation), nameof(CanEditQuestionComparison),
         })
         {
             try { OnPropertyChanged(field); }
@@ -271,12 +276,26 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         }
     }
 
+    // Retiring the feature also drops local context, including detailed callbacks from another page.
+    private void ForgetFeatureDraft()
+    {
+        resetFeatureDraft = true;
+        scope = null;
+        initialPeriod = detailedPeriod = null;
+        question = null;
+    }
+
     /// <summary>Loads actual account choices only, with no HTTP, automatic selection, settings write or model run.</summary>
     [RelayCommand] public async Task LoadAsync()
     {
         var feature = runtime.FeatureSession;
         if (feature.IsCancellationRequested || HasPendingOperation || rootRetired || ownsRoot?.Invoke() == false) return;
-        if (featureSession.IsCancellationRequested) { Retire(); }
+        if (featureSession.IsCancellationRequested)
+        {
+            // A page removed from view may have unregistered before the preference changed.
+            ForgetFeatureDraft();
+            Retire();
+        }
         featureSession = feature;
         local.Changed -= OnLanguageChanged; local.Changed += OnLanguageChanged;
         frameEpoch++; active = true; visible ??= CancellationTokenSource.CreateLinkedTokenSource(feature); var ct = visible.Token; var original = ++epoch;
@@ -291,6 +310,12 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             remote?.Dispose(); remote = null; availability = null; retained = null; offer = null; review = null;
             Summary = Disclosure = ResultText = ResultStatus = ResultSnapshot = ShareStatus = BalanceText = null; ProviderText = text["Ai_NoProvider"];
             Validate(original);
+            if (resetFeatureDraft)
+            {
+                Reset(QuestionText, string.Empty, value => QuestionText = value);
+                QuestionStatus = null; Validate(original);
+                NotifyQuestionScope(); Validate(original);
+            }
             var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); Validate(original);
             var incoming = initialPeriod ?? detailedPeriod;
             if (incoming is not null)
@@ -303,7 +328,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
                 Reset(ConfirmedOnly, incoming.ConfirmedOnly, value => ConfirmedOnly = value);
                 Reset(ComparePrevious, incoming.ComparePrevious, value => ComparePrevious = value);
             }
-            else if (oldFile is not null && oldFile != current.File)
+            else if (resetFeatureDraft || oldFile is not null && oldFile != current.File)
             {
                 // D-963: only our own default changes advance the expected revision. A nested draft edit
                 // or root retirement must stop before the next default or account publication.
@@ -324,6 +349,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             detailedPeriod = incoming?.IsDetailed == true ? incoming : null;
             OnPropertyChanged(nameof(CanEditScope)); OnPropertyChanged(nameof(CanOpenFundingDraft)); Validate(original);
             Loaded = true; Validate(original);
+            resetFeatureDraft = false;
             if (ReferenceEquals(initialPeriod, incoming)) initialPeriod = null;
 
             void Reset<T>(T before, T value, Action<T> publish)

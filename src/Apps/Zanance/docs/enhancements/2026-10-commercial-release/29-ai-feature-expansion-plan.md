@@ -97,6 +97,20 @@ passed with synthetic effects and zero external provider requests.
 Strict Windows and Android Release builds passed. Signed offline Android APK
 SHA256: 76c9e3201f750adff97b69730690ddc786b1f0281782783c716dc34e7a509bd4.
 
+Opting out now also retires the local question and the original analysis draft, including
+a detailed report or funding handoff and its source callbacks. Reopening the same page
+after re-enabling starts with the usual dates, confirmed-only mode and no selected accounts.
+A page returned to within the same enabled session keeps its detailed scope. The private
+request journal can still be read through a fresh explicit provider check.
+
+Three new host cases reproduced retained account selection on a visible or departed
+page and a retained question. The corrected build passed all three, the ordinary
+return control and three directly affected opt-out cases. The tests used only
+synthetic data and recorded no real provider request or financial posting. An independent
+Windows review used the original page and device preference. The native account checkbox
+changed from selected in the detailed draft to unselected in the fresh editable draft.
+The financial fingerprint stayed equal. Evidence is in `artifacts/ai-opt-out-draft-retirement`.
+
 Provider status and offer reads also use the lifetime of the Analysis page
 that started them. In two focused tests, replacing that page previously left
 a held availability or offer read waiting even while the original presentation
