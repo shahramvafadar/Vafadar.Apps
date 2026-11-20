@@ -36,7 +36,7 @@ if ($LASTEXITCODE -ne 0) { throw 'The APK package information could not be read.
 # Only extract package, permission and debug flags; do not dump arbitrary manifest metadata.
 $package = [regex]::Match(($permissionLines -join "`n"), '(?m)^package: (\S+)\s*$').Groups[1].Value
 $permissions = @($permissionLines | ForEach-Object {
-    if ($_ -match "^uses-permission: name='([^']+)'") { $Matches[1] }
+    if ($_ -match "^uses-permission(?:-sdk-\d+)?: name='([^']+)'") { $Matches[1] }
 } | Sort-Object -Unique)
 Import-Module (Join-Path $PSScriptRoot '../modules/AndroidPrivacy.psm1') -Force
 Assert-ZananceAndroidPrivacy -Package $package -Variant $Variant -Permissions $permissions -Debuggable (($badging -join "`n") -match '(?m)^application-debuggable')

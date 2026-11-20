@@ -114,6 +114,15 @@ camera/network-state permissions, fixture package, Debug and missing reminder ca
 rejected when Offline is required; actual Offline/Cloud artifacts are checked separately. Main automated suite stays
 separate from these PowerShell cases. No app UI, financial schema, production provider or backup policy changed.
 
+The APK permission parser also inspects SDK-qualified permission declarations. An AAPT2-compiled
+fixture with `uses-permission-sdk-23` for `READ_CONTACTS` was previously accepted because its line was
+omitted by the parser. The same fixture now fails on the unexpected permission. The complete dual-ABI
+Offline Release APK with SHA-256
+`9f1c9df40e85763054eb3568be2fa2821c55e719cdcd28e744d0a3a7c7ed8bde` passed. Its permissions are
+notifications, boot completion, the two Android biometric declarations and the private AndroidX
+dynamic receiver permission. The fixture was compiled for static inspection only and was never
+signed or installed. The original and corrected results are in `artifacts/zpv`.
+
 ## Store declarations and remaining gates
 
 * Android Offline: verify the exact submitted Release artifact has no INTERNET. OS backups and user shares are
