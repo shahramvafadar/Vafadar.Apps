@@ -144,7 +144,7 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
     {
         base.OnActivityResult(requestCode, resultCode, data);
-        if (!AndroidAttachmentPicker.OnActivityResult(this, requestCode, resultCode, data)
+        if (!AndroidDocumentPicker.OnActivityResult(this, requestCode, resultCode, data)
             && !Interaction.AndroidHouseholdRecoverySave.OnActivityResult(this, requestCode, resultCode, data)
             && !CameraCapture.OnActivityResult(this, requestCode, resultCode))
         {
@@ -157,7 +157,7 @@ public class MainActivity : MauiAppCompatActivity
     {
         _notificationSettingsReturn?.TrySetResult(false);
         CameraCapture.OnDestroyed(this);
-        AndroidAttachmentPicker.OnDestroyed(this);
+        AndroidDocumentPicker.OnDestroyed(this);
         Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this);
         base.OnDestroy();
     }

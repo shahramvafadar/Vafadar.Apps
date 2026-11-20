@@ -331,6 +331,10 @@ public sealed partial class BackupViewModel : ViewModelBase
         var owner = Restore.CapturePreparationOwner();
         try
         {
+#if ANDROID
+            await AndroidDocumentPicker.UseAsync(_translator["Backup_PickFile"], null,
+                (stream, name, _) => Restore.PrepareAsync(stream, name, owner), owner.EnsureCurrent);
+#else
             var result = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = _translator["Backup_PickFile"] });
             owner.EnsureCurrent();
             if (result is null)
@@ -340,6 +344,7 @@ public sealed partial class BackupViewModel : ViewModelBase
 
             await using var stream = await result.OpenReadAsync();
             owner.EnsureCurrent(); await Restore.PrepareAsync(stream, result.FileName, owner);
+#endif
         }
         catch (Exception ex) when (ex is not OutOfMemoryException && !owner.IsCurrent) { }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or PermissionException or InvalidOperationException)

@@ -70,6 +70,42 @@ public sealed class BackupRestoreFlowTests
     private static async Task PrepareAsync(BackupRestoreSession session, byte[] package, string name = "fictitious-original.zanbak")
     { using var input = new MemoryStream(package, writable: false); await session.PrepareAsync(input, name); Assert.True(session.HasPreview); }
 
+    /// <summary>A provider stream may advertise seeking even though its position cannot be queried.</summary>
+    [Fact]
+    public async Task Portable_backup_preview_reads_provider_without_querying_its_position()
+    {
+        using var f = new FlowFixture();
+        var backup = Service(f);
+        var runtime = new Runtime(f, backup);
+        var session = Session(f, backup, runtime);
+        using var provider = new PipeLikeBackupStream(await backup.CreatePackageAsync(cancellationToken: Ct));
+
+        await session.PrepareAsync(provider, "Fictitious pipe.vbak");
+
+        Assert.True(session.HasPreview);
+        Assert.Null(session.Error);
+        Assert.Equal("Fictitious pipe.vbak", session.PickedName);
+        Assert.Equal(0, runtime.Primary);
+    }
+
+    private sealed class PipeLikeBackupStream(byte[] bytes) : Stream
+    {
+        private readonly MemoryStream source = new(bytes, writable: false);
+        public override bool CanRead => true;
+        public override bool CanSeek => true;
+        public override bool CanWrite => false;
+        public override long Length => bytes.Length;
+        public override long Position { get => throw new IOException("The provider cannot report a position."); set => throw new NotSupportedException(); }
+        public override int Read(byte[] buffer, int offset, int count) => source.Read(buffer, offset, count);
+        public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default) =>
+            source.ReadAsync(buffer, cancellationToken);
+        public override void Flush() => throw new NotSupportedException();
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+        public override void SetLength(long value) => throw new NotSupportedException();
+        public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+        protected override void Dispose(bool disposing) { if (disposing) source.Dispose(); base.Dispose(disposing); }
+    }
+
     [Theory]
     [InlineData("en", "display")][InlineData("fa", "display")][InlineData("de", "display")][InlineData("es", "display")][InlineData("fr", "display")][InlineData("it", "display")]
     [InlineData("en", "onboarding")][InlineData("fa", "onboarding")][InlineData("de", "onboarding")][InlineData("es", "onboarding")][InlineData("fr", "onboarding")][InlineData("it", "onboarding")]

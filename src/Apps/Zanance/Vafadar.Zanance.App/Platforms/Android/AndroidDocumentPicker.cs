@@ -1,13 +1,14 @@
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.Provider;
 using Vafadar.Zanance.App.Presentation;
 
 namespace Vafadar.Zanance.App;
 
 /// <summary>Reads one document selected by the Android system picker, using its transient read grant.</summary>
-internal static class AndroidAttachmentPicker
+internal static class AndroidDocumentPicker
 {
     // Keep this range below the camera and household document ranges.
     private const int FirstCode = 0x2000, LastCode = 0x3FFF;
@@ -17,8 +18,9 @@ internal static class AndroidAttachmentPicker
 
     private sealed record Pending(Activity Activity, int Code, TaskCompletionSource<Android.Net.Uri?> Completion);
 
-    /// <summary>Returns the selected name, reported MIME type and bounded bytes, or null on cancellation.</summary>
-    internal static async Task<(string Name, string? ContentType, byte[] Bytes)?> PickAsync(string title)
+    /// <summary>Uses the selected document within its read grant and closes its stream before releasing the picker.</summary>
+    internal static async Task UseAsync(string title, string[]? mimeTypes, Func<Stream, string, string?, Task> use,
+        Action? validateOwner = null)
     {
         if (!PickerOwner.Wait(0))
             throw new InvalidOperationException("An attachment picker is already open.");
@@ -34,16 +36,30 @@ internal static class AndroidAttachmentPicker
             Volatile.Write(ref pending, own);
             using var intent = new Intent(Intent.ActionOpenDocument);
             intent.SetType("*/*");
-            intent.PutExtra(Intent.ExtraMimeTypes, new[] { "image/*", "application/pdf" });
+            if (mimeTypes is not null)
+                intent.PutExtra(Intent.ExtraMimeTypes, mimeTypes);
             using var chooser = Intent.CreateChooser(intent, title);
             activity.StartActivityForResult(chooser, own.Code);
             using var uri = await own.Completion.Task;
             if (uri is null || activity.IsDestroyed)
-                return null;
+                return;
 
             // MAUI's generic picker copies to a physical path first. Its copy can query Position
             // on a provider pipe and it runs before the app can apply its byte limit.
-            return await Task.Run(() => ReadAsync(activity, uri));
+            validateOwner?.Invoke();
+            var document = await Task.Run(() => Open(activity, uri, mimeTypes));
+            using var asset = document.Asset;
+            using var input = document.Input;
+            validateOwner?.Invoke();
+            await use(input, document.Name, document.ContentType);
+        }
+        catch (Java.IO.IOException error)
+        {
+            throw new IOException("The selected document could not be read.", error);
+        }
+        catch (Java.Lang.SecurityException error)
+        {
+            throw new UnauthorizedAccessException("The selected document is unavailable.", error);
         }
         finally
         {
@@ -53,7 +69,8 @@ internal static class AndroidAttachmentPicker
         }
     }
 
-    private static async Task<(string Name, string? ContentType, byte[] Bytes)> ReadAsync(Activity activity, Android.Net.Uri uri)
+    private static (string Name, string? ContentType, Stream Input, AssetFileDescriptor? Asset) Open(
+        Activity activity, Android.Net.Uri uri, string[]? mimeTypes)
     {
         var resolver = activity.ContentResolver ?? throw new IOException("The selected document is unavailable.");
         var authority = uri.Authority;
@@ -66,7 +83,10 @@ internal static class AndroidAttachmentPicker
 
         string? name = null;
         bool virtualFile = false;
-        using (var cursor = resolver.Query(uri, [IOpenableColumns.DisplayName, DocumentsContract.Document.ColumnFlags], null, null, null))
+        string[] projection = DocumentsContract.IsDocumentUri(activity, uri)
+            ? [IOpenableColumns.DisplayName, DocumentsContract.Document.ColumnFlags]
+            : [IOpenableColumns.DisplayName];
+        using (var cursor = resolver.Query(uri, projection, null, null, null))
         {
             if (cursor?.MoveToFirst() == true)
             {
@@ -81,17 +101,27 @@ internal static class AndroidAttachmentPicker
         var contentType = resolver.GetType(uri);
         if (virtualFile)
         {
-            contentType = resolver.GetStreamTypes(uri, "application/pdf")?.FirstOrDefault()
-                ?? resolver.GetStreamTypes(uri, "image/*")?.FirstOrDefault()
+            var filters = mimeTypes ?? ["*/*"];
+            contentType = filters.SelectMany(filter => resolver.GetStreamTypes(uri, filter) ?? []).FirstOrDefault()
                 ?? throw new IOException("The selected virtual document offers no supported format.");
-            using var asset = resolver.OpenTypedAssetFileDescriptor(uri, contentType, null)
+            var fileName = GetName(name, contentType);
+            var asset = resolver.OpenTypedAssetFileDescriptor(uri, contentType, null)
                 ?? throw new IOException("The selected document is unavailable.");
-            using var stream = asset.CreateInputStream() ?? throw new IOException("The selected document is unavailable.");
-            return (GetName(name, contentType), contentType, await AttachmentFiles.ReadSourceAsync(stream));
+            try
+            {
+                return (fileName, contentType, asset.CreateInputStream()
+                    ?? throw new IOException("The selected document is unavailable."), asset);
+            }
+            catch
+            {
+                using (asset) asset.Close();
+                throw;
+            }
         }
 
-        using var input = resolver.OpenInputStream(uri) ?? throw new IOException("The selected document is unavailable.");
-        return (GetName(name, contentType), contentType, await AttachmentFiles.ReadSourceAsync(input));
+        var selectedName = GetName(name, contentType);
+        var input = resolver.OpenInputStream(uri) ?? throw new IOException("The selected document is unavailable.");
+        return (selectedName, contentType, input, null);
     }
 
     private static string GetName(string? displayName, string? contentType)

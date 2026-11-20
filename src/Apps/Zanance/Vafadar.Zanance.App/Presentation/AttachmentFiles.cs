@@ -20,10 +20,13 @@ internal static partial class AttachmentFiles
     public static async Task<PreparedAttachment?> PickAsync(string title, bool forRecognition = false)
     {
 #if ANDROID
-        var source = await AndroidAttachmentPicker.PickAsync(title);
-        return source is { } selected
-            ? await PrepareAsync(selected.Name, ResolveContentType(selected.Name, selected.ContentType), selected.Bytes, forRecognition)
-            : null;
+        PreparedAttachment? prepared = null;
+        await AndroidDocumentPicker.UseAsync(title, ["application/pdf", "image/*"], async (input, name, contentType) =>
+        {
+            var bytes = await Task.Run(() => ReadSourceAsync(input));
+            prepared = await PrepareAsync(name, ResolveContentType(name, contentType), bytes, forRecognition);
+        });
+        return prepared;
 #else
         var file = await FilePicker.Default.PickAsync(new PickOptions
         {

@@ -1590,6 +1590,22 @@ The original backup digest stayed equal. The owned emulator was retired. Evidenc
 the observed portable restore and persistence in userspace simulation. Password-protected
 recovery in this environment, whole-database equality and hardware page-size acceptance remain open.
 
+## Android backup preview from a provider stream
+
+The backup chooser now uses the same temporary Android read grant as receipt attachments.
+The portable preview reads sequentially even when the provider advertises a seekable file
+descriptor whose position is unavailable. It retains the existing portable size range and
+the separate protected-startup limit. One focused preview regression and three affected
+startup-limit cases passed. Strict Windows and Android builds passed. Signed offline APK
+`3ae5bba6` passed signature, package, offline manifest and static alignment checks.
+
+One fresh Android 16 emulator selected the retained D-403 fixture from a synthetic provider
+that served a non-seekable pipe. Zanance made one stream open. The original first-run preview
+showed one account, one transaction and one plan. Cancel cleared the preview and Back returned
+to Welcome. No replacement or account creation occurred. The owned emulator was retired.
+Evidence is under `artifacts/backup-native-stream-preview`. The separate recovery screen for
+failed protected startup was built with the same adapter and was not opened in this run.
+
 ## D-299 reference-source release gates
 
 Keep a live provider, explicit source/coverage/redistribution licence, cost/entitlement policy and public route

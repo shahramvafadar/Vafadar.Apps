@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 
 namespace Vafadar.Zanance.App.Security;
 
-/// <summary>Reads only the bounded borrowed portable input while its original presentation remains live.</summary>
+/// <summary>Reads backup input sequentially without seeking on a borrowed provider stream.</summary>
 internal static class StartupBackupPackageReader
 {
     /// <summary>The original portable-envelope allowance; callers cannot enlarge the existing limit.</summary>
@@ -11,9 +11,18 @@ internal static class StartupBackupPackageReader
     /// <summary>Returns an independent owned buffer and clears all temporary copies on success, failure or retirement.</summary>
     internal static async Task<byte[]> ReadAsync(Stream input, CancellationToken ct, long maximumBytes = MaximumBytes)
     {
-        ArgumentNullException.ThrowIfNull(input);
         ArgumentOutOfRangeException.ThrowIfLessThan(maximumBytes, 1);
         ArgumentOutOfRangeException.ThrowIfGreaterThan(maximumBytes, MaximumBytes);
+        return await ReadCoreAsync(input, ct, maximumBytes).ConfigureAwait(false);
+    }
+
+    /// <summary>Uses the normal portable format envelope limit without applying the startup safety-copy limit.</summary>
+    internal static Task<byte[]> ReadPortableAsync(Stream input, CancellationToken ct) =>
+        ReadCoreAsync(input, ct, int.MaxValue);
+
+    private static async Task<byte[]> ReadCoreAsync(Stream input, CancellationToken ct, long maximumBytes)
+    {
+        ArgumentNullException.ThrowIfNull(input);
         ct.ThrowIfCancellationRequested();
         using var buffer = new MemoryStream();
         var chunk = new byte[81920];

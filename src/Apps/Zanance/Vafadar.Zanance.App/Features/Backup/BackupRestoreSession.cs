@@ -5,6 +5,7 @@ using Vafadar.Backup.Security;
 using Vafadar.Localization;
 using Vafadar.Localization.Formatting;
 using Vafadar.Maui.Mvvm;
+using Vafadar.Zanance.App.Security;
 using Vafadar.Zanance.Data;
 
 namespace Vafadar.Zanance.App.Features.Backup;
@@ -82,15 +83,21 @@ public sealed partial class BackupRestoreSession : ViewModelBase
         var owner = originalOwner ?? CapturePreparationOwner(); owner.EnsureCurrent();
         var source = owner.SourceValidation; source();
         IsBusy = true;
+        byte[]? loaded = null;
         try
         {
-            using var buffer = new MemoryStream(); await stream.CopyToAsync(buffer, owner.Token);
+            loaded = await StartupBackupPackageReader.ReadPortableAsync(stream, owner.Token);
             owner.EnsureCurrent(); source();
-            ClearSelection(); _sourceValidation = source; _package = buffer.ToArray(); PickedName = name; NeedsPassword = BackupEncryption.IsEncrypted(_package);
+            ClearSelection(); _sourceValidation = source; _package = loaded; loaded = null;
+            PickedName = name; NeedsPassword = BackupEncryption.IsEncrypted(_package);
             if (!NeedsPassword) await InspectAsync(owner);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (owner.IsCurrent) Error = _translator["Backup_Error_Storage"]; }
-        finally { EndOriginalOperation(); }
+        finally
+        {
+            if (loaded is not null) System.Security.Cryptography.CryptographicOperations.ZeroMemory(loaded);
+            EndOriginalOperation();
+        }
     }
     [RelayCommand(CanExecute = nameof(CanCheck))]
     private async Task CheckAsync()
