@@ -304,6 +304,8 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] D-63 device acceptance: set/change/remove PIN, failed-attempt delay across restart, notification/backup/export gates, recovery success/cancel/unavailable, secure-storage failures; Android screenshot toggle and recents on supported Android versions; iOS keychain/reinstall and privacy cover
   [Android 16 evidence for the active first app PIN delay](07-acceptance-test-plan.md#at-69-android-restart-during-the-first-app-pin-penalty)
   covers one ordinary app restart inside the original 60-second interval.
+  [Android 16 PIN change and removal](07-acceptance-test-plan.md#at-69-android-app-pin-change-and-removal-across-restarts)
+  covers the original Settings form, the replacement PIN after restart and direct Home after removal.
 
 ## Build secrets
 

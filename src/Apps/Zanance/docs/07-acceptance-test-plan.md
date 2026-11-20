@@ -535,6 +535,25 @@ and emulator were retired. Local receipts are under `artifacts/at69-native-activ
 This verifies the active first penalty across an app restart. Physical-device and
 device-reboot behavior, recovery and iOS remain separate.
 
+### AT-69 Android app PIN change and removal across restarts
+
+The signed Offline Release APK `9803b374` ran on a separate disposable Android 16
+x86-64 emulator with one synthetic zero-opening account. The original **Set or change PIN**
+form rejected a wrong current PIN and stayed open. One change with the correct current PIN
+closed the form. After an app-only restart on the same boot, the old PIN was refused and
+the replacement opened Home with the original EUR 0.00 balance.
+
+The original **Remove app PIN** command refused an empty current-PIN field. The next controller
+tap did not remove the PIN while the keyboard was still visible. The same form kept the
+entered value. After dismissing the observed keyboard, the pending removal completed with
+that value. Settings displayed **No app PIN is set**. A second app-only restart reached
+Home directly and preserved the original balance.
+
+Only the generated app PIN was used. Retained captures redact password fields. The disposable
+package and emulator were retired. Local receipts are under `artifacts/at69-native-pin-lifecycle`.
+This verifies the original PIN change and removal flow on the named emulator. Physical-device
+and iOS acceptance remain open.
+
 ## AT-70 Android live recent-apps privacy
 
 The original signed offline APK `3f96f091` ran on Android 16 x86_64 with 4096-byte pages.
