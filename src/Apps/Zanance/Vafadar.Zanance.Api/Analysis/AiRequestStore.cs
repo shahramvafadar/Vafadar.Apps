@@ -181,9 +181,22 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         await using var db = await factory.CreateDbContextAsync(ct);
         var requests = db.Set<AiRequestRow>();
         var offers = db.Set<AiOfferRow>().Where(item => item.Provider == providerName && item.PilotRouteId != null);
-        var alreadyKnown = await requests.Where(row => row.VendorOperationId == responseId)
-            .Join(offers, row => row.OfferId, offer => offer.Id, (row, _) => row.Id).AnyAsync(ct);
-        if (alreadyKnown) return true;
+        var known = await (from request in requests.AsNoTracking()
+                           join offer in offers.AsNoTracking() on request.OfferId equals offer.Id
+                           where request.VendorOperationId == responseId
+                           select new { Request = request, Offer = offer }).Take(2).ToArrayAsync(ct);
+        if (known.Length > 1) return false;
+        if (known.Length == 1)
+        {
+            var originalRequest = known[0].Request;
+            if (originalRequest.State != AiRequestState.Pending || originalRequest.PilotVendorStatus.HasValue) return true;
+            var frozenOffer = known[0].Offer;
+            var originalRoute = await db.Set<AiPilotRouteRow>().AsNoTracking().SingleAsync(item => item.Id == frozenOffer.PilotRouteId, ct);
+            var observed = await pilot.StatusAsync(originalRoute, Offer(frozenOffer), originalRequest.PayloadDigest, responseId, ct);
+            if (!observed.VendorStatus.HasValue) return false;
+            await ApplyAsync(originalRequest.UserId, originalRequest.Id, observed, CancellationToken.None);
+            return true;
+        }
         var candidates = await (from request in requests.AsNoTracking()
                                 join offer in offers.AsNoTracking() on request.OfferId equals offer.Id
                                 where request.State == AiRequestState.Pending && request.PilotDispatchStage == AiPilotDispatchStage.Claimed &&
@@ -201,10 +214,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         var route = await db.Set<AiPilotRouteRow>().AsNoTracking().SingleAsync(item => item.Id == original.Offer.PilotRouteId, ct);
         var outcome = pilot.RecoveredNoticeOutcome(route, Offer(original.Offer), original.PayloadDigest, value);
         if (outcome is null) return true;
-        var bound = await requests.Where(row => row.Id == original.Id && row.State == AiRequestState.Pending &&
-                row.PilotDispatchStage == AiPilotDispatchStage.Claimed && row.VendorOperationId == null)
-            .ExecuteUpdateAsync(set => set.SetProperty(row => row.VendorOperationId, responseId), ct);
-        if (bound == 1) await ApplyAsync(original.UserId, original.Id, outcome, CancellationToken.None);
+        // Binding and applying the same authenticated observation must survive or roll back together.
+        await ApplyAsync(original.UserId, original.Id, outcome, CancellationToken.None, recoveredHandle: responseId);
         return true;
     }
 
@@ -329,7 +340,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         if (updated != 1) throw new IOException("Original provider operation could not be recorded.");
     }
 
-    private async Task ApplyAsync(string owner, Guid id, AiProviderOutcome outcome, CancellationToken ct)
+    private async Task ApplyAsync(string owner, Guid id, AiProviderOutcome outcome, CancellationToken ct, string? recoveredHandle = null)
     {
         if (outcome.State == AiProviderState.Unknown && outcome.Metering is null && outcome.VendorStatus is null) return;
         if (!Enum.IsDefined(outcome.State)) return;
@@ -341,6 +352,12 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         await SyncRequestScope.LockOwnerAsync(db, owner, ct);
         var row = await db.Set<AiRequestRow>().SingleAsync(r => r.Id == id && r.UserId == owner, ct);
         if (row.State != AiRequestState.Pending) return;
+        if (recoveredHandle is not null)
+        {
+            if (row.PilotDispatchStage != AiPilotDispatchStage.Claimed ||
+                row.VendorOperationId is { } originalHandle && originalHandle != recoveredHandle) return;
+            row.VendorOperationId = recoveredHandle;
+        }
         if (outcome.VendorStatus is { } vendorStatus)
         {
             if (row.VendorOperationId is null || !Enum.IsDefined(vendorStatus) ||
