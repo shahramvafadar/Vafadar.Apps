@@ -42,6 +42,9 @@ jobs:
         with:
           python-version: '3.13'
 
+      - name: Verify Android bundle manifest permission guards
+        run: python eng/maui/test_verify_android_bundle_manifest.py
+
       - name: Verify pinned notification source guards
         run: python eng/notifications/test_source_preparation.py
 

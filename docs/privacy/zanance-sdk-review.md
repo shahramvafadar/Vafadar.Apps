@@ -132,7 +132,7 @@ notification permission. All 20 existing APK policy cases passed against the sha
 signed ARM64 Offline AAB (SHA-256
 `3d63d62a911e1311dc00fb8f43e73a1035dc739ee2db6c6b0ffb72cb0b6a916c`)
 and complete dual-ABI Offline APK passed their respective new checks. Local receipts are in
-`artifacts/zba`. These checks cover manifest declarations. Runtime behavior is reviewed separately.
+`artifacts/zba`. The Libraries and tests CI job runs the bundle verifier against synthetic manifests for offline acceptance, SDK-qualified unexpected permissions, cloud internet restrictions and missing notifications. These checks cover manifest declarations. Runtime behavior is reviewed separately.
 
 ## Store declarations and remaining gates
 
