@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FluentIcons.Common;
@@ -760,9 +761,19 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             _from = _from, _to = _to, _currency = _currency, PeriodKind = PeriodKind, AccountScopeIndex = AccountScopeIndex,
             ScopeAccount = ScopeAccount, CurrencyNames = CurrencyNames, CurrencyIndex = CurrencyIndex, ConfirmedOnly = ConfirmedOnly,
             ChangeRangeIndex = ChangeRangeIndex, PeriodText = PeriodText, CanUseAdvancedReports = advanced, IsAdvanced = IsAdvanced && advanced };
-        var bytes = await projection.RenderPdfAsync(advanced); await _reportStore.ValidateAsync(review);
-        if (scope != ScopeStamp()) throw new InvalidOperationException("The original report scope changed during rendering.");
-        return bytes;
+        var bytes = await projection.RenderPdfAsync(advanced);
+        try
+        {
+            await _reportStore.ValidateAsync(review);
+            if (scope != ScopeStamp()) throw new InvalidOperationException("The original report scope changed during rendering.");
+            return bytes;
+        }
+        catch
+        {
+            // A detached document that cannot be handed off remains ours to clear.
+            CryptographicOperations.ZeroMemory(bytes);
+            throw;
+        }
     }
 
     private async Task<byte[]> RenderPdfAsync(bool advanced)

@@ -1,5 +1,17 @@
 # Physical report, saved-filter and PDF handoff (D-323)
 
+## Managed PDF export buffer retirement - 20 November 2026
+
+Report export clears the owned rendered byte array after the temporary file is written,
+including when revalidation or the write fails. A detached render rejected before transfer
+also clears its array. The published file remains available to the native recipient under its
+existing cache policy.
+
+Three focused host cases reproduced retained bytes before the correction. Four selected cases
+passed afterward, covering refusal after rendering, a failed write, removal of an unpublished
+file, and exact file bytes at the offered handoff. The byte-array assertions use synthetic
+data and do not rerun the device or recipient acceptance below.
+
 ## Separate D-699 follow-through - 31 October 2026
 
 D329 already closed the physical recipient/content gap, including en/fa/de pages; retain that evidence. D699 separately checks the current post-D647 command's source21 equality across native share/return, exact producer/receiver/host bytes and explicit READ-grant revocation. Its repeated English page inspection is corroboration, not newly missing acceptance. D323's chooser-only boundary remains unchanged; no old phone/financial/filter action is replayed or reclassified.

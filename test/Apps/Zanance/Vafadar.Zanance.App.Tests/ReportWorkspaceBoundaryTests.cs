@@ -154,9 +154,47 @@ public sealed class ReportWorkspaceBoundaryTests
     public async Task Retiring_after_original_share_starts_does_not_remove_the_offered_file()
     {
         using var f = new FlowFixture(); await SeedAsync(f); var work = Work(f); await PublishAsync(work); var lease = Assert.IsType<ReportCommandLease>(work.CaptureCommand(() => "R1/EUR")); var path = f.Directory.Combine("d647-offered.pdf");
-        var runtime = new OwnedFileRuntime(path) { AfterShare = () => work.SetActive(false) };
-        await new ReportExportSession(f.Services.GetRequiredService<ReportWorkStore>()).ExportAsync(lease.Review, false, lease.RequireCurrent, () => Task.FromResult(Encoding.ASCII.GetBytes("D647 offered cache effect")), runtime, lease.Token);
+        const string content = "D647 offered cache effect";
+        var buffer = Encoding.ASCII.GetBytes(content);
+        var runtime = new OwnedFileRuntime(path)
+        {
+            AfterShare = () =>
+            {
+                Assert.All(buffer, value => Assert.Equal(0, value));
+                work.SetActive(false);
+            }
+        };
+        await new ReportExportSession(f.Services.GetRequiredService<ReportWorkStore>()).ExportAsync(lease.Review, false, lease.RequireCurrent, () => Task.FromResult(buffer), runtime, lease.Token);
         Assert.Equal(1, runtime.Shares); Assert.Equal(0, runtime.Removes); Assert.True(File.Exists(path)); Assert.False(work.CanInteract);
+        Assert.Equal(content, await File.ReadAllTextAsync(path, Ct));
+    }
+
+    /// <summary>The export relinquishes its owned rendered bytes when validation or writing fails.</summary>
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Rejected_PDF_export_clears_its_buffer_and_never_shares(bool writeFails)
+    {
+        using var f = new FlowFixture();
+        await SeedAsync(f);
+        var work = Work(f);
+        await PublishAsync(work);
+        var lease = Assert.IsType<ReportCommandLease>(work.CaptureCommand(() => "R1/EUR"));
+        var path = Path.Combine(f.Directory.Combine("absent-cache"), "report.pdf");
+        var buffer = Encoding.ASCII.GetBytes("Synthetic private PDF bytes");
+        var runtime = new OwnedFileRuntime(path);
+        var session = new ReportExportSession(f.Services.GetRequiredService<ReportWorkStore>());
+        var error = await Record.ExceptionAsync(() => session.ExportAsync(lease.Review, false, lease.RequireCurrent, () =>
+        {
+            if (!writeFails) work.SetActive(false);
+            return Task.FromResult(buffer);
+        }, runtime, lease.Token));
+        if (writeFails) Assert.IsType<DirectoryNotFoundException>(error);
+        else Assert.True(error is InvalidOperationException or OperationCanceledException);
+        Assert.All(buffer, value => Assert.Equal(0, value));
+        Assert.Equal((writeFails ? 1 : 0, 0, 0), (runtime.Writes, runtime.Shares, runtime.Removes));
+        Assert.False(File.Exists(path));
+        Assert.False(session.IsBusy);
     }
     /// <summary>The actual report contribution writer rolls back when native ownership retires before or after SQL.</summary>
     [Theory]

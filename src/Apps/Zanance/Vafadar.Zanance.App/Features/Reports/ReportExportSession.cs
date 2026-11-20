@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Vafadar.Zanance.Data.Commerce;
 
 namespace Vafadar.Zanance.App.Features.Reports;
@@ -22,6 +23,7 @@ public sealed class ReportExportSession(ReportWorkStore store)
     public bool IsBusy { get; private set; }
 
     /// <summary>Exports a detached original projection without changing the live report selection.</summary>
+    /// <remarks>The renderer transfers ownership of the returned buffer. The writer consumes it before returning.</remarks>
     public async Task ExportAsync(ReportReadReview review, bool advanced, Action validateScope,
         Func<Task<byte[]>> render, IReportExportRuntime runtime, CancellationToken cancellationToken = default)
     {
@@ -34,8 +36,14 @@ public sealed class ReportExportSession(ReportWorkStore store)
             review.DemandPdf(advanced); validateScope(); await store.ValidateAsync(review, cancellationToken);
             if (!await runtime.ConfirmAsync()) return;
             await ValidateAsync();
-            var bytes = await render(); await ValidateAsync();
-            path = await runtime.WriteAsync(bytes); await ValidateAsync();
+            var bytes = await render();
+            try
+            {
+                await ValidateAsync();
+                path = await runtime.WriteAsync(bytes);
+            }
+            finally { CryptographicOperations.ZeroMemory(bytes); }
+            await ValidateAsync();
             // Native sharing can outlive this await. Only failed files that were never offered are removed here.
             shareStarted = true; await runtime.ShareAsync(path);
         }
