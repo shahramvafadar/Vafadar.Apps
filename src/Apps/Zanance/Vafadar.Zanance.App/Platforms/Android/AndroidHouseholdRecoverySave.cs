@@ -26,9 +26,8 @@ internal static class AndroidHouseholdRecoverySave
             // request code and exact activity owner; document results never enter those other flows.
             ct.ThrowIfCancellationRequested(); activity.StartActivityForResult(intent, own.Code); launched = true;
             using var uri = await own.Completion.Task; ct.ThrowIfCancellationRequested(); if (uri is null) return false;
-            await using (var stream = activity.ContentResolver?.OpenOutputStream(uri, "w") ?? throw new IOException("The selected destination is unavailable."))
-            { await stream.WriteAsync(encrypted, ct); await stream.FlushAsync(ct); }
-            ct.ThrowIfCancellationRequested(); return true;
+            var stream = activity.ContentResolver?.OpenOutputStream(uri, "w") ?? throw new IOException("The selected destination is unavailable.");
+            return await HouseholdRecoveryFiles.WriteSelectedAsync(stream, encrypted, ct);
         }
         catch
         {

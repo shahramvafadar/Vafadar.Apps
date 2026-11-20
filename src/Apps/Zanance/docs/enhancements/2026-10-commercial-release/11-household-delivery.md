@@ -1761,3 +1761,18 @@ the separate focused history/worker/service/native cases are not silently added 
 keys, negative evidence, privacy snapshots and unrelated machine resources are preserved. The next approved
 whole batch is Android/iOS billing plus identity-bound future-web prerequisites; live web checkout and commercial
 Windows remain excluded. External store/provider/account/signing gates stay explicit.
+
+## Native recovery-file Save completion
+
+The previous Save completion check could report cancellation after the selected destination
+had already accepted all bytes, flushed, and closed. A synthetic destination that cancelled
+the deadline during a successful close reproduced the issue. Android and Windows now use the
+same write and close boundary. Cancellation still stops a retired request before writing, and
+a failed close does not confirm Save. Windows also rechecks the deadline before truncating the
+selected file after an asynchronous open.
+
+The focused tests exercise synthetic streams. They check the exact written bytes and one
+successful close, a cancelled request with no bytes written, and an actual close exception.
+All three selected tests, the strict Windows build, standard test clean, and the signed
+offline Android build passed. No native Save, ledger operation, or recovery enrolment was
+repeated.

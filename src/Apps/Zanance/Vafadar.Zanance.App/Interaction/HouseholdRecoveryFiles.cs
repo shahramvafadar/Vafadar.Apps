@@ -5,7 +5,7 @@ using Vafadar.Zanance.App.Security;
 namespace Vafadar.Zanance.App.Interaction;
 
 /// <summary>Explicit native document effects for small password-encrypted kits; no readable cache file, persisted URI or new storage permission.</summary>
-internal static class HouseholdRecoveryFiles
+internal static partial class HouseholdRecoveryFiles
 {
     /// <summary>Actual qualified adapter targets; iOS Save remains a separate native Mac implementation/acceptance gate.</summary>
     internal static bool Available => OperatingSystem.IsAndroid() || OperatingSystem.IsWindows();
@@ -76,13 +76,11 @@ internal static class HouseholdRecoveryFiles
         picker.FileTypeChoices.Add("Zanance", new List<string> { ".zhr" });
         WinRT.Interop.InitializeWithWindow.Initialize(picker, WinRT.Interop.WindowNative.GetWindowHandle(window));
         var file = await picker.PickSaveFileAsync(); ct.ThrowIfCancellationRequested(); if (file is null) return false;
-        using (var native = await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
-        {
-            native.Size = 0;
-            using var stream = System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite(native);
-            await stream.WriteAsync(encrypted, ct); await stream.FlushAsync(ct);
-        }
-        ct.ThrowIfCancellationRequested(); return true;
+        using var native = await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+        ct.ThrowIfCancellationRequested();
+        native.Size = 0;
+        var stream = System.IO.WindowsRuntimeStreamExtensions.AsStreamForWrite(native);
+        return await WriteSelectedAsync(stream, encrypted, ct);
 #else
         await Task.CompletedTask; throw new PlatformNotSupportedException("Native recovery-file Save is not yet available on this platform.");
 #endif
