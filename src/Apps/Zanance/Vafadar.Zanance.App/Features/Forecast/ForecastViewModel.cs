@@ -309,7 +309,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                 ValidateReportAsync = ValidateSourceAsync,
             };
             await ValidateSourceAsync();
-            if (Current()) await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false));
+            if (Current()) await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false, feature));
         }
         catch (OperationCanceledException) when (!Current()) { }
         catch (Exception error) when (error is not OutOfMemoryException)

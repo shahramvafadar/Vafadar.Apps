@@ -8,6 +8,7 @@ internal sealed record AiPeriodHandoff(string File, DateOnly From, DateOnly To, 
     internal const string QueryKey = "analysisPeriod";
     internal IReadOnlyList<Guid> Accounts { get; private init; } = [];
     internal bool ComparePrevious { get; init; }
+    internal CancellationToken FeatureSession { get; private init; }
     internal AiReportDetails? Report { get; init; }
     internal AiFundingFacts? Funding { get; init; }
     internal AiForecastFacts? Forecast { get; init; }
@@ -24,5 +25,6 @@ internal sealed record AiPeriodHandoff(string File, DateOnly From, DateOnly To, 
         return original.Length == 0 ? null : new(file, from, to, confirmedOnly) { Accounts = Array.AsReadOnly(original) };
     }
 
-    internal Dictionary<string, object> Query(bool compare) => new() { [QueryKey] = this with { ComparePrevious = compare } };
+    internal Dictionary<string, object> Query(bool compare, CancellationToken feature)
+        => new() { [QueryKey] = this with { ComparePrevious = compare, FeatureSession = feature } };
 }

@@ -134,7 +134,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Captures the source route before its first load, without reviewing or sending anything.</summary>
     internal void SetInitialPeriod(AiPeriodHandoff period)
     {
-        if (!Loaded && !rootRetired) initialPeriod = period;
+        if (!Loaded && !rootRetired && !period.FeatureSession.IsCancellationRequested) initialPeriod = period;
     }
     /// <summary>Root replacement permanently retires the old disclosure and private connection.</summary>
     internal void RetireRoot() { rootRetired = true; Retire(); }
@@ -317,6 +317,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
                 NotifyQuestionScope(); Validate(original);
             }
             var current = await store.AccountsAsync(ct); Validate(original); runtime.Capture(current.File).Validate(); Validate(original);
+            // Native navigation can deliver a reviewed scope after its enabled session has ended.
+            if (initialPeriod?.FeatureSession.IsCancellationRequested == true) initialPeriod = null;
             var incoming = initialPeriod ?? detailedPeriod;
             if (incoming is not null)
             {

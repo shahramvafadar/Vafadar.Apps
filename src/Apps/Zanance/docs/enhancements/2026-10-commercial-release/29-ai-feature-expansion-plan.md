@@ -111,6 +111,19 @@ Windows review used the original page and device preference. The native account 
 changed from selected in the detailed draft to unselected in the fresh editable draft.
 The financial fingerprint stayed equal. Evidence is in `artifacts/ai-opt-out-draft-retirement`.
 
+A period or detailed report navigation carries the AI session from its original action.
+Home, Reports, Budget, Goals and Forecast all use this rule. Analysis checks that session
+on query receipt and before first applying the selection. Turning AI off and back on
+while a push is pending discards the original dates, filters, selected accounts and
+detailed report data. An arriving page can still open as a fresh, unselected Analysis form.
+Two focused synthetic cases reproduced the stale selection before query delivery and
+before the first load. The corrected cases and three active-session controls passed.
+An isolated Windows review held the original Shell push, changed the preference twice,
+then released the same push. The original account selection was absent when Analysis loaded.
+Back returned to the same Home page and the financial fingerprint stayed equal.
+Evidence is under `artifacts/ai-period-route-session`. No provider was called and no
+financial posting was made.
+
 Provider status and offer reads also use the lifetime of the Analysis page
 that started them. In two focused tests, replacing that page previously left
 a held availability or offer read waiting even while the original presentation

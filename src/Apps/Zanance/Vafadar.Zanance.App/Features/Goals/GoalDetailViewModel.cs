@@ -695,7 +695,7 @@ public sealed partial class GoalDetailViewModel(
         {
             await period.ValidateReportAsync!();
             if (!feature.IsCancellationRequested && identity == _identityVersion && !_retired && CanView && ReferenceEquals(period, _fundingAnalysis))
-                await interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false));
+                await interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false, feature));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         { if (!_retired && identity == _identityVersion) await interaction.ShowFailureAsync(error); }

@@ -438,7 +438,7 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         {
             await ValidateAsync();
             if (!feature.IsCancellationRequested && OwnsView(view) && !_routeRetired)
-                await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false));
+                await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false, feature));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         { if (OwnsView(view) && !_routeRetired) await _interaction.ShowFailureAsync(error); }

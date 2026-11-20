@@ -676,10 +676,14 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     [RelayCommand] private Task ExplainHomePeriodAsync() => OpenHomeAnalysisAsync(false);
     [RelayCommand] private Task CompareHomePeriodAsync() => OpenHomeAnalysisAsync(true);
 
-    private Task OpenHomeAnalysisAsync(bool compare) => Analysis.AiFeatures.Current.Enabled &&
-        !_publicationRetired && Loading.IsReady && HasAnalysisPeriod && _analysisPeriodIndex == PeriodIndex &&
-        _analysisPeriod is { } period && Shell.Current is { CurrentPage: HomePage page } shell && ReferenceEquals(page.BindingContext, this)
-        ? shell.GoToAsync(AppRoutes.AnalysisRoute, period.Query(compare)) : Task.CompletedTask;
+    private Task OpenHomeAnalysisAsync(bool compare)
+    {
+        var feature = Analysis.AiFeatures.Current.Capture();
+        return !feature.IsCancellationRequested &&
+            !_publicationRetired && Loading.IsReady && HasAnalysisPeriod && _analysisPeriodIndex == PeriodIndex &&
+            _analysisPeriod is { } period && Shell.Current is { CurrentPage: HomePage page } shell && ReferenceEquals(page.BindingContext, this)
+            ? shell.GoToAsync(AppRoutes.AnalysisRoute, period.Query(compare, feature)) : Task.CompletedTask;
+    }
 
     private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states,
         DateOnly today, Core.Commerce.PlanWorkPolicy work)

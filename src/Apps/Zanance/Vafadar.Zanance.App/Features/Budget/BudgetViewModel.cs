@@ -596,7 +596,7 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         {
             await period.ValidateReportAsync!();
             if (!feature.IsCancellationRequested && _visible && revision == _pageRevision && ReferenceEquals(period, _fundingAnalysis))
-                await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false));
+                await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false, feature));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         { if (_visible && revision == _pageRevision) await _interaction.ShowFailureAsync(error); }

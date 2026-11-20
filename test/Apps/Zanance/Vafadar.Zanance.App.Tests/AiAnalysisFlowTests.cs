@@ -391,7 +391,7 @@ public sealed partial class AiAnalysisFlowTests
         var source = await f.Services.GetRequiredService<AiSnapshotStore>().AccountsAsync(Ct);
         var ids = new[] { Assert.Single(source.Accounts).Id };
         var handoff = AiPeriodHandoff.Capture(source.File, new(2026, 10, 1), new(2026, 10, 15), false, ids)!;
-        var route = new Vafadar.Zanance.App.Features.Reports.ReportNavigation("analysis", handoff.Query(comparison));
+        var route = new Vafadar.Zanance.App.Features.Reports.ReportNavigation("analysis", handoff.Query(comparison, runtime.FeatureSession));
         ids[0] = Guid.NewGuid();
         vm.Retire();
         vm.SetInitialPeriod(Assert.IsType<AiPeriodHandoff>(route.CopyQuery()[AiPeriodHandoff.QueryKey]));
@@ -405,6 +405,43 @@ public sealed partial class AiAnalysisFlowTests
         Assert.Equal(comparison ? AiPurpose.PeriodComparison : AiPurpose.PeriodExplanation, payload.Purpose);
         if (comparison) Assert.Equal(new DateOnly(2026, 9, 16), payload.Previous!.From);
         Assert.Equal(0, runtime.Opens);
+    }
+
+    /// <summary>Route delivery and first appearance cannot attach a report from an earlier AI session.</summary>
+    [Theory]
+    [InlineData("before-query")]
+    [InlineData("before-load")]
+    [InlineData("current")]
+    public async Task Analysis_route_admits_only_the_original_enabled_session(string timing)
+    {
+        using var f = new FlowFixture();
+        var runtime = new Runtime();
+        var account = new Account { Name = "Fictitious route metadata", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1) };
+        await f.Store.SaveAccountAsync(account, Ct);
+        var store = f.Services.GetRequiredService<AiSnapshotStore>();
+        var source = await store.AccountsAsync(Ct);
+        var model = new AiAnalysisViewModel(store, f.Translator, f.Localization, new DateFormatter(f.Localization), f.Time, f.Platform, runtime);
+        var period = AiPeriodHandoff.Capture(source.File, new(2026, 8, 1), new(2026, 8, 15), false, [account.Id])!;
+        var route = new Vafadar.Zanance.App.Features.Reports.ReportNavigation("analysis", period.Query(true, runtime.FeatureSession));
+
+        if (timing == "before-query") SwitchSession();
+        model.SetInitialPeriod(Assert.IsType<AiPeriodHandoff>(route.CopyQuery()[AiPeriodHandoff.QueryKey]));
+        if (timing == "before-load") SwitchSession();
+        await model.ActivateAsync();
+
+        bool current = timing == "current";
+        Assert.True(model.Loaded);
+        Assert.Equal(current, Assert.Single(model.Accounts).Selected);
+        Assert.Equal(current, model.ComparePrevious);
+        Assert.Equal(!current, model.ConfirmedOnly);
+        Assert.Null(model.Disclosure);
+        Assert.Equal(0, runtime.Opens);
+
+        void SwitchSession()
+        {
+            runtime.Features.Enabled = false;
+            runtime.Features.Enabled = true;
+        }
     }
 
     /// <summary>A report from a replaced file or account cannot silently widen the scope.</summary>

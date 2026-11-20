@@ -659,7 +659,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
             await command.ValidateAsync();
             if (feature.IsCancellationRequested) return;
             var source = command.CaptureChildSource();
-            await NavigateFrozenAsync(new(AppRoutes.AnalysisRoute, (period with { ValidateReportAsync = source.ValidateAsync }).Query(compare)));
+            await NavigateFrozenAsync(new(AppRoutes.AnalysisRoute, (period with { ValidateReportAsync = source.ValidateAsync }).Query(compare, feature)));
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
@@ -679,7 +679,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         var period = Analysis.AiPeriodHandoff.Capture(review.DatabasePath, _from, _to, ConfirmedOnly, ids);
         // The original AI session can retire while the report source is being revalidated.
         return period is null ? Task.CompletedTask
-            : NavigateReportAsync(new(AppRoutes.AnalysisRoute, period.Query(compare)), () => !feature.IsCancellationRequested);
+            : NavigateReportAsync(new(AppRoutes.AnalysisRoute, period.Query(compare, feature)), () => !feature.IsCancellationRequested);
     }
     private async Task NavigateFrozenAsync(ReportNavigation target)
     {
