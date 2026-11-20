@@ -281,7 +281,10 @@ public sealed partial class PeopleStore
     /// Sets who one side lets see a relationship: itself and the other side only, one of its circles, or
     /// everybody. A side sets its own and no other; the relationship is shown to who both sides allow (PRIV-008).
     /// </summary>
-    public bool Show(string id, string relationship, ScopeKind kind, long? circle = null)
+    public bool Show(string id, string relationship, ScopeKind kind, long? circle = null) =>
+        Between(relationship) is { } two && Guarded([OfAccount(id), two], () => ShowUnguarded(id, relationship, kind, circle));
+
+    private bool ShowUnguarded(string id, string relationship, ScopeKind kind, long? circle)
     {
         var stored = _context.Relationships.SingleOrDefault(candidate => candidate.Id == relationship);
         if (stored is null || !IsOpen(id) || !Enum.IsDefined(kind)
@@ -357,12 +360,25 @@ public sealed partial class PeopleStore
     public bool SetCircle(string id, long circle, IEnumerable<string> members)
     {
         ArgumentNullException.ThrowIfNull(members);
+
+        // The circles of an account are the account's; whether somebody may be in one hangs on what the two
+        // show, so the lock of each two is held while it is looked at and written.
+        var named = members.Where(member => member is { Length: > 0 and <= 64 }).Distinct(StringComparer.Ordinal).Take(MostInCircle + 1).ToList();
+        return named.Count <= MostInCircle && Guarded([OfAccount(id), .. named.Select(member => OfTwo(id, member))], () => SetCircleUnguarded(id, circle, named));
+    }
+
+    /// <summary>How many accounts a circle holds at most.</summary>
+    public const int MostInCircle = 200;
+
+    private bool SetCircleUnguarded(string id, long circle, List<string> members)
+    {
         if (!IsOpen(id) || !_context.Circles.AsNoTracking().Any(candidate => candidate.Number == circle && candidate.Owner == id))
         {
             return false;
         }
 
         var known = Relationships(id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other.Id).ToHashSet(StringComparer.Ordinal);
+        Reach("circle");
         _context.CircleMembers.RemoveRange(_context.CircleMembers.Where(member => member.Circle == circle));
         foreach (var member in members.Where(known.Contains).Distinct(StringComparer.Ordinal))
         {
@@ -377,7 +393,9 @@ public sealed partial class PeopleStore
     /// Removes a circle. What was shown to it is shown to the two sides only from then on: taking an audience
     /// away never widens one.
     /// </summary>
-    public bool RemoveCircle(string id, long circle)
+    public bool RemoveCircle(string id, long circle) => Guarded([OfAccount(id)], () => RemoveCircleUnguarded(id, circle));
+
+    private bool RemoveCircleUnguarded(string id, long circle)
     {
         var stored = _context.Circles.SingleOrDefault(candidate => candidate.Number == circle && candidate.Owner == id);
         if (stored is null)
@@ -478,7 +496,20 @@ public sealed partial class PeopleStore
         _context.Relationships.RemoveRange(_context.Relationships.Where(relationship => relationship.State == (int)RelationshipState.Rejected && relationship.ChangedAt < before));
     }
 
-    private bool Act(string id, string relationship, Func<SocialRelationship, AccountId, ActOutcome> act, bool remove, bool accepted = false)
+    // The lock of the two accounts of a relationship, or nothing when there is no such relationship. The two
+    // accounts of a relationship never change, so this can be read before the lock is taken.
+    private string? Between(string relationship) =>
+        _context.Relationships.AsNoTracking().Where(candidate => candidate.Id == relationship).Select(candidate => new { candidate.From, candidate.To }).SingleOrDefault() is { } two
+            ? OfTwo(two.From, two.To)
+            : null;
+
+    // Whatever is done with a relationship is done under the lock of its two accounts: what is decided here –
+    // "is this the last the two show", "the one it replaces is still there" – is decided on what no other act
+    // changes meanwhile.
+    private bool Act(string id, string relationship, Func<SocialRelationship, AccountId, ActOutcome> act, bool remove, bool accepted = false) =>
+        Between(relationship) is { } two && Guarded([two], () => ActUnguarded(id, relationship, act, remove, accepted));
+
+    private bool ActUnguarded(string id, string relationship, Func<SocialRelationship, AccountId, ActOutcome> act, bool remove, bool accepted)
     {
         var stored = _context.Relationships.SingleOrDefault(candidate => candidate.Id == relationship);
         if (stored is null || !IsOpen(id))
@@ -494,6 +525,7 @@ public sealed partial class PeopleStore
             return false;
         }
 
+        Reach("relationship");
         if (remove)
         {
             // A request to call this relationship something else goes with it.

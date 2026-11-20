@@ -388,7 +388,10 @@ namespace Vafadar.Dastan.People.Migrations
 
                     b.HasIndex("Tree");
 
-                    b.ToTable("Kinships", "personal");
+                    b.ToTable("Kinships", "personal", t =>
+                        {
+                            t.HasCheckConstraint("CK_Kinships_TwoRecords", "\"From\" <> \"To\"");
+                        });
                 });
 
             modelBuilder.Entity("Vafadar.Dastan.People.StoredPerson", b =>

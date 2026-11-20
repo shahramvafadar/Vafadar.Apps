@@ -86,6 +86,11 @@ internal static class OperatorCommands
               for it to be deleted at once. The site deletes it the next time somebody opens a page of
               an account.
 
+          people repair --people <database> [--change]
+              Counts who is in a circle or a tree of an account they show no accepted relationship
+              with, and names the trees in which somebody is their own ancestor. With --change the
+              places in circles and trees are taken away; a tree with a loop is left as it is.
+
           people persons <tree> --people <database>
               Lists the records of the persons in a tree with their identifiers.
 
@@ -285,6 +290,26 @@ internal static class OperatorCommands
                     }
 
                     output.WriteLine($"{name}: the account is deleted the next time the site deletes what was closed.");
+                    return ContentCommands.Done;
+                });
+
+            case ["people", "repair", "--people", _]:
+            case ["people", "repair", "--people", _, "--change"]:
+                var change = words.Count == 5;
+                return People(words[3], output, time, store =>
+                {
+                    // What two requests at the same moment could leave behind before every act took its locks
+                    // (ADR 0022). Without --change nothing is written.
+                    var found = store.RepairMemberships(change);
+                    var verb = change ? "taken out" : "to take out";
+                    output.WriteLine($"{found.CircleMembers} {(found.CircleMembers == 1 ? "place" : "places")} in a circle {verb}: no accepted relationship with the owner.");
+                    output.WriteLine($"{found.TreeMembers} {(found.TreeMembers == 1 ? "place" : "places")} in a tree {verb}: no accepted relationship with the owner.");
+                    output.WriteLine($"{found.TreesWithALoop.Length} {(found.TreesWithALoop.Length == 1 ? "tree" : "trees")} in which somebody is their own ancestor; nothing is changed there, the owner decides which link is wrong.");
+                    foreach (var tree in found.TreesWithALoop)
+                    {
+                        output.WriteLine($"  {tree}");
+                    }
+
                     return ContentCommands.Done;
                 });
 

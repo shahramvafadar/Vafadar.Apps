@@ -305,7 +305,15 @@ dotnet Vafadar.Dastan.Content.dll people lift <number> --people env --site https
 dotnet Vafadar.Dastan.Content.dll people persons <tree> --people env
 dotnet Vafadar.Dastan.Content.dll people person remove <tree> <person> --people env
 dotnet Vafadar.Dastan.Content.dll people forget <name> --people env
+dotnet Vafadar.Dastan.Content.dll people repair --people env [--change]
 ```
+
+`people repair` looks for what two requests at the same moment could leave behind before every act took its
+locks (ADR 0022): somebody in a circle or a tree of an account they show no accepted relationship with, and
+a tree in which somebody is their own ancestor. Without `--change` it only counts. With it, the places in
+circles and trees are taken away, as the end of the last relationship would have; a tree with a loop is named
+and left as it is – which link is wrong only who knows the family can say. It can be run as often as wanted.
+Run it once after the version that brings it.
 
 A restricted photograph is seen by its owner only; a restricted tree is not public and cannot be made public;
 a closed account signs in nowhere and is deleted after 30 days like one its visitor closed. The person
