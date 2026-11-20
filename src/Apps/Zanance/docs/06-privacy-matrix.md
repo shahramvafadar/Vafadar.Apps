@@ -61,6 +61,22 @@ iOS: `NSFaceIDUsageDescription` (app lock) and `NSCameraUsageDescription` (recei
 
 Any change to SDKs, permissions, backup destinations, sign-in, billing or AI must update this file (MAT-05).
 
+### About disclosure on Android
+
+On 2026-11-20, a strict offline x64 Release build of `2c94c879` produced APK SHA-256
+`46d1694a848cf913717107b7ca8bf87a9664623d29b1195b28c6065f1d0e1bd5`.
+It ran on a fresh Android 35 emulator reporting 16,384-byte pages. With one zero-opening
+fictional account and no ledger entries, the normal More → About screen displayed the exact
+English and Persian disclosure and an in-viewport problem-report button. In Persian, one
+additional scroll brought the whole disclosure into view. The report button was not invoked.
+The four other translations have resource-level checks. This observes the disclosure, not
+network behavior, device-wide accessibility or publication of the public policy.
+
+Local evidence: `artifacts/zpa/about-en.xml` and `artifacts/zpa/about-fa-full.xml`. The original
+build failed to resolve the shell used by the notification preparation target. A process-local
+short PATH resolved it and the strict build finished without build warnings or errors. The
+disposable emulator was retired and the standard isolated build clean completed.
+
 D-64: original photo bytes are transient during recognition only; a separate upright copy is bounded to 3200 px,
 while only the 1600 px metadata-free JPEG is attached and backed up. Source rows/candidates/currency evidence are
 not additional database fields or exports. No new permission, SDK or network path. A stored-image reread cannot
