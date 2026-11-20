@@ -58,3 +58,13 @@ a signed fixture with a different package ID, the debuggable fixture with its ow
 expected ID, and a network-enabled APK presented as offline were refused. The
 entry-point fixture confirms that a verifier refusal emits no path or installation
 advice. No app was rebuilt or installed for these checks.
+
+## Fresh publish provenance
+
+Each attempt has an empty staging directory, including the automatic retry after a
+restore race. Selection and signature verification take place there. A successful
+verification promotes the signed APK to the existing handoff path. A successful
+publish exit that emits no file leaves a prior handoff intact and reports failure.
+The retry likewise cannot hand off a file produced by its failed first attempt.
+An existing differently named signed package still requires a separate output
+directory. The script retires only its own staging directories.

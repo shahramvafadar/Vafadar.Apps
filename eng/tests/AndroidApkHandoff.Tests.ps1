@@ -8,6 +8,7 @@ $fixture = Join-Path $temporaryRoot ('Vafadar-AndroidApkHandoff-' + [Guid]::NewG
 $previousExitCode = $global:LASTEXITCODE
 $previousPath = $env:PATH
 $previousCommandLog = $env:VAFADAR_HANDOFF_COMMAND_LOG
+$previousPayload = $env:VAFADAR_HANDOFF_PAYLOAD
 
 Push-Location
 try {
@@ -40,27 +41,77 @@ if ($ApkPath -like '*verifier-refused*') { throw 'The fixture verifier refused t
     # without accidentally reaching an installed SDK or restoring native packages.
     if ($IsWindows) {
         $fakeHost = Join-Path $fixture 'dotnet.cmd'
-        [IO.File]::WriteAllText($fakeHost, "@echo off`r`necho %1>>`"%VAFADAR_HANDOFF_COMMAND_LOG%`"`r`nexit /b 0`r`n")
+        [IO.File]::WriteAllText($fakeHost, @'
+@echo off
+echo %1>>"%VAFADAR_HANDOFF_COMMAND_LOG%"
+if "%~1" neq "publish" exit /b 0
+:next
+if "%~1" equ "" exit /b 96
+if "%~1" equ "-o" goto emit
+shift
+goto next
+:emit
+if exist "%VAFADAR_HANDOFF_PAYLOAD%\attempted.flag" exit /b 0
+if exist "%VAFADAR_HANDOFF_PAYLOAD%\*.apk" copy /y "%VAFADAR_HANDOFF_PAYLOAD%\*.apk" "%~2\" >nul
+if exist "%VAFADAR_HANDOFF_PAYLOAD%\retry.flag" (
+    ren "%VAFADAR_HANDOFF_PAYLOAD%\retry.flag" attempted.flag
+    echo NETSDK1005 simulated retry
+    exit /b 1
+)
+exit /b 0
+'@)
     } else {
         $fakeHost = Join-Path $fixture 'dotnet'
-        [IO.File]::WriteAllText($fakeHost, "#!/bin/sh`nprintf '%s\n' `"`$1`" >> `"`$VAFADAR_HANDOFF_COMMAND_LOG`"`nexit 0`n")
+        [IO.File]::WriteAllText($fakeHost, @'
+#!/bin/sh
+printf '%s\n' "$1" >> "$VAFADAR_HANDOFF_COMMAND_LOG"
+[ "$1" = publish ] || exit 0
+while [ "$#" -gt 0 ]; do
+    if [ "$1" = -o ]; then
+        [ ! -f "$VAFADAR_HANDOFF_PAYLOAD/attempted.flag" ] || exit 0
+        for file in "$VAFADAR_HANDOFF_PAYLOAD"/*.apk; do
+            if [ -f "$file" ]; then cp "$file" "$2/" || exit $?; fi
+        done
+        if [ -f "$VAFADAR_HANDOFF_PAYLOAD/retry.flag" ]; then
+            mv "$VAFADAR_HANDOFF_PAYLOAD/retry.flag" "$VAFADAR_HANDOFF_PAYLOAD/attempted.flag"
+            printf '%s\n' 'NETSDK1005 simulated retry'
+            exit 1
+        fi
+        exit 0
+    fi
+    shift
+done
+exit 96
+'@)
         [IO.File]::SetUnixFileMode($fakeHost, [IO.UnixFileMode]::UserRead -bor [IO.UnixFileMode]::UserWrite -bor [IO.UnixFileMode]::UserExecute)
     }
     $env:VAFADAR_HANDOFF_COMMAND_LOG = $commandLog
     $env:PATH = $fixture + [IO.Path]::PathSeparator + $previousPath
     $resolvedHost = Get-Command dotnet -CommandType Application | Select-Object -First 1
     if ($resolvedHost.Source -ne $fakeHost) { throw 'The isolated SDK executable was not selected.' }
-    foreach ($case in @('missing', 'empty', 'ambiguous', 'unique', 'verifier-refused')) {
+    foreach ($case in @('missing', 'stale', 'empty', 'ambiguous', 'unique', 'verifier-refused', 'other-app', 'retry-no-file')) {
         $output = Join-Path $fixture $case
-        New-Item -ItemType Directory -Path $output | Out-Null
-        if ($case -eq 'empty') {
-            [IO.File]::WriteAllBytes((Join-Path $output 'fixture-Signed.apk'), [byte[]]@())
+        $payload = Join-Path $fixture "$case-payload"
+        New-Item -ItemType Directory -Path $output, $payload | Out-Null
+        $env:VAFADAR_HANDOFF_PAYLOAD = $payload
+        $publishedApk = Join-Path $output 'fixture-Signed.apk'
+        if ($case -in @('stale', 'unique')) {
+            [IO.File]::WriteAllText($publishedApk, 'Previous handoff.')
         }
-        if ($case -in @('ambiguous', 'unique', 'verifier-refused')) {
-            [IO.File]::WriteAllText((Join-Path $output 'fixture-Signed.apk'), 'Not an Android package; artifact-selection fixture only.')
+        if ($case -eq 'other-app') {
+            [IO.File]::WriteAllText((Join-Path $output 'other-Signed.apk'), 'Another existing package.')
+        }
+        if ($case -eq 'empty') {
+            [IO.File]::WriteAllBytes((Join-Path $payload 'fixture-Signed.apk'), [byte[]]@())
+        }
+        if ($case -in @('ambiguous', 'unique', 'verifier-refused', 'other-app', 'retry-no-file')) {
+            [IO.File]::WriteAllText((Join-Path $payload 'fixture-Signed.apk'), 'New handoff fixture.')
+        }
+        if ($case -eq 'retry-no-file') {
+            [IO.File]::WriteAllText((Join-Path $payload 'retry.flag'), '')
         }
         if ($case -eq 'ambiguous') {
-            [IO.File]::WriteAllText((Join-Path $output 'other-Signed.apk'), 'Second artifact-selection fixture only.')
+            [IO.File]::WriteAllText((Join-Path $payload 'other-Signed.apk'), 'Second candidate from the same build.')
         }
         $accepted = $false
         $lines = @()
@@ -70,7 +121,7 @@ if ($ApkPath -like '*verifier-refused*') { throw 'The fixture verifier refused t
         }
         catch {
             if ($case -eq 'unique') { throw }
-            if ($_.Exception.Message -notmatch 'Expected exactly one signed APK|signed APK is empty|fixture verifier refused') { throw }
+            if ($_.Exception.Message -notmatch 'Expected exactly one signed APK|signed APK is empty|fixture verifier refused|another signed APK') { throw }
         }
         if ($accepted -ne ($case -eq 'unique')) { throw "Unexpected artifact admission for $case." }
         if ($case -eq 'unique' -and (-not ($lines -like 'APK:*fixture-Signed.apk*') -or
@@ -80,6 +131,16 @@ if ($ApkPath -like '*verifier-refused*') { throw 'The fixture verifier refused t
         if (!$accepted -and $lines -match '^APK:|^Package:|^SHA-256:|adb install') {
             throw "An unverified handoff was reported for $case."
         }
+        if ($case -eq 'stale' -and [IO.File]::ReadAllText($publishedApk) -cne 'Previous handoff.') {
+            throw 'A failed publish changed the prior handoff.'
+        }
+        if ($case -eq 'unique' -and [IO.File]::ReadAllText($publishedApk) -cne 'New handoff fixture.') {
+            throw 'The fresh artifact did not replace the previous handoff.'
+        }
+        if ($case -eq 'other-app' -and (Test-Path -LiteralPath $publishedApk)) {
+            throw 'The mixed output gained another signed package.'
+        }
+        if (Get-ChildItem -LiteralPath $output -Directory) { throw 'An owned publish directory was left behind.' }
     }
     # A preparation refusal must stop before restore/publish, even when an inert SDK would succeed.
     [IO.File]::WriteAllText($preparation, @'
@@ -94,14 +155,17 @@ throw 'Private Core preparation fixture refusal.'
     }
     if (-not $preparationRefused) { throw 'The entry point accepted a refused Core preparation.' }
     $buildCommands = @([IO.File]::ReadAllLines($commandLog))
-    if (($buildCommands -join ',') -ne 'prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,verify,prepare,restore,publish,verify,prepare-refused') {
+    $expectedCommands = @('prepare,restore,publish') * 4 +
+        @('prepare,restore,publish,verify') * 3 + @('prepare,restore,publish,restore,publish', 'prepare-refused')
+    if (($buildCommands -join ',') -ne ($expectedCommands -join ',')) {
         throw 'The isolated preparation, build and verification boundaries changed.'
     }
-    'Five APK handoff cases and one preparation refusal passed with isolated build and verifier commands.'
+    'Eight APK handoff cases and one preparation refusal passed with isolated build and verifier commands.'
 }
 finally {
     Pop-Location
     $env:PATH = $previousPath
+    $env:VAFADAR_HANDOFF_PAYLOAD = $previousPayload
     if ($null -eq $previousCommandLog) {
         Remove-Item Env:/VAFADAR_HANDOFF_COMMAND_LOG -ErrorAction SilentlyContinue
     } else {
