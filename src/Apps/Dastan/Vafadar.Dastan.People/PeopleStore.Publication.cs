@@ -63,7 +63,9 @@ public sealed partial class PeopleStore
     /// Agrees to be named in a tree that is to be public, or takes that back. Only an account that is a record
     /// of the tree can, for itself, and only once the owner asked. Taken back, the tree is hidden at once.
     /// </summary>
-    public bool Consent(string id, string tree, bool agree)
+    public bool Consent(string id, string tree, bool agree) => Guarded([OfTree(tree)], () => ConsentUnguarded(id, tree, agree));
+
+    private bool ConsentUnguarded(string id, string tree, bool agree)
     {
         var asked = _context.Trees.AsNoTracking().Any(candidate => candidate.Id == tree && candidate.PublicationAskedAt != null);
         var record = _context.Persons.AsNoTracking().FirstOrDefault(person => person.Tree == tree && person.Account == id);
@@ -89,7 +91,9 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>Makes a tree public. Only the owner can, once asked, and only when nobody stands in the way.</summary>
-    public bool Publish(string id, string tree)
+    public bool Publish(string id, string tree) => Guarded([OfTree(tree)], () => PublishUnguarded(id, tree));
+
+    private bool PublishUnguarded(string id, string tree)
     {
         var stored = _context.Trees.SingleOrDefault(candidate => candidate.Id == tree && candidate.Owner == id);
         if (stored is null || !IsOpen(id) || stored.PublicationAskedAt is null || stored.PublishedAt is not null || IsRestricted(RestrictionKind.Tree, tree) || !Blockers(tree).IsEmpty)
@@ -108,7 +112,9 @@ public sealed partial class PeopleStore
     /// Takes the making public of a tree back, whether it was only asked or done. Only the owner can. Nobody
     /// but those it is shared with sees the tree afterwards, and what was agreed is forgotten.
     /// </summary>
-    public bool Unpublish(string id, string tree)
+    public bool Unpublish(string id, string tree) => Guarded([OfTree(tree)], () => UnpublishUnguarded(id, tree));
+
+    private bool UnpublishUnguarded(string id, string tree)
     {
         var stored = _context.Trees.SingleOrDefault(candidate => candidate.Id == tree && candidate.Owner == id);
         if (stored is null || !IsOpen(id) || stored.PublicationAskedAt is null)

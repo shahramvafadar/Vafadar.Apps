@@ -865,6 +865,12 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             link.Property(item => item.From).HasMaxLength(40);
             link.Property(item => item.To).HasMaxLength(40);
             link.HasIndex(item => item.Tree);
+
+            // What the store checks under the lock of the tree, said to the database too where it can be said
+            // (ADR 0022): nobody is linked to themselves, and two records are linked once, whichever is named
+            // first – the index for that is written in the migration, the model cannot say it. That nobody is
+            // their own ancestor over several steps no constraint can say.
+            link.ToTable(table => table.HasCheckConstraint("CK_Kinships_TwoRecords", "\"From\" <> \"To\""));
             link.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);
             link.HasOne<StoredPerson>().WithMany().HasForeignKey(item => item.From).OnDelete(DeleteBehavior.Cascade);
             link.HasOne<StoredPerson>().WithMany().HasForeignKey(item => item.To).OnDelete(DeleteBehavior.Cascade);

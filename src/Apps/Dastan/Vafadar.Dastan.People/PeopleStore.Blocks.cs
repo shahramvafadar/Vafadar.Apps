@@ -27,6 +27,8 @@ public sealed partial class PeopleStore
                 return false;
             }
 
+            Reach("block");
+
             // What the two showed together, and what waited for an answer between them, is gone – with the
             // circles and the trees they shared and the photographs of one that are said to show the other.
             _context.Relationships.RemoveRange(_context.Relationships.Where(stored => (stored.From == id && stored.To == other) || (stored.From == other && stored.To == id)));

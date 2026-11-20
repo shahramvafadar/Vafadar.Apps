@@ -370,3 +370,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The privacy notice and the terms say what an account is now: a name, a mail address that you confirm and
   that nobody else is shown, and a password; which mail the site sends you and how long it keeps it; and that a
   decision about your account is mailed to you with its reasons. In English, German and Persian.
+- Ending a relationship, blocking somebody and sharing a circle or a tree with them at the same moment can no
+  longer leave somebody in a circle or a tree of an account they show nothing with, and two links made at the
+  same moment can no longer make somebody their own ancestor. The command `people repair` puts right what the
+  earlier version could have left behind.

@@ -63,7 +63,10 @@ public sealed partial class PeopleStore
     /// account is gone – and never the claimant (PRIV-004). Confirmed, the record names the account; nothing is
     /// merged and nobody sees more than before.
     /// </summary>
-    public bool ReviewClaim(string id, string tree, long claim, bool confirm)
+    public bool ReviewClaim(string id, string tree, long claim, bool confirm) =>
+        Guarded([OfTree(tree)], () => ReviewClaimUnguarded(id, tree, claim, confirm));
+
+    private bool ReviewClaimUnguarded(string id, string tree, long claim, bool confirm)
     {
         var stored = _context.Claims.SingleOrDefault(candidate => candidate.Number == claim && candidate.Tree == tree);
         var record = stored is null ? null : _context.Persons.SingleOrDefault(candidate => candidate.Id == stored.Person && candidate.Tree == tree);
@@ -102,7 +105,10 @@ public sealed partial class PeopleStore
     /// Takes back what an account said about a record of a tree: its claim that waits, or that the record is
     /// this account. From then on the record names nobody.
     /// </summary>
-    public bool Unclaim(string id, string tree, string person)
+    public bool Unclaim(string id, string tree, string person) =>
+        Guarded([OfTree(tree)], () => UnclaimUnguarded(id, tree, person));
+
+    private bool UnclaimUnguarded(string id, string tree, string person)
     {
         var record = _context.Persons.SingleOrDefault(candidate => candidate.Id == person && candidate.Tree == tree);
         var claim = _context.Claims.SingleOrDefault(candidate => candidate.Tree == tree && candidate.Person == person && candidate.Account == id);

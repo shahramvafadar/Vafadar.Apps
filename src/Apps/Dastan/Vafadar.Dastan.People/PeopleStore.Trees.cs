@@ -234,7 +234,10 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>Gives a tree another name. Only its owner can.</summary>
-    public bool RenameTree(string id, string tree, string name)
+    public bool RenameTree(string id, string tree, string name) =>
+        Guarded([OfTree(tree)], () => RenameTreeUnguarded(id, tree, name));
+
+    private bool RenameTreeUnguarded(string id, string tree, string name)
     {
         var stored = _context.Trees.SingleOrDefault(candidate => candidate.Id == tree && candidate.Owner == id);
         if (stored is null || !IsOpen(id) || Named(name) is not { } written)
@@ -250,7 +253,10 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>Removes a tree with everything in it. Only its owner can.</summary>
-    public bool RemoveTree(string id, string tree)
+    public bool RemoveTree(string id, string tree) =>
+        Guarded([OfTree(tree)], () => RemoveTreeUnguarded(id, tree));
+
+    private bool RemoveTreeUnguarded(string id, string tree)
     {
         var stored = _context.Trees.SingleOrDefault(candidate => candidate.Id == tree && candidate.Owner == id);
         if (stored is null || !IsOpen(id))
@@ -268,7 +274,10 @@ public sealed partial class PeopleStore
     /// for an account the owner has an accepted relationship with – naming somebody is no way to find out
     /// whether an account exists.
     /// </summary>
-    public bool SetTreeMember(string id, string tree, string account, TreeRole role)
+    public bool SetTreeMember(string id, string tree, string account, TreeRole role) =>
+        Guarded([OfTwo(id, account), OfTree(tree)], () => SetTreeMemberUnguarded(id, tree, account, role));
+
+    private bool SetTreeMemberUnguarded(string id, string tree, string account, TreeRole role)
     {
         if (!IsOpen(id) || role is not (TreeRole.None or TreeRole.Viewer or TreeRole.Editor)
             || !_context.Trees.AsNoTracking().Any(candidate => candidate.Id == tree && candidate.Owner == id))
@@ -278,6 +287,7 @@ public sealed partial class PeopleStore
 
         var stored = _context.TreeMembers.SingleOrDefault(member => member.Tree == tree && member.Account == account);
         var known = Relationships(id).FirstOrDefault(relationship => relationship.State == RelationshipState.Accepted && relationship.Other.Id == account);
+        Reach("tree-member");
         if (role == TreeRole.None)
         {
             if (stored is null)
@@ -363,7 +373,10 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>Removes the record of a person, with its links. Who may change the tree can.</summary>
-    public bool RemovePerson(string id, string tree, string person)
+    public bool RemovePerson(string id, string tree, string person) =>
+        Guarded([OfTree(tree)], () => RemovePersonUnguarded(id, tree, person));
+
+    private bool RemovePersonUnguarded(string id, string tree, string person)
     {
         var stored = _context.Persons.SingleOrDefault(candidate => candidate.Id == person && candidate.Tree == tree);
         if (stored is null || Role(id, tree) < TreeRole.Editor)
@@ -393,7 +406,10 @@ public sealed partial class PeopleStore
     /// <c>same</c>, <c>exists</c> (the two are linked already: two people hold one family role), <c>loop</c>
     /// (nobody is their own ancestor).
     /// </summary>
-    public string Link(string id, string tree, string kind, string from, string to, Vafadar.Temporal.TemporalExpression? since = null, Vafadar.Temporal.TemporalExpression? until = null)
+    public string Link(string id, string tree, string kind, string from, string to, Vafadar.Temporal.TemporalExpression? since = null, Vafadar.Temporal.TemporalExpression? until = null) =>
+        Guarded([OfTree(tree)], () => LinkUnguarded(id, tree, kind, from, to, since, until));
+
+    private string LinkUnguarded(string id, string tree, string kind, string from, string to, Vafadar.Temporal.TemporalExpression? since, Vafadar.Temporal.TemporalExpression? until)
     {
         if (Role(id, tree) < TreeRole.Editor)
         {
@@ -433,6 +449,7 @@ public sealed partial class PeopleStore
             return "loop";
         }
 
+        Reach("link");
         _context.Kinships.Add(new StoredKinship { Tree = tree, Kind = kind, From = from, To = to, Since = PersonTime.Write(since), Until = PersonTime.Write(until) });
         Record(tree, id, IsParentage(kind) ? "parent-added" : "partner-added", $"{people[from]} – {people[to]}");
         Save();
@@ -446,7 +463,10 @@ public sealed partial class PeopleStore
     public static bool IsParentage(string kind) => kind is "parent" or "adoptive-parent" or "guardian";
 
     /// <summary>Removes a link. Who may change the tree can.</summary>
-    public bool Unlink(string id, string tree, long link)
+    public bool Unlink(string id, string tree, long link) =>
+        Guarded([OfTree(tree)], () => UnlinkUnguarded(id, tree, link));
+
+    private bool UnlinkUnguarded(string id, string tree, long link)
     {
         var stored = _context.Kinships.SingleOrDefault(candidate => candidate.Number == link && candidate.Tree == tree);
         if (stored is null || Role(id, tree) < TreeRole.Editor)
@@ -492,7 +512,19 @@ public sealed partial class PeopleStore
     private void LeaveTrees(string one, string other)
     {
         var trees = _context.Trees.AsNoTracking().Where(tree => tree.Owner == one || tree.Owner == other).Select(tree => new { tree.Id, tree.Owner }).ToList();
-        foreach (var tree in trees)
+
+        // The lock of the two accounts is held, so nothing between them is shared anew meanwhile; the trees of
+        // which something changes are locked too – a claim or a link in one of them waits – and they come after
+        // the two accounts in the order.
+        var shared = trees.Where(tree =>
+        {
+            var guest = tree.Owner == one ? other : one;
+            return _context.TreeMembers.AsNoTracking().Any(member => member.Tree == tree.Id && member.Account == guest)
+                || _context.Claims.AsNoTracking().Any(claim => claim.Tree == tree.Id && claim.Account == guest)
+                || _context.Persons.AsNoTracking().Any(person => person.Tree == tree.Id && person.Account == guest);
+        }).ToList();
+        Hold(shared.Select(tree => OfTree(tree.Id)));
+        foreach (var tree in shared)
         {
             var guest = tree.Owner == one ? other : one;
             _context.TreeMembers.RemoveRange(_context.TreeMembers.Where(member => member.Tree == tree.Id && member.Account == guest));

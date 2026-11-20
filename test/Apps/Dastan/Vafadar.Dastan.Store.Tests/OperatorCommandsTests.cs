@@ -274,6 +274,13 @@ public sealed class OperatorCommandsTests : IDisposable
         Assert.Contains("reason: Repeated breaches.", standing, StringComparison.Ordinal);
 
         Assert.Contains($"{zal}  Zal", Run("people", "persons", tree, "--people", People).Output, StringComparison.Ordinal);
+
+        // Nothing is left behind in a store that only ever had the locks: the repair finds nothing, with and without changing.
+        Assert.Contains("0 places in a circle to take out", Run("people", "repair", "--people", People).Output, StringComparison.Ordinal);
+        var repaired = Run("people", "repair", "--people", People, "--change");
+        Assert.Equal(ContentCommands.Done, repaired.Exit);
+        Assert.Contains("0 places in a tree taken out", repaired.Output, StringComparison.Ordinal);
+        Assert.Contains("0 trees in which somebody is their own ancestor", repaired.Output, StringComparison.Ordinal);
         Assert.Equal(ContentCommands.Done, Run("people", "person", "remove", tree, zal, "--people", People).Exit);
         Assert.Equal(ContentCommands.NotUsable, Run("people", "person", "remove", tree, zal, "--people", People).Exit);
 
