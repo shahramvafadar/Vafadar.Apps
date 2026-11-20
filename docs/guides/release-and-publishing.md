@@ -118,9 +118,17 @@ Its four locally generated ARM64/API 36 splits passed signature checks and `zipa
 The master APK retained the offline permissions policy, package and version, and all
 204 libraries in the ARM64 split were stored at 16 KiB offsets with SHA-256 values equal to the AAB entries.
 
-The x64 input bundle was unchanged. Local evidence includes the device specifications, source digests, split
-signature and alignment receipts, and native-entry comparisons. Play signing, installation and execution on a
-device with 16 KiB pages remain separate acceptance checks. See the
+The retained x64 input bundle was later used to generate a fresh local split set with the same device
+specification and a disposable test certificate. A fresh API 36 x86_64 emulator at density 420 accepted all
+four splits in a single Package Manager session. The launcher opened the app, and the same process reached
+the native Welcome screen after its preparation cover. The input bundle hash was unchanged and the fixture
+was retired. No account or transaction was entered. The x64 example declares INTERNET, so airplane mode and
+disabled Wi-Fi isolated the launch. The emulator reported 4096-byte kernel pages. The install and launch
+receipts and native hierarchy are retained in `artifacts/zsi`.
+
+Local evidence also includes the earlier device specifications, source digests, split signature and alignment
+receipts, and native-entry comparisons. Play signing, ARM64 installation and execution on a device with
+16 KiB pages remain separate acceptance checks. See the
 [Android bundletool guide](https://developer.android.com/tools/bundletool).
 
 ## iOS (after the Android version is complete)
