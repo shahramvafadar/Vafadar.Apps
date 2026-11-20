@@ -8869,4 +8869,7 @@ Original XML SHA-256: {5}</value>
   <data name="Screen_LegacyHint" xml:space="preserve">
     <value>Android 12 and earlier block screenshots here to keep your financial information out of recent apps.</value>
   </data>
+  <data name="Occurrence_OriginalDueDate" xml:space="preserve">
+    <value>Originally due {0}</value>
+  </data>
 </root>

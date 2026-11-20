@@ -8828,4 +8828,7 @@
   <data name="Screen_LegacyHint" xml:space="preserve">
     <value>در اندروید ۱۲ و نسخه‌های قدیمی‌تر، گرفتن اسکرین‌شات مسدود است تا اطلاعات مالی شما در برنامه‌های اخیر دیده نشود.</value>
   </data>
+  <data name="Occurrence_OriginalDueDate" xml:space="preserve">
+    <value>موعد اولیه: {0}</value>
+  </data>
 </root>

@@ -238,7 +238,7 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
             schedule.Id,
             occurrence.OriginalDate,
             schedule.Name,
-            subtitle,
+            text.WithOriginalDueDate(subtitle, occurrence),
             text.Amount(occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, CurrencyOf(schedule.AccountId, context)),
             AmountColor(schedule.Kind),
             icon,

@@ -246,7 +246,7 @@ public sealed partial class PlanDetailViewModel(
             OccurrenceView.Settled => colors.Income,
             _ => colors.Neutral,
         };
-        return new OccurrenceRow(occurrence.OriginalDate, text.Date(occurrence.DueDate), text.Amount(occurrence.IsOpen && occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, currency), text.Status(occurrence.Status), color);
+        return new OccurrenceRow(occurrence.OriginalDate, text.WithOriginalDueDate(text.Date(occurrence.DueDate), occurrence), text.Amount(occurrence.IsOpen && occurrence.Paid > 0 ? occurrence.Outstanding : occurrence.Amount, occurrence.AmountMode, currency), text.Status(occurrence.Status), color);
     }
 
     private bool Current(PlanDetailSnapshot source, long revision, Guid id, SnapshotLoadState owner, string display) =>

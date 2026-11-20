@@ -310,7 +310,7 @@ public sealed partial class OccurrenceViewModel(
 
         Publish(() => Name = schedule.Name);
         Publish(() => CurrencyCode = _currency);
-        Publish(() => DueText = translator.Format("Occurrence_DueOn", text.Date(occurrence.DueDate)));
+        Publish(() => DueText = text.WithOriginalDueDate(translator.Format("Occurrence_DueOn", text.Date(occurrence.DueDate)), occurrence));
         Publish(() => PlannedAmountText = text.Amount(occurrence.Amount, occurrence.AmountMode, _currency));
         Publish(() => StatusText = text.Status(occurrence.Status));
         Publish(() => IsOpen = occurrence.IsOpen);

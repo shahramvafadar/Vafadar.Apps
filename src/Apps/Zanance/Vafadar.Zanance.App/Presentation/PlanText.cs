@@ -112,6 +112,13 @@ internal sealed class PlanText(Translator translator, IDateFormatter dates, ILoc
     /// <summary>A due date, e.g. "Mon 5 May" plus "today"/"overdue" hints are added by the caller.</summary>
     public string Date(DateOnly date) => dates.Format(date, DateFormatStyle.Long);
 
+    /// <summary>Adds the original date when the current due date no longer identifies the occurrence.</summary>
+    public string WithOriginalDueDate(string caption, Occurrence occurrence) =>
+        occurrence.OriginalDate == occurrence.DueDate
+            ? caption
+            : caption + Environment.NewLine +
+                translator.Format("Occurrence_OriginalDueDate", dates.Format(occurrence.OriginalDate, DateFormatStyle.Short));
+
     private string DayText(RecurrenceRule rule) =>
         rule.DayRule.IsWeekday() ? WeekdayText(rule)
         : rule.DayRule == MonthDayRule.LastDayOfMonth

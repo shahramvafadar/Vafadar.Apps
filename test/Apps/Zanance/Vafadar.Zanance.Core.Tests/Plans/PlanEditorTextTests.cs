@@ -72,6 +72,41 @@ public sealed class PlanEditorTextTests
         Assert.NotEqual(text.UpcomingDates(ended, ended.Start)[0], text.UpcomingDates(ended, ended.Start.AddYears(1))[0]);
     }
 
+    /// <summary>Dates converging on one working day still have distinct localized captions.</summary>
+    [Theory]
+    [InlineData("en")]
+    [InlineData("fa")]
+    [InlineData("de")]
+    [InlineData("es")]
+    [InlineData("fr")]
+    [InlineData("it")]
+    public void Shifted_occurrence_captions_keep_each_original_date(string language)
+    {
+        var (text, dates) = Create(language, language == "fa" ? CalendarSystem.Persian : CalendarSystem.Gregorian);
+        var first = new DateOnly(2026, 11, 21);
+        var second = first.AddDays(1);
+        var due = first.AddDays(2);
+        var schedule = new Schedule
+        {
+            Name = "Synthetic monthly plan",
+            Rule = new() { Frequency = Frequency.Monthly, Start = first, SecondDay = 22, WeekendDays = 65, WeekendShift = WeekendShift.After },
+        };
+        var occurrences = Occurrences.Between(schedule, [], first, due, first.AddDays(-1)).ToArray();
+        Assert.Equal(new[] { first, second }, occurrences.Select(item => item.OriginalDate));
+        Assert.All(occurrences, item => Assert.Equal(due, item.DueDate));
+
+        var effectiveCaption = text.Date(due);
+        var captions = occurrences.Select(item => text.WithOriginalDueDate(effectiveCaption, item)).ToArray();
+        Assert.NotEqual(captions[0], captions[1]);
+        for (var index = 0; index < captions.Length; index++)
+        {
+            Assert.StartsWith(effectiveCaption + Environment.NewLine, captions[index], StringComparison.Ordinal);
+            Assert.Contains(dates.Format(occurrences[index].OriginalDate, DateFormatStyle.Short), captions[index], StringComparison.Ordinal);
+            Assert.DoesNotContain("Occurrence_OriginalDueDate", captions[index], StringComparison.Ordinal);
+        }
+        Assert.Equal(effectiveCaption, text.WithOriginalDueDate(effectiveCaption, occurrences[0] with { OriginalDate = due }));
+    }
+
     private static (PlanText Text, DateFormatter Dates) Create(string language, CalendarSystem displayCalendar)
     {
         var translator = new Translator();

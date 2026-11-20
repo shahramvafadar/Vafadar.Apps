@@ -8828,4 +8828,7 @@ Original-XML SHA-256: {5}</value>
   <data name="Screen_LegacyHint" xml:space="preserve">
     <value>Unter Android 12 und älter sind Screenshots gesperrt, damit deine Finanzdaten in der Übersicht der zuletzt verwendeten Apps verborgen bleiben.</value>
   </data>
+  <data name="Occurrence_OriginalDueDate" xml:space="preserve">
+    <value>Ursprünglich fällig am {0}</value>
+  </data>
 </root>

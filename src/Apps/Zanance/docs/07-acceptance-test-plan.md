@@ -628,6 +628,26 @@ hierarchies remain under `artifacts/at72-shared-day`. This qualifies the read-on
 same-day projection and local review on the retained APK. Posting, physical delivery
 and newer APK adoption remain separate.
 
+### Selecting one moved occurrence by its original date
+
+On a fresh owned Android 16 emulator with the same synthetic fixture, the earlier
+signed APK `40a809f6` showed two separate Upcoming buttons with identical captions.
+The updated Offline Release APK `7e70152c` kept the package UID and first-install
+time and enabled distinguishing the two buttons by their visible original dates.
+The due-item screen showed both the displayed November 23 deadline and its original
+November 21 date. A single **Skip** action removed the November 21 item and kept the
+November 22 item visible. Plan details showed both original dates with the skipped
+item in history. The transaction list remained empty. No payment or provider was
+invoked.
+
+Six focused host cases checked the separate captions in the six app languages, using
+the Persian display calendar in the Persian case. Both strict platform builds passed.
+The first file-picker hierarchy was incomplete. The same original picker continued
+with its verified document selection. The owned emulator was retired. Evidence and
+the exact APK are retained under `artifacts/at72-skip-shared`. This verifies the
+English Android selection and Skip for this fixture. Other languages were checked
+at the caption level, and physical-device and notification delivery remain open.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.

@@ -8817,4 +8817,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Screen_LegacyHint" xml:space="preserve">
     <value>Su Android 12 e versioni precedenti, gli screenshot sono bloccati per nascondere i tuoi dati finanziari nelle app recenti.</value>
   </data>
+  <data name="Occurrence_OriginalDueDate" xml:space="preserve">
+    <value>Scadenza originale: {0}</value>
+  </data>
 </root>

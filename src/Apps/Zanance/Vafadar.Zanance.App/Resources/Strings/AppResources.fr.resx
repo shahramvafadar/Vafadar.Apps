@@ -8805,4 +8805,7 @@ SHA-256 du XML original : {5}</value>
   <data name="Screen_LegacyHint" xml:space="preserve">
     <value>Sous Android 12 et les versions antérieures, les captures d’écran sont bloquées pour masquer vos données financières dans les applications récentes.</value>
   </data>
+  <data name="Occurrence_OriginalDueDate" xml:space="preserve">
+    <value>Échéance initiale : {0}</value>
+  </data>
 </root>
