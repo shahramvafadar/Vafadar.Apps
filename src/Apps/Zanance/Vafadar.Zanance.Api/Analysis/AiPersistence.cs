@@ -84,6 +84,19 @@ public sealed class AiRequestRow
     public int? VendorOutputTokens { get; set; }
 }
 
+/// <summary>A separate retention receipt preserves the original terminal request and credit journal.</summary>
+public sealed class AiPilotDeletionRow
+{
+    /// <summary>Original completed synthetic request, with at most one deletion attempt.</summary>
+    public Guid RequestId { get; set; }
+    /// <summary>Local operator who authorized the original deletion attempt.</summary>
+    public string Actor { get; set; } = "";
+    /// <summary>Committed before sending the original destructive call.</summary>
+    public DateTimeOffset StartedAt { get; set; }
+    /// <summary>Time that the original vendor acknowledged deletion.</summary>
+    public DateTimeOffset? ConfirmedAt { get; set; }
+}
+
 /// <summary>An audited local operator selection. An off row retires previous unaccepted quotes.</summary>
 public sealed class AiPilotRouteRow
 {
@@ -186,6 +199,11 @@ internal static class AiServiceModel
         request.Property(r => r.PilotMeteredTariff).HasMaxLength(64);
         request.HasIndex(r => r.OfferId).IsUnique(); request.HasIndex(r => new { r.UserId, r.CreatedAt });
         request.HasOne<AiOfferRow>().WithMany().HasForeignKey(r => r.OfferId).OnDelete(DeleteBehavior.Restrict);
+        var deletion = model.Entity<AiPilotDeletionRow>(); deletion.ToTable("AiPilotDeletions");
+        deletion.HasKey(r => r.RequestId);
+        deletion.Property(r => r.Actor).HasMaxLength(256);
+        deletion.HasOne<AiRequestRow>().WithOne().HasForeignKey<AiPilotDeletionRow>(r => r.RequestId).OnDelete(DeleteBehavior.Restrict);
+
         var statusCheck = model.Entity<AiPilotStatusCheckRow>(); statusCheck.ToTable("AiPilotStatusChecks");
         statusCheck.HasKey(r => new { r.RequestId, r.Attempt });
         statusCheck.Property(r => r.Actor).HasMaxLength(256);

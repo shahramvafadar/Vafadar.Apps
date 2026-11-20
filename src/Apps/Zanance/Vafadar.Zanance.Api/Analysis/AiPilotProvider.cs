@@ -362,6 +362,30 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         return result is not null && Text(result.RootElement, "id") == id ? Outcome(profile, offer.Purpose, digest, result.RootElement) : Unknown;
     }
 
+    /// <summary>Admits only the original synthetic operation and project before an explicit retention action.</summary>
+    internal bool CanDeleteResult(AiPilotRouteRow route, AiOffer offer, string digest, string id) =>
+        CanCheckStatus(route, offer, digest, id) &&
+        (offer.Provider != "openai" || id.StartsWith("resp_", StringComparison.Ordinal));
+
+    /// <summary>Sends one deletion and accepts only a receipt for the original stored result.</summary>
+    internal async Task<bool> DeleteResultAsync(AiPilotRouteRow route, AiOffer offer, string digest, string id, CancellationToken ct)
+    {
+        if (!CanDeleteResult(route, offer, digest, id) || Admit(route, offer) is not { } profile) return false;
+        using var request = Request(profile, HttpMethod.Delete, profile.Url + "/" + id);
+        if (profile.Provider == "openai")
+        {
+            using var receipt = await SendAsync(request, ct);
+            return receipt is not null && Text(receipt.RootElement, "id") == id &&
+                Text(receipt.RootElement, "object") == "response.deleted" &&
+                Read(receipt.RootElement, "deleted").ValueKind == JsonValueKind.True;
+        }
+
+        // Gemini acknowledges the addressed deletion via HTTP without a response identity.
+        using var client = clients.CreateClient(Client);
+        using var acknowledgement = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
+        return acknowledgement.StatusCode is System.Net.HttpStatusCode.OK or System.Net.HttpStatusCode.NoContent;
+    }
+
     private async Task<JsonDocument?> SendAsync(HttpRequestMessage request, CancellationToken ct)
     {
         using var client = clients.CreateClient(Client);

@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("89220390-7238-4f6b-8813-f9be380e71e2"), entityTypeCount: 50)
+            : base(skipDetectChanges: false, modelId: new Guid("3628c4f6-3b51-46c3-a378-40e395ed38ec"), entityTypeCount: 51)
         {
         }
 
@@ -27,6 +27,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var aiCreditRow = AiCreditRowEntityType.Create(this);
             var aiOfferRow = AiOfferRowEntityType.Create(this);
             var aiPilotCompletionNoticeRow = AiPilotCompletionNoticeRowEntityType.Create(this);
+            var aiPilotDeletionRow = AiPilotDeletionRowEntityType.Create(this);
             var aiPilotRouteRow = AiPilotRouteRowEntityType.Create(this);
             var aiPilotStatusCheckRow = AiPilotStatusCheckRowEntityType.Create(this);
             var aiRequestRow = AiRequestRowEntityType.Create(this);
@@ -79,6 +80,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             AiCreditRowEntityType.CreateForeignKey2(aiCreditRow, serviceUser);
             AiOfferRowEntityType.CreateForeignKey1(aiOfferRow, aiPilotRouteRow);
             AiOfferRowEntityType.CreateForeignKey2(aiOfferRow, serviceUser);
+            AiPilotDeletionRowEntityType.CreateForeignKey1(aiPilotDeletionRow, aiRequestRow);
             AiPilotStatusCheckRowEntityType.CreateForeignKey1(aiPilotStatusCheckRow, aiRequestRow);
             AiRequestRowEntityType.CreateForeignKey1(aiRequestRow, aiOfferRow);
             AiRequestRowEntityType.CreateForeignKey2(aiRequestRow, serviceUser);
@@ -134,6 +136,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             AiCreditRowEntityType.CreateAnnotations(aiCreditRow);
             AiOfferRowEntityType.CreateAnnotations(aiOfferRow);
             AiPilotCompletionNoticeRowEntityType.CreateAnnotations(aiPilotCompletionNoticeRow);
+            AiPilotDeletionRowEntityType.CreateAnnotations(aiPilotDeletionRow);
             AiPilotRouteRowEntityType.CreateAnnotations(aiPilotRouteRow);
             AiPilotStatusCheckRowEntityType.CreateAnnotations(aiPilotStatusCheckRow);
             AiRequestRowEntityType.CreateAnnotations(aiRequestRow);
