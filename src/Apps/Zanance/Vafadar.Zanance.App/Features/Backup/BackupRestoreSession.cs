@@ -78,7 +78,11 @@ public sealed partial class BackupRestoreSession : ViewModelBase
         CheckCommand.NotifyCanExecuteChanged(); RestoreCommand.NotifyCanExecuteChanged(); FinishCommand.NotifyCanExecuteChanged(); CancelCommand.NotifyCanExecuteChanged();
     }
     /// <summary>Publishes a new package only after its entire stream was read; failed reads retain the old review.</summary>
-    public async Task PrepareAsync(Stream stream, string name, PreparationOwner? originalOwner = null)
+    public Task PrepareAsync(Stream stream, string name, PreparationOwner? originalOwner = null) =>
+        PreparePickedAsync(stream, name, originalOwner, CancellationToken.None);
+
+    /// <summary>Also retires the read and preview when the native selection owner disappears.</summary>
+    internal async Task PreparePickedAsync(Stream stream, string name, PreparationOwner? originalOwner, CancellationToken providerToken)
     {
         if (IsBusy || HasCompleted || !Current) return;
         var owner = originalOwner ?? CapturePreparationOwner(); owner.EnsureCurrent();
@@ -87,12 +91,17 @@ public sealed partial class BackupRestoreSession : ViewModelBase
         byte[]? loaded = null;
         try
         {
-            loaded = await StartupBackupPackageReader.ReadPortableAsync(stream, owner.Token, source);
+            using var linked = providerToken.CanBeCanceled
+                ? CancellationTokenSource.CreateLinkedTokenSource(owner.Token, providerToken) : null;
+            var readToken = linked?.Token ?? owner.Token;
+            loaded = await StartupBackupPackageReader.ReadPortableAsync(stream, readToken, source);
+            readToken.ThrowIfCancellationRequested();
             owner.EnsureCurrent(); source();
             ClearSelection(); _sourceValidation = source; _package = loaded; loaded = null;
             PickedName = name; NeedsPassword = BackupEncryption.IsEncrypted(_package);
-            if (!NeedsPassword) await InspectAsync(owner);
+            if (!NeedsPassword) await InspectAsync(owner, readToken);
         }
+        catch (OperationCanceledException) when (providerToken.IsCancellationRequested) { }
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (owner.IsCurrent) Error = _translator["Backup_Error_Storage"]; }
         finally
         {
@@ -105,10 +114,10 @@ public sealed partial class BackupRestoreSession : ViewModelBase
     {
         if (!CanCheck) return;
         var owner = CapturePreparationOwner(); IsBusy = true;
-        try { await InspectAsync(owner); }
+        try { await InspectAsync(owner, owner.Token); }
         finally { EndOriginalOperation(); }
     }
-    private async Task InspectAsync(PreparationOwner owner)
+    private async Task InspectAsync(PreparationOwner owner, CancellationToken inspectionToken)
     {
         Error = null; HasPreview = false;
         var published = false;
@@ -118,12 +127,13 @@ public sealed partial class BackupRestoreSession : ViewModelBase
             var package = _package!; var password = NeedsPassword ? Password : null; var revision = Volatile.Read(ref _selectionVersion);
             void ValidatePreviewOwner()
             {
+                inspectionToken.ThrowIfCancellationRequested();
                 owner.EnsureCurrent(); _sourceValidation?.Invoke();
                 if (revision != Volatile.Read(ref _selectionVersion) || !ReferenceEquals(package, _package))
                     throw new InvalidOperationException("The original restore input changed during inspection.");
             }
 
-            var manifest = await _backup.InspectPackageAsync(package, password, owner.Token);
+            var manifest = await _backup.InspectPackageAsync(package, password, inspectionToken);
             var description = Describe(manifest);
             ValidatePreviewOwner();
             // Binding notifications run synchronously and can retire the original frame during either setter.
@@ -133,6 +143,7 @@ public sealed partial class BackupRestoreSession : ViewModelBase
             ValidatePreviewOwner();
             published = true;
         }
+        catch (OperationCanceledException) when (inspectionToken.IsCancellationRequested) { }
         catch (BackupException exception) { if (owner.IsCurrent) Error = _translator[$"Backup_Error_{exception.Error}"]; }
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (owner.IsCurrent) Error = _translator["Backup_ReviewFailed"]; }
         finally

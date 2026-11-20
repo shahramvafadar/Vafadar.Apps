@@ -18,9 +18,9 @@ internal static partial class HouseholdRecoveryFiles
         byte[]? bytes = null;
         try
         {
-            await AndroidDocumentPicker.UseAsync(title, null, async (input, _, _) =>
+            await AndroidDocumentPicker.UseAsync(title, null, async (input, _, _, lifetime) =>
             {
-                bytes = await Task.Run(() => ReadEncryptedAsync(input, ct), ct);
+                bytes = await Task.Run(() => ReadEncryptedAsync(input, lifetime), lifetime);
             }, ct.ThrowIfCancellationRequested, ct: ct);
             ct.ThrowIfCancellationRequested();
             var accepted = bytes;

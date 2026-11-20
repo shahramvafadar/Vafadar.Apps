@@ -16,10 +16,11 @@ internal static class AndroidDocumentPicker
     private static Pending? pending;
     private static readonly SemaphoreSlim PickerOwner = new(1, 1);
 
-    private sealed record Pending(Activity Activity, int Code, TaskCompletionSource<Android.Net.Uri?> Completion);
+    private sealed record Pending(Activity Activity, int Code, TaskCompletionSource<Android.Net.Uri?> Completion,
+        CancellationTokenSource Lifetime);
 
     /// <summary>Uses the selected document within its read grant and closes its stream before releasing the picker.</summary>
-    internal static async Task UseAsync(string title, string[]? mimeTypes, Func<Stream, string, string?, Task> use,
+    internal static async Task UseAsync(string title, string[]? mimeTypes, Func<Stream, string, string?, CancellationToken, Task> use,
         Action? validateOwner = null, string[]? virtualMimeTypes = null, CancellationToken ct = default)
     {
         ct.ThrowIfCancellationRequested();
@@ -33,7 +34,9 @@ internal static class AndroidDocumentPicker
             if (lastCode >= LastCode)
                 throw new InvalidOperationException("The attachment request identity range is exhausted.");
 
-            own = new(activity, ++lastCode, new(TaskCreationOptions.RunContinuationsAsynchronously));
+            own = new(activity, ++lastCode, new(TaskCreationOptions.RunContinuationsAsynchronously),
+                CancellationTokenSource.CreateLinkedTokenSource(ct));
+            var lifetime = own.Lifetime.Token;
             Volatile.Write(ref pending, own);
             using var intent = new Intent(Intent.ActionOpenDocument);
             intent.SetType("*/*");
@@ -48,17 +51,19 @@ internal static class AndroidDocumentPicker
             // MAUI's generic picker copies to a physical path first. Its copy can query Position
             // on a provider pipe and it runs before the app can apply its byte limit.
             validateOwner?.Invoke();
-            var document = await Task.Run(() => Open(activity, uri, virtualMimeTypes ?? mimeTypes, ct), ct);
+            var document = await Task.Run(() => Open(activity, uri, virtualMimeTypes ?? mimeTypes, lifetime), lifetime);
             using var asset = document.Asset;
             using var input = document.Input;
-            ct.ThrowIfCancellationRequested();
+            lifetime.ThrowIfCancellationRequested();
             validateOwner?.Invoke();
-            await use(input, document.Name, document.ContentType);
+            lifetime.ThrowIfCancellationRequested();
+            await use(input, document.Name, document.ContentType, lifetime);
+            lifetime.ThrowIfCancellationRequested();
         }
         catch (Android.OS.OperationCanceledException error)
         {
-            if (ct.IsCancellationRequested)
-                throw new OperationCanceledException("The selected document request retired.", error, ct);
+            if (own?.Lifetime.IsCancellationRequested == true)
+                throw new OperationCanceledException("The selected document request retired.", error, own.Lifetime.Token);
             throw new IOException("The provider cancelled the selected document request.", error);
         }
         catch (Java.IO.IOException error)
@@ -72,7 +77,10 @@ internal static class AndroidDocumentPicker
         finally
         {
             if (own is not null)
+            {
                 Interlocked.CompareExchange(ref pending, null, own);
+                own.Lifetime.Dispose();
+            }
             PickerOwner.Release();
         }
     }
@@ -167,6 +175,9 @@ internal static class AndroidDocumentPicker
     internal static void OnDestroyed(Activity activity)
     {
         if (Volatile.Read(ref pending) is { } own && ReferenceEquals(own.Activity, activity))
+        {
             own.Completion.TrySetResult(null);
+            own.Lifetime.Cancel();
+        }
     }
 }

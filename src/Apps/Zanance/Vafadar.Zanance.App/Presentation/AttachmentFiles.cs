@@ -33,9 +33,9 @@ internal static partial class AttachmentFiles
         try
         {
 #if ANDROID
-            await AndroidDocumentPicker.UseAsync(title, ["application/pdf", "image/*"], async (input, name, contentType) =>
+            await AndroidDocumentPicker.UseAsync(title, ["application/pdf", "image/*"], async (input, name, contentType, lifetime) =>
             {
-                prepared = await PrepareSelectedAsync(input, name, contentType);
+                prepared = await PrepareSelectedAsync(input, name, contentType, lifetime);
             }, Current, ct: ct);
 #else
             var file = await FilePicker.Default.PickAsync(new PickOptions
@@ -51,7 +51,7 @@ internal static partial class AttachmentFiles
 
             Current();
             await using (var stream = await file.OpenReadAsync())
-                prepared = await PrepareSelectedAsync(stream, file.FileName, file.ContentType);
+                prepared = await PrepareSelectedAsync(stream, file.FileName, file.ContentType, ct);
 #endif
             Current();
             var selected = prepared;
@@ -68,12 +68,13 @@ internal static partial class AttachmentFiles
             }
         }
 
-        async Task<PreparedAttachment> PrepareSelectedAsync(Stream input, string name, string? contentType)
+        async Task<PreparedAttachment> PrepareSelectedAsync(Stream input, string name, string? contentType, CancellationToken readToken)
         {
             Current();
-            var bytes = await Task.Run(() => ReadSourceAsync(input, ct), ct);
+            var bytes = await Task.Run(() => ReadSourceAsync(input, readToken), readToken);
             try
             {
+                readToken.ThrowIfCancellationRequested();
                 Current();
                 return await PrepareAsync(name, ResolveContentType(name, contentType), bytes, forRecognition);
             }

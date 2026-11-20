@@ -68,9 +68,9 @@ internal sealed class StartupBackupPage : ContentPage
 #if ANDROID
             var authority = original;
             string? selectedName = null;
-            await AndroidDocumentPicker.UseAsync(translator["Backup_PickFile"], null, async (input, name, _) =>
+            await AndroidDocumentPicker.UseAsync(translator["Backup_PickFile"], null, async (input, name, _, pickerToken) =>
             {
-                loaded = await StartupBackupPackageReader.ReadAsync(input, authority);
+                loaded = await StartupBackupPackageReader.ReadPickedAsync(input, authority, pickerToken);
                 selectedName = name;
             }, authority.RequireCurrent, ct: authority.Token);
             if (loaded is null || !OwnsPage) return;
@@ -88,6 +88,7 @@ internal sealed class StartupBackupPage : ContentPage
             Clear(); selection = original; original = null;
             package = loaded; loaded = null; fileName.Text = selectedName;
         }
+        catch (OperationCanceledException) { }
         catch (Exception failure) when (failure is not OutOfMemoryException)
         { if (OwnsPage) ShowError("Recovery_BackupFailed"); }
         finally

@@ -207,6 +207,30 @@ public sealed class BackupRestoreOwnershipTests
     }
 
     [Fact]
+    public async Task Retired_provider_cancels_the_read_while_the_restore_frame_remains_current()
+    {
+        using var f = new FlowFixture();
+        var backup = Service(f);
+        var runtime = new Runtime(backup, new Owner(), "none");
+        var session = new BackupRestoreSession(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time);
+        var owner = session.CapturePreparationOwner();
+        using var provider = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        using var stream = new HeldRead([1, 2, 3]);
+        var pending = session.PreparePickedAsync(stream, "Retired provider.zanbak", owner, provider.Token);
+        await stream.Entered.Task.WaitAsync(Ct);
+        provider.Cancel();
+        await pending;
+
+        Assert.True(owner.IsCurrent);
+        Assert.True(stream.ActualToken.IsCancellationRequested);
+        Assert.Equal(1, stream.Reads);
+        Assert.Null(session.PickedName);
+        Assert.False(session.CanCheck);
+        Assert.Null(session.Error);
+        Assert.Equal(0, runtime.Primary);
+    }
+
+    [Fact]
     public async Task A_target_replaced_during_provider_read_stops_before_the_next_read()
     {
         using var f = new FlowFixture();

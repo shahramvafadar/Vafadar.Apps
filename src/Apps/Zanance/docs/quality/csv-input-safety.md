@@ -172,3 +172,27 @@ The installed fixture was hash-verified and reused without reinstalling it. Evid
 is under `artifacts/android-provider-open-cancellation/native`.
 Both test packages and the owned AVD were retired. The used APKs and observations
 remain. The production app and physical phones were outside this run.
+
+### Original Android activity lifetime
+
+The Android request now links the caller's cancellation to the lifetime of the activity
+that launched the chooser. Actual activity destruction ends that request and cancels the
+provider open or the token used by the attachment, CSV, portable backup, startup recovery
+and household recovery readers. The chooser still has one owner and releases it only
+when the original request finishes.
+
+Two new cases on a fresh Android 16 emulator used the source-linked picker and the
+existing separate provider fixture. Destroying the requesting activity during a held
+resolver open sent cancellation to the provider before the consumer began. Destroying
+the activity after the stream was handed over cancelled the token observed by the held
+consumer. The outer caller token stayed live in both cases. Neither case replayed the
+previous six scenarios. The actual DocumentsUI screen and shipping app UI were outside
+this test. Evidence is under `artifacts/android-picker-activity-retirement/native`.
+
+The new managed test also cancelled a held portable backup read without retiring the
+restore page. It observed one read, no selection or preview, no error feedback and no
+restore. All 33 selected restore and startup reader tests passed.
+
+The two private packages and the AVD were retired. The strict Windows build,
+standard test cleanup, and signed offline Android Release build passed. The verified
+APK SHA-256 is `b58701a111921e059f138bc07d8365c6e3f93c71bb6ce43f28765ebf327cb779`.

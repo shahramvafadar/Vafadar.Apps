@@ -10,7 +10,7 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
     public Task<PickedDataFile?> PickCsvAsync(string title) => PickCsvAsync(title, static () => { }, CancellationToken.None);
     /// <inheritdoc />
     public Task<PickedDataFile?> PickCsvAsync(string title, Action validateOwner, CancellationToken ct) =>
-        PickAsync(title, source => Core.DataFiles.CsvInput.ReadTextAsync(source, cancellationToken: ct), validateOwner, ct);
+        PickAsync(title, (source, token) => Core.DataFiles.CsvInput.ReadTextAsync(source, cancellationToken: token), validateOwner, ct);
     /// <inheritdoc />
     public Task<bool> ConfirmExportAsync(string reason) => appLock.ConfirmAsync(reason);
     /// <inheritdoc />
@@ -18,16 +18,17 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
         PickBankCsvAsync(title, encoding, static () => { }, CancellationToken.None);
     /// <inheritdoc />
     public Task<PickedDataFile?> PickBankCsvAsync(string title, Core.DataFiles.BankCsvEncoding encoding, Action validateOwner, CancellationToken ct) =>
-        PickAsync(title, source => ReadBankCsvAsync(source, encoding, validateOwner, ct), validateOwner, ct);
+        PickAsync(title, (source, token) => ReadBankCsvAsync(source, encoding, validateOwner, token), validateOwner, ct);
 
-    private static async Task<PickedDataFile?> PickAsync(string title, Func<Stream, Task<string>> read,
+    private static async Task<PickedDataFile?> PickAsync(string title, Func<Stream, CancellationToken, Task<string>> read,
         Action validateOwner, CancellationToken ct)
     {
         void Current() { ct.ThrowIfCancellationRequested(); validateOwner(); }
-        async Task<PickedDataFile> ReadAsync(Stream input, string name)
+        async Task<PickedDataFile> ReadAsync(Stream input, string name, CancellationToken readToken)
         {
             Current();
-            var text = await read(input);
+            var text = await read(input, readToken);
+            readToken.ThrowIfCancellationRequested();
             Current();
             return new(name, text);
         }
@@ -37,9 +38,9 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
 #if ANDROID
         PickedDataFile? picked = null;
         // An ordinary bank export can have generic MIME metadata; only constrain virtual conversions.
-        await AndroidDocumentPicker.UseAsync(title, null, async (input, name, _) =>
+        await AndroidDocumentPicker.UseAsync(title, null, async (input, name, _, lifetime) =>
         {
-            picked = await Task.Run(() => ReadAsync(input, name), ct);
+            picked = await Task.Run(() => ReadAsync(input, name, lifetime), lifetime);
         }, Current, virtualMimeTypes: ["text/csv", "text/comma-separated-values"], ct: ct);
         Current();
         return picked;
@@ -50,7 +51,7 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
         return await Task.Run(async () =>
         {
             await using var input = await file.OpenReadAsync();
-            return await ReadAsync(input, file.FileName);
+            return await ReadAsync(input, file.FileName, ct);
         }, ct);
 #endif
     }
