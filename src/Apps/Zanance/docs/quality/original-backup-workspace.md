@@ -156,3 +156,21 @@ row action. The package and owned API 36 AVD were retired after the check. The
 final device XML was hash-matched and removed from the guest. Local evidence
 remains under `artifacts/local-backup-row-api24`. No physical device, existing
 profile or financial transaction was used in this check.
+
+The device-only path was checked separately on the minimum supported Android 7
+(API 24, x64). The SDK resolver found the existing compatibility image once its
+tools directory was bound to that SDK root. The installed APK had the same
+SHA-256 as the signed build. The first installer-path pull was refused by the
+legacy sync service. A read-only binary stream verified the installed bytes
+without reinstalling.
+
+The app generated one automatic copy for the new synthetic zero-opening
+account. Selecting its row opened the preview directly, with the matching
+creation time and one account, zero transactions and zero plans. The device-only
+row did not present the portable Share action, and Cancel closed the preview
+without replacement. The initial UI observer missed the combined Android 7
+label and hint for the Backup button, then compared the row's size hint as
+part of its title. The corrected observer continued on the same page and open
+preview. No row selection, portable export, recipient handoff or transaction
+was repeated or added. The owned package, final hash-matched device XML and
+AVD were retired. Evidence is under `artifacts/local-backup-minimum-android`.
