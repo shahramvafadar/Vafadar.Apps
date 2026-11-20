@@ -13,7 +13,7 @@ $projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
 $metadata = & $projectDotNet msbuild $Project -nologo -v:q "-p:Configuration=$Configuration" `
     -p:TargetFramework=net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
     -p:EmbedAssembliesIntoApk=true -t:_ResolveMonoAndroidSdks `
-    '-getProperty:ApplicationId,ApplicationVersion,ApplicationDisplayVersion,AndroidSdkBuildToolsPath,AndroidBundleToolJarPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore,_ZananceAndroidPrivacyVariant' @BuildProperties
+    '-getProperty:ApplicationId,ApplicationVersion,ApplicationDisplayVersion,AndroidSdkBuildToolsPath,AndroidBundleToolJarPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore,_ZananceAndroidPrivacyVariant,RuntimeIdentifier,RuntimeIdentifiers' @BuildProperties
 if ($LASTEXITCODE -ne 0) { throw 'Could not resolve the Android package identity and verification tools.' }
 $properties = ($metadata -join "`n" | ConvertFrom-Json).Properties
 if (!$properties.ApplicationId -or !$properties.AndroidSdkBuildToolsPath -or
@@ -80,6 +80,10 @@ if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafada
     }
     Import-Module (Join-Path $PSScriptRoot '../modules/AndroidPrivacy.psm1')
     Assert-ZananceAndroidReleaseBadging -Badging $badging -Variant $variant
+    $runtimeIdentifiers = if ($properties.RuntimeIdentifier) { $properties.RuntimeIdentifier } else { $properties.RuntimeIdentifiers }
+    $payloadVerifier = Join-Path $PSScriptRoot '../maui/verify-android-bundle-managed-payload.py'
+    $payloadResult = & $python $payloadVerifier --apk "--runtime-identifiers=$runtimeIdentifiers" $apk.FullName 2>&1
+    if ($LASTEXITCODE -ne 0) { throw "The Zanance Release APK failed native ABI verification. $payloadResult" }
     $storageVerifier = Join-Path $PSScriptRoot '../maui/verify-android-bundle-sqlcipher.py'
     $storageReceipt = Join-Path $PSScriptRoot '../native/sqlcipher/android.package.contents.json'
     $storageResult = & $python $storageVerifier --apk $apk.FullName $storageReceipt 2>&1

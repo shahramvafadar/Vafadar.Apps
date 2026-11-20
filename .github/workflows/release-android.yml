@@ -150,11 +150,13 @@ jobs:
           java eng/maui/VerifyAndroidBundle.java "${bundles[0]}" "$RUNNER_TEMP/zanance-signing/upload.keystore"
           python eng/maui/verify-android-bundle-elf.py "${bundles[0]}"
           python eng/maui/verify-android-bundle-sqlcipher.py "${bundles[0]}" eng/native/sqlcipher/android.package.contents.json
-          python eng/maui/verify-android-bundle-managed-payload.py "${bundles[0]}"
-          bundletool=$(dotnet msbuild "$APP_PROJECT" -nologo -v:q \
+          android_metadata=$(dotnet msbuild "$APP_PROJECT" -nologo -v:q \
             -p:Configuration=Release -p:TargetFramework=net10.0-android \
             -p:VafadarMauiTargetFrameworks=net10.0-android \
-            -t:_ResolveMonoAndroidSdks -getProperty:AndroidBundleToolJarPath)
+            -t:_ResolveMonoAndroidSdks -getProperty:AndroidBundleToolJarPath,RuntimeIdentifier,RuntimeIdentifiers)
+          bundletool=$(python -c 'import json, sys; print(json.load(sys.stdin)["Properties"]["AndroidBundleToolJarPath"])' <<< "$android_metadata")
+          runtime_ids=$(python -c 'import json, sys; p = json.load(sys.stdin)["Properties"]; print(p["RuntimeIdentifier"] or p["RuntimeIdentifiers"])' <<< "$android_metadata")
+          python eng/maui/verify-android-bundle-managed-payload.py --runtime-identifiers="$runtime_ids" "${bundles[0]}"
           test -f "$bundletool" || { echo "::error::could not resolve the Android SDK bundletool"; exit 1; }
           java -jar "$bundletool" validate --bundle="${bundles[0]}" >/dev/null
           echo "Verified Android App Bundle structure."
