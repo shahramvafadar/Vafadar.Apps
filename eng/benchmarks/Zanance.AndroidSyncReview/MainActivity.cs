@@ -33,7 +33,8 @@ public sealed class MainActivity : MauiAppCompatActivity
 #if AI_NETWORK_REVIEW
         var run = Intent?.GetStringExtra("analysis_run");
         if (savedInstanceState is null && run is not null && System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$"))
-            _ = RunAnalysisNetworkAsync(run, Intent?.GetIntExtra("analysis_port", 0) ?? 0, Intent?.GetStringExtra("analysis_certificate"));
+            _ = RunAnalysisNetworkAsync(run, Intent?.GetIntExtra("analysis_port", 0) ?? 0, Intent?.GetStringExtra("analysis_certificate"),
+                Intent?.GetBooleanExtra("analysis_consent", false) == true);
 #elif SYNC_NETWORK_REVIEW
         var run = Intent?.GetStringExtra("network_run");
         if (savedInstanceState is null && run is not null && System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$"))
@@ -47,11 +48,11 @@ public sealed class MainActivity : MauiAppCompatActivity
     }
 
 #if AI_NETWORK_REVIEW
-    private static async Task RunAnalysisNetworkAsync(string run, int port, string? certificate)
+    private static async Task RunAnalysisNetworkAsync(string run, int port, string? certificate, bool consent)
     {
         var app = (App)Microsoft.Maui.Controls.Application.Current!;
         await app.WaitForStartupAsync();
-        await AndroidAnalysisNetworkReview.RunAsync(app, IPlatformApplication.Current!.Services, run, port, certificate);
+        await AndroidAnalysisNetworkReview.RunAsync(app, IPlatformApplication.Current!.Services, run, port, certificate, consent);
     }
 #elif SYNC_NETWORK_REVIEW
     private static async Task RunNetworkAsync(string run, bool resume, int port, string? certificate, string? attachment, bool continuation)

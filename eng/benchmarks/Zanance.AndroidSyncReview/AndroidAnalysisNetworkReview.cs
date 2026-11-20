@@ -4,6 +4,9 @@ using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Zanance.App.Features.Analysis;
 using Vafadar.Zanance.App.Features.Sync;
+using Vafadar.Zanance.App.Security;
+using Vafadar.Localization;
+using CommunityToolkit.Mvvm.Input;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Analysis;
 using Vafadar.Zanance.Data;
@@ -18,9 +21,9 @@ internal static class AndroidAnalysisNetworkReview
     private const string Tag = "ZananceAnalysisNetwork";
 
     /// <summary>Runs the one admitted fictional cohort and reports only its current checkpoint.</summary>
-    internal static async Task RunAsync(App app, IServiceProvider services, string run, int port, string? fingerprint)
+    internal static async Task RunAsync(App app, IServiceProvider services, string run, int port, string? fingerprint, bool consent)
     {
-        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(3));
+        using var timeout = new CancellationTokenSource(TimeSpan.FromMinutes(consent ? 5 : 3));
         var ct = timeout.Token;
         var checkpoint = "identity";
         try
@@ -57,6 +60,16 @@ internal static class AndroidAnalysisNetworkReview
                 identity.Id, source.File, new(original.Validate, original.Cancellation));
             Require(await remote.ReadAsync(ct) is null);
 
+            if (consent)
+            {
+                checkpoint = "native-consent";
+                await VerifyConsentAsync();
+                await snapshot.CheckAsync(review, ct);
+                Require((await store.GetEntriesAsync(cancellationToken: ct)).Count == 0);
+                Android.Util.Log.Info(Tag, run + "|consent-complete|1|zero-ledger");
+                return;
+            }
+
             checkpoint = "native-openai";
             var first = await SendAsync("openai", "gpt-6-luna");
             checkpoint = "original-route-switch";
@@ -77,6 +90,33 @@ internal static class AndroidAnalysisNetworkReview
             Require((await snapshot.AccountsAsync(ct)).Accounts.Single() == source.Accounts.Single());
             await File.WriteAllTextAsync(Path.Combine(root, "complete"), "Two isolated original requests settled", ct);
             Android.Util.Log.Info(Tag, run + "|complete|2|zero-ledger");
+            async Task VerifyConsentAsync()
+            {
+                var runtime = new LocalReviewRuntime(peer, tokens, services.GetRequiredService<IAiPrivateStorage>(),
+                    lifetime, services.GetRequiredService<AppLockService>(), services.GetRequiredService<Translator>());
+                var vm = ActivatorUtilities.CreateInstance<AiAnalysisViewModel>(services, runtime);
+                var page = new AiAnalysisPage(vm);
+                var period = AiPeriodHandoff.Capture(source.File, review.Selection.From, review.Selection.To, true, [account.Id])!;
+                page.ApplyQueryAttributes(period.Query(false));
+                app.ShowSyncReview(page);
+                var canceled = await ObserveSendAsync(vm.SendCommand, null);
+                Require(await remote.ReadAsync(ct) is null && vm.CanSend);
+                Android.Util.Log.Info(Tag, run + "|consent-cancelled|no-journal");
+                await ObserveSendAsync(vm.SendCommand, canceled);
+                var result = (await remote.ReadAsync(ct))?.Result;
+                Require(result is { State: AiRequestState.Completed, ChargedUnits: 1 } &&
+                    vm.ResultText == "The selected period has no recorded activity.");
+            }
+
+            async Task<Task> ObserveSendAsync(IAsyncRelayCommand command, Task? previous)
+            {
+                while (command.ExecutionTask is null || ReferenceEquals(command.ExecutionTask, previous))
+                    await Task.Delay(TimeSpan.FromMilliseconds(100), ct);
+                var current = command.ExecutionTask!;
+                await current.WaitAsync(ct);
+                return current;
+            }
+
             async Task<AiRequestResult> SendAsync(string provider, string model)
             {
                 var offer = await remote.OfferAsync(AiPurpose.PeriodExplanation, ct);
@@ -90,6 +130,39 @@ internal static class AndroidAnalysisNetworkReview
         catch (Exception error)
         {
             Android.Util.Log.Error(Tag, run + "|" + checkpoint + "|" + error.GetType().Name);
+        }
+    }
+
+    private sealed class LocalReviewRuntime(LocalSyncPeer peer, IPersonalSyncTokenStore tokens, IAiPrivateStorage storage,
+        PersonalSyncLifetime lifetime, AppLockService appLock, Translator text) : IAiRuntime
+    {
+        public bool NetworkAvailable => true;
+
+        public AiUiAccess Capture(string originalFile)
+        {
+            var access = lifetime.CaptureAnalysis(false);
+            Require(access.Scope == originalFile);
+            return new(access.Validate, access.Cancellation);
+        }
+
+        public Task<bool> ConfirmDisclosureAsync() => appLock.ConfirmAsync(text["Lock_ConfirmExport"]);
+
+        public Task ShareAsync(string exactText) => throw new InvalidOperationException("This review does not share data.");
+
+        public async Task<IAiRemote> OpenAsync(string originalFile, CancellationToken ct)
+        {
+            var access = lifetime.CaptureAnalysis(true);
+            Require(access.Scope == originalFile);
+            var transport = new PersonalSyncTransport(peer, tokens, TimeProvider.System, access.Validate);
+            try
+            {
+                using var bound = CancellationTokenSource.CreateLinkedTokenSource(ct, access.Cancellation);
+                var owner = await transport.BillingIdentityAsync(bound.Token);
+                Require(owner is not null);
+                access.Validate();
+                return new AiConnectedRemote(transport, storage, owner!, originalFile, new(access.Validate, access.Cancellation));
+            }
+            catch { transport.Dispose(); throw; }
         }
     }
 

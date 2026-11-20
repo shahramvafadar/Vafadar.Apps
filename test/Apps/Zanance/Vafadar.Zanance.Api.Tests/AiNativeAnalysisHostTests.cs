@@ -21,7 +21,7 @@ namespace Vafadar.Zanance.Api.Tests;
 [Trait("Qualification", "AiLocal")]
 public sealed class AiNativeAnalysisHostTests
 {
-    /// <summary>Accepts exactly two fictional requests across the original server model switch.</summary>
+    /// <summary>Hosts the original two-request switch or the separate one-request native consent cohort.</summary>
     [Fact]
     public async Task Isolated_analysis_host_settles_two_original_native_requests()
     {
@@ -34,6 +34,8 @@ public sealed class AiNativeAnalysisHostTests
         Assert.Equal(("127.0.0.1", 55482, "zanance_ai_provider_pilot"), (settings.Host, settings.Port, settings.Database));
         var root = Environment.GetEnvironmentVariable("ZANANCE_AI_NATIVE_ROOT")!;
         Assert.Equal("Zanance isolated native analysis", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        var consent = File.Exists(Path.Combine(root, "consent.marker"));
+        var expected = consent ? 1 : 2;
         var run = await File.ReadAllTextAsync(Path.Combine(root, "run.txt"), ct);
         Assert.True(run.Length == 32 && run.All(char.IsAsciiHexDigitLower));
         using (File.Open(Path.Combine(root, "native-host-started"), FileMode.CreateNew)) { }
@@ -72,7 +74,7 @@ public sealed class AiNativeAnalysisHostTests
             Assert.True((await users.CreateAsync(user, "Fictitious!" + run + "aA9")).Succeeded);
             owner = user.Id;
         }
-        await store.GrantAsync(owner, "native-analysis-" + run, false, 2, ct);
+        await store.GrantAsync(owner, "native-analysis-" + run, false, expected, ct);
         await SelectAsync("gpt-6-luna");
         await app.StartAsync(ct);
         var address = app.Services.GetRequiredService<IServer>().Features.Get<IServerAddressesFeature>()!.Addresses.Single();
@@ -84,16 +86,20 @@ public sealed class AiNativeAnalysisHostTests
 
         var first = await ObserveAsync(1);
         Assert.Equal("resp_native_analysis", Assert.Single(first).VendorOperationId);
-        await SelectAsync("gemini-3.5-flash-lite");
-        var completed = await ObserveAsync(2);
-        Assert.Contains(completed, row => row.VendorOperationId == "interaction_native_analysis");
+        var completed = first;
+        if (!consent)
+        {
+            await SelectAsync("gemini-3.5-flash-lite");
+            completed = await ObserveAsync(expected);
+            Assert.Contains(completed, row => row.VendorOperationId == "interaction_native_analysis");
+        }
         Assert.All(completed, row => Assert.True(row.ChargedUnits == 1 && row.GiftedReserved == 1));
         await using var verify = await factory.CreateDbContextAsync(ct);
-        Assert.Equal(2, await verify.Set<AiCreditRow>().CountAsync(row => row.UserId == owner && row.Kind == AiCreditEvent.Reserve, ct));
-        Assert.Equal(2, await verify.Set<AiCreditRow>().CountAsync(row => row.UserId == owner && row.Kind == AiCreditEvent.Settle, ct));
+        Assert.Equal(expected, await verify.Set<AiCreditRow>().CountAsync(row => row.UserId == owner && row.Kind == AiCreditEvent.Reserve, ct));
+        Assert.Equal(expected, await verify.Set<AiCreditRow>().CountAsync(row => row.UserId == owner && row.Kind == AiCreditEvent.Settle, ct));
         Assert.Equal(1, replies.OpenAiCreates);
-        Assert.Equal(1, replies.GeminiCreates);
-        await File.WriteAllTextAsync(Path.Combine(root, "host-complete.txt"), "Two original synthetic settlements", ct);
+        Assert.Equal(consent ? 0 : 1, replies.GeminiCreates);
+        await File.WriteAllTextAsync(Path.Combine(root, "host-complete.txt"), expected.ToString(System.Globalization.CultureInfo.InvariantCulture), ct);
 
         async Task SelectAsync(string model)
         {

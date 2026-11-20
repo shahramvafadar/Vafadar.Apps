@@ -21,6 +21,13 @@ Use the original process's `ZananceAnalysisNetwork` terminal log and the host te
 The runner creates one empty fictional EUR account and two analysis results with zero ledger entries.
 A missing terminal record is not permission to launch again or duplicate a request.
 
+For the separate native-consent cohort, add `consent.marker` to the fresh host root before starting
+the same host, and add `--ez analysis_consent true` to the one fresh application launch. This mode
+displays the original Analysis page. Review the fictional period, check the provider and quote the
+request through its native controls. Cancel the first dialog and check the native no-journal record
+and zero server reservations before opening the same quote again. The explicitly approved request
+settles once. The host switches models only in the original two-request mode.
+
 ## Independent household recovery-file adapter variant
 
 `ReviewHouseholdFiles=true` selects the permanent engineering package
