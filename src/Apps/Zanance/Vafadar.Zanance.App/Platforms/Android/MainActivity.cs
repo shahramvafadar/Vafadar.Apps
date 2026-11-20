@@ -15,6 +15,7 @@ namespace Vafadar.Zanance.App;
         | ConfigChanges.LayoutDirection | ConfigChanges.FontScale)]
 public class MainActivity : MauiAppCompatActivity
 {
+    private Android.Views.View? _recentsCover;
     private int _configurationDensityDpi;
     private float _configurationFontScale;
     private TaskCompletionSource<bool>? _notificationSettingsReturn;
@@ -39,7 +40,8 @@ public class MainActivity : MauiAppCompatActivity
         _configurationDensityDpi = Resources?.Configuration?.DensityDpi ?? 0;
         _configurationFontScale = Resources?.Configuration?.FontScale ?? 0;
         if (OperatingSystem.IsAndroidVersionAtLeast(33)) { SetRecentsScreenshotEnabled(false); }
-        Security.ScreenProtection.SetBackground(false);
+        // Android 10+ can resume several activities. Keep screenshot protection until this one is on top.
+        Security.ScreenProtection.SetBackground(OperatingSystem.IsAndroidVersionAtLeast(29));
         UpdateSystemBarIcons();
 
         // A recreated activity or a start from the recent apps delivers the old intent again; only a fresh tap counts.
@@ -51,17 +53,47 @@ public class MainActivity : MauiAppCompatActivity
 
     protected override void OnPause()
     {
-        // Set before Android captures the recent-apps preview, even when foreground screenshots are allowed (D-63).
-        Window?.AddFlags(WindowManagerFlags.Secure);
-        Security.ScreenProtection.SetBackground(true);
+        ApplyForegroundPrivacy(false);
         base.OnPause();
     }
 
     protected override void OnResume()
     {
         base.OnResume();
-        Security.ScreenProtection.SetBackground(false);
+        if (!OperatingSystem.IsAndroidVersionAtLeast(29)) ApplyForegroundPrivacy(true);
         _notificationSettingsReturn?.TrySetResult(true);
+    }
+
+    /// <summary>Protects the app when Android Overview shows a live surface without pausing the activity.</summary>
+    [System.Runtime.Versioning.SupportedOSPlatform("android29.0")]
+    public override void OnTopResumedActivityChanged(bool isTopResumedActivity)
+    {
+        base.OnTopResumedActivityChanged(isTopResumedActivity);
+        ApplyForegroundPrivacy(isTopResumedActivity);
+    }
+
+    private void ApplyForegroundPrivacy(bool foreground)
+    {
+        Security.ScreenProtection.SetBackground(!foreground);
+
+        // Overview can keep drawing the live activity even when saved recents screenshots are disabled.
+        // Cover the original window content as well as protecting screen capture.
+        if (foreground)
+        {
+            if (_recentsCover is not null) _recentsCover.Visibility = ViewStates.Gone;
+            return;
+        }
+
+        if (Window?.DecorView is not ViewGroup decor) return;
+        if (_recentsCover is null)
+        {
+            _recentsCover = new Android.Views.View(this) { ImportantForAccessibility = ImportantForAccessibility.No };
+            _recentsCover.SetBackgroundColor(Android.Graphics.Color.Black);
+            decor.AddView(_recentsCover, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent));
+        }
+
+        _recentsCover.BringToFront();
+        _recentsCover.Visibility = ViewStates.Visible;
     }
 
     /// <summary>Opens this app's Android settings and waits for the same activity to resume.</summary>

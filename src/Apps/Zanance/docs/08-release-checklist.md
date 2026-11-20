@@ -274,7 +274,7 @@ independent work and overall goal remain active. Broader gates stay open.
   data-transfer control remains open. [Framework evidence](quality/empty-policy-and-current-s24-d1235.md) ·
   [Samsung evidence](quality/samsung-oem-transfer-result-d1233.md)
 - [x] No financial data, notes, tokens or passwords in logs (SEC-04) – code review 2026-09-29: only `Debug.WriteLine` (removed from release builds) and the debug logger in Debug builds
-- [x] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview always protected (Android API 33+ recents exclusion and secure background flags, iOS cover; D-63). Foreground screenshots may be allowed on Android. Device check pending
+- [x] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview always protected (Android API 33+ recents exclusion and secure background flags, iOS cover; D-63). Foreground screenshots may be allowed on Android. [Android 16 emulator evidence](07-acceptance-test-plan.md#at-70-android-live-recent-apps-privacy) verifies the live Overview card stays redacted with foreground screenshots allowed. Physical Samsung remains open.
 
 - [ ] D-63 device acceptance: set/change/remove PIN, failed-attempt delay across restart, notification/backup/export gates, recovery success/cancel/unavailable, secure-storage failures; Android screenshot toggle and recents on supported Android versions; iOS keychain/reinstall and privacy cover
 
