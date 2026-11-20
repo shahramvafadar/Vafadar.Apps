@@ -41,3 +41,29 @@ and the retained-reminder capture.
 The test package and its emulator were removed after verification. The
 emulator settings matched the initial snapshot before shutdown, and the
 shared ADB server was preserved.
+
+## Android reminder channel disabled while app notifications are allowed
+
+Android 16 can continue granting app notifications while its General reminder
+channel is blocked. A fresh emulator ran the signed build from `f1888f03` with
+one synthetic plan with an unknown amount, a three-day reminder and automatic
+posting off. An actual reminder created the default channel. To reach that
+event, the guest clock was temporarily advanced into the reminder window, then
+the original clock and automatic-time setting were restored before changing
+the channel.
+
+Disabling only General set its importance to 0 with the app permission still
+granted. The original Plans page returned to the same row with no warning.
+The first candidate showed the warning but Turn on entered the Plans failure
+state. The correction leaves the Android context's cached notification
+manager available to the notification service.
+
+The final signed offline APK
+(`ee104d8e7021e96ebc9c080e723fa7f57523cdbf7886c5dc0c4e67f27241ff9f`)
+was installed on the same UID without resetting the app. Plans showed the
+warning and retained the original row. Turn on and Open settings opened the
+actual General channel. Re-enabling it restored importance 3 while the app
+permission remained granted. Back returned to the same Plans row and process,
+with the warning gone. There was one plan save and no financial posting.
+The guest's original display geometry was restored and the disposable test
+installation and emulator were retired. Neither physical phone was used.

@@ -112,6 +112,13 @@ public class MainActivity : MauiAppCompatActivity
             {
                 using var intent = new Intent(Android.Provider.Settings.ActionAppNotificationSettings);
                 intent.PutExtra(Android.Provider.Settings.ExtraAppPackage, PackageName);
+                var manager = GetSystemService(NotificationService) as NotificationManager;
+                if (manager?.AreNotificationsEnabled() == true && Reminders.LocalNotificationScheduler.IsAndroidChannelBlocked())
+                {
+                    intent.SetAction(Android.Provider.Settings.ActionChannelNotificationSettings);
+                    intent.PutExtra(Android.Provider.Settings.ExtraChannelId,
+                        Plugin.LocalNotification.Core.Models.AndroidOption.AndroidOptions.DefaultChannelId);
+                }
                 StartActivity(intent);
             }
             else

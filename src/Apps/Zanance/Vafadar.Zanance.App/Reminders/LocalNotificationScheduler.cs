@@ -86,7 +86,30 @@ internal sealed class LocalNotificationScheduler : IReminderScheduler
 #endif
     }
 
-    public Task<bool> AreEnabledAsync() => _service.AreNotificationsEnabled();
+    public Task<bool> AreEnabledAsync()
+    {
+#if ANDROID
+        if (IsAndroidChannelBlocked())
+        {
+            return Task.FromResult(false);
+        }
+#endif
+        return _service.AreNotificationsEnabled();
+    }
+
+#if ANDROID
+    /// <summary>Checks the channel used by reminder requests without creating or modifying it.</summary>
+    internal static bool IsAndroidChannelBlocked()
+    {
+        if (!OperatingSystem.IsAndroidVersionAtLeast(26)) return false;
+        // The context caches this manager and the notification SDK also uses its Java peer.
+        var manager = Android.App.Application.Context.GetSystemService(Android.Content.Context.NotificationService)
+            as Android.App.NotificationManager;
+        using var channel = manager?.GetNotificationChannel(AndroidOptions.DefaultChannelId);
+        // Before the first reminder the SDK may not have created the channel yet.
+        return channel?.Importance == Android.App.NotificationImportance.None;
+    }
+#endif
 
     public Task<bool> RequestPermissionAsync() => _service.RequestNotificationPermission(new NotificationPermission
     {
