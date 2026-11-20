@@ -22,6 +22,13 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// <summary>The name of the story in addresses.</summary>
     public const string Story = "story-rostam-sohrab";
 
+    /// <summary>
+    /// Gets what a check of accessibility looks at on a page of Dastan: all of it but the notice the control
+    /// of the graph (ADR 0020) puts over a page while the site has no key of its licence. The notice is no
+    /// part of Dastan and is not there on the site of the owner; it alone is left out.
+    /// </summary>
+    public static Deque.AxeCore.Commons.AxeRunContext PageOfDastan => new() { Exclude = [new Deque.AxeCore.Commons.AxeSelector(".sf-license-validation-banner")] };
+
     // More windows than any one test opens.
     private const int WindowsKept = 4;
 
@@ -99,7 +106,13 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// <param name="readTo">The reading stage the visitor has already chosen, if any (0 is the first).</param>
     /// <param name="dark">Whether the device of the visitor asks for the dark appearance.</param>
     /// <param name="script">Whether the browser of the visitor runs scripts.</param>
-    public async Task<IPage> Visitor(int width = 360, int? readTo = null, bool dark = false, bool script = true, bool offline = false)
+    /// <param name="offline">Whether the visitor turned reading without a connection on.</param>
+    /// <param name="graph">
+    /// Whether the script that draws a graph (ADR 0020) reaches the visitor. A test of the still drawing – which
+    /// is what a page first answers with, and what stays where that script does not arrive – says nothing and
+    /// gets the still drawing for as long as it looks; a test of the drawing that moves asks for it.
+    /// </param>
+    public async Task<IPage> Visitor(int width = 360, int? readTo = null, bool dark = false, bool script = true, bool offline = false, bool graph = false)
     {
         Assert.SkipWhen(_browser is null, "No browser: start the container of src/Apps/Dastan/compose.yaml and set DASTAN_BROWSER=ws://127.0.0.1:53333/.");
 
@@ -120,6 +133,11 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
             JavaScriptEnabled = script,
         });
         _windows.Enqueue(context);
+        if (!graph)
+        {
+            await context.RouteAsync(new System.Text.RegularExpressions.Regex(@"/graph(\.[a-z0-9]+)?\.js$"), route => route.AbortAsync());
+        }
+
         if (offline)
         {
             // Somebody who turned reading without a connection on (row 18.8.2): only then the site has a worker.

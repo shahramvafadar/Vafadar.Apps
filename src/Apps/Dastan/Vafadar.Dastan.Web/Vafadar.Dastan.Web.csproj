@@ -63,9 +63,15 @@
   </Target>
 
   <Target Name="BuildDastanScripts" DependsOnTargets="RestoreDastanScripts" Condition="'$(BuildDastanScripts)' == 'true'" Inputs="@(DastanScriptSource)" Outputs="$(DastanScriptTools)/built.stamp">
-    <Copy SourceFiles="Scripts/build.mjs" DestinationFolder="$(DastanScriptTools)" />
-    <Exec Command="node node_modules/typescript/bin/tsc --noEmit -p &quot;$(DastanScripts)/tsconfig.json&quot;" WorkingDirectory="$(DastanScriptTools)" />
-    <Exec Command="node build.mjs &quot;$(DastanScripts)/src&quot; &quot;$(DastanScriptTools)/out&quot;" WorkingDirectory="$(DastanScriptTools)" />
+    <!-- The sources are read beside the tools: a package they name is looked for from where the source lies. -->
+    <ItemGroup>
+      <_DastanScriptText Include="Scripts/src/**/*.ts" />
+    </ItemGroup>
+    <RemoveDir Directories="$(DastanScriptTools)/src" />
+    <Copy SourceFiles="@(_DastanScriptText)" DestinationFolder="$(DastanScriptTools)/src/%(RecursiveDir)" />
+    <Copy SourceFiles="Scripts/build.mjs;Scripts/tsconfig.json" DestinationFolder="$(DastanScriptTools)" />
+    <Exec Command="node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json" WorkingDirectory="$(DastanScriptTools)" />
+    <Exec Command="node build.mjs src out" WorkingDirectory="$(DastanScriptTools)" />
     <Touch Files="$(DastanScriptTools)/built.stamp" AlwaysCreate="true" />
   </Target>
 

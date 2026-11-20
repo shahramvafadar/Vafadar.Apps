@@ -122,7 +122,10 @@ if (proxies.Length > 0)
     app.UseForwardedHeaders();
 }
 
-app.UseSecurityHeaders();
+// Only what the site itself serves – and, for pictures alone, what the page made itself: the graph (ADR 0020)
+// draws the picture it saves from a drawing it holds in memory ("blob:"), and the control behind it uses an
+// empty picture written into its script ("data:"). Nothing of another host, for pictures either.
+app.UseSecurityHeaders(headers => headers.ContentSecurityPolicy += "; img-src 'self' blob: data:");
 app.UseFreshPages();
 if (site.Audience != Audience.Public)
 {
@@ -179,6 +182,7 @@ app.MapVisitorAccounts();
 app.MapPeople();
 app.MapAffiliations();
 app.MapProfileData();
+app.MapGraphData();
 app.MapTrees();
 app.MapPhotos();
 app.MapRazorComponents<App>();

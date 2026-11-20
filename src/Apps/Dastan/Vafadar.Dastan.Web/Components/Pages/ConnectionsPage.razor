@@ -30,7 +30,9 @@
         var below = Steps(string.Format(CultureInfo.CurrentCulture, T["Flow_Below"], name), ChartWing.Below);
         var beside = Steps(T["Flow_Beside"], ChartWing.BesideStart, ChartWing.BesideEnd);
         <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Connections_Graph"], name)" Top="above" Bottom="below" Left="beside" Right="beside">
-            <ConnectionsGraph Chart="_chart" Open="_open" Address="Address" />
+            <GraphView Source="@($"{Site.Collection}/entity/{_chart.Focus.Id}/connections.json")" Label="@string.Format(CultureInfo.CurrentCulture, T["Connections_Graph"], name)">
+                <ConnectionsGraph Chart="_chart" Open="_open" Address="Address" />
+            </GraphView>
         </ChartStage>
 
         @if (view.Edges.Any(edge => edge.Relation.Review == ReviewStatus.Disputed))

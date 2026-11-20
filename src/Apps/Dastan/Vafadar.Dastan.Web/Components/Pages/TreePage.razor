@@ -88,13 +88,15 @@ else if (_tree is not null)
         <section aria-labelledby="drawing-title">
             <h2 id="drawing-title">@T["Tree_Drawing_Title"]</h2>
             <ChartStage Id="drawing" Class="stage-fitted" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
-                <TreeDrawing Tree="_placement">
-                    <Box Context="id">
-                        <span class="graph-entity">
-                            <a class="graph-name" href="@($"account/trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
-                        </span>
-                    </Box>
-                </TreeDrawing>
+                <GraphView Source="@($"account/trees/{_tree.Tree.Id}/graph.json")" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
+                    <TreeDrawing Tree="_placement">
+                        <Box Context="id">
+                            <span class="graph-entity">
+                                <a class="graph-name" href="@($"account/trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
+                            </span>
+                        </Box>
+                    </TreeDrawing>
+                </GraphView>
             </ChartStage>
             <p class="note">@T["Tree_Drawing_Note"]</p>
         </section>

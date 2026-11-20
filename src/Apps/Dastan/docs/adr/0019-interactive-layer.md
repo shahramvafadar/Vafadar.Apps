@@ -70,6 +70,7 @@ takes its place.
   of data is neither. A browser test opens the panel for somebody who reads without a connection and finds
   nothing of the data among what the device keeps.
 * *The content security policy is unchanged:* everything from the site itself, nothing written into a page.
+  (Step 19.8 added one rule for pictures alone – `img-src 'self' blob: data:` – for the graph; see ADR 0020.)
 
 **Decided while building:**
 

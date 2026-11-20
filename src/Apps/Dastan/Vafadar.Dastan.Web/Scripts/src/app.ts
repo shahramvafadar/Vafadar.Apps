@@ -11,7 +11,20 @@ window.addEventListener('load', () => {
   void keepOrForget();
   void sayWhatIsKept();
   bringNamesIntoSight();
+  drawGraphs();
 });
+
+// A page with a graph (ADR 0020) names the script that draws it; it is asked for once the page is shown, and
+// by no other page.
+function drawGraphs(): void {
+  const address = document.querySelector<HTMLElement>('dastan-graph[data-script]')?.dataset['script'];
+  if (address) {
+    const script = document.createElement('script');
+    script.src = new URL(address, document.baseURI).href;
+    script.async = true;
+    document.head.append(script);
+  }
+}
 
 // What a page offers beyond itself is offered as soon as the page can be read.
 if (document.readyState === 'loading') {

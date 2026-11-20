@@ -24,13 +24,15 @@
     @if (TreeEndpoints.Placement(_tree) is { } placement)
     {
         <ChartStage Id="drawing" Class="stage-fitted" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
-            <TreeDrawing Tree="placement">
-                <Box Context="id">
-                    <span class="graph-entity">
-                        <a class="graph-name" href="@($"trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
-                    </span>
-                </Box>
-            </TreeDrawing>
+            <GraphView Source="@($"trees/{_tree.Tree.Id}/graph.json")" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
+                <TreeDrawing Tree="placement">
+                    <Box Context="id">
+                        <span class="graph-entity">
+                            <a class="graph-name" href="@($"trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
+                        </span>
+                    </Box>
+                </TreeDrawing>
+            </GraphView>
         </ChartStage>
     }
 

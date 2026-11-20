@@ -59,7 +59,9 @@
         if (!_state.Across)
         {
             <ChartStage Id="chart" Label="@label" Top="older" Bottom="younger" Left="beside" Right="beside">
-                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" />
+                <GraphView Source="@($"{Site.Collection}/entity/{_entity.Id}/family.json")" Label="@label">
+                    <FamilyTreeChart Tree="_tree" Focus="_entity.Id" />
+                </GraphView>
             </ChartStage>
         }
         else if (Visitor.Language.IsRightToLeft)

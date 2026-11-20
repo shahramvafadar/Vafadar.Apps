@@ -67,3 +67,73 @@ looked ourselves, in Chromium, Firefox and WebKit, at 360 and 1280 pixels (step 
 The licence key of Syncfusion is in the script and readable by everybody; it comes from the secrets of the
 build. The still drawing of the server stays as the first answer of a page. The trial stays in the
 repository as the record of what was seen and as the place where a new version of the control is tried.
+
+## What is built (step 19.8, 2026-11-20)
+
+* **The contract and its addresses.** `GraphData` – nodes with the words of their card and the address of
+  their profile, edges with identity, role, words, direction, time, source and whether they are disputed –
+  is answered for the family and for the connections of an entity, for a tree of an account and for a public
+  tree (`…/family.json`, `…/connections.json`, `…/graph.json`), by the code of the page, asked with what the
+  page is asked with, kept by nothing. A test holds every answer against the page of the same visitor.
+* **Where a card stands is decided by Dastan.** The answer of a family says the row and the place of every
+  node, from the layout that draws the still picture (`FamilyTreeLayout`, `TreeShapeLayout`), where the
+  rules of a family live. The control lays nothing out: it draws, moves, zooms and writes pictures. So the
+  layout modules of the control are not in the script, and a family looks the same still and moving.
+  Connections have no rows; they stand on one round around the node the page is about, which grows
+  with their number (with two rounds a line went through a card of the inner one).
+* **The control is one file of TypeScript** (`Scripts/src/graph.ts`), made into `graph.js`, which only a
+  page with a graph asks for, after it is shown. A page holds `<dastan-graph>` around its still drawing
+  (`GraphView.razor`); the script takes the place of the still drawing once it has drawn, and gives it back
+  when the reader asks, when the address does not answer and when anything fails.
+* **The five workarounds** are in that file, each named where it is done: the diagram is kept left to right
+  and each Persian line is wrapped in marks of its direction; lines are broken at spaces by the control and
+  handed back as lines; each end of a relation has a point of its own on the side of the card that looks at
+  the other card, and a label stands at its own part of its line; the saved SVG carries the font and the
+  pictures, and the PNG is drawn from it at twice the size; every padding names four sides.
+* **The keyboard**: the drawing is one stop of Tab; the arrow keys go to the nearest card in their direction;
+  Enter opens the profile in the panel of the page (ADR 0017) and Escape returns to the drawing; + − 0 make
+  it larger, smaller and whole; Tab and Shift+Tab leave. The control gets no key. What is chosen is said in a
+  live region, with its relations; the keys are written below the drawing; the list of the page stays.
+* **Opening and closing** a generation or a side is what it was: the steps at the sides of the stage, which
+  ask for the page again. The drawing is then drawn again from the new answer.
+
+**Found while building, in a real browser:**
+
+* **The control counts its use and sends the count to a host of its maker** (Application Insights) when a
+  page runs at an address of development. It is switched off in the script before the control is made
+  (`Telemetry.disable()`), and the rules of the site refuse a connection to any other host in any case. A
+  browser test listens to everything a page with a graph asks for and fails on an address of another host.
+* **The content security policy has one more rule, for pictures alone:** `img-src 'self' blob: data:`. The
+  control uses an empty picture written into its script, and a PNG is drawn from a picture held in memory.
+  Scripts, styles, fonts and connections stay with the site alone; the control needs nothing else – it sets
+  its styles through the object model, which the policy allows.
+* **Without a key of its licence the control puts a notice over the page.** The key is given to the site as
+  `Dastan__Syncfusion__Key` (operations) and is readable in the page, as said above; the owner enters it.
+  The tests run without a key and leave the notice – and nothing else – out of the check of accessibility.
+* **The control makes a drawing smaller to fit, never larger,** so "the whole drawing" first shows it at its
+  own size; and the words of a relation are kept on one line, because the control breaks a label at every
+  space and the marks of the direction must stand around a whole line.
+* **In Firefox, where letters are a little larger,** the labels of two relations between the same two cards
+  touched; the points of the two lines were moved further apart.
+
+**Measured** (made-up families handed to the drawing in the place of the answer; the browsers of the test
+container on the machine of development, a window of 1280 pixels; budgets written into the test before the
+first run: drawn within 2 s, 6 s and 30 s, a step with the keyboard within 0.3 s, 0.5 s and 1 s):
+
+| People | Answer | Chromium: drawn, a step | Firefox | WebKit | Texts in the page |
+|---|---|---|---|---|---|
+| 100 | 25 kB | 0.10 s, 20 ms | 0.13 s, 21 ms | 0.33 s, 172 ms | 300 (all) |
+| 1,000 | 277 kB | 0.25 s, 12 ms | 0.54 s, 29 ms | 0.50 s, 246 ms | 75 (what is in sight) |
+| 10,000 | 2.9 MB | 2.7 s, 40 ms | 4.1 s, 19 ms | 3.4 s, 131 ms | 75 |
+
+Above 150 cards only what is in sight is in the page. All are far inside the budgets, so the control stays.
+What the numbers do not say: the answer of the site for so many nodes (the collection has none so large, and
+a page asks for a neighbourhood, not for everything); a phone; a slow connection, on which the 2.5 MB of the
+script (625 kB compressed) are felt on the first page with a graph and kept by the browser afterwards.
+
+**Not looked at:** a real phone and touch with two fingers; a screen reader; a saved file opened in another
+program; the page with a key of the licence; a family and a tree of an account by eye (their tests pass in
+three browsers); the image of the container built with the second script. Looked at by eye: the connections
+of a name, in Persian, dark, 1100 pixels wide, in Chromium – cards, a card with a picture, labels and tools.
+**Not built:** what is chosen is not yet carried on to the timeline and the gallery (R-EXP-05) – that comes
+with the timeline, step 19.9.
