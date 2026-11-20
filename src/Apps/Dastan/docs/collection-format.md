@@ -163,6 +163,27 @@ before the first named stage nothing is carried.
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage |
 | `dated` | Optional: what is stated about the entity with a time of the calendar – see below |
+| `picture` | Optional: the media item that is the picture of the profile – an image of the collection that says in `depictedEntityIds` that it depicts this entity. It is shown to who may see that item; everybody else sees a drawing of the kind |
+| `facts` | Optional: the facts of the profile – see "The facts of a profile" |
+
+### The facts of a profile
+
+Every type of entity has facts its profile needs and facts that may be added ([ADR 0017](adr/0017-node-profile.md));
+the table is in [the domain model](product/03-domain-model-and-ontology.md), DOM-018. An essential fact that a
+record does not state is shown to the reader as "not known" – so state what the sources say, and state that a
+time is not known where they say that.
+
+| Field | Meaning |
+|---|---|
+| `fact` | The key of the fact – one the type of the entity has. A fact is stated once, except the few that may be stated several times (`founder`, `creator`, `participant`) |
+| `text` | For a fact that is said in words: the words, in the language of the collection |
+| `entityId` | For a fact that names a place or another entity: its identifier. A place is an entity whose type is a place |
+| `time` | For a fact that says when: the time as in `dated`. `{ "kind": "unknown" }` states that nobody knows; `{ "kind": "inapplicable" }` that there is none – somebody who lives has no time of death |
+| `sourceIds` | Optional: the sources the fact rests on |
+| `spoilerLevel` | Optional: the stage from which the fact is told – not before its entity. Until then it is shown like one nobody stated |
+
+A fact says exactly one of `text`, `entityId` and `time` – the one its kind of fact takes. In a story, write
+`role` in words that give nothing of the story away, or give the fact the stage from which it may be told.
 
 ### `dated` – what has a date
 
@@ -496,6 +517,7 @@ stops in an order a reader can follow: the later the stage, the later the stop.
 | `media` | Identifier → `label`, `caption`, `altText` |
 | `threads` | Identifier → `label`, `summary`, and `notes`: the identifier of what a stop names → the note of that stop |
 | `dated` | Key of a dated statement → `label`, `summary` |
+| `entities` … `facts` | Inside the texts of an entity: the key of a fact → its words (`"facts": { "role": "…" }`) |
 
 Every part is optional. A text that is left out is shown in the language of the collection and marked as such. A
 translation that names something the collection does not have is a problem.

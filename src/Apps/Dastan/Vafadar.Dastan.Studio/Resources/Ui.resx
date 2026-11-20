@@ -807,4 +807,22 @@
   <data name="Done_comparisonwithdrawn" xml:space="preserve">
     <value>The site does not show the comparison from its next start on.</value>
   </data>
+  <data name="Fields_FactsHint" xml:space="preserve">
+    <value>The facts the kind of this entity has. A row that says nothing is a fact the record does not state; an essential fact that is not stated is shown to readers as not known.</value>
+  </data>
+  <data name="Fields_FactMissing" xml:space="preserve">
+    <value>essential, not stated</value>
+  </data>
+  <data name="Publish_Notes" xml:space="preserve">
+    <value>{0} entities have a profile that lacks something</value>
+  </data>
+  <data name="Publish_Notes_Lead" xml:space="preserve">
+    <value>These are notes, not faults: a revision is made with them. A reader sees a drawing of the kind in place of a missing picture, and “not known” for an essential fact that is not stated.</value>
+  </data>
+  <data name="Publish_Notes_NoPicture" xml:space="preserve">
+    <value>no picture</value>
+  </data>
+  <data name="Publish_Notes_Missing" xml:space="preserve">
+    <value>essential facts not stated: {0}</value>
+  </data>
 </root>

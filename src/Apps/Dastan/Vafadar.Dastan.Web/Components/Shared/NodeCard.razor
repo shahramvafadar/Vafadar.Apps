@@ -1,0 +1,45 @@
+@* The card of a node (step 19.5, ADR 0017): its picture or the drawing of its kind, its name as the link to
+   its page, its kind, and up to three stated facts – what a list, a search result and a graph show of a node.
+   It comes from the same projection as the page, so it never shows what the page of this visitor would not. *@
+@inject DastanSite Site
+
+<div class="node-card">
+    <ProfilePicture Profile="Profile" Small="true" />
+    <div class="node-card-words">
+        @if (Level == 2)
+        {
+            <h2><a href="@_address"><Loc Text="Profile.Entity.Label" /></a></h2>
+        }
+        else
+        {
+            <h3><a href="@_address"><Loc Text="Profile.Entity.Label" /></a></h3>
+        }
+        <p class="meta"><TypeName Type="Profile.Entity.Type" /></p>
+        @if (Summary)
+        {
+            <p><Loc Text="Profile.Entity.Summary" /></p>
+        }
+        @if (!Profile.Card.IsEmpty)
+        {
+            <ProfileFactList Lines="Profile.Card" Compact="true" />
+        }
+    </div>
+</div>
+
+@code {
+    private string _address = string.Empty;
+
+    /// <summary>Gets or sets the profile, as the visitor of this request may see it.</summary>
+    [Parameter, EditorRequired]
+    public NodeProfile Profile { get; set; } = null!;
+
+    /// <summary>Gets or sets a value indicating whether the summary of the node is shown too – in a list that has the room.</summary>
+    [Parameter]
+    public bool Summary { get; set; }
+
+    /// <summary>Gets or sets the level of the heading the name is: 3 in a list under a heading of a section, 2 directly under the title of a page.</summary>
+    [Parameter]
+    public int Level { get; set; } = 3;
+
+    protected override void OnParametersSet() => _address = $"{Site.Collection}/entity/{Profile.Entity.Id}";
+}

@@ -18,7 +18,11 @@ public static class TimeForm
     private const string Window = "between";
     private const string Lasting = "period";
 
-    private static readonly FieldOption[] Kinds = [new(None, "–"), new(Once, Once), new(Window, Window), new(Lasting, Lasting)];
+    // A time that is stated as not known, and one that does not apply – somebody who lives has no time of death.
+    private const string NotKnown = "unknown";
+    private const string NoSuch = "inapplicable";
+
+    private static readonly FieldOption[] Kinds = [new(None, "–"), new(Once, Once), new(Window, Window), new(Lasting, Lasting), new(NotKnown, "not known"), new(NoSuch, "does not apply")];
     private static readonly FieldOption[] Eras = [new("commonEra", "CE"), new("beforeCommonEra", "BCE")];
     private static readonly FieldOption[] Starts = [.. Enum.GetNames<PeriodStartState>().Select(Option)];
     private static readonly FieldOption[] Ends = [.. Enum.GetNames<PeriodEndState>().Select(Option)];
@@ -38,6 +42,8 @@ public static class TimeForm
                 Occurrence { At: CalendarPosition at } once when Plain(at) => once,
                 OccurrenceWindow { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } window when Plain(earliest) && Plain(latest) => window,
                 Period { LastConfirmed: null } period when Plain(period.Start.Earliest) && Plain(period.Start.Latest) && Plain(period.End.Earliest) && Plain(period.End.Latest) => period,
+                UnknownTime { SourceText: null } unknown => unknown,
+                InapplicableTime { SourceText: null } none => none,
                 _ => null,
             };
         }
@@ -62,6 +68,8 @@ public static class TimeForm
                 period.Start.State == PeriodStartState.Between ? period.Start.Latest : null,
                 period.End.Earliest,
                 period.End.State == PeriodEndState.Between ? period.End.Latest : null),
+            UnknownTime => (NotKnown, null, null, null, null),
+            InapplicableTime => (NoSuch, null, null, null, null),
             _ => (None, null, null, null, null),
         };
         var lasting = time as Period;
@@ -113,6 +121,8 @@ public static class TimeForm
                         _ => PeriodEnd.At(Required(form, path, "until", stood, problems)!),
                     },
                     form[$"{path}.continuous"].Contains("true") ? PeriodContinuity.Continuous : PeriodContinuity.NotAsserted),
+                NotKnown => new UnknownTime(),
+                NoSuch => new InapplicableTime(),
                 _ => null,
             };
         }

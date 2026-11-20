@@ -90,6 +90,27 @@
     <section aria-labelledby="publish">
         <h2 id="publish">@T["Publish_Title"]</h2>
         <p class="note">@string.Format(CultureInfo.CurrentCulture, T["Publish_Lead"], Editor.Number(next))</p>
+        @if (_notes.Length > 0)
+        {
+            @* What the profiles lack (ADR 0017): said before a revision is made, and stopping none. *@
+            <details id="profile-notes">
+                <summary>@string.Format(CultureInfo.CurrentCulture, T["Publish_Notes"], Editor.Number(_notes.Length))</summary>
+                <p class="note">@T["Publish_Notes_Lead"]</p>
+                <ul role="list">
+                    @foreach (var note in _notes)
+                    {
+                        <li>
+                            <a href="@($"{Collection}/record/entities/{note.Entity}#profile-facts")"><bdi>@note.Label</bdi></a>
+                            <span class="meta">
+                                – @if (note.NoPicture) { @T["Publish_Notes_NoPicture"] }
+                                @if (note.NoPicture && !note.Missing.IsEmpty) { <text>; </text> }
+                                @if (!note.Missing.IsEmpty) { @string.Format(CultureInfo.CurrentCulture, T["Publish_Notes_Missing"], string.Join(", ", note.Missing)) }
+                            </span>
+                        </li>
+                    }
+                </ul>
+            </details>
+        }
         <ActOutcome Problems="_problems" />
         <Allowed Role="EditorRoles.Publisher">
 <form method="post" @formname="publish" @onsubmit="Publish" class="act" action="@($"{Collection}/revisions")">
@@ -114,6 +135,7 @@
     private List<RevisionInfo> _revisions = [];
     private List<string>? _problems;
     private List<string>? _releaseProblems;
+    private System.Collections.Immutable.ImmutableArray<ProfileNote> _notes = [];
     private int? _released;
 
     [CascadingParameter]
@@ -151,6 +173,7 @@
         // The newest revision first.
         _revisions = [.. Store.Revisions(Collection).Reverse()];
         _released = Store.Released(Collection);
+        _notes = Store.ProfileNotes(Collection);
     }
 
     // A day inside the text of an option, which can hold no element: kept in its own order, left to right,

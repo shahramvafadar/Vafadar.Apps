@@ -76,6 +76,18 @@ public sealed class Entity
     public ImmutableArray<ExternalIdentifier> Identifiers { get; init; } = [];
 
     /// <summary>
+    /// Gets the facts of the profile of the entity (step 19.5, ADR 0017): what its kind needs and what was
+    /// added, each of a kind the table of <see cref="ProfileFacts"/> has for its type.
+    /// </summary>
+    public ImmutableArray<ProfileFact> Facts { get; init; } = [];
+
+    /// <summary>
+    /// Gets the media item that is the picture of the profile, or nothing. It is shown to exactly those who
+    /// may see that item; everybody else sees a drawing of the kind.
+    /// </summary>
+    public MediaId? Picture { get; init; }
+
+    /// <summary>
     /// Gets where on the earth a real place is, when the editors state it. A place of a story has none: it is
     /// not a place on a map.
     /// </summary>

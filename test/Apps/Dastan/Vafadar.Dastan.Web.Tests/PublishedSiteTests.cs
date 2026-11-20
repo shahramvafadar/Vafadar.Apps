@@ -79,6 +79,11 @@ public sealed class PublishedSite : DemoSite
 
         var diagram = sample["media"]!.AsArray().Single(item => (string?)item!["id"] == PublicDiagram)!;
         diagram["publicRenderEligibility"] = new JsonObject { ["allowed"] = true };
+
+        // Two pictures of profiles (ADR 0017), as test data: the diagram, which the public may see from the
+        // third stage on, and an image of a museum that is not cleared for the public at all.
+        sample["entities"]!.AsArray().Single(entity => (string?)entity!["id"] == "character-rostam")!["picture"] = PublicDiagram;
+        sample["entities"]!.AsArray().Single(entity => (string?)entity!["id"] == "character-rakhsh")!["picture"] = "media-met-452419";
         File.WriteAllText(path, sample.ToJsonString());
     }
 

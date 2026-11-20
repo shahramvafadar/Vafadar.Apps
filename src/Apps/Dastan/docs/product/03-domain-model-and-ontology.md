@@ -177,3 +177,95 @@ The shared core supplies identity, associations, statements, time, sources, medi
 **Proposed implementation boundary:** The companion JSON files are editorial and review inputs. They are not the production entity schema or an authorization API. The first executable slice should map the selected record types into a small typed read model, retain source IDs and context, and expose only the records eligible for that response. It does not need a user-editable ontology engine, a graph database, or every future domain module to demonstrate the common core.
 
 The Shahnameh input inherits world and edition context for its narrative claims; artwork creation metadata retains its separate real-world meaning. The synthetic company/team/family inputs remain clearly marked review fixtures. Publication approval, local demonstration eligibility, reader progress and future private access are independent decisions. Successful fixture validation must never be described as production authorization or public editorial approval.
+
+## DOM-018 — The profile of a node and the facts of each kind
+
+Every node – public or private – has a profile ([ADR 0017](../adr/0017-node-profile.md)): its stable identity,
+its kind, its names, a summary, a picture, and **the facts its kind needs**. The table says for each kind of
+the vocabulary which facts are essential and which may be added. An essential fact that is not stated is
+shown as unknown; it is not left out and not made up. A fact that is stated says exactly one thing – a time
+(an expression of time with its uncertainty, never a bare year), a place, another node, or words – and
+carries its sources. A fact may be told from a later reading stage than its node; until then it is shown
+like one nobody stated, so that a profile tells nothing of what lies ahead.
+
+The same table is in the code (`ProfileFacts`); a test holds the two together.
+
+<!-- facts-of-kinds -->
+| Kind | Essential | May be added |
+|---|---|---|
+| `work` | `creator`, `created` | `language`, `partOf` |
+| `storyArc` | `partOf` | `created` |
+| `character` | `role` | `origin` |
+| `animalCharacter` | `role` | `companionOf` |
+| `narrativePlace` | `partOf` | – |
+| `narrativeRegion` | `partOf` | – |
+| `narrativeObject` | `heldBy` | `creator` |
+| `person` | `born`, `died`, `knownFor` | `birthPlace`, `deathPlace` |
+| `organisation` | `founded`, `field` | `dissolved`, `seat`, `founder` |
+| `place` | `partOf` | `founded`, `dissolved` |
+| `region` | `partOf` | `founded`, `dissolved` |
+| `company` | `founded`, `field`, `seat` | `dissolved`, `founder` |
+| `sportsClub` | `founded`, `home` | `colours`, `dissolved` |
+| `sportsTeam` | `founded`, `home` | `colours`, `partOf`, `dissolved` |
+| `competition` | `founded`, `field` | `organiser`, `where` |
+| `competitionSeason` | `partOf`, `happened` | `winner`, `where` |
+| `brand` | `founded`, `owner` | `dissolved` |
+| `product` | `created`, `creator` | `dissolved`, `partOf` |
+| `university` | `founded`, `seat` | `dissolved`, `founder`, `field` |
+| `government` | `founded`, `seat` | `dissolved` |
+| `dynasty` | `founded`, `seat` | `dissolved`, `founder` |
+| `family` | `founded`, `seat` | `founder` |
+| `community` | `home` | `language` |
+| `country` | `seat` | `founded`, `dissolved`, `partOf` |
+| `event` | `happened`, `where` | `participant` |
+| `period` | `began`, `ended` | `where` |
+| `office` | `partOf` | `founded`, `dissolved` |
+| `honour` | `organiser` | `founded`, `field` |
+| `object` | `created`, `keptAt` | `creator`, `owner` |
+| `naturalSubject` | `field` | `where` |
+| `concept` | `field` | `created`, `creator` |
+<!-- /facts-of-kinds -->
+
+What each fact says:
+
+<!-- kinds-of-fact -->
+| Fact | Says | Meaning |
+|---|---|---|
+| `began` | a time | When it began |
+| `birthPlace` | a place | Where they were born |
+| `born` | a time | When they were born |
+| `colours` | words | Its colours |
+| `companionOf` | another node | Whose companion it is |
+| `created` | a time | When it was made, written or first described |
+| `creator` | another node, several | Who made it |
+| `deathPlace` | a place | Where they died |
+| `died` | a time | When they died; for somebody who lives, a time that does not apply |
+| `dissolved` | a time | When it was closed, dissolved or ended; for what still exists, a time that does not apply |
+| `ended` | a time | When it ended |
+| `field` | words | Its field: what it does or is about |
+| `founded` | a time | When it was founded, first held or first given |
+| `founder` | another node, several | Who founded it |
+| `happened` | a time | When it happened or was held |
+| `heldBy` | another node | Who holds it in the story |
+| `home` | a place | Where it is at home: the ground of a club, the land of a people |
+| `keptAt` | a place | Where it is kept |
+| `knownFor` | words | What they were or are: a poet, a ruler, a physician |
+| `language` | words | Its language |
+| `organiser` | another node | Who holds it, or who gives it |
+| `origin` | a place | Where it comes from |
+| `owner` | another node | Who owns it |
+| `partOf` | another node | What it is a part of: the region of a place, the work of a story, the club of a team |
+| `participant` | another node, several | Who took part |
+| `role` | words | What it is in the story, in words that give nothing of the story away |
+| `seat` | a place | Its seat, its capital or its head office |
+| `where` | a place | Where it happened, or where it is found |
+| `winner` | another node | Who won it |
+<!-- /kinds-of-fact -->
+
+**The picture** of a profile is a media item of the collection that depicts the node. It is shown to exactly
+those who may see that item – by reading stage and by the audience it was cleared for; everybody else, and a
+node without a picture, sees a drawing of the kind.
+
+**A page and a card.** The page of a node shows the whole profile. A card – in a graph, a list, a search
+result – shows the identity, the name, the picture and up to three stated facts. Both come from the same
+projection, so a card never shows what the page of the same visitor would not.

@@ -46,6 +46,31 @@
         <SaveControl Kind="SavedKind.Entity" Id="@overview.Entity.Id.Value" />
     </header>
 
+    @if (_profile is { } profile)
+    {
+        @* The profile (step 19.5, ADR 0017): the picture this visitor may see, or the drawing of the kind, and
+           the facts the kind needs – each stated or said to be unknown – with those that were added. *@
+        <section class="profile" aria-labelledby="profile">
+            <h2 id="profile">@T["Profile_Title"]</h2>
+            <div class="profile-body">
+                <figure class="profile-figure">
+                    <ProfilePicture Profile="profile" />
+                    <figcaption class="meta">
+                        @if (profile.Picture is { } picture)
+                        {
+                            <a href="@($"{Site.Collection}/media/{picture.Id}")"><Loc Text="picture.Label" /></a>
+                        }
+                        else
+                        {
+                            @T["Profile_NoPicture"]
+                        }
+                    </figcaption>
+                </figure>
+                <ProfileFactList Lines="[.. profile.Essential, .. profile.More]" />
+            </div>
+        </section>
+    }
+
     @if (!overview.Entity.Dated.IsEmpty)
     {
         @* What is stated about the entity itself: when something lasted or happened, how much of something. *@
@@ -188,6 +213,7 @@
 
 @code {
     private EntityOverview? _entity;
+    private NodeProfile? _profile;
     private bool _hasFamily;
     private bool _hasMedia;
     private System.Collections.Immutable.ImmutableArray<ThreadOnward> _onward = [];
@@ -213,6 +239,7 @@
         }
 
         _here = $"{Site.Collection}/entity/{_entity.Entity.Id}";
+        _profile = Visitor.Projection!.Profile(_entity.Entity.Id);
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
         _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.IsEmpty;
         _onward = Visitor.Projection.Onward(_entity.Entity.Id);

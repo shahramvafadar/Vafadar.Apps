@@ -268,7 +268,10 @@
         "src-ganjoor-s02"
       ],
       "spoilerLevel": 0,
-      "labelFa": "رستم"
+      "labelFa": "رستم",
+      "facts": [
+        { "fact": "role", "text": "A warrior", "sourceIds": ["src-ganjoor-s02"] }
+      ]
     },
     {
       "id": "character-zal",
@@ -313,7 +316,11 @@
         "src-ganjoor-s02"
       ],
       "spoilerLevel": 0,
-      "labelFa": "رخش"
+      "labelFa": "رخش",
+      "facts": [
+        { "fact": "role", "text": "Rostam's horse", "sourceIds": ["src-ganjoor-s02"] },
+        { "fact": "companionOf", "entityId": "character-rostam", "sourceIds": ["src-ganjoor-s02"] }
+      ]
     },
     {
       "id": "character-king-samangan",

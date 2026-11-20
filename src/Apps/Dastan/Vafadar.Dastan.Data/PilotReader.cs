@@ -306,6 +306,9 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     /// <summary>Returns the name a file gives a type of entity.</summary>
     internal static string NameOf(EntityType type) => EntityTypeNames.First(name => name.Value == type).Key;
 
+    /// <summary>Returns the type a record names with a word of the file, or nothing for a word that names none.</summary>
+    internal static EntityType? TypeNamed(string written) => EntityTypeNames.GetValueOrDefault(written);
+
     /// <summary>Returns the fields that take one of a fixed set of values, with the values this reader understands.</summary>
     internal static ImmutableArray<ContentChoices> Choices()
     {
@@ -711,6 +714,21 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             }
         }
 
+        // The profile (ADR 0017): the picture, and the facts of the kind.
+        var picture = record.Identifier("picture", required: false);
+        var facts = ImmutableArray.CreateBuilder<ProfileFact>();
+        foreach (var part in record.Children("facts", required: false))
+        {
+            if (typeKnown && id is not null && ReadFact(part, id, type!, level) is { } fact)
+            {
+                facts.Add(fact);
+            }
+            else
+            {
+                partsComplete = false;
+            }
+        }
+
         record.Finish();
         if (id is null || !typeKnown || label is null || summary is null || level is null || !datedComplete || !partsComplete)
         {
@@ -751,6 +769,75 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Names = names.ToImmutable(),
             Identifiers = identifiers.ToImmutable(),
             Position = position,
+            Facts = facts.ToImmutable(),
+            Picture = picture is null ? null : new MediaId(picture),
+        };
+    }
+
+    /// <summary>
+    /// Reads a fact of the profile of an entity: its kind – one the type of the entity has – and exactly what
+    /// that kind of fact says: <c>time</c>, <c>entityId</c> or <c>text</c>. Without a stage of its own it is
+    /// told with its entity.
+    /// </summary>
+    private ProfileFact? ReadFact(JsonRecord record, string entity, EntityType type, ReadingLevel? ofEntity)
+    {
+        var key = record.Identifier("fact");
+        FactKind? kind = null;
+        if (key is not null)
+        {
+            record.Name = $"{entity}, the fact {key}";
+            kind = ProfileFacts.Of(type).Find(key);
+            if (kind is null)
+            {
+                record.Problem($"a {type.Key} has no such fact; it has {string.Join(", ", ProfileFacts.Of(type).All.Select(of => of.Key))}.");
+            }
+        }
+
+        var sources = Ids(record, "sourceIds", required: false);
+        var level = record.IsStated("spoilerLevel") ? Level(record) : ofEntity;
+        TemporalExpression? time = null;
+        string? node = null;
+        string? words = null;
+        var said = true;
+        switch (kind?.Value)
+        {
+            case FactValue.Time:
+                time = ReadTime(record, "time is not a time of the calendar: a fact of a profile is not dated by a place in the story.");
+                said = time is not null;
+                record.Absent("entityId", "this fact says a time.");
+                record.Absent("text", "this fact says a time.");
+                break;
+            case FactValue.Words:
+                words = record.Text("text");
+                said = words is not null;
+                record.Absent("time", "this fact is said in words.");
+                record.Absent("entityId", "this fact is said in words.");
+                break;
+            case FactValue.Place or FactValue.Node:
+                node = record.Identifier("entityId");
+                said = node is not null;
+                record.Absent("time", "this fact names an entity.");
+                record.Absent("text", "this fact names an entity.");
+                break;
+            default:
+                record.Notes("time", "entityId", "text");
+                break;
+        }
+
+        record.Finish();
+        if (kind is null || level is null || !said)
+        {
+            return null;
+        }
+
+        return new ProfileFact
+        {
+            Kind = kind,
+            Time = time,
+            Node = node is null ? null : new EntityId(node),
+            Words = words is null ? null : Localized(words, $"entities/{entity}/facts/{kind.Key}"),
+            Sources = [.. sources.Select(source => new SourceId(source))],
+            Level = level.Value,
         };
     }
 
@@ -1784,7 +1871,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     /// <summary>The texts a translation may translate. The tool of the editors makes its inputs from this list.</summary>
     internal static readonly ImmutableArray<ContentTexts> Translated =
     [
-        new("entities", ["label", "summary"]),
+        new("entities", ["label", "summary"], Facts: true),
         new("relations", ["label"]),
         new("events", ["label", "summary"], Roles: true),
         new("media", ["label", "caption", "altText"]),
@@ -1818,6 +1905,15 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 foreach (var (entity, role) in texts.NamedTexts("roles", required: false))
                 {
                     translation.Add($"{group}/{id}/roles/{entity}", role);
+                }
+            }
+
+            if (translated.Facts)
+            {
+                // The facts of a profile that are said in words, by the key of the fact (ADR 0017).
+                foreach (var (fact, words) in texts.NamedTexts("facts", required: false))
+                {
+                    translation.Add($"{group}/{id}/facts/{fact}", words);
                 }
             }
 

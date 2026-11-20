@@ -807,4 +807,22 @@
   <data name="Done_comparisonwithdrawn" xml:space="preserve">
     <value>سایت از شروع بعدی‌اش این مقایسه را نشان نمی‌دهد.</value>
   </data>
+  <data name="Fields_FactsHint" xml:space="preserve">
+    <value>واقعیت‌هایی که نوعِ این موجودیت دارد. ردیفی که چیزی نگوید واقعیتی است که رکورد بیان نمی‌کند؛ واقعیتِ لازمی که بیان نشود به خواننده «دانسته نیست» نشان داده می‌شود.</value>
+  </data>
+  <data name="Fields_FactMissing" xml:space="preserve">
+    <value>لازم است و بیان نشده</value>
+  </data>
+  <data name="Publish_Notes" xml:space="preserve">
+    <value>نمایهٔ {0} موجودیت چیزی کم دارد</value>
+  </data>
+  <data name="Publish_Notes_Lead" xml:space="preserve">
+    <value>این‌ها یادداشت‌اند، نه خطا: بازبینه با همین‌ها ساخته می‌شود. خواننده به‌جای تصویرِ نبوده طرحِ نوع را می‌بیند و برای واقعیتِ لازمی که بیان نشده «دانسته نیست».</value>
+  </data>
+  <data name="Publish_Notes_NoPicture" xml:space="preserve">
+    <value>بدون تصویر</value>
+  </data>
+  <data name="Publish_Notes_Missing" xml:space="preserve">
+    <value>واقعیت‌های لازمِ بیان‌نشده: {0}</value>
+  </data>
 </root>

@@ -136,10 +136,9 @@
         <ul class="cards" role="list">
             @foreach (var subject in overview.Subjects)
             {
+                @* Each subject as its card (ADR 0017): picture or drawing of its kind, name, kind, and what is known of it. *@
                 <li class="card">
-                    <h3><a href="@($"{Site.Collection}/entity/{subject.Id}")"><Loc Text="subject.Label" /></a></h3>
-                    <p class="meta"><TypeName Type="subject.Type" /></p>
-                    <p><Loc Text="subject.Summary" /></p>
+                    <NodeCard Profile="Visitor.Projection!.Profile(subject.Id)!" Summary="true" />
                 </li>
             }
         </ul>

@@ -44,6 +44,7 @@ public sealed class Projection
             .. catalogue.Entities
                 .Where(entity => entity.Level.IsWithin(boundary))
                 .Select(entity => entity.Dated.All(dated => dated.Level.IsWithin(boundary)) && entity.Names.All(name => name.Level.IsWithin(boundary))
+                        && entity.Facts.All(fact => fact.Level.IsWithin(boundary))
                     ? entity
                     : new Entity
                     {
@@ -57,6 +58,8 @@ public sealed class Projection
                         Names = [.. entity.Names.Where(name => name.Level.IsWithin(boundary))],
                         Identifiers = entity.Identifiers,
                         Position = entity.Position,
+                        Facts = [.. entity.Facts.Where(fact => fact.Level.IsWithin(boundary))],
+                        Picture = entity.Picture,
                     }),
         ];
         Relations = [.. catalogue.Relations.Where(relation => relation.Level.IsWithin(boundary))];
@@ -99,7 +102,7 @@ public sealed class Projection
 
         // Only the sources that support something visible are named: a source of a hidden record or of an item that
         // may not be shown would tell that the record exists.
-        var cited = Entities.SelectMany(entity => entity.Sources.Concat(entity.Dated.SelectMany(dated => dated.Sources)).Concat(entity.Names.SelectMany(name => name.Sources)))
+        var cited = Entities.SelectMany(entity => entity.Sources.Concat(entity.Dated.SelectMany(dated => dated.Sources)).Concat(entity.Names.SelectMany(name => name.Sources)).Concat(entity.Facts.SelectMany(fact => fact.Sources)))
             .Concat(Relations.SelectMany(relation => relation.Sources))
             .Concat(AllSteps.SelectMany(step => step.Event.Sources))
             .Concat(Media.SelectMany(item => item.Sources))
@@ -261,6 +264,29 @@ public sealed class Projection
         {
             Stories = [.. Stories.Select(story => _entities[story])],
         };
+    }
+
+    /// <summary>
+    /// Returns the profile of a node as this visitor may see it (ADR 0017), or <see langword="null"/> for a
+    /// node the visitor may not see. A fact is told when its stage is reached and – where it names another
+    /// node – that node may be seen; an essential fact that is not told is said to be unknown, whether nobody
+    /// stated it or the story has not come to it, so that a profile tells nothing of what lies ahead. The
+    /// picture is there only when the visitor may see that media item.
+    /// </summary>
+    public NodeProfile? Profile(EntityId id)
+    {
+        if (Find(id) is not { } entity)
+        {
+            return null;
+        }
+
+        var facts = ProfileFacts.Of(entity.Type);
+        var told = entity.Facts.Where(fact => fact.Node is not { } node || _entities.ContainsKey(node)).ToLookup(fact => fact.Kind.Key, StringComparer.Ordinal);
+        return new NodeProfile(
+            entity,
+            entity.Picture is { } picture ? Find(picture) : null,
+            [.. facts.Essential.Select(kind => new ProfileLine(kind, [.. told[kind.Key]]))],
+            [.. facts.Optional.Where(kind => told.Contains(kind.Key)).Select(kind => new ProfileLine(kind, [.. told[kind.Key]]))]);
     }
 
     /// <summary>Returns an entity with what a visitor may follow from it, or <see langword="null"/>.</summary>

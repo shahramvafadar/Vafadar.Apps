@@ -84,6 +84,30 @@
         </fieldset>
         break;
 
+    case FieldKind.Fact:
+        @* The fact a row of the profile states: its key goes with the form unseen, and what it means is said. *@
+        <input type="hidden" name="@Field.Path" value="@Field.Text" />
+        <p class="hint">@Field.Hint</p>
+        break;
+
+    case FieldKind.Facts:
+        @* The facts of the profile (ADR 0017): one row for every fact the kind of the entity has. *@
+        <fieldset class="field part" id="profile-facts">
+            <legend><code>@Field.Name</code></legend>
+            <span class="hint">@T["Fields_FactsHint"]</span>
+            @foreach (var row in Field.Rows)
+            {
+                <fieldset class="field part row @(row[0].Missing ? "missing" : null)">
+                    <legend><code>@row[0].Text</code>@if (row[0].Missing) { <strong class="mark"> – @T["Fields_FactMissing"]</strong> }</legend>
+                    @foreach (var part in row)
+                    {
+                        <FieldInput Field="part" />
+                    }
+                </fieldset>
+            }
+        </fieldset>
+        break;
+
     case FieldKind.Rows:
         <fieldset class="field part">
             <legend><code>@Field.Name</code></legend>

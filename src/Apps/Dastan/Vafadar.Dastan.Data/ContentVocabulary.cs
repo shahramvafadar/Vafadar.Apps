@@ -18,7 +18,7 @@ public sealed record ContentChoices(string Field, string Meaning, ImmutableArray
 /// <param name="Fields">The fields of a record that are translated.</param>
 /// <param name="Roles">Whether the roles of what takes part in a record are translated, by the identifier of what takes part.</param>
 /// <param name="Notes">Whether the notes of the stops of a record are translated, by the identifier of what the stop names.</param>
-public sealed record ContentTexts(string Group, ImmutableArray<string> Fields, bool Roles = false, bool Notes = false);
+public sealed record ContentTexts(string Group, ImmutableArray<string> Fields, bool Roles = false, bool Notes = false, bool Facts = false);
 
 /// <summary>
 /// The fixed sets of values of the content files, taken from the readers themselves – a list for writers that
@@ -29,6 +29,12 @@ public static class ContentVocabulary
 {
     /// <summary>Gets the fixed sets of the file of a collection (<see cref="PilotSample.SchemaVersion"/>) and of its translations.</summary>
     public static ImmutableArray<ContentChoices> Collection { get; } = PilotReader.Choices();
+
+    /// <summary>
+    /// Returns the type of entity a record names in its field <c>type</c>, or nothing for a word that names
+    /// none: the tool of the editors asks for the facts of the profile of that type (ADR 0017).
+    /// </summary>
+    public static Vafadar.Dastan.Core.EntityType? EntityType(string? written) => written is null ? null : PilotReader.TypeNamed(written);
 
     /// <summary>Gets the texts of a collection that its translations may translate; the readers refuse any other.</summary>
     public static ImmutableArray<ContentTexts> Translated => PilotReader.Translated;

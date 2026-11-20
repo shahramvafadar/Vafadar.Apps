@@ -3066,4 +3066,109 @@
   <data name="Account_Said_notices-off" xml:space="preserve">
     <value>سایت دیگر وقتی کسی چیزی از شما بخواهد ایمیل نمی‌فرستد. همهٔ درخواست‌ها را همچنان در صفحه‌های خودتان می‌بینید.</value>
   </data>
+  <data name="Profile_Title" xml:space="preserve">
+    <value>نمایه</value>
+  </data>
+  <data name="Profile_Unknown" xml:space="preserve">
+    <value>دانسته نیست</value>
+  </data>
+  <data name="Profile_Inapplicable" xml:space="preserve">
+    <value>موضوعیت ندارد</value>
+  </data>
+  <data name="Profile_NoPicture" xml:space="preserve">
+    <value>هنوز تصویری نیست؛ این طرحِ نوعِ آن است.</value>
+  </data>
+  <data name="Fact_died_None" xml:space="preserve">
+    <value>در قید حیات</value>
+  </data>
+  <data name="Fact_dissolved_None" xml:space="preserve">
+    <value>هنوز برپاست</value>
+  </data>
+  <data name="Fact_began" xml:space="preserve">
+    <value>آغاز</value>
+  </data>
+  <data name="Fact_birthPlace" xml:space="preserve">
+    <value>زادگاه</value>
+  </data>
+  <data name="Fact_born" xml:space="preserve">
+    <value>تولد</value>
+  </data>
+  <data name="Fact_colours" xml:space="preserve">
+    <value>رنگ‌ها</value>
+  </data>
+  <data name="Fact_companionOf" xml:space="preserve">
+    <value>همراهِ</value>
+  </data>
+  <data name="Fact_created" xml:space="preserve">
+    <value>زمان پدید آمدن</value>
+  </data>
+  <data name="Fact_creator" xml:space="preserve">
+    <value>پدیدآورنده</value>
+  </data>
+  <data name="Fact_deathPlace" xml:space="preserve">
+    <value>محل درگذشت</value>
+  </data>
+  <data name="Fact_died" xml:space="preserve">
+    <value>درگذشت</value>
+  </data>
+  <data name="Fact_dissolved" xml:space="preserve">
+    <value>پایان</value>
+  </data>
+  <data name="Fact_ended" xml:space="preserve">
+    <value>پایان</value>
+  </data>
+  <data name="Fact_field" xml:space="preserve">
+    <value>زمینه</value>
+  </data>
+  <data name="Fact_founded" xml:space="preserve">
+    <value>بنیان‌گذاری</value>
+  </data>
+  <data name="Fact_founder" xml:space="preserve">
+    <value>بنیان‌گذار</value>
+  </data>
+  <data name="Fact_happened" xml:space="preserve">
+    <value>زمان</value>
+  </data>
+  <data name="Fact_heldBy" xml:space="preserve">
+    <value>در دستِ</value>
+  </data>
+  <data name="Fact_home" xml:space="preserve">
+    <value>خانه</value>
+  </data>
+  <data name="Fact_keptAt" xml:space="preserve">
+    <value>محل نگهداری</value>
+  </data>
+  <data name="Fact_knownFor" xml:space="preserve">
+    <value>شناخته به</value>
+  </data>
+  <data name="Fact_language" xml:space="preserve">
+    <value>زبان</value>
+  </data>
+  <data name="Fact_organiser" xml:space="preserve">
+    <value>برگزارکننده</value>
+  </data>
+  <data name="Fact_origin" xml:space="preserve">
+    <value>خاستگاه</value>
+  </data>
+  <data name="Fact_owner" xml:space="preserve">
+    <value>مالک</value>
+  </data>
+  <data name="Fact_partOf" xml:space="preserve">
+    <value>بخشی از</value>
+  </data>
+  <data name="Fact_participant" xml:space="preserve">
+    <value>شرکت‌کنندگان</value>
+  </data>
+  <data name="Fact_role" xml:space="preserve">
+    <value>در داستان</value>
+  </data>
+  <data name="Fact_seat" xml:space="preserve">
+    <value>مقر</value>
+  </data>
+  <data name="Fact_where" xml:space="preserve">
+    <value>مکان</value>
+  </data>
+  <data name="Fact_winner" xml:space="preserve">
+    <value>برنده</value>
+  </data>
 </root>

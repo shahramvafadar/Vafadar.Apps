@@ -65,6 +65,13 @@ public sealed class StoredRelease
 /// <param name="Changes">How many records it adds, changes and removes against the revision before.</param>
 public sealed record PublishResult(ImmutableArray<string> Problems, int Number = 0, ExportedCollection? Revision = null, (int Added, int Changed, int Removed) Changes = default);
 
+/// <summary>What the profile of an entity lacks: a note for the editors, not a fault.</summary>
+/// <param name="Entity">The identifier of the entity.</param>
+/// <param name="Label">Its name.</param>
+/// <param name="NoPicture">Whether it has no picture.</param>
+/// <param name="Missing">The essential facts of its kind it does not state, by their keys.</param>
+public sealed record ProfileNote(string Entity, string Label, bool NoPicture, ImmutableArray<string> Missing);
+
 /// <summary>A published revision of a collection, without its content.</summary>
 /// <param name="Number">The number.</param>
 /// <param name="PublishedOn">The day it was published.</param>
@@ -76,6 +83,41 @@ public sealed record RevisionInfo(int Number, DateOnly PublishedOn, string? Note
 // revision from a file; the store adds that it knows the revision before and keeps the one it makes.
 public sealed partial class EditorialStore
 {
+    /// <summary>
+    /// Returns what the profiles of a collection lack (step 19.5, ADR 0017), as notes for who is about to
+    /// publish: an entity without a picture, and an essential fact of its kind that is not stated. A note is
+    /// no fault – a revision is published with them, and a reader is told that the fact is not known – so the
+    /// editors see what is open without being stopped by it.
+    /// </summary>
+    /// <param name="collectionId">The collection.</param>
+    public ImmutableArray<ProfileNote> ProfileNotes(string collectionId)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(collectionId);
+        _context.ChangeTracker.Clear();
+        if (Working(collectionId) is not var (root, _))
+        {
+            return [];
+        }
+
+        var notes = ImmutableArray.CreateBuilder<ProfileNote>();
+        foreach (var entity in (root["entities"] as JsonArray ?? []).OfType<JsonObject>())
+        {
+            if ((string?)entity["id"] is not { } id || ContentVocabulary.EntityType((string?)entity["type"]) is not { } type)
+            {
+                continue;
+            }
+
+            var stated = (entity["facts"] as JsonArray ?? []).Select(fact => (string?)(fact as JsonObject)?["fact"]).ToHashSet(StringComparer.Ordinal);
+            notes.Add(new ProfileNote(
+                id,
+                (string?)entity["label"] ?? id,
+                entity["picture"] is null,
+                [.. Vafadar.Dastan.Core.ProfileFacts.Of(type).Essential.Where(fact => !stated.Contains(fact.Key)).Select(fact => fact.Key)]));
+        }
+
+        return [.. notes.Where(note => note.NoPicture || !note.Missing.IsEmpty)];
+    }
+
     /// <summary>
     /// Makes the next published revision of a collection out of what the store holds: numbered after the last
     /// one the store published, with the history of the revisions before and what this one changes. A statement

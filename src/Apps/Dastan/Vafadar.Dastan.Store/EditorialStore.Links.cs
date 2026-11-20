@@ -92,6 +92,16 @@ public sealed partial class EditorialStore
         Many("source", record["sourceIds"], "sources");
         switch (group)
         {
+            case "entities":
+                // The profile of a node (ADR 0017): its picture, and the facts that name another node.
+                One("picture", record["picture"], "media");
+                foreach (var fact in record["facts"] as JsonArray ?? [])
+                {
+                    One("fact-entity", (fact as JsonObject)?["entityId"], "entities");
+                    Many("fact-source", (fact as JsonObject)?["sourceIds"], "sources");
+                }
+
+                break;
             case "relations":
                 One("from", record["from"], "entities");
                 One("to", record["to"], "entities");
