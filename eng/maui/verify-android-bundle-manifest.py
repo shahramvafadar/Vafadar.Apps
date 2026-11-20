@@ -104,7 +104,13 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
     }
     if missing := required - unrestricted:
         raise SystemExit("Missing unrestricted bundle permissions: " + ", ".join(sorted(missing)))
-    verify_msal_redirect(applications[0], entra_client_id)
+    application = applications[0]
+    if edition == "offline":
+        activity_names = [activity.get(ANDROID + "name", "") for activity in application.findall("activity")]
+        if any(name.endswith(".BrowserTabActivity") or name == "microsoft.identity.client.AuthenticationActivity"
+               for name in activity_names):
+            raise SystemExit("Offline bundle registers a Microsoft sign-in activity.")
+    verify_msal_redirect(application, entra_client_id)
     print(f"Verified bundle package, version, target API {target_sdk}, release flags, backup policy bindings, "
           "edition permissions and MSAL redirect configuration.")
 

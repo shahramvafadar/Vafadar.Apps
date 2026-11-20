@@ -106,6 +106,15 @@ emulator were retired. Local evidence is under `artifacts/offline-sign-in-compon
 This covers the APK declarations and startup only. Cloud sign-in, the final store bundle and
 runtime traffic acceptance are separate.
 
+The Play workflow now checks the decoded base manifest for the same offline sign-in boundary.
+Both focused offline fixtures passed the former verifier and were refused after the change.
+The cloud fixture continued to pass with a library sign-in activity. The previously signed
+offline AAB `3d63d62a` was refused by the tightened check. A new locally signed Release AAB
+`ab1ff5de` passed the decoded manifest, packaged backup exclusions, 16 KiB native load
+alignment and qualified SQLCipher checks for ARM64 and x86-64. Its local signature verified
+with a self-signed development certificate. No production upload certificate or Play
+submission was used. Local receipts are in `artifacts/offline-sign-in-component-bundle`.
+
 
 ```powershell
 ./eng/tests/AndroidPrivacy.Tests.ps1

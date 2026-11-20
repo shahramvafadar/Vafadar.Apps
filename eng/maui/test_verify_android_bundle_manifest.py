@@ -42,6 +42,25 @@ class BundlePermissionTests(unittest.TestCase):
         result = self.verify("offline")
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_offline_rejects_packaged_microsoft_sign_in(self):
+        applications = self.manifest.find("application")
+        for name in ("crc648316b0a9aa8cfd61.BrowserTabActivity",
+                     "microsoft.identity.client.AuthenticationActivity"):
+            with self.subTest(name=name):
+                activity = ElementTree.SubElement(applications, "activity", {ANDROID + "name": name})
+                result = self.verify("offline")
+                applications.remove(activity)
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertIn(b"Offline bundle registers a Microsoft sign-in activity", result.stderr)
+
+    def test_cloud_keeps_library_sign_in_components(self):
+        self.add_permission("android.permission.INTERNET")
+        ElementTree.SubElement(self.manifest.find("application"), "activity", {
+            ANDROID + "name": "microsoft.identity.client.AuthenticationActivity"
+        })
+        result = self.verify("cloud-backup")
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_sdk_qualified_unexpected_permission_fails(self):
         self.add_permission("android.permission.READ_CONTACTS", tag="uses-permission-sdk-23")
         result = self.verify("offline")
