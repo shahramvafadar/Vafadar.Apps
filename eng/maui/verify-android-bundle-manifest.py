@@ -4,10 +4,12 @@ import sys
 from xml.etree import ElementTree
 
 ANDROID = "{http://schemas.android.com/apk/res/android}"
+# Google Play's mobile submission requirement effective 2026-08-31.
+PLAY_MIN_TARGET_SDK = 36
 
 
 def verify_manifest(manifest, package, display_version, build_number, edition):
-    """Require the requested release identity and a non-debuggable application."""
+    """Require the requested release identity, Play target SDK and edition policy."""
     if manifest.tag != "manifest":
         raise SystemExit("Expected a decoded Android manifest.")
     expected = {
@@ -18,6 +20,15 @@ def verify_manifest(manifest, package, display_version, build_number, edition):
     for attribute, value in expected.items():
         if manifest.get(attribute) != value:
             raise SystemExit(f"Bundle {attribute.removeprefix(ANDROID)} differs from the requested release.")
+
+    sdk_elements = manifest.findall("uses-sdk")
+    if len(sdk_elements) != 1:
+        raise SystemExit("Expected exactly one uses-sdk in the base manifest.")
+    target_sdk = sdk_elements[0].get(ANDROID + "targetSdkVersion", "")
+    if not target_sdk.isascii() or not target_sdk.isdecimal():
+        raise SystemExit("Bundle does not declare a numeric android:targetSdkVersion.")
+    if int(target_sdk) < PLAY_MIN_TARGET_SDK:
+        raise SystemExit(f"Bundle targets API {target_sdk}; Google Play requires API {PLAY_MIN_TARGET_SDK} or higher.")
 
     applications = manifest.findall("application")
     if len(applications) != 1:
@@ -40,7 +51,7 @@ def verify_manifest(manifest, package, display_version, build_number, edition):
         for element in permissions
     ):
         raise SystemExit("Cloud backup release bundle lacks unrestricted INTERNET.")
-    print("Verified bundle package, version, release flags and edition network permissions.")
+    print(f"Verified bundle package, version, target API {target_sdk}, release flags and edition network permissions.")
 
 
 if __name__ == "__main__":

@@ -67,7 +67,10 @@ Each app is versioned independently.
 4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
    configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
    that bundle. The base manifest must contain the permanent package ID, requested display version and build number,
-   with debug and test-only flags off. Without a cloud-backup client ID, the bundle must omit INTERNET. A cloud-backup
+   with debug and test-only flags off. The decoded base manifest must declare a numeric target SDK of at least 36,
+   the [Google Play mobile submission minimum](https://support.google.com/googleplay/android-developer/answer/11926878)
+   effective 31 August 2026. Recheck that policy before each release and update `PLAY_MIN_TARGET_SDK` when it changes.
+   Without a cloud-backup client ID, the bundle must omit INTERNET. A cloud-backup
    bundle must request INTERNET without an SDK cap. Both editions must omit ACCESS_NETWORK_STATE. This workflow
    leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size acceptance need their own checks. Download the
    verified `.aab` artifact, upload it in Play Console, then **delete the artifact** (artifacts of public
@@ -94,8 +97,9 @@ A separate strict ARM64 Release build used the offline configuration and a dispo
 `file:` password inputs, with no real store or provider credential. The signed AAB SHA-256 is
 `3d63d62a911e1311dc00fb8f43e73a1035dc739ee2db6c6b0ffb72cb0b6a916c`.
 The workflow verifiers accepted its upload certificate, release identity, absence of network permissions and
-all 204 ELF libraries. Its four locally generated ARM64/API 36 splits passed signature checks and
-`zipalign -c -P 16 4`. The master APK retained the offline permissions policy, package and version, and all
+all 204 ELF libraries. Its decoded base manifest declares minimum API 24 and target API 36.
+Its four locally generated ARM64/API 36 splits passed signature checks and `zipalign -c -P 16 4`.
+The master APK retained the offline permissions policy, package and version, and all
 204 libraries in the ARM64 split were stored at 16 KiB offsets with SHA-256 values equal to the AAB entries.
 
 The x64 input bundle was unchanged. Local evidence includes the device specifications, source digests, split
