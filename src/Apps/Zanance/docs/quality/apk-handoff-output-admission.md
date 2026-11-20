@@ -59,6 +59,33 @@ expected ID, and a network-enabled APK presented as offline were refused. The
 entry-point fixture confirms that a verifier refusal emits no path or installation
 advice. No app was rebuilt or installed for these checks.
 
+### Edition-specific permissions on signed release APKs
+
+The verifier now reads the Android project's effective edition and applies the matching
+shared permission policy to the signed APK. The default offline build, configured cloud
+backup, personal sync and Billing all pass through that check before handoff. Billing
+takes precedence when its build flag is enabled. The project reports only the edition
+to the verifier. The offline manifest overlay uses the same classification.
+
+Required permissions must be declared without SDK restrictions. The focused policy
+cases cover missing or extra online permissions and restricted declarations, including a
+Billing declaration limited to older SDKs. The project evaluation also checks six
+configurations, including synthetic OAuth settings and the combined Billing/sync case.
+
+An initial verifier invocation needed the Android assets restored after the Windows build.
+The retained signed offline APK `722093c6` then passed with the default offline classification.
+The older connected APK `8d5dee1c` failed the separate storage-policy check. Its compiled
+sharing resource still allowed the external root and entire cache. That package remains
+negative evidence for the current handoff.
+
+The current signed Billing Sandbox APK `bb924893` and the current signed personal-sync
+APK `e1282f7e` both passed the complete Release handoff, including permissions and compiled
+storage rules. Presenting that same current personal-sync APK to the default offline
+classification was rejected because it requests Internet permission. The 20 permission
+policy cases, 14 decoded-badging cases, six edition evaluations and strict Windows build
+passed. The checks did not install a package, start a store purchase or contact an OAuth
+provider. Signed-package evidence remains under `artifacts/apk-permission-edition-sync`.
+
 ## Fresh publish provenance
 
 Each attempt has an empty staging directory, including the automatic retry after a

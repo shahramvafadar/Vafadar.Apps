@@ -13,7 +13,7 @@ $projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
 $metadata = & $projectDotNet msbuild $Project -nologo -v:q "-p:Configuration=$Configuration" `
     -p:TargetFramework=net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
     -p:EmbedAssembliesIntoApk=true -t:_ResolveMonoAndroidSdks `
-    '-getProperty:ApplicationId,ApplicationVersion,ApplicationDisplayVersion,AndroidSdkBuildToolsPath,AndroidBundleToolJarPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore' @BuildProperties
+    '-getProperty:ApplicationId,ApplicationVersion,ApplicationDisplayVersion,AndroidSdkBuildToolsPath,AndroidBundleToolJarPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore,_ZananceAndroidPrivacyVariant' @BuildProperties
 if ($LASTEXITCODE -ne 0) { throw 'Could not resolve the Android package identity and verification tools.' }
 $properties = ($metadata -join "`n" | ConvertFrom-Json).Properties
 if (!$properties.ApplicationId -or !$properties.AndroidSdkBuildToolsPath -or
@@ -74,8 +74,12 @@ if ($Offline -and ($badging -cmatch "^uses-permission(?:-sdk-\d+)?: name='androi
 }
 
 if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {
+    $variant = $properties._ZananceAndroidPrivacyVariant
+    if ($Offline -and $variant -cne 'Offline') {
+        throw 'The requested offline handoff differs from the evaluated Zanance edition.'
+    }
     Import-Module (Join-Path $PSScriptRoot '../modules/AndroidPrivacy.psm1')
-    Assert-ZananceAndroidReleaseBadging -Badging $badging -Offline:$Offline
+    Assert-ZananceAndroidReleaseBadging -Badging $badging -Variant $variant
     $storageVerifier = Join-Path $PSScriptRoot '../maui/verify-android-bundle-sqlcipher.py'
     $storageReceipt = Join-Path $PSScriptRoot '../native/sqlcipher/android.package.contents.json'
     $storageResult = & $python $storageVerifier --apk $apk.FullName $storageReceipt 2>&1
@@ -100,7 +104,7 @@ if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafada
     }
 }
 
-if ($Offline -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {
+if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafadar.zanance' -and $variant -ceq 'Offline') {
     # Check the merged APK because the SDK can register login activities without an OAuth client.
     $manifest = @(& $aapt2 dump xmltree $apk.FullName --file AndroidManifest.xml 2>&1)
     if ($LASTEXITCODE -ne 0) { throw 'The offline APK component declarations could not be read.' }

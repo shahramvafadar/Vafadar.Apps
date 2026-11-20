@@ -32,9 +32,11 @@ function Assert-ZananceAndroidPrivacy {
 function Assert-ZananceAndroidReleaseBadging {
     <#
     .SYNOPSIS
-        Checks the qualified SDK range and, when selected, the offline permission policy on the signed handoff.
+        Checks the qualified SDK range and expected edition permissions on the signed handoff.
     #>
-    param([string[]]$Badging, [switch]$Offline)
+    param(
+        [Parameter(Mandatory = $true)] [string[]]$Badging,
+        [Parameter(Mandatory = $true)] [ValidateSet('Offline', 'Cloud', 'Billing')] [string]$Variant)
     $minimum = @($Badging -cmatch '^minSdkVersion:')
     if ($minimum.Count -ne 1 -or $minimum[0] -cne "minSdkVersion:'$($androidPolicy.minimumSdk)'") {
         throw "The Zanance Release APK must declare Android minimum API $($androidPolicy.minimumSdk)."
@@ -45,18 +47,18 @@ function Assert-ZananceAndroidReleaseBadging {
         [int]$Matches[1] -lt $androidPolicy.playMinimumTargetSdk) {
         throw "The Zanance Release APK must target Android API $($androidPolicy.playMinimumTargetSdk) or higher."
     }
-    if (!$Offline) { return }
-
     $permissions = [Collections.Generic.List[string]]::new()
     $unrestricted = [Collections.Generic.List[string]]::new()
     foreach ($line in $Badging) {
-        if ($line -cmatch "^uses-permission(?:-sdk-[0-9]+)?: name='([^']+)'(.*)$") {
-            $name = $Matches[1]
+        if ($line -cmatch "^(uses-permission(?:-sdk-[0-9]+)?): name='([^']+)'(.*)$") {
+            $name = $Matches[2]
             $permissions.Add($name)
-            if ($Matches[2] -cnotmatch '\bmaxSdkVersion=') { $unrestricted.Add($name) }
+            if ($Matches[1] -ceq 'uses-permission' -and $Matches[3] -cnotmatch '\bmaxSdkVersion=') {
+                $unrestricted.Add($name)
+            }
         }
     }
-    Assert-ZananceAndroidPrivacy -Package 'pro.vafadar.zanance' -Variant Offline -Permissions $permissions -UnrestrictedPermissions $unrestricted
+    Assert-ZananceAndroidPrivacy -Package 'pro.vafadar.zanance' -Variant $Variant -Permissions $permissions -UnrestrictedPermissions $unrestricted
 }
 
 Export-ModuleMember -Function Assert-ZananceAndroidPrivacy, Assert-ZananceAndroidReleaseBadging

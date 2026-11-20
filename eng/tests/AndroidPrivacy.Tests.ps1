@@ -46,6 +46,8 @@ if (!$BillingOnly) {
     $target = "targetSdkVersion:'36'"
     $notifications = "uses-permission: name='android.permission.POST_NOTIFICATIONS'"
     $boot = "uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'"
+    $network = "uses-permission: name='android.permission.INTERNET'"
+    $store = "uses-permission: name='com.android.vending.BILLING'"
     $release = @($minimum, $target, $notifications, $boot)
     $handoffs = @(
         @{ Lines = $release },
@@ -54,11 +56,18 @@ if (!$BillingOnly) {
         @{ Lines = $release + "maxSdkVersion:'36'"; Failure = 'must not declare a maximum SDK' },
         @{ Lines = @($minimum, "targetSdkVersion:'35'", $notifications, $boot); Failure = 'must target Android API 36' },
         @{ Lines = @($minimum, $target, "$notifications maxSdkVersion='35'", $boot); Failure = 'Missing required permissions: android.permission.POST_NOTIFICATIONS' },
-        @{ Lines = $release + "uses-permission-sdk-23: name='android.permission.READ_CONTACTS'"; Failure = 'Unexpected permissions: android.permission.READ_CONTACTS' }
+        @{ Lines = $release + "uses-permission-sdk-23: name='android.permission.READ_CONTACTS'"; Failure = 'Unexpected permissions: android.permission.READ_CONTACTS' },
+        @{ Lines = $release + $network; Variant = 'Cloud' },
+        @{ Lines = $release; Variant = 'Cloud'; Failure = 'Missing required permissions: android.permission.INTERNET' },
+        @{ Lines = $release + $network + $store; Variant = 'Cloud'; Failure = 'Unexpected permissions: com.android.vending.BILLING' },
+        @{ Lines = $release + $network + $store; Variant = 'Billing' },
+        @{ Lines = $release + $network; Variant = 'Billing'; Failure = 'Missing required permissions: com.android.vending.BILLING' },
+        @{ Lines = $release + $network + "$store maxSdkVersion='35'"; Variant = 'Billing'; Failure = 'Missing required permissions: com.android.vending.BILLING' },
+        @{ Lines = $release + $store + "uses-permission-sdk-23: name='android.permission.INTERNET'"; Variant = 'Billing'; Failure = 'Missing required permissions: android.permission.INTERNET' }
     )
     foreach ($handoff in $handoffs) {
         $failure = $null
-        try { Assert-ZananceAndroidReleaseBadging -Badging $handoff.Lines -Offline }
+        try { Assert-ZananceAndroidReleaseBadging -Badging $handoff.Lines -Variant ($handoff.Variant ?? 'Offline') }
         catch { $failure = $_.Exception.Message }
         if ((!$handoff.Failure -and $failure) -or ($handoff.Failure -and (!$failure -or !$failure.Contains($handoff.Failure)))) {
             throw "Release badging regression. Expected '$($handoff.Failure)', received '$failure'."

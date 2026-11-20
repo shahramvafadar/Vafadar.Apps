@@ -186,7 +186,13 @@
     </ItemGroup>
   </Target>
 
-  <ItemGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android' and '$(Configuration)' == 'Release' and '$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' == '' and '$(ZanancePersonalSyncEnabled)' != 'true' and '$(ZananceBillingEnabled)' != 'true'">
+  <!-- Expose only the effective permission policy to the signed APK verifier, never the OAuth identifiers. -->
+  <PropertyGroup Condition="'$(ZananceTargetPlatform)' == 'android'">
+    <_ZananceAndroidPrivacyVariant>Offline</_ZananceAndroidPrivacyVariant>
+    <_ZananceAndroidPrivacyVariant Condition="'$(MicrosoftEntraClientId)$(GoogleOAuthClientIdAndroid)' != '' or '$(ZanancePersonalSyncEnabled)' == 'true'">Cloud</_ZananceAndroidPrivacyVariant>
+    <_ZananceAndroidPrivacyVariant Condition="'$(ZananceBillingEnabled)' == 'true'">Billing</_ZananceAndroidPrivacyVariant>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Release' and '$(_ZananceAndroidPrivacyVariant)' == 'Offline'">
     <AndroidManifestOverlay Include="Platforms\Android\ReleaseManifest.xml" />
   </ItemGroup>
 
