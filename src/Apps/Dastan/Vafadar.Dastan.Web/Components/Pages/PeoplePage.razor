@@ -185,7 +185,7 @@
                         <input type="hidden" name="circle" value="@circle.Number" />
                         <fieldset>
                             <legend>@T["People_Circle_Members"]</legend>
-                            @foreach (var relationship in _accepted)
+                            @foreach (var relationship in _accepted.DistinctBy(accepted => accepted.Other.Id))
                             {
                                 var box = $"circle-{circle.Number}-{relationship.Other.Id}";
                                 <p class="tick">

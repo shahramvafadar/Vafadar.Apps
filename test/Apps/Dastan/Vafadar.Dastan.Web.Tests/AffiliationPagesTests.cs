@@ -65,6 +65,10 @@ public sealed class AffiliationPagesTests : IDisposable
         Assert.Contains(none, page.Main, StringComparison.Ordinal);
         Assert.Contains(find, page.Main, StringComparison.Ordinal);
         Assert.Contains("noindex", page.Html, StringComparison.Ordinal);
+
+        // The search asks this page again: its address is written from the language of the page on, once.
+        Assert.Contains("<form method=\"get\" action=\"account/affiliations\"", page.Html, StringComparison.Ordinal);
+        Assert.Contains($"<base href=\"/{language}/\"", page.Html, StringComparison.Ordinal);
         Assert.DoesNotContain("<script", page.Own, StringComparison.Ordinal);
 
         // Who is not signed in is shown where to sign in; a site without accounts has no such page.

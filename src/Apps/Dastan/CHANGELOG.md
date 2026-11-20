@@ -336,3 +336,15 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   somebody who says a record is them, what they write themselves; of a child, what a parent decides. Of
   somebody who lives and was not asked, a tree keeps a name, the years and the family – nothing else – and
   the page says so. The picture of a person is seen by exactly those who may see that photograph.
+- Two people can show several relationships: a friend who is a colleague too, each with where and since when.
+  New kinds: parent and child, adoptive parent, guardian, brother or sister, teammate, neighbour. Changing what
+  a relationship is called asks the other person; until they agree it stays as it is.
+- An account can block another. What the two showed ends at once; the blocked account cannot ask, tag, invite
+  or find the other one, and is not told.
+- "Where you were": schools, employers and other places, with what you were there and when. You choose who sees
+  a place and may find you through it, and – apart from that – who sees the years. A search finds the people
+  who chose to be found by you through a place.
+- You can look at your own page and at a family tree of yours as everybody, as one of your circles or as one
+  person sees it.
+- A family tree tells a parent by birth, an adoptive parent and a guardian apart; a guardianship can say from
+  when until when.

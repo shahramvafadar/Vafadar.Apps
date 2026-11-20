@@ -405,7 +405,7 @@
         _circles = store.Circles(session.Id);
 
         // Who a photograph can be said to show: its owner, and the people the owner shows a relationship with.
-        _known = [new PersonRef(session.Id, session.Name), .. store.Relationships(session.Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other)];
+        _known = [new PersonRef(session.Id, session.Name), .. store.Relationships(session.Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other).DistinctBy(person => person.Id)];
     }
 
     private string Day(DateOnly day)

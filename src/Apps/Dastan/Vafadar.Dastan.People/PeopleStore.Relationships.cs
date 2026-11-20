@@ -253,7 +253,10 @@ public sealed partial class PeopleStore
                 };
             })
             .OrderBy(relationship => relationship.State == RelationshipState.Accepted ? 2 : relationship.AskedByMe ? 1 : 0)
-            .ThenBy(relationship => relationship.Other.Name, StringComparer.CurrentCultureIgnoreCase)];
+            .ThenBy(relationship => relationship.Other.Name, StringComparer.CurrentCultureIgnoreCase)
+            .ThenBy(relationship => RelationshipKinds.IndexOf(relationship.Kind))
+            .ThenBy(relationship => relationship.Terms.Context, StringComparer.CurrentCultureIgnoreCase)
+            .ThenBy(relationship => relationship.Id, StringComparer.Ordinal)];
     }
 
     /// <summary>Returns how many requests wait for the answer of an account.</summary>

@@ -23,8 +23,8 @@
     </header>
     <p class="note" role="status">
         @(_seen.Kind == "public" ? T["SeeAs_Tree_Now_public"] : string.Format(CultureInfo.CurrentCulture, T[$"SeeAs_Tree_Now_{_seen.Kind}"], $"⁨{_seen.Name}⁩"))
-        <a href="@($"account/trees/{_tree.Tree.Id}")">@T["SeeAs_Back"]</a>
     </p>
+    <p class="actions"><a class="action secondary" href="@($"account/trees/{_tree.Tree.Id}")">@T["SeeAs_Back"]</a></p>
     @if (_seen.Tree is { } seen)
     {
         <TreeSeen Tree="seen" Address="@($"account/trees/{_tree.Tree.Id}?as={As}")" />

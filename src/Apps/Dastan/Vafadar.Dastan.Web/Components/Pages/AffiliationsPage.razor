@@ -107,7 +107,7 @@
     <section id="find" aria-labelledby="find-title">
         <h2 id="find-title">@T["Affiliations_Find_Title"]</h2>
         <p class="note">@T["Affiliations_Find_Note"]</p>
-        <form method="get" action="@_here.TrimStart('/')" class="account">
+        <form method="get" action="@AffiliationEndpoints.Page.TrimStart('/')" class="account">
             <p class="field">
                 <label for="find-place">@T["Affiliations_Place"]</label>
                 <input id="find-place" name="place" type="text" required maxlength="@PeopleStore.LongestOrganisation" value="@_place" autocomplete="off" dir="auto" />
