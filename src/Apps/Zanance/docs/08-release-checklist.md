@@ -1530,6 +1530,13 @@ Discard left the transaction view empty. The owned emulator was retired. Evidenc
 under `artifacts/receipt-stream-diagnosis`. This run did not exercise virtual document conversion
 or install on a physical device.
 
+A separate Android 16 review reused signed APK `75b05718` with one synthetic virtual receipt.
+That provider advertised a typed PDF representation and refused ordinary file opens. Its log
+shows one typed PDF open by Zanance UID 10217 and zero ordinary opens. The editable draft
+showed EUR 42.75. Cancel and Discard left the transaction view empty. The owned emulator was
+retired. Evidence is under `artifacts/receipt-virtual-native`. This check made no product change
+and did not repeat the previous pipe or ordinary-provider qualification.
+
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
 deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate
