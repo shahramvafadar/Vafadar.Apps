@@ -76,6 +76,7 @@ public sealed class Projection
                     item.Id, item.Kind, item.Label, item.Caption, item.Representation, item.Created, item.Creator, item.Rights.Status,
                     item.CataloguePage!, item.DepictedEntities, item.DepictedEvents)
                 {
+                    Shows = item.Shows,
                     CatalogueTitle = item.CatalogueTitle,
                     AccessionNumber = item.AccessionNumber,
                     CreditLine = item.CreditLine,
@@ -595,6 +596,28 @@ public sealed class Projection
 
     /// <summary>Returns every media item that may be shown.</summary>
     public GalleryView Gallery() => new(GalleryRule.WholeCollection, null, null, GalleryOrder.Editorial, Media) { References = References };
+
+    /// <summary>
+    /// Returns the gallery of a time (ADR 0021, R-MED-02): the items that show the time that was asked for – a
+    /// year, a stretch of years or a depth of time – whenever they were made, and, apart from them, the items
+    /// that were made in it. An item that says nothing of the time it shows is in no gallery of a time by it.
+    /// </summary>
+    /// <param name="asked">The time.</param>
+    /// <param name="present">The year of the common era the visitor asks in.</param>
+    public GalleryView Gallery(AskedTime asked, int present)
+    {
+        ArgumentNullException.ThrowIfNull(asked);
+        var span = asked.Span(present);
+        var shown = Media.Select(item => (Item: item, Holding: YearCover.Of(item.Shows, span, present))).Where(found => found.Holding != Holding.No).ToList();
+        var seen = shown.Select(found => found.Item.Id).ToHashSet();
+        return new(GalleryRule.ShowsTime, null, null, GalleryOrder.Editorial, [.. shown.Select(found => found.Item)])
+        {
+            Time = asked,
+            Possibly = [.. shown.Where(found => found.Holding == Holding.Possibly).Select(found => found.Item.Id)],
+            References = [.. References.Where(reference => YearCover.Of(reference.Shows, span, present) != Holding.No)],
+            MadeThen = [.. Media.Where(item => !seen.Contains(item.Id) && YearCover.Of(item.Created, span, present) != Holding.No)],
+        };
+    }
 
     /// <summary>Returns the media that depict an entity, or <see langword="null"/>.</summary>
     public GalleryView? Gallery(EntityId entity) => Find(entity) is not { } found

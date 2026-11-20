@@ -461,6 +461,7 @@ not say what each has to do with the step.
 | `rights` | `status` – `original_project_content`, `verified_open_access_metadata` or `permission_not_verified`; `statement`; `checkedAt` (a day); optional `license` and `sourceUrl` (the page of the policy) |
 | `depictedContext` | `kind` – `later_artwork_of_literary_narrative` or `present_day_explanatory_diagram`; `worldId`; optional `scope`. `calendarDate` is refused: an artwork does not date the story |
 | `creationDate` | When the item was made – see below |
+| `depictedTime` | Optional: the time the item shows, where it shows a time of the world – apart from `creationDate`, and never guessed from it. Written like the `time` of a dated statement (a date of a calendar, a window between two, a depth of time). A step of the telling an item shows is not written here: that is `depictedEventIds`. The gallery of a time finds an item by this time |
 | `demoRenderEligibility` | `allowed` – whether a local demonstration shows the item; optional `reason` |
 | `publicRenderEligibility` | Optional: `allowed` – whether the item is shown to everybody in a published revision, a decision of its own; optional `reason`. It needs rights that are `original_project_content` or `verified_open_access_metadata`, and what showing an item needs |
 | `sourceIds`, `spoilerLevel` | As for every record |

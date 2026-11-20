@@ -894,9 +894,9 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
     /// Reads a statement about an entity with a time of the calendar. The time is written as in a comparison and
     /// is never the place of a step in the story: what the story tells has an order, not a date.
     /// </summary>
-    private static TemporalExpression? ReadTime(JsonRecord record, string refusal)
+    private static TemporalExpression? ReadTime(JsonRecord record, string refusal, string name = "time")
     {
-        if (record.Raw("time") is not { } stated)
+        if (record.Raw(name) is not { } stated)
         {
             return null;
         }
@@ -908,7 +908,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         }
         catch (Exception refused) when (refused is JsonException or ArgumentException or NotSupportedException)
         {
-            record.Problem($"time cannot be read: {refused.Message}");
+            record.Problem($"{name} cannot be read: {refused.Message}");
         }
 
         // A year of a calendar and a depth of time are times of the world (ADR 0021); a place in a telling is not.
@@ -1345,6 +1345,11 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var relatedRelations = Ids(record, "relatedRelationIds", required: false);
         var representationKnown = ReadDepictedContext(record.Child("depictedContext"), out var representation, out var representationScope);
         var created = ReadCreation(record.Child("creationDate"));
+
+        // The time an item shows is a time of the world, apart from the time it was made (ADR 0021).
+        var shows = record.IsStated("depictedTime")
+            ? ReadTime(record, "depictedTime is a place in a telling: the steps an item shows are its depictedEventIds.", "depictedTime")
+            : null;
         var sources = Ids(record, "sourceIds");
         var level = Level(record);
         record.Notes("status", "deliveryStatus");
@@ -1353,7 +1358,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var credit = record.Text("creditLine", required: false);
         foreach (var unread in new[] { "digitalCaptureDate", "uploadDate", "publicationDate", "sharedAt" })
         {
-            record.Nothing(unread, $"{unread} is not read by this reader; of an item only the creation date is.");
+            record.Nothing(unread, $"{unread} is not read by this reader; of an item only the creation date and the time it shows are.");
         }
 
         bool? allowed = null;
@@ -1501,6 +1506,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             Representation = representation,
             RepresentationScope = representationScope,
             Created = created,
+            Shows = shows,
             DepictedEntities = [.. depictedEntities.Select(entity => new EntityId(entity))],
             DepictedEvents = [.. depictedEvents.Select(storyEvent => new EventId(storyEvent))],
             RelatedRelations = [.. relatedRelations.Select(relation => new RelationId(relation))],

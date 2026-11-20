@@ -5,6 +5,7 @@
 @inject DastanSite Site
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
 @if (_gallery is { } gallery)
 {
@@ -17,11 +18,37 @@
         <p class="lead">@_lead</p>
     </header>
 
+    @* The gallery of a time (ADR 0021, R-MED-02): what shows a year, a stretch of years or a depth of time. It is
+       asked for with a form that asks for a page, by the one reader of a time of the site. *@
+    @if (gallery.Rule is GalleryRule.WholeCollection or GalleryRule.ShowsTime)
+    {
+        <form class="search moment-form" method="get" action="@($"{Site.Collection}/gallery")">
+            <div class="search-row">
+                <p class="field">
+                    <label for="gallery-time">@T["Gallery_Time"]</label>
+                    <input type="text" id="gallery-time" name="time" value="@gallery.Time?.Written" maxlength="80" required autocomplete="off" dir="ltr" aria-describedby="gallery-time-how" />
+                    <span class="meta" id="gallery-time-how">@T["Search_Year_How"]</span>
+                </p>
+                <button type="submit" class="action">@T["Moment_Show"]</button>
+            </div>
+        </form>
+        @if (_invalid)
+        {
+            <p class="note" role="alert">@T["Moment_InvalidTime"]</p>
+        }
+
+        @* And back (R-EXP-05): what the collection says held in the time the gallery is of. *@
+        @if (gallery.Time is { } carried)
+        {
+            <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/at?time={Uri.EscapeDataString(carried.Written)}")">@T["Gallery_WhatHeld"]</a></p>
+        }
+    }
+
     @if (gallery.IsEmpty)
     {
         @* Nothing to show is said the same way whether nothing exists or nothing has been reached yet. *@
         <p class="note" role="status">
-            @T["Gallery_Empty"]
+            @T[gallery.Rule == GalleryRule.ShowsTime ? "Gallery_EmptyTime" : "Gallery_Empty"]
             @if (_continues)
             {
                 <text> @T["Gallery_EmptyHint"] </text><a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a>
@@ -77,9 +104,37 @@
                     <h2><a href="@viewer"><Loc Text="item.Label" /></a></h2>
                     <p><Loc Text="item.Caption" /></p>
                     <p class="meta">@T["Media_Made"]: @TimeText.Of(item.Created, Visitor, T)</p>
+                    @if (item.Shows is { } shows)
+                    {
+                        <p class="meta">
+                            @T["Media_ShowsTime"]: @TimeText.Of(shows, Visitor, T)
+                            @if (gallery.Possibly.Contains(item.Id))
+                            {
+                                <span class="possibly">– @T["Gallery_Possibly"]</span>
+                            }
+                        </p>
+                    }
                 </li>
             }
         </ul>
+    }
+
+    @if (!gallery.MadeThen.IsEmpty)
+    {
+        @* Made in the time and not showing it: named apart, so that a picture of a later hand is not taken for one of its time and the other way round. *@
+        <section aria-labelledby="made-then">
+            <h2 id="made-then">@T["Gallery_MadeThen"]</h2>
+            <p class="note">@T["Gallery_MadeThenNote"]</p>
+            <ul class="statements" role="list">
+                @foreach (var item in gallery.MadeThen)
+                {
+                    <li>
+                        <a href="@($"{Site.Collection}/media/{item.Id}")"><Loc Text="item.Label" /></a>
+                        <span class="meta">– @T["Media_Made"]: @TimeText.Of(item.Created, Visitor, T)</span>
+                    </li>
+                }
+            </ul>
+        </section>
     }
 
     @if (!gallery.References.IsEmpty)
@@ -150,6 +205,8 @@
     private GalleryOrder _order;
     private MediaKind? _kind;
     private IReadOnlyList<MediaKind> _kinds = [];
+    private bool _invalid;
+    private string _asked = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -162,6 +219,10 @@
     /// <summary>Gets or sets the kind in the address: <c>image</c> or <c>video</c>; anything else is both.</summary>
     [SupplyParameterFromQuery(Name = "kind")]
     public string? Kind { get; set; }
+
+    /// <summary>Gets or sets a time in the address, as a visitor typed it: the gallery of what shows that time.</summary>
+    [SupplyParameterFromQuery(Name = "time")]
+    public string? Time { get; set; }
 
     /// <summary>Gets or sets the identifier of the entity whose media are asked for, if the address names one.</summary>
     [Parameter]
@@ -182,8 +243,12 @@
         }
 
         // An entity or a step the visitor has not read to and one that does not exist are the same page: not found.
+        // A time is asked of the whole collection; what is no time is said to be none, and the gallery stays whole.
+        var time = named is null && !string.IsNullOrWhiteSpace(Time) ? AskedTime.Read(Time) : null;
+        _invalid = named is null && !string.IsNullOrWhiteSpace(Time) && time is null;
         _gallery = Subject is not null ? projection.Gallery(new EntityId(Subject))
             : Step is not null ? projection.Gallery(new EventId(Step))
+            : time is not null ? projection.Gallery(time, Clock.GetUtcNow().Year)
             : projection.Gallery();
         if (_gallery is null)
         {
@@ -192,7 +257,8 @@
         }
 
         // What a gallery has to choose from is asked before anything is left out.
-        _kinds = [.. _gallery.Items.Select(item => item.Kind).Concat(_gallery.References.Select(item => item.Kind)).Distinct().Order()];
+        _kinds = [.. _gallery.Items.Select(item => item.Kind).Concat(_gallery.References.Select(item => item.Kind)).Concat(_gallery.MadeThen.Select(item => item.Kind)).Distinct().Order()];
+        _asked = time is null ? string.Empty : "time=" + Uri.EscapeDataString(time.Written);
         _order = Order switch { "oldest" => GalleryOrder.OldestFirst, "newest" => GalleryOrder.NewestFirst, _ => GalleryOrder.Editorial };
         _kind = Kind switch { "image" => MediaKind.Image, "video" => MediaKind.Video, _ => null };
         _here = Subject is not null ? $"{Site.Collection}/entity/{Subject}/gallery" : Step is not null ? $"{Site.Collection}/event/{Step}/gallery" : $"{Site.Collection}/gallery";
@@ -223,6 +289,13 @@
                 _context = $"?event={Uri.EscapeDataString(step.Event.Id.Value)}";
                 break;
 
+            case { Time: { } shown }:
+                _title = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleTime"], TimeText.Of(shown, Visitor, T));
+                _lead = T["Gallery_LeadTime"];
+                _back = Site.Collection;
+                _backName = Visitor.Text(overview.Subject.Label).Value;
+                break;
+
             default:
                 _title = T["Gallery_Title"];
                 _lead = T["Gallery_LeadCollection"];
@@ -236,6 +309,7 @@
     {
         var asked = new[]
         {
+            _asked.Length == 0 ? null : _asked,
             order switch { GalleryOrder.OldestFirst => "order=oldest", GalleryOrder.NewestFirst => "order=newest", _ => null },
             kind is { } one ? $"kind={one.ToString().ToLowerInvariant()}" : null,
         }.Where(part => part is not null).ToList();

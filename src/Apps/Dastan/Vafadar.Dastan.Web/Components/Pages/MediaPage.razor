@@ -110,6 +110,16 @@
                 <p class="note">@T["Media_MadeNote"]</p>
             </dd>
 
+            @* The time it shows is another time (ADR 0021, R-MED-04); it leads to what else shows that time. *@
+            @if (item.Shows is { } shows)
+            {
+                <dt>@T["Media_ShowsTime"]</dt>
+                <dd>
+                    @TimeText.Of(shows, Visitor, T)
+                    <p class="note">@T["Media_ShowsNote"]</p>
+                </dd>
+            }
+
             <dt>@T["Media_Creator"]</dt>
             <dd><Foreign Text="@item.Creator" /></dd>
 
