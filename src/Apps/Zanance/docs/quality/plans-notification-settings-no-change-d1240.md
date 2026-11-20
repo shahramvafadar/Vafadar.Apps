@@ -98,3 +98,16 @@ original review setting remained off and Transactions was empty.
 The disposable emulator and package were retired after restoring display
 geometry. The clock and physical phones were untouched. Evidence is under
 `artifacts/android-disabled-reminder-queue`.
+
+## Delivery becomes blocked during a reminder batch
+
+Two source-linked tests reproduced a waiting occurrence alarm and a new snooze alarm
+after delivery became blocked, both during preparation and during publication. The
+reminder service now checks current delivery permission at both boundaries. A block
+withdraws the waiting batch and returns before writing the new snooze or publishing
+budget alerts. The original source validation still guards publication and cache
+commit. All 78 selected reminder flow and publication tests passed, checking that the
+saved financial rows are preserved. The tests model the timing at the scheduler
+boundary. The earlier Android settings and delivery checks were not repeated.
+Strict Windows and Android Release builds passed. The signed offline APK SHA256 is
+f217d45fd8557a0de20deeaec6a4999301548e5640bb5d9ed6d530fb7bbaae92.

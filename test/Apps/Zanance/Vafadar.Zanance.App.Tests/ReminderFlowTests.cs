@@ -219,6 +219,32 @@ public sealed class ReminderFlowTests
     }
 
     [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Delivery_disabled_during_snooze_does_not_leave_new_alarms_or_commit_the_snooze(bool duringPublication)
+    {
+        using var fixture = new FlowFixture();
+        var reminders = await SeedAsync(fixture);
+        await reminders.Service.RefreshAsync();
+        var original = Assert.Single(reminders.Native.Pending);
+        var before = await RowsAsync(fixture);
+
+        if (duringPublication)
+            reminders.Native.OnReplace = () => { reminders.Native.Enabled = false; return Task.CompletedTask; };
+        else
+            reminders.Access.OnCapture = _ => reminders.Native.Enabled = false;
+
+        await reminders.Service.SnoozeAsync(new(original, SnoozeChoice.OneHour));
+
+        Assert.Empty(reminders.Native.Pending);
+        Assert.Equal(duringPublication ? 3 : 2, reminders.Native.Replacements);
+        Assert.Empty(reminders.Native.Shown);
+        Assert.Null(fixture.Preferences.Get("reminders.snoozed"));
+        Assert.Equal(before, await RowsAsync(fixture));
+    }
+
+
+    [Theory]
     [InlineData("fa"), InlineData("en"), InlineData("de")]
     public async Task Receiver_initialization_registers_current_translated_actions_without_database_or_queue_work(string language)
     {

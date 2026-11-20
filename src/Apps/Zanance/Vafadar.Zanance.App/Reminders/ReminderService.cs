@@ -210,6 +210,16 @@ public sealed class ReminderService(
         finally { _gate.Release(); }
     }
 
+    /// <summary>Refuses to publish or retain a pending batch when the platform blocks delivery.</summary>
+    private async Task<bool> WithdrawIfDeliveryBlockedAsync()
+    {
+        if (await scheduler.AreEnabledAsync()) return false;
+
+        // Android can keep alarms while delivery is disabled and release them when Settings grants it.
+        await scheduler.ReplaceAllAsync([]);
+        return true;
+    }
+
     // Refresh and action share the gate and queue cap. Do not persist an action before its actual-file read succeeds.
     private async Task RefreshUnderGateAsync(SnoozeRequest? request = null)
     {
@@ -335,6 +345,7 @@ public sealed class ReminderService(
 
         // Legacy unscoped groups cannot prove their profile or members. Drop that cache, rebuilding normal reminders.
         // The original routing format remains supported for retained historical taps, not for new snoozes.
+        if (await WithdrawIfDeliveryBlockedAsync()) return;
         await ValidateCurrentBatchAsync();
         notifications.AddRange(snoozes.Where(s => notifications.All(n => n.Id != s.Id))
             .Select(s => new ReminderNotification(s.Id, s.Title, s.Body, s.NotifyAt, s.Link, CanSnooze: true, NotifyInstant: s.NotifyInstant, PreserveInstant: !ReminderLocalTime.FollowsLocalClock(s.Id, [s]), ElapsedDeadline: s.ElapsedDeadline, DeliveryExpiresAt: s.DeliveryExpiresAt)));
@@ -348,6 +359,7 @@ public sealed class ReminderService(
             // SDK refusal can follow a partially accepted batch; keep its cache retryable and withdraw pending work.
             await scheduler.ReplaceAllAsync([]); throw;
         }
+        if (await WithdrawIfDeliveryBlockedAsync()) return;
         await ValidateCurrentBatchAsync();
         preferences.Set(SnoozeKey, snoozes.Count > 0 ? ReminderSnoozes.Serialize(snoozes) : null);
         await CheckBudgetAsync(culture);
