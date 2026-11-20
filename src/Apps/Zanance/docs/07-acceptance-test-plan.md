@@ -4842,9 +4842,29 @@ retired. Evidence is in `artifacts/zp2`.
 
 The Android 7 destination attempt was retired before installation or file transfer. Its
 running host console answered while the guest shell's boot observations did not return.
-Two host display observations had the same black frame. This leaves minimum-version
-behavior unqualified for this workload. The earlier protected D-403 fixture separately
-qualifies a nonzero balance and a cold reopen. Physical devices and genuine cloud providers
+Two host display observations had the same black frame. That attempt did not qualify the
+minimum version.
+
+A fresh official Android 7 emulator reported API 24 and x86_64. It installed the same signed
+offline APK from the prior review (SHA-256
+`46d1694a848cf913717107b7ca8bf87a9664623d29b1195b28c6065f1d0e1bd5`)
+and accepted the original encrypted file through the system picker. The legacy Downloads root
+did not index the side-loaded file. A registration helper failed and a separate read-only
+document fixture returned to the app without publishing a selection. Keyboard focus and
+activation in the built-in internal storage provider opened the original Download folder and
+selected the exact file. The 27,333-byte ciphertext read back from shared storage matched
+the original hash before the emulator was retired.
+
+One Check file action displayed one account, zero transactions and zero plans. One replacement
+confirmation produced the original restored notice. Home displayed My account and EUR 0.00,
+and the current-month Transactions view was empty. No destination account or transaction was
+entered. The APK install used the retained signed artifact. A direct readback of the installed
+APK was unavailable to the shell. Fifty top-level XML files passed the synthetic-input
+redaction check, and the owned emulator and its data were retired. Local evidence is in
+`artifacts/zm7`.
+
+The earlier protected D-403 fixture separately qualifies a nonzero balance and a cold reopen.
+Physical devices, OEM transfer, full restored-row comparison and genuine cloud providers
 remain outside this evidence.
 
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
