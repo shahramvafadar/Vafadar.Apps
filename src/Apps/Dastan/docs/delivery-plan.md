@@ -784,3 +784,121 @@ shows. 19.7 before 19.8 and 19.9. 19.10 and 19.11 close the phase.
 **The owner's part**: the Syncfusion licence key for the scripts (entered by the owner; a key of scripts is
 readable in every browser, as Syncfusion's model has it); the mail provider and its credentials before the
 site is public; the look at 19.2.
+
+## 21. Safe foundations and one visual experience (phase 20)
+
+Planned on 2026-11-20, after a review of the source by the owner and three sketches of the owner's (Discover, the explorer of relationships, the profile of a node; each for a wide window and a phone). **Nothing of this phase is built yet.** The sketches are a direction, not a final design: a light, warm ground, readable text, one accent colour, room for pictures and drawings, details only when the reader asks for them. Their pictures are made up for the sketch and are not content of the site; the wordmark stays the plain name.
+
+The review read the code and did not run it. What it found was read again in the code on 2026-11-20 and holds; none of it has been reproduced by a test yet. Each finding is reproduced first, by a test that fails, and corrected after.
+
+**Kept as they are:** .NET 10 and the Blazor Web App, PostgreSQL, ASP.NET Core Identity, the outbox of the mail, `Vafadar.Temporal`, the TypeScript layer, `DastanGraph` behind its contract, the timeline of Dastan's own, and pages that are whole without a script. **Not in this phase:** posts of visitors, videos of visitors, a page of every earlier revision, a logo.
+
+The order is the order of the work. Steps 20.5 to 20.11 are looked at by eye in the **published** build (the image of the `Dockerfile`), in Persian and English, at 360, 412 and 1280 pixels, light and dark – not in the server of development.
+
+### 20.1 – Where it stands, with evidence
+
+* Pictures of Discover, a profile, the family and the connections, a timeline, a story, the gallery, and the trees and photographs of an account, from the published build: both languages, three widths, with what the console and the network said. They are the "before" of this phase.
+* A test for each finding of 20.2 to 20.4 that fails on the code as it is.
+
+### 20.2 – Relationships and trees when two requests arrive together
+
+*Found:* `End`, `Cancel` and `Answer` change a relationship without the lock of the two accounts that `Ask` and `Block` take; two last relationships ended at the same moment can each see the other and leave the memberships of circles and trees in place. `SetCircle` and `SetTreeMember` read "is there an accepted relationship" and write without a lock. `Link` checks for a loop and writes without the lock of the tree. `Guarded` takes no lock when a transaction is open already, and nothing checks that the open one holds the right locks.
+
+* A table in the ADR: every rule ("no membership without an accepted relationship", "no loop of parents", "one claim", the counts) against the acts that can break it and the locks each act takes.
+* Every act of the table takes its whole set of locks, in one order that is written down, from identifiers that never change; reads again what it decides on after it holds them; and writes in the same transaction.
+* An act inside another one says which locks it needs; the outer one holds them or the act refuses – an open transaction is no proof.
+* A constraint of the database wherever a rule can be said as one.
+* After an end or a block, the pages, the JSON, the pictures, the export and the counts refuse from the next request on. A command that repairs memberships left behind by the old code: it can be run twice, removes only what no accepted relationship carries, and reports what it cannot decide.
+* *Tests*, with a real PostgreSQL, two connections and gates instead of pauses: two last relationships ended together; one ended while another stays; an end or a block against sharing with a circle or a tree; accepting, changing and ending together; two links that would close a loop, directly and over several steps; an act inside another; a failure that leaves nothing half done.
+
+### 20.3 – A mail address a provider did not prove
+
+*Found:* for Microsoft the address is the field `mail` or, failing that, a principal name that looks like an address; the new account is made with the address confirmed. Neither field proves that the mailbox exists or is the visitor's. Signing in through a provider does not look at whether the address is confirmed. The answer `address-has-account` tells somebody who proved nothing that an address has an account.
+
+* Who somebody is at a provider (provider and subject) and the confirmed address of the account are two things. An account is found by the first, never by an address.
+* An account made through Microsoft confirms its address by a mail of Dastan's own; the visitor can write another address first. A state "waits for confirmation" with its pages: confirm, send again, correct. Through the outbox, with the limits, the one use and the end of the link as they are.
+* Google stays as it is where the provider says the address is verified.
+* No session of an account, by any way in and for no cookie that exists, before the address is confirmed.
+* Two accounts are never joined because their addresses are alike, and before an address is proven nothing says whether it has an account.
+* From now on an account records how its address was confirmed. A command that lists accounts without such a record and asks them to confirm again, without touching their data; no evidence is invented. (No account was ever made through Microsoft: there is no client.)
+* *Tests:* a principal name only, no address, an address the provider did not verify; coming back twice before confirming; correcting and sending again; an address that has an account; a link that is old or used; a private address asked directly and an old cookie; an account that was confirmed before. The mail really sent to the catcher. A real provider and a real mailbox are the owner's.
+
+### 20.4 – An institution is an entity, and a time there is a stretch of its own
+
+*Found:* an affiliation names its place in words; people are found through a place by the key of those words and an identifier made up on the spot; the context of a relationship is words too. An account cannot state the same place with the same role twice, whatever the dates.
+
+* A reference to an entity that cannot be mistaken: the collection and the entity, never a name or an address. Where one real institution is in several collections, a reviewed "these are the same" – nothing is the same because its name is.
+* The store of the people asks a small directory of what is published (name, kind, place, other names, earlier names) and nothing of the editors' work.
+* An affiliation and the context of a relationship can point at an entity; the words stay and stay allowed when nothing is chosen. Words never make an institution and never attach to one by themselves.
+* A chooser: name, kind, place, what tells it from another of the same name, other and earlier names. Bringing Persian and Arabic letters together helps finding and decides nothing.
+* Several stretches at one place in one role; a gap stays a gap; a question about a year inside the gap finds nobody. What counts as "the same statement twice" is said anew, without "account, place, role".
+* A migration that keeps numbers, words, dates, roles, audiences and consent; only what is certain is pointed at an entity.
+* The profile of an institution can lead to "who was here" – only those who allowed being found, never across a block, with their dates only as they show them. That a place is public makes nobody's time there public.
+* Changing the context of an accepted relationship asks the other side again, as ADR 0018 says.
+* *Tests:* other and earlier names; two places of one name; a new name for the same place; the same identifier in two collections; a place of a story and a real one; words without a place; the migration; a place taken back; hidden dates; not found by choice, blocked, closed; two stretches and the gap between.
+* **The collection that is published has no university, company or club.** The parts are built and tested with made-up places that are labelled so; a reader has something to choose only when such content exists and is approved.
+
+### 20.5 – The parts every page is made of
+
+* The tokens of ADR 0004 grown, not replaced: the colours by meaning, steps of space and of size, the ring of the focus, what is chosen, corners, shadows; light, dark and more contrast as today.
+* Parts, each made once: the head of an identity (picture, name, kind, a line, two or three facts), a card with a picture, a row of a fact, the bar of where one is with the switch of the views, the inspector, a chip of a filter, the chooser of an audience, a request for a relationship, and the states "loading", "nothing here", "went wrong".
+* The frame of the site as the sketches show it: the name, Discover / My World / Saved, the search and the account above; language and appearance together, away from the main ways; on a phone a bar of four at the foot. Saved is there when it is empty.
+* A few icons as drawings in the page, from one source whose licence is recorded.
+* Where no picture is: a drawing in its place that says what kind of thing this is – never a picture that pretends.
+
+### 20.6 – One state of exploring
+
+* A contract no renderer knows: what is explored and in which context, the view (connections, timeline, pictures), the filters, the direction of a tree, what is chosen, and how far the reader has read.
+* The switch of the views keeps what fits; a filter that does not fit the new view is named as set aside, not dropped in silence.
+* In the address: what is public and stable. Not every movement of the drawing; nothing private; an address grants nothing.
+* Choosing a node fills the inspector; making it the centre is an act of its own. Opening more, going back and coming back from a picture keep what was chosen and where the drawing stood.
+
+### 20.7 – Discover (first sketch)
+
+* A large search; one story, era or subject with its picture; "follow the next thread" with cards; a real small piece of a drawing of connections or of a comparison; nothing needs an account.
+* Only what is approved and published is shown. The cards of the sketch (a country through time, a club, universities) are subjects the collection does not have.
+
+### 20.8 – The explorer (second sketch)
+
+* The head of the context and the switch Connections / Timeline / Pictures; "add to the comparison"; the tools of the drawing small and in sight (smaller, larger, all of it), the rest (saving a picture, how it is drawn) behind "more", with names and keys.
+* Cards of the graph with a picture, in sizes made for them.
+* Wide: the drawing and beside it an inspector that does not cover it – picture, name, kind, a line, the nearest facts, "make this the centre", "the whole profile". A phone: the drawing, and a sheet from the foot that takes the focus, closes with Escape and with Back, and gives the focus back.
+* The order of the telling under the drawing where the context is a story, never past what the reader has read.
+* **A tree that grows sideways** goes through `GraphView`: the state and the address, the JSON, the placing, the lines, the keys, the window and the saved picture – both directions, both languages, with several parents, partners and relations side by side. The old drawing stays as what a page without a script shows.
+* What comes next: follow a connection, compare the times, see the pictures of this context – only from what is published and sourced, inside what was read.
+
+### 20.9 – The profile of a node (third sketch)
+
+* One head for every kind: the picture, the kind, the name, where, a line, three facts, "explore the connections" and "keep".
+* Overview / Connections / Timeline / Pictures – the same switch as in the explorer, the same state.
+* "In story and picture" as cards; details, other names and sources folded away until asked for.
+* An account, the record of a person in a tree, somebody of history and somebody of a story look different at the first glance.
+* The one contract of a profile (ADR 0017) feeds the card, the inspector and the page.
+
+### 20.10 – Stories, times and pictures
+
+* The page of a story on the timeline of Dastan's own: the order of the telling, the order inside the world, the calendar and deep time stay four things; nothing is converted between axes that have no common measure.
+* The still chart of the server says the same as the live one: a window as a window, deep time on its axis – or an honest table where a chart cannot say it.
+* A gallery that begins with the pictures, with the context for who asks, and a way back that returns where one was. One picture in several places with a caption for each (R-MED-07), by reference, not by copy.
+
+### 20.11 – What is an account's own
+
+* The parts of 20.5 on trees (seeing, changing and sharing as three tasks), requests, the chooser of 20.4 and photographs.
+* Accepting a relationship, being found, showing dates, agreeing to a tag and making public stay five separate answers. An invitation accepts nothing and claims no record.
+* Nothing to press for what does not exist (posts, videos).
+
+### 20.12 – Proven, and written down
+
+* **The whole way, measured:** a real PostgreSQL, a family that branches as families do with several relations between the same people, long names in both languages, pictures with rights; the time of the question, of the projection and of the placing, the size of the answer and of the scripts, the first drawing one can use, the answer to a step, memory – with the machine, the network and cold or warm written beside. Budgets are set before the last measurement, on the machine of development; CI writes its times down and judges what does not depend on the machine.
+* The first answer holds a bounded neighbourhood; more comes when asked. Drawing only what is in sight does not bound the work of the server.
+* Nothing protected is sent for the browser to hide: rights, publication and the boundary of reading are applied before HTML, JSON, counts, suggestions, small pictures and exports are made. The worker keeps nothing private; signing out and changing the account are tried.
+* WCAG 2.2 AA for what changed; 44 pixels for the main things to press as a target of the product; contrast, focus, zoom, less motion, and a way without dragging. No page that scrolls sideways at 360 and 412 pixels; moving a drawing is something else.
+* The seven journeys of the review as tests in a browser: an unknown subject found and followed and back; times compared and their pictures found; a story read without anything past the boundary in any answer; several relationships asked, accepted and ended; a university with two stretches and being found apart from dates; a tree and photographs seen and, after the end, refused; all of it with the keyboard and on a narrow screen.
+* A script for watching five people do four tasks, with what counts as done without help. Watching them is the owner's.
+* The ADRs, `acceptance.md`, `operations.md`, the table of step 19.1 and this plan say what is; what is history is labelled as history.
+
+### The owner's, before or during this phase
+
+1. **Pictures.** The sketches live from pictures; the collection has drawings in the place of most. Where pictures come from and under which rights is the owner's decision; until then the pages are built for pictures and show honest drawings in their place.
+2. **Content beyond the Shahnameh** (a country through time, a club, universities): without it Discover has one story and the chooser of institutions has nothing to choose.
+3. A real phone, Safari, a screen reader, five people; a mailbox, a sender and the clients at the providers; the key of the licence of the graph – as at the end of phase 19.
