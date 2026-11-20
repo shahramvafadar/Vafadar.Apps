@@ -25,10 +25,10 @@ and says that it is not complete.
 | GDPR Art. 12–14 | Who processes what, why, on which ground, how long, who receives it, which rights | Page `privacy`, with a section for people who are named or shown by others (Art. 14) |
 | GDPR Art. 6, 7, 8 | A ground for each processing; consent that can be taken back; 16 years | Grounds per activity in section 2 below; a tree is public only with the consent of every living person in it, a photograph with tagged people only with theirs, both taken back at once; registration asks for the age |
 | GDPR Art. 15–22 | Access, rectification, erasure, restriction, portability, objection | In the account: a copy of the data (JSON), changing and removing everything, closing the account. For third persons: the notice form and the command `people person remove` |
-| GDPR Art. 25, 32 | Data protection by design and default; security | Private by default; no e-mail address; metadata of photographs removed; section 3 below |
-| GDPR Art. 28 | A contract with whoever processes for the site | Host and network provider – to be signed by the owner ([before-publication.md](before-publication.md)) |
+| GDPR Art. 25, 32 | Data protection by design and default; security | Private by default; a mail address that nobody else is shown and no other contact data; metadata of photographs removed; section 3 below |
+| GDPR Art. 28 | A contract with whoever processes for the site | Host, network provider and the company that sends the mail – to be signed by the owner ([before-publication.md](before-publication.md)) |
 | GDPR Art. 30 | Records of processing | Section 2 below |
-| GDPR Art. 33, 34 | Report a breach within 72 hours; tell the people concerned | Procedure 4.5; the setting `Dastan:Announcement` tells everybody, since the site has no addresses |
+| GDPR Art. 33, 34 | Report a breach within 72 hours; tell the people concerned | Procedure 4.5; the setting `Dastan:Announcement` tells everybody; the accounts concerned can be written to at their addresses |
 | GDPR Art. 35 | Assess the risk where it is likely to be high | Section 5 below |
 | § 25 TDDDG (Art. 5 (3) of Directive 2002/58/EC) | Consent before storing on a device, unless strictly necessary for what was asked | Only necessary cookies, each written when its function is used (the language only when the visitor changes it); a note said once, no banner; page `cookies` lists all; keeping pages for reading without a connection only after a yes (`dastan.offline`) |
 | DSA Art. 11, 12 | Contact points for authorities and for users | Page `imprint` |
@@ -62,8 +62,8 @@ user (CJEU C-492/23 *Russmedia*) and answers the people concerned directly.
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Delivering pages | Every visitor: IP address, time, address asked for, referring page, browser | Answer the request; security | Art. 6 (1) (f) | Host, network provider (processors) | Not stored by the program. Counts per address for the limits per hour in memory, one hour. Logs of the host: see its contract |
 | 2 | Choices on the device | Visitors: language, colours, reading stage, saved list, the note read, offline switch | The function the visitor used | § 25 (2) no. 2 TDDDG; offline: consent, § 25 (1) | – (on the device) | One year after last written |
-| 3 | Account | Users: chosen name, hash of the password, hashes of recovery codes, creation, failed attempts, lock, closing, version and time of the terms read | Account and its safety; proof of the agreement | Art. 6 (1) (b), (f) | Host | Life of the account; 30 days after closing; then deleted |
-| 4 | Sign-in through Google or Microsoft | Users who choose it: provider and hash of its identifier | Sign-in | Art. 6 (1) (b) | Google Ireland, Microsoft Ireland as controllers of their own; transfer to the USA under the Data Privacy Framework | Until unlinked or the account is deleted |
+| 3 | Account | Users: chosen name, mail address and whether it is confirmed, hash of the password, hashes of recovery codes, hashes of the secrets of mailed links with the moment they end, language, creation, failed attempts, lock, closing, version and time of the terms read | Account and its safety; proof of the agreement | Art. 6 (1) (b), (f) | Host | Life of the account; 30 days after closing; then deleted |
+| 4 | Sign-in through Google or Microsoft | Users who choose it: provider, hash of its identifier, and the mail address the provider confirmed (it becomes the address of the account) | Sign-in | Art. 6 (1) (b) | Google Ireland, Microsoft Ireland as controllers of their own; transfer to the USA under the Data Privacy Framework | Until unlinked or the account is deleted |
 | 5 | What belongs to an account | Users: reading positions, saved pages, invitations, relations, circles, albums | The functions | Art. 6 (1) (b) | The accounts the user chose | Until removed or the account is deleted |
 | 6 | Family trees | Users; third persons: name, years of birth and death, deceased or not, kinship; history of changes | Family history of the user | User: household exemption or own ground; operator: Art. 6 (1) (f); public tree: consent of every living person, Art. 6 (1) (a) | Accounts the owner shares with; everybody for a public tree | Until removed or the account is deleted; a person's record on objection |
 | 7 | Photographs | Users; people shown: picture (metadata removed), caption, date, audience, tags and their state, objections | Memories of the user | As 6; shown to everybody only with the consent of every tagged account | The audience the owner chose | As 6 |
@@ -71,7 +71,8 @@ user (CJEU C-492/23 *Russmedia*) and answers the people concerned directly.
 | 9 | Notices about content | Whoever gives one: time, address of the content, kind, explanation, name and mail if given | Examine, decide, answer, show how it was handled | Art. 6 (1) (c) with Art. 16 DSA, else (f) | Operator | One year after the decision (`notices forget`) |
 | 10 | Restrictions and statements of reasons | Users: what, facts, ground, after a notice or not, dates | Enforce law and terms; tell the reasons | Art. 6 (1) (c) with Art. 17 DSA, else (f) | The user concerned | With the account |
 | 11 | Mail to the operator | Writers: address, name, content | Answer; rights of data subjects | Art. 6 (1) (f), (c) | Mail provider of the operator | Until settled, at most three years after the end of that year |
-| 12 | Backups | Everything of 3–10 | Restore after a failure | Art. 6 (1) (f), Art. 32 | Host | 30 days at most |
+| 13 | Mail of the site (ADR 0016) | Users: the address a message goes to, its kind, its text until it is handed over, when it was sent or why not | Confirm an address; a new password; tell what changed in the account, what another user asks (can be turned off), and a decision with its reasons | Art. 6 (1) (b); what others ask: (f); statement of reasons: (c) with Art. 17 DSA | The company that sends the mail (processor), the mail provider of the receiver | The text is emptied when the message is handed over; the record 30 days; a message that cannot be handed over is given up after about two days |
+| 12 | Backups | Everything of 3–10 and 13 | Restore after a failure | Art. 6 (1) (f), Art. 32 | Host | 30 days at most |
 
 No special categories are asked for; the terms forbid entering them about living people. No profiling, no
 automated decision. Transfers to third countries only as in row 4 and where the host or the network provider
@@ -79,7 +80,8 @@ belongs to a group from the USA (Data Privacy Framework or standard contractual 
 
 ## 3. Technical and organisational measures (Art. 32 GDPR)
 
-* **Less data**: no e-mail address, no real name, no date of birth; only years in trees; reports without
+* **Less data**: a mail address shown to nobody else and told to nobody (whether an address has an account is
+  not answered); no real name, no date of birth; only years in trees; reports without
   name or address; the identifier of Google or Microsoft only as a hash; metadata of JPEG and PNG removed.
 * **Private by default**: a photograph and a tree are seen by their owner only until the owner says otherwise;
   public only with consent of the living people concerned; pages of the private area and public trees are not
@@ -151,7 +153,8 @@ the request comes from the account. Answer within one month.
 3. Within 72 hours of knowing, report to the competent authority (its online form), unless a risk to people
    is unlikely.
 4. If the risk is high: tell everybody with `Dastan:Announcement` in both languages and on the first page –
-   the site has no addresses to write to – what happened, what to do (a new password), whom to ask.
+   and write to the accounts concerned at their addresses (the outbox, with a text of its own for the case) –
+   what happened, what to do (a new password), whom to ask.
 
 ### 4.6 Suspicion of a serious crime (Art. 18 DSA)
 
@@ -192,8 +195,10 @@ of third persons in family trees and photographs, which the supervisory authorit
 | Sensitive data about a person | Free text in names, captions, notes | No fields for them; forbidden by the terms; short limits of length; notice and removal | Text nobody reports |
 | A photograph of a child | Family pictures | Terms section 7; private by default; public only with the consent of tagged accounts, and children have none | A picture shared within a circle |
 | Somebody gets into an account | Weak or reused password | 12 characters, lock after five tries, limits per hour, sign-out everywhere, optional sign-in through a provider | A password given away |
-| A lost account | No e-mail to reset | Eight recovery codes, said clearly | Data deleted with an account nobody can open – none are exposed |
-| The store is taken | Attack on the server | Hashes, no addresses or real names, access for one person, encrypted transport, backups for 30 days | Names in trees and the pictures themselves |
+| A lost account | The password is lost | A link mailed to the confirmed address; eight recovery codes as the second way | An account whose address and codes are lost too cannot be opened by anybody – its data are deleted with it, none are exposed |
+| An account is taken over | Somebody reads the mailbox of a user | A link works once and for one hour; opening it changes nothing before the button of the page; every change of the way in is told to the address and signs out everywhere | Whoever has the mailbox has the account – as with every account that can be reset by mail |
+| An address is found out | Asking the site whether an address has an account | The same answer whether it has or not; the mail goes to who has the address; ten such mails an hour for a sender | None found |
+| The store is taken | Attack on the server | Hashes of passwords, codes and links; no real names; the texts of sent mail emptied; access for one person, encrypted transport, backups for 30 days | The mail addresses of the accounts, the names in trees and the pictures themselves |
 | A provider sees the traffic | Network provider in front of the site | Contract under Art. 28; Data Privacy Framework | To be confirmed by the owner |
 | Misuse of the notice form | False notices to silence somebody | A person decides; the user is told the reasons and can answer; limits per hour | – |
 

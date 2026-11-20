@@ -184,7 +184,7 @@ fragment is the behaviour of the browser and was not observed here.
 The second addendum left converting out: it needs a library, and a library is the owner's decision. The owner
 decided on SkiaSharp.
 
-* **The library**: `SkiaSharp` 4.154.1 and `SkiaSharp.NativeAssets.Linux.NoDependencies` 4.154.1, both MIT,
+* **The library**: `SkiaSharp` and `SkiaSharp.NativeAssets.Linux.NoDependencies` (4.154.1 when this was written; the version of today is at the end of this record), both MIT,
   published by Microsoft on nuget.org; the second brings the library for a Linux container and needs nothing
   of the system. Referenced by `Vafadar.Dastan.Data` only, behind `ImageSizes`: nothing else of the site
   knows the library. A version that was a few weeks old was taken, not one of the day.
@@ -269,3 +269,13 @@ that ends it. Everything else is left out, known or not. A file that is not buil
 kept: it "cannot be read". A file of the family of MP4 is a video only when it names a kind of MP4.
 
 Not changed: a WebP with EXIF or XMP is refused, as before; a video keeps what it says about its making.
+
+## The library on a later version (step 19.10, 2026-11-20)
+
+The library moved from 4.154.1 to **4.155.2**, and not further. Tried on Windows x64 with the tests of
+`ImageSizes`: with 4.156.2 and with 4.157.0 – the newest ones – the process ends with an access violation in
+the library (`sk_codec_new_from_stream`) when it is handed a file that is no image; no exception reaches the
+program. A site that takes photographs from visitors must not be ended by a file, so those versions are not
+taken, and the test "an image that cannot be read gets no smaller size" is what a later version is tried
+against before it is taken. 4.155.2 passes all 34 tests of the sizes. Whether the Linux library of the newer
+versions fails in the same way was not tried. The image of the container was built and started with 4.155.2.

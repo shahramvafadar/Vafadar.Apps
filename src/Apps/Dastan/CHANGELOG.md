@@ -367,3 +367,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   Solar Hijri on a Persian page, Gregorian otherwise – and is said to be converted.
 - A card that is chosen in a graph offers its timeline and its pictures; every name with dated statements has a
   timeline of its own.
+- The privacy notice and the terms say what an account is now: a name, a mail address that you confirm and
+  that nobody else is shown, and a password; which mail the site sends you and how long it keeps it; and that a
+  decision about your account is mailed to you with its reasons. In English, German and Persian.

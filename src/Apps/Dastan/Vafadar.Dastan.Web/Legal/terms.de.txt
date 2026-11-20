@@ -31,9 +31,9 @@ Soweit die Website dies angibt, erfordert ein neues Konto eine Einladung von jem
 
 Sie wählen einen Namen. Es muss nicht Ihr bürgerlicher Name sein. Er darf nicht vortäuschen, dass Sie jemand anderes, ein Unternehmen oder eine Behörde sind, darf niemanden beleidigen und darf weder die Adresse einer Website noch Werbung sein.
 
-## Ihr Passwort und Ihre Wiederherstellungscodes
+## Ihre E-Mail-Adresse, Ihr Passwort und Ihre Wiederherstellungscodes
 
-Wählen Sie ein Passwort, das Sie nirgendwo sonst verwenden, und halten Sie es geheim. Bewahren Sie die Wiederherstellungscodes an einem sicheren Ort auf. Die Website kennt keine E-Mail-Adresse von Ihnen und kann kein Passwort zurücksetzen: Wenn Sie das Passwort und alle Wiederherstellungscodes verlieren, kann niemand mehr auf das Konto zugreifen, und wir können nicht helfen. Wenn Sie annehmen, dass jemand anderes Ihr Passwort kennt, ändern Sie es sofort; dadurch wird das Konto überall abgemeldet.
+Geben Sie eine E-Mail-Adresse an, die Ihnen gehört und die Sie lesen: Das Konto funktioniert erst, nachdem Sie sie bestätigt haben, und was das Konto betrifft, wird dorthin gesandt. Wählen Sie ein Passwort, das Sie nirgendwo sonst verwenden, und halten Sie es geheim. Bewahren Sie die Wiederherstellungscodes an einem sicheren Ort auf. Wenn Sie das Passwort verlieren, können Sie mit einem an Ihre Adresse gesandten Link oder mit einem Wiederherstellungscode ein neues festlegen; wenn Sie das Passwort, den Zugang zur Adresse und alle Wiederherstellungscodes verlieren, kann niemand mehr auf das Konto zugreifen, und wir können nicht helfen. Wenn Sie annehmen, dass jemand anderes Ihr Passwort kennt, ändern Sie es sofort; dadurch wird das Konto überall abgemeldet.
 
 Sie stehen für das ein, was mit Ihrem Konto geschieht, es sei denn, Sie haben dies nicht zu vertreten.
 
@@ -125,7 +125,7 @@ Wir beschränken niemanden deshalb, weil er in gutem Glauben eine Meldung abgege
 
 # 11. Sie erfahren die Gründe und können widersprechen
 
-Wenn wir etwas von Ihnen beschränken, geben wir Ihnen eine Begründung. Weil die Website keine E-Mail-Adresse von Ihnen hat, lesen Sie sie auf der Seite Ihres Kontos; bei einem geschlossenen Konto lesen Sie sie, nachdem Sie auf der Anmeldeseite den Namen und das Passwort eingegeben haben. Sie gibt an:
+Wenn wir etwas von Ihnen beschränken, geben wir Ihnen eine Begründung. Wir senden sie an die E-Mail-Adresse Ihres Kontos, und Sie lesen sie außerdem auf der Seite Ihres Kontos; bei einem geschlossenen Konto lesen Sie sie dort, nachdem Sie auf der Anmeldeseite nachgewiesen haben, dass das Konto Ihres ist. Sie gibt an:
 
 - was beschränkt wurde, wo und für wie lange;
 - die Tatsachen und Umstände, auf denen die Entscheidung beruht, und ob sie auf eine Meldung hin oder aufgrund unserer eigenen Prüfung ergangen ist;
