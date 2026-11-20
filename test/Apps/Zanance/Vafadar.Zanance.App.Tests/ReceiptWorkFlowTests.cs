@@ -78,6 +78,7 @@ public sealed class ReceiptWorkFlowTests
     [InlineData(true, false, false)]
     [InlineData(true, true, false)]
     [InlineData(true, false, true)]
+    [InlineData(true, true, true)]
     public async Task Private_original_is_cleared_after_the_read_or_on_abandonment(bool allowUnlock, bool fails, bool aliasesCompact)
     {
         using var f = new FlowFixture();
@@ -102,8 +103,28 @@ public sealed class ReceiptWorkFlowTests
         Assert.Equal(allowUnlock ? 1 : 0, native.Read);
         Assert.Equal(allowUnlock ? expected : null, received);
         if (!aliasesCompact) Assert.All(original, value => Assert.Equal(0, value));
-        Assert.Equal(new byte[] { 1, 2 }, compact);
+        Assert.Equal(allowUnlock && !fails ? new byte[] { 1, 2 } : new byte[2], compact);
         Assert.Equal(allowUnlock && !fails ? 1 : 0, native.Drafts.Count);
+    }
+
+    [Fact]
+    public async Task Uncertain_navigation_keeps_the_document_already_handed_to_the_editor()
+    {
+        using var fixture = new FlowFixture();
+        using var provider = Provider(fixture, new Access());
+        byte[] pdf = [1, 2, 3];
+        var native = new Native
+        {
+            File = new("Fictitious.pdf", "application/pdf", pdf),
+            DuringOpen = () => Task.FromException(new IOException("Synthetic navigation failure")),
+        };
+        var session = Session(fixture, provider, native);
+
+        await session.PickAsync();
+
+        Assert.Equal(new byte[] { 1, 2, 3 }, pdf);
+        Assert.Equal(1, native.Read);
+        Assert.NotNull(session.Error);
     }
 
     /// <summary>The original local receipt parser remains available for both receipt entry points when AI is off.</summary>

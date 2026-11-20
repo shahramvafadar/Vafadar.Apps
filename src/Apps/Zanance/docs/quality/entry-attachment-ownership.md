@@ -154,3 +154,24 @@ isolated synthetic data and verify original source bytes and unchanged ownership
 The accepted Android viewer, OCR and financial interactions were not repeated.
 Strict Windows and Android Release builds passed. The signed offline Android APK
 SHA256 is 2a0c6876ef135e8b39f2eafdc7c45d6ec1728527e9a784533c5478485935324b.
+
+## Unpublished receipt files
+
+A newly picked receipt now has one owner until the original editor handoff is
+issued. A late picker result that never reaches the reading session clears both
+its compact content and any separate recognition image. Once admitted, the
+session clears unhanded content when the original operation is abandoned or
+fails. A PDF reader borrowing the same array retains intact bytes until its
+operation returns, even when the source page retires first. A deferred successful
+result retains its compact file across the lock cover. The editor handoff
+preserves its file even if the navigation task later reports failure after the
+destination may have adopted the draft.
+
+Four regressions failed on the baseline because abandoned compact bytes remained.
+All 80 selected receipt work, source, access and startup publication tests
+passed after the correction. The in-flight PDF case holds the actual deferred
+access callback, retires its origin, and checks intact bytes up to reader return,
+followed by clearing and no editor. All data were synthetic. The earlier Android
+receipt and financial acceptance interactions were not repeated.
+Strict Windows and Android Release builds passed. The signed offline Android APK
+SHA256 is 5a552e93e4ff7174445a60dd9772cda6518524f0690c7327e73cc16de59b94c7.

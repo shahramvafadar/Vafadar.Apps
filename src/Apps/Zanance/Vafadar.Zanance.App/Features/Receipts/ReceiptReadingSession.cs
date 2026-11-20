@@ -28,6 +28,9 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
         var completed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         CancellationTokenRegistration retirement = default;
         byte[]? transientOriginal = null;
+        var compactGate = new object();
+        byte[]? compactBytes = null;
+        var compactRetired = false;
         var publishing = false;
         bool Current() => origin?.IsCurrent == true && isCurrent?.Invoke() != false;
         void RequireCurrent()
@@ -40,7 +43,8 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             retirement = origin.Invalidated.Register(() =>
             {
                 // Own navigation may retire the source page before its original native Task completes.
-                if (!Volatile.Read(ref publishing)) completed.TrySetResult();
+                lock (compactGate)
+                    if (!publishing) completed.TrySetResult();
             });
             RequireCurrent();
             // D-952: capture the original page before startup notifications can replace it.
@@ -55,6 +59,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                 ? new ReceiptPickedFile(original.FileName, AttachmentFiles.ResolveContentType(original.FileName, original.ContentType), original.Data)
                 : await runtime.PickAsync();
             if (file is null) return;
+            if (original is null) compactBytes = file.Data;
             if (file.RecognitionData is { } recognitionData && !ReferenceEquals(recognitionData, file.Data))
                 transientOriginal = recognitionData;
             var hasTransientOriginal = transientOriginal is not null;
@@ -70,19 +75,22 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                 RequireCurrent();
                 await reader.ValidateAsync(reviewed);
                 RequireCurrent();
-                // Once the reader claims the original, only that reader may clear it, even if the page retires.
+                // PDFs can use the same bytes for reading and attachment. While the reader
+                // borrows that buffer, retirement can mark it for clearing but cannot clear it.
                 var originalBytes = Interlocked.Exchange(ref transientOriginal, null);
+                var borrowed = hasTransientOriginal ? null : TakeCompact();
                 TextLayoutResult document;
                 try
                 {
                     RequireCurrent();
-                    if (hasTransientOriginal && originalBytes is null)
-                        throw new OperationCanceledException("The original receipt buffer was released before recognition.");
-                    document = await runtime.ReadAsync(originalBytes ?? file.Data, file.ContentType);
+                    var recognitionBytes = originalBytes ?? borrowed
+                        ?? throw new OperationCanceledException("The original receipt buffer was released before recognition.");
+                    document = await runtime.ReadAsync(recognitionBytes, file.ContentType);
                 }
                 finally
                 {
                     if (originalBytes is not null) CryptographicOperations.ZeroMemory(originalBytes);
+                    if (borrowed is not null) ReturnCompact(borrowed);
                 }
                 RequireCurrent();
                 await reader.ValidateAsync(reviewed);
@@ -112,7 +120,13 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                     await draft.ValidateAsync(reader, entryId);
                     RequireCurrent();
                     if (runtime.RetainPublicationIfLocked(() => GuardedAsync(PublishAsync))) return true;
-                    Volatile.Write(ref publishing, true);
+                    lock (compactGate)
+                    {
+                        if (completed.Task.IsCompleted || compactRetired) return false;
+                        publishing = true;
+                        // The destination may have captured this buffer even if navigation later faults.
+                        compactBytes = null;
+                    }
                     await runtime.OpenEditorAsync(draft);
                     return false;
                 }
@@ -120,6 +134,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
+            RetireCompact();
             if (Current()) await QueueAsync(() => ShowFailureAsync(exception));
         }
         finally
@@ -128,7 +143,43 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             origin?.Dispose();
             var unusedOriginal = Interlocked.Exchange(ref transientOriginal, null);
             if (unusedOriginal is not null) CryptographicOperations.ZeroMemory(unusedOriginal);
+            RetireCompact();
             IsBusy = false;
+        }
+
+        byte[]? TakeCompact()
+        {
+            lock (compactGate)
+            {
+                var value = compactBytes;
+                compactBytes = null;
+                return value;
+            }
+        }
+
+        void ReturnCompact(byte[] value)
+        {
+            lock (compactGate)
+            {
+                if (!compactRetired)
+                {
+                    compactBytes = value;
+                    return;
+                }
+            }
+            CryptographicOperations.ZeroMemory(value);
+        }
+
+        void RetireCompact()
+        {
+            byte[]? unused;
+            lock (compactGate)
+            {
+                compactRetired = true;
+                unused = compactBytes;
+                compactBytes = null;
+            }
+            if (unused is not null) CryptographicOperations.ZeroMemory(unused);
         }
 
         async Task QueueAsync(Func<Task<bool>> stage)
@@ -145,6 +196,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             try { if (Current()) deferred = await stage(); }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
+                RetireCompact();
                 if (Current())
                 {
                     try { deferred = await ShowFailureAsync(exception); }

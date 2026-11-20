@@ -30,8 +30,10 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
                 async () => Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], forRecognition: true)),
                 null, discard: file =>
                 {
-                    if (file?.RecognitionData is { } original && !ReferenceEquals(original, file.Data))
+                    if (file is null) return;
+                    if (file.RecognitionData is { } original && !ReferenceEquals(original, file.Data))
                         CryptographicOperations.ZeroMemory(original);
+                    CryptographicOperations.ZeroMemory(file.Data);
                 });
         }
         catch (InvalidDataException exception) { throw new ReceiptPreparationException("Attachment_PhotoFailed", exception); }

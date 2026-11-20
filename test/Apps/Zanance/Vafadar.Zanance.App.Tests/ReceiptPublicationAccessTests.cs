@@ -30,7 +30,8 @@ public sealed class ReceiptPublicationAccessTests
         internal TextLayoutResult Document = new("FICTITIOUS ACCESS SHOP\nTOTAL EUR 24.50");
         internal Func<Task>? DuringRead, DuringAlert;
         public ReceiptReadOrigin CaptureOrigin() => new(() => OwnerCurrent, Retired.Token);
-        public Task<ReceiptPickedFile?> PickAsync() { Picks++; return Task.FromResult<ReceiptPickedFile?>(new("Fictitious compact.jpg", "image/jpeg", [1], [2])); }
+        internal ReceiptPickedFile File = new("Fictitious compact.jpg", "image/jpeg", [1], [2]);
+        public Task<ReceiptPickedFile?> PickAsync() { Picks++; return Task.FromResult<ReceiptPickedFile?>(File); }
         public async Task RunWhenUnlockedAsync(Func<Task> action) { await gate.RunWhenUnlockedAsync(action); Queued.TrySetResult(); }
         public async Task<bool> QueueWhenUnlockedAsync(Func<Task> action) { await RunWhenUnlockedAsync(action); return true; }
         public bool RetainPublicationIfLocked(Func<Task> continuation)
@@ -122,6 +123,44 @@ public sealed class ReceiptPublicationAccessTests
         Assert.Equal(1, native.Reads); Assert.Equal(0, native.Opens); Assert.Equal(1, native.Alerts); Assert.NotNull(session.Error);
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.Equal(otherBefore, await GoalChooserFlowTests.SnapshotAsync(other));
     }
+    [Fact]
+    public async Task Abandoned_pdf_stays_intact_until_its_inflight_reader_returns()
+    {
+        using var fixture = new FlowFixture();
+        var access = await AccessAsync(fixture);
+        await access.SleepAsync();
+        byte[] pdf = [1, 2, 3];
+        using var native = new Native(access) { File = new("Fictitious.pdf", "application/pdf", pdf) };
+        var received = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        byte[]? seenBeforeReturn = null;
+        native.DuringRead = async () =>
+        {
+            received.TrySetResult();
+            await release.Task.WaitAsync(TimeSpan.FromSeconds(20), Ct);
+            seenBeforeReturn = pdf.ToArray();
+        };
+
+        var running = Session(fixture, native).PickAsync();
+        await native.Queued.Task.WaitAsync(TimeSpan.FromSeconds(20), Ct);
+        var unlock = access.UnlockedAsync();
+        try
+        {
+            await received.Task.WaitAsync(TimeSpan.FromSeconds(20), Ct);
+            native.OwnerCurrent = false;
+            native.Retired.Cancel();
+            await running.WaitAsync(TimeSpan.FromSeconds(20), Ct);
+            Assert.Equal(new byte[] { 1, 2, 3 }, pdf);
+        }
+        finally { release.TrySetResult(); }
+        await unlock.WaitAsync(TimeSpan.FromSeconds(20), Ct);
+
+        Assert.Equal(new byte[] { 1, 2, 3 }, seenBeforeReturn);
+        Assert.All(pdf, value => Assert.Equal(0, value));
+        Assert.Equal(1, native.Reads);
+        Assert.Equal(0, native.Opens);
+    }
+
     [Fact]
     public async Task Already_covered_queued_read_keeps_busy_and_owner_retirement_prevents_first_recognition()
     {
