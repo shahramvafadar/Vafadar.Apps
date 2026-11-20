@@ -65,7 +65,9 @@ Each app is versioned independently.
 4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
    configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
    that bundle. The base manifest must contain the permanent package ID, requested display version and build number,
-   with debug and test-only flags off. Play-generated APK packaging and runtime page-size acceptance need their own checks. Download the
+   with debug and test-only flags off. Without a cloud-backup client ID, the bundle must omit INTERNET. A cloud-backup
+   bundle must request INTERNET without an SDK cap. Both editions must omit ACCESS_NETWORK_STATE. This workflow
+   leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size acceptance need their own checks. Download the
    verified `.aab` artifact, upload it in Play Console, then **delete the artifact** (artifacts of public
    repositories are downloadable by any signed-in GitHub user; the workflow keeps them only 3 days).
 5. Tag the commit: `git tag zanance/v1.2.0 && git push origin zanance/v1.2.0`.

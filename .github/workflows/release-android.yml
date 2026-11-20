@@ -119,6 +119,9 @@ jobs:
           -p:ApplicationDisplayVersion="$APP_VERSION"
           -p:ApplicationVersion="$APP_BUILD_NUMBER"
           -p:AndroidPackageFormats=aab
+          -p:ZanancePersonalSyncEnabled=false
+          -p:ZananceBillingEnabled=false
+          -p:ZananceBillingSandbox=false
           -p:AndroidKeyStore=true
           -p:AndroidSigningKeyStore="$RUNNER_TEMP/upload.keystore"
           -p:AndroidSigningKeyAlias="$ANDROID_KEY_ALIAS"
@@ -143,8 +146,12 @@ jobs:
             -p:VafadarMauiTargetFrameworks=net10.0-android \
             -t:_ResolveMonoAndroidSdks -getProperty:AndroidBundleToolJarPath)
           test -f "$bundletool" || { echo "::error::could not resolve the Android SDK bundletool"; exit 1; }
+          edition=offline
+          if [[ -n "$MicrosoftEntraClientId" || -n "$GoogleOAuthClientIdAndroid" ]]; then
+            edition=cloud-backup
+          fi
           java -jar "$bundletool" dump manifest --bundle="${bundles[0]}" | \
-            python eng/maui/verify-android-bundle-manifest.py pro.vafadar.zanance "$APP_VERSION" "$APP_BUILD_NUMBER"
+            python eng/maui/verify-android-bundle-manifest.py pro.vafadar.zanance "$APP_VERSION" "$APP_BUILD_NUMBER" "$edition"
           printf 'path=%s\n' "${bundles[0]}" >> "$GITHUB_OUTPUT"
 
       - name: Remove keystore

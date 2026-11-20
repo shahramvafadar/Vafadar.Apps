@@ -6,7 +6,7 @@ from xml.etree import ElementTree
 ANDROID = "{http://schemas.android.com/apk/res/android}"
 
 
-def verify_manifest(manifest, package, display_version, build_number):
+def verify_manifest(manifest, package, display_version, build_number, edition):
     """Require the requested release identity and a non-debuggable application."""
     if manifest.tag != "manifest":
         raise SystemExit("Expected a decoded Android manifest.")
@@ -25,7 +25,22 @@ def verify_manifest(manifest, package, display_version, build_number):
     for attribute in ("debuggable", "testOnly"):
         if applications[0].get(ANDROID + attribute, "false") != "false":
             raise SystemExit(f"Bundle enables or does not resolve android:{attribute}.")
-    print("Verified bundle package, version and release application flags.")
+    if edition not in ("offline", "cloud-backup"):
+        raise SystemExit("Unknown Android bundle edition.")
+    permissions = [element for element in manifest if element.tag.startswith("uses-permission")]
+    names = {element.get(ANDROID + "name") for element in permissions}
+    if "android.permission.ACCESS_NETWORK_STATE" in names:
+        raise SystemExit("Release bundle requests ACCESS_NETWORK_STATE.")
+    if edition == "offline" and "android.permission.INTERNET" in names:
+        raise SystemExit("Offline release bundle requests INTERNET.")
+    if edition == "cloud-backup" and not any(
+        element.tag == "uses-permission"
+        and element.get(ANDROID + "name") == "android.permission.INTERNET"
+        and element.get(ANDROID + "maxSdkVersion") is None
+        for element in permissions
+    ):
+        raise SystemExit("Cloud backup release bundle lacks unrestricted INTERNET.")
+    print("Verified bundle package, version, release flags and edition network permissions.")
 
 
 if __name__ == "__main__":
