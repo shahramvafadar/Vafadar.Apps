@@ -344,7 +344,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Verified (unit) |
 | AT-54 | Import failure / cancel | IO-11 | Integration + bounded physical Android | S12 | SQLite verified; D-317 native picker cancel and cold persisted ordinary Undo pass; other failure/aggregate/platform matrices remain distinct |
 | AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit + bounded physical Android | S12 | Unit verified; D-317 imported multiline note/tag and literal formula-like title display pass; export/spreadsheet acceptance is separate |
-| AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Verified (library + integration, SQLite) |
+| AT-56 | Wrong password / damaged / other app | BAK-10 | Unit + integration + native Android | S6 | Library and SQLite integration verified. [Native Android backup refusals](#at-56-native-android-backup-refusals) cover checksum damage and foreign app identity. [Native protected restore](#at-57-password-protected-restore-on-a-fresh-android-installation) covers the incorrect-password refusal. |
 | AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified at recorded scopes: integration and D-62 Windows protected/unprotected/preferences/no duplicate account; D-403 original unprotected same-phone independent full Release uninstall/reinstall, native first-run preview/cancel/accept, cold and51-table/74-row re-export equality with one original account, skipped plan and Monday. Permanent Main untouched. [Android emulator protected restore](#at-57-protected-restore-and-complete-original-row-comparison) matched 51 original tables and 74 rows, with the recorded timestamp and additive migration changes. Physical password-protected restore and iOS remain separate. |
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
 | AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Ready to run: implemented (D-35, D-50), needs a build with OAuth clients on a device – connect, back up with protection on/off (D-62), list, restore both package types, delete a cloud backup, disconnect, connect another account; per provider on Android, iOS and Windows. Google's token protocol on iOS/Windows is unit-tested (`Vafadar.Authentication.Tests`) |
@@ -4973,6 +4973,21 @@ pass; production code/APK, managed counts and unchanged prior successes are reta
 PID10005/three profiles/APK/OS match after exact owned cleanup and phone release. This is bounded
 unprotected same-phone independent reinstall evidence, not another phone, protected-password/iOS,
 whole QA-01, power-loss/ANR/A11Y/provider/store/release acceptance. See quality/physical-portable-fresh-install.md.
+
+## AT-56 native Android backup refusals
+
+The signed Offline Release APK `d72991d4` ran on an owned Android 16 x64 emulator with
+4096-byte pages. An independent synthetic profile had one zero-opening account. The native Backup
+page selected two hash-matched files through Android's document picker. The first had a valid
+manifest and content for a different app identity (`b07b879f`). The second retained Zanance's
+identity with a mismatched payload checksum (`39838f1c`).
+
+The screen reported the distinct foreign-app and damaged-backup errors before offering any
+replacement confirmation. Cancelling the first refusal cleared it and allowed the second file
+to be selected. After both refusals, the same process (3109) showed the original account, EUR 0.00
+and an empty all-time transaction list. Neither test accepted replacement or entered authentication.
+The earlier wrong-password case was not repeated. The owned emulator was retired. Local receipts
+and raw hierarchies are under `artifacts/at56-backup-refusal`.
 
 ## AT-57 password-protected restore on a fresh Android installation
 
