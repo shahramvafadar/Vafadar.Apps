@@ -80,9 +80,10 @@ form sets/changes/removes it with current/new/confirmation fields, all validatio
 visible Back action, and masked numeric inputs accepting native digits. PIN takes precedence if both are enabled.
 The unlock cover exposes no financial data; a forgotten-PIN button requires successful device authentication and
 explicit confirmation before removal. No-device-auth and cancellation leave access locked. The first startup frame
-is blank until protected state is read. A separate Android screenshot switch is on by default, applies immediately,
-and explains platform limits and persistent recents protection. Both topics have full help and examples in six
-languages. About states proprietary ownership separately from its compact third-party notices button.
+is blank until protected state is read. On Android 13 and later, the separate screenshot switch is on by default,
+applies immediately, and explains platform limits and persistent recents protection. On Android 12 and earlier,
+the switch is checked and disabled with a localized explanation. About states proprietary ownership separately
+from its compact third-party notices button.
 
 ### First run (D-62)
 
