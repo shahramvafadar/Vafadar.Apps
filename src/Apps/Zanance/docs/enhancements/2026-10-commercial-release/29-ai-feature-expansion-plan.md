@@ -71,6 +71,21 @@ label. Only synthetic zero-opening accounts were set up. No ledger, provider or 
 command was used. The disposable emulator was retired. Evidence is under
 `artifacts/ai-opt-out-profile-scope`.
 
+An owned Android 7 (API 24, x86-64) emulator verified a signed offline Release
+upgrade without clearing data, from SHA-256
+`2ebfabde50cb91f5105b14ab949fb633f0ce01e90f3fe06e48eb259e85b14271`
+to revision `c90741d9`, SHA-256
+`b2b93585bcf9217de55b6ceb22042022ad46bd06ff4dcef6ec2e2543e53cca41`.
+Both installed APKs matched the signed files by hash. The upgrade kept the
+guest boot and package UID. AI was turned off once before the upgrade. After
+the upgrade, Settings still showed AI off, More omitted Analysis, and Home
+kept the original synthetic account, EUR 0.00, and the classic receipt,
+expense and transfer actions. This checks visible state across the upgrade.
+Receipt recognition was covered by the focused fallback tests above and was
+not rerun here. No provider, receipt input, share, or ledger write was used.
+The owned installation and emulator were retired. Native evidence and the
+upgrade receipts are under `artifacts/ai-opt-out-api24-upgrade`.
+
 Turning AI off also retires an already-open Analysis presentation. A synthetic
 regression exposed a prior completed result and request snapshot that stayed
 bound until the next account load. The retired feature session now clears the
