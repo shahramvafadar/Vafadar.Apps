@@ -329,3 +329,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   of a collection shows each subject as a card with the same.
 - The tool of the editors asks for the facts the kind of an entity has, marks an essential one that is missing,
   and lists what the profiles lack before a revision is made – as notes that stop nothing.
+- A person of a family tree has a page of their own, with a picture or a drawing, when and where they were
+  born and died, a few words about them and their family. A date can be a day, a month or a year of the
+  Gregorian or the Solar Hijri calendar, "about", between two years, or said to be not known.
+- What is kept about a person depends on who they are: of somebody who died, what the family knows; of
+  somebody who says a record is them, what they write themselves; of a child, what a parent decides. Of
+  somebody who lives and was not asked, a tree keeps a name, the years and the family – nothing else – and
+  the page says so. The picture of a person is seen by exactly those who may see that photograph.

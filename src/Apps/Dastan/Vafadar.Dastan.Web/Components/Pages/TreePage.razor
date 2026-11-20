@@ -111,7 +111,7 @@
                 @foreach (var person in _tree.People)
                 {
                     <li id="@($"person-{person.Id}")">
-                        <p><strong dir="auto">@person.Name</strong> <span class="meta">@Years(person)</span></p>
+                        <p><strong><a href="@($"account/trees/{_tree.Tree.Id}/person/{person.Id}")" dir="auto">@person.Name</a></strong> <span class="meta">@Years(person)</span></p>
                         @if (!person.Parents.IsEmpty)
                         {
                             <p class="meta">@T["Tree_Parents"] @Named(person.Parents)</p>
@@ -484,19 +484,57 @@
             <label for="@($"{id}-name")">@T["Tree_Person_Name"]</label>
             <input id="@($"{id}-name")" name="name" type="text" required maxlength="@PeopleStore.LongestTreeName" value="@person?.Name" autocomplete="off" dir="auto" />
         </p>
-        <p class="field">
-            <label for="@($"{id}-born")">@T["Tree_Person_Born"]</label>
-            <input id="@($"{id}-born")" name="born" type="text" inputmode="numeric" maxlength="4" value="@person?.Born?.ToString(CultureInfo.InvariantCulture)" autocomplete="off" dir="ltr" />
-        </p>
-        <p class="field">
-            <label for="@($"{id}-died")">@T["Tree_Person_Died"]</label>
-            <input id="@($"{id}-died")" name="died" type="text" inputmode="numeric" maxlength="4" value="@person?.Died?.ToString(CultureInfo.InvariantCulture)" autocomplete="off" dir="ltr" />
-        </p>
+        @Time($"{id}-born", "born", person?.Born)
+        @Time($"{id}-died", "died", person?.Died)
         <p class="tick">
             <input type="checkbox" id="@($"{id}-deceased")" name="deceased" value="yes" checked="@(person?.Deceased == true)" />
             <label for="@($"{id}-deceased")">@T["Tree_Person_Deceased"]</label>
         </p>
     };
+
+    // The fields of one time of a record (step 19.5): the year, as before, and – folded away until somebody needs
+    // them – the month and the day, the calendar, a latest year, "about" and "not known".
+    private RenderFragment Time(string id, string name, Vafadar.Temporal.TemporalExpression? time) => __builder =>
+    {
+        var calendar = TreeEndpoints.CalendarOf(Visitor.Language.Tag);
+        var fields = TreeEndpoints.Fields(time, calendar);
+        <p class="field">
+            <label for="@id">@T[$"Tree_Person_{name}"]</label>
+            <input id="@id" name="@name" type="text" inputmode="numeric" maxlength="4" value="@Written(fields.Year)" autocomplete="off" dir="ltr" />
+        </p>
+        <details class="finer" open="@fields.Finer(calendar)">
+            <summary>@T[$"Tree_Time_More_{name}"]</summary>
+            <p class="field">
+                <label for="@($"{id}-month")">@T["Tree_Time_Month"]</label>
+                <input id="@($"{id}-month")" name="@($"{name}-month")" type="text" inputmode="numeric" maxlength="2" value="@Written(fields.Month)" autocomplete="off" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="@($"{id}-day")">@T["Tree_Time_Day"]</label>
+                <input id="@($"{id}-day")" name="@($"{name}-day")" type="text" inputmode="numeric" maxlength="2" value="@Written(fields.Day)" autocomplete="off" dir="ltr" />
+            </p>
+            <p class="field">
+                <label for="@($"{id}-calendar")">@T["Tree_Time_Calendar"]</label>
+                <select id="@($"{id}-calendar")" name="@($"{name}-calendar")">
+                    <option value="gregorian" selected="@(fields.Calendar == "gregorian")">@T["Tree_Calendar_gregorian"]</option>
+                    <option value="solar-hijri" selected="@(fields.Calendar == "solar-hijri")">@T["Tree_Calendar_solar-hijri"]</option>
+                </select>
+            </p>
+            <p class="field">
+                <label for="@($"{id}-latest")">@T["Tree_Time_Latest"]</label>
+                <input id="@($"{id}-latest")" name="@($"{name}-latest")" type="text" inputmode="numeric" maxlength="4" value="@Written(fields.Latest)" autocomplete="off" dir="ltr" />
+            </p>
+            <p class="tick">
+                <input type="checkbox" id="@($"{id}-about")" name="@($"{name}-about")" value="yes" checked="@fields.About" />
+                <label for="@($"{id}-about")">@T["Tree_Time_About"]</label>
+            </p>
+            <p class="tick">
+                <input type="checkbox" id="@($"{id}-unknown")" name="@($"{name}-unknown")" value="yes" checked="@fields.Unknown" />
+                <label for="@($"{id}-unknown")">@T["Tree_Time_Unknown"]</label>
+            </p>
+        </details>
+    };
+
+    private static string? Written(int? number) => number?.ToString(CultureInfo.InvariantCulture);
 
     // What was wrong with a form, said above it.
     private RenderFragment Problems(string form) => __builder =>

@@ -163,7 +163,10 @@ see, every act tried by the wrong account). Looked at in a browser with two acco
   something public is step 16.6.
 * **A record of a person needs no account** (PRIV-002) and says little on purpose (PRIV-003): a name and,
   when they are known, the year of birth and of death, and whether the person has died. No day, no place, no
-  note, no picture. A tree holds 500 records; an account owns 20 trees.
+  note, no picture. A tree holds 500 records; an account owns 20 trees. *(Since step 19.5 a record states
+  times instead of years, and more can be kept of somebody who died, of somebody who says it themself and of a
+  child whose parent decides – never of a living person nobody asked:
+  [ADR 0017](0017-node-profile.md).)*
 * **Links** are "a parent of" and "the partner of". The same link is not made twice, a record is not linked
   to itself, and nobody becomes their own ancestor.
 * **Every change is kept with who made it** (D-054): what was done, what it was done to as it was named then,

@@ -139,7 +139,8 @@ public sealed partial class PeopleStore
 
         return new(
             whole.Tree with { Role = TreeRole.None },
-            [.. whole.People.Select(person => person with { Account = null, Claimable = false })],
+            // The picture of a person is public only where that photograph is.
+            [.. whole.People.Select(person => person with { Account = null, Claimable = false, MayDescribe = false, Picture = person.Picture is { } picture ? Photo(null, picture.Id) : null })],
             whole.Links,
             [],
             []);

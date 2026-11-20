@@ -77,7 +77,41 @@ statement that needs its own review is a dated statement or a relation. **The sa
 picture**: its museum images are references that may not be shown, and the diagram of the project is no
 portrait of anybody, so every profile of the sample shows the drawing of its kind and says so.
 
-**Not built yet:** the people of a private tree as nodes with this contract – times instead of years, places,
-a picture among the owner's photographs, and what may be kept about a living person who was not asked
-(PRIV-003) – which is part four of the step; the card in a graph, which the graph of step 19.8 draws.
+**The people of a private tree (2026-11-20, step 19.5, part four).**
+
+* *Times, not years.* The record of a person states when they were born and died as an expression of
+  `Vafadar.Temporal` (`PersonTime`): a year, a month or a day of the Gregorian or the Solar Hijri calendar,
+  exact or about; a time known only to lie between two years; or the statement that it is not known. The
+  store refuses every other shape of time and a death before the birth – in one calendar as far as both times
+  say (year, month, day), across two calendars by the years of the common era the times can lie in. The form
+  keeps the one field for the year and folds the rest away below it.
+* *What is kept of whom (PRIV-003).* Beyond the name, the times and the family a record can say where
+  somebody was born and died, a few words about them, and a picture. Who may say it depends on who the
+  person is: **somebody who died** – who may change the tree; **somebody whose account the record is** – that
+  account and nobody else, not the owner of the tree either; **a child** (a living person whose record says
+  a birth less than 18 years ago) – an account that is a parent of the child in this tree, and nobody else;
+  **a living person nobody asked** – nobody: the store keeps nothing, the form is not there, and the page says
+  why. The day of birth of a living person is theirs to say as well: a record made or changed by somebody
+  else says the year. When an account says that a record is not them after all, what it wrote about itself
+  goes with it; when a child is grown, what a parent wrote is not shown any more.
+* *The picture* is one of the photographs of who chooses it. It is shown to exactly those who may see that
+  photograph – the store asks the rule of the photograph with every view – so the tree widens the audience
+  of no photograph. Everybody else sees the drawing of a person. A photograph that is removed is no picture
+  any more.
+* *On the site.* Every person has a page below the tree (`/account/trees/{tree}/person/{id}`, and
+  `/trees/{tree}/person/{id}` for a tree that is public): the picture or the drawing, the times as they were
+  stated, the places, "not known" for what is not stated, the words, the family with ways to the others, and
+  the form for who may say more. A public tree shows the picture only when that photograph is public. No
+  script, and no search engine is asked in.
+* *The copy of one's data* writes the times as they are kept, the places, the words and whether there is a
+  picture.
+
+**Decided while building:** the age below which a parent decides is **18**, not the 16 from which somebody may
+have an account (D-061): from 16 on a person can say the record is theirs and then decides alone; between 16
+and 18 without an account a parent in the tree still does. A record of a child stays out of a public tree as
+before – a living person without an account stands in the way of making a tree public. The places are words,
+not nodes: a private tree has no places of its own to point at, and pointing at a place of a published
+collection is part of the relationships of step 19.6.
+
+**Not built yet:** the card in a graph, which the graph of step 19.8 draws.
 

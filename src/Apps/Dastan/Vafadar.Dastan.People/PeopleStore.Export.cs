@@ -139,9 +139,13 @@ public sealed partial class PeopleStore
             .Select(person => (JsonNode)new JsonObject
             {
                 ["name"] = person.Name,
-                ["born"] = person.Born,
-                ["died"] = person.Died,
+                ["born"] = person.Born is { } born ? JsonNode.Parse(PersonTime.Write(born)!) : null,
+                ["died"] = person.Died is { } died ? JsonNode.Parse(PersonTime.Write(died)!) : null,
                 ["deceased"] = person.Deceased,
+                ["bornAt"] = person.BirthPlace,
+                ["diedAt"] = person.DeathPlace,
+                ["about"] = person.About,
+                ["hasPicture"] = person.Picture is not null,
                 ["account"] = person.Account?.Name,
             })]),
         ["links"] = new JsonArray([.. tree.Links

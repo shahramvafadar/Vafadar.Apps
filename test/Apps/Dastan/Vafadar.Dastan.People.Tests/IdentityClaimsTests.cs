@@ -80,7 +80,7 @@ public sealed class IdentityClaimsTests : IDisposable
 
         var after = _store.Tree(_dara, _tree)!;
         Assert.Equal("Sara", after.Person(_record).Account?.Name);
-        Assert.Equal(("Sara Rad", 1990), (after.Person(_record).Name, after.Person(_record).Born));
+        Assert.Equal(("Sara Rad", 1990), (after.Person(_record).Name, after.Person(_record).Born.Year()));
         Assert.Empty(after.Claims);
 
         // No audience is wider: who may see, may still only see; who may not see, still sees nothing.

@@ -45,7 +45,7 @@ public sealed class FamilyTreePagesTests : IDisposable
         var added = await Send(visitor, page, "person-add", ("name", name), ("born", born), ("died", died));
         Assert.Equal($"{page}?said=person-added#people", added.Response.Headers.Location?.OriginalString);
         var html = (await visitor.Get(page)).Html;
-        return Regex.Matches(html, "<li id=\"person-([a-f0-9]{32})\"><p><strong dir=\"auto\">([^<]+)</strong>").First(match => WebUtility.HtmlDecode(match.Groups[2].Value) == name).Groups[1].Value;
+        return Regex.Matches(html, "<li id=\"person-([a-f0-9]{32})\"><p><strong><a href=\"[^\"]+\" dir=\"auto\">([^<]+)</a></strong>").First(match => WebUtility.HtmlDecode(match.Groups[2].Value) == name).Groups[1].Value;
     }
 
     // The two show a relationship; returns the identifier of the second account.
@@ -105,7 +105,7 @@ public sealed class FamilyTreePagesTests : IDisposable
 
         var tree = await mina.Get(page);
         Assert.Contains("This tree is yours.", tree.Main, StringComparison.Ordinal);
-        Assert.Matches("Rostam</strong>\\s*<span class=\"meta\">1300–1380</span>", tree.Main);
+        Assert.Matches("Rostam</a></strong>\\s*<span class=\"meta\">1300–1380</span>", tree.Main);
         Assert.Contains("Parents: Zal, Rudabeh", tree.Main, StringComparison.Ordinal);
         Assert.Contains("Partner: Rudabeh", tree.Main, StringComparison.Ordinal);
         Assert.Contains("Children: Rostam", tree.Main, StringComparison.Ordinal);
@@ -498,7 +498,7 @@ public sealed class FamilyTreePagesTests : IDisposable
         Assert.Equal(HttpStatusCode.OK, shown.Status);
         Assert.Contains("Everybody living it names has agreed", shown.Main, StringComparison.Ordinal);
         Assert.Contains("<svg class=\"graph tree\"", shown.Html, StringComparison.Ordinal);
-        Assert.Matches("Zal</strong>\\s*<span class=\"meta\">1870–1950</span>", shown.Main);
+        Assert.Matches("Zal</a></strong>\\s*<span class=\"meta\">1870–1950</span>", shown.Main);
         Assert.Contains("Sara Rad", shown.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("Mina", shown.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("This is the account", shown.Main, StringComparison.Ordinal);
@@ -537,7 +537,7 @@ public sealed class FamilyTreePagesTests : IDisposable
         var shown = await _site.Visitor().Get($"/en/trees/{Id(page)}");
         Assert.Equal(HttpStatusCode.OK, shown.Status);
         Assert.Contains("Sam", shown.Main, StringComparison.Ordinal);
-        Assert.Matches("Simin</strong>\\s*<span class=\"meta\">deceased</span>", shown.Main);
+        Assert.Matches("Simin</a></strong>\\s*<span class=\"meta\">deceased</span>", shown.Main);
 
         // Somebody living added afterwards hides it until that is settled.
         await Send(mina, page, "person-add", ("name", "Somebody living"), ("born", ""), ("died", ""));

@@ -1,0 +1,148 @@
+@page "/account/trees/{Tree}/person/{Id}"
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* A person of a family tree (step 19.5, ADR 0017): the profile – a picture or a drawing, when and where they
+   were born and died, a few words, the family – for who may see the tree. Who may say more about the person
+   gets the form for it: the person themself, who may change the tree for somebody who died, a parent for a
+   child (PRIV-003); the store decides. Who may not see the tree gets "not found". *@
+@if (_tree is not null && _person is not null)
+{
+    <PageTitle>@_person.Name – @_tree.Tree.Name – @T["Site_Name"]</PageTitle>
+    <PageAddress None="true" />
+    <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+    <header class="page-header">
+        <h1 dir="auto">@_person.Name</h1>
+        <p class="lead">@T["Person_In"] <a href="@($"account/trees/{_tree.Tree.Id}")" dir="auto">@_tree.Tree.Name</a></p>
+        @if (_person.Account is { } account)
+        {
+            <p class="meta">@T["Tree_Claim_Is"] <a href="@($"people/{account.Id}")"><bdi>@account.Name</bdi></a></p>
+        }
+    </header>
+
+    @if (_said)
+    {
+        <p class="note" role="status">@T["Person_Said_described"]</p>
+    }
+
+    <PersonProfile Tree="_tree" Person="_person" Address="@($"account/trees/{_tree.Tree.Id}")" />
+
+    @if (_person.MayDescribe)
+    {
+        <section id="describe" aria-labelledby="describe-title">
+            <h2 id="describe-title">@T["Person_Describe_Title"]</h2>
+            <p>@T[$"Person_Describe_Lead_{(_person.Account?.Id == _viewer ? "self" : _person.Deceased ? "deceased" : "child")}"]</p>
+            @if (_problem is not null)
+            {
+                <div class="problems" role="alert"><ul>
+                    <li>@T[$"Person_Problem_{_problem}"]</li>
+                </ul></div>
+            }
+            <form method="post" action="@($"{TreeEndpoints.Root}/person-describe")" class="account">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@_here" />
+                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                <input type="hidden" name="person" value="@_person.Id" />
+                <p class="field">
+                    <label for="born-at">@T["Person_BornAt"]</label>
+                    <input id="born-at" name="bornAt" type="text" maxlength="@PeopleStore.LongestPlace" value="@_person.BirthPlace" autocomplete="off" dir="auto" />
+                </p>
+                @if (_person.Deceased)
+                {
+                    <p class="field">
+                        <label for="died-at">@T["Person_DiedAt"]</label>
+                        <input id="died-at" name="diedAt" type="text" maxlength="@PeopleStore.LongestPlace" value="@_person.DeathPlace" autocomplete="off" dir="auto" />
+                    </p>
+                }
+                <p class="field">
+                    <label for="about-words">@T["Person_About"]</label>
+                    <textarea id="about-words" name="about" rows="5" maxlength="@PeopleStore.LongestAbout" dir="auto">@_person.About</textarea>
+                </p>
+                <p class="field">
+                    <label for="picture">@T["Person_Picture"]</label>
+                    <select id="picture" name="picture" aria-describedby="picture-note">
+                        <option value="">@T["Person_Picture_None"]</option>
+                        @if (_person.Picture is { } kept && _photos.All(photo => photo.Id != kept.Id))
+                        {
+                            <option value="@kept.Id" selected>@T["Person_Picture_Kept"]</option>
+                        }
+                        @foreach (var photo in _photos)
+                        {
+                            <option value="@photo.Id" selected="@(_person.Picture?.Id == photo.Id)">@Titled(photo)</option>
+                        }
+                    </select>
+                </p>
+                <p class="meta" id="picture-note">@T["Person_Picture_Note"] <a href="account/photos">@T["Photos_Title"]</a></p>
+                <p><button type="submit" class="action">@T["Person_Describe_Save"]</button></p>
+            </form>
+        </section>
+    }
+}
+
+<ReportLink />
+
+@code {
+    private static readonly string[] Known = ["not-asked", "long", "picture"];
+
+    private TreeView? _tree;
+    private TreePerson? _person;
+    private IReadOnlyList<PhotoInfo> _photos = [];
+    private string? _viewer;
+    private bool _said;
+    private string? _problem;
+    private string _here = TreeEndpoints.Page;
+
+    /// <summary>Gets or sets the identifier of the tree.</summary>
+    [Parameter]
+    public string Tree { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the person.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    [SupplyParameterFromQuery]
+    private string? Said { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Form { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Problem { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (Desk.IsOpen && Tree.Length <= 40 && Id.Length <= 40 && AccountDesk.Session(Context.User) is { } session)
+        {
+            using var store = Desk.Open();
+            _viewer = session.Id;
+            _tree = store.Tree(session.Id, Tree);
+            _person = _tree?.People.FirstOrDefault(person => person.Id == Id);
+            if (_person?.MayDescribe == true)
+            {
+                _photos = store.Photos(session.Id);
+            }
+        }
+
+        if (_tree is null || _person is null)
+        {
+            // A tree that is not shared with somebody does not exist for them, and neither do its people.
+            Navigation.NotFound();
+            return;
+        }
+
+        _here = $"/{Visitor.Language.Tag}{TreeEndpoints.Page}/{_tree.Tree.Id}/person/{_person.Id}";
+        _said = Said == "described";
+        _problem = Form == "describe" && Known.Contains(Problem, StringComparer.Ordinal) ? Problem : null;
+    }
+
+    private string Titled(PhotoInfo photo) => photo.Caption.Length > 0
+        ? photo.Caption
+        : string.Format(CultureInfo.CurrentCulture, T["Person_Picture_Untitled"], TimeText.Of(DateOnly.FromDateTime(photo.SharedAt), Visitor, T));
+}

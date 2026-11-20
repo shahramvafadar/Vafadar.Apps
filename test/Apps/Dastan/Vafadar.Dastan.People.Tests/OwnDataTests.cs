@@ -93,7 +93,7 @@ public sealed class OwnDataTests : IDisposable
         Assert.Equal("""[{"name":"Close","members":["Sara"]}]""", copy["circles"]!.ToJsonString());
         var written = Assert.Single(copy["trees"]!.AsArray())!;
         Assert.Equal("The Rad family", (string?)written["name"]);
-        Assert.Equal("""[{"name":"Rostam","born":null,"died":null,"deceased":false,"account":null},{"name":"Zal","born":1270,"died":null,"deceased":true,"account":null}]""", written["people"]!.ToJsonString());
+        Assert.Equal("""[{"name":"Rostam","born":null,"died":null,"deceased":false,"bornAt":null,"diedAt":null,"about":null,"hasPicture":false,"account":null},{"name":"Zal","born":""" + Vafadar.Temporal.TemporalJson.Serialize(TestPersons.Year(1270)!) + ""","died":null,"deceased":true,"bornAt":null,"diedAt":null,"about":null,"hasPicture":false,"account":null}]""", written["people"]!.ToJsonString());
         Assert.Equal("""[{"kind":"parent","from":"Zal","to":"Rostam"}]""", written["links"]!.ToJsonString());
         Assert.Equal("""[{"account":"Sara","role":"editor"}]""", written["sharedWith"]!.ToJsonString());
         Assert.Equal(5, written["history"]!.AsArray().Count);

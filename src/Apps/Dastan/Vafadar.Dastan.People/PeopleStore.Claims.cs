@@ -121,6 +121,9 @@ public sealed partial class PeopleStore
         {
             record.Account = null;
             ForgetConsent(tree, id);
+
+            // What the account said about itself goes with it: of a living person nobody asked, nothing is kept.
+            ForgetProfileIfNotKept(record);
         }
 
         Record(tree, id, "claim-withdrawn", record.Name);

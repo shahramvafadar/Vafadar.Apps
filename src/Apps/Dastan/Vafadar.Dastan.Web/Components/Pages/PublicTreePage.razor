@@ -40,7 +40,7 @@
             @foreach (var person in _tree.People)
             {
                 <li id="@($"person-{person.Id}")">
-                    <p><strong dir="auto">@person.Name</strong> <span class="meta">@TreeEndpoints.Years(person, T, Visitor)</span></p>
+                    <p><strong><a href="@($"trees/{_tree.Tree.Id}/person/{person.Id}")" dir="auto">@person.Name</a></strong> <span class="meta">@TreeEndpoints.Years(person, T, Visitor)</span></p>
                     @if (!person.Parents.IsEmpty)
                     {
                         <p class="meta">@T["Tree_Parents"] @Named(person.Parents)</p>
