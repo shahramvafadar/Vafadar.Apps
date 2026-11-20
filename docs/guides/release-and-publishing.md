@@ -75,6 +75,24 @@ Each app is versioned independently.
 Future improvement: upload directly to the Play internal track from the workflow (Google Play Developer API with a
 service account), so no artifact is needed.
 
+### Local split APK evidence
+
+On 20 November 2026, the Android SDK's bundletool 1.17.0 generated four split APKs from the retained Zanance x64 AAB
+(SHA-256 `151179293cfef173fb438cbf30630acfec12daf13f41e2f506189fcba28`). The synthetic device specification
+selected API 36, x86_64, English and density 420. This required the installed build-tools 36.0.0 AAPT2 path because
+the SDK's bundletool archive did not embed an AAPT2 binary.
+
+All four splits passed APK signature verification with the same disposable test certificate and passed
+`zipalign -c -P 16 4`. The master split reported `pro.vafadar.zanance`, version 0.1.0 and build number 1.
+Although the 13 native libraries in the input AAB are compressed, the generated x64 split stores them
+without compression. Each starts at a 16 KiB offset, and each library's SHA-256 matches the input.
+AAB compression alone does not predict how libraries will be carried in APK splits.
+
+The input bundle was unchanged. Local evidence includes the device specification, source digest, split
+signature and alignment receipts, and native-entry comparisons. Play signing, ARM64 output, installation and
+execution on a device with 16 KiB pages remain separate acceptance checks. See the
+[Android bundletool guide](https://developer.android.com/tools/bundletool).
+
 ## iOS (after the Android version is complete)
 
 * Apple Developer Program membership; App Store Connect app with bundle id `pro.vafadar.<app>`.
