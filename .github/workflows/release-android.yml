@@ -136,6 +136,7 @@ jobs:
             exit 1
           fi
           java eng/maui/VerifyAndroidBundle.java "${bundles[0]}" "$RUNNER_TEMP/upload.keystore"
+          python eng/maui/verify-android-bundle-elf.py "${bundles[0]}"
           printf 'path=%s\n' "${bundles[0]}" >> "$GITHUB_OUTPUT"
 
       - name: Remove keystore

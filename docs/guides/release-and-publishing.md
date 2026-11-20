@@ -62,7 +62,10 @@ Each app is versioned independently.
 2. GitHub → Actions → **Release (Android)** → *Run workflow*: choose the app, enter the display version and the next
    build number. Google Play caps the Android version code at 2100000000. The workflow verifies the allowed range; check the last used code in Play Console before choosing the next one.
 3. Approve the `production` environment deployment.
-4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the configured upload certificate. Download the verified `.aab` artifact, upload it in Play Console, then **delete the artifact** (artifacts of public
+4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
+   configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
+   that bundle. Play-generated APK packaging and runtime page-size acceptance need their own checks. Download the
+   verified `.aab` artifact, upload it in Play Console, then **delete the artifact** (artifacts of public
    repositories are downloadable by any signed-in GitHub user; the workflow keeps them only 3 days).
 5. Tag the commit: `git tag zanance/v1.2.0 && git push origin zanance/v1.2.0`.
 
