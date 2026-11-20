@@ -159,9 +159,13 @@ jobs:
           DASTAN_POSTGRES_REQUIRED: '1'
           DASTAN_BROWSER: ws://127.0.0.1:53333/
           DASTAN_BROWSER_ENGINE: ${{ matrix.engine }}
-        run: >
-          dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Browser.Tests --configuration Release --no-build
-          --max-threads 2 --report-trx --results-directory "${{ github.workspace }}/TestResults"
+          # The budgets of time of the graph are times of the machine of development: a shared runner writes
+          # its times down, into the results that are uploaded, and does not judge them.
+          DASTAN_BUDGETS: record
+          DASTAN_MEASURES: ${{ github.workspace }}/TestResults/graph-measures.tsv
+        run: |
+          mkdir -p "${{ github.workspace }}/TestResults"
+          dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Browser.Tests --configuration Release --no-build --max-threads 2 --report-trx --results-directory "${{ github.workspace }}/TestResults"
 
       # The log of a job and its files can be read only by who is signed in; a notice of a run can be read by
       # everybody. So the tests that failed are named as notices, with the beginning of what they said.

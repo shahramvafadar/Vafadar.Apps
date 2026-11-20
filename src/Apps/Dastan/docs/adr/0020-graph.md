@@ -127,6 +127,12 @@ first run: drawn within 2 s, 6 s and 30 s, a step with the keyboard within 0.3 s
 | 10,000 | 2.9 MB | 2.7 s, 40 ms | 4.1 s, 19 ms | 3.4 s, 131 ms | 75 |
 
 Above 150 cards only what is in sight is in the page. All are far inside the budgets, so the control stays.
+The budgets are judged on the machine of development only. On the shared runner of CI, where two tests run
+beside each other, the first whole run (2026-11-20) took 593 ms for a step among 100 people in WebKit, twice
+the budget, while Chromium and Firefox stayed inside; that measures the runner, so CI writes its times into
+the uploaded results (`graph-measures.tsv`) and does not judge them (`DASTAN_BUDGETS=record`). What does not
+depend on the machine – every card is there, a step moves the choice, only what is in sight is in the page –
+is asserted there too.
 What the numbers do not say: the answer of the site for so many nodes (the collection has none so large, and
 a page asks for a neighbourhood, not for everything); a phone; a slow connection, on which the 2.5 MB of the
 script (625 kB compressed) are felt on the first page with a graph and kept by the browser afterwards.
