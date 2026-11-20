@@ -1496,7 +1496,7 @@ JPEG, PNG, HEIC and PDF. This sends recognized image extensions through the exis
 preparation path. A stored attachment with a generic media type uses the resolved type for
 viewing and local OCR without changing its stored metadata or bytes. Five focused resolver
 cases and one synthetic SQLite-backed stored PDF reread passed. Strict Windows and Android builds
-passed. Signed offline APK e40e828 passed the signature, identity, offline manifest and static
+passed. Signed offline APK `fe40e828` passed the signature, identity, offline manifest and static
 16 KiB alignment checks. Native coverage for a picker
 that supplies a generic media type remains open.
 
