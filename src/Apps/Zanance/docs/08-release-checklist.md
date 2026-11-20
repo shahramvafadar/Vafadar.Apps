@@ -1567,6 +1567,18 @@ Production analysis and credit sales remain inactive. Keep actual provider priva
 deletion, supported recovery, unit packages/prices and trusted consumable verification, public routing, and
 genuine device/Mac checks open. Manual native sharing discloses the reviewed packet to the selected recipient.
 
+## Current Android 15 page-size compatibility
+
+Signed offline APK `0a4943bc` ran on the official Android 15 x64 emulator with a measured
+16,384-byte userspace page size and a 4 KiB kernel page size. The original first-run recovery
+opened the system file picker. Cancelling it returned to the recovery page without selecting
+a file. Back returned to the same Welcome wizard, which reached Home with one synthetic
+zero-opening account and an empty transaction view. The boot and app process stayed the same.
+The fresh emulator was retired and evidence is under `artifacts/zanance-current-16k-onboarding`.
+No prior test, APK build or financial posting was repeated. The result covers current first-run
+recovery cancellation and empty-profile startup in userspace simulation. Physical ARM64 with
+16 KiB kernel pages, actual backup restoration and populated data remain separate acceptance gates.
+
 ## D-299 reference-source release gates
 
 Keep a live provider, explicit source/coverage/redistribution licence, cost/entitlement policy and public route
