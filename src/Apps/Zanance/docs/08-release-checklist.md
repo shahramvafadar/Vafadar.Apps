@@ -1547,6 +1547,16 @@ selection. The owned emulator stopped. Automatic deletion of its disposable AVD 
 before execution. Captures and its path are retained in `artifacts/receipt-picker-api24-native`.
 The build and the successful Android 16 checks were not repeated.
 
+The direct Android picker retains an existing display-name extension and fills in a known
+platform suffix when absent, preserving the previous picker behavior. Five focused cases and
+strict Windows and Android builds passed. Signed APK `0a4943bc` passed the offline manifest,
+signature, identity and static alignment checks.
+A separate Android 16 package compiled the actual Zanance picker and naming source and selected
+one synthetic extensionless document through the system chooser. It verified the expected
+PDF name, application/pdf type and exact byte digest. The owned Android fixture was retired.
+No ledger, receipt OCR or financial action was used for this check. Evidence is under
+`artifacts/receipt-extensionless-native`.
+
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
 deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate

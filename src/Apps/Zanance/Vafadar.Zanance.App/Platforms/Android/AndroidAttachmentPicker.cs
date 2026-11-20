@@ -96,12 +96,8 @@ internal static class AndroidAttachmentPicker
 
     private static string GetName(string? displayName, string? contentType)
     {
-        var name = Path.GetFileName(displayName?.Replace('\\', '/'));
-        if (!string.IsNullOrWhiteSpace(name) && name is not "." and not "..")
-            return name;
-
         var extension = Android.Webkit.MimeTypeMap.Singleton?.GetExtensionFromMimeType(contentType);
-        return string.IsNullOrEmpty(extension) ? "Attachment" : $"Attachment.{extension}";
+        return AttachmentFiles.NormalizePickedName(displayName, extension);
     }
 
     /// <summary>Completes the exact native request, swallowing any late callback from a retired owner.</summary>

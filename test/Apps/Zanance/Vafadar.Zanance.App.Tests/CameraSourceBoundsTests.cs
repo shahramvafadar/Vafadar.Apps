@@ -19,6 +19,18 @@ public sealed class CameraSourceBoundsTests
         Assert.Equal(expected, AttachmentFiles.ResolveContentType(name, reported));
     }
 
+    /// <summary>Android display names retain existing suffixes and get a known suffix when it is missing.</summary>
+    [Theory]
+    [InlineData("Invoice", "pdf", "Invoice.pdf")]
+    [InlineData("Receipts\\Invoice", ".pdf", "Invoice.pdf")]
+    [InlineData("Invoice.PDF", "pdf", "Invoice.PDF")]
+    [InlineData("Invoice", null, "Invoice")]
+    [InlineData("..", "pdf", "Attachment.pdf")]
+    public void Picker_names_keep_or_add_the_known_suffix(string? supplied, string? extension, string expected)
+    {
+        Assert.Equal(expected, AttachmentFiles.NormalizePickedName(supplied, extension));
+    }
+
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
     /// <summary>Two original admissible lengths grow past the same original byte ceiling before the real file read.</summary>
