@@ -415,7 +415,8 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
     [RelayCommand]
     private async Task ExplainSuggestionAsync()
     {
-        if (!CanInteract || _suggestion.Total is not { } suggestion || _source is not { } source) return;
+        var feature = Analysis.AiFeatures.Current.Capture();
+        if (feature.IsCancellationRequested || !CanInteract || _suggestion.Total is not { } suggestion || _source is not { } source) return;
         var draftRevision = _draftRevision;
         var view = _viewRevision;
         var (from, to) = BudgetPeriods.Range(Configuration(), source.Settings.MonthStartDay);
@@ -436,7 +437,8 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         try
         {
             await ValidateAsync();
-            if (OwnsView(view) && !_routeRetired) await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false));
+            if (!feature.IsCancellationRequested && OwnsView(view) && !_routeRetired)
+                await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
         { if (OwnsView(view) && !_routeRetired) await _interaction.ShowFailureAsync(error); }

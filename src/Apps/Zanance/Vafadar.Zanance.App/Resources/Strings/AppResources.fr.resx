@@ -8808,4 +8808,13 @@ SHA-256 du XML original : {5}</value>
   <data name="Occurrence_OriginalDueDate" xml:space="preserve">
     <value>Échéance initiale : {0}</value>
   </data>
+  <data name="Settings_AiFeatures" xml:space="preserve">
+    <value>Fonctionnalités d’IA</value>
+  </data>
+  <data name="Settings_AiFeaturesHint" xml:space="preserve">
+    <value>Désactivez cette option pour masquer l’analyse par IA et arrêter les nouvelles demandes, la reconnaissance des reçus et les suggestions de catégories locales sur cet appareil.</value>
+  </data>
+  <data name="Ai_DisabledHere" xml:space="preserve">
+    <value>Les fonctionnalités d’IA sont désactivées. Vous pouvez les réactiver dans les paramètres.</value>
+  </data>
 </root>

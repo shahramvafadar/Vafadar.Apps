@@ -60,6 +60,8 @@ public sealed partial class AiAnalysisFlowTests
         internal string? Shared;
         internal int Opens, Shares;
         internal readonly Remote Remote = new();
+        internal AiFeatures Features { get; } = new(true, _ => { });
+        public CancellationToken FeatureSession => Features.Capture();
         public bool NetworkAvailable => Network;
         public AiUiAccess Capture(string originalFile) => new(() => { if (DenyAccess) throw new OperationCanceledException(); }, CancellationToken.None);
         public Task<bool> ConfirmDisclosureAsync() => Task.FromResult(AllowDisclosure);
@@ -78,6 +80,33 @@ public sealed partial class AiAnalysisFlowTests
     }
     private static async Task Review(AiAnalysisViewModel vm)
     { Assert.Single(vm.Accounts).Selected = true; await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure); }
+
+    /// <summary>Turning off AI retires a reviewed screen and revokes both its sharing and connected actions.</summary>
+    [Fact]
+    public async Task Turning_off_AI_blocks_reviewed_actions_even_if_reenabled_before_reopening()
+    {
+        using var f = new FlowFixture();
+        var runtime = new Runtime();
+        var vm = await Model(f, runtime);
+        await Review(vm);
+        Assert.True(vm.CanShare);
+
+        runtime.Features.Enabled = false;
+        Assert.False(vm.CanShare);
+        Assert.False(vm.CanCheckProvider);
+        await vm.ShareCommand.ExecuteAsync(null);
+        await vm.CheckProviderCommand.ExecuteAsync(null);
+        await vm.LoadAsync();
+        Assert.Equal(0, runtime.Shares);
+        Assert.Equal(0, runtime.Opens);
+
+        runtime.Features.Enabled = true;
+        Assert.False(vm.CanShare);
+        await vm.ActivateAsync();
+        Assert.True(vm.Loaded);
+        Assert.True(vm.CanCheckProvider);
+        Assert.Null(vm.Disclosure);
+    }
 
     /// <summary>The period shortcut only seeds a local draft and retains a frozen account scope.</summary>
     [Theory, InlineData(false), InlineData(true)]

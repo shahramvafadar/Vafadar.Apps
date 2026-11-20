@@ -125,7 +125,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private bool metadataReady, stagingMetadata;
     private CancellationTokenSource? visible;
     private Func<bool>? ownsRoot;
-    private bool OwnsPresentation => active && !rootRetired && (ownsRoot?.Invoke() ?? true);
+    private CancellationToken featureSession;
+    private bool OwnsPresentation => active && !featureSession.IsCancellationRequested && !rootRetired && (ownsRoot?.Invoke() ?? true);
     /// <summary>Only the actual original native root may own this analysis page.</summary>
     internal void BindRootOwner(Func<bool> owner) => ownsRoot = owner;
     /// <summary>Captures the source route before its first load, without reviewing or sending anything.</summary>
@@ -136,7 +137,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Root replacement permanently retires the old disclosure and private connection.</summary>
     internal void RetireRoot() { rootRetired = true; Retire(); }
     /// <summary>Pending source reads permit cancellation by Back; native disclosure/submission keeps its owner.</summary>
-    public bool CanLeave => !operationActive || readingSource;
+    public bool CanLeave => !operationActive || readingSource || featureSession.IsCancellationRequested;
     /// <summary>Actual appearance does not silently retry a visible failed source.</summary>
     internal Task ActivateAsync() => OwnsPresentation || rootRetired ? Task.CompletedTask : LoadAsync();
     /// <summary>Actual command ownership cannot be released by mutable shared busy presentation.</summary>
@@ -234,9 +235,12 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Loads actual account choices only, with no HTTP, automatic selection, settings write or model run.</summary>
     [RelayCommand] public async Task LoadAsync()
     {
-        if (HasPendingOperation || rootRetired || ownsRoot?.Invoke() == false) return;
+        var feature = runtime.FeatureSession;
+        if (feature.IsCancellationRequested || HasPendingOperation || rootRetired || ownsRoot?.Invoke() == false) return;
+        if (featureSession.IsCancellationRequested) { Retire(); }
+        featureSession = feature;
         local.Changed -= OnLanguageChanged; local.Changed += OnLanguageChanged;
-        frameEpoch++; active = true; visible ??= new(); var ct = visible.Token; var original = ++epoch;
+        frameEpoch++; active = true; visible ??= CancellationTokenSource.CreateLinkedTokenSource(feature); var ct = visible.Token; var original = ++epoch;
         var selected = Accounts.Where(a => a.Selected).Select(a => a.Id).ToHashSet(); var oldFile = scope?.File;
         readingSource = true; operationActive = true; metadataReady = false;
         try

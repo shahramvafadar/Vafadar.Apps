@@ -112,6 +112,7 @@
     <PackageReference Include="FluentIcons.Common" />
     <PackageReference Include="Microsoft.Maui.Graphics" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Analysis/IAiRuntime.cs" Link="Application/IAiRuntime.cs" />
+    <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Analysis/AiFeatures.cs" Link="Application/AiFeatures.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Analysis/AiAnalysisViewModel.cs" Link="Application/AiAnalysisViewModel.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Analysis/AiConnectedRemote.cs" Link="Application/AiConnectedRemote.cs" />
     <Compile Include="../../../../src/Apps/Zanance/Vafadar.Zanance.App/Features/Analysis/AiPeriodHandoff.cs" Link="Application/AiPeriodHandoff.cs" />

@@ -46,7 +46,9 @@ public sealed partial class MoreViewModel(Translator translator) : ViewModelBase
             [
                 Item("Backup_Title", "More_BackupHint", Symbol.ShieldCheckmark, AppShell.BackupRoute),
                 Item("ImportExport_Title", "More_ImportExportHint", Symbol.DocumentTable, AppShell.ImportExportRoute),
-                Item("Ai_Title", "Ai_MenuHint", Symbol.Info, AppRoutes.AnalysisRoute),
+                ..(Analysis.AiFeatures.Current.Enabled
+                    ? new[] { Item("Ai_Title", "Ai_MenuHint", Symbol.Info, AppRoutes.AnalysisRoute) }
+                    : Array.Empty<MoreItem>()),
                 Item("Profile_Title", "More_ProfilesHint", Symbol.PeopleSwap, AppShell.ProfilesRoute),
 #if PERSONAL_SYNC
                 Item("Sync_Title", "Sync_MoreHint", Symbol.ArrowSwap, AppRoutes.PersonalSyncRoute),
@@ -63,5 +65,6 @@ public sealed partial class MoreViewModel(Translator translator) : ViewModelBase
     }
 
     [RelayCommand]
-    private Task OpenAsync(MoreItem item) => Shell.Current.GoToAsync(item.Route);
+    private Task OpenAsync(MoreItem item) => item.Route == AppRoutes.AnalysisRoute && !Analysis.AiFeatures.Current.Enabled
+        ? Task.CompletedTask : Shell.Current.GoToAsync(item.Route);
 }

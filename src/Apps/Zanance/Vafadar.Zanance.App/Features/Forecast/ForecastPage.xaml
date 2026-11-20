@@ -2,6 +2,7 @@
 <ContentPage
     x:Class="Vafadar.Zanance.App.Features.Forecast.ForecastPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:ai="clr-namespace:Vafadar.Zanance.App.Features.Analysis"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
@@ -39,7 +40,13 @@
                                     <Label Text="{Binding MinimumText}" TextColor="{Binding MinimumColor}" />
                                     <p:WrappingAction Text="{v:Translate Ai_ExplainForecast}" IsVisible="{Binding CanExplain}"
                                         Command="{Binding ExplainForecastCommand, Source={RelativeSource AncestorType={x:Type local:ForecastViewModel}}, x:DataType=local:ForecastViewModel}"
-                                        CommandParameter="{Binding .}" />
+                                        CommandParameter="{Binding .}">
+                                        <p:WrappingAction.Triggers>
+                                            <DataTrigger TargetType="p:WrappingAction" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
+                                                <Setter Property="IsVisible" Value="False" />
+                                            </DataTrigger>
+                                        </p:WrappingAction.Triggers>
+                                    </p:WrappingAction>
                                     <Border BackgroundColor="{DynamicResource ExpenseBackground}" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="12,8"
                                             IsVisible="{Binding Warning, Converter={StaticResource IsNotNullConverter}}">
                                         <Label Text="{Binding Warning}" TextColor="{DynamicResource ExpenseText}" />

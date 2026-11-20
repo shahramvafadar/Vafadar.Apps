@@ -3,7 +3,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui" xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:local="clr-namespace:Vafadar.Zanance.App.Features.Analysis" x:DataType="local:AiAnalysisViewModel" Title="{v:Translate Ai_Title}">
-    <Grid RowDefinitions="*,Auto">
+    <Grid>
+        <Label Padding="24" VerticalOptions="Center" HorizontalTextAlignment="Center" Text="{v:Translate Ai_DisabledHere}"
+               IsVisible="{Binding Enabled, Source={x:Static local:AiFeatures.Current}, Converter={StaticResource InvertedBoolConverter}, x:DataType=local:AiFeatures}" />
+        <Grid RowDefinitions="*,Auto"
+              IsVisible="{Binding Enabled, Source={x:Static local:AiFeatures.Current}, x:DataType=local:AiFeatures}">
         <ScrollView>
             <VerticalStackLayout Padding="16" Spacing="12" IsEnabled="{Binding IsNotBusy}">
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
@@ -88,5 +92,6 @@
             <p:WrappingAction Text="{v:Translate Ai_Reload}" Command="{Binding LoadCommand}" IsEnabled="{Binding IsNotBusy}" IsVisible="{Binding Loaded, Converter={StaticResource InvertedBoolConverter}}" />
             <p:WrappingAction Text="{v:Translate Ai_Review}" Command="{Binding ReviewCommand}" IsEnabled="{Binding IsNotBusy}" Appearance="Primary" />
         </VerticalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

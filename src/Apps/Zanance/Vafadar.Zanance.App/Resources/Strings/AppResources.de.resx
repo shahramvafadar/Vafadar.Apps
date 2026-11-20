@@ -8831,4 +8831,13 @@ Original-XML SHA-256: {5}</value>
   <data name="Occurrence_OriginalDueDate" xml:space="preserve">
     <value>Ursprünglich fällig am {0}</value>
   </data>
+  <data name="Settings_AiFeatures" xml:space="preserve">
+    <value>KI-Funktionen</value>
+  </data>
+  <data name="Settings_AiFeaturesHint" xml:space="preserve">
+    <value>Deaktivieren, um KI-Analysen auszublenden und neue Anfragen, die Belegerkennung und lokale Kategorievorschläge auf diesem Gerät zu stoppen.</value>
+  </data>
+  <data name="Ai_DisabledHere" xml:space="preserve">
+    <value>KI-Funktionen sind deaktiviert. Du kannst sie in den Einstellungen wieder aktivieren.</value>
+  </data>
 </root>

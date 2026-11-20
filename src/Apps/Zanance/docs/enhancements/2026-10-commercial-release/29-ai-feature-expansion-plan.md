@@ -25,6 +25,19 @@ Total estimate is **88–144 engineering hours** for the described isolated impl
 
 ## Shared contracts and acceptance
 
+The device-wide AI switch in Settings → Privacy and security applies across local profiles and
+is retained when the app restarts. Turning it off hides Analysis and its shortcuts, stops new
+requests and manual AI handoffs, and disables receipt recognition and local category suggestions.
+Manual entries, attachments, CSV category selection and explicit category rules remain available.
+The choice does not erase existing records or recall work already accepted by a service.
+
+The 2026-11-20 Android review used one new API 36 emulator and one zero-opening synthetic account.
+The native switch hid Analysis in More and receipt scanning on Home while manual expense and transfer
+actions stayed available. The same settings choice and hidden actions survived a new application
+process. Re-enabling restored both shortcuts. Two focused host tests covered saved choice and
+retirement of an existing review and its provider and sharing actions. Strict Windows and Android
+builds passed. No provider call or financial transaction was made.
+
 - Define a small versioned input and output contract for each approved task. Keep calculations, exact dates, sign and currency semantics in Core. Map model-generated facts to permitted source references so the app can open the original local view. Render output as text. Validate its schema, references, totals and bounds, including zero or insufficient data.
 - Use the current manager selection and Off control for simple and reasoning tasks. Extend the administrator's per-task selections as new distinct tasks are qualified. Treat content such as a note or OCR line as data. A task receives only the selected period, filtered scope, permitted fields and exact destination disclosed to the user. Avoid silent provider fallback. Wait for separate privacy, retention, recovery, budget and commercial gates before sending genuine data.
 - Qualify on a fixed set of synthetic cases for each task. Include refunds, transfers, incomplete or stale inputs, currency separation, date boundaries and the six supported languages. Confirm visible source links, offline continuity, per-request bounds, denial and failure without ledger changes, exact continuation after switching provider and stale suggestion refusal. Use a deterministic baseline before adding an AI dependency, and retain a separate measured quality and cost report for each task.

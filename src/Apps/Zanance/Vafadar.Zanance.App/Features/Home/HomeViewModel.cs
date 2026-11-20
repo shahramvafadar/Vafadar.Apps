@@ -676,7 +676,8 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     [RelayCommand] private Task ExplainHomePeriodAsync() => OpenHomeAnalysisAsync(false);
     [RelayCommand] private Task CompareHomePeriodAsync() => OpenHomeAnalysisAsync(true);
 
-    private Task OpenHomeAnalysisAsync(bool compare) => !_publicationRetired && Loading.IsReady && HasAnalysisPeriod && _analysisPeriodIndex == PeriodIndex &&
+    private Task OpenHomeAnalysisAsync(bool compare) => Analysis.AiFeatures.Current.Enabled &&
+        !_publicationRetired && Loading.IsReady && HasAnalysisPeriod && _analysisPeriodIndex == PeriodIndex &&
         _analysisPeriod is { } period && Shell.Current is { CurrentPage: HomePage page } shell && ReferenceEquals(page.BindingContext, this)
         ? shell.GoToAsync(AppRoutes.AnalysisRoute, period.Query(compare)) : Task.CompletedTask;
 

@@ -687,13 +687,14 @@ public sealed partial class GoalDetailViewModel(
     [RelayCommand]
     private async Task ExplainFundingAsync()
     {
-        if (!CanInteract || _fundingAnalysis is not { } period) return;
+        var feature = Analysis.AiFeatures.Current.Capture();
+        if (feature.IsCancellationRequested || !CanInteract || _fundingAnalysis is not { } period) return;
         var identity = _identityVersion;
         IsBusy = true;
         try
         {
             await period.ValidateReportAsync!();
-            if (identity == _identityVersion && !_retired && CanView && ReferenceEquals(period, _fundingAnalysis))
+            if (!feature.IsCancellationRequested && identity == _identityVersion && !_retired && CanView && ReferenceEquals(period, _fundingAnalysis))
                 await interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false));
         }
         catch (Exception error) when (error is not OutOfMemoryException)

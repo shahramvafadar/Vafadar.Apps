@@ -6,7 +6,7 @@ namespace Vafadar.Zanance.App.Features.Analysis;
 
 /// <summary>The app's connected analysis session, bound to the original identity and foreground access.</summary>
 internal sealed class AiConnectedRemote(PersonalSyncTransport transport, IAiPrivateStorage storage, string user,
-    string originalFile, AiUiAccess access) : IAiRemote
+    string originalFile, AiUiAccess access, CancellationToken feature = default) : IAiRemote
 {
     private readonly AiClient client = new(transport, storage, user, originalFile, access.Validate);
     public string Destination => transport.Peer.Address.AbsoluteUri;
@@ -21,7 +21,7 @@ internal sealed class AiConnectedRemote(PersonalSyncTransport transport, IAiPriv
     private async Task<T> Work<T>(Func<CancellationToken, Task<T>> work, CancellationToken ct)
     {
         access.Validate();
-        using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, access.Cancellation);
+        using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, access.Cancellation, feature);
         var result = await work(linked.Token);
         access.Validate();
         return result;

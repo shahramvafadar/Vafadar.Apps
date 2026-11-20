@@ -649,12 +649,14 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private async Task OpenDetailedAnalysisAsync(Analysis.AiPeriodHandoff? period, bool compare)
     {
-        if (period is null || !CanRunCommands || _workspace.CaptureCommand(ScopeStamp) is not { } command ||
+        var feature = Analysis.AiFeatures.Current.Capture();
+        if (feature.IsCancellationRequested || period is null || !CanRunCommands || _workspace.CaptureCommand(ScopeStamp) is not { } command ||
             command.Review.DatabasePath != period.File) return;
         IsBusy = true;
         try
         {
             await command.ValidateAsync();
+            if (feature.IsCancellationRequested) return;
             var source = command.CaptureChildSource();
             await NavigateFrozenAsync(new(AppRoutes.AnalysisRoute, (period with { ValidateReportAsync = source.ValidateAsync }).Query(compare)));
         }
@@ -668,7 +670,8 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
 
     private Task OpenReportAnalysisAsync(bool compare)
     {
-        if (!CanRunCommands || !ShowOverview || _workspace.Review is not { } review) return Task.CompletedTask;
+        if (!Analysis.AiFeatures.Current.Enabled || !CanRunCommands || !ShowOverview || _workspace.Review is not { } review)
+            return Task.CompletedTask;
         var ids = LedgerCalculator.InScope(_accounts, ScopeIds()).Where(a =>
             string.Equals(a.CurrencyCode, _currency, StringComparison.OrdinalIgnoreCase)).Select(a => a.Id);
         var period = Analysis.AiPeriodHandoff.Capture(review.DatabasePath, _from, _to, ConfirmedOnly, ids);

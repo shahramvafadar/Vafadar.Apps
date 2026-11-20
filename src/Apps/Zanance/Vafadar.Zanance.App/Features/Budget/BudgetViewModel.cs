@@ -588,13 +588,14 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
     [RelayCommand]
     private async Task ExplainFundingAsync()
     {
-        if (!CanNavigate || _fundingAnalysis is not { } period || _refreshing || IsBusy) return;
+        var feature = Analysis.AiFeatures.Current.Capture();
+        if (feature.IsCancellationRequested || !CanNavigate || _fundingAnalysis is not { } period || _refreshing || IsBusy) return;
         var revision = _pageRevision;
         IsBusy = true;
         try
         {
             await period.ValidateReportAsync!();
-            if (_visible && revision == _pageRevision && ReferenceEquals(period, _fundingAnalysis))
+            if (!feature.IsCancellationRequested && _visible && revision == _pageRevision && ReferenceEquals(period, _fundingAnalysis))
                 await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false));
         }
         catch (Exception error) when (error is not OutOfMemoryException)

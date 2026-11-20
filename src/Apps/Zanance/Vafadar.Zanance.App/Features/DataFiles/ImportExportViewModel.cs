@@ -354,7 +354,8 @@ public sealed partial class ImportExportViewModel : ViewModelBase
         var (accounts, categories, existing, _) = read.Inputs;
         string Name(Core.Categories.Category category) => CategoryLookup.NameOf(category, _translator);
         var preview = own ? CsvImport.PreviewOwn(rows, accounts, categories, Name, existing, read.ConsumedIds)
-            : CsvImport.PreviewGeneric(rows, mapping!, accounts, categories, Name, existing, read.PreviewRules, reviewLocalCategories: true);
+            : CsvImport.PreviewGeneric(rows, mapping!, accounts, categories, Name, existing, read.PreviewRules,
+                reviewLocalCategories: Analysis.AiFeatures.Current.Enabled);
         read.Bind(preview.Where(row => row.Entry is not null).Select(row => row.Entry!).DistinctBy(entry => entry.Id));
         read.EnsureCurrent();
         return new LedgerPreviewData(preview, existing, accounts, categories,

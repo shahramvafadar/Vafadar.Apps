@@ -8831,4 +8831,13 @@
   <data name="Occurrence_OriginalDueDate" xml:space="preserve">
     <value>موعد اولیه: {0}</value>
   </data>
+  <data name="Settings_AiFeatures" xml:space="preserve">
+    <value>امکانات هوش مصنوعی</value>
+  </data>
+  <data name="Settings_AiFeaturesHint" xml:space="preserve">
+    <value>برای پنهان‌کردن تحلیل هوش مصنوعی و توقف درخواست‌های تازه، تشخیص متن رسید و پیشنهاد دسته روی این دستگاه، این گزینه را خاموش کنید.</value>
+  </data>
+  <data name="Ai_DisabledHere" xml:space="preserve">
+    <value>امکانات هوش مصنوعی خاموش است. می‌توانید آن را در تنظیمات روشن کنید.</value>
+  </data>
 </root>

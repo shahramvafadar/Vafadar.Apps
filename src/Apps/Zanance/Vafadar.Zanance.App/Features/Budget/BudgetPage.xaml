@@ -2,6 +2,7 @@
 <ContentPage
     x:Class="Vafadar.Zanance.App.Features.Budget.BudgetPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:ai="clr-namespace:Vafadar.Zanance.App.Features.Analysis"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:p="clr-namespace:Vafadar.Zanance.App.Presentation"
     xmlns:v="http://vafadar.pro/schemas/maui"
@@ -90,7 +91,13 @@
             </Grid>
 
             <p:WrappingAction Text="{v:Translate Ai_ExplainLimit}" Command="{Binding ExplainFundingCommand}"
-                              IsVisible="{Binding HasFundingAnalysis}" />
+                              IsVisible="{Binding HasFundingAnalysis}">
+                <p:WrappingAction.Triggers>
+                    <DataTrigger TargetType="p:WrappingAction" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
+                        <Setter Property="IsVisible" Value="False" />
+                    </DataTrigger>
+                </p:WrappingAction.Triggers>
+            </p:WrappingAction>
 
             <!-- No budget is not a zero budget (BUD-01) -->
             <Border Style="{StaticResource Card}" IsVisible="{Binding HasBudget, Converter={StaticResource InvertedBoolConverter}}">

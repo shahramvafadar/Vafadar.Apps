@@ -1,5 +1,12 @@
 # AGENTS.md – working rules for this repository
 
+## Device-wide AI preference (owner, 2026-11-20)
+
+Keep one AI switch in Settings for all profiles on the current installation. Turning it off hides
+AI entry points and prevents new AI work, including on-device receipt recognition and optional
+category suggestions. Keep manual financial actions, attachments and explicit category rules
+available. Re-enabling creates a new feature lifetime and does not replay retired work.
+
 ## D-1240 - One reviewed tool set per Windows compiler; the shared lock stays byte-identical
 
 [Evidence](src/Apps/Zanance/docs/quality/msvc-14-52-windows-producer.md). Never change

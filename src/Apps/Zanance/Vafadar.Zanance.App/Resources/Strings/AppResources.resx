@@ -8872,4 +8872,13 @@ Original XML SHA-256: {5}</value>
   <data name="Occurrence_OriginalDueDate" xml:space="preserve">
     <value>Originally due {0}</value>
   </data>
+  <data name="Settings_AiFeatures" xml:space="preserve">
+    <value>AI features</value>
+  </data>
+  <data name="Settings_AiFeaturesHint" xml:space="preserve">
+    <value>Turn off to hide AI analysis and stop new requests, receipt recognition and local category suggestions on this device.</value>
+  </data>
+  <data name="Ai_DisabledHere" xml:space="preserve">
+    <value>AI features are off. You can turn them on in Settings.</value>
+  </data>
 </root>

@@ -264,7 +264,8 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
     [RelayCommand]
     private async Task ExplainForecastAsync(ForecastCard card)
     {
-        if (!CanInteract || !card.CanExplain || !Cards.Any(item => ReferenceEquals(item, card)) ||
+        var feature = AiFeatures.Current.Capture();
+        if (feature.IsCancellationRequested || !CanInteract || !card.CanExplain || !Cards.Any(item => ReferenceEquals(item, card)) ||
             Workspace.Review is not { } review || Workspace.Forecasts.SingleOrDefault(item => item.CurrencyCode == card.CurrencyCode) is not { } shown)
             return;
 
@@ -274,7 +275,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         var calendar = Workspace.Calendar;
         var hasScenario = HasScenario;
         var token = _lifetime.Token;
-        bool Current() => OwnsFrame && revision == _revision && ReferenceEquals(Workspace.Review, review) &&
+        bool Current() => !feature.IsCancellationRequested && OwnsFrame && revision == _revision && ReferenceEquals(Workspace.Review, review) &&
             Cards.Any(item => ReferenceEquals(item, card)) && !token.IsCancellationRequested;
         async Task ValidateSourceAsync()
         {

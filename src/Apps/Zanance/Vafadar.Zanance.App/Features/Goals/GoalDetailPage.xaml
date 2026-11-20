@@ -2,6 +2,7 @@
 <ContentPage
     x:Class="Vafadar.Zanance.App.Features.Goals.GoalDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:ai="clr-namespace:Vafadar.Zanance.App.Features.Analysis"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
@@ -123,7 +124,13 @@
                 </Border>
 
                 <p:WrappingAction Text="{v:Translate Ai_ExplainGoal}" Command="{Binding ExplainFundingCommand}"
-                                  IsVisible="{Binding HasFundingAnalysis}" IsEnabled="{Binding CanInteract}" />
+                                  IsVisible="{Binding HasFundingAnalysis}" IsEnabled="{Binding CanInteract}">
+                    <p:WrappingAction.Triggers>
+                        <DataTrigger TargetType="p:WrappingAction" Binding="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Value="False">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </p:WrappingAction.Triggers>
+                </p:WrappingAction>
                 <Button Style="{StaticResource PrimaryButton}" Text="{v:Translate Common_Edit}" Command="{Binding EditCommand}" Margin="0,8,0,0" />
                 <!-- Life cycle (ZEX-S0303): pause or resume, complete or reopen, archive or restore -->
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="8">

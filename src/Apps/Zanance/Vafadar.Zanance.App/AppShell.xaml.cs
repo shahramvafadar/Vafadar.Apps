@@ -633,6 +633,10 @@ public partial class AppShell : Shell
     /// <summary>Keeps the actual restore source/accepted follow-through attached through Back and tab navigation.</summary>
     protected override void OnNavigating(ShellNavigatingEventArgs args)
     {
+        if (args.CanCancel && args.Source == ShellNavigationSource.Push && !Features.Analysis.AiFeatures.Current.Enabled
+            && args.Target.Location.OriginalString.Split('?', 2)[0].TrimEnd('/').Split('/')[^1] == AppRoutes.AnalysisRoute)
+            args.Cancel();
+
         // D-654: permit only the exact registered authentication modal, never a general busy Push.
         var originalBackupPage = CurrentPage?.BindingContext is BackupViewModel ? CurrentPage : Security.NativeSensitivePresentation.Underlying(this);
         var backup = originalBackupPage?.BindingContext as BackupViewModel;

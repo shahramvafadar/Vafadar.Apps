@@ -26,6 +26,8 @@ public interface IAiRemote : IDisposable
 /// <summary>Native authorization, deliberate manual share and original pinned identity connection only.</summary>
 public interface IAiRuntime
 {
+    /// <summary>Lifetime of the current enabled AI session.</summary>
+    CancellationToken FeatureSession => CancellationToken.None;
     /// <summary>Whether this explicitly network-enabled edition supports the provider boundary, not whether a provider exists.</summary>
     bool NetworkAvailable { get; }
     /// <summary>Captures the exact original local file and unlocked foreground lifetime.</summary>

@@ -2,6 +2,7 @@
 <ContentPage
     x:Class="Vafadar.Zanance.App.Features.Home.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:ai="clr-namespace:Vafadar.Zanance.App.Features.Analysis"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui"
     xmlns:fi="clr-namespace:FluentIcons.Maui;assembly=FluentIcons.Maui"
@@ -126,7 +127,7 @@
                                         SemanticProperties.Description="{v:Translate Entry_NewTransfer}" ToolTipProperties.Text="{v:Translate Entry_NewTransfer}" />
                             </Grid>
                             <!-- A receipt photo or PDF, read on the device; neutral, because it is a way to add an expense -->
-                            <Grid Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
+                            <Grid IsVisible="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" Margin="4,0" Style="{StaticResource QuickAction}" RowDefinitions="Auto,Auto">
                                 <Border Style="{StaticResource IconTile}" BackgroundColor="{DynamicResource SurfaceMuted}" Stroke="{DynamicResource DividerColor}" HorizontalOptions="Center">
                                     <fi:SymbolIcon Symbol="Receipt" FontSize="20" ForegroundColor="{DynamicResource SecondaryText}" HorizontalOptions="Center" VerticalOptions="Center" />
                                 </Border>
@@ -330,8 +331,8 @@
                 <Border Style="{StaticResource Card}" IsVisible="{Binding HasAnalysisPeriod}">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="{Binding ScopeText}" Style="{StaticResource Secondary}" />
-                        <p:WrappingAction Text="{v:Translate Ai_ExplainPeriodFromReport}" Command="{Binding ExplainHomePeriodCommand}" />
-                        <p:WrappingAction Text="{v:Translate Ai_ComparePeriodFromReport}" Command="{Binding CompareHomePeriodCommand}" />
+                        <p:WrappingAction Text="{v:Translate Ai_ExplainPeriodFromReport}" Command="{Binding ExplainHomePeriodCommand}" IsVisible="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" />
+                        <p:WrappingAction Text="{v:Translate Ai_ComparePeriodFromReport}" Command="{Binding CompareHomePeriodCommand}" IsVisible="{Binding Enabled, Source={x:Static ai:AiFeatures.Current}, x:DataType=ai:AiFeatures}" />
                     </VerticalStackLayout>
                 </Border>
 
