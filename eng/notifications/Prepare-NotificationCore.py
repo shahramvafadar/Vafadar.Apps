@@ -1,8 +1,12 @@
 """Prepare pinned official notification sources with one reviewed Android replacement."""
 
 from pathlib import Path
+from contextlib import contextmanager
+import errno
 import hashlib
 import json
+import os
+import time
 import urllib.request
 import zipfile
 
@@ -18,16 +22,58 @@ def require(condition, message):
         raise ValueError(message)
 
 
+@contextmanager
+def cache_lock(path, timeout=90):
+    """Hold the cache lock until preparation completes or fails."""
+    if os.name == "nt":
+        import msvcrt
+
+        def acquire(stream):
+            stream.seek(0)
+            msvcrt.locking(stream.fileno(), msvcrt.LK_NBLCK, 1)
+    else:
+        import fcntl
+
+        def acquire(stream):
+            fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+
+    deadline = time.monotonic() + timeout
+    while True:
+        try:
+            # Keep the lock path after release so every waiting process uses the same file.
+            stream = path.open("a+b")
+            try:
+                acquire(stream)
+            except BaseException:
+                stream.close()
+                raise
+            break
+        except OSError as error:
+            if error.errno not in (errno.EACCES, errno.EAGAIN) and getattr(error, "winerror", None) not in (32, 33):
+                raise
+            if time.monotonic() >= deadline:
+                raise TimeoutError("Another source preparation still owns the notification cache.") from error
+            time.sleep(0.1)
+    with stream:
+        yield
+
+
 def prepare(here=None):
     """Populate only this repository's immutable source cache, retaining failed inputs."""
     here = Path(here).resolve() if here is not None else Path(__file__).resolve().parent
     repo = here.parent.parent
+    root = repo / "artifacts" / "notification-core"
+    root.mkdir(parents=True, exist_ok=True)
+    with cache_lock(root / "source.prepare.lock"):
+        prepare_locked(here, root)
+
+
+def prepare_locked(here, root):
+    """Verify and populate the source cache while the caller holds its lock."""
     manifest = json.loads((here / "notification-core.inputs.json").read_text())
     require(manifest["SchemaVersion"] == 1, "Unsupported notification source manifest.")
     require(digest((here / "LICENSE.upstream").read_bytes()) == manifest["LicenseSHA256"],
             "Preserve the changed upstream license input.")
-    root = repo / "artifacts" / "notification-core"
-    root.mkdir(parents=True, exist_ok=True)
     archive = root / "upstream.zip"
     if not archive.exists():
         # This pinned official source is already MIT-licensed; no binary substitute or credentials.

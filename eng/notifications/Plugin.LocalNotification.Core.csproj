@@ -17,12 +17,13 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <NotificationCoreSource>$(RepoRoot)artifacts/notification-core/source/</NotificationCoreSource>
+    <NotificationCorePython Condition="'$(NotificationCorePython)' == ''">python</NotificationCorePython>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" />
   </ItemGroup>
   <Target Name="PrepareReviewedNotificationCoreSource" BeforeTargets="PrepareForBuild">
-    <Exec Command="pwsh -NoProfile -File &quot;$(MSBuildThisFileDirectory)Prepare-NotificationCore.ps1&quot;" />
+    <Exec Command="&quot;$(NotificationCorePython)&quot; &quot;$(MSBuildThisFileDirectory)Prepare-NotificationCore.py&quot;" />
     <!-- Preparation precedes this dynamic include on fresh restore/build hosts. -->
     <ItemGroup>
       <Compile Include="$(NotificationCoreSource)*.cs;$(NotificationCoreSource)Models/**/*.cs;$(NotificationCoreSource)Platforms/Android/**/*.cs" />

@@ -10,8 +10,11 @@ the original IncludeStoppedPackages flag.
 C# file, license and reviewed `AndroidUtils.cs` replacement by SHA256. The preparation
 script downloads only that bounded official archive into project-owned
 `artifacts/notification-core`, refuses modified/incomplete/extra inputs and preserves
-them for diagnosis. The PowerShell wrapper holds an exclusive file lock while
-preparing. Python3 and PowerShell7 are build prerequisites; CI supplies Python3.13.
+them for diagnosis. The Python entry point holds an exclusive file lock for the
+entire preparation and releases it on success or failure. The notification project
+calls Python directly from MSBuild. CI supplies Python 3.13. If a local MSBuild
+process cannot resolve `python`, set `NotificationCorePython` to the full path to
+the installed interpreter.
 
 The source project retains public assembly identity1.1.2.0 and records file revision
 1.1.2.580. The Android targets exclude the corresponding package assets and reference
@@ -26,8 +29,9 @@ They preserve original failing outcomes and must never be used as shipping packa
 Do not add a global feed, change source mapping or weaken digest checks to build.
 
 Run `python eng/notifications/test_source_preparation.py` after relevant source-input
-changes. The seven tests execute actual preparation against disposable owned inputs;
-they do not post notifications, prepare financial data or establish native delivery.
+changes. The tests execute actual preparation against disposable owned inputs and
+verify that a waiting process prepares the cache only after the owner releases it.
+Native delivery is qualified separately.
 See [the actual comparison and qualification limits](../../src/Apps/Zanance/docs/quality/reboot-paired-delivery-diagnosis.md).
 
 D-581 uses explicit input rejection rather than Python `assert`: `-O` and

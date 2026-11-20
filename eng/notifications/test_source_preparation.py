@@ -86,6 +86,32 @@ class SourcePreparationTests(unittest.TestCase):
             SOURCE.prepare(self.here)
         self.assertTrue(extra.exists())
 
+    def test_second_process_waits_for_the_cache_owner(self):
+        command = [
+            sys.executable, "-B", "-c",
+            "import runpy,sys; runpy.run_path(sys.argv[1])['prepare'](sys.argv[2])",
+            str(HERE / "Prepare-NotificationCore.py"), str(self.here),
+        ]
+        with SOURCE.cache_lock(self.cache / "source.prepare.lock"):
+            child = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            try:
+                with self.assertRaises(subprocess.TimeoutExpired):
+                    child.wait(timeout=1)
+                self.assertFalse((self.cache / "source").exists())
+            except BaseException:
+                child.kill()
+                child.communicate()
+                raise
+        try:
+            stdout, stderr = child.communicate(timeout=20)
+        except subprocess.TimeoutExpired:
+            child.kill()
+            child.communicate()
+            raise
+        self.assertEqual(child.returncode, 0, stderr.decode(errors="replace"))
+        self.assertIn(b"single Android replacement verified", stdout)
+        self.assertTrue((self.cache / "source/GeofenceHandlerRegistry.cs").exists())
+
     def run_optimized_preparation(self):
         """Exercise the actual production entry point under Python's assertion-free mode."""
         return subprocess.run(
