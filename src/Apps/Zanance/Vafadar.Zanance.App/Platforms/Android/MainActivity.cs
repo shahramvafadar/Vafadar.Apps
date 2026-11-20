@@ -144,7 +144,9 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
     {
         base.OnActivityResult(requestCode, resultCode, data);
-        if (!Interaction.AndroidHouseholdRecoverySave.OnActivityResult(this, requestCode, resultCode, data) && !CameraCapture.OnActivityResult(this, requestCode, resultCode))
+        if (!AndroidAttachmentPicker.OnActivityResult(this, requestCode, resultCode, data)
+            && !Interaction.AndroidHouseholdRecoverySave.OnActivityResult(this, requestCode, resultCode, data)
+            && !CameraCapture.OnActivityResult(this, requestCode, resultCode))
         {
             Vafadar.Authentication.Maui.SignInActivityResults.OnActivityResult(requestCode, resultCode, data);
         }
@@ -155,6 +157,7 @@ public class MainActivity : MauiAppCompatActivity
     {
         _notificationSettingsReturn?.TrySetResult(false);
         CameraCapture.OnDestroyed(this);
+        AndroidAttachmentPicker.OnDestroyed(this);
         Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this);
         base.OnDestroy();
     }

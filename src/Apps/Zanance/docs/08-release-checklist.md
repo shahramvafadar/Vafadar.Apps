@@ -1512,6 +1512,24 @@ the managed MIME type from the cached filename, so the focused host checks estab
 managed fallback itself. Geometry was restored and the owned emulator retired. Evidence
 remains under artifacts/receipt-generic-mime-native.
 
+The pipe failure was isolated on Android 16 with the same provider APK and fixture PDF, using a
+separate diagnostic package. Sequential Android content-stream reads returned all 48,236 bytes
+with the expected SHA-256. The exact MAUI Essentials 10.0.120 physical-path conversion failed
+at the Java file-channel Position call during Stream.CopyTo buffer sizing. Zanance now bounds
+Android attachment reads directly from the temporary content grant and does not ask that stream
+for a length or position. It keeps the system document chooser and consumes a callback only for
+its original activity and request. Other platforms retain their existing picker.
+
+Strict Windows and Android builds passed. The signed offline APK `75b05718` passed package
+identity, signature, offline manifest and static 16 KiB checks. The first Android compile
+rejected the obsolete display-name binding; the supported interface was used in the final build.
+With AI off on the owned Android 16 emulator, cancelling the new native picker returned to Home.
+A fresh selection then opened the exact non-seekable provider once under Zanance UID 10218,
+received its generic MIME type and showed EUR 42.75 in the editable receipt draft. Cancel and
+Discard left the transaction view empty. The owned emulator was retired. Evidence is retained
+under `artifacts/receipt-stream-diagnosis`. This run did not exercise virtual document conversion
+or install on a physical device.
+
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
 deletion and lost-receipt handling have simulated evidence. Android offline and connected editions have separate

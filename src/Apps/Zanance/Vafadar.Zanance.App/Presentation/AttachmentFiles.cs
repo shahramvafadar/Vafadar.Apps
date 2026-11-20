@@ -19,12 +19,17 @@ internal static partial class AttachmentFiles
 
     public static async Task<PreparedAttachment?> PickAsync(string title, bool forRecognition = false)
     {
+#if ANDROID
+        var source = await AndroidAttachmentPicker.PickAsync(title);
+        return source is { } selected
+            ? await PrepareAsync(selected.Name, ResolveContentType(selected.Name, selected.ContentType), selected.Bytes, forRecognition)
+            : null;
+#else
         var file = await FilePicker.Default.PickAsync(new PickOptions
         {
             PickerTitle = title,
             FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
             {
-                [DevicePlatform.Android] = ["image/*", "application/pdf"],
                 [DevicePlatform.iOS] = ["public.image", "com.adobe.pdf"],
                 [DevicePlatform.WinUI] = [".jpg", ".jpeg", ".png", ".heic", ".pdf"],
             }),
@@ -37,6 +42,7 @@ internal static partial class AttachmentFiles
         await using var stream = await file.OpenReadAsync();
         return await PrepareAsync(file.FileName, ResolveContentType(file.FileName, file.ContentType),
             await ReadSourceAsync(stream), forRecognition);
+#endif
     }
 
     /// <summary>Prepares a camera photo for storage, retaining the transient original only for recognition.</summary>
