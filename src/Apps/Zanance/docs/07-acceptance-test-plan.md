@@ -5368,6 +5368,27 @@ were not replayed. The emulator was stopped. Its data files remain because autom
 was refused. This case qualifies the minimum Android version for this package pair and
 visible account data, with physical upgrades and complete encrypted-row equality still open.
 
+### AT-60 legacy ledger upgrade on the Android 15 page-size test image
+
+The retained D-554 Offline Release APK `50f5d58b` restored the existing fictitious D-403
+packet `892dd1a4` through the system document picker on an owned Android 15 x86-64
+`google_apis_ps16k` emulator. The preview counted one account, one transaction and one plan.
+After one in-place upgrade to the signed Offline Release APK `9803b374` from revision
+`384658d0`, Home retained D403_Cash and EUR 35.00. The same EUR 2 Food expense retained
+its account, date and note. The EUR 9 occurrence retained its October 20 date and Skipped
+status. The visible fields matched the pre-upgrade capture.
+
+The verified signer, UID, first-install timestamp and boot were the same, while the process
+and installed APK digest changed. No transaction or plan was recorded and the restore was
+performed only on the old installation. The first AVD creation selected the ordinary SDK
+and refused the image. Selecting the existing compatibility SDK resolved it. The first
+document picker capture ran before the picker took the foreground. The same operation
+completed after it settled. The copied file, package and owned emulator were retired.
+
+This qualifies one upgrade on the simulated 16 KiB userspace image. The guest kernel
+reported 4 KiB. Hardware page-size, physical upgrade and complete encrypted-row equality
+remain open. Local receipts are retained in `artifacts/at60-ps16k-current-upgrade`.
+
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
 
 The retained D-401 candidate qualifies one card purchase60 and Checking-to-Card payment90, with

@@ -224,7 +224,10 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Upgrade from every earlier test build keeps data (AT-60). The first-schema integration test passes.
   A [direct Android upgrade from the retained D-320 build](07-acceptance-test-plan.md#at-60-direct-upgrade-from-the-retained-d-320-android-apk)
   preserved one named synthetic account and its balance. A [direct upgrade from D-554 with a retained ledger](07-acceptance-test-plan.md#at-60-direct-upgrade-with-a-retained-legacy-ledger)
-  also preserved a synthetic transaction and a skipped plan occurrence. Other build pairs and physical verification remain open.
+  also preserved a synthetic transaction and a skipped plan occurrence. A separate
+  [upgrade on the Android 15 page-size test image](07-acceptance-test-plan.md#at-60-legacy-ledger-upgrade-on-the-android-15-page-size-test-image)
+  preserved the same retained account, transaction and plan against the current signed package.
+  Other build pairs and physical verification remain open.
 - [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57). The
   [fresh Android emulator review](07-acceptance-test-plan.md#at-57-password-protected-restore-on-a-fresh-android-installation)
   restored the protected fixture and retained its balance after a cold reopen. A separate Android emulator
