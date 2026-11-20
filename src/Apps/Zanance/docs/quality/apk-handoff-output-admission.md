@@ -68,3 +68,17 @@ publish exit that emits no file leaves a prior handoff intact and reports failur
 The retry likewise cannot hand off a file produced by its failed first attempt.
 An existing differently named signed package still requires a separate output
 directory. The script retires only its own staging directories.
+
+On 2026-11-20, the real entry point built and verified a strict offline Release
+APK from `f8d91857`. The output started with a copy of an older connected APK.
+An initial single-ABI attempt injected the runtime identifier into plain library
+projects and hit NETSDK1112. It preserved the prior file and retired its staging
+directory. The standard project build then replaced only that copied handoff.
+
+The resulting `pro.vafadar.zanance` APK has 100,052,895 bytes and SHA-256
+`9f1c9df40e85763054eb3568be2fa2821c55e719cdcd28e744d0a3a7c7ed8bde`.
+The entry point verified its signature and offline manifest and reported that same
+digest. Each of ARM64 and x86_64 has 192 AOT and 204 ELF files. All native load
+segments passed the static 16 KiB check. The temporary publish directory was
+removed and a standard isolated build clean passed. The APK and a receipt remain
+under `artifacts/zhb`. No device installation was performed.
