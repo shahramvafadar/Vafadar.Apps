@@ -114,6 +114,48 @@ public sealed class AiQuestionTests
         Assert.Equal((new DateOnly(2026, 10, 15), new DateOnly(2026, 11, 14)), result);
     }
 
+    /// <summary>The original Interpret action cannot apply a separate question introduced by a binding callback.</summary>
+    [Fact]
+    public async Task Interpret_command_does_not_adopt_a_new_question_from_its_first_notification()
+    {
+        using var f = new FlowFixture();
+        var store = f.Services.GetRequiredService<AiSnapshotStore>();
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        var vm = new AiAnalysisViewModel(store, f.Translator, f.Localization, new DateFormatter(f.Localization),
+            f.Time, f.Platform, new LocalRuntime());
+        await vm.LoadAsync();
+        vm.QuestionText = "Why did EUR spending rise?";
+        var initialDates = (vm.From, vm.To);
+        var initialCompare = vm.ComparePrevious;
+        var changed = false;
+        vm.PropertyChanged += (_, args) =>
+        {
+            if (changed || args.PropertyName != nameof(vm.CanEditQuestionComparison)) return;
+            changed = true;
+            vm.QuestionText = "Which EUR plans contribute to next month's shortfall?";
+        };
+
+        await vm.ApplyQuestionCommand.ExecuteAsync(null);
+
+        Assert.True(changed);
+        Assert.Contains("next month", vm.QuestionText, StringComparison.Ordinal);
+        Assert.Null(vm.QuestionStatus);
+        Assert.Equal(initialDates, (vm.From, vm.To));
+        Assert.Equal(initialCompare, vm.ComparePrevious);
+        Assert.True(vm.CanEditQuestionComparison);
+        Assert.False(vm.HasPendingOperation);
+        Assert.Null(vm.Disclosure);
+
+        // A separate Interpret action may apply the new question normally.
+        await vm.ApplyQuestionCommand.ExecuteAsync(null);
+        Assert.Equal(f.Translator.Format("AiQuestion_Currency", f.Translator["AiQuestion_Plans"], "EUR"), vm.QuestionStatus);
+        Assert.False(vm.CanEditQuestionComparison);
+        Assert.NotEqual(initialDates, (vm.From, vm.To));
+        Assert.False(vm.HasPendingOperation);
+        Assert.Null(vm.Disclosure);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
     private sealed class LocalRuntime : IAiRuntime
     {
         public bool NetworkAvailable => false;

@@ -68,16 +68,20 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private async Task ApplyQuestionAsync()
     {
         if (!OwnsPresentation || !Loaded || !CanEditScope || HasPendingOperation || scope is not { } original) return;
+        var originalText = QuestionText;
+        var version = BeginInvalidation();
         question = null;
-        NotifyQuestionScope();
-        var version = Invalidate();
-        var interpretation = AiQuestionParser.Interpret(QuestionText);
-        if (interpretation is null) { QuestionStatus = text["AiQuestion_Clarify"]; return; }
-        var chosenCurrency = interpretation.Currency;
-        var today = DateOnly.FromDateTime(time.GetLocalNow().Date);
         readingSource = operationActive = true;
         try
         {
+            ClearInvalidatedPreview(version); Validate(version);
+            QuestionStatus = null; Validate(version);
+            NotifyQuestionScope(); Validate(version);
+            var interpretation = AiQuestionParser.Interpret(originalText);
+            if (interpretation is null) { QuestionStatus = text["AiQuestion_Clarify"]; return; }
+
+            var chosenCurrency = interpretation.Currency;
+            var today = DateOnly.FromDateTime(time.GetLocalNow().Date);
             StartOperation(version);
             var range = interpretation.NextMonth
                 ? await store.UpcomingMonthAsync(original.File, today,
