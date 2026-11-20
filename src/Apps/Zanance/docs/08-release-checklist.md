@@ -1606,6 +1606,21 @@ to Welcome. No replacement or account creation occurred. The owned emulator was 
 Evidence is under `artifacts/backup-native-stream-preview`. The separate recovery screen for
 failed protected startup was built with the same adapter and was not opened in this run.
 
+## Android CSV import previews from provider streams
+
+The generic CSV and bank-preset paths now use the Android chooser's temporary read stream.
+Each keeps its existing bounded decoder, cancellation and original-profile validation. Strict
+Windows and Android builds passed. The signed offline APK `15c9753a` passed package, signature,
+manifest and static alignment checks.
+
+On Android 16 with AI off, two retained synthetic files were served through non-seekable
+provider pipes. Zanance opened each exactly once. The generic preview showed the named
+EUR 12.34 expense and the StarMoney preview showed three source rows. The first observer
+found the generic preview summary but missed the row below the pinned action bar. Only
+the body was scrolled to inspect the same result. No import was approved and Transactions
+remained empty. The fresh emulator was retired. Evidence is under
+`artifacts/csv-native-stream-preview`.
+
 ## D-299 reference-source release gates
 
 Keep a live provider, explicit source/coverage/redistribution licence, cost/entitlement policy and public route

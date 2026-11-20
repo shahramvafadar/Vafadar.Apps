@@ -8,34 +8,55 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
     /// <inheritdoc />
     public Task<PickedDataFile?> PickCsvAsync(string title) => PickCsvAsync(title, static () => { }, CancellationToken.None);
     /// <inheritdoc />
-    public async Task<PickedDataFile?> PickCsvAsync(string title, Action validateOwner, CancellationToken ct)
-    {
-        ct.ThrowIfCancellationRequested(); validateOwner();
-        var file = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = title });
-        ct.ThrowIfCancellationRequested(); validateOwner();
-        if (file is null) return null;
-        // D-385: providers may finish reads synchronously; keep stream opening/decoding off the window thread.
-        return await Task.Run(async () =>
-        {
-            await using var stream = await file.OpenReadAsync();
-            ct.ThrowIfCancellationRequested(); validateOwner();
-            var content = await Core.DataFiles.CsvInput.ReadTextAsync(stream, cancellationToken: ct);
-            ct.ThrowIfCancellationRequested(); validateOwner(); return new PickedDataFile(file.FileName, content);
-        }, ct);
-    }
+    public Task<PickedDataFile?> PickCsvAsync(string title, Action validateOwner, CancellationToken ct) =>
+        PickAsync(title, source => Core.DataFiles.CsvInput.ReadTextAsync(source, cancellationToken: ct), validateOwner, ct);
     /// <inheritdoc />
     public Task<bool> ConfirmExportAsync(string reason) => appLock.ConfirmAsync(reason);
     /// <inheritdoc />
     public Task<PickedDataFile?> PickBankCsvAsync(string title, Core.DataFiles.BankCsvEncoding encoding) =>
         PickBankCsvAsync(title, encoding, static () => { }, CancellationToken.None);
     /// <inheritdoc />
-    public async Task<PickedDataFile?> PickBankCsvAsync(string title, Core.DataFiles.BankCsvEncoding encoding, Action validateOwner, CancellationToken ct)
+    public Task<PickedDataFile?> PickBankCsvAsync(string title, Core.DataFiles.BankCsvEncoding encoding, Action validateOwner, CancellationToken ct) =>
+        PickAsync(title, source => ReadBankCsvAsync(source, encoding, validateOwner, ct), validateOwner, ct);
+
+    private static async Task<PickedDataFile?> PickAsync(string title, Func<Stream, Task<string>> read,
+        Action validateOwner, CancellationToken ct)
     {
-        ct.ThrowIfCancellationRequested(); validateOwner();
+        void Current() { ct.ThrowIfCancellationRequested(); validateOwner(); }
+        async Task<PickedDataFile> ReadAsync(Stream input, string name)
+        {
+            Current();
+            var text = await read(input);
+            Current();
+            return new(name, text);
+        }
+
+        Current();
+        // D-385: small provider reads and decoding can finish synchronously.
+#if ANDROID
+        PickedDataFile? picked = null;
+        await AndroidDocumentPicker.UseAsync(title, null, async (input, name, _) =>
+        {
+            picked = await Task.Run(() => ReadAsync(input, name), ct);
+        }, Current);
+        Current();
+        return picked;
+#else
         var file = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = title });
-        ct.ThrowIfCancellationRequested(); validateOwner();
+        Current();
         if (file is null) return null;
-        await using var source = await file.OpenReadAsync(); using var buffer = new MemoryStream();
+        return await Task.Run(async () =>
+        {
+            await using var input = await file.OpenReadAsync();
+            return await ReadAsync(input, file.FileName);
+        }, ct);
+#endif
+    }
+
+    private static async Task<string> ReadBankCsvAsync(Stream source, Core.DataFiles.BankCsvEncoding encoding,
+        Action validateOwner, CancellationToken ct)
+    {
+        using var buffer = new MemoryStream();
         var bytes = new byte[65536]; int count;
         while ((count = await source.ReadAsync(bytes, ct)) != 0)
         {
@@ -43,10 +64,9 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
             if (buffer.Length + count > Core.DataFiles.StarMoneyCsv.MaximumBytes) throw new FormatException("The bank file exceeds its safe bound.");
             await buffer.WriteAsync(bytes.AsMemory(0, count), ct);
         }
-        // Strict decoding can be synchronous even when the platform stream completed asynchronously.
-        var content = buffer.ToArray();
-        var text = await Task.Run(() => Core.DataFiles.StarMoneyCsv.Decode(content, encoding), ct);
-        ct.ThrowIfCancellationRequested(); validateOwner(); return new(file.FileName, text);
+        ct.ThrowIfCancellationRequested();
+        validateOwner();
+        return Core.DataFiles.StarMoneyCsv.Decode(buffer.ToArray(), encoding);
     }
     /// <inheritdoc />
     public Task ShareCsvAsync(string fileName, string title, string content) =>
