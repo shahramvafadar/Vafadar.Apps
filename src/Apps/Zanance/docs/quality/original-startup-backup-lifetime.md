@@ -66,6 +66,17 @@ preview showed one account, one transaction and one plan. Cancel cleared the pre
 returned to Welcome on the same boot and app process. The run required no restore or ledger
 write. Evidence is retained under `artifacts/xbw-native`.
 
+The normal restore preview also clears its own selected package on Cancel, replacement,
+permanent root retirement and accepted restore. A permanently retired root waits for any
+operation still borrowing the package before clearing it. Sixteen focused ownership cases
+cover the exact former array, the source stream, accepted follow-through and a suspended
+borrower. The held-stream cancellation test overrides the current sequential read method so
+it observes the production read instead of waiting for an unused stream-copy callback.
+Strict Windows and Android builds passed. The signed offline APK `722093c6` opened the
+retained D-403 pipe once on a fresh Android 16 guest. Its original preview rendered the
+expected record counts, Cancel cleared the review, and Back returned to Welcome in the same
+process without restoring a package. The native evidence is under `artifacts/xbp-native`.
+
 ## Focused evidence
 
 Nine distinct actual-stream cases pass on the production reader: independent complete

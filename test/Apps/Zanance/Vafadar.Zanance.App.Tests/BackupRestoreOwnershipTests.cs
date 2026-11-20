@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Backup;
 using Vafadar.Core.Hosting;
@@ -19,12 +20,15 @@ public sealed class BackupRestoreOwnershipTests
         internal Func<Action>? SourceGuard;
         internal Func<Task<bool>>? PendingConsent;
         internal Func<Task<bool>>? PendingAuthentication;
+        internal Func<byte[], Task>? BorrowPackage;
         public Action CaptureSourceValidation() => SourceGuard?.Invoke() ?? (static () => { });
         public Task<bool> ConfirmReplacementAsync() { if (PendingConsent is not null) return PendingConsent(); if (retire == "consent") owner.Current = false; return Task.FromResult(true); }
         public Task<bool> AuthenticateAsync() { Auth++; if (PendingAuthentication is not null) return PendingAuthentication(); if (retire == "auth") owner.Current = false; return Task.FromResult(true); }
         public Task CreateSafetyCopyAsync() { Safety++; if (retire == "safety") owner.Current = false; return Task.CompletedTask; }
         public async Task RestorePrimaryAsync(byte[] package, string? password)
-        { Primary++; await backup.RestorePackageAsync(package, password, Ct); if (retire == "accepted") owner.Current = false;
+        { Primary++;
+            if (BorrowPackage is not null) { await BorrowPackage(package); return; }
+            await backup.RestorePackageAsync(package, password, Ct); if (retire == "accepted") owner.Current = false;
             if (retire == "uncertain-retired") { owner.Current = false; throw new IOException("Fictitious later-source failure after actual replacement."); } }
         public Task ApplyDisplayAsync() { Display++; return Task.CompletedTask; }
         public Task CompleteOnboardingAsync() => Task.CompletedTask;
@@ -34,6 +38,83 @@ public sealed class BackupRestoreOwnershipTests
     }
     private static BackupService Service(FlowFixture f) => new(f.Services.GetServices<IBackupSource>(),
         f.Services.GetServices<IBackupSummaryProvider>(), new StaticAppEnvironment("pro.vafadar.zanance", "Zanance", new(0, 1, 0), "Fictitious D654 device", "Tests"), f.Preferences, f.Time, new());
+
+    private static byte[] SelectedPackage(BackupRestoreSession session) => Assert.IsType<byte[]>(
+        typeof(BackupRestoreSession).GetField("_package", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(session));
+
+    /// <summary>Final selection changes zero the session's private copy while preserving the source.</summary>
+    [Theory]
+    [InlineData("cancel")]
+    [InlineData("replace")]
+    [InlineData("retire")]
+    public async Task Discarded_selection_clears_the_owned_package(string action)
+    {
+        using var f = new FlowFixture();
+        var backup = Service(f);
+        var runtime = new Runtime(backup, new Owner(), "none");
+        var session = new BackupRestoreSession(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time);
+        var source = await backup.CreatePackageAsync(cancellationToken: Ct);
+        var unchanged = source.ToArray();
+        using var input = new MemoryStream(source, writable: false);
+        await session.PrepareAsync(input, "Original portable fixture.vbak");
+        var first = SelectedPackage(session);
+        Assert.Equal(source, first);
+
+        if (action == "cancel")
+            session.CancelCommand.Execute(null);
+        else if (action == "replace")
+        {
+            input.Position = 0;
+            await session.PrepareAsync(input, "Second portable fixture.vbak");
+            Assert.Equal(source, SelectedPackage(session));
+            Assert.True(session.HasPreview);
+        }
+        else
+            session.RetireRoot();
+
+        Assert.All(first, value => Assert.Equal((byte)0, value));
+        Assert.Equal(unchanged, source);
+        Assert.Equal(0, runtime.Primary);
+    }
+
+    /// <summary>Root retirement waits for the original restore borrower before clearing the package.</summary>
+    [Fact]
+    public async Task Retiring_a_busy_root_clears_only_after_the_borrower_returns()
+    {
+        using var f = new FlowFixture();
+        var backup = Service(f);
+        var entered = new TaskCompletionSource<byte[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var runtime = new Runtime(backup, new Owner(), "none")
+        {
+            BorrowPackage = async package =>
+            {
+                entered.SetResult(package);
+                await release.Task.WaitAsync(Ct);
+                throw new IOException("Fictitious replacement did not complete.");
+            }
+        };
+        var session = new BackupRestoreSession(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time);
+        var source = await backup.CreatePackageAsync(cancellationToken: Ct);
+        using var input = new MemoryStream(source, writable: false);
+        await session.PrepareAsync(input, "Borrowed portable fixture.vbak");
+        Assert.True(session.CanRestore);
+        var pending = session.RestoreCommand.ExecuteAsync(null);
+        var borrowed = await entered.Task.WaitAsync(Ct);
+        try
+        {
+            session.RetireRoot();
+            Assert.True(session.IsBusy);
+            Assert.Equal(source, borrowed);
+        }
+        finally { release.TrySetResult(); }
+
+        await pending;
+        Assert.All(borrowed, value => Assert.Equal((byte)0, value));
+        Assert.Null(session.PickedName);
+        Assert.False(session.HasCompleted);
+    }
+
     [Theory]
     [InlineData("consent")][InlineData("auth")][InlineData("safety")]
     public async Task Retired_original_native_await_cannot_begin_primary_source_replacement(string stage)
@@ -56,7 +137,9 @@ public sealed class BackupRestoreOwnershipTests
         var owner = new Owner(); var runtime = new Runtime(backup, owner, "accepted");
         var session = new BackupRestoreSession(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time, () => owner.Current);
         using var stream = new MemoryStream(package, writable: false); await session.PrepareAsync(stream, "D654-original-accepted.zanbak");
+        var consumed = SelectedPackage(session);
         await session.RestoreCommand.ExecuteAsync(null); Assert.True(session.HasCompleted); Assert.NotNull(session.Result); Assert.Null(session.PickedName);
+        Assert.All(consumed, value => Assert.Equal((byte)0, value));
         Assert.Equal(1, runtime.Primary); Assert.Equal(0, runtime.Opened); Assert.Equal(0, runtime.Display);
         await session.RestoreCommand.ExecuteAsync(null); Assert.Equal(1, runtime.Primary);
         owner.Current = true; session.SetPresentationActive(true); await session.FinishCommand.ExecuteAsync(null);
@@ -82,8 +165,8 @@ public sealed class BackupRestoreOwnershipTests
         internal readonly TaskCompletionSource Entered = new(TaskCreationOptions.RunContinuationsAsynchronously);
         internal readonly TaskCompletionSource Release = new(TaskCreationOptions.RunContinuationsAsynchronously);
         internal CancellationToken ActualToken { get; private set; }
-        public override async Task CopyToAsync(Stream destination, int bufferSize, CancellationToken ct)
-        { ActualToken = ct; Entered.TrySetResult(); await Release.Task.WaitAsync(ct); await base.CopyToAsync(destination, bufferSize, ct); }
+        public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken ct = default)
+        { ActualToken = ct; Entered.TrySetResult(); await Release.Task.WaitAsync(ct); return await base.ReadAsync(buffer, ct); }
     }
     [Fact]
     public async Task Actual_selected_stream_cancels_on_departure_and_an_old_owner_cannot_borrow_native_return()

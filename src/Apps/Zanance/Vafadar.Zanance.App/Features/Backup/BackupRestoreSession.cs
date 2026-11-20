@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Vafadar.Backup;
@@ -95,7 +96,7 @@ public sealed partial class BackupRestoreSession : ViewModelBase
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (owner.IsCurrent) Error = _translator["Backup_Error_Storage"]; }
         finally
         {
-            if (loaded is not null) System.Security.Cryptography.CryptographicOperations.ZeroMemory(loaded);
+            if (loaded is not null) CryptographicOperations.ZeroMemory(loaded);
             EndOriginalOperation();
         }
     }
@@ -194,7 +195,10 @@ public sealed partial class BackupRestoreSession : ViewModelBase
     private void ClearSelection()
     {
         Interlocked.Increment(ref _selectionVersion); _sourceValidation = null;
-        _package = null; PickedName = null; Password = string.Empty; NeedsPassword = false; HasPreview = false; PreviewText = null;
+        // Terminal release arrives after the current reader or restore returns.
+        var retired = Interlocked.Exchange(ref _package, null);
+        if (retired is not null) CryptographicOperations.ZeroMemory(retired);
+        PickedName = null; Password = string.Empty; NeedsPassword = false; HasPreview = false; PreviewText = null;
     }
     private string Describe(BackupManifest manifest)
     {
