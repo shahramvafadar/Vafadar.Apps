@@ -7,10 +7,12 @@ internal static class BoundedPrivateFileReader
 {
     /// <summary>Returns the complete original bytes within the caller's format-specific limit.</summary>
     internal static async Task<byte[]> ReadAsync(Stream input, long maximumBytes, CancellationToken ct,
-        Func<Exception> limitExceeded)
+        Func<Exception> limitExceeded, Action? validateOwner = null)
     {
         ArgumentNullException.ThrowIfNull(input);
+        ArgumentOutOfRangeException.ThrowIfNegative(maximumBytes);
         ct.ThrowIfCancellationRequested();
+        validateOwner?.Invoke();
         using var buffer = new MemoryStream();
         var chunk = new byte[81920];
         try
@@ -18,9 +20,13 @@ internal static class BoundedPrivateFileReader
             while (true)
             {
                 ct.ThrowIfCancellationRequested();
-                var count = await input.ReadAsync(chunk, ct).ConfigureAwait(false);
+                // Read at most one sentinel byte beyond the caller's complete-file bound.
+                var remaining = maximumBytes - buffer.Length;
+                var request = remaining >= chunk.Length ? chunk.Length : (int)remaining + 1;
+                var count = await input.ReadAsync(chunk.AsMemory(0, request), ct).ConfigureAwait(false);
                 // A provider may finish a native read after cancellation; never publish that late input.
                 ct.ThrowIfCancellationRequested();
+                validateOwner?.Invoke();
                 if (count == 0) break;
                 if (buffer.Length + count > maximumBytes) throw limitExceeded();
                 Append(buffer, chunk.AsSpan(0, count));

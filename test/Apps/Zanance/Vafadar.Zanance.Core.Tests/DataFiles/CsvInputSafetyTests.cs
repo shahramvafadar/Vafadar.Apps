@@ -128,6 +128,20 @@ public sealed class CsvInputSafetyTests
     }
 
     [Fact]
+    public async Task A_late_BOM_fragment_cannot_trigger_another_provider_read_after_cancellation()
+    {
+        using var cancellation = new CancellationTokenSource();
+        using var source = new FragmentedStream([239, 187, 191, 65], 1) { IgnoreCancellation = true };
+        source.AfterRead = cancellation.Cancel;
+
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            CsvInput.ReadTextAsync(source, cancellationToken: cancellation.Token));
+
+        Assert.Equal(1, source.BytesRead);
+        Assert.True(source.CanRead);
+    }
+
+    [Fact]
     public async Task Provider_failure_after_partial_read_does_not_publish_partial_text_or_close_the_original_stream()
     {
         using var source = new FragmentedStream(Encoding.UTF8.GetBytes("fictitious long input"), 2);
@@ -154,6 +168,7 @@ public sealed class CsvInputSafetyTests
         internal Action? AfterRead;
         internal long? ReportedLength;
         internal int LengthRequests;
+        internal bool IgnoreCancellation;
         public override bool CanSeek => ReportedLength is not null;
         public override bool CanWrite => false;
         public override long Length { get { LengthRequests++; return ReportedLength ?? throw new NotSupportedException(); } }
@@ -165,7 +180,8 @@ public sealed class CsvInputSafetyTests
         }
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested(); var length = Math.Min(Math.Min(buffer.Length, fragment), bytes.Length - BytesRead);
+            if (!IgnoreCancellation) cancellationToken.ThrowIfCancellationRequested();
+            var length = Math.Min(Math.Min(buffer.Length, fragment), bytes.Length - BytesRead);
             bytes.AsMemory(BytesRead, length).CopyTo(buffer); BytesRead += length; AfterRead?.Invoke(); return ValueTask.FromResult(length);
         }
         public override void Flush() => throw new NotSupportedException();

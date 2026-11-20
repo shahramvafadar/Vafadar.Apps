@@ -88,6 +88,32 @@ public sealed class StartupBackupPackageReaderTests
         Assert.Empty(await StartupBackupPackageReader.ReadAsync(source, TestContext.Current.CancellationToken));
     }
 
+    [Fact]
+    public async Task Bounded_private_input_checks_its_original_owner_before_requesting_more_data()
+    {
+        var current = true;
+        using var source = new ObservedStream { DuringRead = () => current = false };
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            BoundedPrivateFileReader.ReadAsync(source, 32, TestContext.Current.CancellationToken,
+                static () => new IOException(), () =>
+                {
+                    if (!current) throw new InvalidOperationException("The original file selection retired.");
+                }));
+        Assert.Equal(1, source.Reads);
+        Assert.True(source.LastChunk.Span.IndexOfAnyExcept((byte)0) < 0);
+        Assert.True(source.CanRead);
+    }
+
+    [Fact]
+    public async Task Bounded_private_input_consumes_only_one_excess_byte()
+    {
+        using var source = new MemoryStream(new byte[80]);
+        await Assert.ThrowsAsync<IOException>(() => BoundedPrivateFileReader.ReadAsync(source, 32,
+            TestContext.Current.CancellationToken, static () => new IOException()));
+        Assert.Equal(33, source.Position);
+        Assert.True(source.CanRead);
+    }
+
     private sealed class ObservedStream : Stream
     {
         internal Action? DuringRead { get; init; }

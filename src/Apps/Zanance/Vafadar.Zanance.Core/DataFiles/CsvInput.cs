@@ -13,13 +13,19 @@ public static class CsvInput
         using var bounded = new ByteBudgetStream(source, budget.MaximumBytes);
         using var reader = new StreamReader(bounded, Encoding.UTF8, detectEncodingFromByteOrderMarks: true, bufferSize: 4096);
         var result = new StringBuilder(); var chars = new char[8192]; int count;
-        while ((count = await reader.ReadAsync(chars.AsMemory(), cancellationToken).ConfigureAwait(false)) != 0)
+        try
         {
-            if (result.Length > budget.MaximumCharacters - count)
-                throw new CsvReadLimitException(CsvReadLimit.Characters, budget.MaximumCharacters);
-            result.Append(chars, 0, count);
+            while ((count = await reader.ReadAsync(chars.AsMemory(), cancellationToken).ConfigureAwait(false)) != 0)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (result.Length > budget.MaximumCharacters - count)
+                    throw new CsvReadLimitException(CsvReadLimit.Characters, budget.MaximumCharacters);
+                result.Append(chars, 0, count);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            return result.ToString();
         }
-        return result.ToString();
+        finally { Array.Clear(chars); }
     }
 
     /// <summary>Counts real reads, allowing only one sentinel byte beyond the budget; never closes the native source.</summary>
@@ -65,7 +71,11 @@ public static class CsvInput
             // Coalesce at most the first four bytes, still counting every byte against the original stream budget.
             do
             {
-                var read = Count(await source.ReadAsync(buffer.Slice(total, Request(buffer.Length - total)), cancellationToken).ConfigureAwait(false));
+                cancellationToken.ThrowIfCancellationRequested();
+                var received = await source.ReadAsync(buffer.Slice(total, Request(buffer.Length - total)), cancellationToken).ConfigureAwait(false);
+                // Some Android providers return a fragment after cancellation. Do not coalesce a second fragment.
+                cancellationToken.ThrowIfCancellationRequested();
+                var read = Count(received);
                 total += read;
                 if (read == 0) break;
             } while (_read < 4 && total < buffer.Length);

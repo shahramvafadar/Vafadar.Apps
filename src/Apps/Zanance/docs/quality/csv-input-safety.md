@@ -115,3 +115,28 @@ Arbitrary bank specimens, all hostile/provider inputs, total import memory/laten
 acceptance, iOS and publication remain open. D-386 schedules dedicated native ANR/crash and Android
 accessibility work after remaining approved development; this batch does not reopen those tracks or
 claim they are fixed. Existing successful financial/crypto/backend suites are not replayed.
+
+## Late provider reads after CSV cancellation
+
+A one-byte fragmented synthetic provider returned its first UTF-8 BOM byte as
+the selection was cancelled and ignored cancellation on further calls. The
+original reader consumed four bytes while detecting the BOM. The corrected
+reader checks cancellation around each actual provider read, including the
+first four-byte coalescing step, so it stops after the first late byte. It
+also clears its own decoded character scratch on completion or refusal.
+
+Android CSV import now passes the original cancellation token into document
+open. The explicit StarMoney input uses the same bounded private reader used by
+attachments and startup recovery. The reader checks the original owner before
+reading and after each provider return, clears private temporary byte arrays,
+and reads at most one sentinel byte beyond the exact bound. StarMoney clears
+the owned input bytes once the original encoding has been interpreted.
+The text remains the usual input to the explicit preview and import flow.
+
+The 27 selected CSV and StarMoney Core tests and 121 selected app tests passed.
+The new cases cover a late BOM fragment, a retired private reader and the exact
+excess byte limit. Existing fragmented encoding, large-export, malformed-input
+and app outcome controls retain their assertions. All data were synthetic.
+Evidence is under `artifacts/csv-cancelled-provider-input`.
+Strict Windows and Android Release builds passed. The signed offline APK SHA256
+is 93211dd299b0d6fb0edc7f0010f6600b22396079b96ee17aa26cd7eb71f6b842.

@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Vafadar.Zanance.App.Security;
 
 namespace Vafadar.Zanance.App.Features.DataFiles;
@@ -39,7 +40,7 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
         await AndroidDocumentPicker.UseAsync(title, null, async (input, name, _) =>
         {
             picked = await Task.Run(() => ReadAsync(input, name), ct);
-        }, Current, virtualMimeTypes: ["text/csv", "text/comma-separated-values"]);
+        }, Current, virtualMimeTypes: ["text/csv", "text/comma-separated-values"], ct: ct);
         Current();
         return picked;
 #else
@@ -57,17 +58,15 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
     private static async Task<string> ReadBankCsvAsync(Stream source, Core.DataFiles.BankCsvEncoding encoding,
         Action validateOwner, CancellationToken ct)
     {
-        using var buffer = new MemoryStream();
-        var bytes = new byte[65536]; int count;
-        while ((count = await source.ReadAsync(bytes, ct)) != 0)
+        var bytes = await BoundedPrivateFileReader.ReadAsync(source, Core.DataFiles.StarMoneyCsv.MaximumBytes, ct,
+            static () => new FormatException("The bank file exceeds its safe bound."), validateOwner);
+        try
         {
+            ct.ThrowIfCancellationRequested();
             validateOwner();
-            if (buffer.Length + count > Core.DataFiles.StarMoneyCsv.MaximumBytes) throw new FormatException("The bank file exceeds its safe bound.");
-            await buffer.WriteAsync(bytes.AsMemory(0, count), ct);
+            return Core.DataFiles.StarMoneyCsv.Decode(bytes, encoding);
         }
-        ct.ThrowIfCancellationRequested();
-        validateOwner();
-        return Core.DataFiles.StarMoneyCsv.Decode(buffer.ToArray(), encoding);
+        finally { CryptographicOperations.ZeroMemory(bytes); }
     }
     /// <inheritdoc />
     public Task ShareCsvAsync(string fileName, string title, string content) =>
