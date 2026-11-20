@@ -111,18 +111,34 @@ public sealed partial class BackupRestoreSession : ViewModelBase
     private async Task InspectAsync(PreparationOwner owner)
     {
         Error = null; HasPreview = false;
+        var published = false;
         try
         {
             owner.EnsureCurrent(); _sourceValidation?.Invoke();
             var package = _package!; var password = NeedsPassword ? Password : null; var revision = Volatile.Read(ref _selectionVersion);
+            void ValidatePreviewOwner()
+            {
+                owner.EnsureCurrent(); _sourceValidation?.Invoke();
+                if (revision != Volatile.Read(ref _selectionVersion) || !ReferenceEquals(package, _package))
+                    throw new InvalidOperationException("The original restore input changed during inspection.");
+            }
+
             var manifest = await _backup.InspectPackageAsync(package, password, owner.Token);
-            owner.EnsureCurrent(); _sourceValidation?.Invoke();
-            if (revision != Volatile.Read(ref _selectionVersion) || !ReferenceEquals(package, _package))
-                throw new InvalidOperationException("The original restore input changed during inspection.");
-            PreviewText = Describe(manifest); HasPreview = true;
+            var description = Describe(manifest);
+            ValidatePreviewOwner();
+            // Binding notifications run synchronously and can retire the original frame during either setter.
+            PreviewText = description;
+            ValidatePreviewOwner();
+            HasPreview = true;
+            ValidatePreviewOwner();
+            published = true;
         }
         catch (BackupException exception) { if (owner.IsCurrent) Error = _translator[$"Backup_Error_{exception.Error}"]; }
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (owner.IsCurrent) Error = _translator["Backup_ReviewFailed"]; }
+        finally
+        {
+            if (!published) { HasPreview = false; PreviewText = null; }
+        }
     }
     [RelayCommand(CanExecute = nameof(CanRestore))]
     private async Task RestoreAsync()

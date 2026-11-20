@@ -160,6 +160,42 @@ public sealed class BackupRestoreOwnershipTests
         Assert.Null(session.PickedName); Assert.False(session.HasPreview); Assert.Equal(0, runtime.Primary);
         Assert.False(File.Exists(f.Directory.Combine("D654-other-unopened.db")));
     }
+    [Theory]
+    [InlineData(nameof(BackupRestoreSession.PreviewText), false)]
+    [InlineData(nameof(BackupRestoreSession.HasPreview), true)]
+    public async Task Retired_frame_cannot_enable_restore_during_preview_publication(string property, bool beforeAssignment)
+    {
+        using var f = new FlowFixture();
+        await f.Store.GetSettingsAsync(Ct);
+        var backup = Service(f);
+        var package = await backup.CreatePackageAsync(cancellationToken: Ct);
+        var runtime = new Runtime(backup, new Owner(), "none");
+        var session = new BackupRestoreSession(backup, runtime, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time);
+        var retired = false;
+        void ReturnToPage(string? changed)
+        {
+            if (retired || changed != property || session.PreviewText is null) return;
+            retired = true;
+            session.Deactivate();
+            session.SetPresentationActive(true);
+        }
+
+        if (beforeAssignment) session.PropertyChanging += (_, args) => ReturnToPage(args.PropertyName);
+        else session.PropertyChanged += (_, args) => ReturnToPage(args.PropertyName);
+
+        using var stream = new MemoryStream(package, writable: false);
+        await session.PrepareAsync(stream, "Portable preview fixture.zanbak");
+
+        Assert.True(retired);
+        Assert.False(session.HasPreview);
+        Assert.Null(session.PreviewText);
+        Assert.False(session.CanRestore);
+        Assert.True(session.CanCheck);
+        await session.CheckCommand.ExecuteAsync(null);
+        Assert.True(session.CanRestore);
+        Assert.Equal(0, runtime.Primary);
+    }
+
     private sealed class HeldRead(byte[] bytes) : MemoryStream(bytes, writable: false)
     {
         internal readonly TaskCompletionSource Entered = new(TaskCreationOptions.RunContinuationsAsynchronously);

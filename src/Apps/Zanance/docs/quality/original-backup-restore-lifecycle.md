@@ -167,3 +167,21 @@ A single new28-target supplemental cleanup is rejected before process creation w
 `blocked by policy`. All28 targets remain:4,710files/1,780,809,003logical bytes. No subset,
 alternate method, movement, escalation, retry or reuse is attempted. Earlier refused scopes
 remain untouched. This remaining-output limitation is explicit, not a complete disk-cleanup claim.
+
+## Preview publication during synchronous binding notifications
+
+Two source-linked tests reproduced an invalid restore affordance with a synthetic portable
+package. The original page retired and returned either during the caption's changed
+notification or during the preview flag's changing notification. In both cases the old
+inspection left the returned page with its restore action enabled.
+
+Inspection now validates the original frame, target and selection before publishing the
+caption and after each property setter. A refused publication clears the caption and the
+preview flag while the original operation still owns the busy state. A fresh explicit review
+can inspect the retained package. All 66 selected tests across restore ownership, restore
+flow and startup package reading passed after the change. The two new cases exercise
+re-review without invoking primary replacement. They use synchronous binding observers
+and establish no new native navigation or physical-device acceptance.
+
+The strict Windows build and standard test clean passed. The offline signed Android
+artifact has SHA-256 `ac90bc9d64309c9c1528f9f8b98b09a58cf56b5c4ec776c2fb1aea10f7fad51b`.
