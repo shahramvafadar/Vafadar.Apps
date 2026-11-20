@@ -149,6 +149,7 @@ jobs:
           fi
           java eng/maui/VerifyAndroidBundle.java "${bundles[0]}" "$RUNNER_TEMP/zanance-signing/upload.keystore"
           python eng/maui/verify-android-bundle-elf.py "${bundles[0]}"
+          python eng/maui/verify-android-bundle-sqlcipher.py "${bundles[0]}" eng/native/sqlcipher/android.package.contents.json
           bundletool=$(dotnet msbuild "$APP_PROJECT" -nologo -v:q \
             -p:Configuration=Release -p:TargetFramework=net10.0-android \
             -p:VafadarMauiTargetFrameworks=net10.0-android \

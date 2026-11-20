@@ -77,6 +77,13 @@ build failed to resolve the shell used by the notification preparation target. A
 short PATH resolved it and the strict build finished without build warnings or errors. The
 disposable emulator was retired and the standard isolated build clean completed.
 
+The runtime reported an absent optional `SQLitePCLRaw.batteries_v2` assembly before onboarding.
+[Microsoft.Data.Sqlite.Core 10.0.12](https://github.com/dotnet/efcore/blob/v10.0.12/src/Microsoft.Data.Sqlite.Core/SqliteConnection.cs#L47-L51)
+looks for that initializer and continues when it is absent. Zanance selects its SQLCipher provider
+directly on Android. The observed APK contains the x64 SQLCipher engine and its managed provider.
+The same process completed the zero-opening account setup and displayed Home and About. This
+runtime message does not require adding the generic SQLite bundle.
+
 D-64: original photo bytes are transient during recognition only; a separate upright copy is bounded to 3200 px,
 while only the 1600 px metadata-free JPEG is attached and backed up. Source rows/candidates/currency evidence are
 not additional database fields or exports. No new permission, SDK or network path. A stored-image reread cannot

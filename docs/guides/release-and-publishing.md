@@ -66,7 +66,8 @@ Each app is versioned independently.
    `env:` password prefix for bundles. The keystore and password files are removed after verification or failure.
 4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
    configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
-   that bundle. The base manifest must contain the permanent package ID, requested display version and build number,
+   that bundle. Each base ABI must contain the qualified SQLCipher bytes, and the included manifest and notices must
+   match the reviewed native package. The base manifest must contain the permanent package ID, requested display version and build number,
    with debug and test-only flags off. The decoded base manifest must declare a numeric target SDK of at least 36,
    the [Google Play mobile submission minimum](https://support.google.com/googleplay/android-developer/answer/11926878)
    effective 31 August 2026. Recheck that policy before each release and update `PLAY_MIN_TARGET_SDK` when it changes.
