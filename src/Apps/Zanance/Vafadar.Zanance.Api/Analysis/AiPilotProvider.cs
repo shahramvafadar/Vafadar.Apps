@@ -436,10 +436,13 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
             return unpublished;
 
         static int? InRange(int? count, int total) => count >= 0 && count <= total ? count : null;
-        var values = Array(response, openAi ? "output" : "steps")
+        var content = Array(response, openAi ? "output" : "steps")
             .Where(item => Text(item, "type") == (openAi ? "message" : "model_output"))
-            .SelectMany(item => Array(item, "content"))
-            .Where(item => Text(item, "type") == (openAi ? "output_text" : "text"))
+            .SelectMany(item => Array(item, "content")).ToArray();
+        // An explicit refusal takes precedence over structured text anywhere in the response.
+        if (openAi && content.Any(item => Text(item, "type") == "refusal")) return unpublished;
+
+        var values = content.Where(item => Text(item, "type") == (openAi ? "output_text" : "text"))
             .Select(item => Text(item, "text")).ToArray();
         if (values.Length != 1 || values[0] is not { } value) return unpublished;
         try
