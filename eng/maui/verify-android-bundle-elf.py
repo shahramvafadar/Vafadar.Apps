@@ -35,6 +35,8 @@ def check_library(bundle, entry, machine):
                 raise ValueError("load segment extends beyond the library")
             if alignment < PAGE_SIZE or alignment & (alignment - 1) or file_offset % PAGE_SIZE != address % PAGE_SIZE:
                 raise ValueError("load segment is not aligned to 16 KiB")
+            if file_offset % alignment != address % alignment:
+                raise ValueError("load segment does not match its declared ELF alignment")
         if not seen_load:
             raise ValueError("no load segments")
 

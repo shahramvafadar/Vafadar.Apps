@@ -79,7 +79,9 @@ the handoff.
    `env:` password prefix for bundles. The keystore and password files are removed after verification or failure.
 4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
    configured upload certificate. It also verifies 16 KiB ELF load alignment for every ARM64 and x64 native library in
-   that bundle. The bundle must explicitly request uncompressed native libraries with 16 KiB ZIP alignment
+   that bundle. The shared APK and App Bundle check also requires each load segment's file offset
+   and virtual address to agree modulo its declared ELF alignment, including alignments above
+   16 KiB. The bundle must explicitly request uncompressed native libraries with 16 KiB ZIP alignment
    for the APKs generated from it. See [Android page size guidance](https://developer.android.com/guide/practices/page-sizes#bundletool).
    The Android SDK validates the bundle structure before upload. The base native ABI set must
    match the producing project's evaluated runtime identifiers. The base module must contain one

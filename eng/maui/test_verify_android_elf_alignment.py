@@ -14,14 +14,14 @@ ARM64 = 183
 X64 = 62
 
 
-def library(machine, alignment=16384):
+def library(machine, alignment=16384, address=0):
     """Supply one ELF64 header and one PT_LOAD entry without executable contents."""
     identification = b"\x7fELF\x02\x01\x01".ljust(16, b"\0")
     header = struct.pack(
         "<16sHHIQQQIHHHHHH",
         identification, 3, machine, 1, 0, 64, 0, 0, 64, 56, 1, 0, 0, 0,
     )
-    segment = struct.pack("<IIQQQQQQ", 1, 4, 0, 0, 0, 120, 120, alignment)
+    segment = struct.pack("<IIQQQQQQ", 1, 4, 0, address, 0, 120, 120, alignment)
     return header + segment
 
 
@@ -68,6 +68,20 @@ class AndroidElfTests(unittest.TestCase):
         result = self.verify(members, apk=False)
         self.assertEqual(result.returncode, 1)
         self.assertIn("feature/lib/x86_64/libfeature.so: load segment is not aligned", result.stderr)
+
+    def test_declared_load_alignment_applies_in_both_formats(self):
+        for apk, member, machine in (
+            (True, "lib/arm64-v8a/libfixture.so", ARM64),
+            (False, "base/lib/x86_64/libfixture.so", X64),
+        ):
+            with self.subTest(apk=apk):
+                # Both addresses agree with the file offset modulo 16 KiB. Only
+                # the first also agrees with the larger alignment it declares.
+                valid = self.verify({member: library(machine, alignment=65536, address=65536)}, apk=apk)
+                self.assertEqual(valid.returncode, 0, valid.stderr)
+                invalid = self.verify({member: library(machine, alignment=65536, address=16384)}, apk=apk)
+                self.assertEqual(invalid.returncode, 1, invalid.stderr)
+                self.assertIn(f"{member}: load segment does not match its declared ELF alignment", invalid.stderr)
 
     def test_native_entries_from_the_other_archive_layout_do_not_count(self):
         for apk, entry in (
