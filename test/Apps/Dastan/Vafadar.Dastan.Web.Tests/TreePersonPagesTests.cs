@@ -270,6 +270,56 @@ public sealed class TreePersonPagesTests : IDisposable
     }
 
     [Fact]
+    public async Task The_graph_of_a_tree_holds_its_people_and_links_for_who_may_see_it_and_for_nobody_else()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var tree = await Tree(mina);
+        var zal = await Person(mina, tree, "Zal", ("born", "1870"), ("died", "1950"));
+        var simorgh = await Person(mina, tree, "Simorgh", ("deceased", "yes"));
+        var rudabeh = await Person(mina, tree, "Rudabeh", ("deceased", "yes"));
+        var rostam = await Person(mina, tree, "Rostam", ("deceased", "yes"));
+        await Send(mina, tree, tree, "link", ("kind", "guardian"), ("from", Id(simorgh)), ("to", Id(zal)), ("since", "1870"), ("until", "1886"));
+        await Send(mina, tree, tree, "link", ("kind", "partner"), ("from", Id(zal)), ("to", Id(rudabeh)));
+        await Send(mina, tree, tree, "link", ("kind", "parent"), ("from", Id(zal)), ("to", Id(rostam)));
+
+        var answer = await mina.Get($"{tree}/graph.json");
+        var graph = System.Text.Json.Nodes.JsonNode.Parse(answer.Html)!;
+        var page = Regex.Replace(WebUtility.HtmlDecode(Regex.Replace((await mina.Get(tree)).Html, "<[^>]+>", " ")), "\\s+", " ");
+        Assert.Equal((HttpStatusCode.OK, "no-store", "family"), (answer.Status, answer.Response.Headers.CacheControl?.ToString(), (string?)graph["kind"]));
+
+        // The people of the page, each with what its line says and the addresses of its page and its profile.
+        var nodes = graph["nodes"]!.AsArray().ToDictionary(node => (string)node!["name"]!, node => node!);
+        Assert.Equal(["Rostam", "Rudabeh", "Simorgh", "Zal"], nodes.Keys.Order(StringComparer.Ordinal));
+        Assert.Equal(("1870–1950", $"account/trees/{Id(tree)}/person/{Id(zal)}", $"account/trees/{Id(tree)}/person/{Id(zal)}/profile.json"),
+            ((string?)nodes["Zal"]["lines"]![0], (string?)nodes["Zal"]["address"], (string?)nodes["Zal"]["profile"]));
+        Assert.Contains("Zal 1870–1950", page, StringComparison.Ordinal);
+
+        // The links of the page, each of its own kind: a guardian is no parent by birth, and says its time.
+        var edges = graph["edges"]!.AsArray().ToDictionary(edge => (string)edge!["role"]!, edge => edge!);
+        Assert.Equal(["guardian", "parent", "partner"], edges.Keys.Order(StringComparer.Ordinal));
+        Assert.Equal((Id(simorgh), Id(zal), "the guardian of", true, "1870 to 1886"),
+            ((string?)edges["guardian"]["from"], (string?)edges["guardian"]["to"], (string?)edges["guardian"]["label"], (bool)edges["guardian"]["directed"]!, (string?)edges["guardian"]["when"]));
+        Assert.False((bool)edges["partner"]["directed"]!);
+        Assert.Contains("is the guardian of ⁨Zal⁩, 1870 to 1886", page, StringComparison.Ordinal);
+
+        // Rows: the guardian above Zal, his partner beside him, his child below.
+        int Row(string name) => (int)nodes[name]["row"]!;
+        Assert.True(Row("Simorgh") < Row("Zal") && Row("Zal") == Row("Rudabeh") && Row("Zal") < Row("Rostam"));
+
+        // Nobody else gets it – until the tree is public, and then everybody gets what the public page shows.
+        var open = $"/en/trees/{Id(tree)}";
+        Assert.Equal(HttpStatusCode.NotFound, (await sara.Get($"{tree}/graph.json")).Status);
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get($"{tree}/graph.json")).Status);
+        Assert.Equal(HttpStatusCode.NotFound, (await _site.Visitor().Get($"{open}/graph.json")).Status);
+        await Send(mina, tree, tree, "publication", ("act", "ask"));
+        await Send(mina, tree, tree, "publication", ("act", "publish"));
+        var everybody = System.Text.Json.Nodes.JsonNode.Parse((await _site.Visitor().Get($"{open}/graph.json")).Html)!;
+        Assert.Equal(4, everybody["nodes"]!.AsArray().Count);
+        Assert.All(everybody["nodes"]!.AsArray(), node => Assert.StartsWith($"trees/{Id(tree)}/person/", (string?)node!["address"], StringComparison.Ordinal));
+    }
+
+    [Fact]
     public async Task The_page_of_a_person_exists_for_nobody_who_may_not_see_the_tree()
     {
         var mina = await Signed("Mina");
