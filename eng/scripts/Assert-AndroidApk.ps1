@@ -31,6 +31,15 @@ foreach ($tool in @($aapt2, $java, $properties.ApkSignerJar)) {
 $null = & $java -jar $properties.ApkSignerJar verify $apk.FullName 2>&1
 if ($LASTEXITCODE -ne 0) { throw 'The Android SDK could not verify the APK signature.' }
 
+# Signature validation does not guarantee the placement of uncompressed native libraries.
+# Check the exact signed Release archive without modifying its bytes.
+if ($Configuration -eq 'Release') {
+    $zipalign = Join-Path $properties.AndroidSdkBuildToolsPath "zipalign$toolSuffix"
+    if (!(Test-Path -LiteralPath $zipalign -PathType Leaf)) { throw "APK verification tool unavailable: $zipalign" }
+    $null = & $zipalign -c -P 16 4 $apk.FullName 2>&1
+    if ($LASTEXITCODE -ne 0) { throw 'The Release APK failed the Android SDK 16 KiB archive alignment check.' }
+}
+
 $badging = @(& $aapt2 dump badging $apk.FullName 2>&1)
 if ($LASTEXITCODE -ne 0) { throw 'The Android SDK could not read the APK manifest.' }
 $identity = @($badging | Select-String -Pattern "^package: name='([^']+)'")

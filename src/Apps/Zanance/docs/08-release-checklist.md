@@ -217,7 +217,7 @@ independent work and overall goal remain active. Broader gates stay open.
   interleaving pass. [Exact limits](quality/original-camera-result-ownership.md); whole
   device/corpus/security/stability and release rows below remain separate.
 
-- [ ] Every Android phone-test handoff includes a complete signed Release APK with package/signature verified
+- [ ] Every Android phone-test handoff includes a complete signed Release APK with package, signature and 16 KiB archive alignment verified
   and the actual file path supplied (D-66); installation and physical-device acceptance are checked separately.
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations
 - [x] Golden data AT-62 exact in en/fa/de (calculation and display tests: separators per language, Persian digits)
