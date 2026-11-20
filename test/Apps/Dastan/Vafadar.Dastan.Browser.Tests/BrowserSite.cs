@@ -168,11 +168,49 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
     /// <summary>
     /// Waits until the window shows an address and the page there has been loaded. A link that is chosen while
     /// its page is still loading is not always followed in WebKit; a visitor is slower than a test.
+    /// <para>
+    /// The wait for the event of the load missed it now and then, in every engine and most on a slow machine
+    /// (the runner of CI, 2026-11-20): it ended only with its time, and its log said the network had long been
+    /// idle. Why the event was missed is not known. So the wait is short and asked again, and between two
+    /// waits the document itself is asked whether it is complete; a document that really never completes still
+    /// fails here, after the same thirty seconds. (Asking the document alone would not do: a window without
+    /// scripts does not answer in every engine.)
+    /// </para>
     /// </summary>
     public static async Task Arrived(IPage page, System.Text.RegularExpressions.Regex address)
     {
         await Assertions.Expect(page).ToHaveURLAsync(address);
-        await page.WaitForLoadStateAsync(LoadState.Load);
+        var until = DateTime.UtcNow.AddSeconds(30);
+        while (true)
+        {
+            try
+            {
+                await page.WaitForLoadStateAsync(LoadState.Load, new() { Timeout = 2_000 });
+                return;
+            }
+            catch (TimeoutException)
+            {
+                // Asked again below.
+            }
+
+            try
+            {
+                var state = await page.EvaluateAsync<string>("document.readyState").WaitAsync(TimeSpan.FromSeconds(2));
+                if (state == "complete")
+                {
+                    return;
+                }
+            }
+            catch (Exception stopped) when (stopped is PlaywrightException or TimeoutException)
+            {
+                // The window went on to another document while it was asked, or does not answer without scripts.
+            }
+
+            if (DateTime.UtcNow > until)
+            {
+                throw new TimeoutException($"The page at {page.Url} was not loaded within thirty seconds.");
+            }
+        }
     }
 
     // Stands in front of everything the site maps and answers the address of the worker when a test asks for it.
