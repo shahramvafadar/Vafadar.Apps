@@ -235,9 +235,9 @@ public static partial class ReceiptParser
                 {
                     var after = amountLine[(match.Index + match.Length)..].TrimStart();
                     var before = amountLine[..match.Index].TrimEnd();
-                    if (before.EndsWith('-') || before.EndsWith('−') || after.StartsWith('-') || after.StartsWith('−')
-                        || before.EndsWith('\'') || before.EndsWith('\u2019') || after.StartsWith('\'') || after.StartsWith('\u2019')
-                        || before.EndsWith('(') && after.StartsWith(')'))
+                    if (HasNegativeMarker(before, after)
+                        || unitMatches.Length != 0 && HasNegativeCurrencyEnvelope(amountLine, match, unitMatches)
+                        || before.EndsWith('\'') || before.EndsWith('\u2019') || after.StartsWith('\'') || after.StartsWith('\u2019'))
                     {
                         damaged = true;
                         continue;
@@ -303,6 +303,31 @@ public static partial class ReceiptParser
             AmountSource = paymentSources.Count > 0 ? string.Join('\n', paymentSources.Distinct().Take(4)) : null,
         };
     }
+
+    // A currency printed inside the sign or accounting parentheses is part of the amount,
+    // but a non-adjacent unit (used as currency evidence elsewhere) cannot extend its bounds.
+    private static bool HasNegativeCurrencyEnvelope(string line, Match amount, IReadOnlyList<Match> units)
+    {
+        var start = amount.Index;
+        var end = start + amount.Length;
+        var first = start;
+        var last = end;
+        foreach (var unit in units)
+        {
+            var unitEnd = unit.Index + unit.Length;
+            if (unitEnd <= start && line.AsSpan(unitEnd, start - unitEnd).Trim().IsEmpty)
+                first = unit.Index;
+            else if (unit.Index >= end && line.AsSpan(end, unit.Index - end).Trim().IsEmpty)
+                last = unitEnd;
+        }
+
+        return HasNegativeMarker(line.AsSpan(0, first).TrimEnd(), line.AsSpan(last).TrimStart());
+    }
+
+    private static bool HasNegativeMarker(ReadOnlySpan<char> before, ReadOnlySpan<char> after) =>
+        (!before.IsEmpty && before[^1] is '-' or '−') ||
+        (!after.IsEmpty && after[0] is '-' or '−') ||
+        (!before.IsEmpty && before[^1] == '(' && !after.IsEmpty && after[0] == ')');
 
     /// <summary>Separates only an exact strong total word joined to a complete known ISO currency code.</summary>
     private static string SeparateJoinedTotalUnit(string line) => WordPattern().Replace(line, match =>

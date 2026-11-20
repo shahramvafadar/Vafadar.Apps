@@ -87,3 +87,27 @@ continuous goal stays active; these two bounded reader corrections are complete.
 Later [D853 physical adoption](current-input-corrections-physical-adoption.md) adopts
 this same65523bd6 once without reset as Main26327; no reader/financial/auth/photo
 success is replayed and private Main source remains unread.
+
+## Negative markers around a printed receipt currency
+
+A minus or accounting parentheses can enclose both the amount and its printed
+currency. Eight synthetic inputs previously returned an unsigned positive
+suggestion when a recognized unit separated the number from the negative marker.
+The parser now checks the adjacent recognized-unit boundary as well as the
+numeric boundary. A negative source stays visible for review with no selectable
+positive candidate. Currency association, unchanged unsigned totals, and
+inclusive-tax handling retain their original behavior.
+
+All 289 selected receipt parser tests passed, including the eight reproduced
+failures and three unsigned controls. The cases verify ASCII and Unicode minus,
+prefix and suffix units, and accounting parentheses with Latin and Persian input.
+
+Strict Windows and Android Release builds passed. The signed offline APK SHA256 was
+ab3c8f5bfb4d6ccf4788c262207a29c556898945e5c588a344ac2fb51f0a396c.
+On a fresh Android 16 x64 emulator, the original system picker opened one new
+synthetic digital PDF. The editable draft showed the exact source
+`TOTAL (EUR 12.34)`, the review notice, and an unset Amount with its original
+placeholder. No positive amount-choice button was present. Cancel and Discard
+returned to the same process and Transactions was empty. The test package, fixture
+and owned AVD were retired. No earlier receipt or financial action was replayed.
+Evidence is under `artifacts/receipt-signed-currency-envelope`.

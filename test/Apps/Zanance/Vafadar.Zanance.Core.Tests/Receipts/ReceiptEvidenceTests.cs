@@ -1,4 +1,5 @@
 using System.Globalization;
+using Vafadar.Core.Text;
 using Vafadar.Zanance.Core.Receipts;
 using Vafadar.Documents;
 
@@ -65,6 +66,38 @@ public sealed class ReceiptEvidenceTests
     [InlineData("TOTAL ١٢٫٣٤ EUR", "12.34")]
     public void Explicit_units_and_identifiers_do_not_change_the_purchase_number(string text, string expected) =>
         Assert.Equal(decimal.Parse(expected, CultureInfo.InvariantCulture), ReceiptParser.Parse(text).Amount);
+
+    [Theory]
+    [InlineData("TOTAL -EUR 12,34")]
+    [InlineData("TOTAL − € 12,34")]
+    [InlineData("TOTAL 12,34 EUR-")]
+    [InlineData("TOTAL 12,34 € −")]
+    [InlineData("TOTAL (EUR 12,34)")]
+    [InlineData("TOTAL (12,34 EUR)")]
+    [InlineData("Gesamtbetrag (£ 12,34)")]
+    [InlineData("جمع کل (۱۲٬۳۴۵ تومان)")]
+    public void A_negative_total_sign_can_surround_the_printed_currency(string text)
+    {
+        var receipt = ReceiptParser.Parse(text);
+
+        Assert.Null(receipt.Amount);
+        Assert.Equal(ReceiptAmountStatus.Review, receipt.AmountStatus);
+        Assert.Empty(receipt.Candidates);
+        Assert.Equal(Digits.ToAscii(text).Replace('٬', ','), receipt.AmountSource);
+    }
+
+    [Theory]
+    [InlineData("TOTAL EUR 12,34")]
+    [InlineData("TOTAL 12,34 EUR")]
+    [InlineData("TOTAL 12,34 EUR (incl. VAT 1,00)")]
+    public void An_unsigned_currency_token_does_not_hide_a_purchase_total(string text)
+    {
+        var receipt = ReceiptParser.Parse(text);
+
+        Assert.Equal(12.34m, receipt.Amount);
+        Assert.Equal(ReceiptAmountStatus.Found, receipt.AmountStatus);
+        Assert.Equal("EUR", Assert.Single(receipt.Candidates).CurrencyCode);
+    }
 
     [Fact]
     public void Different_currencies_stay_attached_to_their_candidates()
