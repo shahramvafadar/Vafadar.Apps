@@ -5076,7 +5076,7 @@ Cantidad de bienes: sigue un peso o número de unidades, no su precio. Una subid
     <value>Informar de un problema</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance no envía automáticamente estadísticas de uso ni informes de errores. Este botón prepara un informe con la versión de la app y datos del dispositivo. Revísalo, elimina cualquier dato personal o financiero y elige dónde enviarlo.</value>
+    <value>Zanance no incorpora análisis de uso ni informes automáticos de fallos. En las versiones de Android con acceso a internet, Google ML Kit puede enviar métricas de diagnóstico de la lectura de recibos. Este botón prepara un informe local con información de la app y del dispositivo. Revísalo y elige dónde enviarlo.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>Preparar informe del problema</value>

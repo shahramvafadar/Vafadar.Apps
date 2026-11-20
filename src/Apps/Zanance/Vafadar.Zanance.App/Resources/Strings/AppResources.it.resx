@@ -5095,7 +5095,7 @@ Quantità posseduta: segue un peso o un numero di unità, non il prezzo. Un aume
     <value>Segnala un problema</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance non invia automaticamente dati di utilizzo o segnalazioni di arresto anomalo. Questo pulsante prepara una segnalazione con la versione dell’app e le informazioni sul dispositivo. Rivedila, rimuovi dati finanziari o personali e scegli dove inviarla.</value>
+    <value>Zanance non include analisi dell’utilizzo o segnalazioni automatiche di arresti anomali. Nelle versioni Android con accesso a Internet, Google ML Kit può inviare dati diagnostici sulla lettura delle ricevute. Questo pulsante prepara una segnalazione locale con informazioni sull’app e sul dispositivo. Rileggila e scegli dove inviarla.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>Prepara segnalazione</value>

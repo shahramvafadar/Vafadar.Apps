@@ -5109,7 +5109,7 @@ Bestandsmenge: Gewicht oder Stückzahl zählt, nicht der Preis. Ein Preisanstieg
     <value>Problem melden</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance sendet keine automatischen Nutzungsanalysen oder Absturzberichte. Diese Schaltfläche erstellt einen Bericht mit App-Version und Geräteinformationen. Prüfen Sie ihn, entfernen Sie finanzielle und persönliche Angaben und wählen Sie selbst, wohin Sie ihn senden.</value>
+    <value>Zanance hat keine eigene Nutzungsanalyse und keine automatische Absturzmeldung. In Android-Versionen mit Internetzugriff kann Google ML Kit Diagnosedaten zur Belegerkennung senden. Diese Schaltfläche erstellt einen lokalen Bericht mit App- und Geräteinformationen. Prüfen Sie ihn und wählen Sie das Ziel.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>Problembericht vorbereiten</value>

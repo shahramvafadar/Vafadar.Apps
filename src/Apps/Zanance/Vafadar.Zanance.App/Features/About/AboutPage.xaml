@@ -61,7 +61,7 @@
                 </VerticalStackLayout>
             </Border>
 
-            <!-- ZEX-S0905: no telemetry; a report is prepared locally and the user decides where it goes. -->
+            <!-- ZEX-S0905: disclose SDK diagnostics and let the user choose a destination for a local report. -->
             <Label Text="{v:Translate About_ProblemTitle}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="10">

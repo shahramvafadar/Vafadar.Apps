@@ -5127,7 +5127,7 @@ Holding quantity: follow a weight or number of items, not their price. A rise in
     <value>Report a problem</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance does not automatically send usage analytics or crash reports. This button prepares a report with the app version and device information. Review it, remove any financial or personal details, and choose where to send it.</value>
+    <value>Zanance has no built-in usage analytics or automatic crash reporting. On Android editions with internet access, Google ML Kit may send diagnostic metrics for receipt reading. This button prepares a local report with app and device information. Review it and choose where to send it.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>Prepare a problem report</value>

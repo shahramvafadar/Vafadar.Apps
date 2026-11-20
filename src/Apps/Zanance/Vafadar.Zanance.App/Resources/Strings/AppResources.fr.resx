@@ -5082,7 +5082,7 @@ Quantité détenue : suit un poids ou un nombre d’unités, pas leur prix. Une
     <value>Signaler un problème</value>
   </data>
   <data name="About_ProblemText" xml:space="preserve">
-    <value>Zanance n’envoie automatiquement ni statistiques d’utilisation ni rapports de plantage. Ce bouton prépare un rapport contenant la version de l’application et des informations sur l’appareil. Relisez-le, retirez toute donnée financière ou personnelle, puis choisissez où l’envoyer.</value>
+    <value>Zanance n’intègre aucun service de statistiques d’utilisation ou de rapport automatique de plantage. Dans les versions Android avec accès à Internet, Google ML Kit peut envoyer des données de diagnostic liées à la lecture des reçus. Ce bouton prépare un rapport local sur l’application et l’appareil. Relisez-le et choisissez où l’envoyer.</value>
   </data>
   <data name="About_ProblemButton" xml:space="preserve">
     <value>Préparer un rapport de problème</value>

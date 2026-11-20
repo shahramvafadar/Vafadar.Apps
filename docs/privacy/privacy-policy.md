@@ -22,8 +22,8 @@ This policy covers the apps published by Shahram Vafadar ("I", "me") under the n
   an optional online synchronization/sharing flow with its separate encryption and consent boundaries. Android excludes private app data from system backup and device transfer; the iOS release policy remains to be verified before release.
 * Password protection is optional for portable local and cloud backup files. With it enabled, files are encrypted with
   your chosen password. Without it, anyone who obtains the file can read its contents.
-* I add no advertising, application analytics, tracking or crash-reporting service. Android builds with cloud backup
-  can permit Google ML Kit diagnostics; offline Android Release builds remove the network permission.
+* I add no advertising, application analytics, tracking or crash-reporting service. Android editions with internet
+  access can permit Google ML Kit diagnostics. Offline Android Release builds remove the app's network permission.
 
 ## Data the apps store
 
@@ -46,8 +46,9 @@ without losing access. The iOS implementation and its release acceptance remain 
 * **Automatic local copies.** If enabled, daily or weekly copies use device-key encryption without storing a password. They stay local with separate retention and explicit restore confirmation. They cannot replace a portable export when moving to a new device.
 * **CSV and PDF export.** You can export entries (CSV) or a report (PDF) and share them. These files are **not
   encrypted**; where they go is your decision. Attachments are never included in exports.
-* **Cloud backup (optional).** You can connect your own Google Drive or OneDrive (Android, iOS, Windows) and store
-  backups there. Nothing is uploaded until you connect and choose "Back up now". Cloud backups follow your password-protection choice. If enabled,
+* **Cloud backup (optional).** You can connect your own Google Drive or OneDrive in a build configured for that provider.
+  Signing in exchanges account and authorization information with that provider. The app uploads a backup file when you
+  choose "Back up now". Cloud backups follow your password-protection choice. If enabled,
   they are encrypted with your password, which is never saved or uploaded. If disabled, the file is readable by
   anyone who obtains it, even though it is stored in your own cloud account. The app asks only for access to its own app folder
   (`drive.appdata`, `Files.ReadWrite.AppFolder`) and, for Google, your e-mail address to show which account is
@@ -74,10 +75,11 @@ generic text; names and amounts appear only if you turn on "Show names and amoun
 If you choose "Read" on a receipt photo or PDF file, the text is read on your device. The text of a digital PDF is taken
 from the file itself; a photo or a scanned PDF page is recognised – by the system on iOS and Windows and by
 Google ML Kit, which is built into the app, on Android. The found amount, date and shop only fill the entry form for
-you to check. The file and the text are not sent anywhere by the app. On Android, Google ML Kit may send SDK
-diagnostics to Google in Android builds that offer cloud backup, even before a cloud account is connected. These
+you to check. Receipt recognition runs locally. On Android editions with internet access, Google ML Kit may send SDK
+diagnostics to Google, even before a cloud account is connected. These
 can include device/app information, per-installation identifiers, performance and SDK event metrics. Offline Android
-Release builds have no internet permission. The current SDK/build-specific review is maintained in the privacy matrix.
+Release builds have no internet permission. See [Google ML Kit's privacy information](https://developers.google.com/ml-kit/terms#privacy)
+and the build-specific privacy matrix.
 
 ## App lock
 
@@ -101,9 +103,10 @@ the purchased features can be unlocked. Zanance has no activated real-store purc
 
 ## Permissions
 
-The apps request only the permissions they need. Zanance uses notifications (reminders, asked only when you turn
-one on), restarting reminders after the device restarts, biometric unlock (for the optional app lock) and, only in
-online-enabled builds, internet access for your chosen cloud backup and expressly enabled service features. It has no location,
+The apps request only the permissions they need. Zanance uses notifications for reminders. Android can offer the
+permission after onboarding or when you enable a reminder. You can also grant it in system settings. Zanance
+restores scheduled reminders after device restart and supports biometric unlock for the optional app lock.
+Online editions request internet access for your chosen cloud backup and expressly enabled service features. Zanance has no location,
 contacts or photo-library permission. Android receipt photos use the camera app without a camera permission; iOS
 asks for camera access only when you choose to take a receipt photo. Existing files use the system file picker. Each app's store listing shows the permissions it uses.
 ## Children
