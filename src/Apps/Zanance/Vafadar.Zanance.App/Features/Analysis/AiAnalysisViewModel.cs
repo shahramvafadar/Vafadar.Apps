@@ -440,14 +440,16 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Reads only identity/provider/wallet metadata; no selected financial payload or automatic sign-in is sent.</summary>
     [RelayCommand] public async Task CheckProviderAsync()
     {
-        if (!CanCheckProvider || scope is null) return;
+        if (!CanCheckProvider || scope is null || visible is not { } owner) return;
+        var cancellation = owner.Token;
         var version = epoch; var originalFile = scope.File; operationActive = true; metadataReady = false; IAiRemote? opened = null;
         try
         {
             StartOperation(version); offer = null;
-            opened = await runtime.OpenAsync(originalFile, CancellationToken.None); Validate(version);
-            var status = await opened.AvailabilityAsync(CancellationToken.None); Validate(version);
-            var saved = await opened.ReadAsync(CancellationToken.None); Validate(version);
+            // Cancel metadata reads if their page retires, even when the profile and AI preference stay active.
+            opened = await runtime.OpenAsync(originalFile, cancellation); Validate(version);
+            var status = await opened.AvailabilityAsync(cancellation); Validate(version);
+            var saved = await opened.ReadAsync(cancellation); Validate(version);
             // Stage one coherent metadata snapshot before the first binding callback.
             var configured = status.Configured || status.ComparisonConfigured == true;
             var destination = configured || saved is not null ? opened.Destination : null; Validate(version);
@@ -507,13 +509,14 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     /// <summary>Fetches explicit metadata-only original terms; the native Send confirmation still has not happened.</summary>
     [RelayCommand] public async Task QuoteAsync()
     {
-        if (!CanQuote || remote is null || review is null) return;
+        if (!CanQuote || remote is null || review is null || visible is not { } owner) return;
+        var cancellation = owner.Token;
         var version = epoch; var original = review; var connection = remote; operationActive = true;
         try
         {
             // D-979: beginning a replacement quote revokes earlier terms before any busy/binding callback.
             offer = null; StartOperation(version); ValidateReview(version, original);
-            var terms = await connection.OfferAsync(original.Payload.Purpose, CancellationToken.None); ValidateReview(version, original);
+            var terms = await connection.OfferAsync(original.Payload.Purpose, cancellation); ValidateReview(version, original);
             var caption = text.Format("Ai_Offer", connection.Destination, terms.Provider, terms.Model, N(terms.MaximumUnits), terms.ExpiresAt.ToString("u", local.CurrentCulture));
             ValidateReview(version, original);
             PublishMetadata(version, caption, BalanceText, ResultSnapshot, ResultText, ResultStatus, () => { });

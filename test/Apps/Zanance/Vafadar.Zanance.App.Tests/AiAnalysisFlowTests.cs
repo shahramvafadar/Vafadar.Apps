@@ -24,12 +24,21 @@ public sealed partial class AiAnalysisFlowTests
         internal Action? AfterSubmission;
         internal int Submissions, Continues, Closes, RecordReads, Disposals;
         internal Func<Task>? DuringAvailability;
+        internal Func<CancellationToken, Task>? HoldAvailability, HoldQuote;
         public string Destination => "https://localhost/fictional-ai-fixture";
         public async Task<AiAvailability> AvailabilityAsync(CancellationToken ct)
-        { if (DuringAvailability is not null) await DuringAvailability(); return new(true, "fictitious-local", "fixture-v1", Balance); }
+        {
+            if (DuringAvailability is not null) await DuringAvailability();
+            if (HoldAvailability is not null) await HoldAvailability(ct);
+            return new(true, "fictitious-local", "fixture-v1", Balance);
+        }
         public Task<AiClientRecord?> ReadAsync(CancellationToken ct)
         { RecordReads++; return FailRecordRead ? Task.FromException<AiClientRecord?>(new IOException("Controlled original private record read failure.")) : Task.FromResult(Record); }
-        public Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct) => Task.FromResult(new AiOffer(Guid.NewGuid(), "fictitious-local", "fixture-v1", purpose, 8, new(2026, 10, 9, 10, 0, 0, TimeSpan.Zero)));
+        public async Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct)
+        {
+            if (HoldQuote is not null) await HoldQuote(ct);
+            return new(Guid.NewGuid(), "fictitious-local", "fixture-v1", purpose, 8, new(2026, 10, 9, 10, 0, 0, TimeSpan.Zero));
+        }
         public async Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct)
         {
             await recheck(); Submissions++;
@@ -80,6 +89,51 @@ public sealed partial class AiAnalysisFlowTests
     }
     private static async Task Review(AiAnalysisViewModel vm)
     { Assert.Single(vm.Accounts).Selected = true; await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure); }
+
+    /// <summary>Retiring the original page cancels connected reads even while AI stays enabled.</summary>
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Retiring_analysis_page_cancels_its_provider_metadata_read(bool quote)
+    {
+        using var fixture = new FlowFixture();
+        var runtime = new Runtime();
+        var model = await Model(fixture, runtime);
+        var response = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        CancellationToken received = default;
+        Task Hold(CancellationToken token)
+        {
+            received = token;
+            return response.Task.WaitAsync(token);
+        }
+
+        if (quote)
+        {
+            await Review(model);
+            await model.CheckProviderAsync();
+            runtime.Remote.HoldQuote = Hold;
+        }
+        else runtime.Remote.HoldAvailability = Hold;
+
+        var priorReads = runtime.Remote.RecordReads;
+        var pending = quote ? model.QuoteAsync() : model.CheckProviderAsync();
+        try
+        {
+            Assert.False(pending.IsCompleted);
+            model.RetireRoot();
+            Assert.True(runtime.Features.Enabled);
+            Assert.True(received.IsCancellationRequested);
+            await pending.WaitAsync(TimeSpan.FromSeconds(5), Ct);
+            Assert.Equal(priorReads, runtime.Remote.RecordReads);
+            Assert.False(model.CanSend);
+            Assert.Equal(0, runtime.Remote.Submissions);
+        }
+        finally
+        {
+            response.TrySetResult();
+            await pending;
+        }
+    }
 
     /// <summary>Turning off AI retires a reviewed screen and revokes both its sharing and connected actions.</summary>
     [Fact]
