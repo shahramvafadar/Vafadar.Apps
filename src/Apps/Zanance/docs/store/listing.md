@@ -3,15 +3,16 @@
 Draft texts for Google Play in English, Persian, German, Spanish, French and Italian. The sections below
 describe the Offline edition and a separate cloud-backup-only edition, not every network-enabled build.
 Do not use the cloud-backup-only copy unchanged for personal sync, household sharing, billing or rate services.
-The final selected release, real OAuth, mobile assets, physical-device/Store and iOS acceptance remain gates.
+The final selected release, real OAuth, physical-device/Store and iOS acceptance remain gates.
 These drafts do not choose a release edition or authorize publication.
 
 Current Google Play limits are title30, short description80 and full description4000 characters;
 recheck the final selected text in Play Console before publication.
 [Official product-detail limits](https://support.google.com/googleplay/android-developer/answer/9859152?hl=en).
 
-Screenshots: `eng/scripts/Run-StoreDrafts.ps1` with fictitious data, light and dark, one set per language
-(`store/screenshots/<language>/`, see the list at the end).
+The [Android preview set](screenshots/android/README.md) contains eight fictitious captures per language.
+The [Play graphics drafts](graphics/android/README.md) contain the square icon and localized feature graphics.
+The historical Windows screenshots are linked below.
 
 ## English
 

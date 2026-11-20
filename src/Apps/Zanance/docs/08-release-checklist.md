@@ -282,7 +282,10 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Target API level, signing, content rating, target audience per current Play requirements (REL-02)
 - [x] Final app name: **Zanance** (owner decision 2026-09-26)
 - [x] Icon, splash and notification icon from the approved brand master (D-26)
-- [x] Draft store texts and eight fictitious native Windows screenshots in each of en/fa/de/es/fr/it (REL-03/04, D-338), with exact RGB provenance. Mobile screenshots, featured resolution, Store acceptance and publication remain open; see `docs/quality/store-drafts.md`.
+- [x] Draft store texts and eight fictitious Android screenshots per language in en/fa/de/es/fr/it (REL-03/04).
+  The [Android preview set](store/screenshots/android/README.md) retains exact RGB provenance. Historical Windows captures remain separate.
+- [x] Draft [Play icon and six feature graphics](store/graphics/android/README.md), using the approved symbol and wordmark.
+- [ ] Final Play listing asset review against the selected release and upload to Play Console.
 - [x] Third-party licences listed in the app (Settings → About)
 - [ ] Internal → closed testing → production track
 
