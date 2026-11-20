@@ -69,6 +69,37 @@ public sealed class AttachmentCacheTests
         Assert.Equal(new byte[] { 2 }, File.ReadAllBytes(unrelated));
     }
 
+    /// <summary>Profile reset removes only that profile's staged portable backups.</summary>
+    [Theory]
+    [InlineData("")]
+    [InlineData("176785fa415a4e0586e0911be87a13f2")]
+    public void Backup_share_cleanup_owns_only_the_accepted_profile(string profileId)
+    {
+        using var directory = new OwnedDirectory();
+        const string stagingName = "2203693cc04e0be7f4f024d5f9499e13";
+        const string mainBackup = "pro.vafadar.zanance_20261120T121314Z.vbak";
+        const string secondBackup = "pro.vafadar.zanance~176785fa415a4e0586e0911be87a13f2_20261120T121314Z.vbak";
+        var staging = Path.Combine(directory.Root, stagingName);
+        var main = Directory.CreateDirectory(Path.Combine(staging, Guid.NewGuid().ToString("N"))).FullName;
+        var second = Directory.CreateDirectory(Path.Combine(staging, Guid.NewGuid().ToString("N"))).FullName;
+        var unrelated = Path.Combine(second, "user-selected.vbak");
+        var outside = Path.Combine(directory.Root, mainBackup);
+        var mainPath = Path.Combine(main, mainBackup);
+        var secondPath = Path.Combine(second, secondBackup);
+        var sameNameOutsideOpaqueFolder = Path.Combine(staging, mainBackup);
+        foreach (var path in new[] { mainPath, secondPath, unrelated, outside, sameNameOutsideOpaqueFolder })
+            File.WriteAllBytes(path, [9]);
+
+        AttachmentCache.ClearBackupShares(directory.Root, profileId);
+
+        Assert.Equal(profileId.Length != 0, File.Exists(mainPath));
+        Assert.Equal(profileId.Length == 0, File.Exists(secondPath));
+        Assert.True(Directory.Exists(main));
+        Assert.Equal(new byte[] { 9 }, File.ReadAllBytes(unrelated));
+        Assert.Equal(new byte[] { 9 }, File.ReadAllBytes(outside));
+        Assert.Equal(new byte[] { 9 }, File.ReadAllBytes(sameNameOutsideOpaqueFolder));
+    }
+
     private sealed class OwnedDirectory : IDisposable
     {
         internal string Root { get; } = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "Zanance-CameraCache-" + Guid.NewGuid().ToString("N"))).FullName;

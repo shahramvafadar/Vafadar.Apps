@@ -74,7 +74,19 @@ internal static partial class AttachmentFiles
     private static string CacheFolder => Path.Combine(FileSystem.CacheDirectory, "attachments");
 
     /// <summary>Removes original temporary viewer/export copies and abandoned camera originals on startup and after data deletion.</summary>
-    public static void ClearCache() => AttachmentCache.Clear(FileSystem.CacheDirectory);
+    public static void ClearCache(string? resetProfileId = null)
+    {
+        AttachmentCache.Clear(FileSystem.CacheDirectory);
+#if ANDROID
+        if (resetProfileId is null) return;
+
+        AttachmentCache.ClearBackupShares(FileSystem.CacheDirectory, resetProfileId);
+        // Older Android versions of Zanance let MAUI prefer its app-specific external cache.
+        var legacyCache = Android.App.Application.Context.ExternalCacheDir?.AbsolutePath;
+        if (!string.IsNullOrEmpty(legacyCache))
+            AttachmentCache.ClearBackupShares(legacyCache, resetProfileId);
+#endif
+    }
 
     /// <summary>Writes the attachment to the cache and opens it with the app the device chooses.</summary>
     /// <returns><see langword="false"/> when no app could open it.</returns>

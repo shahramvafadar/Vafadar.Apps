@@ -145,7 +145,7 @@ public sealed partial class SettingsViewModel
                 path => Current() && path == receipt.DatabasePath, token);
             if (!Current()) return;
             if (current.Accounts.Count != 0 || current.Entries.Count != 0) throw new InvalidOperationException("New profile data must not be removed by old accepted follow-through.");
-            if (!_resetCacheCleared) { Presentation.AttachmentFiles.ClearCache(); _resetCacheCleared = true; }
+            if (!_resetCacheCleared) { Presentation.AttachmentFiles.ClearCache(_profilesAtReset); _resetCacheCleared = true; }
             if (!_resetRemindersRefreshed) { await _reminders.RefreshAsync(); _resetRemindersRefreshed = true; }
             if (!Current()) return;
             Presentation.DisplayUnitPreferences.Apply(string.Empty); await _lock.ReloadAsync();

@@ -86,6 +86,12 @@ signed AAB `885f79b6` passed the manifest, compiled storage policy, 16 KiB ELF a
 checks. A development certificate signed this bundle. These checks required no repeated
 native handoffs or Play submission. Bundle evidence is in `artifacts/restricted-share-bundle`.
 
+After a confirmed Android profile reset, Zanance attempts to retire temporary copies made for
+sharing that profile's portable backups. It matches the backup filename identity inside the
+sharing cache, including the older app-specific external cache. Focused tests cover Main and
+secondary profiles and verify that other profiles' staged copies and original backups remain.
+Copies saved by recipients are outside the app's control.
+
 ## Permissions
 
 iOS: `NSFaceIDUsageDescription` (app lock) and `NSCameraUsageDescription` (receipt photos, D-38), localised in `Platforms/iOS/*.lproj/InfoPlist.strings`; notifications use the system authorisation dialog. Windows: no capability beyond `runFullTrust` (files only, no camera). Android manifest:
