@@ -5,6 +5,7 @@ public partial class OccurrencePage : ContentPage
     private readonly OccurrenceViewModel _viewModel;
     private AppShell? _ownerShell;
     private bool _shellRetired;
+    private bool _readDeferredUntilNavigation;
     private bool _observingValidation;
     private int _validationVersion;
     /// <summary>Gets the original appearance load so native callers await its actual lifetime rather than starting another read.</summary>
@@ -39,13 +40,18 @@ public partial class OccurrencePage : ContentPage
         var window = Window; var root = window?.Page;
         // D-937: CurrentPage can remain this page beneath a lock or other modal.
         // Retained-tab refresh and accepted notices must not cross that visible cover.
-        _viewModel.SetActive(true, () => !_shellRetired && window is not null && root is not null && ReferenceEquals(Window, window)
+        bool OwnsPage() => !_shellRetired && window is not null && root is not null && ReferenceEquals(Window, window)
             && ReferenceEquals(window.Page, root) && root.Navigation.ModalStack.Count == 0
-            && (root is AppShell shell ? ReferenceEquals(shell.CurrentPage, this) : ReferenceEquals(root, this)),
-            () => !_shellRetired && window is not null && root is not null && ReferenceEquals(window.Page, root)
+            && (root is AppShell shell ? ReferenceEquals(shell.CurrentPage, this) : ReferenceEquals(root, this));
+        _readDeferredUntilNavigation = !OwnsPage();
+        _viewModel.SetActive(true, OwnsPage, () => !_shellRetired && window is not null && root is not null && ReferenceEquals(window.Page, root)
                 && root.Navigation.ModalStack.Count == 0);
         return PendingPublication = _viewModel.RefreshForNavigationAsync();
     }
+
+    /// <summary>Starts the read deferred when appearance preceded publication of the Shell push.</summary>
+    internal Task CompletePushAsync() =>
+        _readDeferredUntilNavigation ? RefreshForNavigationAsync() : Task.CompletedTask;
 
     /// <summary>Permanently retires this original root's read and pending native consent ownership.</summary>
     internal void RetireShellPublication() { _shellRetired = true; _viewModel.SetActive(false); }

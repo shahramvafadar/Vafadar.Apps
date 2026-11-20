@@ -325,7 +325,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-35 | Snooze notification | REM-04 | Manual | S10 | Verified (unit: snooze repeats the reminder with its own id, never changes the due date, ends when the occurrence closes; moving a due date moves the reminder); device check pending |
 | AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Verified (unit: settled or skipped occurrences have no reminder; taps only open the occurrence) |
 | AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | [Physical post-reboot delivery](quality/physical-paired-reminder-preparation.md#terminal-outcome1november2026) verified both original reminders within their unchanged one-hour window. The precision failure and intervening launch remain recorded. Travel and DST device acceptance remain separate. |
-| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | [Android SystemUI lock-screen rendering](#at-38-generic-reminder-on-the-android-lock-screen) verified the generic default and absence of fixture details. Device-credential and app-lock tap behavior, optional detail and physical acceptance remain separate. |
+| AT-38 | Notification on lock screen | REM-05 | Manual | S10 | [Android SystemUI lock-screen rendering](#at-38-generic-reminder-on-the-android-lock-screen) verified the generic default and absence of fixture details. [Warm Plans notification tap under the app PIN](#at-61-warm-plans-notification-tap-under-the-app-pin) verified the retained due item on the emulator. Android device credential, optional detail and physical acceptance remain separate. |
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung no/zero/exact/exceeded/refund/cold/deletion scope; broader device/platform gates remain |
 | AT-40 | Total and sub-category limits | BUD-02 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung independent total/category/refund and category-only scope; other hierarchy/platform variants remain |
 | AT-41 | Monthly equivalent of yearly cost | BUD-09 | Unit | S7 | Verified (unit) |
@@ -349,7 +349,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
 | AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Ready to run: implemented (D-35, D-50), needs a build with OAuth clients on a device – connect, back up with protection on/off (D-62), list, restore both package types, delete a cloud backup, disconnect, connect another account; per provider on Android, iOS and Windows. Google's token protocol on iOS/Windows is unit-tested (`Vafadar.Authentication.Tests`) |
 | AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Verified (integration: first schema with data upgraded to latest; restore migrates older backups); re-run each slice |
-| AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | [Credential enable and return](quality/physical-original-device-credential.md), [cold biometric unlock](quality/physical-original-cold-biometric.md) and [cold cancellation](quality/physical-original-cold-cancellation.md) have bounded physical evidence. [CSV and local-backup cancellation](quality/physical-sensitive-cancellation-completion.md) and [PDF cancellation](quality/physical-pdf-cancellation-retained-input.md) verified the real authentication boundary without an output. Notification tap while locked, restore and full device/platform acceptance remain separate. |
+| AT-61 | App lock with notification/export | SEC-02 | Manual | S13 | [Credential enable and return](quality/physical-original-device-credential.md), [cold biometric unlock](quality/physical-original-cold-biometric.md) and [cold cancellation](quality/physical-original-cold-cancellation.md) have bounded physical evidence. [CSV and local-backup cancellation](quality/physical-sensitive-cancellation-completion.md) and [PDF cancellation](quality/physical-pdf-cancellation-retained-input.md) verified the real authentication boundary without an output. [Cold goal/current-review](quality/pin-covered-cold-notification-routes.md) and [warm Plans notification taps](#at-61-warm-plans-notification-tap-under-the-app-pin) have scoped Android emulator app-PIN evidence. Restore and broader device/platform acceptance remain separate. |
 | AT-69 | Device-wide four-digit app PIN | SEC-01..04, D-63 | Unit + Windows UI + device | Maintenance | 20 PIN cases verified (set/change/remove, salts, delays/restart/rollback, concurrency, storage failure, recovery); Windows UI: cold start stays covered, incorrect PIN rejected, one-minute delay survives restart, change/removal need the current PIN, cancelled backup confirmation creates no file; en/fa/de both themes at 360/412/wide checked. D-737/D-749/D-751 accept the named physical device-authentication boundaries; physical optional-app-PIN, recents/other routes and iOS remain separate |
 | AT-72 | Clear plan and debt setup | D-65, REC, F2-DEBT, UX | Unit + running-app + device | Maintenance | 21 new unit cases cover calendar-anchored monthly dates, first-inclusive count, short months, translations, debt signs and unsaved transfer reminders. Windows fixtures check blank Once, monthly/count, explicit rule calendar, optional debt/receivable terms in en/fa/de light/dark at 360/412/wide. UI Automation: positive debt/receivable saves open details with correct signs, negative input rejected; monthly/custom follows the first day; saved reminder has unknown principal, automatic posting off and no new ledger entry; cancellation leaves schedules/ledger unchanged. Strict Windows/Android builds and 1121 tests pass. Physical-device acceptance remains open. |
 | AT-71 | Receipt purchase-total evidence and review | D-64, F2, PRI | C# + Windows image/UI + device | Maintenance | Regressions first failed on the old parser/layout, then passed; six-language valid text samples, tax inclusion, token boundaries/signs/zero, non-money numbers, currency/unit conflicts and skew/separator/page fixtures checked. Windows actual image selection: inclusive-tax/EXIF receipts give 4.10, skew gives 24.90; two totals require a manual choice, USD/EUR conflict and missing total leave the draft blank. Saved JPEG reread gives 4.10; missing-total reread keeps existing 4.10. Choice/cancel, picker cancel, unreadable PDF and failed image preparation do not change ledger/attachments. 1100 tests and strict Windows/Android builds pass; en/fa/de both themes at 360/412/wide checked. D-473 adds bounded Samsung Save/PDF attachment/cold stored reread/Cancel; full device/corpus acceptance remains ZCR-QA-05. |
@@ -415,8 +415,32 @@ the eventual fixture. The final pending alarm, active notification, keyguard sta
 hierarchy are retained in `artifacts/zlk`. No timed save, notification tap, credential or
 financial write was repeated. The original settings were verified before the AVD was retired.
 
-This covers default lock-screen presentation on the test emulator. Device-credential and
-app-lock tap behavior, the optional details setting and physical-device acceptance remain open.
+This covers default lock-screen presentation on the test emulator. Device-credential taps,
+the optional details setting and physical-device acceptance remain open. The app-PIN tap is
+covered separately below.
+
+## AT-61 warm Plans notification tap under the app PIN
+
+On Android 16 x86_64, a saved once-only Plans reminder for an unknown amount was
+created with automatic posting off. The original signed APK opened its due-item page
+after a single SystemUI content tap and the fixture app PIN, but the page remained
+on its loading cover. Switching tabs in the same process later revealed the original
+plan without another notification, PIN entry or financial save.
+
+When Shell finishes pushing the page, it resumes an occurrence read deferred when appearance did not
+yet own the visible page. It uses the existing loader and the same window, root,
+visible page and modal-cover checks.
+
+After an upgrade without resetting the fixture, signed offline APK `3f96f091` retained
+the app PIN and the same plan. Only its reminder time changed. The alarm target was
+05:24. The observer found the same native notification ID 671717199 at 05:25:56, then
+tapped its generic SystemUI content once. The PIN cover hid the plan. One unlock
+showed the original plan, date and unknown amount directly, with no tab switch.
+The process remained PID 5769 throughout delivery, tap and unlock. No payment or
+completion command was invoked. The strict Windows and signed dual-ABI Android builds
+passed after addressing separate build prerequisites. Scoped local evidence is under `artifacts/zlt`.
+This is an app-PIN check using fictitious data. OS device-credential authentication and
+physical tap acceptance were outside this run.
 
 ## AT-76 - Build-specific SDK and Android permission boundaries (D-69 / SEC-09)
 

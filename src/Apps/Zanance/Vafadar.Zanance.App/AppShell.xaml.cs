@@ -585,7 +585,14 @@ public partial class AppShell : Shell
     {
         // D-394/D-401: a retained Android detail can become visible without a new Page.OnAppearing callback.
         // Keep the original covered loader; it shares an already pending appearance read and never posts money.
-        if (_navigationRetired || args.Source is not (ShellNavigationSource.ShellItemChanged
+        if (_navigationRetired) return;
+        if (args.Source == ShellNavigationSource.Push && CurrentPage is OccurrencePage pushedOccurrence)
+        {
+            // A reminder returning from the PIN cover can appear before Shell publishes its new current page.
+            await Presentation.Failures.GuardAsync(pushedOccurrence.CompletePushAsync);
+            return;
+        }
+        if (args.Source is not (ShellNavigationSource.ShellItemChanged
                 or ShellNavigationSource.ShellSectionChanged or ShellNavigationSource.ShellContentChanged)) return;
         // D-577: the list can be retained too; otherwise it keeps pre-transfer/refund balances until Back/reopen.
         if (CurrentPage is Features.Sync.PersonalSyncPage personalSync) await Presentation.Failures.GuardAsync(personalSync.RefreshForNavigationAsync);
