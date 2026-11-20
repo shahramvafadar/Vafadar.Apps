@@ -12,7 +12,8 @@ $apk = Get-Item -LiteralPath $ApkPath
 $projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
 $metadata = & $projectDotNet msbuild $Project -nologo -v:q "-p:Configuration=$Configuration" `
     -p:TargetFramework=net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
-    -t:_ResolveMonoAndroidSdks '-getProperty:ApplicationId,AndroidSdkBuildToolsPath,ApkSignerJar,JavaSdkDirectory' @BuildProperties
+    -p:EmbedAssembliesIntoApk=true -t:_ResolveMonoAndroidSdks `
+    '-getProperty:ApplicationId,AndroidSdkBuildToolsPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore' @BuildProperties
 if ($LASTEXITCODE -ne 0) { throw 'Could not resolve the Android package identity and verification tools.' }
 $properties = ($metadata -join "`n" | ConvertFrom-Json).Properties
 if (!$properties.ApplicationId -or !$properties.AndroidSdkBuildToolsPath -or
@@ -41,6 +42,25 @@ if ($Configuration -eq 'Release' -and ($badging -cmatch '^application-debuggable
 }
 if ($Offline -and ($badging -cmatch "^uses-permission(?:-sdk-\d+)?: name='android\.permission\.(INTERNET|ACCESS_NETWORK_STATE)'")) {
     throw 'The offline APK requests a network permission.'
+}
+
+# The current Android SDK embeds one managed assembly store per packaged ABI.
+# A valid APK signature also covers packages from which a required store was omitted.
+if ($properties._AndroidUseAssemblyStore -eq 'true') {
+    $archive = [IO.Compression.ZipFile]::OpenRead($apk.FullName)
+    try {
+        $nativeAbis = @($archive.Entries | ForEach-Object {
+            if ($_.FullName -cmatch '^lib/([^/]+)/[^/]+\.so$') { $Matches[1] }
+        } | Sort-Object -Unique)
+        if ($nativeAbis.Count -eq 0) { throw 'The APK contains no native Android ABI.' }
+        foreach ($name in @('classes.dex') + @($nativeAbis | ForEach-Object { "lib/$_/libassembly-store.so" })) {
+            $members = @($archive.Entries | Where-Object FullName -CEQ $name)
+            if ($members.Count -ne 1 -or $members[0].Length -eq 0) {
+                throw "The APK must contain exactly one nonempty $name."
+            }
+        }
+    }
+    finally { $archive.Dispose() }
 }
 
 [pscustomobject]@{

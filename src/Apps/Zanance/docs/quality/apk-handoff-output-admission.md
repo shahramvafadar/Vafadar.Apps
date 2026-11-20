@@ -82,3 +82,19 @@ digest. Each of ARM64 and x86_64 has 192 AOT and 204 ELF files. All native load
 segments passed the static 16 KiB check. The temporary publish directory was
 removed and a standard isolated build clean passed. The APK and a receipt remain
 under `artifacts/zhb`. No device installation was performed.
+
+## Managed payload admission
+
+A derivative of the reviewed dual-ABI offline APK omitted only the ARM64 managed
+assembly store from its application payload. It was signed with a new disposable
+test key. The original verifier accepted its package, signature and offline
+manifest. The verifier now uses the producing SDK's effective assembly packaging
+mode. In assembly-store mode it requires exactly one nonempty primary DEX and one
+nonempty assembly store for every ABI present in the archive. The SDK-resolved
+loose-assembly Debug mode keeps its existing verification path.
+
+The same incomplete fixture now fails specifically on the missing ARM64 store.
+The original complete dual-ABI Release APK passes the new checks with its exact
+previous digest. No app was rebuilt or installed. This checks required ZIP
+members, without validating every assembly inside each store. The before and
+after receipts and the signed negative fixture remain in `artifacts/zhc`.
