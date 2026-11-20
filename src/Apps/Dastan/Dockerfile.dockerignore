@@ -22,3 +22,6 @@ src/Apps/Dastan/content
 src/Apps/Dastan/docs
 **/bin
 **/obj
+**/node_modules
+# The script of the site is built in the image, from its sources: one that was built outside is not sent.
+src/Apps/Dastan/Vafadar.Dastan.Web/wwwroot/app.js

@@ -36,4 +36,46 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" />
   </ItemGroup>
 
+  <!--
+    The layer of TypeScript (ADR 0019): the sources in Scripts/ are checked by the compiler of TypeScript and
+    made into one file, wwwroot/app.js, by a bundler – both with the versions the lock file names. The tools
+    are fetched into obj/, beside the other files of the build. The file that is made is kept in the
+    repository, so that the site can be read as it is served; on the build server a file that differs from
+    what its sources make stops the build. A build that got the file from elsewhere (the image of the container
+    makes it in a stage of its own) says BuildDastanScripts=false.
+  -->
+  <PropertyGroup>
+    <BuildDastanScripts Condition="'$(BuildDastanScripts)' == ''">true</BuildDastanScripts>
+    <DastanScripts>$(MSBuildProjectDirectory)/Scripts</DastanScripts>
+    <DastanScriptTools>$(MSBuildProjectDirectory)/obj/scripts</DastanScriptTools>
+    <DastanScript>$(MSBuildProjectDirectory)/wwwroot/app.js</DastanScript>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The sources of the script are no pages of the site: nothing of the folder is published. -->
+    <Content Remove="Scripts/**" />
+    <None Remove="Scripts/**" />
+    <DastanScriptSource Include="Scripts/src/**/*.ts;Scripts/build.mjs;Scripts/tsconfig.json;Scripts/package-lock.json" />
+  </ItemGroup>
+
+  <Target Name="RestoreDastanScripts" Condition="'$(BuildDastanScripts)' == 'true'" Inputs="Scripts/package.json;Scripts/package-lock.json;Scripts/.npmrc" Outputs="$(DastanScriptTools)/node_modules/.package-lock.json">
+    <Copy SourceFiles="Scripts/package.json;Scripts/package-lock.json;Scripts/.npmrc" DestinationFolder="$(DastanScriptTools)" />
+    <Exec Command="npm ci" WorkingDirectory="$(DastanScriptTools)" />
+  </Target>
+
+  <Target Name="BuildDastanScripts" DependsOnTargets="RestoreDastanScripts" BeforeTargets="ResolveProjectStaticWebAssets;AssignTargetPaths" Condition="'$(BuildDastanScripts)' == 'true'" Inputs="@(DastanScriptSource)" Outputs="$(DastanScriptTools)/built.stamp">
+    <Copy SourceFiles="Scripts/build.mjs" DestinationFolder="$(DastanScriptTools)" />
+    <Exec Command="node node_modules/typescript/bin/tsc --noEmit -p &quot;$(DastanScripts)/tsconfig.json&quot;" WorkingDirectory="$(DastanScriptTools)" />
+    <Exec Command="node build.mjs &quot;$(DastanScripts)/src&quot; &quot;$(DastanScriptTools)/app.js&quot;" WorkingDirectory="$(DastanScriptTools)" />
+    <GetFileHash Files="$(DastanScriptTools)/app.js">
+      <Output TaskParameter="Hash" PropertyName="DastanScriptMade" />
+    </GetFileHash>
+    <GetFileHash Files="$(DastanScript)" Condition="Exists('$(DastanScript)')">
+      <Output TaskParameter="Hash" PropertyName="DastanScriptKept" />
+    </GetFileHash>
+    <Error Condition="'$(GITHUB_ACTIONS)' == 'true' And '$(DastanScriptMade)' != '$(DastanScriptKept)'" Text="wwwroot/app.js is not what its sources in Scripts/ make: build the site once and commit the file." />
+    <Copy SourceFiles="$(DastanScriptTools)/app.js" DestinationFiles="$(DastanScript)" Condition="'$(DastanScriptMade)' != '$(DastanScriptKept)'" />
+    <Touch Files="$(DastanScriptTools)/built.stamp" AlwaysCreate="true" />
+  </Target>
+
 </Project>

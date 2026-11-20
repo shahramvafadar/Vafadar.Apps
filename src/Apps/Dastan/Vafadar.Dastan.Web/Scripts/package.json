@@ -1,0 +1,14 @@
+{
+  "name": "dastan-site-scripts",
+  "private": true,
+  "description": "The layer of TypeScript of the Dastan website (ADR 0019). Built with the site: 'npm ci' and 'node build.mjs'.",
+  "type": "module",
+  "scripts": {
+    "check": "tsc --noEmit -p tsconfig.json",
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "typescript": "7.0.2"
+  }
+}

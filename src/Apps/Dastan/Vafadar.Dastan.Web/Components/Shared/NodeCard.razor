@@ -2,6 +2,8 @@
    its page, its kind, and up to three stated facts – what a list, a search result and a graph show of a node.
    It comes from the same projection as the page, so it never shows what the page of this visitor would not. *@
 @inject DastanSite Site
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
 
 <div class="node-card">
     <ProfilePicture Profile="Profile" Small="true" />
@@ -23,11 +25,17 @@
         {
             <ProfileFactList Lines="Profile.Card" Compact="true" />
         }
+        @* A look at the whole profile without leaving the list (ADR 0019): offered by the script of the site,
+           which fills a panel from the address of the profile. Without the script the name leads to the page. *@
+        <p class="peek" data-profile-peek hidden>
+            <button type="button" data-profile="@($"{_address}{ProfileDataEndpoints.Ending}")" data-name="@_name">@T["Profile_Peek"]<span class="visually-hidden"> – @_name</span></button>
+        </p>
     </div>
 </div>
 
 @code {
     private string _address = string.Empty;
+    private string _name = string.Empty;
 
     /// <summary>Gets or sets the profile, as the visitor of this request may see it.</summary>
     [Parameter, EditorRequired]
@@ -41,5 +49,6 @@
     [Parameter]
     public int Level { get; set; } = 3;
 
-    protected override void OnParametersSet() => _address = $"{Site.Collection}/entity/{Profile.Entity.Id}";
+    protected override void OnParametersSet() =>
+        (_address, _name) = ($"{Site.Collection}/entity/{Profile.Entity.Id}", Visitor.Text(Profile.Entity.Label).Value);
 }

@@ -3561,4 +3561,19 @@
   <data name="SeeAs_Tree_None_account" xml:space="preserve">
     <value>این حساب چیزی نمی‌بیند: شجره‌نامه با آن هم‌رسانی نشده و صفحه‌اش می‌گوید «پیدا نشد».</value>
   </data>
+  <data name="Profile_Peek" xml:space="preserve">
+    <value>نگاهی به نمایه</value>
+  </data>
+  <data name="Profile_Panel_Close" xml:space="preserve">
+    <value>بستن</value>
+  </data>
+  <data name="Profile_Panel_Wait" xml:space="preserve">
+    <value>نمایه در حال دریافت است …</value>
+  </data>
+  <data name="Profile_Panel_Failed" xml:space="preserve">
+    <value>نمایه دریافت نشد. صفحه‌اش آن را نشان می‌دهد:</value>
+  </data>
+  <data name="Profile_Panel_Open" xml:space="preserve">
+    <value>باز کردن صفحه</value>
+  </data>
 </root>

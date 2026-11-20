@@ -1,0 +1,2 @@
+# Made by the build from Scripts/ and kept here (ADR 0019): the bytes the bundler wrote, on every system.
+wwwroot/app.js -text

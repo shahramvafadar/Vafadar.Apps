@@ -348,3 +348,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   person sees it.
 - A family tree tells a parent by birth, an adoptive parent and a guardian apart; a guardianship can say from
   when until when.
+- In a list, a card offers a look at the profile: it opens beside the list, shows what the page of the node
+  shows, and leads on to the page. Without a script the list is as before.
