@@ -1497,8 +1497,20 @@ preparation path. A stored attachment with a generic media type uses the resolve
 viewing and local OCR without changing its stored metadata or bytes. Five focused resolver
 cases and one synthetic SQLite-backed stored PDF reread passed. Strict Windows and Android builds
 passed. Signed offline APK `fe40e828` passed the signature, identity, offline manifest and static
-16 KiB alignment checks. Native coverage for a picker
-that supplies a generic media type remains open.
+16 KiB alignment checks.
+
+One owned Android 16 emulator used the same signed package and a read-only synthetic document
+provider. The provider listed the PDF as selectable and logged an octet-stream type response
+and file open for the Zanance UID. With AI off, the seekable provider returned the image-only
+PDF and the original editable amount field showed EUR 42.75. Cancel and Discard left the
+transaction view empty. The first provider used a non-seekable pipe and the app reported a
+receipt-read failure. Its cause remains unconfirmed. The same app process continued with the
+seekable provider and no setup or successful financial operation was repeated. The initial
+amount observer missed the accessibility prefix; the preserved capture and same draft confirmed
+the actual value. This exercises the native provider boundary. The Android picker can derive
+the managed MIME type from the cached filename, so the focused host checks establish the
+managed fallback itself. Geometry was restored and the owned emulator retired. Evidence
+remains under artifacts/receipt-generic-mime-native.
 
 The connected Analysis flow and the authenticated per-task model switch have isolated synthetic evidence.
 The live synthetic pilot accepted 22 of 24 requests across the two providers and six languages. Completed-result
