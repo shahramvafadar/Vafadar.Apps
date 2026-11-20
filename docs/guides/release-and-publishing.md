@@ -71,8 +71,9 @@ Each app is versioned independently.
    the [Google Play mobile submission minimum](https://support.google.com/googleplay/android-developer/answer/11926878)
    effective 31 August 2026. Recheck that policy before each release and update `PLAY_MIN_TARGET_SDK` when it changes.
    Both editions must retain `allowBackup=false` and reference Zanance's legacy backup and modern data extraction
-   rules from the base manifest. This check covers the manifest bindings. Android and OEM transfer behavior
-   still require their separate acceptance checks.
+   rules from the base manifest. The verifier resolves both resources from the bundle's base resource table and
+   checks the full-domain exclusions in every packaged configuration, including the default. Android and OEM
+   transfer behavior still require their separate acceptance checks.
    Without a cloud-backup client ID, the bundle must omit INTERNET. A cloud-backup
    bundle must request INTERNET without an SDK cap. Both editions must omit ACCESS_NETWORK_STATE. This workflow
    leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size acceptance need their own checks. Download the

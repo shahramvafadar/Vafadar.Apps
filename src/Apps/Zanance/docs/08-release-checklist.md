@@ -256,7 +256,8 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked against the release edition.
   The retained offline ARM64 and cloud-backup x64 bundles both bind the legacy and modern exclusion rules and
-  declare `allowBackup=false` in the base manifest.
+  declare `allowBackup=false` in the base manifest. Their compiled legacy, cloud-backup and device-transfer
+  rule sets each exclude all nine domains.
   The Android framework positive restore control covered nine domains, and the empty-extraction result was
   classified for that transport.
   Samsung Smart Switch transferred the two helper apps with no private payload in either; the Samsung positive
