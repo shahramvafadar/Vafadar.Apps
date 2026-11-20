@@ -102,6 +102,73 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+  # The tests of Dastan in a real browser (its delivery plan, step 19.11): the site runs on the runner, on its
+  # loopback only, and the browser of the official Playwright container – the same image as Dastan's compose
+  # file names – visits it. One job for each engine. Nothing of this job leaves the runner but the pulls of the
+  # three pinned images; the job "Libraries and tests" has no browser and skips these tests, as before.
+  dastan-browser:
+    name: Dastan in a browser (${{ matrix.engine }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Build
+        run: dotnet build test/Apps/Dastan/Vafadar.Dastan.Browser.Tests --configuration Release
+
+      - name: Start the PostgreSQL of Dastan's tests
+        run: |
+          docker run -d --name dastan-test-postgres -p 127.0.0.1:53432:5432 --tmpfs /var/lib/postgresql             -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_INITDB_ARGS="--encoding=UTF8 --locale=C"             postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+          for attempt in $(seq 1 30); do
+            if docker exec dastan-test-postgres pg_isready -h 127.0.0.1 -U postgres; then break; fi
+            sleep 1
+          done
+          docker exec dastan-test-postgres pg_isready -h 127.0.0.1 -U postgres
+
+      - name: Start the mail catcher of Dastan's tests
+        run: |
+          docker run -d --name dastan-test-mail -p 127.0.0.1:53425:1025 -p 127.0.0.1:53480:8025 -e MP_DISABLE_VERSION_CHECK=true -e MP_MAX_MESSAGES=2000 axllent/mailpit:v1.33.0@sha256:9b3a463be15354c0f0eba91697d80e3e0d8a5623ef0e627cacc836bc17fd5231
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://127.0.0.1:53480/api/v1/info > /dev/null; then break; fi
+            sleep 1
+          done
+          curl --silent --fail http://127.0.0.1:53480/api/v1/info > /dev/null
+
+      # The version of the container and of the package Microsoft.Playwright have to be the same.
+      - name: Start the browser of Dastan's tests
+        run: |
+          docker run -d --name dastan-test-browser --init --ipc=host --user pwuser --workdir /home/pwuser -p 127.0.0.1:53333:3000 mcr.microsoft.com/playwright:v1.64.1-noble /bin/sh -c "npx -y playwright@1.64.1 run-server --port 3000 --host 0.0.0.0"
+          for attempt in $(seq 1 90); do
+            if (echo > /dev/tcp/127.0.0.1/53333) 2> /dev/null && docker logs dastan-test-browser 2>&1 | grep -q "Listening on"; then break; fi
+            sleep 2
+          done
+          docker logs dastan-test-browser 2>&1 | grep "Listening on"
+
+      - name: Test
+        env:
+          DASTAN_POSTGRES_REQUIRED: '1'
+          DASTAN_BROWSER: ws://127.0.0.1:53333/
+          DASTAN_BROWSER_ENGINE: ${{ matrix.engine }}
+        run: >
+          dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Browser.Tests --configuration Release --no-build
+          --max-threads 2 --report-trx --results-directory "${{ github.workspace }}/TestResults"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dastan-browser-${{ matrix.engine }}
+          path: TestResults
+          if-no-files-found: ignore
+          retention-days: 14
+
   android:
     name: Android build
     runs-on: ubuntu-latest
