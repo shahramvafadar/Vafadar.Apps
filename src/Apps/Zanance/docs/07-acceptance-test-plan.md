@@ -514,6 +514,27 @@ passed after addressing separate build prerequisites. Scoped local evidence is u
 This is an app-PIN check using fictitious data. OS device-credential authentication and
 physical tap acceptance were outside this run.
 
+## AT-69 Android restart during the first app PIN penalty
+
+The signed Offline Release APK `9803b374` ran on a disposable Android 16 x86-64
+emulator. A synthetic account opened with EUR 0.00. The original Settings form
+enabled a generated app PIN. The ordinary lock screen rejected five submitted
+nonmatching values and displayed a 60-second delay on the fifth.
+
+One app-only stop and normal launch within that active interval changed the PID from
+6264 to 6802 on the same boot. The lock screen still covered the app. One submission
+while the original delay was active displayed 47 seconds remaining, within the first
+minute. No clock, system credential or transaction changed.
+
+The Settings observer initially waited for the PIN status outside the viewport, and
+the first lock observer initially classified the empty field's accessibility caption
+as entered text. Continuing from the same installed app required scrolling and
+correcting that classification. Neither observer failure submitted a guess or
+repeated PIN setup. Retained captures redact password fields. The disposable package
+and emulator were retired. Local receipts are under `artifacts/at69-native-active-retry-restart`.
+This verifies the active first penalty across an app restart. Physical-device and
+device-reboot behavior, recovery and iOS remain separate.
+
 ## AT-70 Android live recent-apps privacy
 
 The original signed offline APK `3f96f091` ran on Android 16 x86_64 with 4096-byte pages.

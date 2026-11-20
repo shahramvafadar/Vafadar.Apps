@@ -302,6 +302,8 @@ independent work and overall goal remain active. Broader gates stay open.
 - [x] Recent-apps preview and notifications hide financial data by default (SEC-02, REM-05) – notifications generic by default; preview always protected (Android API 33+ recents exclusion and secure background flags, iOS cover; D-63). Foreground screenshots may be allowed on Android 13 and later. [Android 7 emulator evidence](07-acceptance-test-plan.md#at-70-minimum-android-capture-policy) verifies mandatory screenshot blocking and a redacted live card. [Android 16 emulator evidence](07-acceptance-test-plan.md#at-70-android-live-recent-apps-privacy) verifies the live Overview card stays redacted with foreground screenshots allowed. Physical Samsung remains open.
 
 - [ ] D-63 device acceptance: set/change/remove PIN, failed-attempt delay across restart, notification/backup/export gates, recovery success/cancel/unavailable, secure-storage failures; Android screenshot toggle and recents on supported Android versions; iOS keychain/reinstall and privacy cover
+  [Android 16 evidence for the active first app PIN delay](07-acceptance-test-plan.md#at-69-android-restart-during-the-first-app-pin-penalty)
+  covers one ordinary app restart inside the original 60-second interval.
 
 ## Build secrets
 
