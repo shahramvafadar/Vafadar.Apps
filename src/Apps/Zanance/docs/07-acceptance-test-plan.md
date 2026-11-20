@@ -4815,6 +4815,33 @@ Retained XML was redacted and checked before the emulator was retired. Local evi
 restore on this fresh emulator, the named visible values and their cold persistence. Physical
 password-protected restore, OEM transfer and full restored-row comparison remain separate.
 
+### AT-57 protected restore and complete original-row comparison
+
+The retained D-403 synthetic export, SHA-256
+`892dd1a4123050cc387c04cf716616e47ca009fd6a13c1c7ae5b73f3e2f20279`, was sealed without changing its
+contents using the production password-based encryption code. An in-memory round trip recovered the input
+bytes exactly. A fresh, disconnected Android 36 x86_64 emulator installed the retained dual-ABI offline
+Release APK `9f1c9df4` and the existing local review receiver. The original first-run screen selected the
+hash-matched encrypted file, showed one account, one transaction and one plan, and accepted a single
+replacement confirmation. Home displayed EUR 35.00 without an account, transaction or plan being entered.
+
+One original password-protected re-export was shared to the local receiver. The application displayed
+Backup created and cleared both password fields. The receiver stored one 28,025-byte encrypted file,
+SHA-256 `9ea29ddd286dd8bed924361f4bce22b7468e95de755356952d084954efff8726`. The package was decrypted
+and compared with the original in memory. Both exports passed manifest and SQLite integrity checks.
+All 51 original tables and 74 source rows were compared with SQLite value types. The original fields,
+identities and portable preferences were retained. The documented onboarding Settings timestamp advanced.
+Three application migration records and four derived Home tables were added. No original table or column
+was removed. This is preservation of original data across the restore and migrations.
+
+The initial host helper compile referred to an enum's nonexistent separate file and passed after the
+duplicate compile input was removed. An early picker capture had no accessibility root and was observed
+again without reopening the picker. A gesture entered the Android launcher, and the existing backup
+session resumed from the launcher before the single export. Twenty-six XML files were checked for
+redaction of the submitted synthetic password and historical source device label. The emulator exited
+after the first shutdown wait expired, and its guest data was retired. Evidence is in `artifacts/zfr`.
+Physical password-protected restore, OEM transfer and cloud destinations remain open.
+
 ### AT-57 native encrypted export and local handoff
 
 The same offline APK ran on a separate fresh Android 35 emulator. One new zero-opening
