@@ -137,3 +137,22 @@ observed calls and used a borrowed synthetic stream without opening a native cho
 or restoring data. Evidence is under `artifacts/local-backup-selection-ownership`.
 The strict Windows build and signed offline Android Release package passed. The
 APK SHA-256 is `ac658c65ff4d63c32cfece0c65a51107ae9e27bed3da7c0edcfd8b5097d7717a`.
+
+The same signed APK was also checked in the app on a fresh, owned Android 16
+(API 36, x64, 4096-byte pages) emulator. A synthetic profile with one
+zero-opening account created one local portable file with password protection
+turned off. The warning was visible before creation. The creation chooser was
+canceled. Choosing Share in the action sheet for the new row opened the Android
+chooser for the same single file. The chooser was canceled without selecting a
+recipient. Choosing Restore backup on the same row showed the matching creation
+time and a preview of one account, zero transactions and zero plans. Cancel
+closed the preview without confirming replacement.
+
+The initial API 24 AVD setup was refused by the SDK package resolver before any
+guest was created. The preview observer initially expected a standalone counts
+label. The captured hierarchy showed the counts within a multiline summary,
+and the observer was corrected on the open preview without repeating either
+row action. The package and owned API 36 AVD were retired after the check. The
+final device XML was hash-matched and removed from the guest. Local evidence
+remains under `artifacts/local-backup-row-api24`. No physical device, existing
+profile or financial transaction was used in this check.
