@@ -3066,4 +3066,109 @@
   <data name="Account_Said_notices-off" xml:space="preserve">
     <value>The site no longer mails you when somebody asks something of you. You still see every request on your pages.</value>
   </data>
+  <data name="Profile_Title" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Profile_Unknown" xml:space="preserve">
+    <value>Not known</value>
+  </data>
+  <data name="Profile_Inapplicable" xml:space="preserve">
+    <value>Does not apply</value>
+  </data>
+  <data name="Profile_NoPicture" xml:space="preserve">
+    <value>No picture yet – this is a drawing of the kind.</value>
+  </data>
+  <data name="Fact_died_None" xml:space="preserve">
+    <value>Living</value>
+  </data>
+  <data name="Fact_dissolved_None" xml:space="preserve">
+    <value>Still exists</value>
+  </data>
+  <data name="Fact_began" xml:space="preserve">
+    <value>Began</value>
+  </data>
+  <data name="Fact_birthPlace" xml:space="preserve">
+    <value>Born in</value>
+  </data>
+  <data name="Fact_born" xml:space="preserve">
+    <value>Born</value>
+  </data>
+  <data name="Fact_colours" xml:space="preserve">
+    <value>Colours</value>
+  </data>
+  <data name="Fact_companionOf" xml:space="preserve">
+    <value>Companion of</value>
+  </data>
+  <data name="Fact_created" xml:space="preserve">
+    <value>Made</value>
+  </data>
+  <data name="Fact_creator" xml:space="preserve">
+    <value>Made by</value>
+  </data>
+  <data name="Fact_deathPlace" xml:space="preserve">
+    <value>Died in</value>
+  </data>
+  <data name="Fact_died" xml:space="preserve">
+    <value>Died</value>
+  </data>
+  <data name="Fact_dissolved" xml:space="preserve">
+    <value>Ended</value>
+  </data>
+  <data name="Fact_ended" xml:space="preserve">
+    <value>Ended</value>
+  </data>
+  <data name="Fact_field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="Fact_founded" xml:space="preserve">
+    <value>Founded</value>
+  </data>
+  <data name="Fact_founder" xml:space="preserve">
+    <value>Founded by</value>
+  </data>
+  <data name="Fact_happened" xml:space="preserve">
+    <value>When</value>
+  </data>
+  <data name="Fact_heldBy" xml:space="preserve">
+    <value>Held by</value>
+  </data>
+  <data name="Fact_home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Fact_keptAt" xml:space="preserve">
+    <value>Kept at</value>
+  </data>
+  <data name="Fact_knownFor" xml:space="preserve">
+    <value>Known as</value>
+  </data>
+  <data name="Fact_language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Fact_organiser" xml:space="preserve">
+    <value>Organised by</value>
+  </data>
+  <data name="Fact_origin" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Fact_owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="Fact_partOf" xml:space="preserve">
+    <value>Part of</value>
+  </data>
+  <data name="Fact_participant" xml:space="preserve">
+    <value>Took part</value>
+  </data>
+  <data name="Fact_role" xml:space="preserve">
+    <value>In the story</value>
+  </data>
+  <data name="Fact_seat" xml:space="preserve">
+    <value>Seat</value>
+  </data>
+  <data name="Fact_where" xml:space="preserve">
+    <value>Where</value>
+  </data>
+  <data name="Fact_winner" xml:space="preserve">
+    <value>Winner</value>
+  </data>
 </root>

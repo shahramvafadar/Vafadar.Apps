@@ -1,0 +1,86 @@
+@* The picture of the profile of a node (step 19.5, ADR 0017): the media item the record names, when this
+   visitor may see it and its file is there – otherwise a drawing of the kind of the node. The drawing is
+   decoration: the kind is said in words beside it. *@
+@inject DastanSite Site
+@inject Visitor Visitor
+
+<span class="profile-picture @(Small ? "small" : null)">
+    @if (_file is not null && Profile.Picture is { } item)
+    {
+        <img src="@_file" srcset="@MediaAddress.SourceSet(Site.Collection, item, file => Site.ContentFile(file) is not null)" sizes="@(item.Sizes.IsEmpty ? null : Small ? "4rem" : "(min-width: 40rem) 14rem, 60vw")" alt="@_alt" loading="lazy" />
+    }
+    else
+    {
+        <svg class="kind-drawing" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            @switch (Profile.Entity.Type.Nature)
+            {
+                case EntityNature.Being when Profile.Entity.Type == EntityTypes.AnimalCharacter:
+                    @* An animal is no person: the print of a paw. *@
+                    <ellipse cx="12" cy="15.500" rx="4.200" ry="3.400" />
+                    <circle cx="6.500" cy="10.500" r="1.700" />
+                    <circle cx="10" cy="7" r="1.700" />
+                    <circle cx="14" cy="7" r="1.700" />
+                    <circle cx="17.500" cy="10.500" r="1.700" />
+                    break;
+                case EntityNature.Being:
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                    break;
+                case EntityNature.Group:
+                    <circle cx="8.5" cy="9" r="3" />
+                    <circle cx="16" cy="8" r="2.5" />
+                    <path d="M2.5 20c0-3.5 2.7-5.5 6-5.5s6 2 6 5.5" />
+                    <path d="M16 13c3 0 5.5 1.8 5.5 5" />
+                    break;
+                case EntityNature.Place:
+                    <path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.800-6.5 11-6.5 11z" />
+                    <circle cx="12" cy="10" r="2.3" />
+                    break;
+                case EntityNature.Work:
+                    <path d="M5 4.500h10a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z" />
+                    <path d="M8.500 9h6M8.500 12.500h6" />
+                    break;
+                case EntityNature.Object:
+                    <path d="M12 3.500 20 8v8l-8 4.500L4 16V8z" />
+                    <path d="M4 8l8 4.500L20 8M12 12.500V20.500" />
+                    break;
+                case EntityNature.Occasion:
+                    <rect x="4" y="5.500" width="16" height="14.500" rx="2" />
+                    <path d="M4 10h16M8.500 3.500v4M15.500 3.500v4" />
+                    break;
+                case EntityNature.Role:
+                    <path d="M4.500 17 3.500 8l5 3.500L12 6l3.500 5.500 5-3.500-1 9z" />
+                    <path d="M5 20h14" />
+                    break;
+                default:
+                    <circle cx="12" cy="12" r="2.200" />
+                    <ellipse cx="12" cy="12" rx="9" ry="4" />
+                    <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(60 12 12)" />
+                    <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(120 12 12)" />
+                    break;
+            }
+        </svg>
+    }
+</span>
+
+@code {
+    private string? _file;
+    private string _alt = string.Empty;
+
+    /// <summary>Gets or sets the profile, as the visitor of this request may see it.</summary>
+    [Parameter, EditorRequired]
+    public NodeProfile Profile { get; set; } = null!;
+
+    /// <summary>Gets or sets a value indicating whether the picture stands on a card: small, and without words of its own.</summary>
+    [Parameter]
+    public bool Small { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _file = Profile.Picture is { Kind: MediaKind.Image } item && Site.ContentFile(item.File) is not null ? MediaAddress.File(Site.Collection, item.Id) : null;
+
+        // On a card the name stands beside the picture and says what it is; on the page the picture is described
+        // by the words written for it, or by its title where nobody wrote any.
+        _alt = Small || Profile.Picture is not { } shown ? string.Empty : Visitor.Text(shown.AltText ?? shown.Label).Value;
+    }
+}

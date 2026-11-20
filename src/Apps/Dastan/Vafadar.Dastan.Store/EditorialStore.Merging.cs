@@ -55,6 +55,52 @@ public sealed partial class EditorialStore
                 }
             }
 
+            // The profile (ADR 0017): the kept entity keeps its picture and its facts, and takes from the merged
+            // one what it does not state itself – with the words of a fact in every language.
+            if (keep["picture"] is null && merged["picture"] is { } picture)
+            {
+                keep["picture"] = picture.DeepClone();
+            }
+
+            var facts = keep["facts"] as JsonArray ?? [];
+            var taken = new List<string>();
+            foreach (var fact in (merged["facts"] as JsonArray ?? []).Select(fact => fact!.AsObject()))
+            {
+                var kind = (string?)fact["fact"];
+                var other = (string?)fact["entityId"];
+                if (other == keepId || facts.Any(held => (string?)held!["fact"] == kind && (other is null || (string?)held["entityId"] == other)))
+                {
+                    continue;
+                }
+
+                facts.Add(fact.DeepClone());
+                if (fact["text"] is not null && kind is not null)
+                {
+                    taken.Add(kind);
+                }
+            }
+
+            if (facts.Count > 0 && facts.Parent is null)
+            {
+                keep["facts"] = facts;
+            }
+
+            foreach (var translation in translations.Values)
+            {
+                if ((translation["entities"] as JsonObject)?[mergedId]?["facts"] is not JsonObject words)
+                {
+                    continue;
+                }
+
+                foreach (var kind in taken.Where(kind => words[kind] is not null))
+                {
+                    var entitiesOf = translation["entities"]!.AsObject();
+                    var kept = entitiesOf[keepId] as JsonObject ?? (JsonObject)(entitiesOf[keepId] = new JsonObject())!;
+                    var keptWords = kept["facts"] as JsonObject ?? (JsonObject)(kept["facts"] = new JsonObject())!;
+                    keptWords[kind] ??= words[kind]!.DeepClone();
+                }
+            }
+
             Named((string?)merged["label"], Language(root));
             Named((string?)merged["labelFa"], "fa");
             foreach (var (language, translation) in translations)
@@ -91,6 +137,20 @@ public sealed partial class EditorialStore
             }
 
             entities.Remove(merged);
+
+            // A fact of any profile that named the merged entity names the kept one.
+            foreach (var entity in entities.Select(entity => entity!.AsObject()))
+            {
+                foreach (var fact in (entity["facts"] as JsonArray ?? []).Select(fact => fact!.AsObject()).Where(fact => (string?)fact["entityId"] == mergedId))
+                {
+                    if ((string?)entity["id"] == keepId)
+                    {
+                        return $"{keepId}, the fact {(string?)fact["fact"]}: after the merge the fact would name {keepId} itself; change the fact or take it out first.";
+                    }
+
+                    fact["entityId"] = keepId;
+                }
+            }
 
             // Every record that named the merged entity names the kept one.
             foreach (var relation in root["relations"]!.AsArray().Select(relation => relation!.AsObject()))

@@ -305,6 +305,7 @@ public sealed class Catalogue
                     }
                 }
 
+                CheckProfile(entity);
                 foreach (var twice in entity.Names.GroupBy(name => (name.Name, name.Language)).Where(names => names.Count() > 1))
                 {
                     problems.Add($"{entity.Id.Value}: the name {twice.Key.Name} is given twice in {twice.Key.Language}.");
@@ -465,6 +466,84 @@ public sealed class Catalogue
                 else if (publication.Revision is { } revision && record.On > revision.PublishedOn)
                 {
                     problems.Add($"{name}: the review is dated after the revision was published.");
+                }
+            }
+        }
+
+        // The profile of a node (ADR 0017): its facts are of the kinds its type has, each says exactly what
+        // its kind of fact takes, and its picture is a media item of the collection that depicts it.
+        private Dictionary<EntityId, Entity>? _byId;
+
+        private void CheckProfile(Entity entity)
+        {
+            var known = ProfileFacts.Of(entity.Type);
+            // An identifier that is used twice is a problem of its own; the first record of it stands for it here.
+            var entities = _byId ??= catalogue.Entities.GroupBy(other => other.Id).ToDictionary(group => group.Key, group => group.First());
+            foreach (var fact in entity.Facts)
+            {
+                var named = $"{entity.Id.Value}, the fact {fact.Kind.Key}";
+                CheckSources(named, fact.Sources, fact.Level, required: false);
+                CheckStage(named, fact.Level);
+                if (!entity.Level.IsWithin(fact.Level))
+                {
+                    problems.Add($"{named}: a fact about {entity.Id} cannot be shown before {entity.Id} itself.");
+                }
+
+                if (known.Find(fact.Kind.Key) is not { } kind)
+                {
+                    problems.Add($"{named}: a {entity.Type.Key} has no such fact; it has {string.Join(", ", known.All.Select(of => of.Key))}.");
+                    continue;
+                }
+
+                var says = (fact.Time is not null ? 1 : 0) + (fact.Node is not null ? 1 : 0) + (fact.Words is not null ? 1 : 0);
+                var fits = kind.Value switch
+                {
+                    FactValue.Time => fact.Time is not null,
+                    FactValue.Words => fact.Words is not null,
+                    _ => fact.Node is not null,
+                };
+                if (says != 1 || !fits)
+                {
+                    problems.Add($"{named}: it says {kind.Value switch { FactValue.Time => "a time", FactValue.Words => "words", FactValue.Place => "a place", _ => "another entity" }}, and nothing else.");
+                    continue;
+                }
+
+                if (fact.Node is { } node)
+                {
+                    if (!entities.TryGetValue(node, out var other))
+                    {
+                        problems.Add($"{named}: it names {node}, which is no entity of the collection.");
+                    }
+                    else if (node == entity.Id)
+                    {
+                        problems.Add($"{named}: it names the entity itself.");
+                    }
+                    else if (kind.Value == FactValue.Place && other.Type.Nature != EntityNature.Place)
+                    {
+                        problems.Add($"{named}: it names {node}, which is no place.");
+                    }
+                }
+            }
+
+            foreach (var twice in entity.Facts.GroupBy(fact => fact.Kind.Key).Where(facts => facts.Count() > 1 && !facts.First().Kind.Many))
+            {
+                problems.Add($"{entity.Id.Value}: the fact {twice.Key} is stated {twice.Count()} times; it is stated once.");
+            }
+
+            if (entity.Picture is { } picture)
+            {
+                var item = catalogue.Media.FirstOrDefault(media => media.Id == picture);
+                if (item is null)
+                {
+                    problems.Add($"{entity.Id.Value}: its picture {picture} is no media item of the collection.");
+                }
+                else if (item.Kind != MediaKind.Image)
+                {
+                    problems.Add($"{entity.Id.Value}: its picture {picture} is no image.");
+                }
+                else if (!item.DepictedEntities.Contains(entity.Id))
+                {
+                    problems.Add($"{entity.Id.Value}: its picture {picture} does not say that it depicts {entity.Id}.");
                 }
             }
         }

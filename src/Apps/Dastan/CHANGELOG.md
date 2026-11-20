@@ -324,3 +324,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   an editor sees has changed; an account of the tool is made again, like everything else of an earlier
   database.
 - What was wrong with a form is read out by a screen reader as a list again, on every page with a form.
+- Every entity has a profile on its page: the few facts that matter for what it is – each stated, or said to be
+  not known – and its picture, or a drawing of its kind where there is no picture that may be shown. The list
+  of a collection shows each subject as a card with the same.
+- The tool of the editors asks for the facts the kind of an entity has, marks an essential one that is missing,
+  and lists what the profiles lack before a revision is made – as notes that stop nothing.

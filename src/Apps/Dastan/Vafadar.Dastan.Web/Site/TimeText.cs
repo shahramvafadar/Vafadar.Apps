@@ -28,6 +28,7 @@ public static class TimeText
             OccurrenceWindow { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(earliest, latest, visitor, text),
             Period period when Start(period, visitor, text) is { } start && End(period, visitor, text) is { } end =>
                 string.Format(CultureInfo.CurrentCulture, text["Date_Range"], start, end),
+            UnknownTime => text["Profile_Unknown"],
             _ => text["Date_NotStated"],
         };
     }

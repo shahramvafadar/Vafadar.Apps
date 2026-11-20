@@ -145,7 +145,7 @@ public sealed class StudioFormTests : IDisposable
                     }
 
                     break;
-                case FieldKind.Rows:
+                case FieldKind.Rows or FieldKind.Facts:
                     foreach (var part in field.Rows.SelectMany(Sent))
                     {
                         yield return part;

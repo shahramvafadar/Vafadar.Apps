@@ -88,6 +88,9 @@ public sealed class EditorialThreadsTests : IDisposable
         var twin = WorkingCopy.Stored(store, "entities", "character-rostam");
         twin["id"] = "character-rostam-again";
         twin["label"] = "Rostam, written again";
+
+        // The picture of the first record says that it depicts that record, not this one.
+        twin.Remove("picture");
         Assert.True(store.Put(Collection, "entities", twin, "a writer", "A second record of the same man.").Done);
         Assert.True(store.Put(Collection, "threads", Thread(("entityId", "character-rostam-again"), ("eventId", "event-01"), ("entityId", "character-rostam")), "a writer", "A thread over both.").Done);
 

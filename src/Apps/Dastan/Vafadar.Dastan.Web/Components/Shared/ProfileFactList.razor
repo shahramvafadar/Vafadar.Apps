@@ -1,0 +1,55 @@
+@* The facts of a profile (step 19.5, ADR 0017): each kind of fact with what is stated of it – a time, a place,
+   another node, words – or the words that it is not known. A fact nobody may tell this visitor yet reads
+   like one nobody stated. *@
+@inject DastanSite Site
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
+
+<dl class="facts profile-facts @(Compact ? "compact" : null)">
+    @foreach (var line in Lines)
+    {
+        <dt>@T[$"Fact_{line.Kind.Key}"]</dt>
+        @if (line.IsUnknown)
+        {
+            <dd class="unknown">@T["Profile_Unknown"]</dd>
+        }
+        else
+        {
+            @foreach (var fact in line.Stated)
+            {
+                <dd>
+                    @if (fact.Words is { } words)
+                    {
+                        <Loc Text="words" />
+                    }
+                    else if (fact.Node is { } node && Visitor.Projection!.Find(node) is { } other)
+                    {
+                        <a href="@($"{Site.Collection}/entity/{other.Id}")"><Loc Text="other.Label" /></a>
+                    }
+                    else if (fact.Time is Vafadar.Temporal.UnknownTime)
+                    {
+                        <span class="unknown">@T["Profile_Unknown"]</span>
+                    }
+                    else if (fact.Time is Vafadar.Temporal.InapplicableTime)
+                    {
+                        @(T[$"Fact_{line.Kind.Key}_None"] is { ResourceNotFound: false } none ? none.Value : T["Profile_Inapplicable"].Value)
+                    }
+                    else if (fact.Time is { } time)
+                    {
+                        <bdi>@TimeText.Of(time, Visitor, T)</bdi>
+                    }
+                </dd>
+            }
+        }
+    }
+</dl>
+
+@code {
+    /// <summary>Gets or sets the lines to show.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<ProfileLine> Lines { get; set; } = [];
+
+    /// <summary>Gets or sets a value indicating whether the list stands on a card: each fact on one line.</summary>
+    [Parameter]
+    public bool Compact { get; set; }
+}

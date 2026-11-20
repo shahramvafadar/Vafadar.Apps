@@ -127,6 +127,7 @@ relation, event and media item has a `spoilerLevel`: the earliest stage at which
   that record and a link to the museum, without a picture.
 * A shown image needs a checked text alternative, a shown video its playing time, captions and a transcript.
 * The date an artwork was made is not a date of the story it shows.
+* The picture of a profile (`picture` of an entity) is one of these items – an image that depicts the entity and may be shown. Without one the page shows a drawing of the kind and says so; an image of a museum that is only a reference cannot be a picture that is seen.
 
 ## Adding to a file and correcting it
 

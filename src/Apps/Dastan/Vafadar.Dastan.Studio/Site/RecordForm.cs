@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.Extensions.Primitives;
+using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Data;
 using Vafadar.Dastan.Store;
 
@@ -43,6 +44,12 @@ public enum FieldKind
 
     /// <summary>A time of the calendar: what happened once or between two times, or what lasted.</summary>
     Time = 10,
+
+    /// <summary>The facts of the profile of an entity: one row for every fact its kind has (ADR 0017).</summary>
+    Facts = 11,
+
+    /// <summary>The fact a row of the profile states: its key, what it means, and whether the kind needs it.</summary>
+    Fact = 12,
 }
 
 /// <summary>A value a field can be given, with what the editor is shown for it.</summary>
@@ -76,6 +83,12 @@ public sealed class FormField
 
     /// <summary>Gets the language of the text, when the field is a text of the record in another language.</summary>
     public string? Language { get; init; }
+
+    /// <summary>Gets what the field means, said beside it; nothing for a field that is named by the file alone.</summary>
+    public string? Hint { get; init; }
+
+    /// <summary>Gets a value indicating whether the field is one the record should have and does not.</summary>
+    public bool Missing { get; init; }
 
     /// <summary>Gets the text an input starts with.</summary>
     public string Text => Value switch
@@ -183,6 +196,12 @@ public static class RecordForm
 
     // The statements with a date of an entity: the list, the key a row names itself by, and the texts of a row
     // a translation translates – the place "dated" of a translation document, by the key.
+    // The facts of the profile of an entity: the list, the key a row states, and the three things a fact can
+    // say – the place "facts" of a translation document holds the words, by the key of the fact.
+    private const string Facts = "facts";
+    private const string Fact = "fact";
+    private const string Words = "text";
+
     private const string Dated = "dated";
     private const string Key = "key";
     private static readonly string[] DatedTexts = ["label", "summary"];
@@ -203,7 +222,9 @@ public static class RecordForm
     {
         ArgumentNullException.ThrowIfNull(record);
         ArgumentNullException.ThrowIfNull(context);
-        var fields = record.Where(field => !Kept.Contains(field.Key)).Select(field => Field($"{group}[]", "f", field.Key, field.Value, context, nested: false)).ToList();
+        var fields = record.Where(field => !Kept.Contains(field.Key))
+            .Select(field => group == "entities" && field.Key == Facts && FactsOf(record, context) is { } profile ? profile : Field($"{group}[]", "f", field.Key, field.Value, context, nested: false))
+            .ToList();
         if (StatesNoTime(group, record))
         {
             fields.Add(new FormField { Path = $"f.{Time}", Name = Time, Kind = FieldKind.Time, Parts = TimeForm.Parts($"f.{Time}", null) });
@@ -214,6 +235,12 @@ public static class RecordForm
             // A list the entity does not have yet, with the one row that begins it.
             fields.AddRange(EntityLists.Keys.Order(StringComparer.Ordinal).Where(list => !record.ContainsKey(list))
                 .Select(list => Field("entities[]", "f", list, new JsonArray(), context, nested: false)));
+
+            // The facts its kind has, asked for also when the entity states none yet.
+            if (!record.ContainsKey(Facts) && FactsOf(record, context) is { } profile)
+            {
+                fields.Add(profile);
+            }
         }
 
         if (texts is not { Count: > 0 } || !Translated.TryGetValue(group, out var translated))
@@ -239,6 +266,25 @@ public static class RecordForm
                                 : dated.Select(text => Translation(
                                     $"t.{text.Language}.{Dated}[{index}].{part.Name}", part.Name, text.Language,
                                     TextOf((text.Texts[row.FirstOrDefault(named => named.Name == Key)?.Text ?? string.Empty] as JsonObject)?[part.Name]), part.Kind)).Prepend(part)),
+                        ]),
+                    ],
+                });
+                continue;
+            }
+
+            if (translated.Facts && field.Kind == FieldKind.Facts)
+            {
+                // The words of a fact in another language go with its row, by the key of the fact.
+                shown.Add(new FormField
+                {
+                    Path = field.Path, Name = field.Name, Kind = field.Kind, Value = field.Value,
+                    Rows =
+                    [
+                        .. field.Rows.Select((row, index) => (IReadOnlyList<FormField>)
+                        [
+                            .. row.SelectMany(part => part.Name != Words
+                                ? [part]
+                                : texts.Select(text => Translation($"t.{text.Language}.{Facts}[{index}].{Words}", Words, text.Language, TextOf((text.Texts[Facts] as JsonObject)?[row[0].Text]), part.Kind)).Prepend(part)),
                         ]),
                     ],
                 });
@@ -328,6 +374,32 @@ public static class RecordForm
                 {
                     // The form had no input for the text: it stays as it is, for the readers to judge.
                     now[name] = kept.DeepClone();
+                }
+            }
+
+            if (translated.Facts)
+            {
+                if (form.ContainsKey($"f.{Facts}[0].{Fact}"))
+                {
+                    // The words of a fact in another language are kept under the key of the fact; the words of
+                    // a fact that is stated no longer go with it.
+                    var words = new JsonObject();
+                    for (var index = 0; form.TryGetValue($"f.{Facts}[{index}].{Fact}", out var key); index++)
+                    {
+                        if (Sent(key) is { Length: > 0 } fact && Sent(form[$"f.{Facts}[{index}].{Words}"]).Length > 0 && Sent(form[$"t.{language}.{Facts}[{index}].{Words}"]) is { Length: > 0 } said)
+                        {
+                            words[fact] = said;
+                        }
+                    }
+
+                    if (words.Count > 0)
+                    {
+                        now[Facts] = words;
+                    }
+                }
+                else if (before[Facts] is { } kept)
+                {
+                    now[Facts] = kept.DeepClone();
                 }
             }
 
@@ -497,7 +569,7 @@ public static class RecordForm
 
         if (group == "entities")
         {
-            foreach (var list in EntityLists.Keys.Where(list => !record.ContainsKey(list)))
+            foreach (var list in EntityLists.Keys.Append(Facts).Where(list => !record.ContainsKey(list)))
             {
                 if (fields.TryGetValue(list, out var begun) && Filled(begun, form, problems) is { Node: JsonArray { Count: > 0 } rows })
                 {
@@ -507,6 +579,114 @@ public static class RecordForm
         }
 
         return filled;
+    }
+
+    // The facts of the profile of an entity as rows (ADR 0017): first what the record states, in its order, then
+    // a row for every fact its kind has and the record does not state – the essential ones marked as missing –
+    // and one more for a fact that may be stated several times. A fact says one thing: the row has the input
+    // for exactly that. Nothing when the form cannot show the facts this way – the type is not known, or a
+    // fact is written in a way the rows have no inputs for; the field is then the text of the file.
+    private static FormField? FactsOf(JsonObject record, FormContext context)
+    {
+        if (ContentVocabulary.EntityType((string?)record["type"]) is not { } type || record[Facts] is not (null or JsonArray))
+        {
+            return null;
+        }
+
+        var kinds = ProfileFacts.Of(type);
+        var stated = record[Facts] as JsonArray ?? [];
+        var rows = new List<IReadOnlyList<FormField>>();
+        foreach (var fact in stated)
+        {
+            if (fact is not JsonObject written || (string?)written[Fact] is not { } key || kinds.Find(key) is not { } kind
+                || written.Any(part => part.Key is not (Fact or Words or "entityId" or Time or "sourceIds" or "spoilerLevel"))
+                || (kind.Value == FactValue.Time && TimeForm.Parse(written[Time]) is null))
+            {
+                return null;
+            }
+
+            rows.Add(FactRow(rows.Count, kind, kinds.Essential.Contains(kind), written, context));
+        }
+
+        foreach (var kind in kinds.All.Where(kind => kind.Many || !stated.Any(fact => (string?)fact![Fact] == kind.Key)))
+        {
+            rows.Add(FactRow(rows.Count, kind, kinds.Essential.Contains(kind), null, context));
+        }
+
+        return new FormField { Path = $"f.{Facts}", Name = Facts, Kind = FieldKind.Facts, Value = record[Facts], Rows = rows };
+    }
+
+    // One row of the facts: the fact, what it says, what it rests on, and from which stage on it may be told.
+    private static List<FormField> FactRow(int index, FactKind kind, bool essential, JsonObject? written, FormContext context)
+    {
+        var path = $"f.{Facts}[{index}]";
+        var says = kind.Value switch
+        {
+            FactValue.Words => new FormField { Path = $"{path}.{Words}", Name = Words, Kind = FieldKind.Text, Value = JsonValue.Create((string?)written?[Words] ?? string.Empty) },
+            FactValue.Time => new FormField { Path = $"{path}.{Time}", Name = Time, Kind = FieldKind.Time, Value = written?[Time], Parts = TimeForm.Parts($"{path}.{Time}", TimeForm.Parse(written?[Time])) },
+            _ => new FormField
+            {
+                Path = $"{path}.entityId", Name = "entityId", Kind = FieldKind.Choice, Value = JsonValue.Create((string?)written?["entityId"] ?? string.Empty),
+                Options = With(context.Records.TryGetValue("entities", out var entities) ? entities : [], (string?)written?["entityId"] ?? string.Empty, unchosen: true),
+            },
+        };
+        return
+        [
+            new FormField
+            {
+                Path = $"{path}.{Fact}", Name = Fact, Kind = FieldKind.Fact, Value = JsonValue.Create(kind.Key),
+                Hint = $"{kind.Meaning}. {(essential ? "Essential" : "May be added")}{(kind.Many ? "; may be stated several times" : null)}.",
+                Missing = essential && written is null,
+            },
+            says,
+            new FormField
+            {
+                Path = $"{path}.sourceIds", Name = "sourceIds", Kind = FieldKind.References, Value = written?["sourceIds"],
+                Options = context.Records.TryGetValue("sources", out var sources) ? sources : [],
+            },
+            new FormField
+            {
+                Path = $"{path}.spoilerLevel", Name = "spoilerLevel", Kind = FieldKind.Choice,
+                Value = JsonValue.Create(written?["spoilerLevel"]?.ToJsonString() ?? string.Empty),
+                Options = [new FieldOption(string.Empty, "– with the entity"), .. context.Stages],
+            },
+        ];
+    }
+
+    // The facts as the rows were filled in: a row that says nothing is a fact the record does not state. A fact
+    // keeps the parts it had – its sources and its stage are written only where they are stated.
+    private static (JsonNode? Node, bool Present)? FilledFacts(FormField field, IFormCollection form, List<string> problems)
+    {
+        var facts = new JsonArray();
+        foreach (var row in field.Rows)
+        {
+            if (Filled(row[1], form, problems) is not { Node: { } says })
+            {
+                continue;
+            }
+
+            var fact = new JsonObject { [Fact] = row[0].Text, [row[1].Name] = says };
+            if (Filled(row[2], form, problems) is { Node: JsonArray sources } && (sources.Count > 0 || row[2].Value is not null))
+            {
+                fact["sourceIds"] = sources;
+            }
+
+            if (Sent(form[row[3].Path]) is { Length: > 0 } level)
+            {
+                if (int.TryParse(level, NumberStyles.None, CultureInfo.InvariantCulture, out var stage))
+                {
+                    fact["spoilerLevel"] = stage;
+                }
+                else
+                {
+                    problems.Add($"{Facts}, {row[0].Text}: the reading stage is a number.");
+                }
+            }
+
+            facts.Add(fact);
+        }
+
+        return facts.Count == 0 ? null : (facts, true);
     }
 
     // A relation of the world outside a story that does not say when it held.
@@ -691,6 +871,9 @@ public static class RecordForm
                 }
 
                 return (group, true);
+
+            case FieldKind.Facts:
+                return FilledFacts(field, form, problems);
 
             case FieldKind.Rows:
                 var rows = new JsonArray();
