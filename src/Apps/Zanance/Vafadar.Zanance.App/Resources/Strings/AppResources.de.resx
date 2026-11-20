@@ -7936,6 +7936,9 @@ Höchstens {3} Guthabeneinheiten; Angebot gültig bis {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>Die ursprüngliche Anfrage ist offen oder ihr Ausgang unklar. Guthaben bleibt reserviert. Setzen Sie genau diese Anfrage fort oder schließen Sie sie vor einer neuen. Ein Timeout ist weder Erstattung noch Erlaubnis für eine erneute Belastung.</value>
   </data>
+  <data name="Ai_SourceReviewRequired" xml:space="preserve">
+    <value>Der Dienst kennt diese Anfrage nicht. Die Prüfung der ursprünglichen Daten ist nicht bestätigt. Schließe die Anfrage und prüfe die aktuellen Daten erneut.</value>
+  </data>
   <data name="Ai_Continue" xml:space="preserve">
     <value>Ursprüngliche Anfrage fortsetzen</value>
   </data>

@@ -7925,6 +7925,9 @@ Massimo: {3} unità di credito; offerta valida fino al {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>La richiesta originale è in attesa o ha esito sconosciuto. I crediti restano riservati. Continua o chiudi questa precisa richiesta prima di avviarne un’altra; un timeout non è un rimborso né il permesso di addebitare di nuovo.</value>
   </data>
+  <data name="Ai_SourceReviewRequired" xml:space="preserve">
+    <value>Il servizio non trova questa richiesta e la verifica dei dati originali non è confermata. Chiudi la richiesta e controlla di nuovo i dati attuali.</value>
+  </data>
   <data name="Ai_Continue" xml:space="preserve">
     <value>Continua la richiesta originale</value>
   </data>

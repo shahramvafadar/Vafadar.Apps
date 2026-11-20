@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -89,11 +90,17 @@ public sealed class AiHttpContinuationTests
         var provider = new Provider(root); builder.Services.AddSingleton<IAiProvider>(provider);
         builder.WebHost.ConfigureKestrel(options => ServiceHost.ListenLocalTls(options, 0));
         await using var app = builder.Build();
-        var loseReply = false; var financialPosts = 0;
+        var loseReply = false; var refuseBeforeAcceptance = false; var financialPosts = 0;
         app.Use(async (http, next) =>
         {
             if (http.Request.Path == "/analysis/requests" && http.Request.Method == "POST")
             {
+                if (refuseBeforeAcceptance)
+                {
+                    refuseBeforeAcceptance = false;
+                    http.Response.StatusCode = StatusCodes.Status503ServiceUnavailable;
+                    return;
+                }
                 Interlocked.Increment(ref financialPosts);
                 if (loseReply)
                 {
@@ -137,7 +144,9 @@ public sealed class AiHttpContinuationTests
             {
                 await store.GrantAsync(owner, "fictitious-original-tls-wallet", true, 20, Ct);
                 var client = Client("before-http"); var offer = await client.OfferAsync(AiPurpose.PeriodExplanation, Ct); var before = financialPosts;
-                await Assert.ThrowsAsync<IOException>(() => client.SubmitAsync(offer, Payload(), () => throw new IOException("Fictitious process boundary before HTTP."), Ct));
+                refuseBeforeAcceptance = true;
+                var refusal = await Assert.ThrowsAsync<PersonalSyncHttpException>(() => client.SubmitAsync(offer, Payload(), () => Task.CompletedTask, Ct));
+                Assert.Equal(HttpStatusCode.ServiceUnavailable, refusal.Status);
                 Assert.Equal(before, financialPosts); await Original("before-http", client); await Advance(1);
             }
             if (stage < 2)

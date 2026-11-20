@@ -7936,6 +7936,9 @@
   <data name="Ai_Pending" xml:space="preserve">
     <value>درخواست اصلی در انتظار است یا نتیجه‌اش معلوم نیست. اعتبارش رزرو می‌ماند. پیش از درخواست دیگر، همین درخواست را ادامه دهید یا ببندید؛ timeout نه بازپرداخت است و نه مجوز مصرف دوبارهٔ اعتبار.</value>
   </data>
+  <data name="Ai_SourceReviewRequired" xml:space="preserve">
+    <value>سرویس این درخواست را پیدا نکرد و تأیید بررسی دادهٔ اولیه در دسترس نیست. درخواست قبلی را ببندید و دادهٔ فعلی را دوباره بررسی کنید.</value>
+  </data>
   <data name="Ai_Continue" xml:space="preserve">
     <value>ادامهٔ همان درخواست اصلی</value>
   </data>

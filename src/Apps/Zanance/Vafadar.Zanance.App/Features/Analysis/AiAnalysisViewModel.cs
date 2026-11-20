@@ -770,6 +770,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         Environment.NewLine + string.Join(Environment.NewLine, period.Totals.Select(t => text.Format("Ai_CurrencySummary", t.CurrencyCode,
             MoneyText.Format(t.NetIncome, t.CurrencyCode, local.CurrentCulture), MoneyText.Format(t.NetExpense, t.CurrencyCode, local.CurrentCulture), MoneyText.Format(checked(t.NetIncome - t.NetExpense), t.CurrencyCode, local.CurrentCulture))));
     private static string FailureKey(Exception error) => error is PersonalSyncHttpException { Status: HttpStatusCode.Unauthorized } || error.Message == "AiIdentityRequired" ? "Ai_IdentityRequired" :
+        error is AiSourceReviewRequiredException ? "Ai_SourceReviewRequired" :
         error is PersonalSyncHttpException { Status: HttpStatusCode.NotFound or HttpStatusCode.ServiceUnavailable } ? "Ai_NoProvider" :
         error is PersonalSyncHttpException { Status: HttpStatusCode.TooManyRequests } ? "Ai_WaitStatus" : "Ai_Failed";
     private void SetError(string? key) { errorKey = key; Error = key is null ? null : text[key]; }

@@ -141,8 +141,11 @@ cached historical balances cannot overwrite current authoritative wallet metadat
 
 Service states are Pending, Completed, Refunded and NotAccepted. A timeout/unknown outcome retains reservation;
 only definitive original provider evidence settles actual charge or refunds. Not-found at a provider is Unknown.
-An explicit client continuation checks status first and may send only the exact saved packet/id when absent at
-the service. Metadata-only close creates a durable unaccepted closure, so a late original packet cannot start
+An explicit continuation checks status first. It can send the exact saved packet and ID when the service has no
+request and the journal records a successful final source review. A refused or interrupted review leaves a
+staged record with an explicit negative marker. Older records without a marker can still recover service status. If the service has no record
+of a staged or older request, the user can close the original and review the current data again.
+Metadata-only close creates a durable unaccepted closure, so a late original packet cannot start
 later; accepted work is neither recalled nor guessed refunded. A single immutable offer cannot authorize two
 requests. A trusted receipt/gift port is internal only, globally deduplicates the original grant identity and
 never accepts client-chosen units or subscription entitlement. Purchased credit never automatically expires.
@@ -166,13 +169,18 @@ final backup policy remain actual Mac work. Official platform reference:
   affected application-flow case, not the other13 successes.
 - AiCreditPersistenceTests:one fact with eight durable actual PostgreSQL stages. AiHttpContinuationTests:one fact
   with seven stages, actual Kestrel pinned TLS/authenticated identity middleware and protected original clients.
-  Financial HTTP is absent before local persistence/source validation; an absent request replays the same id,
-  a withheld accepted response resumes via status without another financial POST, invalid output stays pending,
+  Financial HTTP follows local persistence and source validation. An admitted request absent at the service
+  can replay the same ID.
+  A withheld accepted response resumes via status without another financial POST, invalid output stays pending,
   unaccepted expiry/refusal is durable and revoked sessions are refused. Client-side serialization is not worker
   concurrency evidence; AiConcurrentCreditTests independently uses two real store workers/owner transactions
   to prove only one8-unit reservation can consume an actual10-unit balance. Its second case resolves the real
   production DI registration and closed default provider. No actual AI model, price or purchase is used.
-- Total34 distinct new focused cases, plus23 existing resource completeness/usage cases for all six languages.
+- Four focused loopback TLS cases verify a refused local source review, a confirmed pre-acceptance interruption,
+  and absent and accepted legacy records. The staged and absent legacy packets produce no aggregate POST.
+  The admitted retry preserves the original ID, offer and payload digest. Accepted legacy status remains
+  readable. The fixture uses synthetic data, a local journal and no real provider.
+- The original delivery recorded 34 distinct focused cases and 23 existing resource completeness and usage cases across six languages.
   Historical3753 complete-suite cases and unrelated successful billing/sync/cipher/bank/accountant checks were
   not replayed or added to a fictitious current total.
 - Two additive service migrations and regenerated service compiled model are applied to the same original

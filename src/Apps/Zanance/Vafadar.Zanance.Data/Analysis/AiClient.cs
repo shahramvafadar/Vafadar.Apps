@@ -18,7 +18,15 @@ public interface IAiPrivateStorage
     Task WriteAsync(string scope, string value, CancellationToken ct);
 }
 /// <summary>Original private immutable consent and last confirmed outcome; no bearer credential or new grant.</summary>
-public sealed record AiClientRecord(int Version, AiSubmission Submission, AiRequestResult? Result);
+public sealed record AiClientRecord(int Version, AiSubmission Submission, AiRequestResult? Result)
+{
+    /// <summary>The final source recheck decision. Null marks a journal saved before this decision was recorded.</summary>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public bool? DispatchPermitted { get; init; }
+}
+
+/// <summary>The service has no original request and the journal cannot establish dispatch authority.</summary>
+public sealed class AiSourceReviewRequiredException() : InvalidOperationException("Close the unaccepted original request before a new review.");
 
 /// <summary>One identity/peer/original-file client; timeouts retain its literal request and permit status only.</summary>
 public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage storage, string expectedUser, string originalFile, Action verifyAccess)
@@ -69,14 +77,19 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
                 throw new InvalidOperationException("Continue the original analysis status before another request.");
             var submission = new AiSubmission(Guid.NewGuid(), offer, frozen);
             verifyAccess();
-            await SaveAsync(new(1, submission, null), ct); // A process cut after this point never means safe to create a new id.
+            var staged = new AiClientRecord(1, submission, null) { DispatchPermitted = false };
+            await SaveAsync(staged, ct);
             await recheckSource(); verifyAccess();
+            // An interrupted or refused source check leaves only a staged record. Durably
+            // record the successful review before entering the original transport boundary.
+            var admitted = staged with { DispatchPermitted = true };
+            await SaveAsync(admitted, ct); verifyAccess();
             var result = await transport.AnalysisSubmitAsync(expectedUser, submission, ct); verifyAccess(); Validate(submission, result);
-            await SaveAsync(new(1, submission, result), ct); return result;
+            await SaveAsync(admitted with { Result = result }, ct); return result;
         }
         finally { semaphore.Release(); }
     }
-    /// <summary>Explicit continuation: status first; only an absent service id replays the same immutable submission, never a new id.</summary>
+    /// <summary>Checks status first. Only a durably admitted packet absent at the service can be retried.</summary>
     public async Task<AiRequestResult> ContinueAsync(CancellationToken ct = default)
     {
         verifyAccess(); var semaphore = Operations.GetOrAdd(Scope, _ => new SemaphoreSlim(1, 1)); await semaphore.WaitAsync(ct);
@@ -88,6 +101,7 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
             try { result = await transport.AnalysisStatusAsync(expectedUser, state.Submission.RequestId, ct); }
             catch (PersonalSyncHttpException missing) when (missing.Status == HttpStatusCode.NotFound)
             {
+                if (state.DispatchPermitted != true) throw new AiSourceReviewRequiredException();
                 // This explicitly confirmed continuation may publish the same original packet if it never arrived.
                 // The service serializes the original id; it never invokes the provider twice for an existing request.
                 verifyAccess(); result = await transport.AnalysisSubmitAsync(expectedUser, state.Submission, ct);

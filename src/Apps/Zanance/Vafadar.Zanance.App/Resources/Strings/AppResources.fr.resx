@@ -7913,6 +7913,9 @@ Maximum : {3} unités de crédit ; offre valable jusqu’au {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>La demande d’origine est en attente ou son résultat est inconnu. Les crédits restent réservés. Continuez ou fermez cette demande exacte avant d’en créer une autre ; un délai dépassé n’est ni un remboursement ni une autorisation de débiter à nouveau.</value>
   </data>
+  <data name="Ai_SourceReviewRequired" xml:space="preserve">
+    <value>Le service ne trouve pas cette demande et la vérification des données d’origine n’a pas pu être confirmée. Clôturez la demande et vérifiez de nouveau les données actuelles.</value>
+  </data>
   <data name="Ai_Continue" xml:space="preserve">
     <value>Continuer la demande d’origine</value>
   </data>
