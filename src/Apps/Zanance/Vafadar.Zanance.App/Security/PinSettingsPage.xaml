@@ -3,13 +3,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:v="http://vafadar.pro/schemas/maui" xmlns:local="clr-namespace:Vafadar.Zanance.App.Security"
     x:DataType="local:PinSettingsViewModel" Title="{v:Translate Pin_Setting}">
-    <Grid RowDefinitions="Auto,*" Padding="16" RowSpacing="12">
+    <Grid x:Name="PinContainer" RowDefinitions="Auto,*" Padding="16" RowSpacing="12">
         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
             <Button Text="{v:Translate Common_Back}" Command="{Binding BackCommand}" Style="{StaticResource TextButton}" />
             <Label Grid.Column="1" Text="{v:Translate Pin_Setting}" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
             <v:HelpButton Grid.Column="2" Topic="AppPin" />
         </Grid>
-        <ScrollView Grid.Row="1">
+        <ScrollView x:Name="PinViewport" Grid.Row="1">
             <VerticalStackLayout Spacing="12">
                 <Label Text="{v:Translate Pin_SetupHint}" Style="{StaticResource Secondary}" />
                 <Border Style="{StaticResource Card}">

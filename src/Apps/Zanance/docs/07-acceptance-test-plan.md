@@ -554,6 +554,23 @@ package and emulator were retired. Local receipts are under `artifacts/at69-nati
 This verifies the original PIN change and removal flow on the named emulator. Physical-device
 and iOS acceptance remain open.
 
+### AT-69 PIN Settings actions with the Android keyboard open
+
+The original PIN Settings modal now uses the same temporary Android keyboard viewport as
+the lock screen. The signed Offline Release APK `6abbe156` verified the change on a fresh
+Android 16 x86-64 emulator. With the keyboard top at pixel 1628, the Save target occupied
+pixels 1180–1312 vertically and saved the generated app PIN. The visible Remove app PIN
+target occupied pixels 1531–1628. One tap while the keyboard was still open reached the
+original validation and displayed the expected incorrect-PIN message for a synthetic wrong
+value. The earlier successful removal was not repeated.
+
+The observer initially omitted the visible-frame field in Android's inset diagnostic and
+stopped before the first Save. The same entered fields supplied the accepted Save. Strict
+Windows and signed Android Release builds passed. The disposable emulator was retired.
+Local redacted captures and button bounds are under `artifacts/at69-pin-ime-native`.
+This records touch reachability at the tested viewport. Minimum target size over all
+layouts, physical devices and iOS remain separate.
+
 ## AT-70 Android live recent-apps privacy
 
 The original signed offline APK `3f96f091` ran on Android 16 x86_64 with 4096-byte pages.

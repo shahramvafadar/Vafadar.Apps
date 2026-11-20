@@ -6,6 +6,9 @@ namespace Vafadar.Zanance.App.Security;
 public partial class PinSettingsPage : ContentPage
 {
     private readonly PinSettingsViewModel _viewModel;
+#if ANDROID
+    private LockKeyboardViewport? _keyboardViewport;
+#endif
 
     /// <summary>Creates a PIN form without storing or displaying credentials.</summary>
     public PinSettingsPage(AppLockService appLock, Translator translator)
@@ -22,12 +25,18 @@ public partial class PinSettingsPage : ContentPage
             if (!_viewModel.IsCurrent()) return;
             await Navigation.PopModalAsync();
         };
+#if ANDROID
+        Loaded += (_, _) => UseKeyboardViewport();
+#endif
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         _viewModel.Activate();
+#if ANDROID
+        Dispatcher.Dispatch(UseKeyboardViewport);
+#endif
     }
 
     protected override bool OnBackButtonPressed()
@@ -38,7 +47,20 @@ public partial class PinSettingsPage : ContentPage
 
     protected override void OnDisappearing()
     {
+#if ANDROID
+        _keyboardViewport?.Dispose();
+        _keyboardViewport = null;
+#endif
         _viewModel.Deactivate();
         base.OnDisappearing();
     }
+
+#if ANDROID
+    private void UseKeyboardViewport()
+    {
+        if (_keyboardViewport is null && _viewModel.IsCurrent())
+            _keyboardViewport = LockKeyboardViewport.TryAcquire(Handler?.PlatformView as Android.Views.View,
+                PinContainer, PinViewport);
+    }
+#endif
 }
