@@ -102,6 +102,16 @@ their existing navigation guards.
 The Windows build and signed offline Android package passed. The updated
 APK SHA-256 is `2ebfabde50cb91f5105b14ab949fb633f0ce01e90f3fe06e48eb259e85b14271`.
 
+An independent Windows Debug package then exercised both departures through
+the original `AppShell` and `AiAnalysisPage`, with one synthetic zero-opening
+account and a local runtime holding each response. The Shell's Back route
+returned to the same Home instance, cancelled the held read and retired the
+Send action in both cases. AI stayed enabled and the financial fingerprint
+matched before and after. No submission or provider request ran. This uses the
+actual Windows navigation lifecycle with a programmatic Back route. Android
+system Back and a connected provider were outside the run. The source and two
+receipts are retained under `artifacts/analysis-metadata-native-back`.
+
 - Define a small versioned input and output contract for each approved task. Keep calculations, exact dates, sign and currency semantics in Core. Map model-generated facts to permitted source references so the app can open the original local view. Render output as text. Validate its schema, references, totals and bounds, including zero or insufficient data.
 - Use the current manager selection and Off control for simple and reasoning tasks. Extend the administrator's per-task selections as new distinct tasks are qualified. Treat content such as a note or OCR line as data. A task receives only the selected period, filtered scope, permitted fields and exact destination disclosed to the user. Avoid silent provider fallback. Wait for separate privacy, retention, recovery, budget and commercial gates before sending genuine data.
 - Qualify on a fixed set of synthetic cases for each task. Include refunds, transfers, incomplete or stale inputs, currency separation, date boundaries and the six supported languages. Confirm visible source links, offline continuity, per-request bounds, denial and failure without ledger changes, exact continuation after switching provider and stale suggestion refusal. Use a deterministic baseline before adding an AI dependency, and retain a separate measured quality and cost report for each task.
