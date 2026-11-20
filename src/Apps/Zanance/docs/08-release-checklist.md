@@ -1470,10 +1470,18 @@ again. Two focused host cases covered new and attached receipts with AI off, and
 deterministic CSV category review. Evidence remains under `artifacts/ai-classical-fallback-native`.
 
 The same signed APK on Android 7 reached the original file picker with AI off. The synthetic
-image-only PDF was visible under internal storage, but the native picker did not return it in this
-fixture. The picker was canceled, Home returned and the ledger stayed empty. This observation
-covers original picker entry and cancellation. Complete Android 7 selection and OCR for this
-workflow remain open. Evidence remains under `artifacts/ai-classical-api24-pdf`.
+image-only PDF was visible under internal storage, but the native picker did not return it on the
+initial tap. The picker was canceled, Home returned and the ledger stayed empty. Evidence remains
+under `artifacts/ai-classical-api24-pdf`.
+
+A fresh Android 7 follow-up reused the identical APK and PDF. The native picker returned the file
+after one long press on the exact PDF row, a visible `1 selected` state, and one Open action.
+With AI still off, local OCR showed EUR 42.75 in the editable amount field. Cancel and Discard
+left the ledger empty. The initial streamed installation stalled before completion. It was
+abandoned before the same package was installed by the non-streaming path. A transient observer
+read stopped before Start, then the same setup continued without replaying prior inputs. This
+qualifies the legacy selection and OCR path on one emulator. The initial direct-tap observation
+and physical-device coverage remain separate. Evidence is under `artifacts/ai-classical-api24-select`.
 
 On Android 16, the same signed APK and identical image-only PDF completed the original picker and
 local OCR path with AI off. The PDF consisted of a single raster image with no text layer. The
