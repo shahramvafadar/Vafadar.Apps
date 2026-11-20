@@ -337,7 +337,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-47 | Currency without / with 3 decimals | FIN-05 | Unit | S1 | Verified (unit, incl. conversion between 0- and 3-digit currencies) |
 | Q-02 | 10,000 entries, 20 accounts, 100 plans | Q-02 | Unit + manual | S14/S16 | Verified (calculation budget test with the reference data set); device measurement pending |
 | AT-48 | fa/de/en and digit systems | LOC-01..04 | Unit + manual | S3/S14 | Verified (unit: digits, separators, search, resource completeness and usage; snapshots of every screen in en/de/fa) |
-| AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | Implemented (mode never deletes data; hidden plan and budget settings summarised); manual check pending |
+| AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | [Scoped Android mode round trip](#at-49-android-display-mode-round-trip) kept the observed financial values and access to existing items. Full stored-row comparison and other platforms remain separate. |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit + Home and report drill-downs with the same filter) |
 | AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Verified (unit) |
 | AT-52 | Re-import own CSV | IO-10 | Unit + bounded physical Android | S12 | Unit verified; D-317 same own-format fixture yields zero new/two known and a disabled action; actual producer-export roundtrip remains distinct |
@@ -418,6 +418,35 @@ financial write was repeated. The original settings were verified before the AVD
 This covers default lock-screen presentation on the test emulator. Device-credential taps,
 the optional details setting and physical-device acceptance remain open. The app-PIN tap is
 covered separately below.
+
+## AT-49 Android display mode round trip
+
+The retained signed offline APK `3f96f091` ran on a fresh Android 16 x86_64 emulator with 4096-byte
+pages. First-run restore loaded one synthetic profile with two accounts, one tagged expense,
+a three-week scheduled plan, three budgets, a pinned account-balance goal and one holding.
+The input ZIP and its SQLite payload were validated before admission. No transaction, plan,
+budget, goal or holding was saved through the application.
+
+In PID 3710, the restored fixture opened in Advanced. The original Settings control switched
+to Simple and then back to Advanced. Reopening Settings after browsing
+maintained the Simple selection. In Simple, the weekly budget kept November 16–22, its one-account
+scope, EUR 30 limit and EUR 28 remaining. Both modes published EUR 113 remaining against the EUR
+115 monthly limit, including EUR 15 rollover. The observed report scope, EUR 2 spending and
+EUR 2 deficit matched. The account-balance goal showed EUR 35 of EUR 120 in both lists. The
+same holding stayed visible at 20 g and EUR 200 in the holding lists. The ledger showed the
+original expense and both tags remained visible in its Simple detail.
+
+After returning to Advanced, Home matched the Simple EUR 35 recorded balance and 20 g holding.
+The pinned goal was visible on the Advanced Home return. The custom EUR 9 plan disclosed the
+same three-week Sunday rule, move after weekends and Monday November 23 next date in Simple
+and on return. The fixture did not compare all persisted rows or the entire Home dashboard.
+The first attempt to reach Settings was still in the retained Holdings child. A native Back
+returned to More. The observer also initially missed the already selected weekly chip while
+the budget tab settled, then used the loaded hierarchy without tapping the chip again.
+
+No application source changed. The existing signed binary was reused and the disposable
+emulator was retired. The local fixture input, native captures and comparison receipt are
+under `artifacts/at49-native-mode`.
 
 ## AT-61 warm Plans notification tap under the app PIN
 
