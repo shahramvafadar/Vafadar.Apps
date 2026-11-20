@@ -163,6 +163,31 @@ jobs:
           dotnet test --project test/Apps/Dastan/Vafadar.Dastan.Browser.Tests --configuration Release --no-build
           --max-threads 2 --report-trx --results-directory "${{ github.workspace }}/TestResults"
 
+      # The log of a job and its files can be read only by who is signed in; a notice of a run can be read by
+      # everybody. So the tests that failed are named as notices, with the beginning of what they said.
+      - name: Name the tests that failed
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          import glob, xml.etree.ElementTree as ET
+          ns = {'t': 'http://microsoft.com/schemas/VisualStudio/TeamTest/2010'}
+          clean = lambda text: ' '.join((text or '').split()).replace('%', '%25').replace('::', ': :')
+          failed = []
+          for path in glob.glob('TestResults/**/*.trx', recursive=True):
+              for result in ET.parse(path).getroot().iterfind('.//t:UnitTestResult', ns):
+                  if result.get('outcome') == 'Failed':
+                      message = result.find('.//t:Message', ns)
+                      trace = result.find('.//t:StackTrace', ns)
+                      said = clean(message.text if message is not None else '')[:600]
+                      where = clean(trace.text if trace is not None else '')[:500]
+                      failed.append((clean(result.get('testName')), said + ' | ' + where))
+          print(f'{len(failed)} failed')
+          for name, said in failed[:9]:
+              print(f'::error::{name[:200]} -- {said}')
+          if len(failed) > 9:
+              print('::error::More tests failed: ' + '; '.join(name for name, _ in failed[9:])[:1000])
+          PY
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v7
