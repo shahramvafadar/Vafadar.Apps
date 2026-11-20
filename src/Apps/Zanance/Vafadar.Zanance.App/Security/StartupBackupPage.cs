@@ -70,9 +70,9 @@ internal sealed class StartupBackupPage : ContentPage
             string? selectedName = null;
             await AndroidDocumentPicker.UseAsync(translator["Backup_PickFile"], null, async (input, name, _) =>
             {
-                loaded = await StartupBackupPackageReader.ReadAsync(input, authority.Token);
+                loaded = await StartupBackupPackageReader.ReadAsync(input, authority);
                 selectedName = name;
-            }, authority.RequireCurrent);
+            }, authority.RequireCurrent, ct: authority.Token);
             if (loaded is null || !OwnsPage) return;
 #else
             var result = await FilePicker.Default.PickAsync(new PickOptions { PickerTitle = translator["Backup_PickFile"] });
@@ -80,7 +80,7 @@ internal sealed class StartupBackupPage : ContentPage
             original.RequireCurrent();
             await using var input = await result.OpenReadAsync();
             original.RequireCurrent();
-            loaded = await StartupBackupPackageReader.ReadAsync(input, original.Token);
+            loaded = await StartupBackupPackageReader.ReadAsync(input, original);
             if (!OwnsPage) return;
             var selectedName = result.FileName;
 #endif

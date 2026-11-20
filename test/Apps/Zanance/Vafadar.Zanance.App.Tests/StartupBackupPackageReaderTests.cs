@@ -50,6 +50,25 @@ public sealed class StartupBackupPackageReaderTests
         Assert.Equal(1, source.Reads); Assert.All(source.LastChunk.ToArray(), value => Assert.Equal((byte)0, value));
     }
 
+    [Fact]
+    public async Task Changed_startup_publication_refuses_the_next_read_under_the_same_live_frame()
+    {
+        var original = true;
+        using var owner = new RecoverySetupAuthority(() =>
+        {
+            if (!original) throw new IOException("The original startup publication changed.");
+        }, TestContext.Current.CancellationToken);
+        using var source = new ObservedStream { DuringRead = () => original = false };
+        owner.RequireCurrent();
+
+        await Assert.ThrowsAsync<IOException>(() => StartupBackupPackageReader.ReadAsync(source, owner));
+
+        Assert.False(owner.Token.IsCancellationRequested);
+        Assert.Equal(1, source.Reads);
+        Assert.True(source.LastChunk.Span.IndexOfAnyExcept((byte)0) < 0);
+        Assert.True(source.CanRead);
+    }
+
     /// <summary>Native read errors clear all borrowed chunk memory instead of exposing a partly loaded recovery selection.</summary>
     [Fact]
     public async Task Failure_after_partial_read_clears_original_temporary_chunk()

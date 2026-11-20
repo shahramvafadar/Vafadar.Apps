@@ -176,3 +176,19 @@ push and one delayed exact-head CI. Genuine startup owner authentication, valid 
 accepted staging, whole DB/key/security, phone adoption, general ANR/crash/stability, overall
 speed, remaining accessibility, iOS/providers/Store/public hosting and release remain separate.
 The full delivery goal remains active.
+
+## Changed recovery source during a provider read
+
+A source-linked test used a synthetic stream that invalidates the original startup
+recovery authority during its first read while leaving the frame token live. With the
+previous token-only reader, the stream returned a byte array despite the invalidation.
+The Android and Windows startup pickers now both read under the captured authority.
+Android also carries the original frame token into the native provider-open dispatch.
+
+The changed authority causes the reader to discard the returned chunk and stop before
+the next read. The regression verifies one read, a zeroed temporary chunk and a still-open
+borrowed stream. All 18 selected startup reader and recovery authority tests passed. No
+actual recovery was attempted in this test.
+
+The strict Windows build, standard test clean, and signed offline Android build passed.
+The Android artifact has SHA-256 `f8934755bf75bf5c0d16b806bbb3ea2756a0b623189487972a59929e4698bdb1`.

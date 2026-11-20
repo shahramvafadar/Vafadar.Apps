@@ -14,6 +14,10 @@ internal static class StartupBackupPackageReader
         return await ReadCoreAsync(input, ct, maximumBytes).ConfigureAwait(false);
     }
 
+    /// <summary>Reads a startup backup while the original recovery authority still owns its source.</summary>
+    internal static Task<byte[]> ReadAsync(Stream input, RecoverySetupAuthority authority) =>
+        ReadCoreAsync(input, authority.Token, MaximumBytes, authority.RequireCurrent);
+
     /// <summary>Uses the normal portable format envelope limit without applying the startup safety-copy limit.</summary>
     internal static Task<byte[]> ReadPortableAsync(Stream input, CancellationToken ct, Action validateSource) =>
         ReadCoreAsync(input, ct, int.MaxValue, validateSource);
