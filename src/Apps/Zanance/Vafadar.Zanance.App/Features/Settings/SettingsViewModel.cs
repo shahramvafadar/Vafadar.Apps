@@ -212,6 +212,9 @@ public sealed partial class SettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial bool BlockScreenshots { get; set; }
 
+    /// <summary>Gets whether this Android release can allow foreground screenshots without exposing the task preview.</summary>
+    public bool ScreenshotChoiceAvailable => !ScreenProtection.RequiresLegacyProtection;
+
     /// <summary>Gets whether the separate app PIN is configured.</summary>
     [ObservableProperty]
     public partial bool PinEnabled { get; set; }

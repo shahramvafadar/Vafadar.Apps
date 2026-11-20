@@ -8866,4 +8866,7 @@ Original XML SHA-256: {5}</value>
   <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
     <value>Unknown amounts before this window: {0}. The opening balance may be incomplete.</value>
   </data>
+  <data name="Screen_LegacyHint" xml:space="preserve">
+    <value>Android 12 and earlier block screenshots here to keep your financial information out of recent apps.</value>
+  </data>
 </root>

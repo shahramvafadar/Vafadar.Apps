@@ -8814,4 +8814,7 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
     <value>Importi sconosciuti prima di questo periodo: {0}. Il saldo iniziale potrebbe essere incompleto.</value>
   </data>
+  <data name="Screen_LegacyHint" xml:space="preserve">
+    <value>Su Android 12 e versioni precedenti, gli screenshot sono bloccati per nascondere i tuoi dati finanziari nelle app recenti.</value>
+  </data>
 </root>

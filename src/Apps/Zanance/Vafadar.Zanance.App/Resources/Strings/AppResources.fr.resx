@@ -8802,4 +8802,7 @@ SHA-256 du XML original : {5}</value>
   <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
     <value>Montants inconnus avant cette période : {0}. Le solde initial peut être incomplet.</value>
   </data>
+  <data name="Screen_LegacyHint" xml:space="preserve">
+    <value>Sous Android 12 et les versions antérieures, les captures d’écran sont bloquées pour masquer vos données financières dans les applications récentes.</value>
+  </data>
 </root>

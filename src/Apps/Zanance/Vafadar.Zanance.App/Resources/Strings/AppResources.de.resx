@@ -8825,4 +8825,7 @@ Original-XML SHA-256: {5}</value>
   <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
     <value>Unbekannte Beträge vor diesem Zeitraum: {0}. Der Anfangssaldo kann unvollständig sein.</value>
   </data>
+  <data name="Screen_LegacyHint" xml:space="preserve">
+    <value>Unter Android 12 und älter sind Screenshots gesperrt, damit deine Finanzdaten in der Übersicht der zuletzt verwendeten Apps verborgen bleiben.</value>
+  </data>
 </root>

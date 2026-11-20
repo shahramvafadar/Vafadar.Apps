@@ -155,11 +155,13 @@
                     <BoxView HeightRequest="1" Color="{DynamicResource DividerColor}" />
                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                         <Label Text="{v:Translate Screen_Block}" VerticalOptions="Center" />
-                        <v:HelpButton Grid.Column="1" Topic="Screenshots" />
-                        <Switch Grid.Column="2" IsToggled="{Binding BlockScreenshots}" OnColor="{DynamicResource Primary}"
+                        <v:HelpButton Grid.Column="1" Topic="Screenshots" IsVisible="{Binding ScreenshotChoiceAvailable}" />
+                        <Switch Grid.Column="2" IsToggled="{Binding BlockScreenshots}" IsEnabled="{Binding ScreenshotChoiceAvailable}" OnColor="{DynamicResource Primary}"
                             SemanticProperties.Description="{v:Translate Screen_Block}" />
                     </Grid>
-                    <Label Text="{v:Translate Screen_Hint}" Style="{StaticResource Secondary}" />
+                    <Label Text="{v:Translate Screen_Hint}" Style="{StaticResource Secondary}" IsVisible="{Binding ScreenshotChoiceAvailable}" />
+                    <Label Text="{v:Translate Screen_LegacyHint}" Style="{StaticResource Secondary}"
+                           IsVisible="{Binding ScreenshotChoiceAvailable, Converter={StaticResource InvertedBoolConverter}}" />
                 </VerticalStackLayout>
             </Border>
 

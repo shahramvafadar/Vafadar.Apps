@@ -7,7 +7,10 @@ public static class ScreenProtection
     private static bool _background;
 
     /// <summary>Gets whether screenshots are blocked; new installations keep the privacy-preserving default.</summary>
-    public static bool BlockScreenshots => Preferences.Default.Get(Key, true);
+    public static bool BlockScreenshots => RequiresLegacyProtection || Preferences.Default.Get(Key, true);
+
+    // Before API 33, Android can capture the current task before activity callbacks run.
+    internal static bool RequiresLegacyProtection => OperatingSystem.IsAndroid() && !OperatingSystem.IsAndroidVersionAtLeast(33);
 
 #if ANDROID
     /// <summary>Includes owned MAUI modal windows in the original device screenshot policy (D-726).</summary>
@@ -17,6 +20,7 @@ public static class ScreenProtection
     /// <summary>Saves and immediately applies the foreground screenshot choice.</summary>
     public static void Set(bool block)
     {
+        if (RequiresLegacyProtection) return;
         Preferences.Default.Set(Key, block);
         Apply();
     }

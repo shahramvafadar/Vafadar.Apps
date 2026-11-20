@@ -8825,4 +8825,7 @@
   <data name="AiQuestion_EarlierUnknown" xml:space="preserve">
     <value>تعداد مبلغ‌های نامعلوم پیش از این بازه: {0}. ماندهٔ آغاز ممکن است ناقص باشد.</value>
   </data>
+  <data name="Screen_LegacyHint" xml:space="preserve">
+    <value>در اندروید ۱۲ و نسخه‌های قدیمی‌تر، گرفتن اسکرین‌شات مسدود است تا اطلاعات مالی شما در برنامه‌های اخیر دیده نشود.</value>
+  </data>
 </root>
