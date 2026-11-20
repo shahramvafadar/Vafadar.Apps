@@ -50,6 +50,18 @@ the user turns it back on before validation finishes. A focused host test holds 
 report source validation, retires the original session and verifies that a new session can
 validate the same report. This test covers the report command lease and uses no provider.
 
+The signed offline Release APK for revision `384658d0` (SHA-256 `9803b374c8bdebf43f8339e2ddcb1690795f9977b04a85cc0ebad124f80769a5`)
+passed the APK handoff checks and ran on an owned Android 16 x86-64 emulator. One synthetic
+EUR 4.56 expense made the original Reports overview available. With AI off, both AI actions
+disappeared and the period, account scope, and EUR 4.56 spending stayed the same. The original
+local Surplus explanation opened and showed negative EUR 4.56. After re-enabling AI, one
+fresh comparison opened Analysis with the report account selected and the preceding
+interval switch on. No provider or share command was invoked. The same app process and
+boot were retained through the checks. The disposable installation and emulator were
+retired. Local evidence is under `artifacts/android-release-acceptance-20261120`.
+The native check covers the switch and a fresh comparison, while the in-flight command
+case remains covered by the focused host test above.
+
 - Define a small versioned input and output contract for each approved task. Keep calculations, exact dates, sign and currency semantics in Core. Map model-generated facts to permitted source references so the app can open the original local view. Render output as text. Validate its schema, references, totals and bounds, including zero or insufficient data.
 - Use the current manager selection and Off control for simple and reasoning tasks. Extend the administrator's per-task selections as new distinct tasks are qualified. Treat content such as a note or OCR line as data. A task receives only the selected period, filtered scope, permitted fields and exact destination disclosed to the user. Avoid silent provider fallback. Wait for separate privacy, retention, recovery, budget and commercial gates before sending genuine data.
 - Qualify on a fixed set of synthetic cases for each task. Include refunds, transfers, incomplete or stale inputs, currency separation, date boundaries and the six supported languages. Confirm visible source links, offline continuity, per-request bounds, denial and failure without ledger changes, exact continuation after switching provider and stale suggestion refusal. Use a deterministic baseline before adding an AI dependency, and retain a separate measured quality and cost report for each task.
