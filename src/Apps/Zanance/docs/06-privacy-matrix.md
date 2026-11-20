@@ -94,6 +94,15 @@ still follows its separate rules for on-device backups. A protected deletion tha
 an interruption uses the original profile identity. Copies saved by recipients are outside
 the app's control.
 
+The signed offline APK `2d05d89f` was exercised through the Profiles screen on an isolated
+Android 16 guest. Three fictitious files were seeded in the internal sharing cache using
+the exact new secondary profile identity. Cancelling its first deletion confirmation kept
+all three files byte-for-byte and the profile remained visible. Accepting both confirmations
+removed the secondary profile and its staged copy. The Main and unrelated copies kept their
+hashes, ownership, modes and modification times in the same application process. This fixture
+covered the internal cache and a secondary profile deletion. It did not exercise the legacy
+external cache, a profile reset, an external recipient or a real device.
+
 On an isolated Android 16 x86-64 guest, the signed offline APK
 `2d05d89f72061910a4547d9fb772dcd729bc7e966c92a3536af998f02865f743` was installed once
 and started with six fictitious cache files. An early read, before the app was ready,
