@@ -1579,6 +1579,17 @@ No prior test, APK build or financial posting was repeated. The result covers cu
 recovery cancellation and empty-profile startup in userspace simulation. Physical ARM64 with
 16 KiB kernel pages, actual backup restoration and populated data remain separate acceptance gates.
 
+A separate fresh Android 15 x64 emulator with 16,384-byte userspace pages restored the exact
+retained unprotected D-403 synthetic portable backup using the same signed APK `0a4943bc`.
+The native preview reported one account, one transaction and one plan. One explicit replacement
+confirmation opened Home with EUR 35.00 without asking for a new account. After a cold reopen
+in a different app process on the same boot, Home still showed EUR 35.00, Transactions showed
+the named EUR 2.00 expense and Plans retained the EUR 9.00 occurrence marked Skipped.
+The original backup digest stayed equal. The owned emulator was retired. Evidence remains under
+`artifacts/zanance-16k-legacy-restore`. No financial source was recreated or posted. This verifies
+the observed portable restore and persistence in userspace simulation. Password-protected
+recovery in this environment, whole-database equality and hardware page-size acceptance remain open.
+
 ## D-299 reference-source release gates
 
 Keep a live provider, explicit source/coverage/redistribution licence, cost/entitlement policy and public route
