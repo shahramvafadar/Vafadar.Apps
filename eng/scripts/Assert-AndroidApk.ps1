@@ -13,7 +13,7 @@ $projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
 $metadata = & $projectDotNet msbuild $Project -nologo -v:q "-p:Configuration=$Configuration" `
     -p:TargetFramework=net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
     -p:EmbedAssembliesIntoApk=true -t:_ResolveMonoAndroidSdks `
-    '-getProperty:ApplicationId,AndroidSdkBuildToolsPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore' @BuildProperties
+    '-getProperty:ApplicationId,ApplicationVersion,ApplicationDisplayVersion,AndroidSdkBuildToolsPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore' @BuildProperties
 if ($LASTEXITCODE -ne 0) { throw 'Could not resolve the Android package identity and verification tools.' }
 $properties = ($metadata -join "`n" | ConvertFrom-Json).Properties
 if (!$properties.ApplicationId -or !$properties.AndroidSdkBuildToolsPath -or
@@ -51,6 +51,17 @@ if ($LASTEXITCODE -ne 0) { throw 'The Android SDK could not read the APK manifes
 $identity = @($badging | Select-String -Pattern "^package: name='([^']+)'")
 if ($identity.Count -ne 1 -or $identity[0].Matches[0].Groups[1].Value -cne $properties.ApplicationId) {
     throw 'The APK manifest package differs from the producing Android project.'
+}
+$revision = $identity[0].Line
+$versionCode = [regex]::Match($revision, " versionCode='([0-9]+)'")
+$versionName = [regex]::Match($revision, " versionName='([^']+)'")
+$expectedCode = [uint32]0
+if (![uint32]::TryParse($properties.ApplicationVersion, [ref]$expectedCode) -or
+    !$versionCode.Success -or $versionCode.Groups[1].Value -cne $expectedCode.ToString([Globalization.CultureInfo]::InvariantCulture)) {
+    throw 'The APK manifest version code differs from the producing Android project.'
+}
+if (!$versionName.Success -or $versionName.Groups[1].Value -cne $properties.ApplicationDisplayVersion) {
+    throw 'The APK manifest display version differs from the producing Android project.'
 }
 if ($badging -cmatch '^testOnly=') {
     throw 'The APK is marked testOnly and requires a test installation.'

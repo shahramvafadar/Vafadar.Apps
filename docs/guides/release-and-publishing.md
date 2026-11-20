@@ -60,7 +60,7 @@ Each app is versioned independently.
 
 For a direct Android handoff, run `eng/scripts/Build-AndroidApk.ps1`. The script reports the
 full path, package ID and SHA-256 after the Android SDK verifies the APK signature and its
-manifest matches the producing project. Each attempt publishes to a fresh staging directory.
+manifest matches the producing project's package ID, version code and display version. Each attempt publishes to a fresh staging directory.
 Only its verified signed APK replaces the same-named handoff file in the output directory.
 A failed or empty publish leaves the prior handoff in place. Release handoffs reject debuggable APKs and verify both 16 KiB ZIP alignment and the ELF load alignment of ARM64 and x64 libraries. With
 `-Offline`, both INTERNET and ACCESS_NETWORK_STATE must be absent. Device installation and
