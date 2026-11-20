@@ -1942,7 +1942,7 @@
     <value>A link is between two different people.</value>
   </data>
   <data name="Trees_Problem_link-exists" xml:space="preserve">
-    <value>These two are linked like this already.</value>
+    <value>These two are linked already: two people hold one role in a family.</value>
   </data>
   <data name="Trees_Problem_link-loop" xml:space="preserve">
     <value>That would make somebody their own ancestor.</value>
@@ -3491,5 +3491,74 @@
   </data>
   <data name="Person_Affiliations" xml:space="preserve">
     <value>Where they were</value>
+  </data>
+  <data name="Tree_Link_adoptive-parent" xml:space="preserve">
+    <value>an adoptive parent of</value>
+  </data>
+  <data name="Tree_Link_guardian" xml:space="preserve">
+    <value>the guardian of</value>
+  </data>
+  <data name="Tree_Linked_adoptive-parent" xml:space="preserve">
+    <value>{0} is an adoptive parent of {1}</value>
+  </data>
+  <data name="Tree_Linked_guardian" xml:space="preserve">
+    <value>{0} is the guardian of {1}</value>
+  </data>
+  <data name="Tree_Link_When" xml:space="preserve">
+    <value>A guardianship: from when until when</value>
+  </data>
+  <data name="Trees_Problem_link-time" xml:space="preserve">
+    <value>Only a guardianship says from when until when; a year is a number from 1 to 9999, and "until" is not before "since".</value>
+  </data>
+  <data name="SeeAs_Title" xml:space="preserve">
+    <value>See this page as somebody else sees it</value>
+  </data>
+  <data name="SeeAs_Note" xml:space="preserve">
+    <value>The page is drawn again by the same rules, for the viewer you choose.</value>
+  </data>
+  <data name="SeeAs_Label" xml:space="preserve">
+    <value>As</value>
+  </data>
+  <data name="SeeAs_public" xml:space="preserve">
+    <value>Everybody – somebody without an account</value>
+  </data>
+  <data name="SeeAs_Send" xml:space="preserve">
+    <value>Look</value>
+  </data>
+  <data name="SeeAs_Now_public" xml:space="preserve">
+    <value>You are looking at your page as everybody sees it.</value>
+  </data>
+  <data name="SeeAs_Now_circle" xml:space="preserve">
+    <value>You are looking at your page as the circle {0} sees it.</value>
+  </data>
+  <data name="SeeAs_Now_account" xml:space="preserve">
+    <value>You are looking at your page as {0} sees it.</value>
+  </data>
+  <data name="SeeAs_OtherSide" xml:space="preserve">
+    <value>Of a relationship you see here what you yourself let them see; the other side of it can keep it from them, and that is theirs to know. Photographs of others are left out for the same reason.</value>
+  </data>
+  <data name="SeeAs_Back" xml:space="preserve">
+    <value>Back to your own view</value>
+  </data>
+  <data name="SeeAs_Tree_Title" xml:space="preserve">
+    <value>See this tree as somebody else sees it</value>
+  </data>
+  <data name="SeeAs_Tree_Note" xml:space="preserve">
+    <value>A tree is shared with accounts, not with circles: a circle sees of it what everybody sees.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_public" xml:space="preserve">
+    <value>You are looking at this tree as everybody sees it.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_circle" xml:space="preserve">
+    <value>You are looking at this tree as the circle {0} sees it – which is as everybody does.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_account" xml:space="preserve">
+    <value>You are looking at this tree as {0} sees it.</value>
+  </data>
+  <data name="SeeAs_Tree_None_public" xml:space="preserve">
+    <value>They see nothing: the tree is not public, and its page answers them "not found".</value>
+  </data>
+  <data name="SeeAs_Tree_None_account" xml:space="preserve">
+    <value>This account sees nothing: the tree is not shared with it, and its page answers "not found".</value>
   </data>
 </root>

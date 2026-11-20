@@ -362,6 +362,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<string>("Since")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
+
                     b.Property<string>("To")
                         .IsRequired()
                         .HasMaxLength(40)
@@ -371,6 +375,10 @@ namespace Vafadar.Dastan.People.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Until")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
 
                     b.HasKey("Number");
 

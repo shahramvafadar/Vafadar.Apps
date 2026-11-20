@@ -125,18 +125,48 @@ public sealed class FamilyTreesTests : IDisposable
     }
 
     [Fact]
+    public void A_child_has_a_parent_by_birth_an_adoptive_parent_and_a_guardian_in_different_people()
+    {
+        var (zal, simorgh, sam, rudabeh) = (Person("Zal"), Person("Simorgh"), Person("Sam"), Person("Rudabeh"));
+        var since = TestPersons.Year(1870)!;
+        var until = TestPersons.Year(1886)!;
+
+        Assert.Equal("done", _store.Link(_mina, _tree, "parent", sam, zal));
+        Assert.Equal("done", _store.Link(_mina, _tree, "guardian", simorgh, zal, since, until));
+        Assert.Equal("done", _store.Link(_mina, _tree, "adoptive-parent", rudabeh, zal));
+
+        // All three stand above the child in the tree, and each link says what it is.
+        var tree = _store.Tree(_mina, _tree)!;
+        Assert.Equal([sam, simorgh, rudabeh], tree.Person(zal).Parents);
+        Assert.Equal([zal], tree.Person(simorgh).Children);
+        var guardianship = tree.Links.Single(link => link.Kind == "guardian");
+        Assert.Equal((since, until), (guardianship.Since, guardianship.Until));
+        Assert.Equal(["adoptive-parent", "guardian", "parent"], tree.Links.Select(link => link.Kind).Order());
+
+        // Nobody is their own ancestor through a guardian either, and only a guardianship says a time.
+        Assert.Equal("loop", _store.Link(_mina, _tree, "guardian", zal, Person("Sam's father") is var father && _store.Link(_mina, _tree, "parent", father, sam) == "done" ? father : father));
+        Assert.Equal("time", _store.Link(_mina, _tree, "parent", zal, Person("Rostam"), since));
+        Assert.Equal("time", _store.Link(_mina, _tree, "guardian", zal, Person("Somebody"), until, since));
+
+        var written = _store.Export(_mina, Password)!["trees"]!.AsArray().Single()!["links"]!.AsArray().Single(link => (string?)link!["kind"] == "guardian")!;
+        Assert.Equal(Vafadar.Temporal.TemporalJson.Serialize(since), written["since"]!.ToJsonString());
+    }
+
+    [Fact]
     public void A_link_that_cannot_be_says_why()
     {
         var (zal, rostam, sohrab) = (Person("Zal"), Person("Rostam"), Person("Sohrab"));
         var other = _store.AddPerson(_mina, _store.AddTree(_mina, "Another tree")!, "Stranger", null, null, deceased: false)!;
         _store.Link(_mina, _tree, "parent", zal, rostam);
         _store.Link(_mina, _tree, "parent", rostam, sohrab);
-        _store.Link(_mina, _tree, "partner", zal, rostam);
+        _store.Link(_mina, _tree, "partner", zal, Person("Rudabeh"));
 
+        // Two people hold one role in a family (ADR 0018): linked once, whatever the kind and the direction.
         Assert.Equal("same", _store.Link(_mina, _tree, "parent", zal, zal));
         Assert.Equal("exists", _store.Link(_mina, _tree, "parent", zal, rostam));
         Assert.Equal("exists", _store.Link(_mina, _tree, "parent", rostam, zal));
         Assert.Equal("exists", _store.Link(_mina, _tree, "partner", rostam, zal));
+        Assert.Equal("exists", _store.Link(_mina, _tree, "guardian", zal, rostam));
 
         // Nobody is their own ancestor.
         Assert.Equal("loop", _store.Link(_mina, _tree, "parent", sohrab, zal));

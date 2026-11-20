@@ -165,7 +165,23 @@ public sealed partial class PeopleStore
                 ["account"] = person.Account?.Name,
             })]),
         ["links"] = new JsonArray([.. tree.Links
-            .Select(link => (JsonNode)new JsonObject { ["kind"] = link.Kind, ["from"] = tree.Person(link.From).Name, ["to"] = tree.Person(link.To).Name })]),
+            .Select(link =>
+            {
+                var written = new JsonObject { ["kind"] = link.Kind, ["from"] = tree.Person(link.From).Name, ["to"] = tree.Person(link.To).Name };
+
+                // A link says a time only where it has one: a guardianship from when until when.
+                if (link.Since is { } since)
+                {
+                    written["since"] = JsonNode.Parse(PersonTime.Write(since)!);
+                }
+
+                if (link.Until is { } until)
+                {
+                    written["until"] = JsonNode.Parse(PersonTime.Write(until)!);
+                }
+
+                return (JsonNode)written;
+            })]),
         ["sharedWith"] = new JsonArray([.. tree.Members
             .Select(member => (JsonNode)new JsonObject { ["account"] = member.Account.Name, ["role"] = member.Role.ToString().ToLowerInvariant() })]),
         ["history"] = new JsonArray([.. tree.History

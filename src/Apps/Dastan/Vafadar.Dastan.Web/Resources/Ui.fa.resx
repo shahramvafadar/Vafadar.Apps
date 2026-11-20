@@ -1942,7 +1942,7 @@
     <value>پیوند میان دو فرد متفاوت است.</value>
   </data>
   <data name="Trees_Problem_link-exists" xml:space="preserve">
-    <value>این دو از پیش همین پیوند را دارند.</value>
+    <value>این دو از پیش پیوند دارند: دو نفر در خانواده یک نقش دارند.</value>
   </data>
   <data name="Trees_Problem_link-loop" xml:space="preserve">
     <value>با این پیوند کسی نیای خودش می‌شود.</value>
@@ -3491,5 +3491,74 @@
   </data>
   <data name="Person_Affiliations" xml:space="preserve">
     <value>جاهایی که بوده است</value>
+  </data>
+  <data name="Tree_Link_adoptive-parent" xml:space="preserve">
+    <value>پدر یا مادرخواندهٔ</value>
+  </data>
+  <data name="Tree_Link_guardian" xml:space="preserve">
+    <value>سرپرستِ</value>
+  </data>
+  <data name="Tree_Linked_adoptive-parent" xml:space="preserve">
+    <value>{0} پدر یا مادرخواندهٔ {1} است</value>
+  </data>
+  <data name="Tree_Linked_guardian" xml:space="preserve">
+    <value>{0} سرپرستِ {1} است</value>
+  </data>
+  <data name="Tree_Link_When" xml:space="preserve">
+    <value>سرپرستی: از کی تا کی</value>
+  </data>
+  <data name="Trees_Problem_link-time" xml:space="preserve">
+    <value>فقط سرپرستی می‌گوید از کی تا کی؛ سال عددی از ۱ تا ۹۹۹۹ است و «تا» پیش از «از» نیست.</value>
+  </data>
+  <data name="SeeAs_Title" xml:space="preserve">
+    <value>این صفحه را به چشم دیگری ببینید</value>
+  </data>
+  <data name="SeeAs_Note" xml:space="preserve">
+    <value>صفحه با همان قاعده‌ها دوباره کشیده می‌شود، برای بیننده‌ای که برمی‌گزینید.</value>
+  </data>
+  <data name="SeeAs_Label" xml:space="preserve">
+    <value>به چشمِ</value>
+  </data>
+  <data name="SeeAs_public" xml:space="preserve">
+    <value>همگان – کسی بدون حساب</value>
+  </data>
+  <data name="SeeAs_Send" xml:space="preserve">
+    <value>ببین</value>
+  </data>
+  <data name="SeeAs_Now_public" xml:space="preserve">
+    <value>صفحه‌تان را آن‌طور می‌بینید که همگان می‌بینند.</value>
+  </data>
+  <data name="SeeAs_Now_circle" xml:space="preserve">
+    <value>صفحه‌تان را آن‌طور می‌بینید که حلقهٔ {0} می‌بیند.</value>
+  </data>
+  <data name="SeeAs_Now_account" xml:space="preserve">
+    <value>صفحه‌تان را آن‌طور می‌بینید که {0} می‌بیند.</value>
+  </data>
+  <data name="SeeAs_OtherSide" xml:space="preserve">
+    <value>از هر رابطه این‌جا همان را می‌بینید که خودتان اجازه داده‌اید ببینند؛ طرف دیگرِ رابطه می‌تواند آن را از آن‌ها پنهان نگه دارد، و دانستنش با خودِ اوست. عکس‌های دیگران هم به همین دلیل نیامده‌اند.</value>
+  </data>
+  <data name="SeeAs_Back" xml:space="preserve">
+    <value>بازگشت به نمای خودتان</value>
+  </data>
+  <data name="SeeAs_Tree_Title" xml:space="preserve">
+    <value>این شجره‌نامه را به چشم دیگری ببینید</value>
+  </data>
+  <data name="SeeAs_Tree_Note" xml:space="preserve">
+    <value>شجره‌نامه با حساب‌ها هم‌رسانی می‌شود، نه با حلقه‌ها: حلقه همان را از آن می‌بیند که همگان می‌بینند.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_public" xml:space="preserve">
+    <value>این شجره‌نامه را آن‌طور می‌بینید که همگان می‌بینند.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_circle" xml:space="preserve">
+    <value>این شجره‌نامه را آن‌طور می‌بینید که حلقهٔ {0} می‌بیند – یعنی مانند همگان.</value>
+  </data>
+  <data name="SeeAs_Tree_Now_account" xml:space="preserve">
+    <value>این شجره‌نامه را آن‌طور می‌بینید که {0} می‌بیند.</value>
+  </data>
+  <data name="SeeAs_Tree_None_public" xml:space="preserve">
+    <value>چیزی نمی‌بینند: شجره‌نامه همگانی نیست و صفحه‌اش به آن‌ها می‌گوید «پیدا نشد».</value>
+  </data>
+  <data name="SeeAs_Tree_None_account" xml:space="preserve">
+    <value>این حساب چیزی نمی‌بیند: شجره‌نامه با آن هم‌رسانی نشده و صفحه‌اش می‌گوید «پیدا نشد».</value>
   </data>
 </root>

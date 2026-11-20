@@ -414,6 +414,12 @@ public sealed class StoredKinship
 
     /// <summary>Gets or sets the second record: the child, or the other partner.</summary>
     public required string To { get; set; }
+
+    /// <summary>Gets or sets from when the link holds, for a guardianship that says so: an expression of time as <see cref="PersonTime"/> writes it.</summary>
+    public string? Since { get; set; }
+
+    /// <summary>Gets or sets until when the link held.</summary>
+    public string? Until { get; set; }
 }
 
 /// <summary>A change of a tree, kept with who made it (D-054).</summary>
@@ -854,6 +860,8 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             link.HasKey(item => item.Number);
             link.Property(item => item.Tree).HasMaxLength(40);
             link.Property(item => item.Kind).HasMaxLength(20);
+            link.Property(item => item.Since).HasMaxLength(600);
+            link.Property(item => item.Until).HasMaxLength(600);
             link.Property(item => item.From).HasMaxLength(40);
             link.Property(item => item.To).HasMaxLength(40);
             link.HasIndex(item => item.Tree);

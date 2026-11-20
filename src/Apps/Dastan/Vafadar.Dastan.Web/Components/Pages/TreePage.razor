@@ -11,7 +11,34 @@
    see or change it, and every change with who made it. Who may only see it gets no form; who may not see it
    gets "not found", like for a tree that does not exist. The tree is drawn like the family of a collection
    (TreeDrawing) and listed below the drawing. *@
-@if (_tree is not null)
+@if (_tree is not null && _seen is not null)
+{
+    @* Looking as somebody else (PRIV-015): the tree as that viewer is shown it, with nothing to do. *@
+    <PageTitle>@_tree.Tree.Name – @T["Site_Name"]</PageTitle>
+    <PageAddress None="true" />
+    <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+    <header class="page-header">
+        <h1 dir="auto">@_tree.Tree.Name</h1>
+    </header>
+    <p class="note" role="status">
+        @(_seen.Kind == "public" ? T["SeeAs_Tree_Now_public"] : string.Format(CultureInfo.CurrentCulture, T[$"SeeAs_Tree_Now_{_seen.Kind}"], $"⁨{_seen.Name}⁩"))
+        <a href="@($"account/trees/{_tree.Tree.Id}")">@T["SeeAs_Back"]</a>
+    </p>
+    @if (_seen.Tree is { } seen)
+    {
+        <TreeSeen Tree="seen" Address="@($"account/trees/{_tree.Tree.Id}?as={As}")" />
+    }
+    else
+    {
+        <p class="note">@T[_seen.Kind == "account" ? "SeeAs_Tree_None_account" : "SeeAs_Tree_None_public"]</p>
+    }
+    <section id="see-as-section" aria-labelledby="see-as-title">
+        <h2 id="see-as-title">@T["SeeAs_Tree_Title"]</h2>
+        <SeeAsForm Address="@($"account/trees/{_tree.Tree.Id}")" Circles="_circles" Known="_known" Chosen="@As" />
+    </section>
+}
+else if (_tree is not null)
 {
     var mayChange = _tree.Tree.Role >= TreeRole.Editor;
     var owns = _tree.Tree.Role == TreeRole.Owner;
@@ -223,8 +250,10 @@
                     <p class="field">
                         <label for="link-kind">@T["Tree_Link_Kind"]</label>
                         <select id="link-kind" name="kind" required>
-                            <option value="parent">@T["Tree_Link_parent"]</option>
-                            <option value="partner">@T["Tree_Link_partner"]</option>
+                            @foreach (var kind in PeopleStore.LinkKinds)
+                            {
+                                <option value="@kind">@T[$"Tree_Link_{kind}"]</option>
+                            }
                         </select>
                     </p>
                     <p class="field">
@@ -236,6 +265,24 @@
                             }
                         </select>
                     </p>
+                    <details class="finer">
+                        <summary>@T["Tree_Link_When"]</summary>
+                        <p class="field">
+                            <label for="link-since">@T["People_Ask_Since"]</label>
+                            <input id="link-since" name="since" type="text" inputmode="numeric" maxlength="4" autocomplete="off" dir="ltr" />
+                        </p>
+                        <p class="field">
+                            <label for="link-until">@T["People_Ask_Until"]</label>
+                            <input id="link-until" name="until" type="text" inputmode="numeric" maxlength="4" autocomplete="off" dir="ltr" />
+                        </p>
+                        <p class="field">
+                            <label for="link-calendar">@T["People_Ask_Calendar"]</label>
+                            <select id="link-calendar" name="calendar">
+                                <option value="gregorian" selected="@(TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "gregorian")">@T["Tree_Calendar_gregorian"]</option>
+                                <option value="solar-hijri" selected="@(TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "solar-hijri")">@T["Tree_Calendar_solar-hijri"]</option>
+                            </select>
+                        </p>
+                    </details>
                     <p><button type="submit" class="action secondary">@T["Tree_Link_Send"]</button></p>
                 </form>
             }
@@ -248,8 +295,9 @@
                         // do what <bdi> does): a name of another script must not turn the sentence around and make
                         // the child the parent.
                         var said = string.Format(CultureInfo.CurrentCulture, T[$"Tree_Linked_{link.Kind}"], $"\u2068{_tree.Person(link.From).Name}\u2069", $"\u2068{_tree.Person(link.To).Name}\u2069");
+                        var held = PeopleEndpoints.Held(new RelationshipTerms(Since: link.Since, Until: link.Until), T, Visitor);
                         <li>
-                            <span>@said</span>
+                            <span>@said@(held.Length > 0 ? T["People_Held_And"] + held : null)</span>
                             <form method="post" action="@($"{TreeEndpoints.Root}/unlink")" class="save inline">
                                 <AntiforgeryToken />
                                 <input type="hidden" name="returnUrl" value="@_here" />
@@ -353,6 +401,15 @@
         </section>
     }
 
+    @if (owns)
+    {
+        <section id="see-as-section" aria-labelledby="see-as-title">
+            <h2 id="see-as-title">@T["SeeAs_Tree_Title"]</h2>
+            <p class="note">@T["SeeAs_Tree_Note"]</p>
+            <SeeAsForm Address="@($"account/trees/{_tree.Tree.Id}")" Circles="_circles" Known="_known" />
+        </section>
+    }
+
     <section id="history" aria-labelledby="history-title">
         <h2 id="history-title">@T["Tree_History_Title"]</h2>
         <ul class="statements" role="list">
@@ -413,10 +470,16 @@
     // What the forms may answer with: nothing else of an address is turned into words of the page.
     private static readonly string[] Sayings = ["made", "renamed", "person-added", "person-changed", "person-removed", "linked", "unlinked", "member-set", "claimed", "claim-confirmed", "claim-refused", "unclaimed", "publication-asked", "published", "unpublished", "consent-given", "consent-withdrawn"];
     private static readonly string[] Forms = ["people", "person-add", "links", "rename"];
-    private static readonly string[] Known = ["tree-name", "person", "link-kind", "link-unknown", "link-same", "link-exists", "link-loop", "claim-taken", "claim-own", "claim-nobody"];
+    private static readonly string[] Known = ["tree-name", "person", "link-kind", "link-unknown", "link-same", "link-exists", "link-loop", "link-time", "claim-taken", "claim-own", "claim-nobody"];
 
     private TreeView? _tree;
     private List<PersonRef> _known = [];
+    private IReadOnlyList<CircleInfo> _circles = [];
+    private TreeSeenAs? _seen;
+
+    /// <summary>Gets or sets as whom the owner looks at the tree: the public, a circle, an account.</summary>
+    [SupplyParameterFromQuery]
+    private string? As { get; set; }
     private string? _viewer;
     private TreePlacement? _placement;
     private string? _said;
@@ -449,7 +512,9 @@
             _tree = store.Tree(session.Id, Id);
             if (_tree?.Tree.Role == TreeRole.Owner)
             {
-                _known = [.. store.Relationships(session.Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other)];
+                _known = [.. store.Relationships(session.Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other).DistinctBy(person => person.Id)];
+                _circles = store.Circles(session.Id);
+                _seen = As is { Length: > 0 and <= 60 } ? store.SeeTreeAs(session.Id, Id, As) : null;
             }
         }
 

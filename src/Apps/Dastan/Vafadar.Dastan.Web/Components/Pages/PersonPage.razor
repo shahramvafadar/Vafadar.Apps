@@ -18,12 +18,25 @@
 
     <header class="page-header">
         <h1 dir="auto">@_profile.Person.Name</h1>
-        @if (_own)
+        @if (_own && _seen is null)
         {
             <p class="lead">@T["Person_Lead_Self"]</p>
             <p class="actions"><a class="action secondary" href="account/people">@T["People_Title"]</a></p>
         }
     </header>
+
+    @if (_seen is not null)
+    {
+        @* Looking as somebody else (PRIV-015): what follows is what that viewer is shown, by the same rules. *@
+        <p class="note" role="status">
+            @(_seen.Kind == "public" ? T["SeeAs_Now_public"] : string.Format(CultureInfo.CurrentCulture, T[$"SeeAs_Now_{_seen.Kind}"], $"⁨{_seen.Name}⁩"))
+            @if (_seen.Kind != "public")
+            {
+                @: @T["SeeAs_OtherSide"]
+            }
+            <a href="@($"people/{Id}")">@T["SeeAs_Back"]</a>
+        </p>
+    }
 
     <section aria-labelledby="person-relationships">
         <h2 id="person-relationships">@T["Person_Relationships"]</h2>
@@ -65,6 +78,15 @@
         </section>
     }
 
+    @if (_own)
+    {
+        <section id="see-as-section" aria-labelledby="see-as-title">
+            <h2 id="see-as-title">@T["SeeAs_Title"]</h2>
+            <p class="note">@T["SeeAs_Note"]</p>
+            <SeeAsForm Address="@($"people/{Id}")" Circles="_circles" Known="_known" Chosen="@(_seen is null ? null : As)" />
+        </section>
+    }
+
     @if (_viewer is not null && !_own)
     {
         @* Blocking (PRIV-009): this account cannot ask, tag, invite or find the viewer any more, and is not told. *@
@@ -91,10 +113,10 @@
                 @* A gallery by the time a picture was taken (step 16.10): the years among what this viewer may see. *@
                 <nav class="years" aria-label="@T["Photos_Years"]">
                     <ul role="list">
-                        <li><a href="@($"people/{Id}#person-photos")" aria-current="@(Year is null ? "true" : null)">@T["Photos_Years_All"]</a></li>
+                        <li><a href="@($"people/{Id}{(_seen is null ? null : $"?as={As}")}#person-photos")" aria-current="@(Year is null ? "true" : null)">@T["Photos_Years_All"]</a></li>
                         @foreach (var year in _years)
                         {
-                            <li><a href="@($"people/{Id}?year={year.ToString(CultureInfo.InvariantCulture)}#person-photos")" aria-current="@(Year == year ? "true" : null)">@PhotoYears.Written(year, Visitor.Language.Tag)</a></li>
+                            <li><a href="@($"people/{Id}?year={year.ToString(CultureInfo.InvariantCulture)}{(_seen is null ? null : $"&as={As}")}#person-photos")" aria-current="@(Year == year ? "true" : null)">@PhotoYears.Written(year, Visitor.Language.Tag)</a></li>
                         }
                     </ul>
                 </nav>
@@ -185,6 +207,13 @@
     private ProfileView? _profile;
     private bool _own;
     private string? _viewer;
+    private SeenAs? _seen;
+    private IReadOnlyList<CircleInfo> _circles = [];
+    private IReadOnlyList<PersonRef> _known = [];
+
+    /// <summary>Gets or sets as whom the account looks at its own page: the public, a circle, an account.</summary>
+    [SupplyParameterFromQuery]
+    private string? As { get; set; }
 
     /// <summary>Gets or sets the identifier of the account the page is about.</summary>
     [Parameter]
@@ -218,6 +247,19 @@
             }
             _own = viewer == Id;
             _viewer = viewer;
+            if (_own && _profile is not null)
+            {
+                _circles = store.Circles(Id);
+                _known = [.. store.Relationships(Id).Where(relationship => relationship.State == RelationshipState.Accepted).Select(relationship => relationship.Other).DistinctBy(person => person.Id)];
+                _seen = As is { Length: > 0 and <= 60 } ? store.SeeAs(Id, As) : null;
+                if (_seen is not null)
+                {
+                    // The page is drawn from what that viewer is shown, and nothing on it acts for anybody.
+                    (_profile, _photos, _albums, _viewer) = (_seen.Profile, Desk.PhotoFolder is null ? [] : _seen.Photos, Desk.PhotoFolder is null ? [] : _seen.Albums, null);
+                    _years = PhotoYears.Of(_photos);
+                    Year = _years.Contains(Year ?? 0) ? Year : null;
+                }
+            }
         }
 
         if (_profile is null)

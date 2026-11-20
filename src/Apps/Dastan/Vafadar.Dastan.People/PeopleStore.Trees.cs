@@ -68,7 +68,14 @@ public sealed record TreePerson(string Id, string Name, Vafadar.Temporal.Tempora
 /// <param name="Kind"><c>parent</c>: the first is a parent of the second; <c>partner</c>: the two are partners.</param>
 /// <param name="From">The first record.</param>
 /// <param name="To">The second record.</param>
-public sealed record TreeLink(long Number, string Kind, string From, string To);
+public sealed record TreeLink(long Number, string Kind, string From, string To)
+{
+    /// <summary>Gets from when the link holds, for a guardianship that says so.</summary>
+    public Vafadar.Temporal.TemporalExpression? Since { get; init; }
+
+    /// <summary>Gets until when the link held.</summary>
+    public Vafadar.Temporal.TemporalExpression? Until { get; init; }
+}
 
 /// <summary>An account that may see or change a tree.</summary>
 /// <param name="Account">The account.</param>
@@ -194,8 +201,8 @@ public sealed partial class PeopleStore
                 PersonTime.Read(person.Born),
                 PersonTime.Read(person.Died),
                 person.Deceased,
-                [.. links.Where(link => link.Kind == "parent" && link.To == person.Id).Select(link => link.From)],
-                [.. links.Where(link => link.Kind == "parent" && link.From == person.Id).Select(link => link.To)],
+                [.. links.Where(link => IsParentage(link.Kind) && link.To == person.Id).Select(link => link.From)],
+                [.. links.Where(link => IsParentage(link.Kind) && link.From == person.Id).Select(link => link.To)],
                 [.. links.Where(link => link.Kind == "partner" && (link.From == person.Id || link.To == person.Id)).Select(link => link.From == person.Id ? link.To : link.From)],
                 person.Account is { } account ? names.GetValueOrDefault(account) : null,
                 canClaim && person.Account is null && Reviewer(person, viewer) is not null)
@@ -209,7 +216,7 @@ public sealed partial class PeopleStore
                 MayDescribe = MayDescribe(person, viewer),
                 NotAsked = !MayBeDescribed(person),
             })],
-            [.. links.Select(link => new TreeLink(link.Number, link.Kind, link.From, link.To))],
+            [.. links.Select(link => new TreeLink(link.Number, link.Kind, link.From, link.To) { Since = PersonTime.Read(link.Since), Until = PersonTime.Read(link.Until) })],
             [.. members.Where(member => names.ContainsKey(member.Account)).Select(member => new TreeMember(names[member.Account], (TreeRole)member.Role)).OrderBy(member => member.Account.Name, StringComparer.CurrentCultureIgnoreCase)],
             [.. changes.Select(change => new TreeChange(change.At, change.By is { } by && names.TryGetValue(by, out var account) ? account.Name : null, change.What, change.Subject))])
         {
@@ -378,20 +385,30 @@ public sealed partial class PeopleStore
     }
 
     /// <summary>
-    /// Links two records of a tree: the first is a <c>parent</c> of the second, or the two are <c>partner</c>s.
-    /// Returns <c>done</c>, or why not: <c>refused</c>, <c>kind</c>, <c>unknown</c>, <c>same</c>, <c>exists</c>,
-    /// <c>loop</c> (nobody is their own ancestor).
+    /// Links two records of a tree. The links follow the kinds of the relationships (ADR 0018, R-PER-02): the
+    /// first is a <c>parent</c> of the second – by birth – or its <c>adoptive-parent</c> or its
+    /// <c>guardian</c>, or the two are <c>partner</c>s. A child has each of the three from different people; a
+    /// guardianship can say from when until when it holds. Returns <c>done</c>, or why not: <c>refused</c>,
+    /// <c>kind</c>, <c>time</c> (a time that is none, or for a link that has none), <c>unknown</c>,
+    /// <c>same</c>, <c>exists</c> (the two are linked already: two people hold one family role), <c>loop</c>
+    /// (nobody is their own ancestor).
     /// </summary>
-    public string Link(string id, string tree, string kind, string from, string to)
+    public string Link(string id, string tree, string kind, string from, string to, Vafadar.Temporal.TemporalExpression? since = null, Vafadar.Temporal.TemporalExpression? until = null)
     {
         if (Role(id, tree) < TreeRole.Editor)
         {
             return "refused";
         }
 
-        if (kind is not ("parent" or "partner"))
+        if (!LinkKinds.Contains(kind))
         {
             return "kind";
+        }
+
+        if (!PersonTime.IsOne(since) || !PersonTime.IsOne(until) || !PersonTime.Lived(since, until) || since is Vafadar.Temporal.UnknownTime || until is Vafadar.Temporal.UnknownTime
+            || (kind != "guardian" && (since is not null || until is not null)))
+        {
+            return "time";
         }
 
         var people = _context.Persons.AsNoTracking().Where(person => person.Tree == tree && (person.Id == from || person.Id == to)).ToDictionary(person => person.Id, person => person.Name, StringComparer.Ordinal);
@@ -406,21 +423,27 @@ public sealed partial class PeopleStore
         }
 
         var links = _context.Kinships.AsNoTracking().Where(link => link.Tree == tree).ToList();
-        if (links.Any(link => link.Kind == kind && ((link.From == from && link.To == to) || (link.From == to && link.To == from))))
+        if (links.Any(link => (link.From == from && link.To == to) || (link.From == to && link.To == from)))
         {
             return "exists";
         }
 
-        if (kind == "parent" && Descends(links, of: to, who: from))
+        if (IsParentage(kind) && Descends(links, of: to, who: from))
         {
             return "loop";
         }
 
-        _context.Kinships.Add(new StoredKinship { Tree = tree, Kind = kind, From = from, To = to });
-        Record(tree, id, kind == "parent" ? "parent-added" : "partner-added", $"{people[from]} – {people[to]}");
+        _context.Kinships.Add(new StoredKinship { Tree = tree, Kind = kind, From = from, To = to, Since = PersonTime.Write(since), Until = PersonTime.Write(until) });
+        Record(tree, id, IsParentage(kind) ? "parent-added" : "partner-added", $"{people[from]} – {people[to]}");
         Save();
         return "done";
     }
+
+    /// <summary>What a link of a tree can be.</summary>
+    public static readonly ImmutableArray<string> LinkKinds = ["parent", "adoptive-parent", "guardian", "partner"];
+
+    /// <summary>Returns whether a link puts one record above the other: a parent by birth or by adoption, or a guardian.</summary>
+    public static bool IsParentage(string kind) => kind is "parent" or "adoptive-parent" or "guardian";
 
     /// <summary>Removes a link. Who may change the tree can.</summary>
     public bool Unlink(string id, string tree, long link)
@@ -434,7 +457,7 @@ public sealed partial class PeopleStore
 
         var names = _context.Persons.AsNoTracking().Where(person => person.Id == stored.From || person.Id == stored.To).ToDictionary(person => person.Id, person => person.Name, StringComparer.Ordinal);
         _context.Kinships.Remove(stored);
-        Record(tree, id, stored.Kind == "parent" ? "parent-removed" : "partner-removed", $"{names.GetValueOrDefault(stored.From)} – {names.GetValueOrDefault(stored.To)}");
+        Record(tree, id, IsParentage(stored.Kind) ? "parent-removed" : "partner-removed", $"{names.GetValueOrDefault(stored.From)} – {names.GetValueOrDefault(stored.To)}");
         Save();
         return true;
     }
@@ -448,7 +471,7 @@ public sealed partial class PeopleStore
         var open = new Queue<string>([of]);
         while (open.TryDequeue(out var person))
         {
-            foreach (var child in links.Where(link => link.Kind == "parent" && link.From == person).Select(link => link.To))
+            foreach (var child in links.Where(link => IsParentage(link.Kind) && link.From == person).Select(link => link.To))
             {
                 if (child == who)
                 {

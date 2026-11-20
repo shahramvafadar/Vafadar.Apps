@@ -726,7 +726,9 @@ namespace Vafadar.Dastan.People.Migrations
                     Tree = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Kind = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     From = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
-                    To = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
+                    To = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Since = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Until = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true)
                 },
                 constraints: table =>
                 {

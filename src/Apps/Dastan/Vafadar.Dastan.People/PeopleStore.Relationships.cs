@@ -561,7 +561,16 @@ public sealed partial class PeopleStore
             return AccessScope.OnlyMe(account);
         }
 
-        return AccessScope.Circle(account, [.. _context.CircleMembers.AsNoTracking().Where(member => member.Circle == circle).Select(member => member.Member).AsEnumerable().Select(member => new AccountId(member))]);
+        var members = _context.CircleMembers.AsNoTracking().Where(member => member.Circle == circle).Select(member => member.Member).ToList();
+
+        // An account that looks at its own things as this circle would (PRIV-015) is joined by somebody who
+        // stands for a member of it.
+        if (_lookedAs == (owner, circle.Value))
+        {
+            members.Add(CircleViewer);
+        }
+
+        return AccessScope.Circle(account, [.. members.Select(member => new AccountId(member))]);
     }
 
     private Dictionary<string, PersonRef> Names(IEnumerable<string> ids)

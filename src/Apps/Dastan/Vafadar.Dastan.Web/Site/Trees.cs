@@ -38,7 +38,7 @@ public static partial class TreeEndpoints
             return null;
         }
 
-        var parentage = tree.Links.Where(link => link.Kind == "parent").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
+        var parentage = tree.Links.Where(link => PeopleStore.IsParentage(link.Kind)).Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
         var partnerships = tree.Links.Where(link => link.Kind == "partner").Select(link => new TreeShapeLink(link.From, link.To)).ToImmutableArray();
         var rows = TreeShape.Generations(tree.People.Select(person => person.Id), parentage, partnerships);
         return TreeShapeLayout.Of(new TreeShape([.. tree.People.Select(person => new TreeShapeMember(person.Id, rows[person.Id], person.Name))], parentage, partnerships));
@@ -175,8 +175,13 @@ public static partial class TreeEndpoints
 
         forms.MapPost("/link", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? kind, [FromForm] string? from, [FromForm] string? to, [FromForm] string? returnUrl) =>
         {
+            if (!Time(context.Request.Form, "since", out var since) || !Time(context.Request.Form, "until", out var until))
+            {
+                return Back(returnUrl, "links", "link-time");
+            }
+
             using var store = desk.Open();
-            return store.Link(Me(context), tree ?? string.Empty, kind ?? string.Empty, from ?? string.Empty, to ?? string.Empty) switch
+            return store.Link(Me(context), tree ?? string.Empty, kind ?? string.Empty, from ?? string.Empty, to ?? string.Empty, since, until) switch
             {
                 "done" => Said(returnUrl, "linked", "links"),
                 "refused" => Results.BadRequest(),
