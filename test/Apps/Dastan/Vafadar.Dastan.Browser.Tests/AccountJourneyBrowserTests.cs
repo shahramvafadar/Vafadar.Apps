@@ -19,9 +19,20 @@ namespace Vafadar.Dastan.Browser.Tests;
 public sealed class AccountsBrowserSite : BrowserSite
 {
     private readonly int _port = FreePort();
+    private readonly string _photos = Path.Combine(Path.GetTempPath(), "dastan-browser-photos-" + Guid.NewGuid().ToString("N"));
 
     /// <inheritdoc />
     protected override int Port => _port;
+
+    /// <inheritdoc />
+    public override async ValueTask DisposeAsync()
+    {
+        await base.DisposeAsync();
+        if (Directory.Exists(_photos))
+        {
+            Directory.Delete(_photos, recursive: true);
+        }
+    }
 
     /// <inheritdoc />
     protected override void Settings(IWebHostBuilder builder)
@@ -34,6 +45,7 @@ public sealed class AccountsBrowserSite : BrowserSite
         }
 
         builder.UseSetting("Dastan:Database", TestDatabase.For("browser-accounts-" + _port.ToString(CultureInfo.InvariantCulture)));
+        builder.UseSetting("Dastan:Photos", _photos);
         builder.UseSetting("Dastan:Operator:Site", $"http://localhost:{_port.ToString(CultureInfo.InvariantCulture)}");
         builder.UseSetting("Dastan:Mail:Host", MailCatcher.Host);
         builder.UseSetting("Dastan:Mail:Port", MailCatcher.Port.ToString(CultureInfo.InvariantCulture));

@@ -71,7 +71,7 @@ public sealed partial class PeopleStore
     public string? AddTree(string id, string name) => Guarded([OfAccount(id)], () => AddTreeUnguarded(id, name));
 
     /// <summary>Adds the record of a person to a tree. Returns its identifier, or nothing when it cannot be added.</summary>
-    public string? AddPerson(string id, string tree, string name, int? born, int? died, bool deceased) =>
+    public string? AddPerson(string id, string tree, string name, Vafadar.Temporal.TemporalExpression? born, Vafadar.Temporal.TemporalExpression? died, bool deceased) =>
         Guarded([OfTree(tree)], () => AddPersonUnguarded(id, tree, name, born, died, deceased));
 
     /// <summary>Says that a record of a tree is the account itself, and says what came of it.</summary>

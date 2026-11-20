@@ -264,11 +264,23 @@ public sealed class StoredPerson
     /// <summary>Gets or sets the name.</summary>
     public required string Name { get; set; }
 
-    /// <summary>Gets or sets the year of birth, when it is known.</summary>
-    public int? Born { get; set; }
+    /// <summary>Gets or sets when the person was born, when it is stated: an expression of time as <see cref="PersonTime"/> writes it.</summary>
+    public string? Born { get; set; }
 
-    /// <summary>Gets or sets the year of death, when it is known.</summary>
-    public int? Died { get; set; }
+    /// <summary>Gets or sets when the person died, when it is stated: an expression of time as <see cref="PersonTime"/> writes it.</summary>
+    public string? Died { get; set; }
+
+    /// <summary>Gets or sets where the person was born, in words; kept only of whom it may be kept (PRIV-003).</summary>
+    public string? BirthPlace { get; set; }
+
+    /// <summary>Gets or sets where the person died, in words.</summary>
+    public string? DeathPlace { get; set; }
+
+    /// <summary>Gets or sets a few words about the person.</summary>
+    public string? About { get; set; }
+
+    /// <summary>Gets or sets the photograph that is the picture of the person, by its identifier. It is shown to who may see that photograph.</summary>
+    public string? Picture { get; set; }
 
     /// <summary>Gets or sets a value indicating whether the person has died.</summary>
     public bool Deceased { get; set; }
@@ -681,6 +693,12 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             person.Property(item => item.Id).HasMaxLength(40);
             person.Property(item => item.Tree).HasMaxLength(40);
             person.Property(item => item.Name).HasMaxLength(160);
+            person.Property(item => item.Born).HasMaxLength(600);
+            person.Property(item => item.Died).HasMaxLength(600);
+            person.Property(item => item.BirthPlace).HasMaxLength(PeopleStore.LongestPlace);
+            person.Property(item => item.DeathPlace).HasMaxLength(PeopleStore.LongestPlace);
+            person.Property(item => item.About).HasMaxLength(PeopleStore.LongestAbout);
+            person.Property(item => item.Picture).HasMaxLength(40);
             person.Property(item => item.CreatedBy).HasMaxLength(40);
             person.HasIndex(item => item.Tree);
             person.HasOne<StoredTree>().WithMany().HasForeignKey(item => item.Tree).OnDelete(DeleteBehavior.Cascade);

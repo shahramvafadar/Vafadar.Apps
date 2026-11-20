@@ -1,0 +1,52 @@
+@page "/trees/{Tree}/person/{Id}"
+@using Vafadar.Dastan.People
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* A person of a family tree its owner made public (step 19.5, ADR 0017): the profile as everybody may see it.
+   The picture is there only when that photograph is public. A tree that is not public and a record it does
+   not have answer "not found" alike. *@
+@if (_tree is not null && _person is not null)
+{
+    <PageTitle>@_person.Name – @_tree.Tree.Name – @T["Site_Name"]</PageTitle>
+    <PageAddress None="true" />
+    <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+    <header class="page-header">
+        <h1 dir="auto">@_person.Name</h1>
+        <p class="lead">@T["Person_In"] <a href="@($"trees/{_tree.Tree.Id}")" dir="auto">@_tree.Tree.Name</a></p>
+    </header>
+
+    <PersonProfile Tree="_tree" Person="_person" Address="@($"trees/{_tree.Tree.Id}")" />
+}
+
+<ReportLink />
+
+@code {
+    private TreeView? _tree;
+    private TreePerson? _person;
+
+    /// <summary>Gets or sets the identifier of the tree.</summary>
+    [Parameter]
+    public string Tree { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the identifier of the person.</summary>
+    [Parameter]
+    public string Id { get; set; } = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        if (Desk.IsOpen && Tree.Length <= 40 && Id.Length <= 40)
+        {
+            using var store = Desk.Open();
+            _tree = store.PublicTree(Tree);
+            _person = _tree?.People.FirstOrDefault(person => person.Id == Id);
+        }
+
+        if (_person is null)
+        {
+            Navigation.NotFound();
+        }
+    }
+}

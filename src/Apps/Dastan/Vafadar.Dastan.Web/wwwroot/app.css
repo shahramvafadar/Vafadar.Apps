@@ -2033,7 +2033,8 @@ main:has(> .stage) > :not(.stage) {
 
 .account input[type="text"],
 .account input[type="email"],
-.account input[type="password"] {
+.account input[type="password"],
+.account textarea {
   box-sizing: border-box;
   inline-size: 100%;
   min-block-size: 2.75rem;
@@ -2043,6 +2044,19 @@ main:has(> .stage) > :not(.stage) {
   background: var(--surface-raised);
   color: var(--text);
   font: inherit;
+}
+
+/* The finer fields of a time of a person (step 19.5): folded away, and set in from the year they belong to. */
+.account details.finer {
+  margin-block: 0 var(--space-3);
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--border);
+}
+
+/* The words about a person keep the lines they were written in. */
+.person-about {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 
 .account button {

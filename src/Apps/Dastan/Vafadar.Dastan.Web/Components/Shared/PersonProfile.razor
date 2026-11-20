@@ -1,0 +1,137 @@
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject IStringLocalizer<Ui> T
+
+@* The profile of a person of a family tree (step 19.5, ADR 0017): the same picture-and-facts as the profile of
+   a node of a collection – when they were born and died, where, a few words – with what is not known said to
+   be not known. Of somebody who lives and was not asked the page shows a name, the years and the family, and
+   says why there is nothing else (PRIV-003). The picture is one of the photographs of a visitor and is here
+   only when who looks may see that photograph. *@
+<section class="profile" aria-labelledby="profile">
+    <h2 id="profile">@T["Profile_Title"]</h2>
+    <div class="profile-body">
+        <figure class="profile-figure">
+            <span class="profile-picture">
+                @if (Person.Picture is { } picture)
+                {
+                    <PhotoImage Photo="picture" />
+                }
+                else
+                {
+                    <svg class="kind-drawing" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                    </svg>
+                }
+            </span>
+            <figcaption class="meta">
+                @if (Person.Picture is { Caption.Length: > 0 } shown)
+                {
+                    <span dir="auto">@string.Format(CultureInfo.CurrentCulture, T["Person_Picture_Of"], shown.Caption)</span>
+                }
+                else if (Person.Picture is null)
+                {
+                    @T["Person_NoPicture"]
+                }
+            </figcaption>
+        </figure>
+        <dl class="facts profile-facts">
+            <dt>@T["Fact_born"]</dt>
+            @Time(Person.Born)
+            @if (!Person.NotAsked)
+            {
+                <dt>@T["Fact_birthPlace"]</dt>
+                @Words(Person.BirthPlace)
+            }
+            <dt>@T["Fact_died"]</dt>
+            @if (Person.Deceased)
+            {
+                @Time(Person.Died)
+                <dt>@T["Fact_deathPlace"]</dt>
+                @Words(Person.DeathPlace)
+            }
+            else
+            {
+                <dd>@T["Fact_died_None"]</dd>
+            }
+        </dl>
+    </div>
+    @if (Person.NotAsked)
+    {
+        <p class="note">@T["Person_NotAsked"]</p>
+    }
+</section>
+
+@if (Person.About is { } about)
+{
+    <section aria-labelledby="about">
+        <h2 id="about">@T["Person_About_Title"]</h2>
+        <p class="person-about" dir="auto">@about</p>
+    </section>
+}
+
+<section aria-labelledby="family">
+    <h2 id="family">@T["Person_Family_Title"]</h2>
+    @if (Person.Parents.IsEmpty && Person.Partners.IsEmpty && Person.Children.IsEmpty)
+    {
+        <p class="note">@T["Person_Family_None"]</p>
+    }
+    else
+    {
+        <dl class="facts">
+            @Family("Tree_Parents", Person.Parents)
+            @Family("Tree_Partners", Person.Partners)
+            @Family("Tree_Children", Person.Children)
+        </dl>
+    }
+</section>
+
+@code {
+    /// <summary>Gets or sets the tree, as who looks may see it.</summary>
+    [Parameter, EditorRequired]
+    public TreeView Tree { get; set; } = null!;
+
+    /// <summary>Gets or sets the person.</summary>
+    [Parameter, EditorRequired]
+    public TreePerson Person { get; set; } = null!;
+
+    /// <summary>Gets or sets the address of the tree, below which the pages of its people stand.</summary>
+    [Parameter, EditorRequired]
+    public string Address { get; set; } = string.Empty;
+
+    private RenderFragment Time(Vafadar.Temporal.TemporalExpression? time) => __builder =>
+    {
+        if (time is null or Vafadar.Temporal.UnknownTime)
+        {
+            <dd class="unknown">@T["Profile_Unknown"]</dd>
+        }
+        else
+        {
+            <dd><bdi>@TimeText.Of(time, Visitor, T)</bdi></dd>
+        }
+    };
+
+    private RenderFragment Words(string? words) => __builder =>
+    {
+        if (words is null)
+        {
+            <dd class="unknown">@T["Profile_Unknown"]</dd>
+        }
+        else
+        {
+            <dd><bdi>@words</bdi></dd>
+        }
+    };
+
+    private RenderFragment Family(string title, System.Collections.Immutable.ImmutableArray<string> people) => __builder =>
+    {
+        if (!people.IsEmpty)
+        {
+            <dt>@T[title]</dt>
+            @foreach (var id in people)
+            {
+                <dd><a href="@($"{Address}/person/{id}")" dir="auto">@Tree.Person(id).Name</a></dd>
+            }
+        }
+    };
+}

@@ -1930,7 +1930,7 @@
     <value>A tree needs a name of 1 to 80 characters, and you can own 20 trees.</value>
   </data>
   <data name="Trees_Problem_person" xml:space="preserve">
-    <value>A person needs a name of 1 to 80 characters. A year is a number from 1 to 9999, and nobody dies before they are born. A tree holds 500 people.</value>
+    <value>A person needs a name of 1 to 80 characters. A year is a number from 1 to 9999, a month and a day are ones the calendar has, and nobody dies before they are born. Of somebody who lives a record says the year of birth and not the day – the day is theirs to say. A tree holds 500 people.</value>
   </data>
   <data name="Trees_Problem_link-kind" xml:space="preserve">
     <value>Please choose what the two are to each other.</value>
@@ -1994,12 +1994,6 @@
   </data>
   <data name="Tree_Person_Name" xml:space="preserve">
     <value>Name</value>
-  </data>
-  <data name="Tree_Person_Born" xml:space="preserve">
-    <value>Year of birth, if known</value>
-  </data>
-  <data name="Tree_Person_Died" xml:space="preserve">
-    <value>Year of death, if known</value>
   </data>
   <data name="Tree_Person_Deceased" xml:space="preserve">
     <value>Has died</value>
@@ -3170,5 +3164,116 @@
   </data>
   <data name="Fact_winner" xml:space="preserve">
     <value>Winner</value>
+  </data>
+  <data name="Tree_Person_born" xml:space="preserve">
+    <value>Year of birth, if known</value>
+  </data>
+  <data name="Tree_Person_died" xml:space="preserve">
+    <value>Year of death, if known</value>
+  </data>
+  <data name="Tree_Time_More_born" xml:space="preserve">
+    <value>Birth: more exactly, or less</value>
+  </data>
+  <data name="Tree_Time_More_died" xml:space="preserve">
+    <value>Death: more exactly, or less</value>
+  </data>
+  <data name="Tree_Time_Month" xml:space="preserve">
+    <value>Month, as a number</value>
+  </data>
+  <data name="Tree_Time_Day" xml:space="preserve">
+    <value>Day of the month</value>
+  </data>
+  <data name="Tree_Time_Calendar" xml:space="preserve">
+    <value>Calendar of this date</value>
+  </data>
+  <data name="Tree_Calendar_gregorian" xml:space="preserve">
+    <value>Gregorian</value>
+  </data>
+  <data name="Tree_Calendar_solar-hijri" xml:space="preserve">
+    <value>Solar Hijri</value>
+  </data>
+  <data name="Tree_Time_Latest" xml:space="preserve">
+    <value>Or, when only a span of years is known: the latest year</value>
+  </data>
+  <data name="Tree_Time_About" xml:space="preserve">
+    <value>About – not exactly</value>
+  </data>
+  <data name="Tree_Time_Unknown" xml:space="preserve">
+    <value>It is not known (leave the year empty)</value>
+  </data>
+  <data name="Person_In" xml:space="preserve">
+    <value>In the family tree</value>
+  </data>
+  <data name="Person_NotAsked" xml:space="preserve">
+    <value>This is somebody who lives and has not been asked. The tree keeps a name, the years and how they belong to the family – and nothing else. When they have an account here and say that this record is theirs, they can say more themselves.</value>
+  </data>
+  <data name="Person_About_Title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Person_Family_Title" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="Person_Family_None" xml:space="preserve">
+    <value>Nobody is linked to this person yet.</value>
+  </data>
+  <data name="Person_Picture_Of" xml:space="preserve">
+    <value>Picture: {0}</value>
+  </data>
+  <data name="Person_NoPicture" xml:space="preserve">
+    <value>No picture – this is a drawing.</value>
+  </data>
+  <data name="Person_Describe_Title" xml:space="preserve">
+    <value>Say more about this person</value>
+  </data>
+  <data name="Person_Describe_Lead_self" xml:space="preserve">
+    <value>This record is you. What you write here is seen by everybody who may see the tree; nobody else can write it.</value>
+  </data>
+  <data name="Person_Describe_Lead_deceased" xml:space="preserve">
+    <value>This person has died: who may change the tree may write what the family knows.</value>
+  </data>
+  <data name="Person_Describe_Lead_child" xml:space="preserve">
+    <value>This is a child, and you are a parent in this tree: what is kept about the child is yours to decide.</value>
+  </data>
+  <data name="Person_BornAt" xml:space="preserve">
+    <value>Born in – a place, in words</value>
+  </data>
+  <data name="Person_DiedAt" xml:space="preserve">
+    <value>Died in – a place, in words</value>
+  </data>
+  <data name="Person_About" xml:space="preserve">
+    <value>A few words about them (up to 1000 characters)</value>
+  </data>
+  <data name="Person_Picture" xml:space="preserve">
+    <value>Picture – one of your photographs</value>
+  </data>
+  <data name="Person_Picture_None" xml:space="preserve">
+    <value>No picture</value>
+  </data>
+  <data name="Person_Picture_Kept" xml:space="preserve">
+    <value>The picture that is there now</value>
+  </data>
+  <data name="Person_Picture_Untitled" xml:space="preserve">
+    <value>Photograph without a caption, of {0}</value>
+  </data>
+  <data name="Person_Picture_Note" xml:space="preserve">
+    <value>The picture is shown to exactly those who may see that photograph – choose who that is on the page of your photographs.</value>
+  </data>
+  <data name="Person_Describe_Save" xml:space="preserve">
+    <value>Save the profile</value>
+  </data>
+  <data name="Person_Said_described" xml:space="preserve">
+    <value>The profile is saved.</value>
+  </data>
+  <data name="Person_Problem_not-asked" xml:space="preserve">
+    <value>Of somebody who lives and was not asked, nothing but the name, the years and the family is kept.</value>
+  </data>
+  <data name="Person_Problem_long" xml:space="preserve">
+    <value>A place has one line of up to 200 characters; the words about a person have up to 1000.</value>
+  </data>
+  <data name="Person_Problem_picture" xml:space="preserve">
+    <value>The picture has to be one of your own photographs.</value>
+  </data>
+  <data name="Tree_Change_person-described" xml:space="preserve">
+    <value>Profile of a record written</value>
   </data>
 </root>

@@ -12,7 +12,7 @@ using Vafadar.Dastan.People;
 namespace Vafadar.Dastan.People.Migrations
 {
     [DbContext(typeof(PeopleContext))]
-    [Migration("20261119211919_Initial")]
+    [Migration("20261120083141_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -309,12 +309,21 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
+                    b.Property<string>("About")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
                     b.Property<string>("Account")
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
-                    b.Property<int?>("Born")
-                        .HasColumnType("integer");
+                    b.Property<string>("BirthPlace")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Born")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -323,16 +332,25 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
+                    b.Property<string>("DeathPlace")
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
                     b.Property<bool>("Deceased")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("Died")
-                        .HasColumnType("integer");
+                    b.Property<string>("Died")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(160)
                         .HasColumnType("character varying(160)");
+
+                    b.Property<string>("Picture")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("Tree")
                         .IsRequired()

@@ -111,7 +111,7 @@ public sealed class MakingPublicTests : IDisposable
 
         Assert.Equal(("The Rad family", TreeRole.None), (tree.Tree.Name, tree.Tree.Role));
         Assert.Equal(["Sara Rad", "Zal"], tree.People.Select(person => person.Name));
-        Assert.Equal((1870, 1950), (tree.Person(_zal).Born, tree.Person(_zal).Died));
+        Assert.Equal((1870, 1950), (tree.Person(_zal).Born.Year(), tree.Person(_zal).Died.Year()));
         Assert.Equal([_zal], tree.Person(_saraRecord).Parents);
         Assert.Single(tree.Links);
 

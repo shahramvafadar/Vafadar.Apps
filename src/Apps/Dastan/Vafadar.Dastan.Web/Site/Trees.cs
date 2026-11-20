@@ -6,6 +6,7 @@ using Microsoft.Extensions.Localization;
 using Vafadar.Dastan.Core;
 using Vafadar.Dastan.People;
 using Vafadar.Dastan.Web.Resources;
+using Vafadar.Temporal;
 using Vafadar.Web;
 
 namespace Vafadar.Dastan.Web.Site;
@@ -43,18 +44,64 @@ public static partial class TreeEndpoints
         return TreeShapeLayout.Of(new TreeShape([.. tree.People.Select(person => new TreeShapeMember(person.Id, rows[person.Id], person.Name))], parentage, partnerships));
     }
 
+    /// <summary>The fields of a form that state one time of a record: what stands in them for a time that is kept.</summary>
+    /// <param name="Year">The year, or the earliest year of a window.</param>
+    /// <param name="Month">The month, when the time says one.</param>
+    /// <param name="Day">The day, when the time says one.</param>
+    /// <param name="Latest">The latest year, for a time known only to lie between two years.</param>
+    /// <param name="Calendar">The calendar: <c>gregorian</c> or <c>solar-hijri</c>.</param>
+    /// <param name="About">Whether the time is about, not exact.</param>
+    /// <param name="Unknown">Whether the record says that the time is not known.</param>
+    public sealed record TimeFields(int? Year, int? Month, int? Day, int? Latest, string Calendar, bool About, bool Unknown)
+    {
+        /// <summary>Gets a value indicating whether the time says more than a plain year of the calendar a new record starts with.</summary>
+        public bool Finer(string calendar) => Month is not null || Latest is not null || About || Unknown || (Year is not null && Calendar != calendar);
+    }
+
+    /// <summary>Returns the calendar a new record starts with in a language: the one its readers count their years in.</summary>
+    public static string CalendarOf(string language) => language == "fa" ? "solar-hijri" : "gregorian";
+
+    /// <summary>Returns what stands in the fields of a form for a time of a record.</summary>
+    public static TimeFields Fields(TemporalExpression? time, string calendar)
+    {
+        static string Named(CalendarPosition at) => at.Calendar == CalendarSystem.SolarHijri ? "solar-hijri" : "gregorian";
+        return time switch
+        {
+            Occurrence { At: CalendarPosition at } => new(at.Year, at.Month, at.Day, null, Named(at), at.IsApproximate, false),
+            OccurrenceWindow { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => new(earliest.Year, null, null, latest.Year, Named(earliest), earliest.IsApproximate || latest.IsApproximate, false),
+            UnknownTime => new(null, null, null, null, calendar, false, true),
+            _ => new(null, null, null, null, calendar, false, false),
+        };
+    }
+
+    /// <summary>
+    /// Returns a time of a record as a line of a list writes it: the bare year for a year of the common era,
+    /// the words of the time otherwise; nothing for a time that is not stated or not known.
+    /// </summary>
+    public static string? Short(TemporalExpression? time, Visitor visitor, IStringLocalizer<Ui> text)
+    {
+        ArgumentNullException.ThrowIfNull(visitor);
+        ArgumentNullException.ThrowIfNull(text);
+        return time switch
+        {
+            null or UnknownTime => null,
+            Occurrence { At: CalendarPosition { Era: Era.CommonEra, IsApproximate: false } at } => visitor.Number(at.Year),
+            _ => TimeText.Of(time, visitor, text),
+        };
+    }
+
     /// <summary>Returns the years of a record as a page writes them: "1300–1380", "born 1300", "died 1380", "deceased" – whatever is known, and nothing when nothing is.</summary>
     public static string Years(TreePerson person, IStringLocalizer<Ui> text, Visitor visitor)
     {
         ArgumentNullException.ThrowIfNull(person);
         ArgumentNullException.ThrowIfNull(text);
         ArgumentNullException.ThrowIfNull(visitor);
-        return (person.Born, person.Died, person.Deceased) switch
+        return (Short(person.Born, visitor, text), Short(person.Died, visitor, text), person.Deceased) switch
         {
-            ({ } born, { } died, _) => $"{visitor.Number(born)}–{visitor.Number(died)}",
-            ({ } born, null, false) => string.Format(CultureInfo.CurrentCulture, text["Tree_Born"], visitor.Number(born)),
-            ({ } born, null, true) => $"{string.Format(CultureInfo.CurrentCulture, text["Tree_Born"], visitor.Number(born))}{text["Tree_And"]}{text["Tree_Deceased"]}",
-            (null, { } died, _) => string.Format(CultureInfo.CurrentCulture, text["Tree_Died"], visitor.Number(died)),
+            ({ } born, { } died, _) => $"{born}–{died}",
+            ({ } born, null, false) => string.Format(CultureInfo.CurrentCulture, text["Tree_Born"], born),
+            ({ } born, null, true) => $"{string.Format(CultureInfo.CurrentCulture, text["Tree_Born"], born)}{text["Tree_And"]}{text["Tree_Deceased"]}",
+            (null, { } died, _) => string.Format(CultureInfo.CurrentCulture, text["Tree_Died"], died),
             (null, null, true) => text["Tree_Deceased"],
             _ => string.Empty,
         };
@@ -92,20 +139,32 @@ public static partial class TreeEndpoints
             return store.RemoveTree(Me(context), tree ?? string.Empty) ? Results.Redirect($"{Home(returnUrl, list: true)}?said=removed") : Results.BadRequest();
         });
 
-        forms.MapPost("/person-add", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? name, [FromForm] string? born, [FromForm] string? died, [FromForm] string? deceased, [FromForm] string? returnUrl) =>
+        forms.MapPost("/person-add", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? name, [FromForm] string? deceased, [FromForm] string? returnUrl) =>
         {
             using var store = desk.Open();
-            return Year(born, out var from) && Year(died, out var until) && store.AddPerson(Me(context), tree ?? string.Empty, name ?? string.Empty, from, until, deceased is not null) is not null
+            return Time(context.Request.Form, "born", out var from) && Time(context.Request.Form, "died", out var until) && store.AddPerson(Me(context), tree ?? string.Empty, name ?? string.Empty, from, until, deceased is not null) is not null
                 ? Said(returnUrl, "person-added", "people")
                 : Back(returnUrl, "person-add", "person");
         });
 
-        forms.MapPost("/person-change", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? person, [FromForm] string? name, [FromForm] string? born, [FromForm] string? died, [FromForm] string? deceased, [FromForm] string? returnUrl) =>
+        forms.MapPost("/person-change", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? person, [FromForm] string? name, [FromForm] string? deceased, [FromForm] string? returnUrl) =>
         {
             using var store = desk.Open();
-            return Year(born, out var from) && Year(died, out var until) && store.ChangePerson(Me(context), tree ?? string.Empty, person ?? string.Empty, name ?? string.Empty, from, until, deceased is not null)
+            return Time(context.Request.Form, "born", out var from) && Time(context.Request.Form, "died", out var until) && store.ChangePerson(Me(context), tree ?? string.Empty, person ?? string.Empty, name ?? string.Empty, from, until, deceased is not null)
                 ? Said(returnUrl, "person-changed", "people")
                 : Back(returnUrl, "people", "person");
+        });
+
+        // What is said of a person beyond the name and the years (step 19.5, PRIV-003): the store decides who may.
+        forms.MapPost("/person-describe", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? person, [FromForm] string? bornAt, [FromForm] string? diedAt, [FromForm] string? about, [FromForm] string? picture, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return store.DescribePerson(Me(context), tree ?? string.Empty, person ?? string.Empty, bornAt, diedAt, about, picture) switch
+            {
+                "done" => Said(returnUrl, "described", "profile"),
+                "refused" => Results.BadRequest(),
+                var problem => Back(returnUrl, "describe", problem),
+            };
         });
 
         forms.MapPost("/person-remove", (HttpContext context, AccountDesk desk, [FromForm] string? tree, [FromForm] string? person, [FromForm] string? returnUrl) =>
@@ -209,21 +268,67 @@ public static partial class TreeEndpoints
     // The filter of the group has seen that somebody signed in.
     private static string Me(HttpContext context) => AccountDesk.Session(context.User)!.Id;
 
-    // An empty field is a year that is not known; anything else has to be a number.
-    private static bool Year(string? written, out int? year)
+    // The time a form states in the fields of one name: a year, with a month and a day where they are known, in
+    // the calendar that was chosen, exact or about – or a year and a latest year for a time that is only known
+    // to lie between two – or the statement that it is not known. Nothing in the fields is a time nobody stated;
+    // fields that contradict each other are refused rather than read one way or the other.
+    private static bool Time(IFormCollection form, string field, out TemporalExpression? time)
     {
-        year = null;
-        if (string.IsNullOrWhiteSpace(written))
-        {
-            return true;
-        }
-
-        if (!int.TryParse(Vafadar.Core.Text.Digits.ToAscii(written.Trim()), NumberStyles.None, CultureInfo.InvariantCulture, out var number))
+        time = null;
+        string? Of(string part) => form[part.Length == 0 ? field : $"{field}-{part}"].ToString() is { } written && !string.IsNullOrWhiteSpace(written) ? written.Trim() : null;
+        if (!Number(Of(string.Empty), 9999, out var year) || !Number(Of("month"), 12, out var month) || !Number(Of("day"), 31, out var day) || !Number(Of("latest"), 9999, out var latest))
         {
             return false;
         }
 
-        year = number;
+        var unknown = Of("unknown") is not null;
+        if (year is not { } from)
+        {
+            time = unknown ? new UnknownTime() : null;
+            return month is null && day is null && latest is null;
+        }
+
+        if (unknown || (day is not null && month is null) || (latest is not null && month is not null))
+        {
+            return false;
+        }
+
+        var (calendar, era) = Of("calendar") == "solar-hijri" ? (CalendarSystem.SolarHijri, Era.SolarHijri) : (CalendarSystem.Gregorian, Era.CommonEra);
+        var about = Of("about") is not null;
+        CalendarPosition As(CalendarPosition position) => about ? position.Approximately() : position;
+        try
+        {
+            var at = As((month, day) switch
+            {
+                ({ } inMonth, { } onDay) => CalendarPosition.OfDay(calendar, era, from, inMonth, onDay),
+                ({ } inMonth, null) => CalendarPosition.OfMonth(calendar, era, from, inMonth),
+                _ => CalendarPosition.OfYear(calendar, era, from),
+            });
+            time = latest is { } until ? new OccurrenceWindow(at, As(CalendarPosition.OfYear(calendar, era, until))) : new Occurrence(at);
+            return true;
+        }
+        catch (ArgumentException)
+        {
+            // A day the month does not have, or a latest year before the first.
+            return false;
+        }
+    }
+
+    // An empty field is a number that is not stated; anything else has to be a number from one to the most.
+    private static bool Number(string? written, int most, out int? number)
+    {
+        number = null;
+        if (written is null)
+        {
+            return true;
+        }
+
+        if (!int.TryParse(Vafadar.Core.Text.Digits.ToAscii(written), NumberStyles.None, CultureInfo.InvariantCulture, out var read) || read < 1 || read > most)
+        {
+            return false;
+        }
+
+        number = read;
         return true;
     }
 
@@ -243,6 +348,6 @@ public static partial class TreeEndpoints
     private static IResult Back(string? returnUrl, string form, string problem) =>
         Results.Redirect($"{Home(returnUrl)}?form={form}&problem={problem}#{form}");
 
-    [GeneratedRegex("^((?:/[a-z]{2})?/account/trees)(?:/[a-f0-9]{32})?$")]
+    [GeneratedRegex("^((?:/[a-z]{2})?/account/trees)(?:/[a-f0-9]{32}(?:/person/[a-f0-9]{32})?)?$")]
     private static partial Regex Pages();
 }

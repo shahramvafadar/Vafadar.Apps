@@ -1930,7 +1930,7 @@
     <value>شجره‌نامه نامی ۱ تا ۸۰ نویسه‌ای می‌خواهد، و می‌توانید ۲۰ شجره‌نامه داشته باشید.</value>
   </data>
   <data name="Trees_Problem_person" xml:space="preserve">
-    <value>فرد نامی ۱ تا ۸۰ نویسه‌ای می‌خواهد. سال عددی از ۱ تا ۹۹۹۹ است و کسی پیش از تولدش نمی‌میرد. هر شجره‌نامه ۵۰۰ نفر جا دارد.</value>
+    <value>فرد نامی ۱ تا ۸۰ نویسه‌ای می‌خواهد. سال عددی از ۱ تا ۹۹۹۹ است، ماه و روز باید در تقویم باشند و کسی پیش از تولدش نمی‌میرد. دربارهٔ کسی که زنده است پرونده سال تولد را می‌گوید و نه روز را – گفتنِ روز با خودِ اوست. هر شجره‌نامه ۵۰۰ نفر جا دارد.</value>
   </data>
   <data name="Trees_Problem_link-kind" xml:space="preserve">
     <value>لطفاً نسبت این دو را برگزینید.</value>
@@ -1994,12 +1994,6 @@
   </data>
   <data name="Tree_Person_Name" xml:space="preserve">
     <value>نام</value>
-  </data>
-  <data name="Tree_Person_Born" xml:space="preserve">
-    <value>سال تولد، اگر دانسته است</value>
-  </data>
-  <data name="Tree_Person_Died" xml:space="preserve">
-    <value>سال درگذشت، اگر دانسته است</value>
   </data>
   <data name="Tree_Person_Deceased" xml:space="preserve">
     <value>درگذشته است</value>
@@ -3170,5 +3164,116 @@
   </data>
   <data name="Fact_winner" xml:space="preserve">
     <value>برنده</value>
+  </data>
+  <data name="Tree_Person_born" xml:space="preserve">
+    <value>سال تولد، اگر دانسته است</value>
+  </data>
+  <data name="Tree_Person_died" xml:space="preserve">
+    <value>سال درگذشت، اگر دانسته است</value>
+  </data>
+  <data name="Tree_Time_More_born" xml:space="preserve">
+    <value>تولد: دقیق‌تر، یا نادقیق‌تر</value>
+  </data>
+  <data name="Tree_Time_More_died" xml:space="preserve">
+    <value>درگذشت: دقیق‌تر، یا نادقیق‌تر</value>
+  </data>
+  <data name="Tree_Time_Month" xml:space="preserve">
+    <value>ماه، به عدد</value>
+  </data>
+  <data name="Tree_Time_Day" xml:space="preserve">
+    <value>روزِ ماه</value>
+  </data>
+  <data name="Tree_Time_Calendar" xml:space="preserve">
+    <value>تقویم این تاریخ</value>
+  </data>
+  <data name="Tree_Calendar_gregorian" xml:space="preserve">
+    <value>میلادی</value>
+  </data>
+  <data name="Tree_Calendar_solar-hijri" xml:space="preserve">
+    <value>هجری خورشیدی</value>
+  </data>
+  <data name="Tree_Time_Latest" xml:space="preserve">
+    <value>یا اگر فقط بازه‌ای از سال‌ها دانسته است: آخرین سال</value>
+  </data>
+  <data name="Tree_Time_About" xml:space="preserve">
+    <value>حدودی – نه دقیق</value>
+  </data>
+  <data name="Tree_Time_Unknown" xml:space="preserve">
+    <value>دانسته نیست (سال را خالی بگذارید)</value>
+  </data>
+  <data name="Person_In" xml:space="preserve">
+    <value>در شجره‌نامهٔ</value>
+  </data>
+  <data name="Person_NotAsked" xml:space="preserve">
+    <value>این فرد زنده است و از او پرسیده نشده. شجره‌نامه فقط نام، سال‌ها و نسبتش با خانواده را نگه می‌دارد – و نه چیز دیگری. هر وقت خودش این‌جا حساب داشته باشد و بگوید این پرونده از آنِ اوست، می‌تواند خودش بیشتر بگوید.</value>
+  </data>
+  <data name="Person_About_Title" xml:space="preserve">
+    <value>درباره</value>
+  </data>
+  <data name="Person_Family_Title" xml:space="preserve">
+    <value>خانواده</value>
+  </data>
+  <data name="Person_Family_None" xml:space="preserve">
+    <value>هنوز کسی به این فرد پیوند نخورده است.</value>
+  </data>
+  <data name="Person_Picture_Of" xml:space="preserve">
+    <value>تصویر: {0}</value>
+  </data>
+  <data name="Person_NoPicture" xml:space="preserve">
+    <value>تصویری نیست – این یک طرح است.</value>
+  </data>
+  <data name="Person_Describe_Title" xml:space="preserve">
+    <value>دربارهٔ این فرد بیشتر بگویید</value>
+  </data>
+  <data name="Person_Describe_Lead_self" xml:space="preserve">
+    <value>این پرونده خودِ شمایید. آنچه این‌جا بنویسید را هر کسی که شجره‌نامه را می‌بیند می‌بیند؛ کس دیگری نمی‌تواند آن را بنویسد.</value>
+  </data>
+  <data name="Person_Describe_Lead_deceased" xml:space="preserve">
+    <value>این فرد درگذشته است: هر کس اجازهٔ تغییر شجره‌نامه را دارد می‌تواند آنچه خانواده می‌داند را بنویسد.</value>
+  </data>
+  <data name="Person_Describe_Lead_child" xml:space="preserve">
+    <value>این یک کودک است و شما در این شجره‌نامه پدر یا مادر او هستید: تصمیم دربارهٔ آنچه از کودک نگه داشته می‌شود با شماست.</value>
+  </data>
+  <data name="Person_BornAt" xml:space="preserve">
+    <value>محل تولد – به کلمه</value>
+  </data>
+  <data name="Person_DiedAt" xml:space="preserve">
+    <value>محل درگذشت – به کلمه</value>
+  </data>
+  <data name="Person_About" xml:space="preserve">
+    <value>چند کلمه درباره‌اش (تا ۱۰۰۰ نویسه)</value>
+  </data>
+  <data name="Person_Picture" xml:space="preserve">
+    <value>تصویر – یکی از عکس‌های شما</value>
+  </data>
+  <data name="Person_Picture_None" xml:space="preserve">
+    <value>بدون تصویر</value>
+  </data>
+  <data name="Person_Picture_Kept" xml:space="preserve">
+    <value>تصویری که اکنون هست</value>
+  </data>
+  <data name="Person_Picture_Untitled" xml:space="preserve">
+    <value>عکسی بدون توضیح، از {0}</value>
+  </data>
+  <data name="Person_Picture_Note" xml:space="preserve">
+    <value>تصویر دقیقاً به همان کسانی نشان داده می‌شود که آن عکس را می‌بینند – این را در صفحهٔ عکس‌هایتان تعیین کنید.</value>
+  </data>
+  <data name="Person_Describe_Save" xml:space="preserve">
+    <value>ذخیرهٔ نمایه</value>
+  </data>
+  <data name="Person_Said_described" xml:space="preserve">
+    <value>نمایه ذخیره شد.</value>
+  </data>
+  <data name="Person_Problem_not-asked" xml:space="preserve">
+    <value>از کسی که زنده است و از او پرسیده نشده، جز نام، سال‌ها و خانواده چیزی نگه داشته نمی‌شود.</value>
+  </data>
+  <data name="Person_Problem_long" xml:space="preserve">
+    <value>محل یک سطر تا ۲۰۰ نویسه است؛ متنِ دربارهٔ فرد تا ۱۰۰۰ نویسه.</value>
+  </data>
+  <data name="Person_Problem_picture" xml:space="preserve">
+    <value>تصویر باید یکی از عکس‌های خودتان باشد.</value>
+  </data>
+  <data name="Tree_Change_person-described" xml:space="preserve">
+    <value>نوشتن نمایهٔ رکورد</value>
   </data>
 </root>
