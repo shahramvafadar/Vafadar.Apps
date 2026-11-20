@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("3628c4f6-3b51-46c3-a378-40e395ed38ec"), entityTypeCount: 51)
+            : base(skipDetectChanges: false, modelId: new Guid("61b79ea4-3dbb-4991-9d51-7de5fc67082b"), entityTypeCount: 51)
         {
         }
 

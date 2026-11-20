@@ -342,7 +342,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
 
     private async Task ApplyAsync(string owner, Guid id, AiProviderOutcome outcome, CancellationToken ct, string? recoveredHandle = null)
     {
-        if (outcome.State == AiProviderState.Unknown && outcome.Metering is null && outcome.VendorStatus is null) return;
+        if (outcome.State == AiProviderState.Unknown && outcome.Metering is null &&
+            outcome.VendorStatus is null && outcome.CreateRefusal is null) return;
         if (!Enum.IsDefined(outcome.State)) return;
         // Unusable or inconsistent provider evidence leaves the original reservation intact for actual reconciliation.
         if (outcome.ChargedUnits < 0 || outcome.State == AiProviderState.DefinitiveNoCharge && (outcome.ChargedUnits != 0 || outcome.Text is not null)) return;
@@ -357,6 +358,13 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             if (row.PilotDispatchStage != AiPilotDispatchStage.Claimed ||
                 row.VendorOperationId is { } originalHandle && originalHandle != recoveredHandle) return;
             row.VendorOperationId = recoveredHandle;
+        }
+        if (outcome.CreateRefusal is { } createRefusal)
+        {
+            if (row.PilotDispatchStage != AiPilotDispatchStage.Claimed || row.VendorOperationId is not null ||
+                !Enum.IsDefined(createRefusal) || outcome.State != AiProviderState.Unknown ||
+                row.PilotCreateRefusal is { } previousRefusal && previousRefusal != createRefusal) return;
+            row.PilotCreateRefusal = createRefusal;
         }
         if (outcome.VendorStatus is { } vendorStatus)
         {

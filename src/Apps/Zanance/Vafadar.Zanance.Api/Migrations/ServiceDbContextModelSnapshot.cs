@@ -390,6 +390,9 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.Property<long?>("PilotCostCeilingMicros")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("PilotCreateRefusal")
+                        .HasColumnType("integer");
+
                     b.Property<DateTimeOffset?>("PilotDispatchClaimedAt")
                         .HasColumnType("timestamp with time zone");
 

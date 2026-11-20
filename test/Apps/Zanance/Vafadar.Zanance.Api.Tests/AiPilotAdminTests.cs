@@ -391,7 +391,8 @@ public sealed class AiPilotAdminTests
         Assert.Equal(51, Regex.Matches(html, "<tr>", RegexOptions.CultureInvariant, TimeSpan.FromSeconds(1)).Count);
         Assert.Contains("gemini / gemini-4-hydrogen", html, StringComparison.Ordinal);
         Assert.Contains("2026-11-19 12:02:00", html, StringComparison.Ordinal);
-        Assert.Contains(">Recorded</td><td>Failed</td><td>—</td>", html, StringComparison.Ordinal);
+        Assert.Contains(">Recorded</td><td>—</td><td>Failed</td><td>—</td>", html, StringComparison.Ordinal);
+        Assert.Contains(">Missing</td><td>401 Authentication rejected</td><td>—</td><td>—</td>", html, StringComparison.Ordinal);
         Assert.Contains(">Missing</td>", html, StringComparison.Ordinal);
         Assert.Contains(pending[0].Id.ToString("D"), html, StringComparison.Ordinal);
         Assert.Contains(pending[49].Id.ToString("D"), html, StringComparison.Ordinal);
@@ -417,6 +418,7 @@ public sealed class AiPilotAdminTests
                 CreatedAt = now.AddSeconds(index), StatusCheckedAt = index == 0 ? now.AddMinutes(2) : null,
                 VendorOperationId = index == 0 ? "fictional-vendor-reference" : null, PayloadDigest = new('a', 64),
                 PilotVendorStatus = index == 0 ? AiPilotVendorStatus.Failed : null,
+                PilotCreateRefusal = index == 1 ? AiPilotCreateRefusal.AuthenticationRejected : null,
                 GiftedReserved = 1, ChargedUnits = state == AiRequestState.Completed ? 1 : 0,
                 ProtectedPayload = "fictional-protected-aggregate", ProtectedText = state == AiRequestState.Completed ? "fictional-protected-result" : null };
             db.Add(offer);

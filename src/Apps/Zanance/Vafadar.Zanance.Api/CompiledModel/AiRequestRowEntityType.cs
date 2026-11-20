@@ -22,7 +22,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 "Vafadar.Zanance.Api.Analysis.AiRequestRow",
                 typeof(AiRequestRow),
                 baseEntityType,
-                propertyCount: 23,
+                propertyCount: 24,
                 foreignKeyCount: 2,
                 unnamedIndexCount: 2,
                 keyCount: 1);
@@ -84,6 +84,14 @@ namespace Vafadar.Zanance.Api.CompiledModel
                 fieldInfo: typeof(AiRequestRow).GetField("<PilotCostCeilingMicros>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
                 nullable: true);
             pilotCostCeilingMicros.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
+
+            var pilotCreateRefusal = runtimeEntityType.AddProperty(
+                "PilotCreateRefusal",
+                typeof(AiPilotCreateRefusal?),
+                propertyInfo: typeof(AiRequestRow).GetProperty("PilotCreateRefusal", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                fieldInfo: typeof(AiRequestRow).GetField("<PilotCreateRefusal>k__BackingField", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly),
+                nullable: true);
+            pilotCreateRefusal.AddAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None);
 
             var pilotDispatchClaimedAt = runtimeEntityType.AddProperty(
                 "PilotDispatchClaimedAt",

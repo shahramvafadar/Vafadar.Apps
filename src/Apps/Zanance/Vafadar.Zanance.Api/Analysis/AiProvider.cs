@@ -8,9 +8,11 @@ internal sealed record AiProviderOffer(string Provider, string Model, long Maxim
 internal enum AiProviderState { Unknown, Completed, DefinitiveNoCharge }
 /// <summary>Provider-confirmed outcome, never guessed from HTTP timeout or a missing request lookup.</summary>
 internal sealed record AiProviderOutcome(AiProviderState State, long ChargedUnits = 0, string? Text = null, AiPilotUsage? Metering = null,
-    AiPilotVendorStatus? VendorStatus = null);
+    AiPilotVendorStatus? VendorStatus = null, AiPilotCreateRefusal? CreateRefusal = null);
 /// <summary>Terminal status reported by the original synthetic vendor operation, independent of customer credit.</summary>
 public enum AiPilotVendorStatus { Completed = 1, Failed = 2, Incomplete = 3, Cancelled = 4 }
+/// <summary>Only the observed HTTP response class for the one original synthetic create.</summary>
+public enum AiPilotCreateRefusal { RequestRejected = 400, AuthenticationRejected = 401, AccessDenied = 403, ResourceUnavailable = 404, RateLimited = 429 }
 /// <summary>Authenticated terminal usage and an uncached Standard reference estimate, independent of customer credit.</summary>
 internal sealed record AiPilotUsage(int Input, int Output, int? CachedInput, int? Thinking, long EstimateMicros)
 {

@@ -308,7 +308,14 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         using var request = Request(profile, HttpMethod.Post, profile.Url);
         request.Content = JsonContent.Create(body);
         if (profile.Provider == "openai") request.Headers.Add("X-Client-Request-Id", operation);
-        using var result = await SendAsync(request, ct);
+        using var client = clients.CreateClient(Client);
+        using var response = await client.SendAsync(request, ct);
+        if (!response.IsSuccessStatusCode)
+        {
+            var refusal = (AiPilotCreateRefusal)(int)response.StatusCode;
+            return Enum.IsDefined(refusal) ? Unknown with { CreateRefusal = refusal } : Unknown;
+        }
+        using var result = await ParseAsync(response, ct);
         var id = result is null ? null : Text(result.RootElement, "id");
         if (!ValidId(id)) return Unknown;
         await saveId(id!);
@@ -391,7 +398,11 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
     {
         using var client = clients.CreateClient(Client);
         using var response = await client.SendAsync(request, ct);
-        if (!response.IsSuccessStatusCode) return null;
+        return response.IsSuccessStatusCode ? await ParseAsync(response, ct) : null;
+    }
+
+    private static async Task<JsonDocument?> ParseAsync(HttpResponseMessage response, CancellationToken ct)
+    {
         try { return await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync(ct), cancellationToken: ct); }
         catch (JsonException) { return null; }
     }
