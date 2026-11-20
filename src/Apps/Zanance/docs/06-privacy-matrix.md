@@ -103,6 +103,14 @@ hashes, ownership, modes and modification times in the same application process.
 covered the internal cache and a secondary profile deletion. It did not exercise the legacy
 external cache, a profile reset, an external recipient or a real device.
 
+A separate signed Android 16 run used the original Settings reset for Main. Cancelling preserved
+all five fictitious files. Confirming returned to Welcome in the same process and removed Main's
+internally staged copy. The copy bearing another profile identity and the original file in the
+backup directory retained their hashes and metadata. The fixture's legacy external copies stayed
+present. The parent of those copies was visible in the app's mount namespace but had mode 0775
+and UID/GID 1023, outside the app UID and groups. This fixture therefore did not establish deletion
+of copies created by the app in its external cache. That case remains open.
+
 On an isolated Android 16 x86-64 guest, the signed offline APK
 `2d05d89f72061910a4547d9fb772dcd729bc7e966c92a3536af998f02865f743` was installed once
 and started with six fictitious cache files. An early read, before the app was ready,
