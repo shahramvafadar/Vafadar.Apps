@@ -44,3 +44,17 @@ the observer's earlier five-minute pre-deadline boundary. Continue independent w
 This admission guard does not establish installation, whole APK integrity/provenance, general
 security/stability/performance/A11Y, physical/iOS/provider/Store/release acceptance. Android
 completion precedes iOS; the overall delivery goal remains active.
+
+## APK verification before handoff
+
+The entry point now sends the selected file and original build properties to
+`Assert-AndroidApk.ps1` before emitting installation advice. The SDK verifies the
+signature and package identity. Release rejects a debuggable APK, and the offline
+flag rejects either network permission. A successful handoff reports the verified
+package ID and SHA-256 with the full file path.
+
+The existing signed x64 offline Release APK was accepted. Its unsigned counterpart,
+a signed fixture with a different package ID, the debuggable fixture with its own
+expected ID, and a network-enabled APK presented as offline were refused. The
+entry-point fixture confirms that a verifier refusal emits no path or installation
+advice. No app was rebuilt or installed for these checks.

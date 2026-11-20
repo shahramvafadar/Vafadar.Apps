@@ -58,6 +58,12 @@ Each app is versioned independently.
 
 ## Building a release
 
+For a direct Android handoff, run `eng/scripts/Build-AndroidApk.ps1`. The script reports the
+full path, package ID and SHA-256 after the Android SDK verifies the APK signature and its
+manifest matches the producing project. Release handoffs reject debuggable APKs. With
+`-Offline`, both INTERNET and ACCESS_NETWORK_STATE must be absent. Device installation and
+signer continuity with the installed app are separate checks.
+
 1. Update `CHANGELOG.md` of the app and merge to `main`.
 2. GitHub → Actions → **Release (Android)** → *Run workflow*: choose the app, enter the display version and the next
    build number. Google Play caps the Android version code at 2100000000. The workflow verifies the allowed range; check the last used code in Play Console before choosing the next one.

@@ -97,5 +97,9 @@ $apk = $apks[0]
 if ($apk.Length -eq 0) {
     throw 'The signed APK is empty; no installable handoff is available.'
 }
+$verified = & (Join-Path $PSScriptRoot 'Assert-AndroidApk.ps1') -ApkPath $apk.FullName -Project $Project `
+    -Configuration $Configuration -BuildProperties $cloudProperties -Offline:$Offline
 "APK: $($apk.FullName) ($([math]::Round($apk.Length / 1MB, 1)) MB)"
+"Package: $($verified.Package)"
+"SHA-256: $($verified.Sha256)"
 'Copy it to the phone and open it there (allow installing from this source once), or: adb install -r "<path>"'

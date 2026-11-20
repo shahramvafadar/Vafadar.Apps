@@ -1,5 +1,5 @@
 # Exercise the actual entry point without a restore, compilation, signing or device command.
-# These tiny file fixtures qualify artifact selection, not APK contents or signatures.
+# The tiny file fixtures qualify selection and the verifier boundary without an Android SDK.
 $ErrorActionPreference = 'Stop'
 $repo = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 $sourceEntry = Join-Path $repo 'eng/scripts/Build-AndroidApk.ps1'
@@ -26,6 +26,15 @@ try {
     }
     $preparation = Join-Path $maui 'Ensure-ConfigurationMetrics.ps1'
     [IO.File]::WriteAllText($preparation, 'Add-Content -LiteralPath $env:VAFADAR_HANDOFF_COMMAND_LOG -Value prepare')
+    [IO.File]::WriteAllText((Join-Path $scripts 'Assert-AndroidApk.ps1'), @'
+param([string]$ApkPath, [string]$Project, [string]$Configuration, [string[]]$BuildProperties, [switch]$Offline)
+Add-Content -LiteralPath $env:VAFADAR_HANDOFF_COMMAND_LOG -Value verify
+if (!$Offline -or $Configuration -cne 'Release' -or !$Project -or '-p:MicrosoftEntraClientId=' -cnotin $BuildProperties) {
+    throw 'The verifier did not receive the build configuration.'
+}
+if ($ApkPath -like '*verifier-refused*') { throw 'The fixture verifier refused the signature.' }
+[pscustomobject]@{ Package = 'pro.vafadar.zanance'; Sha256 = ('a' * 64) }
+'@)
     # The project wrapper deliberately resolves an Application, not a PowerShell
     # function. Put an inert executable first on PATH so the real wrapper is tested
     # without accidentally reaching an installed SDK or restoring native packages.
@@ -41,13 +50,13 @@ try {
     $env:PATH = $fixture + [IO.Path]::PathSeparator + $previousPath
     $resolvedHost = Get-Command dotnet -CommandType Application | Select-Object -First 1
     if ($resolvedHost.Source -ne $fakeHost) { throw 'The isolated SDK executable was not selected.' }
-    foreach ($case in @('missing', 'empty', 'ambiguous', 'unique')) {
+    foreach ($case in @('missing', 'empty', 'ambiguous', 'unique', 'verifier-refused')) {
         $output = Join-Path $fixture $case
         New-Item -ItemType Directory -Path $output | Out-Null
         if ($case -eq 'empty') {
             [IO.File]::WriteAllBytes((Join-Path $output 'fixture-Signed.apk'), [byte[]]@())
         }
-        if ($case -in @('ambiguous', 'unique')) {
+        if ($case -in @('ambiguous', 'unique', 'verifier-refused')) {
             [IO.File]::WriteAllText((Join-Path $output 'fixture-Signed.apk'), 'Not an Android package; artifact-selection fixture only.')
         }
         if ($case -eq 'ambiguous') {
@@ -56,16 +65,20 @@ try {
         $accepted = $false
         $lines = @()
         try {
-            $lines = @(& $entry -Offline -Output $output)
+            & $entry -Offline -Output $output | ForEach-Object { $lines += $_ }
             $accepted = $true
         }
         catch {
             if ($case -eq 'unique') { throw }
-            if ($_.Exception.Message -notmatch 'Expected exactly one signed APK|signed APK is empty') { throw }
+            if ($_.Exception.Message -notmatch 'Expected exactly one signed APK|signed APK is empty|fixture verifier refused') { throw }
         }
         if ($accepted -ne ($case -eq 'unique')) { throw "Unexpected artifact admission for $case." }
-        if ($case -eq 'unique' -and -not ($lines | Where-Object { $_ -like 'APK:*fixture-Signed.apk*' })) {
-            throw 'The unique artifact was not reported.'
+        if ($case -eq 'unique' -and (-not ($lines -like 'APK:*fixture-Signed.apk*') -or
+            'Package: pro.vafadar.zanance' -cnotin $lines -or "SHA-256: $('a' * 64)" -cnotin $lines)) {
+            throw 'The verified artifact identity was not reported.'
+        }
+        if (!$accepted -and $lines -match '^APK:|^Package:|^SHA-256:|adb install') {
+            throw "An unverified handoff was reported for $case."
         }
     }
     # A preparation refusal must stop before restore/publish, even when an inert SDK would succeed.
@@ -81,10 +94,10 @@ throw 'Private Core preparation fixture refusal.'
     }
     if (-not $preparationRefused) { throw 'The entry point accepted a refused Core preparation.' }
     $buildCommands = @([IO.File]::ReadAllLines($commandLog))
-    if (($buildCommands -join ',') -ne 'prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,prepare-refused') {
-        throw 'The isolated preparation/restore/publish boundary was not exercised exactly once per case.'
+    if (($buildCommands -join ',') -ne 'prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,prepare,restore,publish,verify,prepare,restore,publish,verify,prepare-refused') {
+        throw 'The isolated preparation, build and verification boundaries changed.'
     }
-    'Four APK handoff cases and one preparation refusal passed; no real preparation, SDK build or device work executed.'
+    'Five APK handoff cases and one preparation refusal passed with isolated build and verifier commands.'
 }
 finally {
     Pop-Location
