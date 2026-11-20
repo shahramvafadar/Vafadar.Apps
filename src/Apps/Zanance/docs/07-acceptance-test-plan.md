@@ -5098,6 +5098,27 @@ This verifies one direct replacement of an older same-version-code build with a 
 Physical-device variants, upgrades from other historical builds, individual migration steps and
 complete encrypted-row equality remain open.
 
+### AT-60 direct upgrade with a retained legacy ledger
+
+The retained D-554 Offline Release APK `50f5d58b` ran on a fresh Android 16 x64 emulator with
+4096-byte pages. The original native document picker restored the known synthetic D-403 packet
+`892dd1a4`. Its preview counted one account, one transaction and one plan. The original packet
+was copied intact. After the first device copy failed and left no destination, the pending copy
+continued on the same emulator. Opening the old Welcome restore action first showed the restore
+page. The file was selected only after opening that page's original chooser.
+
+Before and after a single in-place install of the signed Offline Release APK `d72991d4`, Home
+showed `D403_Cash` and `35.00 EUR`. The transaction detail retained the expense title, October
+20 date, EUR 2 amount, original account, Food category and note. The plan detail retained the
+single EUR 9 occurrence with its original October 20 date and Skipped status. The installed
+digests were verified on-device. Both APKs used the same package, signer and version code.
+UID 10216 and the first-install timestamp matched as the app process changed from 4086 to 5651.
+
+The updated app did not repeat onboarding, restore, posting or Skip. The comparison is scoped
+to these public app values and the install identity. Full encrypted-row equality and physical
+upgrade acceptance remain open. The emulator was retired. Local receipts and hierarchies are
+retained in `artifacts/at60-legacy-ledger`.
+
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
 
 The retained D-401 candidate qualifies one card purchase60 and Checking-to-Card payment90, with
