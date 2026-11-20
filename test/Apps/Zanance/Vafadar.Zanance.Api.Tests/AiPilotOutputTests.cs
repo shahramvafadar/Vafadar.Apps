@@ -93,7 +93,43 @@ public sealed class AiPilotOutputTests
         Assert.Null(outcome.Metering);
     }
 
-    private sealed class StatusReceipt(string url, string response) : HttpMessageHandler, IHttpClientFactory
+    /// <summary>A create response with a contradictory correlation value cannot claim the original request.</summary>
+    [Theory]
+    [InlineData("foreign-operation", true, false)]
+    [InlineData(null, true, false)]
+    [InlineData("fictional-original-operation", true, true)]
+    [InlineData(null, false, true)]
+    public async Task Create_response_binds_only_a_matching_echoed_operation(string? echoedOperation, bool includeMetadata, bool expectBinding)
+    {
+        const string model = "gpt-6.2-sol";
+        const string project = "fictional-binding-project";
+        const string operation = "fictional-original-operation";
+        const string handle = "resp_binding_fixture";
+        var revision = Convert.ToHexStringLower(SHA256.HashData(
+            Encoding.UTF8.GetBytes($"zanance-pilot-v1|openai|{model}|{project}")));
+        var route = new AiPilotRouteRow { Provider = "openai", Purpose = AiPurpose.PeriodExplanation, Revision = revision };
+        var offer = new AiOffer(Guid.NewGuid(), route.Provider, model, route.Purpose, 1, DateTimeOffset.UnixEpoch.AddDays(1));
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-binding-only",
+            ["Analysis:ProviderPilot:openai:Project"] = project,
+        }).Build();
+        var response = includeMetadata
+            ? JsonSerializer.Serialize(new { id = handle, model, status = "in_progress", metadata = new { zanance_operation = echoedOperation } })
+            : JsonSerializer.Serialize(new { id = handle, model, status = "in_progress" });
+        using var transport = new StatusReceipt("https://api.openai.com/v1/responses", response, HttpMethod.Post);
+        var provider = new AiPilotProvider(config, transport, TimeProvider.System);
+        var handles = new List<string>();
+
+        var outcome = await provider.BeginAsync(route, offer, operation, AiProtocol.Digest(AiPilotProvider.ReportFixture),
+            id => { handles.Add(id); return Task.CompletedTask; }, TestContext.Current.CancellationToken);
+
+        Assert.Equal(1, transport.Reads);
+        Assert.Equal(expectBinding ? new[] { handle } : [], handles);
+        Assert.Equal(AiProviderState.Unknown, outcome.State);
+    }
+
+    private sealed class StatusReceipt(string url, string response, HttpMethod? method = null) : HttpMessageHandler, IHttpClientFactory
     {
         internal int Reads { get; private set; }
 
@@ -101,7 +137,7 @@ public sealed class AiPilotOutputTests
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Assert.Equal(HttpMethod.Get, request.Method);
+            Assert.Equal(method ?? HttpMethod.Get, request.Method);
             Assert.Equal(url, request.RequestUri!.AbsoluteUri);
             Reads++;
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)

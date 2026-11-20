@@ -139,6 +139,10 @@ The pending operator view shows a content-free HTTP classification for the origi
 
 The isolated PostgreSQL test refused an unknown configured model before any vendor call, then exercised six distinct creates with the genuine service store and synthetic HTTP replies. Each create was sent once despite repeat submission and a later dispatch drain. The five classified replies and one unclassified 503 retained their original reserves, without a handle, usage, customer settlement or refund. The directly affected private HTTPS panel test verified the displayed 401 classification and zero provider traffic. Both tests used the additive migration and regenerated compiled model. There were no real vendor calls or costs.
 
+### Create acknowledgement correlation
+
+The original OpenAI create path now checks its own operation metadata when the acknowledgement echoes the correlation field. Two fictional responses previously attached the returned handle despite a different operation or an explicit null value. The corrected path leaves both outcomes unresolved without attaching a handle. Matching metadata and acknowledgements that omit metadata still bind the returned handle once. Four focused cases used a closed transport and contacted no provider. See the [Responses API reference](https://developers.openai.com/api/reference/resources/responses/methods/create).
+
 ### Explicit refusal in structured output
 
 A separate output check exercised the original OpenAI status adapter with a fictional response containing both valid structured text and a refusal. The text was previously accepted when the refusal was in the same message or in a second message. Both cases now suppress the result and preserve the provider completion status and reported token usage. Existing reservation reconciliation remains in effect. The two focused checks used a closed transport and no live calls. See [structured output refusals](https://developers.openai.com/api/docs/guides/structured-outputs#refusals-with-structured-outputs).

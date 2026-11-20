@@ -318,6 +318,10 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         using var result = await ParseAsync(response, ct);
         var id = result is null ? null : Text(result.RootElement, "id");
         if (!ValidId(id)) return Unknown;
+        // A contradictory operation echo cannot claim this dispatch. Some create receipts omit metadata.
+        var echoedOperation = Read(Read(result!.RootElement, "metadata"), "zanance_operation");
+        if (profile.Provider == "openai" && echoedOperation.ValueKind != JsonValueKind.Undefined &&
+            (echoedOperation.ValueKind != JsonValueKind.String || echoedOperation.GetString() != operation)) return Unknown;
         await saveId(id!);
         return Outcome(profile, offer.Purpose, digest, result!.RootElement);
     }
