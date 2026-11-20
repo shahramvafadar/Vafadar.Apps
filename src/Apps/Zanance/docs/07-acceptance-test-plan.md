@@ -291,7 +291,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-01 | Fresh install offline, no login | PR-01, ONB-01 | Manual | S2 | Verified (Windows Debug snapshots including theme/experience and existing-backup restore entry points, D-62; empty-profile integration test; device run pending) |
 | AT-02 | Simple income/expense | TX-01, FIN-12 | Unit | S1 | Verified (unit, domain level) |
 | AT-03 | Multiple fast Save taps | TX-06 | Unit (view model) + manual | S3 | Verified (unit, domain level) |
-| AT-04 | Leave form / save error keeps input | TX-06 | Unit + manual | S3 | Implemented (discard confirmation, input kept on error); device check pending |
+| AT-04 | Leave form / save error keeps input | TX-06 | Unit + manual | S3 | [Native Android validation and discard](#at-04-android-rejected-draft-and-discard) pass on the offline release APK. Physical-device and storage-failure acceptance remain separate. |
 | AT-05 | Transfer between two accounts | FIN-02 | Unit | S1 | Verified (unit, domain level) |
 | AT-06 | Report only source account | FIN-03 | Unit | S1 | Verified (unit, domain level) |
 | AT-07 | Card purchase and card payment | ACC-04 | Unit + physical | S1 | Verified at recorded scopes: unit and D-404 original Samsung expense60/payment90/positive credit30, cold balances and two ledger details; no actual bank settlement or whole-device acceptance |
@@ -377,6 +377,23 @@ unchanged envelope/database hashes and envelope-tamper rejection. No main packag
 No production encryption, ARM64 device, iOS runtime, hardware-backed guarantee or crash-safe migration acceptance
 is implied. ADR acceptance remains pending owner review. See proposed ADR 0010 and experiments/Zanance.Encryption.
 
+
+## AT-04 Android rejected draft and discard
+
+A fresh API 36 x86_64 emulator installed the retained Offline Release APK, SHA-256
+`9f1c9df40e85763054eb3568be2fa2821c55e719cdcd28e744d0a3a7c7ed8bde`. One zero-opening
+fixture account completed setup. The Home expense action opened a native editor. The amount
+`0.00` remained visible after one Save. The editor displayed “Enter an amount greater than zero.”
+The validation refused the draft before storage. Cancel displayed the original discard dialog.
+Keep editing returned to the same draft with its input and validation feedback. A later Cancel
+and explicit Discard returned to Home. Transactions with All periods and All types selected
+showed no entries. No actual transaction was saved.
+
+The initial observer arrived during preparation and a later hierarchy dump briefly had no
+accessibility root. The same launch continued. Device-side SHA-256 matched the retained APK.
+The disposable AVD was retired. Native captures and the receipt are in `artifacts/zdr`.
+This covers one native validation and discard sequence. Storage-write failure and physical-device
+acceptance remain separate.
 
 ## AT-76 - Build-specific SDK and Android permission boundaries (D-69 / SEC-09)
 
