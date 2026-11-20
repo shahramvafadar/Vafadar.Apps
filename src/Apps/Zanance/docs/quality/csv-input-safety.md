@@ -140,3 +140,22 @@ and app outcome controls retain their assertions. All data were synthetic.
 Evidence is under `artifacts/csv-cancelled-provider-input`.
 Strict Windows and Android Release builds passed. The signed offline APK SHA256
 is 93211dd299b0d6fb0edc7f0010f6600b22396079b96ee17aa26cd7eb71f6b842.
+
+## Android cancellation when opening a selected document
+
+The shared picker now forwards the caller's cancellation to the Android resolver when
+querying metadata and opening a regular or virtual document. For a regular content URI,
+it creates the stream from the same read-only asset descriptor used by Android's
+[ContentResolver.openInputStream implementation](https://android.googlesource.com/platform/frameworks/base/+/refs/heads/main/core/java/android/content/ContentResolver.java).
+The existing transient read-grant check and virtual MIME selection still apply. The
+household recovery picker now supplies its existing deadline to this shared path.
+
+A returned descriptor and stream are released if the original request has already
+retired. File type lookup has no cancellation overload, so the picker checks for
+retirement around that call and between virtual-format lookups. Cancellation of a native
+query or open depends on the document provider's support.
+
+The signed offline Android Release build and APK verification passed. The package
+SHA-256 is `6aa4e4a148e548816ed293a186b73edcdcc0737776c502bf2b9befcdf797e62b`.
+This verifies the compiled Android bindings and package. An external provider was
+not exercised on a running Android device for this change.

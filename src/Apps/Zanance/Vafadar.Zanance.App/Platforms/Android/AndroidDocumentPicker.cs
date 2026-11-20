@@ -48,15 +48,18 @@ internal static class AndroidDocumentPicker
             // MAUI's generic picker copies to a physical path first. Its copy can query Position
             // on a provider pipe and it runs before the app can apply its byte limit.
             validateOwner?.Invoke();
-            var document = await Task.Run(() =>
-            {
-                ct.ThrowIfCancellationRequested();
-                return Open(activity, uri, virtualMimeTypes ?? mimeTypes);
-            }, ct);
+            var document = await Task.Run(() => Open(activity, uri, virtualMimeTypes ?? mimeTypes, ct), ct);
             using var asset = document.Asset;
             using var input = document.Input;
+            ct.ThrowIfCancellationRequested();
             validateOwner?.Invoke();
             await use(input, document.Name, document.ContentType);
+        }
+        catch (Android.OS.OperationCanceledException error)
+        {
+            if (ct.IsCancellationRequested)
+                throw new OperationCanceledException("The selected document request retired.", error, ct);
+            throw new IOException("The provider cancelled the selected document request.", error);
         }
         catch (Java.IO.IOException error)
         {
@@ -74,9 +77,10 @@ internal static class AndroidDocumentPicker
         }
     }
 
-    private static (string Name, string? ContentType, Stream Input, AssetFileDescriptor? Asset) Open(
-        Activity activity, Android.Net.Uri uri, string[]? virtualMimeTypes)
+    private static (string Name, string? ContentType, Stream Input, AssetFileDescriptor Asset) Open(
+        Activity activity, Android.Net.Uri uri, string[]? virtualMimeTypes, CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
         var resolver = activity.ContentResolver ?? throw new IOException("The selected document is unavailable.");
         var authority = uri.Authority;
         var provider = string.IsNullOrEmpty(authority) ? null : activity.PackageManager?.ResolveContentProvider(authority, 0);
@@ -91,8 +95,11 @@ internal static class AndroidDocumentPicker
         string[] projection = DocumentsContract.IsDocumentUri(activity, uri)
             ? [IOpenableColumns.DisplayName, DocumentsContract.Document.ColumnFlags]
             : [IOpenableColumns.DisplayName];
-        using (var cursor = resolver.Query(uri, projection, null, null, null))
+        using var signal = new Android.OS.CancellationSignal();
+        using var cancellation = ct.Register(signal.Cancel);
+        using (var cursor = resolver.Query(uri, projection, null, null, null, signal))
         {
+            ct.ThrowIfCancellationRequested();
             if (cursor?.MoveToFirst() == true)
             {
                 var nameColumn = cursor.GetColumnIndex(IOpenableColumns.DisplayName);
@@ -103,30 +110,40 @@ internal static class AndroidDocumentPicker
             }
         }
 
+        ct.ThrowIfCancellationRequested();
         var contentType = resolver.GetType(uri);
+        ct.ThrowIfCancellationRequested();
+        AssetFileDescriptor? asset;
         if (virtualFile)
         {
             var filters = virtualMimeTypes ?? ["*/*"];
-            contentType = filters.SelectMany(filter => resolver.GetStreamTypes(uri, filter) ?? []).FirstOrDefault()
+            contentType = filters.SelectMany(filter =>
+            {
+                ct.ThrowIfCancellationRequested();
+                return resolver.GetStreamTypes(uri, filter) ?? [];
+            }).FirstOrDefault()
                 ?? throw new IOException("The selected virtual document offers no supported format.");
-            var fileName = GetName(name, contentType, converted: true);
-            var asset = resolver.OpenTypedAssetFileDescriptor(uri, contentType, null)
-                ?? throw new IOException("The selected document is unavailable.");
-            try
-            {
-                return (fileName, contentType, asset.CreateInputStream()
-                    ?? throw new IOException("The selected document is unavailable."), asset);
-            }
-            catch
-            {
-                using (asset) asset.Close();
-                throw;
-            }
+            ct.ThrowIfCancellationRequested();
+            asset = resolver.OpenTypedAssetFileDescriptor(uri, contentType, null, signal);
+        }
+        else
+        {
+            // Android's OpenInputStream uses this descriptor for an admitted content URI.
+            asset = resolver.OpenAssetFileDescriptor(uri, "r", signal);
         }
 
-        var selectedName = GetName(name, contentType);
-        var input = resolver.OpenInputStream(uri) ?? throw new IOException("The selected document is unavailable.");
-        return (selectedName, contentType, input, null);
+        if (asset is null) throw new IOException("The selected document is unavailable.");
+        try
+        {
+            ct.ThrowIfCancellationRequested();
+            return (GetName(name, contentType, converted: virtualFile), contentType,
+                asset.CreateInputStream() ?? throw new IOException("The selected document is unavailable."), asset);
+        }
+        catch
+        {
+            using (asset) asset.Close();
+            throw;
+        }
     }
 
     private static string GetName(string? displayName, string? contentType, bool converted = false)

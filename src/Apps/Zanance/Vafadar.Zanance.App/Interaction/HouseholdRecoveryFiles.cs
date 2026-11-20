@@ -21,7 +21,7 @@ internal static partial class HouseholdRecoveryFiles
             await AndroidDocumentPicker.UseAsync(title, null, async (input, _, _) =>
             {
                 bytes = await Task.Run(() => ReadEncryptedAsync(input, ct), ct);
-            }, ct.ThrowIfCancellationRequested);
+            }, ct.ThrowIfCancellationRequested, ct: ct);
             ct.ThrowIfCancellationRequested();
             var accepted = bytes;
             bytes = null;
