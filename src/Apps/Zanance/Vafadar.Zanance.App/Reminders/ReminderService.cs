@@ -190,8 +190,13 @@ public sealed class ReminderService(
         await _gate.WaitAsync();
         try
         {
-            if (Volatile.Read(ref _disposed) != 0 || !await scheduler.AreEnabledAsync())
+            if (Volatile.Read(ref _disposed) != 0) return;
+            if (!await scheduler.AreEnabledAsync())
             {
+                if (Volatile.Read(ref _disposed) != 0) return;
+                // Android can retain alarms while delivery is blocked. A later Settings grant
+                // must not release a schedule from before the current plan or profile changes.
+                await scheduler.ReplaceAllAsync([]);
                 return;
             }
 

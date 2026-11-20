@@ -177,11 +177,45 @@ public sealed class ReminderFlowTests
     }
 
     [Fact]
-    public async Task Disabled_permission_produces_no_native_or_snooze_effect()
+    public async Task Disabled_permission_withdraws_pending_notifications_without_showing_or_snoozing()
     {
         using var f = new FlowFixture(); var s = await SeedAsync(f); s.Native.Enabled = false;
         await s.Service.RefreshAsync(); await s.Service.SnoozeAsync(new(new(1, "Private", "Private", null, "plans"), SnoozeChoice.OneHour));
-        Assert.Equal(0, s.Native.Replacements); Assert.Empty(s.Native.Shown); Assert.Null(f.Preferences.Get("reminders.snoozed"));
+        Assert.Equal(1, s.Native.Replacements); Assert.Empty(s.Native.Pending); Assert.Empty(s.Native.Shown);
+        Assert.Null(f.Preferences.Get("reminders.snoozed"));
+    }
+
+    [Fact]
+    public async Task Disabled_delivery_withdraws_waiting_alarms_and_rebuilds_from_current_plans_when_reenabled()
+    {
+        using var fixture = new FlowFixture();
+        var reminders = await SeedAsync(fixture);
+        await reminders.Service.RefreshAsync();
+        var previous = Assert.Single(reminders.Native.Pending);
+        reminders.Native.Enabled = false;
+        await using (var database = await fixture.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(Ct))
+        {
+            var removed = await database.Schedules.SingleAsync(plan => plan.Id == reminders.Plans[0].Id, Ct);
+            removed.ReminderEnabled = false;
+            await database.SaveChangesAsync(Ct);
+        }
+        var saved = await RowsAsync(fixture);
+
+        await reminders.Service.RefreshAsync();
+
+        Assert.Empty(reminders.Native.Pending);
+        Assert.Empty(reminders.Native.Shown);
+        Assert.Equal(saved, await RowsAsync(fixture));
+
+        reminders.Native.Enabled = true;
+        await reminders.Service.RefreshAsync();
+
+        var rebuilt = Assert.Single(reminders.Native.Pending);
+        Assert.Equal(previous.NotifyAt, rebuilt.NotifyAt);
+        var remaining = PlanReminderLink.Parse(rebuilt.Link)!.Targets;
+        Assert.Equal(5, remaining.Count);
+        Assert.DoesNotContain(remaining, target => target.PlanId == reminders.Plans[0].Id);
+        Assert.Equal(saved, await RowsAsync(fixture));
     }
 
     [Theory]

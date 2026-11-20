@@ -67,3 +67,34 @@ permission remained granted. Back returned to the same Plans row and process,
 with the warning gone. There was one plan save and no financial posting.
 The guest's original display geometry was restored and the disposable test
 installation and emulator were retired. Neither physical phone was used.
+
+## The app withdraws its pending alarms when delivery is blocked
+
+Previously, a refresh returned without reconciling already pending alarms
+while Android blocked delivery. A new source-linked test reproduced the stale
+queue after one plan's reminder was disabled. A refresh now withdraws pending
+alarms while delivery is blocked. Once delivery is allowed and the app
+refreshes, the queue is rebuilt from the current plan and profile settings.
+No reminder rule or snooze is deleted by withdrawing the native queue. The
+76 selected reminder and publication cases passed, including the current
+source rebuild and the absence of a new snooze while blocked. The Windows
+build passed without warnings or errors.
+
+In an Android 16 x86-64 emulator, the original signed package
+`045e3d29` scheduled a period-review alarm for December 1 at 09:00,
+request ID 1219868079. After the Android package permission and the saved
+review reminder were both turned off, the same pending native alarm remained.
+
+The corrected signed Offline Release APK
+`c0c41fb4fb981bedef355785c4b4a691d17227c9835654368f0d7cd4a0448223`
+was installed without resetting UID 10216. After opening the app with
+permission still denied, Android's active alarm list was empty for Zanance.
+The first observer included historical cancellations in its count. Restricting
+it to live scheduled alarms confirmed the cancellation on the existing app
+process. After the permission was granted, the queue was still empty while
+the user was in Android Settings and again after returning to Zanance. The
+original review setting remained off and Transactions was empty.
+
+The disposable emulator and package were retired after restoring display
+geometry. The clock and physical phones were untouched. Evidence is under
+`artifacts/android-disabled-reminder-queue`.
