@@ -5329,6 +5329,24 @@ to these public app values and the install identity. Full encrypted-row equality
 upgrade acceptance remain open. The emulator was retired. Local receipts and hierarchies are
 retained in `artifacts/at60-legacy-ledger`.
 
+### AT-60 direct upgrade on the minimum Android version
+
+An isolated Android 7 API 24 x86-64 guest installed the retained D-320 Offline Release APK
+`8850a544` and completed setup once using the fictitious account `My account Api24Upgrade`
+without entering a transaction. Home showed the named account and EUR 0.00. An initial UI observer
+expected the Android 16 balance button caption. On Android 7 the button includes the Accounts
+label, so the balance heading was used to read the same prepared Home.
+
+The initial host install command timed out. Android showed no ongoing install session and the
+old installed APK hash, UID and first-install timestamp were still unchanged. The candidate
+`2d05d89f` was then staged on the guest, hash-checked and installed in place with
+`pm install -r`. Both APKs used the same package and signer. The new hash was read from the
+installed APK, UID 10062 and the first-install timestamp remained unchanged, and the first
+ready Home retained the same account and exact balance text. Onboarding and financial posting
+were not replayed. The emulator was stopped. Its data files remain because automatic cleanup
+was refused. This case qualifies the minimum Android version for this package pair and
+visible account data, with physical upgrades and complete encrypted-row equality still open.
+
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
 
 The retained D-401 candidate qualifies one card purchase60 and Checking-to-Card payment90, with
