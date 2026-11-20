@@ -20,6 +20,9 @@ public sealed partial class AiAnalysisFlowTests
     {
         internal AiClientRecord? Record;
         internal AiBalance Balance = new(100, 0, 0, 0);
+        internal bool ExplanationConfigured = true;
+        internal bool? ComparisonConfigured;
+        internal AiPurpose? QuotedPurpose;
         internal bool LoseSubmissionResponse, FailRecordRead;
         internal Action? AfterSubmission;
         internal int Submissions, Continues, Closes, RecordReads, Disposals;
@@ -30,13 +33,14 @@ public sealed partial class AiAnalysisFlowTests
         {
             if (DuringAvailability is not null) await DuringAvailability();
             if (HoldAvailability is not null) await HoldAvailability(ct);
-            return new(true, "fictitious-local", "fixture-v1", Balance);
+            return new(ExplanationConfigured, "fictitious-local", "fixture-v1", Balance, ComparisonConfigured);
         }
         public Task<AiClientRecord?> ReadAsync(CancellationToken ct)
         { RecordReads++; return FailRecordRead ? Task.FromException<AiClientRecord?>(new IOException("Controlled original private record read failure.")) : Task.FromResult(Record); }
         public async Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct)
         {
             if (HoldQuote is not null) await HoldQuote(ct);
+            QuotedPurpose = purpose;
             return new(Guid.NewGuid(), "fictitious-local", "fixture-v1", purpose, 8, new(2026, 10, 9, 10, 0, 0, TimeSpan.Zero));
         }
         public async Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct)
@@ -89,6 +93,38 @@ public sealed partial class AiAnalysisFlowTests
     }
     private static async Task Review(AiAnalysisViewModel vm)
     { Assert.Single(vm.Accounts).Selected = true; await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure); }
+
+    /// <summary>Independent operator routing remains available across app language changes.</summary>
+    [Theory]
+    [InlineData(false, true, false, true)]
+    [InlineData(true, false, true, false)]
+    [InlineData(true, null, true, true)]
+    [InlineData(false, false, false, false)]
+    public async Task Analysis_purpose_availability_survives_language_change(
+        bool explanation, bool? comparison, bool allowExplanation, bool allowComparison)
+    {
+        using var f = new FlowFixture();
+        var runtime = new Runtime();
+        runtime.Remote.ExplanationConfigured = explanation;
+        runtime.Remote.ComparisonConfigured = comparison;
+        var model = await Model(f, runtime);
+        await model.CheckProviderAsync();
+        bool anyPurpose = allowExplanation || allowComparison;
+        Assert.Equal(anyPurpose ? runtime.Remote.Destination : f.Translator["Ai_NoProvider"], model.ProviderText);
+
+        f.Localization.SetLanguage(f.Localization.SupportedLanguages.Single(language => language.CultureName == "de"));
+        Assert.Equal(anyPurpose ? runtime.Remote.Destination : f.Translator["Ai_NoProvider"], model.ProviderText);
+        Assert.Equal(1, runtime.Opens);
+
+        await Review(model);
+        Assert.Equal(allowExplanation, model.CanQuote);
+        model.ComparePrevious = true;
+        await model.ReviewAsync();
+        Assert.Equal(allowComparison, model.CanQuote);
+        await model.QuoteAsync();
+        Assert.Equal(allowComparison ? AiPurpose.PeriodComparison : (AiPurpose?)null, runtime.Remote.QuotedPurpose);
+        Assert.Equal(0, runtime.Remote.Submissions);
+    }
 
     /// <summary>Display only the known request state and the actual scope of the next confirmation.</summary>
     [Theory]

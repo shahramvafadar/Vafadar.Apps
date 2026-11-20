@@ -187,7 +187,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     public bool CanCheckProvider => OwnsPresentation && Loaded && !HasPendingOperation && runtime.NetworkAvailable;
     /// <summary>Gets whether metadata-only original terms can be requested.</summary>
     public bool CanQuote => OwnsPresentation && !HasPendingOperation && review is not null && metadataReady && remote is not null &&
-        availability is { } status && ((review.Selection.ComparePrevious || review.Selection.Forecast is not null || review.Selection.Question?.Intent == AiQuestionIntent.PlanShortfall) ? status.ComparisonConfigured ?? status.Configured : status.Configured) && !Pending;
+        availability is { } status && IsPurposeConfigured(status, review.Payload.Purpose) && !Pending;
     /// <summary>Gets whether current literal terms and actual available quantities permit a request attempt; the service rechecks authority.</summary>
     public bool CanSend => CanQuote && offer is not null && availability is not null &&
         checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= offer.MaximumUnits;
@@ -453,7 +453,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             var status = await opened.AvailabilityAsync(cancellation); Validate(version);
             var saved = await opened.ReadAsync(cancellation); Validate(version);
             // Stage one coherent metadata snapshot before the first binding callback.
-            var configured = status.Configured || status.ComparisonConfigured == true;
+            var configured = HasConfiguredPurpose(status);
             var destination = configured || saved is not null ? opened.Destination : null; Validate(version);
             var provider = configured ? destination : text["Ai_NoProvider"];
             var balance = BalanceCaption(status.Balance);
@@ -606,6 +606,16 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         if (!string.Equals(original, NativeDisclosure(), StringComparison.Ordinal))
             throw new InvalidOperationException("Original analysis native disclosure changed.");
     }
+    private static bool HasConfiguredPurpose(AiAvailability? status)
+        => status is { Configured: true } or { ComparisonConfigured: true };
+
+    private static bool IsPurposeConfigured(AiAvailability status, AiPurpose purpose) => purpose switch
+    {
+        AiPurpose.PeriodExplanation => status.Configured,
+        AiPurpose.PeriodComparison => status.ComparisonConfigured ?? status.Configured,
+        _ => false,
+    };
+
     private bool CanAfford(AiOffer terms) => availability is not null && checked(availability.Balance.PurchasedAvailable + availability.Balance.GiftedAvailable) >= terms.MaximumUnits;
     private void ShowRecord(AiClientRecord? record, bool applyBalance = false)
     {
@@ -793,7 +803,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         try
         {
             // D-965: even a retained destination getter can retire this owner before publication.
-            var provider = status?.Configured == true ? connection?.Destination : text["Ai_NoProvider"];
+            var provider = HasConfiguredPurpose(status) ? connection?.Destination : text["Ai_NoProvider"];
             if (!Current()) return;
             SetError(key); if (!Current()) return;
             if (AccountsError is not null) { AccountsError = text["Ai_ChooseAccounts"]; if (!Current()) return; }

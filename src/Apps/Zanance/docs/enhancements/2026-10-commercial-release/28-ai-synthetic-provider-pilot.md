@@ -232,6 +232,17 @@ The original Analysis command methods and connected app client ran against isola
 
 The app compares the equally long period immediately before the selected dates. For November 1–30 it uses October 2–31. The server pilot accepts that exact synthetic scope alongside the original server-only fixture. The app requests purpose-aware availability while the legacy availability response keeps its original shape. A comparison can obtain its own quote while the report route is off.
 
+Analysis preserves the integrated service destination across language changes when only the
+comparison route is available. Quote eligibility uses the purpose in the reviewed payload.
+Four synthetic host cases cover comparison only, explanation only, both routes off and
+the older availability response without a comparison flag. The latter uses the existing
+shared availability behavior. The comparison-only case previously showed an unavailable
+service after switching to German. There was no new provider lookup on language change
+and no real model request, credit usage or financial posting. A separate Windows app
+review observed the same native destination text before and after the language change,
+with one metadata load and equal financial source fingerprints. Evidence is retained in
+`artifacts/ai-purpose-availability`.
+
 The Home shortcuts and the Reports period overview now open Analysis with the original local file, date range and account selection. Reports carries its report currency/account scope and confirmed-only choice. Home carries the accounts included in its period totals. Its shortcuts remain accessible with the default home layout, which hides the optional period chart. The comparison shortcut additionally selects the existing preceding-period option. Back returns to the source page. Neither shortcut reviews, checks providers or sends data automatically. This first scope explains period aggregates. The detailed Reports actions are described below.
 
 Four focused host cases passed for prefill, local-only review and refusal of a different file or missing account. The independent Windows review used the actual native Invoke pattern for all four Home and Reports actions, verified the selected scope and purpose on the original Analysis screen, and returned with the financial source unchanged and zero provider calls. The initial Windows control was hidden beneath Home's optional chart in the default layout. The verified version moved both actions to a separate visible card. No successful live request was replayed for native verification.
