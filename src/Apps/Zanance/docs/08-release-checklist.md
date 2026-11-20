@@ -306,6 +306,10 @@ independent work and overall goal remain active. Broader gates stay open.
   covers one ordinary app restart inside the original 60-second interval.
   [Android 16 PIN change and removal](07-acceptance-test-plan.md#at-69-android-app-pin-change-and-removal-across-restarts)
   covers the original Settings form, the replacement PIN after restart and direct Home after removal.
+  [Android 16 reboot during the active PIN delay](07-acceptance-test-plan.md#at-69-active-app-pin-delay-across-an-android-reboot)
+  covers the recorded reboot case. The [Samsung enrollment continuity check](quality/owner-enrollment-continuity-samsung-d1028.md)
+  covers two non-authentication-bound keys in an independent package after the owner added and
+  removed the test fingerprint. Other biometric policies and physical release acceptance remain open.
 
 ## Build secrets
 
