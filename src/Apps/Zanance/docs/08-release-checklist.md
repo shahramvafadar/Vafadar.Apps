@@ -225,8 +225,8 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57). The
   [fresh Android emulator review](07-acceptance-test-plan.md#at-57-password-protected-restore-on-a-fresh-android-installation)
   restored the protected fixture and retained its balance after a cold reopen. A separate Android emulator
-  [created and shared an encrypted backup](07-acceptance-test-plan.md#at-57-native-encrypted-export-and-local-handoff).
-  The protected physical round trip remains open.
+  [created, shared and restored the exact encrypted file on a separate installation](07-acceptance-test-plan.md#at-57-native-encrypted-export-and-local-handoff).
+  The protected physical round trip and this workload on Android 7 remain open.
 - [ ] No known critical bug in balances, conversion, double counting, restore or data exposure (Q-01)
 - [ ] Complete reference Android performance acceptance (Q-02). With 10,000 entries, 20 accounts and 100 plans, the
   five-sample warm Home median was 751 ms against the approximate 2,000-ms target. The process-cold launch was

@@ -4833,9 +4833,19 @@ The observer recovered a fresh hierarchy after an early Android dump returned no
 Retained XML masked synthetic input; no plaintext backup was retained. The disposable
 emulator and test signing files were retired. Local evidence is in `artifacts/zpb`.
 
-This is native encrypted creation and handoff evidence. The separate fresh-install review
-used the protected D-403 payload. No real cloud provider, physical device or common-payload
-physical round trip was exercised.
+The independent Android 35 destination subsequently received this exact ciphertext. The
+SHA-256 matched after transfer. The fresh installation used the native first-run picker
+and one replacement confirmation. It opened Home with EUR 0.00, one visible restored
+account and an empty all-period transaction list. No destination account or transaction
+was entered. The original file and the APK were unchanged. Both Android 35 fixtures were
+retired. Evidence is in `artifacts/zp2`.
+
+The Android 7 destination attempt was retired before installation or file transfer. Its
+running host console answered while the guest shell's boot observations did not return.
+Two host display observations had the same black frame. This leaves minimum-version
+behavior unqualified for this workload. The earlier protected D-403 fixture separately
+qualifies a nonzero balance and a cold reopen. Physical devices and genuine cloud providers
+remain outside this evidence.
 
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
 
