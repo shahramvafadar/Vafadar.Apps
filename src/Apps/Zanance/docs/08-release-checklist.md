@@ -1637,8 +1637,33 @@ One fresh Android 16 emulator selected the retained D-403 fixture from a synthet
 that served a non-seekable pipe. Zanance made one stream open. The original first-run preview
 showed one account, one transaction and one plan. Cancel cleared the preview and Back returned
 to Welcome. No replacement or account creation occurred. The owned emulator was retired.
-Evidence is under `artifacts/backup-native-stream-preview`. The separate recovery screen for
-failed protected startup was built with the same adapter and was not opened in this run.
+Evidence is under `artifacts/backup-native-stream-preview`.
+
+## Covered Android startup recovery from a provider stream
+
+A separate Android 16 x86_64 guest installed the same signed offline release used for backup
+share expiry, `4c3e53f2`. One fictitious zero-opening account prepared the protected
+installation. Before a cold launch, the selected generation's local key envelope was
+temporarily renamed inside that disposable installation. The covered startup exposed its
+backup recovery option while the previous financial data remained hidden.
+
+The original system picker passed the retained D-403 backup through a read-only provider pipe.
+The app's UID opened it once. One explicit native recovery confirmation led to a distinct
+encrypted installation and Home showed EUR 35.00. The activation marker matched the receipt
+digest, and the selected encrypted database existed. The original ciphertext hash and metadata
+and the held envelope's inode and metadata matched the pre-recovery observations. A cold launch
+in a new app process showed the same restored Home, the named EUR 2.00 expense and the EUR 9.00
+plan occurrence marked Skipped.
+
+The test initially expected one key envelope; the original prepared fixture had two. The
+test selected the envelope matching the actual database generation and fixed its Android
+`stat` formatting before moving anything. The activation observer was corrected to inspect the
+candidate named in the receipt, because safety and preference companions also matched its
+initial broad filename search. The fixture creation, picker, confirmation and cold recovery
+were each exercised once. No transaction was posted. Both disposable packages and the guest
+were retired. Evidence is retained under
+`artifacts/xbr-native`. Physical recovery, other platforms and full recovered-table equality
+remain separate.
 
 ## Android CSV import previews from provider streams
 
