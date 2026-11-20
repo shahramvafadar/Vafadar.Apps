@@ -109,6 +109,15 @@ ownership, mode and SELinux label, one native Retry completed in the same proces
 comparison covers internal expiry; the earlier app-created external copy was exercised for
 profile reset. No recipient or transaction was involved.
 
+A separate Android 16 guest confirmed expiry in the legacy external cache. The signed
+offline APK `9cf6c14f` created one fictitious backup and its external staging copy through the
+original native share flow. No recipient was selected. The app's UID owned the staging
+directory, and the copy and saved backup had matching hashes. Only the temporary copy and
+its directory were aged past the cutoff. After a same-signer in-place upgrade to `4c3e53f2`,
+the normal startup to Home removed the staged copy. The saved backup kept its hash, owner,
+mode and modification time. Stepping through this test required no profile reset, app data
+clear or ledger posting. Evidence is retained under `artifacts/xbs-external`.
+
 The signed offline APK `2d05d89f` was exercised through the Profiles screen on an isolated
 Android 16 guest. Three fictitious files were seeded in the internal sharing cache using
 the exact new secondary profile identity. Cancelling its first deletion confirmation kept
