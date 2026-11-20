@@ -134,6 +134,20 @@ app process passed preparation and displayed its native Welcome screen with airp
 off. The emulator was retired. The app was neither rebuilt nor re-signed, and no account or transaction
 was entered. The record is in `artifacts/zs16`.
 
+The dual-ABI offline AAB `ab1ff5de`, built after the offline sign-in manifest change, generated
+separate four-file ARM64 and x86-64 split sets using the same disposable certificate. Five distinct
+APK files passed signature and archive alignment verification. The shared master APK had the
+offline permission set and neither Microsoft sign-in activity. All 408 native libraries in the two
+ABI splits were stored at 16 KiB offsets and matched the AAB entries byte for byte.
+
+The fresh Android 16 x86-64 guest installed its four splits in one session and the launcher reached
+the original Welcome screen in the same process. Android reported no active default network and a
+4096-byte page size. No account or transaction was entered. The first immediate read during cleanup
+saw Wi-Fi still transitioning. A later read confirmed restoration of the original settings before the
+owned guest was retired. Receipts are in `artifacts/offline-dual-abi-splits`. This adds offline split
+startup on x86-64 for the current local bundle. ARM64 runtime, true 16 KiB kernel execution and
+distribution with the Play signer are still open.
+
 Local evidence also includes the earlier device specifications, source digests, split signature and alignment
 receipts, and native-entry comparisons. Play signing, ARM64 installation and a device with a real 16 KiB
 kernel remain separate acceptance checks. See the
