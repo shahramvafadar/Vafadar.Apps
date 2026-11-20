@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Vafadar.Documents.Maui;
 using Vafadar.Zanance.Core.Ledger;
 
@@ -56,15 +57,24 @@ internal static partial class AttachmentFiles
     {
         if (contentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
         {
+            var transferredOriginal = false;
             try
             {
                 var smaller = await DocumentImages.PrepareAsync(data, (int)MaxEdge, 0.8f);
-                return new(Path.ChangeExtension(name, ".jpg"), "image/jpeg", smaller, forRecognition ? data : null);
+                var result = new PreparedAttachment(Path.ChangeExtension(name, ".jpg"), "image/jpeg",
+                    smaller, forRecognition ? data : null);
+                transferredOriginal = forRecognition;
+                return result;
             }
             catch (Exception ex) when (ex is not OutOfMemoryException)
             {
                 // Never retain a camera original with location metadata as the stored-copy fallback.
                 throw new InvalidDataException("The photo could not be re-encoded.", ex);
+            }
+            finally
+            {
+                // Only a completed recognition handoff owns the original after preparation.
+                if (!transferredOriginal) CryptographicOperations.ZeroMemory(data);
             }
         }
 

@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace Vafadar.Documents.Maui;
 
 /// <summary>
@@ -38,7 +40,14 @@ public static class DocumentReader
 
                 // Recognition gets its own bounded upright pixels, not the app's 1600 px / quality-80 stored copy.
                 var image = await DocumentImages.PrepareAsync(content, DocumentImages.RecognitionEdge, 0.95f);
-                return TextLayout.Reconstruct(await TextRecognizer.RecognizeAsync(image));
+                try
+                {
+                    return TextLayout.Reconstruct(await TextRecognizer.RecognizeAsync(image));
+                }
+                finally
+                {
+                    CryptographicOperations.ZeroMemory(image);
+                }
             }
 
             // Digital PDFs carry their text; OCR is only needed for scanned pages.
@@ -54,14 +63,23 @@ public static class DocumentReader
 
             var pages = new List<string>();
             var ambiguous = false;
-            foreach (var image in await PdfPageImages.RenderAsync(content, MaxPages))
+            var images = await PdfPageImages.RenderAsync(content, MaxPages);
+            try
             {
-                var layout = TextLayout.Reconstruct(await TextRecognizer.RecognizeAsync(image));
-                ambiguous |= layout.IsAmbiguous;
-                if (layout.Text is { } rows)
+                foreach (var image in images)
                 {
-                    pages.Add(rows);
+                    var layout = TextLayout.Reconstruct(await TextRecognizer.RecognizeAsync(image));
+                    ambiguous |= layout.IsAmbiguous;
+                    if (layout.Text is { } rows)
+                    {
+                        pages.Add(rows);
+                    }
                 }
+            }
+            finally
+            {
+                // An OCR error can leave later pages unread, but the renderer already allocated their images.
+                foreach (var image in images) CryptographicOperations.ZeroMemory(image);
             }
 
             // Nothing recognised: a sparse text layer is still better than nothing.

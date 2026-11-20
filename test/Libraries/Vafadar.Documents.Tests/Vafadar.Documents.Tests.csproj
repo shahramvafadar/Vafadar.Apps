@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Libraries\Vafadar.Documents\Vafadar.Documents.csproj" />
+    <Compile Include="..\..\..\src\Libraries\Vafadar.Documents.Maui\DocumentReader.cs" Link="DocumentReader.cs" />
   </ItemGroup>
 
 </Project>

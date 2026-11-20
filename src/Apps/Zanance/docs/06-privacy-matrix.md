@@ -198,6 +198,10 @@ recover lost detail. Recognition/rendering errors and cancellation do not post l
 The receipt session clears its distinct recognition array when the reader returns or when
 the operation ends before the reader acquires it. A read already in progress keeps its
 input until it finishes. The compact attachment and stored-file input remain intact.
+Image attachment preparation clears its original input if preparation fails or if only
+the compact copy is requested. The document reader clears the images it receives from its
+photo normalizer and scanned-PDF renderer after recognition, including unread pages if OCR
+fails partway through. This covers those managed byte arrays.
 
 The camera, attachment picker and portable-backup reader clear their temporary stream
 chunks and current or superseded accumulation arrays, including on a read failure. Each
