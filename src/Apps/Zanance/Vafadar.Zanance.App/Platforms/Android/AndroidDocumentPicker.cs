@@ -20,7 +20,7 @@ internal static class AndroidDocumentPicker
 
     /// <summary>Uses the selected document within its read grant and closes its stream before releasing the picker.</summary>
     internal static async Task UseAsync(string title, string[]? mimeTypes, Func<Stream, string, string?, Task> use,
-        Action? validateOwner = null)
+        Action? validateOwner = null, string[]? virtualMimeTypes = null)
     {
         if (!PickerOwner.Wait(0))
             throw new InvalidOperationException("An attachment picker is already open.");
@@ -47,7 +47,7 @@ internal static class AndroidDocumentPicker
             // MAUI's generic picker copies to a physical path first. Its copy can query Position
             // on a provider pipe and it runs before the app can apply its byte limit.
             validateOwner?.Invoke();
-            var document = await Task.Run(() => Open(activity, uri, mimeTypes));
+            var document = await Task.Run(() => Open(activity, uri, virtualMimeTypes ?? mimeTypes));
             using var asset = document.Asset;
             using var input = document.Input;
             validateOwner?.Invoke();
@@ -70,7 +70,7 @@ internal static class AndroidDocumentPicker
     }
 
     private static (string Name, string? ContentType, Stream Input, AssetFileDescriptor? Asset) Open(
-        Activity activity, Android.Net.Uri uri, string[]? mimeTypes)
+        Activity activity, Android.Net.Uri uri, string[]? virtualMimeTypes)
     {
         var resolver = activity.ContentResolver ?? throw new IOException("The selected document is unavailable.");
         var authority = uri.Authority;
@@ -101,7 +101,7 @@ internal static class AndroidDocumentPicker
         var contentType = resolver.GetType(uri);
         if (virtualFile)
         {
-            var filters = mimeTypes ?? ["*/*"];
+            var filters = virtualMimeTypes ?? ["*/*"];
             contentType = filters.SelectMany(filter => resolver.GetStreamTypes(uri, filter) ?? []).FirstOrDefault()
                 ?? throw new IOException("The selected virtual document offers no supported format.");
             var fileName = GetName(name, contentType, converted: true);

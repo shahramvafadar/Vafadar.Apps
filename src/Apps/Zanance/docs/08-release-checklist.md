@@ -1650,6 +1650,20 @@ the body was scrolled to inspect the same result. No import was approved and Tra
 remained empty. The fresh emulator was retired. Evidence is under
 `artifacts/csv-native-stream-preview`.
 
+The Android picker requests a CSV representation from virtual documents selected by the generic
+and bank CSV readers. Both CSV MIME aliases are accepted. The regular file chooser stays open to
+files with generic metadata, and the existing parser determines whether their contents are valid.
+
+A new synthetic provider offered a PDF ahead of its CSV representation. On Android 16, signed
+APK `b5a84f03` opened that PDF and showed a CSV quotation error. After one upgrade without
+reset to signed offline APK `9cf6c14f`, selecting the same document opened only `text/csv`
+and displayed `Virtual_Spreadsheet.csv`. The original preview showed one synthetic EUR 19.87
+row and the ledger stayed empty. An initial observation scrolled the pinned footer. The same
+prepared preview was inspected through its content viewport without repeating the selection or
+preview. No import, bank-preset replay or vendor request occurred. Strict Windows and Android
+builds passed. Temporary packages and the owned emulator were retired. Evidence is retained
+under `artifacts/android-virtual-csv-review`.
+
 ## Android household recovery-file transport
 
 The Android household recovery picker reads the selected stream directly using its temporary URI

@@ -35,10 +35,11 @@ internal sealed class MauiDataFileInteraction(AppLockService appLock) : IDataFil
         // D-385: small provider reads and decoding can finish synchronously.
 #if ANDROID
         PickedDataFile? picked = null;
+        // An ordinary bank export can have generic MIME metadata; only constrain virtual conversions.
         await AndroidDocumentPicker.UseAsync(title, null, async (input, name, _) =>
         {
             picked = await Task.Run(() => ReadAsync(input, name), ct);
-        }, Current);
+        }, Current, virtualMimeTypes: ["text/csv", "text/comma-separated-values"]);
         Current();
         return picked;
 #else
