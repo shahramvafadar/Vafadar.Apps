@@ -82,9 +82,9 @@ public static class ServiceHost
             !File.Exists(Path.Combine(root, "production-hosting.marker"))))
             throw new InvalidOperationException("Billing local qualification cannot activate public purchases.");
         var analysis = builder.Configuration.GetValue<bool>("Analysis:LocalQualification");
-        if (analysis && !(builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Integration") ||
-            selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")) &&
-            !File.Exists(Path.Combine(root, "production-hosting.marker"))))
+        if (analysis && (File.Exists(Path.Combine(root, "production-hosting.marker")) ||
+            !(builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("Integration") ||
+              selfHosted?.Origin.DnsSafeHost == "localhost" && File.Exists(Path.Combine(root, "fictitious-hosting.marker")))))
             throw new InvalidOperationException("Local analysis qualification cannot activate a public provider.");
         var pilot = builder.Configuration.GetValue<bool>("Analysis:ProviderPilot:Enabled");
         if (pilot)

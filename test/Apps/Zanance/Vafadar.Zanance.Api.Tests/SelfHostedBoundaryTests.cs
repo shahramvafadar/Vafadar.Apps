@@ -40,6 +40,35 @@ public sealed class SelfHostedBoundaryTests
         }
     }
 
+    /// <summary>A local environment designation cannot grant analysis access to a production service root.</summary>
+    [Theory]
+    [InlineData("Development", false)]
+    [InlineData("Integration", false)]
+    [InlineData("Integration", true)]
+    public void Analysis_qualification_rejects_production_storage_before_effects(string environment, bool providerPilot)
+    {
+        var root = Path.Combine(Path.GetTempPath(), "zanance-analysis-root-refusal-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        const string marker = "production-hosting.marker";
+        try
+        {
+            File.WriteAllText(Path.Combine(root, marker), "fictional production authority");
+            var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+            { EnvironmentName = environment, ApplicationName = typeof(ServiceHost).Assembly.FullName });
+            builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Service:Root"] = root,
+                ["ConnectionStrings:Service"] = "Host=127.0.0.1;Database=zanance_ai_provider_pilot;Username=fixture",
+                ["Analysis:LocalQualification"] = "true",
+                ["Analysis:ProviderPilot:Enabled"] = providerPilot.ToString(),
+            });
+            var error = Assert.Throws<InvalidOperationException>(() => builder.AddZananceService());
+            Assert.Equal("Local analysis qualification cannot activate a public provider.", error.Message);
+            Assert.Equal(new[] { Path.Combine(root, marker) }, Directory.GetFileSystemEntries(root));
+        }
+        finally { Directory.Delete(root, recursive: true); }
+    }
+
     /// <summary>Rejects port drift before attempting to load private listener authority.</summary>
     [Theory]
     [InlineData("https://localhost/")]
