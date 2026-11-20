@@ -66,6 +66,18 @@ PDF, ZIP and attachment opening were checked at the packaged path and source lev
 revision. Their handoffs were not exercised again. Evidence is in
 `artifacts/restricted-android-share-review`.
 
+A second fresh Android 16 emulator checked the remaining three file handoffs using the exact
+same signed APK. It restored the retained one-entry synthetic backup once to prepare the report
+and accountant views. A synthetic PDF was attached through the original entry-detail picker.
+The selected local receiver then read the opened attachment through its grant and matched all
+48,236 bytes to the source digest. The October report PDF (19,547 bytes) and the reviewed
+accountant ZIP (3,379 bytes) arrived through their dedicated provider paths. Each used the
+original system chooser. No financial entry was posted, and CSV and backup sharing were not
+replayed. The initial report observation selected a label inside the clickable tab. The
+same unchanged screen was used to finish the report path. Both fixture source digests matched
+at cleanup. The temporary packages and emulator were retired. Evidence is in
+`artifacts/restricted-share-document-review`.
+
 ## Permissions
 
 iOS: `NSFaceIDUsageDescription` (app lock) and `NSCameraUsageDescription` (receipt photos, D-38), localised in `Platforms/iOS/*.lproj/InfoPlist.strings`; notifications use the system authorisation dialog. Windows: no capability beyond `runFullTrust` (files only, no camera). Android manifest:
