@@ -6,7 +6,7 @@ using Vafadar.Zanance.Core.Money;
 namespace Vafadar.Zanance.Core.Tests.Ledger;
 
 /// <summary>
-/// AT-62 in the three languages: the reference results of specification §24.2 are shown exactly, with the separators of
+/// AT-62 across the six app languages: the reference results of specification §24.2 are shown exactly, with the separators of
 /// each language, and in Persian with Persian digits (D-27).
 /// </summary>
 [Trait("AT", "AT-62")]
@@ -21,6 +21,23 @@ public sealed class GoldenDataDisplayTests
     [InlineData("fa", 2_763, false, "۲۷٫۶۳ EUR")]
     [InlineData("fa", 2_027_63, true, "+۲٬۰۲۷٫۶۳ EUR")]
     public void Reference_results_read_the_same_in_every_language(string language, long minor, bool showPlus, string expected)
+    {
+        AssertReference(language, minor, showPlus, expected);
+    }
+
+    [Theory]
+    [InlineData("es", 250_763, false, "2.507,63 EUR")]
+    [InlineData("es", 202_763, true, "+2.027,63 EUR")]
+    [InlineData("fr", 250_763, false, "2\u202f507,63 EUR")]
+    [InlineData("fr", 202_763, true, "+2\u202f027,63 EUR")]
+    [InlineData("it", 250_763, false, "2.507,63 EUR")]
+    [InlineData("it", 202_763, true, "+2.027,63 EUR")]
+    public void Reference_balance_and_surplus_follow_the_other_supported_locales(string language, long minor, bool showPlus, string expected)
+    {
+        AssertReference(language, minor, showPlus, expected);
+    }
+
+    private static void AssertReference(string language, long minor, bool showPlus, string expected)
     {
         // The culture the app shows, from the same service it uses.
         var localization = new LocalizationService(new LocalizationOptions(), new InMemorySettingsStore(), new Translator());

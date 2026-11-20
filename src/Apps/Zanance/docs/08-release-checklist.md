@@ -220,7 +220,8 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Every Android phone-test handoff includes a complete signed Release APK with package, signature, and 16 KiB ZIP and ELF load alignment verified
   and the actual file path supplied (D-66); installation and physical-device acceptance are checked separately.
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations
-- [x] Golden data AT-62 exact in en/fa/de (calculation and display tests: separators per language, Persian digits)
+- [x] AT-62 golden calculations, checking-only forecast and representative amount formatting in all six app languages
+  are covered by automated tests. [Acceptance record](07-acceptance-test-plan.md)
 - [ ] Upgrade from every earlier test build keeps data (AT-60). The first-schema integration test passes.
   A [direct Android upgrade from the retained D-320 build](07-acceptance-test-plan.md#at-60-direct-upgrade-from-the-retained-d-320-android-apk)
   preserved one named synthetic account and its balance. A [direct upgrade from D-554 with a retained ledger](07-acceptance-test-plan.md#at-60-direct-upgrade-with-a-retained-legacy-ledger)

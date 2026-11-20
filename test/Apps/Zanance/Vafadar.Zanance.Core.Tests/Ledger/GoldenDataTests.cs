@@ -1,6 +1,8 @@
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Forecasts;
 using Vafadar.Zanance.Core.Ledger;
+using Vafadar.Zanance.Core.Plans;
 
 namespace Vafadar.Zanance.Core.Tests.Ledger;
 
@@ -78,5 +80,54 @@ public sealed class GoldenDataTests
         var unreviewed = Assert.Single(LedgerCalculator.Unreviewed(_ledger.Accounts, _ledger.Entries));
         Assert.Equal(1, unreviewed.Count);
         Assert.Equal(LedgerBuilder.Minor(-10m), unreviewed.NetEffect);
+    }
+
+    [Theory]
+    [InlineData(false, 250_763, 189_763)]
+    [InlineData(true, 249_763, 188_763)]
+    public void Section_24_3_forecasts_only_checking_and_never_projects_a_posted_occurrence_twice(
+        bool automaticExpensePosted, long startBalance, long endBalance)
+    {
+        var start = new DateOnly(2026, 10, 10);
+        var horizon = new DateOnly(2026, 10, 31);
+        Schedule Plan(string title, EntryKind kind, long amount, int day) => new()
+        {
+            Name = title,
+            Kind = kind,
+            AccountId = _checking.Id,
+            Amount = amount,
+            Rule = new RecurrenceRule { Frequency = Frequency.Once, Start = new DateOnly(2026, 10, day) },
+        };
+
+        var schedules = new List<Schedule>
+        {
+            Plan("Further income", EntryKind.Income, 20_000, 11),
+            Plan("Gas", EntryKind.Expense, 9_000, 12),
+            Plan("Insurance", EntryKind.Expense, 72_000, 13),
+        };
+        var states = new List<OccurrenceState>();
+        if (automaticExpensePosted)
+        {
+            var automatic = Plan("Automatic expense", EntryKind.Expense, 1_000, 9);
+            var paid = _ledger.Add(EntryKind.Expense, _checking, 10m, date: automatic.Rule.Start, review: ReviewState.Unreviewed);
+            paid.ScheduleId = automatic.Id;
+            paid.OccurrenceDate = automatic.Rule.Start;
+            schedules.Add(automatic);
+            states.Add(new OccurrenceState
+            {
+                ScheduleId = automatic.Id,
+                OriginalDate = automatic.Rule.Start,
+                Status = OccurrenceStatus.Settled,
+                EntryId = paid.Id,
+            });
+        }
+
+        var forecast = Assert.Single(ForecastCalculator.Compute(_ledger.Accounts, _ledger.Entries, schedules, states,
+            start, horizon, accountIds: [_checking.Id]));
+
+        Assert.Equal(250_763, _ledger.Balance(_checking, start, confirmedOnly: true));
+        Assert.Equal(startBalance, forecast.StartBalance);
+        Assert.Equal(endBalance, forecast.EndBalance);
+        Assert.Equal(new long?[] { 20_000, -9_000, -72_000 }, forecast.Items.Select(item => item.Effect));
     }
 }
