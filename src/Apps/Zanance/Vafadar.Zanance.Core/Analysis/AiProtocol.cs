@@ -2,6 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Vafadar.Zanance.Core.Goals;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Core.Money;
 
@@ -193,6 +194,7 @@ public static class AiProtocol
         {
             AiFundingKind.BudgetLimit => facts.Existing is >= 0 && facts.Carry is not null && facts.PeriodCount is null &&
                 facts.PlannedContribution is null && facts.RequiredContribution is null && facts.Unfunded is null &&
+                (Int128)facts.Existing.Value + facts.Carry.Value == facts.Baseline &&
                 facts.Difference > 0 && (Int128)facts.Observed - facts.Baseline == facts.Difference,
             AiFundingKind.BudgetSuggestion => facts.Observed > 0 && facts.Baseline >= facts.Observed &&
                 (Int128)facts.Baseline - facts.Observed == facts.Difference && facts.Existing is null or >= 0 &&
@@ -201,7 +203,9 @@ public static class AiProtocol
             AiFundingKind.Goal => facts.Baseline > 0 && facts.Difference > 0 && facts.Unfunded is >= 0 &&
                 (Int128)facts.Baseline - Math.Max(0, facts.Observed) == facts.Difference && facts.PeriodCount is >= 0 &&
                 facts.Existing is null && facts.Carry is null && facts.PlannedContribution is null or >= 0 &&
-                (facts.RequiredContribution is null || facts.RequiredContribution > 0 && facts.PeriodCount > 0),
+                (facts.PeriodCount > 0
+                    ? facts.RequiredContribution == GoalCalculator.SuggestedContribution(facts.Difference, facts.PeriodCount.Value)
+                    : facts.RequiredContribution is null),
             _ => false,
         };
         if (!valid) throw new ArgumentException("Invalid funding facts.");
