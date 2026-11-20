@@ -322,9 +322,9 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-32 | Two equal plans | REC-21 | Unit | S4 | Verified (unit) |
 | AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Verified (integration: ledger; unit: no missed reminders sent later, pending capped, reminders at the same time grouped into one summary) |
 | AT-34 | Notifications denied/off | REM-02 | Manual | S10 | [Real Android Settings return without a grant](quality/plans-notification-settings-no-change-d1240.md) retained the banner, saved reminder and enabled Turn on action. A [separate grant and delivery check](quality/plans-saved-reminder-delivery-after-grant-d1241.md) used a saved plan without resaving it. Physical-denial acceptance remains separate. |
-| AT-35 | Snooze notification | REM-04 | Manual | S10 | Verified (unit: snooze repeats the reminder with its own id, never changes the due date, ends when the occurrence closes; moving a due date moves the reminder); device check pending |
-| AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Verified (unit: settled or skipped occurrences have no reminder; taps only open the occurrence) |
-| AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | [Physical post-reboot delivery](quality/physical-paired-reminder-preparation.md#terminal-outcome1november2026) verified both original reminders within their unchanged one-hour window. The precision failure and intervening launch remain recorded. Travel and DST device acceptance remain separate. |
+| AT-35 | Snooze notification | REM-04 | Manual | S10 | Unit checks cover the separate snooze ID, original due date and removal after closure. [Android native action](quality/selected-plan-reminders.md#completed-six-case-adapter-batch) and [Samsung cold one-hour action](quality/physical-cold-reminder-action.md) verified the action and pending snooze. Later re-delivery and interrupted action remain separate. |
+| AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Unit verifies exclusion of settled and skipped occurrences. [Android pending alarm cancellation](#at-36-android-cancellation-after-skipping-an-occurrence) observed removal of the original alarm after Skip. A native stale tap after settlement remains open. |
+| AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | [Physical post-reboot delivery](quality/physical-paired-reminder-preparation.md#terminal-outcome1november2026) verified both original reminders within their unchanged one-hour window. The precision failure and intervening launch remain recorded. [Emulator time-zone receiver](quality/local-reminder-clock-changes.md#final-native-stale-cache-cohort) preserved local wall-time and elapsed alarm semantics across an actual zone change. Physical travel and live DST delivery remain separate. |
 | AT-38 | Notification on lock screen | REM-05 | Manual | S10 | [Android SystemUI lock-screen rendering](#at-38-generic-reminder-on-the-android-lock-screen) verified the generic default and absence of fixture details. [Warm Plans notification tap under the app PIN](#at-61-warm-plans-notification-tap-under-the-app-pin) verified the retained due item on the emulator. Android device credential, optional detail and physical acceptance remain separate. |
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung no/zero/exact/exceeded/refund/cold/deletion scope; broader device/platform gates remain |
 | AT-40 | Total and sub-category limits | BUD-02 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung independent total/category/refund and category-only scope; other hierarchy/platform variants remain |
@@ -340,12 +340,12 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-49 | Switch Simple/Advanced | UX-02 | Unit + manual | S13 | [Scoped Android mode round trip](#at-49-android-display-mode-round-trip) kept the observed financial values and access to existing items. Full stored-row comparison and other platforms remain separate. |
 | AT-50 | Drill-down equals report number | REP-01 | Unit | S8 | Verified (unit + Home and report drill-downs with the same filter) |
 | AT-51 | Import with ambiguous date/decimal | IO-08 | Unit | S12 | Verified (unit) |
-| AT-52 | Re-import own CSV | IO-10 | Unit + bounded physical Android | S12 | Unit verified; D-317 same own-format fixture yields zero new/two known and a disabled action; actual producer-export roundtrip remains distinct |
+| AT-52 | Re-import own CSV | IO-10 | Unit + bounded physical Android | S12 | Unit verified. [Original Samsung export and re-import](quality/physical-csv-roundtrip.md) matched all 27 exported fields for five stable IDs and then showed zero new, five known and a disabled Import action. Bank files and separate platform acceptance remain distinct. |
 | AT-53 | Two identical real purchases | IO-10 | Unit | S12 | Verified (unit) |
 | AT-54 | Import failure / cancel | IO-11 | Integration + bounded physical Android | S12 | SQLite verified; D-317 native picker cancel and cold persisted ordinary Undo pass; other failure/aggregate/platform matrices remain distinct |
 | AT-55 | Multi-line / formula-like CSV text | IO-06 | Unit + bounded physical Android | S12 | Unit verified; D-317 imported multiline note/tag and literal formula-like title display pass; export/spreadsheet acceptance is separate |
 | AT-56 | Wrong password / damaged / other app | BAK-10 | Unit (library: verified) + integration | S6 | Verified (library + integration, SQLite) |
-| AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified at recorded scopes: integration and D-62 Windows protected/unprotected/preferences/no duplicate account; D-403 original unprotected same-phone independent full Release uninstall/reinstall, native first-run preview/cancel/accept, cold and51-table/74-row re-export equality with one original account, skipped plan and Monday. Permanent Main untouched; protected-password phone/new-device/iOS acceptance remains separate. |
+| AT-57 | Restore on fresh install | BAK-12 | Integration + manual | S6 | Verified at recorded scopes: integration and D-62 Windows protected/unprotected/preferences/no duplicate account; D-403 original unprotected same-phone independent full Release uninstall/reinstall, native first-run preview/cancel/accept, cold and51-table/74-row re-export equality with one original account, skipped plan and Monday. Permanent Main untouched. [Android emulator protected restore](#at-57-protected-restore-and-complete-original-row-comparison) matched 51 original tables and 74 rows, with the recorded timestamp and additive migration changes. Physical password-protected restore and iOS remain separate. |
 | AT-58 | 11th backup, failed upload | BAK-07 | Unit (library: verified) | S6 | Library verified |
 | AT-59 | Disconnect / switch Drive/OneDrive | BAK-13 | Manual | S15 | Ready to run: implemented (D-35, D-50), needs a build with OAuth clients on a device – connect, back up with protection on/off (D-62), list, restore both package types, delete a cloud backup, disconnect, connect another account; per provider on Android, iOS and Windows. Google's token protocol on iOS/Windows is unit-tested (`Vafadar.Authentication.Tests`) |
 | AT-60 | Upgrade with old data | BAK-12 | Integration (migrations) | every slice | Verified (integration: first schema with data upgraded to latest; restore migrates older backups); re-run each slice |
@@ -394,6 +394,28 @@ accessibility root. The same launch continued. Device-side SHA-256 matched the r
 The disposable AVD was retired. Native captures and the receipt are in `artifacts/zdr`.
 This covers one native validation and discard sequence. Storage-write failure and physical-device
 acceptance remain separate.
+
+## AT-36 Android cancellation after skipping an occurrence
+
+The retained signed offline APK `3f96f091` ran on a fresh Android 16 x86_64 emulator with
+4096-byte pages. The original UI created one zero-opening fictitious account and one
+unknown-amount once plan, with automatic posting off. Its same-day reminder was saved once.
+Android AlarmManager showed one matching ScheduledAlarmReceiver RTC_WAKEUP request for
+05:46 local time.
+
+The original due-item page was opened from Plans. One Skip returned to the due list and
+removed that exact platform alarm by the 05:42:45 observation. All plans retained
+the original plan and its history displayed Skipped on the original date. The All transactions
+view was empty. The app was placed in the background and 22 bounded readings
+found no active notification for the package through 05:48:58, past the alarm's prior
+inexact delivery window.
+
+The first package-absence probe returned a nonzero status for the expected uninstalled
+package. The same boot continued after confirming absence through the package list.
+The test reused the existing signed APK and made no application source change. The emulator
+display values were restored and the disposable emulator was retired. Evidence is under
+`artifacts/at36-native-closed-reminder`. This qualifies the actual scheduled Skip cancellation on Android. A settled
+occurrence with an old visible notice and the stale-tap behavior are separate native cases.
 
 ## AT-38 generic reminder on the Android lock screen
 
