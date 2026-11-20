@@ -255,7 +255,9 @@ independent work and overall goal remain active. Broader gates stay open.
   grant on the owned Android 16 emulator, inside the recorded inexact alarm window. This case supplies evidence
   for the permission-return and delivery path on that fixture. [D1241 delivery evidence](quality/plans-saved-reminder-delivery-after-grant-d1241.md)
   [Native Android holiday and weekend preview](07-acceptance-test-plan.md#at-72-android-working-day-and-public-holiday-preview)
-  records the expected working-day changes and draft cancellation. The matching physical-device case remains open.
+  records the expected working-day changes and draft cancellation. A separate
+  [same-working-day Budget and report case](07-acceptance-test-plan.md#at-72-android-distinct-dates-moved-to-the-same-working-day)
+  retained both open items, their amounts and the empty ledger. The matching physical-device cases remain open.
 
 ## Privacy and security
 

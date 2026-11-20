@@ -606,6 +606,28 @@ draft returned to the original saved day 20. The observer initially closed the a
 details and then reopened them to continue. Three selected host cases and strict Windows and
 Android builds passed. The emulator was retired.
 
+## AT-72 Android distinct dates moved to the same working day
+
+One synthetic monthly plan retained separate anchors for November 21 and 22, 2026. With
+Saturday and Sunday treated as weekends and **Next working day** selected, both were due
+on Monday, November 23. The verified signed Offline Release APK `40a809f6` was reused
+on a fresh owned Android 16 x64 emulator with 4096-byte pages. The source packet held
+one account, one plan and zero transactions.
+
+Budget showed EUR 200.00 and two due items. Reports showed two separate EUR 100.00
+rows on November 23, and the plan comparison showed EUR 200.00 planned, EUR 0.00
+recorded, zero completed and two open. The native Analysis entry and **Review selected
+totals** kept those open items and left the settled difference unavailable. The same
+process showed an empty transaction list afterwards. No provider or payment action was
+invoked. Package creation, financial saves and previous plan editor checks were not repeated.
+
+The first file-picker observation preceded the native window, and the first Analysis
+observer expected a shorter button caption. The same picker and page continued using the
+actual visible controls. The emulator was retired. The synthetic packet and native
+hierarchies remain under `artifacts/at72-shared-day`. This qualifies the read-only
+same-day projection and local review on the retained APK. Posting, physical delivery
+and newer APK adoption remain separate.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.
