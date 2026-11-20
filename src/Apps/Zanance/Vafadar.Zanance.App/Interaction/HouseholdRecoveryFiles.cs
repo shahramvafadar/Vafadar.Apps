@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using Vafadar.Backup.Security;
+using Vafadar.Zanance.App.Security;
 
 namespace Vafadar.Zanance.App.Interaction;
 
@@ -50,7 +51,7 @@ internal static class HouseholdRecoveryFiles
                 ct.ThrowIfCancellationRequested();
                 if (read == 0) break;
                 if (buffer.Length > 32768 - read) throw new InvalidDataException("The selected recovery file exceeds its bound.");
-                await buffer.WriteAsync(piece.AsMemory(0, read), ct);
+                BoundedPrivateFileReader.Append(buffer, piece.AsSpan(0, read));
             }
             if (!BackupEncryption.IsEncrypted(buffer.GetBuffer().AsSpan(0, checked((int)buffer.Length))))
                 throw new InvalidDataException("An encrypted household recovery file is required.");

@@ -1718,6 +1718,10 @@ under `artifacts/android-virtual-csv-review`.
 
 ## Android household recovery-file transport
 
+The recovery-file reader clears its input buffer and every replaced accumulation array,
+including when a selected file is rejected. Its 32 KiB limit and encrypted-file check
+still apply. The shared reader change passed strict Windows and Android builds.
+
 The Android household recovery picker reads the selected stream directly using its temporary URI
 grant. It retains the 32 KiB input limit and the encrypted-package header check. Cancellation
 after a late native read refuses the bytes and clears the temporary buffers. No persistent URI
