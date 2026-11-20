@@ -33,6 +33,31 @@ public sealed class ReceiptSourceAccessTests
             next => { var retained = access.RetainCurrentDestinationIfLocked(next); if (retained) deferred.TrySetResult(); return retained; },
             port.PhotoAsync, port.FileAsync, null);
     private static Task ReachedAsync(Task running, Task deferred) => Task.WhenAny(running, deferred).WaitAsync(TimeSpan.FromSeconds(20), Ct);
+
+    [Fact]
+    public async Task A_picker_result_arriving_after_retirement_is_discarded_once()
+    {
+        using var f = new FlowFixture();
+        using var retired = new CancellationTokenSource();
+        using var origin = new ReceiptReadOrigin(() => true, retired.Token);
+        var source = new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var discarded = new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var discardCount = 0;
+        var delivery = Task.CompletedTask;
+        var running = ReceiptSourceChooser.RunAsync<string?>(f.Translator, new Port(), false, false, origin,
+            action => delivery = action(), _ => false, () => throw new InvalidOperationException(),
+            () => source.Task, null, result => { discardCount++; discarded.SetResult(result); });
+        try
+        {
+            retired.Cancel();
+            Assert.Null(await running.WaitAsync(TimeSpan.FromSeconds(20), Ct));
+        }
+        finally { source.TrySetResult("fictitious late file"); }
+
+        await delivery.WaitAsync(TimeSpan.FromSeconds(20), Ct);
+        Assert.Equal("fictitious late file", await discarded.Task.WaitAsync(TimeSpan.FromSeconds(20), Ct));
+        Assert.Equal(1, discardCount);
+    }
     [Theory][InlineData(true)][InlineData(false)]
     public async Task Chosen_source_after_cover_waits_ahead_of_later_input_without_reasking(bool photo)
     {

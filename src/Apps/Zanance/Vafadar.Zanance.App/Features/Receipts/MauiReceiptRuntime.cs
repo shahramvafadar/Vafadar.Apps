@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Vafadar.Documents;
 using Vafadar.Documents.Maui;
 using Vafadar.Localization;
@@ -26,7 +27,12 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
                 origin, appLock.RunWhenUnlockedAsync, appLock.RetainCurrentDestinationIfLocked,
                 async () => Convert(await PermissionPrompts.TakePhotoAsync(translator) is { } photo
                     ? await AttachmentFiles.FromCameraAsync(translator["Camera_PhotoName"], photo) : null),
-                async () => Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], forRecognition: true)), null);
+                async () => Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], forRecognition: true)),
+                null, discard: file =>
+                {
+                    if (file?.RecognitionData is { } original && !ReferenceEquals(original, file.Data))
+                        CryptographicOperations.ZeroMemory(original);
+                });
         }
         catch (InvalidDataException exception) { throw new ReceiptPreparationException("Attachment_PhotoFailed", exception); }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or PermissionException)

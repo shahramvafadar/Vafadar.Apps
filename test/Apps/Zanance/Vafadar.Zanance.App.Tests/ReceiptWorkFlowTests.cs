@@ -72,6 +72,39 @@ public sealed class ReceiptWorkFlowTests
         await f.Store.AddAttachmentAsync(attachment, Ct); return (entry, attachment);
     }
 
+    [Theory]
+    [InlineData(false, false, false)]
+    [InlineData(true, false, false)]
+    [InlineData(true, true, false)]
+    [InlineData(true, false, true)]
+    public async Task Private_original_is_cleared_after_the_read_or_on_abandonment(bool allowUnlock, bool fails, bool aliasesCompact)
+    {
+        using var f = new FlowFixture();
+        using var provider = Provider(f, new Access());
+        byte[] compact = [1, 2], original = aliasesCompact ? compact : [3, 4, 5];
+        var expected = original.ToArray();
+        byte[]? received = null;
+        var native = new Native
+        {
+            File = new("Fictitious compact.jpg", "image/jpeg", compact, original),
+            AllowUnlock = allowUnlock,
+        };
+        native.DuringRead = () =>
+        {
+            // Record what the reader received before the session clears its input.
+            received = native.Recognition!.ToArray();
+            return fails ? Task.FromException(new IOException("Fictitious reader failure")) : Task.CompletedTask;
+        };
+
+        await Session(f, provider, native).PickAsync();
+
+        Assert.Equal(allowUnlock ? 1 : 0, native.Read);
+        Assert.Equal(allowUnlock ? expected : null, received);
+        if (!aliasesCompact) Assert.All(original, value => Assert.Equal(0, value));
+        Assert.Equal(new byte[] { 1, 2 }, compact);
+        Assert.Equal(allowUnlock && !fails ? 1 : 0, native.Drafts.Count);
+    }
+
     /// <summary>The original local receipt parser remains available for both receipt entry points when AI is off.</summary>
     [Theory]
     [InlineData(false)]

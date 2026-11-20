@@ -31,7 +31,7 @@ internal static class ReceiptSourceChooser
     internal static async Task<T> RunAsync<T>(Translator translator, IAppInteraction interaction,
         bool canTakePhoto, bool showLatinImageHelp, ReceiptReadOrigin origin,
         Func<Func<Task>, Task> queueWhenUnlocked, Func<Func<Task>, bool> retainIfLocked,
-        Func<Task<T>> openPhoto, Func<Task<T>> openFile, T cancelled)
+        Func<Task<T>> openPhoto, Func<Task<T>> openFile, T cancelled, Action<T>? discard = null)
     {
         if (!origin.IsCurrent) return cancelled;
         var completed = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -67,7 +67,11 @@ internal static class ReceiptSourceChooser
                     {
                         if (selected == ReceiptSourceChoice.Cancelled) { completed.TrySetResult(cancelled); return; }
                         var result = await (selected == ReceiptSourceChoice.Photo ? openPhoto() : openFile());
-                        completed.TrySetResult(origin.IsCurrent ? result : cancelled);
+                        if (!origin.IsCurrent || !completed.TrySetResult(result))
+                        {
+                            discard?.Invoke(result);
+                            completed.TrySetResult(cancelled);
+                        }
                         return;
                     }
                     var photo = translator["Receipt_TakePhoto"];

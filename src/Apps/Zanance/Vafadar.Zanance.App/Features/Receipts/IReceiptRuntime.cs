@@ -5,6 +5,7 @@ using Vafadar.Zanance.Data.Commerce;
 namespace Vafadar.Zanance.App.Features.Receipts;
 
 /// <summary>Prepared compact attachment and optional transient bounded recognition image.</summary>
+/// <remarks>A distinct recognition array is transferred to the reading session for clearing after use or abandonment.</remarks>
 public sealed record ReceiptPickedFile(string Name, string ContentType, byte[] Data, byte[]? RecognitionData = null);
 
 /// <summary>Typed process-local destination; only the compact copy reaches the unsaved entry editor.</summary>

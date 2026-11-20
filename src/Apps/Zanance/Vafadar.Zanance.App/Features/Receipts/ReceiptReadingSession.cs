@@ -1,4 +1,6 @@
+using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Vafadar.Documents;
 using Vafadar.Localization;
 using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.Core.Ledger;
@@ -25,6 +27,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
         ReceiptReadOrigin? origin = null;
         var completed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         CancellationTokenRegistration retirement = default;
+        byte[]? transientOriginal = null;
         var publishing = false;
         bool Current() => origin?.IsCurrent == true && isCurrent?.Invoke() != false;
         void RequireCurrent()
@@ -50,6 +53,8 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                 ? new ReceiptPickedFile(original.FileName, AttachmentFiles.ResolveContentType(original.FileName, original.ContentType), original.Data)
                 : await runtime.PickAsync();
             if (file is null) return;
+            var hasTransientOriginal = file.RecognitionData is { } recognitionData && !ReferenceEquals(recognitionData, file.Data);
+            if (hasTransientOriginal) transientOriginal = file.RecognitionData;
             RequireCurrent();
             await reader.ValidateAsync(reviewed);
             if (file.Data.Length == 0 || file.Data.Length > EntryAttachment.MaxBytes)
@@ -62,7 +67,20 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                 RequireCurrent();
                 await reader.ValidateAsync(reviewed);
                 RequireCurrent();
-                var document = await runtime.ReadAsync(file.RecognitionData ?? file.Data, file.ContentType);
+                // Once the reader claims the original, only that reader may clear it, even if the page retires.
+                var originalBytes = Interlocked.Exchange(ref transientOriginal, null);
+                TextLayoutResult document;
+                try
+                {
+                    RequireCurrent();
+                    if (hasTransientOriginal && originalBytes is null)
+                        throw new OperationCanceledException("The original receipt image was released before recognition.");
+                    document = await runtime.ReadAsync(originalBytes ?? file.Data, file.ContentType);
+                }
+                finally
+                {
+                    if (originalBytes is not null) CryptographicOperations.ZeroMemory(originalBytes);
+                }
                 RequireCurrent();
                 await reader.ValidateAsync(reviewed);
                 RequireCurrent();
@@ -103,7 +121,11 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
         }
         finally
         {
-            retirement.Dispose(); origin?.Dispose(); IsBusy = false;
+            retirement.Dispose();
+            origin?.Dispose();
+            var unusedOriginal = Interlocked.Exchange(ref transientOriginal, null);
+            if (unusedOriginal is not null) CryptographicOperations.ZeroMemory(unusedOriginal);
+            IsBusy = false;
         }
 
         async Task QueueAsync(Func<Task<bool>> stage)
