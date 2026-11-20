@@ -156,8 +156,32 @@ public sealed class StoredRelationship
     /// <summary>Gets or sets the account that was asked.</summary>
     public required string To { get; set; }
 
-    /// <summary>Gets or sets what the relationship is called.</summary>
+    /// <summary>Gets or sets what the relationship is called: a kind of <c>RelationshipCatalogue</c>.</summary>
     public required string Kind { get; set; }
+
+    /// <summary>
+    /// Gets or sets, for a kind with a direction, which side holds the role: <see langword="false"/> – the side
+    /// that asked is the parent, the guardian; <see langword="true"/> – the side that was asked is.
+    /// </summary>
+    public bool Reversed { get; set; }
+
+    /// <summary>Gets or sets where the relationship holds, in words: the employer, the school, the team.</summary>
+    public string? Context { get; set; }
+
+    /// <summary>Gets or sets the context as it is compared: without case and outer spaces; empty for none.</summary>
+    public string ContextKey { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets from when the relationship holds, when that is stated: an expression of time as <see cref="PersonTime"/> writes it.</summary>
+    public string? Since { get; set; }
+
+    /// <summary>Gets or sets until when the relationship held, when that is stated.</summary>
+    public string? Until { get; set; }
+
+    /// <summary>
+    /// Gets or sets the relationship this request would take the place of: one that was accepted and is to be
+    /// called something else. It holds as it is until the other side agrees to the new one (ADR 0018).
+    /// </summary>
+    public string? Replaces { get; set; }
 
     /// <summary>Gets or sets where it stands (<c>RelationshipState</c>).</summary>
     public int State { get; set; }
@@ -179,6 +203,19 @@ public sealed class StoredRelationship
 
     /// <summary>Gets or sets when it last moved.</summary>
     public DateTime ChangedAt { get; set; }
+}
+
+/// <summary>That one account blocks another (PRIV-009).</summary>
+public sealed class StoredBlock
+{
+    /// <summary>Gets or sets the account that blocks.</summary>
+    public required string By { get; set; }
+
+    /// <summary>Gets or sets the account that is blocked.</summary>
+    public required string Blocked { get; set; }
+
+    /// <summary>Gets or sets when.</summary>
+    public DateTime At { get; set; }
 }
 
 /// <summary>A circle: a name an account gives to some of the people it has a relationship with.</summary>
@@ -482,6 +519,9 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
     /// <summary>Gets the circles.</summary>
     public DbSet<StoredCircle> Circles => Set<StoredCircle>();
 
+    /// <summary>Gets which account blocks which.</summary>
+    public DbSet<StoredBlock> Blocks => Set<StoredBlock>();
+
     /// <summary>Gets who is in the circles.</summary>
     public DbSet<StoredCircleMember> CircleMembers => Set<StoredCircleMember>();
 
@@ -643,6 +683,11 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             relationship.Property(item => item.From).HasMaxLength(40);
             relationship.Property(item => item.To).HasMaxLength(40);
             relationship.Property(item => item.Kind).HasMaxLength(40);
+            relationship.Property(item => item.Context).HasMaxLength(PeopleStore.LongestContext);
+            relationship.Property(item => item.ContextKey).HasMaxLength(PeopleStore.LongestContext);
+            relationship.Property(item => item.Since).HasMaxLength(600);
+            relationship.Property(item => item.Until).HasMaxLength(600);
+            relationship.Property(item => item.Replaces).HasMaxLength(40);
             relationship.HasIndex(item => item.From);
             relationship.HasIndex(item => item.To);
             relationship.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.From).OnDelete(DeleteBehavior.Cascade);
@@ -656,6 +701,17 @@ public sealed class PeopleContext(DbContextOptions<PeopleContext> options) : DbC
             circle.Property(item => item.Name).HasMaxLength(80);
             circle.HasIndex(item => item.Owner);
             circle.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Owner).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // A block goes with either of its accounts.
+        modelBuilder.Entity<StoredBlock>(block =>
+        {
+            block.HasKey(item => new { item.By, item.Blocked });
+            block.Property(item => item.By).HasMaxLength(40);
+            block.Property(item => item.Blocked).HasMaxLength(40);
+            block.HasIndex(item => item.Blocked);
+            block.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.By).OnDelete(DeleteBehavior.Cascade);
+            block.HasOne<StoredVisitor>().WithMany().HasForeignKey(item => item.Blocked).OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<StoredCircleMember>(member =>

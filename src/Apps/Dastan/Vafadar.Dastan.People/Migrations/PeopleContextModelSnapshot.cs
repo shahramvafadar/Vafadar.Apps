@@ -144,6 +144,26 @@ namespace Vafadar.Dastan.People.Migrations
                     b.ToTable("AlbumPhotos", "personal");
                 });
 
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredBlock", b =>
+                {
+                    b.Property<string>("By")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<string>("Blocked")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<DateTime>("At")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("By", "Blocked");
+
+                    b.HasIndex("Blocked");
+
+                    b.ToTable("Blocks", "personal");
+                });
+
             modelBuilder.Entity("Vafadar.Dastan.People.StoredCircle", b =>
                 {
                     b.Property<long>("Number")
@@ -520,6 +540,15 @@ namespace Vafadar.Dastan.People.Migrations
                     b.Property<DateTime>("ChangedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Context")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("ContextKey")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -539,6 +568,17 @@ namespace Vafadar.Dastan.People.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
+                    b.Property<string>("Replaces")
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<bool>("Reversed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Since")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
+
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
@@ -552,6 +592,10 @@ namespace Vafadar.Dastan.People.Migrations
 
                     b.Property<int>("ToScope")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Until")
+                        .HasMaxLength(600)
+                        .HasColumnType("character varying(600)");
 
                     b.HasKey("Id");
 
@@ -888,6 +932,21 @@ namespace Vafadar.Dastan.People.Migrations
                     b.HasOne("Vafadar.Dastan.People.StoredPhoto", null)
                         .WithMany()
                         .HasForeignKey("Photo")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Dastan.People.StoredBlock", b =>
+                {
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("Blocked")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Vafadar.Dastan.People.StoredVisitor", null)
+                        .WithMany()
+                        .HasForeignKey("By")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

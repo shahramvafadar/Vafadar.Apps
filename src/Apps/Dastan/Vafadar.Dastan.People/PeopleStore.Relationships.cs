@@ -1,8 +1,23 @@
 using System.Collections.Immutable;
 using Microsoft.EntityFrameworkCore;
 using Vafadar.Dastan.Core.Personal;
+using Vafadar.Temporal;
 
 namespace Vafadar.Dastan.People;
+
+/// <summary>What a relationship says beside its kind (ADR 0018).</summary>
+/// <param name="OtherHolds">
+/// For a kind with a direction: whether the other side holds the role – "they are my parent" – rather than the
+/// account that asks – "I am their parent". Without meaning for a kind that reads the same from both sides.
+/// </param>
+/// <param name="Context">Where it holds, in words: the employer, the school, the team; nothing for nowhere in particular.</param>
+/// <param name="Since">From when it holds, when that is stated.</param>
+/// <param name="Until">Until when it held, when that is stated.</param>
+public sealed record RelationshipTerms(bool OtherHolds = false, string? Context = null, TemporalExpression? Since = null, TemporalExpression? Until = null)
+{
+    /// <summary>Nothing beside the kind.</summary>
+    public static readonly RelationshipTerms None = new();
+}
 
 /// <summary>An account as another account is shown it: the identifier and the name.</summary>
 /// <param name="Id">The identifier.</param>
@@ -17,7 +32,14 @@ public sealed record PersonRef(string Id, string Name);
 /// <param name="AskedByMe">Whether this side asked.</param>
 /// <param name="Shown">Who this side lets see it.</param>
 /// <param name="Circle">For a circle: which one.</param>
-public sealed record RelationshipInfo(string Id, PersonRef Other, string Kind, RelationshipState State, bool AskedByMe, ScopeKind Shown, long? Circle);
+public sealed record RelationshipInfo(string Id, PersonRef Other, string Kind, RelationshipState State, bool AskedByMe, ScopeKind Shown, long? Circle)
+{
+    /// <summary>Gets what the relationship says beside its kind, as this side reads it.</summary>
+    public RelationshipTerms Terms { get; init; } = RelationshipTerms.None;
+
+    /// <summary>Gets the accepted relationship this request would take the place of, when it is a request to call one something else.</summary>
+    public string? Replaces { get; init; }
+}
 
 /// <summary>A circle of an account: a name for some of the people it has a relationship with.</summary>
 /// <param name="Number">The number of the circle in the store.</param>
@@ -28,12 +50,20 @@ public sealed record CircleInfo(long Number, string Name, ImmutableArray<PersonR
 /// <summary>A relationship as a page about one of its sides shows it.</summary>
 /// <param name="Other">The other side.</param>
 /// <param name="Kind">What the relationship is called.</param>
-public sealed record ShownRelationship(PersonRef Other, string Kind);
+public sealed record ShownRelationship(PersonRef Other, string Kind)
+{
+    /// <summary>Gets what the relationship says beside its kind, read from the side of the account the page is about.</summary>
+    public RelationshipTerms Terms { get; init; } = RelationshipTerms.None;
+}
 
 /// <summary>What a viewer may see of an account: its name and the relationships both sides let that viewer see.</summary>
 /// <param name="Person">The account.</param>
 /// <param name="Relationships">The relationships the viewer may see.</param>
-public sealed record ProfileView(PersonRef Person, ImmutableArray<ShownRelationship> Relationships);
+public sealed record ProfileView(PersonRef Person, ImmutableArray<ShownRelationship> Relationships)
+{
+    /// <summary>Gets a value indicating whether the viewer blocks this account.</summary>
+    public bool Blocked { get; init; }
+}
 
 /// <content>
 /// The relationships two accounts show together (step 16.3, PRIV-005 to PRIV-009) and the circles that name an
@@ -43,7 +73,10 @@ public sealed record ProfileView(PersonRef Person, ImmutableArray<ShownRelations
 public sealed partial class PeopleStore
 {
     /// <summary>What a relationship can be called.</summary>
-    public static readonly ImmutableArray<string> RelationshipKinds = ["friend", "close-friend", "family", "partner", "colleague", "classmate", "other"];
+    public static readonly ImmutableArray<string> RelationshipKinds = [.. RelationshipCatalogue.All.Select(kind => kind.Key)];
+
+    /// <summary>The greatest length of the context of a relationship, in characters.</summary>
+    public const int LongestContext = 120;
 
     /// <summary>How many requests of an account can wait for an answer at the same time.</summary>
     public const int OpenRequests = 20;
@@ -58,22 +91,34 @@ public sealed partial class PeopleStore
     public static readonly TimeSpan AskAgainAfter = TimeSpan.FromDays(30);
 
     /// <summary>
-    /// Asks another account, by its name, to show a relationship together. Returns <c>asked</c>, or why not:
-    /// <c>kind</c>, <c>unknown</c>, <c>self</c>, <c>exists</c> (the two have a request or a relationship already),
-    /// <c>declined-lately</c>, <c>too-many</c>.
+    /// Asks another account, by its name, to show a relationship together. Each relationship is a record of
+    /// its own (ADR 0018): two accounts can show several – a friend who is a colleague too. Returns
+    /// <c>asked</c>, or why not: <c>kind</c>, <c>terms</c> (a context that is too long or a time that is none),
+    /// <c>unknown</c>, <c>self</c>, <c>exists</c> (the two have this kind in this context already, or a request
+    /// for it), <c>excluded</c> (the two have another kind of the same group: one family role, one step of
+    /// friendship), <c>declined-lately</c>, <c>too-many</c>.
     /// </summary>
-    private string AskUnguarded(string id, string name, string kind)
+    private string AskUnguarded(string id, string name, string kind, RelationshipTerms terms, string? replaces)
     {
         ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(terms);
         if (!IsOpen(id))
         {
             return "unknown";
         }
 
-        if (!RelationshipKinds.Contains(kind))
+        if (RelationshipCatalogue.Find(kind) is not { } asked)
         {
             return "kind";
         }
+
+        var context = Line(terms.Context, LongestContext);
+        if (context.Refused || !PersonTime.IsOne(terms.Since) || !PersonTime.IsOne(terms.Until) || !PersonTime.Lived(terms.Since, terms.Until))
+        {
+            return "terms";
+        }
+
+        var contextKey = Key(context.Value ?? string.Empty);
 
         var key = Key(name.Trim());
         var other = _context.Visitors.AsNoTracking().SingleOrDefault(visitor => visitor.NameKey == key && visitor.ClosedAt == null);
@@ -87,14 +132,57 @@ public sealed partial class PeopleStore
             return "self";
         }
 
+        // An account that blocked the one that asks is not there for it, and is not told (PRIV-009). Who blocked
+        // somebody takes the block back before asking them.
+        if (Blocks(other.Id, id))
+        {
+            return "unknown";
+        }
+
+        if (Blocks(id, other.Id))
+        {
+            return "blocked";
+        }
+
         var now = _time.GetUtcNow().UtcDateTime;
         var between = _context.Relationships.AsNoTracking().Where(stored => (stored.From == id && stored.To == other.Id) || (stored.From == other.Id && stored.To == id)).ToList();
-        if (between.Any(stored => (RelationshipState)stored.State is RelationshipState.Requested or RelationshipState.Accepted))
+        StoredRelationship? replaced = null;
+        var reversed = asked.Directed && terms.OtherHolds;
+        if (replaces is not null)
+        {
+            // Only an accepted relationship of the two is called something else, and only something else.
+            replaced = between.SingleOrDefault(stored => stored.Id == replaces && (RelationshipState)stored.State == RelationshipState.Accepted);
+            if (replaced is null)
+            {
+                return "refused";
+            }
+
+            var holds = asked.Directed && (replaced.From == id ? replaced.Reversed : !replaced.Reversed);
+            if (replaced.Kind == kind && replaced.ContextKey == contextKey && holds == reversed && replaced.Since == PersonTime.Write(terms.Since) && replaced.Until == PersonTime.Write(terms.Until) && replaced.Context == context.Value)
+            {
+                return "same";
+            }
+        }
+
+        // What stands between the two already – asked for or accepted – and is not the one this would replace.
+        var standing = between.Where(stored => stored.Id != replaces && (RelationshipState)stored.State is RelationshipState.Requested or RelationshipState.Accepted).ToList();
+        if (replaces is not null && standing.Any(stored => stored.Replaces == replaces))
+        {
+            // One request to call a relationship something else at a time.
+            return "exists";
+        }
+
+        if (standing.Any(stored => stored.Kind == kind && stored.ContextKey == contextKey))
         {
             return "exists";
         }
 
-        if (between.Any(stored => stored.From == id && (RelationshipState)stored.State == RelationshipState.Rejected && stored.ChangedAt > now - AskAgainAfter))
+        if (standing.Any(stored => RelationshipCatalogue.Find(stored.Kind) is { } has && RelationshipCatalogue.Exclude(asked, contextKey, has, stored.ContextKey)))
+        {
+            return "excluded";
+        }
+
+        if (between.Any(stored => stored.From == id && stored.Kind == kind && stored.ContextKey == contextKey && (RelationshipState)stored.State == RelationshipState.Rejected && stored.ChangedAt > now - AskAgainAfter))
         {
             return "declined-lately";
         }
@@ -112,6 +200,12 @@ public sealed partial class PeopleStore
             From = id,
             To = other.Id,
             Kind = kind,
+            Reversed = reversed,
+            Context = context.Value,
+            ContextKey = contextKey,
+            Since = PersonTime.Write(terms.Since),
+            Until = PersonTime.Write(terms.Until),
+            Replaces = replaces,
             State = (int)rule.State,
             CreatedAt = now,
             ChangedAt = now,
@@ -149,7 +243,11 @@ public sealed partial class PeopleStore
                     (RelationshipState)relationship.State,
                     mine,
                     (ScopeKind)(mine ? relationship.FromScope : relationship.ToScope),
-                    mine ? relationship.FromCircle : relationship.ToCircle);
+                    mine ? relationship.FromCircle : relationship.ToCircle)
+                {
+                    Terms = Terms(relationship, id),
+                    Replaces = relationship.Replaces,
+                };
             })
             .OrderBy(relationship => relationship.State == RelationshipState.Accepted ? 2 : relationship.AskedByMe ? 1 : 0)
             .ThenBy(relationship => relationship.Other.Name, StringComparer.CurrentCultureIgnoreCase)];
@@ -162,7 +260,7 @@ public sealed partial class PeopleStore
     /// Answers a request. Only the side that was asked can – nobody accepts for another account (PRIV-005).
     /// A request that was declined is kept for <see cref="AskAgainAfter"/>, so that it is not asked again at once.
     /// </summary>
-    public bool Answer(string id, string relationship, bool accept) => Act(id, relationship, (rule, me) => accept ? rule.Accept(me) : rule.Reject(me), remove: false);
+    public bool Answer(string id, string relationship, bool accept) => Act(id, relationship, (rule, me) => accept ? rule.Accept(me) : rule.Reject(me), remove: false, accepted: accept);
 
     /// <summary>Takes a request back before it was answered. Only the side that asked can. Nothing of it is kept.</summary>
     public bool Cancel(string id, string relationship) => Act(id, relationship, (rule, me) => rule.Cancel(me), remove: true);
@@ -312,7 +410,9 @@ public sealed partial class PeopleStore
     public ProfileView? Profile(string? viewer, string id)
     {
         var person = _context.Visitors.AsNoTracking().SingleOrDefault(visitor => visitor.Id == id && visitor.ClosedAt == null);
-        if (person is null)
+
+        // Who was blocked by an account does not find it: its page reads like one that is not there (PRIV-009).
+        if (person is null || (viewer is not null && Blocks(id, viewer)))
         {
             return null;
         }
@@ -329,9 +429,26 @@ public sealed partial class PeopleStore
             new PersonRef(person.Id, person.Name),
             [.. accepted
                 .Where(relationship => others.ContainsKey(relationship.From == id ? relationship.To : relationship.From) && Rule(relationship).IsVisibleTo(account))
-                .Select(relationship => new ShownRelationship(others[relationship.From == id ? relationship.To : relationship.From], relationship.Kind))
-                .OrderBy(shown => shown.Other.Name, StringComparer.CurrentCultureIgnoreCase)]);
+                .Select(relationship => new ShownRelationship(others[relationship.From == id ? relationship.To : relationship.From], relationship.Kind) { Terms = Terms(relationship, id) })
+                .OrderBy(shown => shown.Other.Name, StringComparer.CurrentCultureIgnoreCase)
+                .ThenBy(shown => RelationshipKinds.IndexOf(shown.Kind))
+                .ThenBy(shown => shown.Terms.Context, StringComparer.CurrentCultureIgnoreCase)])
+        {
+            Blocked = viewer is not null && Blocks(viewer, id),
+        };
     }
+
+    // What a relationship says beside its kind, read from one of its sides.
+    private static RelationshipTerms Terms(StoredRelationship stored, string side) => new(
+        RelationshipCatalogue.Find(stored.Kind) is { Directed: true } && (stored.From == side ? stored.Reversed : !stored.Reversed),
+        stored.Context,
+        PersonTime.Read(stored.Since),
+        PersonTime.Read(stored.Until));
+
+    // Whether two accounts show a relationship that was accepted – other than one that is about to go.
+    private bool Know(string one, string other, string? except = null) =>
+        _context.Relationships.AsNoTracking().Any(stored => stored.Id != except && stored.State == (int)RelationshipState.Accepted
+            && ((stored.From == one && stored.To == other) || (stored.From == other && stored.To == one)));
 
     // Requests that were declined are forgotten when the time to wait is over.
     private void ForgetDeclined()
@@ -340,7 +457,7 @@ public sealed partial class PeopleStore
         _context.Relationships.RemoveRange(_context.Relationships.Where(relationship => relationship.State == (int)RelationshipState.Rejected && relationship.ChangedAt < before));
     }
 
-    private bool Act(string id, string relationship, Func<SocialRelationship, AccountId, ActOutcome> act, bool remove)
+    private bool Act(string id, string relationship, Func<SocialRelationship, AccountId, ActOutcome> act, bool remove, bool accepted = false)
     {
         var stored = _context.Relationships.SingleOrDefault(candidate => candidate.Id == relationship);
         if (stored is null || !IsOpen(id))
@@ -358,20 +475,34 @@ public sealed partial class PeopleStore
 
         if (remove)
         {
-            // The two are no longer people each other knows: neither stays in a circle of the other.
-            var circles = _context.Circles.Where(circle => circle.Owner == stored.From || circle.Owner == stored.To).ToList();
-            foreach (var circle in circles)
+            // A request to call this relationship something else goes with it.
+            _context.Relationships.RemoveRange(_context.Relationships.Where(request => request.Replaces == stored.Id));
+
+            // Ending one relationship leaves the others (ADR 0018). When it was the last the two showed, they
+            // are no longer people each other knows: neither stays in a circle or a tree of the other.
+            if ((RelationshipState)stored.State == RelationshipState.Accepted && !Know(stored.From, stored.To, except: stored.Id))
             {
-                var other = circle.Owner == stored.From ? stored.To : stored.From;
-                _context.CircleMembers.RemoveRange(_context.CircleMembers.Where(member => member.Circle == circle.Number && member.Member == other));
+                Parted(stored.From, stored.To);
             }
 
-            LeaveTrees(stored.From, stored.To);
             _context.Relationships.Remove(stored);
         }
         else
         {
             (stored.State, stored.ChangedAt) = ((int)rule.State, _time.GetUtcNow().UtcDateTime);
+            if (accepted && stored.Replaces is { } replaces)
+            {
+                // The new one takes the place of the one it was asked for, with the audience each side chose.
+                if (_context.Relationships.SingleOrDefault(candidate => candidate.Id == replaces) is { } old)
+                {
+                    var same = old.From == stored.From;
+                    (stored.FromScope, stored.FromCircle) = same ? (old.FromScope, old.FromCircle) : (old.ToScope, old.ToCircle);
+                    (stored.ToScope, stored.ToCircle) = same ? (old.ToScope, old.ToCircle) : (old.FromScope, old.FromCircle);
+                    _context.Relationships.Remove(old);
+                }
+
+                stored.Replaces = null;
+            }
         }
 
         Save();

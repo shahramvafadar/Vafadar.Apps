@@ -88,7 +88,7 @@ public sealed class NoticeMailTests : IDisposable
         Assert.Empty(Mail(Mina));
 
         // A request that is refused – they have one already – writes nothing more.
-        Assert.Equal("exists", _store.Ask(_mina, "Sara", "friend"));
+        Assert.Equal("exists", _store.Ask(_mina, "Sara", "family"));
         Assert.Single(Mail(Sara));
     }
 

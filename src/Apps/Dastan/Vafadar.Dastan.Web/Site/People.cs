@@ -1,6 +1,9 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Vafadar.Dastan.Core.Personal;
 using Vafadar.Dastan.People;
+using Vafadar.Dastan.Web.Resources;
 using Vafadar.Web;
 
 namespace Vafadar.Dastan.Web.Site;
@@ -32,7 +35,7 @@ public static class PeopleEndpoints
                 : await next(invocation).ConfigureAwait(false);
         });
 
-        forms.MapPost("/ask", (HttpContext context, AccountDesk desk, [FromForm] string? name, [FromForm] string? kind, [FromForm] string? returnUrl) =>
+        forms.MapPost("/ask", (HttpContext context, AccountDesk desk, [FromForm] string? name, [FromForm] string? kind, [FromForm] string? place, [FromForm] string? returnUrl) =>
         {
             // Asking by name could be used to try names: an address asks only so often.
             if (!desk.Allows(context, "ask", AccountDesk.AttemptsPerHour))
@@ -40,9 +43,32 @@ public static class PeopleEndpoints
                 return Back(returnUrl, "ask", "later");
             }
 
+            if (Terms(context.Request.Form, kind, place) is not var (chosen, terms))
+            {
+                return Back(returnUrl, "ask", "terms");
+            }
+
             using var store = desk.Open();
-            var outcome = store.Ask(Me(context), name ?? string.Empty, kind ?? string.Empty);
+            var outcome = store.Ask(Me(context), name ?? string.Empty, chosen, terms);
             return outcome == "asked" ? Said(returnUrl, "asked") : Back(returnUrl, "ask", outcome);
+        });
+
+        // An accepted relationship is to be called something else (ADR 0018): asked of the other side, and
+        // nothing changes until they agree.
+        forms.MapPost("/change", (HttpContext context, AccountDesk desk, [FromForm] string? relationship, [FromForm] string? kind, [FromForm] string? place, [FromForm] string? returnUrl) =>
+        {
+            if (Terms(context.Request.Form, kind, place) is not var (chosen, terms))
+            {
+                return Back(returnUrl, "mine", "terms");
+            }
+
+            using var store = desk.Open();
+            return store.AskChange(Me(context), relationship ?? string.Empty, chosen, terms) switch
+            {
+                "asked" => Said(returnUrl, "change-asked", "mine"),
+                "refused" => Results.BadRequest(),
+                var outcome => Back(returnUrl, "mine", outcome),
+            };
         });
 
         forms.MapPost("/answer", (HttpContext context, AccountDesk desk, [FromForm] string? relationship, [FromForm] string? answer, [FromForm] string? returnUrl) =>
@@ -82,6 +108,19 @@ public static class PeopleEndpoints
             return store.Show(Me(context), relationship ?? string.Empty, chosen.Value.Kind, chosen.Value.Circle) ? Said(returnUrl, "shown") : Results.BadRequest();
         });
 
+        // Blocking (PRIV-009): one-sided, and the other account is not told.
+        forms.MapPost("/block", (HttpContext context, AccountDesk desk, [FromForm] string? account, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return store.Block(Me(context), account ?? string.Empty) ? Said(returnUrl, "blocked", "blocked") : Results.BadRequest();
+        });
+
+        forms.MapPost("/unblock", (HttpContext context, AccountDesk desk, [FromForm] string? account, [FromForm] string? returnUrl) =>
+        {
+            using var store = desk.Open();
+            return store.Unblock(Me(context), account ?? string.Empty) ? Said(returnUrl, "unblocked", "ask") : Results.BadRequest();
+        });
+
         forms.MapPost("/circle-add", (HttpContext context, AccountDesk desk, [FromForm] string? name, [FromForm] string? returnUrl) =>
         {
             using var store = desk.Open();
@@ -101,6 +140,66 @@ public static class PeopleEndpoints
             using var store = desk.Open();
             return circle is { } number && store.RemoveCircle(Me(context), number) ? Said(returnUrl, "circle-removed", "circles") : Results.BadRequest();
         });
+    }
+
+    /// <summary>The ending of the value of a kind with a direction that says: the account that asks holds the role.</summary>
+    public const string Mine = "-mine";
+
+    /// <summary>
+    /// Returns what a form can call the other side: every kind once, and a kind with a direction twice – "they
+    /// are my parent" and "I am their parent", which a page writes as what the other is: parent, child.
+    /// </summary>
+    public static IEnumerable<(string Value, string Kind, bool OtherHolds)> Choices() =>
+        RelationshipCatalogue.All.SelectMany(kind => kind.Directed
+            ? new[] { (kind.Key, kind.Key, true), (kind.Key + Mine, kind.Key, false) }
+            : [(kind.Key, kind.Key, false)]);
+
+    /// <summary>Returns the value of a form for a relationship as one side reads it.</summary>
+    public static string Choice(string kind, RelationshipTerms terms)
+    {
+        ArgumentNullException.ThrowIfNull(terms);
+        return RelationshipCatalogue.Find(kind) is { Directed: true } && !terms.OtherHolds ? kind + Mine : kind;
+    }
+
+    /// <summary>
+    /// Returns what the other side of a relationship is, in the words of a page: "colleague", "parent" or –
+    /// read from the side that holds the role – "child".
+    /// </summary>
+    public static string Called(string kind, RelationshipTerms terms, IStringLocalizer<Ui> text)
+    {
+        ArgumentNullException.ThrowIfNull(terms);
+        ArgumentNullException.ThrowIfNull(text);
+        return text[$"People_Kind_{Choice(kind, terms)}"];
+    }
+
+    /// <summary>
+    /// Returns where and when a relationship holds, as a page writes it after the kind: "The Zabol Press,
+    /// 2010 to 2018" – and nothing when a relationship says neither.
+    /// </summary>
+    public static string Held(RelationshipTerms terms, IStringLocalizer<Ui> text, Visitor visitor)
+    {
+        ArgumentNullException.ThrowIfNull(terms);
+        ArgumentNullException.ThrowIfNull(text);
+        var (since, until) = (TreeEndpoints.Short(terms.Since, visitor, text), TreeEndpoints.Short(terms.Until, visitor, text));
+        var time = (since, until) switch
+        {
+            ({ } from, { } to) => string.Format(CultureInfo.CurrentCulture, text["People_Held_Span"], from, to),
+            ({ } from, null) => string.Format(CultureInfo.CurrentCulture, text["People_Held_Since"], from),
+            (null, { } to) => string.Format(CultureInfo.CurrentCulture, text["People_Held_Until"], to),
+            _ => null,
+        };
+        return string.Join(text["People_Held_And"], new[] { terms.Context, time }.Where(part => part is not null));
+    }
+
+    // What a form says about a relationship: the kind – with its direction, for a kind that has one – where it
+    // holds, and from when until when. Nothing when a time is none.
+    private static (string Kind, RelationshipTerms Terms)? Terms(IFormCollection form, string? kind, string? place)
+    {
+        var chosen = kind ?? string.Empty;
+        var mine = chosen.EndsWith(Mine, StringComparison.Ordinal);
+        return TreeEndpoints.Time(form, "since", out var since) && TreeEndpoints.Time(form, "until", out var until)
+            ? (mine ? chosen[..^Mine.Length] : chosen, new RelationshipTerms(!mine, place, since, until))
+            : null;
     }
 
     /// <summary>Reads an audience as a form names it: <c>private</c>, <c>public</c>, or <c>circle-</c> and the number of a circle.</summary>

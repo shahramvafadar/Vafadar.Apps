@@ -272,7 +272,7 @@ public static partial class TreeEndpoints
     // the calendar that was chosen, exact or about – or a year and a latest year for a time that is only known
     // to lie between two – or the statement that it is not known. Nothing in the fields is a time nobody stated;
     // fields that contradict each other are refused rather than read one way or the other.
-    private static bool Time(IFormCollection form, string field, out TemporalExpression? time)
+    internal static bool Time(IFormCollection form, string field, out TemporalExpression? time)
     {
         time = null;
         string? Of(string part) => form[part.Length == 0 ? field : $"{field}-{part}"].ToString() is { } written && !string.IsNullOrWhiteSpace(written) ? written.Trim() : null;
@@ -293,7 +293,8 @@ public static partial class TreeEndpoints
             return false;
         }
 
-        var (calendar, era) = Of("calendar") == "solar-hijri" ? (CalendarSystem.SolarHijri, Era.SolarHijri) : (CalendarSystem.Gregorian, Era.CommonEra);
+        // A form with several times can ask for their calendar once, in a field of that name.
+        var (calendar, era) = (Of("calendar") ?? form["calendar"].ToString()) == "solar-hijri" ? (CalendarSystem.SolarHijri, Era.SolarHijri) : (CalendarSystem.Gregorian, Era.CommonEra);
         var about = Of("about") is not null;
         CalendarPosition As(CalendarPosition position) => about ? position.Approximately() : position;
         try

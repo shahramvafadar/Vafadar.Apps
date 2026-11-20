@@ -89,7 +89,7 @@ public sealed class OwnDataTests : IDisposable
         Assert.Equal("""[{"collection":"story-rostam-sohrab","stage":3}]""", copy["readingPositions"]!.ToJsonString());
         Assert.Equal("""[{"collection":"story-rostam-sohrab","kind":"entity","id":"character-rostam"}]""", copy["list"]!.ToJsonString());
         Assert.Equal($$"""[{"code":null,"lastDay":"2026-12-02","state":"open"}]""", copy["invitations"]!.ToJsonString());
-        Assert.Equal("""[{"with":"Sara","kind":"family","state":"accepted","askedByMe":true,"shownTo":"Close"}]""", copy["relationships"]!.ToJsonString());
+        Assert.Equal("""[{"with":"Sara","kind":"family","theyHoldTheRole":null,"context":null,"since":null,"until":null,"state":"accepted","askedByMe":true,"shownTo":"Close"}]""", copy["relationships"]!.ToJsonString());
         Assert.Equal("""[{"name":"Close","members":["Sara"]}]""", copy["circles"]!.ToJsonString());
         var written = Assert.Single(copy["trees"]!.AsArray())!;
         Assert.Equal("The Rad family", (string?)written["name"]);

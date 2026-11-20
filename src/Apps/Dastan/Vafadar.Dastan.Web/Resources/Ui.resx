@@ -1765,7 +1765,7 @@
     <value>Ask</value>
   </data>
   <data name="People_Ask_Note" xml:space="preserve">
-    <value>They find your request on their page; the site sends them nothing. Nothing is shown to anybody until they accept, and to decline is their right.</value>
+    <value>They are told by mail, unless they turned that off, and find your request on their page. Nothing is shown to anybody until they accept, and to decline is their right. You can show several relationships with the same person – a friend who is a colleague too.</value>
   </data>
   <data name="People_Kind_friend" xml:space="preserve">
     <value>friend</value>
@@ -1825,7 +1825,7 @@
     <value>Please choose what you are to each other.</value>
   </data>
   <data name="People_Problem_exists" xml:space="preserve">
-    <value>You two have a request or a relationship already.</value>
+    <value>You two have this relationship, or a request for it, already.</value>
   </data>
   <data name="People_Problem_declined-lately" xml:space="preserve">
     <value>This account declined a request of yours not long ago. You can ask again after 30 days.</value>
@@ -3275,5 +3275,116 @@
   </data>
   <data name="Tree_Change_person-described" xml:space="preserve">
     <value>Profile of a record written</value>
+  </data>
+  <data name="People_Kind_parent" xml:space="preserve">
+    <value>parent</value>
+  </data>
+  <data name="People_Kind_parent-mine" xml:space="preserve">
+    <value>child</value>
+  </data>
+  <data name="People_Kind_adoptive-parent" xml:space="preserve">
+    <value>adoptive parent</value>
+  </data>
+  <data name="People_Kind_adoptive-parent-mine" xml:space="preserve">
+    <value>adopted child</value>
+  </data>
+  <data name="People_Kind_guardian" xml:space="preserve">
+    <value>guardian</value>
+  </data>
+  <data name="People_Kind_guardian-mine" xml:space="preserve">
+    <value>ward</value>
+  </data>
+  <data name="People_Kind_sibling" xml:space="preserve">
+    <value>brother or sister</value>
+  </data>
+  <data name="People_Kind_teammate" xml:space="preserve">
+    <value>teammate</value>
+  </data>
+  <data name="People_Kind_neighbour" xml:space="preserve">
+    <value>neighbour</value>
+  </data>
+  <data name="People_Ask_Place" xml:space="preserve">
+    <value>Where – the employer, the school, the team (if it says more)</value>
+  </data>
+  <data name="People_Ask_When" xml:space="preserve">
+    <value>From when until when</value>
+  </data>
+  <data name="People_Ask_Since" xml:space="preserve">
+    <value>Since the year</value>
+  </data>
+  <data name="People_Ask_Until" xml:space="preserve">
+    <value>Until the year</value>
+  </data>
+  <data name="People_Ask_Calendar" xml:space="preserve">
+    <value>Calendar of these years</value>
+  </data>
+  <data name="People_Held_And" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="People_Held_Span" xml:space="preserve">
+    <value>{0} to {1}</value>
+  </data>
+  <data name="People_Held_Since" xml:space="preserve">
+    <value>since {0}</value>
+  </data>
+  <data name="People_Held_Until" xml:space="preserve">
+    <value>until {0}</value>
+  </data>
+  <data name="People_Instead" xml:space="preserve">
+    <value>{0} – instead of: {1}</value>
+  </data>
+  <data name="People_Change" xml:space="preserve">
+    <value>Call it something else</value>
+  </data>
+  <data name="People_Change_Note" xml:space="preserve">
+    <value>The other side is asked. Until they agree, the relationship stays as it is.</value>
+  </data>
+  <data name="People_Change_Send" xml:space="preserve">
+    <value>Ask for the change</value>
+  </data>
+  <data name="People_Said_change-asked" xml:space="preserve">
+    <value>The change is asked for. The relationship stays as it is until they agree.</value>
+  </data>
+  <data name="People_Problem_terms" xml:space="preserve">
+    <value>The place has one line of up to 120 characters; a year is a number from 1 to 9999, and "until" is not before "since".</value>
+  </data>
+  <data name="People_Problem_excluded" xml:space="preserve">
+    <value>You two have another relationship of this group already: one role in a family and one step of friendship at a time. You can ask to call that one something else.</value>
+  </data>
+  <data name="People_Problem_same" xml:space="preserve">
+    <value>That is what the relationship is called already.</value>
+  </data>
+  <data name="Person_Block_Title" xml:space="preserve">
+    <value>Block this account</value>
+  </data>
+  <data name="Person_Block_Note" xml:space="preserve">
+    <value>A blocked account cannot ask you for a relationship, tag you, invite you or find your page. Everything the two of you show together ends at once. The account is not told.</value>
+  </data>
+  <data name="Person_Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="Person_Blocked_Title" xml:space="preserve">
+    <value>You block this account</value>
+  </data>
+  <data name="Person_Blocked_Note" xml:space="preserve">
+    <value>It cannot ask, tag, invite or find you. Taking the block back restores nothing that ended with it.</value>
+  </data>
+  <data name="Person_Unblock" xml:space="preserve">
+    <value>Take the block back</value>
+  </data>
+  <data name="People_Blocked_Title" xml:space="preserve">
+    <value>Accounts you block</value>
+  </data>
+  <data name="People_Blocked_Note" xml:space="preserve">
+    <value>They cannot ask, tag, invite or find you, and are not told.</value>
+  </data>
+  <data name="People_Said_blocked" xml:space="preserve">
+    <value>The account is blocked. What the two of you showed together has ended.</value>
+  </data>
+  <data name="People_Said_unblocked" xml:space="preserve">
+    <value>The block is taken back.</value>
+  </data>
+  <data name="People_Problem_blocked" xml:space="preserve">
+    <value>You block this account. Take the block back before you ask.</value>
   </data>
 </root>

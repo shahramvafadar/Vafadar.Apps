@@ -36,11 +36,26 @@
             <ul class="statements" role="list">
                 @foreach (var shown in _profile.Relationships)
                 {
-                    <li><a href="@($"people/{shown.Other.Id}")" dir="auto">@shown.Other.Name</a> <span class="meta">– @T[$"People_Kind_{shown.Kind}"]</span></li>
+                    <li><a href="@($"people/{shown.Other.Id}")" dir="auto">@shown.Other.Name</a> <span class="meta">– @PeopleEndpoints.Called(shown.Kind, shown.Terms, T)@Held(shown.Terms)</span></li>
                 }
             </ul>
         }
     </section>
+
+    @if (_viewer is not null && !_own)
+    {
+        @* Blocking (PRIV-009): this account cannot ask, tag, invite or find the viewer any more, and is not told. *@
+        <section aria-labelledby="person-block">
+            <h2 id="person-block">@T[_profile.Blocked ? "Person_Blocked_Title" : "Person_Block_Title"]</h2>
+            <p class="note">@T[_profile.Blocked ? "Person_Blocked_Note" : "Person_Block_Note"]</p>
+            <form method="post" action="@($"{PeopleEndpoints.Root}/{(_profile.Blocked ? "unblock" : "block")}")" class="save">
+                <AntiforgeryToken />
+                <input type="hidden" name="returnUrl" value="@($"/{Visitor.Language.Tag}{PeopleEndpoints.Page}")" />
+                <input type="hidden" name="account" value="@_profile.Person.Id" />
+                <button type="submit">@T[_profile.Blocked ? "Person_Unblock" : "Person_Block"]<span class="visually-hidden"> – @_profile.Person.Name</span></button>
+            </form>
+        </section>
+    }
 
     @if (_photos.Count > 0)
     {
@@ -187,4 +202,6 @@
             Navigation.NotFound();
         }
     }
+
+    private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
 }

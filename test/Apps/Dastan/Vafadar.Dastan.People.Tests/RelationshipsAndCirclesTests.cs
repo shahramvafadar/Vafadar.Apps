@@ -77,15 +77,18 @@ public sealed class RelationshipsAndCirclesTests : IDisposable
     }
 
     [Fact]
-    public void Two_accounts_have_one_request_or_relationship_at_a_time()
+    public void Two_accounts_have_one_request_or_relationship_of_a_kind_at_a_time()
     {
         _store.Ask(_mina, "Sara", "friend");
 
-        Assert.Equal("exists", _store.Ask(_mina, "Sara", "family"));
+        // The same kind is asked for once, whoever asks; another kind is a relationship of its own
+        // (ADR 0018) – what stands side by side and what does not is tried in SeveralRelationshipsTests.
+        Assert.Equal("exists", _store.Ask(_mina, "Sara", "friend"));
         Assert.Equal("exists", _store.Ask(_sara, "Mina", "friend"));
 
         _store.Answer(_sara, _store.Relationships(_sara)[0].Id, accept: true);
-        Assert.Equal("exists", _store.Ask(_sara, "Mina", "colleague"));
+        Assert.Equal("exists", _store.Ask(_sara, "Mina", "friend"));
+        Assert.Equal("asked", _store.Ask(_sara, "Mina", "colleague"));
     }
 
     [Fact]

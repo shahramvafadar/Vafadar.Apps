@@ -154,6 +154,34 @@ namespace Vafadar.Dastan.People.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Blocks",
+                schema: "personal",
+                columns: table => new
+                {
+                    By = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Blocked = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    At = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blocks", x => new { x.By, x.Blocked });
+                    table.ForeignKey(
+                        name: "FK_Blocks_Visitors_Blocked",
+                        column: x => x.Blocked,
+                        principalSchema: "personal",
+                        principalTable: "Visitors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Blocks_Visitors_By",
+                        column: x => x.By,
+                        principalSchema: "personal",
+                        principalTable: "Visitors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Circles",
                 schema: "personal",
                 columns: table => new
@@ -291,6 +319,12 @@ namespace Vafadar.Dastan.People.Migrations
                     From = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     To = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     Kind = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    Reversed = table.Column<bool>(type: "boolean", nullable: false),
+                    Context = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: true),
+                    ContextKey = table.Column<string>(type: "character varying(120)", maxLength: 120, nullable: false),
+                    Since = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Until = table.Column<string>(type: "character varying(600)", maxLength: 600, nullable: true),
+                    Replaces = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
                     State = table.Column<int>(type: "integer", nullable: false),
                     FromScope = table.Column<int>(type: "integer", nullable: false),
                     FromCircle = table.Column<long>(type: "bigint", nullable: true),
@@ -701,6 +735,12 @@ namespace Vafadar.Dastan.People.Migrations
                 column: "Owner");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Blocks_Blocked",
+                schema: "personal",
+                table: "Blocks",
+                column: "Blocked");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CircleMembers_Member",
                 schema: "personal",
                 table: "CircleMembers",
@@ -891,6 +931,10 @@ namespace Vafadar.Dastan.People.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AlbumPhotos",
+                schema: "personal");
+
+            migrationBuilder.DropTable(
+                name: "Blocks",
                 schema: "personal");
 
             migrationBuilder.DropTable(
