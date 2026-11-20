@@ -354,3 +354,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   with the arrow keys and saved as a picture (SVG or PNG). Choosing a card and pressing Enter opens its profile
   beside the drawing. The still drawing is still there: one press shows it, and it is what you see without a
   script.
+- You can ask for a time in your own words: a year ("500 BCE"), a stretch of years ("300 to 400") or a depth of
+  time ("55 million years ago", "10 to 20 thousand years ago") – in the search of a collection and in "in a
+  year". Times that lie very far back are written with their number, their unit and what they are counted from.

@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.Extensions.Localization;
+using Vafadar.Dastan.Core;
 using Vafadar.Dastan.Web.Resources;
 using Vafadar.Temporal;
 
@@ -19,18 +20,99 @@ public static class TimeText
         ArgumentNullException.ThrowIfNull(visitor);
         ArgumentNullException.ThrowIfNull(text);
 
-        // A day or a year, a time that is only known to lie between two, and something that lasted. Other shapes
-        // of time are not written by a page yet; saying that the time is not stated here is true, guessing a
-        // wording for them would not be.
+        // A day or a year, a depth of time, a place in a telling; a time that is only known to lie between two;
+        // something that lasted; how long something took; and one of several times (ADR 0021). A time that is
+        // named by another event is not written here: saying that it is not stated is true, a guess is not.
         return time switch
         {
-            Occurrence { At: CalendarPosition position } => Of(position, visitor, text),
-            OccurrenceWindow { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(earliest, latest, visitor, text),
+            Occurrence occurrence => Of(occurrence.At, visitor, text),
+            OccurrenceWindow window => Between(window.Earliest, window.Latest, visitor, text),
             Period period when Start(period, visitor, text) is { } start && End(period, visitor, text) is { } end =>
                 string.Format(CultureInfo.CurrentCulture, text["Date_Range"], start, end),
+            ElapsedTime elapsed => Elapsed(elapsed, visitor, text),
+            AlternativeOccurrences alternatives => alternatives.Options.Select(option => Of(option, visitor, text))
+                .Aggregate((all, next) => string.Format(CultureInfo.CurrentCulture, text["Date_Or"], all, next)),
             UnknownTime => text["Profile_Unknown"],
             _ => text["Date_NotStated"],
         };
+    }
+
+    /// <summary>
+    /// Writes a position of time: a date of a calendar, a depth of time with what it is counted from, or a
+    /// place in a telling. Nothing is converted: the number, the unit and the present are those of the source.
+    /// </summary>
+    public static string Of(TimePosition position, Visitor visitor, IStringLocalizer<Ui> text)
+    {
+        ArgumentNullException.ThrowIfNull(position);
+        ArgumentNullException.ThrowIfNull(visitor);
+        ArgumentNullException.ThrowIfNull(text);
+        return position switch
+        {
+            CalendarPosition calendar => Of(calendar, visitor, text),
+            AgePosition age => Of(age, visitor, text),
+            NarrativePosition step => string.Format(
+                CultureInfo.CurrentCulture, text[step.Order == NarrativeOrder.InWorld ? "Date_StepInWorld" : "Date_Step"], visitor.Number(step.Ordinal)),
+            _ => text["Date_NotStated"],
+        };
+    }
+
+    /// <summary>Writes a depth of time: so many years, thousand, million or billion years ago, or before the year it names.</summary>
+    public static string Of(AgePosition age, Visitor visitor, IStringLocalizer<Ui> text)
+    {
+        ArgumentNullException.ThrowIfNull(age);
+        ArgumentNullException.ThrowIfNull(visitor);
+        ArgumentNullException.ThrowIfNull(text);
+        var years = string.Format(CultureInfo.CurrentCulture, text[$"Age_{age.Unit}"], Number(age.Value, visitor));
+        var written = age.Reference switch
+        {
+            { IsSpecified: false } => string.Format(CultureInfo.CurrentCulture, text["Age_Ago"], years),
+            { CommonEraYear: 1950 } => string.Format(CultureInfo.CurrentCulture, text["Age_BeforePresent"], years),
+            { CommonEraYear: { } year } => string.Format(CultureInfo.CurrentCulture, text["Age_BeforeYear"], years, Year(Era.CommonEra, year, visitor, text)),
+            _ => string.Format(CultureInfo.CurrentCulture, text["Age_Ago"], years),
+        };
+        if (age.Basis == AgeBasis.RadiocarbonYears)
+        {
+            written = string.Format(CultureInfo.CurrentCulture, text["Age_Radiocarbon"], written);
+        }
+
+        return age.IsApproximate ? string.Format(CultureInfo.CurrentCulture, text["Date_About"], written) : written;
+    }
+
+    /// <summary>Writes a time a visitor asked for, in the words of the page (ADR 0021).</summary>
+    public static string Of(AskedTime asked, Visitor visitor, IStringLocalizer<Ui> text)
+    {
+        ArgumentNullException.ThrowIfNull(asked);
+        ArgumentNullException.ThrowIfNull(visitor);
+        ArgumentNullException.ThrowIfNull(text);
+        switch (asked)
+        {
+            case AskedTime.Years years:
+                return years.IsOneYear
+                    ? Year(years.First.Era, years.First.Number, visitor, text)
+                    : string.Format(CultureInfo.CurrentCulture, text["Date_Range"], Year(years.First.Era, years.First.Number, visitor, text), Year(years.Last.Era, years.Last.Number, visitor, text));
+            case AskedTime.Ago ago:
+                var (size, unit) = (ago.UnitSize, ago.Unit);
+                string Depth(decimal depth) => string.Format(
+                    CultureInfo.CurrentCulture, text["Age_Ago"], string.Format(CultureInfo.CurrentCulture, text[$"Age_{unit}"], Number(depth / size, visitor)));
+                return ago.Oldest == ago.Youngest
+                    ? Depth(ago.Oldest)
+                    : string.Format(CultureInfo.CurrentCulture, text["Date_Between"], Depth(ago.Youngest), Depth(ago.Oldest));
+            default:
+                return text["Date_NotStated"];
+        }
+    }
+
+    // A number with a part after the point, in the digits of the visitor.
+    private static string Number(decimal value, Visitor visitor)
+    {
+        var digits = value.ToString("0.######", CultureInfo.InvariantCulture);
+        return visitor.Language.Tag == "fa" ? Vafadar.Core.Text.Digits.ToPersian(digits).Replace('.', '٫') : digits;
+    }
+
+    private static string Elapsed(ElapsedTime elapsed, Visitor visitor, IStringLocalizer<Ui> text)
+    {
+        var written = string.Format(CultureInfo.CurrentCulture, text[$"Date_Elapsed_{elapsed.Unit}"], Number(elapsed.Value, visitor));
+        return elapsed.IsApproximate ? string.Format(CultureInfo.CurrentCulture, text["Date_About"], written) : written;
     }
 
     /// <summary>
@@ -48,7 +130,7 @@ public static class TimeText
     private static string? Start(Period period, Visitor visitor, IStringLocalizer<Ui> text) => period.Start switch
     {
         { State: PeriodStartState.Unknown } => text["Date_StartUnknown"],
-        { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(earliest, latest, visitor, text),
+        { Earliest: { } earliest, Latest: { } latest } => Between(earliest, latest, visitor, text),
         _ => null,
     };
 
@@ -57,12 +139,12 @@ public static class TimeText
         { State: PeriodEndState.Ongoing } => text["Date_Ongoing"],
         { State: PeriodEndState.EndedAtUnknownTime } => text["Date_EndedUnknown"],
         { State: PeriodEndState.Unknown } => text["Date_EndUnknown"],
-        { Earliest: CalendarPosition earliest, Latest: CalendarPosition latest } => Between(earliest, latest, visitor, text),
+        { Earliest: { } earliest, Latest: { } latest } => Between(earliest, latest, visitor, text),
         _ => null,
     };
 
     // One position when both ends of what is known are the same, "between" otherwise.
-    private static string Between(CalendarPosition earliest, CalendarPosition latest, Visitor visitor, IStringLocalizer<Ui> text) =>
+    private static string Between(TimePosition earliest, TimePosition latest, Visitor visitor, IStringLocalizer<Ui> text) =>
         earliest == latest
             ? Of(earliest, visitor, text)
             : string.Format(CultureInfo.CurrentCulture, text["Date_Between"], Of(earliest, visitor, text), Of(latest, visitor, text));

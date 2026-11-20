@@ -1237,7 +1237,7 @@
     <value>What is stated for this year</value>
   </data>
   <data name="Moment_Possibly" xml:space="preserve">
-    <value>may have held – the sources do not say it for certain for this year</value>
+    <value>may have held – the sources do not say it for certain for this time</value>
   </data>
   <data name="Moment_Earlier" xml:space="preserve">
     <value>Earlier: {0}</value>
@@ -1264,7 +1264,10 @@
     <value>At which place</value>
   </data>
   <data name="Search_Year" xml:space="preserve">
-    <value>In which year (of the common era)</value>
+    <value>When</value>
+  </data>
+  <data name="Search_Year_How" xml:space="preserve">
+    <value>A year, a stretch of years or a depth of time: 1200 · 500 BCE · 300 to 400 · 12 ka · 50 to 60 million years ago</value>
   </data>
   <data name="Search_Any" xml:space="preserve">
     <value>any</value>
@@ -3602,5 +3605,59 @@
   </data>
   <data name="Graph_Keys" xml:space="preserve">
     <value>In the drawing: the arrow keys go from one card to the next, Enter opens the profile of the card, + and − make the drawing larger and smaller, 0 shows the whole of it, and Escape lets go of the card. The list on this page says the same in words.</value>
+  </data>
+  <data name="Age_Years" xml:space="preserve">
+    <value>{0} years</value>
+  </data>
+  <data name="Age_ThousandYears" xml:space="preserve">
+    <value>{0} thousand years</value>
+  </data>
+  <data name="Age_MillionYears" xml:space="preserve">
+    <value>{0} million years</value>
+  </data>
+  <data name="Age_BillionYears" xml:space="preserve">
+    <value>{0} billion years</value>
+  </data>
+  <data name="Age_Ago" xml:space="preserve">
+    <value>{0} ago</value>
+  </data>
+  <data name="Age_BeforePresent" xml:space="preserve">
+    <value>{0} before the present (counted from 1950)</value>
+  </data>
+  <data name="Age_BeforeYear" xml:space="preserve">
+    <value>{0} before {1}</value>
+  </data>
+  <data name="Age_Radiocarbon" xml:space="preserve">
+    <value>{0}, in radiocarbon years</value>
+  </data>
+  <data name="Date_Step" xml:space="preserve">
+    <value>step {0} of the telling</value>
+  </data>
+  <data name="Date_StepInWorld" xml:space="preserve">
+    <value>step {0} of the order inside the story</value>
+  </data>
+  <data name="Date_Elapsed_Days" xml:space="preserve">
+    <value>for {0} days</value>
+  </data>
+  <data name="Date_Elapsed_Months" xml:space="preserve">
+    <value>for {0} months</value>
+  </data>
+  <data name="Date_Elapsed_Years" xml:space="preserve">
+    <value>for {0} years</value>
+  </data>
+  <data name="Date_Or" xml:space="preserve">
+    <value>{0} or {1}</value>
+  </data>
+  <data name="Moment_Time" xml:space="preserve">
+    <value>Or a stretch of years or a depth of time</value>
+  </data>
+  <data name="Moment_TitleTime" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Moment_NothingTime" xml:space="preserve">
+    <value>Nothing is stated for this time.</value>
+  </data>
+  <data name="Moment_InvalidTime" xml:space="preserve">
+    <value>That is no time: write a year (500 BCE), a stretch of years (300 to 400) or a depth of time (55 million years ago).</value>
   </data>
 </root>

@@ -127,7 +127,7 @@ public sealed record ChartState
     }
 
     private static int? Year(string? value) =>
-        int.TryParse(value, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var year) && year != 0 && Math.Abs(year) <= FurthestYear
+        int.TryParse(value, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out var year) && year != 0 && year is >= -FurthestYear and <= FurthestYear
             && value![0] != '+'
             ? year
             : null;

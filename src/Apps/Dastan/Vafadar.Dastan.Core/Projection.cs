@@ -513,7 +513,7 @@ public sealed class Projection
     {
         var reaches = Relations.Select(relation => relation.Time)
             .Concat(Entities.SelectMany(entity => entity.Dated.Select(dated => dated.Time)))
-            .Select(YearCover.Reach).OfType<YearSpan>().ToList();
+            .Select(time => YearCover.Reach(time)).OfType<YearSpan>().ToList();
         if (reaches.Count == 0)
         {
             return null;
@@ -540,6 +540,33 @@ public sealed class Projection
                 .Where(stated => stated.Holding != Holding.No)],
             turns.Where(turn => turn.Place < year.Place).Select(turn => (YearOfEra?)turn).LastOrDefault(),
             turns.Where(turn => turn.Place > year.Place).Select(turn => (YearOfEra?)turn).FirstOrDefault());
+    }
+
+    /// <summary>
+    /// Returns whether the collection says of anything when it was, so that a time can be asked for: a year of
+    /// the calendar or a depth of time.
+    /// </summary>
+    /// <param name="present">The year of the common era the visitor asks in.</param>
+    public bool SaysWhen(int present) =>
+        Relations.Select(relation => relation.Time).Concat(Entities.SelectMany(entity => entity.Dated.Select(dated => dated.Time)))
+            .Any(time => YearCover.Reach(time, present) is not null);
+
+    /// <summary>
+    /// Returns what the collection says of a time that was asked for (ADR 0021): a year, a stretch of years or a
+    /// depth of time. The relations that held or may have held in it, and what is stated of the entities for it.
+    /// </summary>
+    /// <param name="asked">The time.</param>
+    /// <param name="present">The year of the common era the visitor asks in; a depth of time is counted from it.</param>
+    public HeldInTime Held(AskedTime asked, int present)
+    {
+        ArgumentNullException.ThrowIfNull(asked);
+        var span = asked.Span(present);
+        return new(
+            asked,
+            [.. Relations.Select(relation => (Relation: relation, Holding: YearCover.Of(relation.Time, span, present)))
+                .Where(held => held.Holding != Holding.No).Select(held => new HeldThen(ToEdge(held.Relation), held.Holding))],
+            [.. Entities.SelectMany(entity => entity.Dated.Select(dated => new StatedThen(entity, dated, YearCover.Of(dated.Time, span, present))))
+                .Where(stated => stated.Holding != Holding.No)]);
     }
 
     /// <summary>
@@ -692,6 +719,13 @@ public sealed class Projection
         {
             var moment = At(year);
             inYear = moment.Relations.SelectMany(held => new[] { held.Edge.From.Id, held.Edge.To.Id }).Concat(moment.Stated.Select(stated => stated.Entity.Id)).ToHashSet();
+        }
+
+        if (filter.Time is { } time)
+        {
+            var then = Held(time, filter.Present);
+            var inTime = then.Relations.SelectMany(held => new[] { held.Edge.From.Id, held.Edge.To.Id }).Concat(then.Stated.Select(stated => stated.Entity.Id)).ToHashSet();
+            inYear = inYear is null ? inTime : [.. inYear.Intersect(inTime)];
         }
 
         bool Passes(Entity entity) =>

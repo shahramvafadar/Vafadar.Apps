@@ -10,21 +10,22 @@ namespace Vafadar.Dastan.Web.Tests;
 /// first reading stage on, and an event from the fourth. The statements are test data – the collection of the
 /// repository states nothing with a date about its entities.
 /// </summary>
-public sealed class DatedSite : DemoSite
+public class DatedSite : DemoSite
 {
-    private readonly string _content = Path.Combine(Path.GetTempPath(), "dastan-dated-" + Guid.NewGuid().ToString("N"), "content");
+    /// <summary>Gets the folder of the content of this site: a copy the tests may add to.</summary>
+    protected string Content { get; } = Path.Combine(Path.GetTempPath(), "dastan-dated-" + Guid.NewGuid().ToString("N"), "content");
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.UseSetting("Dastan:Content", _content);
-        if (Directory.Exists(_content))
+        builder.UseSetting("Dastan:Content", Content);
+        if (Directory.Exists(Content))
         {
             return;
         }
 
         // The collection and, beside it, the documents of the editors it points to for reviewers.
         var app = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "..", "..", "src", "Apps", "Dastan"));
-        var copies = Path.GetDirectoryName(_content)!;
+        var copies = Path.GetDirectoryName(Content)!;
         foreach (var folder in new[] { "content", Path.Combine("docs", "product") })
         {
             foreach (var file in Directory.EnumerateFiles(Path.Combine(app, folder), "*", SearchOption.AllDirectories))
@@ -35,7 +36,7 @@ public sealed class DatedSite : DemoSite
             }
         }
 
-        var path = Path.Combine(_content, "samples", "shahnameh-pilot.json");
+        var path = Path.Combine(Content, "samples", "shahnameh-pilot.json");
         var sample = JsonNode.Parse(File.ReadAllText(path))!.AsObject();
         var work = sample["entities"]!.AsArray().Single(entity => (string?)entity!["id"] == "work-shahnameh")!;
         work["dated"] = JsonNode.Parse(
@@ -85,7 +86,7 @@ public sealed class DatedSite : DemoSite
             """);
         File.WriteAllText(path, sample.ToJsonString());
 
-        var persianPath = Path.Combine(_content, "samples", "shahnameh-pilot.fa.json");
+        var persianPath = Path.Combine(Content, "samples", "shahnameh-pilot.fa.json");
         var persian = JsonNode.Parse(File.ReadAllText(persianPath))!.AsObject();
         persian["dated"] = JsonNode.Parse("""{ "work-written": { "label": "سروده شدنِ اثر" } }""");
         File.WriteAllText(persianPath, persian.ToJsonString());
@@ -94,9 +95,9 @@ public sealed class DatedSite : DemoSite
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
-        if (disposing && Directory.Exists(_content))
+        if (disposing && Directory.Exists(Content))
         {
-            Directory.Delete(Path.GetDirectoryName(_content)!, recursive: true);
+            Directory.Delete(Path.GetDirectoryName(Content)!, recursive: true);
         }
     }
 }

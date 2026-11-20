@@ -105,7 +105,7 @@ public sealed class RelationTimeTests
             """{ "kind": "occurrence", "at": { "frame": "calendar", "era": "commonEra", "year": 0 } }""")));
 
         Assert.Equal(["relation-01: time dates a relation of the story; only a relation with the scope outside_the_story says when it held."], inStory);
-        Assert.Equal(["world-1: time is not a time of the calendar: a relation is not dated by a place in the story."], byPlace);
+        Assert.Equal(["world-1: time is a place in a telling: a relation is not dated by a place in the story."], byPlace);
         Assert.StartsWith("world-1: time cannot be read", Assert.Single(unreadable), StringComparison.Ordinal);
     }
 

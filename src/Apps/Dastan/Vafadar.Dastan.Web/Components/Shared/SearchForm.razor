@@ -4,6 +4,7 @@
 @inject DastanSite Site
 @inject Visitor Visitor
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
 <form class="search" method="get" action="@($"{Site.Collection}/search")" role="search">
     <label for="search-q">@T["Search_Label"]</label>
@@ -42,11 +43,12 @@
                     </select>
                 </p>
             }
-            @if (projection.Years() is not null)
+            @if (projection.SaysWhen(Clock.GetUtcNow().Year))
             {
                 <p class="field">
-                    <label for="search-year">@T["Search_Year"]</label>
-                    <input type="number" id="search-year" name="year" value="@(Filter.Year is { Era: Vafadar.Temporal.Era.CommonEra } year ? year.Number.ToString(CultureInfo.InvariantCulture) : null)" min="1" max="9999" step="1" inputmode="numeric" dir="ltr" />
+                    <label for="search-time">@T["Search_Year"]</label>
+                    <input type="text" id="search-time" name="time" value="@Filter.Time?.Written" maxlength="80" autocomplete="off" dir="ltr" aria-describedby="search-time-how" />
+                    <span class="meta" id="search-time-how">@T["Search_Year_How"]</span>
                 </p>
             }
         </div>

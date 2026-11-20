@@ -162,7 +162,7 @@ before the first named stage nothing is carried.
 | `summary` | One or two sentences, as far as the stage of the entity tells |
 | `sourceIds` | At least one source |
 | `spoilerLevel` | The stage |
-| `dated` | Optional: what is stated about the entity with a time of the calendar – see below |
+| `dated` | Optional: what is stated about the entity with a time of the world: a date of a calendar or a depth of time (so many years, thousand, million or billion years ago: `{ "frame": "age", "value": 55, "unit": "millionYears", "reference": 1950 }`, where `reference` is the year it is counted from and is left out for "years ago", and `"basis": "radiocarbonYears"` says that it is counted in such years) – see below |
 | `picture` | Optional: the media item that is the picture of the profile – an image of the collection that says in `depictedEntityIds` that it depicts this entity. It is shown to who may see that item; everybody else sees a drawing of the kind |
 | `facts` | Optional: the facts of the profile – see "The facts of a profile" |
 
@@ -527,7 +527,7 @@ translation that names something the collection does not have is a problem.
 Beyond a single field: an identifier used twice; a record that cites no source, a source that does not exist or
 belongs to a later stage; a relation, an association or a media item that points to a record that does not exist
 or belongs to a later stage; a stage that is not one of the stages; stages that do not start at 0 or have a gap;
-a dated statement before its entity, or with a time that is not one of the calendar; none or several stories; two events at the same place of the telling; an event without an association, or an
+a dated statement before its entity, or with a time that is a place in a telling; none or several stories; two events at the same place of the telling; an event without an association, or an
 entity associated twice; a place that is not the setting, an object that is not an object; a media item that is
 shown without what showing it needs; a local path that leaves its folder or names a file that does not exist; a
 translation into the language of the collection, a second one into the same language, or one for another

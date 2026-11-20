@@ -96,7 +96,7 @@ public sealed class EntityNamesTests
         Assert.Contains($"{Hero}: the name X is given twice in en.", Of("""[ { "name": "X", "language": "en", "kind": "alternative" }, { "name": "X", "language": "en", "kind": "title" } ]"""));
         Assert.Contains($"{Hero}, the name X: the source src-nowhere does not exist.", Of("""[ { "name": "X", "language": "en", "kind": "alternative", "sourceIds": ["src-nowhere"] } ]"""));
         Assert.Contains(
-            "the name X: time is not a time of the calendar: a name is not dated by a place in the story.",
+            "the name X: time is a place in a telling: a name is not dated by a place in the story.",
             Of("""[ { "name": "X", "language": "en", "kind": "former", "time": { "kind": "occurrence", "at": { "frame": "narrative", "sequence": "story-rostam-sohrab", "order": "presentation", "ordinal": 3 } } } ]"""));
         Assert.Contains($"{Hero}: the identifier Q1 of Wikidata is given twice.", Of("[]", """[ { "issuer": "Wikidata", "value": "Q1", "match": "exact" }, { "issuer": "Wikidata", "value": "Q1", "match": "close" } ]"""));
         Assert.Contains(Of("[]", """[ { "issuer": "Wikidata", "value": "Q1", "url": "http://www.wikidata.org/wiki/Q1", "match": "exact" } ]"""), problem => problem.Contains("url", StringComparison.Ordinal));

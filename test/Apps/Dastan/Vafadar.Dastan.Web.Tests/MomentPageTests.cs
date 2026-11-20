@@ -114,10 +114,86 @@ public sealed class MomentPageTests(WorldSite world, DemoSite demo) : IClassFixt
     }
 
     [Theory]
+    [InlineData("990 to 1000", "990 CE – 1000 CE")]
+    [InlineData("990-1000", "990 CE – 1000 CE")]
+    [InlineData("ago", "years ago")]
+    public async Task A_stretch_of_years_and_a_depth_of_time_are_asked_for_as_a_year_is(string typed, string written)
+    {
+        // The same years as a depth of time, counted back from the year of the asking.
+        var now = DateTime.UtcNow.Year;
+        if (typed == "ago")
+        {
+            (typed, written) = ($"{now - 1000} to {now - 990} years ago", $"between {now - 1000} years ago and {now - 990} years ago");
+        }
+
+        var page = await world.Visitor().Get($"/en/{Story}/at?time={Uri.EscapeDataString(typed)}");
+
+        // What held in a part of the stretch held in it: the poet at the court from 994 to 999, and the people
+        // of the city in the year 1000.
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Contains(written, page.Main, StringComparison.Ordinal);
+        Assert.Contains("Poet at", page.Main, StringComparison.Ordinal);
+        Assert.Contains("People of the city", page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Poet again at", page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Nothing is stated", page.Main, StringComparison.Ordinal);
+
+        // The sources of a relation lead back to this view.
+        Assert.Contains($"from={Uri.EscapeDataString($"{Story}/at?time=")}", page.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task A_time_is_typed_in_Persian_too_and_one_year_of_it_is_the_view_of_that_year()
+    {
+        var stretch = await world.Visitor().Get($"/fa/{Story}/at?time={Uri.EscapeDataString("۹۹۰ تا ۱۰۰۰")}");
+        Assert.Contains("Poet at", stretch.Main, StringComparison.Ordinal);
+        Assert.Contains("value=\"990 to 1000\"", stretch.Html, StringComparison.Ordinal);
+
+        var year = await world.Visitor().Get($"/en/{Story}/at?time={Uri.EscapeDataString("996")}");
+        Assert.Contains("in the year 996 CE", year.Main, StringComparison.Ordinal);
+        Assert.Contains($"href=\"{Story}/at?year=999\"", year.Html, StringComparison.Ordinal);
+
+        var before = await world.Visitor().Get($"/en/{Story}/at?time={Uri.EscapeDataString("۵۰۰ پ.م")}");
+        Assert.Contains("in the year 500 BCE", before.Main, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("55 million years ago", "55 million years ago")]
+    [InlineData("50-60 Ma", "between 50 million years ago and 60 million years ago")]
+    [InlineData("12000 BCE to 11000 BCE", "12000 BCE – 11000 BCE")]
+    [InlineData("4.5 Ga", "4.5 billion years ago")]
+    public async Task A_time_the_collection_says_nothing_of_is_answered_with_nothing_and_not_with_an_error(string typed, string written)
+    {
+        var page = await world.Visitor().Get($"/en/{Story}/at?time={Uri.EscapeDataString(typed)}");
+
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Contains(written, page.Main, StringComparison.Ordinal);
+        Assert.Contains("Nothing is stated for this time.", page.Main, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("400 to 300")]
+    [InlineData("early")]
+    [InlineData("0")]
+    [InlineData("-2147483648")]
+    [InlineData("99999999999999999999")]
+    [InlineData("200 Ga")]
+    [InlineData("<script>alert(1)</script>")]
+    public async Task What_is_no_time_is_said_to_be_none(string typed)
+    {
+        var page = await world.Visitor().Get($"/en/{Story}/at?time={Uri.EscapeDataString(typed)}");
+
+        Assert.Equal(HttpStatusCode.OK, page.Status);
+        Assert.Contains("That is no time", page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("alert(1)", page.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("Poet", page.Main, StringComparison.Ordinal);
+    }
+
+    [Theory]
     [InlineData("?year=0")]
     [InlineData("?year=-5")]
     [InlineData("?year=abc")]
-    [InlineData("?year=10000")]
+    [InlineData("?year=1000001")]
+    [InlineData("?year=2147483648")]
     [InlineData("?year=1000&era=other")]
     [InlineData("?year=%3Cscript%3E")]
     public async Task What_is_no_year_is_said_to_be_none_and_nothing_of_it_is_written_back(string query)

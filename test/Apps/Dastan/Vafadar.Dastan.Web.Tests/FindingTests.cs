@@ -52,8 +52,8 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
     }
 
     [Theory]
-    [InlineData("en", "What kind of thing", "At which place", "In which year", "People and beings")]
-    [InlineData("fa", "چه گونه چیزی", "در کدام جا", "در کدام سال", "کسان و جانداران")]
+    [InlineData("en", "What kind of thing", "At which place", "When", "People and beings")]
+    [InlineData("fa", "چه گونه چیزی", "در کدام جا", "در چه زمانی", "کسان و جانداران")]
     public async Task The_page_of_the_search_asks_for_kind_place_and_year_in_the_language_of_the_page(string language, string kind, string place, string year, string beings)
     {
         var page = await world.Visitor().Get($"/{language}/{Story}/search");
@@ -80,6 +80,7 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
 
     [Theory]
     [InlineData("?year=996", "A court of the tests")]
+    [InlineData("?time=996", "A court of the tests")]
     [InlineData("?q=court&year=996", "A court of the tests")]
     public async Task A_year_finds_what_took_part_in_it(string query, string found)
     {
@@ -87,6 +88,32 @@ public sealed class FindingTests(WorldSite world, DemoSite demo) : IClassFixture
 
         Assert.Contains(found, page.Main, StringComparison.Ordinal);
         Assert.Contains("value=\"996\"", page.Html, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("990 to 998", "990 to 998")]
+    [InlineData("990-998 CE", "990 to 998")]
+    [InlineData("۹۹۰ تا ۹۹۸", "990 to 998")]
+    [InlineData("ago", null)]
+    public async Task A_stretch_of_years_and_a_depth_of_time_find_what_took_part_in_them(string typed, string? kept)
+    {
+        var now = DateTime.UtcNow.Year;
+        if (typed == "ago")
+        {
+            (typed, kept) = ($"{now - 998} to {now - 990} years ago", $"{now - 998} to {now - 990} years ago");
+        }
+
+        var page = await world.Visitor().Get($"/en/{Story}/search?time={Uri.EscapeDataString(typed)}");
+
+        // The poet was at the court from 994 to 999: the court is found, and the time stays in the form as the
+        // reader took it.
+        Assert.Contains("A court of the tests", page.Main, StringComparison.Ordinal);
+        Assert.Contains($"name=\"time\" value=\"{kept}\"", page.Html, StringComparison.Ordinal);
+
+        // A time nothing is said of finds nothing, and what is no time is not asked for.
+        Assert.DoesNotContain("A court of the tests", (await world.Visitor().Get($"/en/{Story}/search?time=55+Ma")).Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("A court of the tests", (await world.Visitor().Get($"/en/{Story}/search?time=600+to+500+BCE")).Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("value=\"400 to 300\"", (await world.Visitor().Get($"/en/{Story}/search?time=400+to+300")).Html, StringComparison.Ordinal);
     }
 
     [Theory]

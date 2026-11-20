@@ -1237,7 +1237,7 @@
     <value>آنچه برای این سال گفته شده</value>
   </data>
   <data name="Moment_Possibly" xml:space="preserve">
-    <value>شاید برقرار بوده – منابع برای این سال با قطعیت نمی‌گویند</value>
+    <value>شاید برقرار بوده – منابع برای این زمان با قطعیت نمی‌گویند</value>
   </data>
   <data name="Moment_Earlier" xml:space="preserve">
     <value>پیش‌تر: {0}</value>
@@ -1264,7 +1264,10 @@
     <value>در کدام جا</value>
   </data>
   <data name="Search_Year" xml:space="preserve">
-    <value>در کدام سال (میلادی)</value>
+    <value>در چه زمانی</value>
+  </data>
+  <data name="Search_Year_How" xml:space="preserve">
+    <value>یک سال، یک بازه یا ژرفای زمان: ۱۲۰۰ · ۵۰۰ پ.م · ۳۰۰ تا ۴۰۰ · ۱۰ تا ۲۰ هزار سال پیش · ۵۵ میلیون سال پیش</value>
   </data>
   <data name="Search_Any" xml:space="preserve">
     <value>هر کدام</value>
@@ -3602,5 +3605,59 @@
   </data>
   <data name="Graph_Keys" xml:space="preserve">
     <value>در نمودار: کلیدهای جهت از یک کارت به کارت کناری می‌روند، Enter نمایهٔ کارت را باز می‌کند، + و − نمودار را بزرگ‌تر و کوچک‌تر می‌کنند، 0 همهٔ آن را نشان می‌دهد و Escape کارت را رها می‌کند. فهرست همین صفحه همین را با واژه می‌گوید.</value>
+  </data>
+  <data name="Age_Years" xml:space="preserve">
+    <value>{0} سال</value>
+  </data>
+  <data name="Age_ThousandYears" xml:space="preserve">
+    <value>{0} هزار سال</value>
+  </data>
+  <data name="Age_MillionYears" xml:space="preserve">
+    <value>{0} میلیون سال</value>
+  </data>
+  <data name="Age_BillionYears" xml:space="preserve">
+    <value>{0} میلیارد سال</value>
+  </data>
+  <data name="Age_Ago" xml:space="preserve">
+    <value>{0} پیش</value>
+  </data>
+  <data name="Age_BeforePresent" xml:space="preserve">
+    <value>{0} پیش از اکنون (شمرده از ۱۹۵۰)</value>
+  </data>
+  <data name="Age_BeforeYear" xml:space="preserve">
+    <value>{0} پیش از {1}</value>
+  </data>
+  <data name="Age_Radiocarbon" xml:space="preserve">
+    <value>{0}، به سال رادیوکربنی</value>
+  </data>
+  <data name="Date_Step" xml:space="preserve">
+    <value>گام {0} روایت</value>
+  </data>
+  <data name="Date_StepInWorld" xml:space="preserve">
+    <value>گام {0} در ترتیب درون داستان</value>
+  </data>
+  <data name="Date_Elapsed_Days" xml:space="preserve">
+    <value>به مدت {0} روز</value>
+  </data>
+  <data name="Date_Elapsed_Months" xml:space="preserve">
+    <value>به مدت {0} ماه</value>
+  </data>
+  <data name="Date_Elapsed_Years" xml:space="preserve">
+    <value>به مدت {0} سال</value>
+  </data>
+  <data name="Date_Or" xml:space="preserve">
+    <value>{0} یا {1}</value>
+  </data>
+  <data name="Moment_Time" xml:space="preserve">
+    <value>یا یک بازه یا ژرفای زمان</value>
+  </data>
+  <data name="Moment_TitleTime" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Moment_NothingTime" xml:space="preserve">
+    <value>برای این زمان چیزی گفته نشده است.</value>
+  </data>
+  <data name="Moment_InvalidTime" xml:space="preserve">
+    <value>این زمان نیست: یک سال (۵۰۰ پ.م)، یک بازه (۳۰۰ تا ۴۰۰) یا ژرفای زمان (۵۵ میلیون سال پیش) بنویسید.</value>
   </data>
 </root>
