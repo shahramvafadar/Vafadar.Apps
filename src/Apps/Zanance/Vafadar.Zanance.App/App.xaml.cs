@@ -99,10 +99,11 @@ public partial class App : Application
             ReplaceRoot(window, CreateShell());
             OfferNotificationsSoon();
             if (_databaseReady) RequestAutomaticBackup();
-            if (_pendingLink is { } link)
+            var links = TakePendingLinks();
+            if (links.Count != 0)
             {
-                _pendingLink = null;
-                Dispatcher.Dispatch(() => _ = Presentation.Failures.GuardAsync(() => OpenLinkAsync(link)));
+                Dispatcher.Dispatch(() => _ = Presentation.Failures.GuardAsync(() =>
+                    _services.GetRequiredService<AppLinkRouter>().OpenBatchAsync(links)));
             }
         }
     }
@@ -444,14 +445,14 @@ public partial class App : Application
             // The callback may remain queued behind a genuine PIN cover; retain this exact page/window rather than global mutable state.
             await Presentation.Failures.GuardAsync(() => _services.GetRequiredService<AppLinkRouter>().StartAsync(() =>
             {
-                if (!presentation.IsCurrent) return Task.FromResult<string?>(null);
+                if (!presentation.IsCurrent) return Task.FromResult<IReadOnlyList<string>>([]);
                 publicationAttempted = true; presentation.Publish(preparedPage);
-                string? link = null;
                 if (window.Page is AppShell)
                 {
-                    link = _pendingLink; _pendingLink = null; OfferNotificationsSoon();
+                    OfferNotificationsSoon();
+                    return Task.FromResult(TakePendingLinks());
                 }
-                return Task.FromResult(link);
+                return Task.FromResult<IReadOnlyList<string>>([]);
             }));
             presentation.RequireCurrent();
             if (publicationAttempted && !presentation.HasPublished)
@@ -553,23 +554,38 @@ public partial class App : Application
         return _services.GetRequiredService<Features.Backup.AutomaticBackupCoordinator>().RunAsync();
     }
 
-    private static string? _pendingLink;
+    private static readonly Queue<string> PendingLinks = new();
+
+    private static IReadOnlyList<string> TakePendingLinks()
+    {
+        lock (PendingLinks)
+        {
+            var links = PendingLinks.ToArray();
+            PendingLinks.Clear();
+            return links;
+        }
+    }
 
     /// <summary>
     /// Opens an in-app link, e.g. <c>entry|Expense</c> from the quick add widget (D-30), after the app lock; before the
-    /// shell exists the link waits for the start.
+    /// shell exists the link waits in arrival order.
     /// </summary>
     public static void OpenLink(string link)
     {
-        if (Current is App app && Shell.Current is not null)
+        if (Current is App app && app.Dispatcher.Dispatch(() =>
+            {
+                if (Shell.Current is AppShell)
+                    _ = Presentation.Failures.GuardAsync(() => app.OpenLinkAsync(link));
+                else
+                    StorePendingLink(link);
+            }))
         {
-            app.Dispatcher.Dispatch(() => app.OpenLinkAsync(link));
+            return;
         }
-        else
-        {
-            _pendingLink = link;
-        }
+        StorePendingLink(link);
     }
+
+    private static void StorePendingLink(string link) { lock (PendingLinks) PendingLinks.Enqueue(link); }
 
     // A tapped reminder opens its occurrence; several taps or an old notification never record anything (REM-04, REM-06).
     private void OnReminderTapped(object? sender, string link) => OpenLink(link);

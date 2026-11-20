@@ -201,7 +201,10 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
     }
 
     /// <summary>Runs <paramref name="action"/> now, or after unlocking when the app is covered (REM-06).</summary>
-    public Task RunWhenUnlockedAsync(Func<Task> action)
+    public Task RunWhenUnlockedAsync(Func<Task> action) => RunWhenUnlockedAsync(action, []);
+
+    /// <summary>Admits a batch of original destinations in arrival order before later input can enter the drain.</summary>
+    internal Task RunWhenUnlockedAsync(Func<Task> action, IReadOnlyList<Func<Task>> remaining)
     {
         ArgumentNullException.ThrowIfNull(action);
         lock (_pending)
@@ -210,12 +213,14 @@ public sealed class AppLockService(IDeviceAuthenticator authenticator, ZananceSt
             if (IsLocked || _drainingPending)
             {
                 _pending.Add(action);
+                _pending.AddRange(remaining);
                 return Task.CompletedTask;
             }
 
             // D-672: the first already-unlocked destination owns the same drain as queued work.
             // Otherwise a second tap overtakes its asynchronous native navigation or source read.
             _drainingPending = true;
+            _pending.AddRange(remaining);
         }
 
         return RunImmediateAndPendingAsync(action);

@@ -11,7 +11,7 @@ public sealed class AppLinkTests
         using var f = new FlowFixture(); await AppLockTests.EnableDeviceAsync(f); var setup = AppLockTests.Create(f);
         var router = new AppLinkRouter(setup.Lock, f.Platform, f.Services.GetRequiredService<Vafadar.Zanance.Data.PlanStore>(), f.Services.GetRequiredService<Vafadar.Zanance.Data.GoalStore>(), f.Store); var prepared = false;
         await setup.Lock.StartAsync();
-        await router.StartAsync(() => { prepared = true; Assert.Empty(f.Platform.Routes); return Task.FromResult<string?>("entry|Expense"); });
+        await router.StartAsync(() => { prepared = true; Assert.Empty(f.Platform.Routes); return Task.FromResult<IReadOnlyList<string>>(["entry|Expense"]); });
         Assert.False(prepared); Assert.Empty(f.Platform.Routes);
         await setup.Lock.UnlockedAsync(); Assert.True(prepared);
         var opened = Assert.Single(f.Platform.Routes); Assert.Equal(AppRoutes.EntryEditorRoute, opened.Route);
@@ -24,8 +24,39 @@ public sealed class AppLinkTests
     {
         using var f = new FlowFixture(); var setup = AppLockTests.Create(f); var router = new AppLinkRouter(setup.Lock, f.Platform, f.Services.GetRequiredService<Vafadar.Zanance.Data.PlanStore>(), f.Services.GetRequiredService<Vafadar.Zanance.Data.GoalStore>(), f.Store);
         var prepared = 0; await setup.Lock.StartAsync();
-        await router.StartAsync(() => { prepared++; return Task.FromResult<string?>(null); });
+        await router.StartAsync(() => { prepared++; return Task.FromResult<IReadOnlyList<string>>([]); });
         Assert.Equal(1, prepared); Assert.Empty(f.Platform.Routes);
+    }
+
+    [Fact, Trait("AT", "AT-80")]
+    public async Task Startup_admits_every_valid_pending_link_in_arrival_order_after_cover()
+    {
+        using var f = new FlowFixture(); await AppLockTests.EnableDeviceAsync(f); var setup = AppLockTests.Create(f);
+        var router = new AppLinkRouter(setup.Lock, f.Platform, f.Services.GetRequiredService<Vafadar.Zanance.Data.PlanStore>(),
+            f.Services.GetRequiredService<Vafadar.Zanance.Data.GoalStore>(), f.Store);
+        await setup.Lock.StartAsync();
+        await router.StartAsync(() => Task.FromResult<IReadOnlyList<string>>(["entry|Income", "unsupported", "entry|Transfer"]));
+        Assert.Empty(f.Platform.Routes);
+
+        await setup.Lock.UnlockedAsync();
+
+        Assert.Equal(new[] { "Income", "Transfer" }, f.Platform.Routes.Select(route => route.Parameters?["kind"] as string));
+    }
+
+    [Fact, Trait("AT", "AT-80")]
+    public async Task An_admitted_batch_stays_ahead_of_later_links_while_covered()
+    {
+        using var f = new FlowFixture(); await AppLockTests.EnableDeviceAsync(f); var setup = AppLockTests.Create(f);
+        var router = new AppLinkRouter(setup.Lock, f.Platform, f.Services.GetRequiredService<Vafadar.Zanance.Data.PlanStore>(),
+            f.Services.GetRequiredService<Vafadar.Zanance.Data.GoalStore>(), f.Store);
+        await setup.Lock.StartAsync();
+        await router.OpenBatchAsync(["entry|Expense", "entry|Income"]);
+        await router.OpenAsync("entry|Transfer");
+        Assert.Empty(f.Platform.Routes);
+
+        await setup.Lock.UnlockedAsync();
+
+        Assert.Equal(new[] { "Expense", "Income", "Transfer" }, f.Platform.Routes.Select(route => route.Parameters?["kind"] as string));
     }
 
     [Theory, Trait("AT", "AT-80")]

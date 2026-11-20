@@ -9,24 +9,34 @@ namespace Vafadar.Zanance.App;
 /// <summary>Opens only supported widget/reminder destinations after secure startup and unlocking, never posting money.</summary>
 public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction interaction, PlanStore plans, GoalStore goals, ZananceStore store)
 {
-    /// <summary>Prepares the first visible page after unlocking, then opens the startup link that waited for that page.</summary>
-    public Task StartAsync(Func<Task<string?>> preparePage)
+    /// <summary>Prepares the first visible page after unlocking, then admits the links that waited for it.</summary>
+    public Task StartAsync(Func<Task<IReadOnlyList<string>>> preparePage)
     {
         ArgumentNullException.ThrowIfNull(preparePage);
         return appLock.RunWhenUnlockedAsync(async () =>
         {
             // A startup PIN cover sits over a blank root, so navigation must wait for both access and the real Shell.
-            var link = await preparePage();
-            if (link is not null) { await OpenAsync(link); }
+            await OpenBatchAsync(await preparePage());
         });
     }
 
     /// <summary>Validates an external link before queuing its navigation behind the application access gate.</summary>
-    public Task OpenAsync(string link)
+    public Task OpenAsync(string link) => Resolve(link) is { } action
+        ? appLock.RunWhenUnlockedAsync(action) : Task.CompletedTask;
+
+    /// <summary>Queues all recognized original startup links together so later input cannot overtake them.</summary>
+    internal Task OpenBatchAsync(IReadOnlyList<string> links)
+    {
+        var actions = links.Select(Resolve).OfType<Func<Task>>().ToArray();
+        return actions.Length == 0 ? Task.CompletedTask
+            : appLock.RunWhenUnlockedAsync(actions[0], new ArraySegment<Func<Task>>(actions, 1, actions.Length - 1));
+    }
+
+    private Func<Task>? Resolve(string link)
     {
         if (BudgetReminderLink.Parse(link) is { } budgetReminder)
         {
-            return appLock.RunWhenUnlockedAsync(ResolveAsync);
+            return ResolveAsync;
             async Task ResolveAsync()
             {
                 // An alert opens its original period without selecting a new Home currency or changing account data.
@@ -39,7 +49,7 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
 
         if (GoalReminderLink.Parse(link) is { } goalReminder)
         {
-            return appLock.RunWhenUnlockedAsync(ResolveAsync);
+            return ResolveAsync;
             async Task ResolveAsync()
             {
                 // Resolve after unlocking; a restored goal Guid alone cannot identify the original notification file.
@@ -57,7 +67,7 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
 
         if (PlanReminderLink.Parse(link) is { } reminder)
         {
-            return appLock.RunWhenUnlockedAsync(ResolveAsync);
+            return ResolveAsync;
             async Task ResolveAsync()
             {
                 // Resolve the active file after unlocking; a restored Guid is not proof of the same profile.
@@ -109,6 +119,6 @@ public sealed class AppLinkRouter(AppLockService appLock, IAppInteraction intera
             };
         }
 
-        return route is null ? Task.CompletedTask : appLock.RunWhenUnlockedAsync(() => interaction.NavigateAsync(route, parameters));
+        return route is null ? null : () => interaction.NavigateAsync(route, parameters);
     }
 }

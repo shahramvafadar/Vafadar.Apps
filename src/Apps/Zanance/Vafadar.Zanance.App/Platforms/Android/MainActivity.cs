@@ -230,7 +230,7 @@ public class MainActivity : MauiAppCompatActivity
     // A tap on the quick add widget (D-30) opens a new entry of that kind, after the app lock.
     private static void OpenFromWidget(Intent? intent)
     {
-        if (intent?.Action == QuickAddWidget.Action && intent.GetStringExtra(QuickAddWidget.KindExtra) is { } kind)
+        if (intent?.Action == QuickAddWidget.Action && intent.GetStringExtra(QuickAddWidget.KindExtra) is ("Expense" or "Income" or "Transfer") and var kind)
         {
             intent.SetAction(null);
             App.OpenLink("entry|" + kind);

@@ -923,6 +923,17 @@ Physical phone, native OS credential UI, real-provider restore, iOS and producti
 The app access gate does not encrypt financial data. No existing owner profile, stored verifier or physical phone is
 used in application tests; the complete signed Release APK remains the required phone-test handoff.
 
+### Queued widget links before the first Shell
+
+On a fresh Android 16 x64 emulator, two controlled quick-add intents entered through
+the real Android MainActivity before onboarding published the Shell. The signed offline
+build (SHA-256 `b89bf76b6199c2bac5c210b48264d9c3d48866fe2de5817e5a401ed9cb450c24`)
+opened Income followed by Expense. Cancelling Expense exposed Income underneath it.
+Cancelling Income returned to Home, and Transactions remained empty. This exercised
+Android intent delivery. Launcher-widget taps and physical devices were outside this check.
+The 32 selected link and reminder-access tests passed, including startup behind the lock
+and the ordering of queued links relative to later input.
+
 ## AT-81 - Legacy valued-asset income/expense consent (D-74 / QA-04)
 
 37 application cases compile the actual AssetEntryConfirmation used by the editor, with real SQLite continuations
