@@ -52,6 +52,25 @@ class BundlePermissionTests(unittest.TestCase):
         result = self.verify("offline")
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_bundle_keeps_exact_minimum_android_version(self):
+        for minimum in (None, "23", "26", "Preview"):
+            with self.subTest(minimum=minimum):
+                self.manifest = ElementTree.fromstring(BASE_MANIFEST)
+                sdk = self.manifest.find("uses-sdk")
+                if minimum is None:
+                    del sdk.attrib[ANDROID + "minSdkVersion"]
+                else:
+                    sdk.set(ANDROID + "minSdkVersion", minimum)
+                result = self.verify("offline")
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertIn(b"Bundle must declare Android minimum API 24", result.stderr)
+
+    def test_bundle_rejects_sdk_ceiling(self):
+        self.manifest.find("uses-sdk").set(ANDROID + "maxSdkVersion", "36")
+        result = self.verify("offline")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn(b"Bundle must not declare android:maxSdkVersion", result.stderr)
+
     def test_offline_rejects_packaged_microsoft_sign_in(self):
         applications = self.manifest.find("application")
         for name in ("crc648316b0a9aa8cfd61.BrowserTabActivity",

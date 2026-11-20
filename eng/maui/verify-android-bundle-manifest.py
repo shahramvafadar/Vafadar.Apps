@@ -7,6 +7,8 @@ import sys
 from xml.etree import ElementTree
 
 ANDROID = "{http://schemas.android.com/apk/res/android}"
+# Keep the qualified Android 7 installation floor in both release editions.
+MIN_SUPPORTED_SDK = 24
 # Google Play's mobile submission requirement effective 2026-08-31.
 PLAY_MIN_TARGET_SDK = 36
 PERMISSION_POLICY = Path(__file__).resolve().parents[1] / "modules" / "zanance-android-permissions.json"
@@ -94,7 +96,12 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
     sdk_elements = manifest.findall("uses-sdk")
     if len(sdk_elements) != 1:
         raise SystemExit("Expected exactly one uses-sdk in the base manifest.")
-    target_sdk = sdk_elements[0].get(ANDROID + "targetSdkVersion", "")
+    sdk = sdk_elements[0]
+    if sdk.get(ANDROID + "minSdkVersion") != str(MIN_SUPPORTED_SDK):
+        raise SystemExit(f"Bundle must declare Android minimum API {MIN_SUPPORTED_SDK}.")
+    if ANDROID + "maxSdkVersion" in sdk.attrib:
+        raise SystemExit("Bundle must not declare android:maxSdkVersion.")
+    target_sdk = sdk.get(ANDROID + "targetSdkVersion", "")
     if not target_sdk.isascii() or not target_sdk.isdecimal():
         raise SystemExit("Bundle does not declare a numeric android:targetSdkVersion.")
     if int(target_sdk) < PLAY_MIN_TARGET_SDK:
@@ -141,8 +148,9 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
             raise SystemExit("Offline bundle registers a Microsoft sign-in activity.")
     verify_msal_redirect(application, entra_client_id)
     verify_file_provider_bindings(application, package)
-    print(f"Verified bundle package, version, target API {target_sdk}, release flags, backup policy bindings, "
-          "edition permissions, MSAL redirect configuration and file-provider bindings.")
+    print(f"Verified bundle package, version, minimum API {MIN_SUPPORTED_SDK}, target API {target_sdk}, "
+          "release flags, backup policy bindings, edition permissions, MSAL redirect configuration "
+          "and file-provider bindings.")
 
 
 if __name__ == "__main__":
