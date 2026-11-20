@@ -254,8 +254,11 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Cloud variant, Windows: Google opens the default browser, the page "Sign-in complete" appears after consent, and the app shows the account; the files `%LOCALAPPDATA%\…\google\google.token` and `msal\msal.cache` are DPAPI-protected and removed or emptied on disconnect; a firewall prompt does not appear for the `127.0.0.1` listener
 - [x] `INTERNET` permission removed if no online feature ships (D-20) – the offline build's merged manifest declares only notifications, boot and biometric (USE_BIOMETRIC / USE_FINGERPRINT from AndroidX Biometric); re-checked 2026-09-29 with the cloud libraries referenced
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
-- [ ] Android Auto Backup disclosed (D-16); decision re-checked against the release edition. The Android framework
-  positive restore control covered nine domains, and the empty-extraction result was classified for that transport.
+- [ ] Android Auto Backup disclosed (D-16); decision re-checked against the release edition.
+  The retained offline ARM64 and cloud-backup x64 bundles both bind the legacy and modern exclusion rules and
+  declare `allowBackup=false` in the base manifest.
+  The Android framework positive restore control covered nine domains, and the empty-extraction result was
+  classified for that transport.
   Samsung Smart Switch transferred the two helper apps with no private payload in either; the Samsung positive
   data-transfer control remains open. [Framework evidence](quality/empty-policy-and-current-s24-d1235.md) ·
   [Samsung evidence](quality/samsung-oem-transfer-result-d1233.md)

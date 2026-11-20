@@ -36,6 +36,17 @@ def verify_manifest(manifest, package, display_version, build_number, edition):
     for attribute in ("debuggable", "testOnly"):
         if applications[0].get(ANDROID + attribute, "false") != "false":
             raise SystemExit(f"Bundle enables or does not resolve android:{attribute}.")
+
+    # OD-10 keeps device-bound storage out of OS backup and device transfer.
+    backup_policy = {
+        "allowBackup": "false",
+        "fullBackupContent": "@xml/backup_rules",
+        "dataExtractionRules": "@xml/data_extraction_rules",
+    }
+    for attribute, value in backup_policy.items():
+        if applications[0].get(ANDROID + attribute) != value:
+            raise SystemExit(f"Bundle does not preserve the required android:{attribute} backup policy.")
+
     if edition not in ("offline", "cloud-backup"):
         raise SystemExit("Unknown Android bundle edition.")
     permissions = [element for element in manifest if element.tag.startswith("uses-permission")]
@@ -51,7 +62,8 @@ def verify_manifest(manifest, package, display_version, build_number, edition):
         for element in permissions
     ):
         raise SystemExit("Cloud backup release bundle lacks unrestricted INTERNET.")
-    print(f"Verified bundle package, version, target API {target_sdk}, release flags and edition network permissions.")
+    print(f"Verified bundle package, version, target API {target_sdk}, release flags, backup policy bindings "
+          "and edition network permissions.")
 
 
 if __name__ == "__main__":
