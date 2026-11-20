@@ -318,10 +318,7 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         using var result = await ParseAsync(response, ct);
         var id = result is null ? null : Text(result.RootElement, "id");
         if (!ValidId(id)) return Unknown;
-        // A contradictory operation echo cannot claim this dispatch. Some create receipts omit metadata.
-        var echoedOperation = Read(Read(result!.RootElement, "metadata"), "zanance_operation");
-        if (profile.Provider == "openai" && echoedOperation.ValueKind != JsonValueKind.Undefined &&
-            (echoedOperation.ValueKind != JsonValueKind.String || echoedOperation.GetString() != operation)) return Unknown;
+        if (profile.Provider == "openai" && !MatchesOpenAiOperationEcho(result!.RootElement, operation)) return Unknown;
         await saveId(id!);
         return Outcome(profile, offer.Purpose, digest, result!.RootElement);
     }
@@ -366,12 +363,22 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         ValidId(id) && Admit(route, offer) is not null && IsSynthetic(offer.Purpose, digest);
 
     /// <summary>Reads only the saved original execution and its matching vendor project.</summary>
-    internal async Task<AiProviderOutcome> StatusAsync(AiPilotRouteRow route, AiOffer offer, string digest, string? id, CancellationToken ct)
+    internal async Task<AiProviderOutcome> StatusAsync(AiPilotRouteRow route, AiOffer offer, string operation, string digest, string? id, CancellationToken ct)
     {
         if (!ValidId(id) || Admit(route, offer) is not { } profile || !IsSynthetic(offer.Purpose, digest)) return Unknown;
         using var request = Request(profile, HttpMethod.Get, profile.Url + "/" + id);
         using var result = await SendAsync(request, ct);
-        return result is not null && Text(result.RootElement, "id") == id ? Outcome(profile, offer.Purpose, digest, result.RootElement) : Unknown;
+        if (result is null || Text(result.RootElement, "id") != id ||
+            profile.Provider == "openai" && !MatchesOpenAiOperationEcho(result.RootElement, operation)) return Unknown;
+        return Outcome(profile, offer.Purpose, digest, result.RootElement);
+    }
+
+    private static bool MatchesOpenAiOperationEcho(JsonElement response, string operation)
+    {
+        // An optional metadata echo must agree with the original operation when supplied.
+        var echoed = Read(Read(response, "metadata"), "zanance_operation");
+        return echoed.ValueKind == JsonValueKind.Undefined ||
+            echoed.ValueKind == JsonValueKind.String && echoed.GetString() == operation;
     }
 
     /// <summary>Admits only the original synthetic operation and project before an explicit retention action.</summary>

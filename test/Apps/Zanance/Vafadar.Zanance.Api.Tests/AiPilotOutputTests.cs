@@ -42,7 +42,7 @@ public sealed class AiPilotOutputTests
         using var transport = new StatusReceipt($"https://api.openai.com/v1/responses/{operation}", response);
         var provider = new AiPilotProvider(config, transport, TimeProvider.System);
 
-        var outcome = await provider.StatusAsync(route, offer, AiProtocol.Digest(AiPilotProvider.ReportFixture), operation,
+        var outcome = await provider.StatusAsync(route, offer, "fictional-original-operation", AiProtocol.Digest(AiPilotProvider.ReportFixture), operation,
             TestContext.Current.CancellationToken);
 
         Assert.Equal(1, transport.Reads);
@@ -83,7 +83,7 @@ public sealed class AiPilotOutputTests
         using var transport = new StatusReceipt($"https://generativelanguage.googleapis.com/v1beta/interactions/{operation}", response);
         var provider = new AiPilotProvider(config, transport, TimeProvider.System);
 
-        var outcome = await provider.StatusAsync(route, offer, AiProtocol.Digest(AiPilotProvider.ReportFixture), operation,
+        var outcome = await provider.StatusAsync(route, offer, "fictional-original-operation", AiProtocol.Digest(AiPilotProvider.ReportFixture), operation,
             TestContext.Current.CancellationToken);
 
         Assert.Equal(1, transport.Reads);
@@ -127,6 +127,45 @@ public sealed class AiPilotOutputTests
         Assert.Equal(1, transport.Reads);
         Assert.Equal(expectBinding ? new[] { handle } : [], handles);
         Assert.Equal(AiProviderState.Unknown, outcome.State);
+    }
+
+    /// <summary>Refuses a terminal response that echoes another operation despite matching the saved handle.</summary>
+    [Theory]
+    [InlineData("foreign-operation", false)]
+    [InlineData(null, false)]
+    [InlineData("fictional-original-operation", true)]
+    public async Task Status_cannot_publish_a_contradictory_operation(string? echoedOperation, bool expected)
+    {
+        const string model = "gpt-6.2-sol";
+        const string project = "fictional-status-project";
+        const string handle = "resp_status_correlation_fixture";
+        var revision = Convert.ToHexStringLower(SHA256.HashData(
+            Encoding.UTF8.GetBytes($"zanance-pilot-v1|openai|{model}|{project}")));
+        var route = new AiPilotRouteRow { Provider = "openai", Purpose = AiPurpose.PeriodExplanation, Revision = revision };
+        var offer = new AiOffer(Guid.NewGuid(), route.Provider, model, route.Purpose, 1, DateTimeOffset.UnixEpoch.AddDays(1));
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-status-only",
+            ["Analysis:ProviderPilot:openai:Project"] = project,
+        }).Build();
+        var output = JsonSerializer.Serialize(new { net_expenses_minor = 38000, explanation = "Fictional expenses." });
+        var response = JsonSerializer.Serialize(new
+        {
+            id = handle, model, status = "completed", metadata = new { zanance_operation = echoedOperation },
+            usage = new { input_tokens = 100, output_tokens = 40 },
+            output = new[] { new { type = "message", content = new[] { new { type = "output_text", text = output } } } },
+        });
+        using var transport = new StatusReceipt($"https://api.openai.com/v1/responses/{handle}", response);
+        var provider = new AiPilotProvider(config, transport, TimeProvider.System);
+
+        var outcome = await provider.StatusAsync(route, offer, "fictional-original-operation", AiProtocol.Digest(AiPilotProvider.ReportFixture), handle,
+            TestContext.Current.CancellationToken);
+
+        Assert.Equal(1, transport.Reads);
+        Assert.Equal(expected ? AiProviderState.Completed : AiProviderState.Unknown, outcome.State);
+        Assert.Equal(expected ? "Fictional expenses." : null, outcome.Text);
+        Assert.Equal(expected ? AiPilotVendorStatus.Completed : null, outcome.VendorStatus);
+        Assert.Equal(expected ? 100 : null, outcome.Metering?.Input);
     }
 
     private sealed class StatusReceipt(string url, string response, HttpMethod? method = null) : HttpMessageHandler, IHttpClientFactory

@@ -192,7 +192,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             if (originalRequest.State != AiRequestState.Pending || originalRequest.PilotVendorStatus.HasValue) return true;
             var frozenOffer = known[0].Offer;
             var originalRoute = await db.Set<AiPilotRouteRow>().AsNoTracking().SingleAsync(item => item.Id == frozenOffer.PilotRouteId, ct);
-            var observed = await pilot.StatusAsync(originalRoute, Offer(frozenOffer), originalRequest.PayloadDigest, responseId, ct);
+            var observed = await pilot.StatusAsync(originalRoute, Offer(frozenOffer),
+                ProviderKey(originalRequest.UserId, originalRequest.Id), originalRequest.PayloadDigest, responseId, ct);
             if (!observed.VendorStatus.HasValue) return false;
             await ApplyAsync(originalRequest.UserId, originalRequest.Id, observed, CancellationToken.None);
             return true;
@@ -251,7 +252,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
                 if (pilotRouteId is null)
                     outcome = await provider.StatusAsync(ProviderKey(owner, request), offer, ct);
                 else if (originalRoute is not null && originalDigest is not null)
-                    outcome = await pilot!.StatusAsync(originalRoute, offer, originalDigest, vendorId, ct);
+                    outcome = await pilot!.StatusAsync(originalRoute, offer, ProviderKey(owner, request), originalDigest, vendorId, ct);
             }
             catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
             if (outcome is not null) await ApplyAsync(owner, request, outcome, CancellationToken.None);
@@ -295,7 +296,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         }
 
         AiProviderOutcome? outcome = null;
-        try { outcome = await pilot.StatusAsync(route, offer, digest, originalId, ct); }
+        try { outcome = await pilot.StatusAsync(route, offer, ProviderKey(owner, request), digest, originalId, ct); }
         catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
         if (outcome is not null) await ApplyAsync(owner, request, outcome, CancellationToken.None);
         await using var observation = await factory.CreateDbContextAsync(CancellationToken.None);
