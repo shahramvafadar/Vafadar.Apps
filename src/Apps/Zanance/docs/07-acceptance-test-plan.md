@@ -648,6 +648,34 @@ the exact APK are retained under `artifacts/at72-skip-shared`. This verifies the
 English Android selection and Skip for this fixture. Other languages were checked
 at the caption level, and physical-device and notification delivery remain open.
 
+### Android grouped reminder for two occurrences sharing an adjusted date
+
+A new synthetic fixture on the same signed Offline Release APK `7e70152c` kept
+the two original November 21 and 22 anchors with their shared November 23 due
+date. The fixture enabled one reminder three days early at 08:48 local time,
+disabled the due-day reminder and automatic posting, and kept notification
+details off. The owned Android 16 x64 emulator had the package notification
+permission granted directly for setup. The older permission-return test was
+not replayed. No clock or idle settings were changed.
+
+Android showed one `RTC_WAKEUP` for the original receiver at 08:48 on
+November 20, with an inexact window of 2 minutes 3.073 seconds. The two original
+dates have distinct planner IDs. The group's actual PendingIntent used the
+first ID, `126705161`, under UID `10216`. The last empty sample was at
+08:49:21, Android recorded creation at 08:49:29.602, and the first active
+sample at 08:49:33 matched the original alarm ID and UID. The only active
+Zanance notification had the generic privacy message without names or amounts.
+
+A single tap in the Android notification shade opened Plans in the same app
+process, using the group destination. Upcoming still showed the two original
+date captions and the transaction list remained empty. No active Zanance
+notification remained after opening it. The first alarm-observer attempt
+preceded package installation and made no claim. The continued observation
+used the original test installation without rescheduling. The emulator was
+retired. The staged packet, alarm, native record, tap receipt and terminal
+checks are retained under `artifacts/at72-shared-reminder`. Physical-device,
+Doze, snooze and cancellation before delivery remain separate.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.

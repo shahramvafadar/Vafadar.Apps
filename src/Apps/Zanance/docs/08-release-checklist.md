@@ -257,7 +257,9 @@ independent work and overall goal remain active. Broader gates stay open.
   [Native Android holiday and weekend preview](07-acceptance-test-plan.md#at-72-android-working-day-and-public-holiday-preview)
   records the expected working-day changes and draft cancellation. A separate
   [same-working-day Budget and report case](07-acceptance-test-plan.md#at-72-android-distinct-dates-moved-to-the-same-working-day)
-  retained both open items, their amounts and the empty ledger. The matching physical-device cases remain open.
+  retained both open items, their amounts and the empty ledger. On an owned emulator, one
+  [grouped notification](07-acceptance-test-plan.md#android-grouped-reminder-for-two-occurrences-sharing-an-adjusted-date)
+  delivered and opened Plans with both original dates still visible. The matching physical-device cases remain open.
 
 ## Privacy and security
 
