@@ -14,15 +14,19 @@ window.addEventListener('load', () => {
   drawGraphs();
 });
 
-// A page with a graph (ADR 0020) names the script that draws it; it is asked for once the page is shown, and
-// by no other page.
+// A page with a graph (ADR 0020) or a timeline (ADR 0021) names the script that draws it; it is asked for once
+// the page is shown, and by no other page.
 function drawGraphs(): void {
-  const address = document.querySelector<HTMLElement>('dastan-graph[data-script]')?.dataset['script'];
-  if (address) {
-    const script = document.createElement('script');
-    script.src = new URL(address, document.baseURI).href;
-    script.async = true;
-    document.head.append(script);
+  const asked = new Set<string>();
+  for (const drawing of document.querySelectorAll<HTMLElement>('dastan-graph[data-script], dastan-timeline[data-script]')) {
+    const address = drawing.dataset['script'];
+    if (address && !asked.has(address)) {
+      asked.add(address);
+      const script = document.createElement('script');
+      script.src = new URL(address, document.baseURI).href;
+      script.async = true;
+      document.head.append(script);
+    }
   }
 }
 

@@ -78,7 +78,47 @@ to stumble on.
 * **The fault at the lowest number** (R-TIME-04, `ChartState.Year`): `?from=-2147483648` made the page of a
   comparison fail, because the number has no absolute value. It is "no choice" now, with a test.
 
-**Not built yet (the next parts of the step):** the three axes as a drawing – a window as a window, an open
-end as open, deep time and the order of a telling as views of their own; zoom and pan in the browser; the time
-a picture shows and the gallery of a period; calendars shown side by side; what was chosen carried from view
-to view. The chart of a comparison still knows years from 9999 BCE to 9999 CE until then.
+### Part 2 (2026-11-20): the control – three axes, drawn as what is known, moved in the browser
+
+* **A timeline as views** (`TimelineViews`, Core): every statement goes to the axis its time is counted on – a
+  date of the calendar, a depth of time (in years before the year of the visit, which the view names), a place
+  in a telling (a view for each telling). A lane appears in the views it has something on. What has no place
+  on any axis – a time nobody knows, a year of an era the axis does not count – is named under the views with
+  a link to its row, not dropped. A time over two kinds of time cannot be said at all: the library refuses it.
+* **What is known is what is drawn.** A window in which something happened once is a dashed frame from its
+  first to its last time, never a point at a middle nobody stated and never a bar. What lasted is a bar; where
+  its beginning or its end is only known to lie between two times, that part is hatched; "still going on" is
+  an arrow; an end nobody states, and "ended, nobody states when", is a fading line with a question mark and
+  no arrow; a beginning nobody states comes out of a fading line. What is less than exact is paler; what is
+  disputed has the border of a dispute.
+* **`timeline.ts`**, our own drawing in SVG, without a library: a line of years for the calendar, a line of
+  powers of ten for the depth of time (so that 55 million and ten thousand years stand on one line), a line of
+  steps for a telling. Time runs from left to right in every language; the words are the page's. No date or
+  clock of the browser is read: every place is a number the server wrote.
+* **The data stands in the page**, in an attribute of `<dastan-timeline>`, written by the server with the
+  words of the table of the same page (`TimelineData`). There is no second request and no address of data:
+  the drawing and the table cannot differ, and the content of a page still holds no script.
+* **Moved in the browser:** larger and smaller around the pointer (the key for it with the wheel, two fingers,
+  + and −, the buttons), sideways (a finger, the mouse, the arrow keys, the buttons), all of it (0). Nothing
+  is asked of the server. The address keeps the view: `from` and `to` of the calendar in the form the still
+  chart reads, so the same address without a script shows the same years; a view of another axis under its
+  own name.
+* **Every mark is a link** to its row of the table, named by what it is and when: Tab walks the marks, Enter
+  opens the row, and a reader who hears the page hears the statement and its time.
+* **The still chart stays** as the first answer, as the choice of the reader ("Show the still chart") and
+  where the script does not run. Its years reach as far as the calendar of the library now (a million years
+  to each side); it draws the calendar only – the other two axes are views of the control, and without a
+  script their statements are in the table and named under the chart, as before.
+* **Where it is:** the comparison of several lanes and the timeline of a collection, which are one component.
+
+**Found by looking, in a browser:** the name of a bar that ran out of the view at the right was out of sight
+with it (it now stands on the part of the bar in sight); the words of a mark of the axis at the very side were
+cut; a drawing with the role of a picture may not hold links (the frame carries the name of the view instead).
+
+**Looked at by eye** (Chromium, 1100 pixels): the comparison of Iran, China and Rome in English and in Persian,
+and a made-up comparison with every kind of beginning and end, deep time and a telling. **Not looked at:** a
+phone, touch with two fingers, a screen reader.
+
+**Not built yet (the next parts of the step):** the page of a story on the control (it keeps its own chart of
+the telling, opened by links); the time a picture shows and the gallery of a period; calendars shown side by
+side; what was chosen carried from view to view.

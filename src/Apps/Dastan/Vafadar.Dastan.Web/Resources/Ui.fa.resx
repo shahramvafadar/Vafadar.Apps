@@ -3660,4 +3660,40 @@
   <data name="Moment_InvalidTime" xml:space="preserve">
     <value>این زمان نیست: یک سال (۵۰۰ پ.م)، یک بازه (۳۰۰ تا ۴۰۰) یا ژرفای زمان (۵۵ میلیون سال پیش) بنویسید.</value>
   </data>
+  <data name="Timeline_Axis_Calendar" xml:space="preserve">
+    <value>بر پایهٔ تقویم</value>
+  </data>
+  <data name="Timeline_Axis_Depth" xml:space="preserve">
+    <value>زمان ژرف، به سال پیش از {0}</value>
+  </data>
+  <data name="Timeline_Axis_Order" xml:space="preserve">
+    <value>به ترتیب روایت</value>
+  </data>
+  <data name="Timeline_Step" xml:space="preserve">
+    <value>گام {0}</value>
+  </data>
+  <data name="Timeline_Earlier" xml:space="preserve">
+    <value>پیش‌تر</value>
+  </data>
+  <data name="Timeline_Later" xml:space="preserve">
+    <value>پس‌تر</value>
+  </data>
+  <data name="Timeline_Whole" xml:space="preserve">
+    <value>همهٔ آن</value>
+  </data>
+  <data name="Timeline_ToStill" xml:space="preserve">
+    <value>نمایش نمودار ایستا</value>
+  </data>
+  <data name="Timeline_ToLive" xml:space="preserve">
+    <value>نمایش نمودار جابه‌جاشدنی</value>
+  </data>
+  <data name="Timeline_Keys" xml:space="preserve">
+    <value>در هر نما: کلیدهای جهت چپ و راست آن را جابه‌جا می‌کنند، + و − بزرگ‌تر و کوچک‌ترش می‌کنند و 0 همه‌اش را نشان می‌دهد؛ با انگشت یا موشواره جابه‌جا می‌شود و با دو انگشت بزرگ و کوچک. هر نشان پیوندی به سطر خودش در جدول پایین است.</value>
+  </data>
+  <data name="Timeline_Legend" xml:space="preserve">
+    <value>نوار چیزی است که ادامه داشته؛ بخش هاشورخورده جایی است که آغاز یا پایانش می‌تواند باشد؛ پیکان می‌گوید هنوز ادامه دارد و خط محوشونده با علامت پرسش می‌گوید پایانش گفته نشده است. قاب خط‌چین بازه‌ای است که چیزی یک بار در آن رخ داده – نه این‌که چقدر طول کشیده. نقطه زمانی است که گفته شده است.</value>
+  </data>
+  <data name="Timeline_Unplaced" xml:space="preserve">
+    <value>رسم نشده‌اند، چون زمانشان روی هیچ‌یک از این محورها جایی ندارد:</value>
+  </data>
 </root>

@@ -357,3 +357,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - You can ask for a time in your own words: a year ("500 BCE"), a stretch of years ("300 to 400") or a depth of
   time ("55 million years ago", "10 to 20 thousand years ago") – in the search of a collection and in "in a
   year". Times that lie very far back are written with their number, their unit and what they are counted from.
+- A timeline can be moved and made larger and smaller: with the mouse, a finger, the keyboard or its buttons.
+  It shows what is known as it is known – a window in which something happened as a window, an end that is
+  open as open – and times that lie very far back, and the order of a telling, have views of their own.

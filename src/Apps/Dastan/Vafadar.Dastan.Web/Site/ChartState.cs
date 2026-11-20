@@ -36,7 +36,7 @@ public sealed record ChartState
     private const int MostLanes = 99;
 
     // A year an address may name. Further out there is nothing a comparison of the site is about.
-    private const int FurthestYear = 9999;
+    private const int FurthestYear = Vafadar.Dastan.Core.AskedTime.FurthestYear;
 
     /// <summary>Gets the direction.</summary>
     public ChartDirection Direction { get; init; }

@@ -4,7 +4,9 @@
 @using Vafadar.Temporal
 @inject Visitor Visitor
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
+<TimelineLive Timeline="_timeline" Here="@_here">
 @* How the chart is looked at lives in the address: every choice is a link, and Back undoes it (ADR 0008). *@
 <nav class="chart-tools" aria-label="@T["Chart_Tools"]">
     <p class="chart-tool">
@@ -75,6 +77,8 @@ RenderFragment Lanes(string stage) => Steps(
     </p>
 }
 
+</TimelineLive>
+
 @if (Comparison.Lanes.Any(lane => lane.Periods.Any(period => period.Review == ReviewStatus.Disputed) || lane.Events.Any(single => single.Review == ReviewStatus.Disputed)))
 {
     <p class="note">@T["Disputed_Legend"]</p>
@@ -125,6 +129,7 @@ RenderFragment Lanes(string stage) => Steps(
 @code {
     private ChartState _state = new();
     private ComparisonChart _chart = null!;
+    private Timeline _timeline = null!;
     private TimelineDrawing? _across;
     private TimelineDrawing? _down;
     private Dictionary<string, ComparisonPeriod> _periods = [];
@@ -164,6 +169,7 @@ RenderFragment Lanes(string stage) => Steps(
         _here = AddressOf(_state);
         _periods = Comparison.Lanes.SelectMany(lane => lane.Periods).ToDictionary(period => period.Key, StringComparer.Ordinal);
         _chart = ComparisonCharts.Of(Comparison, text => Visitor.Text(text).Value, Callout);
+        _timeline = TimelineViews.Of(Comparison, Clock.GetUtcNow().Year);
 
         // The stretch the visitor chose, or the one the comparison is about. A year is shown to its end.
         _from = _state.From is { } first ? ChartState.Place(first) : _chart.From;

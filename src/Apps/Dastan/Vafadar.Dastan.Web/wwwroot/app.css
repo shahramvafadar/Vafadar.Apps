@@ -2532,3 +2532,182 @@ dastan-graph[data-state="still"] .graph-still {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* The timeline that can be moved (ADR 0021, step 19.9). Without its script the element is nothing but the
+   still chart it holds. A view is drawn from left to right in every language: time is a line, not a text. */
+dastan-timeline,
+.tlv-still:not([hidden]) {
+  display: contents;
+}
+
+.tlv-view {
+  margin-block: var(--space-4);
+}
+
+.tlv-title {
+  margin-block: 0 var(--space-2);
+  font-size: 1.1rem;
+}
+
+.tlv-tools:not([hidden]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block: var(--space-2);
+}
+
+.tlv-tools button {
+  min-block-size: 2.75rem;
+  min-inline-size: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.tlv-frame {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.tlv-frame:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.tlv {
+  display: block;
+  font-family: inherit;
+  user-select: none;
+}
+
+.tlv-tick {
+  fill: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.tlv-grid,
+.tlv-rule {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.tlv-grid {
+  stroke-dasharray: 2 4;
+}
+
+.tlv-lane {
+  fill: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tlv-name {
+  fill: var(--text);
+  font-size: 0.8rem;
+}
+
+.tlv-bar {
+  fill: var(--accent);
+  fill-opacity: 0.75;
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.tlv-hatch {
+  stroke: var(--surface-raised);
+  stroke-width: 3;
+}
+
+.tlv-unsure {
+  stroke: none;
+}
+
+.tlv-frame-of-window {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+}
+
+.tlv-point {
+  fill: var(--accent);
+  stroke: var(--surface-raised);
+  stroke-width: 1.5;
+}
+
+.tlv-point-open {
+  fill: var(--surface-raised);
+  stroke: var(--accent);
+}
+
+.tlv-arrow,
+.tlv-open {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+
+.tlv-open {
+  stroke-dasharray: 2 3;
+  stroke-opacity: 0.7;
+}
+
+.tlv-question {
+  fill: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.tlv-disputed .tlv-bar,
+.tlv-disputed .tlv-frame-of-window,
+.tlv-disputed .tlv-point {
+  stroke: var(--mark);
+  stroke-width: 2;
+}
+
+.tlv-loose .tlv-bar,
+.tlv-loose .tlv-point {
+  fill-opacity: 0.45;
+}
+
+.tlv-mark:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.tlv-mark:hover .tlv-name,
+.tlv-mark:focus-visible .tlv-name {
+  text-decoration: underline;
+}
+
+.tlv-keys {
+  margin-block: var(--space-2);
+}
+
+.tlv-name-inside {
+  fill: var(--accent-text);
+  font-weight: 600;
+}
+
+/* A page with a timeline is as wide as the window, like a page with a stage: the still chart in it and the
+   views that are moved take the width, what is to be read keeps the width of a column of text. */
+main:has(> dastan-timeline) {
+  max-inline-size: none;
+}
+
+main:has(> dastan-timeline) > :not(dastan-timeline),
+dastan-timeline > .tlv-tools,
+dastan-timeline > .tlv-still > :not(.stage),
+.tlv-live > :not([data-timeline-views]),
+.tlv-view > :not(.tlv-frame) {
+  max-inline-size: var(--measure);
+  margin-inline: auto;
+}

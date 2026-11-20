@@ -3660,4 +3660,40 @@
   <data name="Moment_InvalidTime" xml:space="preserve">
     <value>That is no time: write a year (500 BCE), a stretch of years (300 to 400) or a depth of time (55 million years ago).</value>
   </data>
+  <data name="Timeline_Axis_Calendar" xml:space="preserve">
+    <value>By the calendar</value>
+  </data>
+  <data name="Timeline_Axis_Depth" xml:space="preserve">
+    <value>Deep time, in years before {0}</value>
+  </data>
+  <data name="Timeline_Axis_Order" xml:space="preserve">
+    <value>In the order of the telling</value>
+  </data>
+  <data name="Timeline_Step" xml:space="preserve">
+    <value>step {0}</value>
+  </data>
+  <data name="Timeline_Earlier" xml:space="preserve">
+    <value>Earlier</value>
+  </data>
+  <data name="Timeline_Later" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="Timeline_Whole" xml:space="preserve">
+    <value>All of it</value>
+  </data>
+  <data name="Timeline_ToStill" xml:space="preserve">
+    <value>Show the still chart</value>
+  </data>
+  <data name="Timeline_ToLive" xml:space="preserve">
+    <value>Show the chart that can be moved</value>
+  </data>
+  <data name="Timeline_Keys" xml:space="preserve">
+    <value>In a view: the arrow keys to the left and to the right move it, + and − make it larger and smaller, 0 shows all of it; with a finger or the mouse it is moved, with two fingers made larger and smaller. Every mark is a link to its row in the table below.</value>
+  </data>
+  <data name="Timeline_Legend" xml:space="preserve">
+    <value>A bar is something that lasted; a hatched part is where its beginning or its end may lie; an arrow says that it is still going on, a fading line with a question mark that its end is not stated. A dashed frame is the window in which something happened once – not how long it took. A point is a time that is stated.</value>
+  </data>
+  <data name="Timeline_Unplaced" xml:space="preserve">
+    <value>Not drawn, because their time has no place on any of these axes:</value>
+  </data>
 </root>
