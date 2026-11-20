@@ -1,5 +1,26 @@
 # Original personal-sync page review
 
+## Authenticated analysis network variant
+
+Build the independent `pro.vafadar.zanance.analysisnetworkreview` package in Release with
+`-p:ReviewAnalysisNetwork=true`. Use a fresh owned Android emulator and keep the original traffic
+away from the production service. The review package uses the personal-sync network manifest and
+refuses the Android notification settings action.
+
+The opt-in `AiNativeAnalysisHostTests.Isolated_analysis_host_settles_two_original_native_requests`
+requires `ZANANCE_AI_NATIVE_CONNECTION` for the isolated loopback PostgreSQL database
+`zanance_ai_provider_pilot` on port 55482, plus a fresh artifact directory in `ZANANCE_AI_NATIVE_ROOT`.
+Write the exact text `Zanance isolated native analysis` to `fixture.marker` and a fresh 32-character
+lowercase hexadecimal value to `run.txt`. The host admits only that fictional identity and replaces
+both vendor transports. After `ready.txt` appears, install and launch the signed review package with
+`analysis_run`, `analysis_port` and `analysis_certificate` from the run and ready files. Only the
+public fixture reference, local port and certificate fingerprint are passed. The original APK identity,
+network permission, signature and emulator ownership must match before launch.
+
+Use the original process's `ZananceAnalysisNetwork` terminal log and the host test receipt together.
+The runner creates one empty fictional EUR account and two analysis results with zero ledger entries.
+A missing terminal record is not permission to launch again or duplicate a request.
+
 ## Independent household recovery-file adapter variant
 
 `ReviewHouseholdFiles=true` selects the permanent engineering package

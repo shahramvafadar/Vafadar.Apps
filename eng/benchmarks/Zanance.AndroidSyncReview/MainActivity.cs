@@ -12,6 +12,9 @@ namespace Vafadar.Zanance.App;
         ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density | ConfigChanges.Locale | ConfigChanges.LayoutDirection)]
 public sealed class MainActivity : MauiAppCompatActivity
 {
+    /// <summary>Independent native reviews leave Android notification settings to the product activity.</summary>
+    internal Task<bool> OpenNotificationSettingsAsync() => Task.FromResult(false);
+
     /// <inheritdoc />
     protected override void OnActivityResult(int requestCode, Result resultCode, Intent? data)
     {
@@ -27,7 +30,11 @@ public sealed class MainActivity : MauiAppCompatActivity
         if (PackageName != AndroidSyncReview.Package) throw new IOException("Independent compiled package identity required before window startup.");
         Window?.AddFlags(WindowManagerFlags.Secure);
         base.OnCreate(savedInstanceState);
-#if SYNC_NETWORK_REVIEW
+#if AI_NETWORK_REVIEW
+        var run = Intent?.GetStringExtra("analysis_run");
+        if (savedInstanceState is null && run is not null && System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$"))
+            _ = RunAnalysisNetworkAsync(run, Intent?.GetIntExtra("analysis_port", 0) ?? 0, Intent?.GetStringExtra("analysis_certificate"));
+#elif SYNC_NETWORK_REVIEW
         var run = Intent?.GetStringExtra("network_run");
         if (savedInstanceState is null && run is not null && System.Text.RegularExpressions.Regex.IsMatch(run, "^[0-9a-f]{32}$"))
             _ = RunNetworkAsync(run, Intent?.GetBooleanExtra("network_resume", false) == true,
@@ -39,7 +46,14 @@ public sealed class MainActivity : MauiAppCompatActivity
 #endif
     }
 
-#if SYNC_NETWORK_REVIEW
+#if AI_NETWORK_REVIEW
+    private static async Task RunAnalysisNetworkAsync(string run, int port, string? certificate)
+    {
+        var app = (App)Microsoft.Maui.Controls.Application.Current!;
+        await app.WaitForStartupAsync();
+        await AndroidAnalysisNetworkReview.RunAsync(app, IPlatformApplication.Current!.Services, run, port, certificate);
+    }
+#elif SYNC_NETWORK_REVIEW
     private static async Task RunNetworkAsync(string run, bool resume, int port, string? certificate, string? attachment, bool continuation)
     {
         var app = (App)Microsoft.Maui.Controls.Application.Current!;

@@ -51,6 +51,10 @@
     <ApplicationId>pro.vafadar.zanance.billingrecoveryreview</ApplicationId>
     <DefineConstants>$(DefineConstants);BILLING_RECOVERY_REVIEW</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ReviewAnalysisNetwork)' == 'true'">
+    <ApplicationId>pro.vafadar.zanance.analysisnetworkreview</ApplicationId>
+    <DefineConstants>$(DefineConstants);AI_NETWORK_REVIEW</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(ReviewAnalysisPrivate)' == 'true'">
     <ApplicationId>pro.vafadar.zanance.analysisprivatereview</ApplicationId>
     <DefineConstants>$(DefineConstants);AI_PRIVATE_REVIEW</DefineConstants>
@@ -63,16 +67,16 @@
     <Compile Include="../../sync/HouseholdRoundtrip/HistoryQualification.NativeBound.cs" Link="Native/HistoryQualification.NativeBound.cs"
              Condition="'$(ReviewHouseholdSnapshot)' == 'true'" />
     <Compile Include="$(OriginalAppRoot)**/*.cs"
-             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs"
+             Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)artifacts/**;$(OriginalAppRoot)Platforms/Windows/**;$(OriginalAppRoot)Platforms/iOS/**;$(OriginalAppRoot)Platforms/Android/MainActivity.cs"
              Link="%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="*.cs" />
     <MauiXaml Include="$(OriginalAppRoot)**/*.xaml"
-              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)Platforms/Windows/**"
+              Exclude="$(OriginalAppRoot)bin/**;$(OriginalAppRoot)obj/**;$(OriginalAppRoot)artifacts/**;$(OriginalAppRoot)Platforms/Windows/**"
               Link="%(RecursiveDir)%(Filename)%(Extension)" />
     <EmbeddedResource Include="$(OriginalAppRoot)Resources/Strings/*.resx" Link="Resources/Strings/%(Filename)%(Extension)" />
     <AndroidResource Include="$(OriginalAppRoot)Platforms/Android/Resources/**" Link="Resources/%(RecursiveDir)%(Filename)%(Extension)" />
-    <AndroidManifestOverlay Include="$(OriginalAppRoot)Platforms/Android/ReleaseManifest.xml" Condition="'$(ReviewNetwork)' != 'true'" />
-    <AndroidManifestOverlay Include="$(OriginalAppRoot)Platforms/Android/PersonalSyncManifest.xml" Condition="'$(ReviewNetwork)' == 'true'" />
+    <AndroidManifestOverlay Include="$(OriginalAppRoot)Platforms/Android/ReleaseManifest.xml" Condition="'$(ReviewNetwork)' != 'true' and '$(ReviewAnalysisNetwork)' != 'true'" />
+    <AndroidManifestOverlay Include="$(OriginalAppRoot)Platforms/Android/PersonalSyncManifest.xml" Condition="'$(ReviewNetwork)' == 'true' or '$(ReviewAnalysisNetwork)' == 'true'" />
     <MauiIcon Include="$(OriginalAppRoot)Resources/AppIcon/appicon.svg" ForegroundFile="$(OriginalAppRoot)Resources/AppIcon/appiconfg.svg" Color="#F4F6F8" />
     <MauiSplashScreen Include="$(OriginalAppRoot)Resources/Splash/splash.svg" Color="#F4F6F8" BaseSize="128,128" />
     <MauiImage Include="$(OriginalAppRoot)Resources/Images/*" />
