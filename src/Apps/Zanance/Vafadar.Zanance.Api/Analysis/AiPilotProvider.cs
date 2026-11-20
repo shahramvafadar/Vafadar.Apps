@@ -427,7 +427,8 @@ internal sealed class AiPilotProvider(IConfiguration configuration, IHttpClientF
         var thinking = openAi ? Number(Read(usage, "output_tokens_details"), "reasoning_tokens") : Number(usage, "total_thought_tokens");
         var cached = openAi ? Number(Read(usage, "input_tokens_details"), "cached_tokens") : Number(usage, "total_cached_tokens");
         if (input is not (>= 0 and <= 1_000_000) || output is not (>= 0 and <= 1_000_000) ||
-            !openAi && thinking is < 0 or > 1_000_000) return terminal;
+            !openAi && Read(usage, "total_thought_tokens").ValueKind is not (JsonValueKind.Undefined or JsonValueKind.Null) &&
+                thinking is not (>= 0 and <= 1_000_000)) return terminal;
         var totalOutput = output.Value + (openAi ? 0 : thinking ?? 0);
         var metering = new AiPilotUsage(input.Value, totalOutput, InRange(cached, input.Value), InRange(thinking, totalOutput),
             StandardEstimate(profile.Model, input.Value, totalOutput));

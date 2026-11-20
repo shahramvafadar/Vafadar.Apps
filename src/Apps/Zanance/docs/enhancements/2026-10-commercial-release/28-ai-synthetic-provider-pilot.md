@@ -143,6 +143,10 @@ The isolated PostgreSQL test refused an unknown configured model before any vend
 
 A separate output check exercised the original OpenAI status adapter with a fictional response containing both valid structured text and a refusal. The text was previously accepted when the refusal was in the same message or in a second message. Both cases now suppress the result and preserve the provider completion status and reported token usage. Existing reservation reconciliation remains in effect. The two focused checks used a closed transport and no live calls. See [structured output refusals](https://developers.openai.com/api/docs/guides/structured-outputs#refusals-with-structured-outputs).
 
+### Invalid Gemini thinking usage
+
+A separate simulated Gemini status check found that a quoted, fractional or out-of-range thinking-token count was interpreted as absent. All three responses had valid business fields and previously completed as if the reported thinking usage were zero. Invalid supplied counts now suppress publication and leave metering unavailable while retaining the original terminal vendor status. The three focused checks did not call a vendor or change customer accounting. See [Gemini pricing](https://aistudio.google.com/docs/pricing#gemini-4-hydrogen) for the inclusion of thinking in billable output.
+
 ### Explicit retention deletion for completed pilot results
 
 The isolated operator CLI accepts `--delete-analysis-pilot-result <original request UUID> --confirm-vendor-deletion`. Use it only for one explicitly approved completed synthetic request after retaining the needed evaluation evidence. The original recorded route revision, existing project, approved digest and stored handle must all match before the operation is reserved. A later model switch or Off does not change that destination. There is no customer-facing route or automatic deletion job.
