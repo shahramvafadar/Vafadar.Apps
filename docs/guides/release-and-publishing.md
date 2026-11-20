@@ -65,6 +65,8 @@ Only its verified signed APK replaces the same-named handoff file in the output 
 A failed or empty publish leaves the prior handoff in place. Release handoffs reject debuggable APKs and verify both 16 KiB ZIP alignment and the ELF load alignment of ARM64 and x64 libraries. Zanance Release APKs also check minimum API 24, target API 36 or higher, and the absence of a maximum SDK filter. With
 `-Offline`, the APK must match the required and allowed permissions in the shared Android policy. Device installation and
 signer continuity with the installed app are separate checks.
+Every Zanance Release APK must also match the qualified SQLCipher library for each packaged ABI
+and carry the corresponding manifest and notices, using the same receipt as the Play bundle.
 
 1. Update `CHANGELOG.md` of the app and merge to `main`.
 2. GitHub → Actions → **Release (Android)** → *Run workflow*: choose the app, enter the display version and the next

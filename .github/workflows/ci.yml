@@ -48,6 +48,9 @@ jobs:
       - name: Verify Android ELF alignment guards
         run: python eng/maui/test_verify_android_elf_alignment.py
 
+      - name: Verify qualified Android SQLCipher archive guards
+        run: python eng/maui/test_verify_android_sqlcipher.py
+
       - name: Verify pinned notification source guards
         run: python eng/notifications/test_source_preparation.py
 

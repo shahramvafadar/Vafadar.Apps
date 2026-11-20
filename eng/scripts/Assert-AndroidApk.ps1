@@ -76,6 +76,10 @@ if ($Offline -and ($badging -cmatch "^uses-permission(?:-sdk-\d+)?: name='androi
 if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {
     Import-Module (Join-Path $PSScriptRoot '../modules/AndroidPrivacy.psm1')
     Assert-ZananceAndroidReleaseBadging -Badging $badging -Offline:$Offline
+    $storageVerifier = Join-Path $PSScriptRoot '../maui/verify-android-bundle-sqlcipher.py'
+    $storageReceipt = Join-Path $PSScriptRoot '../native/sqlcipher/android.package.contents.json'
+    $storageResult = & $python $storageVerifier --apk $apk.FullName $storageReceipt 2>&1
+    if ($LASTEXITCODE -ne 0) { throw "The Zanance Release APK failed SQLCipher package verification. $storageResult" }
 }
 
 if ($Offline -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {
