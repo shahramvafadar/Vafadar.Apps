@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Vafadar.Zanance.Core.Ledger;
 using Vafadar.Zanance.Data;
 using Vafadar.Zanance.Data.Commerce;
@@ -28,9 +29,11 @@ public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceRevi
         if (_busy || Accepted) throw new InvalidOperationException("The original editor save is pending or already accepted.");
         _busy = true; var idle = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously); _idle = idle;
         AttachmentFailed = NotificationFailed = false;
-        var document = attachment?.Copy(); EntryAttachmentReview? destination = null;
+        EntryAttachment? document = null;
+        EntryAttachmentReview? destination = null;
         try
         {
+            document = attachment?.Copy();
             SaveResult result;
             try
             {
@@ -53,6 +56,7 @@ public sealed class EntryEditorSaveSession(ZananceStore store, QuickResourceRevi
         }
         finally
         {
+            if (document is not null) CryptographicOperations.ZeroMemory(document.Data);
             _busy = false; if (ReferenceEquals(_idle, idle)) _idle = null; idle.TrySetResult();
         }
     }

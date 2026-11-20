@@ -70,29 +70,31 @@ public sealed partial class ZananceStore
         ArgumentNullException.ThrowIfNull(review); ArgumentNullException.ThrowIfNull(value); ArgumentNullException.ThrowIfNull(isCurrent);
         if (value.EntryId != review.Inputs.Entry.Id || value.Data.Length is 0 or > EntryAttachment.MaxBytes)
             throw new ArgumentException("The original attachment owner and bounded content are required.", nameof(value));
-        var copy = value.Copy();
         static string Packet(EntryAttachment item) => System.Text.Json.JsonSerializer.Serialize(new
         { item.Id, item.EntryId, item.FileName, item.ContentType, item.CreatedAt, item.UpdatedAt,
             Size = item.Data.Length, Hash = Convert.ToHexString(SHA256.HashData(item.Data)) });
-        var originalPacket = Packet(copy);
-        void Current()
-        {
-            review.EnsureCurrent();
-            if (!isCurrent() || originalPacket != Packet(value))
-                throw new InvalidOperationException("The original attachment operation retired or changed.");
-        }
-        if (copy.EntryId != review.Inputs.Entry.Id || copy.Data.Length is 0 or > EntryAttachment.MaxBytes)
-            throw new ArgumentException("The original attachment owner and bounded content are required.", nameof(value));
+        EntryAttachment? ownedCopy = null;
+        EntryAttachment? existing = null;
         review.BeginWrite(); var committed = false;
         try
         {
+            var copy = ownedCopy = value.Copy();
+            if (copy.EntryId != review.Inputs.Entry.Id || copy.Data.Length is 0 or > EntryAttachment.MaxBytes)
+                throw new ArgumentException("The original attachment owner and bounded content are required.", nameof(value));
+            var originalPacket = Packet(copy);
+            void Current()
+            {
+                review.EnsureCurrent();
+                if (!isCurrent() || originalPacket != Packet(value))
+                    throw new InvalidOperationException("The original attachment operation retired or changed.");
+            }
             Current();
             await using var db = await contextFactory.CreateDbContextAsync(ct);
             review.DemandFile(db);
             await using var write = await CommercialWriteTransaction.OpenAsync(db, commercialAccess, ct, requireTransaction: true);
             write.DemandFeature(deletion ? CommercialFeature.DeleteData : CommercialFeature.Corrections);
             review.Validate(db, await EntryAttachmentReview.ReadAsync(db, review.Inputs.Entry.Id, ct));
-            var existing = await db.Attachments.SingleOrDefaultAsync(a => a.Id == copy.Id, ct);
+            existing = await db.Attachments.SingleOrDefaultAsync(a => a.Id == copy.Id, ct);
             if (deletion)
             {
                 if (existing is null || existing.EntryId != copy.EntryId || existing.FileName != copy.FileName
@@ -110,6 +112,11 @@ public sealed partial class ZananceStore
             await write.CommitAsync(ct); committed = true;
             CommittedWriteNotification.Publish(OnChanged);
         }
-        finally { review.EndWrite(committed); }
+        finally
+        {
+            if (existing is not null) CryptographicOperations.ZeroMemory(existing.Data);
+            if (ownedCopy is not null) CryptographicOperations.ZeroMemory(ownedCopy.Data);
+            review.EndWrite(committed);
+        }
     }
 }

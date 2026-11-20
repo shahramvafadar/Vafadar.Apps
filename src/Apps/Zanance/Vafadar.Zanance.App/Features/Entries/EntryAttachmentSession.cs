@@ -55,25 +55,33 @@ public sealed class EntryAttachmentSession(ZananceStore store)
         return value;
     }
 
-    /// <summary>Picks once and saves only into the original entry, never the later query or selected profile.</summary>
+    /// <summary>Owns the picker's document buffer until it saves to the original entry or the operation ends.</summary>
     public Task AddAsync(Func<Task<EntryAttachment?>> pick) => RunAsync(async (review, revision) =>
     {
         var value = await pick();
         if (value is null) return;
-        if (!Current(review, revision)) throw new InvalidOperationException("The original file picker owner retired.");
-        value.EntryId = review.Inputs.Entry.Id;
-        await store.AddReviewedAttachmentAsync(review, value, () => Current(review, revision));
-        Accepted = true;
+        try
+        {
+            if (!Current(review, revision)) throw new InvalidOperationException("The original file picker owner retired.");
+            value.EntryId = review.Inputs.Entry.Id;
+            await store.AddReviewedAttachmentAsync(review, value, () => Current(review, revision));
+            Accepted = true;
+        }
+        finally { CryptographicOperations.ZeroMemory(value.Data); }
     });
 
     /// <summary>Confirms one original document and refuses changed ownership, content or a departed detail.</summary>
     public Task DeleteAsync(Guid id, Func<string, Task<bool>> confirm) => RunAsync(async (review, revision) =>
     {
         var value = await store.ReadReviewedAttachmentAsync(review, id);
-        if (!Current(review, revision)) throw new InvalidOperationException("The original attachment confirmation retired.");
-        if (!await confirm(value.FileName)) return;
-        await store.DeleteReviewedAttachmentAsync(review, value, () => Current(review, revision));
-        Accepted = true;
+        try
+        {
+            if (!Current(review, revision)) throw new InvalidOperationException("The original attachment confirmation retired.");
+            if (!await confirm(value.FileName)) return;
+            await store.DeleteReviewedAttachmentAsync(review, value, () => Current(review, revision));
+            Accepted = true;
+        }
+        finally { CryptographicOperations.ZeroMemory(value.Data); }
     });
 
     private bool Current(EntryAttachmentReview review, long revision) => revision == _revision && ReferenceEquals(_review, review);

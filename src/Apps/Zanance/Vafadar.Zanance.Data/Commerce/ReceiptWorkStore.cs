@@ -53,17 +53,27 @@ public sealed class ReceiptWorkStore(IDbContextFactory<ZananceDbContext> factory
         var path = DatabaseFileIdentity.ConfiguredPath(db); var access = new CommercialFileAccess(source, path);
         access.EnsureSnapshotCurrent(); access.DemandFeature(CommercialFeature.ReceiptReading);
         LedgerEntry? entry = null; EntryAttachment? attachment = null;
-        if (entryId is not null)
+        try
         {
-            await db.Database.OpenConnectionAsync(cancellationToken);
-            await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
-            await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
-            entry = await db.Entries.AsNoTracking().SingleOrDefaultAsync(item => item.Id == entryId, cancellationToken);
-            attachment = await db.Attachments.AsNoTracking().SingleOrDefaultAsync(item => item.Id == attachmentId, cancellationToken);
-            if (entry is null || entry.Kind != EntryKind.Expense || attachment is null || attachment.EntryId != entry.Id)
-                throw new InvalidOperationException("The original receipt source is unavailable.");
+            if (entryId is not null)
+            {
+                await db.Database.OpenConnectionAsync(cancellationToken);
+                await using var transaction = ((SqliteConnection)db.Database.GetDbConnection()).BeginTransaction(deferred: true);
+                await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
+                entry = await db.Entries.AsNoTracking().SingleOrDefaultAsync(item => item.Id == entryId, cancellationToken);
+                attachment = await db.Attachments.AsNoTracking().SingleOrDefaultAsync(item => item.Id == attachmentId, cancellationToken);
+                if (entry is null || entry.Kind != EntryKind.Expense || attachment is null || attachment.EntryId != entry.Id)
+                    throw new InvalidOperationException("The original receipt source is unavailable.");
+            }
+            var result = new ReceiptReadReview(path, access, entry, attachment);
+            result.EnsureCurrent();
+            return result;
         }
-        var result = new ReceiptReadReview(path, access, entry, attachment); result.EnsureCurrent(); return result;
+        catch
+        {
+            if (attachment is not null) CryptographicOperations.ZeroMemory(attachment.Data);
+            throw;
+        }
     }
     /// <summary>Rejects changed source content/metadata, existing entry or current file before late native results publish.</summary>
     public async Task ValidateAsync(ReceiptReadReview reviewed, CancellationToken cancellationToken = default)
@@ -79,9 +89,16 @@ public sealed class ReceiptWorkStore(IDbContextFactory<ZananceDbContext> factory
             await using var joined = await db.Database.UseTransactionAsync(transaction, cancellationToken);
             var entry = await db.Entries.AsNoTracking().SingleOrDefaultAsync(item => item.Id == reviewed.EntryId, cancellationToken);
             var attachment = await db.Attachments.AsNoTracking().SingleOrDefaultAsync(item => item.Id == reviewed.AttachmentId, cancellationToken);
-            if (entry is null || attachment is null || JsonSerializer.Serialize(entry) != reviewed.EntryPacket
-                || ReceiptReadReview.Packet(attachment) != reviewed.AttachmentPacket)
-                throw new InvalidOperationException("The original receipt source changed; read it again explicitly.");
+            try
+            {
+                if (entry is null || attachment is null || JsonSerializer.Serialize(entry) != reviewed.EntryPacket
+                    || ReceiptReadReview.Packet(attachment) != reviewed.AttachmentPacket)
+                    throw new InvalidOperationException("The original receipt source changed; read it again explicitly.");
+            }
+            finally
+            {
+                if (attachment is not null) CryptographicOperations.ZeroMemory(attachment.Data);
+            }
         }
         reviewed.EnsureCurrent();
     }

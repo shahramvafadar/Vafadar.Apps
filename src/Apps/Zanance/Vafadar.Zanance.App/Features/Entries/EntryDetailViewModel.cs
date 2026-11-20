@@ -523,7 +523,8 @@ public sealed partial class EntryDetailViewModel(
         bool Current() => Owns(owner, revision) && attachmentRevision == _attachmentRevision && ReferenceEquals(owner.Displayed, source);
         if (!row.CanRead || source.Entry?.Kind != EntryKind.Expense
             || source.Inputs.AttachmentReview?.Inputs.Attachments.Any(value => value.Id == row.Id) != true) return;
-        await _attachments.ReadAsync(row.Id);
+        var checkedAttachment = await _attachments.ReadAsync(row.Id);
+        CryptographicOperations.ZeroMemory(checkedAttachment.Data);
         if (Current()) await receipts.ReadAttachmentAsync(source.EntryId, row.Id, Current);
     }));
 
@@ -540,9 +541,13 @@ public sealed partial class EntryDetailViewModel(
                 var picked = await AttachmentFiles.PickAsync(translator["Attachment_Pick"]);
                 if (picked is null) return null;
                 if (!Owns(owner, revision) || attachmentRevision != _attachmentRevision)
+                {
+                    CryptographicOperations.ZeroMemory(picked.Data);
                     throw new OperationCanceledException("The original file picker retired.");
+                }
                 if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
                 {
+                    CryptographicOperations.ZeroMemory(picked.Data);
                     await interaction.AlertAsync(translator["Attachment_Title"],
                         translator[picked.Data.Length == 0 ? "Attachment_Failed" : "Attachment_TooLarge"], translator["Common_Ok"]);
                     return null;

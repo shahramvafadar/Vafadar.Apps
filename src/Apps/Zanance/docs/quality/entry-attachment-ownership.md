@@ -132,3 +132,25 @@ first observer expected the wrong resumed-activity field. The same open viewer w
 topResumedActivity without reopening it. Back returned to the same app process and the attachment
 was still present. The disposable package, guest files and emulator were retired. No physical device
 or real user data was used. The explicit false case is covered by the source-linked test.
+
+## Attachment write and stored OCR buffer ownership
+
+Four focused regressions reproduced retained bytes after a detail picker saved or
+retired and after stored-attachment OCR returned or failed. The picker transfers
+the detached bytes to the detail save session, which clears them at completion.
+Delete clears the detached confirmation copy. The data writer clears its own
+compared and tracked document buffers after the transaction. Editor Save clears
+its detached submission snapshot while leaving the caller's active draft intact.
+
+Stored attachment OCR uses the recognition buffer ownership already used for
+transient photos. The worker clears its detached bytes after reading. If the
+queued worker has not taken them, retirement clears them. Late publication uses
+the same stored source fingerprint after its bytes are released. Receipt validation
+clears its own copies after comparison. These lifetimes preserve stored attachments,
+the original financial writes, and new receipt drafts.
+
+All 84 selected attachment, editor-save and receipt flow tests passed. They use
+isolated synthetic data and verify original source bytes and unchanged ownership.
+The accepted Android viewer, OCR and financial interactions were not repeated.
+Strict Windows and Android Release builds passed. The signed offline Android APK
+SHA256 is 2a0c6876ef135e8b39f2eafdc7c45d6ec1728527e9a784533c5478485935324b.

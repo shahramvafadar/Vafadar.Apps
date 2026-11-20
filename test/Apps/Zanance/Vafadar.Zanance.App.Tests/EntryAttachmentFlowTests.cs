@@ -53,6 +53,38 @@ public sealed class EntryAttachmentFlowTests
         Assert.False(session.Accepted); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Picker_bytes_are_cleared_after_save_or_refusal(bool retire)
+    {
+        using var fixture = new FlowFixture();
+        var entry = await SeedAsync(fixture);
+        var session = new EntryAttachmentSession(fixture.Store);
+        await session.LoadAsync(entry);
+        var document = File();
+        var expected = document.Data.ToArray();
+        var pending = new TaskCompletionSource<EntryAttachment?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var work = session.AddAsync(() => pending.Task);
+        if (retire) session.Retire();
+        pending.SetResult(document);
+
+        if (retire)
+        {
+            await Assert.ThrowsAsync<InvalidOperationException>(() => work);
+            Assert.Empty(await fixture.Store.GetAttachmentsAsync(entry.Id, Ct));
+        }
+        else
+        {
+            await work;
+            Assert.True(session.Accepted);
+            var saved = await fixture.Store.GetAttachmentAsync(document.Id, Ct);
+            Assert.Equal(expected, saved!.Data);
+        }
+
+        Assert.All(document.Data, value => Assert.Equal(0, value));
+    }
+
     [Fact]
     public async Task Cancelled_picker_and_second_pending_invocation_create_no_rows()
     {
@@ -105,9 +137,10 @@ public sealed class EntryAttachmentFlowTests
     {
         using var f = new FlowFixture(); var entry = await SeedAsync(f); var session = new EntryAttachmentSession(f.Store);
         await session.LoadAsync(entry, await f.Store.GetQuickResourceReviewAsync(entry.Id, Ct));
-        var file = File(); await session.AddAsync(() => Task.FromResult<EntryAttachment?>(file));
+        var file = File(); var expected = file.Data.ToArray();
+        await session.AddAsync(() => Task.FromResult<EntryAttachment?>(file));
         Assert.True(session.Accepted); await session.LoadAsync(entry); var read = await session.ReadAsync(file.Id);
-        Assert.Equal(entry.Id, read.EntryId); Assert.Equal(file.FileName, read.FileName); Assert.Equal(file.ContentType, read.ContentType); Assert.Equal(file.Data, read.Data);
+        Assert.Equal(entry.Id, read.EntryId); Assert.Equal(file.FileName, read.FileName); Assert.Equal(file.ContentType, read.ContentType); Assert.Equal(expected, read.Data);
         await session.DeleteAsync(file.Id, name => Task.FromResult(name == file.FileName)); Assert.True(session.Accepted);
         Assert.Empty(await f.Store.GetAttachmentsAsync(entry.Id, Ct)); Assert.Equal(entry.Note, (await f.Store.GetEntryAsync(entry.Id, Ct))!.Note);
     }

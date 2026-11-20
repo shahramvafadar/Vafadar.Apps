@@ -48,13 +48,16 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             IsBusy = true; RequireCurrent();
             Error = null; RequireCurrent();
             var reviewed = await reader.CaptureAsync(entryId, attachmentId);
+            var original = reviewed.Attachment;
+            transientOriginal = original?.Data;
             RequireCurrent();
-            var file = reviewed.Attachment is { } original
+            var file = original is not null
                 ? new ReceiptPickedFile(original.FileName, AttachmentFiles.ResolveContentType(original.FileName, original.ContentType), original.Data)
                 : await runtime.PickAsync();
             if (file is null) return;
-            var hasTransientOriginal = file.RecognitionData is { } recognitionData && !ReferenceEquals(recognitionData, file.Data);
-            if (hasTransientOriginal) transientOriginal = file.RecognitionData;
+            if (file.RecognitionData is { } recognitionData && !ReferenceEquals(recognitionData, file.Data))
+                transientOriginal = recognitionData;
+            var hasTransientOriginal = transientOriginal is not null;
             RequireCurrent();
             await reader.ValidateAsync(reviewed);
             if (file.Data.Length == 0 || file.Data.Length > EntryAttachment.MaxBytes)
@@ -74,7 +77,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                 {
                     RequireCurrent();
                     if (hasTransientOriginal && originalBytes is null)
-                        throw new OperationCanceledException("The original receipt image was released before recognition.");
+                        throw new OperationCanceledException("The original receipt buffer was released before recognition.");
                     document = await runtime.ReadAsync(originalBytes ?? file.Data, file.ContentType);
                 }
                 finally

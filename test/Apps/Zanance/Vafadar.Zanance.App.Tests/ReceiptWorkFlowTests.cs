@@ -40,6 +40,7 @@ public sealed class ReceiptWorkFlowTests
         internal TextLayoutResult Document = new("Fictitious shop\nTOTAL EUR 24.50");
         internal int Picked, Unlocked, Read;
         internal byte[]? Recognition;
+        internal byte[]? RecognitionAtRead;
         internal string? RecognizedContentType;
         internal Func<Task>? DuringPick, DuringRead, DuringAlert, DuringOpen;
         internal bool AllowUnlock = true;
@@ -48,7 +49,7 @@ public sealed class ReceiptWorkFlowTests
         public async Task<ReceiptPickedFile?> PickAsync() { Picked++; if (DuringPick is not null) await DuringPick(); return File; }
         public Task RunWhenUnlockedAsync(Func<Task> action) { Unlocked++; return AllowUnlock ? action() : Task.CompletedTask; }
         public async Task<TextLayoutResult> ReadAsync(byte[] data, string contentType)
-        { Read++; Recognition = data; RecognizedContentType = contentType; if (DuringRead is not null) await DuringRead(); return Document; }
+        { Read++; Recognition = data; RecognitionAtRead = data.ToArray(); RecognizedContentType = contentType; if (DuringRead is not null) await DuringRead(); return Document; }
         public async Task AlertAsync(string title, string message, string cancel)
         { Alerts.Add(message); if (DuringAlert is not null) { var action = DuringAlert; DuringAlert = null; await action(); } }
         public async Task OpenEditorAsync(ReceiptDraft draft) { if (DuringOpen is not null) await DuringOpen(); Drafts.Add(draft); }
@@ -129,7 +130,7 @@ public sealed class ReceiptWorkFlowTests
 
             Assert.Equal(stored ? 0 : 1, native.Picked);
             Assert.Equal(1, native.Read);
-            Assert.Equal(stored ? original.Attachment.Data : native.File!.RecognitionData, native.Recognition);
+            Assert.Equal(stored ? original.Attachment.Data : native.File!.RecognitionData, stored ? native.RecognitionAtRead : native.Recognition);
             Assert.Equal(24.50m, Assert.Single(native.Drafts).Suggestion.Amount);
             Assert.Null(session.Error);
             Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
@@ -152,7 +153,7 @@ public sealed class ReceiptWorkFlowTests
 
         Assert.Equal(1, native.Read);
         Assert.Equal("application/pdf", native.RecognizedContentType);
-        Assert.Equal(original.Attachment.Data, native.Recognition);
+        Assert.Equal(original.Attachment.Data, native.RecognitionAtRead);
         Assert.Equal(24.50m, Assert.Single(native.Drafts).Suggestion.Amount);
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
@@ -209,7 +210,7 @@ public sealed class ReceiptWorkFlowTests
     {
         using var f = new FlowFixture(); var original = await SeedAsync(f); var access = new Access(); using var p = Provider(f, access); var native = new Native { Document = new(null) };
         var before = await GoalChooserFlowTests.SnapshotAsync(f); var session = Session(f, p, native); await session.ReadAttachmentAsync(original.Entry.Id, original.Attachment.Id);
-        Assert.Null(session.Error); Assert.Empty(native.Drafts); Assert.Equal(0, native.Picked); Assert.Equal(1, native.Unlocked); Assert.Equal(original.Attachment.Data, native.Recognition);
+        Assert.Null(session.Error); Assert.Empty(native.Drafts); Assert.Equal(0, native.Picked); Assert.Equal(1, native.Unlocked); Assert.Equal(original.Attachment.Data, native.RecognitionAtRead);
         Assert.Equal(f.Translator["Receipt_Nothing"], Assert.Single(native.Alerts)); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
         Assert.Equal(9876, (await f.Store.GetEntryAsync(original.Entry.Id, Ct))!.Amount);
     }
@@ -304,6 +305,31 @@ public sealed class ReceiptWorkFlowTests
         await session.PickAsync(); Assert.NotNull(session.Error); Assert.Equal(0, native.Read); Assert.Empty(native.Drafts);
         native.DuringPick = null; await session.PickAsync(); Assert.Null(session.Error); Assert.Single(native.Drafts);
     }
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Stored_ocr_releases_its_reader_buffer_after_success_or_failure(bool fails)
+    {
+        using var fixture = new FlowFixture();
+        var (entry, original) = await SeedAsync(fixture);
+        using var provider = Provider(fixture, new Access());
+        var native = new Native();
+        var expected = original.Data.ToArray();
+        byte[]? seen = null;
+        native.DuringRead = () =>
+        {
+            seen = native.Recognition!.ToArray();
+            return fails ? Task.FromException(new IOException("Synthetic OCR failure")) : Task.CompletedTask;
+        };
+
+        await Session(fixture, provider, native).ReadAttachmentAsync(entry.Id, original.Id);
+
+        Assert.Equal(expected, seen);
+        Assert.All(native.Recognition!, value => Assert.Equal(0, value));
+        Assert.Equal(fails ? 0 : 1, native.Drafts.Count);
+        Assert.Equal(expected, (await fixture.Store.GetAttachmentAsync(original.Id, Ct))!.Data);
+    }
+
     [Theory][InlineData(false)][InlineData(true)]
     [Trait("AT", "AT-426")]
     public async Task Retired_detail_during_original_recognition_never_opens_an_editor_or_late_failure(bool readFails)
