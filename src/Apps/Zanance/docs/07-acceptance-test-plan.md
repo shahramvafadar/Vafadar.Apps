@@ -323,7 +323,7 @@ data set (10,000 entries, 20 accounts, 100 active plans) are defined in slice S1
 | AT-33 | App not opened for a month | REC-22, REM-10 | Unit + manual | S4/S10 | Verified (integration: ledger; unit: no missed reminders sent later, pending capped, reminders at the same time grouped into one summary) |
 | AT-34 | Notifications denied/off | REM-02 | Manual | S10 | [Real Android Settings return without a grant](quality/plans-notification-settings-no-change-d1240.md) retained the banner, saved reminder and enabled Turn on action. A [separate grant and delivery check](quality/plans-saved-reminder-delivery-after-grant-d1241.md) used a saved plan without resaving it. Physical-denial acceptance remains separate. |
 | AT-35 | Snooze notification | REM-04 | Manual | S10 | Unit checks cover the separate snooze ID, original due date and removal after closure. [Android native action](quality/selected-plan-reminders.md#completed-six-case-adapter-batch) and [Samsung cold one-hour action](quality/physical-cold-reminder-action.md) verified the action and pending snooze. Later re-delivery and interrupted action remain separate. |
-| AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Unit verifies exclusion of settled and skipped occurrences. [Android pending alarm cancellation](#at-36-android-cancellation-after-skipping-an-occurrence) observed removal of the original alarm after Skip. A native stale tap after settlement remains open. |
+| AT-36 | Notification for settled occurrence | REM-04, REM-06 | Unit + manual | S10 | Unit verifies exclusion of settled and skipped occurrences. [Android pending alarm cancellation](#at-36-android-cancellation-after-skipping-an-occurrence) observed removal of the original alarm after Skip. [Android tap of an old posted notice](#at-36-old-android-notice-after-settlement) opened the settled item without a duplicate transaction. |
 | AT-37 | Reboot, travel, DST | REM-07/08 | Unit (scheduler) + manual | S10 | [Physical post-reboot delivery](quality/physical-paired-reminder-preparation.md#terminal-outcome1november2026) verified both original reminders within their unchanged one-hour window. The precision failure and intervening launch remain recorded. [Emulator time-zone receiver](quality/local-reminder-clock-changes.md#final-native-stale-cache-cohort) preserved local wall-time and elapsed alarm semantics across an actual zone change. Physical travel and live DST delivery remain separate. |
 | AT-38 | Notification on lock screen | REM-05 | Manual | S10 | [Android SystemUI lock-screen rendering](#at-38-generic-reminder-on-the-android-lock-screen) verified the generic default and absence of fixture details. [Warm Plans notification tap under the app PIN](#at-61-warm-plans-notification-tap-under-the-app-pin) verified the retained due item on the emulator. Android device credential, optional detail and physical acceptance remain separate. |
 | AT-39 | Zero / no / exceeded budget | BUD-01/05 | Unit + scoped physical | S1/S7 | Unit/screen verified; D-460 original Samsung no/zero/exact/exceeded/refund/cold/deletion scope; broader device/platform gates remain |
@@ -416,6 +416,27 @@ The test reused the existing signed APK and made no application source change. T
 display values were restored and the disposable emulator was retired. Evidence is under
 `artifacts/at36-native-closed-reminder`. This qualifies the actual scheduled Skip cancellation on Android. A settled
 occurrence with an old visible notice and the stale-tap behavior are separate native cases.
+
+### AT-36 old Android notice after settlement
+
+A separate fresh Android 16 x86_64 emulator used the same signed offline APK `3f96f091` and
+a new fictitious plan. Android posted the original generic notice, ID 1682276291, for the
+05:56 requested time. A single explicit EUR 2.34 settlement in Plans completed before
+any notification tap. All dates and all types showed exactly one transaction for the plan.
+
+The already posted notice stayed in the shade. One tap on that exact SystemUI notification
+opened the original due item, marked Done and showing the recorded EUR 2.34 expense and
+original date. The amount input and both payment actions were absent. Back returned to the
+same Transactions tab in PID 3041. All 38 visible caption and control-class tuples matched
+the pre-tap capture, including the original single transaction.
+
+The initial observer expected a different representation for the empty amount field and
+refused before input. The same form continued once after confirming its actual caption.
+The active Transactions tab did not pop its due-item page when selected again. The original
+page Back action returned to the ledger without a second notification tap or payment.
+Display settings were restored and the disposable emulator was retired. Evidence is under
+`artifacts/at36-native-settled-tap`. This is an Android native fixture, with no raw database comparison or
+physical-device run.
 
 ## AT-38 generic reminder on the Android lock screen
 
