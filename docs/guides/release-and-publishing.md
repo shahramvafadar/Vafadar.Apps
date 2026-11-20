@@ -67,6 +67,9 @@ A failed or empty publish leaves the prior handoff in place. Release handoffs re
 signer continuity with the installed app are separate checks.
 Every Zanance Release APK must also match the qualified SQLCipher library for each packaged ABI
 and carry the corresponding manifest and notices, using the same receipt as the Play bundle.
+The APK gate verifies backup and file-provider bindings and the four compiled XML resources in
+every packaged configuration. AAPT2 converts an inspection-only copy and the signed APK remains
+the handoff.
 
 1. Update `CHANGELOG.md` of the app and merge to `main`.
 2. GitHub → Actions → **Release (Android)** → *Run workflow*: choose the app, enter the display version and the next

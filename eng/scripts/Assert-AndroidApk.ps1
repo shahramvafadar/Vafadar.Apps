@@ -13,7 +13,7 @@ $projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
 $metadata = & $projectDotNet msbuild $Project -nologo -v:q "-p:Configuration=$Configuration" `
     -p:TargetFramework=net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
     -p:EmbedAssembliesIntoApk=true -t:_ResolveMonoAndroidSdks `
-    '-getProperty:ApplicationId,ApplicationVersion,ApplicationDisplayVersion,AndroidSdkBuildToolsPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore' @BuildProperties
+    '-getProperty:ApplicationId,ApplicationVersion,ApplicationDisplayVersion,AndroidSdkBuildToolsPath,AndroidBundleToolJarPath,ApkSignerJar,JavaSdkDirectory,_AndroidUseAssemblyStore' @BuildProperties
 if ($LASTEXITCODE -ne 0) { throw 'Could not resolve the Android package identity and verification tools.' }
 $properties = ($metadata -join "`n" | ConvertFrom-Json).Properties
 if (!$properties.ApplicationId -or !$properties.AndroidSdkBuildToolsPath -or
@@ -80,6 +80,24 @@ if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafada
     $storageReceipt = Join-Path $PSScriptRoot '../native/sqlcipher/android.package.contents.json'
     $storageResult = & $python $storageVerifier --apk $apk.FullName $storageReceipt 2>&1
     if ($LASTEXITCODE -ne 0) { throw "The Zanance Release APK failed SQLCipher package verification. $storageResult" }
+
+    $bundletool = $properties.AndroidBundleToolJarPath
+    if (!$bundletool -or !(Test-Path -LiteralPath $bundletool -PathType Leaf)) {
+        throw 'The Android SDK bundletool resource classes could not be resolved.'
+    }
+    # AAPT2 can read the exact signed APK into an inspection-only copy of its compiled resources.
+    $inspection = Join-Path $apk.DirectoryName ("inspect-" + [Guid]::NewGuid().ToString('N') + '.apk')
+    if (Test-Path -LiteralPath $inspection) { throw 'The private inspection output already exists.' }
+    try {
+        $null = & $aapt2 convert --output-format proto -o $inspection $apk.FullName 2>&1
+        if ($LASTEXITCODE -ne 0) { throw 'The Android SDK could not convert the APK resources for inspection.' }
+        $rules = Join-Path $PSScriptRoot '../maui/VerifyAndroidStorageRules.java'
+        $ruleResult = & $java --class-path $bundletool $rules $inspection $properties.ApplicationId --apk-proto 2>&1
+        if ($LASTEXITCODE -ne 0) { throw "The Zanance Release APK failed Android storage and provider checks. $ruleResult" }
+    }
+    finally {
+        if (Test-Path -LiteralPath $inspection -PathType Leaf) { Remove-Item -LiteralPath $inspection -Force }
+    }
 }
 
 if ($Offline -and $properties.ApplicationId -ceq 'pro.vafadar.zanance') {

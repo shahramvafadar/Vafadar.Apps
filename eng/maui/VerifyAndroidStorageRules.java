@@ -1,6 +1,7 @@
 import com.android.aapt.ConfigurationOuterClass.Configuration;
 import com.android.aapt.Resources;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,6 +11,8 @@ import java.util.zip.ZipFile;
 
 /** Verifies the packaged backup exclusions and the two file providers' cache scopes. */
 class VerifyAndroidStorageRules {
+    private static final String ANDROID = "http://schemas.android.com/apk/res/android";
+    private static final String SHARING_RESOURCE = "microsoft_maui_essentials_fileprovider_file_paths";
     private static final Map<String, String> SHARING_PATHS = Map.of(
         "attachments", "attachments/",
         "csv_exports", "csv-export-v1/",
@@ -21,15 +24,31 @@ class VerifyAndroidStorageRules {
         "device_root", "device_file", "device_database", "device_sharedpref");
 
     public static void main(String[] args) throws IOException {
+        if (args.length != 2 && (args.length != 3 || !args[2].equals("--apk-proto"))) {
+            throw new IllegalArgumentException("Expected archive path, package and optional --apk-proto.");
+        }
+        var apk = args.length == 3;
+        var prefix = apk ? "" : "base/";
         try (var archive = new ZipFile(args[0])) {
             Resources.ResourceTable table;
-            try (var input = archive.getInputStream(requireEntry(archive, "base/resources.pb"))) {
+            try (var input = archive.getInputStream(requireEntry(archive, prefix + "resources.pb"))) {
                 table = Resources.ResourceTable.parseFrom(input);
             }
-            verifyResource(archive, table, args[1], "backup_rules");
-            verifyResource(archive, table, args[1], "data_extraction_rules");
-            verifyResource(archive, table, args[1], "camera_paths");
-            verifyResource(archive, table, args[1], "microsoft_maui_essentials_fileprovider_file_paths");
+            var backup = verifyResource(archive, prefix, table, args[1], "backup_rules");
+            var extraction = verifyResource(archive, prefix, table, args[1], "data_extraction_rules");
+            var camera = verifyResource(archive, prefix, table, args[1], "camera_paths");
+            var sharing = verifyResource(archive, prefix, table, args[1], SHARING_RESOURCE);
+            if (apk) {
+                try (var input = archive.getInputStream(requireEntry(archive, "AndroidManifest.xml"))) {
+                    var manifest = Resources.XmlNode.parseFrom(input).getElement();
+                    var application = manifest.getChildList().stream().filter(node -> node.hasElement()
+                        && node.getElement().getName().equals("application")).map(Resources.XmlNode::getElement).toList();
+                    if (application.size() != 1) {
+                        throw new IOException("Expected exactly one APK application declaration.");
+                    }
+                    verifyApkBindings(application.get(0), args[1], backup, extraction, camera, sharing);
+                }
+            }
         }
         System.out.println("Verified packaged backup exclusions and scoped camera and sharing paths.");
     }
@@ -37,22 +56,27 @@ class VerifyAndroidStorageRules {
     private static ZipEntry requireEntry(ZipFile archive, String name) throws IOException {
         var entry = archive.getEntry(name);
         if (entry == null || entry.isDirectory()) {
-            throw new IOException("Missing bundle entry: " + name);
+            throw new IOException("Missing Android archive entry: " + name);
         }
         return entry;
     }
 
-    private static void verifyResource(
-        ZipFile archive, Resources.ResourceTable table, String packageName, String ruleName
+    private record BoundResource(Resources.Entry entry, int id) { }
+
+    private static int verifyResource(
+        ZipFile archive, String prefix, Resources.ResourceTable table, String packageName, String ruleName
     ) throws IOException {
         var matches = table.getPackageList().stream().filter(p -> p.getPackageName().equals(packageName))
-            .flatMap(p -> p.getTypeList().stream().filter(type -> type.getName().equals("xml")))
-            .flatMap(type -> type.getEntryList().stream().filter(entry -> entry.getName().equals(ruleName)))
+            .flatMap(p -> p.getTypeList().stream().filter(type -> type.getName().equals("xml"))
+                .flatMap(type -> type.getEntryList().stream().filter(entry -> entry.getName().equals(ruleName))
+                    .map(entry -> new BoundResource(entry, p.getPackageId().getId() << 24
+                        | type.getTypeId().getId() << 16 | entry.getEntryId().getId()))))
             .toList();
         if (matches.size() != 1) {
             throw new IOException("Expected exactly one xml/" + ruleName + " resource.");
         }
-        var configs = matches.get(0).getConfigValueList();
+        var resource = matches.get(0);
+        var configs = resource.entry().getConfigValueList();
         if (configs.stream().noneMatch(config -> config.getConfig().equals(Configuration.getDefaultInstance()))) {
             throw new IOException("Missing default configuration for xml/" + ruleName + ".");
         }
@@ -65,14 +89,73 @@ class VerifyAndroidStorageRules {
             if (!path.startsWith("res/") || path.contains("..")) {
                 throw new IOException("Unexpected compiled resource path for xml/" + ruleName + ".");
             }
-            try (var input = archive.getInputStream(requireEntry(archive, "base/" + path))) {
+            try (var input = archive.getInputStream(requireEntry(archive, prefix + path))) {
                 var node = Resources.XmlNode.parseFrom(input);
                 switch (ruleName) {
                     case "camera_paths" -> verifyCachePaths(node, ruleName, Map.of("camera", "camera/"));
-                    case "microsoft_maui_essentials_fileprovider_file_paths" -> verifyCachePaths(node, ruleName, SHARING_PATHS);
+                    case SHARING_RESOURCE -> verifyCachePaths(node, ruleName, SHARING_PATHS);
                     default -> verifyRules(node, ruleName);
                 }
             }
+        }
+        return resource.id();
+    }
+
+    private static void verifyApkBindings(Resources.XmlElement application, String packageName,
+        int backup, int extraction, int camera, int sharing) throws IOException {
+        requireBoolean(application, "allowBackup", false);
+        requireReference(application, "fullBackupContent", backup);
+        requireReference(application, "dataExtractionRules", extraction);
+        verifyApkProvider(application, packageName + ".CameraFileProvider", packageName + ".camera", camera);
+        verifyApkProvider(application, "microsoft.maui.essentials.fileProvider", packageName + ".fileProvider", sharing);
+    }
+
+    private static void verifyApkProvider(Resources.XmlElement application, String name, String authority, int resource)
+        throws IOException {
+        var candidates = application.getChildList().stream().map(Resources.XmlNode::getElement)
+            .filter(element -> element.getName().equals("provider"))
+            .filter(element -> name.equals(literal(element, "name"))
+                || Arrays.asList(literal(element, "authorities").split(";")).contains(authority))
+            .toList();
+        if (candidates.size() != 1 || !name.equals(literal(candidates.get(0), "name"))
+            || !authority.equals(literal(candidates.get(0), "authorities"))) {
+            throw new IOException("Unexpected APK provider for " + authority + ".");
+        }
+        var provider = candidates.get(0);
+        requireBoolean(provider, "exported", false);
+        requireBoolean(provider, "grantUriPermissions", true);
+        var metadata = provider.getChildList().stream().map(Resources.XmlNode::getElement)
+            .filter(element -> element.getName().equals("meta-data")
+                && literal(element, "name").equals("android.support.FILE_PROVIDER_PATHS")).toList();
+        if (metadata.size() != 1) {
+            throw new IOException("Expected one APK paths resource binding for " + authority + ".");
+        }
+        requireReference(metadata.get(0), "resource", resource);
+    }
+
+    private static Resources.XmlAttribute androidAttribute(Resources.XmlElement element, String name) {
+        var matches = element.getAttributeList().stream().filter(attribute ->
+            attribute.getNamespaceUri().equals(ANDROID) && attribute.getName().equals(name)).toList();
+        return matches.size() == 1 ? matches.get(0) : Resources.XmlAttribute.getDefaultInstance();
+    }
+
+    private static String literal(Resources.XmlElement element, String name) {
+        var attribute = androidAttribute(element, name);
+        return attribute.hasCompiledItem() ? "" : attribute.getValue();
+    }
+
+    private static void requireBoolean(Resources.XmlElement element, String name, boolean expected) throws IOException {
+        var value = androidAttribute(element, name).getCompiledItem().getPrim();
+        if (value.getOneofValueCase() != Resources.Primitive.OneofValueCase.BOOLEAN_VALUE
+            || value.getBooleanValue() != expected) {
+            throw new IOException("Unexpected Android " + name + " in APK " + element.getName() + ".");
+        }
+    }
+
+    private static void requireReference(Resources.XmlElement element, String name, int expected) throws IOException {
+        var value = androidAttribute(element, name).getCompiledItem();
+        if (!value.hasRef() || expected == 0 || value.getRef().getId() != expected) {
+            throw new IOException("Unexpected APK resource binding for android:" + name + " in " + element.getName() + ".");
         }
     }
 
