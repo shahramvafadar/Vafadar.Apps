@@ -1,4 +1,5 @@
 using Vafadar.Localization;
+using Vafadar.Zanance.App.Presentation;
 using Vafadar.Zanance.App.Security;
 
 namespace Vafadar.Zanance.App.Features.DataFiles;
@@ -6,7 +7,7 @@ namespace Vafadar.Zanance.App.Features.DataFiles;
 /// <summary>Private bounded native ZIP cache. Successful share targets may keep their own independent copies.</summary>
 internal sealed class MauiAccountantExportRuntime(AppLockService appLock, Translator translator, TimeProvider time) : IAccountantExportRuntime
 {
-    private string Root => Path.Combine(FileSystem.CacheDirectory, "accountant-export-v1");
+    private string Root => Path.Combine(FileSystem.CacheDirectory, AttachmentCache.AccountantExportDirectoryName);
     /// <inheritdoc />
     public void EnsureAvailable() { if (appLock.IsLocked) throw new InvalidOperationException("The application is covered."); }
     /// <inheritdoc />
@@ -42,8 +43,7 @@ internal sealed class MauiAccountantExportRuntime(AppLockService appLock, Transl
     {
         var name = Path.GetFileName(path);
         return Path.GetFullPath(Path.GetDirectoryName(path)!) == Path.GetFullPath(Root)
-            && name.StartsWith("zanance-accountant-", StringComparison.Ordinal) && name.EndsWith(".zip", StringComparison.Ordinal)
-            && Guid.TryParseExact(name[19..^4], "N", out _) && File.Exists(path)
+            && AttachmentCache.IsAccountantExportName(name) && File.Exists(path)
             && (File.GetAttributes(path) & FileAttributes.ReparsePoint) == 0;
     }
 }

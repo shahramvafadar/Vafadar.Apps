@@ -454,6 +454,13 @@ public partial class App : Application
             if (publicationAttempted && !presentation.HasPublished)
                 throw new InvalidOperationException("The original startup page was not published.");
             _databaseReady = true;
+            if (cleanStartupAttachments)
+            {
+                // Offered exports can outlive the chooser. Prune expired copies off the UI thread after startup.
+                var cache = FileSystem.CacheDirectory;
+                var time = _services.GetRequiredService<TimeProvider>();
+                _ = Task.Run(() => Presentation.AttachmentCache.ClearExpiredDataShares(cache, time.GetUtcNow()));
+            }
             if (_isInForeground)
                 _services.GetRequiredService<Features.Sync.PersonalSyncLifetime>().Resume();
             if (Features.Sync.PersonalSyncBuild.IsAvailable)

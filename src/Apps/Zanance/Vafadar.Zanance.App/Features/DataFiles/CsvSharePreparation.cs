@@ -5,6 +5,8 @@ namespace Vafadar.Zanance.App.Features.DataFiles;
 /// <summary>One fresh private CSV copy; offering transfers its lifetime to the existing asynchronous native receiver.</summary>
 public sealed class CsvSharePreparation
 {
+    /// <summary>Gets the private staging root registered with the native sharing provider.</summary>
+    internal const string DirectoryName = "csv-export-v1";
     private readonly string directory;
     private bool offered;
     /// <summary>Gets the unique owned path while retaining the original neutral display filename.</summary>
@@ -14,12 +16,11 @@ public sealed class CsvSharePreparation
     public static async Task<CsvSharePreparation> CreateAsync(string cache, string name, string content, Action validateOwner, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(content); ArgumentNullException.ThrowIfNull(validateOwner);
-        if (string.IsNullOrEmpty(name) || System.IO.Path.GetFileName(name) != name || !name.StartsWith("zanance-", StringComparison.Ordinal)
-            || !name.EndsWith(".csv", StringComparison.Ordinal) || name.Any(value => !char.IsAsciiLetterOrDigit(value) && value is not ('-' or '_' or '.')))
+        if (!IsOwnedFileName(name))
             throw new ArgumentException("A neutral owned CSV filename is required.", nameof(name));
         ct.ThrowIfCancellationRequested(); validateOwner();
         Directory.CreateDirectory(cache); OrdinaryDirectory(cache);
-        var root = System.IO.Path.Combine(System.IO.Path.GetFullPath(cache), "csv-export-v1");
+        var root = System.IO.Path.Combine(System.IO.Path.GetFullPath(cache), DirectoryName);
         Directory.CreateDirectory(root); OrdinaryDirectory(root);
         var directory = System.IO.Path.Combine(root, Guid.NewGuid().ToString("N"));
         if (Directory.Exists(directory) || File.Exists(directory)) throw new IOException("The fresh CSV cache identity already exists.");
@@ -50,4 +51,10 @@ public sealed class CsvSharePreparation
     }
     private static void OrdinaryDirectory(string path)
     { if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != 0) throw new IOException("The private CSV cache directory was redirected."); }
+
+    /// <summary>Recognizes the neutral filenames allowed in an original CSV staging directory.</summary>
+    internal static bool IsOwnedFileName(string name) => !string.IsNullOrEmpty(name)
+        && System.IO.Path.GetFileName(name) == name && name.StartsWith("zanance-", StringComparison.Ordinal)
+        && name.EndsWith(".csv", StringComparison.Ordinal)
+        && !name.Any(value => !char.IsAsciiLetterOrDigit(value) && value is not ('-' or '_' or '.'));
 }

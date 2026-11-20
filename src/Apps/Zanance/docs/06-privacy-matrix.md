@@ -964,7 +964,8 @@ Explicit Germany/year/account selection exports local financial rows and necessa
 to a readable ZIP only after review and confirmation. Both transfer account identities are disclosed together.
 Payees/notes/reimbursement names and exact stored attachment copies are separate opt-ins, initially off. No
 security, preferences, credentials or private service authority is included. Production private cache is bounded
-and failed unpublished files are removed; offered files expire after24 hours on the next export. Native
+and failed unpublished files are removed. Offered copies older than 24 hours are removed at the next app
+startup or accountant export. Native
 recipients control their own copies. This is independent of encrypted automatic backup and optional-password
 portable backup. No new SDK, permission, background upload or financial write is introduced. See the D-296
 delivery record for source, coherent-read/stale-review guards and actual local/native evidence.
@@ -1636,8 +1637,8 @@ by the existing switch and genuine app-lock confirmation. Each offer now uses it
 neutral filename inside a fresh opaque private `csv-export-v1` subdirectory, avoiding overwrite
 of an earlier same-minute offered file. Original UTF-8 BOM and formatter remain unchanged.
 A retired native owner is checked after actual write/flush and before handoff; only its fresh
-unoffered file may be discarded. Offered files remain private cache for the asynchronous
-receiver under the existing policy, without a new retention or encryption claim. Read-only
+unoffered file may be discarded. The asynchronous receiver can read the offered copy after
+the share sheet returns. A later app startup retires copies older than 24 hours. Read-only
 source Retry does not export/share or replay a financial operation. Actual recipient/provider
 and complete release-edition acceptance remain separate. See [D-653](quality/original-csv-workspace.md).
 

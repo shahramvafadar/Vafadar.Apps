@@ -100,6 +100,42 @@ public sealed class AttachmentCacheTests
         Assert.Equal(new byte[] { 9 }, File.ReadAllBytes(sameNameOutsideOpaqueFolder));
     }
 
+    /// <summary>Startup pruning is limited to expired outputs in the two original staging layouts.</summary>
+    [Fact]
+    public void Expired_data_shares_are_pruned_without_removing_recent_or_foreign_files()
+    {
+        using var directory = new OwnedDirectory();
+        var now = new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero);
+        var csv = Directory.CreateDirectory(Path.Combine(directory.Root, "csv-export-v1")).FullName;
+        var zip = Directory.CreateDirectory(Path.Combine(directory.Root, "accountant-export-v1")).FullName;
+        var expiredCsvDirectory = Directory.CreateDirectory(Path.Combine(csv, Guid.NewGuid().ToString("N"))).FullName;
+        var freshCsvDirectory = Directory.CreateDirectory(Path.Combine(csv, Guid.NewGuid().ToString("N"))).FullName;
+        var foreignDirectory = Directory.CreateDirectory(Path.Combine(csv, "outside-sharing-layout")).FullName;
+        var expiredCsv = Write(expiredCsvDirectory, "zanance-export-older.csv", -25);
+        var expiredZip = Write(zip, $"zanance-accountant-{Guid.NewGuid():N}.zip", -25);
+        var freshCsv = Write(freshCsvDirectory, "zanance-export-recent.csv", -1);
+        var exactCutoffZip = Write(zip, $"zanance-accountant-{Guid.NewGuid():N}.zip", -24);
+        var foreignZip = Write(zip, "zanance-accountant-unrelated.zip", -25);
+        var foreignCsv = Write(foreignDirectory, "zanance-export-unrelated.csv", -25);
+        var unrelatedName = Write(freshCsvDirectory, "other.csv", -25);
+
+        AttachmentCache.ClearExpiredDataShares(directory.Root, now);
+
+        Assert.False(File.Exists(expiredCsv));
+        Assert.False(Directory.Exists(expiredCsvDirectory));
+        Assert.False(File.Exists(expiredZip));
+        foreach (var retained in new[] { freshCsv, exactCutoffZip, foreignZip, foreignCsv, unrelatedName })
+            Assert.Equal(new byte[] { 7 }, File.ReadAllBytes(retained));
+
+        string Write(string folder, string name, int offsetHours)
+        {
+            var path = Path.Combine(folder, name);
+            File.WriteAllBytes(path, [7]);
+            File.SetLastWriteTimeUtc(path, now.UtcDateTime.AddHours(offsetHours));
+            return path;
+        }
+    }
+
     private sealed class OwnedDirectory : IDisposable
     {
         internal string Root { get; } = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "Zanance-CameraCache-" + Guid.NewGuid().ToString("N"))).FullName;
