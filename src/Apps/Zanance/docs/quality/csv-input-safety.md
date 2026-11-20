@@ -157,5 +157,18 @@ query or open depends on the document provider's support.
 
 The signed offline Android Release build and APK verification passed. The package
 SHA-256 is `6aa4e4a148e548816ed293a186b73edcdcc0737776c502bf2b9befcdf797e62b`.
-This verifies the compiled Android bindings and package. An external provider was
-not exercised on a running Android device for this change.
+The shipping package was verified on the host. A separate Android 16 emulator run
+compiled the original picker source into a small test application and used a provider
+in a second application with a different UID. An explicit fixture activity supplied
+the read-only grant. This exercised the real activity result, resolver, and provider
+IPC without automating the DocumentsUI selection screen.
+
+All six new cases passed. The provider received cancellation during its metadata
+query, regular open, and typed virtual open. A regular provider that returned an
+asset after cancellation did not invoke the caller's consumer. The regular and
+virtual success controls each delivered the exact synthetic bytes and selected
+metadata. The first installation observer mishandled a multiline successful result.
+The installed fixture was hash-verified and reused without reinstalling it. Evidence
+is under `artifacts/android-provider-open-cancellation/native`.
+Both test packages and the owned AVD were retired. The used APKs and observations
+remain. The production app and physical phones were outside this run.
