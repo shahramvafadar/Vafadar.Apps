@@ -83,19 +83,23 @@ public sealed partial class ImportExportViewModel
         var options = categories.Select((category, index) => $"{index + 1}. {lookup.Name(category.Id)}").ToArray();
         var epoch = Interlocked.Read(ref _interpretationEpoch);
         using var work = BeginWork(); var frame = work.Frame;
+        // The source row may survive a re-render, but the old picker owns only its displayed row.
+        bool OwnsRow() => frame.IsCurrent && epoch == Interlocked.Read(ref _interpretationEpoch) &&
+            ReferenceEquals(_ledgerRead, review) && LedgerPreviewRows.Any(item => ReferenceEquals(item, line)) &&
+            ReferenceEquals(_preview.FirstOrDefault(item => item.Line == line.SourceLine), row);
         try
         {
+            if (!OwnsRow()) return;
             var selected = await _interaction.ChooseAsync(_translator["Entry_Category"], _translator["Common_Cancel"],
                 [unassigned, .. options]);
-            if (!frame.IsCurrent || epoch != Interlocked.Read(ref _interpretationEpoch) || !ReferenceEquals(_ledgerRead, review) ||
-                !ReferenceEquals(_preview.FirstOrDefault(item => item.Line == line.SourceLine), row)) return;
+            if (!OwnsRow()) return;
             var index = Array.IndexOf(options, selected);
             if (selected == unassigned)
                 ApplyDraftCategory(review, entry, categories.FirstOrDefault(category => category.SystemKey == DefaultCategories.Uncategorized)?.Id);
             else if (index >= 0) ApplyDraftCategory(review, entry, categories[index].Id);
         }
         catch (Exception error) when (error is not OutOfMemoryException)
-        { if (frame.IsCurrent) ImportError = CommercialFailureMessage.OrFallback(error, _translator, "Import_ReviewFailed"); }
+        { if (OwnsRow()) ImportError = CommercialFailureMessage.OrFallback(error, _translator, "Import_ReviewFailed"); }
     }
 
     private Core.DataFiles.ImportRow? GetEditableRow(ImportPreviewLine line) =>

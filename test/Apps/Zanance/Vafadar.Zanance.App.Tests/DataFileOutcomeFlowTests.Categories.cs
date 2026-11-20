@@ -5,6 +5,46 @@ namespace Vafadar.Zanance.App.Tests;
 
 public sealed partial class DataFileOutcomeFlowTests
 {
+    /// <summary>An open picker cannot apply a category after its original displayed row has been replaced.</summary>
+    [Fact]
+    public async Task Category_picker_retires_when_the_displayed_csv_row_is_rebuilt()
+    {
+        using var f = new FlowFixture();
+        var files = new Files();
+        await LedgerAsync(f, files);
+        await f.Store.EnsureDefaultCategoriesAsync(Ct);
+        files.Picked = new("fictitious-refresh.csv", "date;amount;title\r\n2026-10-09;-9.25;Fictitious pharmacy\r\n");
+        var (_, _, _, vm) = Create(f, new(), files);
+        await vm.LoadAsync();
+        await vm.PickCommand.ExecuteAsync(null);
+        await vm.PreviewCommand.ExecuteAsync(null);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        var original = Assert.Single(vm.LedgerPreviewRows);
+        var release = new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        f.Platform.PendingChoice = () => release.Task;
+
+        var open = vm.ChooseCsvCategoryCommand.ExecuteAsync(original);
+        var options = Assert.Single(f.Platform.OfferedActions);
+        var healthLabel = f.Translator["Category_Health"];
+        var choice = Assert.Single(options, option => option.EndsWith(". " + healthLabel, StringComparison.Ordinal));
+        vm.SkipDuplicates = !vm.SkipDuplicates;
+        var current = Assert.Single(vm.LedgerPreviewRows);
+        Assert.NotSame(original, current);
+        release.SetResult(choice);
+        await open;
+
+        Assert.Same(current, Assert.Single(vm.LedgerPreviewRows));
+        Assert.NotEqual(healthLabel, current.Category);
+
+        // A new selection on the replacement row still belongs to the current draft.
+        f.Platform.PendingChoice = null;
+        f.Platform.Choices.Enqueue(choice);
+        await vm.ChooseCsvCategoryCommand.ExecuteAsync(current);
+        Assert.Equal(healthLabel, Assert.Single(vm.LedgerPreviewRows).Category);
+        Assert.True(vm.CanRunImport);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
     /// <summary>Qualifies only the new editable generic CSV classification with isolated SQLite.</summary>
     [Fact]
     public async Task Local_category_csv_drafts_preserve_original_rules_and_commit_only_explicit_choices()

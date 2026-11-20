@@ -85,6 +85,7 @@ internal sealed class FlowPlatform : IAppInteraction, IAppFlowHost
     internal readonly List<string[]> OfferedActions = [];
     internal readonly List<string?> PromptInitialValues = [];
     internal Func<Task<string?>>? PendingInput;
+    internal Func<Task<string?>>? PendingChoice;
     internal Func<Exception, Task>? PendingFailure;
     internal Func<Task>? PendingAlert;
     internal Func<Task>? PendingNavigation;
@@ -96,7 +97,7 @@ internal sealed class FlowPlatform : IAppInteraction, IAppFlowHost
     }
     public Task<string?> PromptAsync(string title, string message, string accept, string cancel, string? initialValue = null, int maxLength = -1)
     { PromptInitialValues.Add(initialValue); return PendingInput?.Invoke() ?? Task.FromResult(Inputs.Count > 0 ? Inputs.Dequeue() : null); }
-    public Task<string?> ChooseAsync(string title, string cancel, params string[] actions) { OfferedActions.Add(actions); return Task.FromResult(Choices.Count > 0 ? Choices.Dequeue() : null); }
+    public Task<string?> ChooseAsync(string title, string cancel, params string[] actions) { OfferedActions.Add(actions); return PendingChoice?.Invoke() ?? Task.FromResult(Choices.Count > 0 ? Choices.Dequeue() : null); }
     public Task NavigateAsync(string route, IDictionary<string, object>? parameters = null) { Routes.Add((route, parameters)); return PendingNavigation?.Invoke() ?? Task.CompletedTask; }
     public Task ShowFailureAsync(Exception exception) { Failures.Add(exception); return PendingFailure?.Invoke(exception) ?? Task.CompletedTask; }
     public Task RestoreOnboardingAsync() { Restored++; return Task.CompletedTask; }
