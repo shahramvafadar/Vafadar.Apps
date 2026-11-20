@@ -723,6 +723,30 @@ Evidence remains under `artifacts/at72-group-doze`. This qualifies one
 grouped delivery during forced deep Doze on the emulator. Natural long-idle,
 OEM power management and physical-device delivery remain separate.
 
+### Android grouped reminder after a completed reboot
+
+A fresh owned Android 16 x64 emulator with 4096-byte pages reused the signed
+Offline Release APK `7e70152c`. The synthetic November 21 and 22 occurrences
+shared November 23 as the adjusted due date and a grouped reminder at
+09:19 on November 20. Before reboot the launcher was foregrounded and
+AlarmManager reported request `126705161` for app UID `10216`.
+
+After one reboot, Android reported a new boot identifier and the same UID
+and request code. At 09:16:07 the original reminder was restored for
+09:19:00.008 with a 2 minute 10.529 second inexact window. Zanance was not
+opened after reboot. The last empty sample was 09:20:32. Android recorded
+one generic private notification at 09:20:38.355 and the first active sample
+at 09:20:44 matched the restored request while the launcher still held focus.
+The observer corrected an initial script error and recovered from a read
+timeout on the same boot without repeating the reboot or rearming the alarm.
+
+One tap of the actual notification opened Plans. Upcoming showed both
+EUR 100.00 occurrences with their respective original dates. Transactions
+showed an empty ledger. The notification was absent after the tap and the
+owned emulator was retired. Evidence remains under
+`artifacts/at72-group-reboot`. Physical-device and OEM reboot behavior
+remain separate.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.

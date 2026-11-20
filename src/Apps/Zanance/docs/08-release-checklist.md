@@ -263,7 +263,10 @@ independent work and overall goal remain active. Broader gates stay open.
   [pending-group replacement case](07-acceptance-test-plan.md#android-pending-group-replacement-after-skipping-one-occurrence)
   verified removal of the old alarm and delivery only to the remaining occurrence.
   A separate [forced Doze case](07-acceptance-test-plan.md#android-grouped-reminder-during-forced-doze)
-  delivered the grouped notification while Android still reported deep idle. Physical-device and OEM cases remain open.
+  delivered the grouped notification while Android still reported deep idle. A separate
+  [reboot case](07-acceptance-test-plan.md#android-grouped-reminder-after-a-completed-reboot)
+  restored and delivered the same grouped alarm before Zanance was opened, then opened Plans with both original dates
+  and an empty ledger. Physical-device and OEM cases remain open.
 
 ## Privacy and security
 
