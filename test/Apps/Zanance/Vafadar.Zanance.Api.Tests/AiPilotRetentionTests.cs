@@ -40,7 +40,7 @@ public sealed class AiPilotRetentionTests
         const string owner = "fictional-retention-owner";
         const string actor = "fictional-retention-operator";
 
-        Guid openAi, gemini, foreign, missing, pending, contradictory;
+        Guid openAi, gemini, foreign, missing, pending, contradictory, geminiForeign, geminiLegacy;
         await using (var db = factory.CreateDbContext())
         {
             await db.Database.MigrateAsync(ct);
@@ -62,6 +62,12 @@ public sealed class AiPilotRetentionTests
             gemini = Seed(next, "interaction_fixture_retention");
             missing = Seed(next, "interaction_fixture_missing");
             pending = Seed(next, "interaction_fixture_pending", AiRequestState.Pending);
+            geminiForeign = Seed(next, "interaction_fixture_foreign");
+            geminiLegacy = Seed(next, "interaction_fixture_legacy");
+            transport.Operations.Add("interaction_fixture_retention", Operation(gemini));
+            transport.Operations.Add("interaction_fixture_missing", Operation(missing));
+            transport.Operations.Add("interaction_fixture_foreign", Operation(missing));
+            transport.Operations.Add("interaction_fixture_legacy", null);
             await SelectAsync("off");
             await db.SaveChangesAsync(ct);
 
@@ -111,6 +117,11 @@ public sealed class AiPilotRetentionTests
         Assert.Empty(transport.Calls);
         Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(contradictory, actor, ct));
 
+        Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(geminiForeign, actor, ct));
+        Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(geminiLegacy, actor, ct));
+        Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(geminiForeign, actor, ct));
+        Assert.Empty(transport.Calls);
+
         var concurrent = await Task.WhenAll(retention.DeleteAsync(openAi, actor, ct), retention.DeleteAsync(openAi, actor, ct));
         Assert.Contains(AiPilotDeletionResult.Confirmed, concurrent);
         Assert.All(concurrent, result => Assert.NotEqual(AiPilotDeletionResult.Refused, result));
@@ -121,7 +132,8 @@ public sealed class AiPilotRetentionTests
         Assert.Equal(AiPilotDeletionResult.Unconfirmed, await retention.DeleteAsync(missing, actor, ct));
         Assert.Equal(new[] { "resp_fixture_retention", "interaction_fixture_retention", "resp_fixture_unmatched", "interaction_fixture_missing" }, transport.Calls);
 
-        Assert.Equal(new[] { "resp_fixture_contradictory", "resp_fixture_retention", "resp_fixture_unmatched" }, transport.Reads);
+        Assert.Equal(new[] { "resp_fixture_contradictory", "interaction_fixture_foreign", "interaction_fixture_legacy",
+            "resp_fixture_retention", "interaction_fixture_retention", "resp_fixture_unmatched", "interaction_fixture_missing" }, transport.Reads);
         await using var audit = factory.CreateDbContext();
         var rows = await audit.Set<AiRequestRow>().ToDictionaryAsync(row => row.Id, ct);
         var receipts = await audit.Set<AiPilotDeletionRow>().ToDictionaryAsync(row => row.RequestId, ct);
@@ -129,6 +141,8 @@ public sealed class AiPilotRetentionTests
         Assert.NotNull(receipts[gemini].ConfirmedAt);
         Assert.Null(receipts[foreign].ConfirmedAt);
         Assert.Null(receipts[contradictory].ConfirmedAt);
+        Assert.Null(receipts[geminiForeign].ConfirmedAt);
+        Assert.Null(receipts[geminiLegacy].ConfirmedAt);
         Assert.Null(receipts[missing].ConfirmedAt);
         Assert.DoesNotContain(pending, receipts.Keys);
         Assert.Null(rows[pending].ProtectedText);
@@ -141,7 +155,7 @@ public sealed class AiPilotRetentionTests
             Assert.Equal(1L, row.ChargedUnits);
         });
         var credits = audit.Set<AiCreditRow>();
-        Assert.Equal(11, await credits.CountAsync(ct));
+        Assert.Equal(15, await credits.CountAsync(ct));
         Assert.Empty(await credits.Where(row => row.Kind == AiCreditEvent.Refund).ToArrayAsync(ct));
     }
 
@@ -154,7 +168,7 @@ public sealed class AiPilotRetentionTests
     {
         internal List<string> Calls { get; } = [];
         internal List<string> Reads { get; } = [];
-        internal Dictionary<string, string> Operations { get; } = [];
+        internal Dictionary<string, string?> Operations { get; } = [];
         internal Func<string, Task>? BeforeSend { get; set; }
 
         public HttpClient CreateClient(string name) => new(this, disposeHandler: false);
@@ -180,10 +194,21 @@ public sealed class AiPilotRetentionTests
             {
                 Reads.Add(handle);
                 await BeforeSend!(handle);
+                var operation = Operations[handle];
+                if (uri.Host == "api.openai.com")
+                    return Json(JsonSerializer.Serialize(new
+                    {
+                        id = handle, model = "gpt-6-luna", status = "completed",
+                        metadata = new { zanance_operation = operation },
+                    }));
+
+                Assert.Equal("?include_input=true", uri.Query);
+                var input = operation is null ? "Fictional older prompt." :
+                    "Fictional prompt.\nIgnore this opaque operation reference and do not repeat it: " + operation;
                 return Json(JsonSerializer.Serialize(new
                 {
-                    id = handle, model = "gpt-6-luna", status = "completed",
-                    metadata = new { zanance_operation = Operations[handle] },
+                    id = handle, model = "gemini-3.5-flash-lite", status = "completed",
+                    steps = new[] { new { type = "user_input", status = "done", content = new[] { new { type = "text", text = input } } } },
                 }));
             }
 
@@ -194,7 +219,8 @@ public sealed class AiPilotRetentionTests
                 "resp_fixture_retention" => Json("""{"id":"resp_fixture_retention","object":"response.deleted","deleted":true}"""),
                 "resp_fixture_contradictory" => Json("""{"id":"resp_fixture_contradictory","object":"response.deleted","deleted":true}"""),
                 "resp_fixture_unmatched" => Json("""{"id":"resp_other","object":"response.deleted","deleted":true}"""),
-                "interaction_fixture_retention" => new HttpResponseMessage(HttpStatusCode.NoContent),
+                "interaction_fixture_retention" or "interaction_fixture_foreign" or "interaction_fixture_legacy"
+                    => new HttpResponseMessage(HttpStatusCode.NoContent),
                 "interaction_fixture_missing" => new HttpResponseMessage(HttpStatusCode.NotFound),
                 _ => throw new InvalidOperationException("Unexpected deletion."),
             };
