@@ -94,6 +94,15 @@ still follows its separate rules for on-device backups. A protected deletion tha
 an interruption uses the original profile identity. Copies saved by recipients are outside
 the app's control.
 
+On an isolated Android 16 x86-64 guest, the signed offline APK
+`2d05d89f72061910a4547d9fb772dcd729bc7e966c92a3536af998f02865f743` was installed once
+and started with six fictitious cache files. An early read, before the app was ready,
+found all six. After Welcome appeared in the same process, the old CSV and accountant
+ZIP and the emptied CSV staging directory were absent. The two fresh files and two
+out-of-layout or unrelated-name files kept their hashes, ownership, modes and modification
+times. The fixture was seeded directly in that disposable guest. This exercise covered
+startup expiry and did not initiate a new share, restore or financial write.
+
 ## Permissions
 
 iOS: `NSFaceIDUsageDescription` (app lock) and `NSCameraUsageDescription` (receipt photos, D-38), localised in `Platforms/iOS/*.lproj/InfoPlist.strings`; notifications use the system authorisation dialog. Windows: no capability beyond `runFullTrust` (files only, no camera). Android manifest:
