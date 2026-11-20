@@ -100,6 +100,38 @@ public sealed class CameraSourceBoundsTests
         Assert.False(source.Disposed);
     }
 
+    /// <summary>Only the returned attachment owns the bytes after the provider read has completed.</summary>
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task Attachment_reads_clear_the_transient_chunk_on_success_and_provider_failure(bool fail)
+    {
+        byte[] content = [0xff, 0xd8, 0xff, 0xd9];
+        using var source = new ObservedAttachmentSource(content, fail);
+        if (fail)
+            await Assert.ThrowsAsync<IOException>(() => AttachmentFiles.ReadSourceAsync(source));
+        else
+            Assert.Equal(content, await AttachmentFiles.ReadSourceAsync(source));
+
+        Assert.Equal(2, source.Reads);
+        Assert.True(source.LastChunk.Span.IndexOfAnyExcept((byte)0) < 0);
+        Assert.True(source.CanRead);
+    }
+
+    private sealed class ObservedAttachmentSource(byte[] content, bool fail) : MemoryStream(content, writable: false)
+    {
+        internal Memory<byte> LastChunk { get; private set; }
+        internal int Reads { get; private set; }
+
+        public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            LastChunk = buffer;
+            if (++Reads == 2 && fail)
+                throw new IOException("The provider stopped after returning part of the attachment.");
+            return base.ReadAsync(buffer, cancellationToken);
+        }
+    }
+
     /// <summary>Generates finite fictitious source bytes and rejects every unsupported metadata/seek operation.</summary>
     private sealed class NonseekableSource(long remaining) : Stream
     {

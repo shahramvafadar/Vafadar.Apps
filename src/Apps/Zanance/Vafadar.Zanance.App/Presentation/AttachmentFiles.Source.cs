@@ -1,3 +1,5 @@
+using Vafadar.Zanance.App.Security;
+
 namespace Vafadar.Zanance.App.Presentation;
 
 internal static partial class AttachmentFiles
@@ -43,21 +45,8 @@ internal static partial class AttachmentFiles
     }
 
     /// <summary>Reads a picked/captured source with an encoded-byte bound, including non-seekable picker streams.</summary>
-    internal static async Task<byte[]> ReadSourceAsync(Stream stream)
-    {
-        using var buffer = new MemoryStream();
-        var chunk = new byte[81920];
-        int read;
-        while ((read = await stream.ReadAsync(chunk)) > 0)
-        {
-            if (buffer.Length + read > MaxSourceBytes)
-            {
-                throw new InvalidDataException("The source file is too large.");
-            }
-
-            buffer.Write(chunk, 0, read);
-        }
-        return buffer.ToArray();
-    }
+    internal static Task<byte[]> ReadSourceAsync(Stream stream) =>
+        BoundedPrivateFileReader.ReadAsync(stream, MaxSourceBytes, CancellationToken.None,
+            static () => new InvalidDataException("The source file is too large."));
 
 }

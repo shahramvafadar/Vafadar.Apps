@@ -19,13 +19,13 @@ public sealed class StartupBackupPackageReaderTests
     public void Growing_the_accumulator_clears_earlier_storage_after_copying()
     {
         using var buffer = new MemoryStream(4);
-        StartupBackupPackageReader.Append(buffer, [1, 2]);
+        BoundedPrivateFileReader.Append(buffer, [1, 2]);
         var initial = buffer.GetBuffer();
-        StartupBackupPackageReader.Append(buffer, [3, 4]);
+        BoundedPrivateFileReader.Append(buffer, [3, 4]);
         Assert.Same(initial, buffer.GetBuffer());
         Assert.Equal(new byte[] { 1, 2, 3, 4 }, initial);
 
-        StartupBackupPackageReader.Append(buffer, [5, 6]);
+        BoundedPrivateFileReader.Append(buffer, [5, 6]);
 
         Assert.NotSame(initial, buffer.GetBuffer());
         Assert.All(initial, value => Assert.Equal((byte)0, value));

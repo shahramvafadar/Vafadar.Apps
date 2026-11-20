@@ -196,6 +196,13 @@ while only the 1600 px metadata-free JPEG is attached and backed up. Source rows
 not additional database fields or exports. No new permission, SDK or network path. A stored-image reread cannot
 recover lost detail. Recognition/rendering errors and cancellation do not post ledger entries.
 
+The camera, attachment picker and portable-backup reader clear their temporary stream
+chunks and current or superseded accumulation arrays, including on a read failure. Each
+successful reader returns a separate owned array containing the original bytes. The attachment
+limit remains 64 MiB before photo preparation. Two synthetic provider cases reproduced retained
+attachment chunks on success and failure. The 31 selected attachment and backup-reader checks
+passed afterward, including the cumulative bound and cancellation behavior.
+
 D-65 uses existing account counterparty/reference balance/interest/installment and Schedule fields only. A reminder
 draft and its preview are transient until explicit Save; opening it records no ledger entry. Portable backups retain
 their existing schema. No new data category, SDK, network path or permission; notification permission is requested
