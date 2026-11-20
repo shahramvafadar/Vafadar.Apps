@@ -21,6 +21,15 @@ internal static class AppLocales
         ArgumentNullException.ThrowIfNull(localization);
         if (!OperatingSystem.IsAndroidVersionAtLeast(33))
         {
+            // Old Android versions do not produce a configuration change for an in-app language choice.
+            var language = localization.CurrentLanguage.CultureName;
+            localization.Changed += (_, _) =>
+            {
+                var wanted = localization.CurrentLanguage.CultureName;
+                if (language == wanted) return;
+                language = wanted;
+                MainThread.BeginInvokeOnMainThread(() => QuickAddWidget.Refresh(Android.App.Application.Context));
+            };
             return;
         }
 

@@ -38,7 +38,9 @@ public sealed class QuickAddWidget : AppWidgetProvider
         // D-174: launcher RemoteViews may retain their old resource locale after an app-language change.
         // Resolve captions in the original app language before sending them, without changing device settings.
         using var configuration = new Configuration(context.Resources!.Configuration!);
-        var language = IPlatformApplication.Current?.Services.GetService<ILocalizationService>()?.CurrentLanguage.CultureName;
+        var localization = IPlatformApplication.Current?.Services.GetService<ILocalizationService>();
+        var language = (localization as LocalizationService)?.ReadPreferredLanguage().CultureName
+            ?? localization?.CurrentLanguage.CultureName;
         // The widget receiver can run before localization preferences are published. Android 13+
         // already owns the persisted per-app locale; do not replace it with a startup default.
         if (OperatingSystem.IsAndroidVersionAtLeast(33)

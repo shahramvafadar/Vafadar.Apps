@@ -107,12 +107,7 @@ public sealed class LocalizationService : ILocalizationService
     /// <inheritdoc />
     public void Initialize()
     {
-        var language = FindLanguage(_settings.Get(LanguageKey))
-            ?? FindLanguage(_deviceCulture.Name)
-            ?? FindLanguage(_deviceCulture.TwoLetterISOLanguageName)
-            ?? FindLanguage(_options.DefaultLanguage.CultureName)
-            ?? SupportedLanguages[0];
-
+        var language = ReadPreferredLanguage();
         var region = _settings.Get(RegionKey);
         CurrentRegion = Regions.IsKnown(region) ? region!.ToUpperInvariant() : null;
         FormattingCultureName = ValidFormattingCulture(_settings.Get(FormattingKey));
@@ -120,6 +115,13 @@ public sealed class LocalizationService : ILocalizationService
             ? digits : DigitStyle.LanguageDefault;
         Apply(language, SavedCalendar() ?? _options.DefaultCalendar(language));
     }
+
+    /// <summary>Resolves the saved or device language for native surfaces before the app publishes its cultures.</summary>
+    public AppLanguage ReadPreferredLanguage() => FindLanguage(_settings.Get(LanguageKey))
+        ?? FindLanguage(_deviceCulture.Name)
+        ?? FindLanguage(_deviceCulture.TwoLetterISOLanguageName)
+        ?? FindLanguage(_options.DefaultLanguage.CultureName)
+        ?? SupportedLanguages[0];
 
     /// <inheritdoc />
     public void SetLanguage(AppLanguage language)

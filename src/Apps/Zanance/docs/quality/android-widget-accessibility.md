@@ -81,3 +81,36 @@ host. All four original actions pass; three drafts are cancelled, Home979/public
 match, and only the newly owned widget/helper are removed. This does not replace D-174's original
 emulator launcher/language/theme evidence or accept actual Samsung launcher placement, large-text,
 spoken TalkBack, all lock variants or general stability. No new managed cases or shipping changes.
+
+## Android 7 live and cold widget language
+
+On the owned Android 7 x86-64 launcher, the original signed APK
+`c0c41fb4` placed widget 4 with English labels. Selecting Persian on the
+first onboarding page changed the app language but kept the same widget
+English. Android versions before 13 have no system per-app locale update
+for that in-app choice.
+
+The corrected APK
+`ebe0e0f0c75102f00c61b99c42643b67953a0a4822f3b0f77891ad15a126186f`
+was installed without resetting the app or replacing widget 4. The
+saved Persian onboarding choice and the widget's Persian text and RTL
+order were present. Selecting German on that same onboarding session
+redrew the existing widget with German text and LTR order in the same
+app process. Neither case recreated or re-bound the original widget.
+
+The first attempt to retire the background app process left Android's
+previous process alive. After removing only the owned Zanance task, the
+same emulator confirmed that the app process was absent. The stock
+launcher then added widget 5 with an actual drag. Its receiver started
+a new app process while the launcher stayed visible. Both widget IDs
+remained bound and their three captions matched the saved German language.
+The observer recovered a transient ADB connection error using the already
+running server, without restarting the emulator or repeating task removal.
+
+The read-only language lookup shares normal initialization's rules and
+does not publish cultures or change preferences. All 29 selected
+localization tests passed, including three cold lookup cases. Strict
+Windows and the signed Offline Android build passed. This run remained
+on the first onboarding page and created no account or transaction.
+The disposable installation and emulator were retired. Neither physical
+phone was used. Local evidence is under `artifacts/api24-widget-language`.

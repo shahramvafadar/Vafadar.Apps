@@ -48,6 +48,28 @@ public sealed class LocalizationServiceTests : IDisposable
         Assert.Equal(AppLanguages.Persian, service.CurrentLanguage);
     }
 
+    [Theory]
+    [InlineData("fa", "fa")]
+    [InlineData("unsupported", "de")]
+    [InlineData(null, "de")]
+    public void Reading_a_cold_native_label_language_does_not_publish_the_app_culture(string? preference, string expected)
+    {
+        using var device = CultureScope.WithUiCulture("de-DE");
+        _settings.Set(LocalizationService.LanguageKey, preference);
+        var service = CreateService();
+        var changes = 0;
+        service.Changed += (_, _) => changes++;
+
+        Assert.Equal(expected, service.ReadPreferredLanguage().CultureName);
+        Assert.Equal(AppLanguages.English, service.CurrentLanguage);
+        Assert.Equal("de-DE", CultureInfo.CurrentUICulture.Name);
+        Assert.Equal(0, changes);
+        Assert.Equal(preference, _settings.Get(LocalizationService.LanguageKey));
+
+        service.Initialize();
+        Assert.Equal(expected, service.CurrentLanguage.CultureName);
+    }
+
     [Fact]
     public void SetLanguage_saves_the_choice_applies_the_cultures_and_raises_Changed()
     {
