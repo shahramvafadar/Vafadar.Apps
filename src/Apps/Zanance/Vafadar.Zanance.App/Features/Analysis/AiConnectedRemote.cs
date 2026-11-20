@@ -15,8 +15,8 @@ internal sealed class AiConnectedRemote(PersonalSyncTransport transport, IAiPriv
     public Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct) => Work(token => client.OfferAsync(purpose, token), ct);
     public Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct) =>
         Work(token => client.SubmitAsync(offer, payload, recheck, token), ct);
-    public Task<AiRequestResult> ContinueAsync(CancellationToken ct) => Work(client.ContinueAsync, ct);
-    public Task<AiRequestResult> CloseAsync(CancellationToken ct) => Work(client.CloseAsync, ct);
+    public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct) => Work(token => client.ContinueAsync(expected, token), ct);
+    public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct) => Work(token => client.CloseAsync(expected, token), ct);
 
     private async Task<T> Work<T>(Func<CancellationToken, Task<T>> work, CancellationToken ct)
     {

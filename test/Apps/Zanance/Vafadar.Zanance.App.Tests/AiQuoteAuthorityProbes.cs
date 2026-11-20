@@ -79,7 +79,7 @@ internal sealed class QuoteRuntime(TimeProvider time) : IAiRuntime, IAiRemote
     public Task<bool> ConfirmDisclosureAsync() { Primary++; throw new InvalidOperationException("No genuine authentication."); }
     public Task ShareAsync(string text) { Primary++; throw new InvalidOperationException("No recipient."); }
     public Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> check, CancellationToken ct) { Primary++; throw new InvalidOperationException("No submission."); }
-    public Task<AiRequestResult> ContinueAsync(CancellationToken ct) { Primary++; throw new InvalidOperationException("No continuation."); }
-    public Task<AiRequestResult> CloseAsync(CancellationToken ct) { Primary++; throw new InvalidOperationException("No close."); }
+    public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct) { Primary++; throw new InvalidOperationException("No continuation."); }
+    public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct) { Primary++; throw new InvalidOperationException("No close."); }
     public void Dispose() { }
 }

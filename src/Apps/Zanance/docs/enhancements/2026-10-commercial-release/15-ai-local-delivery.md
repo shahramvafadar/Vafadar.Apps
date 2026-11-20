@@ -145,6 +145,11 @@ An explicit continuation checks status first. It can send the exact saved packet
 request and the journal records a successful final source review. A refused or interrupted review leaves a
 staged record with an explicit negative marker. Older records without a marker can still recover service status. If the service has no record
 of a staged or older request, the user can close the original and review the current data again.
+The Analysis page distinguishes a staged request, an unknown outcome and a confirmed pending result.
+When the displayed record lacks dispatch authority, the confirmation offers a status check only.
+The client compares the displayed ID, exact offer and payload digest with the saved record while
+holding the original operation gate. A later journal update cannot turn that confirmation into
+authority to resend or close a different request.
 Metadata-only close creates a durable unaccepted closure, so a late original packet cannot start
 later; accepted work is neither recalled nor guessed refunded. A single immutable offer cannot authorize two
 requests. A trusted receipt/gift port is internal only, globally deduplicates the original grant identity and
@@ -180,6 +185,13 @@ final backup policy remain actual Mac work. Official platform reference:
   and absent and accepted legacy records. The staged and absent legacy packets produce no aggregate POST.
   The admitted retry preserves the original ID, offer and payload digest. Accepted legacy status remains
   readable. The fixture uses synthetic data, a local journal and no real provider.
+- The retained-status change passed four application caption and confirmation cases and
+  eight directly affected client cases. An independent Windows Debug review verified the
+  staged caption, status-only confirmation and native Cancel without an outbound effect or
+  financial change. Its first observer failed to locate the nested scroll view before
+  opening a confirmation. The corrected observer used the actual scroll view. Receipts
+  are under `artifacts/analysis-retained-native`. The strict Windows build and the
+  signed offline Android package passed.
 - The original delivery recorded 34 distinct focused cases and 23 existing resource completeness and usage cases across six languages.
   Historical3753 complete-suite cases and unrelated successful billing/sync/cipher/bank/accountant checks were
   not replayed or added to a fictitious current total.

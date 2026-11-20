@@ -35,7 +35,7 @@ internal static class AiMetadataPublicationProbes
             if(!quote&&fields.Contains(e.PropertyName)&&!fired)
             {
                 changed++;coherent&=model.ProviderText==expected.Address&&model.BalanceText==p.Text.Format("Ai_Balance",expected.Balance.PurchasedAvailable.ToString(),"0","0","0")
-                    &&model.ResultSnapshot==expected.Snapshot&&model.ResultText==expected.Record?.Result?.Text&&model.ResultStatus==(expected.Record is null?null:expected.Record.Result is null?p.Text["Ai_Pending"]:p.Text.Format("Ai_ResultUnits","3"));
+                    &&model.ResultSnapshot==expected.Snapshot&&model.ResultText==expected.Record?.Result?.Text&&model.ResultStatus==(expected.Record is null?null:expected.Record.Result is null?p.Text["Ai_OutcomeUnknown"]:p.Text.Format("Ai_ResultUnits","3"));
             }
             var target=phase switch{0 or 7 or 8 or 11 or 13=>nameof(model.ProviderText),1=>nameof(model.BalanceText),2 or 9 or 15=>nameof(model.ResultSnapshot),5=>nameof(model.ResultText),_=>"none"};
             if(fired||e.PropertyName!=target)return;fired=true;
@@ -110,7 +110,7 @@ internal sealed class AiMetadataRemote:IAiRemote
     public Task<AiClientRecord?>ReadAsync(CancellationToken ct)=>Task.FromResult(Record);
     public Task<AiOffer>OfferAsync(AiPurpose purpose,CancellationToken ct){owner.Offers++;return Task.FromResult(new AiOffer(Guid.NewGuid(),"declared","input-only",purpose,7,time.GetUtcNow().AddDays(1)));}
     public Task<AiRequestResult>SubmitAsync(AiOffer offer,AiPayload payload,Func<Task>check,CancellationToken ct){owner.Primary++;return Task.FromException<AiRequestResult>(new InvalidOperationException("No primary"));}
-    public Task<AiRequestResult>ContinueAsync(CancellationToken ct){owner.Primary++;return Task.FromException<AiRequestResult>(new InvalidOperationException("No continuation"));}
-    public Task<AiRequestResult>CloseAsync(CancellationToken ct){owner.Primary++;return Task.FromException<AiRequestResult>(new InvalidOperationException("No close"));}
+    public Task<AiRequestResult>ContinueAsync(AiClientRecord expected, CancellationToken ct){owner.Primary++;return Task.FromException<AiRequestResult>(new InvalidOperationException("No continuation"));}
+    public Task<AiRequestResult>CloseAsync(AiClientRecord expected, CancellationToken ct){owner.Primary++;return Task.FromException<AiRequestResult>(new InvalidOperationException("No close"));}
     public void Dispose(){Disposals++;BeforeDispose?.Invoke();}
 }

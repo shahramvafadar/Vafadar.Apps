@@ -7925,6 +7925,15 @@ Massimo: {3} unità di credito; offerta valida fino al {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>La richiesta originale è in attesa o ha esito sconosciuto. I crediti restano riservati. Continua o chiudi questa precisa richiesta prima di avviarne un’altra; un timeout non è un rimborso né il permesso di addebitare di nuovo.</value>
   </data>
+  <data name="Ai_LocalReviewPending" xml:space="preserve">
+    <value>La verifica finale dei dati non è stata registrata. Chiudi questa richiesta salvata prima di controllare di nuovo i dati attuali.</value>
+  </data>
+  <data name="Ai_OutcomeUnknown" xml:space="preserve">
+    <value>L’esito presso il servizio è sconosciuto. Controlla lo stato o chiudi la richiesta originale prima di iniziarne un’altra.</value>
+  </data>
+  <data name="Ai_StatusOnlyConfirm" xml:space="preserve">
+    <value>Vuoi controllare lo stato di questa richiesta salvata? Il controllo non invia dati finanziari e non può inviare nuovamente la richiesta.</value>
+  </data>
   <data name="Ai_SourceReviewRequired" xml:space="preserve">
     <value>Il servizio non trova questa richiesta e la verifica dei dati originali non è confermata. Chiudi la richiesta e controlla di nuovo i dati attuali.</value>
   </data>

@@ -93,7 +93,7 @@ internal sealed class AiResultRemote:IAiRemote
     public Task<AiClientRecord?>ReadAsync(CancellationToken ct){Reads++;BeforeRead?.Invoke();return Task.FromResult<AiClientRecord?>(Current);}
     public Task<AiOffer>OfferAsync(AiPurpose purpose,CancellationToken ct)=>throw new InvalidOperationException("No offer");
     public Task<AiRequestResult>SubmitAsync(AiOffer offer,AiPayload payload,Func<Task> check,CancellationToken ct)=>throw new InvalidOperationException("No submission");
-    public Task<AiRequestResult>ContinueAsync(CancellationToken ct)=>throw new InvalidOperationException("No continuation");
-    public Task<AiRequestResult>CloseAsync(CancellationToken ct){Closes++;Current=Pending with{Result=Result};return Task.FromResult(ReturnPending?Result with{State=AiRequestState.Pending,ChargedUnits=0,Text=null}:Result);}
+    public Task<AiRequestResult>ContinueAsync(AiClientRecord expected, CancellationToken ct)=>throw new InvalidOperationException("No continuation");
+    public Task<AiRequestResult>CloseAsync(AiClientRecord expected, CancellationToken ct){Closes++;Current=Pending with{Result=Result};return Task.FromResult(ReturnPending?Result with{State=AiRequestState.Pending,ChargedUnits=0,Text=null}:Result);}
     public void Dispose(){}
 }

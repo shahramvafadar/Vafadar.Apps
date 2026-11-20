@@ -7936,6 +7936,15 @@ Höchstens {3} Guthabeneinheiten; Angebot gültig bis {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>Die ursprüngliche Anfrage ist offen oder ihr Ausgang unklar. Guthaben bleibt reserviert. Setzen Sie genau diese Anfrage fort oder schließen Sie sie vor einer neuen. Ein Timeout ist weder Erstattung noch Erlaubnis für eine erneute Belastung.</value>
   </data>
+  <data name="Ai_LocalReviewPending" xml:space="preserve">
+    <value>Die abschließende Prüfung der Daten wurde nicht gespeichert. Schließen Sie diese Anfrage, bevor Sie die aktuellen Daten erneut prüfen.</value>
+  </data>
+  <data name="Ai_OutcomeUnknown" xml:space="preserve">
+    <value>Das Ergebnis beim Dienst ist unklar. Prüfen Sie den Status oder schließen Sie die ursprüngliche Anfrage, bevor Sie eine neue starten.</value>
+  </data>
+  <data name="Ai_StatusOnlyConfirm" xml:space="preserve">
+    <value>Möchten Sie den Status genau dieser gespeicherten Anfrage prüfen? Dabei werden keine Finanzdaten gesendet und die Anfrage wird nicht erneut übermittelt.</value>
+  </data>
   <data name="Ai_SourceReviewRequired" xml:space="preserve">
     <value>Der Dienst kennt diese Anfrage nicht. Die Prüfung der ursprünglichen Daten ist nicht bestätigt. Schließe die Anfrage und prüfe die aktuellen Daten erneut.</value>
   </data>

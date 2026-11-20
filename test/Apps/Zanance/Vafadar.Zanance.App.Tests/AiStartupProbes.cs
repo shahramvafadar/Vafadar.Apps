@@ -99,9 +99,9 @@ internal sealed class AiStartupRemoteProbe(TimeProvider clock) : IAiRemote
     { Calls++; return Refuse ? Task.FromException<AiOffer>(new IOException("D958 quote entry refused")) : Task.FromResult(new AiOffer(Guid.NewGuid(), "fictitious-startup", "fixture-only", purpose, 8, clock.GetUtcNow().AddHours(1))); }
     public Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct)
     { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("D958 no submission, intent write, reservation or model run")); }
-    public Task<AiRequestResult> ContinueAsync(CancellationToken ct)
+    public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct)
     { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("D958 no genuine continuation")); }
-    public Task<AiRequestResult> CloseAsync(CancellationToken ct)
+    public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct)
     { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("D958 no genuine closure")); }
     public void Dispose() { }
 }

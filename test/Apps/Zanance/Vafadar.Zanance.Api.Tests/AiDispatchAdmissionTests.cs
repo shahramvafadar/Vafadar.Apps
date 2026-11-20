@@ -94,7 +94,10 @@ public sealed class AiDispatchAdmissionTests
         if (scenario == "interrupted")
         {
             Assert.True(original.DispatchPermitted);
-            Assert.Equal(original.Submission.RequestId, (await resumed.ContinueAsync(ct)).RequestId);
+            var statusOnly = original with { DispatchPermitted = null };
+            await Assert.ThrowsAsync<AiSourceReviewRequiredException>(() => resumed.ContinueAsync(statusOnly, ct));
+            Assert.Equal(1, posts);
+            Assert.Equal(original.Submission.RequestId, (await resumed.ContinueAsync(original, ct)).RequestId);
             Assert.NotNull(delivered);
             Assert.Equal(original.Submission.RequestId, delivered.RequestId);
             Assert.Equal(AiProtocol.Digest(original.Submission.Payload), AiProtocol.Digest(delivered.Payload));
@@ -118,7 +121,37 @@ public sealed class AiDispatchAdmissionTests
             Assert.Equal(AiRequestState.NotAccepted, (await resumed.CloseAsync(ct)).State);
             Assert.Equal(1, closes);
         }
-        Assert.Equal(1, statusReads);
+        Assert.Equal(scenario == "interrupted" ? 2 : 1, statusReads);
+    }
+
+    /// <summary>A replaced journal entry is refused before a status, closure or aggregate request.</summary>
+    [Theory]
+    [InlineData(false, "id")]
+    [InlineData(true, "id")]
+    [InlineData(false, "offer")]
+    [InlineData(false, "payload")]
+    public async Task Original_analysis_confirmation_cannot_act_on_a_replaced_record(bool close, string changed)
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var journal = new MemoryJournal();
+        using var transport = new PersonalSyncTransport(new LocalSyncPeer("https://localhost:55555", new string('f', 64)), new NoSessions());
+        var client = new AiClient(transport, journal, Owner, Path.GetFullPath(Guid.NewGuid().ToString("N")), () => { });
+        var offer = new AiOffer(Guid.NewGuid(), "fixture", "fixture-model", AiPurpose.PeriodExplanation, 8, DateTimeOffset.UtcNow.AddMinutes(5));
+        var payload = new AiPayload(1, offer.Purpose, "en",
+            new(new(2026, 10, 1), new(2026, 10, 2), 1, true, [new("EUR", 0, 0, 0, 0)], 0), null);
+        var expected = new AiClientRecord(1, new(Guid.NewGuid(), offer, payload), null) { DispatchPermitted = true };
+        var modified = changed switch
+        {
+            "id" => expected.Submission with { RequestId = Guid.NewGuid() },
+            "offer" => expected.Submission with { Offer = offer with { Model = "other-fixture-model" } },
+            "payload" => expected.Submission with { Payload = payload with { Language = "fa" } },
+            _ => throw new ArgumentOutOfRangeException(nameof(changed)),
+        };
+        journal.Value = JsonSerializer.Serialize(expected with { Submission = modified }, AiClientJson.Default.AiClientRecord);
+
+        var originalJournal = journal.Value;
+        await Assert.ThrowsAsync<InvalidDataException>(() => close ? client.CloseAsync(expected, ct) : client.ContinueAsync(expected, ct));
+        Assert.Equal(originalJournal, journal.Value);
     }
 
     private sealed class MemoryJournal : IAiPrivateStorage
@@ -132,6 +165,13 @@ public sealed class AiDispatchAdmissionTests
     {
         public Task<PersonalSyncSession?> ReadAsync(string peer, CancellationToken ct) => Task.FromResult<PersonalSyncSession?>(
             new() { UserId = Owner, AccessToken = "synthetic-fixture", RefreshToken = "synthetic-fixture", ExpiresAt = DateTimeOffset.UtcNow.AddMinutes(5) });
+        public Task WriteAsync(string peer, PersonalSyncSession value, CancellationToken ct) => throw new InvalidOperationException();
+        public Task RemoveAsync(string peer, CancellationToken ct) => throw new InvalidOperationException();
+    }
+
+    private sealed class NoSessions : IPersonalSyncTokenStore
+    {
+        public Task<PersonalSyncSession?> ReadAsync(string peer, CancellationToken ct) => throw new InvalidOperationException("Unexpected transport access.");
         public Task WriteAsync(string peer, PersonalSyncSession value, CancellationToken ct) => throw new InvalidOperationException();
         public Task RemoveAsync(string peer, CancellationToken ct) => throw new InvalidOperationException();
     }

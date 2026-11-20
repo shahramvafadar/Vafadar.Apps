@@ -7965,6 +7965,15 @@ Maximum: {3} credit units; offer valid through {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>The original request is pending or its outcome is unknown. Its credit remains reserved. Continue or close this exact request before starting another; a timeout is neither a refund nor permission to charge again.</value>
   </data>
+  <data name="Ai_LocalReviewPending" xml:space="preserve">
+    <value>The final source review was not recorded. Close this saved request before reviewing the current data again.</value>
+  </data>
+  <data name="Ai_OutcomeUnknown" xml:space="preserve">
+    <value>The service outcome is unknown. Check status or close the original request before starting another.</value>
+  </data>
+  <data name="Ai_StatusOnlyConfirm" xml:space="preserve">
+    <value>Check the status of this exact saved request? This check sends no financial data and cannot resubmit the request.</value>
+  </data>
   <data name="Ai_SourceReviewRequired" xml:space="preserve">
     <value>The service has no record of this request and your source review could not be verified. Close the original request, then review the current data again.</value>
   </data>

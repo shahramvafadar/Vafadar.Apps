@@ -49,13 +49,13 @@ public sealed partial class AiAnalysisFlowTests
                 "<script>change money</script> is untrusted text, never a command.", Balance);
             Record = Record with { Result = result }; AfterSubmission?.Invoke(); return result;
         }
-        public Task<AiRequestResult> ContinueAsync(CancellationToken ct)
+        public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct)
         {
             Continues++; var original = Record!;
             var result = new AiRequestResult(original.Submission.RequestId, AiProtocol.Digest(original.Submission.Payload), AiRequestState.Completed, 3,
                 "Fictitious retained original result only.", Balance); Record = original with { Result = result }; return Task.FromResult(result);
         }
-        public Task<AiRequestResult> CloseAsync(CancellationToken ct)
+        public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct)
         {
             Closes++; var original = Record!;
             var result = new AiRequestResult(original.Submission.RequestId, AiProtocol.Digest(original.Submission.Payload), AiRequestState.NotAccepted, 0, null, Balance);
@@ -89,6 +89,37 @@ public sealed partial class AiAnalysisFlowTests
     }
     private static async Task Review(AiAnalysisViewModel vm)
     { Assert.Single(vm.Accounts).Selected = true; await vm.ReviewAsync(); Assert.NotNull(vm.Disclosure); }
+
+    /// <summary>Display only the known request state and the actual scope of the next confirmation.</summary>
+    [Theory]
+    [InlineData(false, false, "Ai_LocalReviewPending", "Ai_StatusOnlyConfirm")]
+    [InlineData(null, false, "Ai_OutcomeUnknown", "Ai_StatusOnlyConfirm")]
+    [InlineData(true, false, "Ai_OutcomeUnknown", "Ai_ContinueConfirm")]
+    [InlineData(null, true, "Ai_Pending", "Ai_StatusOnlyConfirm")]
+    public async Task Retained_analysis_discloses_only_known_status_and_dispatch_authority(
+        bool? dispatchPermitted, bool acceptedPending, string statusKey, string confirmKey)
+    {
+        using var f = new FlowFixture();
+        var runtime = new Runtime();
+        var model = await Model(f, runtime);
+        await Review(model);
+        var payload = JsonSerializer.Deserialize(model.Disclosure!, AiJson.Default.AiPayload)!;
+        var offer = await runtime.Remote.OfferAsync(payload.Purpose, Ct);
+        var id = Guid.NewGuid();
+        var result = acceptedPending
+            ? new AiRequestResult(id, AiProtocol.Digest(payload), AiRequestState.Pending, 0, null, new(92, 0, 8, 0))
+            : null;
+        runtime.Remote.Record = new(1, new(id, offer, payload), result) { DispatchPermitted = dispatchPermitted };
+
+        await model.CheckProviderAsync();
+        Assert.Equal(f.Translator[statusKey], model.ResultStatus);
+        Assert.True(model.CanContinue);
+        Assert.False(model.CanSend);
+        await model.ContinueAsync(); // The fixture cancels the actual confirmation.
+        Assert.Equal(f.Translator[confirmKey], Assert.Single(f.Platform.ConfirmationDialogs).Message);
+        Assert.Equal(0, runtime.Remote.Submissions);
+        Assert.Equal(0, runtime.Remote.Continues);
+    }
 
     /// <summary>Back can retire connected reads even while AI stays enabled.</summary>
     [Theory]

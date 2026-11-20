@@ -89,14 +89,14 @@ public sealed class AiOtherNativeConfirmationCaptionTests
         {
             var payload = new AiPayload(1, AiPurpose.PeriodExplanation, language, new(new(2026, 10, 1), new(2026, 10, 9), 1, true, [new("EUR", 0, 0, 0, 0)], 0), null);
             var offer = new AiOffer(Guid.NewGuid(), "declared", "input-only", payload.Purpose, 7, time.GetUtcNow().AddDays(1));
-            return Task.FromResult<AiClientRecord?>(new(1, new(Guid.NewGuid(), offer, payload), null));
+            return Task.FromResult<AiClientRecord?>(new(1, new(Guid.NewGuid(), offer, payload), null) { DispatchPermitted = true });
         }
         public Task<bool> ConfirmDisclosureAsync() { Primary++; throw new InvalidOperationException("No genuine authorization."); }
         public Task ShareAsync(string text) { Primary++; throw new InvalidOperationException("No recipient."); }
         public Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct) { Primary++; throw new InvalidOperationException(); }
         public Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> check, CancellationToken ct) { Primary++; throw new InvalidOperationException(); }
-        public Task<AiRequestResult> ContinueAsync(CancellationToken ct) { Primary++; throw new InvalidOperationException(); }
-        public Task<AiRequestResult> CloseAsync(CancellationToken ct) { Primary++; throw new InvalidOperationException(); }
+        public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct) { Primary++; throw new InvalidOperationException(); }
+        public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct) { Primary++; throw new InvalidOperationException(); }
         public void Dispose() { }
     }
     /// <summary>Mutates one literal resource without a language event or native input.</summary>

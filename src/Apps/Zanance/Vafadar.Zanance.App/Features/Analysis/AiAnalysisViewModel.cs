@@ -581,9 +581,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             StartOperation(version); ValidateDisclosure(disclosure);
             // D-984: keep the full retained-request warning and use a concise native action.
             var key = close ? "Ai_ConfirmCloseAction" : "Ai_ConfirmContinueAction";
-            if (!await interaction.ConfirmAsync(text["Ai_Title"], text[close ? "Ai_CloseConfirm" : "Ai_ContinueConfirm"], text[key], text["Ai_ConfirmCancelAction"])) return;
+            var message = close ? "Ai_CloseConfirm" : record.DispatchPermitted == true ? "Ai_ContinueConfirm" : "Ai_StatusOnlyConfirm";
+            if (!await interaction.ConfirmAsync(text["Ai_Title"], text[message], text[key], text["Ai_ConfirmCancelAction"])) return;
             ValidateDisclosure(disclosure); Validate(version); if (!close && !await runtime.ConfirmDisclosureAsync()) return; ValidateDisclosure(disclosure); Validate(version);
-            var result = close ? await connection.CloseAsync(CancellationToken.None) : await connection.ContinueAsync(CancellationToken.None);
+            var result = close ? await connection.CloseAsync(record, CancellationToken.None) : await connection.ContinueAsync(record, CancellationToken.None);
             ValidateFrame(presentation); retained = record with { Result = result }; ShowRecord(retained, true);
             var accepted = retained!; var saved = await connection.ReadAsync(CancellationToken.None); ValidateFrame(presentation);
             retained = ValidateRecordFollowup(accepted, saved); ShowRecord(retained, true);
@@ -596,7 +597,7 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     // D-665: native acceptance belongs to the actual shown language/captions, not a translated continuation.
     private string NativeDisclosure() => string.Join("\n", new[] { local.CurrentCulture.Name, text["Ai_Title"],
         text["Ai_ManualConfirm"], text["Ai_ManualShare"], text["Ai_ConfirmShareAction"], text["Ai_ManualPrompt"], text["Ai_SendConfirm"],
-        text["Ai_Send"], text["Ai_ConfirmSendAction"], text["Ai_CloseConfirm"], text["Ai_ContinueConfirm"], text["Ai_Close"], text["Ai_Continue"],
+        text["Ai_Send"], text["Ai_ConfirmSendAction"], text["Ai_CloseConfirm"], text["Ai_ContinueConfirm"], text["Ai_StatusOnlyConfirm"], text["Ai_Close"], text["Ai_Continue"],
         text["Ai_ConfirmCloseAction"], text["Ai_ConfirmContinueAction"], text["Ai_ConfirmCancelAction"], text["Common_Cancel"] });
     private void ValidateDisclosure(string original)
     {
@@ -648,6 +649,8 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
     private string RecordStatus(AiClientRecord record) => record.Result?.State switch
         {
             AiRequestState.Completed => text.Format("Ai_ResultUnits", N(record.Result.ChargedUnits)),
+            null when record.DispatchPermitted == false => text["Ai_LocalReviewPending"],
+            null => text["Ai_OutcomeUnknown"],
             AiRequestState.Refunded => text["Ai_Refunded"], AiRequestState.NotAccepted => text["Ai_NotAccepted"], _ => text["Ai_Pending"],
         };
     private void ShowBalance(AiBalance balance) => BalanceText = BalanceCaption(balance);

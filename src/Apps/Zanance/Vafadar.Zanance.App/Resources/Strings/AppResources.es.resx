@@ -7905,6 +7905,15 @@ Máximo: {3} unidades de crédito; oferta válida hasta {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>La solicitud original está pendiente o se desconoce su resultado. Sus créditos siguen reservados. Continúa o cierra esta solicitud exacta antes de iniciar otra; un timeout no es un reembolso ni permiso para volver a cobrar.</value>
   </data>
+  <data name="Ai_LocalReviewPending" xml:space="preserve">
+    <value>No se registró la revisión final de los datos. Cierra esta solicitud guardada antes de revisar los datos actuales de nuevo.</value>
+  </data>
+  <data name="Ai_OutcomeUnknown" xml:space="preserve">
+    <value>Se desconoce el resultado en el servicio. Consulta el estado o cierra la solicitud original antes de iniciar otra.</value>
+  </data>
+  <data name="Ai_StatusOnlyConfirm" xml:space="preserve">
+    <value>¿Quieres consultar el estado de esta solicitud guardada? No se enviarán datos financieros ni se volverá a enviar la solicitud.</value>
+  </data>
   <data name="Ai_SourceReviewRequired" xml:space="preserve">
     <value>El servicio no encuentra esta solicitud y no se pudo confirmar la revisión de los datos originales. Cierra la solicitud y revisa de nuevo los datos actuales.</value>
   </data>

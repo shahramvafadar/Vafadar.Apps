@@ -129,7 +129,7 @@ internal sealed class AiLanguageRemote : IAiRemote
     public Task<AiClientRecord?> ReadAsync(CancellationToken ct) { Calls++; return Task.FromResult<AiClientRecord?>(record); }
     public Task<AiOffer> OfferAsync(AiPurpose purpose, CancellationToken ct) { Calls++; return Task.FromException<AiOffer>(new InvalidOperationException("No quote")); }
     public Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct) { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("No primary request")); }
-    public Task<AiRequestResult> ContinueAsync(CancellationToken ct) { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("No continuation")); }
-    public Task<AiRequestResult> CloseAsync(CancellationToken ct) { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("No closure")); }
+    public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct) { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("No continuation")); }
+    public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct) { Calls++; return Task.FromException<AiRequestResult>(new InvalidOperationException("No closure")); }
     public void Dispose() { }
 }

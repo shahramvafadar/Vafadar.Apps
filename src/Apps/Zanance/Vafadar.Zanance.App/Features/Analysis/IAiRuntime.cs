@@ -19,9 +19,9 @@ public interface IAiRemote : IDisposable
     /// <summary>Retains literal native consent before the original immutable aggregate submission.</summary>
     Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct);
     /// <summary>Explicit original continuation; status first, identical submission only when the service has no original id.</summary>
-    Task<AiRequestResult> ContinueAsync(CancellationToken ct);
+    Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct);
     /// <summary>Closes an unaccepted original id durably; dispatched work is not assumed canceled or refunded.</summary>
-    Task<AiRequestResult> CloseAsync(CancellationToken ct);
+    Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct);
 }
 /// <summary>Native authorization, deliberate manual share and original pinned identity connection only.</summary>
 public interface IAiRuntime

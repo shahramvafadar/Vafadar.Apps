@@ -7913,6 +7913,15 @@ Maximum : {3} unités de crédit ; offre valable jusqu’au {4}.</value>
   <data name="Ai_Pending" xml:space="preserve">
     <value>La demande d’origine est en attente ou son résultat est inconnu. Les crédits restent réservés. Continuez ou fermez cette demande exacte avant d’en créer une autre ; un délai dépassé n’est ni un remboursement ni une autorisation de débiter à nouveau.</value>
   </data>
+  <data name="Ai_LocalReviewPending" xml:space="preserve">
+    <value>La vérification finale des données n’a pas été enregistrée. Clôturez cette demande avant de vérifier à nouveau les données actuelles.</value>
+  </data>
+  <data name="Ai_OutcomeUnknown" xml:space="preserve">
+    <value>Le résultat auprès du service est inconnu. Vérifiez le statut ou clôturez la demande d’origine avant d’en lancer une autre.</value>
+  </data>
+  <data name="Ai_StatusOnlyConfirm" xml:space="preserve">
+    <value>Voulez-vous vérifier le statut de cette demande enregistrée ? Cette vérification ne transmet aucune donnée financière et ne renvoie pas la demande.</value>
+  </data>
   <data name="Ai_SourceReviewRequired" xml:space="preserve">
     <value>Le service ne trouve pas cette demande et la vérification des données d’origine n’a pas pu être confirmée. Clôturez la demande et vérifiez de nouveau les données actuelles.</value>
   </data>

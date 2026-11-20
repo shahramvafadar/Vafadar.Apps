@@ -90,18 +90,25 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         finally { semaphore.Release(); }
     }
     /// <summary>Checks status first. Only a durably admitted packet absent at the service can be retried.</summary>
-    public async Task<AiRequestResult> ContinueAsync(CancellationToken ct = default)
+    public Task<AiRequestResult> ContinueAsync(CancellationToken ct = default) => ContinueCoreAsync(null, ct);
+
+    /// <summary>Continues the exact displayed request within the authority shown at confirmation.</summary>
+    public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct = default) => ContinueCoreAsync(expected, ct);
+
+    private async Task<AiRequestResult> ContinueCoreAsync(AiClientRecord? expected, CancellationToken ct)
     {
         verifyAccess(); var semaphore = Operations.GetOrAdd(Scope, _ => new SemaphoreSlim(1, 1)); await semaphore.WaitAsync(ct);
         try
         {
             var state = await ReadAsync(ct) ?? throw new InvalidOperationException("Original analysis request required.");
+            ValidateRetainedRequest(state, expected);
             if (state.Result is { State: not AiRequestState.Pending } final) return final;
             AiRequestResult result;
             try { result = await transport.AnalysisStatusAsync(expectedUser, state.Submission.RequestId, ct); }
             catch (PersonalSyncHttpException missing) when (missing.Status == HttpStatusCode.NotFound)
             {
-                if (state.DispatchPermitted != true) throw new AiSourceReviewRequiredException();
+                if (state.DispatchPermitted != true || (expected is not null && expected.DispatchPermitted != true))
+                    throw new AiSourceReviewRequiredException();
                 // This explicitly confirmed continuation may publish the same original packet if it never arrived.
                 // The service serializes the original id; it never invokes the provider twice for an existing request.
                 verifyAccess(); result = await transport.AnalysisSubmitAsync(expectedUser, state.Submission, ct);
@@ -112,12 +119,18 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         finally { semaphore.Release(); }
     }
     /// <summary>Explicitly closes the exact retained original id before allowing a new consent; there is no financial-payload upload.</summary>
-    public async Task<AiRequestResult> CloseAsync(CancellationToken ct = default)
+    public Task<AiRequestResult> CloseAsync(CancellationToken ct = default) => CloseCoreAsync(null, ct);
+
+    /// <summary>Closes only the exact request displayed in the original confirmation.</summary>
+    public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct = default) => CloseCoreAsync(expected, ct);
+
+    private async Task<AiRequestResult> CloseCoreAsync(AiClientRecord? expected, CancellationToken ct)
     {
         verifyAccess(); var semaphore = Operations.GetOrAdd(Scope, _ => new SemaphoreSlim(1, 1)); await semaphore.WaitAsync(ct);
         try
         {
             var state = await ReadAsync(ct) ?? throw new InvalidOperationException("Original analysis request required.");
+            ValidateRetainedRequest(state, expected);
             if (state.Result is { State: not AiRequestState.Pending } final) return final;
             var result = await transport.AnalysisCloseAsync(expectedUser, state.Submission.RequestId,
                 new(state.Submission.Offer, AiProtocol.Digest(state.Submission.Payload)), ct);
@@ -125,6 +138,15 @@ public sealed class AiClient(PersonalSyncTransport transport, IAiPrivateStorage 
         }
         finally { semaphore.Release(); }
     }
+
+    private static void ValidateRetainedRequest(AiClientRecord current, AiClientRecord? expected)
+    {
+        if (expected is not null && (current.Submission.RequestId != expected.Submission.RequestId ||
+            current.Submission.Offer != expected.Submission.Offer ||
+            AiProtocol.Digest(current.Submission.Payload) != AiProtocol.Digest(expected.Submission.Payload)))
+            throw new InvalidDataException("The original analysis request changed after confirmation.");
+    }
+
     private Task SaveAsync(AiClientRecord record, CancellationToken ct)
     {
         verifyAccess(); var raw = JsonSerializer.Serialize(record, AiClientJson.Default.AiClientRecord);

@@ -211,8 +211,8 @@ internal static partial class DebugSnapshots
                 "Fictitious plain text / متن آزمایشی / Beispieltext. <script> is text, never an action.\n" + new string('x', 180), new(50, 20, 0, 0))));
         }
         public Task<AiRequestResult> SubmitAsync(AiOffer offer, AiPayload payload, Func<Task> recheck, CancellationToken ct) { Submissions++; throw new IOException("No provider submission belongs to layout."); }
-        public Task<AiRequestResult> ContinueAsync(CancellationToken ct) => throw new IOException("No service continuation belongs to layout.");
-        public Task<AiRequestResult> CloseAsync(CancellationToken ct) => throw new IOException("No service closure belongs to layout.");
+        public Task<AiRequestResult> ContinueAsync(AiClientRecord expected, CancellationToken ct) => throw new IOException("No service continuation belongs to layout.");
+        public Task<AiRequestResult> CloseAsync(AiClientRecord expected, CancellationToken ct) => throw new IOException("No service closure belongs to layout.");
         public void Dispose() { }
     }
 }
