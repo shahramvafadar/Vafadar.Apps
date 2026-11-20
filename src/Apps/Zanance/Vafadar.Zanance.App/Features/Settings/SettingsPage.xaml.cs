@@ -65,6 +65,12 @@ public partial class SettingsPage : ContentPage
         _publicationActive = true; _viewModel.SetActive(true); return PendingPublication = PublishAfterRouteAsync();
     }
     private async Task PublishAfterRouteAsync() { await Task.Yield(); if (_publicationActive && !_rootRetired) await _viewModel.LoadAsync(); }
+
+    /// <summary>Reads the system notification setting for this still-foreground form.</summary>
+    internal Task RefreshNotificationPermissionAsync(Func<bool> isForeground) =>
+        _viewModel.RefreshNotificationPermissionAsync(() => _publicationActive && !_rootRetired
+            && ReferenceEquals(Shell.Current?.CurrentPage, this) && isForeground());
+
     /// <summary>Retires actual native settings commands and source reads on page/tab departure.</summary>
     internal void RetirePublication() { _publicationActive = false; _viewModel.SetActive(false); }
     /// <summary>Permanently retires a replaced root and any pending original consent.</summary>

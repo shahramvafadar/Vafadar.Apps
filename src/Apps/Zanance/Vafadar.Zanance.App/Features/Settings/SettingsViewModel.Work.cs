@@ -11,6 +11,7 @@ public sealed partial class SettingsViewModel
     private CancellationTokenSource _frame = new(), _read = new();
     private readonly SemaphoreSlim _loadGate = new(1, 1);
     private long _readRevision;
+    private long _notificationPermissionRead;
     private string? _originalFile;
     private int _pendingChanges;
     private bool _needsExplicitReload;
@@ -55,6 +56,18 @@ public sealed partial class SettingsViewModel
         command.RequireCurrent(); await _store.ValidateSettingsWorkSnapshotAsync(command.Review, command.Token); command.RequireCurrent();
         if (!ReferenceEquals(_snapshot?.WorkReview, command.Review) || command.Review.Calendar != Presentation.Calendars.ToPeriod(_localization.CurrentCalendar))
             throw new InvalidOperationException("The original settings publication or calendar changed.");
+    }
+
+    /// <summary>Updates only the notification status after an Android foreground return.</summary>
+    internal async Task RefreshNotificationPermissionAsync(Func<bool> isForeground)
+    {
+        if (!isForeground() || !NotificationsSupported || _pendingChanges != 0 || CaptureCommand() is not { } command)
+            return;
+        var read = ++_notificationPermissionRead;
+        var enabled = await _reminders.Scheduler.AreEnabledAsync();
+        if (read == _notificationPermissionRead && _pendingChanges == 0 && isForeground() && CanInteract && command.IsCurrent
+            && ReferenceEquals(_snapshot?.WorkReview, command.Review))
+            NotificationsEnabled = enabled;
     }
     private void Feedback(string key) { _feedbackKey = key; ActionFeedback = _translator[key]; }
     private async Task ReadOriginalAsync()

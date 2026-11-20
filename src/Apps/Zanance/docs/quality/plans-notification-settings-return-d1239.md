@@ -89,3 +89,22 @@ disagreeing in either direction. Strict Windows and signed Android Release
 builds passed. The disposable package and emulator were retired after
 restoring display geometry and deleting the hash-checked capture. Evidence is
 under `artifacts/api24-plans-settings-return`.
+
+### Notification status on the open Settings form
+
+On a separate Android 7 emulator, the original Settings form stayed open
+after Android's App info blocked notifications. Android reported importance
+NONE, but the form did not show Turn on. Foreground return now reads and
+updates only the original form's notification status. Reloading the settings
+snapshot and concurrent preference changes keep their existing ownership.
+
+Signed Offline Release APK `8cfc0aeb` upgraded the same synthetic fixture
+with its package UID, data directory and install timestamp preserved. After
+an external block and Back, Turn on appeared in the same open Settings form.
+The original button reopened Android App info. Clearing Block all and
+returning removed the warning. The Show names and amounts setting retained
+its original value throughout. The observer initially expected a short
+Settings caption on the More tab and continued using the actual combined
+caption. Strict Windows and signed Android Release builds passed. Display
+geometry was restored and the disposable installation and emulator were
+retired. Evidence is under `artifacts/api24-settings-notification-resume`.

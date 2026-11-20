@@ -261,6 +261,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
             await _store.UpdateSettingsWorkAsync(command.Review, settings => settings.ReviewReminderEnabled = enabled, () => command.IsCurrent, command.Token); accepted = true;
             if (command.IsCurrent && enabled && ReviewReminderEnabled && NotificationsSupported)
             {
+                ++_notificationPermissionRead;
                 var allowed = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
                 if (command.IsCurrent && ReviewReminderEnabled) NotificationsEnabled = allowed;
             }
@@ -502,6 +503,7 @@ public sealed partial class SettingsViewModel : ViewModelBase
     private async Task EnableNotificationsAsync()
     {
         if (CaptureCommand() is not { } command) return; IsBusy = true;
+        ++_notificationPermissionRead;
         try { await ValidateCommandAsync(command); var enabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
             if (command.IsCurrent) NotificationsEnabled = enabled; }
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) await RefuseOriginalSourceAsync(exception); }

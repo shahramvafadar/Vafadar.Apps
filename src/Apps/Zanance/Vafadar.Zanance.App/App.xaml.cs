@@ -503,9 +503,17 @@ public partial class App : Application
         var access = _services.GetRequiredService<AppLockService>();
         await access.ResumeAsync();
 #if ANDROID
-        bool CanRefreshPlans() => _isInForeground && !access.IsLocked;
-        if (CanRefreshPlans() && Windows.FirstOrDefault()?.Page is AppShell { CurrentPage: Features.Plans.PlansPage plans })
-            await plans.RefreshReminderPermissionAsync(CanRefreshPlans);
+        bool CanRefreshPage() => _isInForeground && !access.IsLocked;
+        if (!CanRefreshPage() || Windows.FirstOrDefault()?.Page is not AppShell shell) return;
+        switch (shell.CurrentPage)
+        {
+            case Features.Plans.PlansPage plans:
+                await plans.RefreshReminderPermissionAsync(CanRefreshPage);
+                break;
+            case Features.Settings.SettingsPage settings:
+                await settings.RefreshNotificationPermissionAsync(CanRefreshPage);
+                break;
+        }
 #endif
     }
 
