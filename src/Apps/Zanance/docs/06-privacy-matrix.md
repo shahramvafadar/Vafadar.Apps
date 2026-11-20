@@ -16,7 +16,7 @@ readable by anyone who obtains it. First-run restore creates no extra account an
 
 | Online account | Local ledger | Ads / Analytics / AI | Pro | Privacy policy | Data safety |
 |---|---|---|---|---|---|
-| No mandatory account; optional configured backup clients and explicit local service identity | SQLCipher on Android/Windows; iOS pending | No ads/application analytics; isolated synthetic provider pilot; production model access inactive; native SDK diagnostics possible online | Local entitlement/quota and Android billing prerequisites; real purchases/commercial enforcement inactive | Draft; final processors/artifact/publication acceptance pending | Complete for selected release edition |
+| No mandatory account; optional configured backup clients and explicit local service identity | SQLCipher on Android/Windows; iOS pending | No ads/application analytics; isolated synthetic provider pilot; production model access inactive; native SDK diagnostics possible online | Local entitlement/quota and Android billing prerequisites; real purchases/commercial enforcement inactive | Draft; final processors/artifact/publication acceptance pending | [Edition review drafted](store/play-declaration-review.md#data-safety-by-edition); final declaration pending |
 
 ## Data flows
 

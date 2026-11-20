@@ -277,8 +277,8 @@ independent work and overall goal remain active. Broader gates stay open.
 
 ## Store
 
-- [ ] Data safety form completed from the matrix (PRI-04)
-- [ ] Financial features declaration completed per current Play guidance (REL-01)
+- [ ] Data safety form completed from the matrix and the [edition review](store/play-declaration-review.md#data-safety-by-edition) (PRI-04)
+- [ ] Financial features declaration completed per current Play guidance and the [capability review](store/play-declaration-review.md#financial-features) (REL-01)
 - [ ] Target API level, signing, content rating, target audience per current Play requirements (REL-02)
 - [x] Final app name: **Zanance** (owner decision 2026-09-26)
 - [x] Icon, splash and notification icon from the approved brand master (D-26)
