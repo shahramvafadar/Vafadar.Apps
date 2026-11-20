@@ -257,6 +257,8 @@ The independent Windows native review invoked both new Reports buttons and the o
 The paid estimate uses reported usage, including reasoning or thinking in output, without invoice verification. The pilot remains restricted to exact fictitious fixtures. See [OpenAI model pricing](https://developers.openai.com/api/docs/models/gpt-6.2-sol) and [Gemini model pricing](https://aistudio.google.com/docs/pricing#gemini-3.5-flash-lite).
 
 
+The plan comparison contract now checks the settled planned amount implied by the reported variance. It must be between zero and the full known planned amount. Where there is a settlement and every planned amount is known, the variance must be present. Four new synthetic cases reproduced acceptance of an impossible or missing variance and passed after correction. They also checked valid mixed open and settled amounts and an unknown-amount comparison. The original provider payload format is unchanged. No live calls or inference costs occurred.
+
 ## Budget and goal funding explanations, 2026-11-19
 
 Budget explains the overspent overall or flexible limit first and, without one, the largest overspent category limit in the visible scope. It retains the original financial period, account filter, review choice, effective limit and signed carry. The comparison shows the original base limit and a local draft amount that would match the already recorded spending with the same carry. It does not forecast affordable spending. The existing editor opens for the exact budget.

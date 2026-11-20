@@ -266,6 +266,10 @@ public static class AiProtocol
             plans.All(row => row is not null && Enum.IsDefined(row.Kind) && row.Planned >= 0 && row.Actual >= 0
                 && row.Settled >= 0 && row.Open >= 0 && row.Unknown >= 0
                 && (row.Settled > 0 || (row.Variance is null && row.Actual == 0))
+                // Subtracting the variance from actual recovers only the settled share of the known planned amount.
+                && (row.Variance is { } variance
+                    ? variance >= row.Actual - row.Planned && variance <= row.Actual
+                    : row.Settled == 0 || row.Unknown > 0)
                 && payload.Current.Totals.Any(total => total.CurrencyCode == row.Currency)))
             return;
 
