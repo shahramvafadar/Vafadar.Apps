@@ -4867,6 +4867,26 @@ The earlier protected D-403 fixture separately qualifies a nonzero balance and a
 Physical devices, OEM transfer, full restored-row comparison and genuine cloud providers
 remain outside this evidence.
 
+### AT-60 direct upgrade from the retained D-320 Android APK
+
+A fresh API 36 x86_64 emulator first installed the retained offline Android Release APK
+from 2026-10-17, SHA-256
+`8850a54474a1053717239b06d4ec46f40d2a195c3f83253a3f309a7d351988c0`.
+One first-run setup created a named synthetic account with a zero opening balance. Home showed
+`UpgradeReview` and EUR 0.00. There was no ledger or plan entry.
+
+One `adb install -r` then replaced it with the 2026-11-20 dual-ABI Offline Release APK, SHA-256
+`9f1c9df40e85763054eb3568be2fa2821c55e719cdcd28e744d0a3a7c7ed8bde`. Both packages used the
+same package ID, local signing certificate and version code. The installed APK digests were read
+from Android before and after the replacement. Android retained UID 10216 and the original first
+installation timestamp. The updated application passed preparation and displayed the same named
+account and balance on Home without another setup or any restore. The emulator was retired and
+the public UI and install receipts retained in `artifacts/zup`.
+
+This verifies one direct replacement of an older same-version-code build with a synthetic account.
+Physical-device variants, upgrades from other historical builds, individual migration steps and
+complete encrypted-row equality remain open.
+
 ## D-404 - AT-07/AT-10 original physical credit-card and account archive lifecycle
 
 The retained D-401 candidate qualifies one card purchase60 and Checking-to-Card payment90, with

@@ -221,7 +221,9 @@ independent work and overall goal remain active. Broader gates stay open.
   and the actual file path supplied (D-66); installation and physical-device acceptance are checked separately.
 - [ ] All phase-1 acceptance scenarios pass on the **release** build (07), except explicitly unshipped cloud destinations
 - [x] Golden data AT-62 exact in en/fa/de (calculation and display tests: separators per language, Persian digits)
-- [ ] Upgrade from every earlier test build keeps data (AT-60) – integration test for the first schema passes; re-check with real test builds
+- [ ] Upgrade from every earlier test build keeps data (AT-60). The first-schema integration test passes.
+  A [direct Android upgrade from the retained D-320 build](07-acceptance-test-plan.md#at-60-direct-upgrade-from-the-retained-d-320-android-apk)
+  preserved one named synthetic account and its balance. Other build pairs and physical verification remain open.
 - [ ] Encrypted backup → uninstall → reinstall → restore gives identical balances (AT-57). The
   [fresh Android emulator review](07-acceptance-test-plan.md#at-57-password-protected-restore-on-a-fresh-android-installation)
   restored the protected fixture and retained its balance after a cold reopen. A separate Android emulator
