@@ -179,6 +179,50 @@ public sealed class EditorWriteFlowTests
         Assert.Empty(await store.GetEntriesAsync(cancellationToken: Ct)); Assert.False(vm.CanSave);
     }
 
+    /// <summary>An enabled second monthly day must be valid before the original writer runs.</summary>
+    [Theory]
+    [InlineData("", true)]
+    [InlineData(" ", false)]
+    [InlineData("ab", false)]
+    public async Task Invalid_enabled_second_day_keeps_the_draft_off_the_writer(string rawSecondDay, bool correctAndRetry)
+    {
+        using var f = new FlowFixture();
+        await f.Store.GetSettingsAsync(Ct);
+        await SeedAccountAsync(f, "Synthetic monthly account");
+        var access = new Access();
+        var (store, plans) = Stores(f, access);
+        Enable(f, access, ProductPlan.Plus);
+        await using var reminders = Reminders(f, store, plans);
+        var vm = PlanEditor(f, store, plans, reminders);
+        await vm.ApplyQueryAsync(new Dictionary<string, object>());
+        vm.Name = "Synthetic monthly plan";
+        vm.AmountText = "12";
+        vm.PresetIndex = 3;
+        vm.HasSecondDay = true;
+        vm.SecondDayText = rawSecondDay;
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+
+        var previewError = vm.RuleError;
+        var preview = vm.Preview.ToArray();
+        await vm.SaveCommand.ExecuteAsync(null);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        Assert.Equal(f.Translator["Plan_SecondDayInvalid"], previewError);
+        Assert.Equal(f.Translator["Plan_SecondDayInvalid"], vm.RuleError);
+        Assert.Equal([f.Translator["Plan_RuleInvalid"]], preview);
+        Assert.Equal(rawSecondDay, vm.SecondDayText);
+        Assert.True(vm.HasSecondDay);
+        Assert.Empty(f.Platform.Routes);
+
+        if (correctAndRetry)
+        {
+            vm.SecondDayText = "۲۵";
+            Assert.Null(vm.RuleError);
+            await vm.SaveCommand.ExecuteAsync(null);
+            Assert.Equal(25, Assert.Single(await plans.GetSchedulesAsync(Ct)).Rule.SecondDay);
+            Assert.Empty(await store.GetEntriesAsync(cancellationToken: Ct));
+        }
+    }
+
     [Fact]
     public void Original_edit_copies_preserve_complete_metadata_identity_and_independent_mutable_rule()
     {

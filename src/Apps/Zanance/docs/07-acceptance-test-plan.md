@@ -590,6 +590,22 @@ returned to an empty All plans list. The all-time transaction list remained empt
 process 2723 showed the original account and EUR 0.00. No plan or payment was saved. The emulator
 was retired and local evidence retained in `artifacts/at72-holiday-plan`.
 
+## AT-72 validation of the enabled second monthly day
+
+The original plan editor distinguishes turning the optional second day off from leaving it on
+with an invalid value. An empty, whitespace-only, or non-numeric day previously saved a
+single-day rule. All three cases now display the original repeat error and stop before the
+writer. The synthetic save tests compare the complete source snapshot before and after refusal.
+Correcting the empty field to Persian digits `۲۵` saves the second day as 25 on the same draft
+without making a ledger entry.
+
+The signed Android APK `40a809f6` loaded the retained synthetic monthly plan on an owned API 36
+emulator. Clearing its second day showed the repeat error and an invalid preview. One attempt to
+save kept the editor open. Entering 25 produced the November 25 preview. Discarding the corrected
+draft returned to the original saved day 20. The observer initially closed the already-open repeat
+details and then reopened them to continue. Three selected host cases and strict Windows and
+Android builds passed. The emulator was retired.
+
 ## AT-74 Android native regional preferences
 
 The retained signed offline APK `d72991d4` ran on the owned Android 16 x64 emulator with 4096-byte pages. In setup, the original Android modal pickers selected the German regional format (`de-DE`), explicit Latin digits and Germany's public-holiday calendar. English stayed selected and the default Gregorian calendar was shown. The preview showed `20.11.2026` and `1.234,56`; the holiday disclosure excluded local holidays and workplace substitutes. Starting the fixture created one zero-opening account through normal onboarding without any ledger posting.

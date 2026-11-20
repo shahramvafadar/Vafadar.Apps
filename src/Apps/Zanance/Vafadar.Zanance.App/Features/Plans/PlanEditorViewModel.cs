@@ -730,7 +730,10 @@ public sealed partial class PlanEditorViewModel : ViewModelBase, Presentation.IT
         DayRule = SelectedDayRule,
         MissingDay = (MissingDayPolicy)MissingDayIndex,
         WeekendShift = (WeekendShift)Math.Clamp(WeekendIndex, 0, 2),
-        SecondDay = HasSecondDay && Frequency == Frequency.Monthly && !SelectedDayRule.IsWeekday() && int.TryParse(Vafadar.Core.Text.Digits.ToAscii(SecondDayText), NumberStyles.None, CultureInfo.InvariantCulture, out var second) ? second : null,
+        // Null means the second date is disabled. An enabled but unreadable day must reach rule validation.
+        SecondDay = HasSecondDay && Frequency == Frequency.Monthly && !SelectedDayRule.IsWeekday()
+            ? (int.TryParse(Vafadar.Core.Text.Digits.ToAscii(SecondDayText), NumberStyles.None, CultureInfo.InvariantCulture, out var second) ? second : 0)
+            : null,
         WeekendDays = WeekendIndex == 0 ? 0 : HolidayCalendarText.WeekendMaskForDraft(_existing?.Rule, _weekend),
 
         // Public holidays move a date like the weekend (F2-CON-05). The switch was read but never saved, so the option was
