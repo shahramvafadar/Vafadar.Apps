@@ -127,7 +127,7 @@ public sealed class DastanOptions
 public sealed class DastanLibrary
 {
     // The first part of an address that is no collection: a collection of that name could not be reached.
-    private static readonly string[] Taken = ["account", "compare", "cookies", "media", "imprint", "notice", "people", "photo", "preferences", "preview.png", "privacy", "terms", "report", "saved", "search", "signin-google", "signin-microsoft", "trees", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
+    private static readonly string[] Taken = ["account", "compare", "cookies", "media", "imprint", "notice", "parts", "people", "photo", "preferences", "preview.png", "privacy", "terms", "report", "saved", "search", "signin-google", "signin-microsoft", "trees", "robots.txt", "sitemap.xml", "health", "error", "not-found", "refused"];
 
     /// <summary>Returns whether a first part of an address belongs to the site itself, so that no collection can have that name.</summary>
     public static bool IsTaken(string name) => Taken.Contains(name, StringComparer.OrdinalIgnoreCase);

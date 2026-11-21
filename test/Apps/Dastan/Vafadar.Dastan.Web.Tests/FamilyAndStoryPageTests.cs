@@ -227,7 +227,7 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
 
         Assert.Equal(HttpStatusCode.OK, family.Status);
         Assert.Contains("No family relations to show.", family.Main, StringComparison.Ordinal);
-        Assert.DoesNotContain("<svg", family.Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("<svg", family.Main, StringComparison.Ordinal);
         Assert.DoesNotContain(Family("character-rakhsh"), rakhsh.Links);
         Assert.Contains(Family("character-rostam"), rostam.Links);
     }

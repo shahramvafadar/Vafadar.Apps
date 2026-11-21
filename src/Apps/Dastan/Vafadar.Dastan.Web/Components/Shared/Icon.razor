@@ -1,0 +1,83 @@
+@* A small drawing beside words (step 20.5). The drawings are Dastan's own – lines on a grid of 24, drawn for
+   this site and recorded in docs/adr/0024-parts.md – so no page asks another site for one and no licence of
+   somebody else applies. A drawing is decoration: the words beside it say what it stands for, and where a
+   control shows the drawing alone the control carries the words for a screen reader. *@
+<svg class="icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+    @switch (Name)
+    {
+        case "discover":
+            @* A compass. *@
+            <circle cx="12" cy="12" r="8.5" />
+            <path d="M15.500 8.500 13.400 13.400 8.500 15.500 10.600 10.600z" />
+            break;
+        case "world":
+            @* Somebody among those they know. *@
+            <circle cx="12" cy="7" r="2.600" />
+            <circle cx="5.500" cy="16.500" r="2.200" />
+            <circle cx="18.500" cy="16.500" r="2.200" />
+            <path d="M10.700 9.300 6.800 14.700M13.300 9.300 17.200 14.700M7.700 16.500h8.600" />
+            break;
+        case "saved":
+            @* A marker in a book. *@
+            <path d="M7 4h10v16.500l-5-4-5 4z" />
+            break;
+        case "search":
+            <circle cx="10.500" cy="10.500" r="6" />
+            <path d="M15 15l5 5" />
+            break;
+        case "account":
+            <circle cx="12" cy="8.500" r="3.500" />
+            <path d="M5 20c0-3.900 3.100-6 7-6s7 2.100 7 6" />
+            break;
+        case "settings":
+            @* Three sliders. *@
+            <path d="M4 7h9M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1" />
+            <circle cx="15" cy="7" r="2" />
+            <circle cx="9" cy="12" r="2" />
+            <circle cx="17" cy="17" r="2" />
+            break;
+        case "connections":
+            <circle cx="6" cy="6" r="2.300" />
+            <circle cx="18" cy="9" r="2.300" />
+            <circle cx="9" cy="18" r="2.300" />
+            <path d="M8.200 6.600 15.800 8.400M6.700 8.200 8.300 15.800M16.400 10.800 10.600 16.400" />
+            break;
+        case "timeline":
+            <path d="M3 12h18M7 12V7M12 12v5M17 12V8" />
+            <circle cx="7" cy="5.500" r="1.500" />
+            <circle cx="12" cy="18.500" r="1.500" />
+            <circle cx="17" cy="6.500" r="1.500" />
+            break;
+        case "pictures":
+            <rect x="3.500" y="5" width="17" height="14" rx="2" />
+            <circle cx="9" cy="10" r="1.700" />
+            <path d="M4 17l5-4.500 3.500 3 3-2.500 4.500 4" />
+            break;
+        case "waiting":
+            @* A clock: something goes on. *@
+            <circle cx="12" cy="12" r="8.500" />
+            <path d="M12 7v5l3.500 2" />
+            break;
+        case "nothing":
+            @* An empty tray. *@
+            <path d="M4 13l2.500-7h11L20 13v5.500H4z" />
+            <path d="M4 13h4.500l1 2.500h5l1-2.500H20" />
+            break;
+        case "failed":
+            <path d="M12 4 21 19.500H3z" />
+            <path d="M12 10v4.500M12 17v.300" />
+            break;
+        default:
+            <circle cx="12" cy="12" r="3" />
+            break;
+    }
+</svg>
+
+@code {
+    /// <summary>The drawings there are, by their names.</summary>
+    public static readonly string[] Names = ["discover", "world", "saved", "search", "account", "settings", "connections", "timeline", "pictures", "waiting", "nothing", "failed"];
+
+    /// <summary>Gets or sets the name of the drawing.</summary>
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+}

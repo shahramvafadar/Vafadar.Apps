@@ -38,16 +38,7 @@
             <ul class="people" role="list">
                 @foreach (var request in _waiting)
                 {
-                    <li>
-                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @Called(request)</span></span>
-                        <form method="post" action="@($"{PeopleEndpoints.Root}/answer")" class="save inline">
-                            <AntiforgeryToken />
-                            <input type="hidden" name="returnUrl" value="@_here" />
-                            <input type="hidden" name="relationship" value="@request.Id" />
-                            <button type="submit" name="answer" value="accept">@T["People_Accept"]<span class="visually-hidden"> – @request.Other.Name</span></button>
-                            <button type="submit" name="answer" value="decline">@T["People_Decline"]<span class="visually-hidden"> – @request.Other.Name</span></button>
-                        </form>
-                    </li>
+                    <li><RelationshipRequest Request="request" Called="@Called(request)" ReturnUrl="@_here" /></li>
                 }
             </ul>
         </section>
@@ -87,7 +78,6 @@
             <ul class="people" role="list">
                 @foreach (var relationship in _accepted)
                 {
-                    var chosen = relationship.Shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{relationship.Circle}", _ => "private" };
                     <li>
                         <span><a href="@($"people/{relationship.Other.Id}")" dir="auto">@relationship.Other.Name</a> <span class="meta">– @Called(relationship)</span></span>
                         <form method="post" action="@($"{PeopleEndpoints.Root}/show")" class="save inline">
@@ -95,14 +85,7 @@
                             <input type="hidden" name="returnUrl" value="@_here" />
                             <input type="hidden" name="relationship" value="@relationship.Id" />
                             <label for="@($"shown-{relationship.Id}")">@T["People_Shown_Label"]</label>
-                            <select id="@($"shown-{relationship.Id}")" name="scope">
-                                <option value="private" selected="@(chosen == "private")">@T["People_Scope_private"]</option>
-                                @foreach (var circle in _circles)
-                                {
-                                    <option value="@($"circle-{circle.Number}")" selected="@(chosen == $"circle-{circle.Number}")">@string.Format(CultureInfo.CurrentCulture, T["People_Scope_circle"], circle.Name)</option>
-                                }
-                                <option value="public" selected="@(chosen == "public")">@T["People_Scope_public"]</option>
-                            </select>
+                            <AudienceChoice Id="@($"shown-{relationship.Id}")" Name="scope" Shown="relationship.Shown" Circle="relationship.Circle" Circles="_circles" />
                             <button type="submit">@T["People_Shown_Send"]<span class="visually-hidden"> – @relationship.Other.Name</span></button>
                         </form>
                         <form method="post" action="@($"{PeopleEndpoints.Root}/end")" class="save inline">

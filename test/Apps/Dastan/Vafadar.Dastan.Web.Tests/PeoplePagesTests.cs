@@ -87,8 +87,8 @@ public sealed class PeoplePagesTests : IDisposable
 
         Assert.Contains("Your request is made.", (await mina.Get($"{People}?said=asked")).Main, StringComparison.Ordinal);
         Assert.Contains("You asked", (await mina.Get(People)).Main, StringComparison.Ordinal);
-        Assert.DoesNotContain("waiting</a>", (await mina.Get("/en/")).Html, StringComparison.Ordinal);
-        Assert.Contains("<a href=\"account/people#waiting\">1 waiting</a>", (await sara.Get("/en/")).Html, StringComparison.Ordinal);
+        Assert.DoesNotContain("account/people#waiting", (await mina.Get("/en/")).Html, StringComparison.Ordinal);
+        Assert.Matches("<a href=\"account/people#waiting\">(?s:.*?)<span class=\"visually-hidden\"> – 1 waiting</span>\\s*</a>", (await sara.Get("/en/")).Html);
         var asked = await sara.Get(People);
         Assert.Contains("Waiting for your answer", asked.Main, StringComparison.Ordinal);
         Assert.Matches("Mina</a>\\s*<span class=\"meta\">– close friend", asked.Main);

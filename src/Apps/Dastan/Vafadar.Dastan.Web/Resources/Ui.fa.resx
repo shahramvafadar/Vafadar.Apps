@@ -3900,4 +3900,22 @@
   <data name="People_Look_Note" xml:space="preserve">
     <value>همکار، هم‌کلاسی و هم‌تیمی در جایی با هم بوده‌اند. می‌توانید آن جا را میان مدخل‌های مجموعه‌های این سایت بجویید، یا در فرم زیر با نوشتهٔ خودتان بنویسید.</value>
   </data>
+  <data name="Nav_World" xml:space="preserve">
+    <value>دنیای من</value>
+  </data>
+  <data name="Nav_Saved" xml:space="preserve">
+    <value>ذخیره‌ها</value>
+  </data>
+  <data name="Nav_Settings" xml:space="preserve">
+    <value>زبان و ظاهر</value>
+  </data>
+  <data name="View_Connections" xml:space="preserve">
+    <value>پیوندها</value>
+  </data>
+  <data name="View_Timeline" xml:space="preserve">
+    <value>خط زمان</value>
+  </data>
+  <data name="View_Pictures" xml:space="preserve">
+    <value>تصویرها</value>
+  </data>
 </root>

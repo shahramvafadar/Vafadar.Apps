@@ -61,6 +61,9 @@ public sealed class JourneyTests(BrowserSite site) : IClassFixture<BrowserSite>
         await page.Keyboard.PressAsync("Tab");
         Assert.Equal("skip-link", await page.EvaluateAsync<string>("document.activeElement.className"));
         await page.Keyboard.PressAsync("Enter");
+
+        // The key is pressed before the browser has gone to the place: the address is waited for, not read at once.
+        await page.WaitForURLAsync(new System.Text.RegularExpressions.Regex("#content$"));
         Assert.EndsWith("#content", page.Url, StringComparison.Ordinal);
 
         // From there the controls of the drawing are reached in order, each with a visible focus.

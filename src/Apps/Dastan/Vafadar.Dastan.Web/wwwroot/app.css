@@ -16,9 +16,19 @@
   --focus: #b45309;
   --mark: #92400e;
 
+  /* Grown in step 20.5 (ADR 0024). Each has one meaning: a ground that lies lower than the page – a band, the
+     place of a picture that is not there –; the ground of what is chosen; what went wrong; what is in order. */
+  --surface-sunken: #f2efe7;
+  --accent-soft: #e8e7fa;
+  --danger: #b42318;
+  --ok: #1d6f42;
+  --shadow-1: 0 1px 2px rgb(28 27 46 / 0.08), 0 1px 1px rgb(28 27 46 / 0.04);
+  --shadow-2: 0 8px 24px rgb(28 27 46 / 0.14);
+
   /* Type. A step is 1.2 times the one below; the page title grows with the window. */
   --font-latin: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Roboto", "Noto Sans", "Helvetica Neue", Arial, sans-serif;
   --font-arabic: "Vazirmatn", "Segoe UI", "Noto Sans Arabic", "Geeza Pro", Tahoma, system-ui, sans-serif;
+  --step--2: 0.75rem;
   --step--1: 0.875rem;
   --step-0: 1rem;
   --step-1: 1.2rem;
@@ -34,8 +44,29 @@
   --space-8: 2rem;
   --space-12: 3rem;
 
+  --radius-s: 0.25rem;
   --radius: 0.5rem;
+  --radius-l: 1rem;
+  --radius-full: 999px;
   --measure: 44rem;
+
+  /* The width of a page that shows things side by side, the smallest height of what a finger presses, and
+     the height of the bar of the main ways at the foot of a phone. */
+  --measure-wide: 72rem;
+  --target: 2.75rem;
+  --bar: 3.75rem;
+
+  /* The room the bar takes at the foot of the window: none in a wide window. What is as high as the window
+     is as high as what is left above the bar. */
+  --bar-space: 0px;
+}
+
+/* A visitor who asks for more contrast: lines and secondary text as strong as the text. */
+@media (prefers-contrast: more) {
+  :root {
+    --border: var(--text);
+    --text-muted: var(--text);
+  }
 }
 
 /* Colour – dark, for a visitor who chose it … */
@@ -49,6 +80,12 @@
   --accent-text: #14132a;
   --focus: #fbbf24;
   --mark: #fcd34d;
+  --surface-sunken: #0f0e22;
+  --accent-soft: #2b2a55;
+  --danger: #ffb4a8;
+  --ok: #8ee0b0;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-2: 0 8px 24px rgb(0 0 0 / 0.6);
 }
 
 /* … and for a visitor who made no choice and whose device is dark. Keep the two blocks the same. */
@@ -63,6 +100,12 @@
     --accent-text: #14132a;
     --focus: #fbbf24;
     --mark: #fcd34d;
+    --surface-sunken: #0f0e22;
+    --accent-soft: #2b2a55;
+    --danger: #ffb4a8;
+    --ok: #8ee0b0;
+    --shadow-1: 0 1px 2px rgb(0 0 0 / 0.5);
+    --shadow-2: 0 8px 24px rgb(0 0 0 / 0.6);
   }
 }
 
@@ -135,16 +178,23 @@ main,
   padding-inline: var(--space-4);
 }
 
+/* The head of every page (step 20.5): the name, the main ways, the account, and the language and the appearance
+   behind one control. It may be wider than a page of text. */
 .site-header {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2) var(--space-4);
-  padding-block: var(--space-3);
+  max-inline-size: var(--measure-wide);
+  padding-block: var(--space-2);
   border-block-end: 1px solid var(--border);
 }
 
 .wordmark {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--target);
   font-family: var(--font-latin);
   font-size: var(--step-1);
   font-weight: 700;
@@ -153,25 +203,125 @@ main,
   text-decoration: none;
 }
 
+/* A small drawing beside words: lines in the colour of the words. */
+.icon {
+  flex: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .site-nav {
   display: flex;
   flex: 1 1 auto;
   flex-wrap: wrap;
-  gap: 0 var(--space-4);
+  gap: var(--space-1);
+}
+
+.site-nav a,
+.account-link,
+.site-settings > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--target);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.site-nav a:hover,
+.account-link:hover,
+.site-settings > summary:hover {
+  background: var(--accent-soft);
+}
+
+/* The way the page lies on: said by its ground and its colour, and to a screen reader by aria-current. */
+.site-nav a[aria-current],
+.account-link[aria-current] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* How many wait, on the way that leads to them. */
+.site-nav .count {
+  min-inline-size: 1.4rem;
+  padding-inline: var(--space-1);
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: var(--step--2);
+  line-height: 1.4rem;
+  text-align: center;
 }
 
 .site-tools {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-2) var(--space-4);
+  gap: var(--space-1);
+  margin-inline-start: auto;
+}
+
+.account-link .name {
+  max-inline-size: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The language and the appearance: away from the ways, behind one control that needs no script. */
+.site-settings {
+  position: relative;
+}
+
+.site-settings > summary {
+  list-style: none;
+}
+
+.site-settings > summary::-webkit-details-marker {
+  display: none;
+}
+
+.site-settings[open] > summary {
+  background: var(--accent-soft);
+}
+
+.settings-panel {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-1));
+  inset-inline-end: 0;
+  z-index: 30;
+  display: grid;
+  gap: var(--space-2);
+  inline-size: max-content;
+  max-inline-size: min(20rem, calc(100vw - 2 * var(--space-4)));
+  padding: var(--space-4);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
   font-size: var(--step--1);
 }
 
 .languages {
   display: flex;
-  gap: var(--space-3);
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
   margin: 0;
+}
+
+.languages a,
+.languages span {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--target);
 }
 
 .languages [aria-current] {
@@ -180,13 +330,14 @@ main,
 
 .theme {
   display: inline-flex;
+  justify-self: start;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
 }
 
 .theme button {
-  min-block-size: 2.75rem;
+  min-block-size: var(--target);
   padding: var(--space-1) var(--space-3);
   border: 0;
   background: transparent;
@@ -200,6 +351,79 @@ main,
 .theme button[aria-pressed="true"] {
   background: var(--accent);
   color: var(--accent-text);
+}
+
+/* On a phone the main ways are a bar at the foot of the window, where a thumb reaches them; the head keeps
+   the name, the account and the control of language and appearance. The page ends above the bar. */
+@media (max-width: 40rem) {
+  :root {
+    --bar-space: calc(var(--bar) + env(safe-area-inset-bottom, 0px));
+  }
+
+  body {
+    padding-block-end: var(--bar-space);
+  }
+
+  .site-nav {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: 40;
+    flex-wrap: nowrap;
+    gap: 0;
+    padding-block-end: env(safe-area-inset-bottom, 0px);
+    background: var(--surface-raised);
+    border-block-start: 1px solid var(--border);
+    box-shadow: var(--shadow-2);
+  }
+
+  .site-nav a {
+    position: relative;
+    flex: 1 1 0;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    min-inline-size: 0;
+    min-block-size: var(--bar);
+    padding: var(--space-1);
+    border-radius: 0;
+    font-size: var(--step--2);
+    font-weight: 500;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .site-nav a[aria-current] {
+    background: transparent;
+    box-shadow: inset 0 3px 0 var(--accent);
+  }
+
+  .site-nav .count {
+    position: absolute;
+    inset-block-start: var(--space-1);
+    inset-inline-start: calc(50% + 0.4rem);
+  }
+
+  /* The control of language and appearance shows its drawing alone; its words stay for a screen reader. */
+  .site-settings > summary span {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .account-link .name {
+    max-inline-size: 7rem;
+  }
+}
+
+@media print {
+  .site-nav,
+  .site-tools {
+    display: none;
+  }
 }
 
 main {
@@ -376,6 +600,277 @@ main:focus {
 
 .node-card-words > :first-child {
   margin-block-start: 0;
+}
+
+/* A card of a grid that lives from pictures (step 20.5): the picture above the words, as wide as the card.
+   Where no picture is, the drawing of the kind stands on a lower ground – the place of a picture, not one. */
+.node-card.tall {
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.node-card.tall .profile-picture {
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: var(--surface-sunken);
+}
+
+.node-card.tall .kind-drawing {
+  padding: 8% 32%;
+}
+
+.picture-cards {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-4);
+}
+
+.picture-cards > .card {
+  box-shadow: var(--shadow-1);
+}
+
+/* The head of an identity (step 20.5): the picture beside the name on a wide window, above it on a phone. */
+.identity {
+  display: grid;
+  grid-template-columns: minmax(8rem, 14rem) 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.identity .profile-picture {
+  background: var(--surface-sunken);
+}
+
+.identity-words > * + * {
+  margin-block-start: var(--space-2);
+}
+
+.identity-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block-start: var(--space-4);
+}
+
+@media (max-width: 40rem) {
+  .identity {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .identity .profile-picture {
+    inline-size: min(12rem, 50vw);
+  }
+}
+
+/* Where the visitor is, and the views of the same thing: the one that is shown has the ground of what is
+   chosen and a line below it. The views are as high as a finger needs and wrap on a narrow screen. */
+.view-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--border);
+}
+
+.view-bar-where {
+  font-weight: 600;
+}
+
+.view-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.view-switch a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--target);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.view-switch a:hover {
+  background: var(--accent-soft);
+}
+
+.view-switch a[aria-current] {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 -3px 0 var(--accent);
+}
+
+/* Filters as small links. One that is set has the ground of what is chosen and a mark, not a colour alone. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: var(--target);
+  padding-inline: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: var(--step--1);
+  text-decoration: none;
+}
+
+.chip:hover {
+  border-color: var(--accent);
+}
+
+.chip[aria-current] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* A place of a page that has nothing to show yet: something goes on, nothing is here, something went wrong. */
+.state {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-block: var(--space-3);
+  padding: var(--space-4);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+}
+
+.state .icon {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  margin-block-start: 0.15rem;
+}
+
+.state-words > * + * {
+  margin-block-start: var(--space-2);
+}
+
+.state-failed {
+  border-style: solid;
+  border-color: var(--danger);
+  color: var(--text);
+}
+
+.state-failed .icon {
+  color: var(--danger);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .state-waiting .icon {
+    animation: state-waits 2.4s linear infinite;
+  }
+}
+
+@keyframes state-waits {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* The page of the parts (development only). */
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
+  margin: 0;
+}
+
+.swatches li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step--1);
+}
+
+.swatch {
+  inline-size: 2rem;
+  block-size: 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+}
+
+/* The pages carry no style of their own (the policy of the site forbids it): each token has its class. */
+.swatch-surface {
+  background: var(--surface);
+}
+
+.swatch-surface-raised {
+  background: var(--surface-raised);
+}
+
+.swatch-surface-sunken {
+  background: var(--surface-sunken);
+}
+
+.swatch-accent-soft {
+  background: var(--accent-soft);
+}
+
+.swatch-accent {
+  background: var(--accent);
+}
+
+.swatch-text {
+  background: var(--text);
+}
+
+.swatch-text-muted {
+  background: var(--text-muted);
+}
+
+.swatch-border {
+  background: var(--border);
+}
+
+.swatch-focus {
+  background: var(--focus);
+}
+
+.swatch-mark {
+  background: var(--mark);
+}
+
+.swatch-danger {
+  background: var(--danger);
+}
+
+.swatch-ok {
+  background: var(--ok);
+}
+
+.shadow-1 {
+  box-shadow: var(--shadow-1);
+}
+
+.shadow-2 {
+  box-shadow: var(--shadow-2);
+}
+
+.parts-shadows {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  margin-block-start: var(--space-4);
 }
 
 /* The offer of a card to look at the whole profile (ADR 0019): shown by the script of the site. */
@@ -1480,8 +1975,8 @@ main:has(> .stage) > :not(.stage) {
     "top top top"
     "left frame right"
     "bottom bottom bottom";
-  block-size: calc(100vh - 2 * var(--space-4));
-  block-size: calc(100dvh - 2 * var(--space-4));
+  block-size: calc(100vh - 2 * var(--space-4) - var(--bar-space));
+  block-size: calc(100dvh - 2 * var(--space-4) - var(--bar-space));
   min-block-size: 22rem;
   margin-block: var(--space-4);
   scroll-margin-block-start: var(--space-4);
@@ -2294,8 +2789,8 @@ main details > summary {
 .stage.stage-fitted {
   block-size: auto;
   min-block-size: 0;
-  max-block-size: calc(100vh - 2 * var(--space-4));
-  max-block-size: calc(100dvh - 2 * var(--space-4));
+  max-block-size: calc(100vh - 2 * var(--space-4) - var(--bar-space));
+  max-block-size: calc(100dvh - 2 * var(--space-4) - var(--bar-space));
 }
 
 .stage-fitted .stage-edge:empty {

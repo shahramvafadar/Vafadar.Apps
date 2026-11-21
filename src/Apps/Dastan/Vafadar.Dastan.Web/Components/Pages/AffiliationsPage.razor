@@ -67,11 +67,11 @@
                             <input type="hidden" name="affiliation" value="@affiliation.Number" />
                             <p class="field">
                                 <label for="@($"findable-{affiliation.Number}")">@T["Affiliations_Findable"]</label>
-                                @Audience($"findable-{affiliation.Number}", "findable", affiliation.Findable, affiliation.FindableCircle)
+                                <AudienceChoice Id="@($"findable-{affiliation.Number}")" Name="findable" Shown="affiliation.Findable" Circle="affiliation.FindableCircle" Circles="_circles" />
                             </p>
                             <p class="field">
                                 <label for="@($"dates-{affiliation.Number}")">@T["Affiliations_Dates"]</label>
-                                @Audience($"dates-{affiliation.Number}", "dates", affiliation.Dates, affiliation.DatesCircle)
+                                <AudienceChoice Id="@($"dates-{affiliation.Number}")" Name="dates" Shown="affiliation.Dates" Circle="affiliation.DatesCircle" Circles="_circles" />
                             </p>
                             <p><button type="submit" class="action secondary">@T["People_Shown_Send"]<span class="visually-hidden"> – @affiliation.Terms.Organisation</span></button></p>
                         </form>
@@ -354,20 +354,6 @@
     };
 
     private static string? Written(Vafadar.Temporal.TemporalExpression? time, string calendar) => TreeEndpoints.Fields(time, calendar).Year?.ToString(CultureInfo.InvariantCulture);
-
-    // The choice of an audience: nobody else, one of the circles of the account, everybody.
-    private RenderFragment Audience(string id, string name, ScopeKind shown, long? circle) => __builder =>
-    {
-        var chosen = shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{circle}", _ => "private" };
-        <select id="@id" name="@name">
-            <option value="private" selected="@(chosen == "private")">@T["People_Scope_private"]</option>
-            @foreach (var one in _circles)
-            {
-                <option value="@($"circle-{one.Number}")" selected="@(chosen == $"circle-{one.Number}")">@string.Format(CultureInfo.CurrentCulture, T["People_Scope_circle"], one.Name)</option>
-            }
-            <option value="public" selected="@(chosen == "public")">@T["People_Scope_public"]</option>
-        </select>
-    };
 
     // The fields that say what an affiliation is: the same for a new one and for one that is changed.
     private RenderFragment Fields(string id, AffiliationTerms? terms, System.Collections.Immutable.ImmutableArray<Institution> candidates) => __builder =>

@@ -191,7 +191,7 @@ public sealed class ChartTests(BrowserSite site) : IClassFixture<BrowserSite>
         // stage is as high as the window is, less that margin. What is read keeps the width of a column of text.
         Assert.InRange(sizes[0], 0, 17);
         Assert.InRange(sizes[1], 0, 17);
-        Assert.InRange(sizes[2], sizes[3] - 33, sizes[3]);
+        Assert.InRange(sizes[2], sizes[3] - 33 - (width <= 640 ? 60 : 0), sizes[3] - (width <= 640 ? 60 : 0));
         Assert.True(sizes[4] <= 704.5, $"The heading is {sizes[4]} px wide.");
         Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");
     }

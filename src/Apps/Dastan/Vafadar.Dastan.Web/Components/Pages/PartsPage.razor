@@ -1,0 +1,164 @@
+@page "/parts"
+@using Vafadar.Dastan.Core.Personal
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject NavigationManager Navigation
+@inject IHostEnvironment Environment
+@inject IStringLocalizer<Ui> T
+
+@* The parts every page is made of, side by side (step 20.5, ADR 0024) – a page for who works on the site:
+   it exists on a machine of development only, a site that runs for anybody answers "not found". The headings
+   are the names the parts have in the code; what the parts say is said in the language of the page, with
+   records of the collection and, where a part needs an account, with made-up values that are named so. *@
+<PageTitle>Parts – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+@if (Environment.IsDevelopment())
+{
+    <header class="page-header">
+        <p class="meta">ADR 0024</p>
+        <h1>Parts</h1>
+        <p class="lead">Development only. Made-up values are named so.</p>
+    </header>
+
+    <section aria-labelledby="parts-tokens">
+        <h2 id="parts-tokens">Tokens</h2>
+        <ul class="swatches" role="list">
+            @foreach (var token in new[] { "surface", "surface-raised", "surface-sunken", "accent-soft", "accent", "text", "text-muted", "border", "focus", "mark", "danger", "ok" })
+            {
+                <li><span class="swatch @($"swatch-{token}")"></span><code>--@token</code></li>
+            }
+        </ul>
+        <p class="parts-shadows"><span class="card shadow-1"><code>--shadow-1</code></span> <span class="card shadow-2"><code>--shadow-2</code></span></p>
+    </section>
+
+    <section aria-labelledby="parts-icons">
+        <h2 id="parts-icons">Icon</h2>
+        <ul class="swatches" role="list">
+            @foreach (var name in Icon.Names)
+            {
+                <li><Icon Name="@name" /><code>@name</code></li>
+            }
+        </ul>
+    </section>
+
+    @if (_profiles.Count > 0)
+    {
+        <section aria-labelledby="parts-identity">
+            <h2 id="parts-identity">IdentityHead</h2>
+            <IdentityHead Profile="_profiles[0]">
+                <a class="action" href="@($"{Site.Collection}/entity/{_profiles[0].Entity.Id}")">@T["Profile_Panel_Open"]</a>
+            </IdentityHead>
+        </section>
+
+        <section aria-labelledby="parts-view">
+            <h2 id="parts-view">ViewBar</h2>
+            <ViewBar Label="ViewBar" Views="_views">
+                <Where><a href="@($"{Site.Collection}/entity/{_profiles[0].Entity.Id}")"><Loc Text="_profiles[0].Entity.Label" /></a></Where>
+            </ViewBar>
+        </section>
+
+        <section aria-labelledby="parts-cards">
+            <h2 id="parts-cards">NodeCard</h2>
+            <ul class="cards" role="list">
+                @foreach (var profile in _profiles.Take(3))
+                {
+                    <li class="card"><NodeCard Profile="profile" Summary="true" /></li>
+                }
+            </ul>
+            <h3>NodeCard Tall</h3>
+            <ul class="cards picture-cards" role="list">
+                @foreach (var profile in _profiles)
+                {
+                    <li class="card"><NodeCard Profile="profile" Tall="true" Summary="true" /></li>
+                }
+            </ul>
+        </section>
+
+        <section aria-labelledby="parts-facts">
+            <h2 id="parts-facts">ProfileFactList</h2>
+            <ProfileFactList Lines="[.. _profiles[0].Essential, .. _profiles[0].More]" />
+        </section>
+    }
+
+    <section aria-labelledby="parts-chips">
+        <h2 id="parts-chips">Chip</h2>
+        <ul class="chips" role="list">
+            <li><Chip Href="parts?chip=1#parts-chips" Set="_chip == 1"><TypeName Type="EntityTypes.Person" /></Chip></li>
+            <li><Chip Href="parts?chip=2#parts-chips" Set="_chip == 2"><TypeName Type="EntityTypes.Place" /></Chip></li>
+            <li><Chip Href="parts?chip=3#parts-chips" Set="_chip == 3"><TypeName Type="EntityTypes.University" /></Chip></li>
+            <li><Chip Href="parts#parts-chips" Set="_chip == 0">@T["Search_Title"]</Chip></li>
+        </ul>
+    </section>
+
+    <section aria-labelledby="parts-states">
+        <h2 id="parts-states">StateNote</h2>
+        <StateNote Kind="waiting" Text="@T["Profile_Panel_Wait"]" />
+        <StateNote Kind="nothing" Text="@T["Affiliations_None"]">
+            <p><a class="action secondary" href="parts#parts-states">@T["Affiliations_Add_Title"]</a></p>
+        </StateNote>
+        <StateNote Kind="failed" Text="@T["Profile_Panel_Failed"]">
+            <p><a class="action secondary" href="parts#parts-states">@T["Profile_Panel_Open"]</a></p>
+        </StateNote>
+    </section>
+
+    <section aria-labelledby="parts-audience">
+        <h2 id="parts-audience">AudienceChoice</h2>
+        <form class="account" method="get" action="parts">
+            <p class="field">
+                <label for="parts-audience-choice">@T["People_Shown_Label"]</label>
+                <AudienceChoice Id="parts-audience-choice" Name="audience" Shown="ScopeKind.Circle" Circle="2" Circles="_circles" />
+            </p>
+            <p class="note">Made-up circles.</p>
+        </form>
+    </section>
+
+    <section aria-labelledby="parts-actions">
+        <h2 id="parts-actions">Actions</h2>
+        <p class="actions">
+            <a class="action" href="parts#parts-actions">@T["Search_Title"]</a>
+            <a class="action secondary" href="parts#parts-actions">@T["Profile_Panel_Close"]</a>
+        </p>
+    </section>
+}
+
+@code {
+    private readonly List<NodeProfile> _profiles = [];
+    private IReadOnlyList<ViewBar.View> _views = [];
+    private int _chip;
+
+    // Made-up circles: the part needs some to choose between, and this page has no account.
+    private readonly IReadOnlyList<CircleInfo> _circles = [new(1, "Family (made up)", []), new(2, "Class of 1380 (made up)", [])];
+
+    [SupplyParameterFromQuery]
+    private int? Chip { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (!Environment.IsDevelopment())
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        _chip = Chip is >= 1 and <= 3 ? Chip.Value : 0;
+        if (Visitor.Projection is { } projection)
+        {
+            // One of each nature the collection has, the first of each: a being, a place, a work, a group.
+            _profiles.AddRange(projection.Entities.GroupBy(entity => entity.Type.Nature).Select(group => projection.Profile(group.First().Id)!).Take(6));
+        }
+
+        if (_profiles.Count > 0)
+        {
+            var entity = $"{Site.Collection}/entity/{_profiles[0].Entity.Id}";
+            _views =
+            [
+                new("connections", T["View_Connections"], $"{entity}/connections", true),
+                new("timeline", T["View_Timeline"], $"{entity}/timeline", false),
+                new("pictures", T["View_Pictures"], $"{entity}/media", false),
+            ];
+        }
+    }
+}

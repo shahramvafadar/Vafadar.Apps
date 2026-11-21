@@ -1,0 +1,42 @@
+@* The choice of who sees something of an account (step 20.5, ADR 0024): nobody else, one of the circles of the
+   account, everybody. One part for every place that asks – a relationship, a place somebody was at, its
+   dates – so that the three choices read the same everywhere. The label stands beside it, written by the page. *@
+@using Vafadar.Dastan.Core.Personal
+@using Vafadar.Dastan.People
+@inject IStringLocalizer<Ui> T
+
+<select id="@Id" name="@Name">
+    <option value="private" selected="@(_chosen == "private")">@T["People_Scope_private"]</option>
+    @foreach (var circle in Circles)
+    {
+        <option value="@($"circle-{circle.Number}")" selected="@(_chosen == $"circle-{circle.Number}")">@string.Format(CultureInfo.CurrentCulture, T["People_Scope_circle"], circle.Name)</option>
+    }
+    <option value="public" selected="@(_chosen == "public")">@T["People_Scope_public"]</option>
+</select>
+
+@code {
+    private string _chosen = "private";
+
+    /// <summary>Gets or sets the identifier of the control, which its label names.</summary>
+    [Parameter, EditorRequired]
+    public string Id { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets the name of the field in the form.</summary>
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets who sees it now.</summary>
+    [Parameter]
+    public ScopeKind Shown { get; set; }
+
+    /// <summary>Gets or sets the circle that sees it now, when it is shown to one.</summary>
+    [Parameter]
+    public long? Circle { get; set; }
+
+    /// <summary>Gets or sets the circles of the account.</summary>
+    [Parameter]
+    public IReadOnlyList<CircleInfo> Circles { get; set; } = [];
+
+    protected override void OnParametersSet() =>
+        _chosen = Shown switch { ScopeKind.Public => "public", ScopeKind.Circle => $"circle-{Circle}", _ => "private" };
+}

@@ -160,7 +160,7 @@ public sealed class FamilyTreeBrowserTests(BrowserSite site) : IClassFixture<Bro
 
         Assert.InRange(sizes[0], 0, 17);
         Assert.InRange(sizes[1], 0, 17);
-        Assert.InRange(sizes[2], sizes[3] - 33, sizes[3]);
+        Assert.InRange(sizes[2], sizes[3] - 33 - (width <= 640 ? 60 : 0), sizes[3] - (width <= 640 ? 60 : 0));
         Assert.Equal([2, 2, 2, 2], sizes[7..]);
 
         // A tree that is smaller than its stage stands in its middle; a larger one begins at its edge and scrolls.

@@ -1,0 +1,29 @@
+@* The head of an identity (step 20.5, ADR 0024): the picture this visitor may see or the drawing of the kind,
+   the kind, the name as the title of the page, one line about it, and the two or three facts a card shows.
+   What can be done with it – keeping it, opening a view – is given by the page and stands below the facts. *@
+<header class="identity">
+    <ProfilePicture Profile="Profile" />
+    <div class="identity-words">
+        <p class="meta"><TypeName Type="Profile.Entity.Type" /></p>
+        <h1><Loc Text="Profile.Entity.Label" /></h1>
+        <p class="lead"><Loc Text="Profile.Entity.Summary" /></p>
+        @if (!Profile.Card.IsEmpty)
+        {
+            <ProfileFactList Lines="Profile.Card" Compact="true" />
+        }
+        @if (ChildContent is not null)
+        {
+            <div class="identity-actions">@ChildContent</div>
+        }
+    </div>
+</header>
+
+@code {
+    /// <summary>Gets or sets the profile, as the visitor of this request may see it.</summary>
+    [Parameter, EditorRequired]
+    public NodeProfile Profile { get; set; } = null!;
+
+    /// <summary>Gets or sets what can be done with it.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
