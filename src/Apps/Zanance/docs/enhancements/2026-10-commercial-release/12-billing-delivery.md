@@ -449,9 +449,25 @@ Next work inside this same batch:
 Do not commit these foundations separately, rerun unchanged17 policy cases or repeat delivered household/crypto/UI
 checks as a substitute for the unfinished billing flow. Continue through the actual end-to-end local batch.
 
-## Final local Android/service artifact and runtime scope
+## Current Android billing sandbox review APK
 
-The current complete test APK, including actual bundled SDK notices, is
+The `27b5a595` Release build includes the billing identity startup and native
+confirmation ownership fixes. It built with zero warnings or errors, using
+`BILLING` and `BILLING_SANDBOX` with personal sync and OAuth client configuration
+disabled. The exact 100,471,207-byte archive is
+`artifacts/android-billing-sandbox-27b5a595-release-review/pro.vafadar.zanance-Signed.apk`.
+SHA-256 is `2c4ff4bac60ba1993f949f934c02ca77bf33b70a65b1cf289977d1ba646767d0`.
+
+Package verification passed for `pro.vafadar.zanance`, API 24 minimum and API 36
+target, ARM64 and x86-64, and the explicit INTERNET and Google Play Billing
+permissions. The verified v2/v3 signer matches the existing offline review APK.
+The verifier also checked native ZIP/ELF alignment, the managed assembly stores,
+SQLCipher and compiled Android backup and provider rules. Device installation,
+real store transactions and commercial activation remain separate.
+
+## Original D-295 local Android/service artifact and runtime scope
+
+The original complete D-295 test APK, including actual bundled SDK notices, is
 artifacts/android-billing-local-d295/pro.vafadar.zanance-Signed.apk; 92262644 bytes;
 SHA256ed860c6d6bc90df4a1fe1adc938ee76976c6457ee7b0f5cb3561bbdfc8943270. v2/v3 local debug signature and the permanent identity pass; the explicit Billing permission
 guard passes and the bundled notices exactly match source bytes. The earlier cold-continuation APK remains a
