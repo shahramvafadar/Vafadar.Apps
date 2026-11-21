@@ -33,6 +33,9 @@ The choice does not erase existing records or recall work already accepted by a 
 The device-wide switch still publishes the saved choice when a retired
 operation fails during cancellation. A focused host regression covers that
 failure, notification of the remaining operations and a fresh enabled lifetime.
+An independent regression now checks the UI notifications themselves. If one
+binding throws, the remaining bindings receive the saved choice on both opt-out
+and re-enable. Re-enabling does not revive the retired session.
 
 The initial 2026-11-20 Android review used one new API 36 emulator and one zero-opening synthetic account.
 The native switch hid Analysis in More and receipt scanning on Home while manual expense and transfer

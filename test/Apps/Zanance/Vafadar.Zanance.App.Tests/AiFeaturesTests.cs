@@ -6,6 +6,31 @@ namespace Vafadar.Zanance.App.Tests;
 public sealed class AiFeaturesTests
 {
     [Fact]
+    public void Opt_out_updates_other_bindings_when_one_observer_fails()
+    {
+        var saved = true;
+        var settings = new AiFeatures(saved, value => saved = value);
+        var original = settings.Capture();
+        var visible = true;
+        settings.PropertyChanged += (_, _) => throw new InvalidOperationException("Synthetic binding failure.");
+        settings.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(AiFeatures.Enabled)) visible = settings.Enabled;
+        };
+
+        settings.Enabled = false;
+        Assert.False(visible);
+        Assert.False(saved);
+        Assert.True(original.IsCancellationRequested);
+
+        settings.Enabled = true;
+        Assert.True(visible);
+        Assert.True(saved);
+        Assert.False(settings.Capture().IsCancellationRequested);
+        Assert.True(original.IsCancellationRequested);
+    }
+
+    [Fact]
     public void Off_finishes_and_notifies_even_when_one_original_operation_throws_during_cancellation()
     {
         var saved = true;

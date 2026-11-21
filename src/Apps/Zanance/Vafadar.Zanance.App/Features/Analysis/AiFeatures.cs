@@ -32,7 +32,22 @@ public sealed class AiFeatures(bool enabled, Action<bool> persist) : INotifyProp
                 // Cancel has notified all registered operations. Their failures cannot undo the persisted choice.
                 System.Diagnostics.Debug.WriteLine("An AI operation failed while handling cancellation.");
             }
-            finally { PropertyChanged?.Invoke(this, new(nameof(Enabled))); }
+            finally { PublishChoice(); }
+        }
+    }
+
+    private void PublishChoice()
+    {
+        if (PropertyChanged is not { } observers) return;
+        var change = new PropertyChangedEventArgs(nameof(Enabled));
+        foreach (PropertyChangedEventHandler observer in observers.GetInvocationList())
+        {
+            try { observer(this, change); }
+            catch (Exception error) when (error is not OutOfMemoryException)
+            {
+                // Keep updating the other pages after one binding fails.
+                System.Diagnostics.Debug.WriteLine("An AI preference observer failed.");
+            }
         }
     }
 
