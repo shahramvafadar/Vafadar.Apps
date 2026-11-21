@@ -23,7 +23,12 @@
 
             <Label Text="{v:Translate About_DataTitle}" Style="{StaticResource SectionHeader}" />
             <Border Style="{StaticResource Card}">
-                <Label Text="{v:Translate About_DataText}" />
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{v:Translate About_DataText}" />
+                    <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate About_PrivacyPolicy}"
+                            IsVisible="{x:Static local:AboutViewModel.HasPublishedPrivacyPolicy}"
+                            Command="{Binding OpenPrivacyPolicyCommand}" />
+                </VerticalStackLayout>
             </Border>
 
             <!-- ZEX-S0905: what a backup, a CSV export and a PDF report contain (02 §10). -->

@@ -122,6 +122,9 @@
   <PropertyGroup Condition="'$(ZananceBillingSandbox)' == 'true'">
     <DefineConstants>$(DefineConstants);BILLING_SANDBOX</DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(ZanancePrivacyPolicyPublished)' == 'true'">
+    <DefineConstants>$(DefineConstants);ZANANCE_PRIVACY_POLICY_PUBLISHED</DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(ZananceBillingEnabled)' == 'true'">
     <DefineConstants>$(DefineConstants);BILLING</DefineConstants>
   </PropertyGroup>

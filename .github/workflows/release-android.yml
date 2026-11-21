@@ -42,6 +42,7 @@ jobs:
       APP_EDITION: ${{ inputs.edition }}
       APP_VERSION: ${{ inputs.version }}
       APP_BUILD_NUMBER: ${{ inputs.build-number }}
+      ZANANCE_PRIVACY_POLICY_PUBLISHED: ${{ vars.ZANANCE_PRIVACY_POLICY_PUBLISHED }}
       SyncfusionLicenseKey: ${{ secrets.SYNCFUSION_LICENSE_KEY }}
       # Offline is an explicit choice even on repositories with cloud backup configured.
       MicrosoftEntraClientId: ${{ inputs.edition == 'cloud-backup' && secrets.MICROSOFT_ENTRA_CLIENT_ID || '' }}
@@ -146,6 +147,7 @@ jobs:
           -p:VafadarMauiTargetFrameworks=net10.0-android
           -p:ApplicationDisplayVersion="$APP_VERSION"
           -p:ApplicationVersion="$APP_BUILD_NUMBER"
+          -p:ZanancePrivacyPolicyPublished="$ZANANCE_PRIVACY_POLICY_PUBLISHED"
           -p:AndroidPackageFormats=aab
           -p:ZanancePersonalSyncEnabled=false
           -p:ZananceBillingEnabled=false

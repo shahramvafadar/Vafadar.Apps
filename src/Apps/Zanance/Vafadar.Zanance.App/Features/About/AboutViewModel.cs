@@ -17,6 +17,14 @@ public sealed partial class AboutViewModel(Translator translator, IAppEnvironmen
     /// <summary>The file with the notices; the first block lists the components, the licence texts follow.</summary>
     public const string NoticesFile = "ThirdPartyNotices.txt";
 
+    /// <summary>Whether this build links to the published policy.</summary>
+    public static bool HasPublishedPrivacyPolicy { get; } =
+#if ZANANCE_PRIVACY_POLICY_PUBLISHED
+        true;
+#else
+        false;
+#endif
+
     private const string Separator = "------";
 
     // Lines of the licence files are wrapped at about 80 characters; shorter lines end a heading or an entry on purpose.
@@ -85,6 +93,12 @@ public sealed partial class AboutViewModel(Translator translator, IAppEnvironmen
 
     [RelayCommand]
     private Task ShowNoticesAsync() => Shell.Current.GoToAsync(AppShell.NoticesRoute);
+
+    [RelayCommand]
+    private Task OpenPrivacyPolicyAsync() => HasPublishedPrivacyPolicy
+        ? Presentation.Failures.GuardAsync(async () => await Browser.Default.OpenAsync(
+            new Uri("https://vafadar.pro/privacy"), BrowserLaunchMode.External))
+        : Task.CompletedTask;
 
     /// <summary>
     /// ZEX-S0905: prepares a problem report with only the app version and the device type, and hands it to the system

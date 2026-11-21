@@ -3176,6 +3176,9 @@ Flessibile: separa le bollette mensili e la quota mensile di quelle meno frequen
   <data name="About_DataTitle" xml:space="preserve">
     <value>I tuoi dati</value>
   </data>
+  <data name="About_PrivacyPolicy" xml:space="preserve">
+    <value>Informativa sulla privacy</value>
+  </data>
   <data name="About_DataText" xml:space="preserve">
     <value>Puoi usare Zanance senza un account online. Non ci sono annunci. Se usi l’app in locale, i dati finanziari restano su questo dispositivo. Decidi tu quando esportarli o farne una copia. I backup facoltativi nel cloud vengono salvati nel tuo account collegato. Se attivi la sincronizzazione personale, Zanance può inviare automaticamente i dati al proprio servizio. L’analisi online con IA invia un riepilogo solo dopo che lo hai controllato e confermato. Puoi disattivare l’IA nelle impostazioni.</value>
   </data>

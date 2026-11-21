@@ -3208,6 +3208,9 @@ Flex: track monthly bills and the monthly share of less frequent bills separatel
   <data name="About_DataTitle" xml:space="preserve">
     <value>Your data</value>
   </data>
+  <data name="About_PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
   <data name="About_DataText" xml:space="preserve">
     <value>You can use Zanance without an online account. There are no ads. For local use, your financial records stay on this device. You choose when to export or back them up. Optional cloud backups go to your connected cloud account. If you enable personal sync, Zanance can send records automatically to the Zanance service. Online AI analysis sends a summary only after you review and confirm it. You can turn AI off in Settings.</value>
   </data>

@@ -297,6 +297,11 @@ independent work and overall goal remain active. Broader gates stay open.
 - [ ] Cloud variant, Windows: Google opens the default browser, the page "Sign-in complete" appears after consent, and the app shows the account; the files `%LOCALAPPDATA%\…\google\google.token` and `msal\msal.cache` are DPAPI-protected and removed or emptied on disconnect; a firewall prompt does not appear for the `127.0.0.1` listener
 - [x] `INTERNET` permission removed if no online feature ships (D-20) – the offline build's merged manifest declares only notifications, boot and biometric (USE_BIOMETRIC / USE_FINGERPRINT from AndroidX Biometric); re-checked 2026-09-29 with the cloud libraries referenced
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
+  After confirming the published policy at `https://vafadar.pro/privacy`, set the production environment
+  variable `ZANANCE_PRIVACY_POLICY_PUBLISHED` to `true` before building the store bundle. For a local
+  build of the same edition, use `-p:ZanancePrivacyPolicyPublished=true`. Check More → About →
+  Privacy Policy in the signed package. The app opens the link in the system browser on request and
+  the offline edition needs no network permission. Enter the same URL in Play Console.
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked against the release edition.
   The retained offline ARM64 and cloud-backup x64 bundles both bind the legacy and modern exclusion rules and
   declare `allowBackup=false` in the base manifest. Their compiled legacy, cloud-backup and device-transfer
