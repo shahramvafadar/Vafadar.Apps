@@ -16,6 +16,9 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     internal const int MaximumOperatorChecks = 3;
     private static readonly TimeSpan OperatorStatusInterval = TimeSpan.FromMinutes(1);
     private const long MaximumUnits = 1_000_000_000_000;
+    private const int PilotDispatchBatchSize = 40;
+    private sealed record PilotDispatchCursor(DateTimeOffset CreatedAt, Guid Id);
+    private PilotDispatchCursor? pilotDispatchCursor;
     /// <summary>Reads local provider metadata/balance without transmitting a financial payload or granting credit.</summary>
     internal async Task<AiAvailability> AvailabilityAsync(ClaimsPrincipal actor, CancellationToken ct)
     {
@@ -131,14 +134,25 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     internal async Task DrainPilotDispatchesAsync(CancellationToken ct)
     {
         if (pilot is null) return;
-        Guid[] pending;
+        PilotDispatchCursor[] pending;
         await using (var db = await factory.CreateDbContextAsync(ct))
-            pending = await db.Set<AiRequestRow>().Where(row => row.PilotDispatchStage == AiPilotDispatchStage.Queued &&
+        {
+            var queue = db.Set<AiRequestRow>().Where(row => row.PilotDispatchStage == AiPilotDispatchStage.Queued &&
                     row.State == AiRequestState.Pending && row.VendorOperationId == null &&
-                    !db.AccountDeletionRequests.Any(deletion => deletion.UserId == row.UserId))
-                .OrderBy(row => row.CreatedAt).ThenBy(row => row.Id).Select(row => row.Id).Take(40).ToArrayAsync(ct);
-        foreach (var request in pending)
-            await DispatchPilotAsync(request, ct);
+                    !db.AccountDeletionRequests.Any(deletion => deletion.UserId == row.UserId));
+            if (pilotDispatchCursor is { } cursor)
+                queue = queue.Where(row => row.CreatedAt > cursor.CreatedAt ||
+                    (row.CreatedAt == cursor.CreatedAt && row.Id.CompareTo(cursor.Id) > 0));
+            pending = await queue.OrderBy(row => row.CreatedAt).ThenBy(row => row.Id)
+                .Select(row => new PilotDispatchCursor(row.CreatedAt, row.Id)).Take(PilotDispatchBatchSize).ToArrayAsync(ct);
+        }
+        foreach (var candidate in pending)
+        {
+            // Temporarily unavailable original routes remain queued but must not starve later work.
+            pilotDispatchCursor = candidate;
+            await DispatchPilotAsync(candidate.Id, ct);
+        }
+        if (pending.Length < PilotDispatchBatchSize) pilotDispatchCursor = null;
     }
 
     private async Task DispatchPilotAsync(Guid request, CancellationToken ct)

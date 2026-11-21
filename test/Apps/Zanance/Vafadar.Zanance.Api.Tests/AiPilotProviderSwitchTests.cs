@@ -424,6 +424,67 @@ public sealed class AiPilotProviderSwitchTests
         Assert.Equal(4, await observed.Set<AiCreditRow>().CountAsync(ct));
     }
 
+    /// <summary>Unavailable original routes cannot hold back a later eligible synthetic request.</summary>
+    [Fact]
+    public async Task Pilot_dispatch_advances_past_a_full_page_of_unavailable_original_routes()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_AI_DISPATCH_QUEUE_TEST_DB");
+        Assert.SkipWhen(connection is null, "Requires a dedicated fictional dispatch queue database.");
+        var settings = new NpgsqlConnectionStringBuilder(connection!);
+        Assert.Equal(("127.0.0.1", "zanance_ai_dispatch_queue"), (settings.Host, settings.Database));
+        var factory = new Factory(connection!);
+        var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:gemini:ApiKey"] = "fictional-queue-fixture",
+            ["Analysis:ProviderPilot:gemini:Project"] = "fictional-queue-project",
+        }).Build();
+        using var transport = new Transport { LoseGeminiAcknowledgement = true };
+        var pilot = new AiPilotProvider(config, transport, clock);
+        const string owner = "fictional-queue-owner";
+        var payload = AiPilotProvider.ReportFixture;
+        var eligibleId = Guid.Parse("00000000-0000-0000-0000-000000000041");
+        await using (var db = factory.CreateDbContext())
+        {
+            await db.Database.MigrateAsync(ct);
+            Assert.Empty(await db.Set<AiRequestRow>().ToArrayAsync(ct));
+            db.Users.Add(new ServiceUser { Id = owner, UserName = owner, SecurityStamp = "fictional-queue-stamp" });
+            await db.SaveChangesAsync(ct);
+            await pilot.SelectModelAsync(db, payload.Purpose, "gemini-3.5-flash-lite", "fictional-queue-operator", ct);
+            var eligible = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
+            var unavailable = new AiPilotRouteRow { Provider = eligible.Provider, Model = eligible.Model,
+                Purpose = eligible.Purpose, Revision = "unavailable-fictional-original", Actor = eligible.Actor, SelectedAt = eligible.SelectedAt };
+            db.Add(unavailable);
+            await db.SaveChangesAsync(ct);
+            for (var i = 1; i <= 40; i++) Seed(Guid.Parse($"00000000-0000-0000-0000-{i:D12}"), unavailable);
+            Seed(eligibleId, eligible);
+            await db.SaveChangesAsync(ct);
+
+            void Seed(Guid id, AiPilotRouteRow route)
+            {
+                var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = owner, Provider = route.Provider, Model = route.Model!,
+                    Purpose = payload.Purpose, PilotRouteId = route.Id, MaximumUnits = 1, ExpiresAt = clock.GetUtcNow().AddHours(1) };
+                db.AddRange(offer, new AiRequestRow { Id = id, UserId = owner, OfferId = offer.Id,
+                    PayloadDigest = AiProtocol.Digest(payload), ProtectedPayload = "fictional-protected-aggregate", CreatedAt = clock.GetUtcNow(),
+                    State = AiRequestState.Pending, GiftedReserved = 1, PilotCostCeilingMicros = 1895,
+                    PilotDispatchStage = AiPilotDispatchStage.Queued });
+            }
+        }
+
+        var store = new AiRequestStore(factory, new UnconfiguredAiProvider(), new EphemeralDataProtectionProvider(), clock, pilot);
+        await store.DrainPilotDispatchesAsync(ct);
+        Assert.Empty(transport.Calls);
+        await store.DrainPilotDispatchesAsync(ct);
+        Assert.Equal((HttpMethod.Post, "generativelanguage.googleapis.com", "/v1beta/interactions"), Assert.Single(transport.Calls));
+        await using var observed = factory.CreateDbContext();
+        var rows = await observed.Set<AiRequestRow>().ToDictionaryAsync(row => row.Id, ct);
+        Assert.Equal(AiPilotDispatchStage.Claimed, rows[eligibleId].PilotDispatchStage);
+        Assert.All(rows.Values.Where(row => row.Id != eligibleId), row => Assert.Equal(AiPilotDispatchStage.Queued, row.PilotDispatchStage));
+        Assert.All(rows.Values, row => Assert.Equal(AiRequestState.Pending, row.State));
+        Assert.Empty(await observed.Set<AiCreditRow>().ToArrayAsync(ct));
+    }
+
     /// <summary>Separates confirmed vendor usage from customer settlement for unpublishable original output.</summary>
     [Fact]
     public async Task Pilot_records_terminal_usage_without_settling_unusable_output()

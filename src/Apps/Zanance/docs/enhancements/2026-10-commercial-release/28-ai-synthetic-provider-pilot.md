@@ -397,3 +397,13 @@ The retained PostgreSQL archive from the original live synthetic corpus was rest
 The original HTTPS readiness endpoint returned 200 after migration. With local analysis and the provider pilot disabled, both Analysis availability and the management panel returned 404. A refusing outbound client factory observed zero calls. The rehearsal does not authorize enabling a restored pilot or substituting its held state for a vendor invoice. The isolated database and copied key file were retired, and the original archive checksum and live fixture were preserved.
 
 All accepted replies passed the exact structured checks. Manual review found the requested languages and no unsupported claims or cross-currency additions in those texts. The French Flash-Lite reply omitted French accent marks. This corpus covers the simple empty and financial period-comparison contracts. It does not qualify the full set of feature-specific tasks, sustained latency, customer use or real-data activation.
+
+### Dispatch queue progress
+
+A focused PostgreSQL case placed 40 requests with unavailable original routes
+ahead of one eligible request at the same creation time. The worker previously
+selected the same first batch on both passes. It now advances by creation time
+and request ID between bounded batches, leaving the unavailable requests
+queued with their original routes intact. The second pass claimed the eligible
+request and made exactly one call to a fictional transport. No provider was
+contacted, and the case did not settle or refund any credits.
