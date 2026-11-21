@@ -223,6 +223,10 @@ current service and restores the exact pending row when its original account
 matches. A pending marker alone grants no authority to erase the account.
 Earlier acknowledged requests without a marker are covered once they are
 retrieved through the authenticated app status endpoint or submitted again.
+The isolated PostgreSQL acknowledgement check covers an unavailable marker
+destination after the database commit. The authenticated status read returns
+the original receipt once the destination is usable, without another request
+submission or a second database row.
 
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity

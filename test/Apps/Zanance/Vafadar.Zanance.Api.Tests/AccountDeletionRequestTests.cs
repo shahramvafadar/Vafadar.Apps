@@ -34,6 +34,67 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Unavailable_pending_marker_refuses_acknowledgement_until_a_status_read_repairs_it()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_pending_fence_ack_fixture";
+
+        var serviceRoot = Path.Combine(root, "pending-request-acknowledgement");
+        await using var host = new IdentityHost(connection.ConnectionString, serviceRoot);
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        var users = services.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        const string email = "pending-fence-ack@example.invalid";
+        const string password = "Fictional-Pending-Acknowledgement9!";
+        var owner = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+        Assert.True((await users.CreateAsync(owner, password)).Succeeded);
+
+        using var app = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var login = await app.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+        app.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+
+        var markerRoot = Path.Combine(serviceRoot, "account-deletions");
+        await using (var obstruction = new FileStream(markerRoot, FileMode.CreateNew, FileAccess.Write, FileShare.None))
+            await obstruction.WriteAsync(new byte[] { 1 }, ct);
+        AccountDeletionReceipt expected;
+        try
+        {
+            using var intake = await app.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+            Assert.Equal(HttpStatusCode.ServiceUnavailable, intake.StatusCode);
+            Assert.Empty(await intake.Content.ReadAsStringAsync(ct));
+            var pending = await db.AccountDeletionRequests.AsNoTracking().SingleAsync(ct);
+            Assert.Equal(owner.Id, pending.UserId);
+            expected = new(pending.ReceiptId, pending.RequestedAt);
+
+            using var status = await app.GetAsync("/identity/deletion-request", ct);
+            Assert.Equal(HttpStatusCode.ServiceUnavailable, status.StatusCode);
+            Assert.Empty(await status.Content.ReadAsStringAsync(ct));
+        }
+        finally { File.Delete(markerRoot); }
+
+        var repaired = await app.GetFromJsonAsync<AccountDeletionReceipt>("/identity/deletion-request", ct);
+        Assert.Equal(expected, repaired);
+        Assert.Equal(expected.ReceiptId.ToString("N") + ".request", Path.GetFileName(Directory.EnumerateFiles(markerRoot).Single()));
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(db, storage, ct);
+        Assert.Equal(1, await db.AccountDeletionRequests.CountAsync(ct));
+        Assert.Empty(await db.Set<AccountDeletionCompletion>().ToListAsync(ct));
+        Assert.True(await db.Users.AnyAsync(row => row.Id == owner.Id, ct));
+    }
+
+    [Fact]
     public async Task Acknowledged_pending_request_survives_a_pre_request_restore_without_erasing_the_account()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
