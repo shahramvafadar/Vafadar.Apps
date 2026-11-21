@@ -72,8 +72,11 @@ every packaged configuration. AAPT2 converts an inspection-only copy and the sig
 the handoff.
 
 1. Update `CHANGELOG.md` of the app and merge to `main`.
-2. GitHub → Actions → **Release (Android)** → *Run workflow*: choose the app, enter the display version and the next
-   build number. Google Play caps the Android version code at 2100000000. The workflow verifies the allowed range; check the last used code in Play Console before choosing the next one.
+2. GitHub → Actions → **Release (Android)** → *Run workflow*: choose the app and the approved edition
+   (`offline` or `cloud-backup`), then enter the display version and next build number.
+   The offline build receives no backup OAuth IDs even if they are configured in GitHub.
+   Cloud backup requires at least one configured Android backup client before building.
+   Google Play caps the Android version code at 2100000000. The workflow verifies the allowed range; check the last used code in Play Console before choosing the next one.
 3. Approve the `production` environment deployment.
    AAB signing uses temporary restricted password files because the Android SDK does not support the
    `env:` password prefix for bundles. The keystore and password files are removed after verification or failure.
@@ -101,13 +104,13 @@ the handoff.
    XML resources. The verifier also checks the compiled paths in every packaged configuration.
    The camera provider can use only its camera subdirectory, and the sharing provider can use
    only the five approved internal cache subdirectories.
-   Without a cloud-backup client ID, the bundle must omit INTERNET. A cloud-backup
+   The selected offline bundle must omit INTERNET. A cloud-backup
    bundle must request INTERNET without an SDK cap. Both editions must omit ACCESS_NETWORK_STATE. The verifier
    requires the exact OneDrive browser callback for the configured Entra client and rejects an MSAL callback when
    no Entra client is configured. A correctly packaged callback still requires an actual Microsoft sign-in check.
    This workflow leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size
    acceptance need their own checks. Download the
-   verified `.aab` artifact, upload it in Play Console, then **delete the artifact** (artifacts of public
+   verified `.aab` artifact named for the selected edition, upload it in Play Console, then **delete the artifact** (artifacts of public
    repositories are downloadable by any signed-in GitHub user; the workflow keeps them only 3 days).
 5. Tag the commit: `git tag zanance/v1.2.0 && git push origin zanance/v1.2.0`.
 

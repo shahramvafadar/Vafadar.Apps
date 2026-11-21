@@ -11,6 +11,13 @@ on:
         type: choice
         options:
           - src/Apps/Zanance/Vafadar.Zanance.App/Vafadar.Zanance.App.csproj
+      edition:
+        description: Android edition to build and verify
+        required: true
+        type: choice
+        options:
+          - offline
+          - cloud-backup
       version:
         description: Display version, e.g. 1.2.0
         required: true
@@ -32,12 +39,13 @@ jobs:
     environment: production
     env:
       APP_PROJECT: ${{ inputs.app }}
+      APP_EDITION: ${{ inputs.edition }}
       APP_VERSION: ${{ inputs.version }}
       APP_BUILD_NUMBER: ${{ inputs.build-number }}
       SyncfusionLicenseKey: ${{ secrets.SYNCFUSION_LICENSE_KEY }}
-      # Optional (D-35): with these OAuth clients the build offers cloud backup and keeps INTERNET; without them it stays offline.
-      MicrosoftEntraClientId: ${{ secrets.MICROSOFT_ENTRA_CLIENT_ID }}
-      GoogleOAuthClientIdAndroid: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID_ANDROID }}
+      # Offline is an explicit choice even on repositories with cloud backup configured.
+      MicrosoftEntraClientId: ${{ inputs.edition == 'cloud-backup' && secrets.MICROSOFT_ENTRA_CLIENT_ID || '' }}
+      GoogleOAuthClientIdAndroid: ${{ inputs.edition == 'cloud-backup' && secrets.GOOGLE_OAUTH_CLIENT_ID_ANDROID || '' }}
       ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
       ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
       ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -45,6 +53,18 @@ jobs:
     steps:
       - name: Validate inputs
         run: |
+          case "$APP_EDITION" in
+            offline)
+              [[ -z "$MicrosoftEntraClientId" && -z "$GoogleOAuthClientIdAndroid" ]] || { echo "::error::offline cannot use cloud backup clients"; exit 1; }
+              ;;
+            cloud-backup)
+              [[ -n "$MicrosoftEntraClientId" || -n "$GoogleOAuthClientIdAndroid" ]] || { echo "::error::cloud-backup requires a configured Android backup client"; exit 1; }
+              ;;
+            *)
+              echo "::error::select a supported Android edition"
+              exit 1
+              ;;
+          esac
           [[ "$APP_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "::error::version must look like 1.2.0"; exit 1; }
           [[ "$APP_BUILD_NUMBER" =~ ^[1-9][0-9]*$ ]] || { echo "::error::build-number must be a positive integer"; exit 1; }
           if (( ${#APP_BUILD_NUMBER} > 10 )) || (( APP_BUILD_NUMBER > 2100000000 )); then
@@ -167,12 +187,8 @@ jobs:
               raise SystemExit("The release bundle must request uncompressed 16 KiB native library alignment.")
           print("Verified explicit 16 KiB native library ZIP alignment for generated APKs.")
           '
-          edition=offline
-          if [[ -n "$MicrosoftEntraClientId" || -n "$GoogleOAuthClientIdAndroid" ]]; then
-            edition=cloud-backup
-          fi
           java -jar "$bundletool" dump manifest --bundle="${bundles[0]}" | \
-            python eng/maui/verify-android-bundle-manifest.py pro.vafadar.zanance "$APP_VERSION" "$APP_BUILD_NUMBER" "$edition"
+            python eng/maui/verify-android-bundle-manifest.py pro.vafadar.zanance "$APP_VERSION" "$APP_BUILD_NUMBER" "$APP_EDITION"
           java --class-path "$bundletool" eng/maui/VerifyAndroidStorageRules.java "${bundles[0]}" pro.vafadar.zanance
           printf 'path=%s\n' "${bundles[0]}" >> "$GITHUB_OUTPUT"
 
@@ -191,7 +207,7 @@ jobs:
       - name: Upload App Bundle
         uses: actions/upload-artifact@v7
         with:
-          name: android-${{ inputs.version }}-${{ inputs.build-number }}
+          name: android-${{ inputs.edition }}-${{ inputs.version }}-${{ inputs.build-number }}
           path: ${{ steps.bundle.outputs.path }}
           if-no-files-found: error
           retention-days: 3
