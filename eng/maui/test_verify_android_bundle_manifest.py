@@ -82,11 +82,28 @@ class BundlePermissionTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 1, result.stderr)
                 self.assertIn(b"Offline bundle registers a Microsoft sign-in activity", result.stderr)
 
+    def test_offline_rejects_packaged_google_sign_in(self):
+        application = self.manifest.find("application")
+        for tag, name in (
+            ("activity", "com.google.android.gms.auth.api.signin.internal.SignInHubActivity"),
+            ("service", "com.google.android.gms.auth.api.signin.RevocationBoundService"),
+        ):
+            with self.subTest(name=name):
+                component = ElementTree.SubElement(application, tag, {ANDROID + "name": name})
+                result = self.verify("offline")
+                application.remove(component)
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertIn(b"Offline bundle registers a Google sign-in component", result.stderr)
+
     def test_cloud_keeps_library_sign_in_components(self):
         self.add_permission("android.permission.INTERNET")
-        ElementTree.SubElement(self.manifest.find("application"), "activity", {
-            ANDROID + "name": "microsoft.identity.client.AuthenticationActivity"
-        })
+        application = self.manifest.find("application")
+        for tag, name in (
+            ("activity", "microsoft.identity.client.AuthenticationActivity"),
+            ("activity", "com.google.android.gms.auth.api.signin.internal.SignInHubActivity"),
+            ("service", "com.google.android.gms.auth.api.signin.RevocationBoundService"),
+        ):
+            ElementTree.SubElement(application, tag, {ANDROID + "name": name})
         result = self.verify("cloud-backup")
         self.assertEqual(result.returncode, 0, result.stderr)
 

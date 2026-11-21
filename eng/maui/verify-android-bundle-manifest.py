@@ -144,6 +144,12 @@ def verify_manifest(manifest, package, display_version, build_number, edition, e
         if any(name.endswith(".BrowserTabActivity") or name == "microsoft.identity.client.AuthenticationActivity"
                for name in activity_names):
             raise SystemExit("Offline bundle registers a Microsoft sign-in activity.")
+        google_sign_in = {
+            "com.google.android.gms.auth.api.signin.internal.SignInHubActivity",
+            "com.google.android.gms.auth.api.signin.RevocationBoundService",
+        }
+        if any(element.get(ANDROID + "name") in google_sign_in for element in application):
+            raise SystemExit("Offline bundle registers a Google sign-in component.")
     verify_msal_redirect(application, entra_client_id)
     verify_file_provider_bindings(application, package)
     print(f"Verified bundle package, version, minimum API {minimum_sdk}, target API {target_sdk}, "

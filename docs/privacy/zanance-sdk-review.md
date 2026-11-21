@@ -116,6 +116,55 @@ with a self-signed development certificate. No production upload certificate or 
 submission was used. Local receipts are in `artifacts/offline-sign-in-component-bundle`.
 
 
+### Offline Google sign-in component boundary
+
+The previous signed offline APK `ae6a1bc5` still contained the Google sign-in hub
+activity and the revocation service protected by its declared Google permission.
+The offline overlay now removes both. The APK and bundle manifest checks reject
+these components in the offline edition. Both negative bundle fixtures passed
+before the new check and were rejected afterward. All 11 bundle verifier tests
+pass, including the cloud control with those declarations. Project evaluation
+with a fictional Android Google client confirmed that the cloud edition does
+not use the offline overlay.
+
+The signed offline Release APK
+`2d3853ef8c7b1ba87cd2fcc1e9787ddab01f203e917e0b69a3382a5b42c0ccf3`
+passed the Android release checks. Comparing decoded manifests after ignoring
+line numbers found exactly those two removals, with all other manifest fields
+and 24 remaining component declarations equal. The file installed by hash
+and reached first-run Welcome on an owned Android 15 x86-64 emulator with
+16,384-byte userspace pages. No account, sign-in, OCR or financial submission
+was performed. The disposable package and guest were retired.
+
+The previously retained offline AAB `ab1ff5de` was also refused by the updated
+offline bundle verifier for the Google declaration. A newly built local Release
+AAB with SHA-256
+`bc668220352ff8bc3e538aeb659e420a64f27ad9462e9a02b1b0f52e8404aa5d`
+passed bundletool validation, the decoded manifest and packaged backup and
+sharing rules, explicit 16 KiB ZIP configuration and ELF checks, and managed
+payload and SQLCipher checks for ARM64 and x86-64. Its local signature verified
+with a self-signed development certificate. The production upload certificate,
+Play artifact and runtime traffic review remain open. Evidence is in
+`artifacts/offline-google-sign-in-boundary`.
+
+The local Cloud Release AAB built with a fictional Android Google client has
+SHA-256 `6c58d2d2d1021e0621f2d2ce15ee0541f93af84af18de8911fbafedb6fc631a4`.
+The decoded manifest retains one non-exported Google sign-in hub activity and
+one revocation service protected by the Google revocation permission. The
+Cloud manifest policy, bundle structure, storage and native alignment checks
+passed. A local development certificate was used. No account was used and
+no live cloud request was sent.
+
+Bundletool also generated a local universal APK from the identified offline
+AAB. Its SHA-256 is
+`6944efc816e639acec28593e1d2c288c42d533fb077f088566dfa1fd037b2961`.
+The decoded binary manifest passed the offline permission policy and contained
+neither the Microsoft nor Google sign-in components. The first conversion
+stopped because the bundled tool could not locate AAPT2. Conversion succeeded
+when given the project's resolved SDK AAPT2 path. The derived APK is unsigned
+and was inspected without installing it. This does not inspect APK splits
+generated or signed by Play.
+
 ```powershell
 ./eng/tests/AndroidPrivacy.Tests.ps1
 ./eng/scripts/Build-AndroidApk.ps1 -Offline -Output artifacts/android-offline

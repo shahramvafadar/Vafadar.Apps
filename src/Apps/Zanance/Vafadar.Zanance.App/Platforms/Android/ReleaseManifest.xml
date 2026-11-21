@@ -4,9 +4,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 	<uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
 	<application>
-		<!-- The offline edition never starts the sign-in SDK. Remove both of its exported activities.
+		<!-- The offline edition never starts the cloud sign-in SDKs.
 		     BrowserTabActivity is the managed binding's packaged Android class name. -->
 		<activity android:name="crc648316b0a9aa8cfd61.BrowserTabActivity" tools:node="remove" />
 		<activity android:name="microsoft.identity.client.AuthenticationActivity" tools:node="remove" />
+		<activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" tools:node="remove" />
+		<service android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" tools:node="remove" />
 	</application>
 </manifest>

@@ -115,6 +115,9 @@ if ($Configuration -eq 'Release' -and $properties.ApplicationId -ceq 'pro.vafada
     if ($manifest -cmatch ':name\(0x[0-9a-f]+\)="(?:[\w.]+\.BrowserTabActivity|microsoft\.identity\.client\.AuthenticationActivity)"') {
         throw 'The offline Zanance APK registers a Microsoft sign-in activity.'
     }
+    if ($manifest -cmatch ':name\(0x[0-9a-f]+\)="com\.google\.android\.gms\.auth\.api\.signin\.(?:internal\.SignInHubActivity|RevocationBoundService)"') {
+        throw 'The offline Zanance APK registers a Google sign-in component.'
+    }
 }
 
 # The current Android SDK embeds one managed assembly store per packaged ABI.
