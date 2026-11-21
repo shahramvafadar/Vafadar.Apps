@@ -29,6 +29,10 @@ var retireAccountObjects = args.FirstOrDefault() == "--retire-account-objects";
 var retireAccountSync = args.FirstOrDefault() == "--retire-account-personal-sync";
 var eraseAccountIdentity = args.FirstOrDefault() == "--erase-account-identity";
 var retireIdentityMail = args.FirstOrDefault() == "--retire-account-identity-mail";
+var reconcileRestoredAccounts = args.FirstOrDefault() == "--reconcile-restored-account-deletions";
+if (reconcileRestoredAccounts && (args.Length < 2 || args[1] != "--confirm-isolated-restored-database" ||
+    args.Contains("--migrate", StringComparer.Ordinal)))
+    throw new InvalidOperationException("An explicitly confirmed isolated restored database is required.");
 var accountRetirement = retireAccountObjects || retireAccountSync || eraseAccountIdentity || retireIdentityMail;
 var deletionReceipt = Guid.Empty;
 if ((inspectDeletion || accountRetirement) &&
@@ -53,13 +57,13 @@ if (selectAnalysis && (args.Length < 2 || args[1] is not ("openai" or "gemini" o
 if (selectModel && (args.Length < 3 || args[1] is not ("report" or "comparison") || args.Contains("--migrate")) ||
     listModels && args.Contains("--migrate"))
     throw new InvalidOperationException("Choose report or comparison and an allowlisted model or off.");
-var hostArgs = selectAnalysis || inspectDeletion ? args[2..] :
+var hostArgs = selectAnalysis || inspectDeletion || reconcileRestoredAccounts ? args[2..] :
     selectModel || deletePilotResult || accountRetirement ? args[3..] :
     listModels ? args[1..] : args.Where(arg => arg != "--migrate").ToArray();
 var builder = WebApplication.CreateBuilder(hostArgs);
 builder.AddZananceService(migrationOnly: args.Contains("--migrate", StringComparer.Ordinal));
 var app = builder.Build();
-if (accountRetirement)
+if (accountRetirement || reconcileRestoredAccounts)
 {
     var privateStorage = app.Services.GetRequiredService<ServiceStorage>();
     var privateAuthority = Path.Combine(privateStorage.Root, "installation.protected");
@@ -67,7 +71,14 @@ if (accountRetirement)
     if (!File.Exists(privateAuthority) || privateProtector.Unprotect(await File.ReadAllTextAsync(privateAuthority)) != "Zanance private service v1")
         throw new InvalidOperationException("The existing private installation authority is required.");
     await using var db = await app.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>().CreateDbContextAsync();
-    if (eraseAccountIdentity)
+    if (reconcileRestoredAccounts)
+    {
+        var pending = await AccountDeletionRestoreFence.ReconcileAsync(db, privateStorage,
+            app.Services.GetRequiredService<TimeProvider>(), CancellationToken.None);
+        Console.WriteLine("Outstanding restored account deletions: " + pending.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        if (pending != 0) Environment.ExitCode = 1;
+    }
+    else if (eraseAccountIdentity)
     {
         var result = await AccountIdentityErasure.CompleteAsync(db, privateStorage,
             app.Services.GetRequiredService<TimeProvider>(), deletionReceipt, CancellationToken.None);

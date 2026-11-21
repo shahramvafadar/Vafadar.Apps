@@ -68,6 +68,50 @@ class GatewayTests(unittest.TestCase):
             volume.assert_called_once_with('zanance-selfhost-source', 'private')
             exists.assert_not_called()
 
+    def test_restore_runs_confirmed_account_reconciliation_before_starting_api(self):
+        """An unfinished retirement aborts before worker startup and preserves restore continuation."""
+        args = argparse.Namespace(snapshot='zanance-hosting-snapshot-test', project='zanance-selfhost-target',
+                                  public=False, gateway='direct', port=14543, subnet='172.29.90.0/24',
+                                  reconcile_account_deletions=True)
+        source = 'zanance-selfhost-source'
+        images = {'api': 'sha256:' + '2' * 64, 'database': 'sha256:' + '3' * 64}
+        manifest = {'SourceProject': source, 'Quiesced': True, 'Images': images}
+        labels = {'pro.vafadar.zanance.household-privacy': 'deletion-v1',
+                  'pro.vafadar.zanance.account-privacy': 'receipt-fence-v1'}
+        for unfinished in (False, True):
+            with self.subTest(unfinished=unfinished):
+                state = {'Snapshot': args.snapshot, 'Target': args.project, 'PrivacySource': source,
+                         'Copied': list(operate.VOLUMES), 'DatabaseRestored': True, 'Complete': False}
+                actions = []
+
+                def compose(project, port, subnet, action, *inputs, **options):
+                    self.assertEqual(args.project, project)
+                    actions.append(action)
+                    if action[0] == 'run' and unfinished:
+                        raise RuntimeError('Outstanding restored account deletions')
+
+                with (patch.object(operate, '_manifest', return_value=manifest),
+                      patch.object(operate, '_container', return_value=('stopped', {'state': 'exited', 'image': images['database']})),
+                      patch.object(operate, '_volume', side_effect=lambda project, name: project + '_' + name),
+                      patch.object(operate, '_metadata', return_value=labels),
+                      patch.object(operate, '_exists', return_value=True),
+                      patch.object(operate, '_receipt', return_value=state),
+                      patch.object(operate, '_compose', side_effect=compose),
+                      patch.object(operate, '_run', side_effect=[b'database\n', b'', b'fictitious.receipt\n', b'', b'', b'database\n'])):
+                    if unfinished:
+                        with self.assertRaisesRegex(RuntimeError, 'Outstanding'):
+                            operate._restore(args, 'sha256:' + '1' * 64)
+                    else:
+                        operate._restore(args, 'sha256:' + '1' * 64)
+                self.assertEqual(['up', '-d', '--wait', 'database'], actions[0])
+                self.assertEqual(['run', '--rm', '--no-deps', 'api', '--reconcile-restored-account-deletions',
+                                  '--confirm-isolated-restored-database'], actions[1])
+                self.assertEqual(not unfinished, state['Complete'])
+                if unfinished:
+                    self.assertEqual(2, len(actions))
+                else:
+                    self.assertEqual(['up', '-d', '--wait'], actions[2])
+
     def test_owner_credential_validation_reads_metadata_only(self):
         """The external file is mounted later by the container, never parsed or copied by this operator."""
         with tempfile.TemporaryDirectory(prefix='zanance-tunnel-test-') as directory:

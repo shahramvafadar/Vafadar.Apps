@@ -38,6 +38,30 @@ public static class AccountDeletionRestoreFence
         }
     }
 
+    /// <summary>Reapplies retained, matched deletion requests to an isolated restored service database.</summary>
+    public static async Task<int> ReconcileAsync(ServiceDbContext db, ServiceStorage storage, TimeProvider time, CancellationToken ct)
+    {
+        var outstanding = 0;
+        foreach (var (path, receipt) in Markers(storage.Root))
+        {
+            await ValidateAsync(path, receipt, ct);
+            if (await db.Set<AccountDeletionCompletion>().AnyAsync(row => row.ReceiptId == receipt, ct)) continue;
+            if (!await db.AccountDeletionRequests.AnyAsync(row => row.ReceiptId == receipt, ct))
+            {
+                // A receipt-only marker cannot identify an owner in a backup taken before the request.
+                outstanding++;
+                continue;
+            }
+
+            await AccountPrivateObjectRetirement.RunAsync(db, storage, receipt, ct);
+            await AccountPersonalSyncRetirement.RunAsync(db, storage, receipt, ct);
+            await AccountIdentityMailRetirement.RunAsync(db, storage, receipt, ct);
+            var result = await AccountIdentityErasure.CompleteAsync(db, storage, time, receipt, ct);
+            if (result.Status != AccountIdentityErasureStatus.Completed) outstanding++;
+        }
+        return outstanding;
+    }
+
     /// <summary>Merges only current opaque receipt markers into a distinct restored private root.</summary>
     public static async Task<int> MergeAsync(string currentPrivateRoot, string restoredPrivateRoot, CancellationToken ct = default)
     {

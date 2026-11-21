@@ -351,6 +351,15 @@ def _restore(args, helper):
               '--mount', 'type=volume,source=' + current_private + ',target=/current,readonly',
               '--mount', 'type=volume,source=' + _volume(args.project, 'private') + ',target=/restored',
               privacy_image, '--merge-account-deletions', '/current', '/restored'])
+        if getattr(args, 'reconcile_account_deletions', False):
+            running = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + args.project,
+                            '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
+            if any(service != 'database' for service in running):
+                raise RuntimeError('All restored clients must be stopped before account deletion reconciliation.')
+            _compose(args.project, args.port, args.subnet,
+                     ['run', '--rm', '--no-deps', 'api', '--reconcile-restored-account-deletions', '--confirm-isolated-restored-database'],
+                     manifest['Images'], public=args.public, gateway=args.gateway,
+                     household=manifest.get('HouseholdLocalQualification', False), mail=getattr(args, 'mail_provider', None))
     state['PrivacySource'] = privacy_source
     state['PrivacyReconciled'] = True
     _receipt(helper, state_name, state)
@@ -371,10 +380,14 @@ def main():
     parser.add_argument('--port', type=int, default=14543)
     parser.add_argument('--subnet', default='172.29.83.0/24')
     parser.add_argument('--snapshot')
+    parser.add_argument('--reconcile-account-deletions', action='store_true',
+                        help='Confirm reapplying current account deletions to the isolated restored database before startup.')
     parser.add_argument('--public', action='store_true', help='Preserve an already approved public deployment.')
     parser.add_argument('--mail-provider', choices=('brevo',), help='Preserve an explicitly configured production sender; key contents remain runtime-only.')
     parser.add_argument('--gateway', choices=('direct', 'tunnel'), default='direct', help='Preserve original public ingress; direct mode requires port 443.')
     args = parser.parse_args()
+    if args.reconcile_account_deletions and args.action != 'restore':
+        parser.error('Account deletion reconciliation requires an explicit restore target.')
     if args.mail_provider and not args.public: parser.error('External mail requires an explicit production deployment.')
     if not PROJECT.fullmatch(args.project):
         raise RuntimeError('Explicit Zanance project ownership required.')
