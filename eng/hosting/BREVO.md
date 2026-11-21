@@ -30,6 +30,13 @@ The current code does not require a Brevo template ID, additional sender SDK or
 another source edit after the verified address and private key file are supplied.
 UTF-8 with or without an editor BOM, and an optional trailing line ending, works.
 
+With both nonsecret settings loaded, run
+`python eng/hosting/operate.py check-brevo-config` before provisioning the
+origin. It checks sender syntax and the absolute, non-redirected key-file
+path outside the checkout. It inspects file metadata without reading the
+key, starting Docker, contacting Brevo or sending mail. Sender verification
+in Brevo and access for API UID1654 still need approval and runtime evidence.
+
 ## Fresh origin and maintenance
 
 Follow the original fresh production-authority and Tunnel gates. Use the exact
@@ -44,6 +51,8 @@ require the same original sender. Snapshots retain only provider/sender metadata
 the external credential file is not archived. A historical snapshot with no mail
 authority cannot gain it implicitly. Stop/status do not require the key mount.
 Loss of a key therefore does not prevent draining an existing API.
+Start, restore and transport renewal check the configured file metadata before
+changing deployment state.
 
 Public worker startup refuses missing sender configuration or an absent,
 redirected or oversized key file. Offline `--migrate` does not dispatch mail or

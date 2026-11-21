@@ -180,8 +180,30 @@ def _require_mail(args, original):
         return
     if not args.public or provider != original['Provider']:
         raise RuntimeError('Original external mail mode differs.')
-    if getattr(args, 'action', None) not in ('stop', 'status', 'backup') and os.environ.get('ZANANCE_BREVO_SENDER_EMAIL') != original['SenderEmail']:
-        raise RuntimeError('Original external sender differs; preserve queued challenges.')
+    if getattr(args, 'action', None) not in ('stop', 'status', 'backup'):
+        if os.environ.get('ZANANCE_BREVO_SENDER_EMAIL') != original['SenderEmail']:
+            raise RuntimeError('Original external sender differs; preserve queued challenges.')
+        _require_brevo_inputs()
+
+
+def _require_brevo_inputs():
+    """Validate only the sender and private file metadata before any operator effects."""
+    sender = os.environ.get('ZANANCE_BREVO_SENDER_EMAIL', '')
+    if len(sender) > 254 or not re.fullmatch(r'[^\s<>@]+@[^\s<>@]+', sender):
+        raise RuntimeError('An exact verified sender address is required.')
+    path = Path(os.environ.get('ZANANCE_BREVO_API_KEY_FILE', ''))
+    if not path.is_absolute():
+        raise RuntimeError('An absolute private email key-file path is required.')
+    try:
+        if any(part.is_symlink() or (hasattr(part, 'is_junction') and part.is_junction()) for part in (path, *path.parents)):
+            raise RuntimeError('Indirect owner file paths are refused.')
+        path = path.resolve(strict=True)
+        if path.is_relative_to(BASE.parent.parent):
+            raise RuntimeError('The private email key file must remain outside the repository.')
+        if not path.is_file() or not 0 < path.stat().st_size <= 512:
+            raise RuntimeError('A bounded regular private email key file is required.')
+    except OSError:
+        raise RuntimeError('The private email key file is unavailable.') from None
 
 
 def _manifest(snapshot, helper):
@@ -453,7 +475,7 @@ def _restore(args, helper):
 def main():
     """Require explicit owned targets and never touch another project's containers, network or data."""
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('status', 'start', 'stop', 'backup', 'restore', 'renew-transport'))
+    parser.add_argument('action', choices=('status', 'start', 'stop', 'backup', 'restore', 'renew-transport', 'check-brevo-config'))
     parser.add_argument('--project', default='zanance-selfhost')
     parser.add_argument('--port', type=int, default=14543)
     parser.add_argument('--subnet', default='172.29.83.0/24')
@@ -469,6 +491,10 @@ def main():
     if args.mail_provider and not args.public: parser.error('External mail requires an explicit production deployment.')
     if not PROJECT.fullmatch(args.project):
         raise RuntimeError('Explicit Zanance project ownership required.')
+    if args.action == 'check-brevo-config':
+        _require_brevo_inputs()
+        print('Brevo sender and private file metadata passed the local check.')
+        return
     helper = _run(['docker', 'image', 'inspect', 'zanance-bootstrap:d293', '--format', '{{.Id}}']).decode().strip()
     if not IMAGE.fullmatch(helper):
         raise RuntimeError('Build the reviewed immutable helper image first.')
