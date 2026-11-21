@@ -46,9 +46,13 @@ public sealed class AccountDeletionRequestTests
         var ct = TestContext.Current.CancellationToken;
         Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
 
-        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "analysis-content"), analysis: true);
+        var reviewRoot = Directory.CreateDirectory(Path.Combine(root, $"analysis-content-{Guid.NewGuid():N}")).FullName;
+        var currentRoot = Directory.CreateDirectory(Path.Combine(reviewRoot, "current")).FullName;
+        var restoredRoot = Directory.CreateDirectory(Path.Combine(reviewRoot, "restored")).FullName;
+        await using var host = new IdentityHost(connection.ConnectionString, currentRoot, analysis: true);
         await using var fixture = host.Services.CreateAsyncScope();
         var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = fixture.ServiceProvider.GetRequiredService<ServiceStorage>();
         var users = fixture.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
         await db.Database.MigrateAsync(ct);
         const string email = "analysis-content@example.invalid";
@@ -84,7 +88,7 @@ public sealed class AccountDeletionRequestTests
         var altered = await Assert.ThrowsAsync<PostgresException>(() => db.Database.ExecuteSqlInterpolatedAsync(
             $"""UPDATE "AiRequests" SET "ProtectedPayload" = '', "ProtectedText" = '', "ChargedUnits" = 0 WHERE "Id" = {confirmed.Id}""", ct));
         Assert.Equal(PostgresErrorCodes.CheckViolation, altered.SqlState);
-        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, receipt.ReceiptId, TimeProvider.System, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, storage, receipt.ReceiptId, TimeProvider.System, ct));
 
         var rows = await db.Set<AiRequestRow>().AsNoTracking().ToDictionaryAsync(row => row.Id, ct);
         Assert.Equal(3, rows.Count);
@@ -104,6 +108,42 @@ public sealed class AccountDeletionRequestTests
         using var status = await client.PostAsync($"/analysis/requests/{confirmed.Id}/status", null, ct);
         Assert.Equal(HttpStatusCode.Gone, status.StatusCode);
         Assert.Equal("AiResultRetired", (await status.Content.ReadFromJsonAsync<JsonElement>(ct)).GetProperty("code").GetString());
+
+        var restoredStorage = new ServiceStorage { Root = restoredRoot, LocalMailbox = false };
+        connection.Database = "zanance_delete_analysis_restore_fixture";
+        await using var restored = new ServiceDbContext(new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection.ConnectionString).Options);
+        await restored.Database.MigrateAsync(ct);
+        var originalOffer = await db.Set<AiOfferRow>().AsNoTracking().SingleAsync(row => row.Id == confirmed.OfferId, ct);
+        restored.AddRange(owner, originalOffer);
+        await restored.SaveChangesAsync(ct);
+        restored.ChangeTracker.Clear();
+        Assert.Equal(1, await AccountDeletionRestoreFence.MergeAsync(currentRoot, restoredRoot, ct));
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(db, storage, ct);
+        await Assert.ThrowsAsync<IOException>(() => AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct));
+        restored.Add(confirmed);
+        await restored.SaveChangesAsync(ct);
+        restored.ChangeTracker.Clear();
+        var startupRefusal = await Assert.ThrowsAsync<IOException>(() =>
+            AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct));
+        Assert.Contains("Analysis retirement is not reconciled", startupRefusal.Message, StringComparison.Ordinal);
+        await using var oldHost = new IdentityHost(connection.ConnectionString, restoredRoot, analysis: true);
+        var startup = Record.Exception(() => oldHost.CreateClient().Dispose());
+        Assert.NotNull(startup);
+        Assert.Contains("Analysis retirement is not reconciled", startup.ToString(), StringComparison.Ordinal);
+        Assert.Equal(1, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
+        Assert.Empty(await restored.AccountDeletionRequests.ToListAsync(ct));
+        Assert.Equal(confirmed.ProtectedText, (await restored.Set<AiRequestRow>().AsNoTracking().SingleAsync(ct)).ProtectedText);
+
+        var confirmedEffect = await db.Set<AiPilotDeletionRow>().AsNoTracking().SingleAsync(row => row.RequestId == confirmed.Id, ct);
+        restored.Add(confirmedEffect);
+        await restored.SaveChangesAsync(ct);
+        restored.ChangeTracker.Clear();
+        Assert.Equal(0, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct);
+        Assert.Equal(receipt.ReceiptId, (await restored.AccountDeletionRequests.SingleAsync(ct)).ReceiptId);
+        var retired = await restored.Set<AiRequestRow>().SingleAsync(ct);
+        Assert.Empty(retired.ProtectedPayload);
+        Assert.Equal("", retired.ProtectedText);
 
         AiRequestRow Seed(ServiceUser account, DateTimeOffset? confirmedAt)
         {
@@ -248,6 +288,7 @@ public sealed class AccountDeletionRequestTests
         Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
         connection.Database = "zanance_delete_dispatch_fixture";
         await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "analysis-dispatch-retirement"));
+        var storage = host.Services.GetRequiredService<ServiceStorage>();
         await using var services = host.Services.CreateAsyncScope();
         var factory = services.ServiceProvider.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         await using var db = await factory.CreateDbContextAsync(ct);
@@ -310,16 +351,16 @@ public sealed class AccountDeletionRequestTests
         await db.SaveChangesAsync(ct);
         db.ChangeTracker.Clear();
         Assert.Equal(AccountAnalysisRetirementResult.Pending,
-            await AccountAnalysisRetirement.RunAsync(db, originalReceipt, time, ct, releaseUnclaimedReservations: false));
+            await AccountAnalysisRetirement.RunAsync(db, storage, originalReceipt, time, ct, releaseUnclaimedReservations: false));
         Assert.False(await db.Set<AiCreditRow>().AnyAsync(row => row.Kind == AiCreditEvent.Refund, ct));
-        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, originalReceipt, time, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, storage, originalReceipt, time, ct));
         Assert.Equal(AiRequestState.Refunded, await db.Set<AiRequestRow>().Where(row => row.Id == cancellable.Id).Select(row => row.State).SingleAsync(ct));
         Assert.Equal(AiRequestState.Pending, await db.Set<AiRequestRow>().Where(row => row.Id == alreadyQueued.Id).Select(row => row.State).SingleAsync(ct));
         var refund = await db.Set<AiCreditRow>().AsNoTracking().SingleAsync(row => row.Kind == AiCreditEvent.Refund, ct);
         Assert.Equal(cancellable.Id, refund.RequestId);
         Assert.Equal(2, refund.GiftedAvailable);
         Assert.Equal(-2, refund.GiftedReserved);
-        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, originalReceipt, time, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, storage, originalReceipt, time, ct));
         Assert.Equal(refund.Id, (await db.Set<AiCreditRow>().AsNoTracking().SingleAsync(row => row.Kind == AiCreditEvent.Refund, ct)).Id);
         Assert.Equal(2, await db.Set<AiCreditRow>().CountAsync(ct));
         Assert.Equal(0, http.Calls);
@@ -455,9 +496,9 @@ public sealed class AccountDeletionRequestTests
         await db.SaveChangesAsync(ct);
         db.ChangeTracker.Clear();
 
-        Assert.Equal(AccountAnalysisRetirementResult.UnknownReceipt, await AccountAnalysisRetirement.RunAsync(db, Guid.NewGuid(), TimeProvider.System, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.UnknownReceipt, await AccountAnalysisRetirement.RunAsync(db, storage, Guid.NewGuid(), TimeProvider.System, ct));
         Assert.Equal(4, await db.Set<AiOfferRow>().CountAsync(ct));
-        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, receipt, TimeProvider.System, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, storage, receipt, TimeProvider.System, ct));
         var retained = await db.Set<AiRequestRow>().AsNoTracking().SingleAsync(ct);
         Assert.Equal(pending.Id, retained.Id);
         Assert.Equal(AiRequestState.Pending, retained.State);
@@ -468,7 +509,7 @@ public sealed class AccountDeletionRequestTests
         Assert.Empty(await db.Set<AiCreditRow>().ToListAsync(ct));
         var result = await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, receipt, ct);
         Assert.Equal(new(AccountIdentityErasureStatus.DependenciesRemain, AccountDeletionDependencies.Analysis), result);
-        Assert.Equal(AccountAnalysisRetirementResult.Retired, await AccountAnalysisRetirement.RunAsync(db, otherReceipt, TimeProvider.System, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Retired, await AccountAnalysisRetirement.RunAsync(db, storage, otherReceipt, TimeProvider.System, ct));
         Assert.Equal(pendingOffer.Id, (await db.Set<AiOfferRow>().SingleAsync(ct)).Id);
 
         AiOfferRow Offer(ServiceUser owner) => new() { Id = Guid.NewGuid(), UserId = owner.Id, MaximumUnits = 1, ExpiresAt = now.AddMinutes(5) };

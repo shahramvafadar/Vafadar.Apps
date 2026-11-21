@@ -146,9 +146,13 @@ and result text. Status for the retired result returns `410 AiResultRetired`.
 The stage uses the original owner lock, makes zero provider calls, and keeps
 the deletion receipt, usage and credit history. Unconfirmed provider effects,
 unverified reservations and retained journals remain pending for their
-specific retention decisions. Isolated restore reconciliation can also clear
-confirmed local content, but a historical queue cannot authorize a refund on
-the premise that the live service never began dispatch.
+specific retention decisions. Before committing local erasure, the stage records
+an opaque marker in the private installation. Restores must merge these markers
+from the current private installation, even while account erasure is pending.
+Startup refuses a snapshot that still exposes marked content. Isolated restore
+reconciliation reapplies erasure when the snapshot contains the matching provider
+receipt. A snapshot predating that receipt remains blocked. A historical queue
+cannot authorize a refund based on a presumed lack of dispatch.
 
 An accepted account deletion pauses analysis admission immediately. Availability
 reports analysis disabled, new offers and submissions refuse before any new

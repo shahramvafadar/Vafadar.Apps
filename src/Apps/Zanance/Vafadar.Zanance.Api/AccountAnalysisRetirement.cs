@@ -17,7 +17,7 @@ public enum AccountAnalysisRetirementResult
 public static class AccountAnalysisRetirement
 {
     /// <summary>Retires eligible content and preserves the original credit journal and provider receipts.</summary>
-    public static async Task<AccountAnalysisRetirementResult> RunAsync(ServiceDbContext db, Guid receipt, TimeProvider time,
+    public static async Task<AccountAnalysisRetirementResult> RunAsync(ServiceDbContext db, ServiceStorage storage, Guid receipt, TimeProvider time,
         CancellationToken ct, bool releaseUnclaimedReservations = true)
     {
         if (receipt == Guid.Empty) throw new ArgumentException("The original deletion receipt is required.", nameof(receipt));
@@ -59,11 +59,16 @@ public static class AccountAnalysisRetirement
         // Provider confirmation is bound to this exact completed request. Keep its receipt,
         // usage and credit records while removing local copies of the disclosed content.
         // Empty text retains the original database invariant for a completed request.
-        await requests.Where(row => row.UserId == owner && row.State == AiRequestState.Completed &&
+        var ready = requests.Where(row => row.UserId == owner && row.State == AiRequestState.Completed &&
                 (row.ProtectedPayload != "" || row.ProtectedText != "") &&
-                deletions.Any(effect => effect.RequestId == row.Id && effect.ConfirmedAt >= effect.StartedAt))
-            .ExecuteUpdateAsync(set => set.SetProperty(row => row.ProtectedPayload, "")
-                .SetProperty(row => row.ProtectedText, ""), ct);
+                deletions.Any(effect => effect.RequestId == row.Id && effect.ConfirmedAt >= effect.StartedAt));
+        foreach (var request in await ready.Select(row => row.Id).ToListAsync(ct))
+        {
+            await AccountDeletionRestoreFence.RecordAnalysisAsync(storage, receipt, owner, request, ct);
+            await ready.Where(row => row.Id == request)
+                .ExecuteUpdateAsync(set => set.SetProperty(row => row.ProtectedPayload, "")
+                    .SetProperty(row => row.ProtectedText, ""), ct);
+        }
         await requests.Where(row => row.UserId == owner && row.State == AiRequestState.NotAccepted &&
                 row.PurchasedReserved == 0 && row.GiftedReserved == 0 && row.ChargedUnits == 0 &&
                 row.VendorOperationId == null && row.PilotDispatchStage == null && row.PilotDispatchClaimedAt == null &&

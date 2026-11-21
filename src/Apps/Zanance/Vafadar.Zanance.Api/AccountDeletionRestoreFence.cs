@@ -6,7 +6,7 @@ using Vafadar.Zanance.Api.Sync;
 namespace Vafadar.Zanance.Api;
 
 /// <summary>Immutable minimal receipt markers outside the database snapshot protect restored accounts from resurrection.</summary>
-public static class AccountDeletionRestoreFence
+public static partial class AccountDeletionRestoreFence
 {
     private const string OwnerDomain = "zanance-account-restore-v2:";
 
@@ -27,20 +27,28 @@ public static class AccountDeletionRestoreFence
                 throw new IOException("The account deletion marker owner differs.");
             return;
         }
+        var body = ownerHash is null ? receipt.ToString("D") : $"2\n{receipt:D}\n{ownerHash}";
+        await PublishMarkerAsync(storage.Root, path, body, ct);
+    }
+
+    private static async Task PublishMarkerAsync(string storage, string path, string body, CancellationToken ct)
+    {
         var pending = path + "." + Guid.NewGuid().ToString("N") + ".pending";
         await using (var file = new FileStream(pending, FileMode.CreateNew, FileAccess.Write, FileShare.None, 4096, FileOptions.WriteThrough))
         {
-            var body = ownerHash is null ? receipt.ToString("D") : $"2\n{receipt:D}\n{ownerHash}";
             await file.WriteAsync(Encoding.ASCII.GetBytes(body), ct);
             file.Flush(flushToDisk: true);
         }
-        _ = RootOf(storage.Root);
+        _ = RootOf(storage);
         File.Move(pending, path);
     }
 
     /// <summary>Requires a completion for every current marker before the service starts handling requests.</summary>
     public static async Task VerifyDatabaseAsync(ServiceDbContext db, ServiceStorage storage, CancellationToken ct)
     {
+        foreach (var marker in AnalysisMarkers(storage.Root))
+            if (!await AnalysisContentRetiredAsync(db, await marker.ReadAsync(ct), ct))
+                throw new IOException("Analysis retirement is not reconciled. Reconcile the private restore before starting the service.");
         foreach (var (path, receipt) in Markers(storage.Root))
         {
             _ = await ReadOwnerHashAsync(path, receipt, ct);
@@ -67,11 +75,11 @@ public static class AccountDeletionRestoreFence
             await AccountPersonalSyncRetirement.RunAsync(db, storage, receipt, ct);
             await AccountIdentityMailRetirement.RunAsync(db, storage, receipt, ct);
             // A restored queue cannot prove that its original request was never claimed in the live service.
-            await AccountAnalysisRetirement.RunAsync(db, receipt, time, ct, releaseUnclaimedReservations: false);
+            await AccountAnalysisRetirement.RunAsync(db, storage, receipt, time, ct, releaseUnclaimedReservations: false);
             var result = await AccountIdentityErasure.CompleteAsync(db, storage, time, receipt, ct);
             if (result.Status != AccountIdentityErasureStatus.Completed) outstanding++;
         }
-        return outstanding;
+        return outstanding + await ReconcileAnalysisAsync(db, storage, time, ct);
     }
 
     private static async Task<bool> BindRestoredRequestAsync(ServiceDbContext db, Guid receipt, string? ownerHash,
@@ -82,11 +90,7 @@ public static class AccountDeletionRestoreFence
         if (pendingOwner is not null) return ownerHash is null || OwnerHash(pendingOwner) == ownerHash;
         if (ownerHash is null) return false;
 
-        var matches = await db.Database.SqlQuery<string>($"""
-            SELECT "Id" AS "Value" FROM "AspNetUsers"
-            WHERE sha256(convert_to({OwnerDomain} || "Id", 'UTF8')) = decode({ownerHash}, 'hex')
-            LIMIT 2
-            """).ToListAsync(ct);
+        var matches = await FindRestoredOwnersAsync(db, ownerHash, ct);
         if (matches.Count != 1) return false;
         var owner = matches[0];
         await using var transaction = await db.Database.BeginTransactionAsync(ct);
@@ -100,6 +104,13 @@ public static class AccountDeletionRestoreFence
         await transaction.CommitAsync(ct);
         return true;
     }
+
+    private static Task<List<string>> FindRestoredOwnersAsync(ServiceDbContext db, string ownerHash, CancellationToken ct) =>
+        db.Database.SqlQuery<string>($"""
+            SELECT "Id" AS "Value" FROM "AspNetUsers"
+            WHERE sha256(convert_to({OwnerDomain} || "Id", 'UTF8')) = decode({ownerHash}, 'hex')
+            LIMIT 2
+            """).ToListAsync(ct);
 
     private static string OwnerHash(string owner) =>
         Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(OwnerDomain + owner)));
@@ -121,6 +132,11 @@ public static class AccountDeletionRestoreFence
         {
             var ownerHash = await ReadOwnerHashAsync(path, receipt, ct);
             await WriteMarkerAsync(storage, receipt, ownerHash, ct);
+            merged++;
+        }
+        foreach (var sourceMarker in AnalysisMarkers(source))
+        {
+            await WriteAnalysisMarkerAsync(storage, await sourceMarker.ReadAsync(ct), ct);
             merged++;
         }
         return merged;

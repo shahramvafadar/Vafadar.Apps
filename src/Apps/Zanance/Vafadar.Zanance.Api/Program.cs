@@ -98,7 +98,7 @@ if (accountRetirement || reconcileRestoredAccounts)
     }
     else if (retireAccountAnalysis)
     {
-        var result = await AccountAnalysisRetirement.RunAsync(db, deletionReceipt,
+        var result = await AccountAnalysisRetirement.RunAsync(db, privateStorage, deletionReceipt,
             app.Services.GetRequiredService<TimeProvider>(), CancellationToken.None);
         Console.WriteLine("Account local analysis retirement: " + result);
         if (result != AccountAnalysisRetirementResult.Retired) Environment.ExitCode = 1;
