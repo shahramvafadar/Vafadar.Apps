@@ -115,3 +115,30 @@ collection is part of the relationships of step 19.6.
 
 **Not built yet:** the card in a graph, which the graph of step 19.8 draws.
 
+## The profile as a page (step 20.9)
+
+The page of an entity is put together from the one profile, in the order a visitor needs it:
+
+* **The head** (`IdentityHead`) is the same for every kind: a mark of what it is (`IdentityMark`), the picture
+  this visitor may see or the drawing of the kind, the kind, the name as the one title of the page, where it is
+  (the position of a place, the collection), the line, the facts of the card (`NodeProfile.Card`), and the two
+  acts done first – "Explore the connections", which leads to the drawing with the state of exploring
+  ([ADR 0025](0025-exploring.md)), and keeping.
+* **What it is at the first glance.** Four things that must not be taken for each other: *of a story* (the types
+  `Character`, `AnimalCharacter`, `NarrativePlace`, `NarrativeRegion`, `NarrativeObject`, `StoryArc`), *of
+  the world* (every other type of a collection), *an account*, *a record in a family tree*. Each is said in
+  words with a small drawing; the ground and edge of the mark and the shape of the picture (an arch for what is
+  of a story) differ as well, and nothing is said by a colour alone. The type decides, not an editor: a
+  statement about a character is of a telling, one about a person of history has sources.
+* **In story and picture**: up to three media items that depict it, then every step of the telling it has to do
+  with, in the order of the story – both from the projection of the visitor, so nothing past what was read is
+  in the page. The rest of the pictures is one step away, on the view of the pictures.
+* **Folded until asked for** (`<details>`, which needs no script and is in the page for a search engine and a
+  reader of the source alike): every fact of the profile with what is not known, which picture the head shows,
+  the other names, the sources, what other catalogues call it.
+
+The pages of an account and of a record in a tree keep their own bodies – what they may show is decided by
+other rules (PRIV-003, PRIV-008) – and carry the same mark above their names.
+
+**Not built:** an account and a record in a tree do not use `IdentityHead` – they have no `NodeProfile`; their
+heads are made the same as the others with the spaces of an account (step 20.11).

@@ -19,6 +19,14 @@ public sealed class NodeProfilePagesTests(DemoSite site, PublishedSite published
         return WebUtility.HtmlDecode(page.Html[from..page.Html.IndexOf("</section>", from, StringComparison.Ordinal)]);
     }
 
+    // The head of the page: what it is, its picture or the drawing of its kind, its name (step 20.9).
+    private static string Head(Page page)
+    {
+        var from = page.Html.IndexOf("<header class=\"identity ", StringComparison.Ordinal);
+        Assert.True(from >= 0, "The page has no head of an identity.");
+        return WebUtility.HtmlDecode(page.Html[from..page.Html.IndexOf("</header>", from, StringComparison.Ordinal)]);
+    }
+
     [Theory]
     [InlineData("en", "Profile", "In the story", "A warrior")]
     [InlineData("fa", "نمایه", "در داستان", "پهلوان")]
@@ -39,14 +47,15 @@ public sealed class NodeProfilePagesTests(DemoSite site, PublishedSite published
     [InlineData("fa", "دانسته نیست", "هنوز تصویری نیست")]
     public async Task An_entity_without_a_picture_or_a_fact_says_so(string language, string unknown, string noPicture)
     {
-        var profile = Profile(await site.Visitor().Get($"/{language}/{Story}/entity/character-zal"));
+        var page = await site.Visitor().Get($"/{language}/{Story}/entity/character-zal");
+        var profile = Profile(page);
 
         Assert.Contains($"<dd class=\"unknown\">{unknown}</dd>", profile, StringComparison.Ordinal);
         Assert.Contains(noPicture, profile, StringComparison.Ordinal);
 
         // A drawing of the kind stands in the place of the picture: decoration, with nothing to read out.
-        Assert.Contains("<svg class=\"kind-drawing\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"", profile, StringComparison.Ordinal);
-        Assert.DoesNotContain("<img", profile, StringComparison.Ordinal);
+        Assert.Contains("<svg class=\"kind-drawing\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"", Head(page), StringComparison.Ordinal);
+        Assert.DoesNotContain("<img", Head(page), StringComparison.Ordinal);
 
         // A fact that may be added and is not stated is not listed at all.
         Assert.Single(System.Text.RegularExpressions.Regex.Matches(profile, "<dt>"));
@@ -85,19 +94,20 @@ public sealed class NodeProfilePagesTests(DemoSite site, PublishedSite published
         var early = published.Visitor();
         var before = await early.Get($"/en/{Story}/entity/character-rostam");
 
-        Assert.Contains("kind-drawing", Profile(before), StringComparison.Ordinal);
+        Assert.Contains("kind-drawing", Head(before), StringComparison.Ordinal);
         Assert.Contains("No picture yet", Profile(before), StringComparison.Ordinal);
         Assert.DoesNotContain(Diagram, before.Html, StringComparison.Ordinal);
 
         var late = published.Visitor();
         await late.ReadTo(2);
-        var profile = Profile(await late.Get($"/en/{Story}/entity/character-rostam"));
+        var after = await late.Get($"/en/{Story}/entity/character-rostam");
+        var (shown, profile) = (Head(after), Profile(after));
 
         // The picture is the media item of the record, described by its own words, and leads to its page.
-        Assert.Contains($"<img src=\"/media/{Story}/{Diagram}/file\"", profile, StringComparison.Ordinal);
-        Assert.DoesNotContain("alt=\"\"", profile, StringComparison.Ordinal);
+        Assert.Contains($"<img src=\"/media/{Story}/{Diagram}/file\"", shown, StringComparison.Ordinal);
+        Assert.DoesNotContain("alt=\"\"", shown, StringComparison.Ordinal);
         Assert.Contains($"href=\"{Story}/media/{Diagram}\"", profile, StringComparison.Ordinal);
-        Assert.DoesNotContain("kind-drawing", profile, StringComparison.Ordinal);
+        Assert.DoesNotContain("kind-drawing", shown, StringComparison.Ordinal);
 
         // On a card the picture has no words of its own: the name beside it says who it is.
         var list = WebUtility.HtmlDecode((await late.Get($"/en/{Story}")).Html);
@@ -111,9 +121,11 @@ public sealed class NodeProfilePagesTests(DemoSite site, PublishedSite published
         var visitor = published.Visitor();
         await visitor.ReadTo(4);
 
-        var profile = Profile(await visitor.Get($"/en/{Story}/entity/character-rakhsh"));
+        var page = await visitor.Get($"/en/{Story}/entity/character-rakhsh");
+        var profile = Profile(page);
 
-        Assert.Contains("kind-drawing", profile, StringComparison.Ordinal);
+        Assert.Contains("kind-drawing", Head(page), StringComparison.Ordinal);
+        Assert.DoesNotContain("<img", Head(page), StringComparison.Ordinal);
         Assert.Contains("No picture yet", profile, StringComparison.Ordinal);
         Assert.DoesNotContain("<img", profile, StringComparison.Ordinal);
         Assert.DoesNotContain("media-met-452419", profile, StringComparison.Ordinal);

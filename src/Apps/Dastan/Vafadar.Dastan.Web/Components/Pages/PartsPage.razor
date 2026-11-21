@@ -48,9 +48,16 @@
     {
         <section aria-labelledby="parts-identity">
             <h2 id="parts-identity">IdentityHead</h2>
-            <IdentityHead Profile="_profiles[0]">
+            <IdentityHead Profile="_profiles[0]" Flavour="@IdentityMark.Of(_profiles[0].Entity.Type)">
                 <a class="action" href="@($"{Site.Collection}/entity/{_profiles[0].Entity.Id}")">@T["Profile_Panel_Open"]</a>
             </IdentityHead>
+            <h3>IdentityMark</h3>
+            <div class="actions">
+                <IdentityMark Flavour="@IdentityMark.Story" />
+                <IdentityMark Flavour="@IdentityMark.World" />
+                <IdentityMark Flavour="@IdentityMark.Account" />
+                <IdentityMark Flavour="@IdentityMark.Record" />
+            </div>
         </section>
 
         <section aria-labelledby="parts-view">

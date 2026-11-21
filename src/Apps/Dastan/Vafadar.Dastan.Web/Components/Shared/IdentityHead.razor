@@ -1,11 +1,21 @@
-@* The head of an identity (step 20.5, ADR 0024): the picture this visitor may see or the drawing of the kind,
-   the kind, the name as the title of the page, one line about it, and the two or three facts a card shows.
-   What can be done with it – keeping it, opening a view – is given by the page and stands below the facts. *@
-<header class="identity">
+@* The head of an identity (step 20.5, ADR 0024; the profile of step 20.9): what kind of thing it is at the
+   first glance, the picture this visitor may see or the drawing of the kind, the kind, the name as the title
+   of the page, where it is, one line about it, and the two or three facts a card shows. What can be done with
+   it – exploring its connections, keeping it – is given by the page and stands below the facts. The same
+   profile (ADR 0017) feeds the card, the inspector and this head. *@
+<header class="identity is-@(Flavour ?? "plain")">
     <ProfilePicture Profile="Profile" />
     <div class="identity-words">
+        @if (Flavour is not null)
+        {
+            <IdentityMark Flavour="@Flavour" />
+        }
         <p class="meta"><TypeName Type="Profile.Entity.Type" /></p>
         <h1><Loc Text="Profile.Entity.Label" /></h1>
+        @if (Where is not null)
+        {
+            @Where
+        }
         <p class="lead"><Loc Text="Profile.Entity.Summary" /></p>
         @if (!Profile.Card.IsEmpty)
         {
@@ -22,6 +32,14 @@
     /// <summary>Gets or sets the profile, as the visitor of this request may see it.</summary>
     [Parameter, EditorRequired]
     public NodeProfile Profile { get; set; } = null!;
+
+    /// <summary>Gets or sets which of the kinds of identity it is (<see cref="IdentityMark"/>), when the page says so.</summary>
+    [Parameter]
+    public string? Flavour { get; set; }
+
+    /// <summary>Gets or sets where it is: a line under the name.</summary>
+    [Parameter]
+    public RenderFragment? Where { get; set; }
 
     /// <summary>Gets or sets what can be done with it.</summary>
     [Parameter]

@@ -15,7 +15,8 @@
     <PageAddress None="true" />
     <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
 
-    <header class="page-header">
+    <header class="page-header is-record">
+        <IdentityMark Flavour="@IdentityMark.Record" />
         <h1 dir="auto">@_person.Name</h1>
         <p class="lead">@T["Person_In"] <a href="@($"account/trees/{_tree.Tree.Id}")" dir="auto">@_tree.Tree.Name</a></p>
         @if (_person.Account is { } account)

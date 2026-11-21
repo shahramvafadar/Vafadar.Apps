@@ -118,7 +118,7 @@ public sealed class SiteFrameTests : IDisposable
 
         Assert.Equal(HttpStatusCode.OK, page.Status);
         Assert.Contains("noindex", page.Html, StringComparison.Ordinal);
-        foreach (var part in new[] { "class=\"identity\"", "class=\"view-bar\"", "class=\"node-card tall\"", "class=\"chips\"", "class=\"state state-waiting\"", "class=\"state state-nothing\"", "class=\"state state-failed\"", "id=\"parts-audience-choice\"" })
+        foreach (var part in new[] { "class=\"identity is-", "class=\"identity-mark mark-record\"", "class=\"view-bar\"", "class=\"node-card tall\"", "class=\"chips\"", "class=\"state state-waiting\"", "class=\"state state-nothing\"", "class=\"state state-failed\"", "id=\"parts-audience-choice\"" })
         {
             Assert.Contains(part, page.Html, StringComparison.Ordinal);
         }

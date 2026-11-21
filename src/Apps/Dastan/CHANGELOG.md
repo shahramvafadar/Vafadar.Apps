@@ -399,3 +399,10 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   keys; saving a picture is behind "More". A family tree that grows sideways can now be moved, made larger and
   saved like the one that grows down. Under a drawing stand the steps of the story the name takes part in, as
   far as you have read. You can add names to a comparison and see their times side by side.
+- The page of a name begins the same way for every kind of thing: a mark that says at the first glance whether
+  it is of a story or of the world, its picture or the drawing of its kind, its name, where it is, a line and
+  the nearest facts – and directly below "Explore the connections" and "Keep". Then come "In story and
+  picture": up to three pictures and every step of the story the name has to do with, as far as you have
+  read, as cards. Every fact of the profile, the other names, the sources and what other catalogues call it
+  are under "Details and sources", folded until you open it. The page of an account and of a record in a
+  family tree say what they are in the same way.

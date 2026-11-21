@@ -678,6 +678,75 @@ main:focus {
   }
 }
 
+/* What kind of somebody or something a profile is about (step 20.9): words with a small drawing, and a ground
+   and an edge of its own for each – of a story, of the world, an account, a record in a tree. The words say
+   it; the ground and the shape of the picture let it be seen before the words are read. */
+.identity-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  color: var(--text);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.identity-mark .icon {
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+.identity-mark.mark-story {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.identity-mark.mark-account {
+  background: var(--surface-raised);
+}
+
+.identity-mark.mark-record {
+  border-style: dashed;
+  background: var(--surface-raised);
+}
+
+/* A figure of a story stands under an arch, as on a page of a manuscript; what is of the world in a frame. */
+.identity.is-story .profile-picture {
+  border-start-start-radius: 45% 30%;
+  border-start-end-radius: 45% 30%;
+}
+
+.page-header .identity-mark + h1 {
+  margin-block-start: var(--space-2);
+}
+
+/* In story and picture: cards of pictures and of steps of the telling, with headings of one size. */
+.in-story-cards .card h3 {
+  font-size: var(--step-0);
+}
+
+.step-card {
+  border-inline-start: 3px solid var(--accent);
+}
+
+/* What is folded until asked for: the whole profile, the other names, the sources. */
+details.fold {
+  margin-block-start: var(--space-6);
+  border-block-start: 1px solid var(--border);
+}
+
+details.fold > summary {
+  font-weight: 600;
+}
+
+details.fold > * + * {
+  margin-block-start: var(--space-4);
+}
+
 /* Where the visitor is, and the views of the same thing: the one that is shown has the ground of what is
    chosen and a line below it. The views are as high as a finger needs and wrap on a narrow screen. */
 .view-bar {

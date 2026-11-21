@@ -3999,4 +3999,28 @@
   <data name="Explore_Pictures" xml:space="preserve">
     <value>تصویرهایش</value>
   </data>
+  <data name="Identity_story" xml:space="preserve">
+    <value>از یک قصه</value>
+  </data>
+  <data name="Identity_world" xml:space="preserve">
+    <value>از جهان</value>
+  </data>
+  <data name="Identity_account" xml:space="preserve">
+    <value>یک حساب در داستان</value>
+  </data>
+  <data name="Identity_record" xml:space="preserve">
+    <value>یک برگه در یک شجره‌نامه</value>
+  </data>
+  <data name="Entity_Explore" xml:space="preserve">
+    <value>پیوندها را بکاو</value>
+  </data>
+  <data name="Entity_InStory" xml:space="preserve">
+    <value>در قصه و تصویر</value>
+  </data>
+  <data name="Entity_AllPictures" xml:space="preserve">
+    <value>همهٔ تصویرهایش</value>
+  </data>
+  <data name="Entity_Details" xml:space="preserve">
+    <value>جزئیات و منبع‌ها</value>
+  </data>
 </root>

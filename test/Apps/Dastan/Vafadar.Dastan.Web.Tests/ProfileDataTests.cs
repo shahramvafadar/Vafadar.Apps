@@ -126,7 +126,8 @@ public sealed class ProfileDataTests(DemoSite site, PublishedSite published) : I
 
         await visitor.ReadTo(2);
         var picture = (await Data(visitor, "en", "character-rostam"))["picture"]!;
-        var section = Section(await visitor.Get(Address("en", "character-rostam")));
+        // The picture stands in the head of the page (step 20.9).
+        var section = WebUtility.HtmlDecode((await visitor.Get(Address("en", "character-rostam"))).Main);
 
         Assert.Equal($"/media/{Story}/{PublishedSite.PublicDiagram}/file", (string?)picture["source"]);
         Assert.Contains($"<img src=\"{(string)picture["source"]!}\"", section, StringComparison.Ordinal);

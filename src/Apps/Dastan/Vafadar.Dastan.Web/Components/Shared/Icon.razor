@@ -66,6 +66,15 @@
             <circle cx="12" cy="17.500" r="2.300" />
             <path d="M9.300 6.500h5.400M12 6.500v8.700" />
             break;
+        case "story":
+            @* An open book. *@
+            <path d="M12 6.500C10 5 7 4.500 3.500 5v13c3.500-.500 6.500 0 8.500 1.500 2-1.500 5-2 8.500-1.500V5C17 4.500 14 5 12 6.500z" />
+            <path d="M12 6.500V19.500" />
+            break;
+        case "globe":
+            <circle cx="12" cy="12" r="8.500" />
+            <path d="M3.500 12h17M12 3.500c-5 5-5 12 0 17M12 3.500c5 5 5 12 0 17" />
+            break;
         case "waiting":
             @* A clock: something goes on. *@
             <circle cx="12" cy="12" r="8.500" />
@@ -88,7 +97,7 @@
 
 @code {
     /// <summary>The drawings there are, by their names.</summary>
-    public static readonly string[] Names = ["discover", "world", "saved", "search", "account", "settings", "connections", "timeline", "pictures", "overview", "family", "waiting", "nothing", "failed"];
+    public static readonly string[] Names = ["discover", "world", "saved", "search", "account", "settings", "connections", "timeline", "pictures", "overview", "family", "story", "globe", "waiting", "nothing", "failed"];
 
     /// <summary>Gets or sets the name of the drawing.</summary>
     [Parameter, EditorRequired]
