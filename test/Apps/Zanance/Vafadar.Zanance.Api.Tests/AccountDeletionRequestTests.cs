@@ -34,6 +34,70 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Account_erasure_releases_an_unpublished_reservation_but_preserves_room_history()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        connection.Database = "zanance_delete_household_reservation_fixture";
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, $"household-reservation-{Guid.NewGuid():N}"), household: true);
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = fixture.ServiceProvider.GetRequiredService<ServiceStorage>();
+        var users = fixture.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        using var roomKey = SigningRecipientIdentity.Create();
+        using var deviceKey = SigningRecipientIdentity.Create();
+        const string password = "Fictional-Household-Reservation9!";
+        var bare = await QueueAsync("unpublished-household@example.invalid");
+        var withHistory = await QueueAsync("household-with-history@example.invalid");
+        var originalInvitation = new HouseholdInvitationRow { Id = Guid.NewGuid(), SpaceId = withHistory.Room.SpaceId,
+            Role = HouseholdRole.Editor, OperationId = Guid.NewGuid(), ExpiresAt = DateTimeOffset.UtcNow.AddMinutes(10) };
+        db.Add(originalInvitation);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        var refused = await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, withHistory.Receipt, ct);
+        Assert.Equal(new(AccountIdentityErasureStatus.DependenciesRemain, AccountDeletionDependencies.Household), refused);
+        var result = await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, bare.Receipt, ct);
+        Assert.Equal(AccountIdentityErasureStatus.Completed, result.Status);
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(db, storage, ct);
+        Assert.Equal(bare.Receipt, (await db.Set<AccountDeletionCompletion>().SingleAsync(ct)).ReceiptId);
+        Assert.Equal(withHistory.Owner, (await db.Users.SingleAsync(ct)).Id);
+        Assert.Equal(withHistory.Room.SpaceId, (await db.Set<HouseholdSpaceRow>().SingleAsync(ct)).Id);
+        Assert.Equal(withHistory.Room.DeviceId, (await db.Set<HouseholdDeviceRow>().SingleAsync(ct)).Id);
+        Assert.Equal(withHistory.Owner, (await db.Set<HouseholdMemberRow>().SingleAsync(ct)).UserId);
+        Assert.Equal(originalInvitation.Id, (await db.Set<HouseholdInvitationRow>().SingleAsync(ct)).Id);
+
+        async Task<(Guid Receipt, string Owner, HouseholdSpaceReservation Room)> QueueAsync(string email)
+        {
+            var user = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+            Assert.True((await users.CreateAsync(user, password)).Succeeded);
+            using var client = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+            using var login = await client.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+            Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+            var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+            using var reserve = await client.PostAsJsonAsync("/households/", new HouseholdReserveSpace(Guid.NewGuid(), new('a', 64),
+                new(roomKey.Public.SigningKey, roomKey.Public.WrappingKey), new(deviceKey.Public.SigningKey, deviceKey.Public.WrappingKey)), ct);
+            Assert.Equal(HttpStatusCode.OK, reserve.StatusCode);
+            var room = Assert.IsType<HouseholdSpaceReservation>(await reserve.Content.ReadFromJsonAsync<HouseholdSpaceReservation>(ct));
+            using var intake = await client.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+            Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
+            var receipt = Assert.IsType<AccountDeletionReceipt>(await intake.Content.ReadFromJsonAsync<AccountDeletionReceipt>(ct));
+            return (receipt.ReceiptId, user.Id, room);
+        }
+    }
+
+    [Fact]
     public async Task Pending_account_deletion_blocks_identity_mail_admission_and_delivery()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");

@@ -177,11 +177,14 @@ After the approved stages and retention review, the operator can use
 The active-service transaction rechecks the original dependencies under the
 owner lock. It refuses pending identity mail, sync retirement, household
 references, billing and analysis, and deliberately verifies retired private
-paths before removing their manifests. If the only remaining dependency is a
-previously retired owned household, the transaction may remove its empty
-database tombstone after verifying the independent original deletion marker
-under the room lock. Active rooms, references to other rooms and invalid or
-unavailable markers continue to block. The independent room marker is retained.
+paths before removing their manifests. When household references are the last
+remaining dependency, the transaction can release the exact unpublished room
+reservation if it still contains only the original pending owner and device
+and has no room history. A previously retired owned room can release its empty
+database tombstone after verification of the independent deletion marker.
+Both checks use the room lock. Published rooms, references to other rooms
+and invalid or unavailable deletion markers continue to block. An existing
+independent room marker is retained.
 It removes the original service
 identity, sessions and pending request together. The completion record
 retains only the opaque receipt and timestamp, so an ambiguous result can
