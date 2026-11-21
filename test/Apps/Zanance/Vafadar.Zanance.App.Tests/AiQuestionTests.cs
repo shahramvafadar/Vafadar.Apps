@@ -28,6 +28,51 @@ public sealed class AiQuestionTests
         Assert.Equal(new AiQuestion(AiQuestionIntent.PlanShortfall, "EUR", true), AiQuestionParser.Interpret(forecast));
     }
 
+    /// <summary>Case does not change a distinct currency code, while ordinary words keep their original reading.</summary>
+    [Theory]
+    [InlineData("Why did usd spending rise?", "USD")]
+    [InlineData("Warum sind die eUr-Ausgaben gestiegen?", "EUR")]
+    [InlineData("چرا هزینه‌های gbp افزایش یافت؟", "GBP")]
+    [InlineData("Why did EUR eur spending rise?", "EUR")]
+    [InlineData("Try to explain why spending rose?", null)]
+    [InlineData("Why did TRY spending rise?", "TRY")]
+    public void Question_currency_codes_are_case_insensitive_for_distinct_words(string input, string? currency)
+        => Assert.Equal(new AiQuestion(AiQuestionIntent.SpendingChange, currency, false), AiQuestionParser.Interpret(input));
+
+    /// <summary>Conflicting currencies require clarification even when written in mixed case.</summary>
+    [Fact]
+    public void Question_currency_codes_refuse_mixed_case_disagreement()
+        => Assert.Null(AiQuestionParser.Interpret("Why did EUR usd spending rise?"));
+
+    /// <summary>An explicitly written currency cannot be overwritten by the selected account.</summary>
+    [Fact]
+    public async Task Question_currency_codes_refuse_a_different_account_currency_at_review()
+    {
+        var ct = TestContext.Current.CancellationToken;
+        using var f = new FlowFixture();
+        var store = f.Services.GetRequiredService<AiSnapshotStore>();
+        var account = new Account { Name = "Fictitious EUR", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1) };
+        var category = new Category { Name = "Fictitious recurring expense", Kind = CategoryKind.Expense };
+        await using (var db = await f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>().CreateDbContextAsync(ct))
+        {
+            db.AddRange(account, category);
+            db.Add(new LedgerEntry { AccountId = account.Id, Date = new(2026, 10, 3), Kind = EntryKind.Expense,
+                Amount = 800, Review = ReviewState.Confirmed, CategoryId = category.Id });
+            await db.SaveChangesAsync(ct);
+        }
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        var vm = new AiAnalysisViewModel(store, f.Translator, f.Localization, new DateFormatter(f.Localization),
+            f.Time, f.Platform, new LocalRuntime());
+        await vm.LoadAsync();
+        Assert.Single(vm.Accounts).Selected = true;
+        vm.QuestionText = "Why did usd spending rise?";
+        await vm.ApplyQuestionCommand.ExecuteAsync(null);
+        await vm.ReviewAsync();
+        Assert.Null(vm.Disclosure);
+        Assert.Equal(f.Translator["AiQuestion_Scope"], vm.QuestionStatus);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
     /// <summary>Do not silently replace a written date or count with the selected scope.</summary>
     [Theory]
     [InlineData("Why did EUR spending rise from 2026-10-01 to 2026-10-15?")]

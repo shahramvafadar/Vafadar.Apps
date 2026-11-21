@@ -339,6 +339,19 @@ Output includes thinking tokens. This cost estimate uses measured usage and publ
 
 The bounded question parser asks for clarification when the text contains a number. Written dates and relative day counts used to fall through to the selected period. Four new synthetic cases used an ISO date range, Persian digits, a relative day count and full-width digits. The original parser recognized an intent for all four while ignoring the numeric qualifier. The corrected app keeps the selected dates, shows the existing clarification and creates no disclosure. The financial snapshot matched before and after each case. No provider was contacted.
 
+Currency recognition normalizes distinct ISO codes such as `usd` and `eUr`.
+Codes that are also ordinary words (GEL, MAD, RUB, TRY) retain the uppercase rule.
+Two different codes require clarification even when their case differs. A parsed
+currency still has to match the selected account before the app creates a preview.
+The original application test accepted an EUR preview with a lowercase USD question.
+The corrected case refused it and preserved the synthetic financial snapshot.
+The focused question suite passed 21 cases with no provider calls. An isolated Windows
+review displayed the scope warning on the original Analysis page for the same mismatch.
+The first native observer set the platform text directly without proving the managed
+binding. The corrected observer used the original bound entry and the same synthetic
+account. The financial fingerprint stayed equal and no disclosure was produced.
+Evidence is under `artifacts/ai-question-currency-scope`.
+
 Interpret now owns the question text captured at entry. In a focused synthetic application test, the first scope notification replaced a spending question with a next-month forecast question. The original command previously applied the replacement and changed the period. It now leaves the replacement unprocessed until a separate Interpret action. That action applied the next-month scope without creating a disclosure, contacting a provider, or changing the financial source.
 
 ## Six-language empty and comparison corpus

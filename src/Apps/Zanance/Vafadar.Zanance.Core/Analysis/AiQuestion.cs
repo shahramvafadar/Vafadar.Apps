@@ -47,8 +47,12 @@ public static partial class AiQuestionParser
         var plans = Has(Plans) && Has(Shortfall);
         var nextMonth = Has(NextMonths);
         if (spending == plans || spending && nextMonth || Has(OtherPeriods)) return null;
-        var currencies = IsoWords().Matches(question).Select(match => match.Value)
-            .Where(code => Currencies.TryGet(code, out _)).Distinct(StringComparer.Ordinal).Take(2).ToArray();
+        // Some codes are also ordinary words in the question languages. Keep their explicit uppercase spelling.
+        var currencies = IsoWords().Matches(question)
+            .Select(match => Currencies.TryGet(match.Value, out var currency) &&
+                (match.Value == currency.Code || currency.Code is not ("GEL" or "MAD" or "RUB" or "TRY"))
+                    ? currency.Code : null)
+            .OfType<string>().Distinct(StringComparer.Ordinal).Take(2).ToArray();
         return currencies.Length > 1 ? null : new(spending ? AiQuestionIntent.SpendingChange : AiQuestionIntent.PlanShortfall,
             currencies.FirstOrDefault(), nextMonth);
 
@@ -65,6 +69,6 @@ public static partial class AiQuestionParser
         });
     }
 
-    [GeneratedRegex(@"(?<![\p{L}\p{N}])[A-Z]{3}(?![\p{L}\p{N}])", RegexOptions.CultureInvariant)]
+    [GeneratedRegex(@"(?<![\p{L}\p{N}])[A-Za-z]{3}(?![\p{L}\p{N}])", RegexOptions.CultureInvariant)]
     private static partial Regex IsoWords();
 }
