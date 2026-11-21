@@ -63,6 +63,10 @@ matched their guest hashes before the app and emulator were retired.
 This establishes first-run readiness for that guest. The Samsung positive control, the
 eventual store-signed package and its declaration remain open.
 
+The newer [signed offline review package](../08-release-checklist.md#offline-signed-package-with-the-ai-preference-binding-fix)
+includes the AI preference binding fix and passed the offline archive verifier.
+Use the final Play bundle and its generated APKs to confirm the declaration.
+
 | Flow | Offline review | Cloud-backup review |
 | --- | --- | --- |
 | Financial and profile records, local OCR and local reports | On-device processing is outside Play's collection definition when the data stays on the device. | Same until a feature actually transmits a record. |
@@ -88,7 +92,7 @@ languages. It discloses that enabling personal synchronization can cause
 records to be sent automatically to the Zanance service, and points to the
 Settings switch for disabling AI.
 
-Strict Windows and Android Release builds passed. The signed offline APK
+In the initial disclosure review, strict Windows and Android Release builds passed. The signed offline APK
 `fa00cffc03cf2ecf2a14102245f38d982822ed7984810519cbc37c01c1b82cb4`
 passed package verification. On an owned Android 16 x86-64 emulator, the
 actual About page displayed the full English string exactly. All six resource
@@ -101,12 +105,26 @@ is in `artifacts/about-local-connected-disclosure`.
 [Play's User Data policy](https://support.google.com/googleplay/android-developer/answer/10144311)
 requires in-app access and an active public policy URL in the Console. The
 [policy draft](../../../../../docs/privacy/privacy-policy.md) names
-`https://vafadar.pro/privacy` as its intended URL. On 2026-11-21 the hostname
-did not resolve from the development environment, so no HTTPS policy response
-was verified and no new external link was added to the app. Final policy content
-and review, hosting, the in-app policy link and the Console declaration remain open.
+`https://vafadar.pro/privacy` as its intended URL. The About screen now has a
+localized button that opens that address in the system browser. Its visibility was
+checked in signed offline and synthetic connected Android builds. The production
+bundle workflow requires publication confirmation before it builds with the link
+enabled. The hostname did not return an address in the 2026-11-21 DNS check.
+Final policy content and review, the public HTTPS response, opening the link from
+the exact store artifact and the Console declaration remain open. See the
+[release checklist](../08-release-checklist.md#privacy-and-security).
 
 ## Account deletion for editions offering account creation
+
+The current store workflow offers `offline` and `cloud-backup` with Zanance
+personal sync and billing disabled. Local financial accounts and OAuth access to
+an existing Google or Microsoft account for backup are separate from a service
+identity created by Zanance. The release review must confirm that the exact
+selected bundle exposes no Zanance account creation and consider what other
+versions are present in active distribution tracks before answering the deletion
+questions. A later edition that enables Zanance account creation needs the
+in-app request and publicly reachable web resource. See the
+[Play account deletion FAQ](https://support.google.com/googleplay/android-developer/answer/13327111).
 
 [PRI-05](../spec/Zanance-Product-Specification.md#182-data-policy)
 requires a deletion request path both inside the app and on the public web for
