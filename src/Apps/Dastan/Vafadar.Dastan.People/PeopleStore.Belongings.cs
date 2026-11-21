@@ -230,7 +230,22 @@ public sealed partial class PeopleStore
 
     internal DateOnly Today => DateOnly.FromDateTime(_time.GetUtcNow().UtcDateTime);
 
-    private bool IsOpen(string id) => _context.Visitors.AsNoTracking().Any(visitor => visitor.Id == id && visitor.ClosedAt == null);
+    private bool IsOpen(string id)
+    {
+        bool Asked() => _context.Visitors.AsNoTracking().Any(visitor => visitor.Id == id && visitor.ClosedAt == null);
+        if (_reading is not { } answers)
+        {
+            return Asked();
+        }
+
+        if (!answers.Open.TryGetValue(id, out var open))
+        {
+            open = Asked();
+            answers.Open[id] = open;
+        }
+
+        return open;
+    }
 
     private void Save()
     {

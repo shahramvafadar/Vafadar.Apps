@@ -169,6 +169,40 @@ public sealed partial class PeopleStore
     /// </summary>
     public TreeView? Tree(string? viewer, string tree)
     {
+        // One view asks the same of the same accounts for every record: whether an account is open, what it
+        // may do in the tree, who owns the tree. Measured (step 20.12): a tree of 500 people asked the database
+        // some two thousand times and took three and a half seconds. While one view is read, each of these is
+        // asked once; nothing is remembered beyond the view, so nothing can be stale.
+        if (_reading is not null)
+        {
+            return ReadTree(viewer, tree);
+        }
+
+        _reading = new();
+        try
+        {
+            return ReadTree(viewer, tree);
+        }
+        finally
+        {
+            _reading = null;
+        }
+    }
+
+    // What one view of a tree has asked already.
+    private sealed class ViewAnswers
+    {
+        public Dictionary<(string Account, string Tree), TreeRole> Roles { get; } = [];
+
+        public Dictionary<string, bool> Open { get; } = new(StringComparer.Ordinal);
+
+        public Dictionary<string, string?> Owners { get; } = new(StringComparer.Ordinal);
+    }
+
+    private ViewAnswers? _reading;
+
+    private TreeView? ReadTree(string? viewer, string tree)
+    {
         if (viewer is null || Trees(viewer).SingleOrDefault(candidate => candidate.Id == tree) is not { } info)
         {
             return null;
@@ -482,7 +516,39 @@ public sealed partial class PeopleStore
         return true;
     }
 
-    private TreeRole Role(string id, string tree) => Trees(id).SingleOrDefault(candidate => candidate.Id == tree)?.Role ?? TreeRole.None;
+    private TreeRole Role(string id, string tree)
+    {
+        if (_reading is not { } answers)
+        {
+            return Trees(id).SingleOrDefault(candidate => candidate.Id == tree)?.Role ?? TreeRole.None;
+        }
+
+        if (!answers.Roles.TryGetValue((id, tree), out var role))
+        {
+            role = Trees(id).SingleOrDefault(candidate => candidate.Id == tree)?.Role ?? TreeRole.None;
+            answers.Roles[(id, tree)] = role;
+        }
+
+        return role;
+    }
+
+    // The account a tree is of, asked once while one view is read.
+    private string? OwnerOf(string tree)
+    {
+        string? Asked() => _context.Trees.AsNoTracking().Where(candidate => candidate.Id == tree).Select(candidate => candidate.Owner).SingleOrDefault();
+        if (_reading is not { } answers)
+        {
+            return Asked();
+        }
+
+        if (!answers.Owners.TryGetValue(tree, out var owner))
+        {
+            owner = Asked();
+            answers.Owners[tree] = owner;
+        }
+
+        return owner;
+    }
 
     // Whether somebody is among the descendants of a record: then they cannot become its parent.
     private static bool Descends(List<StoredKinship> links, string of, string who)

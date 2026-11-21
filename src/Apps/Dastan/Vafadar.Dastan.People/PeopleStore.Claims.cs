@@ -142,7 +142,7 @@ public sealed partial class PeopleStore
     private string? Reviewer(StoredPerson record, string claimant)
     {
         var maker = record.CreatedBy is { } made && IsOpen(made) && Role(made, record.Tree) != TreeRole.None ? made : null;
-        var reviewer = maker ?? _context.Trees.AsNoTracking().Where(tree => tree.Id == record.Tree).Select(tree => tree.Owner).SingleOrDefault();
+        var reviewer = maker ?? OwnerOf(record.Tree);
         return reviewer is null || reviewer == claimant || !IsOpen(reviewer) ? null : reviewer;
     }
 

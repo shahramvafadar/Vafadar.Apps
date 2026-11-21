@@ -419,3 +419,5 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   spaces stands on each of their pages. The page of a family tree is three parts – see the tree, change it,
   share it – with a way to each; you are shown only the parts you may use, and what waits for your answer in a
   tree is said at its top.
+- A large family tree opens much faster: the page of a tree of 500 people asked the database some two thousand
+  times and took three and a half seconds before its drawing could begin; it now asks each thing once.

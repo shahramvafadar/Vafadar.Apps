@@ -332,3 +332,19 @@ whether the job passes.
 and the timeline), a screen reader, Safari itself, a mailbox and a sender with a domain, the company that sends
 the mail and a contract with it, clients at Google and Microsoft, the key of the licence of the graph, a
 lawyer's reading of the legal texts, and the approval of the texts of the collection by an editor.
+
+## Where the rows stand at the end of phase 20 (step 20.12, 2026-11-21)
+
+Phase 20 rebuilt how the site is used and closed rows that the section above still calls open. This section
+names them; the sections above are left as they were written.
+
+| Rows | Now | Shown by | Still open |
+|---|---|---|---|
+| R-TIME-02, R-TIME-03 | the still chart of the server draws a window as a window (20.10) | `StoriesTimesPicturesTests` | – |
+| R-TIME-04 | the still chart says a depth of time as a table of its own axis, converted into nothing (20.10) | `StoriesTimesPicturesTests` | an axis of depth drawn without a script |
+| R-STORY-03 | the page of a story gives its steps to the timeline on the axis of the telling; the order inside the world is a view that says so itself (20.10) | `TimelineViewsTests`, `StoryChartBrowserTests` | a story of a collection that states an order inside its world |
+| R-MED-07, SC-18 | one picture in several places with a caption and sources for each, by reference (20.10) | `MediaPlacesTests`, `StoriesTimesPicturesTests` | inputs of the Studio for placements |
+| R-EXP-05 | what is chosen, compared and left out is carried between the views of a name in the address (20.6, 20.8) | `ExplorationTests`, `ExploringPagesTests`, `ExplorerPagesTests` | a stretch of years honoured by the connections and the pictures |
+| R-PER-06, R-PER-07 | a place of a collection is chosen as where one was, and "who was here" is asked from its page (20.4) | `InstitutionsTests`, `InstitutionPagesTests` | places proposed by visitors |
+| R-MED-02 | – | – | themes of a gallery: the vocabulary has no kind for a theme |
+| R-PLAT-01, R-PLAT-05 | the journeys run in Chromium, Firefox and WebKit on the build server | the workflow of CI | Safari itself, a real phone, a screen reader, people who see the site for the first time ([user-test.md](user-test.md)) |

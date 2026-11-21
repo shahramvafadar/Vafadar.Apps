@@ -276,3 +276,23 @@ Not checked: Safari on a Mac or a phone, Firefox on Android, and the page for "n
 | The store knows who an editor is: an account with a password of which only a derived value is kept; too many wrong passwords close it for a while; another password or a closed account ends every sign-in | **Implemented and checked** | `EditorAccountsTests` |
 | With accounts the tool shows nothing to who has not signed in, answers another machine over an encrypted connection only, and keeps every act under the account – whatever name a form gives | **Implemented and checked** | `StudioAccountsTests`; signing in, an act and signing out done in a browser at phone width, right to left. Not checked: a browser signing in through a proxy with a certificate |
 | The tool runs as a container for a server: the store and the keys on a volume, alive or not, a copy of the store written while it runs and brought back | **Implemented and checked on this machine** | `StoreCopyTests`, `StudioAccountsTests`; the image built and run, `eng/Check-Studio.ps1` passed (it found a cookie that was not Secure, which was corrected), a store put into the volume, signed in as a proxy would pass it on, a copy written in the container. Not done: a real server, a proxy with a certificate, an account made with a terminal in the container |
+
+## Phase 20 – safe foundations and one visual experience (2026-11-21)
+
+What phase 20 of the [delivery plan](delivery-plan.md) built is said there, step by step, with what each step
+did not build and did not show. This section says how the whole is shown.
+
+| What | State | Shown by |
+|---|---|---|
+| An unknown subject is found, followed and left again – with the keyboard alone, on a screen of 360 px, in both languages | **Implemented and checked** | `SevenJourneysBrowserTests` |
+| The times of two names are compared and the pictures of a name found, the comparison kept on the way there and back | **Implemented and checked** | `SevenJourneysBrowserTests`, `ExplorerPagesTests` |
+| A story is read and no answer of the site – a page, a graph, a profile, a search – holds a record, a name or a step that was not read; what is asked for by its address is answered as what does not exist | **Implemented and checked** | `SevenJourneysBrowserTests` (every answer of a walk at the second stage is read), `ExploringPagesTests`, `StoriesTimesPicturesTests` |
+| Several relationships are asked one by one, accepted each by itself, and one ended while the other stays | **Implemented and checked** | `TwoPeopleJourneyBrowserTests`, `RelationshipsBrowserTests` |
+| A place somebody was at twice: found by it, with its dates shown to nobody – two answers | **Implemented and checked** | `TwoPeopleJourneyBrowserTests`, `AffiliationPagesTests` |
+| A family tree and a photograph are seen by somebody else and, taken back, refused to her | **Implemented and checked** | `TwoPeopleJourneyBrowserTests`, `FamilyTreePagesTests`, `PhotoPagesTests` |
+| All of it on a narrow screen without a page that scrolls sideways, and what changed breaks no rule of WCAG 2.1 A and AA a tool can check; the ways of the head, of the bars and of the tasks are at least 44 px | **Implemented and checked by a tool** | the tests in a browser of steps 20.5 to 20.12 (axe-core). Not checked: by a person with a screen reader; WCAG 2.2 criteria no tool decides (focus not obscured, dragging – every drawing has keys and links beside dragging, by construction) |
+| The largest family tree goes the whole way – database, placing, answer, drawing – within budgets set before the last measurement | **Implemented and checked on this machine** | `WholeWayBrowserTests`; the numbers are in [ADR 0020](adr/0020-graph.md) |
+| What a device keeps holds nothing private; nothing is kept for somebody who is signed in | **Implemented and checked** (before phase 20, unchanged) | `KeptOfflineTests`, `WorkerUpdateTests` |
+| Five people do four tasks | **Not done** – the owner's | the script is [user-test.md](user-test.md) |
+
+The suite has 3297 tests; all passed on the machine of development on 2026-11-21 with the budgets judged.
