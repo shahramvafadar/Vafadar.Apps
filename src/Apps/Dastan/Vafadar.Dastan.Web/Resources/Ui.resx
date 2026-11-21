@@ -3963,4 +3963,7 @@
   <data name="Explore_Filter_KindOfPicture" xml:space="preserve">
     <value>the kind of picture you chose</value>
   </data>
+  <data name="Discover_Drawing_Open" xml:space="preserve">
+    <value>Explore these connections</value>
+  </data>
 </root>

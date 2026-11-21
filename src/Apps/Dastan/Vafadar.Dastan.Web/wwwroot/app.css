@@ -621,6 +621,18 @@ main:focus {
   padding: 8% 32%;
 }
 
+/* On a phone a drawing that stands for a picture is a band, not half a screen: it says the kind and gives
+   the room to the words. A real picture keeps its shape. */
+@media (max-width: 40rem) {
+  .node-card.tall .profile-picture:has(.kind-drawing) {
+    aspect-ratio: 5 / 2;
+  }
+
+  .node-card.tall .kind-drawing {
+    padding: 4% 38%;
+  }
+}
+
 .picture-cards {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
   gap: var(--space-4);
@@ -707,6 +719,93 @@ main:focus {
   background: var(--accent-soft);
   color: var(--accent);
   box-shadow: inset 0 -3px 0 var(--accent);
+}
+
+/* Where a visitor begins (step 20.7). The page is wider than a page of text: it shows things side by side.
+   What is read – the words of the hero, a note – keeps the measure of text. */
+main:has(> .discover) {
+  max-inline-size: var(--measure-wide);
+}
+
+.discover .hero {
+  max-inline-size: var(--measure);
+  padding-block: var(--space-6) var(--space-4);
+}
+
+/* The search of the start is the largest thing after the name: a field as high as a finger and a half. */
+.discover .hero .search {
+  margin-block-start: var(--space-6);
+}
+
+.discover .hero .search label {
+  font-size: var(--step-1);
+  font-weight: 600;
+}
+
+.discover .hero .search input {
+  min-block-size: 3.25rem;
+  font-size: var(--step-1);
+  box-shadow: var(--shadow-1);
+}
+
+.discover .hero .search .action {
+  min-block-size: 3.25rem;
+}
+
+/* What the site has to begin with: one beside the other where there is room. */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: var(--space-4);
+}
+
+.features > .card {
+  box-shadow: var(--shadow-1);
+}
+
+/* A feature with a picture: the picture beside the words, above them on a phone. */
+.feature {
+  display: grid;
+  grid-template-columns: minmax(7rem, 12rem) 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.feature:not(:has(.profile-picture)) {
+  grid-template-columns: 1fr;
+}
+
+.feature > * + * {
+  margin-block-start: 0;
+}
+
+.feature .profile-picture {
+  border: 0;
+  background: var(--surface-sunken);
+}
+
+.feature-words > * + * {
+  margin-block-start: var(--space-2);
+}
+
+@media (max-width: 30rem) {
+  .feature {
+    grid-template-columns: 1fr;
+  }
+
+  .feature .profile-picture {
+    inline-size: min(10rem, 50vw);
+  }
+}
+
+/* A piece of a drawing on a page that is not the page of the drawing: it scrolls inside its frame. */
+.drawing-peek {
+  max-block-size: 26rem;
+  overflow: auto;
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
 }
 
 /* What is chosen while exploring (step 20.6): looked at closer without leaving the view. */

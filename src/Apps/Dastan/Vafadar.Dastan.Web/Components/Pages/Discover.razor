@@ -4,72 +4,166 @@
 @inject DastanLibrary Library
 @inject IStringLocalizer<Ui> T
 
+@* Where a visitor begins (step 20.7, ADR 0024): a large search; what the site has to begin with – a story or a
+   subject, with its picture or the drawing of its kind –; the names to start with as cards; threads to follow;
+   a real piece of a drawing of connections; and what is laid side by side. Everything here is what the
+   collections hold and this visitor may see: no card stands for something the site does not have, and nothing
+   asks for an account. *@
 <PageTitle>@T["Site_Name"] – @T["Site_Tagline"]</PageTitle>
 <PageDescription Title="@T["Site_Name"]" Text="@($"{T["Site_Tagline"]} {T["Discover_Lead"]}")" />
 
-<section class="hero">
-    <h1>@T["Site_Name"]</h1>
-    <p class="tagline">@T["Site_Tagline"]</p>
-    <p>@T["Discover_Lead"]</p>
-</section>
-
-@* Every collection of the site the visitor may see (step 14.10), the one a visitor enters first at the top –
-   each with what it is about as far as this visitor has read it. *@
 @{
+    // Every collection of the site the visitor may see (step 14.10), the one a visitor enters first at the top.
     var shown = Library.Collections.Select(collection => (Collection: collection, Projection: Visitor.Of(collection))).Where(entry => entry.Projection is not null).ToList();
 }
-@if (shown.Count > 0)
-{
-    <section aria-labelledby="first-story">
-        <h2 id="first-story">@T[shown.Count == 1 ? "Discover_First" : "Discover_Collections"]</h2>
-        @foreach (var (collection, projection) in shown)
+
+<div class="discover">
+    <section class="hero">
+        <h1>@T["Site_Name"]</h1>
+        <p class="tagline">@T["Site_Tagline"]</p>
+        <p>@T["Discover_Lead"]</p>
+        @if (shown.Count == 1)
         {
-            var overview = projection!.Overview();
-            <article class="card">
-                <h3><a href="@collection.Collection"><Loc Text="overview.Subject.Label" /></a></h3>
-                @if (overview.Work is { } work)
+            <SearchForm />
+        }
+        else if (shown.Count > 1)
+        {
+            @* With several collections a name is looked for in all of them; each has its own search on its page. *@
+            <form class="search" method="get" action="search" role="search">
+                <label for="site-search-q">@T["SiteSearch_Label"]</label>
+                <div class="search-row">
+                    <input type="search" id="site-search-q" name="q" maxlength="80" autocomplete="off" enterkeyhint="search" dir="auto" />
+                    <button type="submit" class="action">@T["Search_Title"]</button>
+                </div>
+                <p class="note">@T["Search_Hint"]</p>
+            </form>
+        }
+    </section>
+
+    @if (shown.Count > 0)
+    {
+        <section aria-labelledby="first-story">
+            <h2 id="first-story">@T[shown.Count == 1 ? "Discover_First" : "Discover_Collections"]</h2>
+            <div class="features">
+                @foreach (var (collection, projection) in shown)
                 {
-                    <p class="meta"><Loc Text="work.Label" /></p>
+                    var overview = projection!.Overview();
+                    <article class="card feature">
+                        @if (collection == Site && projection.Profile(overview.Subject.Id) is { } profile)
+                        {
+                            @* The picture of what the collection is about, or the drawing of its kind. A collection
+                               that is not the one of this page shows no picture: its files are asked of its own pages. *@
+                            <ProfilePicture Profile="profile" />
+                        }
+                        <div class="feature-words">
+                            <h3><a href="@collection.Collection"><Loc Text="overview.Subject.Label" /></a></h3>
+                            @if (overview.Work is { } work)
+                            {
+                                <p class="meta"><Loc Text="work.Label" /></p>
+                            }
+                            <p><Loc Text="overview.Subject.Summary" /></p>
+                            <p><a class="action" href="@collection.Collection">@T[projection.Stories.IsEmpty ? "Discover_OpenCollection" : "Discover_Open"]<span class="visually-hidden"> – @Visitor.Text(overview.Subject.Label).Value</span></a></p>
+                        </div>
+                    </article>
                 }
-                <p><Loc Text="overview.Subject.Summary" /></p>
-                <p><a class="action" href="@collection.Collection">@T[projection.Stories.IsEmpty ? "Discover_OpenCollection" : "Discover_Open"]<span class="visually-hidden"> – @Visitor.Text(overview.Subject.Label).Value</span></a></p>
-            </article>
-        }
-    </section>
-
-    @if (shown.Count == 1)
-    {
-        <SearchForm />
-    }
-    else
-    {
-        @* With several collections a name is looked for in all of them; each has its own search on its page. *@
-        <form class="search" method="get" action="search" role="search">
-            <label for="site-search-q">@T["SiteSearch_Label"]</label>
-            <div class="search-row">
-                <input type="search" id="site-search-q" name="q" maxlength="80" autocomplete="off" enterkeyhint="search" dir="auto" />
-                <button type="submit" class="action">@T["Search_Title"]</button>
             </div>
-            <p class="note">@T["Search_Hint"]</p>
-        </form>
+        </section>
     }
-}
-else if (Site.Comparisons.IsEmpty)
-{
-    <p class="note">@T["Discover_Nothing"]</p>
-}
+    else if (Site.Comparisons.IsEmpty)
+    {
+        <p class="note">@T["Discover_Nothing"]</p>
+    }
 
-@if (!Site.Comparisons.IsEmpty)
-{
-    <section aria-labelledby="side-by-side">
-        <h2 id="side-by-side">@T["Discover_Comparisons"]</h2>
-        @foreach (var comparison in Site.Comparisons)
+    @if (_subjects.Count > 0)
+    {
+        @* The names the editors say to start with, as far as this visitor has read: each as its card. *@
+        <section aria-labelledby="start-with">
+            <h2 id="start-with">@T["Collection_Subjects"]</h2>
+            <ul class="cards picture-cards" role="list">
+                @foreach (var profile in _subjects)
+                {
+                    <li class="card"><NodeCard Profile="profile" Tall="true" Summary="true" /></li>
+                }
+            </ul>
+        </section>
+    }
+
+    @if (Visitor.Projection is { Threads.IsEmpty: false } threaded)
+    {
+        @* Threads the editors lay through the collection (R-EXP-04): a way to read, begun here. *@
+        <section aria-labelledby="threads">
+            <h2 id="threads">@T["Thread_List"]</h2>
+            <ul class="cards" role="list">
+                @foreach (var thread in threaded.Threads)
+                {
+                    <li class="card">
+                        <h3><a href="@($"{Site.Collection}/thread/{thread.Thread.Id}")"><Loc Text="thread.Thread.Label" /></a></h3>
+                        <p><Loc Text="thread.Thread.Summary" /></p>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+
+    @if (_chart is { } chart)
+    {
+        @* A real piece of a drawing: the connections of the first name that has any, as its own page draws
+           them – not a picture of a drawing. It scrolls inside its frame; the page behind it does not. *@
+        var name = Visitor.Text(chart.Focus.Label).Value;
+        <section aria-labelledby="a-drawing">
+            <h2 id="a-drawing">@string.Format(CultureInfo.CurrentCulture, T["Connections_Title"], name)</h2>
+            <div class="drawing-peek" tabindex="0" role="group" aria-label="@string.Format(CultureInfo.CurrentCulture, T["Connections_Graph"], name)">
+                <ConnectionsGraph Chart="chart" Open="_none" Address="@((focus, open) => $"{Site.Collection}/entity/{focus}/connections{(open.Any() ? "?open=" + string.Join(',', open.Select(id => id.Value).Distinct()) : null)}")" />
+            </div>
+            <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/entity/{chart.Focus.Id}/connections")">@T["Discover_Drawing_Open"]<span class="visually-hidden"> – @name</span></a></p>
+        </section>
+    }
+
+    @if (!Site.Comparisons.IsEmpty)
+    {
+        <section aria-labelledby="side-by-side">
+            <h2 id="side-by-side">@T["Discover_Comparisons"]</h2>
+            <div class="features">
+                @foreach (var comparison in Site.Comparisons)
+                {
+                    <article class="card">
+                        <h3><a href="@($"compare/{comparison.Id}")"><Loc Text="comparison.Title" /></a></h3>
+                        <p><Loc Text="comparison.Summary" /></p>
+                        <p><a class="action" href="@($"compare/{comparison.Id}")">@T["Discover_OpenComparison"]</a></p>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+</div>
+
+@code {
+    // How many names the start shows as cards: a page to begin with, not the list of the collection.
+    private const int MostSubjects = 6;
+
+    private readonly List<NodeProfile> _subjects = [];
+    private ConnectionsChart? _chart;
+    private static readonly IReadOnlyList<EntityId> _none = [];
+
+    protected override void OnInitialized()
+    {
+        // Of the collection the site begins with, as far as this visitor has read it.
+        if (Visitor.Projection is not { } projection)
         {
-            <article class="card">
-                <h3><a href="@($"compare/{comparison.Id}")"><Loc Text="comparison.Title" /></a></h3>
-                <p><Loc Text="comparison.Summary" /></p>
-                <p><a class="action" href="@($"compare/{comparison.Id}")">@T["Discover_OpenComparison"]</a></p>
-            </article>
+            return;
         }
-    </section>
+
+        var subjects = projection.Overview().Subjects;
+        _subjects.AddRange(subjects.Take(MostSubjects).Select(subject => projection.Profile(subject.Id)!));
+
+        // The first of them that is connected with something: its drawing, with nothing opened.
+        foreach (var subject in subjects)
+        {
+            if (projection.Connections(subject.Id, []) is { Edges.IsEmpty: false } view)
+            {
+                _chart = ConnectionsLayout.Of(view, text => Visitor.Text(text).Value, Visitor.Language.IsRightToLeft ? 1.9 : 1.6);
+                break;
+            }
+        }
+    }
 }
