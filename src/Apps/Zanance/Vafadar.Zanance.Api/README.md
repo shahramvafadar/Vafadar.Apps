@@ -113,6 +113,12 @@ object scope. The receipt, identity and other service records remain pending.
 Final account erasure must recheck for new objects under its execution lock
 and handle backups separately.
 
+An upload takes the same owner lock as deletion intake. Once a deletion request
+is pending, new private object uploads return HTTP 409 before storing a file or
+manifest. The existing deletion receipt remains available. An isolated PostgreSQL
+test pauses an authenticated upload before the owner lock, admits deletion, and
+then resumes the upload to verify this ordering.
+
 The personal sync stage is
 `--retire-account-personal-sync <receipt-id> --confirm-personal-sync-retirement`.
 The owner and piece locks protect one transaction that records exact server

@@ -55,6 +55,9 @@ public static class ObjectRoutes
         // Recheck the original session after waiting for any owner erasure or revocation.
         await using var scope = await SyncRequestScope.OpenAsync(http.User, db, time, ct);
         if (scope is null) return Results.Unauthorized();
+        // Intake and publication use the same owner lock. A request authenticated
+        // before retirement cannot add a new object after deletion is queued.
+        if (await scope.AccountDeletionPendingAsync(ct)) return Results.Conflict();
         var owner = scope.Owner;
         var used = await db.Objects.Where(o => o.UserId == owner && !o.Deleted).SumAsync(o => o.Length, ct);
         if (used + content.Length > 64 * 1024 * 1024 || await db.Objects.CountAsync(o => o.UserId == owner && !o.Deleted, ct) >= 100)

@@ -34,6 +34,60 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Account_deletion_admitted_during_upload_prevents_private_object_publication()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_object_admission_fixture";
+
+        var uploadWait = new OwnerUploadWait();
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "object-admission-service"), uploadWait);
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        var users = services.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        const string email = "object-admission@example.invalid";
+        const string password = "Fictional-Object-Admission9!";
+        var user = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+        Assert.True((await users.CreateAsync(user, password)).Succeeded);
+
+        using var app = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var login = await app.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+        app.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+
+        using var content = new ByteArrayContent(new byte[] { 1, 2, 3 });
+        content.Headers.ContentType = new("application/octet-stream");
+        uploadWait.Arm();
+        var upload = app.PostAsync("/objects/", content, ct);
+        AccountDeletionReceipt receipt;
+        try
+        {
+            await uploadWait.Entered.Task.WaitAsync(TimeSpan.FromSeconds(10), ct);
+            using var intake = await app.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+            Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
+            receipt = Assert.IsType<AccountDeletionReceipt>(await intake.Content.ReadFromJsonAsync<AccountDeletionReceipt>(ct));
+        }
+        finally { uploadWait.Release.TrySetResult(); }
+
+        using var response = await upload;
+        Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        Assert.Empty(await db.Objects.AsNoTracking().ToListAsync(ct));
+        Assert.Empty(Directory.EnumerateFiles(Path.Combine(storage.Root, "objects")));
+        Assert.Equal(receipt, await app.GetFromJsonAsync<AccountDeletionReceipt>("/identity/deletion-request", ct));
+    }
+
+    [Fact]
     public async Task Account_erasure_releases_an_unpublished_reservation_but_preserves_room_history()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
