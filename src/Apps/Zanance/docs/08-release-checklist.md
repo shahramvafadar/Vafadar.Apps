@@ -6521,3 +6521,24 @@ This verifies the native boundary before the first page and subsequent
 renderer reuse. Cancellation inside an active native page render and
 native app-page retirement are outside this probe. No receipt OCR,
 account setup, ledger write or real-device action was repeated.
+
+## Signed offline handoff with cancellable PDF rendering (2026-11-21)
+
+The current offline Android test handoff uses the existing Release build
+of app source `ef9da336`. It includes cancellation inside the PDF
+rendering stage and the earlier receipt reading and picker corrections.
+Later commits through `5d31b17a` affect hosting operations and documentation.
+
+- APK: `artifacts/android-offline-ef9da336-release-review/pro.vafadar.zanance-Signed.apk`
+- Size: 100,093,721 bytes
+- SHA-256: `14ffd3e7d1f62b443c8d37078518ad587f00ae3a9853ed9905e77653a1cfa08a`
+
+The exact archive passed the canonical offline APK verifier, with required
+payloads, SQLCipher, offline policies, and 16 KiB ZIP and ELF alignment.
+It contains arm64-v8a and x86_64 and uses the same local test certificate
+as the `f2c0f1b1` handoff, with verified v2 and v3 signatures. The handoff
+copy matches the verified source archive by SHA-256.
+
+The native renderer probe above verified its named case with the original
+library on Android 16 in a separate package. This handoff had no new
+build, installation, device session or re-execution of accepted tests.
