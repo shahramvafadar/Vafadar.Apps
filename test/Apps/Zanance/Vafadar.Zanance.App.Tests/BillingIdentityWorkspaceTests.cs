@@ -7,6 +7,58 @@ namespace Vafadar.Zanance.App.Tests;
 public sealed class BillingIdentityWorkspaceTests
 {
     [Fact]
+    public async Task Billing_identity_startup_feedback_failure_leaves_read_retry_available()
+    {
+        using var fixture = new FlowFixture();
+        var effects = new Effects();
+        var model = new BillingIdentityViewModel(effects, fixture.Translator, fixture.Platform);
+        await model.ActivateAsync();
+        var failures = 0;
+        model.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(model.IsBusy) && model.IsBusy && failures++ == 0)
+                throw new InvalidOperationException("Synthetic busy feedback failure.");
+        };
+
+        await model.RefreshSessionCommand.ExecuteAsync(null);
+
+        Assert.Equal(1, effects.SessionReads);
+        Assert.False(model.HasPendingOperation);
+        Assert.True(model.CanRead);
+        Assert.False(model.IsReady);
+        Assert.Equal(fixture.Translator["BillingIdentity_Unavailable"], model.Status);
+        await model.RefreshSessionCommand.ExecuteAsync(null);
+        Assert.Equal(2, effects.SessionReads);
+        Assert.True(model.IsReady);
+        Assert.Equal(0, effects.SignIns);
+        model.Deactivate();
+    }
+
+    [Fact]
+    public async Task Billing_identity_startup_refuses_submission_when_busy_feedback_retires_the_root()
+    {
+        using var fixture = new FlowFixture();
+        var effects = new Effects();
+        var model = new BillingIdentityViewModel(effects, fixture.Translator, fixture.Platform);
+        await model.ActivateAsync();
+        model.Email = "fictional@example.invalid";
+        model.Password = "Synthetic-original-password9!";
+        model.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(model.IsBusy) && model.IsBusy)
+                model.RetireRoot();
+        };
+
+        await model.SubmitCommand.ExecuteAsync(null);
+
+        Assert.Equal(0, effects.SignIns);
+        Assert.Equal(1, effects.SessionReads);
+        Assert.False(model.IsReady);
+        Assert.False(model.HasPendingOperation);
+        Assert.Empty(model.Password);
+    }
+
+    [Fact]
     public async Task Billing_deletion_recovers_receipt_without_resending_and_clears_it_for_a_new_subject()
     {
         using var fixture = new FlowFixture();

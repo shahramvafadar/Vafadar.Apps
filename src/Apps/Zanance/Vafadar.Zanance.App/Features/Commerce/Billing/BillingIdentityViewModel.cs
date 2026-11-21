@@ -287,13 +287,17 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
         if (!OwnsPresentation || HasPendingOperation || reviewing) return;
         var current = epoch; var ct = visible!.Token; var submittedRevision = inputRevision;
         bool Current() => OwnsPresentation && current == epoch && !ct.IsCancellationRequested;
-        operationActive = true; readingSession = primary is null; IsBusy = true;
+        operationActive = true; readingSession = primary is null;
         sessionReady = false; readFailed = false;
         if (primary is not null) { acceptedKey = statusKey = null; }
-        RefreshDisplay();
         try
         {
+            IsBusy = true;
+            if (!Current()) return;
+            RefreshDisplay();
+            if (!Current()) return;
             DeletionPassword = "";
+            if (!Current()) return;
             if (primary is not null)
             {
                 var acknowledgement = await primary(ct);
