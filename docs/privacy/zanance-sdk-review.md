@@ -1,5 +1,42 @@
 # Zanance SDK and permission review (SEC-09, D-69)
 
+## Current signed Android review artifacts
+
+These observations bind to the exact already signed review APKs listed below.
+Android SDK AAPT2 reported the manifest permissions and SDK dexdump reported
+class **definitions** across all three DEX files per archive. The check reads
+the binaries without rebuilding or running them.
+
+| Signed review APK | INTERNET | Play Billing permission | Play Billing definitions | DataTransport definitions | ML Kit definitions | Google legacy sign-in definitions | Google location definitions |
+|---|---|---|---:|---:|---:|---:|---:|
+| Offline `2eede0f5` | No | No | 0 | 317 | 203 | 39 | 0 |
+| Personal sync `216204c3` | Yes | No | 0 | 317 | 203 | 39 | 0 |
+| Billing sandbox `27b5a595` | Yes | Yes | 273 | 317 | 203 | 39 | 99 |
+
+No inspected archive declares Android location, advertising ID or network-state
+permission. Each declares notifications, boot completion, biometric and
+fingerprint permissions plus its own dynamic-receiver permission. No DEX class
+definition in the inspected Microsoft Identity Client, Firebase Analytics or
+Firebase Crashlytics namespaces was found. These are namespace checks rather
+than a complete inventory of managed assemblies or renamed code.
+
+All three archives carry the same application notices asset, which includes
+the optional Google Play Billing notice. Its text is shared across build
+editions. The DEX and permission evidence distinguishes the packaged billing
+edition. DataTransport and legacy Google sign-in definitions are present even
+in the offline archive; their presence establishes package composition only.
+The offline APK's original verifier separately checks the absence of the
+network permission and Google/Microsoft sign-in component declarations.
+
+The SHA-256 identities inspected were
+
+- Offline `1e38ab9fe7734fd4f8b428e19389e43955207bb9a79b57caa059ac9f45e9d24e`
+- Personal sync `95933e405db963bbe3b9de91e7bdcd340818f067991fae3cf552d10ad37e1ed2`
+- Billing sandbox `2c4ff4bac60ba1993f949f934c02ca77bf33b70a65b1cf289977d1ba646767d0`
+
+Observed runtime traffic, external processor configuration, real store
+behavior and the declaration for the final selected release remain open.
+
 
 ## Current optional billing boundary (D-295,2026-10-16)
 
