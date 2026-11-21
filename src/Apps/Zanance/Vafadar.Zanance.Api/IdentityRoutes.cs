@@ -89,6 +89,11 @@ public static class IdentityRoutes
             await db.Entry(user).ReloadAsync(ct);
             if (db.Entry(user).State == EntityState.Detached || !user.EmailConfirmed ||
                 await db.AccountDeletionRequests.AnyAsync(row => row.UserId == user.Id, ct)) return Results.Accepted();
+            // Repeated requests during delivery retain the exact queued challenge and provider idempotency key.
+            var now = time.GetUtcNow();
+            if (await db.Challenges.AnyAsync(row => row.UserId == user.Id && row.Purpose == "reset" &&
+                    !row.Consumed && !row.Delivered && row.ExpiresAt > now, ct))
+                return Results.Accepted();
             var token = await users.GeneratePasswordResetTokenAsync(user);
             AddChallenge(db, protection, time, user, "reset", token, services.GetService<IIdentityMailSender>()?.Authority, input.Language);
             await db.SaveChangesAsync(ct);

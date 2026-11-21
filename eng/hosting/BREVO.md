@@ -76,6 +76,9 @@ passwords, already confirmed accounts and deleted original users never acquire a
 replacement code or password change. Anonymous responses remain uniform. Recovery
 continues through the original one-use password-reset validation; no automatic
 login or device authentication is introduced.
+Repeating recovery while a valid reset email is queued or in flight keeps the
+original challenge and delivery key. A delivered or expired challenge allows
+another explicit recovery request under the existing request limits.
 
 The original UUID is the batch idempotency key. Its documented 30-minute lifetime
 exceeds the original 15-minute challenge. Only 201 with a nonempty receipt or the

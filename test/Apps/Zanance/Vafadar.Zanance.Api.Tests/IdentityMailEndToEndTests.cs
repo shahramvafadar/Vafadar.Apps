@@ -20,6 +20,67 @@ namespace Vafadar.Zanance.Api.Tests;
 [Trait("Qualification", "IdentityMailLocal")]
 public sealed class IdentityMailEndToEndTests
 {
+    [Fact]
+    public async Task Recovery_preserves_the_original_queued_challenge_until_it_is_delivered()
+    {
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_MAIL_TEST_DB");
+        Assert.SkipWhen(connection is null, "Requires the independent fictional identity-mail database.");
+        var authority = new NpgsqlConnectionStringBuilder(connection!);
+        Assert.Equal("zanance_identity_mail_d1227", authority.Database);
+        Assert.Equal("127.0.0.1", authority.Host);
+        var ct = TestContext.Current.CancellationToken;
+        var root = Directory.CreateTempSubdirectory("zanance-recovery-queue-");
+        var key = Path.Combine(root.FullName, "fictional-key");
+        await File.WriteAllTextAsync(key, "fictional-not-a-provider-key", ct);
+        try
+        {
+            await using (var setup = new ServiceDbContext(new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection!).Options))
+                await setup.Database.MigrateAsync(ct);
+
+            var clock = new FakeTimeProvider(DateTimeOffset.UtcNow);
+            using var sender = new BrevoIdentityMailSender("sender@example.invalid", key,
+                new Peer((_, _) => throw new InvalidOperationException("No mail may be sent in this route test.")));
+            await using var host = new Host(connection!, Path.Combine(root.FullName, "private"), clock, sender);
+            using var http = host.CreateClient(new WebApplicationFactoryClientOptions { BaseAddress = new Uri("https://localhost") });
+            await using var scope = host.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<ServiceDbContext>();
+            var manager = scope.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+            var email = $"recovery-{Guid.NewGuid():N}@example.invalid";
+            var owner = new ServiceUser { Email = email, UserName = email, EmailConfirmed = true };
+            Assert.True((await manager.CreateAsync(owner)).Succeeded);
+            try
+            {
+                async Task RequestAsync(string language)
+                {
+                    using var response = await http.PostAsJsonAsync("/identity/recover", new IdentityInput(email, "", language), ct);
+                    Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+                }
+
+                var resets = db.Challenges.AsNoTracking().Where(row => row.UserId == owner.Id && row.Purpose == "reset");
+                await RequestAsync("de-DE");
+                var original = await resets.SingleAsync(ct);
+                await RequestAsync("fa-IR");
+                var retained = await resets.SingleAsync(ct);
+                Assert.Equal((original.Id, original.ExpiresAt), (retained.Id, retained.ExpiresAt));
+                Assert.True(original.ProtectedMail == retained.ProtectedMail, "The retained encrypted envelope changed.");
+
+                await resets.Where(row => row.Id == original.Id).ExecuteUpdateAsync(set => set.SetProperty(row => row.Delivered, true), ct);
+                await RequestAsync("fa-IR");
+                Assert.Equal(2, await resets.CountAsync(ct));
+                Assert.NotEqual(original.Id, await resets.Where(row => !row.Delivered).Select(row => row.Id).SingleAsync(ct));
+            }
+            finally
+            {
+                await db.Challenges.Where(row => row.UserId == owner.Id).ExecuteDeleteAsync(CancellationToken.None);
+                Assert.True((await manager.DeleteAsync(owner)).Succeeded);
+            }
+        }
+        finally
+        {
+            root.Delete(recursive: true);
+        }
+    }
+
     /// <summary>The captured language/code survives an unknown provider outcome; delivered codes complete both original Identity purposes.</summary>
     [Fact]
     public async Task Original_confirmation_and_recovery_complete_through_the_versioned_provider_outbox()
