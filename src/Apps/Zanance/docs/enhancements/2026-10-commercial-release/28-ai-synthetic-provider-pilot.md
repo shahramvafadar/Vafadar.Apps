@@ -352,6 +352,18 @@ binding. The corrected observer used the original bound entry and the same synth
 account. The financial fingerprint stayed equal and no disclosure was produced.
 Evidence is under `artifacts/ai-question-currency-scope`.
 
+The signed offline Release APK for revision `3705dd77` passed a separate Android 16
+(API 36 x86-64, 4096-byte pages) review. The installed APK matched SHA-256
+`ae6a1bc50397b9c7a62c265128bd0f1ca2f4301336b34417d144623d5484fa5b`.
+One fresh zero-opening account in EUR was selected. The native entry accepted a
+lowercase `usd` question, Interpret displayed the requested code USD, and Review
+displayed the account-scope warning. The upper and lower Analysis viewports showed
+no outgoing preview. The native provider check stayed disabled and Transactions
+remained empty. The first entry observer expected just the typed value, while
+Android exposed the caption and value together. The observer continued with the same
+input and did not repeat setup or text entry. The disposable package and emulator
+were retired. Native captures and the receipt are under `artifacts/ai-question-android36`.
+
 Interpret now owns the question text captured at entry. In a focused synthetic application test, the first scope notification replaced a spending question with a next-month forecast question. The original command previously applied the replacement and changed the period. It now leaves the replacement unprocessed until a separate Interpret action. That action applied the next-month scope without creating a disclosure, contacting a provider, or changing the financial source.
 
 ## Six-language empty and comparison corpus
