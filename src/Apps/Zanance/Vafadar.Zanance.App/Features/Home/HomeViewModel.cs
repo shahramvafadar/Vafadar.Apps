@@ -676,13 +676,25 @@ public sealed partial class HomeViewModel : ViewModelBase, Presentation.IThemeAw
     [RelayCommand] private Task ExplainHomePeriodAsync() => OpenHomeAnalysisAsync(false);
     [RelayCommand] private Task CompareHomePeriodAsync() => OpenHomeAnalysisAsync(true);
 
-    private Task OpenHomeAnalysisAsync(bool compare)
+    private async Task OpenHomeAnalysisAsync(bool compare)
     {
         var feature = Analysis.AiFeatures.Current.Capture();
-        return !feature.IsCancellationRequested &&
-            !_publicationRetired && Loading.IsReady && HasAnalysisPeriod && _analysisPeriodIndex == PeriodIndex &&
-            _analysisPeriod is { } period && Shell.Current is { CurrentPage: HomePage page } shell && ReferenceEquals(page.BindingContext, this)
-            ? shell.GoToAsync(AppRoutes.AnalysisRoute, period.Query(compare, feature)) : Task.CompletedTask;
+        if (feature.IsCancellationRequested || _publicationRetired || !Loading.IsReady || !HasAnalysisPeriod ||
+            _analysisPeriodIndex != PeriodIndex || _analysisPeriod is not { } period ||
+            Shell.Current is not { CurrentPage: HomePage page } shell || !ReferenceEquals(page.BindingContext, this))
+            return;
+
+        try
+        {
+            await shell.GoToAsync(AppRoutes.AnalysisRoute, period.Query(compare, feature));
+        }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (!feature.IsCancellationRequested && !_publicationRetired && ReferenceEquals(Shell.Current, shell) &&
+                ReferenceEquals(shell.CurrentPage, page) && ReferenceEquals(page.BindingContext, this) &&
+                _analysisPeriodIndex == PeriodIndex && ReferenceEquals(_analysisPeriod, period))
+                await Presentation.Failures.ShowAsync(error);
+        }
     }
 
     private async Task LoadPlansAsync(Dictionary<Guid, Account> accounts, CategoryLookup categories, List<Schedule> allSchedules, List<OccurrenceState> states,
