@@ -28,6 +28,8 @@ internal static class AndroidDocumentPicker
             throw new InvalidOperationException("An attachment picker is already open.");
 
         Pending? own = null;
+        var launched = false;
+        var received = false;
         try
         {
             var activity = Platform.CurrentActivity ?? throw new InvalidOperationException("No activity to open the document picker.");
@@ -44,7 +46,9 @@ internal static class AndroidDocumentPicker
                 intent.PutExtra(Intent.ExtraMimeTypes, mimeTypes);
             using var chooser = Intent.CreateChooser(intent, title);
             activity.StartActivityForResult(chooser, own.Code);
-            using var uri = await own.Completion.Task;
+            launched = true;
+            using var uri = await own.Completion.Task.WaitAsync(lifetime);
+            received = true;
             if (uri is null || activity.IsDestroyed)
                 return;
 
@@ -76,13 +80,27 @@ internal static class AndroidDocumentPicker
         }
         finally
         {
-            if (own is not null)
-            {
-                Interlocked.CompareExchange(ref pending, null, own);
-                own.Lifetime.Dispose();
-            }
-            PickerOwner.Release();
+            // The managed page may retire before DocumentsUI. Only the callback (or its
+            // activity's destruction) can release the abandoned native selection.
+            if (own is not null && launched && !received) _ = DrainAbandonedSelectionAsync(own);
+            else Release(own);
         }
+    }
+
+    private static async Task DrainAbandonedSelectionAsync(Pending own)
+    {
+        try { (await own.Completion.Task)?.Dispose(); }
+        finally { Release(own); }
+    }
+
+    private static void Release(Pending? own)
+    {
+        if (own is not null)
+        {
+            Interlocked.CompareExchange(ref pending, null, own);
+            own.Lifetime.Dispose();
+        }
+        PickerOwner.Release();
     }
 
     private static (string Name, string? ContentType, Stream Input, AssetFileDescriptor Asset) Open(
@@ -176,8 +194,8 @@ internal static class AndroidDocumentPicker
     {
         if (Volatile.Read(ref pending) is { } own && ReferenceEquals(own.Activity, activity))
         {
-            own.Completion.TrySetResult(null);
             own.Lifetime.Cancel();
+            own.Completion.TrySetResult(null);
         }
     }
 }

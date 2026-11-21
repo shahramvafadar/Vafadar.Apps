@@ -6396,3 +6396,22 @@ Exact complete4a72373a is installed without reset as Main27284. Its first ready 
 adoption, not whole private-source/key, financial, crash/performance/accessibility/
 platform/provider/store acceptance. No release gate is silently checked off.
 See [current physical evidence](quality/current-physical-main-adoption-d836.md).
+## Android document selection caller retirement (2026-11-21)
+
+Cancelling the original managed caller releases its wait for DocumentsUI.
+The native selection keeps its original activity and request identity until
+it returns or that activity is destroyed. A second selection during this
+period is refused. A late URI is disposed without opening its provider.
+
+One isolated Android 16 x86-64 Debug fixture called the original picker. Its
+managed token expired while DocumentsUI remained foreground. The caller
+finished with cancellation and the next attempted call was refused.
+After Android Back on that original picker, the same process opened one
+new selection and completed it on Back. The diagnostic observed zero provider
+reads. The dedicated package and emulator were retired. The first build hit
+the Windows path limit. Using the shorter project path completed the build
+without issuing a previous test input again.
+
+The signed offline Release APK passed the canonical package verification
+with SHA-256 `412c4824c821232d9aec807e3d36da946f2d5095ad01b8693a02f643103f2dfa`.
+The native review covered Back with the original activity still alive.
