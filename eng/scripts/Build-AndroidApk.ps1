@@ -52,6 +52,12 @@ if ($Offline) {
 Set-Location (Resolve-Path (Join-Path $PSScriptRoot '..\..'))
 New-Item -ItemType Directory -Force $Output | Out-Null
 $projectDotNet = Join-Path $PSScriptRoot 'Invoke-ProjectDotNet.ps1'
+# MSBuild starts a separate shell, where a bare python command can resolve
+# differently from the interpreter used by the Core preparation below.
+$notificationPython = $env:NotificationCorePython
+if (!$notificationPython) {
+    $notificationPython = (Get-Command python -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
+}
 
 # Restore must not silently fall back to the original Core assembly when its density correction is required.
 # Preparation verifies a completed package or builds its pinned source in repository-owned state.
@@ -73,7 +79,8 @@ try {
             $publishAttempts.Add($publishPath)
             # EmbedAssembliesIntoApk makes a Debug APK complete as well; Release always embeds them.
             $log = & $projectDotNet publish $Project -c $Configuration -f net10.0-android -p:VafadarMauiTargetFrameworks=net10.0-android `
-                -p:AndroidPackageFormat=apk -p:EmbedAssembliesIntoApk=true -p:ContinuousIntegrationBuild=true @cloudProperties -o $publishPath -nologo --no-restore 2>&1
+                -p:AndroidPackageFormat=apk -p:EmbedAssembliesIntoApk=true -p:ContinuousIntegrationBuild=true `
+                "-p:NotificationCorePython=$notificationPython" @cloudProperties -o $publishPath -nologo --no-restore 2>&1
         }
 
         if ($LASTEXITCODE -eq 0 -or $attempt -eq 2 -or -not ($log | Select-String -Pattern 'NETSDK1005|APT2126' -Quiet)) {
