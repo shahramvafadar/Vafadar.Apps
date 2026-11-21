@@ -54,7 +54,13 @@ offline build uses the existing private Core package and omits network permissio
 | Billing APK, 100,057,198 bytes | `4bab1399502dbb3cb190e1184709c08cb6a35d6bde255edd550568447b092e2c` |
 
 The offline handoff is under `artifacts/android-offline-6ed9a9fa-release-review`.
-These checks cover the two local APKs. The Samsung positive control, the
+The exact offline APK also passed a fresh installation and one ordinary cold
+launch on a disposable Android 16 x86-64 emulator with 4 KiB memory pages.
+The first observation showed the preparing screen. The same process then
+showed Welcome, step 1 of 3, with the local-use explanation and the existing
+backup entry. No setup or financial action was invoked. Both captured UI trees
+matched their guest hashes before the app and emulator were retired.
+This establishes first-run readiness for that guest. The Samsung positive control, the
 eventual store-signed package and its declaration remain open.
 
 | Flow | Offline review | Cloud-backup review |
