@@ -451,6 +451,20 @@ checks as a substitute for the unfinished billing flow. Continue through the act
 
 ## Current Android billing sandbox review APK
 
+Use the replacement review APK from `ea039325`:
+`artifacts/android-billing-sandbox-ea039325-licensed-review/pro.vafadar.zanance-Signed.apk`.
+SHA-256 is `1e54b70100b5e37397846f7e018cc8be996aa8cc0b73132749d58d8c19297b4e`.
+The host required-license test passed using the canonical checkout's local
+Syncfusion configuration. The replacement built cleanly, passed the same
+signature, alignment, storage and edition checks, and reached Welcome without
+the trial warning or any dialog tap on a fresh Android 16 x86-64 emulator.
+The emulator was retired. Phone, Play account and real purchase acceptance remain open.
+
+The earlier worktree-only APK below showed the Syncfusion trial warning on
+first launch. It remains evidence for the signed package and the initial
+[network observation](../../../../../../docs/privacy/zanance-sdk-review.md#billing-sandbox-first-launch-observation).
+Use the replacement for review.
+
 The `27b5a595` Release build includes the billing identity startup and native
 confirmation ownership fixes. It built with zero warnings or errors, using
 `BILLING` and `BILLING_SANDBOX` with personal sync and OAuth client configuration

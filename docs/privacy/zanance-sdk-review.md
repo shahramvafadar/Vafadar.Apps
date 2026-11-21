@@ -34,8 +34,22 @@ The SHA-256 identities inspected were
 - Personal sync `95933e405db963bbe3b9de91e7bdcd340818f067991fae3cf552d10ad37e1ed2`
 - Billing sandbox `2c4ff4bac60ba1993f949f934c02ca77bf33b70a65b1cf289977d1ba646767d0`
 
-Observed runtime traffic, external processor configuration, real store
-behavior and the declaration for the final selected release remain open.
+### Billing sandbox first-launch observation
+
+The exact `27b5a595` review APK ran once on a fresh Android 16 x86-64 guest.
+Guest firewall rules rejected outbound IPv4 and IPv6 traffic for the installed
+application UID before launch. A separate, blocked TCP control incremented the
+IPv4 counter to verify the detector. No packets or payloads were captured.
+
+First launch displayed a Syncfusion trial warning. Both application counters
+were zero at the warning. After dismissing it with OK, the same process reached
+Welcome, and both counters still read zero after 32.16 seconds. There was no
+sign-in, setup, store, OCR or financial action. The fixture was retired.
+
+This covers attempted packets attributed to the application UID during those
+first-launch observations. DNS delegated to platform services, other UIDs and
+foreground opt-in flows were outside the measurement. External processor
+configuration, real store behavior and the final release declaration remain open.
 
 
 ## Current optional billing boundary (D-295,2026-10-16)
