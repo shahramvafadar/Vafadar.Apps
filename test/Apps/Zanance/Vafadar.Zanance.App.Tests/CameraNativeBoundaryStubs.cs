@@ -71,7 +71,12 @@ namespace Java.IO
         /// <summary>Reports whether the original camera output exists.</summary>
         internal bool Exists() => System.IO.File.Exists(AbsolutePath);
         /// <summary>Reads the real camera output length for the original encoded-size guard.</summary>
-        internal long Length() => new FileInfo(AbsolutePath).Length;
+        internal long Length()
+        {
+            BeforeLength?.Invoke();
+            return new FileInfo(AbsolutePath).Length;
+        }
+        internal Action? BeforeLength { get; set; }
         /// <summary>Deletes only the exact test-owned output selected by the original adapter.</summary>
         internal bool Delete() { System.IO.File.Delete(AbsolutePath); return true; }
         public void Dispose() { }

@@ -1,5 +1,17 @@
 # 01 – Assessment and decision log
 
+## Android camera owner retires after acceptance (2026-11-21)
+
+The native camera result can arrive before the activity is destroyed. A successful result therefore
+no longer ends activity ownership. The same cancellation lifetime spans the native wait and the
+bounded file read. A retired read discards any returned bytes and the original temporary file is
+removed before another request can use the camera slot.
+
+One new linked-source test reproduced successful completion after original activity destruction.
+It now observes cancellation and verifies that the temporary file is absent. The
+three directly affected activity ownership cases also passed. All four use synthetic host
+boundaries. The earlier Camera2 Back review was retained and no device input was issued.
+
 ## Transaction detail attachment picker retirement (2026-11-21)
 
 The transaction attachment session now cancels its picker wait when the original detail leaves or

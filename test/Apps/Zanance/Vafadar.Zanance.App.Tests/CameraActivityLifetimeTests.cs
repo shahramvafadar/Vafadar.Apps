@@ -7,6 +7,36 @@ namespace Vafadar.Zanance.App.Tests;
 [Collection("Original Android camera ownership")]
 public sealed class CameraActivityLifetimeTests
 {
+    [Fact]
+    public async Task Destroying_original_activity_after_camera_accepts_retires_output_read()
+    {
+        using var directory = new TemporaryDirectory();
+        var owner = new CameraBoundaryActivity(directory.Path);
+        var ct = TestContext.Current.CancellationToken;
+        Platform.CurrentActivity = owner;
+        var capture = CameraCapture.TakePhotoAsync(ct);
+        var output = owner.LastOutput!;
+        try
+        {
+            await File.WriteAllBytesAsync(output.AbsolutePath, new byte[] { 1, 2, 3 }, ct);
+            var destroyed = false;
+            output.BeforeLength = () =>
+            {
+                destroyed = true;
+                CameraCapture.OnDestroyed(owner);
+            };
+            Assert.True(CameraCapture.OnActivityResult(owner, owner.LastRequest, Result.Ok));
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => capture.WaitAsync(TimeSpan.FromSeconds(3), ct));
+            Assert.True(destroyed);
+            Assert.False(File.Exists(output.AbsolutePath));
+        }
+        finally
+        {
+            CameraCapture.OnDestroyed(owner);
+            Platform.CurrentActivity = null;
+        }
+    }
+
     /// <summary>A foreign Activity cannot settle a pending original capture using its valid request code.</summary>
     [Fact]
     public async Task Foreign_activity_result_cannot_complete_original_capture()

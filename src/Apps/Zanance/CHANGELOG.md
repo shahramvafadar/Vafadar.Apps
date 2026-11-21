@@ -5,6 +5,7 @@
 - Android releases cancelled file-selection requests promptly and waits for the open system picker to close before opening another.
 - Leaving transaction details ends the app's wait for an attachment selection and prevents a late selection from attaching to another transaction.
 - Android ends the receipt camera wait when its original request is cancelled and cleans up the temporary file after the camera returns.
+- Android stops reading a receipt photo if the activity that opened the camera is destroyed during the return.
 - Plans, Settings and the goal editor discard obsolete notification-permission responses when their original page is replaced or left. Android finishes the open settings visit before accepting another one.
 
 - D-1240: the Windows development build compiles its source-built encrypted-storage library with the newer Microsoft compiler tool set 14.52.37025 on current GitHub runners; storage format, keys and app behavior are unchanged.

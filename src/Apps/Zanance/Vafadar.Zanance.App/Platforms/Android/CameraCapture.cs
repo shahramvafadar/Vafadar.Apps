@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -20,7 +21,8 @@ internal static class CameraCapture
     private static readonly SemaphoreSlim CaptureOwner = new(1, 1);
 
     /// <summary>Retains the exact native owner and result identity until original output cleanup finishes.</summary>
-    private sealed record Pending(Activity Owner, int Code, TaskCompletionSource<bool> Completion);
+    private sealed record Pending(Activity Owner, int Code, TaskCompletionSource<bool> Completion,
+        CancellationTokenSource Lifetime);
 
     /// <summary>Gets a value indicating whether the device has a camera.</summary>
     public static bool IsAvailable => Platform.AppContext.PackageManager?.HasSystemFeature(PackageManager.FeatureCameraAny) == true;
@@ -44,7 +46,9 @@ internal static class CameraCapture
             var activity = Platform.CurrentActivity ?? throw new InvalidOperationException("No activity to start the camera from.");
             if (_requestCode >= LastRequestCode)
                 throw new InvalidOperationException("The camera request identity range is exhausted.");
-            own = new Pending(activity, ++_requestCode, new(TaskCreationOptions.RunContinuationsAsynchronously));
+            own = new Pending(activity, ++_requestCode, new(TaskCreationOptions.RunContinuationsAsynchronously),
+                CancellationTokenSource.CreateLinkedTokenSource(ct));
+            var lifetime = own.Lifetime.Token;
             using var folder = new Java.IO.File(activity.CacheDir, Presentation.AttachmentCache.CameraDirectoryName);
             folder.Mkdirs();
             file = new Java.IO.File(folder, $"{Guid.NewGuid():N}.jpg");
@@ -53,19 +57,29 @@ internal static class CameraCapture
             intent.PutExtra(MediaStore.ExtraOutput, uri);
             intent.AddFlags(ActivityFlags.GrantWriteUriPermission | ActivityFlags.GrantReadUriPermission);
 
-            ct.ThrowIfCancellationRequested();
+            lifetime.ThrowIfCancellationRequested();
             Volatile.Write(ref _pending, own);
             activity.StartActivityForResult(intent, own.Code);
             launched = true;
-            var accepted = await own.Completion.Task.WaitAsync(ct);
+            var accepted = await own.Completion.Task.WaitAsync(lifetime);
             received = true;
-            ct.ThrowIfCancellationRequested();
+            lifetime.ThrowIfCancellationRequested();
             if (!accepted || !file.Exists() || file.Length() == 0)
                 return null;
 
             if (file.Length() > Presentation.AttachmentFiles.MaxSourceBytes)
                 throw new InvalidDataException("The camera source file is too large.");
-            return await Presentation.AttachmentFiles.ReadCameraSourceAsync(file.AbsolutePath, ct);
+            var bytes = await Presentation.AttachmentFiles.ReadCameraSourceAsync(file.AbsolutePath, lifetime);
+            try
+            {
+                lifetime.ThrowIfCancellationRequested();
+                return bytes;
+            }
+            catch (OperationCanceledException)
+            {
+                CryptographicOperations.ZeroMemory(bytes);
+                throw;
+            }
         }
         finally
         {
@@ -87,7 +101,11 @@ internal static class CameraCapture
     {
         try
         {
-            if (own is not null) Interlocked.CompareExchange(ref _pending, null, own);
+            if (own is not null)
+            {
+                Interlocked.CompareExchange(ref _pending, null, own);
+                own.Lifetime.Dispose();
+            }
             using (file) file?.Delete();
         }
         finally { CaptureOwner.Release(); }
@@ -107,11 +125,14 @@ internal static class CameraCapture
         return true;
     }
 
-    /// <summary>Ends only the destroyed Activity's native wait, retaining the gate until its file cleanup completes.</summary>
+    /// <summary>Retires the destroyed Activity's wait and source read, retaining the gate through file cleanup.</summary>
     public static void OnDestroyed(Activity activity)
     {
         if (Volatile.Read(ref _pending) is { } own && ReferenceEquals(own.Owner, activity))
-            own.Completion.TrySetCanceled();
+        {
+            try { own.Lifetime.Cancel(); }
+            finally { own.Completion.TrySetCanceled(); }
+        }
     }
 }
 
