@@ -37,6 +37,15 @@ path outside the checkout. It inspects file metadata without reading the
 key, starting Docker, contacting Brevo or sending mail. Sender verification
 in Brevo and access for API UID1654 still need approval and runtime evidence.
 
+The evaluated base, Tunnel and Brevo overlays assign the key file to the API
+service alone. An isolated Docker Desktop probe on this Windows host used the
+same UID/GID 1654 and mount target with a fictional file and no network. It
+opened the file for reading, confirmed the mount's read-only flag and could
+not open it for append. This qualifies the host mount path with fictional
+input. The real credential's permissions and provider delivery are still
+unverified. The local receipt is
+`artifacts/zanance-brevo-mount-reviewed-a9abe3bca0c44738b4497d2a787dfea2/verification.json`.
+
 ## Fresh origin and maintenance
 
 Follow the original fresh production-authority and Tunnel gates. Use the exact
