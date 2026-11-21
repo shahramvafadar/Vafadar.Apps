@@ -260,6 +260,61 @@ class GatewayTests(unittest.TestCase):
                 compose.assert_not_called()
                 backup.assert_not_called()
 
+    def test_backup_with_a_new_pending_marker_never_publishes_a_completion_receipt(self):
+        project = 'zanance-selfhost-backup-marker'
+        args = argparse.Namespace(project=project, snapshot='zanance-hosting-snapshot-marker',
+                                  port=14543, subnet='172.29.90.0/24', public=False, gateway='direct')
+        captured = []
+
+        def run(command, **kwargs):
+            captured.append(command)
+            if command[:2] == ['docker', 'exec']:
+                return b'0\n'
+            if 'sort -z' in command[-1]:
+                copied = any('sha256sum /snapshot/' in item[-1] for item in captured)
+                return b'request ' + (b'a' if copied else b'b') * 64 + b'\n'
+            if 'sha256sum /snapshot/' in command[-1]:
+                return b'c' * 64 + b'\n'
+            return b''
+
+        with (patch.object(operate, '_exists', return_value=False),
+              patch.object(operate, '_require_gateway'),
+              patch.object(operate, '_container', return_value=('owned', {'state': 'exited', 'image': 'sha256:' + '1' * 64})),
+              patch.object(operate, '_household_mode', return_value=False),
+              patch.object(operate, '_volume', side_effect=lambda owner, logical: owner + '_' + logical),
+              patch.object(operate, '_run', side_effect=run),
+              patch.object(operate, '_compose') as compose,
+              patch.object(operate, '_pipe') as pipe,
+              patch.object(operate, '_manifest') as manifest):
+            with self.assertRaisesRegex(RuntimeError, 'Original deletion marker inventory changed'):
+                operate._backup(args, 'sha256:' + '2' * 64)
+        compose.assert_called_once()
+        pipe.assert_called_once()
+        self.assertFalse(any('complete.pending' in item[-1] for item in captured))
+        manifest.assert_not_called()
+
+    def test_backup_refuses_a_running_private_volume_client_before_copying(self):
+        project = 'zanance-selfhost-backup-mounted'
+        args = argparse.Namespace(project=project, snapshot='zanance-hosting-snapshot-mounted',
+                                  port=14543, subnet='172.29.90.0/24', public=False, gateway='direct')
+
+        def run(command, **kwargs):
+            return b'fictional-independent-client\n' if 'volume=' + project + '_private' in command else b''
+
+        with (patch.object(operate, '_exists', return_value=False),
+              patch.object(operate, '_require_gateway'),
+              patch.object(operate, '_container', return_value=('owned', {'state': 'exited'})),
+              patch.object(operate, '_household_mode', return_value=False),
+              patch.object(operate, '_volume', return_value=project + '_private'),
+              patch.object(operate, '_run', side_effect=run) as commands,
+              patch.object(operate, '_compose') as compose,
+              patch.object(operate, '_pipe') as pipe):
+            with self.assertRaisesRegex(RuntimeError, 'Private volume clients'):
+                operate._backup(args, 'sha256:' + '2' * 64)
+        compose.assert_called_once()
+        pipe.assert_not_called()
+        self.assertFalse(any(call.args[0][:3] == ['docker', 'volume', 'create'] for call in commands.call_args_list))
+
     def test_restore_receipt_admits_completed_target_and_preserves_nonrestored_sources(self):
         project = 'zanance-selfhost-reviewed'
         helper = 'sha256:' + '1' * 64

@@ -81,6 +81,9 @@ through original Windows/Android native pages. The current signed personal-sync 
 Use `python eng/hosting/operate.py status` for bounded public status. `stop` drains only API/proxy; `start` verifies
 the exact original project labels. `backup --snapshot zanance-hosting-snapshot-NAME` leaves workers stopped and
 keeps the complete private snapshot only inside Docker. Resume with `start` after reviewing the result.
+Before copying and before publishing a completed snapshot, the operator checks
+that the original clients are still drained. An independent live private-volume
+mount or a changed deletion-marker inventory prevents publication.
 `restore --snapshot NAME --project zanance-selfhost-RESTORE --port 14544 --subnet 172.29.84.0/24` requires a fresh
 separate target and free checked subnet/port; source and snapshot remain intact. Snapshot manifests retain exact
 runtime image IDs. Images must remain locally available or be rebuilt/qualified before an upgrade. Never prune

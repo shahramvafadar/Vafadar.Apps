@@ -243,14 +243,20 @@ def _backup(args, helper):
     if any(service not in ('api', 'proxy', 'database') for service in active):
         raise RuntimeError('An owned migration/qualification is still live; snapshot refused.')
     _compose(args.project, args.port, args.subnet, ['stop', '--timeout', '45', 'api', 'proxy'], public=args.public, gateway=args.gateway, mail=getattr(args, 'mail_provider', None))
-    _, api = _container(args.project, 'api')
-    _, proxy = _container(args.project, 'proxy')
-    if api['state'] != 'exited' or proxy['state'] != 'exited':
-        raise RuntimeError('Original workers are not drained; snapshot refused.')
-    remaining = _run(['docker', 'exec', database, 'psql', '-h', '/tmp', '-U', 'postgres', '-d', 'zanance', '-tAc',
-                      "SELECT count(*) FROM pg_stat_activity WHERE usename IN ('zanance_runtime','zanance_owner')"]).strip()
-    if remaining != b'0':
-        raise RuntimeError('An original database client is still live; source remains stopped.')
+    private_volume = _volume(args.project, 'private')
+
+    def require_quiesced_source():
+        for service in ('api', 'proxy'):
+            if _container(args.project, service)[1]['state'] != 'exited':
+                raise RuntimeError('Original workers are not drained; snapshot refused.')
+        _require_drained_private_clients(args.project, private_volume)
+        remaining = _run(['docker', 'exec', database, 'psql', '-h', '/tmp', '-U', 'postgres', '-d', 'zanance', '-tAc',
+                          "SELECT count(*) FROM pg_stat_activity WHERE usename IN ('zanance_runtime','zanance_owner')"]).strip()
+        if remaining != b'0':
+            raise RuntimeError('An original database client is still live; source remains stopped.')
+
+    require_quiesced_source()
+    original_markers = _deletion_marker_inventory(helper, private_volume)
     images = {service: _container(args.project, service)[1]['image'] for service in ('api', 'proxy', 'provision', 'database')}
     _run(['docker', 'volume', 'create', '--label', 'pro.vafadar.zanance.snapshot=d293', '--label', 'pro.vafadar.zanance.hosting=d293', args.snapshot])
     target = [(args.snapshot, '/snapshot', False)]
@@ -267,16 +273,19 @@ def _backup(args, helper):
         archives[logical] = _run(_helper(helper, target, 'sha256sum /snapshot/' + filename)).decode().split()[0]
     manifest = {'Schema': 1, 'DeploymentFormat': 'immutable-config-v1', 'SourceProject': args.project, 'CreatedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 'Quiesced': True, 'Public': args.public, 'Gateway': args.gateway, 'HouseholdLocalQualification': household, 'IdentityMail': _mail_mode(args.project) if args.public else None, 'Images': images, 'Archives': archives}
+    require_quiesced_source()
+    if _deletion_marker_inventory(helper, private_volume) != original_markers:
+        raise RuntimeError('Original deletion marker inventory changed; snapshot was not completed.')
     _run(_helper(helper, target, 'umask 077; cat >/snapshot/complete.pending; sync -f /snapshot/complete.pending; mv /snapshot/complete.pending /snapshot/complete.json; sync -f /snapshot'), data=json.dumps(manifest).encode())
     _manifest(args.snapshot, helper)
     print('Complete private snapshot: ' + args.snapshot + '; original workers remain stopped.')
 
 
-def _require_drained_restore_clients(project, private_volume):
+def _require_drained_private_clients(project, private_volume):
     active_services = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + project,
                             '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
     if any(service != 'database' for service in active_services):
-        raise RuntimeError('Restore clients must be drained before using private state.')
+        raise RuntimeError('Service clients must be drained before using private state.')
     # A one-off container may mount this volume without belonging to the Compose project.
     if _run(['docker', 'ps', '-q', '--filter', 'volume=' + private_volume]).strip():
         raise RuntimeError('Private volume clients must be drained before using private state.')
@@ -329,7 +338,7 @@ def _restore(args, helper):
         if _container(privacy_source, service)[1]['state'] != 'exited':
             raise RuntimeError('Latest original privacy workers must be stopped before restore.')
     current_private = _volume(privacy_source, 'private')
-    _require_drained_restore_clients(privacy_source, current_private)
+    _require_drained_private_clients(privacy_source, current_private)
     privacy_image = manifest['Images']['api']
     privacy_labels = _metadata('image', privacy_image, '{{json .Config.Labels}}') or {}
     capable = privacy_labels.get('pro.vafadar.zanance.household-privacy') == 'deletion-v1'
@@ -364,7 +373,7 @@ def _restore(args, helper):
     if state.get('Complete'):
         print('Restore already complete; no successful operation repeated.'); return
     target_private = args.project + '_private'
-    _require_drained_restore_clients(args.project, target_private)
+    _require_drained_private_clients(args.project, target_private)
     for logical in VOLUMES:
         if logical in state['Copied']:
             _volume(args.project, logical); continue
@@ -391,8 +400,8 @@ def _restore(args, helper):
         _pipe(_helper(helper, [(args.snapshot, '/snapshot', True)], 'cat /snapshot/database.dump'),
               ['docker', 'exec', '-i', database, 'pg_restore', '-h', '/tmp', '-U', 'postgres', '-d', 'zanance', '--single-transaction', '--exit-on-error'])
         state['DatabaseRestored'] = True; _receipt(helper, state_name, state)
-    _require_drained_restore_clients(privacy_source, current_private)
-    _require_drained_restore_clients(args.project, target_private)
+    _require_drained_private_clients(privacy_source, current_private)
+    _require_drained_private_clients(args.project, target_private)
     if _deletion_marker_inventory(helper, current_private) != original_markers:
         raise RuntimeError('Original deletion marker inventory changed; target remains stopped.')
     if capable:
@@ -410,7 +419,7 @@ def _restore(args, helper):
               '--mount', 'type=volume,source=' + _volume(args.project, 'private') + ',target=/restored',
               privacy_image, '--merge-account-deletions', '/current', '/restored'])
         if getattr(args, 'reconcile_account_deletions', False):
-            _require_drained_restore_clients(args.project, target_private)
+            _require_drained_private_clients(args.project, target_private)
             _compose(args.project, args.port, args.subnet,
                      ['run', '--rm', '--no-deps', 'api', '--reconcile-restored-account-deletions', '--confirm-isolated-restored-database'],
                      manifest['Images'], public=args.public, gateway=args.gateway,
@@ -418,8 +427,8 @@ def _restore(args, helper):
     for service in ('api', 'proxy'):
         if _container(privacy_source, service)[1]['state'] != 'exited':
             raise RuntimeError('Original privacy workers restarted during restore; target remains stopped.')
-    _require_drained_restore_clients(privacy_source, current_private)
-    _require_drained_restore_clients(args.project, target_private)
+    _require_drained_private_clients(privacy_source, current_private)
+    _require_drained_private_clients(args.project, target_private)
     if _deletion_marker_inventory(helper, current_private) != original_markers:
         raise RuntimeError('Original deletion marker inventory changed; target remains stopped.')
     state['PrivacySource'] = privacy_source
