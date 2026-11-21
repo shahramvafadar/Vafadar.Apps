@@ -274,14 +274,15 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         var horizonIndex = Workspace.HorizonIndex;
         var calendar = Workspace.Calendar;
         var hasScenario = HasScenario;
-        var token = _lifetime.Token;
+        using var linked = CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token, feature);
+        var token = linked.Token;
         bool Current() => !feature.IsCancellationRequested && OwnsFrame && revision == _revision && ReferenceEquals(Workspace.Review, review) &&
             Cards.Any(item => ReferenceEquals(item, card)) && !token.IsCancellationRequested;
-        async Task ValidateSourceAsync()
+        async Task ValidateSourceAsync(CancellationToken cancellationToken)
         {
             if (day != Today || calendar != Presentation.Calendars.ToPeriod(_localization.CurrentCalendar))
                 throw new InvalidOperationException("The original forecast dates changed.");
-            await Workspace.ValidateExplanationSourceAsync(review);
+            await Workspace.ValidateExplanationSourceAsync(review, cancellationToken);
             if (day != Today || calendar != Presentation.Calendars.ToPeriod(_localization.CurrentCalendar))
                 throw new InvalidOperationException("The original forecast dates changed.");
         }
@@ -289,7 +290,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
         IsBusy = true;
         try
         {
-            await Workspace.ValidateAnalysisAsync(review);
+            await Workspace.ValidateFeatureAnalysisAsync(review, feature);
             if (!Current()) return;
             var baseline = hasScenario
                 ? await Task.Run(() => review.Compute(horizonIndex, new ForecastScenario(), calendar, day)
@@ -308,7 +309,7 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                 ReportLabels = Array.AsReadOnly(labels.Concat(scenarioLabels).ToArray()),
                 ValidateReportAsync = ValidateSourceAsync,
             };
-            await ValidateSourceAsync();
+            await ValidateSourceAsync(token);
             if (Current()) await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false, feature));
         }
         catch (OperationCanceledException) when (!Current()) { }

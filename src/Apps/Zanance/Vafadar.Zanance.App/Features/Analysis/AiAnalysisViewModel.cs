@@ -412,11 +412,11 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
                     selection.ConfirmedOnly != detail.ConfirmedOnly || !selection.AccountIds.ToHashSet().SetEquals(detail.Accounts) ||
                     detail.ValidateReportAsync is null)
                     throw new InvalidOperationException("The displayed report scope changed.");
-                await detail.ValidateReportAsync(); Validate(original);
+                await detail.ValidateReportAsync(linked.Token); Validate(original);
             }
 
             var prepared = await store.ReviewAsync(selection, linked.Token); Validate(original); access.Validate(); Validate(original);
-            if (detailedPeriod?.ValidateReportAsync is { } validateReport) { await validateReport(); Validate(original); }
+            if (detailedPeriod?.ValidateReportAsync is { } validateReport) { await validateReport(linked.Token); Validate(original); }
             var payload = prepared.Payload; var summary = Period(payload.Current);
             if (payload.Previous is not null) summary += Environment.NewLine + Period(payload.Previous);
             if (applied is not null) summary = QuestionSummary(prepared, payload, summary);
@@ -790,8 +790,10 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
             (original.Selection.AsOf != DateOnly.FromDateTime(time.GetLocalNow().Date) ||
                 original.Selection.QuestionCalendar != Presentation.Calendars.ToPeriod(local.CurrentCalendar)))
             throw new InvalidOperationException("The original question scope expired.");
-        await store.CheckAsync(original);
-        if (detailedPeriod?.ValidateReportAsync is { } validateReport) await validateReport();
+        var token = visible?.Token ?? featureSession;
+        var validateReport = detailedPeriod?.ValidateReportAsync;
+        await store.CheckAsync(original, token);
+        if (validateReport is not null) await validateReport(token);
     }
 
     private string ReportSummary(AiPeriodHandoff localReport, AiPayload payload)

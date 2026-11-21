@@ -673,10 +673,10 @@ public sealed partial class GoalDetailViewModel(
         {
             Funding = Core.Analysis.AiFundingFacts.Goal(goal.CurrencyCode, progress.Target, progress.Current, progress.Remaining,
                 progress.Opportunities, progress.PlannedContribution, progress.Opportunities > 0 ? progress.Required : null, progress.Unfunded),
-            ValidateReportAsync = async () =>
+            ValidateReportAsync = async cancellationToken =>
             {
                 if (Today != today) throw new InvalidOperationException("The original funding date changed.");
-                await goals.ValidateListSnapshotAsync(source);
+                await goals.ValidateListSnapshotAsync(source, cancellationToken);
                 if (Today != today) throw new InvalidOperationException("The original funding date changed.");
             },
             OpenDraftAsync = () => interaction.NavigateAsync(AppRoutes.GoalEditorRoute, new Dictionary<string, object>
@@ -693,12 +693,12 @@ public sealed partial class GoalDetailViewModel(
         IsBusy = true;
         try
         {
-            await period.ValidateReportAsync!();
+            await period.ValidateReportAsync!(feature);
             if (!feature.IsCancellationRequested && identity == _identityVersion && !_retired && CanView && ReferenceEquals(period, _fundingAnalysis))
                 await interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false, feature));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
-        { if (!_retired && identity == _identityVersion) await interaction.ShowFailureAsync(error); }
+        { if (!feature.IsCancellationRequested && !_retired && identity == _identityVersion) await interaction.ShowFailureAsync(error); }
         finally { IsBusy = false; }
     }
 

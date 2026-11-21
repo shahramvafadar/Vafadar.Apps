@@ -17,7 +17,7 @@ internal sealed record AiPeriodHandoff(string File, DateOnly From, DateOnly To, 
     internal DateOnly? CompareFrom { get; init; }
     internal DateOnly? CompareTo { get; init; }
     internal IReadOnlyList<string> ReportLabels { get; init; } = [];
-    internal Func<Task>? ValidateReportAsync { get; init; }
+    internal Func<CancellationToken, Task>? ValidateReportAsync { get; init; }
 
     internal static AiPeriodHandoff? Capture(string file, DateOnly from, DateOnly to, bool confirmedOnly, IEnumerable<Guid> accounts)
     {

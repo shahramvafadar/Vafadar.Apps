@@ -444,6 +444,50 @@ public sealed partial class AiAnalysisFlowTests
         }
     }
 
+    /// <summary>The original detailed validation retires before it can publish a preview for a new session.</summary>
+    [Fact]
+    public async Task Opting_out_cancels_the_detailed_analysis_source_before_disclosure()
+    {
+        using var fixture = new FlowFixture();
+        var runtime = new Runtime();
+        var day = new DateOnly(2026, 10, 1);
+        var account = new Account { Name = "Synthetic detailed source", CurrencyCode = "EUR", OpeningDate = day };
+        await fixture.Store.SaveAccountAsync(account, Ct);
+        var store = fixture.Services.GetRequiredService<AiSnapshotStore>();
+        var source = await store.AccountsAsync(Ct);
+        var entered = new TaskCompletionSource<CancellationToken>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var scope = AiPeriodHandoff.Capture(source.File, day, day.AddDays(8), false, [account.Id])! with
+        {
+            Funding = AiFundingFacts.Suggestion("EUR", 1000, 2000, 1, 3000),
+            ValidateReportAsync = async token =>
+            {
+                entered.TrySetResult(token);
+                await release.Task.WaitAsync(token);
+            },
+        };
+        var model = new AiAnalysisViewModel(store, fixture.Translator, fixture.Localization,
+            new DateFormatter(fixture.Localization), fixture.Time, fixture.Platform, runtime);
+        model.SetInitialPeriod(Assert.IsType<AiPeriodHandoff>(scope.Query(false, runtime.FeatureSession)[AiPeriodHandoff.QueryKey]));
+        await model.LoadAsync();
+        Assert.True(model.Loaded);
+
+        var review = model.ReviewAsync();
+        try
+        {
+            var original = await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+            runtime.Features.Enabled = false;
+            runtime.Features.Enabled = true;
+            Assert.True(original.IsCancellationRequested);
+            await review.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+            Assert.False(release.Task.IsCompleted);
+            Assert.Null(model.Disclosure);
+            Assert.Null(model.Summary);
+            Assert.Equal(0, runtime.Opens);
+        }
+        finally { release.TrySetResult(); }
+    }
+
     /// <summary>A report from a replaced file or account cannot silently widen the scope.</summary>
     [Theory, InlineData(false), InlineData(true)]
     public async Task Period_handoff_refuses_replaced_file_or_missing_account(bool replaceFile)

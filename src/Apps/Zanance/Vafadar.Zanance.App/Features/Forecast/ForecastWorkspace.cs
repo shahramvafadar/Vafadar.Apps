@@ -90,9 +90,10 @@ public sealed partial class ForecastWorkspace(ForecastWorkStore reader, ZananceS
         finally { NotifyState(); }
     }
     /// <summary>Revalidates a frozen read-only explanation even after Analysis covers the original Forecast page.</summary>
-    internal async Task ValidateExplanationSourceAsync(ForecastReadSnapshot reviewed)
+    internal async Task ValidateExplanationSourceAsync(ForecastReadSnapshot reviewed, CancellationToken cancellationToken)
     {
-        await reader.ValidateAsync(reviewed);
+        await reader.ValidateAsync(reviewed, cancellationToken);
+        cancellationToken.ThrowIfCancellationRequested();
         reviewed.Demand(CommercialFeature.AdvancedForecast);
     }
 
@@ -100,10 +101,20 @@ public sealed partial class ForecastWorkspace(ForecastWorkStore reader, ZananceS
     public async Task ValidateAnalysisAsync(ForecastReadSnapshot reviewed)
     { await ValidatePublicationAsync(reviewed); reviewed.Demand(CommercialFeature.AdvancedForecast); }
     /// <summary>Validates the exact current original source without granting analytical access.</summary>
-    public async Task ValidatePublicationAsync(ForecastReadSnapshot reviewed)
+    public Task ValidatePublicationAsync(ForecastReadSnapshot reviewed) => ValidatePublicationAsync(reviewed, CancellationToken.None);
+
+    /// <summary>Validates an AI shortcut under both its feature and original Forecast publication lifetimes.</summary>
+    internal async Task ValidateFeatureAnalysisAsync(ForecastReadSnapshot reviewed, CancellationToken feature)
+    { await ValidatePublicationAsync(reviewed, feature); reviewed.Demand(CommercialFeature.AdvancedForecast); }
+
+    private async Task ValidatePublicationAsync(ForecastReadSnapshot reviewed, CancellationToken feature)
     {
         if (!OwnsFrame || !ReferenceEquals(Review, reviewed)) throw new InvalidOperationException("Original forecast publication retired.");
-        await reader.ValidateAsync(reviewed, _lifetime.Token);
+        using var linked = feature.CanBeCanceled ? CancellationTokenSource.CreateLinkedTokenSource(_lifetime.Token, feature) : null;
+        var token = linked?.Token ?? _lifetime.Token;
+        token.ThrowIfCancellationRequested();
+        await reader.ValidateAsync(reviewed, token);
+        token.ThrowIfCancellationRequested();
         if (!OwnsFrame || !ReferenceEquals(Review, reviewed)) throw new InvalidOperationException("Original forecast publication retired.");
     }
     /// <summary>Changes only a current explicitly permitted process-local scenario.</summary>

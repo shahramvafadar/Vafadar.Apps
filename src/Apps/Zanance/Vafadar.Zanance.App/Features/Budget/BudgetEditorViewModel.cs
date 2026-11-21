@@ -436,19 +436,19 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
         IsBusy = true;
         try
         {
-            await ValidateAsync();
+            await ValidateAsync(feature);
             if (!feature.IsCancellationRequested && OwnsView(view) && !_routeRetired)
                 await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false, feature));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
-        { if (OwnsView(view) && !_routeRetired) await _interaction.ShowFailureAsync(error); }
+        { if (!feature.IsCancellationRequested && OwnsView(view) && !_routeRetired) await _interaction.ShowFailureAsync(error); }
         finally { IsBusy = false; }
 
-        async Task ValidateAsync()
+        async Task ValidateAsync(CancellationToken cancellationToken)
         {
             if (!OwnsRoot || _routeRetired || _committed || _draftRevision != draftRevision || !ReferenceEquals(source, _source))
                 throw new InvalidOperationException("The original budget suggestion was retired.");
-            await _store.ValidateBudgetEditorSnapshotAsync(source);
+            await _store.ValidateBudgetEditorSnapshotAsync(source, cancellationToken);
             if (!OwnsRoot || _routeRetired || _committed || _draftRevision != draftRevision || !ReferenceEquals(source, _source))
                 throw new InvalidOperationException("The original budget suggestion changed.");
         }

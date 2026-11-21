@@ -81,6 +81,55 @@ public sealed class ReportWorkspaceBoundaryTests
         await Assert.IsType<ReportCommandLease>(
             work.CaptureCommand(() => "R1/EUR", () => !currentSession.IsCancellationRequested)).ValidateAsync();
     }
+    /// <summary>Opting out releases a pending report read while the classical report remains published.</summary>
+    [Fact]
+    public async Task Ai_opt_out_cancels_held_report_validation_without_retiring_the_report()
+    {
+        using var f = new FlowFixture();
+        await SeedAsync(f);
+        var factory = new GateFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var work = Gated(f, factory);
+        await PublishAsync(work);
+        var displayed = work.Review;
+        var features = new AiFeatures(true, _ => { });
+        using var feature = CancellationTokenSource.CreateLinkedTokenSource(Ct, features.Capture());
+        var command = Assert.IsType<ReportCommandLease>(work.CaptureCommand(() => "R1/EUR"));
+        var entered = new TaskCompletionSource<CancellationToken>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        factory.Before = async token =>
+        {
+            entered.TrySetResult(token);
+            await release.Task.WaitAsync(token);
+        };
+
+        var pending = command.ValidateForFeatureAsync(feature.Token);
+        try
+        {
+            var originalRead = await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+            Assert.False(originalRead.IsCancellationRequested);
+            features.Enabled = false;
+            features.Enabled = true;
+
+            Assert.True(originalRead.IsCancellationRequested);
+            await Assert.ThrowsAnyAsync<OperationCanceledException>(() => pending);
+            Assert.False(release.Task.IsCompleted);
+            Assert.True(work.CanInteract);
+            Assert.Same(displayed, work.Review);
+            Assert.Null(work.Failure);
+        }
+        finally
+        {
+            factory.Before = null;
+            release.TrySetResult();
+        }
+
+        var fresh = Assert.IsType<ReportCommandLease>(work.CaptureCommand(() => "R1/EUR"));
+        using var current = CancellationTokenSource.CreateLinkedTokenSource(Ct, features.Capture());
+        await fresh.ValidateForFeatureAsync(current.Token);
+        Assert.Empty(f.Platform.Routes);
+        Assert.Empty(await f.Store.GetEntriesAsync(cancellationToken: Ct));
+    }
+
     /// <summary>Actual protected source changes cover old authority and retain explicit current-page Retry.</summary>
     [Fact]
     public async Task Changed_actual_settings_refuse_old_source_until_explicit_retry()

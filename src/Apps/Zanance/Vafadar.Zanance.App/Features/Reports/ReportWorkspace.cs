@@ -91,9 +91,18 @@ public sealed class ReportCommandLease
     internal ReportCommandLease(ReportWorkStore store, ReportReadReview review, CancellationToken token, Func<bool> current, Func<bool> rootCurrent, CancellationToken rootToken)
     { _store = store; Review = review; Token = token; _current = current; _rootCurrent = rootCurrent; _rootToken = rootToken; }
     /// <summary>Rejects retired parent authority before and after validating full original data/file/day/access.</summary>
-    public async Task ValidateAsync()
+    public Task ValidateAsync() => ValidateForFeatureAsync(CancellationToken.None);
+
+    /// <summary>Also cancels source validation when the original optional feature session ends.</summary>
+    public async Task ValidateForFeatureAsync(CancellationToken feature)
     {
-        RequireCurrent(); await _store.ValidateAsync(Review, Token); RequireCurrent();
+        RequireCurrent();
+        using var linked = feature.CanBeCanceled ? CancellationTokenSource.CreateLinkedTokenSource(Token, feature) : null;
+        var token = linked?.Token ?? Token;
+        token.ThrowIfCancellationRequested();
+        await _store.ValidateAsync(Review, token);
+        token.ThrowIfCancellationRequested();
+        RequireCurrent();
     }
     /// <summary>Rejects a stale original parent command before a native side effect or actual writer commit.</summary>
     public void RequireCurrent() { Token.ThrowIfCancellationRequested(); if (!IsCurrent) throw new InvalidOperationException("Original report command retired."); }
@@ -108,9 +117,18 @@ public sealed class ReportSourceLease(ReportWorkStore store, ReportReadReview re
     /// <summary>Gets exact original root/scope availability; parent publication may be covered during the normal return.</summary>
     public bool IsCurrent => !rootToken.IsCancellationRequested && current();
     /// <summary>Validates the immutable original packet before and after native child-close handoff.</summary>
-    public async Task ValidateAsync()
+    public Task ValidateAsync() => ValidateForFeatureAsync(CancellationToken.None);
+
+    /// <summary>Revalidates the frozen source under an optional feature or child-page lifetime.</summary>
+    public async Task ValidateForFeatureAsync(CancellationToken feature)
     {
-        RequireCurrent(); await store.ValidateAsync(review, rootToken); RequireCurrent();
+        RequireCurrent();
+        using var linked = feature.CanBeCanceled ? CancellationTokenSource.CreateLinkedTokenSource(rootToken, feature) : null;
+        var token = linked?.Token ?? rootToken;
+        token.ThrowIfCancellationRequested();
+        await store.ValidateAsync(review, token);
+        token.ThrowIfCancellationRequested();
+        RequireCurrent();
     }
     private void RequireCurrent() { rootToken.ThrowIfCancellationRequested(); if (!IsCurrent) throw new InvalidOperationException("Original report explanation source retired."); }
 }

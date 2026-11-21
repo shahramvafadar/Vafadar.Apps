@@ -630,11 +630,11 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     }
 
     // Opens the explanation of a KPI with the number, the scope it was computed with and its parts (ZEX-UI14).
-    private async Task NavigateReportAsync(ReportNavigation target, Func<bool>? rowCurrent = null)
+    private async Task NavigateReportAsync(ReportNavigation target, Func<bool>? rowCurrent = null, CancellationToken feature = default)
     {
         if (!CanRunCommands || _workspace.CaptureCommand(ScopeStamp, rowCurrent) is not { } command) return;
         IsBusy = true;
-        try { await command.ValidateAsync(); await NavigateFrozenAsync(target); }
+        try { await command.ValidateForFeatureAsync(feature); await NavigateFrozenAsync(target); }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
         finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
@@ -656,13 +656,13 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         IsBusy = true;
         try
         {
-            await command.ValidateAsync();
+            await command.ValidateForFeatureAsync(feature);
             if (feature.IsCancellationRequested) return;
             var source = command.CaptureChildSource();
-            await NavigateFrozenAsync(new(AppRoutes.AnalysisRoute, (period with { ValidateReportAsync = source.ValidateAsync }).Query(compare, feature)));
+            await NavigateFrozenAsync(new(AppRoutes.AnalysisRoute, (period with { ValidateReportAsync = source.ValidateForFeatureAsync }).Query(compare, feature)));
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
+        { if (!feature.IsCancellationRequested && command.IsCurrent) await _workspace.RefuseAsync(exception); }
         finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
     }
 
@@ -679,7 +679,7 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         var period = Analysis.AiPeriodHandoff.Capture(review.DatabasePath, _from, _to, ConfirmedOnly, ids);
         // The original AI session can retire while the report source is being revalidated.
         return period is null ? Task.CompletedTask
-            : NavigateReportAsync(new(AppRoutes.AnalysisRoute, period.Query(compare, feature)), () => !feature.IsCancellationRequested);
+            : NavigateReportAsync(new(AppRoutes.AnalysisRoute, period.Query(compare, feature)), () => !feature.IsCancellationRequested, feature);
     }
     private async Task NavigateFrozenAsync(ReportNavigation target)
     {

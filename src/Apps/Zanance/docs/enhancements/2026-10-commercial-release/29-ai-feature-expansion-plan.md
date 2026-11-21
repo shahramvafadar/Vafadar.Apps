@@ -50,6 +50,24 @@ the user turns it back on before validation finishes. A focused host test holds 
 report source validation, retires the original session and verifies that a new session can
 validate the same report. This test covers the report command lease and uses no provider.
 
+The Reports overview and detailed AI shortcuts also pass the original AI
+session token into source validation. A separate focused host case held the
+actual SQLite context acquisition. Turning AI off canceled the held read
+before the fixture released it. Re-enabling AI did not revive that read.
+The same classical report remained published and a fresh session validated
+its source successfully. No route, provider request or ledger entry was
+created by this case.
+
+Budget, goal and forecast shortcuts now pass that same session cancellation
+into their original source reads. Detailed Analysis uses its original page
+and session token for source validation before the preview and later
+read-only checks before sharing or sending. Two focused host tests used
+fictional input. One held a budget suggestion's SQLite acquisition and
+observed cancellation without changing the draft, opening Analysis or
+changing any financial rows. The other held the detailed source callback,
+observed cancellation on opt-out and verified zero preview publication
+and zero provider opens after re-enabling.
+
 The signed offline Release APK for revision `384658d0` (SHA-256 `9803b374c8bdebf43f8339e2ddcb1690795f9977b04a85cc0ebad124f80769a5`)
 passed the APK handoff checks and ran on an owned Android 16 x86-64 emulator. One synthetic
 EUR 4.56 expense made the original Reports overview available. With AI off, both AI actions
@@ -61,6 +79,21 @@ boot were retained through the checks. The disposable installation and emulator 
 retired. Local evidence is under `artifacts/android-release-acceptance-20261120`.
 The native check covers the switch and a fresh comparison, while the in-flight command
 case remains covered by the focused host test above.
+
+An AI shortcut now suppresses failures returned after its original enabled
+session ends, even if a new session is already enabled. This applies to the
+budget suggestion, budget and goal funding, and detailed report shortcuts.
+The budget suggestion flow reproduced the obsolete failure both with AI
+still off and after re-enabling. Three focused host cases passed after the
+change, including the control where AI stays on and the original error is
+still shown. The deterministic budget suggestion remained available. The
+test used a synthetic profile and simulated native navigation, with no
+provider request.
+
+The goal funding shortcut also passed its own focused host case: after
+re-enabling AI, the old navigation failure stayed hidden and a fresh tap
+carried the new session and the goal funding facts. The isolated financial
+rows matched their pre-navigation snapshot.
 
 Signed Offline Release APK `e7cf917b` also verified the switch across two local profiles
 on an owned Android 16 x86-64 emulator. AI was turned off once in Main. The second profile

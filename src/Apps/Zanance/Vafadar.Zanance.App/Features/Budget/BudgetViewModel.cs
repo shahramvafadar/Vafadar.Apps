@@ -562,17 +562,17 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
             OpenDraftAsync = () => _interaction.NavigateAsync(AppRoutes.BudgetEditorRoute, route),
         };
 
-        async Task ValidateAsync()
+        async Task ValidateAsync(CancellationToken cancellationToken)
         {
-            await _store.ValidateBudgetEditorReviewAsync(review);
-            var fresh = await _store.GetBudgetReadSnapshotAsync();
+            await _store.ValidateBudgetEditorReviewAsync(review, cancellationToken);
+            var fresh = await _store.GetBudgetReadSnapshotAsync(cancellationToken);
             if (fresh.Review.CreateEditorOrigin().DatabasePath != period.File || today != Today)
                 throw new InvalidOperationException("The original budget period changed.");
             var freshBudget = fresh.Review.Choices.Items.SingleOrDefault(item => item.Id == budget.Id)?.ToBudget()
                 ?? throw new InvalidOperationException("The original budget is unavailable.");
-            var current = await BudgetFinancialProjection.PrepareAsync(fresh, freshBudget, from, to, budget.CurrencyCode, today, confirmed);
+            var current = await BudgetFinancialProjection.PrepareAsync(fresh, freshBudget, from, to, budget.CurrencyCode, today, confirmed, cancellationToken);
             if (Funding(current) != original) throw new InvalidOperationException("The original budget funding changed.");
-            await _store.ValidateBudgetEditorReviewAsync(review);
+            await _store.ValidateBudgetEditorReviewAsync(review, cancellationToken);
         }
 
         (Guid? CategoryId, Core.Analysis.AiFundingFacts Facts)? Funding(BudgetFinancialProjection result)
@@ -594,12 +594,12 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         IsBusy = true;
         try
         {
-            await period.ValidateReportAsync!();
+            await period.ValidateReportAsync!(feature);
             if (!feature.IsCancellationRequested && _visible && revision == _pageRevision && ReferenceEquals(period, _fundingAnalysis))
                 await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false, feature));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
-        { if (_visible && revision == _pageRevision) await _interaction.ShowFailureAsync(error); }
+        { if (!feature.IsCancellationRequested && _visible && revision == _pageRevision) await _interaction.ShowFailureAsync(error); }
         finally { IsBusy = false; }
     }
 

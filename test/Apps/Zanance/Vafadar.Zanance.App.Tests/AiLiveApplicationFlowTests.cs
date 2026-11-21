@@ -253,7 +253,7 @@ public sealed class AiLiveApplicationFlowTests
                 Forecast = fixture.Forecast,
                 OpenDraftAsync = funding.HasValue ? () => { draftsOpened++; return Task.CompletedTask; } : null,
                 ReportLabels = Enumerable.Range(1, reportRows).Select(i => $"Fictitious private label {i}").ToArray(),
-                ValidateReportAsync = () => reportSourceCurrent ? Task.CompletedTask
+                ValidateReportAsync = _ => reportSourceCurrent ? Task.CompletedTask
                     : Task.FromException(new InvalidOperationException("Synthetic retired report source.")),
             });
         }
