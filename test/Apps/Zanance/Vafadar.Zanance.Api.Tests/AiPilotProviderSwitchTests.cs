@@ -435,15 +435,18 @@ public sealed class AiPilotProviderSwitchTests
         Assert.Equal(("127.0.0.1", "zanance_ai_dispatch_queue"), (settings.Host, settings.Database));
         var factory = new Factory(connection!);
         var clock = new FakeTimeProvider(new DateTimeOffset(2026, 11, 20, 12, 0, 0, TimeSpan.Zero));
+        const string projectSetting = "Analysis:ProviderPilot:gemini:Project";
+        const string originalProject = "fictional-original-queue-project";
         var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
         {
             ["Analysis:ProviderPilot:gemini:ApiKey"] = "fictional-queue-fixture",
-            ["Analysis:ProviderPilot:gemini:Project"] = "fictional-queue-project",
+            [projectSetting] = originalProject,
         }).Build();
         using var transport = new Transport { LoseGeminiAcknowledgement = true };
         var pilot = new AiPilotProvider(config, transport, clock);
         const string owner = "fictional-queue-owner";
         var payload = AiPilotProvider.ReportFixture;
+        var originalId = Guid.Parse("00000000-0000-0000-0000-000000000001");
         var eligibleId = Guid.Parse("00000000-0000-0000-0000-000000000041");
         await using (var db = factory.CreateDbContext())
         {
@@ -452,12 +455,16 @@ public sealed class AiPilotProviderSwitchTests
             db.Users.Add(new ServiceUser { Id = owner, UserName = owner, SecurityStamp = "fictional-queue-stamp" });
             await db.SaveChangesAsync(ct);
             await pilot.SelectModelAsync(db, payload.Purpose, "gemini-3.5-flash-lite", "fictional-queue-operator", ct);
-            var eligible = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
+            var original = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
+            config[projectSetting] = "fictional-current-queue-project";
+            await pilot.SelectModelAsync(db, payload.Purpose, "gemini-3.5-flash-lite", "fictional-queue-operator", ct);
+            var eligible = await db.Set<AiPilotRouteRow>().OrderByDescending(row => row.Id).FirstAsync(ct);
             var unavailable = new AiPilotRouteRow { Provider = eligible.Provider, Model = eligible.Model,
                 Purpose = eligible.Purpose, Revision = "unavailable-fictional-original", Actor = eligible.Actor, SelectedAt = eligible.SelectedAt };
             db.Add(unavailable);
             await db.SaveChangesAsync(ct);
-            for (var i = 1; i <= 40; i++) Seed(Guid.Parse($"00000000-0000-0000-0000-{i:D12}"), unavailable);
+            Seed(originalId, original);
+            for (var i = 2; i <= 40; i++) Seed(Guid.Parse($"00000000-0000-0000-0000-{i:D12}"), unavailable);
             Seed(eligibleId, eligible);
             await db.SaveChangesAsync(ct);
 
@@ -478,10 +485,30 @@ public sealed class AiPilotProviderSwitchTests
         await store.DrainPilotDispatchesAsync(ct);
         Assert.Equal((HttpMethod.Post, "generativelanguage.googleapis.com", "/v1beta/interactions"), Assert.Single(transport.Calls));
         await using var observed = factory.CreateDbContext();
-        var rows = await observed.Set<AiRequestRow>().ToDictionaryAsync(row => row.Id, ct);
+        var rows = await observed.Set<AiRequestRow>().AsNoTracking().ToDictionaryAsync(row => row.Id, ct);
         Assert.Equal(AiPilotDispatchStage.Claimed, rows[eligibleId].PilotDispatchStage);
         Assert.All(rows.Values.Where(row => row.Id != eligibleId), row => Assert.Equal(AiPilotDispatchStage.Queued, row.PilotDispatchStage));
         Assert.All(rows.Values, row => Assert.Equal(AiRequestState.Pending, row.State));
+        Assert.Empty(await observed.Set<AiCreditRow>().ToArrayAsync(ct));
+
+        var originalOffer = rows[originalId].OfferId;
+        var originalRoute = await observed.Set<AiOfferRow>().Where(row => row.Id == originalOffer)
+            .Select(row => row.PilotRouteId).SingleAsync(ct);
+        config[projectSetting] = originalProject;
+        clock.Advance(TimeSpan.FromSeconds(5));
+        await store.DrainPilotDispatchesAsync(ct);
+        Assert.Equal(2, transport.Calls.Count);
+        Assert.All(transport.Calls, call =>
+            Assert.Equal((HttpMethod.Post, "generativelanguage.googleapis.com", "/v1beta/interactions"), call));
+        var afterRecovery = await observed.Set<AiRequestRow>().AsNoTracking().ToDictionaryAsync(row => row.Id, ct);
+        Assert.Equal(AiPilotDispatchStage.Claimed, afterRecovery[originalId].PilotDispatchStage);
+        Assert.Equal(clock.GetUtcNow(), afterRecovery[originalId].PilotDispatchClaimedAt);
+        Assert.Equal(originalOffer, afterRecovery[originalId].OfferId);
+        Assert.Equal(originalRoute, await observed.Set<AiOfferRow>().Where(row => row.Id == originalOffer)
+            .Select(row => row.PilotRouteId).SingleAsync(ct));
+        Assert.Equal(rows[eligibleId].PilotDispatchClaimedAt, afterRecovery[eligibleId].PilotDispatchClaimedAt);
+        Assert.Equal(39, afterRecovery.Values.Count(row => row.PilotDispatchStage == AiPilotDispatchStage.Queued));
+        Assert.All(afterRecovery.Values, row => Assert.Equal(AiRequestState.Pending, row.State));
         Assert.Empty(await observed.Set<AiCreditRow>().ToArrayAsync(ct));
     }
 

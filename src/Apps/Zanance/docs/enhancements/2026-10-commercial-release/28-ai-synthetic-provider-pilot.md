@@ -407,3 +407,9 @@ and request ID between bounded batches, leaving the unavailable requests
 queued with their original routes intact. The second pass claimed the eligible
 request and made exactly one call to a fictional transport. No provider was
 contacted, and the case did not settle or refund any credits.
+
+The recovery check restored the older request's original fictional project
+after the worker reached the end of the queue. On the next pass the older
+request used the same saved offer and route and made one new fictional call.
+The later request's claim time stayed unchanged, and the other 39 requests
+remained queued. No real vendor or deployment state was used.
