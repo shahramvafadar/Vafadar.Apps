@@ -110,6 +110,10 @@ operation has a 20-second deadline, below the one-minute lease; responses are
 bounded to 8KiB. Acceptance is not inbox placement. Provider bodies, codes, keys
 and recipient addresses are not logged.
 
+An expired worker lease cannot initiate a send. A focused PostgreSQL test advanced
+the clock just after reading the claimed envelope. The next pass had to claim a
+fresh lease before the fictional sender received the same original challenge once.
+
 Brevo processes recipient/sender, instructions, one-use code, opaque challenge
 UUID and ordinary transport metadata. Provider logging/retention requires the
 actual account/DPA review; no retention period is invented. Keep the same account

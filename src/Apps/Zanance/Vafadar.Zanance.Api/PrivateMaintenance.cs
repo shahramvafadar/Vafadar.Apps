@@ -74,7 +74,10 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
                 await claim.CommitAsync(ct);
             }
             var row = await db.Challenges.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id && c.LeaseOwner == lease, ct);
-            if (row is null || row.Consumed || row.ExpiresAt <= time.GetUtcNow()) continue;
+            var dispatchTime = time.GetUtcNow();
+            // A delayed worker must leave expired claims for a fresh lease.
+            if (row is null || row.Consumed || row.Delivered || row.ExpiresAt <= dispatchTime ||
+                row.LeaseUntil is not { } leaseUntil || leaseUntil <= dispatchTime) continue;
             if (sender is not null)
             {
                 try

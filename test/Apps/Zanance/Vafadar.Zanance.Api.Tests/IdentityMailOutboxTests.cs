@@ -1,8 +1,10 @@
 using System.Collections.Concurrent;
+using System.Data.Common;
 using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Time.Testing;
@@ -103,6 +105,94 @@ public sealed class IdentityMailOutboxTests
             Assert.Empty(Directory.EnumerateFiles(Path.Combine(root, "mailbox")));
         }
         finally { Directory.Delete(root, recursive: true); }
+    }
+
+    [Fact]
+    public async Task Expired_dispatch_claim_requires_a_fresh_lease_before_sending()
+    {
+        var connection = Environment.GetEnvironmentVariable("ZANANCE_MAIL_LEASE_TEST_DB");
+        Assert.SkipWhen(connection is null, "Requires the dedicated fictional mail lease database.");
+        var settings = new NpgsqlConnectionStringBuilder(connection!);
+        Assert.Equal(("127.0.0.1", "zanance_identity_mail_lease_fixture"), (settings.Host, settings.Database));
+        var ct = TestContext.Current.CancellationToken;
+        var root = Directory.CreateTempSubdirectory("zanance-mail-expired-lease-");
+        try
+        {
+            root.CreateSubdirectory("objects");
+            root.CreateSubdirectory("mailbox");
+            var clock = new FakeTimeProvider(DateTimeOffset.UtcNow);
+            var protection = new EphemeralDataProtectionProvider();
+            var sender = new RecordingSender();
+            var expiry = new ExpireOriginalLease(clock);
+            var storage = new ServiceStorage { Root = root.FullName, LocalMailbox = false };
+            var services = new ServiceCollection();
+            services.AddSingleton<TimeProvider>(clock);
+            services.AddSingleton<IDataProtectionProvider>(protection);
+            services.AddSingleton(storage);
+            services.AddSingleton<IIdentityMailSender>(sender);
+            services.AddSingleton<IHouseholdDeletionLedger, HouseholdDeletionLedger>();
+            services.AddSingleton<HouseholdRetirement>();
+            services.AddDbContextFactory<ServiceDbContext>(options => options.UseNpgsql(connection!).AddInterceptors(expiry));
+            await using var provider = services.BuildServiceProvider();
+            var factory = provider.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
+            var id = Guid.NewGuid();
+            await using var db = await factory.CreateDbContextAsync(ct);
+            await db.Database.MigrateAsync(ct);
+            Assert.Empty(await db.Challenges.ToArrayAsync(ct));
+            var user = new ServiceUser { Id = Guid.NewGuid().ToString("N"), Email = "recipient@example.invalid" };
+            db.Users.Add(user);
+            db.Challenges.Add(new IdentityChallenge { Id = id, UserId = user.Id, Purpose = "confirm",
+                ExpiresAt = clock.GetUtcNow().AddMinutes(15),
+                ProtectedMail = protection.CreateProtector("identity-mail-v1")
+                    .Protect(JsonSerializer.Serialize(new PrivateMail(user.Email, "fictional-code", sender.Authority))) });
+            await db.SaveChangesAsync(ct);
+
+            using var worker = new PrivateMaintenance(provider.GetRequiredService<IServiceScopeFactory>(), storage, clock, new Lifetime());
+            await worker.RunOnceAsync(ct);
+            Assert.True(expiry.Expired);
+            Assert.Empty(sender.Submissions);
+            var held = await db.Challenges.AsNoTracking().SingleAsync(ct);
+            Assert.NotNull(held.LeaseOwner);
+            Assert.False(held.Delivered);
+
+            await worker.RunOnceAsync(ct);
+            Assert.Equal(id, Assert.Single(sender.Submissions));
+            var delivered = await db.Challenges.AsNoTracking().SingleAsync(ct);
+            Assert.NotEqual(held.LeaseOwner, delivered.LeaseOwner);
+            Assert.True(delivered.Delivered);
+            Assert.Equal(held.ProtectedMail, delivered.ProtectedMail);
+        }
+        finally { root.Delete(recursive: true); }
+    }
+
+    private sealed class ExpireOriginalLease(FakeTimeProvider clock) : DbCommandInterceptor
+    {
+        internal bool Expired { get; private set; }
+
+        public override ValueTask<DbDataReader> ReaderExecutedAsync(DbCommand command, CommandExecutedEventData eventData,
+            DbDataReader result, CancellationToken cancellationToken = default)
+        {
+            if (!Expired && command.CommandText.StartsWith("SELECT", StringComparison.Ordinal) &&
+                command.CommandText.Contains("FROM \"Challenges\"", StringComparison.Ordinal) &&
+                command.CommandText.Contains(".\"LeaseOwner\" =", StringComparison.Ordinal))
+            {
+                Expired = true;
+                clock.Advance(TimeSpan.FromSeconds(61));
+            }
+            return base.ReaderExecutedAsync(command, eventData, result, cancellationToken);
+        }
+    }
+
+    private sealed class RecordingSender : IIdentityMailSender
+    {
+        public string Authority => "brevo-v1:sender@example.invalid";
+        internal List<Guid> Submissions { get; } = [];
+
+        public Task SubmitAsync(IdentityMail mail, CancellationToken ct)
+        {
+            Submissions.Add(mail.Id);
+            return Task.CompletedTask;
+        }
     }
 
     private sealed class Peer(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> send) : HttpMessageHandler

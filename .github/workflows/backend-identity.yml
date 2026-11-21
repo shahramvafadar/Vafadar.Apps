@@ -118,6 +118,7 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
       ZANANCE_MAIL_TEST_DB: Host=127.0.0.1;Port=55477;Database=zanance_identity_mail_d1226;Username=postgres
+      ZANANCE_MAIL_LEASE_TEST_DB: Host=127.0.0.1;Port=55477;Database=zanance_identity_mail_lease_fixture;Username=postgres
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
@@ -131,6 +132,7 @@ jobs:
             sleep 1
           done
           docker exec zanance-identity-mail-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_mail_d1226
+          docker exec zanance-identity-mail-ci createdb -h 127.0.0.1 -U postgres zanance_identity_mail_lease_fixture
           docker exec zanance-identity-mail-ci createdb -h 127.0.0.1 -U postgres zanance_identity_mail_http_d1226
           docker exec zanance-identity-mail-ci createdb -h 127.0.0.1 -U postgres zanance_identity_mail_d1227
           docker exec zanance-identity-mail-ci createdb -h 127.0.0.1 -U postgres zanance_identity_mail_retry_d1227
