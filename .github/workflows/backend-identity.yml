@@ -322,6 +322,8 @@ jobs:
         run: |
           docker exec zanance-analysis-ci createdb -h 127.0.0.1 -U postgres zanance_ai_dispatch_queue
           ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -method '*Pilot_dispatch_advances_past_a_full_page_of_unavailable_original_routes' -failSkips -result-xml TestResults/analysis-dispatch-queue.xml
+      - name: Verify synthetic dispatch worker recovery from a database update failure
+        run: ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -class '*AiPilotDispatchWorkerTests' -failSkips -result-xml TestResults/analysis-dispatch-worker.xml
       - name: Upload bounded analysis reports only
         if: always()
         uses: actions/upload-artifact@v7

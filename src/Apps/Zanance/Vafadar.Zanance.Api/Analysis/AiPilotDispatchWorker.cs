@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Vafadar.Zanance.Api.Analysis;
@@ -18,7 +19,8 @@ internal sealed class AiPilotDispatchWorker(AiRequestStore store, AiPilotComplet
                 await notices.DrainAsync(stoppingToken);
                 await store.DrainPilotDispatchesAsync(stoppingToken);
             }
-            catch (Exception error) when (error is NpgsqlException or IOException or TimeoutException)
+            catch (Exception error) when (error is NpgsqlException or IOException or TimeoutException or
+                DbUpdateException { InnerException: NpgsqlException { IsTransient: true } })
             {
                 logger.LogWarning("The synthetic analysis queue could not be read or claimed.");
             }
