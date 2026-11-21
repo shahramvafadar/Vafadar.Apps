@@ -173,6 +173,22 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AccountDeletionRequests");
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.AccountSyncFileRetirement", b =>
+                {
+                    b.Property<Guid>("FileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ReceiptId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("FileId");
+
+                    b.HasIndex("ReceiptId");
+
+                    b.ToTable("AccountSyncFileRetirements", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiCreditRow", b =>
                 {
                     b.Property<Guid>("Id")

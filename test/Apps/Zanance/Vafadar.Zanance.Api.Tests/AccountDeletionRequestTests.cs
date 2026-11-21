@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Vafadar.Zanance.Api.Analysis;
 using Vafadar.Zanance.Api.Billing;
+using Vafadar.Zanance.Api.Rates;
 using Vafadar.Zanance.Api.Sharing;
 using Vafadar.Zanance.Api.Sync;
 using Vafadar.Zanance.Core.Commerce;
@@ -22,6 +23,86 @@ namespace Vafadar.Zanance.Api.Tests;
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Personal_sync_retirement_cascades_original_rows_and_resumes_exact_queued_pieces()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_sync_fixture";
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "sync-retirement-service"));
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        await db.Database.MigrateAsync("20261121013816_AccountDeletionRequests", ct);
+        var target = new ServiceUser { UserName = "sync-retirement-target@example.invalid" };
+        var other = new ServiceUser { UserName = "sync-retirement-other@example.invalid" };
+        var receipt = Guid.NewGuid();
+        var now = DateTimeOffset.UtcNow;
+        db.Users.AddRange(target, other);
+        db.AccountDeletionRequests.Add(new() { UserId = target.Id, ReceiptId = receipt, RequestedAt = now });
+        var targetPiece = AddProfile(target);
+        var otherPiece = AddProfile(other);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+        await db.Database.MigrateAsync(ct);
+        Assert.False(db.Database.HasPendingModelChanges());
+
+        var pieceRoot = Directory.CreateDirectory(Path.Combine(storage.Root, "sync-pieces")).FullName;
+        var targetPath = Path.Combine(pieceRoot, targetPiece.FileId.ToString("N"));
+        var otherPath = Path.Combine(pieceRoot, otherPiece.FileId.ToString("N"));
+        Directory.CreateDirectory(targetPath);
+        await File.WriteAllBytesAsync(otherPath, new byte[] { 5, 6, 7 }, ct);
+        try
+        {
+            Assert.Equal(AccountPersonalSyncRetirementResult.UnknownReceipt,
+                await AccountPersonalSyncRetirement.RunAsync(db, storage, Guid.NewGuid(), ct));
+            Assert.Equal(2, await db.Set<SyncBlobPieceRow>().CountAsync(ct));
+            Assert.Equal(AccountPersonalSyncRetirementResult.Pending,
+                await AccountPersonalSyncRetirement.RunAsync(db, storage, receipt, ct));
+            Assert.Equal(otherPiece.FileId, (await db.Set<SyncBlobPieceRow>().SingleAsync(ct)).FileId);
+            Assert.Equal(other.Id, (await db.Set<SyncDeviceRow>().SingleAsync(ct)).UserId);
+            Assert.Equal(otherPiece.SpaceId, (await db.Set<PersonalMarketSourceRow>().SingleAsync(ct)).ProfileId);
+            var pending = await db.Set<AccountSyncFileRetirement>().SingleAsync(ct);
+            Assert.Equal(receipt, pending.ReceiptId);
+            Assert.Equal(targetPiece.FileId, pending.FileId);
+            Assert.Equal(AccountDeletionDependencies.PersonalSync, await AccountDeletionInventory.InspectAsync(db, receipt, ct));
+            Assert.True(Directory.Exists(targetPath));
+        }
+        finally { Directory.Delete(targetPath); }
+
+        await File.WriteAllBytesAsync(targetPath, new byte[] { 1, 2, 3 }, ct);
+        Assert.Equal(AccountPersonalSyncRetirementResult.Retired,
+            await AccountPersonalSyncRetirement.RunAsync(db, storage, receipt, ct));
+        Assert.False(File.Exists(targetPath));
+        Assert.Equal(new byte[] { 5, 6, 7 }, await File.ReadAllBytesAsync(otherPath, ct));
+        Assert.Empty(await db.Set<AccountSyncFileRetirement>().ToListAsync(ct));
+        Assert.Equal(2, await db.Users.CountAsync(ct));
+        Assert.Equal(receipt, (await db.AccountDeletionRequests.SingleAsync(ct)).ReceiptId);
+
+        SyncBlobPieceRow AddProfile(ServiceUser owner)
+        {
+            var id = Guid.NewGuid();
+            var device = new SyncDeviceRow { Id = Guid.NewGuid(), SessionId = Guid.NewGuid(), UserId = owner.Id };
+            var hash = new string('a', 64);
+            var piece = new SyncBlobPieceRow { SpaceId = id, BlobHash = hash, FileId = Guid.NewGuid(), Length = 3, Hash = hash };
+            db.AddRange(device,
+                new SyncSpaceRow { Id = id, UserId = owner.Id, BootstrapDeviceId = device.Id },
+                new SyncBlobRow { SpaceId = id, Hash = hash, Length = 3, Parts = 1 },
+                piece,
+                new PersonalMarketSourceRow { ProfileId = id, DocumentId = Guid.NewGuid(), Digest = hash,
+                    ProtectedDocument = "Fictional protected payload", Bytes = 3 });
+            return piece;
+        }
+    }
+
     [Fact]
     public async Task Account_objects_remain_hidden_after_io_failure_and_resume_only_the_original_retirement()
     {

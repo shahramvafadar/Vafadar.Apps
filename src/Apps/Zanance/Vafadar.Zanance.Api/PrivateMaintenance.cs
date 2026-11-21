@@ -29,6 +29,7 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
         var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         await using var db = await factory.CreateDbContextAsync(ct);
         var now = time.GetUtcNow();
+        await AccountPersonalSyncRetirement.RetireFilesAsync(db, storage, db.Set<AccountSyncFileRetirement>(), ct);
         await syncPieces.RunAsync(db, ct);
         await scope.ServiceProvider.GetRequiredService<Sharing.HouseholdRetirement>().RunOnceAsync(ct);
         await AccountPrivateObjectRetirement.RetireFilesAsync(db, storage, db.Objects, ct);

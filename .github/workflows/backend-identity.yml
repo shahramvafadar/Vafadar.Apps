@@ -67,6 +67,7 @@ jobs:
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_web_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_inventory_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_objects_fixture'
+          docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_sync_fixture'
           mkdir -p "$ZANANCE_IDENTITY_REMOVAL_TEST_ROOT" "$ZANANCE_DELETE_REQUEST_FIXTURE_ROOT"
           printf '%s' 'Zanance fictional identity removal fixture' > "$ZANANCE_IDENTITY_REMOVAL_TEST_ROOT/fixture.marker"
           printf '%s' 'Zanance fictional deletion request fixture' > "$ZANANCE_DELETE_REQUEST_FIXTURE_ROOT/fixture.marker"

@@ -42,7 +42,8 @@ public static class AccountDeletionInventory
         if (await db.Objects.AnyAsync(row => row.UserId == owner, ct))
             dependencies |= AccountDeletionDependencies.PrivateObjects;
         if (await db.Set<SyncSpaceRow>().AnyAsync(row => row.UserId == owner, ct) ||
-            await db.Set<SyncDeviceRow>().AnyAsync(row => row.UserId == owner, ct))
+            await db.Set<SyncDeviceRow>().AnyAsync(row => row.UserId == owner, ct) ||
+            await db.Set<AccountSyncFileRetirement>().AnyAsync(row => row.ReceiptId == receipt, ct))
             dependencies |= AccountDeletionDependencies.PersonalSync;
         // Historical references can survive an ownership transfer and do not all have identity foreign keys.
         var deletionActorHash = HouseholdDeletionLedger.Actor(owner);

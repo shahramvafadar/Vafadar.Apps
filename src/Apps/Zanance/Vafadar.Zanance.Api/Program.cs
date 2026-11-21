@@ -19,13 +19,16 @@ var listModels = args.FirstOrDefault() == "--list-analysis-models";
 var deletePilotResult = args.FirstOrDefault() == "--delete-analysis-pilot-result";
 var inspectDeletion = args.FirstOrDefault() == "--inspect-account-deletion";
 var retireAccountObjects = args.FirstOrDefault() == "--retire-account-objects";
+var retireAccountSync = args.FirstOrDefault() == "--retire-account-personal-sync";
 var deletionReceipt = Guid.Empty;
-if ((inspectDeletion || retireAccountObjects) &&
+if ((inspectDeletion || retireAccountObjects || retireAccountSync) &&
     (args.Length < 2 || !Guid.TryParseExact(args[1], "D", out deletionReceipt) || deletionReceipt == Guid.Empty ||
         args.Contains("--migrate", StringComparer.Ordinal)))
     throw new InvalidOperationException("The original pending deletion receipt is required.");
 if (retireAccountObjects && (args.Length < 3 || args[2] != "--confirm-private-object-retirement"))
     throw new InvalidOperationException("Explicit confirmation of private-object retirement is required.");
+if (retireAccountSync && (args.Length < 3 || args[2] != "--confirm-personal-sync-retirement"))
+    throw new InvalidOperationException("Explicit confirmation of personal sync retirement is required.");
 var pilotRequestId = Guid.Empty;
 if (deletePilotResult &&
     (args.Length < 3 || !Guid.TryParseExact(args[1], "D", out pilotRequestId) || pilotRequestId == Guid.Empty ||
@@ -36,11 +39,13 @@ if (selectAnalysis && (args.Length < 2 || args[1] is not ("openai" or "gemini" o
 if (selectModel && (args.Length < 3 || args[1] is not ("report" or "comparison") || args.Contains("--migrate")) ||
     listModels && args.Contains("--migrate"))
     throw new InvalidOperationException("Choose report or comparison and an allowlisted model or off.");
-var hostArgs = selectAnalysis || inspectDeletion ? args[2..] : selectModel || deletePilotResult || retireAccountObjects ? args[3..] : listModels ? args[1..] : args.Where(arg => arg != "--migrate").ToArray();
+var hostArgs = selectAnalysis || inspectDeletion ? args[2..] :
+    selectModel || deletePilotResult || retireAccountObjects || retireAccountSync ? args[3..] :
+    listModels ? args[1..] : args.Where(arg => arg != "--migrate").ToArray();
 var builder = WebApplication.CreateBuilder(hostArgs);
 builder.AddZananceService(migrationOnly: args.Contains("--migrate", StringComparer.Ordinal));
 var app = builder.Build();
-if (retireAccountObjects)
+if (retireAccountObjects || retireAccountSync)
 {
     var privateStorage = app.Services.GetRequiredService<ServiceStorage>();
     var privateAuthority = Path.Combine(privateStorage.Root, "installation.protected");
@@ -48,9 +53,18 @@ if (retireAccountObjects)
     if (!File.Exists(privateAuthority) || privateProtector.Unprotect(await File.ReadAllTextAsync(privateAuthority)) != "Zanance private service v1")
         throw new InvalidOperationException("The existing private installation authority is required.");
     await using var db = await app.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>().CreateDbContextAsync();
-    var result = await AccountPrivateObjectRetirement.RunAsync(db, privateStorage, deletionReceipt, CancellationToken.None);
-    Console.WriteLine("Account private-object retirement: " + result);
-    if (result != AccountPrivateObjectRetirementResult.Retired) Environment.ExitCode = 1;
+    if (retireAccountSync)
+    {
+        var result = await AccountPersonalSyncRetirement.RunAsync(db, privateStorage, deletionReceipt, CancellationToken.None);
+        Console.WriteLine("Account personal-sync retirement: " + result);
+        if (result != AccountPersonalSyncRetirementResult.Retired) Environment.ExitCode = 1;
+    }
+    else
+    {
+        var result = await AccountPrivateObjectRetirement.RunAsync(db, privateStorage, deletionReceipt, CancellationToken.None);
+        Console.WriteLine("Account private-object retirement: " + result);
+        if (result != AccountPrivateObjectRetirementResult.Retired) Environment.ExitCode = 1;
+    }
     return;
 }
 if (inspectDeletion)

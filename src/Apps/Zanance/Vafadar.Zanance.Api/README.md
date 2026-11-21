@@ -113,6 +113,17 @@ object scope. The receipt, identity and other service records remain pending.
 Final account erasure must recheck for new objects under its execution lock
 and handle backups separately.
 
+The personal sync stage is
+`--retire-account-personal-sync <receipt-id> --confirm-personal-sync-retirement`.
+The owner and piece locks protect one transaction that records exact server
+piece IDs in a durable queue and removes the original spaces and device grants.
+The existing space foreign keys remove the associated records, rounds, metadata
+and personal market-source rows. The operator or ordinary maintenance can
+resume a bounded file pass after interruption. Live manifests and substituted
+directories or links are excluded. The stage covers the current server copies
+and needs a final recheck under the account execution lock. Independent device
+copies and backups have their own retention boundaries.
+
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity
 rate limit. The browser form requires antiforgery validation, returns no-store
