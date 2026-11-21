@@ -99,6 +99,8 @@
                                 <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowAccountDeletionReceipt}">
                                     <Label Text="{v:Translate AccountDeletion_Pending}" />
                                     <Label Text="{Binding AccountDeletionReference}" />
+                                    <p:WrappingAction x:Name="DeletionWebsiteAction" Text="{v:Translate AccountDeletion_WebStatus}"
+                                                      IsVisible="{Binding ShowAccountDeletionWebsite}" IsEnabled="{Binding CanInteract}" />
                                 </VerticalStackLayout>
                             </VerticalStackLayout>
                         </Border>

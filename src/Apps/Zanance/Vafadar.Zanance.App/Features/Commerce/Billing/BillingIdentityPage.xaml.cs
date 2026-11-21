@@ -29,7 +29,12 @@ public partial class BillingIdentityPage : ContentPage
     }
     /// <summary>Builds controls only; private session/credential effects wait for actual appearance and explicit actions.</summary>
     public BillingIdentityPage(BillingIdentityViewModel model, ILocalizationService localization)
-    { InitializeComponent(); BindingContext = this.model = model; this.localization = localization; }
+    {
+        InitializeComponent();
+        BindingContext = this.model = model;
+        this.localization = localization;
+        DeletionWebsiteAction.Command = new Command(OpenAccountDeletionWebsite);
+    }
     /// <inheritdoc />
     protected override async void OnAppearing()
     {
@@ -41,5 +46,12 @@ public partial class BillingIdentityPage : ContentPage
     { localization.Changed -= OnLanguageChanged; if (!Security.NativeSensitivePresentation.CoversOriginalPage(this)) RetirePublication(); base.OnDisappearing(); }
     /// <inheritdoc />
     protected override bool OnBackButtonPressed() => !model.CanLeave || base.OnBackButtonPressed();
+    private async void OpenAccountDeletionWebsite()
+    {
+        if (rootRetired || !model.CanSignOut || !model.ShowAccountDeletionReceipt) return;
+        await Presentation.Failures.GuardAsync(async () => await Browser.Default.OpenAsync(
+            Data.Sync.LocalSyncPeer.HostedAccountDeletionStatusPage, BrowserLaunchMode.External));
+    }
+
     private void OnLanguageChanged(object? sender, EventArgs args) => model.RefreshDisplay();
 }

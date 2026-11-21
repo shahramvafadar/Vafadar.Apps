@@ -41,6 +41,7 @@ public partial class PersonalSyncPage : ContentPage
     {
         InitializeComponent();
         BindingContext = this.viewModel = viewModel;
+        DeletionWebsiteAction.Command = new Command(OpenAccountDeletionWebsite);
         AttachmentImageViewport.SizeChanged += (_, _) => viewModel.SetAttachmentViewport(AttachmentImageViewport.Width);
     }
     /// <summary>Keeps first-run navigation explicit while using this same original personal sync flow.</summary>
@@ -65,6 +66,13 @@ public partial class PersonalSyncPage : ContentPage
 
     /// <inheritdoc />
     protected override bool OnBackButtonPressed() => !viewModel.CanLeave || base.OnBackButtonPressed();
+
+    private async void OpenAccountDeletionWebsite()
+    {
+        if (rootRetired || !viewModel.CanInteract || !viewModel.ShowAccountDeletionWebsite) return;
+        await Presentation.Failures.GuardAsync(async () => await Browser.Default.OpenAsync(
+            Data.Sync.LocalSyncPeer.HostedAccountDeletionStatusPage, BrowserLaunchMode.External));
+    }
 
     private async void OnPreviewChanged(object? sender, PropertyChangedEventArgs args)
     {

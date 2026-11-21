@@ -8864,6 +8864,9 @@
   <data name="AccountDeletion_Submit" xml:space="preserve">
     <value>درخواست حذف حساب</value>
   </data>
+  <data name="AccountDeletion_WebStatus" xml:space="preserve">
+    <value>پیگیری رسید حذف در وب</value>
+  </data>
   <data name="AccountDeletion_Pending" xml:space="preserve">
     <value>درخواست در انتظار است. شناسهٔ رسید</value>
   </data>

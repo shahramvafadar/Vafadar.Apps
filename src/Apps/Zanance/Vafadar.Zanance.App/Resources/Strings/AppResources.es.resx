@@ -8833,6 +8833,9 @@ SHA-256 del XML original: {5}</value>
   <data name="AccountDeletion_Submit" xml:space="preserve">
     <value>Solicitar la eliminación de la cuenta</value>
   </data>
+  <data name="AccountDeletion_WebStatus" xml:space="preserve">
+    <value>Consultar el estado en la web</value>
+  </data>
   <data name="AccountDeletion_Pending" xml:space="preserve">
     <value>Solicitud pendiente. Referencia del justificante</value>
   </data>

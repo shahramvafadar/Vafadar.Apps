@@ -8864,6 +8864,9 @@ Original-XML SHA-256: {5}</value>
   <data name="AccountDeletion_Submit" xml:space="preserve">
     <value>Kontolöschung beantragen</value>
   </data>
+  <data name="AccountDeletion_WebStatus" xml:space="preserve">
+    <value>Löschstatus im Web prüfen</value>
+  </data>
   <data name="AccountDeletion_Pending" xml:space="preserve">
     <value>Anfrage offen. Referenznummer</value>
   </data>

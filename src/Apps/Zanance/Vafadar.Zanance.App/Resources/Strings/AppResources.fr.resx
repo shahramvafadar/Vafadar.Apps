@@ -8841,6 +8841,9 @@ SHA-256 du XML original : {5}</value>
   <data name="AccountDeletion_Submit" xml:space="preserve">
     <value>Demander la suppression du compte</value>
   </data>
+  <data name="AccountDeletion_WebStatus" xml:space="preserve">
+    <value>Vérifier le statut sur le site</value>
+  </data>
   <data name="AccountDeletion_Pending" xml:space="preserve">
     <value>Demande en attente. Référence du reçu</value>
   </data>

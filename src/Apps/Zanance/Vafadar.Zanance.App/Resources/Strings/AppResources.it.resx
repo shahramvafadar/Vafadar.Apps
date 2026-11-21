@@ -8853,6 +8853,9 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="AccountDeletion_Submit" xml:space="preserve">
     <value>Richiedi l’eliminazione dell’account</value>
   </data>
+  <data name="AccountDeletion_WebStatus" xml:space="preserve">
+    <value>Controlla lo stato sul sito</value>
+  </data>
   <data name="AccountDeletion_Pending" xml:space="preserve">
     <value>Richiesta in sospeso. Riferimento della ricevuta</value>
   </data>

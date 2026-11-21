@@ -8905,6 +8905,9 @@ Original XML SHA-256: {5}</value>
   <data name="AccountDeletion_Submit" xml:space="preserve">
     <value>Request account deletion</value>
   </data>
+  <data name="AccountDeletion_WebStatus" xml:space="preserve">
+    <value>Check receipt on website</value>
+  </data>
   <data name="AccountDeletion_Pending" xml:space="preserve">
     <value>Request pending. Receipt reference</value>
   </data>

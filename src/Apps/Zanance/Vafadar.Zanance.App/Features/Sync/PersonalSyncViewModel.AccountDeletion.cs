@@ -21,6 +21,9 @@ public sealed partial class PersonalSyncViewModel
     /// <summary>Gets the pending receipt reference without retaining password proof.</summary>
     public string? AccountDeletionReference => ShowAccountDeletionReceipt ? deletionReceipt?.ReceiptId.ToString("D") : null;
 
+    /// <summary>Only a receipt from the hosted service can link to its public status form.</summary>
+    public bool ShowAccountDeletionWebsite => ShowAccountDeletionReceipt && transport?.Peer.UsesSystemTrust == true;
+
     /// <summary>Gets or sets the transient password dedicated to confirming the deletion request.</summary>
     public string DeletionPassword
     {
@@ -99,5 +102,6 @@ public sealed partial class PersonalSyncViewModel
         OnPropertyChanged(nameof(ShowAccountDeletionForm));
         OnPropertyChanged(nameof(ShowAccountDeletionReceipt));
         OnPropertyChanged(nameof(AccountDeletionReference));
+        OnPropertyChanged(nameof(ShowAccountDeletionWebsite));
     }
 }

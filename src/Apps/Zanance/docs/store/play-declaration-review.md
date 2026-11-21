@@ -101,8 +101,14 @@ submission and the same pending receipt through the app API. Users can check
 the opaque reference on that page after their session is retired. The protected
 POST returns only pending, completed active-service deletion, or unavailable.
 The focused test opens the receipt before and after actual synthetic account
-erasure. Personal Sync
-native layout review, publicly reachable deployment, deletion execution,
+erasure. Personal Sync and the store account form link hosted receipts to
+the browser status form.
+The browser opens only the fixed address, so users enter the reference
+themselves. A locally pinned Personal Sync peer displays its own receipt
+without a hosted link. Both new actions passed 18 native Windows layout
+contexts each with synthetic receipts, Persian, English and German, light
+and dark themes, and widths of 360, 412 and 1280. The review verified the
+native captions and touch targets. Publicly reachable deployment, deletion execution,
 verified retention and the Console declaration remain open.
 See [the service boundary](../../Vafadar.Zanance.Api/README.md#api-boundary)
 and [Play User Data policy](https://support.google.com/googleplay/android-developer/answer/10144311).

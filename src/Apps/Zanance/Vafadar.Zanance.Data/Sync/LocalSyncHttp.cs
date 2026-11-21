@@ -8,6 +8,11 @@ namespace Vafadar.Zanance.Data.Sync;
 /// <summary>A reviewed local or approved hosted peer, separate from credentials and financial profile identifiers.</summary>
 public sealed class LocalSyncPeer
 {
+    private const string HostedName = "api.zanance.vafadar.pro";
+
+    /// <summary>The browser form for an opaque hosted account deletion receipt.</summary>
+    public static Uri HostedAccountDeletionStatusPage { get; } = new($"https://{HostedName}/identity/delete-account#check-status");
+
     /// <summary>Canonical local HTTPS endpoint or the explicitly approved public service origin.</summary>
     public Uri Address { get; }
     /// <summary>Reviewed local certificate SHA-256; empty only for the approved public origin's normal system trust.</summary>
@@ -23,7 +28,7 @@ public sealed class LocalSyncPeer
             uri.UserInfo.Length != 0 || uri.Query.Length != 0 || uri.Fragment.Length != 0 || uri.AbsolutePath != "/")
             throw new ArgumentException("A reviewed HTTPS service origin is required.");
         ArgumentNullException.ThrowIfNull(fingerprint);
-        if (uri.DnsSafeHost == "api.zanance.vafadar.pro")
+        if (uri.DnsSafeHost == HostedName)
         {
             if (uri.Port != 443 || !string.IsNullOrWhiteSpace(fingerprint))
                 throw new ArgumentException("The approved public origin requires normal system trust without a local pin override.");

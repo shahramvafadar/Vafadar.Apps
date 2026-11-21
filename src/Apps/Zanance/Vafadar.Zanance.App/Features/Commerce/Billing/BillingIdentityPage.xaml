@@ -51,6 +51,8 @@
                         <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowAccountDeletionReceipt}">
                             <Label Text="{v:Translate AccountDeletion_Pending}" />
                             <Label Text="{Binding AccountDeletionReference}" />
+                            <p:WrappingAction x:Name="DeletionWebsiteAction" Text="{v:Translate AccountDeletion_WebStatus}"
+                                              IsEnabled="{Binding CanSignOut}" />
                         </VerticalStackLayout>
                         <Label Text="{Binding DeletionFeedback}" Style="{StaticResource ErrorText}"
                             IsVisible="{Binding DeletionFeedback, Converter={StaticResource IsNotNullConverter}}" />

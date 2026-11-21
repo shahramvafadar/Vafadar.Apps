@@ -55,6 +55,9 @@ public sealed partial class PersonalSyncSessionLifetimeTests
             Assert.Null(model.Error);
             Assert.True(model.ShowAccountDeletionReceipt);
             Assert.Equal(host.DeletionReceiptId.ToString("D"), model.AccountDeletionReference);
+            Assert.False(model.ShowAccountDeletionWebsite);
+            Assert.Equal("https://api.zanance.vafadar.pro/identity/delete-account#check-status",
+                LocalSyncPeer.HostedAccountDeletionStatusPage.AbsoluteUri);
             Assert.Equal(1, host.DeletionSubmissions);
             Assert.Empty(await fixture.Store.GetEntriesAsync(cancellationToken: Ct));
         }
