@@ -21,6 +21,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     {
         await using var db = await factory.CreateDbContextAsync(ct);
         await using var scope = await OpenAsync(actor, db, ct);
+        if (await DeletionPendingAsync(db, scope.Owner, ct))
+            return new(false, null, null, await BalanceAsync(db, scope.Owner, ct), false);
         var offer = pilot is null ? provider.Offer(AiPurpose.PeriodExplanation)
             : (await pilot.OfferAsync(db, AiPurpose.PeriodExplanation, ct))?.Offer;
         if (offer is not null) ValidateOffer(offer);
@@ -35,6 +37,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     {
         if (!Enum.IsDefined(purpose)) throw new AiRefusal(422, "AiPurposeRefused");
         await using var db = await factory.CreateDbContextAsync(ct); await using var scope = await OpenAsync(actor, db, ct);
+        await RequireNewWorkAsync(db, scope.Owner, ct);
         if (pilot is not null) await AiPilotProvider.LockAsync(db, ct);
         var selection = pilot is null ? null : await pilot.OfferAsync(db, purpose, ct);
         var original = (pilot is null ? provider.Offer(purpose) : selection?.Offer) ?? throw new AiRefusal(503, "AiProviderNotConfigured");
@@ -69,6 +72,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             }
             else
             {
+                await RequireNewWorkAsync(db, owner, ct);
                 var row = await db.Set<AiOfferRow>().SingleOrDefaultAsync(r => r.Id == submission.Offer.Id && r.UserId == owner, ct)
                     ?? throw new AiRefusal(404, "AiOfferUnavailable");
                 if (!SameOffer(row, submission.Offer) || row.Purpose != payload.Purpose)
@@ -130,7 +134,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         Guid[] pending;
         await using (var db = await factory.CreateDbContextAsync(ct))
             pending = await db.Set<AiRequestRow>().Where(row => row.PilotDispatchStage == AiPilotDispatchStage.Queued &&
-                    row.State == AiRequestState.Pending && row.VendorOperationId == null)
+                    row.State == AiRequestState.Pending && row.VendorOperationId == null &&
+                    !db.AccountDeletionRequests.Any(deletion => deletion.UserId == row.UserId))
                 .OrderBy(row => row.CreatedAt).ThenBy(row => row.Id).Select(row => row.Id).Take(40).ToArrayAsync(ct);
         foreach (var request in pending)
             await DispatchPilotAsync(request, ct);
@@ -147,21 +152,28 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             // Read only the original dispatch metadata. The pilot maps the allowlisted digest to its own fixed synthetic input.
             var pending = db.Set<AiRequestRow>().Where(row => row.Id == request && row.State == AiRequestState.Pending &&
                 row.PilotDispatchStage == AiPilotDispatchStage.Queued && row.VendorOperationId == null);
-            var metadata = await pending.Select(row => new { row.UserId, row.PayloadDigest, row.OfferId }).SingleOrDefaultAsync(ct);
+            var originalOwner = await pending.Select(row => row.UserId).SingleOrDefaultAsync(ct);
+            if (originalOwner is null) return;
+            await using var transaction = await db.Database.BeginTransactionAsync(ct);
+            await SyncRequestScope.LockOwnerAsync(db, originalOwner, ct);
+            if (await DeletionPendingAsync(db, originalOwner, ct)) return;
+            pending = pending.Where(row => row.UserId == originalOwner);
+            var metadata = await pending.Select(row => new { row.PayloadDigest, row.OfferId }).SingleOrDefaultAsync(ct);
             if (metadata is null) return;
             var offer = await db.Set<AiOfferRow>().AsNoTracking().SingleAsync(row => row.Id == metadata.OfferId, ct);
             if (offer.PilotRouteId is not { } routeId) return;
             route = await db.Set<AiPilotRouteRow>().AsNoTracking().SingleAsync(row => row.Id == routeId, ct);
             original = Offer(offer);
             digest = metadata.PayloadDigest;
-            owner = metadata.UserId;
+            owner = originalOwner;
             if (!pilot.CanBegin(route, original, digest)) return;
-            // The standalone update is the committed boundary. A lost update response is ambiguous and may never allow a retry.
+            // The claim and pending account deletion share the owner lock. A committed claim is the one original boundary.
             var now = time.GetUtcNow();
             var claimed = await pending.ExecuteUpdateAsync(set => set
                 .SetProperty(row => row.PilotDispatchStage, AiPilotDispatchStage.Claimed)
                 .SetProperty(row => row.PilotDispatchClaimedAt, now), ct);
             if (claimed != 1) return;
+            await transaction.CommitAsync(ct);
         }
 
         AiProviderOutcome? outcome = null;
@@ -172,6 +184,14 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         }
         catch (Exception error) when (error is IOException or HttpRequestException or OperationCanceledException or TimeoutException) { }
         if (outcome is not null) await ApplyAsync(owner, request, outcome, CancellationToken.None);
+    }
+
+    private static Task<bool> DeletionPendingAsync(ServiceDbContext db, string owner, CancellationToken ct) =>
+        db.AccountDeletionRequests.AnyAsync(row => row.UserId == owner, ct);
+
+    private static async Task RequireNewWorkAsync(ServiceDbContext db, string owner, CancellationToken ct)
+    {
+        if (await DeletionPendingAsync(db, owner, ct)) throw new AiRefusal(409, "AiAccountDeletionPending");
     }
 
     /// <summary>Binds an authenticated retrieval to one exact original, already claimed synthetic operation.</summary>

@@ -143,6 +143,13 @@ credit records remain pending for their specific retention decisions. The
 same local stage is used during isolated restore reconciliation. It does not
 send provider traffic or alter credit records.
 
+An accepted account deletion pauses analysis admission immediately. Availability
+reports analysis disabled, new offers and submissions refuse before any new
+reservation, and the dispatch worker leaves unclaimed pilot requests queued.
+The owner lock orders a pilot claim against the deletion request. Existing work
+that has crossed its dispatch boundary retains its original status and credit
+handling.
+
 After the approved stages and retention review, the operator can use
 `--erase-account-identity <receipt-id> --confirm-server-identity-erasure`.
 The active-service transaction rechecks the original dependencies under the

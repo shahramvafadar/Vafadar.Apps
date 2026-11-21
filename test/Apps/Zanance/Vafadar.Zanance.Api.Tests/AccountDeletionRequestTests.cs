@@ -1,15 +1,18 @@
 using System.Net;
 using System.Data.Common;
+using System.Security.Claims;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
@@ -27,6 +30,103 @@ namespace Vafadar.Zanance.Api.Tests;
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Pending_account_deletion_stops_new_analysis_and_preserves_queued_work_without_provider_io()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_dispatch_fixture";
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "analysis-dispatch-retirement"));
+        await using var services = host.Services.CreateAsyncScope();
+        var factory = services.ServiceProvider.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
+        await using var db = await factory.CreateDbContextAsync(ct);
+        await db.Database.MigrateAsync(ct);
+        var protection = new EphemeralDataProtectionProvider();
+        var time = TimeProvider.System;
+        var now = time.GetUtcNow();
+        var target = new ServiceUser { UserName = "dispatch-deletion-target@example.invalid" };
+        var other = new ServiceUser { UserName = "dispatch-deletion-other@example.invalid" };
+        db.Users.AddRange(target, other);
+        var targetActor = Actor(target);
+        var otherActor = Actor(other);
+        await db.SaveChangesAsync(ct);
+
+        var provider = new NoProviderTraffic();
+        var store = new AiRequestStore(factory, provider, protection, time);
+        var offer = await store.OfferAsync(targetActor, AiPurpose.PeriodExplanation, ct);
+        var payload = AiPilotProvider.ReportFixture;
+        var submission = new AiSubmission(Guid.NewGuid(), offer, payload);
+        var http = new NoProviderHttp();
+        var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["Analysis:ProviderPilot:openai:ApiKey"] = "fictional-deletion-test-key",
+            ["Analysis:ProviderPilot:openai:Project"] = "fixture-deletion-gate",
+        }).Build();
+        var pilot = new AiPilotProvider(config, http, time);
+        await pilot.SelectModelAsync(db, AiPurpose.PeriodExplanation, "gpt-6-luna", "fictional-operator", ct);
+        var route = await db.Set<AiPilotRouteRow>().SingleAsync(ct);
+        var alreadyQueuedOffer = new AiOfferRow { Id = Guid.NewGuid(), UserId = target.Id, PilotRouteId = route.Id,
+            Provider = route.Provider, Model = route.Model!, Purpose = route.Purpose, MaximumUnits = 1, ExpiresAt = now.AddMinutes(5) };
+        var alreadyQueued = new AiRequestRow { Id = Guid.NewGuid(), UserId = target.Id, OfferId = alreadyQueuedOffer.Id,
+            CreatedAt = now, State = AiRequestState.Pending, GiftedReserved = 1, PilotDispatchStage = AiPilotDispatchStage.Queued,
+            PilotCostCeilingMicros = 100, PayloadDigest = AiProtocol.Digest(payload), ProtectedPayload = "Fictional pending payload" };
+        db.AddRange(alreadyQueuedOffer, alreadyQueued, new AccountDeletionRequest { UserId = target.Id, ReceiptId = Guid.NewGuid(), RequestedAt = now });
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        Assert.False((await store.AvailabilityAsync(targetActor, ct)).Configured);
+        Assert.True((await store.AvailabilityAsync(otherActor, ct)).Configured);
+        Assert.Equal("AiAccountDeletionPending",
+            (await Assert.ThrowsAsync<AiRefusal>(() => store.OfferAsync(targetActor, offer.Purpose, ct))).Message);
+        Assert.Equal("AiAccountDeletionPending",
+            (await Assert.ThrowsAsync<AiRefusal>(() => store.SubmitAsync(targetActor, submission, ct))).Message);
+        await new AiRequestStore(factory, provider, protection, time, pilot).DrainPilotDispatchesAsync(ct);
+        var preserved = await db.Set<AiRequestRow>().AsNoTracking().SingleAsync(ct);
+        Assert.Equal(alreadyQueued.Id, preserved.Id);
+        Assert.Equal(AiPilotDispatchStage.Queued, preserved.PilotDispatchStage);
+        Assert.Equal(AiRequestState.Pending, preserved.State);
+        Assert.Empty(await db.Set<AiCreditRow>().ToListAsync(ct));
+        Assert.Equal(0, http.Calls);
+
+        ClaimsPrincipal Actor(ServiceUser owner)
+        {
+            var session = new DeviceSession { Id = Guid.NewGuid(), UserId = owner.Id, ExpiresAt = now.AddHours(1) };
+            db.Sessions.Add(session);
+            return new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
+            {
+                new(ClaimTypes.NameIdentifier, owner.Id), new(ServiceHost.SessionClaim, session.Id.ToString("D")),
+                new(ServiceHost.GenerationClaim, "0"),
+            }, "Fictional"));
+        }
+    }
+
+    private sealed class NoProviderTraffic : IAiProvider
+    {
+        public AiProviderOffer? Offer(AiPurpose purpose) => new("fixture", "fixture-model", 1);
+        public Task<AiProviderOutcome> BeginAsync(string operation, AiOffer offer, AiPayload payload, CancellationToken ct)
+            => throw new InvalidOperationException("Provider creation is forbidden in this fixture.");
+        public Task<AiProviderOutcome> StatusAsync(string operation, AiOffer offer, CancellationToken ct)
+            => throw new InvalidOperationException("Provider status is forbidden in this fixture.");
+    }
+
+    private sealed class NoProviderHttp : IHttpClientFactory
+    {
+        public int Calls { get; private set; }
+        public HttpClient CreateClient(string name)
+        {
+            Calls++;
+            throw new InvalidOperationException("External transport is forbidden in this fixture.");
+        }
+    }
+
     [Fact]
     public async Task Account_erasure_releases_only_verified_retired_rooms_and_preserves_restore_markers()
     {
