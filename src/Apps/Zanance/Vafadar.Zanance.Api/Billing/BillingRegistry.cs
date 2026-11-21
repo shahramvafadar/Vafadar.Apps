@@ -35,6 +35,7 @@ internal sealed class BillingRegistry(IDbContextFactory<ServiceDbContext> factor
                 BillingJson.Default.BillingRegistrationResult, 65536);
             await scope.CommitAsync(ct); return original;
         }
+        await scope.RequireAccountAdmissionAsync(ct);
         row = new() { Id = body.Id, PublicIdentity = body.PublicIdentity, DeviceFingerprint = key.Fingerprint,
             Distribution = body.Distribution, Environment = body.Environment, UserId = scope.UserId,
             RegistrationIdentityHash = body.IdentityHash, CreatedAt = time.GetUtcNow() };
@@ -43,7 +44,7 @@ internal sealed class BillingRegistry(IDbContextFactory<ServiceDbContext> factor
         db.Add(row);
         // The immutable registration replay must not reissue historical paid grants after a later refund.
         // A fresh signed command with a fresh nonce/time proof is required for a complete current snapshot.
-        var snapshot = await SnapshotAsync(db, row, scope.UserId, body.Id, ct, BillingSnapshotKind.Registration);
+        var snapshot = await SnapshotAsync(db, row, scope, body.Id, ct, BillingSnapshotKind.Registration);
         var result = new BillingRegistrationResult(row.Id, snapshot.AccountToken, BillingAuthority.Public(signer),
             BillingAuthority.Sign(snapshot, signer), catalog.Read(row.Distribution, row.Environment));
         row.ProtectedRegistrationResponse = Convert.ToBase64String(protector.Protect(JsonSerializer.SerializeToUtf8Bytes(result, BillingJson.Default.BillingRegistrationResult)));
@@ -78,9 +79,10 @@ internal sealed class BillingRegistry(IDbContextFactory<ServiceDbContext> factor
     }
 
     /// <summary>Captures only actual current rights; a complete replacement snapshot removes old expired/revoked claims.</summary>
-    internal async Task<BillingSnapshot> SnapshotAsync(ServiceDbContext db, BillingCustomerRow customer, string? user,
+    internal async Task<BillingSnapshot> SnapshotAsync(ServiceDbContext db, BillingCustomerRow customer, BillingRequestScope scope,
         Guid requestId, CancellationToken ct, BillingSnapshotKind kind = BillingSnapshotKind.Current)
     {
+        var user = scope.UserId;
         if (user is not null && customer.UserId is not null && user != customer.UserId)
             throw new BillingRefusal(403, "BillingIdentityDiffers");
         var account = customer.AccountToken;
@@ -89,6 +91,9 @@ internal sealed class BillingRegistry(IDbContextFactory<ServiceDbContext> factor
             var binding = await db.Set<BillingIdentityRow>().SingleOrDefaultAsync(row => row.UserId == user && row.Environment == customer.Environment, ct);
             if (binding is null)
             {
+                // Observation must not enroll a retiring account. An already accepted
+                // store operation can still complete its original receipt.
+                if (kind == BillingSnapshotKind.Current) await scope.RequireAccountAdmissionAsync(ct);
                 var token = Guid.NewGuid();
                 binding = new() { UserId = user, Environment = customer.Environment, AccountToken = token,
                     GoogleAccountBinding = BillingAuthority.GoogleAccount(token, identity: true) };

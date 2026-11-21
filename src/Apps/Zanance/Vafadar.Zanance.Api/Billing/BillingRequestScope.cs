@@ -16,6 +16,13 @@ internal sealed class BillingRequestScope : IAsyncDisposable
     /// <summary>Actual confirmed identity or null for account-free local Plus.</summary>
     internal string? UserId => _session?.Owner;
 
+    /// <summary>Refuses new account bindings under the same owner lock as deletion intake.</summary>
+    internal async Task RequireAccountAdmissionAsync(CancellationToken ct)
+    {
+        if (_session is not null && await _session.AccountDeletionPendingAsync(ct))
+            throw new BillingRefusal(409, "BillingAccountDeletionPending");
+    }
+
     /// <summary>Revalidates an actual session under the existing owner lock; anonymous never creates an identity.</summary>
     internal static async Task<BillingRequestScope> OpenAsync(ServiceDbContext db, ClaimsPrincipal principal, TimeProvider time, CancellationToken ct)
     {

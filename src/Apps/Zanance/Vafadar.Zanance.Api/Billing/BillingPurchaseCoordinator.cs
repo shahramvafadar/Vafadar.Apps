@@ -90,7 +90,7 @@ internal sealed partial class BillingPurchaseCoordinator(IDbContextFactory<Servi
             throw new BillingRefusal(503, "OriginalBillingWorkUnavailable");
         if (journal.CompletedWork == work.PurchaseIds.Length)
         {
-            var snapshot = await registry.SnapshotAsync(db, customer, scope.UserId, command.OperationId, ct, BillingSnapshotKind.Operation);
+            var snapshot = await registry.SnapshotAsync(db, customer, scope, command.OperationId, ct, BillingSnapshotKind.Operation);
             var result = BillingAuthority.CommandResult(snapshot, signer, signed,
                 command.Operation != BillingOperation.Refresh && journal.LastState is not (null or BillingPurchaseState.Pending),
                 command.Operation == BillingOperation.Refresh ? null : journal.LastState, command.NativePaymentId,

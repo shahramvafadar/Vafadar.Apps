@@ -34,7 +34,7 @@ internal sealed class BillingCommandStore(IDbContextFactory<ServiceDbContext> fa
                 await db.Set<BillingCommandRow>().Where(row => row.CustomerId == customerId && row.ExpiresAt < now && row.ProtectedResponse != "").ExecuteDeleteAsync(ct);
                 if (await db.Set<BillingCommandRow>().CountAsync(row => row.CustomerId == customerId, ct) >= 256)
                     throw new BillingRefusal(413, "BillingPendingWorkBound");
-                var snapshot = await registry.SnapshotAsync(db, customer, scope.UserId, command.OperationId, ct, BillingSnapshotKind.Operation);
+                var snapshot = await registry.SnapshotAsync(db, customer, scope, command.OperationId, ct, BillingSnapshotKind.Operation);
                 var result = BillingAuthority.CommandResult(snapshot, signer, signed, false, null, command.NativePaymentId);
                 journal = NewJournal(customerId, command.OperationId, signed, now, protection);
                 SaveResponse(journal, result, protection); db.Add(journal); await scope.CommitAsync(ct); return result;
@@ -57,7 +57,10 @@ internal sealed class BillingCommandStore(IDbContextFactory<ServiceDbContext> fa
                     // Linking a customer is not a transfer of someone else's store purchase. Each purchase
                     // is associated only through its separately verified restoration/ownership path.
                     if (customer.UserId is null)
-                    { customer.UserId = scope.UserId; customer.Revision = checked(customer.Revision + 1); changed = true; }
+                    {
+                        await scope.RequireAccountAdmissionAsync(ct);
+                        customer.UserId = scope.UserId; customer.Revision = checked(customer.Revision + 1); changed = true;
+                    }
                 }
                 else if (command.Operation == BillingOperation.RetireDevice)
                 {
@@ -66,7 +69,7 @@ internal sealed class BillingCommandStore(IDbContextFactory<ServiceDbContext> fa
                 }
                 else if (command.Operation != BillingOperation.Observe) throw new BillingRefusal(422, "BillingOperationRefused");
                 var kind = command.Operation == BillingOperation.Observe ? BillingSnapshotKind.Current : BillingSnapshotKind.Operation;
-                var snapshot = await registry.SnapshotAsync(db, customer, scope.UserId, command.OperationId, ct, kind);
+                var snapshot = await registry.SnapshotAsync(db, customer, scope, command.OperationId, ct, kind);
                 var result = BillingAuthority.CommandResult(snapshot, signer, signed, false, null, command.NativePaymentId);
                 // Fresh read-only observations never fill the durable purchase-command journal.
                 if (changed)

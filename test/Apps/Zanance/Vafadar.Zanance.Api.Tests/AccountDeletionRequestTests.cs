@@ -34,6 +34,89 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Pending_deletion_preserves_billing_replay_and_refuses_new_account_bindings()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_billing_admission_fixture";
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "billing-admission-service"), billing: true);
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var users = services.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        const string email = "billing-deletion-admission@example.invalid";
+        const string password = "Fictional-Billing-Admission9!";
+        var user = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+        Assert.True((await users.CreateAsync(user, password)).Succeeded);
+        var identity = BillingAuthority.IdentityHash(user.Id);
+
+        using var app = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var anonymous = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var login = await app.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+        app.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+
+        using var device = SigningRecipientIdentity.Create();
+        using var detached = SigningRecipientIdentity.Create();
+        var originalRequest = Register(device, BillingEnvironment.Sandbox, identity);
+        var detachedRequest = Register(detached, BillingEnvironment.Production, null);
+        using var original = await app.PostAsJsonAsync("/billing/devices", originalRequest.Envelope, BillingJson.Default.BillingRegistrationEnvelope, ct);
+        using var control = await anonymous.PostAsJsonAsync("/billing/devices", detachedRequest.Envelope, BillingJson.Default.BillingRegistrationEnvelope, ct);
+        Assert.Equal(HttpStatusCode.OK, original.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, control.StatusCode);
+        var originalReply = await original.Content.ReadAsStringAsync(ct);
+
+        using var removal = await app.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+        Assert.Equal(HttpStatusCode.Accepted, removal.StatusCode);
+        using var replay = await app.PostAsJsonAsync("/billing/devices", originalRequest.Envelope, BillingJson.Default.BillingRegistrationEnvelope, ct);
+        Assert.Equal(HttpStatusCode.OK, replay.StatusCode);
+        Assert.Equal(originalReply, await replay.Content.ReadAsStringAsync(ct));
+
+        using var refused = await app.PostAsJsonAsync("/billing/devices", Register(device, BillingEnvironment.Sandbox, identity).Envelope,
+            BillingJson.Default.BillingRegistrationEnvelope, ct);
+        Assert.Equal(HttpStatusCode.Conflict, refused.StatusCode);
+        Assert.Equal("BillingAccountDeletionPending", (await refused.Content.ReadFromJsonAsync<JsonElement>(ct)).GetProperty("code").GetString());
+        await AssertRefusedAsync(BillingOperation.Observe);
+        await AssertRefusedAsync(BillingOperation.LinkIdentity);
+        Assert.Equal(2, await db.Set<BillingCustomerRow>().CountAsync(ct));
+        Assert.Null((await db.Set<BillingCustomerRow>().SingleAsync(row => row.Id == detachedRequest.Id, ct)).UserId);
+        Assert.Equal(BillingEnvironment.Sandbox, (await db.Set<BillingIdentityRow>().SingleAsync(ct)).Environment);
+        Assert.Empty(await db.Set<BillingPurchaseRow>().ToListAsync(ct));
+        Assert.Empty(await db.Set<BillingCommandRow>().ToListAsync(ct));
+
+        static (Guid Id, BillingRegistrationEnvelope Envelope) Register(SigningRecipientIdentity key, BillingEnvironment environment, string? owner)
+        {
+            var id = Guid.NewGuid();
+            var publicJson = JsonSerializer.Serialize(key.Public, BillingProviderJson.Default.PublicSigningRecipientIdentity);
+            var request = new BillingRegistration(id, BillingIssuer.GooglePlay, environment, publicJson, owner);
+            var signed = StandardJoseSignatures.Sign(JsonSerializer.SerializeToUtf8Bytes(request, BillingJson.Default.BillingRegistration),
+                key, BillingAuthority.RegistrationPurpose);
+            return (id, new(publicJson, signed));
+        }
+
+        async Task AssertRefusedAsync(BillingOperation operation)
+        {
+            var command = new BillingCommand(detachedRequest.Id, Guid.NewGuid(), operation, 0, identity, null, null, DateTimeOffset.UtcNow.AddMinutes(2));
+            var signed = StandardJoseSignatures.Sign(JsonSerializer.SerializeToUtf8Bytes(command, BillingJson.Default.BillingCommand),
+                detached, BillingAuthority.CommandPurpose);
+            using var reply = await app.PostAsJsonAsync($"/billing/devices/{detachedRequest.Id}/commands",
+                new BillingSignedRequest(signed), BillingJson.Default.BillingSignedRequest, ct);
+            Assert.Equal(HttpStatusCode.Conflict, reply.StatusCode);
+            Assert.Equal("BillingAccountDeletionPending", (await reply.Content.ReadFromJsonAsync<JsonElement>(ct)).GetProperty("code").GetString());
+        }
+    }
+
+    [Fact]
     public async Task Account_deletion_admitted_during_upload_prevents_private_object_publication()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
@@ -1493,7 +1576,7 @@ public sealed class AccountDeletionRequestTests
     }
 
     private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null, bool analysis = false,
-        bool household = false, IIdentityMailSender? sender = null) : WebApplicationFactory<Program>
+        bool household = false, IIdentityMailSender? sender = null, bool billing = false) : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -1502,6 +1585,7 @@ public sealed class AccountDeletionRequestTests
             builder.UseSetting("Service:Root", root);
             if (analysis) builder.UseSetting("Analysis:LocalQualification", "true");
             if (household) builder.UseSetting("Service:Household:LocalQualification", "true");
+            if (billing) builder.UseSetting("Billing:LocalQualification", "true");
             builder.ConfigureServices(services =>
             {
                 services.RemoveAll<IHostedService>();

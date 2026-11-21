@@ -119,6 +119,14 @@ manifest. The existing deletion receipt remains available. An isolated PostgreSQ
 test pauses an authenticated upload before the owner lock, admits deletion, and
 then resumes the upload to verify this ordering.
 
+Pending deletion also refuses new signed-in billing registrations and links.
+Observing an anonymous device with a pending account cannot create a billing
+identity binding. The owner lock orders these operations against deletion
+intake. Exact registration replay continues to return its original response.
+Existing purchases, command receipts, and provider settlement keep their
+existing handling. Local verification uses fictional device keys and no store
+or payment provider.
+
 The personal sync stage is
 `--retire-account-personal-sync <receipt-id> --confirm-personal-sync-retirement`.
 The owner and piece locks protect one transaction that records exact server
