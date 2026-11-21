@@ -633,10 +633,15 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
     private async Task NavigateReportAsync(ReportNavigation target, Func<bool>? rowCurrent = null, CancellationToken feature = default)
     {
         if (!CanRunCommands || _workspace.CaptureCommand(ScopeStamp, rowCurrent) is not { } command) return;
-        IsBusy = true;
-        try { await command.ValidateForFeatureAsync(feature); await NavigateFrozenAsync(target); }
+        try
+        {
+            IsBusy = true;
+            if (feature.IsCancellationRequested || !command.IsCurrent) return;
+            await command.ValidateForFeatureAsync(feature);
+            if (!feature.IsCancellationRequested) await NavigateFrozenAsync(target);
+        }
         catch (Exception exception) when (exception is not OutOfMemoryException)
-        { if (command.IsCurrent) await _workspace.RefuseAsync(exception); }
+        { if (!feature.IsCancellationRequested && command.IsCurrent) await _workspace.RefuseAsync(exception); }
         finally { IsBusy = false; if (_reloadRequested && OwnsPublication) await LoadAsync(); }
     }
 
@@ -653,9 +658,10 @@ public sealed partial class ReportsViewModel : ViewModelBase, IQueryAttributable
         var feature = Analysis.AiFeatures.Current.Capture();
         if (feature.IsCancellationRequested || period is null || !CanRunCommands || _workspace.CaptureCommand(ScopeStamp) is not { } command ||
             command.Review.DatabasePath != period.File) return;
-        IsBusy = true;
         try
         {
+            IsBusy = true;
+            if (feature.IsCancellationRequested || !command.IsCurrent) return;
             await command.ValidateForFeatureAsync(feature);
             if (feature.IsCancellationRequested) return;
             var source = command.CaptureChildSource();

@@ -13,29 +13,38 @@ namespace Vafadar.Zanance.App.Tests;
 [Collection("Classical feature preference")]
 public sealed class AiGoalShortcutTests
 {
+    [Fact]
+    public async Task Failed_AI_shortcut_startup_leaves_goal_funding_available()
+    {
+        using var fixture = new FlowFixture();
+        var model = await OpenFundingAsync(fixture);
+        var prior = AiFeatures.Current;
+        try
+        {
+            AiFeatures.Current = new(true, _ => { });
+            model.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(model.IsBusy) && model.IsBusy)
+                    throw new IOException("Synthetic goal explanation startup failure.");
+            };
+
+            await model.ExplainFundingCommand.ExecuteAsync(null);
+
+            Assert.True(model.CanInteract);
+            Assert.True(model.HasFundingAnalysis);
+            Assert.Empty(fixture.Platform.Routes);
+            Assert.Single(fixture.Platform.Failures);
+        }
+        finally { AiFeatures.Current = prior; }
+    }
+
     /// <summary>A retired goal shortcut cannot show its late error or block a fresh analysis.</summary>
     [Fact]
     public async Task Reenabled_AI_discards_the_old_goal_shortcut_failure_and_allows_one_fresh_shortcut()
     {
         using var fixture = new FlowFixture();
         var cancellation = TestContext.Current.CancellationToken;
-        await fixture.Store.SaveAccountAsync(new Account
-        {
-            Name = "Synthetic funding account", CurrencyCode = "EUR", OpeningDate = new(2026, 9, 1)
-        }, cancellation);
-        var goals = fixture.Services.GetRequiredService<GoalStore>();
-        var goal = new Goal { Name = "Synthetic funding target", CurrencyCode = "EUR", TargetAmount = 10000 };
-        await goals.SaveGoalAsync(goal, cancellation);
-        var dates = new DateFormatter(fixture.Localization);
-        var holdings = fixture.Services.GetRequiredService<HoldingStore>();
-        var holdingText = new HoldingText(fixture.Translator, fixture.Localization, dates);
-        var presenter = new GoalPresenter(fixture.Translator, dates, fixture.Localization, holdings, holdingText);
-        var model = new GoalDetailViewModel(fixture.Store, goals, fixture.Services.GetRequiredService<PlanStore>(),
-            holdings, presenter, fixture.Translator, dates, fixture.Localization, fixture.Time, fixture.Platform);
-        model.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = goal.Id });
-        await model.LoadAsync();
-        Assert.True(model.CanInteract);
-        Assert.True(model.HasFundingAnalysis);
+        var model = await OpenFundingAsync(fixture);
         var originalRows = await GoalChooserFlowTests.SnapshotAsync(fixture);
 
         var originalPreference = AiFeatures.Current;
@@ -75,5 +84,28 @@ public sealed class AiGoalShortcutTests
             Assert.Equal(originalRows, await GoalChooserFlowTests.SnapshotAsync(fixture));
         }
         finally { AiFeatures.Current = originalPreference; }
+    }
+
+    private static async Task<GoalDetailViewModel> OpenFundingAsync(FlowFixture fixture)
+    {
+        var cancellation = TestContext.Current.CancellationToken;
+        await fixture.Store.SaveAccountAsync(new Account
+        {
+            Name = "Synthetic funding account", CurrencyCode = "EUR", OpeningDate = new(2026, 9, 1)
+        }, cancellation);
+        var goals = fixture.Services.GetRequiredService<GoalStore>();
+        var goal = new Goal { Name = "Synthetic funding target", CurrencyCode = "EUR", TargetAmount = 10000 };
+        await goals.SaveGoalAsync(goal, cancellation);
+        var dates = new DateFormatter(fixture.Localization);
+        var holdings = fixture.Services.GetRequiredService<HoldingStore>();
+        var holdingText = new HoldingText(fixture.Translator, fixture.Localization, dates);
+        var presenter = new GoalPresenter(fixture.Translator, dates, fixture.Localization, holdings, holdingText);
+        var model = new GoalDetailViewModel(fixture.Store, goals, fixture.Services.GetRequiredService<PlanStore>(),
+            holdings, presenter, fixture.Translator, dates, fixture.Localization, fixture.Time, fixture.Platform);
+        model.ApplyQueryAttributes(new Dictionary<string, object> { ["id"] = goal.Id });
+        await model.LoadAsync();
+        Assert.True(model.CanInteract);
+        Assert.True(model.HasFundingAnalysis);
+        return model;
     }
 }

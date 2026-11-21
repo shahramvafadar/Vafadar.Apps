@@ -433,9 +433,10 @@ public sealed partial class BudgetEditorViewModel : ViewModelBase, IUnsavedChang
             // The original form holds the draft and already has an explicit Use suggestion action.
             OpenDraftAsync = () => _interaction.NavigateAsync(".."),
         };
-        IsBusy = true;
         try
         {
+            IsBusy = true;
+            if (feature.IsCancellationRequested || !OwnsView(view) || _routeRetired) return;
             await ValidateAsync(feature);
             if (!feature.IsCancellationRequested && OwnsView(view) && !_routeRetired)
                 await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, packet.Query(false, feature));

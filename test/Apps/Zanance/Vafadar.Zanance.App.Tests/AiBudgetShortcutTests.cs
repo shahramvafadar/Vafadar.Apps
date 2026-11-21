@@ -12,6 +12,32 @@ namespace Vafadar.Zanance.App.Tests;
 [Collection("Classical feature preference")]
 public sealed class AiBudgetShortcutTests
 {
+    [Fact]
+    public async Task Failed_AI_shortcut_startup_leaves_the_budget_suggestion_available()
+    {
+        using var fixture = new FlowFixture();
+        var model = await OpenSuggestionAsync(fixture, fixture.Store, TestContext.Current.CancellationToken);
+        var suggestion = model.TotalSuggestionText;
+        var prior = AiFeatures.Current;
+        try
+        {
+            AiFeatures.Current = new(true, _ => { });
+            model.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(model.IsBusy) && model.IsBusy)
+                    throw new IOException("Synthetic budget explanation startup failure.");
+            };
+
+            await model.ExplainSuggestionCommand.ExecuteAsync(null);
+
+            Assert.True(model.CanInteract);
+            Assert.Equal(suggestion, model.TotalSuggestionText);
+            Assert.Empty(fixture.Platform.Routes);
+            Assert.Single(fixture.Platform.Failures);
+        }
+        finally { AiFeatures.Current = prior; }
+    }
+
     /// <summary>A failed native route can report its error only while the original AI session is current.</summary>
     [Theory]
     [InlineData(true, false)]

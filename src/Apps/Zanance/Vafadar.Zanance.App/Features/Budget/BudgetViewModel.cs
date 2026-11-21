@@ -591,11 +591,13 @@ public sealed partial class BudgetViewModel : ViewModelBase, Presentation.ITheme
         var feature = Analysis.AiFeatures.Current.Capture();
         if (feature.IsCancellationRequested || !CanNavigate || _fundingAnalysis is not { } period || _refreshing || IsBusy) return;
         var revision = _pageRevision;
-        IsBusy = true;
+        bool Current() => !feature.IsCancellationRequested && _visible && revision == _pageRevision && ReferenceEquals(period, _fundingAnalysis);
         try
         {
+            IsBusy = true;
+            if (!Current()) return;
             await period.ValidateReportAsync!(feature);
-            if (!feature.IsCancellationRequested && _visible && revision == _pageRevision && ReferenceEquals(period, _fundingAnalysis))
+            if (Current())
                 await _interaction.NavigateAsync(AppRoutes.AnalysisRoute, period.Query(false, feature));
         }
         catch (Exception error) when (error is not OutOfMemoryException)
