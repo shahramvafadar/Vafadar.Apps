@@ -94,6 +94,14 @@ request must address those records, private file retirement, already-dispatched
 provider work and what may be retained. Restore and independent recipient copies
 also need their scope explained.
 
+Before executing a pending request, an operator can run the configured service
+binary with `--inspect-account-deletion <receipt-id>`. This command starts no
+HTTP listener and reports only dependency categories from a read-only database
+snapshot. It covers sessions, identity mail, private objects, personal sync,
+household membership and historical links, billing, and analysis. A missing
+receipt returns exit code 1. The inventory needs to be revalidated at execution
+and does not determine file, backup, recipient or vendor retention.
+
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity
 rate limit. The browser form requires antiforgery validation, returns no-store

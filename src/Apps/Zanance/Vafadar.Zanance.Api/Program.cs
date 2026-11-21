@@ -1,5 +1,6 @@
 using Vafadar.Zanance.Api;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Analysis;
 
 // Offline privacy restoration never constructs the database, listener, key ring or host.
@@ -16,6 +17,12 @@ var selectAnalysis = args.FirstOrDefault() == "--select-analysis-provider";
 var selectModel = args.FirstOrDefault() == "--select-analysis-model";
 var listModels = args.FirstOrDefault() == "--list-analysis-models";
 var deletePilotResult = args.FirstOrDefault() == "--delete-analysis-pilot-result";
+var inspectDeletion = args.FirstOrDefault() == "--inspect-account-deletion";
+var deletionReceipt = Guid.Empty;
+if (inspectDeletion &&
+    (args.Length < 2 || !Guid.TryParseExact(args[1], "D", out deletionReceipt) || deletionReceipt == Guid.Empty ||
+        args.Contains("--migrate", StringComparer.Ordinal)))
+    throw new InvalidOperationException("The original pending deletion receipt is required.");
 var pilotRequestId = Guid.Empty;
 if (deletePilotResult &&
     (args.Length < 3 || !Guid.TryParseExact(args[1], "D", out pilotRequestId) || pilotRequestId == Guid.Empty ||
@@ -26,10 +33,18 @@ if (selectAnalysis && (args.Length < 2 || args[1] is not ("openai" or "gemini" o
 if (selectModel && (args.Length < 3 || args[1] is not ("report" or "comparison") || args.Contains("--migrate")) ||
     listModels && args.Contains("--migrate"))
     throw new InvalidOperationException("Choose report or comparison and an allowlisted model or off.");
-var hostArgs = selectAnalysis ? args[2..] : selectModel || deletePilotResult ? args[3..] : listModels ? args[1..] : args.Where(arg => arg != "--migrate").ToArray();
+var hostArgs = selectAnalysis || inspectDeletion ? args[2..] : selectModel || deletePilotResult ? args[3..] : listModels ? args[1..] : args.Where(arg => arg != "--migrate").ToArray();
 var builder = WebApplication.CreateBuilder(hostArgs);
 builder.AddZananceService(migrationOnly: args.Contains("--migrate", StringComparer.Ordinal));
 var app = builder.Build();
+if (inspectDeletion)
+{
+    await using var db = await app.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>().CreateDbContextAsync();
+    var groups = await AccountDeletionInventory.InspectAsync(db, deletionReceipt, CancellationToken.None);
+    Console.WriteLine(groups is { } found ? "Pending account deletion dependencies: " + found : "Pending account deletion request not found.");
+    if (groups is null) Environment.ExitCode = 1;
+    return;
+}
 if (selectAnalysis || selectModel || listModels || deletePilotResult)
 {
     var pilot = app.Services.GetService<Vafadar.Zanance.Api.Analysis.AiPilotProvider>()

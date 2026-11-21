@@ -11,12 +11,73 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
+using Vafadar.Zanance.Api.Analysis;
+using Vafadar.Zanance.Api.Billing;
+using Vafadar.Zanance.Api.Sharing;
+using Vafadar.Zanance.Api.Sync;
+using Vafadar.Zanance.Core.Commerce;
 
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Deletion_inventory_scopes_each_record_group_to_the_original_receipt_without_mutation()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_inventory_fixture";
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "inventory-service"));
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        await db.Database.MigrateAsync(ct);
+        var target = new ServiceUser { UserName = "inventory-target@example.invalid" };
+        var other = new ServiceUser { UserName = "inventory-empty@example.invalid" };
+        var sharedOwner = new ServiceUser { UserName = "inventory-current-household-owner@example.invalid" };
+        var targetReceipt = Guid.NewGuid();
+        var otherReceipt = Guid.NewGuid();
+        var now = DateTimeOffset.UtcNow;
+        db.Users.AddRange(target, other, sharedOwner);
+        db.AccountDeletionRequests.AddRange(
+            new() { UserId = target.Id, ReceiptId = targetReceipt, RequestedAt = now },
+            new() { UserId = other.Id, ReceiptId = otherReceipt, RequestedAt = now });
+        var space = new HouseholdSpaceRow { Id = Guid.NewGuid(), OwnerId = sharedOwner.Id };
+        db.AddRange(
+            new DeviceSession { Id = Guid.NewGuid(), UserId = target.Id, ExpiresAt = now.AddDays(1) },
+            new IdentityChallenge { Id = Guid.NewGuid(), UserId = target.Id, Purpose = "reset", ExpiresAt = now.AddMinutes(5) },
+            new PrivateObject { Id = Guid.NewGuid(), UserId = target.Id, CreatedAt = now },
+            new SyncSpaceRow { Id = Guid.NewGuid(), UserId = target.Id },
+            space,
+            new HouseholdMembershipEventRow { SpaceId = space.Id, Version = 1, ActorId = target.Id, CreatedAt = now },
+            new BillingCustomerRow { Id = Guid.NewGuid(), AccountToken = Guid.NewGuid(), CreatedAt = now,
+                RegistrationIdentityHash = BillingAccountBinding.Identity(target.Id) },
+            new AiOfferRow { Id = Guid.NewGuid(), UserId = target.Id, MaximumUnits = 1, ExpiresAt = now.AddMinutes(10) });
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        var all = AccountDeletionDependencies.Sessions | AccountDeletionDependencies.IdentityMail |
+            AccountDeletionDependencies.PrivateObjects | AccountDeletionDependencies.PersonalSync |
+            AccountDeletionDependencies.Household | AccountDeletionDependencies.Billing | AccountDeletionDependencies.Analysis;
+        Assert.Equal(all, await AccountDeletionInventory.InspectAsync(db, targetReceipt, ct));
+        Assert.Equal(AccountDeletionDependencies.None, await AccountDeletionInventory.InspectAsync(db, otherReceipt, ct));
+        Assert.Null(await AccountDeletionInventory.InspectAsync(db, Guid.NewGuid(), ct));
+        Assert.Equal(3, await db.Users.CountAsync(ct));
+        Assert.Equal(2, await db.AccountDeletionRequests.CountAsync(ct));
+        Assert.False((await db.Sessions.SingleAsync(ct)).Revoked);
+        Assert.False((await db.Objects.SingleAsync(ct)).Deleted);
+        Assert.False((await db.Set<HouseholdSpaceRow>().SingleAsync(ct)).Deleted);
+    }
+
     [Fact]
     public async Task Web_deletion_requires_fresh_proof_and_shares_the_pending_receipt_with_the_app()
     {
