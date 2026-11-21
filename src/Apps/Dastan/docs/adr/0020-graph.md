@@ -179,3 +179,49 @@ window and saved picture are those of every graph. The still drawing stays what 
 **Not built:** cards in sizes of their own – every card of a drawing has one width, with or without a
 picture; two fingers on a phone were not tried; the tree of an account has the inspector and no "put in the
 middle" – it explores no public name.
+
+## The whole way, measured (step 20.12)
+
+The measures above hand a made-up answer to the drawing. `WholeWayBrowserTests` measures the way an answer
+really goes: a family tree as large as a tree may be (`PeopleStore.MostPeople`, 500 people; eight couples, three
+children each, every child with a partner from outside, every tenth child with a guardian who also adopts
+them – 734 links, long names in Persian and English) is kept in PostgreSQL 18 through the store, asked of the
+store, placed, written as the answer of the site and drawn.
+
+**Found by the first measurement and corrected:** the question took 3.5 s, warm – the view of a tree asked the
+database for every record again whether an account is open, what it may do in the tree and who owns the tree,
+some two thousand questions. While one view is read each of these is now asked once (`PeopleStore.Tree`);
+nothing is remembered beyond the view. The first drawing one can use went from 9.6 s to under 3 s.
+
+**Measured on 2026-11-21**, on the machine of development (Intel Core i5-12400, 6 cores, 64 GB, Windows 11;
+PostgreSQL 18.6 and Chromium of Playwright 1.64 in containers of Docker Desktop on the same machine, the site
+in the process of the test, the network the loopback of the machine), while every other test of the suite ran
+beside it. Cold is the first time in the process, warm the middle of five:
+
+| What | Cold | Warm | Budget (warm) |
+|---|---|---|---|
+| The question: the store reads the tree of 500 people | 82 ms | 54 ms | 400 ms |
+| The placing: generations and places for the drawing | 68 ms | 27 ms | 400 ms |
+| The whole answer of the site (`graph.json`), asked from the browser | 207 ms | 148 ms | 1.5 s |
+| From asking for the page to a drawing one can use | 2.8 s | – | 5 s |
+| The drawing itself, of that | 0.5 s | – | – |
+| One step with the keyboard, and one step larger | 92 ms | – | 500 ms |
+
+The answer is 316 kB (budget 400 kB) and the page holds 40 MB (budget 200 MB). Of the scripts the page asked
+for, Dastan's own were 4 kB as the page reported them (budget 300 kB) and the control of the diagram 2.5 MB,
+which only a page with a drawing loads. Run by itself the same test measured a question of 29 ms warm and a
+usable drawing after 1.7 s.
+
+**What one answer holds is bounded before it is made.** The connections of a name are the name and the rows
+that were opened; a family of a collection is so many generations up and down, more when asked; a family tree
+of a visitor holds at most 500 people, and the store refuses the next one – the test asks for it. Drawing only
+what is in sight (above 150 cards) spares the browser, not the server; the server is spared by these bounds.
+
+The budgets were written into the test after the first measurement and before the last, for the machine of
+development. Where `DASTAN_BUDGETS=record` is set – the runner of CI – the times are written down
+(`DASTAN_MEASURES`) and not judged; the sizes and the bound are judged everywhere.
+
+**Not measured:** photographs with their rights as pictures of the people of the tree – the tree of the
+measurement has none; a tree read over a real network or from a database on another machine; Firefox and
+WebKit on the machine of development (the runner of CI writes their times down); memory of the server; more
+than one visitor at a time.

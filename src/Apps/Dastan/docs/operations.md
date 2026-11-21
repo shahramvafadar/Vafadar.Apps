@@ -359,5 +359,5 @@ answer and belongs into the [privacy matrix](../../../../docs/privacy/privacy-ma
 * **More than one container at a time.** With several, the keys of the forms have to be shared (`Dastan__Keys`
   on a volume all of them use); it was tried with one container.
 * **The image on another processor or operating system** than this machine's (linux/amd64 under Docker Desktop).
-* **Load.** No measurement of how many visitors a container serves.
+* **Load.** No measurement of how many visitors a container serves. What one visitor's largest drawing costs – the database, the answer, the browser – was measured on the machine of development (step 20.12; the numbers and the machine are in [ADR 0020](adr/0020-graph.md), "The whole way, measured"). To write the times of a run down instead of judging them, set `DASTAN_BUDGETS=record` and name a file in `DASTAN_MEASURES`, as the workflow of CI does.
 * **An image registry.** The image was built and run locally; nothing was pushed anywhere.
