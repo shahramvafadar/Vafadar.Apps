@@ -86,7 +86,9 @@ the handoff.
    and virtual address to agree modulo its declared ELF alignment, including alignments above
    16 KiB. The bundle must explicitly request uncompressed native libraries with 16 KiB ZIP alignment
    for the APKs generated from it. See [Android page size guidance](https://developer.android.com/guide/practices/page-sizes#bundletool).
-   The Android SDK validates the bundle structure before upload. The base native ABI set must
+   The Android SDK validates the bundle structure before upload. The Zanance release gate
+   accepts only the base app module, where the manifest and component policies are verified.
+   The base native ABI set must
    match the producing project's evaluated runtime identifiers. The base module must contain one
    nonempty primary DEX and one nonempty managed assembly store for every requested ABI.
    Each base ABI must contain the qualified SQLCipher bytes, and the included manifest and notices must

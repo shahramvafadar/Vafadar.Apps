@@ -32,6 +32,16 @@ def bundle_fixture(*entries):
 
 
 class ManagedPayloadTests(unittest.TestCase):
+    def test_rejects_an_additional_app_bundle_module(self):
+        archive = bundle_fixture(
+            (DEX, b"dex"),
+            (ARM, b"arm"),
+            ("base/manifest/AndroidManifest.xml", b"base manifest"),
+            ("optional_feature/manifest/AndroidManifest.xml", b"additional manifest"),
+        )
+        with self.assertRaisesRegex(SystemExit, "Only the base app module"):
+            verify_archive(archive, "android-arm64")
+
     def test_complete_base_payload(self):
         for rids, entries in (
             ("android-arm64", [(DEX, b"dex"), (ARM, b"arm")]),

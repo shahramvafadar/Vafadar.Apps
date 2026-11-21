@@ -15,6 +15,14 @@ def verify_archive(path, runtime_identifiers, *, apk=False):
     prefix = "" if apk else "base/"
     with zipfile.ZipFile(path) as bundle:
         entries = bundle.infolist()
+        # The release verifies permissions and component bindings from the base
+        # manifest. Keep that review exhaustive for Zanance's single-module AAB.
+        if not apk and any(
+            entry.filename != "base/manifest/AndroidManifest.xml"
+            and entry.filename.partition("/")[2] == "manifest/AndroidManifest.xml"
+            for entry in entries
+        ):
+            raise SystemExit("Only the base app module is supported in a Zanance release bundle.")
         abis = {
             parts[1]
             for entry in entries
