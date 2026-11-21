@@ -126,7 +126,11 @@ copies and backups have their own retention boundaries.
 
 The identity-mail stage is
 `--retire-account-identity-mail <receipt-id> --confirm-identity-mail-retirement`.
-It consumes original verification and recovery challenges under the owner
+Deletion intake blocks new verification and recovery challenges, completion of
+existing challenges, and new worker claims for that account. Public registration
+and recovery retain their uniform accepted responses. The original owner lock
+orders these changes against intake. A delivery already claimed can finish.
+The retirement stage consumes original verification and recovery challenges under the owner
 lock, then retires their exact local mailbox files and challenge rows in a
 bounded pass. Local publication uses the same lock and rechecks its lease
 before writing. An unconfirmed claimed delivery remains pending until its

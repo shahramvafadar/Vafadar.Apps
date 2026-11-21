@@ -34,6 +34,81 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Pending_account_deletion_blocks_identity_mail_admission_and_delivery()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        connection.Database = "zanance_delete_mail_admission_fixture";
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+
+        var sender = new RecordingDeletionMailSender();
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, $"mail-admission-{Guid.NewGuid():N}"), sender: sender);
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var users = fixture.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        var protection = fixture.ServiceProvider.GetRequiredService<IDataProtectionProvider>();
+        await db.Database.MigrateAsync(ct);
+        const string password = "Fictional-Mail-Admission9!";
+        var owner = await SeedAsync("mail-admission-owner@example.invalid", true);
+        var unconfirmed = await SeedAsync("mail-admission-unconfirmed@example.invalid", false);
+        var other = await SeedAsync("mail-admission-unrelated@example.invalid", true);
+        using var client = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        await RecoverAsync(owner.Email!);
+        var original = await db.Challenges.AsNoTracking().SingleAsync(ct);
+        var mail = Assert.IsType<PrivateMail>(JsonSerializer.Deserialize<PrivateMail>(
+            protection.CreateProtector("identity-mail-v1").Unprotect(original.ProtectedMail)));
+        using var login = await client.PostAsJsonAsync("/identity/login", new IdentityInput(owner.Email!, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+        using var intake = await client.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+        Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
+        db.AccountDeletionRequests.Add(new() { UserId = unconfirmed.Id, ReceiptId = Guid.NewGuid(), RequestedAt = DateTimeOffset.UtcNow });
+        await db.SaveChangesAsync(ct);
+
+        await RecoverAsync(owner.Email!);
+        await RecoverAsync("no-such-mail-admission@example.invalid");
+        using var register = await client.PostAsJsonAsync("/identity/register", new IdentityInput(unconfirmed.Email!, password), ct);
+        Assert.Equal(HttpStatusCode.Accepted, register.StatusCode);
+        Assert.Empty(await register.Content.ReadAsByteArrayAsync(ct));
+        using var complete = await client.PostAsJsonAsync("/identity/complete",
+            new ChallengeInput(original.Id, mail.Token, "Fictional-New-Password9!"), ct);
+        Assert.Equal(HttpStatusCode.BadRequest, complete.StatusCode);
+        Assert.Equal(original.Id, (await db.Challenges.AsNoTracking().SingleAsync(ct)).Id);
+
+        await RecoverAsync(other.Email!);
+        using (var maintenance = ActivatorUtilities.CreateInstance<PrivateMaintenance>(host.Services))
+            await maintenance.RunOnceAsync(ct);
+        Assert.Equal(other.Email, Assert.Single(sender.Recipients));
+        var rows = await db.Challenges.AsNoTracking().ToDictionaryAsync(row => row.UserId, ct);
+        Assert.Equal(2, rows.Count);
+        Assert.False(rows[owner.Id].Consumed);
+        Assert.False(rows[owner.Id].Delivered);
+        Assert.Null(rows[owner.Id].LeaseOwner);
+        Assert.True(rows[other.Id].Delivered);
+
+        async Task RecoverAsync(string email)
+        {
+            using var response = await client.PostAsJsonAsync("/identity/recover", new IdentityInput(email, ""), ct);
+            Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+            Assert.Empty(await response.Content.ReadAsByteArrayAsync(ct));
+        }
+        async Task<ServiceUser> SeedAsync(string email, bool confirmed)
+        {
+            var user = new ServiceUser { UserName = email, Email = email, EmailConfirmed = confirmed };
+            Assert.True((await users.CreateAsync(user, password)).Succeeded);
+            return user;
+        }
+    }
+
+    [Fact]
     public async Task Pending_account_deletion_refuses_new_household_admission()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
@@ -1251,7 +1326,19 @@ public sealed class AccountDeletionRequestTests
         }
     }
 
-    private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null, bool analysis = false, bool household = false) : WebApplicationFactory<Program>
+    private sealed class RecordingDeletionMailSender : IIdentityMailSender
+    {
+        internal List<string> Recipients { get; } = [];
+        public string Authority => "brevo-v1:sender@example.invalid";
+        public Task SubmitAsync(IdentityMail mail, CancellationToken ct)
+        {
+            Recipients.Add(mail.Recipient);
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null, bool analysis = false,
+        bool household = false, IIdentityMailSender? sender = null) : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -1263,6 +1350,7 @@ public sealed class AccountDeletionRequestTests
             builder.ConfigureServices(services =>
             {
                 services.RemoveAll<IHostedService>();
+                if (sender is not null) services.AddSingleton(sender);
                 if (uploadWait is not null)
                     services.ConfigureDbContext<ServiceDbContext>(options => options.AddInterceptors(uploadWait));
             });

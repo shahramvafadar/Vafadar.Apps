@@ -56,14 +56,23 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
         var sender = scope.ServiceProvider.GetService<IIdentityMailSender>();
         if (!storage.LocalMailbox && sender is null) return;
         var lease = Guid.NewGuid();
-        var ids = await db.Challenges.Where(c => !c.Delivered && !c.Consumed && c.ExpiresAt > now && (c.LeaseUntil == null || c.LeaseUntil < now))
-            .OrderBy(c => c.ExpiresAt).Select(c => c.Id).Take(20).ToListAsync(ct);
-        foreach (var id in ids)
+        var candidates = await db.Challenges.Where(c => !c.Delivered && !c.Consumed && c.ExpiresAt > now &&
+                (c.LeaseUntil == null || c.LeaseUntil < now) && !db.AccountDeletionRequests.Any(row => row.UserId == c.UserId))
+            .OrderBy(c => c.ExpiresAt).Select(c => new { c.Id, c.UserId }).Take(20).ToListAsync(ct);
+        foreach (var candidate in candidates)
         {
-            now = time.GetUtcNow();
-            var claimed = await db.Challenges.Where(c => c.Id == id && !c.Delivered && !c.Consumed && c.ExpiresAt > now && (c.LeaseUntil == null || c.LeaseUntil < now))
-                .ExecuteUpdateAsync(u => u.SetProperty(c => c.LeaseOwner, lease).SetProperty(c => c.LeaseUntil, now.AddMinutes(1)), ct);
-            if (claimed != 1) continue;
+            var id = candidate.Id;
+            await using (var claim = await db.Database.BeginTransactionAsync(ct))
+            {
+                await Sync.SyncRequestScope.LockOwnerAsync(db, candidate.UserId, ct);
+                if (await db.AccountDeletionRequests.AnyAsync(row => row.UserId == candidate.UserId, ct)) continue;
+                now = time.GetUtcNow();
+                var claimed = await db.Challenges.Where(c => c.Id == id && c.UserId == candidate.UserId &&
+                        !c.Delivered && !c.Consumed && c.ExpiresAt > now && (c.LeaseUntil == null || c.LeaseUntil < now))
+                    .ExecuteUpdateAsync(u => u.SetProperty(c => c.LeaseOwner, lease).SetProperty(c => c.LeaseUntil, now.AddMinutes(1)), ct);
+                if (claimed != 1) continue;
+                await claim.CommitAsync(ct);
+            }
             var row = await db.Challenges.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id && c.LeaseOwner == lease, ct);
             if (row is null || row.Consumed || row.ExpiresAt <= time.GetUtcNow()) continue;
             if (sender is not null)
@@ -86,6 +95,7 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
                 // An expired/replaced lease cannot recreate a file after retirement has completed.
                 await using var local = await db.Database.BeginTransactionAsync(ct);
                 await Sync.SyncRequestScope.LockOwnerAsync(db, row.UserId, ct);
+                if (await db.AccountDeletionRequests.AnyAsync(request => request.UserId == row.UserId, ct)) continue;
                 if (!await db.Challenges.AnyAsync(c => c.Id == id && c.LeaseOwner == lease &&
                         !c.Consumed && !c.Delivered && c.ExpiresAt > time.GetUtcNow() && c.LeaseUntil > time.GetUtcNow(), ct))
                     continue;

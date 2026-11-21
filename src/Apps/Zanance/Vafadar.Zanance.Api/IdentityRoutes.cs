@@ -54,6 +54,7 @@ public static class IdentityRoutes
                 await Sync.SyncRequestScope.LockOwnerAsync(db, existing.Id, ct);
                 await db.Entry(existing).ReloadAsync(ct);
                 if (db.Entry(existing).State != EntityState.Detached && !existing.EmailConfirmed &&
+                    !await db.AccountDeletionRequests.AnyAsync(row => row.UserId == existing.Id, ct) &&
                     await users.CheckPasswordAsync(existing, input.Password))
                 {
                     var now = time.GetUtcNow();
@@ -86,7 +87,8 @@ public static class IdentityRoutes
             await using var tx = await db.Database.BeginTransactionAsync(ct);
             await Sync.SyncRequestScope.LockOwnerAsync(db, user.Id, ct);
             await db.Entry(user).ReloadAsync(ct);
-            if (db.Entry(user).State == EntityState.Detached || !user.EmailConfirmed) return Results.Accepted();
+            if (db.Entry(user).State == EntityState.Detached || !user.EmailConfirmed ||
+                await db.AccountDeletionRequests.AnyAsync(row => row.UserId == user.Id, ct)) return Results.Accepted();
             var token = await users.GeneratePasswordResetTokenAsync(user);
             AddChallenge(db, protection, time, user, "reset", token, services.GetService<IIdentityMailSender>()?.Authority, input.Language);
             await db.SaveChangesAsync(ct);
@@ -193,6 +195,7 @@ public static class IdentityRoutes
         if (owner is null) return Results.BadRequest();
         // Take the owner lock before changing the challenge, as owner retirement may remove both rows.
         await Sync.SyncRequestScope.LockOwnerAsync(db, owner, ct);
+        if (await db.AccountDeletionRequests.AnyAsync(row => row.UserId == owner, ct)) return Results.BadRequest();
         var claimed = await db.Challenges.Where(c => c.Id == input.Id && c.UserId == owner && !c.Consumed && c.ExpiresAt > time.GetUtcNow())
             .ExecuteUpdateAsync(u => u.SetProperty(c => c.Consumed, true), ct);
         if (claimed != 1) return Results.BadRequest();
