@@ -204,6 +204,7 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         internal readonly Guid DeletionReceiptId = Guid.NewGuid();
         internal int DeletionSubmissions;
         internal Action? BeforeIdentityResponse;
+        internal Action? BeforeRefreshRefusal;
         internal SyncProfile[] CatalogProfiles = [];
         internal SyncDevice[] CatalogDevices = [];
         internal int ProfileCreations;
@@ -274,6 +275,9 @@ public sealed partial class PersonalSyncSessionLifetimeTests
                     await context.Response.Body.WriteAsync(new byte[] { 11, 23, 47 }, Ct); break;
                 case "/identity/login":
                     await context.Response.WriteAsJsonAsync(new { tokenType = "Bearer", accessToken = access, refreshToken = refresh, expiresIn = 3600 }, Ct); break;
+                case "/identity/refresh" when BeforeRefreshRefusal is not null:
+                    BeforeRefreshRefusal.Invoke();
+                    context.Response.StatusCode = 401; break;
                 case "/identity/deletion-request" when context.Request.Method == "POST":
                     Interlocked.Increment(ref DeletionSubmissions);
                     context.Response.StatusCode = 503; break;

@@ -320,7 +320,13 @@ public sealed partial class PersonalSyncTransport : IProfileSynchronizationTrans
             await tokens.WriteAsync(credentialKey, renewed, ct); return renewed;
         }
         catch (PersonalSyncHttpException error) when (error.Status == HttpStatusCode.Unauthorized)
-        { await tokens.RemoveAsync(credentialKey, ct); throw; }
+        {
+            // A late refusal must not retire the shared session on behalf of an obsolete caller.
+            ct.ThrowIfCancellationRequested();
+            verifyAccess?.Invoke();
+            await tokens.RemoveAsync(credentialKey, ct);
+            throw;
+        }
     }
     private async Task<PersonalSyncSession> GrantAsync<T>(string path, T body, JsonTypeInfo<T> type, CancellationToken ct)
     {
