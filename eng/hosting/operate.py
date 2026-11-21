@@ -261,6 +261,16 @@ def _backup(args, helper):
     print('Complete private snapshot: ' + args.snapshot + '; original workers remain stopped.')
 
 
+def _require_drained_restore_clients(project, private_volume):
+    active_services = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + project,
+                            '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
+    if any(service != 'database' for service in active_services):
+        raise RuntimeError('Restore clients must be drained before using private state.')
+    # A one-off container may mount this volume without belonging to the Compose project.
+    if _run(['docker', 'ps', '-q', '--filter', 'volume=' + private_volume]).strip():
+        raise RuntimeError('Private volume clients must be drained before using private state.')
+
+
 def _restore(args, helper):
     manifest = _manifest(args.snapshot, helper)
     if bool(manifest.get('Public', False)) != args.public or manifest.get('Gateway', 'direct') != args.gateway:
@@ -276,11 +286,8 @@ def _restore(args, helper):
     for service in ('api', 'proxy'):
         if _container(privacy_source, service)[1]['state'] != 'exited':
             raise RuntimeError('Latest original privacy workers must be stopped before restore.')
-    active_source = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + privacy_source,
-                         '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
-    if any(service != 'database' for service in active_source):
-        raise RuntimeError('Latest original private-storage clients must be drained before restore.')
     current_private = _volume(privacy_source, 'private')
+    _require_drained_restore_clients(privacy_source, current_private)
     privacy_image = manifest['Images']['api']
     privacy_labels = _metadata('image', privacy_image, '{{json .Config.Labels}}') or {}
     capable = privacy_labels.get('pro.vafadar.zanance.household-privacy') == 'deletion-v1'
@@ -327,6 +334,8 @@ def _restore(args, helper):
         _receipt(helper, state_name, state)
     if state.get('Complete'):
         print('Restore already complete; no successful operation repeated.'); return
+    target_private = args.project + '_private'
+    _require_drained_restore_clients(args.project, target_private)
     for logical in VOLUMES:
         if logical in state['Copied']:
             _volume(args.project, logical); continue
@@ -353,6 +362,8 @@ def _restore(args, helper):
         _pipe(_helper(helper, [(args.snapshot, '/snapshot', True)], 'cat /snapshot/database.dump'),
               ['docker', 'exec', '-i', database, 'pg_restore', '-h', '/tmp', '-U', 'postgres', '-d', 'zanance', '--single-transaction', '--exit-on-error'])
         state['DatabaseRestored'] = True; _receipt(helper, state_name, state)
+    _require_drained_restore_clients(privacy_source, current_private)
+    _require_drained_restore_clients(args.project, target_private)
     if capable:
         # Re-run only this idempotent additive merge on interrupted restoration; never
         # replace an original marker or skip newer privacy intent before serving data.
@@ -368,20 +379,19 @@ def _restore(args, helper):
               '--mount', 'type=volume,source=' + _volume(args.project, 'private') + ',target=/restored',
               privacy_image, '--merge-account-deletions', '/current', '/restored'])
         if getattr(args, 'reconcile_account_deletions', False):
-            running = _run(['docker', 'ps', '--filter', 'label=com.docker.compose.project=' + args.project,
-                            '--format', '{{.Label "com.docker.compose.service"}}']).decode().splitlines()
-            if any(service != 'database' for service in running):
-                raise RuntimeError('All restored clients must be stopped before account deletion reconciliation.')
+            _require_drained_restore_clients(args.project, target_private)
             _compose(args.project, args.port, args.subnet,
                      ['run', '--rm', '--no-deps', 'api', '--reconcile-restored-account-deletions', '--confirm-isolated-restored-database'],
                      manifest['Images'], public=args.public, gateway=args.gateway,
                      household=manifest.get('HouseholdLocalQualification', False), mail=getattr(args, 'mail_provider', None))
-    state['PrivacySource'] = privacy_source
-    state['PrivacyReconciled'] = True
-    _receipt(helper, state_name, state)
     for service in ('api', 'proxy'):
         if _container(privacy_source, service)[1]['state'] != 'exited':
             raise RuntimeError('Original privacy workers restarted during restore; target remains stopped.')
+    _require_drained_restore_clients(privacy_source, current_private)
+    _require_drained_restore_clients(args.project, target_private)
+    state['PrivacySource'] = privacy_source
+    state['PrivacyReconciled'] = True
+    _receipt(helper, state_name, state)
     _compose(args.project, args.port, args.subnet, ['up', '-d', '--wait'], manifest['Images'], public=args.public, gateway=args.gateway,
              household=manifest.get('HouseholdLocalQualification', False), mail=getattr(args, 'mail_provider', None))
     state['Complete'] = True; _receipt(helper, state_name, state)

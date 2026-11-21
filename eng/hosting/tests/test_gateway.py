@@ -61,7 +61,7 @@ class GatewayTests(unittest.TestCase):
               patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
               patch.object(operate, '_volume', return_value='original-private') as volume,
               patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.household-privacy': 'deletion-v1'}),
-              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'account\n']),
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'', b'account\n']),
               patch.object(operate, '_exists') as exists):
             with self.assertRaisesRegex(RuntimeError, 'cannot enforce current account deletions'):
                 operate._restore(args, 'sha256:' + '1' * 64)
@@ -76,7 +76,7 @@ class GatewayTests(unittest.TestCase):
               patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
               patch.object(operate, '_volume', return_value='original-private'),
               patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.account-privacy': 'receipt-fence-v2'}),
-              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'analysis\n']) as run,
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'', b'analysis\n']) as run,
               patch.object(operate, '_exists') as exists,
               patch.object(operate, '_compose') as compose):
             with self.assertRaisesRegex(RuntimeError, 'cannot enforce current analysis retirements'):
@@ -93,7 +93,7 @@ class GatewayTests(unittest.TestCase):
               patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
               patch.object(operate, '_volume', return_value='original-private'),
               patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.account-privacy': 'receipt-fence-v3'}),
-              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'request\n']) as run,
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'', b'request\n']) as run,
               patch.object(operate, '_exists') as exists,
               patch.object(operate, '_compose') as compose):
             with self.assertRaisesRegex(RuntimeError, 'cannot enforce current pending account deletions'):
@@ -124,6 +124,13 @@ class GatewayTests(unittest.TestCase):
                     if action[0] == 'run' and unfinished:
                         raise RuntimeError('Outstanding restored account deletions')
 
+                def run_command(command, **_):
+                    if command[:2] == ['docker', 'ps'] and '--format' in command:
+                        return b'database\n'
+                    if '*.analysis-retired' in command[-1]:
+                        return b'analysis\n'
+                    return b''
+
                 with (patch.object(operate, '_manifest', return_value=manifest),
                       patch.object(operate, '_container', return_value=('stopped', {'state': 'exited', 'image': images['database']})),
                       patch.object(operate, '_volume', side_effect=lambda project, name: project + '_' + name),
@@ -131,7 +138,7 @@ class GatewayTests(unittest.TestCase):
                       patch.object(operate, '_exists', return_value=True),
                       patch.object(operate, '_receipt', return_value=state),
                       patch.object(operate, '_compose', side_effect=compose),
-                      patch.object(operate, '_run', side_effect=[b'database\n', b'', b'analysis\n', b'', b'', b'database\n']) as run):
+                      patch.object(operate, '_run', side_effect=run_command) as run):
                     if unfinished:
                         with self.assertRaisesRegex(RuntimeError, 'Outstanding'):
                             operate._restore(args, 'sha256:' + '1' * 64)
@@ -147,6 +154,44 @@ class GatewayTests(unittest.TestCase):
                     self.assertEqual(2, len(actions))
                 else:
                     self.assertEqual(['up', '-d', '--wait'], actions[2])
+
+    def test_restore_refuses_a_live_client_of_the_original_private_volume_before_target_startup(self):
+        """A running mount matters even when all original Compose clients report stopped."""
+        args = argparse.Namespace(snapshot='zanance-hosting-snapshot-test', project='zanance-selfhost-target',
+                                  public=False, gateway='direct', port=14543, subnet='172.29.90.0/24')
+        source = 'zanance-selfhost-source'
+        images = {'api': 'sha256:' + '2' * 64, 'database': 'sha256:' + '3' * 64}
+        manifest = {'SourceProject': source, 'Quiesced': True, 'Images': images}
+        original_private = source + '_private'
+        state = {'Snapshot': args.snapshot, 'Target': args.project, 'PrivacySource': source,
+                 'Copied': list(operate.VOLUMES), 'DatabaseRestored': True, 'Complete': False}
+        actions = []
+        source_volume_checks = 0
+
+        def run(command, **_):
+            nonlocal source_volume_checks
+            if 'volume=' + original_private in command:
+                source_volume_checks += 1
+                if source_volume_checks == 3:
+                    return b'fictional-running-source-client\n'
+            if '--format' in command and 'label=com.docker.compose.project=' + source in command:
+                return b'database\n'
+            return b''
+
+        with (patch.object(operate, '_manifest', return_value=manifest),
+              patch.object(operate, '_container', return_value=('stopped', {'state': 'exited', 'image': images['database']})),
+              patch.object(operate, '_volume', side_effect=lambda project, name: project + '_' + name),
+              patch.object(operate, '_metadata', return_value={}),
+              patch.object(operate, '_exists', return_value=True),
+              patch.object(operate, '_receipt', return_value=state),
+              patch.object(operate, '_compose', side_effect=lambda project, port, subnet, action, *inputs, **options: actions.append(action)),
+              patch.object(operate, '_run', side_effect=run)):
+            with self.assertRaisesRegex(RuntimeError, 'Private volume clients'):
+                operate._restore(args, 'sha256:' + '1' * 64)
+        self.assertEqual([['up', '-d', '--wait', 'database']], actions)
+        self.assertEqual(3, source_volume_checks)
+        self.assertFalse(state['Complete'])
+        self.assertFalse(state.get('PrivacyReconciled', False))
 
     def test_owner_credential_validation_reads_metadata_only(self):
         """The external file is mounted later by the container, never parsed or copied by this operator."""
