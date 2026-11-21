@@ -4,6 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Vafadar.Zanance.Core.Analysis;
 
 // Offline privacy restoration never constructs the database, listener, key ring or host.
+if (args.FirstOrDefault() == "--merge-account-deletions")
+{
+    if (args.Length != 3) throw new IOException("Explicit current and restored private roots required.");
+    var merged = await AccountDeletionRestoreFence.MergeAsync(args[1], args[2]);
+    Console.WriteLine("Validated account deletion markers: " + merged.ToString(System.Globalization.CultureInfo.InvariantCulture));
+    return;
+}
 if (args.Length > 0 && args[0] == "--merge-household-deletions")
 {
     if (args.Length != 3) throw new IOException("Explicit current and restored private roots required.");
@@ -140,7 +147,10 @@ if (args.Contains("--migrate", StringComparer.Ordinal))
     await SelfHostedService.GrantRuntimeAsync(app.Services);
     return;
 }
-var root = app.Services.GetRequiredService<ServiceStorage>().Root;
+var serviceStorage = app.Services.GetRequiredService<ServiceStorage>();
+await using (var db = await app.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>().CreateDbContextAsync())
+    await AccountDeletionRestoreFence.VerifyDatabaseAsync(db, serviceStorage, CancellationToken.None);
+var root = serviceStorage.Root;
 var protector = app.Services.GetRequiredService<Microsoft.AspNetCore.DataProtection.IDataProtectionProvider>()
     .CreateProtector("service-installation-v1");
 var installation = Path.Combine(root, "installation.protected");

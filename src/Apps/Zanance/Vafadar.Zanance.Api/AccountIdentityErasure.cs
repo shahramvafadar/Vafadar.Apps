@@ -51,6 +51,8 @@ public static class AccountIdentityErasure
         if (blocked != AccountDeletionDependencies.None)
             return new(AccountIdentityErasureStatus.DependenciesRemain, blocked);
 
+        // Publish the independent restore authority before removing the original account from PostgreSQL.
+        await AccountDeletionRestoreFence.RecordAsync(storage, receipt, ct);
         await db.Objects.Where(row => row.UserId == owner).ExecuteDeleteAsync(ct);
         if (await db.Users.Where(row => row.Id == owner).ExecuteDeleteAsync(ct) != 1)
             throw new InvalidOperationException("The original account could not be retired.");

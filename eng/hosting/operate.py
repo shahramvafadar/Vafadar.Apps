@@ -288,6 +288,10 @@ def _restore(args, helper):
         'test ! -L /current/household-deletions || exit 23; if test -e /current/household-deletions; then test -d /current/household-deletions || exit 23; find /current/household-deletions -mindepth 1 -maxdepth 1 -name "*.json" -print -quit; fi')).strip()
     if markers and not capable:
         raise RuntimeError('Historical service image cannot enforce current household deletions; explicit upgrade qualification required.')
+    account_markers = _run(_helper(helper, [(current_private, '/current', True)],
+        'test ! -L /current/account-deletions || exit 23; if test -e /current/account-deletions; then test -d /current/account-deletions || exit 23; find /current/account-deletions -mindepth 1 -maxdepth 1 -name "*.receipt" -print -quit; fi')).strip()
+    if account_markers and privacy_labels.get('pro.vafadar.zanance.account-privacy') != 'receipt-fence-v1':
+        raise RuntimeError('Historical service image cannot enforce current account deletions; explicit upgrade qualification required.')
     state_name = args.project + '_restore-state'
     if _exists('volume', state_name):
         state_name = _volume(args.project, 'restore-state')
@@ -341,6 +345,12 @@ def _restore(args, helper):
               '--mount', 'type=volume,source=' + current_private + ',target=/current,readonly',
               '--mount', 'type=volume,source=' + _volume(args.project, 'private') + ',target=/restored',
               privacy_image, '--merge-household-deletions', '/current', '/restored'])
+    if account_markers:
+        _run(['docker', 'run', '--rm', '--network', 'none', '--read-only', '--user', '1654:1654',
+              '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges:true',
+              '--mount', 'type=volume,source=' + current_private + ',target=/current,readonly',
+              '--mount', 'type=volume,source=' + _volume(args.project, 'private') + ',target=/restored',
+              privacy_image, '--merge-account-deletions', '/current', '/restored'])
     state['PrivacySource'] = privacy_source
     state['PrivacyReconciled'] = True
     _receipt(helper, state_name, state)

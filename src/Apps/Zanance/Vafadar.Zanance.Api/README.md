@@ -142,8 +142,10 @@ references, billing and analysis, and deliberately verifies retired private
 paths before removing their manifests. It removes the original service
 identity, sessions and pending request together. The completion record
 retains only the opaque receipt and timestamp, so an ambiguous result can
-be reconciled without doing the deletion again. Backup restoration and
-off-service retention need separate handling before production activation.
+be reconciled without doing the deletion again. A separate opaque marker in
+the latest private volume fences startup on older restored databases.
+Reconciliation of blocked backups and off-service retention need separate
+handling before production activation.
 
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity

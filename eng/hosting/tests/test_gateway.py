@@ -52,6 +52,22 @@ class GatewayTests(unittest.TestCase):
             with self.assertRaises(RuntimeError): operate._restore(args, 'sha256:' + '1' * 64)
             run.assert_not_called()
 
+    def test_old_service_image_cannot_restore_after_an_account_deletion(self):
+        """An opaque current marker requires the corresponding capability before creating target state."""
+        args = argparse.Namespace(snapshot='zanance-hosting-snapshot-test', project='zanance-selfhost-target',
+                                  public=False, gateway='direct')
+        manifest = {'SourceProject': 'zanance-selfhost-source', 'Quiesced': True, 'Images': {'api': 'sha256:' + '2' * 64}}
+        with (patch.object(operate, '_manifest', return_value=manifest),
+              patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
+              patch.object(operate, '_volume', return_value='original-private') as volume,
+              patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.household-privacy': 'deletion-v1'}),
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'/current/account-deletions/fictitious.receipt\n']),
+              patch.object(operate, '_exists') as exists):
+            with self.assertRaisesRegex(RuntimeError, 'cannot enforce current account deletions'):
+                operate._restore(args, 'sha256:' + '1' * 64)
+            volume.assert_called_once_with('zanance-selfhost-source', 'private')
+            exists.assert_not_called()
+
     def test_owner_credential_validation_reads_metadata_only(self):
         """The external file is mounted later by the container, never parsed or copied by this operator."""
         with tempfile.TemporaryDirectory(prefix='zanance-tunnel-test-') as directory:

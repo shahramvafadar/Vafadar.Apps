@@ -26,6 +26,55 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Restore_fence_stops_service_start_with_a_pre_erasure_database()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        var fixtureRoot = Path.Combine(root, "restore-fence-" + Guid.NewGuid().ToString("N"));
+        var currentRoot = Directory.CreateDirectory(Path.Combine(fixtureRoot, "current")).FullName;
+        var restoredRoot = Directory.CreateDirectory(Path.Combine(fixtureRoot, "restored")).FullName;
+        var currentStorage = new ServiceStorage { Root = currentRoot, LocalMailbox = false };
+        var restoredStorage = new ServiceStorage { Root = restoredRoot, LocalMailbox = false };
+        connection.Database = "zanance_delete_fence_current_fixture";
+        await using var current = new ServiceDbContext(new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection.ConnectionString).Options);
+        connection.Database = "zanance_delete_fence_restored_fixture";
+        await using var restored = new ServiceDbContext(new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection.ConnectionString).Options);
+        var receipt = Guid.NewGuid();
+        var identity = Guid.NewGuid().ToString("D");
+        foreach (var db in new[] { current, restored })
+        {
+            await db.Database.MigrateAsync(ct);
+            db.Users.Add(new() { Id = identity, UserName = "restore-fence-original@example.invalid" });
+            db.AccountDeletionRequests.Add(new() { UserId = identity, ReceiptId = receipt, RequestedAt = DateTimeOffset.UtcNow });
+            await db.SaveChangesAsync(ct);
+            db.ChangeTracker.Clear();
+        }
+
+        var result = await AccountIdentityErasure.CompleteAsync(current, currentStorage, TimeProvider.System, receipt, ct);
+        Assert.Equal(AccountIdentityErasureStatus.Completed, result.Status);
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(current, currentStorage, ct);
+        Assert.Equal(1, await AccountDeletionRestoreFence.MergeAsync(currentRoot, restoredRoot, ct));
+        var refusal = await Assert.ThrowsAsync<IOException>(() => AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct));
+        Assert.Contains("completion is missing", refusal.Message, StringComparison.Ordinal);
+        await using var oldHost = new IdentityHost(connection.ConnectionString, restoredRoot);
+        var startup = Record.Exception(() => oldHost.CreateClient().Dispose());
+        Assert.NotNull(startup);
+        Assert.Contains("completion is missing", startup.ToString(), StringComparison.Ordinal);
+        Assert.True(await restored.Users.AnyAsync(row => row.Id == identity, ct));
+        Assert.Empty(await restored.Set<AccountDeletionCompletion>().ToListAsync(ct));
+        var copied = Directory.EnumerateFiles(Path.Combine(restoredRoot, "account-deletions")).Single();
+        Assert.Equal(receipt.ToString("D"), await File.ReadAllTextAsync(copied, ct));
+    }
+
+    [Fact]
     public async Task Account_identity_mail_retires_local_copies_and_keeps_an_unconfirmed_claim_pending()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");

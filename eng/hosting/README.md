@@ -133,6 +133,14 @@ An old database/private-volume snapshot is not the latest privacy authority. Bef
 
 Before the restored service starts, a deletion-v1 image runs its offline --merge-household-deletions command with the latest original private volume read-only and the restored private volume writable. The merge validates and adds only immutable public-metadata deletion markers; it never copies keys, mail or financial objects and refuses conflicting existing originals. Recheck original workers before serving the target. Historical images without the immutable capability label cannot start when newer source deletion markers exist; an explicit separately qualified upgrade is required.
 
+Account identity erasure publishes a separate opaque receipt marker before the
+database commit. Restore transfers these exact markers from the stopped latest
+source using an image labeled `pro.vafadar.zanance.account-privacy=receipt-fence-v1`.
+An older image is refused before target creation. A capable application refuses
+to start if any transferred receipt lacks an active-service completion in the
+restored database. This prevents serving a pre-erasure database. Reconciliation
+of that database and its private files is required before serving it.
+
 The current API command passed Windows, idempotence, conflict/no-overwrite and invalid-directory cases. The freshly published image zanance-service:d294-household-privacy also ran the exact merge as UID1654, read-only root, no network and no capabilities. The subsequent independent full hosted compose/snapshot lifecycle now also passed, as recorded below; identity-erasure and whole D-294 acceptance remain open. Do not replace or discard the latest original private volume merely to restore an older backup successfully.
 ## D-294 full household hosting lifecycle qualification
 

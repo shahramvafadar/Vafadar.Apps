@@ -5,7 +5,8 @@ COPY . .
 RUN dotnet publish src/Apps/Zanance/Vafadar.Zanance.Api -c Release -r linux-x64 --self-contained false -p:ContinuousIntegrationBuild=true -o /publish/api \
  && dotnet publish eng/hosting/Bootstrap -c Release -r linux-x64 --self-contained false -p:ContinuousIntegrationBuild=true -o /publish/bootstrap
 FROM mcr.microsoft.com/dotnet/aspnet:10.0.15-noble@sha256:bfd912c83295ce66d4b706ebb8541b9f14259b0e76fbb88b2751f58ce2399d2e AS service
-LABEL pro.vafadar.zanance.household-privacy="deletion-v1"
+LABEL pro.vafadar.zanance.household-privacy="deletion-v1" \
+      pro.vafadar.zanance.account-privacy="receipt-fence-v1"
 WORKDIR /app
 COPY --from=build /publish/api/ ./
 COPY --from=build /publish/bootstrap/ /probe/
