@@ -68,13 +68,17 @@
         else if (Visitor.Language.IsRightToLeft)
         {
             <ChartStage Id="chart" Label="@label" Right="older" Left="younger" Top="beside" Bottom="beside">
-                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+                <GraphView Source="@($"{Site.Collection}/entity/{_entity.Id}/family.json")" Label="@label">
+                    <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+                </GraphView>
             </ChartStage>
         }
         else
         {
             <ChartStage Id="chart" Label="@label" Left="older" Right="younger" Top="beside" Bottom="beside">
-                <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+                <GraphView Source="@($"{Site.Collection}/entity/{_entity.Id}/family.json")" Label="@label">
+                    <FamilyTreeChart Tree="_tree" Focus="_entity.Id" GenerationsAcross="true" />
+                </GraphView>
             </ChartStage>
         }
 
@@ -101,6 +105,8 @@
             }
         </section>
     }
+
+    <ExploreOn State="_explore" />
 }
 
 @code {

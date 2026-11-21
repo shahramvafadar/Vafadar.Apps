@@ -377,14 +377,16 @@ main,
     box-shadow: var(--shadow-2);
   }
 
-  .site-nav a {
+  /* Named through the head, so that no later rule about the links of the ways is stronger: the bar is as
+     high as the room the page leaves for it. */
+  .site-header .site-nav a {
     position: relative;
     flex: 1 1 0;
     flex-direction: column;
     justify-content: center;
     gap: 0;
     min-inline-size: 0;
-    min-block-size: var(--bar);
+    min-block-size: calc(var(--bar) - 1px);
     padding: var(--space-1);
     border-radius: 0;
     font-size: var(--step--2);
@@ -829,6 +831,29 @@ main:has(> .discover) {
 
 .explore-aside {
   margin-block: var(--space-2);
+}
+
+/* The steps of the telling a name takes part in, under its drawing: a short list, each step a line. */
+.telling {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+}
+
+.telling li {
+  min-block-size: var(--target);
+  padding-block: var(--space-2);
+  border-block-end: 1px solid var(--border);
+}
+
+/* What is compared with the name that is explored. */
+.explore-compared {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-block: var(--space-3);
 }
 
 /* The link of a row that chooses the other one of a statement. */
@@ -3154,6 +3179,112 @@ dastan-graph[data-state="still"] .graph-still {
   flex: 1;
   flex-direction: column;
   min-block-size: 0;
+}
+
+/* The drawing and, beside it, the inspector (step 20.8). Without the script the frame takes no part in the
+   layout, like the element around it. */
+.graph-body {
+  display: contents;
+}
+
+dastan-graph[data-state="live"] .graph-body,
+dastan-graph[data-state="still"] .graph-body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr);
+  min-block-size: 0;
+}
+
+/* What is chosen, shown closer: beside the drawing, which it does not cover. */
+.inspector:not([hidden]) {
+  display: block;
+  overflow: auto;
+  padding: var(--space-4);
+  border-inline-start: 1px solid var(--border);
+  background: var(--surface-raised);
+  cursor: auto;
+}
+
+.inspector > * + * {
+  margin-block-start: var(--space-2);
+}
+
+.inspector:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -2px;
+}
+
+.inspector-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.inspector h2 {
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+/* A way on that what is chosen does not have is not there: the look of an action must not show it. */
+.inspector [hidden] {
+  display: none;
+}
+
+.inspector .profile-picture {
+  inline-size: min(10rem, 100%);
+}
+
+.inspector .facts {
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin-block: var(--space-3);
+}
+
+.inspector .facts dd {
+  margin-block-end: var(--space-2);
+}
+
+@media (min-width: 60.01rem) {
+  dastan-graph[data-state="live"] .graph-body:has(.inspector:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+  }
+}
+
+/* On a phone the inspector is a sheet at the foot of the window, above the bar of the ways: the drawing stays
+   in sight above it. */
+@media (max-width: 60rem) {
+  .inspector:not([hidden]) {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: var(--bar-space);
+    z-index: 35;
+    max-block-size: 55vh;
+    border-inline-start: 0;
+    border-block-start: 1px solid var(--border);
+    border-start-start-radius: var(--radius-l);
+    border-start-end-radius: var(--radius-l);
+    box-shadow: var(--shadow-2);
+  }
+}
+
+/* The tools that stand behind "More", and the key of a tool beside its name. */
+.graph-more:not([hidden]) {
+  display: contents;
+}
+
+.graph-tools kbd {
+  margin-inline-start: var(--space-1);
+  padding-inline: var(--space-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--step--2);
+}
+
+.graph-tools button[aria-expanded="true"] {
+  background: var(--accent-soft);
 }
 
 /* The drawing itself is laid out from left to right in every language (the control has no other way); the

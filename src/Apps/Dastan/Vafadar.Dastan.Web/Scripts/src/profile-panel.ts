@@ -11,7 +11,7 @@ interface Words {
   unknown?: boolean;
 }
 
-interface Profile {
+export interface Profile {
   name: string;
   nameLanguage: string | null;
   kind: string | null;
@@ -51,7 +51,8 @@ function written(words: Words): HTMLElement {
   return holder;
 }
 
-function drawn(profile: Profile): HTMLElement[] {
+/** The body of a profile as the panel and the inspector of a drawing show it: picture, a line, the facts. */
+export function drawn(profile: Profile): HTMLElement[] {
   const parts: HTMLElement[] = [];
   if (profile.picture) {
     const frame = document.createElement('p');

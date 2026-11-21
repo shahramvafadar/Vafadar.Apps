@@ -65,6 +65,12 @@ public sealed class Exploration
     /// <summary>The most rows of a drawing of connections an address may name as open.</summary>
     public const int MostOpen = 40;
 
+    /// <summary>The name of what is compared with what is explored, in an address.</summary>
+    public const string ComparedName = "with";
+
+    /// <summary>The most names that can be compared with what is explored: a chart of time stays one that can be read.</summary>
+    public const int MostCompared = 5;
+
     private const int FurthestReach = 12;
     private const int MostLanes = 99;
     private const int MostScales = 7;
@@ -74,7 +80,8 @@ public sealed class Exploration
     private static readonly ImmutableArray<(string Name, ExplorationView? Of, string Native, Func<string, string?> Read)> Parts =
     [
         (ChosenName, null, ChosenName, Identifier),
-        ("open", ExplorationView.Connections, "open", Identifiers),
+        (ComparedName, null, ComparedName, value => Identifiers(value, MostCompared)),
+        ("open", ExplorationView.Connections, "open", value => Identifiers(value, MostOpen)),
         ("up", ExplorationView.Family, "up", value => Number(value, 0, FurthestReach)),
         ("down", ExplorationView.Family, "down", value => Number(value, 0, FurthestReach)),
         ("beside", ExplorationView.Family, "beside", value => Number(value, 0, FurthestReach)),
@@ -117,6 +124,13 @@ public sealed class Exploration
     /// <summary>Gets the rows of the drawing of connections that are open.</summary>
     public ImmutableArray<EntityId> Open =>
         _said.TryGetValue("open", out var open) ? [.. open.Split(',').Select(id => new EntityId(id))] : [];
+
+    /// <summary>
+    /// Gets what is compared with what is explored (step 20.8): names whose times stand beside its times in the
+    /// chart of time. They name things; whether the visitor may see them is the projection's answer.
+    /// </summary>
+    public ImmutableArray<EntityId> Compared =>
+        _said.TryGetValue(ComparedName, out var compared) ? [.. compared.Split(',').Select(id => new EntityId(id))] : [];
 
     /// <summary>Gets the stretch of years a chart of time was told to show, or nothing.</summary>
     public (int From, int To)? Years =>
@@ -174,6 +188,20 @@ public sealed class Exploration
         if (said.TryGetValue(ChosenName, out var chosen) && chosen == subject.Value)
         {
             said.Remove(ChosenName);
+        }
+
+        // And it is not compared with itself.
+        if (said.TryGetValue(ComparedName, out var compared))
+        {
+            var others = string.Join(',', compared.Split(',').Where(id => id != subject.Value));
+            if (others.Length == 0)
+            {
+                said.Remove(ComparedName);
+            }
+            else
+            {
+                said[ComparedName] = others;
+            }
         }
 
         return new(subject, view, boundary, said.ToImmutable());
@@ -263,6 +291,26 @@ public sealed class Exploration
         new(Subject, View, Boundary, chosen is { } one && one != Subject && Identifier(one.Value) is { } id ? _said.SetItem(ChosenName, id) : _said.Remove(ChosenName));
 
     /// <summary>
+    /// Returns the state with something added to the comparison. What is explored is not compared with itself,
+    /// nothing stands in it twice, and a name beyond <see cref="MostCompared"/> is not added: the state is then
+    /// the same as before.
+    /// </summary>
+    public Exploration Compare(EntityId other)
+    {
+        var compared = Compared;
+        return other == Subject || compared.Contains(other) || compared.Length >= MostCompared || Identifier(other.Value) is null
+            ? this
+            : new(Subject, View, Boundary, _said.SetItem(ComparedName, string.Join(',', compared.Append(other).Select(id => id.Value))));
+    }
+
+    /// <summary>Returns the state with something taken out of the comparison.</summary>
+    public Exploration Uncompare(EntityId other)
+    {
+        var left = string.Join(',', Compared.Where(id => id != other).Select(id => id.Value));
+        return new(Subject, View, Boundary, left.Length == 0 ? _said.Remove(ComparedName) : _said.SetItem(ComparedName, left));
+    }
+
+    /// <summary>
     /// Returns the state with exactly these rows of the drawing of connections open. The page of the drawing
     /// says so once the projection has answered: what an address asked to open and the visitor may not see, or
     /// what is not connected, is not open and is not carried on.
@@ -270,7 +318,7 @@ public sealed class Exploration
     public Exploration Opened(IEnumerable<EntityId> open)
     {
         ArgumentNullException.ThrowIfNull(open);
-        var rows = Identifiers(string.Join(',', open.Select(row => row.Value)));
+        var rows = Identifiers(string.Join(',', open.Select(row => row.Value)), MostOpen);
         return new(Subject, View, Boundary, rows is null ? _said.Remove("open") : _said.SetItem("open", rows));
     }
 
@@ -280,7 +328,7 @@ public sealed class Exploration
     /// the manner of looking and what was left out stay with the visitor.
     /// </summary>
     public Exploration Centre(EntityId centre) =>
-        new(centre, View, Boundary, _said.RemoveRange(OfTheSubject).Remove(ChosenName));
+        new Exploration(centre, View, Boundary, _said.RemoveRange(OfTheSubject).Remove(ChosenName)).Uncompare(centre);
 
     // The query of an address of a view: what is the view's own under the names of its page, and – for the
     // whole state – what the other views were told under the names it is carried by.
@@ -302,9 +350,9 @@ public sealed class Exploration
     private static string? Identifier(string value) =>
         value.Length is > 0 and <= 120 && value.All(letter => char.IsAsciiLetterOrDigit(letter) || letter is '-' or '_' or '.') ? value : null;
 
-    private static string? Identifiers(string value)
+    private static string? Identifiers(string value, int most)
     {
-        var ids = value.Split(',', StringSplitOptions.TrimEntries).Select(Identifier).Where(id => id is not null).Distinct().Take(MostOpen).ToList();
+        var ids = value.Split(',', StringSplitOptions.TrimEntries).Select(Identifier).Where(id => id is not null).Distinct().Take(most).ToList();
         return ids.Count == 0 ? null : string.Join(',', ids);
     }
 

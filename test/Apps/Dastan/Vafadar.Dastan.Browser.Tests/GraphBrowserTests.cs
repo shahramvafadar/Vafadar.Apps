@@ -229,14 +229,16 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         var again = await site.Visitor(1280, readTo: 4, graph: true);
         var (drawn, _) = await Drawn(again, page.Url);
         Assert.Equal(above, (await Seen(drawn)).GetProperty("chosen").GetString());
-        await Assertions.Expect(again.Locator("[data-explore-chosen]")).ToHaveAttributeAsync("data-explore-chosen", above);
+        // Beside the drawing the inspector says what is chosen; the block of the page, which said the same, has gone.
+        await Assertions.Expect(drawn.Locator("[data-graph-inspector]")).ToBeVisibleAsync();
+        await Assertions.Expect(again.Locator("[data-explore-chosen]")).ToHaveCountAsync(0);
 
         // Letting go of the card takes it out of the address, of the links and of what the page said.
         await drawn.Locator("[data-graph-canvas]").FocusAsync();
         await again.Keyboard.PressAsync("Escape");
         Assert.DoesNotContain("sel=", again.Url, StringComparison.Ordinal);
         Assert.All(await again.EvaluateAsync<string[]>("[...document.querySelectorAll('a[data-explore]')].map(link => new URL(link.href).search)"), link => Assert.DoesNotContain("sel=", link, StringComparison.Ordinal));
-        await Assertions.Expect(again.Locator("[data-explore-chosen]")).ToHaveCountAsync(0);
+        await Assertions.Expect(drawn.Locator("[data-graph-inspector]")).ToBeHiddenAsync();
     }
 
     [Fact]
@@ -267,13 +269,23 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         Assert.Equal(0, await host.Locator("[data-graph-canvas] [tabindex]:not([tabindex='-1'])").CountAsync());
         Assert.False(string.IsNullOrWhiteSpace(await canvas.GetAttributeAsync("aria-label")));
         await Assertions.Expect(page.Locator("#" + await canvas.GetAttributeAsync("aria-describedby"))).ToBeVisibleAsync();
-        await Assertions.Expect(host.Locator("[data-graph-profile]")).ToBeDisabledAsync();
+        var inspector = host.Locator("[data-graph-inspector]");
+        await Assertions.Expect(inspector).ToBeHiddenAsync();
 
         // The first arrow chooses the one the page is about; it is said, with its relations.
         await page.Keyboard.PressAsync("ArrowDown");
         Assert.Equal("character-rostam", (await Seen(host)).GetProperty("chosen").GetString());
         await Assertions.Expect(said).ToContainTextAsync(names["character-rostam"]);
-        await Assertions.Expect(host.Locator("[data-graph-profile]")).ToBeEnabledAsync();
+
+        // Beside the drawing the inspector shows it at once – and does not take the focus: the arrows go on.
+        await Assertions.Expect(inspector).ToBeVisibleAsync();
+        await Assertions.Expect(inspector.Locator("[data-inspector-name]")).ToHaveTextAsync(names["character-rostam"]);
+        await Assertions.Expect(inspector.Locator("[data-inspector-wait]")).ToBeHiddenAsync();
+        Assert.True(await canvas.EvaluateAsync<bool>("canvas => document.activeElement === canvas"), "The drawing keeps the focus.");
+
+        // The one in the middle is in the middle already, and is not compared with itself.
+        await Assertions.Expect(inspector.Locator("[data-inspector-centre]")).ToBeHiddenAsync();
+        await Assertions.Expect(inspector.Locator("[data-inspector-compare]")).ToBeHiddenAsync();
 
         // What is chosen is carried on (R-EXP-05): to its pictures, where a picture shows it – and to nothing it does not have.
         await Assertions.Expect(host.Locator("[data-graph-gallery]")).ToBeVisibleAsync();
@@ -294,15 +306,21 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         await page.Keyboard.PressAsync("Delete");
         Assert.Equal(before, (await Seen(host)).GetProperty("cards").GetRawText());
 
-        // Enter opens the profile of the card in the panel of the page; Escape closes it, back in the drawing.
+        // The inspector follows what is chosen: its name, its profile, and the acts – "put in the middle" leads
+        // to the same view of the other name.
+        await Assertions.Expect(inspector.Locator("[data-inspector-name]")).ToHaveTextAsync(names[below]);
+        await Assertions.Expect(inspector.Locator("[data-inspector-wait]")).ToBeHiddenAsync();
+        await Assertions.Expect(inspector.Locator(".profile-facts")).ToBeVisibleAsync();
+        Assert.EndsWith($"/{language}/{Story}/entity/{below}/family", await inspector.Locator("[data-inspector-centre]").EvaluateAsync<string>("link => link.href"), StringComparison.Ordinal);
+        Assert.EndsWith($"/{language}/{Story}/entity/{below}", await inspector.Locator("[data-inspector-open]").EvaluateAsync<string>("link => link.href"), StringComparison.Ordinal);
+
+        // Enter goes to the inspector; Escape comes back to the drawing, and what is chosen stays chosen.
         await page.Keyboard.PressAsync("Enter");
-        var panel = page.Locator("#profile-panel");
-        await Assertions.Expect(panel).ToBeVisibleAsync();
-        await Assertions.Expect(panel.Locator("[data-panel-wait]")).ToBeHiddenAsync();
-        Assert.Equal(Words(names[below]), Words(await panel.Locator("#profile-panel-name").InnerTextAsync()));
+        Assert.True(await inspector.EvaluateAsync<bool>("inspector => document.activeElement === inspector"), "The inspector has the focus.");
         await page.Keyboard.PressAsync("Escape");
-        await Assertions.Expect(panel).ToBeHiddenAsync();
         Assert.True(await canvas.EvaluateAsync<bool>("canvas => document.activeElement === canvas"), "The drawing has the focus again.");
+        Assert.Equal(below, (await Seen(host)).GetProperty("chosen").GetString());
+        await Assertions.Expect(page.Locator("#profile-panel")).ToBeHiddenAsync();
 
         // Larger, smaller and the whole of it, by keys; Escape lets go of the card.
         var whole = (await Seen(host)).GetProperty("zoom").GetDouble();
@@ -313,7 +331,7 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         await page.Keyboard.PressAsync("Escape");
         Assert.Equal(JsonValueKind.Null, (await Seen(host)).GetProperty("chosen").ValueKind);
         await Assertions.Expect(said).ToBeEmptyAsync();
-        await Assertions.Expect(host.Locator("[data-graph-gallery]")).ToBeHiddenAsync();
+        await Assertions.Expect(inspector).ToBeHiddenAsync();
 
         // Tab leaves the drawing, in both directions.
         await page.Keyboard.PressAsync("Tab");
@@ -347,6 +365,10 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         }
 
         // The still drawing, with its links, for a reader who wants it – and back.
+        // What is not used all the time stands behind "More", which says whether it is open.
+        await Assertions.Expect(host.Locator("[data-graph-to-still]")).ToBeHiddenAsync();
+        await host.Locator("[data-graph-more]").ClickAsync();
+        Assert.Equal("true", await host.Locator("[data-graph-more]").GetAttributeAsync("aria-expanded"));
         await host.Locator("[data-graph-to-still]").ClickAsync();
         await Assertions.Expect(host.Locator("[data-graph-canvas]")).ToBeHiddenAsync();
         await Assertions.Expect(host.Locator("[data-graph-still] a.graph-name").First).ToBeVisibleAsync();
@@ -387,6 +409,7 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         Assert.Equal(sizes[1] * 2, sizes[3], 2.0);
 
         // The buttons hand the files to the reader.
+        await host.Locator("[data-graph-more]").ClickAsync();
         var saved = await page.RunAndWaitForDownloadAsync(() => host.Locator("[data-graph-svg]").ClickAsync());
         Assert.Equal("dastan.svg", saved.SuggestedFilename);
         saved = await page.RunAndWaitForDownloadAsync(() => host.Locator("[data-graph-png]").ClickAsync());

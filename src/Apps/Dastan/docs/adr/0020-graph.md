@@ -143,3 +143,39 @@ three browsers); the image of the container built with the second script. Looked
 of a name, in Persian, dark, 1100 pixels wide, in Chromium – cards, a card with a picture, labels and tools.
 **Not built:** what is chosen is not yet carried on to the timeline and the gallery (R-EXP-05) – that comes
 with the timeline, step 19.9.
+
+## The explorer (step 20.8, 2026-11-21)
+
+**The inspector takes the place of the panel.** What is chosen in a drawing is shown closer in an inspector
+that belongs to the drawing (`GraphView`), filled from the same profile the panel of ADR 0019 is filled
+from. In a wide window (above 60 rem) it stands beside the drawing and takes room from it: it covers
+nothing, follows what is chosen, and does not take the focus – the arrows go on. Enter goes to it, Escape
+comes back to the drawing with the card still chosen, "Close" lets go of the card. On a phone it is a sheet
+at the foot of the window, above the bar of the ways: it opens when the visitor asks for it – a finger on a
+card, or Enter – and not because the keys walk past a card or an address names one; it takes the focus, and
+Escape and the Back button of the browser close it and give the focus back to the drawing. The panel of ADR
+0019 stays for the cards of lists.
+
+The inspector carries the acts of ADR 0025: put in the middle (the same view of the other name, an address
+the graph gives each card), the whole profile, add to the comparison, and the ways on to the timeline and the
+pictures where the card has any.
+
+**The tools.** Larger, smaller and the whole drawing are in sight, each with its key beside its name and as
+`aria-keyshortcuts`. Saving a picture and the still drawing stand behind "More", a button that says whether
+it is open.
+
+**The room of the drawing.** The control is not told when its room changes. The drawing watches its own room
+(`ResizeObserver`): when the inspector opens or closes, or the window is made wider or narrower, the control
+is told, and what is chosen is brought to the middle of the new room – with nothing chosen the whole drawing
+is shown in it. Found in a test: without that a part of the drawing lay behind a bar that scrolls and that no
+key reaches.
+
+**A family that grows across the page** is a graph too. The address of the graph says `flow: across`; the
+rows and the places are the same the layout of Dastan gives the tree that grows down, and the drawing lays
+them the other way round: a column for each generation, the oldest where the page begins – at the right of a
+page read from the right –, the cards of one generation under each other, the lines at right angles. Keys,
+window and saved picture are those of every graph. The still drawing stays what a page without script shows.
+
+**Not built:** cards in sizes of their own – every card of a drawing has one width, with or without a
+picture; two fingers on a phone were not tried; the tree of an account has the inspector and no "put in the
+middle" – it explores no public name.

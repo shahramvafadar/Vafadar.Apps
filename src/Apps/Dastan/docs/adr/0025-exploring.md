@@ -66,6 +66,14 @@ address of the page and into the links of the views, and letting go takes it out
 same for its stretch of years. Only where the bar stands: a page that explores no single public name – a
 comparison, a tree of an account – gets nothing written into its address.
 
+**The comparison** (step 20.8). A visitor can lay the times of other names beside the times of the name that
+is explored: `with`, on every view, at most five names, each once, never the name in the middle. "Add to the
+comparison" is offered for what is chosen – on the page and in the inspector of a drawing – when it has
+something with a time; the bar names what is compared, each with the way to take it out, and leads to the
+chart of time, which then has a lane for each. What is compared is named, and drawn, only as far as the
+visitor may see it. Another name in the middle keeps the comparison, without itself. This is the comparison
+of a visitor, in an address; the comparisons the editors write (ADR 0008) are another thing and stay.
+
 ## Consequences
 
 * A view is added by a line in the table of the contract and a page that passes its links through `Carry`.

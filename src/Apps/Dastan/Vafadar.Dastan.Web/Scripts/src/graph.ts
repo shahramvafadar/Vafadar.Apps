@@ -12,6 +12,7 @@ import {
 } from '@syncfusion/ej2-diagrams';
 import { registerLicense, Telemetry } from '@syncfusion/ej2-base';
 import { carry, explores, said } from './explore';
+import { drawn as profileDrawn, type Profile } from './profile-panel';
 
 // Found in a browser (step 19.8): the control comes with a count of its use that it sends to a host of its
 // maker (Application Insights) when a page runs at an address of development. Dastan sends nothing about a
@@ -24,17 +25,21 @@ interface Picture { source: string; sizes: string | null; words: string; }
 interface GraphNode {
   id: string; name: string; address: string; profile: string; nameLanguage?: string; kind?: string;
   picture?: Picture; lines: string[]; row?: number; place?: number; expandable: boolean; timeline?: string; gallery?: string;
+  centre?: string; compare?: string;
 }
 interface GraphEdge {
   id: string; from: string; to: string; role: string; label: string; directed: boolean;
   labelLanguage?: string; when?: string; source?: string; disputed: boolean;
 }
-interface Graph { kind: string; focus: string | null; nodes: GraphNode[]; edges: GraphEdge[]; }
+interface Graph { kind: string; focus: string | null; nodes: GraphNode[]; edges: GraphEdge[]; flow?: string; }
 
 // The measures of a card, in pixels of the drawing. Every card has the same width, so that the places of the
 // layout – counted in cards – are columns of the drawing.
 const cardWidth = 220, pictureSize = 44, gap = 8, inset = 8;
 const columnStep = cardWidth + 40, rowStep = 150;
+// A family that grows across the page (step 20.8): a column for each generation, with the room its lines need
+// between two columns, and the cards of one generation under each other.
+const generationStep = cardWidth + 90, besideStep = 124;
 // Above this number of cards only what is in sight is drawn.
 const manyNodes = 150;
 
@@ -71,10 +76,17 @@ class DastanGraph {
   private readonly spot = new Map<string, { x: number; y: number }>();
   private diagram!: Diagram;
   private selected: string | null = null;
+  // The inspector (step 20.8): what is chosen, shown closer beside the drawing – a sheet at the foot of a phone.
+  private readonly inspector: HTMLElement | null;
+  private asked: AbortController | null = null;
+  private byKeyboard = false;
+  private fitNext = false;
+  private inHistory = false;
 
   constructor(private readonly host: HTMLElement, private readonly canvas: HTMLElement, private readonly graph: Graph) {
     this.rightToLeft = getComputedStyle(host).direction === 'rtl';
     this.look = lookOf(host);
+    this.inspector = host.querySelector<HTMLElement>('[data-graph-inspector]');
     // The control does not take every identifier; the nodes and the edges are numbered for it.
     graph.nodes.forEach((node, index) => {
       this.byKey.set('n' + index, node);
@@ -89,7 +101,16 @@ class DastanGraph {
     const nodes = this.graph.nodes;
     if (nodes.length > 0 && nodes.every(node => node.row !== undefined && node.place !== undefined)) {
       const last = Math.max(...nodes.map(node => node.place!));
+      // Across the page the generations are columns: the oldest where the page begins – at the right of a
+      // page that is read from right to left –, and the places of a generation run down the drawing.
+      const across = this.graph.flow === 'across';
+      const youngest = Math.max(...nodes.map(node => node.row!));
       for (const node of nodes) {
+        if (across) {
+          this.spot.set(node.id, { x: (this.rightToLeft ? youngest - node.row! : node.row!) * generationStep, y: node.place! * besideStep });
+          continue;
+        }
+
         const along = this.rightToLeft ? last - node.place! : node.place!;
         this.spot.set(node.id, { x: along * columnStep, y: node.row! * rowStep });
       }
@@ -222,7 +243,8 @@ class DastanGraph {
           sourceID: from, targetID: to,
           sourcePortID: edge.from === first ? firstPort : secondPort,
           targetPortID: edge.to === second ? secondPort : firstPort,
-          type: family && upright ? 'Orthogonal' : 'Straight',
+          // The lines of a family run at right angles, down the drawing or – where it grows across – along it.
+          type: family && (upright || this.graph.flow === 'across') ? 'Orthogonal' : 'Straight',
           cornerRadius: 6,
           constraints: ConnectorConstraints.None,
           style: { strokeColor: colour, strokeWidth: 1.5, strokeDashArray: edge.disputed ? '3 3' : edge.role === 'parent' || edge.role === 'partner' || !family ? '' : '6 3' },
@@ -264,18 +286,33 @@ class DastanGraph {
           this.say(change.newValue?.[0]?.id ?? null);
         }
       },
-      doubleClick: () => this.openProfile(),
+      doubleClick: () => this.toInspector(),
     });
     this.diagram.appendTo(this.canvas);
     this.diagram.fitToPage({ mode: 'Page', region: 'Content', canZoomIn: false, margin: { left: 24, right: 24, top: 24, bottom: 24 } });
     this.oneStop();
     this.keys();
+    this.inspectorKeys();
 
-    // What the address says is chosen (ADR 0025) is chosen in the drawing as it is on the page of the server.
+    // What the address says is chosen (ADR 0025) is chosen in the drawing as it is on the page of the server –
+    // without taking the focus: the visitor has not asked for it in this drawing. The inspector of the drawing
+    // then says what the page said about it, so the block of the page goes.
     const chosen = explores() ? this.keyOf.get(said('sel') ?? '') : undefined;
     if (chosen) {
+      this.byKeyboard = true;
       this.choose(chosen);
+      this.byKeyboard = false;
     }
+
+    if (this.inspector && !this.isSheet) {
+      document.querySelector('[data-explore-chosen]')?.remove();
+
+      // Drawn with something chosen, the drawing is shown whole in the room the inspector leaves it: once
+      // the page has given the inspector its room.
+      this.fitNext = chosen !== undefined;
+    }
+
+    this.watchRoom();
   }
 
   // The keyboard of ADR 0020: the drawing is one stop of Tab. Nothing inside it takes the focus by itself.
@@ -299,16 +336,15 @@ class DastanGraph {
     // What stands in the middle is not chosen in itself.
     const chosenNow = node && node.id !== this.graph.focus ? node.id : null;
     carry('sel', chosenNow);
+    // Where the page still says what was chosen (a phone, whose sheet opens only when asked for), it says so
+    // only while it is true.
     const written = document.querySelector<HTMLElement>('[data-explore-chosen]');
     if (written && written.dataset['exploreChosen'] !== chosenNow) {
       written.remove();
     }
 
     const said = this.host.querySelector<HTMLElement>('[data-graph-said]');
-    const open = this.host.querySelector<HTMLButtonElement>('[data-graph-profile]');
-    if (open) {
-      open.disabled = !node;
-    }
+    this.inspect(node);
 
     // What is chosen is carried on: to its timeline and to its pictures, where it has any (R-EXP-05).
     for (const [name, address] of [['timeline', node?.timeline], ['gallery', node?.gallery]] as const) {
@@ -339,6 +375,187 @@ class DastanGraph {
     said.textContent = [node.name, ...node.lines, ...relations].join('. ');
   }
 
+  // On a phone the inspector is a sheet over the foot of the drawing; beside the drawing where there is room.
+  private get isSheet(): boolean {
+    return matchMedia('(max-width: 60rem)').matches;
+  }
+
+  // The inspector shows what is chosen: at once the name the drawing has, then the profile the site answers
+  // with – which is what the page of the same visitor shows. Nothing chosen, no inspector.
+  private inspect(node: GraphNode | null): void {
+    const inspector = this.inspector;
+    if (!inspector) {
+      return;
+    }
+
+    this.asked?.abort();
+    const part = <T extends HTMLElement>(name: string): T | null => inspector.querySelector<T>(`[data-inspector-${name}]`);
+    const [name, kind, body, wait, failed] = [part('name'), part('kind'), part('body'), part('wait'), part('failed')];
+    if (!node || !name || !kind || !body || !wait || !failed) {
+      const held = inspector.contains(document.activeElement);
+      inspector.hidden = true;
+      if (held) {
+        this.canvas.focus();
+      }
+
+
+      this.leaveHistory();
+      return;
+    }
+
+    name.textContent = node.name;
+    if (node.nameLanguage) {
+      name.lang = node.nameLanguage;
+    } else {
+      name.removeAttribute('lang');
+    }
+
+    kind.textContent = node.kind ?? '';
+    body.replaceChildren();
+    wait.hidden = false;
+    failed.hidden = true;
+    for (const [link, address] of [['centre', node.centre], ['open', node.address], ['compare', node.compare]] as const) {
+      const to = part<HTMLAnchorElement>(link);
+      if (to) {
+        to.hidden = !address;
+        if (address) {
+          to.href = here(address);
+        } else {
+          to.removeAttribute('href');
+        }
+      }
+    }
+
+    // Beside the drawing the inspector follows what is chosen. A sheet lies over the drawing: it opens when the
+    // visitor asks for it – a finger on a card, or Enter – and not because the keys walk past a card or an
+    // address names one. Open already, it follows what is chosen.
+    if (!this.isSheet || !this.byKeyboard) {
+      inspector.hidden = false;
+    }
+
+    if (this.isSheet && !this.byKeyboard) {
+      this.toInspector();
+    }
+
+    const asked = this.asked = new AbortController();
+    void (async (): Promise<void> => {
+      try {
+        const answer = await fetch(here(node.profile), { headers: { Accept: 'application/json' }, cache: 'no-store', signal: asked.signal });
+        if (!answer.ok) {
+          throw new Error(String(answer.status));
+        }
+
+        const profile = await answer.json() as Profile;
+        kind.textContent = profile.kind ?? '';
+        body.replaceChildren(...profileDrawn(profile));
+        wait.hidden = true;
+      } catch (problem) {
+        if (!(problem instanceof DOMException && problem.name === 'AbortError')) {
+          wait.hidden = true;
+          failed.hidden = false;
+        }
+      }
+    })();
+  }
+
+  // Beside the drawing the inspector takes room from it, and gives it back; a window is made wider or
+  // narrower. The control is not told by itself: whenever the room of the drawing changes it is told its new
+  // room, and what is chosen is brought into it – or, once, the whole drawing is shown in it.
+  private watchRoom(): void {
+    if (typeof ResizeObserver !== 'function') {
+      return;
+    }
+
+    let room = [this.canvas.clientWidth, this.canvas.clientHeight];
+    new ResizeObserver(() => {
+      const now = [this.canvas.clientWidth, this.canvas.clientHeight];
+      if (now[0] === room[0] && now[1] === room[1]) {
+        return;
+      }
+
+      room = now;
+      this.diagram.updateViewPort();
+      if (this.fitNext) {
+        this.fitNext = false;
+        this.fit();
+        return;
+      }
+
+      // With nothing chosen the whole drawing is shown in its new room – otherwise a part of it would lie
+      // outside, behind a bar that scrolls and that no key reaches.
+      const chosen = this.selected ? this.diagram.getObject(this.selected) as { wrapper?: { bounds: unknown } } : null;
+      if (chosen?.wrapper) {
+        // In the middle of the new room: "into view" of the control keeps a card where it was when a part of
+        // it was in the old room, also where the inspector now stands.
+        this.diagram.bringToCenter(chosen.wrapper.bounds as never);
+      } else {
+        this.fit();
+      }
+    }).observe(this.canvas);
+  }
+
+  // The focus goes to the inspector: Enter in the drawing, or a finger on a card of a phone. A sheet is a
+  // place of its own in the history, so that the Back button closes it and not the page.
+  toInspector(): void {
+    if (!this.inspector || !this.node(this.selected)) {
+      return;
+    }
+
+    this.inspector.hidden = false;
+
+    this.inspector.focus();
+    if (this.isSheet && !this.inHistory) {
+      history.pushState({ ...(history.state as object | null), inspector: true }, '');
+      this.inHistory = true;
+    }
+  }
+
+  // Back from the inspector to the drawing; what is chosen stays chosen.
+  private toDrawing(): void {
+    this.canvas.focus();
+  }
+
+  // Nothing is chosen any more: the inspector goes, and the focus is in the drawing again.
+  private letGo(): void {
+    this.diagram.clearSelection();
+    this.say(null);
+    this.canvas.focus();
+  }
+
+  private leaveHistory(): void {
+    if (this.inHistory) {
+      this.inHistory = false;
+      history.back();
+    }
+  }
+
+  private inspectorKeys(): void {
+    const inspector = this.inspector;
+    if (!inspector) {
+      return;
+    }
+
+    inspector.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        // Beside the drawing Escape goes back to it; a sheet is closed by it, as a dialog is.
+        if (this.isSheet) {
+          this.letGo();
+        } else {
+          this.toDrawing();
+        }
+      }
+    });
+    inspector.querySelector<HTMLElement>('[data-inspector-close]')?.addEventListener('click', () => this.letGo());
+    // The Back button of the browser closes a sheet that was opened.
+    window.addEventListener('popstate', () => {
+      if (this.inHistory) {
+        this.inHistory = false;
+        this.letGo();
+      }
+    });
+  }
+
   private choose(key: string): void {
     const object = this.diagram.getObject(key) as NodeModel & { wrapper?: { bounds: { x: number; y: number; width: number; height: number } } };
     this.diagram.select([object]);
@@ -354,7 +571,9 @@ class DastanGraph {
     if (!from) {
       const first = this.keyOf.get(this.graph.focus ?? '') ?? (this.graph.nodes.length > 0 ? 'n0' : null);
       if (first) {
+        this.byKeyboard = true;
         this.choose(first);
+        this.byKeyboard = false;
       }
 
       return;
@@ -377,7 +596,9 @@ class DastanGraph {
     }
 
     if (best) {
+      this.byKeyboard = true;
       this.choose(this.keyOf.get(best)!);
+      this.byKeyboard = false;
     }
   }
 
@@ -396,7 +617,7 @@ class DastanGraph {
           case 'ArrowRight': this.step(1, 0); return true;
           case 'ArrowUp': this.step(0, -1); return true;
           case 'ArrowDown': this.step(0, 1); return true;
-          case 'Enter': case ' ': this.openProfile(); return true;
+          case 'Enter': case ' ': this.toInspector(); return true;
           case 'Escape': this.diagram.clearSelection(); this.say(null); return true;
           case '+': case '=': this.zoom(1.25); return true;
           case '-': this.zoom(0.8); return true;
@@ -433,14 +654,6 @@ class DastanGraph {
     // The control makes a drawing smaller to fit and never larger; so it is first shown at its own size.
     this.diagram.reset();
     this.diagram.fitToPage({ mode: 'Page', region: 'Content', canZoomIn: false, margin: { left: 24, right: 24, top: 24, bottom: 24 } });
-  }
-
-  // The profile of what is chosen opens in the panel of the page (ADR 0017), outside the drawing.
-  openProfile(): void {
-    const node = this.node(this.selected);
-    if (node) {
-      document.dispatchEvent(new CustomEvent('dastan:profile', { detail: { address: node.profile, name: node.name } }));
-    }
   }
 
   // Workaround 4: what the control writes as a picture holds the texts in the right order but names the font
@@ -557,7 +770,16 @@ async function start(host: HTMLElement): Promise<void> {
     on('in', () => drawn.zoom(1.25));
     on('out', () => drawn.zoom(0.8));
     on('fit', () => drawn.fit());
-    on('profile', () => drawn.openProfile());
+    // The tools that are not used all the time stand behind "More".
+    const more = host.querySelector<HTMLElement>('[data-graph-more]');
+    const rest = host.querySelector<HTMLElement>('[data-graph-more-tools]');
+    if (more && rest) {
+      more.addEventListener('click', () => {
+        rest.hidden = !rest.hidden;
+        more.setAttribute('aria-expanded', String(!rest.hidden));
+      });
+    }
+
     on('svg', () => void drawn.picture('svg').then(blob => save(blob, 'dastan.svg')));
     on('png', () => void drawn.picture('png').then(blob => save(blob, 'dastan.png')));
     on('to-still', () => show(false));

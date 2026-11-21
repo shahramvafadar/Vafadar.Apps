@@ -1,0 +1,99 @@
+@* What stands under a drawing of the explorer (step 20.8): where the collection tells a story, the steps of
+   the telling the name takes part in, in their order – as far as this visitor has read, which is what the
+   projection answers –, and what comes next: the threads that pass the name, its times beside those of the
+   names it is compared with, its pictures. Each is offered only where it leads to something. No script. *@
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject IStringLocalizer<Ui> T
+
+@if (!_steps.IsEmpty)
+{
+    <section aria-labelledby="telling">
+        <h2 id="telling">@T["Explore_Telling"]</h2>
+        <ol class="telling" role="list">
+            @foreach (var appearance in _steps)
+            {
+                <li>
+                    <span class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(appearance.Step.Number))</span>
+                    <a href="@(StoryAddress.Of(Site, Visitor, appearance.Step))"><Loc Text="appearance.Step.Event.Label" /></a>
+                    <span class="meta">– <Loc Text="appearance.Association.Role" /></span>
+                </li>
+            }
+        </ol>
+        @if (_continues)
+        {
+            @* The telling goes on after what was read; nothing says how far or with whom. *@
+            <p class="note">@T["Explore_Telling_More"] <a href="@($"{Site.Collection}#reading")">@T["Reading_Change"]</a></p>
+        }
+    </section>
+}
+
+@if (!_onward.IsEmpty || _times is not null || _pictures is not null)
+{
+    <section aria-labelledby="next">
+        <h2 id="next">@T["Explore_Next"]</h2>
+        @if (!_onward.IsEmpty)
+        {
+            <ul class="statements" role="list">
+                @foreach (var onward in _onward)
+                {
+                    <li>
+                        @if (onward.Next is { } next)
+                        {
+                            <a href="@ThreadText.Address(Site, Visitor, next)"><Loc Text="ThreadText.Label(next)" /></a>
+                            <text> – </text><Loc Text="next.Stop.Note" />
+                        }
+                        else
+                        {
+                            <span>@T["Thread_LastReached"]</span>
+                        }
+                        <span class="meta">
+                            (<a href="@($"{Site.Collection}/thread/{onward.Thread.Id}#stop-{onward.Here.Number}")"><Loc Text="onward.Thread.Label" /></a>)
+                        </span>
+                    </li>
+                }
+            </ul>
+        }
+        <p class="actions">
+            @if (_times is not null)
+            {
+                <a class="action secondary" href="@_times">@T[State.Compared.IsEmpty ? "Explore_Times" : "Explore_CompareTimes"]</a>
+            }
+            @if (_pictures is not null)
+            {
+                <a class="action secondary" href="@_pictures">@T["Explore_Pictures"]</a>
+            }
+        </p>
+    </section>
+}
+
+@code {
+    private System.Collections.Immutable.ImmutableArray<Appearance> _steps = [];
+    private System.Collections.Immutable.ImmutableArray<ThreadOnward> _onward = [];
+    private bool _continues;
+    private string? _times;
+    private string? _pictures;
+
+    /// <summary>Gets or sets the state of exploring of the page.</summary>
+    [Parameter, EditorRequired]
+    public Exploration State { get; set; } = null!;
+
+    protected override void OnParametersSet()
+    {
+        if (Visitor.Projection is not { } projection || projection.Entity(State.Subject) is not { } overview)
+        {
+            return;
+        }
+
+        _steps = overview.Appearances;
+        _continues = !_steps.IsEmpty && projection.StoryContinues;
+        _onward = projection.Onward(State.Subject);
+        var compared = State.Compared.Any(other => projection.Find(other) is not null);
+        _times = State.View != ExplorationView.Timeline && (Exploring.HasTimes(projection, State.Subject) || compared)
+            ? $"{Site.Collection}/{State.Address(ExplorationView.Timeline)}"
+            : null;
+        _pictures = State.View != ExplorationView.Pictures && projection.Gallery(State.Subject) is { IsEmpty: false }
+            ? $"{Site.Collection}/{State.Address(ExplorationView.Pictures)}"
+            : null;
+    }
+}

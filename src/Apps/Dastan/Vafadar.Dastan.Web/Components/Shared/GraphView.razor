@@ -2,7 +2,12 @@
    needs to draw the same graph as one that can be moved, made larger and smaller, walked with the keyboard and
    saved as a picture. The page is complete without the script: then this is the still drawing and nothing else.
    The script asks the address of the graph, which answers what this page shows to this visitor – asked with
-   what the page was asked with – and takes the place of the still drawing once it has drawn. *@
+   what the page was asked with – and takes the place of the still drawing once it has drawn.
+
+   The explorer (step 20.8): the tools that are used all the time are in sight, each with its key; the rest is
+   behind "More". Beside the drawing stands the inspector: what is chosen, shown closer without covering the
+   drawing – on a phone a sheet at the foot of the window. It is filled by the script from the profile of the
+   card, which answers what the page of the same visitor shows. *@
 @inject NavigationManager Navigation
 @inject IConfiguration Configuration
 @inject IStringLocalizer<Ui> T
@@ -11,29 +16,50 @@
               data-font="@Assets["fonts/vazirmatn-nl-wght.woff2"]" data-key="@Configuration["Dastan:Syncfusion:Key"]">
     <div class="graph-tools" data-graph-tools hidden>
         <span class="graph-tools-live" data-graph-live-tools>
-            <button type="button" data-graph-in>@T["Graph_Larger"]</button>
-            <button type="button" data-graph-out>@T["Graph_Smaller"]</button>
-            <button type="button" data-graph-fit>@T["Graph_Whole"]</button>
-            <button type="button" data-graph-profile disabled>@T["Graph_Profile"]</button>
-            <a class="graph-on" data-graph-timeline hidden>@T["Graph_Timeline"]</a>
-            <a class="graph-on" data-graph-gallery hidden>@T["Graph_Gallery"]</a>
-            <button type="button" data-graph-svg>@T["Graph_SaveSvg"]</button>
-            <button type="button" data-graph-png>@T["Graph_SavePng"]</button>
-            <button type="button" data-graph-to-still>@T["Graph_ToStill"]</button>
+            <button type="button" data-graph-in aria-keyshortcuts="+">@T["Graph_Larger"] <kbd aria-hidden="true">+</kbd></button>
+            <button type="button" data-graph-out aria-keyshortcuts="-">@T["Graph_Smaller"] <kbd aria-hidden="true">−</kbd></button>
+            <button type="button" data-graph-fit aria-keyshortcuts="0">@T["Graph_Whole"] <kbd aria-hidden="true">0</kbd></button>
+            <button type="button" data-graph-more aria-expanded="false" aria-controls="@_more">@T["Graph_More"]</button>
+            <span class="graph-more" id="@_more" data-graph-more-tools hidden>
+                <button type="button" data-graph-svg>@T["Graph_SaveSvg"]</button>
+                <button type="button" data-graph-png>@T["Graph_SavePng"]</button>
+                <button type="button" data-graph-to-still>@T["Graph_ToStill"]</button>
+            </span>
         </span>
         <button type="button" data-graph-to-live hidden>@T["Graph_ToLive"]</button>
     </div>
-    <div class="graph-still" data-graph-still>@ChildContent</div>
-    <div class="graph-live" data-graph-live hidden>
-        <div class="graph-canvas" data-graph-canvas tabindex="0" role="application" aria-label="@Label" aria-describedby="@_help" dir="ltr"></div>
-        <p class="meta graph-keys" id="@_help">@T["Graph_Keys"]</p>
-        <p class="graph-said" data-graph-said aria-live="polite"></p>
+    <div class="graph-body">
+        <div class="graph-still" data-graph-still>@ChildContent</div>
+        <div class="graph-live" data-graph-live hidden>
+            <div class="graph-canvas" data-graph-canvas tabindex="0" role="application" aria-label="@Label" aria-describedby="@_help" dir="ltr"></div>
+            <p class="meta graph-keys" id="@_help">@T["Graph_Keys"]</p>
+            <p class="graph-said" data-graph-said aria-live="polite"></p>
+        </div>
+        <aside class="inspector" data-graph-inspector hidden tabindex="-1" aria-labelledby="@_name">
+            <div class="inspector-head">
+                <h2 id="@_name" data-inspector-name></h2>
+                <button type="button" class="action secondary" data-inspector-close>@T["Inspector_Close"]</button>
+            </div>
+            <p class="meta" data-inspector-kind></p>
+            <p class="note" data-inspector-wait role="status">@T["Profile_Panel_Wait"]</p>
+            <p class="note" data-inspector-failed role="alert" hidden>@T["Profile_Panel_Failed"]</p>
+            <div data-inspector-body></div>
+            <p class="actions">
+                <a class="action secondary" data-inspector-centre hidden>@T["Explore_Centre"]</a>
+                <a class="action secondary" data-inspector-open>@T["Explore_Profile"]</a>
+                <a class="action secondary" data-inspector-compare hidden>@T["Explore_Compare"]</a>
+                <a class="action secondary" data-graph-timeline hidden>@T["Graph_Timeline"]</a>
+                <a class="action secondary" data-graph-gallery hidden>@T["Graph_Gallery"]</a>
+            </p>
+        </aside>
     </div>
 </dastan-graph>
 
 @code {
     // A page has one graph; the same page is the same text every time it is asked for.
     private const string _help = "graph-keys";
+    private const string _more = "graph-more";
+    private const string _name = "inspector-name";
 
     /// <summary>Gets or sets the still drawing.</summary>
     [Parameter, EditorRequired]

@@ -18,7 +18,16 @@ namespace Vafadar.Dastan.Web.Site;
 /// <param name="Nodes">The nodes, in the order of the page.</param>
 /// <param name="Edges">The edges, in the order of the page.</param>
 /// <param name="More">Where the page offers to open further, as far as a graph says so.</param>
-public sealed record GraphData(string Kind, string? Focus, IReadOnlyList<GraphNode> Nodes, IReadOnlyList<GraphEdge> Edges, GraphMore? More = null);
+public sealed record GraphData(string Kind, string? Focus, IReadOnlyList<GraphNode> Nodes, IReadOnlyList<GraphEdge> Edges, GraphMore? More = null)
+{
+    /// <summary>
+    /// Gets which way the generations of a family run (step 20.8): nothing – down the drawing, a row for each –
+    /// or <c>across</c>: a column for each, the oldest where the page begins. The rows and the places of the
+    /// nodes are the same in both; the drawing lays them the other way round.
+    /// </summary>
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? Flow { get; init; }
+}
 
 /// <summary>A node of a graph: who or what it is, in the words of its card.</summary>
 /// <param name="Id">The identifier of the node in this graph.</param>
@@ -27,6 +36,22 @@ public sealed record GraphData(string Kind, string? Focus, IReadOnlyList<GraphNo
 /// <param name="Profile">The address of the profile of the node, for the panel.</param>
 public sealed record GraphNode(string Id, string Name, string Address, string Profile)
 {
+    /// <summary>
+    /// Gets the address of the same view with this node in the middle (step 20.8, ADR 0025) – what "put in the
+    /// middle" leads to –, written by the state of exploring; nothing for the node that is in the middle and
+    /// for a graph that explores no public name.
+    /// </summary>
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? Centre { get; init; }
+
+    /// <summary>
+    /// Gets the address of the same view with this node added to the comparison (step 20.8); nothing for the
+    /// node in the middle, for one that is compared already, when the comparison is full and for a node that
+    /// has nothing with a time – there would be nothing of it to lay beside the others.
+    /// </summary>
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? Compare { get; init; }
+
     /// <summary>Gets the language of the name where it is not the language of the page.</summary>
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public string? NameLanguage { get; init; }
@@ -111,7 +136,7 @@ public sealed record GraphMore(bool Above, bool Below, bool Beside);
 public static class GraphDataEndpoints
 {
     /// <summary>Returns the family of an entity as a graph.</summary>
-    public static GraphData Of(FamilyView family, EntityId around, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text)
+    public static GraphData Of(FamilyView family, EntityId around, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, Exploration? explore = null)
     {
         ArgumentNullException.ThrowIfNull(family);
         ArgumentNullException.ThrowIfNull(visitor);
@@ -120,16 +145,19 @@ public static class GraphDataEndpoints
         return new(
             "family",
             around.Value,
-            [.. family.Members.Select(member => Node(member.Entity, visitor, site, text) with { Row = placed[member.Entity.Id].Layer, Place = placed[member.Entity.Id].Place })],
+            [.. family.Members.Select(member => Node(member.Entity, visitor, site, text, explore) with { Row = placed[member.Entity.Id].Layer, Place = placed[member.Entity.Id].Place })],
             [
                 .. family.Parentage.Select(edge => Edge(edge, "parent", directed: true, visitor, site, text)),
                 .. family.Partnerships.Select(edge => Edge(edge, "partner", directed: false, visitor, site, text)),
             ],
-            new(family.MoreAbove, family.MoreBelow, family.MoreBeside));
+            new(family.MoreAbove, family.MoreBelow, family.MoreBeside))
+        {
+            Flow = explore is { TreeAcross: true } ? "across" : null,
+        };
     }
 
     /// <summary>Returns the connections of an entity as a graph.</summary>
-    public static GraphData Of(ConnectionsView view, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text)
+    public static GraphData Of(ConnectionsView view, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, Exploration? explore = null)
     {
         ArgumentNullException.ThrowIfNull(view);
         ArgumentNullException.ThrowIfNull(visitor);
@@ -138,7 +166,7 @@ public static class GraphDataEndpoints
         return new(
             "connections",
             view.Focus.Id.Value,
-            [.. view.Nodes.Select(entity => Node(entity, visitor, site, text) with { Expandable = expandable.Contains(entity.Id) })],
+            [.. view.Nodes.Select(entity => Node(entity, visitor, site, text, explore) with { Expandable = expandable.Contains(entity.Id) })],
             [.. view.Edges.Select(edge => Edge(edge, "relation", directed: true, visitor, site, text))]);
     }
 
@@ -199,9 +227,12 @@ public static class GraphDataEndpoints
             var known = collection == site.Collection && id.Length > 0 && !id.Any(char.IsWhiteSpace);
             var state = TreeState.Read(up, down, beside, family, null);
             var around = new EntityId(known ? id : "-");
+
+            // The address of the graph is asked with what the page was asked with: the state of exploring is the page's.
+            var explore = Exploring.Of(context, visitor, around, ExplorationView.Family);
             var view = !known || visitor.Projection is not { } projection ? null
                 : state.Whole ? projection.Family(around) : projection.Family(around, state.Up, state.Down, state.Beside);
-            return Answer(context, view is null ? null : Of(view, around, visitor, site, text));
+            return Answer(context, view is null ? null : Of(view, around, visitor, site, text, explore));
         });
 
         endpoints.MapGet("/{collection}/entity/{id}/connections.json", (HttpContext context, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, string collection, string id, string? open) =>
@@ -210,7 +241,7 @@ public static class GraphDataEndpoints
             var known = collection == site.Collection && IsIdentifier(id);
             var opened = (open ?? string.Empty).Split(',', StringSplitOptions.TrimEntries).Where(IsIdentifier).Select(one => new EntityId(one)).Distinct();
             var view = known ? visitor.Projection?.Connections(new EntityId(id), opened) : null;
-            return Answer(context, view is null ? null : Of(view, visitor, site, text));
+            return Answer(context, view is null ? null : Of(view, visitor, site, text, Exploring.Of(context, visitor, view.Focus.Id, ExplorationView.Connections).Opened(view.Expanded.Select(entity => entity.Id))));
         });
 
         endpoints.MapGet(TreeEndpoints.Page + "/{tree}/graph.json", (HttpContext context, AccountDesk desk, Visitor visitor, IStringLocalizer<Ui> text, string tree) =>
@@ -259,13 +290,15 @@ public static class GraphDataEndpoints
     }
 
     // The card of an entity: its name, its kind, its picture and the first stated facts – from its profile.
-    private static GraphNode Node(Entity entity, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text)
+    private static GraphNode Node(Entity entity, Visitor visitor, DastanSite site, IStringLocalizer<Ui> text, Exploration? explore = null)
     {
         var profile = ProfileDataEndpoints.Of(visitor.Projection!.Profile(entity.Id)!, visitor, site, text);
         var card = visitor.Projection.Profile(entity.Id)!.Card.Select(line => text[$"Fact_{line.Kind.Key}"].Value).ToHashSet(StringComparer.Ordinal);
         return new(entity.Id.Value, profile.Name, profile.Address, profile.Address + ProfileDataEndpoints.Ending)
         {
             // The ways on are offered only where they lead to something: a timeline with a statement, a gallery with a picture.
+            Centre = explore is null || explore.Subject == entity.Id ? null : $"{site.Collection}/{explore.Centre(entity.Id).Address(explore.View)}",
+            Compare = explore is null || !Exploring.CanCompare(visitor.Projection, explore, entity.Id) ? null : $"{site.Collection}/{explore.Choose(entity.Id).Compare(entity.Id).Address(explore.View)}",
             Timeline = !entity.Dated.IsEmpty ? profile.Address + "/timeline" : null,
             Gallery = visitor.Projection.Gallery(entity.Id) is { IsEmpty: false } ? profile.Address + "/gallery" : null,
             NameLanguage = profile.NameLanguage,
