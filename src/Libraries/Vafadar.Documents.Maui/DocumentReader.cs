@@ -56,7 +56,7 @@ public static class DocumentReader
             }
 
             // Digital PDFs carry their text; OCR is only needed for scanned pages.
-            var text = await Task.Run(() => PdfText.Extract(content, MaxPages), ct);
+            var text = await Task.Run(() => PdfText.Extract(content, ct, MaxPages), ct);
             ct.ThrowIfCancellationRequested();
             if (text is not null)
             {
@@ -113,7 +113,7 @@ public static class DocumentReader
 
         async Task<string?> ReadSparsePdfAsync()
         {
-            var sparse = await Task.Run(() => PdfText.Extract(content, MaxPages, minimumPerPage: 0), ct);
+            var sparse = await Task.Run(() => PdfText.Extract(content, ct, MaxPages, minimumPerPage: 0), ct);
             ct.ThrowIfCancellationRequested();
             return sparse;
         }

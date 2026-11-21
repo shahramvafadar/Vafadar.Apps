@@ -54,9 +54,14 @@ public static class PdfText
     /// layer (a scanner's watermark); below this it is treated as scanned so its pages are recognised instead.
     /// </param>
     /// <returns>The rows, or <see langword="null"/> when the file has no usable text layer or cannot be opened.</returns>
-    public static string? Extract(byte[] pdf, int maxPages = 4, int minimumPerPage = 30)
+    public static string? Extract(byte[] pdf, int maxPages = 4, int minimumPerPage = 30) =>
+        Extract(pdf, CancellationToken.None, maxPages, minimumPerPage);
+
+    /// <summary>Extracts text from the chosen pages while the original read is active.</summary>
+    public static string? Extract(byte[] pdf, CancellationToken ct, int maxPages = 4, int minimumPerPage = 30)
     {
         ArgumentNullException.ThrowIfNull(pdf);
+        ct.ThrowIfCancellationRequested();
         try
         {
             using var stream = new MemoryStream(pdf, writable: false);
@@ -67,16 +72,19 @@ public static class PdfText
                 var pages = TextLayout.PagesToRead(document.Pages.Count, maxPages);
                 foreach (var index in pages)
                 {
+                    ct.ThrowIfCancellationRequested();
                     if (document.Pages[index] is not PdfLoadedPage page)
                     {
                         continue;
                     }
 
                     page.ExtractText(out TextLineCollection lines);
+                    ct.ThrowIfCancellationRequested();
                     var offset = index * PageOffset;
                     var lineId = 0;
                     foreach (var line in lines.TextLine)
                     {
+                        ct.ThrowIfCancellationRequested();
                         foreach (var word in line.WordCollection)
                         {
                             // Persian text in PDFs is often stored as presentation forms; compatibility normalisation
@@ -96,7 +104,9 @@ public static class PdfText
                     }
                 }
 
+                ct.ThrowIfCancellationRequested();
                 var rows = TextLayout.Rows(words);
+                ct.ThrowIfCancellationRequested();
                 var content = rows?.Count(char.IsLetterOrDigit) ?? 0;
                 return TextLayout.HasContent(rows) && content >= minimumPerPage * Math.Max(1, pages.Count) ? rows : null;
             }
@@ -107,6 +117,7 @@ public static class PdfText
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
+            ct.ThrowIfCancellationRequested();
             // A damaged or password-protected file has nothing to read.
             System.Diagnostics.Debug.WriteLine($"PDF text extraction failed: {ex.GetType().Name}");
             return null;

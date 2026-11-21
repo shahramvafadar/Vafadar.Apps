@@ -7,13 +7,15 @@ namespace Vafadar.Documents.Tests;
 
 public sealed class PdfTextTests
 {
+    private static CancellationToken Ct => TestContext.Current.CancellationToken;
+
     [Fact]
     public void The_text_layer_of_a_digital_invoice_is_read_in_rows()
     {
         // The label and the price are separate text runs far apart on the same line, as invoice generators write them.
         var pdf = MinimalPdf.Create([[new("Musterfirma GmbH", 40, 40), new("Rechnungsdatum 28.09.2026", 40, 90), new("Rechnungsbetrag", 40, 300), new("119,00 EUR", 420, 300)]]);
 
-        var text = PdfText.Extract(pdf);
+        var text = PdfText.Extract(pdf, Ct);
 
         Assert.NotNull(text);
         var rows = text.Split('\n');
@@ -26,7 +28,7 @@ public sealed class PdfTextTests
     {
         var pdf = MinimalPdf.Create([.. Enumerable.Range(1, 7).Select(n => new MinimalPdf.Run[] { new($"Seite {n} von sieben der Rechnung Nummer 4711", 40, 40) })]);
 
-        var rows = PdfText.Extract(pdf, maxPages: 3)!.Split(['\n', '\f']);
+        var rows = PdfText.Extract(pdf, Ct, maxPages: 3)!.Split(['\n', '\f']);
 
         Assert.Equal([.. new[] { 1, 2, 7 }.Select(n => $"Seite {n} von sieben der Rechnung Nummer 4711")], rows);
         Assert.Equal(7, PdfText.PageCount(pdf));
@@ -37,7 +39,7 @@ public sealed class PdfTextTests
     {
         var pdf = MinimalPdf.Create([[]]);
 
-        Assert.Null(PdfText.Extract(pdf));
+        Assert.Null(PdfText.Extract(pdf, Ct));
     }
 
     [Fact]
@@ -45,8 +47,8 @@ public sealed class PdfTextTests
     {
         var pdf = MinimalPdf.Create([[new("Scanned with a scanner app", 40, 800)]]);
 
-        Assert.Null(PdfText.Extract(pdf));
-        Assert.Equal("Scanned with a scanner app", PdfText.Extract(pdf, minimumPerPage: 0));
+        Assert.Null(PdfText.Extract(pdf, Ct));
+        Assert.Equal("Scanned with a scanner app", PdfText.Extract(pdf, Ct, minimumPerPage: 0));
     }
 
     [Fact]
@@ -61,9 +63,20 @@ public sealed class PdfTextTests
             });
 
         // The protected file comes from Syncfusion: its trial notice does not matter, the file cannot be opened at all.
-        Assert.Null(PdfText.Extract("%PDF-1.7 broken"u8.ToArray()));
-        Assert.Null(PdfText.Extract(locked));
+        Assert.Null(PdfText.Extract("%PDF-1.7 broken"u8.ToArray(), Ct));
+        Assert.Null(PdfText.Extract(locked, Ct));
         Assert.Equal(0, PdfText.PageCount(locked));
+    }
+
+    [Fact]
+    public void A_retired_text_read_returns_cancellation_instead_of_an_empty_document()
+    {
+        var pdf = MinimalPdf.Create([[new("Fictional text-layer invoice 24.50 EUR", 40, 40)], []]);
+        var token = new CancellationToken(canceled: true);
+
+        var refusal = Assert.Throws<OperationCanceledException>(() => PdfText.Extract(pdf, token));
+
+        Assert.Equal(token, refusal.CancellationToken);
     }
 
     [Theory]
