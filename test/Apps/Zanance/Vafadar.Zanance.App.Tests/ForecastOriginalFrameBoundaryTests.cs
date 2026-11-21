@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Vafadar.Localization.Formatting;
+using Vafadar.Zanance.App.Features.Analysis;
 using Vafadar.Zanance.App.Features.Forecast;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
@@ -28,6 +29,44 @@ public sealed class ForecastOriginalFrameBoundaryTests
     }
     private static ForecastViewModel Model(FlowFixture f, Port port) => new(f.Store, f.Translator, new DateFormatter(f.Localization), f.Localization, f.Time, f.Services.GetRequiredService<ForecastWorkStore>(), port);
     private static async Task SeedAsync(FlowFixture f) => await f.Store.SaveAccountAsync(new Account { Name = "D646 original account", CurrencyCode = "EUR", OpeningDate = Day.AddMonths(-1), OpeningBalance = 0 }, Ct);
+
+    [Fact]
+    public async Task Failed_explanation_startup_leaves_the_original_forecast_available()
+    {
+        using var f = new FlowFixture();
+        await SeedAsync(f);
+        var prior = AiFeatures.Current;
+        try
+        {
+            AiFeatures.Current = new(true, _ => { });
+            var factory = new GateFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+            var model = GatedModel(f, factory);
+            await model.LoadAsync();
+            var card = Assert.Single(model.Cards);
+            Assert.True(model.CanInteract);
+            Assert.True(card.CanExplain);
+            var reads = 0;
+            factory.Before = _ => { reads++; return Task.CompletedTask; };
+            var failed = false;
+            model.PropertyChanged += (_, args) =>
+            {
+                if (failed || args.PropertyName != nameof(model.IsBusy) || !model.IsBusy) return;
+                failed = true;
+                throw new IOException("Synthetic explanation startup feedback failure.");
+            };
+
+            await model.ExplainForecastCommand.ExecuteAsync(card);
+
+            Assert.True(failed);
+            Assert.False(model.IsBusy);
+            Assert.True(model.CanInteract);
+            Assert.Same(card, Assert.Single(model.Cards));
+            Assert.Equal(0, reads);
+            Assert.Empty(f.Platform.Routes);
+        }
+        finally { AiFeatures.Current = prior; }
+    }
+
     /// <summary>A native name returned after another complete projection must not save that replacement projection.</summary>
     [Fact]
     public async Task Pending_original_name_cannot_save_a_reloaded_projection()

@@ -287,9 +287,10 @@ public sealed partial class ForecastViewModel : ViewModelBase, Presentation.IThe
                 throw new InvalidOperationException("The original forecast dates changed.");
         }
 
-        IsBusy = true;
         try
         {
+            IsBusy = true;
+            if (!Current()) return;
             await Workspace.ValidateFeatureAnalysisAsync(review, feature);
             if (!Current()) return;
             var baseline = hasScenario
