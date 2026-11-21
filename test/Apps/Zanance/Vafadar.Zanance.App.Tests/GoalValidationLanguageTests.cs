@@ -17,7 +17,7 @@ public sealed class GoalValidationLanguageTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("No permission request allowed.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("No permission request allowed.");
     }
     /// <summary>Uses each supported target language with both independently validated contribution methods.</summary>
     public static IEnumerable<object[]> Cases => from language in new[] { "en", "fa", "de", "es", "fr", "it" }

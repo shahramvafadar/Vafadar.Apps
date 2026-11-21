@@ -30,11 +30,14 @@ public sealed class GoalEditorContinuationTests
     {
         internal readonly TaskCompletionSource Entered = new(TaskCreationOptions.RunContinuationsAsynchronously);
         internal TaskCompletionSource<bool>? Answer;
+        internal bool CancelWait;
         public bool IsSupported => supported;
-        public Task<bool> EnableAsync()
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct)
         {
             if (!supported) throw new InvalidOperationException("No notification permission belongs to this continuation.");
-            Entered.TrySetResult(); return Answer?.Task ?? Task.FromResult(true);
+            var answer = Answer?.Task ?? Task.FromResult(true);
+            Entered.TrySetResult();
+            return CancelWait ? answer.WaitAsync(ct) : answer;
         }
     }
     private static GoalEditorViewModel Editor(FlowFixture f, GoalStore? goals = null, IGoalEditorNotifications? notifications = null)
@@ -287,6 +290,37 @@ public sealed class GoalEditorContinuationTests
         Assert.False(vm.IsBusy); Assert.False(vm.IsReady); Assert.Null(vm.ReminderNote);
         Assert.Empty(f.Platform.Failures); Assert.Empty(f.Platform.Alerts); Assert.Empty(f.Platform.Routes);
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
+    [Fact]
+    public async Task Departing_goal_releases_permission_busy_before_native_settings_returns()
+    {
+        using var f = new FlowFixture();
+        var goal = await SeedAsync(f);
+        var answer = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var notifications = new Notifications(true) { Answer = answer, CancelWait = true };
+        var vm = Editor(f, notifications: notifications);
+        await vm.ApplyQueryAsync(new Dictionary<string, object> { ["id"] = goal.Id });
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        var idle = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        vm.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(vm.IsBusy) && !vm.IsBusy) idle.TrySetResult();
+        };
+
+        vm.ReminderEnabled = true;
+        await notifications.Entered.Task.WaitAsync(Ct);
+        Assert.True(vm.IsBusy);
+        vm.SetViewActive(false);
+        try
+        {
+            await idle.Task.WaitAsync(TimeSpan.FromSeconds(5), Ct);
+            Assert.False(answer.Task.IsCompleted);
+            Assert.Null(vm.ReminderNote);
+            Assert.Empty(f.Platform.Failures);
+            Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        }
+        finally { answer.TrySetResult(true); }
     }
 
     /// <summary>Retired cached work rights disable the stale Save while keeping the exact editable draft for explicit reload.</summary>

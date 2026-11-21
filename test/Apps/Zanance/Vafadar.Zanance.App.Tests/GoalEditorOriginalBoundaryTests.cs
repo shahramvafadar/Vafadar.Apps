@@ -17,7 +17,7 @@ public sealed class GoalEditorOriginalBoundaryTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("A read must not request notification permission.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("A read must not request notification permission.");
     }
 
     /// <summary>A delayed original SQLite reader cannot uncover a form after native departure.</summary>

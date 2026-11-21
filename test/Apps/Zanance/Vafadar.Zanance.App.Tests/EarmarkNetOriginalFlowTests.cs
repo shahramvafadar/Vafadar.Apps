@@ -17,7 +17,7 @@ public sealed class EarmarkNetOriginalFlowTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("No notification request belongs to a read.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("No notification request belongs to a read.");
     }
 
     /// <summary>The complete original detail and its too-large release refusal preserve all source tables.</summary>

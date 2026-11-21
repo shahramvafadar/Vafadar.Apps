@@ -39,7 +39,7 @@ internal static partial class DebugSnapshots
     private sealed class GoalEditorReviewNotifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("Review opening requested notification permission.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("Review opening requested notification permission.");
     }
 
     // D-147 / AT-149: actual modal, real native Invoke targets and complete independently owned data.

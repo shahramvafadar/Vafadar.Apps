@@ -262,7 +262,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
             if (command.IsCurrent && enabled && ReviewReminderEnabled && NotificationsSupported)
             {
                 ++_notificationPermissionRead;
-                var allowed = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+                var allowed = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator,
+                    () => command.IsCurrent && ReviewReminderEnabled, command.Token);
                 if (command.IsCurrent && ReviewReminderEnabled) NotificationsEnabled = allowed;
             }
             await _reminders.RefreshAsync();
@@ -504,7 +505,8 @@ public sealed partial class SettingsViewModel : ViewModelBase
     {
         if (CaptureCommand() is not { } command) return; IsBusy = true;
         ++_notificationPermissionRead;
-        try { await ValidateCommandAsync(command); var enabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(_reminders, _translator);
+        try { await ValidateCommandAsync(command); var enabled = await Presentation.PermissionPrompts.EnableNotificationsAsync(
+                _reminders, _translator, () => command.IsCurrent, command.Token);
             if (command.IsCurrent) NotificationsEnabled = enabled; }
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (command.IsCurrent) await RefuseOriginalSourceAsync(exception); }
         finally { IsBusy = false; PublishWorkState(); }

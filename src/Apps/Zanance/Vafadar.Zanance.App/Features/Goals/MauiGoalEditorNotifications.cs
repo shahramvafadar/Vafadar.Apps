@@ -10,5 +10,6 @@ internal sealed class MauiGoalEditorNotifications(ReminderService reminders, Tra
     public bool IsSupported => reminders.Scheduler.IsSupported;
 
     /// <inheritdoc />
-    public Task<bool> EnableAsync() => Presentation.PermissionPrompts.EnableNotificationsAsync(reminders, translator);
+    public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) =>
+        Presentation.PermissionPrompts.EnableNotificationsAsync(reminders, translator, isCurrent, ct);
 }

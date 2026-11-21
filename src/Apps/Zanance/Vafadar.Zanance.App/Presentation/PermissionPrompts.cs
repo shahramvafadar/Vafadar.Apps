@@ -51,17 +51,25 @@ internal static class PermissionPrompts
     /// The user turns notifications on (Plans, Settings): the system asks while it still can; once it no longer shows
     /// its dialog, the notification settings of the app open after a short explanation. Returns whether they are on.
     /// </summary>
-    public static async Task<bool> EnableNotificationsAsync(ReminderService reminders, Translator translator)
+    public static async Task<bool> EnableNotificationsAsync(ReminderService reminders, Translator translator,
+        Func<bool> isCurrent, CancellationToken ct)
     {
+        if (!isCurrent()) return false;
+        ct.ThrowIfCancellationRequested();
         var watch = Stopwatch.StartNew();
         var enabled = await reminders.EnsurePermissionAsync();
+        if (!isCurrent()) return false;
+        ct.ThrowIfCancellationRequested();
         if (!enabled && reminders.Scheduler.IsSupported && watch.Elapsed < AnsweredWithoutDialog && Shell.Current is { } shell
             && await shell.DisplayAlertAsync(translator["Notify_OffTitle"], translator["Notify_OffText"], translator["Common_OpenSettings"], translator["Common_Cancel"]))
         {
+            if (!isCurrent()) return false;
+            ct.ThrowIfCancellationRequested();
 #if ANDROID
             if (Platform.CurrentActivity is MainActivity activity)
             {
-                enabled = await activity.OpenNotificationSettingsAsync() && await reminders.Scheduler.AreEnabledAsync();
+                enabled = await activity.OpenNotificationSettingsAsync(ct) && isCurrent()
+                    && await reminders.Scheduler.AreEnabledAsync();
             }
             else
 #endif
@@ -70,6 +78,8 @@ internal static class PermissionPrompts
             }
         }
 
+        if (!isCurrent()) return false;
+        ct.ThrowIfCancellationRequested();
         if (enabled)
         {
             reminders.RefreshSoon();

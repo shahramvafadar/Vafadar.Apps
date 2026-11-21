@@ -11,7 +11,7 @@ namespace Android.Content
     /// <summary>Original temporary file grants, without an operating-system permission operation.</summary>
     [Flags] internal enum ActivityFlags { GrantWriteUriPermission = 1, GrantReadUriPermission = 2 }
     /// <summary>Captures only the original output file passed to the native launch.</summary>
-    internal sealed class Intent(string action)
+    internal sealed class Intent(string action) : IDisposable
     {
         /// <summary>Gets the original intent action.</summary>
         internal string Action { get; } = action;
@@ -21,6 +21,7 @@ namespace Android.Content
         internal void PutExtra(string name, object value) => Output = value;
         /// <summary>Accepts the original temporary-grant flags without changing system permissions.</summary>
         internal void AddFlags(ActivityFlags flags) { }
+        public void Dispose() { }
     }
     /// <summary>Represents a native camera launch refusal.</summary>
     internal sealed class ActivityNotFoundException : Exception { }
@@ -57,7 +58,7 @@ namespace Android.Runtime
 namespace Java.IO
 {
     /// <summary>Maps only each test's fresh camera output onto its real temporary filesystem.</summary>
-    internal sealed class File
+    internal sealed class File : IDisposable
     {
         /// <summary>Gets the real path inside this test-owned temporary directory.</summary>
         internal string AbsolutePath { get; }
@@ -73,6 +74,7 @@ namespace Java.IO
         internal long Length() => new FileInfo(AbsolutePath).Length;
         /// <summary>Deletes only the exact test-owned output selected by the original adapter.</summary>
         internal bool Delete() { System.IO.File.Delete(AbsolutePath); return true; }
+        public void Dispose() { }
     }
 }
 namespace AndroidX.Core.Content
@@ -81,7 +83,7 @@ namespace AndroidX.Core.Content
     internal class FileProvider
     {
         /// <summary>Passes the exact original output through an inert URI boundary.</summary>
-        internal static object GetUriForFile(Vafadar.Zanance.App.CameraBoundaryActivity activity,
+        internal static Java.IO.File GetUriForFile(Vafadar.Zanance.App.CameraBoundaryActivity activity,
             string authority, Java.IO.File file) => file;
     }
 }

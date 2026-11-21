@@ -20,7 +20,7 @@ public sealed class GoalPercentExactInputTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("Percent validation cannot request permission.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("Percent validation cannot request permission.");
     }
     private static async Task<(GoalEditorViewModel Editor, GoalStore Store, Goal Goal)> OpenAsync(FlowFixture f, decimal percent)
     {

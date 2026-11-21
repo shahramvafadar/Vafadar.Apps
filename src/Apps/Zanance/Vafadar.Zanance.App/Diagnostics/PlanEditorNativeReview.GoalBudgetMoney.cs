@@ -38,7 +38,7 @@ internal sealed partial class PlanEditorNativeReview
         /// <inheritdoc />
         public bool IsSupported => false;
         /// <inheritdoc />
-        public Task<bool> EnableAsync() => throw new IOException("Monetary review requested a device permission.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new IOException("Monetary review requested a device permission.");
     }
     private sealed class MoneyInteraction : IAppInteraction
     {

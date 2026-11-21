@@ -15,7 +15,7 @@ public sealed class GoalNullableBindingTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("Clearing input cannot request permission.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("Clearing input cannot request permission.");
     }
 
     /// <summary>Each independently cleared text retains its raw value through captions, validation and reentry.</summary>

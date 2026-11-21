@@ -346,16 +346,17 @@ public sealed partial class PlansViewModel : ViewModelBase, Presentation.IThemeA
     private async Task EnableRemindersAsync()
     {
         var source = _published; var owner = Loading; var revision = _revision; var segment = SegmentIndex; var day = Today; var display = DisplayIdentity();
-        bool Current() => Owns(source, owner, revision, segment, day, display, requireIdle: false);
+        var token = _lifetime.Token;
+        bool Current() => !token.IsCancellationRequested && Owns(source, owner, revision, segment, day, display, requireIdle: false);
         if (!Current() || IsPermissionBusy || !RemindersOff) return;
         _permissionRead++;
         var idle = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously); _permissionIdle = idle;
         try
         {
-            IsPermissionBusy = true; await _plans.ValidateCenterSnapshotAsync(source!, _lifetime.Token); if (!Current()) return;
+            IsPermissionBusy = true; await _plans.ValidateCenterSnapshotAsync(source!, token); if (!Current()) return;
             // Keep the original explicit native permission/settings flow. Only its original current page may use its result.
-            var enabled = await PermissionPrompts.EnableNotificationsAsync(_reminders, _translator); if (!Current()) return;
-            await _plans.ValidateCenterSnapshotAsync(source!, _lifetime.Token); if (!Current()) return; source!.EnsureCurrent();
+            var enabled = await PermissionPrompts.EnableNotificationsAsync(_reminders, _translator, Current, token); if (!Current()) return;
+            await _plans.ValidateCenterSnapshotAsync(source!, token); if (!Current()) return; source!.EnsureCurrent();
             RemindersOff = !enabled;
         }
         catch (Exception exception) when (exception is not OutOfMemoryException) { if (Current()) await FailCurrentAsync(exception, owner); }

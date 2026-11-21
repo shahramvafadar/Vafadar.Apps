@@ -7,5 +7,5 @@ public interface IGoalEditorNotifications
     bool IsSupported { get; }
 
     /// <summary>Offers the established explanation and native permission dialog for the explicit choice.</summary>
-    Task<bool> EnableAsync();
+    Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct);
 }

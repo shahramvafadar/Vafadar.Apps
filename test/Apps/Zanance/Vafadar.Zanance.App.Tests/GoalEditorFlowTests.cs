@@ -34,7 +34,7 @@ public sealed class GoalEditorFlowTests
         public bool IsSupported { get; set; } = true;
         internal int Requests;
         internal Func<Task<bool>>? Pending;
-        public Task<bool> EnableAsync() { Requests++; return Pending?.Invoke() ?? Task.FromResult(true); }
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) { Requests++; return Pending?.Invoke() ?? Task.FromResult(true); }
     }
     private sealed record Seed(Goal Goal, Account Account, AssetType Type, Category[] Categories,
         GoalStore Goals, Access Access, Notifications Notifications, GoalEditorViewModel Editor, IDbContextFactory<ZananceDbContext> Factory);

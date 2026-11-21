@@ -61,7 +61,7 @@ public class MainActivity : MauiAppCompatActivity
     {
         base.OnResume();
         if (!OperatingSystem.IsAndroidVersionAtLeast(29)) ApplyForegroundPrivacy(true);
-        _notificationSettingsReturn?.TrySetResult(true);
+        CompleteNotificationSettings(true);
     }
 
     /// <summary>Protects the app when Android Overview shows a live surface without pausing the activity.</summary>
@@ -97,8 +97,9 @@ public class MainActivity : MauiAppCompatActivity
     }
 
     /// <summary>Opens this app's Android settings and waits for the same activity to resume.</summary>
-    internal async Task<bool> OpenNotificationSettingsAsync()
+    internal async Task<bool> OpenNotificationSettingsAsync(CancellationToken ct)
     {
+        ct.ThrowIfCancellationRequested();
         if (_notificationSettingsReturn is not null)
         {
             return false;
@@ -126,14 +127,23 @@ public class MainActivity : MauiAppCompatActivity
                 AppInfo.Current.ShowSettingsUI();
             }
 
-            // Settings does not supply a permission result. Resume lets the caller query
-            // the current permission after the user has returned to this original activity.
-            return await returned.Task;
         }
-        finally
+        catch
         {
-            _notificationSettingsReturn = null;
+            CompleteNotificationSettings(false);
+            throw;
         }
+
+        // A retired caller may stop waiting while Android settings still owns the screen.
+        // Only the original activity lifecycle releases the outstanding launch.
+        return await returned.Task.WaitAsync(ct);
+    }
+
+    private void CompleteNotificationSettings(bool resumed)
+    {
+        var returned = _notificationSettingsReturn;
+        _notificationSettingsReturn = null;
+        returned?.TrySetResult(resumed);
     }
 
     /// <inheritdoc />
@@ -162,7 +172,7 @@ public class MainActivity : MauiAppCompatActivity
     /// <inheritdoc />
     protected override void OnDestroy()
     {
-        _notificationSettingsReturn?.TrySetResult(false);
+        CompleteNotificationSettings(false);
         CameraCapture.OnDestroyed(this);
         AndroidDocumentPicker.OnDestroyed(this);
         Interaction.AndroidHouseholdRecoverySave.OnDestroyed(this);

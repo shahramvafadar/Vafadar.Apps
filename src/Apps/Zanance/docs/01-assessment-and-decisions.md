@@ -1,5 +1,21 @@
 # 01 – Assessment and decision log
 
+## Notification settings outlive a retired page (2026-11-21)
+
+An Android notification settings visit belongs to the activity that launches it. A cancelled page wait
+ends promptly, while the activity retains the visit until it resumes, is destroyed, or fails to launch
+settings. The owner is checked after the permission dialogue and its fallback explanation, before
+reading the returned settings state and before scheduling a follow-up refresh. Plans, Settings and the
+goal editor pass their existing page lifetime to this flow. The saved reminder and existing permission
+rules are unchanged.
+
+One focused editor test retired a pending wait while leaving its native answer unresolved and compared
+the isolated data before and after. On an owned Android 36 emulator, a debug fixture invoked the
+original activity adapter with the system notification settings visible. Cancellation ended the
+caller wait and a competing launch was refused. Android Back then allowed one fresh visit, which
+returned normally in the same process. This check covers adapter ownership. It used no reminder
+save, grant change, alarm delivery, or physical device. The fixture and its AVD were retired.
+
 ## D-1240 - MSVC 14.52.37025 qualified as a Windows producer of the source-built cipher (2026-11-19)
 
 Hosted image `windows-2025-vs2026` 20261116.315 (installation 18.12.12405.243) no longer carries the reviewed

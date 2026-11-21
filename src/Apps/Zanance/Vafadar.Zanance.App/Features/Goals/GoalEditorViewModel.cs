@@ -671,6 +671,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
         if (!value || !CanInteract || !NewReminder || _existing is { State: not GoalState.Active }) return;
         if (_source is not { } source) return;
         var owner = _viewRevision; var revision = _draftRevision; var draft = CaptureDraft();
+        var token = _readLifetime.Token;
         bool Current() => OwnsSource(source, owner) && revision == _draftRevision && draft == CaptureDraft();
         IsBusy = true;
         try
@@ -679,7 +680,7 @@ public sealed partial class GoalEditorViewModel : ViewModelBase, IThemeAware, IU
             {
                 await _goals.ValidateEditorSnapshotAsync(source);
                 if (!Current()) return;
-                var enabled = await _notifications.EnableAsync();
+                var enabled = await _notifications.EnableAsync(Current, token);
                 if (!Current()) return;
                 await _goals.ValidateEditorSnapshotAsync(source);
                 if (Current()) ReminderNote = enabled ? null : _translator["Reminder_PermissionDenied"];

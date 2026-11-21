@@ -30,7 +30,7 @@ public sealed class PreSaveReadinessFlowTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("No native permission belongs to a pre-Save review.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("No native permission belongs to a pre-Save review.");
     }
     private static GoalEditorViewModel GoalEditor(FlowFixture f, GoalStore goals)
     {

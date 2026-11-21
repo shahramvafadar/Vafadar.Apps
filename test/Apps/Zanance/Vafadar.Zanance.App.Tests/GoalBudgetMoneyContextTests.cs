@@ -20,7 +20,7 @@ public sealed class GoalBudgetMoneyContextTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("No native permission belongs to monetary review.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("No native permission belongs to monetary review.");
     }
     private static async Task SeedAsync(FlowFixture f)
     {

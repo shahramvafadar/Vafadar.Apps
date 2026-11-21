@@ -19,7 +19,7 @@ public sealed class EligibleIncomeOriginalPreviewTests
     private sealed class Notifications : IGoalEditorNotifications
     {
         public bool IsSupported => false;
-        public Task<bool> EnableAsync() => throw new InvalidOperationException("An original read must not request notification permission.");
+        public Task<bool> EnableAsync(Func<bool> isCurrent, CancellationToken ct) => throw new InvalidOperationException("An original read must not request notification permission.");
     }
 
     /// <summary>The actual reader and retained-plan preview preserve all source tables through an unsaved note edit.</summary>
