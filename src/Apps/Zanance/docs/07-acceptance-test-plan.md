@@ -5798,6 +5798,10 @@ claimed. Continue remaining ready feature/device work with D-386 and external ga
 
 ## D-424 - Original entry-detail attachment owner and complete file names
 
+The [2026-11-21 attachment picker follow-up](01-assessment-and-decisions.md#transaction-detail-attachment-picker-retirement-2026-11-21)
+qualifies one new managed cancellation case with the chooser still pending. Two related returned-result
+cases cover a departed detail and a replacement transaction. All three keep the isolated source intact.
+
 Bind detail attachment reads, native picking and confirmed removal to the original displayed entry,
 actual file, metadata and view owner; recheck cached rights and original bytes under the writer.
 A changed/departed picker cannot target another query/profile. Consume known commits before

@@ -536,14 +536,14 @@ public sealed partial class EntryDetailViewModel(
         var revision = _revision; var attachmentRevision = _attachmentRevision;
         try
         {
-            await owner.NavigateAsync(async _ => await _attachments.AddAsync(async () =>
+            await owner.NavigateAsync(async _ => await _attachments.AddAsync(async ct =>
             {
                 void RequireCurrent()
                 {
                     if (!Owns(owner, revision) || attachmentRevision != _attachmentRevision)
                         throw new OperationCanceledException("The original file picker retired.");
                 }
-                var picked = await AttachmentFiles.PickAsync(translator["Attachment_Pick"], RequireCurrent);
+                var picked = await AttachmentFiles.PickAsync(translator["Attachment_Pick"], RequireCurrent, ct: ct);
                 if (picked is null) return null;
                 if (picked.Data.Length == 0 || picked.Data.Length > EntryAttachment.MaxBytes)
                 {

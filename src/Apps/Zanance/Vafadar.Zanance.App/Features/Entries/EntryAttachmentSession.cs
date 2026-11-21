@@ -11,6 +11,7 @@ public sealed class EntryAttachmentSession(ZananceStore store)
     private EntryAttachmentReview? _review;
     private long _revision;
     private bool _busy;
+    private CancellationTokenSource? _pendingPick;
 
     /// <summary>Gets original displayed metadata; a failed or retired load grants no action authority.</summary>
     public EntryAttachmentReview? Review => _review;
@@ -19,7 +20,12 @@ public sealed class EntryAttachmentSession(ZananceStore store)
     public bool Accepted { get; private set; }
 
     /// <summary>Retires original work before a query or navigation can adopt another detail.</summary>
-    public void Retire() { _revision++; _review = null; }
+    public void Retire()
+    {
+        _revision++;
+        _review = null;
+        _pendingPick?.Cancel();
+    }
 
     /// <summary>Adopts the attachment packet already prepared with its complete original detail read.</summary>
     public void PublishReview(EntryAttachmentReview review, LedgerEntry displayed)
@@ -56,9 +62,14 @@ public sealed class EntryAttachmentSession(ZananceStore store)
     }
 
     /// <summary>Owns the picker's document buffer until it saves to the original entry or the operation ends.</summary>
-    public Task AddAsync(Func<Task<EntryAttachment?>> pick) => RunAsync(async (review, revision) =>
+    public Task AddAsync(Func<CancellationToken, Task<EntryAttachment?>> pick) => RunAsync(async (review, revision) =>
     {
-        var value = await pick();
+        using var lifetime = new CancellationTokenSource();
+        _pendingPick = lifetime;
+        EntryAttachment? value;
+        try { value = await pick(lifetime.Token); }
+        catch (OperationCanceledException) when (lifetime.IsCancellationRequested) { return; }
+        finally { _pendingPick = null; }
         if (value is null) return;
         try
         {

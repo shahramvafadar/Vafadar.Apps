@@ -3,6 +3,7 @@
 - In signed-in Personal Sync and the store account screen, check an account deletion request or confirm your password to submit one and see its pending receipt.
 - Open the web status form from a hosted deletion receipt to check it after account closure.
 - Android releases cancelled file-selection requests promptly and waits for the open system picker to close before opening another.
+- Leaving transaction details ends the app's wait for an attachment selection and prevents a late selection from attaching to another transaction.
 - Android ends the receipt camera wait when its original request is cancelled and cleans up the temporary file after the camera returns.
 - Plans, Settings and the goal editor discard obsolete notification-permission responses when their original page is replaced or left. Android finishes the open settings visit before accepting another one.
 

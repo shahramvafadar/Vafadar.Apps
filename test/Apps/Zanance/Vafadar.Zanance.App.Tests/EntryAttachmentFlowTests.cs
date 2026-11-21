@@ -32,7 +32,7 @@ public sealed class EntryAttachmentFlowTests
     {
         using var f = new FlowFixture(); var entry = await SeedAsync(f); var other = await SeedAsync(f);
         var session = new EntryAttachmentSession(f.Store); await session.LoadAsync(entry);
-        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(() => pending.Task);
+        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(_ => pending.Task);
         if (newQuery) await session.LoadAsync(other); else session.Retire();
         var before = await GoalChooserFlowTests.SnapshotAsync(f); pending.SetResult(File());
         await Assert.ThrowsAsync<InvalidOperationException>(() => work);
@@ -45,7 +45,7 @@ public sealed class EntryAttachmentFlowTests
     {
         using var f = new FlowFixture(); var entry = await SeedAsync(f); var session = new EntryAttachmentSession(f.Store);
         await session.LoadAsync(entry); var pending = new TaskCompletionSource<EntryAttachment?>();
-        var work = session.AddAsync(() => pending.Task);
+        var work = session.AddAsync(_ => pending.Task);
         if (deletion) await f.Store.DeleteEntryAsync(entry.Id, Ct);
         else { entry.Note = "Later original edit"; await f.Store.SaveEntryAsync(entry, cancellationToken: Ct); }
         var before = await GoalChooserFlowTests.SnapshotAsync(f); pending.SetResult(File());
@@ -65,7 +65,7 @@ public sealed class EntryAttachmentFlowTests
         var document = File();
         var expected = document.Data.ToArray();
         var pending = new TaskCompletionSource<EntryAttachment?>(TaskCreationOptions.RunContinuationsAsynchronously);
-        var work = session.AddAsync(() => pending.Task);
+        var work = session.AddAsync(_ => pending.Task);
         if (retire) session.Retire();
         pending.SetResult(document);
 
@@ -86,12 +86,51 @@ public sealed class EntryAttachmentFlowTests
     }
 
     [Fact]
+    public async Task Retired_detail_releases_attachment_wait_before_native_selection_returns()
+    {
+        using var fixture = new FlowFixture();
+        var entry = await SeedAsync(fixture);
+        var session = new EntryAttachmentSession(fixture.Store);
+        await session.LoadAsync(entry);
+        var before = await GoalChooserFlowTests.SnapshotAsync(fixture);
+        var selection = new TaskCompletionSource<EntryAttachment?>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        using var testLifetime = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        async Task<EntryAttachment?> PickAsync(CancellationToken owner)
+        {
+            using var wait = CancellationTokenSource.CreateLinkedTokenSource(testLifetime.Token, owner);
+            return await selection.Task.WaitAsync(wait.Token);
+        }
+
+        var retired = session.AddAsync(PickAsync);
+        session.Retire();
+        try
+        {
+            await retired.WaitAsync(TimeSpan.FromSeconds(5), Ct);
+            Assert.False(selection.Task.IsCompleted);
+            Assert.False(session.Accepted);
+        }
+        finally { selection.TrySetResult(null); }
+
+        await session.LoadAsync(entry);
+        var started = false;
+        await session.AddAsync(token =>
+        {
+            token.ThrowIfCancellationRequested();
+            started = true;
+            return Task.FromResult<EntryAttachment?>(null);
+        });
+        Assert.True(started);
+        Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(fixture));
+    }
+
+    [Fact]
     public async Task Cancelled_picker_and_second_pending_invocation_create_no_rows()
     {
         using var f = new FlowFixture(); var entry = await SeedAsync(f); var session = new EntryAttachmentSession(f.Store);
         await session.LoadAsync(entry); var before = await GoalChooserFlowTests.SnapshotAsync(f);
-        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(() => pending.Task);
-        await session.AddAsync(() => throw new InvalidOperationException("A second picker must not open."));
+        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(_ => pending.Task);
+        await session.AddAsync(_ => throw new InvalidOperationException("A second picker must not open."));
         pending.SetResult(null); await work; Assert.False(session.Accepted);
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
@@ -123,10 +162,10 @@ public sealed class EntryAttachmentFlowTests
         var session = new EntryAttachmentSession(f.Store); await session.LoadAsync(entry);
         f.Store.Changed += (_, _) => throw new InvalidOperationException("Deliberate postcommit observer failure.");
         await Assert.ThrowsAsync<CommittedWriteNotificationException>(() => deletion
-            ? session.DeleteAsync(file.Id, _ => Task.FromResult(true)) : session.AddAsync(() => Task.FromResult<EntryAttachment?>(file)));
+            ? session.DeleteAsync(file.Id, _ => Task.FromResult(true)) : session.AddAsync(_ => Task.FromResult<EntryAttachment?>(file)));
         Assert.True(session.Accepted); Assert.Null(session.Review);
         var before = await GoalChooserFlowTests.SnapshotAsync(f);
-        await Assert.ThrowsAsync<InvalidOperationException>(() => session.AddAsync(() => throw new InvalidOperationException("No second native picker.")));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => session.AddAsync(_ => throw new InvalidOperationException("No second native picker.")));
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
         Assert.Equal(deletion ? 0 : 1, (await f.Store.GetAttachmentsAsync(entry.Id, Ct)).Count);
         Assert.Equal(entry.Amount, (await f.Store.GetEntryAsync(entry.Id, Ct))!.Amount);
@@ -138,7 +177,7 @@ public sealed class EntryAttachmentFlowTests
         using var f = new FlowFixture(); var entry = await SeedAsync(f); var session = new EntryAttachmentSession(f.Store);
         await session.LoadAsync(entry, await f.Store.GetQuickResourceReviewAsync(entry.Id, Ct));
         var file = File(); var expected = file.Data.ToArray();
-        await session.AddAsync(() => Task.FromResult<EntryAttachment?>(file));
+        await session.AddAsync(_ => Task.FromResult<EntryAttachment?>(file));
         Assert.True(session.Accepted); await session.LoadAsync(entry); var read = await session.ReadAsync(file.Id);
         Assert.Equal(entry.Id, read.EntryId); Assert.Equal(file.FileName, read.FileName); Assert.Equal(file.ContentType, read.ContentType); Assert.Equal(expected, read.Data);
         await session.DeleteAsync(file.Id, name => Task.FromResult(name == file.FileName)); Assert.True(session.Accepted);
@@ -171,7 +210,7 @@ public sealed class EntryAttachmentFlowTests
         }
         var factory = new SwitchingFactory(firstFactory); var store = new ZananceStore(factory, first.Time, new Access());
         var session = new EntryAttachmentSession(store); await session.LoadAsync(entry);
-        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(() => pending.Task);
+        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(_ => pending.Task);
         factory.Current = secondFactory; var before = await GoalChooserFlowTests.SnapshotAsync(second);
         pending.SetResult(File()); await Assert.ThrowsAsync<InvalidOperationException>(() => work);
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(second));
@@ -187,7 +226,7 @@ public sealed class EntryAttachmentFlowTests
         using var f = new FlowFixture(); var entry = await SeedAsync(f); var access = new Access();
         var store = new ZananceStore(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>(), f.Time, access);
         var session = new EntryAttachmentSession(store); await session.LoadAsync(entry);
-        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(() => pending.Task);
+        var pending = new TaskCompletionSource<EntryAttachment?>(); var work = session.AddAsync(_ => pending.Task);
         access.Current = new(f.Directory.Combine("zanance.db"), new(ProductPlan.Free, new(EntitlementScopeKind.PersonalProfile, Guid.NewGuid())));
         var before = await GoalChooserFlowTests.SnapshotAsync(f); pending.SetResult(File());
         await Assert.ThrowsAsync<InvalidOperationException>(() => work);
@@ -200,7 +239,7 @@ public sealed class EntryAttachmentFlowTests
         using var f = new FlowFixture(); var entry = await SeedAsync(f); var session = new EntryAttachmentSession(f.Store);
         await session.LoadAsync(entry); var before = await GoalChooserFlowTests.SnapshotAsync(f);
         f.Time.BeforeRead = session.Retire;
-        await Assert.ThrowsAsync<InvalidOperationException>(() => session.AddAsync(() => Task.FromResult<EntryAttachment?>(File())));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => session.AddAsync(_ => Task.FromResult<EntryAttachment?>(File())));
         f.Time.BeforeRead = null;
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f)); Assert.False(session.Accepted);
     }

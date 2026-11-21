@@ -1,5 +1,18 @@
 # 01 – Assessment and decision log
 
+## Transaction detail attachment picker retirement (2026-11-21)
+
+The transaction attachment session now cancels its picker wait when the original detail leaves or
+adopts another source. The original document adapter still holds the Android request until the
+system returns the result. Attachment writes continue to use the reviewed entry and check ownership
+before committing. The session clears a late returned buffer even if a picker ignores cancellation.
+
+A focused host test left the simulated native answer unresolved, retired the detail, and observed
+the wait end before the answer. A new picker request on a freshly reviewed detail then ran without
+reusing the old request. The test and the two related late-selection cases preserved the synthetic
+database. The Android adapter's [native return evidence](08-release-checklist.md#android-document-selection-caller-retirement-2026-11-21)
+is carried forward from its isolated review.
+
 ## Notification settings outlive a retired page (2026-11-21)
 
 An Android notification settings visit belongs to the activity that launches it. A cancelled page wait
