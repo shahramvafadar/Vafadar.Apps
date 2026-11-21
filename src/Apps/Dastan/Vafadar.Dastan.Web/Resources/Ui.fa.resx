@@ -3918,4 +3918,49 @@
   <data name="View_Pictures" xml:space="preserve">
     <value>تصویرها</value>
   </data>
+  <data name="View_Overview" xml:space="preserve">
+    <value>نمای کلی</value>
+  </data>
+  <data name="View_Family" xml:space="preserve">
+    <value>خانواده</value>
+  </data>
+  <data name="Explore_Label" xml:space="preserve">
+    <value>نماهای این</value>
+  </data>
+  <data name="Explore_Chosen" xml:space="preserve">
+    <value>انتخاب‌شده:</value>
+  </data>
+  <data name="Explore_Choose" xml:space="preserve">
+    <value>از نزدیک ببین</value>
+  </data>
+  <data name="Explore_Centre" xml:space="preserve">
+    <value>در میانه بگذار</value>
+  </data>
+  <data name="Explore_Profile" xml:space="preserve">
+    <value>نمایهٔ کامل</value>
+  </data>
+  <data name="Explore_Unchoose" xml:space="preserve">
+    <value>انتخاب را بردار</value>
+  </data>
+  <data name="Explore_Aside" xml:space="preserve">
+    <value>در این نما کنار گذاشته نشده:</value>
+  </data>
+  <data name="Explore_Aside_And" xml:space="preserve">
+    <value>، </value>
+  </data>
+  <data name="Explore_Aside_End" xml:space="preserve">
+    <value>. برای نمایی که به آن تعلق دارد نگه داشته شده است.</value>
+  </data>
+  <data name="Explore_Filter_Years" xml:space="preserve">
+    <value>سال‌هایی که انتخاب کردید</value>
+  </data>
+  <data name="Explore_Filter_WithoutEvents" xml:space="preserve">
+    <value>رویدادهایی که پنهان کردید</value>
+  </data>
+  <data name="Explore_Filter_FewerLanes" xml:space="preserve">
+    <value>ردیف‌هایی که بستید</value>
+  </data>
+  <data name="Explore_Filter_KindOfPicture" xml:space="preserve">
+    <value>نوع تصویری که انتخاب کردید</value>
+  </data>
 </root>

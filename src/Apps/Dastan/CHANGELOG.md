@@ -386,3 +386,7 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Every page has the same head: the name, then Discover, My World, Saved and Search, then your account. The
   language and the appearance (light, dark, like your device) are together behind one control at the end of the
   head. On a phone the four ways are a bar at the foot of the screen. Saved is there before you keep anything.
+- The page of a name, its connections, its family, its timeline and its pictures have one bar that leads from
+  each to the others. Going to another view and coming back finds the first as you left it: what you opened, how
+  far, in which order. You can look closer at somebody in a list or a drawing without leaving – "Chosen" – and
+  put them in the middle when you want to. An address you pass on carries all of it, and nothing about you.

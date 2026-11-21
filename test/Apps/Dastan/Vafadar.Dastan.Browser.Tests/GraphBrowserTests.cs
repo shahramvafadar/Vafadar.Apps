@@ -205,6 +205,52 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         }
     }
 
+    [Fact]
+    public async Task What_is_chosen_in_the_drawing_is_in_the_address_and_in_the_links_of_the_views()
+    {
+        var page = await site.Visitor(1280, readTo: 4, graph: true);
+        var (host, _) = await Drawn(page, $"/en/{Story}/entity/character-rostam/family?family=whole");
+        Task<string[]> Links() => page.EvaluateAsync<string[]>("[...document.querySelectorAll('a[data-explore]')].map(link => new URL(link.href).search)");
+
+        // The one in the middle is not chosen in itself: the address says nothing.
+        await host.Locator("[data-graph-canvas]").FocusAsync();
+        await page.Keyboard.PressAsync("ArrowDown");
+        Assert.DoesNotContain("sel=", page.Url, StringComparison.Ordinal);
+
+        // Another card: the address of the page and every link of a view name it (ADR 0025).
+        await page.Keyboard.PressAsync("ArrowUp");
+        var above = (await Seen(host)).GetProperty("chosen").GetString()!;
+        Assert.EndsWith($"/family?family=whole&sel={above}", page.Url, StringComparison.Ordinal);
+        var links = await Links();
+        Assert.True(links.Length >= 3);
+        Assert.All(links, link => Assert.Contains($"sel={above}", link, StringComparison.Ordinal));
+
+        // The page asked again with that address shows the same card chosen – on the page and in the drawing.
+        var again = await site.Visitor(1280, readTo: 4, graph: true);
+        var (drawn, _) = await Drawn(again, page.Url);
+        Assert.Equal(above, (await Seen(drawn)).GetProperty("chosen").GetString());
+        await Assertions.Expect(again.Locator("[data-explore-chosen]")).ToHaveAttributeAsync("data-explore-chosen", above);
+
+        // Letting go of the card takes it out of the address, of the links and of what the page said.
+        await drawn.Locator("[data-graph-canvas]").FocusAsync();
+        await again.Keyboard.PressAsync("Escape");
+        Assert.DoesNotContain("sel=", again.Url, StringComparison.Ordinal);
+        Assert.All(await again.EvaluateAsync<string[]>("[...document.querySelectorAll('a[data-explore]')].map(link => new URL(link.href).search)"), link => Assert.DoesNotContain("sel=", link, StringComparison.Ordinal));
+        await Assertions.Expect(again.Locator("[data-explore-chosen]")).ToHaveCountAsync(0);
+    }
+
+    [Fact]
+    public async Task A_page_that_explores_no_single_name_has_no_bar_a_drawing_could_write_into()
+    {
+        // A drawing writes what is chosen into an address only where the bar of exploring stands (explore.ts):
+        // the page of a comparison has none. That a tree of an account has none either is not walked here.
+        var page = await site.Visitor(1280, readTo: 4, graph: true);
+        await page.GotoAsync($"/en/{Story}/entity/character-rostam/family?family=whole");
+        Assert.True(await page.EvaluateAsync<bool>("document.querySelector('nav.view-bar') !== null"));
+        await page.GotoAsync("/en/compare/iran-china-rome");
+        Assert.False(await page.EvaluateAsync<bool>("document.querySelector('nav.view-bar') !== null"));
+    }
+
     [Theory]
     [InlineData("en")]
     [InlineData("fa")]

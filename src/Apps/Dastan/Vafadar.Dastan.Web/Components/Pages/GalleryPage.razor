@@ -12,11 +12,19 @@
     <PageTitle>@_title – @T["Site_Name"]</PageTitle>
 
     <header class="page-header">
-        <p class="meta"><a href="@_back">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _backName)</a></p>
+        @if (_explore is null)
+        {
+            <p class="meta"><a href="@_back">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _backName)</a></p>
+        }
         <h1>@_title</h1>
         @* The page says why its items are here (document 15): the rule, not a search the visitor cannot see. *@
         <p class="lead">@_lead</p>
     </header>
+
+    @if (_explore is not null)
+    {
+        <ExploreBar State="_explore" />
+    }
 
     @* The gallery of a time (ADR 0021, R-MED-02): what shows a year, a stretch of years or a depth of time. It is
        asked for with a form that asks for a page, by the one reader of a time of the site. *@
@@ -202,6 +210,13 @@
     private string _context = string.Empty;
     private bool _continues;
     private string _here = string.Empty;
+
+    // The state of exploring one name; nothing for the pictures of a step or of the whole collection.
+    private Exploration? _explore;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
     private GalleryOrder _order;
     private MediaKind? _kind;
     private IReadOnlyList<MediaKind> _kinds = [];
@@ -267,6 +282,8 @@
             _gallery = _gallery.Arranged(_order, _kind);
         }
 
+        _explore = Subject is null ? null : Exploring.Of(Context, Visitor, new EntityId(Subject), ExplorationView.Pictures);
+
         var overview = projection.Overview();
         _continues = overview.StoryContinues;
         switch (_gallery)
@@ -313,7 +330,8 @@
             order switch { GalleryOrder.OldestFirst => "order=oldest", GalleryOrder.NewestFirst => "order=newest", _ => null },
             kind is { } one ? $"kind={one.ToString().ToLowerInvariant()}" : null,
         }.Where(part => part is not null).ToList();
-        return asked.Count == 0 ? _here : $"{_here}?{string.Join('&', asked)}";
+        var address = asked.Count == 0 ? _here : $"{_here}?{string.Join('&', asked)}";
+        return _explore is null ? address : _explore.Carry(address);
     }
 
     // A choice of several: the one that is on says so.

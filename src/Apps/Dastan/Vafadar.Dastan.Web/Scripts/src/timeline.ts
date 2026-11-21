@@ -9,6 +9,7 @@
 //
 // The script is asked for by a page that holds a <dastan-timeline>, after the page is shown. Until it has
 // drawn, and where it cannot, the still chart of the server stays.
+import { inStep } from './explore';
 
 type Axis = 'calendar' | 'depth' | 'order';
 type Edge = 'known' | 'between' | 'ongoing' | 'endedAtUnknownTime' | 'unknown';
@@ -121,6 +122,11 @@ class TimelineView {
     }
 
     history.replaceState(history.state, '', address);
+
+    // The stretch of years is part of the state of exploring (ADR 0025): the links of the views carry it.
+    if (this.view.axis === 'calendar') {
+      inStep(['from', 'to']);
+    }
   }
 
   private x(value: number): number {

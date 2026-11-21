@@ -20,12 +20,10 @@
         @if (_of is { } of)
         {
             @* The timeline of one name (R-EXP-05): what was chosen elsewhere – in a graph, on a page – carried here. *@
-            <p class="meta"><a href="@($"{Site.Collection}/entity/{of.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], Visitor.Text(of.Label).Value)</a></p>
             <h1>@title</h1>
             <p class="lead">@T["Timeline_LeadOf"]</p>
             <p class="actions">
                 <a class="action secondary" href="@($"{Site.Collection}/timeline")">@T["Timeline_All"]</a>
-                <a class="action secondary" href="@($"{Site.Collection}/entity/{of.Id}/connections")">@T["Timeline_Connections"]</a>
             </p>
         }
         else
@@ -36,9 +34,14 @@
         }
     </header>
 
+    @if (_explore is not null)
+    {
+        <ExploreBar State="_explore" />
+    }
+
     @if (_timeline is { } timeline)
     {
-        <ComparisonView Comparison="timeline" Address="@_page" State="_state" LongNames="true"
+        <ComparisonView Comparison="timeline" Address="@_page" State="_state" LongNames="true" Carry="@(_explore is null ? null : _explore.Carry)"
                         SourceAddress="@(source => EvidenceAddress.Source(Site.Collection, source.Id, _here))" />
     }
     else
@@ -55,6 +58,12 @@
 }
 
 @code {
+    // The state of exploring one name; nothing for the chart of the whole collection, which explores no one thing.
+    private Exploration? _explore;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
     // The name of the lane of the images and videos among the keys of the chart; no record of a collection has it.
     private const string MadeLane = "timeline-made";
 
@@ -123,6 +132,7 @@
         }
 
         _page = _of is null ? $"{Site.Collection}/timeline" : $"{Site.Collection}/entity/{_of.Id}/timeline";
+        _explore = _of is null ? null : Exploring.Of(Context, Visitor, _of.Id, ExplorationView.Timeline);
         _here = $"{_page}{_state.Query()}";
         _timeline = Build(projection);
     }

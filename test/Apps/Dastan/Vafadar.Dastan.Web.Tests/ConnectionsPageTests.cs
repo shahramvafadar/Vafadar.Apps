@@ -221,7 +221,7 @@ public sealed class ConnectionsPageTests(DemoSite site) : IClassFixture<DemoSite
         var page = await site.Visitor().Get($"/en/{Connections(entity)}");
 
         Assert.Equal(HttpStatusCode.NotFound, page.Status);
-        Assert.DoesNotContain("<svg", page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("<svg class=\"graph", page.Main, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -254,7 +254,7 @@ public sealed class ConnectionsPageTests(DemoSite site) : IClassFixture<DemoSite
 
         Assert.Equal(HttpStatusCode.OK, page.Status);
         Assert.Contains("No connections to show.", page.Main, StringComparison.Ordinal);
-        Assert.DoesNotContain("<svg", page.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("<svg class=\"graph", page.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("class=\"stage", page.Html, StringComparison.Ordinal);
     }
 
