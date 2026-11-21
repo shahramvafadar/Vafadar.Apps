@@ -39,6 +39,24 @@ are reference builds. The offline bundle omits INTERNET and the cloud-backup bun
 Both retain Android backup and transfer exclusions. The release workflow disables personal sync and
 billing. Use the final release package and its enabled destinations when completing the form.
 
+On 2026-11-21, the offline Release APK from `6ed9a9fa` and the
+retained Billing Release APK from `41d2e273` both passed the canonical
+exact-archive verifier. No app-producing source changed between those commits.
+Both packages identify `pro.vafadar.zanance` version 0.1.0 (code 1) and
+contain ARM64 and x86-64. The verifier checked the signature, 16 KiB archive
+and ELF alignment, edition permissions, native storage payload, and the
+packaged legacy backup, cloud backup and device transfer exclusions. The
+offline build uses the existing private Core package and omits network permissions.
+
+| Local Release artifact | SHA-256 |
+| --- | --- |
+| Offline APK, 100,278,175 bytes | `d56f265dba6b2eb973536b33244aba057f0fe49f66aa0004169b3a4b9a1dbd1a` |
+| Billing APK, 100,057,198 bytes | `4bab1399502dbb3cb190e1184709c08cb6a35d6bde255edd550568447b092e2c` |
+
+The offline handoff is under `artifacts/android-offline-6ed9a9fa-release-review`.
+These checks cover the two local APKs. The Samsung positive control, the
+eventual store-signed package and its declaration remain open.
+
 | Flow | Offline review | Cloud-backup review |
 | --- | --- | --- |
 | Financial and profile records, local OCR and local reports | On-device processing is outside Play's collection definition when the data stays on the device. | Same until a feature actually transmits a record. |
