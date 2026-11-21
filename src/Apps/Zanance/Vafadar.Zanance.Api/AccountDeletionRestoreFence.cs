@@ -66,7 +66,8 @@ public static class AccountDeletionRestoreFence
             await AccountPrivateObjectRetirement.RunAsync(db, storage, receipt, ct);
             await AccountPersonalSyncRetirement.RunAsync(db, storage, receipt, ct);
             await AccountIdentityMailRetirement.RunAsync(db, storage, receipt, ct);
-            await AccountAnalysisRetirement.RunAsync(db, receipt, ct);
+            // A restored queue cannot prove that its original request was never claimed in the live service.
+            await AccountAnalysisRetirement.RunAsync(db, receipt, time, ct, releaseUnclaimedReservations: false);
             var result = await AccountIdentityErasure.CompleteAsync(db, storage, time, receipt, ct);
             if (result.Status != AccountIdentityErasureStatus.Completed) outstanding++;
         }

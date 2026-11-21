@@ -5,7 +5,7 @@ using Vafadar.Zanance.Core.Analysis;
 
 namespace Vafadar.Zanance.Api;
 
-/// <summary>Result of deleting local analysis records with no provider or credit effects.</summary>
+/// <summary>Result of local analysis retirement without provider traffic.</summary>
 public enum AccountAnalysisRetirementResult
 {
     UnknownReceipt,
@@ -16,8 +16,9 @@ public enum AccountAnalysisRetirementResult
 /// <summary>Retires only local offers and refused requests for the account identified by the original receipt.</summary>
 public static class AccountAnalysisRetirement
 {
-    /// <summary>Never sends vendor work or modifies credit journal rows. An unresolved request keeps erasure pending.</summary>
-    public static async Task<AccountAnalysisRetirementResult> RunAsync(ServiceDbContext db, Guid receipt, CancellationToken ct)
+    /// <summary>Releases an exact never-dispatched reservation and preserves the original credit journal.</summary>
+    public static async Task<AccountAnalysisRetirementResult> RunAsync(ServiceDbContext db, Guid receipt, TimeProvider time,
+        CancellationToken ct, bool releaseUnclaimedReservations = true)
     {
         if (receipt == Guid.Empty) throw new ArgumentException("The original deletion receipt is required.", nameof(receipt));
         var owner = await db.AccountDeletionRequests.AsNoTracking().Where(row => row.ReceiptId == receipt)
@@ -30,8 +31,31 @@ public static class AccountAnalysisRetirement
             return AccountAnalysisRetirementResult.UnknownReceipt;
         var requests = db.Set<AiRequestRow>();
         var credits = db.Set<AiCreditRow>();
+        var offers = db.Set<AiOfferRow>();
         var deletions = db.Set<AiPilotDeletionRow>();
         var lookups = db.Set<AiPilotStatusCheckRow>();
+        var unclaimed = releaseUnclaimedReservations
+            ? await requests.Where(row => row.UserId == owner && row.State == AiRequestState.Pending &&
+                row.PilotDispatchStage == AiPilotDispatchStage.Queued && row.PilotDispatchClaimedAt == null &&
+                row.VendorOperationId == null && row.PilotVendorStatus == null && row.PilotCreateRefusal == null &&
+                row.PilotMeteredCostMicros == null && row.PilotCostCeilingMicros != null &&
+                row.StatusCheckedAt == null && row.ChargedUnits == 0 &&
+                offers.Any(offer => offer.Id == row.OfferId && offer.UserId == owner && offer.PilotRouteId != null) &&
+                !deletions.Any(effect => effect.RequestId == row.Id) && !lookups.Any(check => check.RequestId == row.Id))
+                .ToListAsync(ct)
+            : [];
+        foreach (var row in unclaimed)
+        {
+            var journal = await credits.AsNoTracking().Where(eventRow => eventRow.RequestId == row.Id).Take(2).ToListAsync(ct);
+            if (journal.Count != 1 || journal[0] is not { Kind: AiCreditEvent.Reserve } original ||
+                original.UserId != owner || original.PurchasedReserved != row.PurchasedReserved ||
+                original.GiftedReserved != row.GiftedReserved || original.PurchasedAvailable != -row.PurchasedReserved ||
+                original.GiftedAvailable != -row.GiftedReserved)
+                continue;
+            row.State = AiRequestState.Refunded;
+            AiRequestStore.RecordRefund(db, row, row.PurchasedReserved, row.GiftedReserved, time.GetUtcNow());
+        }
+        await db.SaveChangesAsync(ct);
         await requests.Where(row => row.UserId == owner && row.State == AiRequestState.NotAccepted &&
                 row.PurchasedReserved == 0 && row.GiftedReserved == 0 && row.ChargedUnits == 0 &&
                 row.VendorOperationId == null && row.PilotDispatchStage == null && row.PilotDispatchClaimedAt == null &&
@@ -39,7 +63,7 @@ public static class AccountAnalysisRetirement
                 !credits.Any(credit => credit.RequestId == row.Id) && !deletions.Any(effect => effect.RequestId == row.Id) &&
                 !lookups.Any(check => check.RequestId == row.Id))
             .ExecuteDeleteAsync(ct);
-        await db.Set<AiOfferRow>().Where(row => row.UserId == owner && !requests.Any(request => request.OfferId == row.Id))
+        await offers.Where(row => row.UserId == owner && !requests.Any(request => request.OfferId == row.Id))
             .ExecuteDeleteAsync(ct);
         var remaining = await AccountDeletionInventory.HasAnalysisAsync(db, owner, ct);
         await transaction.CommitAsync(ct);

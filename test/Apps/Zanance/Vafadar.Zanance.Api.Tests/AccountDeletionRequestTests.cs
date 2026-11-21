@@ -31,7 +31,7 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
-    public async Task Pending_account_deletion_stops_new_analysis_and_preserves_queued_work_without_provider_io()
+    public async Task Pending_account_deletion_refunds_only_an_exact_never_dispatched_reservation()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
         Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
@@ -78,7 +78,8 @@ public sealed class AccountDeletionRequestTests
         var alreadyQueued = new AiRequestRow { Id = Guid.NewGuid(), UserId = target.Id, OfferId = alreadyQueuedOffer.Id,
             CreatedAt = now, State = AiRequestState.Pending, GiftedReserved = 1, PilotDispatchStage = AiPilotDispatchStage.Queued,
             PilotCostCeilingMicros = 100, PayloadDigest = AiProtocol.Digest(payload), ProtectedPayload = "Fictional pending payload" };
-        db.AddRange(alreadyQueuedOffer, alreadyQueued, new AccountDeletionRequest { UserId = target.Id, ReceiptId = Guid.NewGuid(), RequestedAt = now });
+        var originalReceipt = Guid.NewGuid();
+        db.AddRange(alreadyQueuedOffer, alreadyQueued, new AccountDeletionRequest { UserId = target.Id, ReceiptId = originalReceipt, RequestedAt = now });
         await db.SaveChangesAsync(ct);
         db.ChangeTracker.Clear();
 
@@ -94,6 +95,30 @@ public sealed class AccountDeletionRequestTests
         Assert.Equal(AiPilotDispatchStage.Queued, preserved.PilotDispatchStage);
         Assert.Equal(AiRequestState.Pending, preserved.State);
         Assert.Empty(await db.Set<AiCreditRow>().ToListAsync(ct));
+        Assert.Equal(0, http.Calls);
+
+        var cancellableOffer = new AiOfferRow { Id = Guid.NewGuid(), UserId = target.Id, PilotRouteId = route.Id,
+            Provider = route.Provider, Model = route.Model!, Purpose = route.Purpose, MaximumUnits = 2, ExpiresAt = now.AddMinutes(5) };
+        var cancellable = new AiRequestRow { Id = Guid.NewGuid(), UserId = target.Id, OfferId = cancellableOffer.Id,
+            CreatedAt = now, State = AiRequestState.Pending, GiftedReserved = 2, PilotDispatchStage = AiPilotDispatchStage.Queued,
+            PilotCostCeilingMicros = 100, PayloadDigest = AiProtocol.Digest(payload), ProtectedPayload = "Fictional reserved payload" };
+        db.AddRange(cancellableOffer, cancellable, new AiCreditRow { Id = Guid.NewGuid(), UserId = target.Id, RequestId = cancellable.Id,
+            Kind = AiCreditEvent.Reserve, GiftedAvailable = -2, GiftedReserved = 2, CreatedAt = now });
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+        Assert.Equal(AccountAnalysisRetirementResult.Pending,
+            await AccountAnalysisRetirement.RunAsync(db, originalReceipt, time, ct, releaseUnclaimedReservations: false));
+        Assert.False(await db.Set<AiCreditRow>().AnyAsync(row => row.Kind == AiCreditEvent.Refund, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, originalReceipt, time, ct));
+        Assert.Equal(AiRequestState.Refunded, await db.Set<AiRequestRow>().Where(row => row.Id == cancellable.Id).Select(row => row.State).SingleAsync(ct));
+        Assert.Equal(AiRequestState.Pending, await db.Set<AiRequestRow>().Where(row => row.Id == alreadyQueued.Id).Select(row => row.State).SingleAsync(ct));
+        var refund = await db.Set<AiCreditRow>().AsNoTracking().SingleAsync(row => row.Kind == AiCreditEvent.Refund, ct);
+        Assert.Equal(cancellable.Id, refund.RequestId);
+        Assert.Equal(2, refund.GiftedAvailable);
+        Assert.Equal(-2, refund.GiftedReserved);
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, originalReceipt, time, ct));
+        Assert.Equal(refund.Id, (await db.Set<AiCreditRow>().AsNoTracking().SingleAsync(row => row.Kind == AiCreditEvent.Refund, ct)).Id);
+        Assert.Equal(2, await db.Set<AiCreditRow>().CountAsync(ct));
         Assert.Equal(0, http.Calls);
 
         ClaimsPrincipal Actor(ServiceUser owner)
@@ -227,9 +252,9 @@ public sealed class AccountDeletionRequestTests
         await db.SaveChangesAsync(ct);
         db.ChangeTracker.Clear();
 
-        Assert.Equal(AccountAnalysisRetirementResult.UnknownReceipt, await AccountAnalysisRetirement.RunAsync(db, Guid.NewGuid(), ct));
+        Assert.Equal(AccountAnalysisRetirementResult.UnknownReceipt, await AccountAnalysisRetirement.RunAsync(db, Guid.NewGuid(), TimeProvider.System, ct));
         Assert.Equal(4, await db.Set<AiOfferRow>().CountAsync(ct));
-        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, receipt, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, receipt, TimeProvider.System, ct));
         var retained = await db.Set<AiRequestRow>().AsNoTracking().SingleAsync(ct);
         Assert.Equal(pending.Id, retained.Id);
         Assert.Equal(AiRequestState.Pending, retained.State);
@@ -240,7 +265,7 @@ public sealed class AccountDeletionRequestTests
         Assert.Empty(await db.Set<AiCreditRow>().ToListAsync(ct));
         var result = await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, receipt, ct);
         Assert.Equal(new(AccountIdentityErasureStatus.DependenciesRemain, AccountDeletionDependencies.Analysis), result);
-        Assert.Equal(AccountAnalysisRetirementResult.Retired, await AccountAnalysisRetirement.RunAsync(db, otherReceipt, ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Retired, await AccountAnalysisRetirement.RunAsync(db, otherReceipt, TimeProvider.System, ct));
         Assert.Equal(pendingOffer.Id, (await db.Set<AiOfferRow>().SingleAsync(ct)).Id);
 
         AiOfferRow Offer(ServiceUser owner) => new() { Id = Guid.NewGuid(), UserId = owner.Id, MaximumUnits = 1, ExpiresAt = now.AddMinutes(5) };

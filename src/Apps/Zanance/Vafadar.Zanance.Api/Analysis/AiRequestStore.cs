@@ -431,8 +431,7 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
             row.ProtectedText = Protector(owner, id).Protect(outcome.Text!); row.State = AiRequestState.Completed; row.ChargedUnits = outcome.ChargedUnits;
         }
         else row.State = AiRequestState.Refunded;
-        if (giftRefund != 0 || purchaseRefund != 0)
-            db.Add(Event(owner, id, AiCreditEvent.Refund, purchaseRefund, giftRefund, -purchaseRefund, -giftRefund, now));
+        RecordRefund(db, row, purchaseRefund, giftRefund, now);
         await db.SaveChangesAsync(ct); await transaction.CommitAsync(ct);
     }
     private async Task<AiRequestResult> ReadAsync(ClaimsPrincipal actor, Guid id, CancellationToken ct)
@@ -490,6 +489,11 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
     private static AiCreditRow Event(string owner, Guid? request, AiCreditEvent kind, long purchased, long gifted, long purchasedReserved, long giftedReserved, DateTimeOffset now)
         => new() { Id = Guid.NewGuid(), UserId = owner, RequestId = request, Kind = kind, PurchasedAvailable = purchased, GiftedAvailable = gifted,
             PurchasedReserved = purchasedReserved, GiftedReserved = giftedReserved, CreatedAt = now };
+    internal static void RecordRefund(ServiceDbContext db, AiRequestRow row, long purchased, long gifted, DateTimeOffset now)
+    {
+        if (purchased != 0 || gifted != 0)
+            db.Add(Event(row.UserId, row.Id, AiCreditEvent.Refund, purchased, gifted, -purchased, -gifted, now));
+    }
     private static async Task<AiBalance> BalanceAsync(ServiceDbContext db, string owner, CancellationToken ct)
     {
         var balance = await db.Set<AiCreditRow>().Where(r => r.UserId == owner).GroupBy(r => r.UserId)

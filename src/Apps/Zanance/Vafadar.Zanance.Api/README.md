@@ -138,10 +138,14 @@ The local analysis stage is
 `--retire-account-local-analysis <receipt-id> --confirm-local-analysis-retirement`.
 It removes unused offers and refused requests whose rows prove no dispatch,
 provider result, status or deletion attempt, credit reservation or journal
-effect. It uses the original owner lock. Dispatched or unresolved work and
-credit records remain pending for their specific retention decisions. The
-same local stage is used during isolated restore reconciliation. It does not
-send provider traffic or alter credit records.
+effect. If a pilot request is provably unclaimed and has exactly its original
+reservation entry, the same stage releases that reservation once through the
+existing append-only refund journal. It uses the original owner lock, contacts
+no provider, and preserves discharged credit history. Dispatched work,
+unverified reservations and retained journals remain pending for their
+specific retention decisions. Isolated restore reconciliation removes local
+unused and refused records only, since a historical queue cannot prove that
+the live service never began dispatch.
 
 An accepted account deletion pauses analysis admission immediately. Availability
 reports analysis disabled, new offers and submissions refuse before any new
