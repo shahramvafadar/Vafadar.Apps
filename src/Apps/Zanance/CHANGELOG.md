@@ -1,6 +1,6 @@
 # Changelog – Zanance
 
-- In signed-in Personal Sync, check an account deletion request or confirm your password to submit one and see its pending receipt.
+- In signed-in Personal Sync and the store account screen, check an account deletion request or confirm your password to submit one and see its pending receipt.
 
 - D-1240: the Windows development build compiles its source-built encrypted-storage library with the newer Microsoft compiler tool set 14.52.37025 on current GitHub runners; storage format, keys and app behavior are unchanged.
 

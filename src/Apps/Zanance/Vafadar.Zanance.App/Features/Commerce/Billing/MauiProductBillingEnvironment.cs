@@ -89,7 +89,13 @@ internal sealed class MauiProductBillingEnvironment(PersonalSyncLifetime lifetim
     }
 
     /// <inheritdoc />
-    public Task<bool> ConnectedAsync(CancellationToken ct) => IdentityWorkAsync((context, token) => context.HasIdentityAsync(token), ct);
+    public Task<string?> ReadSubjectAsync(CancellationToken ct) => IdentityWorkAsync((context, token) => context.ReadSubjectAsync(token), ct);
+    /// <inheritdoc />
+    public Task<AccountDeletionReceipt?> ReadDeletionAsync(string subject, CancellationToken ct) =>
+        IdentityWorkAsync((context, token) => context.IdentityTransport.ReadDeletionAsync(subject, token), ct);
+    /// <inheritdoc />
+    public Task<AccountDeletionReceipt> RequestDeletionAsync(string subject, string password, CancellationToken ct) =>
+        IdentityWorkAsync((context, token) => context.IdentityTransport.RequestDeletionAsync(subject, password, token), ct);
     /// <inheritdoc />
     public async Task SignInAsync(string email, string password, CancellationToken ct)
         => await IdentityWorkAsync(async (context, token) => { await context.IdentityTransport.SignInIdentityAsync(email, password, token); return true; }, ct);
@@ -302,13 +308,15 @@ internal sealed class MauiProductBillingEnvironment(PersonalSyncLifetime lifetim
             identity = new(identityTransport, storage, issuer, BillingBuild.Environment);
         }
         internal BillingClient Client(bool useIdentity) => useIdentity ? identity : anonymous;
-        internal async Task<bool> HasIdentityAsync(CancellationToken ct)
+        internal async Task<bool> HasIdentityAsync(CancellationToken ct) => await ReadSubjectAsync(ct) is not null;
+
+        internal async Task<string?> ReadSubjectAsync(CancellationToken ct)
         {
-            try { return await identityTransport.CurrentUserAsync(ct) is not null; }
+            try { return await identityTransport.CurrentUserAsync(ct); }
             catch (Exception error) when (error is InvalidDataException or System.Text.Json.JsonException or System.Security.Cryptography.CryptographicException)
-            { return false; } // An unreadable optional session must not force an account for anonymous Plus restoration.
+            { return null; } // An unreadable optional session must not force an account for anonymous Plus restoration.
 #if ANDROID
-            catch (Java.Security.GeneralSecurityException) { return false; }
+            catch (Java.Security.GeneralSecurityException) { return null; }
 #endif
         }
         public void Dispose() { anonymousTransport.Dispose(); identityTransport.Dispose(); }

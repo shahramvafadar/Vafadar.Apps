@@ -49,7 +49,7 @@ public sealed class BillingIdentityFlowTests
         internal bool Connected = true;
         internal int Submissions;
         internal Task SignIn = Task.CompletedTask;
-        public Task<bool> ConnectedAsync(CancellationToken ct) => Task.FromResult(Connected);
+        public Task<string?> ReadSubjectAsync(CancellationToken ct) => Task.FromResult(Connected ? "synthetic-account" : null);
         public Task SignInAsync(string email, string password, CancellationToken ct) { Submissions++; return SignIn; }
         public Task<bool> SignOutAsync(CancellationToken ct) { Submissions++; Connected = false; return Task.FromResult(true); }
         public Task RegisterAsync(string email, string password, CancellationToken ct) { Submissions++; return Task.CompletedTask; }

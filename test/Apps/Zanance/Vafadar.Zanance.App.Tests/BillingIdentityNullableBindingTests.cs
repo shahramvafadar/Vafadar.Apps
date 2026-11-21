@@ -10,7 +10,7 @@ public sealed class BillingIdentityNullableBindingTests
     {
         internal int Reads, Primary;
         public bool Available => true;
-        public Task<bool> ConnectedAsync(CancellationToken ct) { Reads++; return Task.FromResult(false); }
+        public Task<string?> ReadSubjectAsync(CancellationToken ct) { Reads++; return Task.FromResult<string?>(null); }
         private Task Refuse() { Primary++; throw new InvalidOperationException("An invalid draft cannot submit an identity request."); }
         public Task SignInAsync(string email, string password, CancellationToken ct) => Refuse();
         public Task RegisterAsync(string email, string password, CancellationToken ct) => Refuse();

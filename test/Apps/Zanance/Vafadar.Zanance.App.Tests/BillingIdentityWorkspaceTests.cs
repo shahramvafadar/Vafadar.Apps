@@ -1,10 +1,61 @@
 using Vafadar.Zanance.App.Features.Commerce.Billing;
+using Vafadar.Zanance.Data.Sync;
 
 namespace Vafadar.Zanance.App.Tests;
 
 /// <summary>Original optional identity read and native consent ownership; all effects are isolated and fictitious.</summary>
 public sealed class BillingIdentityWorkspaceTests
 {
+    [Fact]
+    public async Task Billing_deletion_recovers_receipt_without_resending_and_clears_it_for_a_new_subject()
+    {
+        using var fixture = new FlowFixture();
+        var effects = new Effects();
+        var model = new BillingIdentityViewModel(effects, fixture.Translator, fixture.Platform);
+        await model.ActivateAsync();
+        try
+        {
+            Assert.False(model.ShowAccountDeletionForm);
+            await model.ReadAccountDeletionCommand.ExecuteAsync(null);
+            Assert.True(model.ShowAccountDeletionForm);
+            model.DeletionPassword = "Synthetic-original-password9!";
+            await model.RequestAccountDeletionCommand.ExecuteAsync(null);
+            Assert.False(model.ShowAccountDeletionForm);
+            Assert.Empty(model.DeletionPassword);
+            Assert.NotNull(model.DeletionFeedback);
+            await model.RequestAccountDeletionCommand.ExecuteAsync(null);
+            Assert.Equal(1, effects.DeletionSubmissions);
+
+            await model.ReadAccountDeletionCommand.ExecuteAsync(null);
+            Assert.True(model.ShowAccountDeletionReceipt);
+            Assert.Equal(effects.Receipt.ReceiptId.ToString("D"), model.AccountDeletionReference);
+            Assert.Null(model.DeletionFeedback);
+            effects.Subject = "replacement-synthetic-account";
+            await model.RefreshSessionCommand.ExecuteAsync(null);
+            Assert.True(model.Connected);
+            Assert.False(model.ShowAccountDeletionForm);
+            Assert.Null(model.AccountDeletionReference);
+            Assert.Equal(1, effects.DeletionSubmissions);
+        }
+        finally { model.Deactivate(); }
+    }
+
+    [Fact]
+    public async Task Billing_deletion_hides_a_status_received_after_the_original_page_retires()
+    {
+        using var fixture = new FlowFixture();
+        var pending = new TaskCompletionSource<AccountDeletionReceipt?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var effects = new Effects { DeletionRead = pending.Task };
+        var model = new BillingIdentityViewModel(effects, fixture.Translator, fixture.Platform);
+        await model.ActivateAsync();
+        var read = model.ReadAccountDeletionCommand.ExecuteAsync(null);
+        model.Deactivate();
+        pending.SetResult(effects.Receipt);
+        await read;
+        Assert.False(model.ShowAccountDeletionReceipt);
+        Assert.Null(model.AccountDeletionReference);
+    }
+
     [Fact]
     public async Task Actual_appearance_coalesces_the_original_pending_session_read()
     {
@@ -151,7 +202,24 @@ public sealed class BillingIdentityWorkspaceTests
         internal Task SignIn=Task.CompletedTask;
         internal Task<bool>? SignOut;
         internal Func<CancellationToken,Task<bool>>? Session;
-        public Task<bool> ConnectedAsync(CancellationToken ct) { SessionReads++; return Session?.Invoke(ct)??Task.FromResult(Connected); }
+        internal string Subject = "original-synthetic-account";
+        internal int DeletionSubmissions;
+        internal Task<AccountDeletionReceipt?>? DeletionRead;
+        internal readonly AccountDeletionReceipt Receipt = new(Guid.NewGuid(), DateTimeOffset.UtcNow);
+        public async Task<string?> ReadSubjectAsync(CancellationToken ct)
+        { SessionReads++; return (Session is { } read ? await read(ct) : Connected) ? Subject : null; }
+        public Task<AccountDeletionReceipt?> ReadDeletionAsync(string subject, CancellationToken ct)
+        {
+            Assert.Equal(Subject, subject);
+            return DeletionRead ?? Task.FromResult<AccountDeletionReceipt?>(DeletionSubmissions == 0 ? null : Receipt);
+        }
+        public Task<AccountDeletionReceipt> RequestDeletionAsync(string subject, string password, CancellationToken ct)
+        {
+            Assert.Equal(Subject, subject);
+            Assert.Equal("Synthetic-original-password9!", password);
+            DeletionSubmissions++;
+            return Task.FromException<AccountDeletionReceipt>(new IOException("Synthetic response loss."));
+        }
         public Task<bool> SignOutAsync(CancellationToken ct) { Signouts++; Connected=false; return SignOut??Task.FromResult(RemoteConfirmed); }
         public Task RegisterAsync(string email,string password,CancellationToken ct) { Registrations++; return Task.CompletedTask; }
         public Task SignInAsync(string email,string password,CancellationToken ct){SignIns++;return SignIn;}

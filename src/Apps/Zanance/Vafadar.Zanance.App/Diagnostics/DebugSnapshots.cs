@@ -339,6 +339,10 @@ internal static partial class DebugSnapshots
         {
             await ReviewBillingIdentityLayoutAsync(app, services, folder); return;
         }
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-deletion-layout")
+        {
+            await ReviewBillingDeletionLayoutAsync(app, services, folder); return;
+        }
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "billing-owned-layout" or "billing-layout" or "billing-comparison-note" or "billing-retry-layout" or "billing-recovery-layout" or "billing-dialog-caption" or "billing-replacement-layout")
         {
             await ReviewBillingLayoutAsync(app, services, folder); return;

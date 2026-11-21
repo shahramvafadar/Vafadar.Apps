@@ -231,6 +231,9 @@ public partial class App : Application
             throw new InvalidOperationException("Independent bank CSV installation required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "accountant-native" && AppInfo.Current.PackageName != "pro.vafadar.zanance.accountantreview")
             throw new InvalidOperationException("Independent accountant installation required before startup.");
+        if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") == "billing-deletion-layout"
+            && AppInfo.Current.PackageName != "pro.vafadar.zanance.billingdeletionreview")
+            throw new InvalidOperationException("Independent account deletion layout identity required before startup.");
         if (Environment.GetEnvironmentVariable("VAFADAR_SNAPSHOT_ONLY") is "billing-layout" or "billing-comparison-note" or "billing-identity-layout" or "billing-retry-layout" or "billing-recovery-layout" or "billing-dialog-caption" or "billing-replacement-layout"
             && AppInfo.Current.PackageName != "pro.vafadar.zanance.billinglayout")
             throw new InvalidOperationException("Independent billing layout identity required before startup.");

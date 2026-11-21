@@ -89,9 +89,13 @@ requires a deletion request path both inside the app and on the public web for
 an edition with Zanance account creation. Local profile deletion, disconnecting
 sync and revoking a session have different effects. The service accepts one
 pending deletion request for the current reauthenticated owner and gives it a
-stable receipt. The signed-in Personal Sync page offers the request and status
-lookup. Its host model has been tested against an isolated HTTPS responder.
-Native layout review, other account entry points and the public web are still
-open, as are deletion execution, verified retention and the Console declaration.
+stable receipt. The signed-in Personal Sync and store account pages offer the
+request and status lookup. Focused host tests cover the isolated HTTPS transport,
+lost-response recovery, account replacement and retired-page feedback. An isolated
+Windows run checked the store account deletion card in 18 Persian, English and
+German layout contexts at widths 360, 412 and 1280 in light and dark themes.
+Each native status action opened the empty password form without a submission.
+Personal Sync native layout review and the public web remain open, along with
+deletion execution, verified retention and the Console declaration.
 See [the service boundary](../../Vafadar.Zanance.Api/README.md#api-boundary)
 and [Play User Data policy](https://support.google.com/googleplay/android-developer/answer/10144311).

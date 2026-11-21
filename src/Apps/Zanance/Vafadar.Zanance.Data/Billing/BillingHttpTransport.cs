@@ -28,6 +28,12 @@ public sealed class BillingHttpTransport : IBillingServiceTransport, IDisposable
     }
     /// <inheritdoc />
     public Task<string?> CurrentUserAsync(CancellationToken ct) => useIdentity ? identity.BillingIdentityAsync(ct) : Task.FromResult<string?>(null);
+    /// <summary>Reads the pending deletion receipt through the original bound service session.</summary>
+    public Task<AccountDeletionReceipt?> ReadDeletionAsync(string subject, CancellationToken ct) =>
+        useIdentity ? identity.ReadAccountDeletionAsync(subject, ct) : throw new InvalidOperationException("A signed-in account is required.");
+    /// <summary>Requests deletion through the original bound service session.</summary>
+    public Task<AccountDeletionReceipt> RequestDeletionAsync(string subject, string password, CancellationToken ct) =>
+        useIdentity ? identity.RequestAccountDeletionAsync(subject, password, ct) : throw new InvalidOperationException("A signed-in account is required.");
     /// <inheritdoc />
     public Task<BillingTimeResult> TimeAsync(Guid nonce, CancellationToken ct) => SendAsync(HttpMethod.Get,
         "billing/time/" + nonce.ToString("D"), null, BillingJson.Default.BillingTimeResult, ct);

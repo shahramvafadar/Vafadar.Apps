@@ -10,6 +10,7 @@ using Vafadar.Maui.Localization;
 using Vafadar.Zanance.App.Features.Commerce.Billing;
 using Vafadar.Zanance.App.Interaction;
 using Vafadar.Zanance.App.Presentation;
+using Vafadar.Zanance.Data.Sync;
 using NativeNode = Microsoft.UI.Xaml.DependencyObject;
 using NativeElement = Microsoft.UI.Xaml.FrameworkElement;
 using NativeButton = Microsoft.UI.Xaml.Controls.Button;
@@ -113,11 +114,86 @@ internal static partial class DebugSnapshots
                 foreach (var child in Nodes(VisualTreeHelper.GetChild(node, index))) yield return child;
         }
     }
+    private static async Task ReviewBillingDeletionLayoutAsync(App app, IServiceProvider services, string folder)
+    {
+        if (AppInfo.Current.PackageName != "pro.vafadar.zanance.billingdeletionreview" || !Path.GetFullPath(folder).Equals(
+            Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "artifacts", "billing-deletion-layout")), StringComparison.OrdinalIgnoreCase))
+            throw new IOException("Exact independent deletion layout required.");
+        var localization = services.GetRequiredService<ILocalizationService>();
+        var text = services.GetRequiredService<Translator>();
+        var themes = services.GetRequiredService<ThemeService>();
+        var window = app.Windows[0];
+        foreach (var language in new[] { "en", "fa", "de" })
+        foreach (var theme in new[] { ThemeChoice.Light, ThemeChoice.Dark })
+        foreach (var width in new[] { 360, 412, 1280 })
+        {
+            var proof = Path.Combine(folder, $"{language}-{theme}-{width}.json");
+            if (File.Exists(proof)) continue;
+            themes.Set(theme); await SetLanguageAsync(app, localization, language);
+            window.Width = width; window.Height = 820;
+            var effects = new IdentityLayoutEffects();
+            var model = new BillingIdentityViewModel(effects, text, services.GetRequiredService<IAppInteraction>());
+            var page = new BillingIdentityPage(model, localization).WithFlowDirection(localization);
+            var root = window.Page ?? throw new IOException();
+            await root.Navigation.PushModalAsync(new NavigationPage(page).WithFlowDirection(localization), false);
+            try
+            {
+                for (var wait = 0; wait < 160 && !model.CanSignOut; wait++) await Task.Delay(25);
+                if (!model.CanSignOut || model.ShowAccountDeletionForm) throw new IOException("Unexpected initial deletion form.");
+                var observed = new List<object>();
+                var scroll = VisualDescendants(page).OfType<ScrollView>().Single();
+                var status = await NativeActionAsync(model.ReadAccountDeletionCommand, text["AccountDeletion_Status"]);
+                InvokeChoiceReview(status, observed);
+                for (var wait = 0; wait < 160 && !model.ShowAccountDeletionForm; wait++) await Task.Delay(25);
+                if (!model.ShowAccountDeletionForm || effects.DeletionReads != 1)
+                    throw new IOException("Native status did not open the deletion form.");
+                foreach (var key in new[] { "AccountDeletion_Title", "AccountDeletion_Explanation" })
+                {
+                    var label = VisualDescendants(scroll).OfType<Label>().Single(label => label.Text == text[key]);
+                    await ScrollToViewIfNeededAsync(scroll, label); await Task.Delay(25);
+                    CheckCaption(label, observed);
+                }
+                var submit = await NativeActionAsync(model.RequestAccountDeletionCommand, text["AccountDeletion_Submit"]);
+                if (VisualDescendants(scroll).OfType<WrappingAction>()
+                    .Single(action => ReferenceEquals(action.Command, model.RequestAccountDeletionCommand)).Parent is not VerticalStackLayout deletionForm)
+                    throw new IOException("Deletion form is missing.");
+                var password = VisualDescendants(deletionForm).OfType<Entry>().Single();
+                await ScrollToViewIfNeededAsync(scroll, password);
+                if (!password.IsPassword || password.MaxLength != 256 || password.IsTextPredictionEnabled ||
+                    password.IsSpellCheckEnabled || !string.IsNullOrEmpty(password.Text))
+                    throw new IOException("Unexpected deletion password presentation.");
+                if (!submit.IsEnabled || effects.Submissions != 0)
+                    throw new IOException("Unexpected deletion submission or target.");
+                await File.WriteAllTextAsync(proof, JsonSerializer.Serialize(new
+                { Language = language, Theme = theme.ToString(), Width = width, NativeRead = effects.DeletionReads, Captions = observed.Count, effects.Submissions }));
+
+                async Task<Button> NativeActionAsync(System.Windows.Input.ICommand command, string name)
+                {
+                    var action = VisualDescendants(scroll).OfType<WrappingAction>().Single(action => ReferenceEquals(action.Command, command));
+                    await ScrollToViewIfNeededAsync(scroll, action); await Task.Delay(25);
+                    var button = VisualDescendants(action).OfType<Button>().Single();
+                    if (button.Handler?.PlatformView is not NativeButton { ActualWidth: >= 44, ActualHeight: >= 44 } native ||
+                        FrameworkElementAutomationPeer.CreatePeerForElement(native)?.GetName() != name)
+                        throw new IOException("Deletion target or native caption differs.");
+                    return button;
+                }
+            }
+            finally { await root.Navigation.PopModalAsync(false); }
+        }
+    }
+
     private sealed class IdentityLayoutEffects : IBillingIdentityEnvironment
     {
         public bool Available => true;
         internal int Submissions;
-        public Task<bool> ConnectedAsync(CancellationToken ct) => Task.FromResult(true);
+        internal int DeletionReads;
+        public Task<string?> ReadSubjectAsync(CancellationToken ct) => Task.FromResult<string?>("synthetic-account");
+        public Task<AccountDeletionReceipt?> ReadDeletionAsync(string subject, CancellationToken ct)
+        {
+            if (subject != "synthetic-account") throw new IOException("Unexpected layout identity.");
+            DeletionReads++;
+            return Task.FromResult<AccountDeletionReceipt?>(null);
+        }
         public Task SignInAsync(string email, string password, CancellationToken ct) => Forbidden();
         public Task<bool> SignOutAsync(CancellationToken ct) { Submissions++; throw new IOException("No real identity effect belongs to layout review."); }
         public Task RegisterAsync(string email, string password, CancellationToken ct) => Forbidden();

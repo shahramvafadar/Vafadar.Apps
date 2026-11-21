@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
 using Vafadar.Zanance.App.Interaction;
+using Vafadar.Zanance.Data.Sync;
 
 namespace Vafadar.Zanance.App.Features.Commerce.Billing;
 
@@ -21,6 +22,10 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     private long inputRevision;
     private string? acceptedKey;
     private long acceptedRevision;
+    private string? subject;
+    private bool deletionStatusRead;
+    private AccountDeletionReceipt? deletionReceipt;
+    private string deletionPassword = "";
     private bool OwnsPresentation => visible is not null && !rootRetired && (ownsRoot?.Invoke() ?? true);
     /// <summary>Only the original actual page/root may publish private-session observations or native consent.</summary>
     internal void BindRootOwner(Func<bool> owner) => ownsRoot = owner;
@@ -75,6 +80,26 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     public bool CanSubmit => IsReady && environment.Available && !reviewing && !HasPendingOperation;
     /// <summary>Only this current actual session can be explicitly retired.</summary>
     public bool CanSignOut => CanSubmit && Connected;
+    /// <summary>Shows password proof only after a current empty status read.</summary>
+    public bool ShowAccountDeletionForm => Connected && deletionStatusRead && deletionReceipt is null;
+    /// <summary>Shows the pending receipt for the current original subject.</summary>
+    public bool ShowAccountDeletionReceipt => Connected && deletionReceipt is not null;
+    /// <summary>The displayed reference identifies the pending request.</summary>
+    public string? AccountDeletionReference => ShowAccountDeletionReceipt ? deletionReceipt?.ReceiptId.ToString("D") : null;
+    /// <summary>Transient password dedicated to deletion proof.</summary>
+    public string DeletionPassword
+    {
+        get => deletionPassword;
+        set
+        {
+            var input = value ?? "";
+            if (input.Length != 0 && (!CanSignOut || !ShowAccountDeletionForm)) return;
+            SetProperty(ref deletionPassword, input);
+        }
+    }
+    /// <summary>Content-free status for deletion proof or a service failure.</summary>
+    public string? DeletionFeedback => deletionFeedbackKey is { } key ? translator[key] : null;
+    private string? deletionFeedbackKey;
     /// <summary>The main action always names the actual effect.</summary>
     public string SubmitText => Modes[Math.Clamp(ModeIndex, 0, 4)];
 
@@ -92,6 +117,7 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     public void Deactivate()
     {
         epoch++; visible?.Cancel(); visible?.Dispose(); visible = null;
+        subject = null; ClearDeletionState();
         Password = ""; Token = ""; operationActive = false; readingSession = false; IsBusy = false;
         Connected = false; sessionReady = false; readFailed = false; acceptedKey = statusKey = null; Status = null; RefreshDisplay();
     }
@@ -122,6 +148,10 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
         if (ChallengeError is not null) ChallengeError = translator["BillingIdentity_ChallengeError"];
         if (TokenError is not null) TokenError = translator["BillingIdentity_TokenError"];
         foreach (var name in new[] { nameof(Modes), nameof(ShowEmail), nameof(ShowPassword), nameof(ShowChallenge), nameof(CanSubmit), nameof(CanSignOut), nameof(SubmitText), nameof(IsReady), nameof(CanRead), nameof(CanLeave), nameof(HasPendingOperation) }) OnPropertyChanged(name);
+        OnPropertyChanged(nameof(ShowAccountDeletionForm));
+        OnPropertyChanged(nameof(ShowAccountDeletionReceipt));
+        OnPropertyChanged(nameof(AccountDeletionReference));
+        OnPropertyChanged(nameof(DeletionFeedback));
         SubmitCommand.NotifyCanExecuteChanged(); SignOutCommand.NotifyCanExecuteChanged(); RefreshSessionCommand.NotifyCanExecuteChanged();
     }
     partial void OnModeIndexChanged(int oldValue, int newValue)
@@ -193,6 +223,65 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
     // Only nonsecret disclosure facts and an input revision are retained across native consent.
     private string Disclosure() => translator.Culture.Name + "\n" + translator["BillingIdentity_Explanation"]
         + "\n" + translator["BillingIdentity_SignOutExplanation"] + "\n" + SubmitText;
+
+    [RelayCommand]
+    private Task ReadAccountDeletionAsync() => RunDeletionAsync(environment.ReadDeletionAsync);
+
+    [RelayCommand]
+    private Task RequestAccountDeletionAsync()
+    {
+        if (!CanSignOut || !ShowAccountDeletionForm) return Task.CompletedTask;
+        var password = deletionPassword;
+        if (password.Length is < 12 or > 256)
+        {
+            DeletionPassword = "";
+            deletionFeedbackKey = "BillingIdentity_PasswordError";
+            OnPropertyChanged(nameof(DeletionFeedback));
+            return Task.CompletedTask;
+        }
+        return RunDeletionAsync(async (owner, ct) => await environment.RequestDeletionAsync(owner, password, ct));
+    }
+
+    private async Task RunDeletionAsync(Func<string, CancellationToken, Task<AccountDeletionReceipt?>> work)
+    {
+        if (!CanSignOut || subject is not { } original) return;
+        var current = epoch;
+        var ct = visible!.Token;
+        bool Current() => OwnsPresentation && current == epoch && subject == original && !ct.IsCancellationRequested;
+        operationActive = true;
+        try
+        {
+            // A lost submission response is reconciled by reading status. The form stays closed until that read.
+            ClearDeletionState();
+            IsBusy = true;
+            RefreshDisplay();
+            if (!Current()) return;
+            var receipt = await work(original, ct);
+            if (!Current()) return;
+            deletionReceipt = receipt;
+            deletionStatusRead = true;
+        }
+        catch (OperationCanceledException) when (!Current()) { }
+        catch (Exception error) when (error is not OutOfMemoryException)
+        {
+            if (Current()) deletionFeedbackKey = "BillingIdentity_Unavailable";
+        }
+        finally
+        {
+            if (current == epoch) { operationActive = false; IsBusy = false; RefreshDisplay(); }
+        }
+    }
+
+    private void ClearDeletionState()
+    {
+        deletionStatusRead = false;
+        deletionReceipt = null;
+        deletionFeedbackKey = null;
+        if (deletionPassword.Length == 0) return;
+        deletionPassword = "";
+        OnPropertyChanged(nameof(DeletionPassword));
+    }
+
     private async Task RunAsync(Func<CancellationToken, Task<string>>? primary)
     {
         if (!OwnsPresentation || HasPendingOperation || reviewing) return;
@@ -204,6 +293,7 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
         RefreshDisplay();
         try
         {
+            DeletionPassword = "";
             if (primary is not null)
             {
                 var acknowledgement = await primary(ct);
@@ -212,9 +302,11 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
                 // It is neither a recipient-existence claim nor evidence about a newer draft.
                 acceptedKey = acknowledgement; acceptedRevision = submittedRevision; statusKey = null;
             }
-            var connected = await environment.ConnectedAsync(ct);
+            var observedSubject = await environment.ReadSubjectAsync(ct);
             if (!Current()) return;
-            Connected = connected; sessionReady = true; readFailed = false; statusKey = null;
+            if (subject != observedSubject) ClearDeletionState();
+            subject = observedSubject;
+            Connected = observedSubject is not null; sessionReady = true; readFailed = false; statusKey = null;
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested) { }
         catch (Exception error) when (error is not OutOfMemoryException)

@@ -37,6 +37,25 @@
                         IsTextPredictionEnabled="False" IsSpellCheckEnabled="False" SemanticProperties.Description="{v:Translate BillingIdentity_Token}" />
                     <Label Text="{Binding TokenError}" Style="{StaticResource ErrorText}" IsVisible="{Binding TokenError, Converter={StaticResource IsNotNullConverter}}" />
                 </VerticalStackLayout>
+                <Border Style="{StaticResource Card}" IsVisible="{Binding Connected}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{v:Translate AccountDeletion_Title}" Style="{StaticResource SectionHeader}" />
+                        <Label Text="{v:Translate AccountDeletion_Explanation}" Style="{StaticResource Secondary}" />
+                        <p:WrappingAction Text="{v:Translate AccountDeletion_Status}" Command="{Binding ReadAccountDeletionCommand}" IsEnabled="{Binding CanSignOut}" />
+                        <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowAccountDeletionForm}" IsEnabled="{Binding CanSignOut}">
+                            <Label Text="{v:Translate BillingIdentity_Password}" />
+                            <Entry Text="{Binding DeletionPassword}" IsPassword="True" MaxLength="256" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"
+                                SemanticProperties.Description="{v:Translate BillingIdentity_Password}" />
+                            <p:WrappingAction Text="{v:Translate AccountDeletion_Submit}" Appearance="Destructive" Command="{Binding RequestAccountDeletionCommand}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowAccountDeletionReceipt}">
+                            <Label Text="{v:Translate AccountDeletion_Pending}" />
+                            <Label Text="{Binding AccountDeletionReference}" />
+                        </VerticalStackLayout>
+                        <Label Text="{Binding DeletionFeedback}" Style="{StaticResource ErrorText}"
+                            IsVisible="{Binding DeletionFeedback, Converter={StaticResource IsNotNullConverter}}" />
+                    </VerticalStackLayout>
+                </Border>
                 </VerticalStackLayout>
                 <Label Text="{Binding Status}" IsVisible="{Binding Status, Converter={StaticResource IsNotNullConverter}}" />
                 <ActivityIndicator IsVisible="{Binding HasPendingOperation}" IsRunning="{Binding HasPendingOperation}" WidthRequest="44" HeightRequest="44" Color="{DynamicResource Primary}" />
