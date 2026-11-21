@@ -6623,3 +6623,27 @@ launched once. The original XML observer output encoding was corrected without
 restarting the app. The temporary emulator was removed after restoring the
 AVD manager's required host PATH. The signed APK and screen evidence remain in
 `artifacts/zanance-about-offline-be889f0d/about-verification.json` and its sibling XML.
+
+### Connected Android About verification
+
+A separate licensed Release review APK from `c29ee3cd` enabled personal sync,
+a fictional Android Google OAuth client identifier and the privacy link's build
+option. Billing stayed disabled. The exact package passed the archive, signature,
+native storage and alignment checks. SHA-256:
+`1db53d2fed6704965faf1754f2ba6c9df8b4f49cc563fa7c4ca0a5387233489c`.
+
+The installed APK hash matched on a fresh Android 16 x86_64 emulator.
+Airplane mode was on, Wi-Fi was off and there was no default network route.
+About showed the local data summary, the cloud backup, personal sync and
+online Analysis disclosures, and one enabled Privacy Policy button. The
+policy button was not opened. This verifies visibility in the English
+connected review package. The published policy and its live link remain
+unverified, and no sign-in, provider action or financial entry ran.
+
+The first readiness window expired and the first reminder-offer XML capture
+could not be parsed. The same process continued without reinstalling,
+relaunching or repeating accepted onboarding actions. One zero-opening test
+account enabled access to About. The AVD was removed and the shared ADB
+server stayed running. The source APK and the evidence JSON and XML are under
+`artifacts/android-connected-c29ee3cd-synthetic-about-review` and
+`artifacts/zanance-about-connected-c29ee3cd`.
