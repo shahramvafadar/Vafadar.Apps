@@ -108,6 +108,17 @@ whose restore receipt is incomplete. `status` and `stop` remain available.
 project's workers/database and renews only internal TLS leaf certificates with the same keys and CA. It retains
 the historical protection certificate/key used by the key ring, restarts the stack and requires a readiness check.
 The renewal provisioner and restarted stack use the image IDs captured by the pre-maintenance snapshot.
+The isolated runtime check of `59e9044d` ran the actual operator stop/start and one
+snapshot-backed renewal. Both left API and PostgreSQL healthy and the proxy
+running on the same four image IDs. The renewal provisioner also ran on the
+original image and exited successfully. The four transport leaf certificates
+changed while the CA and data-protection certificates matched exactly.
+The first fixture startup hit an exhausted Docker default address pool before
+the provisioner ran. The same fixture then continued with two explicit,
+unused subnets in a fixture-only Compose overlay. Its containers, volumes,
+networks and snapshot were retired after validation. The public evidence is in
+`artifacts/zanance-maintenance-image-59e9044d/evidence.json`. This test used a
+fresh local project with no financial writes or production renewal.
 Schedule this explicit operator maintenance before the 365-day leaves expire. It is not an unattended updater.
 The public fingerprint intent permits completing an interrupted multi-file publication with `renew-transport` in
 the provisioner; do not start workers with a pending intent. Partial initial preparation or `.pending` writes
