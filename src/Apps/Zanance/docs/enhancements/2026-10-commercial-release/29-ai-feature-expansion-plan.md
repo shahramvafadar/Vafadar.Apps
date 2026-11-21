@@ -50,6 +50,15 @@ reader handled a newly selected receipt and a stored attachment and presented th
 for review. The generic CSV preview kept deterministic category suggestions editable. All three
 checks preserved the input financial data and made no provider requests.
 
+The signed offline APK from `10fc575a` was also checked on a fresh Android 16
+x86-64 emulator in airplane mode. With AI features visibly off in Settings,
+the original Home receipt action opened Android's file picker and read one
+synthetic PNG. The unsaved expense showed the original total `12.34 EUR`.
+Cancel and Discard returned to Home, and Transactions showed an empty list
+with all dates and types selected. Setup created one zero-opening test account.
+The installed APK and guest PNG matched the local hashes. The emulator was
+retired and the evidence is in `artifacts/zanance-ocr-ai-off-native-10fc575a`.
+
 The Reports overview's explain and compare commands retain the AI session from the original
 tap across report-source validation. Turning AI off retires the pending command, even when
 the user turns it back on before validation finishes. A focused host test holds the real
