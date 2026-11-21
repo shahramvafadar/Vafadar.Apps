@@ -6542,3 +6542,20 @@ copy matches the verified source archive by SHA-256.
 The native renderer probe above verified its named case with the original
 library on Android 16 in a separate package. This handoff had no new
 build, installation, device session or re-execution of accepted tests.
+
+## Signed offline handoff with completed AI retirement (2026-11-21)
+
+The current test APK from `2eede0f5` includes cancellation of direct PDF
+text extraction and releases the original AI connection even when cancellation
+feedback fails. The new opt-out regression used a synthetic account and a
+held metadata quotation with zero submissions. It failed before the fix,
+then confirmed disposal and fresh activation without replay.
+
+- APK: `artifacts/android-offline-2eede0f5-release-review/pro.vafadar.zanance-Signed.apk`
+- Size: 99,696,239 bytes
+- SHA-256: `1e38ab9fe7734fd4f8b428e19389e43955207bb9a79b57caa059ac9f45e9d24e`
+
+Strict offline Android Release and the canonical exact-archive verification
+passed. The archive has arm64-v8a and x86_64, 16 KiB alignment and the same
+local test certificate as the preceding handoff with v2 and v3 signatures.
+No device installation or genuine AI service request ran in this check.
