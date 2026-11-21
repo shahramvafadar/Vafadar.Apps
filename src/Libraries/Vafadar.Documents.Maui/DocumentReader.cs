@@ -26,9 +26,14 @@ public static class DocumentReader
         (await ReadDocumentAsync(content, contentType)).Text;
 
     /// <summary>Reads text while preserving whether OCR column alignment needs human review.</summary>
-    public static async Task<TextLayoutResult> ReadDocumentAsync(byte[] content, string? contentType)
+    public static Task<TextLayoutResult> ReadDocumentAsync(byte[] content, string? contentType) =>
+        ReadDocumentAsync(content, contentType, CancellationToken.None);
+
+    /// <summary>Reads text and stops before the next extraction step when the reader is cancelled.</summary>
+    public static async Task<TextLayoutResult> ReadDocumentAsync(byte[] content, string? contentType, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(content);
+        ct.ThrowIfCancellationRequested();
         try
         {
             if (!PdfText.IsPdf(contentType, content))
@@ -42,7 +47,7 @@ public static class DocumentReader
                 var image = await DocumentImages.PrepareAsync(content, DocumentImages.RecognitionEdge, 0.95f);
                 try
                 {
-                    return TextLayout.Reconstruct(await TextRecognizer.RecognizeAsync(image));
+                    return await RecognizePageAsync(image);
                 }
                 finally
                 {
@@ -51,14 +56,16 @@ public static class DocumentReader
             }
 
             // Digital PDFs carry their text; OCR is only needed for scanned pages.
-            if (await Task.Run(() => PdfText.Extract(content, MaxPages)) is { } text)
+            var text = await Task.Run(() => PdfText.Extract(content, MaxPages), ct);
+            ct.ThrowIfCancellationRequested();
+            if (text is not null)
             {
                 return new(text);
             }
 
             if (!TextRecognizer.IsSupported || !PdfPageImages.IsSupported)
             {
-                return new(await Task.Run(() => PdfText.Extract(content, MaxPages, minimumPerPage: 0)));
+                return new(await ReadSparsePdfAsync());
             }
 
             var pages = new List<string>();
@@ -68,7 +75,7 @@ public static class DocumentReader
             {
                 foreach (var image in images)
                 {
-                    var layout = TextLayout.Reconstruct(await TextRecognizer.RecognizeAsync(image));
+                    var layout = await RecognizePageAsync(image);
                     ambiguous |= layout.IsAmbiguous;
                     if (layout.Text is { } rows)
                     {
@@ -85,13 +92,30 @@ public static class DocumentReader
             // Nothing recognised: a sparse text layer is still better than nothing.
             return new(pages.Count > 0
                 ? string.Join('\f', pages)
-                : await Task.Run(() => PdfText.Extract(content, MaxPages, minimumPerPage: 0)), ambiguous);
+                : await ReadSparsePdfAsync(), ambiguous);
         }
         catch (Exception ex) when (ex is not OutOfMemoryException)
         {
+            ct.ThrowIfCancellationRequested();
             // An unreadable or unsupported file is "nothing found", never a crash.
             System.Diagnostics.Debug.WriteLine($"Document reading failed: {ex.GetType().Name}");
             return new(null);
+        }
+
+        async Task<TextLayoutResult> RecognizePageAsync(byte[] image)
+        {
+            ct.ThrowIfCancellationRequested();
+            // The native recognizer may still own these bytes. Wait for it to settle before clearing them.
+            var words = await TextRecognizer.RecognizeAsync(image);
+            ct.ThrowIfCancellationRequested();
+            return TextLayout.Reconstruct(words);
+        }
+
+        async Task<string?> ReadSparsePdfAsync()
+        {
+            var sparse = await Task.Run(() => PdfText.Extract(content, MaxPages, minimumPerPage: 0), ct);
+            ct.ThrowIfCancellationRequested();
+            return sparse;
         }
     }
 

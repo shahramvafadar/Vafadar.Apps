@@ -56,7 +56,7 @@ public sealed class CameraSourceBoundsTests
         Assert.InRange(admitted, 1, AttachmentFiles.MaxSourceBytes);
         // Reproduce an external writer's growth between the adapter's stat and its original file read.
         await using (var externalWriter = File.OpenWrite(path)) externalWriter.SetLength(AttachmentFiles.MaxSourceBytes + 1L);
-        await Assert.ThrowsAsync<InvalidDataException>(() => AttachmentFiles.ReadCameraSourceAsync(path));
+        await Assert.ThrowsAsync<InvalidDataException>(() => AttachmentFiles.ReadCameraSourceAsync(path, Ct));
         Assert.Equal(AttachmentFiles.MaxSourceBytes + 1L, new FileInfo(path).Length);
     }
 
@@ -75,7 +75,7 @@ public sealed class CameraSourceBoundsTests
             source.Position = length - 2;
             await source.WriteAsync(new byte[] { 0xFF, 0xD9 }, Ct);
         }
-        var bytes = await AttachmentFiles.ReadCameraSourceAsync(path);
+        var bytes = await AttachmentFiles.ReadCameraSourceAsync(path, Ct);
         Assert.Equal(length, bytes.Length);
         Assert.Equal(new byte[] { 0xFF, 0xD8, 0x45, 0x58 }, bytes[..4]);
         Assert.Equal(new byte[] { 0xFF, 0xD9 }, bytes[^2..]);
@@ -87,7 +87,7 @@ public sealed class CameraSourceBoundsTests
     public async Task Missing_camera_source_preserves_the_original_io_failure()
     {
         using var directory = new TemporaryDirectory();
-        await Assert.ThrowsAsync<FileNotFoundException>(() => AttachmentFiles.ReadCameraSourceAsync(directory.Combine("absent.jpg")));
+        await Assert.ThrowsAsync<FileNotFoundException>(() => AttachmentFiles.ReadCameraSourceAsync(directory.Combine("absent.jpg"), Ct));
     }
 
     /// <summary>The original picker reader rejects actual bytes without trusting seekable lengths or taking stream ownership.</summary>

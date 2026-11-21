@@ -45,7 +45,7 @@ public sealed class CameraActivityLifetimeTests
         var owner = new CameraBoundaryActivity(directory.Path);
         var other = new CameraBoundaryActivity(directory.Path);
         Platform.CurrentActivity = owner;
-        var capture = CameraCapture.TakePhotoAsync();
+        var capture = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken);
         try
         {
             Platform.CurrentActivity = other;
@@ -69,7 +69,7 @@ public sealed class CameraActivityLifetimeTests
         using var directory = new TemporaryDirectory();
         var owner = new CameraBoundaryActivity(directory.Path);
         Platform.CurrentActivity = owner;
-        var first = CameraCapture.TakePhotoAsync();
+        var first = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken);
         var oldCode = owner.LastRequest;
         var output = owner.LastOutput!.AbsolutePath;
         await File.WriteAllBytesAsync(output, new byte[] { 1, 2, 3 }, TestContext.Current.CancellationToken);
@@ -78,7 +78,7 @@ public sealed class CameraActivityLifetimeTests
         Assert.False(File.Exists(output));
         var replacement = new CameraBoundaryActivity(directory.Path);
         Platform.CurrentActivity = replacement;
-        var second = CameraCapture.TakePhotoAsync();
+        var second = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken);
         try
         {
             Assert.NotEqual(oldCode, replacement.LastRequest);
@@ -102,7 +102,7 @@ public sealed class CameraActivityLifetimeTests
         using var directory = new TemporaryDirectory();
         var owner = new CameraBoundaryActivity(directory.Path);
         Platform.CurrentActivity = owner;
-        var capture = CameraCapture.TakePhotoAsync();
+        var capture = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken);
         try
         {
             CameraCapture.OnDestroyed(new CameraBoundaryActivity(directory.Path));

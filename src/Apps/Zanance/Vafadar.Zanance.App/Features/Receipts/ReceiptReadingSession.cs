@@ -86,7 +86,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                     RequireCurrent();
                     var recognitionBytes = originalBytes ?? borrowed
                         ?? throw new OperationCanceledException("The original receipt buffer was released before recognition.");
-                    document = await runtime.ReadAsync(recognitionBytes, file.ContentType);
+                    document = await runtime.ReadAsync(recognitionBytes, file.ContentType, invalidated);
                 }
                 finally
                 {

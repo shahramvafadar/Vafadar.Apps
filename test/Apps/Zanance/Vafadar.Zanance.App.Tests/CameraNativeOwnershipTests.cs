@@ -17,7 +17,7 @@ public sealed class CameraNativeOwnershipTests
     {
         using var directory = new TemporaryDirectory();
         var activity = new CameraBoundaryActivity(directory.Path); Platform.CurrentActivity = activity;
-        var first = CameraCapture.TakePhotoAsync(); var second = CameraCapture.TakePhotoAsync();
+        var first = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken); var second = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken);
         try
         {
             Assert.True(second.IsFaulted);
@@ -43,8 +43,8 @@ public sealed class CameraNativeOwnershipTests
         var activity = new CameraBoundaryActivity(directory.Path) { ThrowOnLaunch = true }; Platform.CurrentActivity = activity;
         try
         {
-            await Assert.ThrowsAsync<Android.Content.ActivityNotFoundException>(() => CameraCapture.TakePhotoAsync());
-            activity.ThrowOnLaunch = false; var next = CameraCapture.TakePhotoAsync();
+            await Assert.ThrowsAsync<Android.Content.ActivityNotFoundException>(() => CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken));
+            activity.ThrowOnLaunch = false; var next = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken);
             Assert.False(next.IsCompleted); Assert.Equal(2, activity.Launches);
             Assert.True(CameraCapture.OnActivityResult(activity, activity.LastRequest, Result.Canceled));
             Assert.Null(await next.WaitAsync(TimeSpan.FromSeconds(3), TestContext.Current.CancellationToken));
@@ -60,7 +60,7 @@ public sealed class CameraNativeOwnershipTests
         var activity = new CameraBoundaryActivity(directory.Path); Platform.CurrentActivity = activity;
         try
         {
-            var capture = CameraCapture.TakePhotoAsync(); var output = activity.LastOutput!.AbsolutePath;
+            var capture = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken); var output = activity.LastOutput!.AbsolutePath;
             byte[] expected = [0xFF, 0xD8, 0x45, 0x58, 0x01, 0xFF, 0xD9];
             await File.WriteAllBytesAsync(output, expected, TestContext.Current.CancellationToken);
             Assert.True(CameraCapture.OnActivityResult(activity, activity.LastRequest, Result.Ok));
@@ -78,12 +78,12 @@ public sealed class CameraNativeOwnershipTests
         var activity = new CameraBoundaryActivity(directory.Path); Platform.CurrentActivity = activity;
         try
         {
-            var capture = CameraCapture.TakePhotoAsync(); var output = activity.LastOutput!.AbsolutePath;
+            var capture = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken); var output = activity.LastOutput!.AbsolutePath;
             await File.WriteAllBytesAsync(output, new byte[] { 1, 2, 3 }, TestContext.Current.CancellationToken);
             Assert.False(CameraCapture.OnActivityResult(activity, activity.LastRequest + 1, Result.Ok)); Assert.False(capture.IsCompleted);
             Assert.True(CameraCapture.OnActivityResult(activity, activity.LastRequest, Result.Canceled));
             Assert.Null(await capture.WaitAsync(TimeSpan.FromSeconds(3), TestContext.Current.CancellationToken)); Assert.False(File.Exists(output));
-            var next = CameraCapture.TakePhotoAsync(); Assert.False(next.IsCompleted); Assert.Equal(2, activity.Launches);
+            var next = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken); Assert.False(next.IsCompleted); Assert.Equal(2, activity.Launches);
             CameraCapture.OnActivityResult(activity, activity.LastRequest, Result.Canceled);
             Assert.Null(await next.WaitAsync(TimeSpan.FromSeconds(3), TestContext.Current.CancellationToken));
         }
@@ -98,12 +98,12 @@ public sealed class CameraNativeOwnershipTests
         var activity = new CameraBoundaryActivity(directory.Path); Platform.CurrentActivity = activity;
         try
         {
-            var capture = CameraCapture.TakePhotoAsync(); var output = activity.LastOutput!.AbsolutePath;
+            var capture = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken); var output = activity.LastOutput!.AbsolutePath;
             await using (var file = File.Create(output)) file.SetLength(Presentation.AttachmentFiles.MaxSourceBytes + 1L);
             CameraCapture.OnActivityResult(activity, activity.LastRequest, Result.Ok);
             await Assert.ThrowsAsync<InvalidDataException>(() => capture);
             Assert.False(File.Exists(output));
-            var next = CameraCapture.TakePhotoAsync(); Assert.False(next.IsCompleted); Assert.Equal(2, activity.Launches);
+            var next = CameraCapture.TakePhotoAsync(TestContext.Current.CancellationToken); Assert.False(next.IsCompleted); Assert.Equal(2, activity.Launches);
             CameraCapture.OnActivityResult(activity, activity.LastRequest, Result.Canceled);
             Assert.Null(await next.WaitAsync(TimeSpan.FromSeconds(3), TestContext.Current.CancellationToken));
         }

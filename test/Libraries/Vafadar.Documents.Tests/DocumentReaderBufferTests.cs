@@ -15,7 +15,7 @@ namespace Vafadar.Documents.Tests
             TextRecognizer.FailOnRead = false;
             try
             {
-                await DocumentReader.ReadDocumentAsync(source, "image/jpeg");
+                await DocumentReader.ReadDocumentAsync(source, "image/jpeg", TestContext.Current.CancellationToken);
 
                 Assert.Equal(new byte[] { 4, 5, 6 }, Assert.Single(TextRecognizer.Reads));
                 Assert.All(prepared, value => Assert.Equal(0, value));
@@ -35,7 +35,7 @@ namespace Vafadar.Documents.Tests
             TextRecognizer.FailOnRead = true;
             try
             {
-                var layout = await DocumentReader.ReadDocumentAsync(source, "application/pdf");
+                var layout = await DocumentReader.ReadDocumentAsync(source, "application/pdf", TestContext.Current.CancellationToken);
 
                 Assert.Null(layout.Text);
                 Assert.Equal(new byte[] { 6, 7 }, Assert.Single(TextRecognizer.Reads));
@@ -44,6 +44,43 @@ namespace Vafadar.Documents.Tests
                 Assert.Equal(expected, source);
             }
             finally { PdfPageImages.Images = []; TextRecognizer.Reads = []; TextRecognizer.FailOnRead = false; }
+        }
+
+        [Fact]
+        public async Task Cancelled_scan_waits_for_active_page_and_does_not_read_the_next_page()
+        {
+            var source = MinimalPdf.Create([[], []]);
+            var expected = source.ToArray();
+            byte[] first = [6, 7], second = [8, 9];
+            var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            var release = new TaskCompletionSource<IReadOnlyList<LayoutWord>>(TaskCreationOptions.RunContinuationsAsynchronously);
+            using var retired = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
+            PdfPageImages.Images = [first, second];
+            TextRecognizer.Reads = [];
+            TextRecognizer.Read = () => { entered.TrySetResult(); return release.Task; };
+            var reading = DocumentReader.ReadDocumentAsync(source, "application/pdf", retired.Token);
+            try
+            {
+                await entered.Task.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
+                await retired.CancelAsync();
+                Assert.False(reading.IsCompleted);
+                Assert.Equal(new byte[] { 6, 7 }, first);
+
+                release.SetResult([]);
+                await Assert.ThrowsAnyAsync<OperationCanceledException>(() => reading);
+
+                Assert.Equal(new byte[] { 6, 7 }, Assert.Single(TextRecognizer.Reads));
+                Assert.All(first, value => Assert.Equal(0, value));
+                Assert.All(second, value => Assert.Equal(0, value));
+                Assert.Equal(expected, source);
+            }
+            finally
+            {
+                release.TrySetResult([]);
+                PdfPageImages.Images = [];
+                TextRecognizer.Reads = [];
+                TextRecognizer.Read = null;
+            }
         }
     }
 }
@@ -71,10 +108,12 @@ namespace Vafadar.Documents.Maui
     {
         internal static bool IsSupported => true;
         internal static bool FailOnRead;
+        internal static Func<Task<IReadOnlyList<LayoutWord>>>? Read;
         internal static List<byte[]> Reads = [];
         internal static Task<IReadOnlyList<LayoutWord>> RecognizeAsync(byte[] image)
         {
             Reads.Add(image.ToArray());
+            if (Read is { } read) return read();
             return FailOnRead
                 ? Task.FromException<IReadOnlyList<LayoutWord>>(new IOException("Synthetic OCR failure."))
                 : Task.FromResult<IReadOnlyList<LayoutWord>>([]);

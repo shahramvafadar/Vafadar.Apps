@@ -100,7 +100,8 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
         });
     }
     /// <inheritdoc />
-    public Task<TextLayoutResult> ReadAsync(byte[] data, string contentType) => DocumentReader.ReadDocumentAsync(data, contentType);
+    public Task<TextLayoutResult> ReadAsync(byte[] data, string contentType, CancellationToken ct) =>
+        DocumentReader.ReadDocumentAsync(data, contentType, ct);
     /// <inheritdoc />
     public Task AlertAsync(string title, string message, string cancel) => interaction.AlertAsync(title, message, cancel);
     /// <inheritdoc />

@@ -42,14 +42,21 @@ public sealed class ReceiptWorkFlowTests
         internal byte[]? Recognition;
         internal byte[]? RecognitionAtRead;
         internal string? RecognizedContentType;
+        internal CancellationToken OriginToken, RecognitionToken;
         internal Func<Task>? DuringPick, DuringRead, DuringAlert, DuringOpen;
         internal bool AllowUnlock = true;
         internal List<string> Alerts = [];
         internal List<ReceiptDraft> Drafts = [];
         public async Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin) { Picked++; if (DuringPick is not null) await DuringPick(); return File; }
+        public ReceiptReadOrigin CaptureOrigin() => new(() => true, OriginToken);
         public Task RunWhenUnlockedAsync(Func<Task> action) { Unlocked++; return AllowUnlock ? action() : Task.CompletedTask; }
-        public async Task<TextLayoutResult> ReadAsync(byte[] data, string contentType)
-        { Read++; Recognition = data; RecognitionAtRead = data.ToArray(); RecognizedContentType = contentType; if (DuringRead is not null) await DuringRead(); return Document; }
+        public async Task<TextLayoutResult> ReadAsync(byte[] data, string contentType, CancellationToken ct)
+        {
+            Read++; Recognition = data; RecognitionAtRead = data.ToArray(); RecognizedContentType = contentType;
+            RecognitionToken = ct;
+            if (DuringRead is not null) await DuringRead();
+            return Document;
+        }
         public async Task AlertAsync(string title, string message, string cancel)
         { Alerts.Add(message); if (DuringAlert is not null) { var action = DuringAlert; DuringAlert = null; await action(); } }
         public async Task OpenEditorAsync(ReceiptDraft draft) { if (DuringOpen is not null) await DuringOpen(); Drafts.Add(draft); }
@@ -362,6 +369,31 @@ public sealed class ReceiptWorkFlowTests
         await session.ReadAttachmentAsync(entry.Id, file.Id, () => current);
         Assert.Equal(1, native.Read); Assert.Equal(0, native.Picked); Assert.Empty(native.Drafts); Assert.Empty(native.Alerts);
         Assert.Null(session.Error); Assert.False(session.IsBusy); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+    }
+
+    [Fact]
+    public async Task Original_page_cancels_the_ocr_token_and_retires_the_prepared_receipt()
+    {
+        using var f = new FlowFixture();
+        using var provider = Provider(f, new Access());
+        using var retirement = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        var native = new Native { OriginToken = retirement.Token };
+        native.DuringRead = async () =>
+        {
+            await retirement.CancelAsync();
+            native.RecognitionToken.ThrowIfCancellationRequested();
+        };
+        var session = Session(f, provider, native);
+
+        await session.PickAsync();
+
+        Assert.Equal(retirement.Token, native.RecognitionToken);
+        Assert.Equal(1, native.Read);
+        Assert.All(native.File!.Data, value => Assert.Equal(0, value));
+        Assert.All(native.File.RecognitionData!, value => Assert.Equal(0, value));
+        Assert.Empty(native.Drafts);
+        Assert.Empty(native.Alerts);
+        Assert.False(session.IsBusy);
     }
 
     [Fact][Trait("AT", "AT-426")]

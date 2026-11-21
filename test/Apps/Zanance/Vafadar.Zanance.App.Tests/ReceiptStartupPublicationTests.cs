@@ -129,7 +129,7 @@ public sealed class ReceiptStartupPublicationTests
         { Captured++; var epoch = Epoch; return new(() => epoch == Epoch, Invalidated, () => Released++); }
         public Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin) { Picks++; return Task.FromResult<ReceiptPickedFile?>(null); }
         public Task RunWhenUnlockedAsync(Func<Task> action) => action();
-        public Task<TextLayoutResult> ReadAsync(byte[] data, string contentType) => throw new InvalidOperationException("D952 recognition must remain unreachable");
+        public Task<TextLayoutResult> ReadAsync(byte[] data, string contentType, CancellationToken ct) => throw new InvalidOperationException("D952 recognition must remain unreachable");
         public Task AlertAsync(string title, string message, string cancel) { Alerts++; return Task.CompletedTask; }
         public Task OpenEditorAsync(ReceiptDraft draft) => throw new InvalidOperationException("D952 editor must remain unreachable");
     }

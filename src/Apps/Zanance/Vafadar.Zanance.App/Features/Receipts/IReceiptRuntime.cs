@@ -39,7 +39,7 @@ public interface IReceiptRuntime
     /// <summary>Retains only unfinished presentation at the current drain's head when access closed during a read.</summary>
     bool RetainPublicationIfLocked(Func<Task> continuation) => false;
     /// <summary>Uses the original native OCR/PDF reader, preserving source layout ambiguity.</summary>
-    Task<TextLayoutResult> ReadAsync(byte[] data, string contentType);
+    Task<TextLayoutResult> ReadAsync(byte[] data, string contentType, CancellationToken ct);
     /// <summary>Shows translated feedback in the actual application window.</summary>
     Task AlertAsync(string title, string message, string cancel);
     /// <summary>Opens the original new or existing entry editor without saving financial data.</summary>

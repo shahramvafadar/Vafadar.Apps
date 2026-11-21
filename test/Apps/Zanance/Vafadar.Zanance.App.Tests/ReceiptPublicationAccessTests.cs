@@ -39,7 +39,7 @@ public sealed class ReceiptPublicationAccessTests
             var retained = gate.RetainCurrentDestinationIfLocked(continuation);
             if (retained) Deferred.TrySetResult(); return retained;
         }
-        public async Task<TextLayoutResult> ReadAsync(byte[] data, string contentType)
+        public async Task<TextLayoutResult> ReadAsync(byte[] data, string contentType, CancellationToken ct)
         { Reads++; if (DuringRead is not null) await DuringRead(); return Document; }
         public async Task AlertAsync(string title, string message, string cancel)
         { Alerts++; if (gate.IsLocked) AlertedWhileLocked++; if (DuringAlert is not null) { var once = DuringAlert; DuringAlert = null; await once(); } }
