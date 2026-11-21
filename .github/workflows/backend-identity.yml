@@ -43,6 +43,10 @@ jobs:
       DOTNET_NOLOGO: true
       ZANANCE_TEST_DB: Host=127.0.0.1;Port=55473;Database=zanance_identity_ci;Username=postgres
       ZANANCE_TEST_CONTAINER: zanance-backend-ci
+      ZANANCE_IDENTITY_REMOVAL_TEST_DB: Host=127.0.0.1;Port=55488;Database=zanance_identity_removal_fixture;Username=postgres
+      ZANANCE_IDENTITY_REMOVAL_TEST_ROOT: ${{ github.workspace }}/artifacts/identity-removal-ci
+      ZANANCE_DELETE_REQUEST_FIXTURE_DB: Host=127.0.0.1;Port=55489;Database=zanance_delete_request_fixture;Username=postgres
+      ZANANCE_DELETE_REQUEST_FIXTURE_ROOT: ${{ github.workspace }}/artifacts/deletion-request-ci
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-dotnet@v6
@@ -50,7 +54,7 @@ jobs:
           global-json-file: global.json
       - name: Prepare isolated PostgreSQL build dependency
         run: |
-          docker run -d --name zanance-backend-ci -p 127.0.0.1:55473:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_identity_ci postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
+          docker run -d --name zanance-backend-ci -p 127.0.0.1:55473:5432 -p 127.0.0.1:55488:5432 -p 127.0.0.1:55489:5432 --tmpfs /var/lib/postgresql -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=zanance_identity_ci postgres@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15
           # The image bootstrap server accepts Unix sockets before the final TCP server starts.
           for attempt in $(seq 1 30); do
             if docker exec zanance-backend-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_ci; then break; fi
@@ -58,6 +62,11 @@ jobs:
           done
           docker exec zanance-backend-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_ci
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE ROLE zanance_runtime LOGIN'
+          docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_identity_removal_fixture'
+          docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_request_fixture'
+          mkdir -p "$ZANANCE_IDENTITY_REMOVAL_TEST_ROOT" "$ZANANCE_DELETE_REQUEST_FIXTURE_ROOT"
+          printf '%s' 'Zanance fictional identity removal fixture' > "$ZANANCE_IDENTITY_REMOVAL_TEST_ROOT/fixture.marker"
+          printf '%s' 'Zanance fictional deletion request fixture' > "$ZANANCE_DELETE_REQUEST_FIXTURE_ROOT/fixture.marker"
       - name: Publish security-patched independent test runtime
         run: dotnet publish test/Apps/Zanance/Vafadar.Zanance.Api.Tests/Vafadar.Zanance.Api.Tests.csproj --configuration Release -r linux-x64 --self-contained true -p:RuntimeFrameworkVersion=10.0.15 -p:ContinuousIntegrationBuild=true --output artifacts/identity-test-runtime
       - name: Verify actual identity, private storage and isolated restore
