@@ -165,6 +165,25 @@ when given the project's resolved SDK AAPT2 path. The derived APK is unsigned
 and was inspected without installing it. This does not inspect APK splits
 generated or signed by Play.
 
+### External component inventory for the signed offline APK
+
+The signed APK used for the Android 16 goal opt-out check, SHA-256
+`c6c1235324cb33626393c8231b981bbce05aca80895fe4e6cd2aac457020e4c4`,
+declares 24 manifest components. Three are explicitly exported, 20 explicitly
+set `exported=false`, and the remaining service, `KeepAliveService`,
+omits the attribute and has no intent filter. No provider is exported.
+
+| Explicitly exported component | Manifest boundary |
+|---|---|
+| Zanance `MainActivity` | One launcher filter. The widget route in source accepts only Expense, Income or Transfer and opens an editor. |
+| Zanance `QuickAddWidget` | One widget-update filter. The source renders localized labels without amounts, uses immutable pending intents and leaves entry actions to the app. |
+| AndroidX `ProfileInstallReceiver` | The manifest requires `android.permission.DUMP` and lists four profile-maintenance filters. |
+
+The decoded manifest and all 24 declarations are retained in
+`artifacts/goal-ai-toggle-native-bd0938b3`. The inventory records packaged
+declarations and the two Zanance source boundaries. Runtime sender admission,
+online-edition traffic and the final Play artifact remain separate checks.
+
 ```powershell
 ./eng/tests/AndroidPrivacy.Tests.ps1
 ./eng/scripts/Build-AndroidApk.ps1 -Offline -Output artifacts/android-offline
