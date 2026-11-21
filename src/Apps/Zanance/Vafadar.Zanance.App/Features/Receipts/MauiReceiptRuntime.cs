@@ -31,7 +31,7 @@ public sealed class MauiReceiptRuntime(Translator translator, AppLockService app
                 showLatinImageHelp: false,
 #endif
                 origin, appLock.RunWhenUnlockedAsync, appLock.RetainCurrentDestinationIfLocked,
-                async () => Convert(await PermissionPrompts.TakePhotoAsync(translator) is { } photo
+                async () => Convert(await PermissionPrompts.TakePhotoAsync(translator, invalidated) is { } photo
                     ? await AttachmentFiles.FromCameraAsync(translator["Camera_PhotoName"], photo) : null),
                 async () => Convert(await AttachmentFiles.PickAsync(translator["Attachment_Pick"], RequireCurrent,
                     forRecognition: true, ct: invalidated)),

@@ -6415,3 +6415,20 @@ without issuing a previous test input again.
 The signed offline Release APK passed the canonical package verification
 with SHA-256 `412c4824c821232d9aec807e3d36da946f2d5095ad01b8693a02f643103f2dfa`.
 The native review covered Back with the original activity still alive.
+
+## Android receipt camera caller retirement (2026-11-21)
+
+The original receipt source now passes its invalidation token to camera
+capture and the bounded source read. A cancelled caller stops waiting while
+the original camera activity retains the capture slot and temporary output
+path. Cleanup releases the slot after the native response.
+
+One isolated Android 16 x86-64 Debug fixture invoked the original camera
+adapter. With Camera2 still in the foreground, the managed wait cancelled and
+a competing capture was refused. Back finished that original camera window.
+The same process then opened a second camera window and completed it with
+Back. The camera cache contained zero files at the end. The scenario took
+zero photos and invoked zero financial actions. The dedicated package and AVD
+were retired. The evidence covers the cancellation branch with a live
+activity. Earlier accepted photo flows retain their original evidence.
+Strict Windows and offline Android Release builds passed without warnings.

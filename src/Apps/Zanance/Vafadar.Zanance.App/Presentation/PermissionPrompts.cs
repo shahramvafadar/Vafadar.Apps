@@ -96,15 +96,17 @@ internal static class PermissionPrompts
     /// camera may not be used. Android uses the system camera app, which needs no permission of Zanance; iOS asks with
     /// the usage description of Info.plist, and leads to the settings once access was refused.
     /// </summary>
-    public static async Task<byte[]?> TakePhotoAsync(Translator translator)
+    public static async Task<byte[]?> TakePhotoAsync(Translator translator, CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
 #if ANDROID
         try
         {
-            return await CameraCapture.TakePhotoAsync();
+            return await CameraCapture.TakePhotoAsync(ct);
         }
         catch (Android.Content.ActivityNotFoundException)
         {
+            ct.ThrowIfCancellationRequested();
             await Shell.Current.DisplayAlertAsync(translator["Receipt_Title"], translator["Camera_NotAvailable"], translator["Common_Ok"]);
             return null;
         }
@@ -128,7 +130,7 @@ internal static class PermissionPrompts
             }
 
             await using var stream = await file.OpenReadAsync();
-            return await AttachmentFiles.ReadSourceAsync(stream);
+            return await AttachmentFiles.ReadSourceAsync(stream, ct);
         }
         catch (PermissionException)
         {

@@ -71,11 +71,12 @@ internal static partial class AttachmentFiles
     internal const int MaxSourceBytes = 64 * 1024 * 1024;
 
     /// <summary>Reads the original owned camera output after native acceptance; it never deletes or changes that file.</summary>
-    internal static async Task<byte[]> ReadCameraSourceAsync(string path)
+    internal static async Task<byte[]> ReadCameraSourceAsync(string path, CancellationToken ct = default)
     {
         // D-613: an external camera can grow its output after the adapter's early stat; bound actual reads too.
+        ct.ThrowIfCancellationRequested();
         await using var stream = File.OpenRead(path);
-        return await ReadSourceAsync(stream);
+        return await ReadSourceAsync(stream, ct);
     }
 
     /// <summary>Reads a picked/captured source with an encoded-byte bound, including non-seekable picker streams.</summary>

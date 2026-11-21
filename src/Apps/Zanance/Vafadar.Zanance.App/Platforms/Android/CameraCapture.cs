@@ -28,52 +28,69 @@ internal static class CameraCapture
     /// <summary>Returns the photo, or <see langword="null"/> when the user went back without taking one.</summary>
     /// <exception cref="ActivityNotFoundException">No camera app is installed.</exception>
     /// <exception cref="InvalidOperationException">Another capture still owns the native result, or no activity is available.</exception>
-    public static async Task<byte[]?> TakePhotoAsync()
+    public static async Task<byte[]?> TakePhotoAsync(CancellationToken ct = default)
     {
+        ct.ThrowIfCancellationRequested();
         // D-804: the native request code belongs to one operation through file cleanup.
         // A second caller must not cancel its predecessor or redirect that predecessor's result.
         if (!CaptureOwner.Wait(0))
             throw new InvalidOperationException("Another camera capture is already pending.");
+        Pending? own = null;
+        Java.IO.File? file = null;
+        var launched = false;
+        var received = false;
         try
         {
             var activity = Platform.CurrentActivity ?? throw new InvalidOperationException("No activity to start the camera from.");
             if (_requestCode >= LastRequestCode)
                 throw new InvalidOperationException("The camera request identity range is exhausted.");
-            var own = new Pending(activity, ++_requestCode, new(TaskCreationOptions.RunContinuationsAsynchronously));
-            var folder = new Java.IO.File(activity.CacheDir, Presentation.AttachmentCache.CameraDirectoryName);
+            own = new Pending(activity, ++_requestCode, new(TaskCreationOptions.RunContinuationsAsynchronously));
+            using var folder = new Java.IO.File(activity.CacheDir, Presentation.AttachmentCache.CameraDirectoryName);
             folder.Mkdirs();
-            var file = new Java.IO.File(folder, $"{Guid.NewGuid():N}.jpg");
-            try
-            {
-                var uri = AndroidX.Core.Content.FileProvider.GetUriForFile(activity, $"{activity.PackageName}.camera", file);
-                var intent = new Intent(MediaStore.ActionImageCapture);
-                intent.PutExtra(MediaStore.ExtraOutput, uri);
-                intent.AddFlags(ActivityFlags.GrantWriteUriPermission | ActivityFlags.GrantReadUriPermission);
+            file = new Java.IO.File(folder, $"{Guid.NewGuid():N}.jpg");
+            using var uri = AndroidX.Core.Content.FileProvider.GetUriForFile(activity, $"{activity.PackageName}.camera", file);
+            using var intent = new Intent(MediaStore.ActionImageCapture);
+            intent.PutExtra(MediaStore.ExtraOutput, uri);
+            intent.AddFlags(ActivityFlags.GrantWriteUriPermission | ActivityFlags.GrantReadUriPermission);
 
-                Volatile.Write(ref _pending, own);
-                activity.StartActivityForResult(intent, own.Code);
-                if (!await own.Completion.Task || !file.Exists() || file.Length() == 0)
-                {
-                    return null;
-                }
+            ct.ThrowIfCancellationRequested();
+            Volatile.Write(ref _pending, own);
+            activity.StartActivityForResult(intent, own.Code);
+            launched = true;
+            var accepted = await own.Completion.Task.WaitAsync(ct);
+            received = true;
+            ct.ThrowIfCancellationRequested();
+            if (!accepted || !file.Exists() || file.Length() == 0)
+                return null;
 
-                if (file.Length() > Presentation.AttachmentFiles.MaxSourceBytes)
-                {
-                    throw new InvalidDataException("The camera source file is too large.");
-                }
-
-                return await Presentation.AttachmentFiles.ReadCameraSourceAsync(file.AbsolutePath);
-            }
-            finally
-            {
-                Interlocked.CompareExchange(ref _pending, null, own);
-                file.Delete();
-            }
+            if (file.Length() > Presentation.AttachmentFiles.MaxSourceBytes)
+                throw new InvalidDataException("The camera source file is too large.");
+            return await Presentation.AttachmentFiles.ReadCameraSourceAsync(file.AbsolutePath, ct);
         }
         finally
         {
-            CaptureOwner.Release();
+            // A retired page can stop waiting before the camera returns. The original
+            // callback still owns the output path and the slot until cleanup completes.
+            if (launched && !received && own is not null) _ = DrainAbandonedCaptureAsync(own, file);
+            else Release(own, file);
         }
+    }
+
+    private static async Task DrainAbandonedCaptureAsync(Pending own, Java.IO.File? file)
+    {
+        try { await own.Completion.Task; }
+        catch (OperationCanceledException) { /* The original Activity was destroyed. */ }
+        finally { Release(own, file); }
+    }
+
+    private static void Release(Pending? own, Java.IO.File? file)
+    {
+        try
+        {
+            if (own is not null) Interlocked.CompareExchange(ref _pending, null, own);
+            using (file) file?.Delete();
+        }
+        finally { CaptureOwner.Release(); }
     }
 
     /// <summary>Completes a pending capture; returns whether the result belonged to it.</summary>

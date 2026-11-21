@@ -3,6 +3,7 @@
 - In signed-in Personal Sync and the store account screen, check an account deletion request or confirm your password to submit one and see its pending receipt.
 - Open the web status form from a hosted deletion receipt to check it after account closure.
 - Android releases cancelled file-selection requests promptly and waits for the open system picker to close before opening another.
+- Android ends the receipt camera wait when its original request is cancelled and cleans up the temporary file after the camera returns.
 
 - D-1240: the Windows development build compiles its source-built encrypted-storage library with the newer Microsoft compiler tool set 14.52.37025 on current GitHub runners; storage format, keys and app behavior are unchanged.
 
