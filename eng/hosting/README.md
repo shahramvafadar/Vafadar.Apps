@@ -84,6 +84,14 @@ keeps the complete private snapshot only inside Docker. Resume with `start` afte
 Before copying and before publishing a completed snapshot, the operator checks
 that the original clients are still drained. An independent live private-volume
 mount or a changed deletion-marker inventory prevents publication.
+
+The isolated Docker qualification of `2180409e` exercised this refusal
+with the packaged `0a11729f` service. A synthetic pending request and its
+matching marker were added after the actual database dump, before the
+private archive was copied. The operator rejected the changed inventory
+and left both archives without a completion receipt. The source API and
+proxy remained stopped. The fixture and its incomplete snapshot were
+retired. Evidence is in `artifacts/zanance-private-backup-change-2180409e`.
 `restore --snapshot NAME --project zanance-selfhost-RESTORE --port 14544 --subnet 172.29.84.0/24` requires a fresh
 separate target and free checked subnet/port; source and snapshot remain intact. Snapshot manifests retain exact
 runtime image IDs. Images must remain locally available or be rebuilt/qualified before an upgrade. Never prune
