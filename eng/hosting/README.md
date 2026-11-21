@@ -135,8 +135,12 @@ Before the restored service starts, a deletion-v1 image runs its offline --merge
 
 Account identity erasure publishes a separate opaque receipt marker before the
 database commit. Restore transfers these exact markers from the stopped latest
-source using an image labeled `pro.vafadar.zanance.account-privacy=receipt-fence-v2`.
-The v1 image can serve only its original receipt-only marker format.
+source using an image with the matching `pro.vafadar.zanance.account-privacy`
+capability. The v1 image supports its original receipt-only marker format. The
+v2 image also supports markers bound to the original identity. An independent
+`.analysis-retired` marker requires `receipt-fence-v3`, even when the account
+has no completed identity erasure marker. These markers protect already erased
+analysis content while the rest of account deletion is pending.
 An older image is refused before target creation. A capable application refuses
 to start if any transferred receipt lacks an active-service completion in the
 restored database. This prevents serving a pre-erasure database. When the isolated

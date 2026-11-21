@@ -61,12 +61,29 @@ class GatewayTests(unittest.TestCase):
               patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
               patch.object(operate, '_volume', return_value='original-private') as volume,
               patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.household-privacy': 'deletion-v1'}),
-              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'/current/account-deletions/fictitious.receipt\n']),
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'account\n']),
               patch.object(operate, '_exists') as exists):
             with self.assertRaisesRegex(RuntimeError, 'cannot enforce current account deletions'):
                 operate._restore(args, 'sha256:' + '1' * 64)
             volume.assert_called_once_with('zanance-selfhost-source', 'private')
             exists.assert_not_called()
+
+    def test_analysis_retirement_marker_alone_refuses_an_older_receipt_fence(self):
+        args = argparse.Namespace(snapshot='zanance-hosting-snapshot-test', project='zanance-selfhost-target',
+                                  public=False, gateway='direct')
+        manifest = {'SourceProject': 'zanance-selfhost-source', 'Quiesced': True, 'Images': {'api': 'sha256:' + '2' * 64}}
+        with (patch.object(operate, '_manifest', return_value=manifest),
+              patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
+              patch.object(operate, '_volume', return_value='original-private'),
+              patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.account-privacy': 'receipt-fence-v2'}),
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'analysis\n']) as run,
+              patch.object(operate, '_exists') as exists,
+              patch.object(operate, '_compose') as compose):
+            with self.assertRaisesRegex(RuntimeError, 'cannot enforce current analysis retirements'):
+                operate._restore(args, 'sha256:' + '1' * 64)
+            self.assertIn('*.analysis-retired', run.call_args.args[0][-1])
+            exists.assert_not_called()
+            compose.assert_not_called()
 
     def test_restore_runs_confirmed_account_reconciliation_before_starting_api(self):
         """An unfinished retirement aborts before worker startup and preserves restore continuation."""
@@ -77,7 +94,7 @@ class GatewayTests(unittest.TestCase):
         images = {'api': 'sha256:' + '2' * 64, 'database': 'sha256:' + '3' * 64}
         manifest = {'SourceProject': source, 'Quiesced': True, 'Images': images}
         labels = {'pro.vafadar.zanance.household-privacy': 'deletion-v1',
-                  'pro.vafadar.zanance.account-privacy': 'receipt-fence-v2'}
+                  'pro.vafadar.zanance.account-privacy': 'receipt-fence-v3'}
         for unfinished in (False, True):
             with self.subTest(unfinished=unfinished):
                 state = {'Snapshot': args.snapshot, 'Target': args.project, 'PrivacySource': source,
@@ -97,12 +114,14 @@ class GatewayTests(unittest.TestCase):
                       patch.object(operate, '_exists', return_value=True),
                       patch.object(operate, '_receipt', return_value=state),
                       patch.object(operate, '_compose', side_effect=compose),
-                      patch.object(operate, '_run', side_effect=[b'database\n', b'', b'fictitious.receipt\n', b'', b'', b'database\n'])):
+                      patch.object(operate, '_run', side_effect=[b'database\n', b'', b'analysis\n', b'', b'', b'database\n']) as run):
                     if unfinished:
                         with self.assertRaisesRegex(RuntimeError, 'Outstanding'):
                             operate._restore(args, 'sha256:' + '1' * 64)
                     else:
                         operate._restore(args, 'sha256:' + '1' * 64)
+                    merge = [command.args[0] for command in run.call_args_list if '--merge-account-deletions' in command.args[0]]
+                    self.assertEqual([['--merge-account-deletions', '/current', '/restored']], [args[-3:] for args in merge])
                 self.assertEqual(['up', '-d', '--wait', 'database'], actions[0])
                 self.assertEqual(['run', '--rm', '--no-deps', 'api', '--reconcile-restored-account-deletions',
                                   '--confirm-isolated-restored-database'], actions[1])
