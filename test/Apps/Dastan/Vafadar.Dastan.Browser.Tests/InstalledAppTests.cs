@@ -42,11 +42,11 @@ public sealed class InstalledAppTests(BrowserSite site) : IClassFixture<BrowserS
             """);
         Assert.Equal(
             [
-                "dastan-shell-1 /_content/Vafadar.Web/vafadar.css",
-                "dastan-shell-1 /app.css",
-                "dastan-shell-1 /fonts/vazirmatn-nl-wght.woff2",
-                "dastan-shell-1 /icon.svg",
-                "dastan-shell-1 /offline.html",
+                "dastan-shell-2 /_content/Vafadar.Web/vafadar.css",
+                "dastan-shell-2 /app.css",
+                "dastan-shell-2 /favicon.svg",
+                "dastan-shell-2 /fonts/vazirmatn-nl-wght.woff2",
+                "dastan-shell-2 /offline.html",
             ],
             kept);
 

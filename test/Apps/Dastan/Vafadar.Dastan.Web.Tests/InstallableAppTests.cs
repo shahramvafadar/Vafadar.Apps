@@ -35,7 +35,12 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
         var icons = root.GetProperty("icons").EnumerateArray().ToList();
         Assert.Contains(icons, icon => icon.GetProperty("sizes").GetString() == "192x192" && icon.GetProperty("purpose").GetString() == "any");
         Assert.Contains(icons, icon => icon.GetProperty("sizes").GetString() == "512x512" && icon.GetProperty("purpose").GetString() == "any");
+        Assert.Contains(icons, icon => icon.GetProperty("sizes").GetString() == "192x192" && icon.GetProperty("purpose").GetString() == "maskable");
         Assert.Contains(icons, icon => icon.GetProperty("sizes").GetString() == "512x512" && icon.GetProperty("purpose").GetString() == "maskable");
+
+        // An icon for every shape is a file of its own: one drawn for "any" is never offered as "maskable".
+        Assert.Equal(icons.Count, icons.Select(icon => icon.GetProperty("src").GetString()).Distinct().Count());
+        Assert.All(icons, icon => Assert.Equal(icon.GetProperty("purpose").GetString() == "maskable", icon.GetProperty("src").GetString()!.Contains("maskable", StringComparison.Ordinal)));
         foreach (var icon in icons)
         {
             var file = await visitor.Get(icon.GetProperty("src").GetString()!);
@@ -133,7 +138,7 @@ public sealed class InstallableAppTests(DemoSite site) : IClassFixture<DemoSite>
 
         var kept = Regex.Match(worker.Html, "const FILES = \\[(.*?)\\];", RegexOptions.Singleline).Groups[1].Value;
         var files = Regex.Matches(kept, "'([^']+)'").Select(match => match.Groups[1].Value).ToList();
-        Assert.Equal(["/offline.html", "/app.css", "/_content/Vafadar.Web/vafadar.css", "/fonts/vazirmatn-nl-wght.woff2", "/icon.svg"], files);
+        Assert.Equal(["/offline.html", "/app.css", "/_content/Vafadar.Web/vafadar.css", "/fonts/vazirmatn-nl-wght.woff2", "/favicon.svg"], files);
         foreach (var file in files)
         {
             Assert.Equal(HttpStatusCode.OK, (await visitor.Get(file)).Status);

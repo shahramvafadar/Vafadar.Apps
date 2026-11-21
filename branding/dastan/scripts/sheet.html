@@ -1,0 +1,134 @@
+<!doctype html>
+<!-- The comparison sheet of the Dastan logo. build.mjs puts the drawings where the braces are and a browser
+     draws the page into previews/comparison.png, one pixel for a pixel. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; padding: 24px; width: 1452px; background: #fff; color: #1C1B2E; font: 14px/1.4 system-ui, sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 16px; margin: 28px 0 8px; border-top: 1px solid #ddd; padding-top: 12px; }
+  p { margin: 0 0 8px; color: #555; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+  .cell { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+  .cell small { color: #666; font-size: 11px; }
+  .crop { width: 1300px; height: 420px; background: url(data:image/webp;base64,{{reference}}) -150px -170px no-repeat; }
+  .ground { background: #FAF8F3; }
+  .master { width: 1300px; height: 420px; position: relative; }
+  .master .art { position: absolute; left: 35.73px; top: 31.04px; width: 1214px; height: 346px; }
+  .over { position: relative; width: 1300px; height: 420px; }
+  .over .master { position: absolute; inset: 0; mix-blend-mode: difference; }
+  .light { background: #FBFAF7; } .dark { background: #1C1B2E; } .indigo { background: #3B3A8F; } .white { background: #fff; border: 1px solid #ddd; }
+  .pad { padding: 24px; }
+  .pad .art { display: block; height: 80px; width: auto; }
+  .sizes { display: flex; gap: 14px; align-items: flex-end; padding: 12px; }
+  canvas.big { image-rendering: pixelated; }
+  .mask { position: relative; width: 192px; height: 192px; overflow: hidden; }
+  .mask img { display: block; width: 192px; height: 192px; }
+  .mask::after { content: ""; position: absolute; left: 10%; top: 10%; width: 80%; height: 80%; border: 1px dashed #F4B860; border-radius: 50%; box-sizing: border-box; }
+</style>
+</head>
+<body>
+<h1>Dastan logo – reference, vector master, variants, actual sizes</h1>
+<p>Drawn by a browser from the vector master (source/dastan-geometry.json). The reference is the large logo of references/dastan-logo-approved.webp.</p>
+
+<h2>1. The approved reference (pixels)</h2>
+<div class="crop"></div>
+<h2>2. The vector master, at the same size and place</h2>
+<div class="master ground">{{logo-color}}</div>
+<h2>3. One over the other (difference: black where they agree, a light line where an edge differs)</h2>
+<div class="over"><div class="crop"></div><div class="master ground">{{logo-color}}</div></div>
+<p id="measured"></p>
+
+<h2>4. Variants</h2>
+<div class="row">
+  <div class="cell"><div class="pad light">{{logo-color}}</div><small>colour, on the ivory of the site</small></div>
+  <div class="cell"><div class="pad dark">{{logo-white}}</div><small>white, on ink</small></div>
+  <div class="cell"><div class="pad white">{{logo-black}}</div><small>black</small></div>
+</div>
+<div class="row" style="margin-top:16px">
+  <div class="cell"><div class="pad light">{{symbol-indigo}}</div><small>symbol, indigo</small></div>
+  <div class="cell"><div class="pad dark">{{symbol-white}}</div><small>symbol, white</small></div>
+  <div class="cell"><div class="pad white">{{symbol-black}}</div><small>symbol, black</small></div>
+  <div class="cell"><img src="{{app-icon:data}}" width="128" height="128" alt=""><small>app icon</small></div>
+  <div class="cell"><img src="{{maskable:data}}" width="128" height="128" alt=""><small>maskable (whole square)</small></div>
+</div>
+
+<h2>5. The symbol at 16, 20, 24, 32, 48 and 64 pixels – as it is, and six times as large to see the pixels</h2>
+<div class="row" id="actual"></div>
+
+<h2>6. The logo at the heights of a head of a page: 24, 28, 32 and 40 pixels</h2>
+<div class="row">
+  <div class="cell"><div class="sizes light" id="heads-light"></div><small>light</small></div>
+  <div class="cell"><div class="sizes dark" id="heads-dark"></div><small>dark</small></div>
+</div>
+
+<h2>7. The maskable icon as platforms cut it; the dashed circle is the safe zone (radius 40 %)</h2>
+<div class="row">
+  <div class="cell"><div class="mask" style="border-radius:50%"><img src="{{maskable:data}}" alt=""></div><small>circle</small></div>
+  <div class="cell"><div class="mask" style="border-radius:22%"><img src="{{maskable:data}}" alt=""></div><small>rounded square</small></div>
+  <div class="cell"><div class="mask" style="border-radius:38% / 38%"><img src="{{maskable:data}}" alt=""></div><small>squircle, roughly</small></div>
+  <div class="cell"><div class="mask"><img src="{{maskable:data}}" alt=""></div><small>the whole square</small></div>
+</div>
+
+<script>
+  const sources = {
+    'symbol, master': '{{symbol-indigo:data}}', 'symbol, small-size variant': '{{symbol-small:data}}',
+    'icon, master': '{{app-icon:data}}', 'icon, small-size variant': '{{small:data}}',
+  };
+  const logos = { light: '{{logo-color:data}}', dark: '{{logo-white:data}}' };
+  const load = source => new Promise(done => { const image = new Image(); image.onload = () => done(image); image.src = source; });
+  window.ready = (async () => {
+    const actual = document.getElementById('actual');
+    for (const [name, source] of Object.entries(sources)) {
+      const image = await load(source);
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      const [small, large] = [document.createElement('div'), document.createElement('div')];
+      small.className = large.className = 'sizes light';
+      for (const size of [16, 20, 24, 32, 48, 64]) {
+        const width = name.startsWith('icon') ? size : Math.round(size * image.naturalWidth / image.naturalHeight);
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = size;
+        canvas.getContext('2d').drawImage(image, 0, 0, width, size);
+        small.append(canvas);
+        if (size <= 32) {
+          const big = document.createElement('canvas');
+          big.width = width; big.height = size; big.className = 'big';
+          big.style.width = width * 6 + 'px'; big.style.height = size * 6 + 'px';
+          big.getContext('2d').drawImage(canvas, 0, 0);
+          large.append(big);
+        }
+      }
+      const label = document.createElement('small');
+      label.textContent = name;
+      cell.append(small, large, label);
+      actual.append(cell);
+    }
+    for (const [ground, source] of Object.entries(logos)) {
+      const image = await load(source);
+      for (const height of [24, 28, 32, 40]) {
+        const copy = new Image();
+        copy.src = source; copy.height = height; copy.width = Math.round(height * image.naturalWidth / image.naturalHeight);
+        document.getElementById('heads-' + ground).append(copy);
+      }
+    }
+  })();
+
+  // How far the master is from the reference: of the pixels that have ink in either, the share that has it in one only.
+  window.measure = async () => {
+    await window.ready;
+    const crop = { x: 150, y: 170, w: 1300, h: 420 };
+    const reference = await load(getComputedStyle(document.querySelector('.crop')).backgroundImage.slice(5, -2));
+    const master = await load(logos.light);
+    const pixels = (image, x, y, width, height) => { const canvas = document.createElement('canvas'); canvas.width = crop.w; canvas.height = crop.h; const context = canvas.getContext('2d'); context.fillStyle = '#FAF8F3'; context.fillRect(0, 0, crop.w, crop.h); if (width) { context.drawImage(image, x, y, width, height); } else { context.drawImage(image, x, y); } return context.getImageData(0, 0, crop.w, crop.h).data; };
+    const [a, b] = [pixels(reference, -crop.x, -crop.y), pixels(master, 35.73, 31.04, 1214, 346)];
+    let either = 0, apart = 0;
+    for (let index = 0; index < a.length; index += 4) { const [one, other] = [a[index + 1] < 150, b[index + 1] < 150]; if (one || other) { either++; } if (one !== other) { apart++; } }
+    const result = { inkPixels: either, differing: apart, share: Math.round(apart / either * 10000) / 10000 };
+    document.getElementById('measured').textContent = `Measured: ${apart} of ${either} pixels with ink differ (${(result.share * 100).toFixed(2)} %) – the soft edges of the picture.`;
+    return result;
+  };
+</script>
+</body>
+</html>

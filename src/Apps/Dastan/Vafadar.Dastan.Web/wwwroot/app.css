@@ -12,6 +12,8 @@
   --text-muted: #56556b;
   --border: #d9d6e3;
   --accent: #3b3a8f;
+  --logo-symbol: #3b3a8f;
+  --logo-word: #1c1b2e;
   --accent-text: #ffffff;
   --focus: #b45309;
   --mark: #92400e;
@@ -77,6 +79,8 @@
   --text-muted: #b6b4cc;
   --border: #3a3960;
   --accent: #b1b0ff;
+  --logo-symbol: #ffffff;
+  --logo-word: #ffffff;
   --accent-text: #14132a;
   --focus: #fbbf24;
   --mark: #fcd34d;
@@ -97,6 +101,10 @@
     --text-muted: #b6b4cc;
     --border: #3a3960;
     --accent: #b1b0ff;
+    --logo-symbol: #ffffff;
+    --logo-word: #ffffff;
+  --logo-symbol: #ffffff;
+  --logo-word: #ffffff;
     --accent-text: #14132a;
     --focus: #fbbf24;
     --mark: #fcd34d;
@@ -195,12 +203,26 @@ main,
   display: inline-flex;
   align-items: center;
   min-block-size: var(--target);
-  font-family: var(--font-latin);
-  font-size: var(--step-1);
-  font-weight: 700;
-  letter-spacing: 0.01em;
   color: var(--text);
   text-decoration: none;
+}
+
+/* The logo (ADR 0026): as high as a line of the head, as wide as its drawing asks – never stretched. It takes
+   the colours of the brand on a light ground and is white on a dark one. A drawing has no direction of
+   writing: the Latin wordmark reads the same on a Persian page. */
+.logo {
+  display: block;
+  block-size: 1.75rem;
+  inline-size: auto;
+  flex: none;
+}
+
+.logo-symbol {
+  fill: var(--logo-symbol);
+}
+
+.logo-word {
+  fill: var(--logo-word);
 }
 
 /* A small drawing beside words: lines in the colour of the words. */

@@ -421,3 +421,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   tree is said at its top.
 - A large family tree opens much faster: the page of a tree of 500 people asked the database some two thousand
   times and took three and a half seconds before its drawing could begin; it now asks each thing once.
+- Dastan has its logo: a symbol – an open D with a dot and a page – and the name beside it, in the head of every
+  page, as the icon of the tab and of the installed app, and in the picture a link is shown with when it is
+  passed on. On a dark appearance the logo is white.

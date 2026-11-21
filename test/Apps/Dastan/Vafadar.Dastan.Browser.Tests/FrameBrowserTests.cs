@@ -65,6 +65,45 @@ public sealed class FrameBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         Assert.True(tools.Y < name.Y + name.Height && tools.Y + tools.Height > name.Y, "The settings stand in the row of the name.");
         Assert.True(name.X + name.Width <= ways.X && ways.X + ways.Width <= tools.X + 1, "Name, ways and settings follow each other.");
         Assert.Equal("page", await page.Locator(".site-nav a").First.GetAttributeAsync("aria-current"));
+
+        // The name is the logo (ADR 0026): a drawing as wide as its geometry asks for its height, in the indigo
+        // and the ink of the brand on a light ground, in a link that is named once and can be pressed.
+        var logo = (await page.Locator(".wordmark .logo").BoundingBoxAsync())!;
+        Assert.Equal(1214d / 346, logo.Width / logo.Height, 0.02);
+        Assert.InRange(logo.Height, 24, 40);
+        Assert.True(name.Height >= 43.5, $"The logo is pressed in {name.Height} px.");
+        Assert.Equal("Dastan", await page.Locator(".wordmark").GetAttributeAsync("aria-label"));
+        Assert.Equal(["rgb(59, 58, 143)", "rgb(28, 27, 46)"], await page.EvaluateAsync<string[]>("[getComputedStyle(document.querySelector('.logo-symbol')).fill, getComputedStyle(document.querySelector('.logo-word')).fill]"));
+    }
+
+    [Theory]
+    [InlineData("fa", 360)]
+    [InlineData("en", 360)]
+    [InlineData("fa", 1280)]
+    public async Task On_a_dark_ground_the_logo_is_white_and_on_a_Persian_page_it_is_not_turned_around(string language, int width)
+    {
+        var page = await site.Visitor(width: width, dark: true);
+        await page.GotoAsync($"/{language}/");
+
+        Assert.Equal(["rgb(255, 255, 255)", "rgb(255, 255, 255)"], await page.EvaluateAsync<string[]>("[getComputedStyle(document.querySelector('.logo-symbol')).fill, getComputedStyle(document.querySelector('.logo-word')).fill]"));
+
+        // The symbol stands left of the wordmark in every language: the D is a Latin letter and the word is Latin.
+        var places = await page.EvaluateAsync<double[]>("[document.querySelector('.logo-symbol').getBoundingClientRect().right, document.querySelector('.logo-word').getBoundingClientRect().left]");
+        Assert.True(places[0] < places[1], "The symbol stands before the wordmark.");
+        Assert.Equal("none", await page.EvaluateAsync<string>("getComputedStyle(document.querySelector('.logo')).transform"));
+        var logo = (await page.Locator(".wordmark .logo").BoundingBoxAsync())!;
+        Assert.Equal(1214d / 346, logo.Width / logo.Height, 0.02);
+        Assert.False(await page.EvaluateAsync<bool>("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1"), "The page scrolls sideways.");
+
+        // The icon of the tab and the manifest lead to files that are there.
+        var addresses = (await page.EvaluateAsync<string[]>("[...document.querySelectorAll('link[rel~=icon], link[rel=apple-touch-icon]')].map(link => link.href)")).ToList();
+        Assert.Equal(3, addresses.Count);
+        var manifest = await (await page.APIRequest.GetAsync("/manifest.webmanifest")).JsonAsync();
+        addresses.AddRange(manifest!.Value.GetProperty("icons").EnumerateArray().Select(icon => icon.GetProperty("src").GetString()!));
+        foreach (var address in addresses)
+        {
+            Assert.True((await page.APIRequest.GetAsync(address)).Ok, $"{address} is not there.");
+        }
     }
 
     [Theory]
