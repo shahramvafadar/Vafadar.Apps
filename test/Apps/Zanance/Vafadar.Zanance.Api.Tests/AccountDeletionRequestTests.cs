@@ -1185,6 +1185,59 @@ public sealed class AccountDeletionRequestTests
     }
 
     [Fact]
+    public async Task Substituted_pending_mail_directory_blocks_erasure_until_original_path_is_retired()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_pending_mail_fixture";
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "pending-mail-retirement-service"));
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        await db.Database.MigrateAsync(ct);
+        var owner = new ServiceUser { UserName = "pending-mail-deletion@example.invalid" };
+        var receipt = Guid.NewGuid();
+        var now = DateTimeOffset.UtcNow;
+        var challenge = new IdentityChallenge { Id = Guid.NewGuid(), UserId = owner.Id, Purpose = "reset", ExpiresAt = now.AddMinutes(5) };
+        db.Users.Add(owner);
+        db.AccountDeletionRequests.Add(new() { UserId = owner.Id, ReceiptId = receipt, RequestedAt = now });
+        db.Challenges.Add(challenge);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        var mailbox = Path.Combine(storage.Root, "mailbox");
+        var pending = Path.Combine(mailbox, $"{challenge.Id:N}.{Guid.NewGuid():N}.pending");
+        Directory.CreateDirectory(pending);
+        var retained = Path.Combine(pending, "fictional-mail");
+        await File.WriteAllTextAsync(retained, "Fictional retained mail", ct);
+
+        Assert.Equal(AccountIdentityMailRetirementResult.Pending, await AccountIdentityMailRetirement.RunAsync(db, storage, receipt, ct));
+        Assert.True(await db.Challenges.AnyAsync(row => row.Id == challenge.Id && row.Consumed, ct));
+        Assert.Equal("Fictional retained mail", await File.ReadAllTextAsync(retained, ct));
+        Assert.Equal(new(AccountIdentityErasureStatus.DependenciesRemain, AccountDeletionDependencies.IdentityMail),
+            await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, receipt, ct));
+        Assert.False(await db.Set<AccountDeletionCompletion>().AnyAsync(row => row.ReceiptId == receipt, ct));
+
+        File.Delete(retained);
+        Directory.Delete(pending);
+        await File.WriteAllTextAsync(pending, "Fictional ordinary staging file", ct);
+        Assert.Equal(AccountIdentityMailRetirementResult.Retired, await AccountIdentityMailRetirement.RunAsync(db, storage, receipt, ct));
+        Assert.False(File.Exists(pending));
+        Assert.Equal(AccountIdentityErasureStatus.Completed,
+            (await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, receipt, ct)).Status);
+        Assert.False(await db.Users.AnyAsync(row => row.Id == owner.Id, ct));
+    }
+
+    [Fact]
     public async Task Identity_erasure_refuses_unresolved_files_and_revokes_only_the_original_service_account()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");

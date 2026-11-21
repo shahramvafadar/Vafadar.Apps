@@ -61,7 +61,8 @@ public static class AccountIdentityMailRetirement
         try
         {
             if (!RemoveFile(Path.Combine(root, name))) return false;
-            foreach (var path in Directory.EnumerateFiles(root, name + ".*.pending"))
+            // Inspect directories as well so a substituted staging path keeps the challenge pending.
+            foreach (var path in Directory.EnumerateFileSystemEntries(root, name + ".*.pending"))
             {
                 var suffix = Path.GetFileName(path).AsSpan(name.Length);
                 if (suffix.Length == 41 && suffix[0] == '.' && suffix[33..].SequenceEqual(".pending") &&
