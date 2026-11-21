@@ -154,6 +154,31 @@ reconstruct that request only when exactly one existing identity matches and no
 conflicting receipt exists. Unmatched or conflicting identities and legacy
 markers without a pending request stay fenced.
 
+### Standalone analysis marker restore qualification (2026-11-21)
+
+The `db827ec4` service build, image
+`sha256:5aeccc7aa4b73f3e620b25aa5ec3717d857fe431bbad0b7f4af1f481b5bcc310`,
+passed a full local Compose restore with PostgreSQL and the original private
+volume. The source `zanance-selfhost-analysis-marker-src` used one fictional
+completed result with a confirmed provider receipt and a pending account
+deletion. Its snapshot preceded local analysis erasure. After that erasure,
+there was one standalone analysis marker and zero identity completion markers.
+
+The operator merged the marker and reconciled
+`zanance-hosting-snapshot-analysis-marker-review` before starting
+`zanance-selfhost-analysis-marker-dst`. The marker's bytes matched in source
+and target. Both protected content fields were empty in the restored database.
+The original terminal state, charged units, confirmed receipt and pending
+request remained. The restored internal TLS readiness probe passed and the
+proxy was bound to loopback port 14782. The first source launch met exhausted
+automatic Docker address pools. The review continued on explicitly scoped free
+database and edge subnets using the same source project.
+
+Both review stacks are stopped and the snapshot is retained. The qualification
+covers a snapshot containing the original provider confirmation. Public
+deployment, actual provider retention and off-machine disaster recovery remain
+open.
+
 The current API command passed Windows, idempotence, conflict/no-overwrite and invalid-directory cases. The freshly published image zanance-service:d294-household-privacy also ran the exact merge as UID1654, read-only root, no network and no capabilities. The subsequent independent full hosted compose/snapshot lifecycle now also passed, as recorded below; identity-erasure and whole D-294 acceptance remain open. Do not replace or discard the latest original private volume merely to restore an older backup successfully.
 ## D-294 full household hosting lifecycle qualification
 
