@@ -154,23 +154,24 @@ public static class IdentityRoutes
         app.MapGet("/sessions", async (ClaimsPrincipal principal, ServiceDbContext db, CancellationToken ct) =>
             Results.Ok(await db.Sessions.AsNoTracking().Where(s => s.UserId == principal.FindFirstValue(ClaimTypes.NameIdentifier))
                 .Select(s => new { s.Id, s.ExpiresAt, s.Revoked }).ToListAsync(ct))).RequireAuthorization();
-        app.MapDelete("/sessions/{id:guid}", async (Guid id, ClaimsPrincipal principal, ServiceDbContext db, CancellationToken ct) =>
+        app.MapDelete("/sessions/{id:guid}", async (Guid id, ClaimsPrincipal principal, ServiceDbContext db,
+            TimeProvider time, CancellationToken ct) =>
         {
-            var owner = principal.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
-            await Sync.SyncRequestScope.LockOwnerAsync(db, owner, ct);
-            var changed = await db.Sessions.Where(s => s.Id == id && s.UserId == principal.FindFirstValue(ClaimTypes.NameIdentifier))
+            await using var scope = await Sync.SyncRequestScope.OpenAsync(principal, db, time, ct);
+            if (scope is null) return Results.Unauthorized();
+            var changed = await db.Sessions.Where(s => s.Id == id && s.UserId == scope.Owner)
                 .ExecuteUpdateAsync(u => u.SetProperty(s => s.Revoked, true), ct);
-            await tx.CommitAsync(ct);
+            await scope.CommitAsync(ct);
             return changed == 1 ? Results.NoContent() : Results.NotFound();
         }).RequireAuthorization();
-        app.MapPost("/sessions/revoke-all", async (ClaimsPrincipal principal, ServiceDbContext db, CancellationToken ct) =>
+        app.MapPost("/sessions/revoke-all", async (ClaimsPrincipal principal, ServiceDbContext db,
+            TimeProvider time, CancellationToken ct) =>
         {
-            var owner = principal.FindFirstValue(ClaimTypes.NameIdentifier)!;
-            await using var tx = await db.Database.BeginTransactionAsync(ct);
-            await Sync.SyncRequestScope.LockOwnerAsync(db, owner, ct);
-            await db.Sessions.Where(s => s.UserId == principal.FindFirstValue(ClaimTypes.NameIdentifier)).ExecuteUpdateAsync(u => u.SetProperty(s => s.Revoked, true), ct);
-            await tx.CommitAsync(ct);
+            await using var scope = await Sync.SyncRequestScope.OpenAsync(principal, db, time, ct);
+            if (scope is null) return Results.Unauthorized();
+            await db.Sessions.Where(s => s.UserId == scope.Owner)
+                .ExecuteUpdateAsync(u => u.SetProperty(s => s.Revoked, true), ct);
+            await scope.CommitAsync(ct);
             return Results.NoContent();
         }).RequireAuthorization();
     }
