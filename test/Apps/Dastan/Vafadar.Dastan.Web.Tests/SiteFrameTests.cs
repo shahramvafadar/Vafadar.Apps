@@ -71,14 +71,14 @@ public sealed class SiteFrameTests : IDisposable
 
         var (mina, sara) = (await Signed("Mina"), await Signed("Sara"));
         var start = await mina.Get("/en/");
-        Assert.Equal(["./", "account/people", "saved", "search"], Ways(start));
+        Assert.Equal(["./", "account/world", "saved", "search"], Ways(start));
         Assert.Contains("<bdi class=\"name\">Mina</bdi>", start.Html, StringComparison.Ordinal);
-        Assert.Equal("account/people", Current(await mina.Get("/en/account/trees")));
+        Assert.Equal("account/world", Current(await mina.Get("/en/account/trees")));
 
         // Somebody asks: the way to the private space leads to who waits and says how many.
         await mina.Post("/preferences/people/ask", "/en/account/people", ("name", "Sara"), ("kind", "friend"), ("returnUrl", "/en/account/people"));
         var asked = await sara.Get("/en/");
-        Assert.Equal(["./", "account/people#waiting", "saved", "search"], Ways(asked));
+        Assert.Equal(["./", "account/world#waiting", "saved", "search"], Ways(asked));
         Assert.Equal("Discover My World 1 – 1 waiting Saved Search", Words(Nav(asked)));
         Assert.Contains("<span class=\"count\" aria-hidden=\"true\">1</span>", Nav(asked), StringComparison.Ordinal);
     }

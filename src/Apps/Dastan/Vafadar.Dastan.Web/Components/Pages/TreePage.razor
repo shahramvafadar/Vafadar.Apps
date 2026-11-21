@@ -58,410 +58,468 @@ else if (_tree is not null)
         <p class="note" role="status">@T[$"Trees_Said_{_said}"]</p>
     }
 
-    @if (_tree.Publication.AskedOfMe)
+    // What waits for an answer of this visitor stands first and leads to where it is answered.
+    var asked = _tree.Publication.AskedOfMe;
+    var toReview = _tree.Claims.Count(claim => claim.CanReview);
+    var shares = owns || asked || toReview > 0;
+
+    @if (asked || toReview > 0)
     {
-        @* Making public needs the consent of everybody living the tree names (D-053): asked here, of the
-           account a record is, and taken back here – which hides the tree at once (D-055). *@
-        <section id="consent" aria-labelledby="consent-title">
-            <h2 id="consent-title">@T["Tree_Consent_Title"]</h2>
-            <p>@T[_tree.Publication.Consented ? "Tree_Consent_Given" : "Tree_Consent_Asked"]</p>
-            <p class="note">@T["Tree_Consent_Note"]</p>
-            <form method="post" action="@($"{TreeEndpoints.Root}/consent")" class="save">
-                <AntiforgeryToken />
-                <input type="hidden" name="returnUrl" value="@_here" />
-                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                @if (_tree.Publication.Consented)
+        <StateNote Kind="waiting" Text="@T["Tree_Waiting"]">
+            <p class="actions">
+                @if (asked)
                 {
-                    <button type="submit" name="answer" value="take-back">@T["Tree_Consent_TakeBack"]</button>
+                    <a class="action secondary" href="@($"account/trees/{_tree.Tree.Id}#consent")">@T["Tree_Consent_Title"]</a>
                 }
-                else
+                @if (toReview > 0)
                 {
-                    <button type="submit" name="answer" value="agree">@T["Tree_Consent_Agree"]</button>
+                    <a class="action secondary" href="@($"account/trees/{_tree.Tree.Id}#claims")">@T["Tree_Claims_Title"]</a>
                 }
-            </form>
-        </section>
+            </p>
+        </StateNote>
     }
 
-    @if (_placement is not null)
-    {
-        @* The drawing of the tree: the same layout and the same drawing as the family of a collection. *@
-        <section aria-labelledby="drawing-title">
-            <h2 id="drawing-title">@T["Tree_Drawing_Title"]</h2>
-            <ChartStage Id="drawing" Class="stage-fitted" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
-                <GraphView Source="@($"account/trees/{_tree.Tree.Id}/graph.json")" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
-                    <TreeDrawing Tree="_placement">
-                        <Box Context="id">
-                            <span class="graph-entity">
-                                <a class="graph-name" href="@($"account/trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
-                            </span>
-                        </Box>
-                    </TreeDrawing>
-                </GraphView>
-            </ChartStage>
-            <p class="note">@T["Tree_Drawing_Note"]</p>
-        </section>
-    }
+    @* Three tasks, three parts of the page (step 20.11): seeing the tree, changing it, and sharing it. Who may
+       not do one of them is not shown its part – and is offered nothing that leads to it. *@
+    <nav class="task-nav" aria-label="@T["Tree_Tasks"]">
+        <ul class="chips" role="list">
+            <li><a class="chip" href="@($"account/trees/{_tree.Tree.Id}#see")"><Icon Name="family" /><span>@T["Tree_Task_See"]</span></a></li>
+            @if (mayChange)
+            {
+                <li><a class="chip" href="@($"account/trees/{_tree.Tree.Id}#change")"><Icon Name="settings" /><span>@T["Tree_Task_Change"]</span></a></li>
+            }
+            @if (shares)
+            {
+                <li><a class="chip" href="@($"account/trees/{_tree.Tree.Id}#share")"><Icon Name="world" /><span>@T["Tree_Task_Share"]</span></a></li>
+            }
+        </ul>
+    </nav>
 
-    @if (_tree.Claims.Any(claim => claim.CanReview))
-    {
-        <section id="claims" aria-labelledby="claims-title">
-            <h2 id="claims-title">@T["Tree_Claims_Title"]</h2>
-            <p class="note">@T["Tree_Claims_Note"]</p>
-            <ul class="people" role="list">
-                @foreach (var claim in _tree.Claims.Where(claim => claim.CanReview))
+    <section class="task" id="see" aria-labelledby="see-title">
+        <h2 id="see-title">@T["Tree_Task_See"]</h2>
+        <p class="note">@T["Tree_Task_See_Lead"]</p>
+
+        @if (_placement is not null)
+        {
+            @* The drawing of the tree: the same layout and the same drawing as the family of a collection. *@
+            <section aria-labelledby="drawing-title">
+                <h3 id="drawing-title">@T["Tree_Drawing_Title"]</h3>
+                <ChartStage Id="drawing" Class="stage-fitted" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
+                    <GraphView Source="@($"account/trees/{_tree.Tree.Id}/graph.json")" Label="@string.Format(CultureInfo.CurrentCulture, T["Tree_Drawing_Label"], _tree.Tree.Name)">
+                        <TreeDrawing Tree="_placement">
+                            <Box Context="id">
+                                <span class="graph-entity">
+                                    <a class="graph-name" href="@($"account/trees/{_tree.Tree.Id}#person-{id}")" dir="auto">@_tree.Person(id).Name</a>
+                                </span>
+                            </Box>
+                        </TreeDrawing>
+                    </GraphView>
+                </ChartStage>
+                <p class="note">@T["Tree_Drawing_Note"]</p>
+            </section>
+        }
+
+        <section id="people" aria-labelledby="people-title">
+            <h3 id="people-title">@T["Tree_People_Title"]</h3>
+            @Problems("people")
+            @if (_tree.People.IsEmpty)
+            {
+                <p class="note">@T["Tree_People_None"]</p>
+            }
+            else
+            {
+                <ul class="tree-people" role="list">
+                    @foreach (var person in _tree.People)
+                    {
+                        <li id="@($"person-{person.Id}")">
+                            <p><strong><a href="@($"account/trees/{_tree.Tree.Id}/person/{person.Id}")" dir="auto">@person.Name</a></strong> <span class="meta">@Years(person)</span></p>
+                            @if (!person.Parents.IsEmpty)
+                            {
+                                <p class="meta">@T["Tree_Parents"] @Named(person.Parents)</p>
+                            }
+                            @if (!person.Partners.IsEmpty)
+                            {
+                                <p class="meta">@T["Tree_Partners"] @Named(person.Partners)</p>
+                            }
+                            @if (!person.Children.IsEmpty)
+                            {
+                                <p class="meta">@T["Tree_Children"] @Named(person.Children)</p>
+                            }
+                            @{
+                                var waits = _tree.Claims.Any(claim => claim.Mine && claim.Person == person.Id);
+                            }
+                            @if (person.Account is { } account)
+                            {
+                                @* A confirmed claim: the record names the account, and that is all it does (PRIV-004). *@
+                                <p class="meta">@T["Tree_Claim_Is"] <a href="@($"people/{account.Id}")"><bdi>@account.Name</bdi></a></p>
+                            }
+                            else if (waits)
+                            {
+                                <p class="meta">@T["Tree_Claim_Waits"]</p>
+                            }
+                            @if (person.Account?.Id == _viewer || waits)
+                            {
+                                <form method="post" action="@($"{TreeEndpoints.Root}/unclaim")" class="save">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                    <input type="hidden" name="person" value="@person.Id" />
+                                    <button type="submit">@T[waits ? "Tree_Claim_Withdraw" : "Tree_Claim_NotMe"]<span class="visually-hidden"> – @person.Name</span></button>
+                                </form>
+                            }
+                            else if (person.Claimable)
+                            {
+                                <form method="post" action="@($"{TreeEndpoints.Root}/claim")" class="save">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                    <input type="hidden" name="person" value="@person.Id" />
+                                    <button type="submit">@T["Tree_Claim_Me"]<span class="visually-hidden"> – @person.Name</span></button>
+                                </form>
+                            }
+                            @if (mayChange)
+                            {
+                                <details>
+                                    <summary>@T["Tree_Person_Change"]<span class="visually-hidden"> – @person.Name</span></summary>
+                                    <form method="post" action="@($"{TreeEndpoints.Root}/person-change")" class="account">
+                                        <AntiforgeryToken />
+                                        <input type="hidden" name="returnUrl" value="@_here" />
+                                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                        <input type="hidden" name="person" value="@person.Id" />
+                                        @Fields($"change-{person.Id}", person)
+                                        <p><button type="submit" class="action secondary">@T["Tree_Person_Save"]</button></p>
+                                    </form>
+                                    <form method="post" action="@($"{TreeEndpoints.Root}/person-remove")" class="save">
+                                        <AntiforgeryToken />
+                                        <input type="hidden" name="returnUrl" value="@_here" />
+                                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                        <input type="hidden" name="person" value="@person.Id" />
+                                        <button type="submit">@T["Tree_Person_Remove"]<span class="visually-hidden"> – @person.Name</span></button>
+                                    </form>
+                                </details>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+
+        <section id="history" aria-labelledby="history-title">
+            <h3 id="history-title">@T["Tree_History_Title"]</h3>
+            <ul class="statements" role="list">
+                @foreach (var change in _tree.History)
                 {
-                    var record = _tree.Person(claim.Person).Name;
                     <li>
-                        <span><a href="@($"people/{claim.By.Id}")"><bdi>@claim.By.Name</bdi></a> <span class="meta">– @T["Tree_Claim_Says"] <bdi>@record</bdi></span></span>
-                        <form method="post" action="@($"{TreeEndpoints.Root}/claim-review")" class="save inline">
-                            <AntiforgeryToken />
-                            <input type="hidden" name="returnUrl" value="@_here" />
-                            <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                            <input type="hidden" name="claim" value="@claim.Number" />
-                            <button type="submit" name="answer" value="confirm">@T["Tree_Claim_Confirm"]<span class="visually-hidden"> – @claim.By.Name, @record</span></button>
-                            <button type="submit" name="answer" value="refuse">@T["Tree_Claim_Refuse"]<span class="visually-hidden"> – @claim.By.Name, @record</span></button>
-                        </form>
+                        @* A name of another script stands by itself, so that it does not turn the words around it. *@
+                        <span>@T[$"Tree_Change_{change.What}"]</span>@if (change.Subject.Length > 0)
+                        {
+                            <text>: </text><bdi>@change.Subject</bdi>
+                        }
+                        @* The space stands inside the element: between two elements Razor leaves none. *@
+                        @if (change.What.StartsWith("operator-", StringComparison.Ordinal))
+                        {
+                            @* What who runs the site did is by no account. *@
+                            <span class="meta"> – @Day(change.At)</span>
+                        }
+                        else
+                        {
+                            <span class="meta"> – <bdi>@(change.By ?? T["Tree_Change_Gone"].Value)</bdi>@T["Tree_And"]@Day(change.At)</span>
+                        }
                     </li>
                 }
             </ul>
         </section>
-    }
-
-    <section id="people" aria-labelledby="people-title">
-        <h2 id="people-title">@T["Tree_People_Title"]</h2>
-        @Problems("people")
-        @if (_tree.People.IsEmpty)
-        {
-            <p class="note">@T["Tree_People_None"]</p>
-        }
-        else
-        {
-            <ul class="tree-people" role="list">
-                @foreach (var person in _tree.People)
-                {
-                    <li id="@($"person-{person.Id}")">
-                        <p><strong><a href="@($"account/trees/{_tree.Tree.Id}/person/{person.Id}")" dir="auto">@person.Name</a></strong> <span class="meta">@Years(person)</span></p>
-                        @if (!person.Parents.IsEmpty)
-                        {
-                            <p class="meta">@T["Tree_Parents"] @Named(person.Parents)</p>
-                        }
-                        @if (!person.Partners.IsEmpty)
-                        {
-                            <p class="meta">@T["Tree_Partners"] @Named(person.Partners)</p>
-                        }
-                        @if (!person.Children.IsEmpty)
-                        {
-                            <p class="meta">@T["Tree_Children"] @Named(person.Children)</p>
-                        }
-                        @{
-                            var waits = _tree.Claims.Any(claim => claim.Mine && claim.Person == person.Id);
-                        }
-                        @if (person.Account is { } account)
-                        {
-                            @* A confirmed claim: the record names the account, and that is all it does (PRIV-004). *@
-                            <p class="meta">@T["Tree_Claim_Is"] <a href="@($"people/{account.Id}")"><bdi>@account.Name</bdi></a></p>
-                        }
-                        else if (waits)
-                        {
-                            <p class="meta">@T["Tree_Claim_Waits"]</p>
-                        }
-                        @if (person.Account?.Id == _viewer || waits)
-                        {
-                            <form method="post" action="@($"{TreeEndpoints.Root}/unclaim")" class="save">
-                                <AntiforgeryToken />
-                                <input type="hidden" name="returnUrl" value="@_here" />
-                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                                <input type="hidden" name="person" value="@person.Id" />
-                                <button type="submit">@T[waits ? "Tree_Claim_Withdraw" : "Tree_Claim_NotMe"]<span class="visually-hidden"> – @person.Name</span></button>
-                            </form>
-                        }
-                        else if (person.Claimable)
-                        {
-                            <form method="post" action="@($"{TreeEndpoints.Root}/claim")" class="save">
-                                <AntiforgeryToken />
-                                <input type="hidden" name="returnUrl" value="@_here" />
-                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                                <input type="hidden" name="person" value="@person.Id" />
-                                <button type="submit">@T["Tree_Claim_Me"]<span class="visually-hidden"> – @person.Name</span></button>
-                            </form>
-                        }
-                        @if (mayChange)
-                        {
-                            <details>
-                                <summary>@T["Tree_Person_Change"]<span class="visually-hidden"> – @person.Name</span></summary>
-                                <form method="post" action="@($"{TreeEndpoints.Root}/person-change")" class="account">
-                                    <AntiforgeryToken />
-                                    <input type="hidden" name="returnUrl" value="@_here" />
-                                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                                    <input type="hidden" name="person" value="@person.Id" />
-                                    @Fields($"change-{person.Id}", person)
-                                    <p><button type="submit" class="action secondary">@T["Tree_Person_Save"]</button></p>
-                                </form>
-                                <form method="post" action="@($"{TreeEndpoints.Root}/person-remove")" class="save">
-                                    <AntiforgeryToken />
-                                    <input type="hidden" name="returnUrl" value="@_here" />
-                                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                                    <input type="hidden" name="person" value="@person.Id" />
-                                    <button type="submit">@T["Tree_Person_Remove"]<span class="visually-hidden"> – @person.Name</span></button>
-                                </form>
-                            </details>
-                        }
-                    </li>
-                }
-            </ul>
-        }
     </section>
 
     @if (mayChange)
     {
-        <section id="person-add" aria-labelledby="person-add-title">
-            <h2 id="person-add-title">@T["Tree_Person_Add_Title"]</h2>
-            @Problems("person-add")
-            <form method="post" action="@($"{TreeEndpoints.Root}/person-add")" class="account">
-                <AntiforgeryToken />
-                <input type="hidden" name="returnUrl" value="@_here" />
-                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                @Fields("add", null)
-                <p class="note">@T["Tree_Person_Note"]</p>
-                <p><button type="submit" class="action secondary">@T["Tree_Person_Add_Send"]</button></p>
-            </form>
-        </section>
+        <section class="task" id="change" aria-labelledby="change-title">
+            <h2 id="change-title">@T["Tree_Task_Change"]</h2>
+            <p class="note">@T["Tree_Task_Change_Lead"]</p>
 
-        <section id="links" aria-labelledby="links-title">
-            <h2 id="links-title">@T["Tree_Links_Title"]</h2>
-            @Problems("links")
-            @if (_tree.People.Length < 2)
+            @if (mayChange)
             {
-                <p class="note">@T["Tree_Links_Few"]</p>
-            }
-            else
-            {
-                <form method="post" action="@($"{TreeEndpoints.Root}/link")" class="account">
-                    <AntiforgeryToken />
-                    <input type="hidden" name="returnUrl" value="@_here" />
-                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                    <p class="field">
-                        <label for="link-from">@T["Tree_Link_From"]</label>
-                        <select id="link-from" name="from" required>
-                            @foreach (var person in _tree.People)
-                            {
-                                <option value="@person.Id">@person.Name</option>
-                            }
-                        </select>
-                    </p>
-                    <p class="field">
-                        <label for="link-kind">@T["Tree_Link_Kind"]</label>
-                        <select id="link-kind" name="kind" required>
-                            @foreach (var kind in PeopleStore.LinkKinds)
-                            {
-                                <option value="@kind">@T[$"Tree_Link_{kind}"]</option>
-                            }
-                        </select>
-                    </p>
-                    <p class="field">
-                        <label for="link-to">@T["Tree_Link_To"]</label>
-                        <select id="link-to" name="to" required>
-                            @foreach (var person in _tree.People)
-                            {
-                                <option value="@person.Id">@person.Name</option>
-                            }
-                        </select>
-                    </p>
-                    <details class="finer">
-                        <summary>@T["Tree_Link_When"]</summary>
-                        <p class="field">
-                            <label for="link-since">@T["People_Ask_Since"]</label>
-                            <input id="link-since" name="since" type="text" inputmode="numeric" maxlength="4" autocomplete="off" dir="ltr" />
-                        </p>
-                        <p class="field">
-                            <label for="link-until">@T["People_Ask_Until"]</label>
-                            <input id="link-until" name="until" type="text" inputmode="numeric" maxlength="4" autocomplete="off" dir="ltr" />
-                        </p>
-                        <p class="field">
-                            <label for="link-calendar">@T["People_Ask_Calendar"]</label>
-                            <select id="link-calendar" name="calendar">
-                                <option value="gregorian" selected="@(TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "gregorian")">@T["Tree_Calendar_gregorian"]</option>
-                                <option value="solar-hijri" selected="@(TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "solar-hijri")">@T["Tree_Calendar_solar-hijri"]</option>
-                            </select>
-                        </p>
-                    </details>
-                    <p><button type="submit" class="action secondary">@T["Tree_Link_Send"]</button></p>
-                </form>
-            }
-            @if (!_tree.Links.IsEmpty)
-            {
-                <ul class="people" role="list">
-                    @foreach (var link in _tree.Links)
+                <section id="person-add" aria-labelledby="person-add-title">
+                    <h3 id="person-add-title">@T["Tree_Person_Add_Title"]</h3>
+                    @Problems("person-add")
+                    <form method="post" action="@($"{TreeEndpoints.Root}/person-add")" class="account">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="returnUrl" value="@_here" />
+                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                        @Fields("add", null)
+                        <p class="note">@T["Tree_Person_Note"]</p>
+                        <p><button type="submit" class="action secondary">@T["Tree_Person_Add_Send"]</button></p>
+                    </form>
+                </section>
+
+                <section id="links" aria-labelledby="links-title">
+                    <h3 id="links-title">@T["Tree_Links_Title"]</h3>
+                    @Problems("links")
+                    @if (_tree.People.Length < 2)
                     {
-                        // The sentence runs as the page does. Each name stands by itself (the marks U+2068 and U+2069
-                        // do what <bdi> does): a name of another script must not turn the sentence around and make
-                        // the child the parent.
-                        var said = string.Format(CultureInfo.CurrentCulture, T[$"Tree_Linked_{link.Kind}"], $"\u2068{_tree.Person(link.From).Name}\u2069", $"\u2068{_tree.Person(link.To).Name}\u2069");
-                        var held = PeopleEndpoints.Held(new RelationshipTerms(Since: link.Since, Until: link.Until), T, Visitor);
-                        <li>
-                            <span>@said@(held.Length > 0 ? T["People_Held_And"] + held : null)</span>
-                            <form method="post" action="@($"{TreeEndpoints.Root}/unlink")" class="save inline">
-                                <AntiforgeryToken />
-                                <input type="hidden" name="returnUrl" value="@_here" />
-                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                                <input type="hidden" name="link" value="@link.Number" />
-                                <button type="submit">@T["Tree_Link_Remove"]<span class="visually-hidden"> – @said</span></button>
-                            </form>
-                        </li>
-                    }
-                </ul>
-            }
-        </section>
-    }
-
-    @if (owns)
-    {
-        <section id="members" aria-labelledby="members-title">
-            <h2 id="members-title">@T["Tree_Members_Title"]</h2>
-            <p>@T["Tree_Members_Lead"]</p>
-            @if (_known.Count == 0)
-            {
-                <p class="note">@T["Tree_Members_Nobody"] <a href="account/people">@T["People_Link"]</a></p>
-            }
-            else
-            {
-                <ul class="people" role="list">
-                    @foreach (var person in _known)
-                    {
-                        var role = _tree.Members.FirstOrDefault(member => member.Account.Id == person.Id)?.Role ?? TreeRole.None;
-                        <li>
-                            <a href="@($"people/{person.Id}")" dir="auto">@person.Name</a>
-                            <form method="post" action="@($"{TreeEndpoints.Root}/member")" class="save inline">
-                                <AntiforgeryToken />
-                                <input type="hidden" name="returnUrl" value="@_here" />
-                                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                                <input type="hidden" name="account" value="@person.Id" />
-                                <label for="@($"role-{person.Id}")" class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Tree_Member_Label"], person.Name)</label>
-                                <select id="@($"role-{person.Id}")" name="role">
-                                    <option value="none" selected="@(role == TreeRole.None)">@T["Tree_Role_none"]</option>
-                                    <option value="viewer" selected="@(role == TreeRole.Viewer)">@T["Tree_Role_viewer"]</option>
-                                    <option value="editor" selected="@(role == TreeRole.Editor)">@T["Tree_Role_editor"]</option>
-                                </select>
-                                <button type="submit">@T["People_Shown_Send"]<span class="visually-hidden"> – @person.Name</span></button>
-                            </form>
-                        </li>
-                    }
-                </ul>
-            }
-        </section>
-    }
-
-    @if (owns)
-    {
-        var publication = _tree.Publication;
-        <section id="publication" aria-labelledby="publication-title">
-            <h2 id="publication-title">@T["Tree_Publication_Title"]</h2>
-            <p>@T["Tree_Publication_Lead"]</p>
-            @if (publication.Asked)
-            {
-                @if (publication.IsPublic)
-                {
-                    <p role="status">@T["Tree_Publication_IsPublic"] <a href="@($"trees/{_tree.Tree.Id}")">@T["Tree_Publication_Link"]</a></p>
-                }
-                else if (publication.Published)
-                {
-                    <p role="status">@T["Tree_Publication_Hidden"]</p>
-                }
-
-                @if (!publication.Blockers.IsEmpty)
-                {
-                    <p>@T["Tree_Publication_Blockers"]</p>
-                    <ul class="statements" role="list">
-                        @foreach (var blocker in publication.Blockers)
-                        {
-                            <li><a href="@($"account/trees/{_tree.Tree.Id}#person-{blocker.Person}")"><bdi>@blocker.Name</bdi></a> <span class="meta">– @T[$"Tree_Publication_{blocker.Why}"]</span></li>
-                        }
-                    </ul>
-                }
-                else if (!publication.Published)
-                {
-                    <p>@T["Tree_Publication_Ready"]</p>
-                }
-            }
-            <form method="post" action="@($"{TreeEndpoints.Root}/publication")" class="save">
-                <AntiforgeryToken />
-                <input type="hidden" name="returnUrl" value="@_here" />
-                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                @if (!publication.Asked)
-                {
-                    <button type="submit" name="act" value="ask">@T["Tree_Publication_Ask"]</button>
-                }
-                else
-                {
-                    @if (!publication.Published && publication.Blockers.IsEmpty)
-                    {
-                        <button type="submit" name="act" value="publish">@T["Tree_Publication_Publish"]</button>
-                    }
-                    <button type="submit" name="act" value="take-back">@T["Tree_Publication_TakeBack"]</button>
-                }
-            </form>
-        </section>
-    }
-
-    @if (owns)
-    {
-        <section id="see-as-section" aria-labelledby="see-as-title">
-            <h2 id="see-as-title">@T["SeeAs_Tree_Title"]</h2>
-            <p class="note">@T["SeeAs_Tree_Note"]</p>
-            <SeeAsForm Address="@($"account/trees/{_tree.Tree.Id}")" Circles="_circles" Known="_known" />
-        </section>
-    }
-
-    <section id="history" aria-labelledby="history-title">
-        <h2 id="history-title">@T["Tree_History_Title"]</h2>
-        <ul class="statements" role="list">
-            @foreach (var change in _tree.History)
-            {
-                <li>
-                    @* A name of another script stands by itself, so that it does not turn the words around it. *@
-                    <span>@T[$"Tree_Change_{change.What}"]</span>@if (change.Subject.Length > 0)
-                    {
-                        <text>: </text><bdi>@change.Subject</bdi>
-                    }
-                    @* The space stands inside the element: between two elements Razor leaves none. *@
-                    @if (change.What.StartsWith("operator-", StringComparison.Ordinal))
-                    {
-                        @* What who runs the site did is by no account. *@
-                        <span class="meta"> – @Day(change.At)</span>
+                        <p class="note">@T["Tree_Links_Few"]</p>
                     }
                     else
                     {
-                        <span class="meta"> – <bdi>@(change.By ?? T["Tree_Change_Gone"].Value)</bdi>@T["Tree_And"]@Day(change.At)</span>
+                        <form method="post" action="@($"{TreeEndpoints.Root}/link")" class="account">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                            <p class="field">
+                                <label for="link-from">@T["Tree_Link_From"]</label>
+                                <select id="link-from" name="from" required>
+                                    @foreach (var person in _tree.People)
+                                    {
+                                        <option value="@person.Id">@person.Name</option>
+                                    }
+                                </select>
+                            </p>
+                            <p class="field">
+                                <label for="link-kind">@T["Tree_Link_Kind"]</label>
+                                <select id="link-kind" name="kind" required>
+                                    @foreach (var kind in PeopleStore.LinkKinds)
+                                    {
+                                        <option value="@kind">@T[$"Tree_Link_{kind}"]</option>
+                                    }
+                                </select>
+                            </p>
+                            <p class="field">
+                                <label for="link-to">@T["Tree_Link_To"]</label>
+                                <select id="link-to" name="to" required>
+                                    @foreach (var person in _tree.People)
+                                    {
+                                        <option value="@person.Id">@person.Name</option>
+                                    }
+                                </select>
+                            </p>
+                            <details class="finer">
+                                <summary>@T["Tree_Link_When"]</summary>
+                                <p class="field">
+                                    <label for="link-since">@T["People_Ask_Since"]</label>
+                                    <input id="link-since" name="since" type="text" inputmode="numeric" maxlength="4" autocomplete="off" dir="ltr" />
+                                </p>
+                                <p class="field">
+                                    <label for="link-until">@T["People_Ask_Until"]</label>
+                                    <input id="link-until" name="until" type="text" inputmode="numeric" maxlength="4" autocomplete="off" dir="ltr" />
+                                </p>
+                                <p class="field">
+                                    <label for="link-calendar">@T["People_Ask_Calendar"]</label>
+                                    <select id="link-calendar" name="calendar">
+                                        <option value="gregorian" selected="@(TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "gregorian")">@T["Tree_Calendar_gregorian"]</option>
+                                        <option value="solar-hijri" selected="@(TreeEndpoints.CalendarOf(Visitor.Language.Tag) == "solar-hijri")">@T["Tree_Calendar_solar-hijri"]</option>
+                                    </select>
+                                </p>
+                            </details>
+                            <p><button type="submit" class="action secondary">@T["Tree_Link_Send"]</button></p>
+                        </form>
                     }
-                </li>
+                    @if (!_tree.Links.IsEmpty)
+                    {
+                        <ul class="people" role="list">
+                            @foreach (var link in _tree.Links)
+                            {
+                                // The sentence runs as the page does. Each name stands by itself (the marks U+2068 and U+2069
+                                // do what <bdi> does): a name of another script must not turn the sentence around and make
+                                // the child the parent.
+                                var said = string.Format(CultureInfo.CurrentCulture, T[$"Tree_Linked_{link.Kind}"], $"\u2068{_tree.Person(link.From).Name}\u2069", $"\u2068{_tree.Person(link.To).Name}\u2069");
+                                var held = PeopleEndpoints.Held(new RelationshipTerms(Since: link.Since, Until: link.Until), T, Visitor);
+                                <li>
+                                    <span>@said@(held.Length > 0 ? T["People_Held_And"] + held : null)</span>
+                                    <form method="post" action="@($"{TreeEndpoints.Root}/unlink")" class="save inline">
+                                        <AntiforgeryToken />
+                                        <input type="hidden" name="returnUrl" value="@_here" />
+                                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                        <input type="hidden" name="link" value="@link.Number" />
+                                        <button type="submit">@T["Tree_Link_Remove"]<span class="visually-hidden"> – @said</span></button>
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </section>
             }
-        </ul>
-    </section>
 
-    @if (owns)
+            @if (owns)
+            {
+                <section id="rename" aria-labelledby="rename-title">
+                    <h3 id="rename-title">@T["Tree_Rename_Title"]</h3>
+                    @Problems("rename")
+                    <form method="post" action="@($"{TreeEndpoints.Root}/rename")" class="account">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="returnUrl" value="@_here" />
+                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                        <p class="field">
+                            <label for="rename-name">@T["Trees_Name"]</label>
+                            <input id="rename-name" name="name" type="text" required maxlength="@PeopleStore.LongestTreeName" value="@_tree.Tree.Name" autocomplete="off" dir="auto" />
+                        </p>
+                        <p><button type="submit" class="action secondary">@T["Tree_Rename_Send"]</button></p>
+                    </form>
+                    <details>
+                        <summary>@T["Tree_Remove_Lead"]</summary>
+                        <form method="post" action="@($"{TreeEndpoints.Root}/remove")" class="save">
+                            <AntiforgeryToken />
+                            <input type="hidden" name="returnUrl" value="@_here" />
+                            <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                            <button type="submit">@T["Tree_Remove_Send"]</button>
+                        </form>
+                    </details>
+                </section>
+            }
+        </section>
+    }
+
+    @if (shares)
     {
-        <section id="rename" aria-labelledby="rename-title">
-            <h2 id="rename-title">@T["Tree_Rename_Title"]</h2>
-            @Problems("rename")
-            <form method="post" action="@($"{TreeEndpoints.Root}/rename")" class="account">
-                <AntiforgeryToken />
-                <input type="hidden" name="returnUrl" value="@_here" />
-                <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                <p class="field">
-                    <label for="rename-name">@T["Trees_Name"]</label>
-                    <input id="rename-name" name="name" type="text" required maxlength="@PeopleStore.LongestTreeName" value="@_tree.Tree.Name" autocomplete="off" dir="auto" />
-                </p>
-                <p><button type="submit" class="action secondary">@T["Tree_Rename_Send"]</button></p>
-            </form>
-            <details>
-                <summary>@T["Tree_Remove_Lead"]</summary>
-                <form method="post" action="@($"{TreeEndpoints.Root}/remove")" class="save">
-                    <AntiforgeryToken />
-                    <input type="hidden" name="returnUrl" value="@_here" />
-                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
-                    <button type="submit">@T["Tree_Remove_Send"]</button>
-                </form>
-            </details>
+        <section class="task" id="share" aria-labelledby="share-title">
+            <h2 id="share-title">@T["Tree_Task_Share"]</h2>
+            <p class="note">@T["Tree_Task_Share_Lead"]</p>
+
+            @if (_tree.Publication.AskedOfMe)
+            {
+                @* Making public needs the consent of everybody living the tree names (D-053): asked here, of the
+                   account a record is, and taken back here – which hides the tree at once (D-055). *@
+                <section id="consent" aria-labelledby="consent-title">
+                    <h3 id="consent-title">@T["Tree_Consent_Title"]</h3>
+                    <p>@T[_tree.Publication.Consented ? "Tree_Consent_Given" : "Tree_Consent_Asked"]</p>
+                    <p class="note">@T["Tree_Consent_Note"]</p>
+                    <form method="post" action="@($"{TreeEndpoints.Root}/consent")" class="save">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="returnUrl" value="@_here" />
+                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                        @if (_tree.Publication.Consented)
+                        {
+                            <button type="submit" name="answer" value="take-back">@T["Tree_Consent_TakeBack"]</button>
+                        }
+                        else
+                        {
+                            <button type="submit" name="answer" value="agree">@T["Tree_Consent_Agree"]</button>
+                        }
+                    </form>
+                </section>
+            }
+
+            @if (_tree.Claims.Any(claim => claim.CanReview))
+            {
+                <section id="claims" aria-labelledby="claims-title">
+                    <h3 id="claims-title">@T["Tree_Claims_Title"]</h3>
+                    <p class="note">@T["Tree_Claims_Note"]</p>
+                    <ul class="people" role="list">
+                        @foreach (var claim in _tree.Claims.Where(claim => claim.CanReview))
+                        {
+                            var record = _tree.Person(claim.Person).Name;
+                            <li>
+                                <span><a href="@($"people/{claim.By.Id}")"><bdi>@claim.By.Name</bdi></a> <span class="meta">– @T["Tree_Claim_Says"] <bdi>@record</bdi></span></span>
+                                <form method="post" action="@($"{TreeEndpoints.Root}/claim-review")" class="save inline">
+                                    <AntiforgeryToken />
+                                    <input type="hidden" name="returnUrl" value="@_here" />
+                                    <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                    <input type="hidden" name="claim" value="@claim.Number" />
+                                    <button type="submit" name="answer" value="confirm">@T["Tree_Claim_Confirm"]<span class="visually-hidden"> – @claim.By.Name, @record</span></button>
+                                    <button type="submit" name="answer" value="refuse">@T["Tree_Claim_Refuse"]<span class="visually-hidden"> – @claim.By.Name, @record</span></button>
+                                </form>
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
+
+            @if (owns)
+            {
+                <section id="members" aria-labelledby="members-title">
+                    <h3 id="members-title">@T["Tree_Members_Title"]</h3>
+                    <p>@T["Tree_Members_Lead"]</p>
+                    @if (_known.Count == 0)
+                    {
+                        <p class="note">@T["Tree_Members_Nobody"] <a href="account/people">@T["People_Link"]</a></p>
+                    }
+                    else
+                    {
+                        <ul class="people" role="list">
+                            @foreach (var person in _known)
+                            {
+                                var role = _tree.Members.FirstOrDefault(member => member.Account.Id == person.Id)?.Role ?? TreeRole.None;
+                                <li>
+                                    <a href="@($"people/{person.Id}")" dir="auto">@person.Name</a>
+                                    <form method="post" action="@($"{TreeEndpoints.Root}/member")" class="save inline">
+                                        <AntiforgeryToken />
+                                        <input type="hidden" name="returnUrl" value="@_here" />
+                                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                                        <input type="hidden" name="account" value="@person.Id" />
+                                        <label for="@($"role-{person.Id}")" class="visually-hidden">@string.Format(CultureInfo.CurrentCulture, T["Tree_Member_Label"], person.Name)</label>
+                                        <select id="@($"role-{person.Id}")" name="role">
+                                            <option value="none" selected="@(role == TreeRole.None)">@T["Tree_Role_none"]</option>
+                                            <option value="viewer" selected="@(role == TreeRole.Viewer)">@T["Tree_Role_viewer"]</option>
+                                            <option value="editor" selected="@(role == TreeRole.Editor)">@T["Tree_Role_editor"]</option>
+                                        </select>
+                                        <button type="submit">@T["People_Shown_Send"]<span class="visually-hidden"> – @person.Name</span></button>
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </section>
+            }
+
+            @if (owns)
+            {
+                var publication = _tree.Publication;
+                <section id="publication" aria-labelledby="publication-title">
+                    <h3 id="publication-title">@T["Tree_Publication_Title"]</h3>
+                    <p>@T["Tree_Publication_Lead"]</p>
+                    @if (publication.Asked)
+                    {
+                        @if (publication.IsPublic)
+                        {
+                            <p role="status">@T["Tree_Publication_IsPublic"] <a href="@($"trees/{_tree.Tree.Id}")">@T["Tree_Publication_Link"]</a></p>
+                        }
+                        else if (publication.Published)
+                        {
+                            <p role="status">@T["Tree_Publication_Hidden"]</p>
+                        }
+
+                        @if (!publication.Blockers.IsEmpty)
+                        {
+                            <p>@T["Tree_Publication_Blockers"]</p>
+                            <ul class="statements" role="list">
+                                @foreach (var blocker in publication.Blockers)
+                                {
+                                    <li><a href="@($"account/trees/{_tree.Tree.Id}#person-{blocker.Person}")"><bdi>@blocker.Name</bdi></a> <span class="meta">– @T[$"Tree_Publication_{blocker.Why}"]</span></li>
+                                }
+                            </ul>
+                        }
+                        else if (!publication.Published)
+                        {
+                            <p>@T["Tree_Publication_Ready"]</p>
+                        }
+                    }
+                    <form method="post" action="@($"{TreeEndpoints.Root}/publication")" class="save">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="returnUrl" value="@_here" />
+                        <input type="hidden" name="tree" value="@_tree.Tree.Id" />
+                        @if (!publication.Asked)
+                        {
+                            <button type="submit" name="act" value="ask">@T["Tree_Publication_Ask"]</button>
+                        }
+                        else
+                        {
+                            @if (!publication.Published && publication.Blockers.IsEmpty)
+                            {
+                                <button type="submit" name="act" value="publish">@T["Tree_Publication_Publish"]</button>
+                            }
+                            <button type="submit" name="act" value="take-back">@T["Tree_Publication_TakeBack"]</button>
+                        }
+                    </form>
+                </section>
+            }
+
+            @if (owns)
+            {
+                <section id="see-as-section" aria-labelledby="see-as-title">
+                    <h3 id="see-as-title">@T["SeeAs_Tree_Title"]</h3>
+                    <p class="note">@T["SeeAs_Tree_Note"]</p>
+                    <SeeAsForm Address="@($"account/trees/{_tree.Tree.Id}")" Circles="_circles" Known="_known" />
+                </section>
+            }
         </section>
     }
 }

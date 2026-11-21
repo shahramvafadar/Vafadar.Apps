@@ -87,8 +87,8 @@ public sealed class PeoplePagesTests : IDisposable
 
         Assert.Contains("Your request is made.", (await mina.Get($"{People}?said=asked")).Main, StringComparison.Ordinal);
         Assert.Contains("You asked", (await mina.Get(People)).Main, StringComparison.Ordinal);
-        Assert.DoesNotContain("account/people#waiting", (await mina.Get("/en/")).Html, StringComparison.Ordinal);
-        Assert.Matches("<a href=\"account/people#waiting\">(?s:.*?)<span class=\"visually-hidden\"> – 1 waiting</span>\\s*</a>", (await sara.Get("/en/")).Html);
+        Assert.DoesNotContain("account/world#waiting", (await mina.Get("/en/")).Html, StringComparison.Ordinal);
+        Assert.Matches("<a href=\"account/world#waiting\">(?s:.*?)<span class=\"visually-hidden\"> – 1 waiting</span>\\s*</a>", (await sara.Get("/en/")).Html);
         var asked = await sara.Get(People);
         Assert.Contains("Waiting for your answer", asked.Main, StringComparison.Ordinal);
         Assert.Matches("Mina</a>\\s*<span class=\"meta\">– close friend", asked.Main);
@@ -321,5 +321,50 @@ public sealed class PeoplePagesTests : IDisposable
         Assert.DoesNotContain("hello", page.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("nonsense", page.Main, StringComparison.Ordinal);
         Assert.DoesNotContain("role=\"alert\"", page.Html, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public async Task My_world_says_what_waits_and_what_is_there_and_decides_nothing()
+    {
+        const string World = "/en/account/world";
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+
+        // Empty: said as empty, with the mark of an account, the spaces as one bar, and for no search engine.
+        var empty = await mina.Get(World);
+        Assert.Equal(HttpStatusCode.OK, empty.Status);
+        Assert.Contains("noindex", empty.Html, StringComparison.Ordinal);
+        Assert.Contains("class=\"identity-mark mark-account\"", empty.Main, StringComparison.Ordinal);
+        Assert.Contains("Nothing waits for your answer.", empty.Main, StringComparison.Ordinal);
+        Assert.Contains("No relationship yet.", empty.Main, StringComparison.Ordinal);
+        Assert.Contains("No family tree yet", empty.Main, StringComparison.Ordinal);
+        Assert.Matches("<nav class=\"view-bar account-bar\"(?s:.*?)<a href=\"account/world\" aria-current=\"page\">", empty.Main);
+        Assert.Single(Regex.Matches(Regex.Match(empty.Main, "<nav class=\"view-bar account-bar\"(?s:.*?)</nav>").Value, "aria-current"));
+
+        // Nothing is decided on this page – it has no form –, and nothing is offered that the site does not have.
+        Assert.DoesNotContain("<form", empty.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("video", empty.Main, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("post", Regex.Replace(empty.Main, "<[^>]+>", " "), StringComparison.OrdinalIgnoreCase);
+
+        // Asked: who asks and what for stand first and lead to where the answer is given.
+        await Send(mina, "ask", ("name", "Sara"), ("kind", "friend"));
+        var asked = await sara.Get(World);
+        Assert.Matches("<a href=\"account/people#waiting\"><bdi>Mina</bdi></a>\\s*<span class=\"meta\">– friend", asked.Main);
+        Assert.DoesNotContain("Nothing waits", asked.Main, StringComparison.Ordinal);
+        Assert.DoesNotContain("Sara", (await mina.Get(World)).Main[..(await mina.Get(World)).Main.IndexOf("spaces-title", StringComparison.Ordinal)].Replace("Mina", string.Empty, StringComparison.Ordinal), StringComparison.Ordinal);
+
+        // Accepted where it belongs, it is counted here for both.
+        await Send(sara, "answer", ("relationship", await Relationship(sara)), ("answer", "accept"));
+        Assert.Contains("1 relationships", (await mina.Get(World)).Main, StringComparison.Ordinal);
+        Assert.Contains("Nothing waits for your answer.", (await sara.Get(World)).Main, StringComparison.Ordinal);
+
+        // The same bar on the pages of the spaces, each marking itself.
+        Assert.Matches("<a href=\"account/people\" aria-current=\"page\">", (await mina.Get(People)).Main);
+        Assert.Matches("<a href=\"account/trees\" aria-current=\"page\">", (await mina.Get("/en/account/trees")).Main);
+
+        // Who is not signed in is led to where one signs in.
+        var stranger = await _site.Visitor().Get(World);
+        Assert.Equal(HttpStatusCode.Redirect, stranger.Status);
+        Assert.EndsWith(Account, stranger.Response.Headers.Location?.OriginalString, StringComparison.Ordinal);
     }
 }

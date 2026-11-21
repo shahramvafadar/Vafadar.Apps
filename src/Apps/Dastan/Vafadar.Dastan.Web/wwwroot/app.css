@@ -792,6 +792,42 @@ details.fold > * + * {
   box-shadow: inset 0 -3px 0 var(--accent);
 }
 
+/* What is an account's own (step 20.11). The bar of its spaces begins where the page begins; the spaces of
+   My World stand side by side as cards with their drawing beside the name; the tasks of a tree are parts of
+   the page under a line each, and the ways to them are chips that are not filters but places of the page. */
+.account-bar {
+  justify-content: flex-start;
+  margin-block-end: var(--space-4);
+}
+
+.world-card h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step-1);
+}
+
+.task-nav {
+  margin-block: var(--space-4);
+}
+
+.task-nav .chip {
+  gap: var(--space-2);
+  font-weight: 600;
+}
+
+.task {
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-4);
+  border-block-start: 2px solid var(--border);
+  scroll-margin-block-start: var(--space-4);
+}
+
+.task > section + section,
+.task > .note + section {
+  margin-block-start: var(--space-6);
+}
+
 /* Where a visitor begins (step 20.7). The page is wider than a page of text: it shows things side by side.
    What is read – the words of the hero, a note – keeps the measure of text. */
 main:has(> .discover) {

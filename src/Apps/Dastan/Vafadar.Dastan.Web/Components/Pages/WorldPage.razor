@@ -1,0 +1,112 @@
+@page "/account/world"
+@using Vafadar.Dastan.Core.Personal
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject AccountDesk Desk
+@inject NavigationManager Navigation
+@inject IStringLocalizer<Ui> T
+
+@* My World (step 20.11): what is an account's own, in one place – what waits for an answer first, then the
+   people, where one was, the family trees and the photographs, each with how much there is and the way to its
+   page. Nothing is decided here: accepting a relationship, being found, showing dates, agreeing to a tag and
+   making something public are answered where each belongs, one by one. Nothing is offered that the site does
+   not have – no posts, no videos. Only who signed in sees the page; it is for no search engine. *@
+<PageTitle>@T["World_Title"] – @T["Site_Name"]</PageTitle>
+<PageAddress None="true" />
+<HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
+
+@if (_me is not null)
+{
+    <header class="page-header is-account">
+        <IdentityMark Flavour="@IdentityMark.Account" />
+        <h1>@T["World_Title"]</h1>
+        <p class="lead"><bdi>@_me.Name</bdi> – @T["World_Lead"]</p>
+        <p class="actions"><a class="action secondary" href="@($"people/{_me.Id}")">@T["World_AsOthers"]</a></p>
+    </header>
+
+    <AccountBar Here="world" />
+
+    <section id="waiting" aria-labelledby="waiting-title">
+        <h2 id="waiting-title">@T["World_Waiting"]</h2>
+        @if (_waiting.Count == 0 && _tags == 0)
+        {
+            <StateNote Kind="nothing" Text="@T["World_NothingWaiting"]" />
+        }
+        else
+        {
+            <ul class="statements" role="list">
+                @foreach (var request in _waiting)
+                {
+                    @* Who asks and what for; the answer is given on the page of the people, where it belongs. *@
+                    <li>
+                        <a href="account/people#waiting"><bdi>@request.Other.Name</bdi></a>
+                        <span class="meta">– @PeopleEndpoints.Called(request.Kind, request.Terms, T)</span>
+                    </li>
+                }
+                @if (_tags > 0)
+                {
+                    <li><a href="account/photos#waiting">@string.Format(CultureInfo.CurrentCulture, T["World_Tags_Waiting"], Visitor.Number(_tags))</a></li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section aria-labelledby="spaces-title">
+        <h2 id="spaces-title" class="visually-hidden">@T["World_Bar"]</h2>
+        <ul class="cards world-cards" role="list">
+            @Space("connections", "People_Title", "account/people", _relationships, "World_People_Count", "World_People_None")
+            @Space("globe", "Affiliations_Title", "account/affiliations", _places, "World_Places_Count", "World_Places_None")
+            @Space("family", "Trees_Title", "account/trees", _trees, "World_Trees_Count", "World_Trees_None")
+            @if (Desk.PhotoFolder is not null)
+            {
+                @Space("pictures", "Photos_Title", "account/photos", _photos, "World_Photos_Count", "World_Photos_None")
+            }
+        </ul>
+    </section>
+}
+
+@code {
+    private VisitorSession? _me;
+    private IReadOnlyList<RelationshipInfo> _waiting = [];
+    private int _tags;
+    private int _relationships;
+    private int _places;
+    private int _trees;
+    private int _photos;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        if (!Desk.IsOpen)
+        {
+            Navigation.NotFound();
+            return;
+        }
+
+        if (AccountDesk.Session(Context.User) is not { } session)
+        {
+            // Who is not signed in is shown where to sign in.
+            Navigation.NavigateTo($"/{Visitor.Language.Tag}{AccountDesk.Page}");
+            return;
+        }
+
+        _me = session;
+        using var store = Desk.Open();
+        var all = store.Relationships(session.Id);
+        _waiting = [.. all.Where(relationship => relationship.State == RelationshipState.Requested && !relationship.AskedByMe)];
+        _relationships = all.Count(relationship => relationship.State == RelationshipState.Accepted);
+        _tags = Desk.PhotoFolder is null ? 0 : store.TagsWaiting(session.Id).Count;
+        _places = store.Affiliations(session.Id).Count;
+        _trees = store.Trees(session.Id).Count;
+        _photos = Desk.PhotoFolder is null ? 0 : store.Photos(session.Id).Count;
+    }
+
+    // One space of the account: what it is, how much there is of it – or that there is nothing yet, said as that –, and the way to it.
+    private RenderFragment Space(string icon, string name, string address, int count, string some, string none) =>
+        @<li class="card world-card">
+            <h3><Icon Name="@icon" /> <a href="@address">@T[name]</a></h3>
+            <p class="@(count == 0 ? "note" : null)">@(count == 0 ? T[none].Value : string.Format(CultureInfo.CurrentCulture, T[some], Visitor.Number(count)))</p>
+        </li>;
+}

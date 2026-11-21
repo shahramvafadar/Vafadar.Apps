@@ -1,0 +1,31 @@
+@* The spaces that are an account's own, as one list on each of them (step 20.11): My World, the people, where
+   one was, the family trees, the photographs, and the account itself. The one the visitor is on is marked –
+   in words for a screen reader (aria-current), with a ground and a line for the eye. Links, no script. *@
+@inject IStringLocalizer<Ui> T
+@inject AccountDesk Desk
+
+<nav class="view-bar account-bar" aria-label="@T["World_Bar"]">
+    <ul class="view-switch" role="list">
+        @* A site that keeps no photographs offers no way to them: nothing to press for what is not there. *@
+        @foreach (var (key, address, icon, name) in Spaces.Where(space => space.Key != "photos" || Desk.PhotoFolder is not null))
+        {
+            <li><a href="@address" aria-current="@(key == Here ? "page" : null)"><Icon Name="@icon" /><span>@T[name]</span></a></li>
+        }
+    </ul>
+</nav>
+
+@code {
+    private static readonly (string Key, string Address, string Icon, string Name)[] Spaces =
+    [
+        ("world", "account/world", "world", "World_Title"),
+        ("people", "account/people", "connections", "People_Title"),
+        ("affiliations", "account/affiliations", "globe", "Affiliations_Title"),
+        ("trees", "account/trees", "family", "Trees_Title"),
+        ("photos", "account/photos", "pictures", "Photos_Title"),
+        ("account", "account", "account", "World_Account"),
+    ];
+
+    /// <summary>Gets or sets which of the spaces the page is: <c>world</c>, <c>people</c>, <c>affiliations</c>, <c>trees</c>, <c>photos</c> or <c>account</c>.</summary>
+    [Parameter, EditorRequired]
+    public string Here { get; set; } = string.Empty;
+}

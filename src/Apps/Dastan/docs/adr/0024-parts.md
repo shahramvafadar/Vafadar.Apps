@@ -92,3 +92,29 @@ Pages carry no style of their own – the policy of the site forbids it – so e
 * The palette, the Latin font and a logo: the owner's, as ADR 0004 says.
 * A page of its own for the private space ("My World"): step 20.11. Until then the way leads to the people
   of the account, and to the page of the account for who has not signed in.
+
+## What is an account's own (step 20.11)
+
+* **My World** (`/account/world`) is where the way "My World" of the head leads who signed in. It decides
+  nothing and has no form: what waits for an answer – a request for a relationship, a tag on a photograph –
+  is named first and leads to the page where it is answered; then the spaces stand as cards with how much each
+  holds, or that it holds nothing yet, said as that (`StateNote`). It carries the mark of an account
+  (`IdentityMark`).
+* **`AccountBar`** is the one list of the spaces – My World, people, where one was, family trees, photographs,
+  the account – on each of their pages, the one shown marked. A site that keeps no photographs offers no way to
+  them: nothing is offered for what does not exist, and the site has no posts and no videos of visitors to offer.
+* **The page of a family tree is three tasks**: seeing (the drawing, the people, every change), changing (adding
+  somebody, the links, the name of the tree and its removal) and sharing (who may see or change it, making it
+  public, the agreement that is asked, records somebody says are them, looking as somebody else). Each is a
+  part of the page under a heading of its own, with a way to it at the top; a part somebody may not use is not
+  in their page, and neither is the way to it. What waits for an answer of this visitor is said first.
+* **Five answers stay five.** Accepting a relationship, being found by a place, showing its dates, agreeing to a
+  tag and making a tree public are asked and answered apart, each where it belongs; none is on My World, and
+  none follows from another. An invitation makes an account and nothing else. These rules are those of
+  ADR 0014 and are shown by the tests named there (`PeoplePagesTests`, `AffiliationPagesTests`,
+  `PhotoPagesTests`, `FamilyTreePagesTests`, the tests of invitations); this step moved no rule.
+
+**Not built:** the head of a page of an account and of a record in a tree is the mark above the name, not
+`IdentityHead` – that part is fed by the profile of a node of a collection (ADR 0017), which neither has; a
+profile of that shape for people of accounts is not made up here. The pages of the people, of where one was and
+of the photographs keep their bodies as they were and gained the bar; they were not put together anew.

@@ -4056,4 +4056,79 @@
   <data name="Media_PlaceSources" xml:space="preserve">
     <value>آنچه پشتوانهٔ نوشتهٔ این‌جاست:</value>
   </data>
+  <data name="Tree_Waiting" xml:space="preserve">
+    <value>این‌جا چیزی چشم‌به‌راهِ پاسخ شماست.</value>
+  </data>
+  <data name="Tree_Tasks" xml:space="preserve">
+    <value>آنچه با این شجره‌نامه می‌توانید بکنید</value>
+  </data>
+  <data name="Tree_Task_See" xml:space="preserve">
+    <value>دیدنِ شجره‌نامه</value>
+  </data>
+  <data name="Tree_Task_Change" xml:space="preserve">
+    <value>تغییر دادنِ شجره‌نامه</value>
+  </data>
+  <data name="Tree_Task_Share" xml:space="preserve">
+    <value>هم‌رسانیِ شجره‌نامه</value>
+  </data>
+  <data name="Tree_Task_See_Lead" xml:space="preserve">
+    <value>نمودار، همهٔ کسانی که در شجره‌نامه هستند، و هر تغییر با کسی که آن را داده است.</value>
+  </data>
+  <data name="Tree_Task_Change_Lead" xml:space="preserve">
+    <value>کسی را بیفزایید، بگویید چه کسی پدر یا مادر، همسر یا فرزندِ کیست، نام شجره‌نامه را عوض کنید. هر تغییر نگه داشته می‌شود و در بالا دیده می‌شود.</value>
+  </data>
+  <data name="Tree_Task_Share_Lead" xml:space="preserve">
+    <value>چه کسِ دیگری می‌تواند شجره‌نامه را ببیند یا تغییر دهد، آیا همه می‌توانند آن را ببینند، و از کسانی که در آن نام برده شده‌اند چه پرسیده می‌شود. هر کدام تصمیمی جداست: هیچ‌یک از دیگری نتیجه نمی‌شود.</value>
+  </data>
+  <data name="World_Title" xml:space="preserve">
+    <value>دنیای من</value>
+  </data>
+  <data name="World_Lead" xml:space="preserve">
+    <value>آنچه در داستان از آنِ شماست: کسانی که با آن‌ها پیوند دارید، جاهایی که بوده‌اید، شجره‌نامه‌ها و عکس‌هایتان. هر کدام صفحهٔ خودش را دارد و هر چیزی که نشان می‌دهید پاسخِ خودش را به این‌که چه کسی آن را ببیند.</value>
+  </data>
+  <data name="World_Waiting" xml:space="preserve">
+    <value>چشم‌به‌راهِ پاسخ شما</value>
+  </data>
+  <data name="World_NothingWaiting" xml:space="preserve">
+    <value>چیزی چشم‌به‌راهِ پاسخ شما نیست.</value>
+  </data>
+  <data name="World_People_Count" xml:space="preserve">
+    <value>{0} پیوند</value>
+  </data>
+  <data name="World_People_None" xml:space="preserve">
+    <value>هنوز پیوندی نیست. پیوند را یکی می‌پرسد و دیگری می‌پذیرد.</value>
+  </data>
+  <data name="World_Places_Count" xml:space="preserve">
+    <value>{0} جا و زمان</value>
+  </data>
+  <data name="World_Places_None" xml:space="preserve">
+    <value>نگفته‌اید کجا بوده‌اید. پیدا شدن از راهِ یک جا تصمیمی جدا از نشان دادنِ تاریخ‌های آن است.</value>
+  </data>
+  <data name="World_Trees_Count" xml:space="preserve">
+    <value>{0} شجره‌نامه</value>
+  </data>
+  <data name="World_Trees_None" xml:space="preserve">
+    <value>هنوز شجره‌نامه‌ای ندارید و هیچ‌کدام با شما هم‌رسانی نشده است.</value>
+  </data>
+  <data name="World_Photos_Count" xml:space="preserve">
+    <value>{0} عکس</value>
+  </data>
+  <data name="World_Photos_None" xml:space="preserve">
+    <value>هنوز عکسی نیست. عکس را تنها شما می‌بینید تا وقتی چیز دیگری بگویید.</value>
+  </data>
+  <data name="World_Open" xml:space="preserve">
+    <value>باز کردن</value>
+  </data>
+  <data name="World_AsOthers" xml:space="preserve">
+    <value>صفحهٔ شما آن‌گونه که دیگران می‌بینند</value>
+  </data>
+  <data name="World_Account" xml:space="preserve">
+    <value>حساب و ورود</value>
+  </data>
+  <data name="World_Bar" xml:space="preserve">
+    <value>آنچه از آنِ شماست</value>
+  </data>
+  <data name="World_Tags_Waiting" xml:space="preserve">
+    <value>{0} عکس از شما نام برده‌اند و چشم‌به‌راهِ موافقت شما هستند</value>
+  </data>
 </root>

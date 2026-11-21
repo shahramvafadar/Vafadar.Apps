@@ -414,3 +414,8 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   fold above them. Opening a picture and going back returns to the gallery as you left it – the same time, the
   same order, the same kind. One picture can stand beside somebody and at a step of the story with words for
   each place; the picture itself, its rights and its sources stay one.
+- "My World" is a page of its own: what waits for your answer stands first, then your people, where you were, your
+  family trees and your photographs, each with how much there is and the way to it. The same list of these
+  spaces stands on each of their pages. The page of a family tree is three parts – see the tree, change it,
+  share it – with a way to each; you are shown only the parts you may use, and what waits for your answer in a
+  tree is said at its top.
