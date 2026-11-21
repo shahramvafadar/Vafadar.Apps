@@ -6476,3 +6476,23 @@ state and no accepted input was repeated. The evidence is under
 owned AVD were retired. No ledger entry, receipt scan, provider request or
 financial action ran. This is evidence for the named release pair and opt-out
 state, with whole-database and physical-device acceptance still open.
+
+## Signed offline handoff with receipt cancellation (2026-11-21)
+
+The latest local test handoff uses the completed Android Release build of the
+product sources in `f2c0f1b1`. It includes page-lifetime cancellation for
+receipt source reads and for the remaining stages of on-device OCR.
+
+- APK: `artifacts/android-offline-f2c0f1b1-release-review/pro.vafadar.zanance-Signed.apk`
+- Size: 99,692,143 bytes
+- SHA-256: `7c3153509f5dd4055aaef1e6214a5d8dceca18c9cf4908f77fa8afb8244bf993`
+
+The exact signed bytes passed the canonical offline APK verifier, including
+package identity, required embedded payloads, SQLCipher, offline permission
+and component policy, and 16 KiB ZIP and ELF alignment. Both v2 and v3
+signatures passed with the same local test certificate as the `1fe6e594`
+handoff. The handoff copy matches the verified build by SHA-256.
+
+The two cancellation contracts passed on the host with synthetic data.
+Upgrade and AI opt-out device evidence covers the earlier `1fe6e594` APK.
+This handoff required no new build, installation, device or financial action.
