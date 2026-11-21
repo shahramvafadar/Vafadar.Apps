@@ -81,3 +81,14 @@ requires in-app access and an active public policy URL in the Console. The
 did not resolve from the development environment, so no HTTPS policy response
 was verified and no new external link was added to the app. Final policy content
 and review, hosting, the in-app policy link and the Console declaration remain open.
+
+## Account deletion for editions offering account creation
+
+[PRI-05](../spec/Zanance-Product-Specification.md#182-data-policy)
+requires a deletion request path both inside the app and on the public web for
+an edition with Zanance account creation. Local profile deletion, disconnecting
+sync and revoking a session have different effects. The service now serializes
+pending identity operations against removal of a synthetic identity, but the
+end-to-end request, associated data handling, public web path, verified retention,
+and Console answer are open. See [the service boundary](../../Vafadar.Zanance.Api/README.md#api-boundary)
+and [Play User Data policy](https://support.google.com/googleplay/android-developer/answer/10144311).

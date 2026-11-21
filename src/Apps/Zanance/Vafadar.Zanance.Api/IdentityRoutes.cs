@@ -82,9 +82,14 @@ public static class IdentityRoutes
             if (input.Email is null || input.Email.Length > 254) return Results.BadRequest();
             var user = await users.FindByEmailAsync(input.Email);
             if (user is null || !user.EmailConfirmed) return Results.Accepted();
+            await using var tx = await db.Database.BeginTransactionAsync(ct);
+            await Sync.SyncRequestScope.LockOwnerAsync(db, user.Id, ct);
+            await db.Entry(user).ReloadAsync(ct);
+            if (db.Entry(user).State == EntityState.Detached || !user.EmailConfirmed) return Results.Accepted();
             var token = await users.GeneratePasswordResetTokenAsync(user);
             AddChallenge(db, protection, time, user, "reset", token, services.GetService<IIdentityMailSender>()?.Authority, input.Language);
             await db.SaveChangesAsync(ct);
+            await tx.CommitAsync(ct);
             return Results.Accepted();
         });
         app.MapPost("/identity/complete", CompleteAsync);
@@ -99,6 +104,7 @@ public static class IdentityRoutes
             // A reset can have completed while this request waited. Authenticate the reloaded
             // maintained Identity row, not the previously tracked password/stamp snapshot.
             await db.Entry(user).ReloadAsync(ct);
+            if (db.Entry(user).State == EntityState.Detached) return Results.Unauthorized();
             if (!(await signIn.CheckPasswordSignInAsync(user, input.Password, lockoutOnFailure: true)).Succeeded)
             { await tx.CommitAsync(ct); return Results.Unauthorized(); }
             var session = new DeviceSession { Id = Guid.NewGuid(), UserId = user.Id, ExpiresAt = time.GetUtcNow().AddDays(14) };
@@ -181,11 +187,15 @@ public static class IdentityRoutes
     {
         if (input.Token is null || input.Token.Length > 8192 || input.Password?.Length > 256) return Results.BadRequest();
         await using var tx = await db.Database.BeginTransactionAsync(ct);
-        var claimed = await db.Challenges.Where(c => c.Id == input.Id && !c.Consumed && c.ExpiresAt > time.GetUtcNow())
+        var owner = await db.Challenges.Where(c => c.Id == input.Id)
+            .Select(c => c.UserId).SingleOrDefaultAsync(ct);
+        if (owner is null) return Results.BadRequest();
+        // Take the owner lock before changing the challenge, as owner retirement may remove both rows.
+        await Sync.SyncRequestScope.LockOwnerAsync(db, owner, ct);
+        var claimed = await db.Challenges.Where(c => c.Id == input.Id && c.UserId == owner && !c.Consumed && c.ExpiresAt > time.GetUtcNow())
             .ExecuteUpdateAsync(u => u.SetProperty(c => c.Consumed, true), ct);
         if (claimed != 1) return Results.BadRequest();
         var challenge = await db.Challenges.AsNoTracking().SingleAsync(c => c.Id == input.Id, ct);
-        await Sync.SyncRequestScope.LockOwnerAsync(db, challenge.UserId, ct);
         var mail = JsonSerializer.Deserialize<PrivateMail>(protection.CreateProtector("identity-mail-v1").Unprotect(challenge.ProtectedMail));
         if (mail is null || !System.Security.Cryptography.CryptographicOperations.FixedTimeEquals(
             System.Text.Encoding.UTF8.GetBytes(mail.Token), System.Text.Encoding.UTF8.GetBytes(input.Token))) return Results.BadRequest();

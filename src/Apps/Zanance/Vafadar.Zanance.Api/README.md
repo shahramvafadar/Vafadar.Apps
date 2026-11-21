@@ -59,6 +59,24 @@ or log. They use Identity's 15-minute Data Protection provider and a transaction
 Login requires confirmed email and Identity password checks/lockout. Password hashing is the
 maintained Identity PBKDF2 hasher at 600,000 iterations; no custom credential cryptography.
 
+Login, recovery and challenge completion serialize on the original account
+before issuing a session, creating a recovery grant or consuming a challenge.
+Login and recovery re-read the identity after obtaining the lock. Completion
+reads the original owner without changing the challenge, then claims it under
+that same lock. Three focused HTTP tests on a disposable PostgreSQL database
+verified the behavior when the fictional account was removed while each request
+waited. There was no new session or challenge. No real mail or provider was used.
+
+This is a prerequisite for account deletion. The integration fixture removed only
+an identity without user content or shared data. The service still requires the
+account deletion workflow for PRI-05. Sessions and challenges cascade from the
+identity, while private objects, personal sync, household ownership and membership,
+billing and analysis have separate restrictive dependencies. A complete deletion
+request must address those records, private file retirement, already-dispatched
+provider work and what may be retained. Restore and independent recipient copies
+also need their scope explained. The in-app and external request entry points
+remain part of that delivery.
+
 Bearer/refresh tickets use the framework BearerToken handler, not JWT/OIDC or a new token format.
 Access lasts 15 minutes; absolute device grants last 14 days. Each authorized request rechecks the
 Identity security stamp, exact session, expiry and refresh generation. Concurrent refresh consumes
