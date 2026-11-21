@@ -295,15 +295,19 @@ def _restore(args, helper):
             test -d "$dir" || exit 23
             receipts=$(find "$dir" -mindepth 1 -maxdepth 1 -name "*.receipt" -print -quit) || exit 23
             analysis=$(find "$dir" -mindepth 1 -maxdepth 1 -name "*.analysis-retired" -print -quit) || exit 23
+            requests=$(find "$dir" -mindepth 1 -maxdepth 1 -name "*.request" -print -quit) || exit 23
             if test -n "$receipts"; then printf 'account\n'; fi
             if test -n "$analysis"; then printf 'analysis\n'; fi
+            if test -n "$requests"; then printf 'request\n'; fi
         fi
         ''')).splitlines()
     account_privacy = privacy_labels.get('pro.vafadar.zanance.account-privacy')
-    if b'account' in account_markers and account_privacy not in ('receipt-fence-v1', 'receipt-fence-v2', 'receipt-fence-v3'):
+    if b'account' in account_markers and account_privacy not in ('receipt-fence-v1', 'receipt-fence-v2', 'receipt-fence-v3', 'receipt-fence-v4'):
         raise RuntimeError('Historical service image cannot enforce current account deletions; explicit upgrade qualification required.')
-    if b'analysis' in account_markers and account_privacy != 'receipt-fence-v3':
+    if b'analysis' in account_markers and account_privacy not in ('receipt-fence-v3', 'receipt-fence-v4'):
         raise RuntimeError('Historical service image cannot enforce current analysis retirements; explicit upgrade qualification required.')
+    if b'request' in account_markers and account_privacy != 'receipt-fence-v4':
+        raise RuntimeError('Historical service image cannot enforce current pending account deletions; explicit upgrade qualification required.')
     state_name = args.project + '_restore-state'
     if _exists('volume', state_name):
         state_name = _volume(args.project, 'restore-state')

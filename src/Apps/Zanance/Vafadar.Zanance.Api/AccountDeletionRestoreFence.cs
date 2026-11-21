@@ -34,18 +34,35 @@ public static partial class AccountDeletionRestoreFence
     private static async Task PublishMarkerAsync(string storage, string path, string body, CancellationToken ct)
     {
         var pending = path + "." + Guid.NewGuid().ToString("N") + ".pending";
-        await using (var file = new FileStream(pending, FileMode.CreateNew, FileAccess.Write, FileShare.None, 4096, FileOptions.WriteThrough))
+        var created = false;
+        try
         {
-            await file.WriteAsync(Encoding.ASCII.GetBytes(body), ct);
-            file.Flush(flushToDisk: true);
+            await using (var file = new FileStream(pending, FileMode.CreateNew, FileAccess.Write, FileShare.None, 4096, FileOptions.WriteThrough))
+            {
+                created = true;
+                await file.WriteAsync(Encoding.ASCII.GetBytes(body), ct);
+                file.Flush(flushToDisk: true);
+            }
+            _ = RootOf(storage);
+            File.Move(pending, path);
+            created = false;
         }
-        _ = RootOf(storage);
-        File.Move(pending, path);
+        finally
+        {
+            if (created)
+            {
+                _ = RootOf(storage);
+                File.Delete(pending);
+            }
+        }
     }
 
     /// <summary>Requires a completion for every current marker before the service starts handling requests.</summary>
     public static async Task VerifyDatabaseAsync(ServiceDbContext db, ServiceStorage storage, CancellationToken ct)
     {
+        foreach (var marker in PendingMarkers(storage.Root))
+            if (!await PendingRequestIsReconciledAsync(db, await marker.ReadAsync(ct), ct))
+                throw new IOException("Pending account deletion is missing or differs. Reconcile the private restore before starting the service.");
         foreach (var marker in AnalysisMarkers(storage.Root))
             if (!await AnalysisContentRetiredAsync(db, await marker.ReadAsync(ct), ct))
                 throw new IOException("Analysis retirement is not reconciled. Reconcile the private restore before starting the service.");
@@ -61,6 +78,14 @@ public static partial class AccountDeletionRestoreFence
     public static async Task<int> ReconcileAsync(ServiceDbContext db, ServiceStorage storage, TimeProvider time, CancellationToken ct)
     {
         var outstanding = 0;
+        foreach (var marker in PendingMarkers(storage.Root))
+        {
+            var pending = await marker.ReadAsync(ct);
+            if (await PendingRequestIsReconciledAsync(db, pending, ct)) continue;
+            if (!await BindRestoredRequestAsync(db, pending.Receipt, pending.Owner, time, ct, pending.RequestedAt) ||
+                !await PendingRequestIsReconciledAsync(db, pending, ct))
+                outstanding++;
+        }
         foreach (var (path, receipt) in Markers(storage.Root))
         {
             var ownerHash = await ReadOwnerHashAsync(path, receipt, ct);
@@ -83,7 +108,7 @@ public static partial class AccountDeletionRestoreFence
     }
 
     private static async Task<bool> BindRestoredRequestAsync(ServiceDbContext db, Guid receipt, string? ownerHash,
-        TimeProvider time, CancellationToken ct)
+        TimeProvider time, CancellationToken ct, DateTimeOffset? requestedAt = null)
     {
         var pendingOwner = await db.AccountDeletionRequests.AsNoTracking().Where(row => row.ReceiptId == receipt)
             .Select(row => row.UserId).SingleOrDefaultAsync(ct);
@@ -99,7 +124,7 @@ public static partial class AccountDeletionRestoreFence
         var original = await db.AccountDeletionRequests.AsNoTracking().SingleOrDefaultAsync(row => row.UserId == owner, ct);
         if (original is not null) return original.ReceiptId == receipt;
         if (await db.AccountDeletionRequests.AnyAsync(row => row.ReceiptId == receipt, ct)) return false;
-        db.AccountDeletionRequests.Add(new() { UserId = owner, ReceiptId = receipt, RequestedAt = time.GetUtcNow() });
+        db.AccountDeletionRequests.Add(new() { UserId = owner, ReceiptId = receipt, RequestedAt = requestedAt ?? time.GetUtcNow() });
         await db.SaveChangesAsync(ct);
         await transaction.CommitAsync(ct);
         return true;
@@ -137,6 +162,11 @@ public static partial class AccountDeletionRestoreFence
         foreach (var sourceMarker in AnalysisMarkers(source))
         {
             await WriteAnalysisMarkerAsync(storage, await sourceMarker.ReadAsync(ct), ct);
+            merged++;
+        }
+        foreach (var sourceMarker in PendingMarkers(source))
+        {
+            await WritePendingMarkerAsync(storage, await sourceMarker.ReadAsync(ct), ct);
             merged++;
         }
         return merged;

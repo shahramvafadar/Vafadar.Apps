@@ -214,6 +214,16 @@ when exactly that identity is present and no request conflicts. Unmatched
 legacy markers and remaining dependencies keep the service unavailable.
 Off-service retention remains separate.
 
+New pending request acknowledgements also write an opaque `.request` marker
+after the request transaction commits. A failed marker write returns an
+unavailable response. Retrying retrieves the same request. The marker records
+only the receipt, a digest of the original internal account identity, and the
+original UTC request time. The restore process merges it from the stopped
+current service and restores the exact pending row when its original account
+matches. A pending marker alone grants no authority to erase the account.
+Earlier acknowledged requests without a marker are covered once they are
+retrieved through the authenticated app status endpoint or submitted again.
+
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity
 rate limit. The browser form requires antiforgery validation, returns no-store

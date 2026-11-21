@@ -22,7 +22,7 @@ internal static class AccountDeletionPage
     }
 
     private static async Task<IResult> SubmitAsync(HttpContext http, IAntiforgery csrf, UserManager<ServiceUser> users,
-        SignInManager<ServiceUser> signIn, ServiceDbContext db, TimeProvider time, CancellationToken ct)
+        SignInManager<ServiceUser> signIn, ServiceDbContext db, ServiceStorage storage, TimeProvider time, CancellationToken ct)
     {
         if (!await ValidFormAsync(http, csrf))
             return Form(http, csrf, "Reload this page before submitting the request.", 400);
@@ -48,6 +48,8 @@ internal static class AccountDeletionPage
         var receipt = await AccountDeletionRoutes.QueueAsync(db, user.Id, time, ct);
         await db.SaveChangesAsync(ct);
         await transaction.CommitAsync(ct);
+        if (!await AccountDeletionRestoreFence.RecordAcknowledgementAsync(storage, receipt, user.Id, ct))
+            return Form(http, csrf, "The service could not confirm your receipt. Try again to retrieve the same request.", 503);
         return Page(http, $"""
             <p>Your request has been received and is pending.</p>
             <p>Receipt reference <strong>{receipt.ReceiptId:D}</strong></p>

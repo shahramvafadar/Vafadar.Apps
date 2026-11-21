@@ -26,17 +26,20 @@ internal static class AccountDeletionRoutes
         AccountDeletionPage.Map(app);
     }
 
-    private static async Task<IResult> ReadAsync(HttpContext http, ServiceDbContext db, TimeProvider time, CancellationToken ct)
+    private static async Task<IResult> ReadAsync(HttpContext http, ServiceDbContext db, ServiceStorage storage, TimeProvider time, CancellationToken ct)
     {
         http.Response.Headers.CacheControl = "no-store";
         await using var scope = await SyncRequestScope.OpenAsync(http.User, db, time, ct);
         if (scope is null) return Results.Unauthorized();
         var current = await db.AccountDeletionRequests.AsNoTracking().SingleOrDefaultAsync(row => row.UserId == scope.Owner, ct);
-        return current is null ? Results.NoContent() : Results.Ok(Receipt(current));
+        if (current is null) return Results.NoContent();
+        var receipt = Receipt(current);
+        return await AccountDeletionRestoreFence.RecordAcknowledgementAsync(storage, receipt, scope.Owner, ct)
+            ? Results.Ok(receipt) : Results.StatusCode(503);
     }
 
     private static async Task<IResult> RequestAsync(AccountDeletionInput input, HttpContext http, UserManager<ServiceUser> users,
-        SignInManager<ServiceUser> signIn, ServiceDbContext db, TimeProvider time, CancellationToken ct)
+        SignInManager<ServiceUser> signIn, ServiceDbContext db, ServiceStorage storage, TimeProvider time, CancellationToken ct)
     {
         http.Response.Headers.CacheControl = "no-store";
         if (input.Password is not { Length: >= 12 and <= 256 }) return Results.BadRequest();
@@ -53,6 +56,8 @@ internal static class AccountDeletionRoutes
 
         var receipt = await QueueAsync(db, scope.Owner, time, ct);
         await scope.CommitAsync(ct);
+        if (!await AccountDeletionRestoreFence.RecordAcknowledgementAsync(storage, receipt, scope.Owner, ct))
+            return Results.StatusCode(503);
         return Results.Accepted(value: receipt);
     }
 

@@ -85,6 +85,23 @@ class GatewayTests(unittest.TestCase):
             exists.assert_not_called()
             compose.assert_not_called()
 
+    def test_pending_account_request_refuses_v3_before_creating_restore_state(self):
+        args = argparse.Namespace(snapshot='zanance-hosting-snapshot-test', project='zanance-selfhost-target',
+                                  public=False, gateway='direct')
+        manifest = {'SourceProject': 'zanance-selfhost-source', 'Quiesced': True, 'Images': {'api': 'sha256:' + '2' * 64}}
+        with (patch.object(operate, '_manifest', return_value=manifest),
+              patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
+              patch.object(operate, '_volume', return_value='original-private'),
+              patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.account-privacy': 'receipt-fence-v3'}),
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'request\n']) as run,
+              patch.object(operate, '_exists') as exists,
+              patch.object(operate, '_compose') as compose):
+            with self.assertRaisesRegex(RuntimeError, 'cannot enforce current pending account deletions'):
+                operate._restore(args, 'sha256:' + '1' * 64)
+            self.assertIn('*.request', run.call_args.args[0][-1])
+            exists.assert_not_called()
+            compose.assert_not_called()
+
     def test_restore_runs_confirmed_account_reconciliation_before_starting_api(self):
         """An unfinished retirement aborts before worker startup and preserves restore continuation."""
         args = argparse.Namespace(snapshot='zanance-hosting-snapshot-test', project='zanance-selfhost-target',

@@ -141,9 +141,14 @@ v2 image also supports markers bound to the original identity. An independent
 `.analysis-retired` marker requires `receipt-fence-v3`, even when the account
 has no completed identity erasure marker. These markers protect already erased
 analysis content while the rest of account deletion is pending.
+An acknowledgement marker with the `.request` suffix requires
+`receipt-fence-v4`, which also supports the earlier marker formats. When the
+original identity matches, reconciliation of this marker restores only the
+pending request and its original timestamp.
 An older image is refused before target creation. A capable application refuses
-to start if any transferred receipt lacks an active-service completion in the
-restored database. This prevents serving a pre-erasure database. When the isolated
+to start if a transferred completion marker lacks an active-service completion
+or an acknowledgement marker lacks its exact pending request or completion.
+This prevents serving a database that predates either event. When the isolated
 target has the original matching pending requests, use the same restore with
 `--reconcile-account-deletions` to confirm a reconciliation pass before startup.
 It processes only matched receipts, removing restored private service copies via

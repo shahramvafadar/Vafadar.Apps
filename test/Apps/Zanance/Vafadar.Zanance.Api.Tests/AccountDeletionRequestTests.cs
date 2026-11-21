@@ -34,6 +34,62 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Acknowledged_pending_request_survives_a_pre_request_restore_without_erasing_the_account()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        var currentRoot = Path.Combine(root, "pending-request-current");
+        var restoredRoot = Directory.CreateDirectory(Path.Combine(root, "pending-request-restored")).FullName;
+        var restoredStorage = new ServiceStorage { Root = restoredRoot, LocalMailbox = false };
+        connection.Database = "zanance_pending_fence_current_fixture";
+        await using var host = new IdentityHost(connection.ConnectionString, currentRoot);
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var users = services.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        const string email = "pending-fence@example.invalid";
+        const string password = "Fictional-Pending-Fence9!";
+        var owner = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+        Assert.True((await users.CreateAsync(owner, password)).Succeeded);
+        connection.Database = "zanance_pending_fence_restored_fixture";
+        await using var restored = new ServiceDbContext(new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection.ConnectionString).Options);
+        await restored.Database.MigrateAsync(ct);
+        restored.Users.Add(new() { Id = owner.Id, UserName = email, Email = email, EmailConfirmed = true });
+        await restored.SaveChangesAsync(ct);
+        restored.ChangeTracker.Clear();
+
+        using var app = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var login = await app.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+        app.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+        using var intake = await app.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+        Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
+        var receipt = Assert.IsType<AccountDeletionReceipt>(await intake.Content.ReadFromJsonAsync<AccountDeletionReceipt>(ct));
+
+        Assert.Equal(1, await AccountDeletionRestoreFence.MergeAsync(currentRoot, restoredRoot, ct));
+        var marker = await File.ReadAllTextAsync(Directory.EnumerateFiles(Path.Combine(restoredRoot, "account-deletions")).Single(), ct);
+        Assert.DoesNotContain(email, marker, StringComparison.Ordinal);
+        Assert.DoesNotContain(owner.Id, marker, StringComparison.Ordinal);
+        await Assert.ThrowsAsync<IOException>(() => AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct));
+        Assert.Equal(0, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct);
+        var pending = await restored.AccountDeletionRequests.AsNoTracking().SingleAsync(ct);
+        Assert.Equal(receipt, new AccountDeletionReceipt(pending.ReceiptId, pending.RequestedAt));
+        Assert.Equal(owner.Id, pending.UserId);
+        Assert.True(await restored.Users.AnyAsync(row => row.Id == owner.Id, ct));
+        Assert.Empty(await restored.Set<AccountDeletionCompletion>().ToListAsync(ct));
+    }
+
+    [Fact]
     public async Task Pending_deletion_preserves_billing_replay_and_refuses_new_account_bindings()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
