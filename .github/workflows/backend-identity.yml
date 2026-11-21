@@ -42,6 +42,7 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
       ZANANCE_TEST_DB: Host=127.0.0.1;Port=55473;Database=zanance_identity_ci;Username=postgres
+      ZANANCE_SESSION_TEST_DB: Host=127.0.0.1;Port=55473;Database=zanance_identity_session_revocation;Username=postgres
       ZANANCE_TEST_CONTAINER: zanance-backend-ci
       ZANANCE_IDENTITY_REMOVAL_TEST_DB: Host=127.0.0.1;Port=55488;Database=zanance_identity_removal_fixture;Username=postgres
       ZANANCE_IDENTITY_REMOVAL_TEST_ROOT: ${{ github.workspace }}/artifacts/identity-removal-ci
@@ -62,6 +63,7 @@ jobs:
           done
           docker exec zanance-backend-ci pg_isready -h 127.0.0.1 -U postgres -d zanance_identity_ci
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE ROLE zanance_runtime LOGIN'
+          docker exec zanance-backend-ci createdb -h 127.0.0.1 -U postgres zanance_identity_session_revocation
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_identity_removal_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_request_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_web_fixture'
@@ -314,6 +316,12 @@ jobs:
             ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -method "*$method" -failSkips -result-xml "TestResults/analysis-$method.xml"
             docker exec zanance-analysis-ci dropdb -h 127.0.0.1 -U postgres zanance_ai_provider_pilot
           done
+      - name: Verify progress and route recovery in the synthetic dispatch queue
+        env:
+          ZANANCE_AI_DISPATCH_QUEUE_TEST_DB: Host=127.0.0.1;Port=55479;Database=zanance_ai_dispatch_queue;Username=postgres
+        run: |
+          docker exec zanance-analysis-ci createdb -h 127.0.0.1 -U postgres zanance_ai_dispatch_queue
+          ./artifacts/analysis-test-runtime/Vafadar.Zanance.Api.Tests -method '*Pilot_dispatch_advances_past_a_full_page_of_unavailable_original_routes' -failSkips -result-xml TestResults/analysis-dispatch-queue.xml
       - name: Upload bounded analysis reports only
         if: always()
         uses: actions/upload-artifact@v7
