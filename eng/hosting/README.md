@@ -145,6 +145,33 @@ An acknowledgement marker with the `.request` suffix requires
 `receipt-fence-v4`, which also supports the earlier marker formats. When the
 original identity matches, reconciliation of this marker restores only the
 pending request and its original timestamp.
+
+### Packaged pending request restore verification (2026-11-21)
+
+The Linux service image from source `e7d45753` advertises `receipt-fence-v4`.
+Its immutable image ID is
+`sha256:578f702eba7d6c717ad74a4c77ead87c9edea9e5b9535b2d7d7d9bce9f3f3c65`.
+The offline merge ran as UID 1654 with a read-only root, no network, and the
+original fictional marker volume mounted read-only. The merged marker matched
+the source byte for byte. The packaged service refused a database without the
+acknowledged pending request.
+
+An Integration-mode fixture used a persistent synthetic protection certificate
+to run the packaged reconciliation command against an isolated PostgreSQL
+database. It restored the exact receipt, timestamp and original account binding.
+The account remained present with zero completion records. Internal readiness
+then returned HTTP 200. This verifies the packaged commands and startup fence
+without starting a public or SelfHosted Compose deployment. All fixture
+containers, volumes and the isolated network were retired.
+
+The first build context could not enumerate an old artifact path. The image was
+then built from the committed allowlisted source. The first fixture subnet
+overlapped an existing Docker network and was refused before creating state.
+An ephemeral Integration protection key also refused the separate reconciliation
+process. The certificate-backed fixture reused the exact merged marker bytes.
+
+### Restore startup and operator requirements
+
 An older image is refused before target creation. A capable application refuses
 to start if a transferred completion marker lacks an active-service completion
 or an acknowledgement marker lacks its exact pending request or completion.
