@@ -6496,3 +6496,28 @@ handoff. The handoff copy matches the verified build by SHA-256.
 The two cancellation contracts passed on the host with synthetic data.
 Upgrade and AI opt-out device evidence covers the earlier `1fe6e594` APK.
 This handoff required no new build, installation, device or financial action.
+
+## Native Android PDF rendering cancellation (2026-11-21)
+
+An independent offline SDK-only probe from `ef9da336` referenced the
+original `Vafadar.Documents.Maui` project. The packaged probe had neither
+`INTERNET` nor `ACCESS_NETWORK_STATE`. On an owned Android 16 x86-64 guest,
+the original renderer opened a new two-page synthetic PDF. The probe
+cancelled with the original token at the native page-count callback,
+before opening a page. The renderer returned cancellation with that token
+and left no linked staging PDF. A separate uncancelled call then read the
+second page as a 3,404-byte JPEG with both original pages still reported,
+the source digest unchanged, and no staging PDF.
+
+The first probe build needed the reviewed Android Core path and an explicit
+managed exception type. A Debug archive with network permissions was refused
+before installation. The Release probe was installed once and the explicit
+activity launch followed a refused implicit launch. The owned package and
+emulator were retired. Only the AVD tool's environment was corrected after
+its first retirement command failed to resolve a Windows utility.
+
+Evidence is in `artifacts/android-pdf-render-cancellation-ef9da336`.
+This verifies the native boundary before the first page and subsequent
+renderer reuse. Cancellation inside an active native page render and
+native app-page retirement are outside this probe. No receipt OCR,
+account setup, ledger write or real-device action was repeated.
