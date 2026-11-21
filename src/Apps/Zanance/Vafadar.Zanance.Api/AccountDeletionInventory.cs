@@ -52,17 +52,7 @@ public static class AccountDeletionInventory
             await db.Set<SyncDeviceRow>().AnyAsync(row => row.UserId == owner, ct) ||
             await db.Set<AccountSyncFileRetirement>().AnyAsync(row => row.ReceiptId == receipt, ct))
             dependencies |= AccountDeletionDependencies.PersonalSync;
-        // Historical references can survive an ownership transfer and do not all have identity foreign keys.
-        var deletionActorHash = HouseholdDeletionLedger.Actor(owner);
-        if (await db.Set<HouseholdSpaceRow>().AnyAsync(row => row.OwnerId == owner || row.DeletionActorHash == deletionActorHash, ct) ||
-            await db.Set<HouseholdMemberRow>().AnyAsync(row => row.UserId == owner, ct) ||
-            await db.Set<HouseholdInvitationRow>().AnyAsync(row => row.ClaimedUserId == owner, ct) ||
-            await db.Set<HouseholdMembershipEventRow>().AnyAsync(row => row.ActorId == owner, ct) ||
-            await db.Set<HouseholdAuditRow>().AnyAsync(row => row.ActorId == owner, ct) ||
-            await db.Set<HouseholdOwnershipRow>().AnyAsync(row => row.OwnerId == owner, ct) ||
-            await db.Set<HouseholdRecoveryRow>().AnyAsync(row => row.OwnerId == owner, ct) ||
-            await db.Set<HouseholdRecoverySeedRow>().AnyAsync(row => row.OwnerId == owner, ct))
-            dependencies |= AccountDeletionDependencies.Household;
+        if (await HasHouseholdAsync(db, owner, ct)) dependencies |= AccountDeletionDependencies.Household;
         var billingIdentityHash = BillingAuthority.IdentityHash(owner);
         if (await db.Set<BillingCustomerRow>().AnyAsync(row => row.UserId == owner || row.RegistrationIdentityHash == billingIdentityHash, ct) ||
             await db.Set<BillingIdentityRow>().AnyAsync(row => row.UserId == owner, ct) ||
@@ -70,6 +60,20 @@ public static class AccountDeletionInventory
             dependencies |= AccountDeletionDependencies.Billing;
         if (await HasAnalysisAsync(db, owner, ct)) dependencies |= AccountDeletionDependencies.Analysis;
         return dependencies;
+    }
+
+    internal static async Task<bool> HasHouseholdAsync(ServiceDbContext db, string owner, CancellationToken ct)
+    {
+        // Historical references can survive an ownership transfer and do not all have identity foreign keys.
+        var actor = HouseholdDeletionLedger.Actor(owner);
+        return await db.Set<HouseholdSpaceRow>().AnyAsync(row => row.OwnerId == owner || row.DeletionActorHash == actor, ct) ||
+            await db.Set<HouseholdMemberRow>().AnyAsync(row => row.UserId == owner, ct) ||
+            await db.Set<HouseholdInvitationRow>().AnyAsync(row => row.ClaimedUserId == owner, ct) ||
+            await db.Set<HouseholdMembershipEventRow>().AnyAsync(row => row.ActorId == owner, ct) ||
+            await db.Set<HouseholdAuditRow>().AnyAsync(row => row.ActorId == owner, ct) ||
+            await db.Set<HouseholdOwnershipRow>().AnyAsync(row => row.OwnerId == owner, ct) ||
+            await db.Set<HouseholdRecoveryRow>().AnyAsync(row => row.OwnerId == owner, ct) ||
+            await db.Set<HouseholdRecoverySeedRow>().AnyAsync(row => row.OwnerId == owner, ct);
     }
 
     internal static async Task<bool> HasAnalysisAsync(ServiceDbContext db, string owner, CancellationToken ct) =>

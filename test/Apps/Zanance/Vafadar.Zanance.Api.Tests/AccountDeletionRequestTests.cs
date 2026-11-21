@@ -20,12 +20,72 @@ using Vafadar.Zanance.Api.Sharing;
 using Vafadar.Zanance.Api.Sync;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Analysis;
+using Vafadar.Zanance.Core.Sharing;
 
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Account_erasure_releases_only_verified_retired_rooms_and_preserves_restore_markers()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_household_fixture";
+
+        await using var host = new IdentityHost(connection.ConnectionString,
+            Path.Combine(root, "household-erasure-" + Guid.NewGuid().ToString("N")));
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        var ledger = services.ServiceProvider.GetRequiredService<IHouseholdDeletionLedger>();
+        await db.Database.MigrateAsync(ct);
+        var target = new ServiceUser { UserName = "household-erasure-target@example.invalid" };
+        var other = new ServiceUser { UserName = "household-erasure-other@example.invalid" };
+        var receipt = Guid.NewGuid();
+        var now = DateTimeOffset.UtcNow;
+        var retired = new HouseholdSpaceRow { Id = Guid.NewGuid(), OwnerId = target.Id, CreationOperationId = Guid.NewGuid(),
+            CreatedAt = now, Deleted = true };
+        var active = new HouseholdSpaceRow { Id = Guid.NewGuid(), OwnerId = target.Id, CreationOperationId = Guid.NewGuid(),
+            CreatedAt = now, HostExpiresAt = now.AddDays(5) };
+        db.Users.AddRange(target, other);
+        db.AccountDeletionRequests.Add(new() { UserId = target.Id, ReceiptId = receipt, RequestedAt = now });
+        db.AddRange(retired, active);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+        var marker = new HouseholdDeletionMarker(1, retired.Id, Guid.NewGuid(), HouseholdDeletionLedger.Actor(target.Id),
+            new string('a', 64), now.ToUnixTimeSeconds(), HouseholdDeletionReason.Owner);
+        await ledger.RecordAsync(marker, ct);
+        await services.ServiceProvider.GetRequiredService<HouseholdRetirement>().RunOnceAsync(ct);
+        Assert.True((await db.Set<HouseholdSpaceRow>().AsNoTracking().SingleAsync(row => row.Id == retired.Id, ct)).StorageRetired);
+
+        var blocked = await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, receipt, ct);
+        Assert.Equal(new(AccountIdentityErasureStatus.DependenciesRemain, AccountDeletionDependencies.Household), blocked);
+        Assert.Equal(2, await db.Set<HouseholdSpaceRow>().CountAsync(ct));
+        Assert.Equal(marker, await ledger.ReadAsync(retired.Id, ct));
+
+        // Model the independently reviewed transfer outcome without replaying the app's ownership protocol.
+        await db.Set<HouseholdSpaceRow>().Where(row => row.Id == active.Id)
+            .ExecuteUpdateAsync(update => update.SetProperty(row => row.OwnerId, other.Id), ct);
+        Assert.Equal(AccountIdentityErasureStatus.Completed,
+            (await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, receipt, ct)).Status);
+        var current = await db.Set<HouseholdSpaceRow>().AsNoTracking().SingleAsync(ct);
+        Assert.Equal(active.Id, current.Id);
+        Assert.Equal(other.Id, current.OwnerId);
+        Assert.False(current.Deleted);
+        Assert.Equal(marker, await ledger.ReadAsync(retired.Id, ct));
+        Assert.Equal(other.Id, (await db.Users.AsNoTracking().SingleAsync(ct)).Id);
+    }
+
     [Fact]
     public async Task Local_analysis_retirement_removes_only_refused_requests_without_provider_or_credit_effects()
     {

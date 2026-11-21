@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Vafadar.Zanance.Api.Sharing;
 using Vafadar.Zanance.Api.Sync;
 
 namespace Vafadar.Zanance.Api;
@@ -48,6 +49,12 @@ public static class AccountIdentityErasure
         if ((present & AccountDeletionDependencies.PrivateObjects) != 0 &&
             !await PrivateObjectsRetiredAsync(db, storage, owner, ct))
             blocked |= AccountDeletionDependencies.PrivateObjects;
+        if (blocked == AccountDeletionDependencies.Household)
+        {
+            await RemoveRetiredHouseholdReferencesAsync(db, owner, ct);
+            if (!await AccountDeletionInventory.HasHouseholdAsync(db, owner, ct))
+                blocked = AccountDeletionDependencies.None;
+        }
         if (blocked != AccountDeletionDependencies.None)
             return new(AccountIdentityErasureStatus.DependenciesRemain, blocked);
 
@@ -66,6 +73,27 @@ public static class AccountIdentityErasure
     private static async Task<AccountIdentityErasureResult> KnownResultAsync(ServiceDbContext db, Guid receipt, CancellationToken ct) =>
         new(await db.Set<AccountDeletionCompletion>().AnyAsync(row => row.ReceiptId == receipt, ct)
             ? AccountIdentityErasureStatus.Completed : AccountIdentityErasureStatus.UnknownReceipt);
+
+    private static async Task RemoveRetiredHouseholdReferencesAsync(ServiceDbContext db, string owner, CancellationToken ct)
+    {
+        var retired = db.Set<HouseholdSpaceRow>().Where(row => row.OwnerId == owner && row.Deleted &&
+            row.StorageRetired && row.DeletionOperationId != null);
+        var rooms = await retired.OrderBy(row => row.Id).Select(row => row.Id).ToListAsync(ct);
+        foreach (var id in rooms)
+        {
+            await HouseholdRequestScope.LockRoomAsync(db, id, ct);
+            var room = await retired.AsNoTracking().SingleOrDefaultAsync(row => row.Id == id, ct);
+            if (room is null || room.OwnerSigningKey.Length != 0 || room.OwnerWrappingKey.Length != 0 ||
+                await db.Set<HouseholdOwnershipRow>().AnyAsync(row => row.SpaceId == id, ct)) continue;
+            var marker = await db.HouseholdDeletions.ReadAsync(id, ct);
+            if (marker is null) continue;
+            // Verify the independent marker against the exact recorded room declaration.
+            HouseholdLifecycleStore.Apply(room, marker);
+            // The room's child foreign keys still refuse if the ordinary retirement did not clear them.
+            // Dropping the owner's SQL tombstone does not remove the independent restore marker.
+            await retired.Where(row => row.Id == id).ExecuteDeleteAsync(ct);
+        }
+    }
 
     private static async Task<bool> PrivateObjectsRetiredAsync(ServiceDbContext db, ServiceStorage storage, string owner, CancellationToken ct)
     {

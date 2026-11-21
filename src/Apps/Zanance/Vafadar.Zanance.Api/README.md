@@ -148,7 +148,12 @@ After the approved stages and retention review, the operator can use
 The active-service transaction rechecks the original dependencies under the
 owner lock. It refuses pending identity mail, sync retirement, household
 references, billing and analysis, and deliberately verifies retired private
-paths before removing their manifests. It removes the original service
+paths before removing their manifests. If the only remaining dependency is a
+previously retired owned household, the transaction may remove its empty
+database tombstone after verifying the independent original deletion marker
+under the room lock. Active rooms, references to other rooms and invalid or
+unavailable markers continue to block. The independent room marker is retained.
+It removes the original service
 identity, sessions and pending request together. The completion record
 retains only the opaque receipt and timestamp, so an ambiguous result can
 be reconciled without doing the deletion again. A separate opaque marker in
