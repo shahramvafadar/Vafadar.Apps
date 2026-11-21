@@ -16,7 +16,6 @@ internal static class SyncRoundRoutes
             ServiceDbContext db, TimeProvider time, IDataProtectionProvider protection, ServiceStorage storage, CancellationToken ct) =>
             await RunAsync(profile, input.DeviceId, principal, db, time, protection, storage, async (scope, space, store) =>
             {
-                await scope.RequireActiveAccountAsync(ct);
                 var round = await store.OpenAsync(scope, space, input, ct);
                 return Results.Ok(await HandleAsync(db, round, ct));
             }, ct));
@@ -40,7 +39,6 @@ internal static class SyncRoundRoutes
             await RunAsync(profile, deviceId, principal, db, time, protection, storage, async (scope, space, store) =>
             {
                 var round = await RoundAsync(db, space.Id, deviceId, roundId, ct);
-                await scope.RequireActiveAccountAsync(ct);
                 return Results.Ok(await store.CommitAsync(scope, space, round, input, ct));
             }, ct));
         group.MapDelete("/profiles/{profile:guid}/rounds/{roundId:guid}", async (Guid profile, Guid roundId, Guid deviceId, ClaimsPrincipal principal,

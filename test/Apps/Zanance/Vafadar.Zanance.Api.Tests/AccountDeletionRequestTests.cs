@@ -64,13 +64,25 @@ public sealed class AccountDeletionRequestTests
         var profile = Assert.IsType<SyncProfile>(await creation.Content.ReadFromJsonAsync<SyncProfile>(ct));
         var profilePath = $"{profiles}/{profile.Id}";
         var rounds = $"{profilePath}/rounds";
+        var boundDevice = $"?deviceId={device.Id}";
+
+        var originalOpen = new SyncOpenRound(device.Id, Guid.NewGuid(), SyncSchema.Hash);
+        using var completedOpening = await owner.PostAsJsonAsync(rounds, originalOpen, ct);
+        Assert.Equal(HttpStatusCode.OK, completedOpening.StatusCode);
+        var completed = Assert.IsType<SyncRoundHandle>(await completedOpening.Content.ReadFromJsonAsync<SyncRoundHandle>(ct));
+        var completedPath = $"{rounds}/{completed.Id}/commit{boundDevice}";
+        var emptyCommit = new SyncCommitRound(0, 0, SyncProtocolDigest.Round([]), []);
+        using var completion = await owner.PostAsJsonAsync(completedPath, emptyCommit, ct);
+        Assert.Equal(HttpStatusCode.OK, completion.StatusCode);
+        var receipt = Assert.IsType<SyncCommitResult>(await completion.Content.ReadFromJsonAsync<SyncCommitResult>(ct));
+        Assert.True(receipt.Committed);
+
         using var opening = await owner.PostAsJsonAsync(rounds, new SyncOpenRound(device.Id, Guid.NewGuid(), SyncSchema.Hash), ct);
         Assert.Equal(HttpStatusCode.OK, opening.StatusCode);
         var round = Assert.IsType<SyncRoundHandle>(await opening.Content.ReadFromJsonAsync<SyncRoundHandle>(ct));
 
         using var intake = await owner.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
         Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
-        var boundDevice = $"?deviceId={device.Id}";
         var originalRound = $"{rounds}/{round.Id}";
         var blob = $"{profilePath}/blobs/{new string('a', 64)}";
         await RefusesAsync(owner.PostAsJsonAsync(devices, new SyncNameInput("Replacement"), ct));
@@ -78,12 +90,30 @@ public sealed class AccountDeletionRequestTests
         await RefusesAsync(owner.PostAsJsonAsync($"{profilePath}/initialization", new SyncClaimInitialization(device.Id, device.Id), ct));
         await RefusesAsync(owner.PostAsJsonAsync(rounds, new SyncOpenRound(device.Id, Guid.NewGuid(), SyncSchema.Hash), ct));
         await RefusesAsync(owner.PutAsJsonAsync($"{originalRound}/parts{boundDevice}", new SyncRoundPart(0, []), ct));
-        await RefusesAsync(owner.PostAsJsonAsync($"{originalRound}/commit{boundDevice}", new SyncCommitRound(0, 0, new string('a', 64), []), ct));
+        await RefusesAsync(owner.PostAsJsonAsync($"{originalRound}/commit{boundDevice}", emptyCommit, ct));
         await RefusesAsync(owner.PostAsJsonAsync(blob + boundDevice, new SyncBlobDeclaration(1), ct));
         using var bytes = new ByteArrayContent([1]);
         bytes.Headers.ContentType = new("application/octet-stream");
         await RefusesAsync(owner.PutAsync($"{blob}/parts/0{boundDevice}", bytes, ct));
         await RefusesAsync(owner.PostAsync($"{blob}/complete{boundDevice}", null, ct));
+
+        using var reopened = await owner.PostAsJsonAsync(rounds, originalOpen, ct);
+        Assert.Equal(HttpStatusCode.OK, reopened.StatusCode);
+        var acknowledged = Assert.IsType<SyncRoundHandle>(await reopened.Content.ReadFromJsonAsync<SyncRoundHandle>(ct));
+        Assert.Equal(completed.Id, acknowledged.Id);
+        Assert.True(acknowledged.Committed);
+        Assert.Equal(receipt.Cursor, acknowledged.Cursor);
+        using var repeated = await owner.PostAsJsonAsync(completedPath, emptyCommit, ct);
+        Assert.Equal(HttpStatusCode.OK, repeated.StatusCode);
+        var repeatedReceipt = Assert.IsType<SyncCommitResult>(await repeated.Content.ReadFromJsonAsync<SyncCommitResult>(ct));
+        Assert.True(repeatedReceipt.Committed);
+        Assert.Equal(receipt.Cursor, repeatedReceipt.Cursor);
+        using var altered = await owner.PostAsJsonAsync(completedPath, emptyCommit with { ContentHash = new string('b', 64) }, ct);
+        Assert.Equal(HttpStatusCode.Conflict, altered.StatusCode);
+        Assert.Contains("AlteredCompletion", await altered.Content.ReadAsStringAsync(ct), StringComparison.Ordinal);
+        Assert.Equal(2, await db.Set<SyncRoundRow>().CountAsync(ct));
+        Assert.Empty(await db.Set<SyncRecordRow>().ToListAsync(ct));
+        Assert.Empty(await db.Set<SyncEventRow>().ToListAsync(ct));
 
         using var lookup = await owner.GetAsync(originalRound + boundDevice, ct);
         Assert.Equal(HttpStatusCode.OK, lookup.StatusCode);

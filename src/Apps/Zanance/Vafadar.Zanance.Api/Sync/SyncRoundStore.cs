@@ -35,6 +35,7 @@ internal sealed class SyncRoundStore(ServiceDbContext db, IDataProtectionProvide
             if (round.SchemaHash != input.SchemaHash) throw new SyncProtocolRefusal(409, "AlteredOperation");
             return round;
         }
+        await scope.RequireActiveAccountAsync(ct);
         if (await db.Set<SyncRoundRow>().CountAsync(row => row.SpaceId == space.Id && !row.Committed && !row.Abandoned, ct) >= 16)
             throw new SyncProtocolRefusal(413, "PendingRoundBound");
         if (await (from pending in db.Set<SyncRoundRow>() join owned in db.Set<SyncSpaceRow>() on pending.SpaceId equals owned.Id
@@ -93,6 +94,7 @@ internal sealed class SyncRoundStore(ServiceDbContext db, IDataProtectionProvide
                 throw new SyncProtocolRefusal(409, "AlteredCompletion");
             return new(true, round.CommitCursor, []);
         }
+        await scope.RequireActiveAccountAsync(ct);
         var parts = await db.Set<SyncPartRow>().AsNoTracking().Where(row => row.RoundId == round.Id).OrderBy(row => row.Index).ToListAsync(ct);
         if (parts.Count != input.Parts || parts.Where((part, index) => part.Index != index).Any() ||
             parts.Sum(part => (long)part.Rows) != input.Rows || SyncProtocolDigest.Round(parts.Select(part => part.Hash)) != input.ContentHash)
