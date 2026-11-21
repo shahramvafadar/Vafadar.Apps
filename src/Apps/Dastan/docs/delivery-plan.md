@@ -787,7 +787,7 @@ site is public; the look at 19.2.
 
 ## 21. Safe foundations and one visual experience (phase 20)
 
-Planned on 2026-11-20, after a review of the source by the owner and three sketches of the owner's (Discover, the explorer of relationships, the profile of a node; each for a wide window and a phone). **The twelve steps were done by 2026-11-21**; each says below what it built, what it did not build and what it did not show, and [acceptance.md](acceptance.md) says how the whole is shown. What is left to the owner is named there and in step 20.12: people who see the site for the first time ([user-test.md](user-test.md)), a real phone, Safari itself and a screen reader. (As planned, this paragraph said: "Nothing of this phase is built yet.") The sketches are a direction, not a final design: a light, warm ground, readable text, one accent colour, room for pictures and drawings, details only when the reader asks for them. Their pictures are made up for the sketch and are not content of the site; the wordmark stays the plain name.
+Planned on 2026-11-20, after a review of the source by the owner and three sketches of the owner's (Discover, the explorer of relationships, the profile of a node; each for a wide window and a phone). **The twelve steps were done by 2026-11-21**; each says below what it built, what it did not build and what it did not show, and [acceptance.md](acceptance.md) says how the whole is shown. What is left to the owner is named there and in step 20.12: people who see the site for the first time ([user-test.md](user-test.md)), a real phone, Safari itself and a screen reader. (As planned, this paragraph said: "Nothing of this phase is built yet.") The sketches are a direction, not a final design: a light, warm ground, readable text, one accent colour, room for pictures and drawings, details only when the reader asks for them. Their pictures are made up for the sketch and are not content of the site; the wordmark stays the plain name. (It did until 2026-11-21 – section 22.)
 
 The review read the code and did not run it. What it found was read again in the code on 2026-11-20 and holds; none of it has been reproduced by a test yet. Each finding is reproduced first, by a test that fails, and corrected after.
 
@@ -933,3 +933,66 @@ After phase 20 the owner chose a logo and handed over a picture of it with a wri
 faithfully as vectors, make every asset from one source, and put it on the site.
 
 **Done on 2026-11-21** ([ADR 0026](adr/0026-logo.md); `branding/dastan/README.md`). *Built:* the geometry of the logo, traced from the large logo of the approved picture and fitted with curves – the open D, the dot as a circle, the page, the six letters of the wordmark as outlines, 172 segments –, kept as `branding/dastan/source/dastan-geometry.json`; one script that writes from it two masters, ten variants as SVG, eighteen PNGs of the logo and the symbol without a ground, eight icons, `favicon.ico` with three sizes, the code the site draws the logo with, and a sheet of comparison; a small-size variant for 16 and 32 pixels with a heavier page and dot, named as such. On the site: the logo in the head of every page as a drawing in the page (indigo and ink on a light ground, white on a dark one, named once, never mirrored), the icons of the tab, the manifest with icons for "any" and separate ones for "maskable", the page for "no connection", the picture of a shared link; the store of the worker named anew so that a device drops the earlier icon and keeps the pages a visitor read. *Shown by tests:* eleven cases of `LogoTests` (the head in both languages; the site draws the geometry of the brand and no other; no asset holds pixels, a script, a font or anything fetched; the icons of the site are byte for byte those the brand made; the three sizes of the ICO; size, ground and the whole symbol of five icons, the maskable ones inside the circle of 40 %), four cases in a browser in `FrameBrowserTests` (the proportions and the colours of the logo on a light and a dark ground, not turned on a Persian page, every icon the page and the manifest name is there), and seven earlier tests brought to the new names. The whole suite ran once: 3308 of 3311 passed; the three that failed were the new cases in a browser, which asked for the icons from inside the page and were refused there – they ask from the test now and pass, with the other tests of the head, the installed app and the worker (70 cases). *Looked at:* the sheet (`branding/dastan/previews/comparison.png`) – the reference, the master, one over the other with 2.6 % of the pixels with ink differing at the soft edges of the picture, the variants, the symbol at 16 to 64 pixels as it is and enlarged, the logo at 24 to 40 pixels, the maskable icon under a circle and a rounded square; the head of the site in English, light, 1280 px and in Persian, dark, 360 px, on the machine of development. **Not built:** formats for print; a guide of the brand beyond the README; the logo in the tool of the editors (the Studio keeps its plain name). **Not shown:** the app installed on a phone or a computer and what a launcher makes of the maskable icon; the icon of a tab in Safari and Firefox by eye; a screen reader; the published build was not photographed. The original vector file and the font of the wordmark were not available: the geometry is a reconstruction of a picture.
+
+## 23. What phase 20 and the logo left that needed nobody's decision (2026-11-21)
+
+The steps of phase 20 and section 22 each say what they did not build. Six of those things needed no decision
+of the owner, no content and no device; they were built in one piece of work. Everything else that is open is
+listed at the end of this section with whose it is.
+
+**Done on 2026-11-21.** *Built:*
+
+1. **The symbol in the tool of the editors** ([ADR 0026](adr/0026-logo.md), point 8): before the name of the
+   tool in the head of every page, the icon of a tab; the same geometry, written by the same script.
+2. **My World names what a family tree asks** ([ADR 0024](adr/0024-parts.md)): an agreement to be named in
+   public and a claim to confirm or refuse, each leading to where it is answered. *Found on the way:* the top
+   of a tree said "something here waits for your answer" to somebody who had agreed already; it says so only
+   while the answer is missing.
+3. **The place of a relationship leads to its page** ([ADR 0023](adr/0023-institutions.md)) where the two
+   named an entry of a collection.
+4. **Inputs for the places of a picture in the Studio** ([ADR 0021](adr/0021-timeline.md)): rows that offer an
+   entity and an event, the row that begins the list, the caption of a place in the other language. *Found on
+   the way:* a form that was refused showed again only the fields the record had before – a list or a time the
+   form had added was gone; it is shown again as it was filled in.
+5. **The moving view of a story tells who takes part from who is only mentioned** (ADR 0021): a hollow mark,
+   and the words of the table in the name of every mark.
+6. **A drawing is where it was left** ([ADR 0025](adr/0025-exploring.md)): size and movement of the moving
+   drawing of a graph, kept with the place of the history, put back by Back, Forward and loading anew.
+
+Also: two lines that stood twice in the style sheet of the site (the colours of the logo for a dark device)
+stand once.
+
+*Shown by tests:* `StudioSymbolTests` (4 cases: the head in both languages, the geometry of the brand, the icon
+for who is signed in and who is not); `My_world_names_what_a_tree_asks_of_an_account_until_it_is_answered` in
+`FamilyTreePagesTests` (a claim for who made the record and nobody else; an agreement for who is named and
+nobody else; gone when answered, back when taken back, nothing of a tree one may not see); the link of a place
+in `Colleagues_can_say_at_which_entry_and_two_employers_of_one_name_are_two` of `InstitutionPagesTests`, for
+both sides; `StudioPlacementTests` (3 cases: the row that begins the list; an entity and an event added with
+their Persian captions, taken out again down to no list; a place the item does not show refused by the readers
+with the form as it was filled in); the presence of every mark in `TimelineViewsTests`, and in a browser, in
+`StoryChartBrowserTests`, every mark against its cell of the table in English at 1280 px and in Persian, dark,
+at 390 px; `A_visitor_who_comes_back_finds_the_drawing_as_large_and_as_far_moved_as_it_was_left` in
+`GraphBrowserTests` (loaded anew, Back, forgotten by "the whole drawing", whole for who comes first) at 1280
+and 360 px. The whole suite ran once after the last change: 3321 tests, none failed. *Looked at:* the head of the tool of the editors in English, light, 1280 px and in Persian,
+dark, 360 px, on the machine of development, over an empty store.
+
+**Not shown:** the five other changes were not looked at by eye – they are shown by the tests above, of which
+those of the drawings run in a real browser; nothing was looked at in the published build; Firefox and WebKit
+run the tests on the build server only.
+
+**What is still open, and whose it is.** Nothing below is forgotten; none of it can be built without the one
+named.
+
+| Open | Whose | Why not built here |
+|---|---|---|
+| Themes of a gallery (R-MED-02) | the owner, as editor | The vocabulary has no kind for a theme; which themes there are is an editorial decision, and a theme is a value of the vocabulary, not a free word (ADR 0021). |
+| A stretch of years that the connections and the pictures of a name honour | the owner | ADR 0025 left open whether they should leave years out at all. |
+| A way for a visitor to propose a place to the editors | the owner | An editorial process with somebody who looks at the proposals (ADR 0023). |
+| Pictures, and content beyond the Shahnameh | the owner | Rights and sources; without them Discover has one story and drawings in the place of pictures. |
+| The order inside the world of a story of a collection | the owner, with content | No collection states one; a comparison file can. |
+| Cards of a graph in sizes of their own; a first answer smaller than a whole family tree | nobody yet | The measurement of step 20.12 did not ask for either. |
+| `IdentityHead` for an account and a record in a tree | the owner | It would need a profile of people of accounts, which is a decision about what an account shows (ADR 0024). |
+| Formats of the logo for print; a guide of the brand | the owner | Asked for by no step; the masters are vectors and serve print as they are. |
+| A real phone, the app installed, Safari itself, a screen reader, five people who see the site for the first time | the owner | They need a device, eyes and ears. |
+| A mailbox and a sender, the clients at Google and Microsoft, the key of the licence of the graph, a host and an address | the owner | Accounts, contracts and secrets are entered by the owner alone. |
+| The legal pages read by a lawyer, the postal address | the owner | Section 18.8. |

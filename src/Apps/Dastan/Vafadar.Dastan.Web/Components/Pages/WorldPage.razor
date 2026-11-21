@@ -28,7 +28,7 @@
 
     <section id="waiting" aria-labelledby="waiting-title">
         <h2 id="waiting-title">@T["World_Waiting"]</h2>
-        @if (_waiting.Count == 0 && _tags == 0)
+        @if (_waiting.Count == 0 && _tags == 0 && _inTrees.Count == 0)
         {
             <StateNote Kind="nothing" Text="@T["World_NothingWaiting"]" />
         }
@@ -42,6 +42,24 @@
                         <a href="account/people#waiting"><bdi>@request.Other.Name</bdi></a>
                         <span class="meta">– @PeopleEndpoints.Called(request.Kind, request.Terms, T)</span>
                     </li>
+                }
+                @foreach (var waiting in _inTrees)
+                {
+                    @* What a tree asks of this account – the page of the tree says the same at its top, and answers it. *@
+                    @if (waiting.Agreement)
+                    {
+                        <li>
+                            <a href="@($"account/trees/{waiting.Tree.Id}#consent")"><bdi>@waiting.Tree.Name</bdi></a>
+                            <span class="meta">– @T["World_Tree_Agreement"]</span>
+                        </li>
+                    }
+                    @if (waiting.Claims > 0)
+                    {
+                        <li>
+                            <a href="@($"account/trees/{waiting.Tree.Id}#claims")"><bdi>@waiting.Tree.Name</bdi></a>
+                            <span class="meta">– @string.Format(CultureInfo.CurrentCulture, T["World_Tree_Claims"], Visitor.Number(waiting.Claims))</span>
+                        </li>
+                    }
                 }
                 @if (_tags > 0)
                 {
@@ -68,6 +86,7 @@
 @code {
     private VisitorSession? _me;
     private IReadOnlyList<RelationshipInfo> _waiting = [];
+    private IReadOnlyList<TreeWaiting> _inTrees = [];
     private int _tags;
     private int _relationships;
     private int _places;
@@ -100,6 +119,7 @@
         _tags = Desk.PhotoFolder is null ? 0 : store.TagsWaiting(session.Id).Count;
         _places = store.Affiliations(session.Id).Count;
         _trees = store.Trees(session.Id).Count;
+        _inTrees = store.TreesWaiting(session.Id);
         _photos = Desk.PhotoFolder is null ? 0 : store.Photos(session.Id).Count;
     }
 

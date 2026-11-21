@@ -1,0 +1,30 @@
+@* What a relationship is called, with where it holds and from when until when: "colleague, The Zabol Press,
+   2010 to 2018" (ADR 0014, step 20.4). Where the two named an entry of a collection that is published, the place
+   is what the entry is called today and leads to its page; where they wrote words, or the entry is not published
+   at the moment, the words stand. It is written on one line: a space between its parts would be read. *@
+@using Vafadar.Dastan.Core
+@using Vafadar.Dastan.People
+@inject Visitor Visitor
+@inject DastanLibrary Library
+@inject IStringLocalizer<Ui> T
+
+@PeopleEndpoints.Called(Kind, Terms, T)@if (_place is { } place){@T["People_Held_And"]<a href="@($"{place.Reference.Collection}/entity/{place.Reference.Entity}")"><Loc Text="place.Entity.Label" /></a>}else if (!string.IsNullOrWhiteSpace(Terms.Context)){@T["People_Held_And"]@Terms.Context}@if (_time.Length > 0){@T["People_Held_And"]@_time}
+
+@code {
+    private Institution? _place;
+    private string _time = string.Empty;
+
+    /// <summary>Gets or sets the kind of the relationship.</summary>
+    [Parameter, EditorRequired]
+    public string Kind { get; set; } = string.Empty;
+
+    /// <summary>Gets or sets what the two said beside the kind.</summary>
+    [Parameter, EditorRequired]
+    public RelationshipTerms Terms { get; set; } = RelationshipTerms.None;
+
+    protected override void OnParametersSet()
+    {
+        _place = Library.Institutions.Find(Terms.Place);
+        _time = PeopleEndpoints.Held(new RelationshipTerms(Since: Terms.Since, Until: Terms.Until), T, Visitor);
+    }
+}

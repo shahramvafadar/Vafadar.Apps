@@ -79,10 +79,16 @@ writes: in the head of every page (`Components/Shared/Logo.razor`, indigo and in
 dark one) and in the picture of a shared link (`Site/PreviewPicture.cs`). The script also places `favicon.svg`,
 `favicon.ico` and the five icons of `wwwroot/icons`. The site has no dependency for the logo.
 
+`src/Apps/Dastan/Vafadar.Dastan.Studio`, the tool of the editors, shows the symbol alone before its name – the
+name "Dastan Studio" is words in the language of the editor, so the wordmark does not stand beside it. The
+script writes the same geometry into its `Site/BrandGeometry.cs` and places `favicon.svg` and `favicon.ico` in
+its `wwwroot`; the tool is no app to install and has no other icon. `StudioSymbolTests` fail when the tool
+draws another geometry or serves another icon than this folder holds.
+
 ## Making everything again
 
 ```powershell
-node branding/dastan/scripts/build.mjs            # the SVG files and Site/BrandGeometry.cs – Node alone
+node branding/dastan/scripts/build.mjs            # the SVG files and both Site/BrandGeometry.cs – Node alone
 node branding/dastan/scripts/build.mjs --raster   # also the PNG and ICO files, the icons of the site, the sheet
 ```
 

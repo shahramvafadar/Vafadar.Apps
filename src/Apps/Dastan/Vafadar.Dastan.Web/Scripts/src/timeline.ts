@@ -17,6 +17,8 @@ type Edge = 'known' | 'between' | 'ongoing' | 'endedAtUnknownTime' | 'unknown';
 interface Mark {
   key: string; label: string; shape: 'moment' | 'window' | 'lasting'; from: number; to: number; when: string; address: string;
   start?: Edge; end?: Edge; startedBy?: number; endsFrom?: number; loose?: boolean; disputed?: boolean;
+  // At a step of a telling: what the step says about the name being there, and whether it is only spoken of.
+  presence?: string; spokenOf?: boolean;
 }
 interface Lane { key: string; label: string; marks: Mark[]; }
 interface View { axis: Axis; title: string; from: number; to: number; lanes: Lane[]; }
@@ -286,9 +288,12 @@ class TimelineView {
   }
 
   private mark(mark: Mark, start: number, end: number, y: number, before: boolean): void {
-    const link = shape('a', { class: `tlv-mark tlv-${mark.shape}${mark.disputed ? ' tlv-disputed' : ''}${mark.loose ? ' tlv-loose' : ''}`, href: new URL(mark.address, document.baseURI).href, 'aria-label': `${mark.label}: ${mark.when}` }, this.svg);
+    // Who is only spoken of at a step is said in the name of the mark and drawn hollow – as the still chart and
+    // its table say it: taking part and being mentioned are not the same.
+    const said = mark.presence ? ` – ${mark.presence}` : '';
+    const link = shape('a', { class: `tlv-mark tlv-${mark.shape}${mark.disputed ? ' tlv-disputed' : ''}${mark.loose ? ' tlv-loose' : ''}${mark.spokenOf ? ' tlv-spoken-of' : ''}`, href: new URL(mark.address, document.baseURI).href, 'aria-label': `${mark.label}: ${mark.when}${said}` }, this.svg);
     link.dataset['key'] = mark.key;
-    shape('title', {}, link).textContent = `${mark.label} – ${mark.when}`;
+    shape('title', {}, link).textContent = `${mark.label} – ${mark.when}${said}`;
     const middle = y + barHeight / 2;
     let textAt = end + 8;
     if (mark.shape === 'moment') {

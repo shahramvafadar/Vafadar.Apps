@@ -424,3 +424,16 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - Dastan has its logo: a symbol – an open D with a dot and a page – and the name beside it, in the head of every
   page, as the icon of the tab and of the installed app, and in the picture a link is shown with when it is
   passed on. On a dark appearance the logo is white.
+- The tool of the editors shows the symbol of Dastan before its name and as the icon of its tab.
+- "My World" also names what a family tree asks of you – whether you agree to be named in public, and whether a
+  record somebody says is them is confirmed – and leads to where you answer. A tree no longer says that
+  something waits for you once you have answered.
+- Where a relationship names a place the site has a page of ("colleague, at …"), the name of the place leads to
+  that page.
+- In the moving view of a story a name that is only mentioned at a step has a hollow mark, and every mark says
+  what the name has to do with the step.
+- A drawing you made larger or moved is as you left it when you come back with the Back button or load the page
+  again; "the whole drawing" shows all of it again.
+- For editors: the form of a picture has inputs for the places it stands in with words of their own – an entity
+  or a step, a caption, sources – and for the caption of each place in the other language. A form that is
+  refused shows again everything that was filled in, also a list that was begun in it.

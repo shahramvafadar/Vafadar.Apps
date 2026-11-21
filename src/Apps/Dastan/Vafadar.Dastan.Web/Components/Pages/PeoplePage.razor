@@ -54,7 +54,7 @@
                 @foreach (var request in _asked)
                 {
                     <li>
-                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @Called(request)</span></span>
+                        <span><a href="@($"people/{request.Other.Id}")" dir="auto">@request.Other.Name</a> <span class="meta">– @Shown(request)</span></span>
                         <form method="post" action="@($"{PeopleEndpoints.Root}/cancel")" class="save inline">
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
@@ -81,7 +81,7 @@
                 @foreach (var relationship in _accepted)
                 {
                     <li>
-                        <span><a href="@($"people/{relationship.Other.Id}")" dir="auto">@relationship.Other.Name</a> <span class="meta">– @Called(relationship)</span></span>
+                        <span><a href="@($"people/{relationship.Other.Id}")" dir="auto">@relationship.Other.Name</a> <span class="meta">– @Shown(relationship)</span></span>
                         <form method="post" action="@($"{PeopleEndpoints.Root}/show")" class="save inline">
                             <AntiforgeryToken />
                             <input type="hidden" name="returnUrl" value="@_here" />
@@ -319,6 +319,12 @@
             ? string.Format(CultureInfo.CurrentCulture, T["People_Instead"], called, PeopleEndpoints.Called(now.Kind, now.Terms, T) + Held(now.Terms))
             : called;
     }
+
+    // The same in a list: the place leads to its page where it is an entry of a collection. A request to call a
+    // relationship something else is one sentence of two names and stays words.
+    private RenderFragment Shown(RelationshipInfo relationship) => relationship.Replaces is not null
+        ? @<text>@Called(relationship)</text>
+        : @<RelationshipCalled Kind="@relationship.Kind" Terms="relationship.Terms" />;
 
     private string Held(RelationshipTerms terms) => PeopleEndpoints.Held(terms, T, Visitor, Library.Institutions) is { Length: > 0 } held ? T["People_Held_And"] + held : string.Empty;
 

@@ -28,6 +28,12 @@ public enum TreeRole
 /// <param name="People">How many records of people it has.</param>
 public sealed record TreeInfo(string Id, string Name, PersonRef Owner, TreeRole Role, int People);
 
+/// <summary>What waits for the answer of an account in a tree it may see.</summary>
+/// <param name="Tree">The tree.</param>
+/// <param name="Agreement">Whether the tree asks the account to agree to be named in public, and it has not answered.</param>
+/// <param name="Claims">How many claims on records of the tree the account is the one to confirm or refuse.</param>
+public sealed record TreeWaiting(TreeInfo Tree, bool Agreement, int Claims);
+
 /// <summary>The record of a person in a family tree. A record can be there without an account (PRIV-002).</summary>
 /// <param name="Id">The identifier.</param>
 /// <param name="Name">The name.</param>
@@ -161,6 +167,39 @@ public sealed partial class PeopleStore
             .Select(tree => new TreeInfo(tree.Id, tree.Name, owners[tree.Owner], tree.Owner == id ? TreeRole.Owner : shared[tree.Id], counts.GetValueOrDefault(tree.Id)))
             .OrderByDescending(tree => tree.Role == TreeRole.Owner)
             .ThenBy(tree => tree.Name, StringComparer.CurrentCultureIgnoreCase)];
+    }
+
+    /// <summary>
+    /// Returns the trees in which something waits for the answer of an account: an agreement to be named in
+    /// public that is asked of it and not given, or a claim on a record that this account is the one to confirm
+    /// or refuse. It says what the page of each tree says at its top, and nothing of a tree the account may
+    /// not see.
+    /// </summary>
+    public IReadOnlyList<TreeWaiting> TreesWaiting(string id)
+    {
+        var trees = Trees(id);
+        if (trees.Count == 0)
+        {
+            return [];
+        }
+
+        var ids = trees.Select(tree => tree.Id).ToList();
+        var asking = _context.Trees.AsNoTracking().Where(tree => ids.Contains(tree.Id) && tree.PublicationAskedAt != null).Select(tree => tree.Id).ToHashSet(StringComparer.Ordinal);
+        var named = _context.Persons.AsNoTracking().Where(person => ids.Contains(person.Tree) && person.Account == id).Select(person => person.Tree).ToHashSet(StringComparer.Ordinal);
+        var agreed = _context.PublicationConsents.AsNoTracking().Where(consent => ids.Contains(consent.Tree) && consent.Account == id).Select(consent => consent.Tree).ToHashSet(StringComparer.Ordinal);
+        var claims = _context.Claims.AsNoTracking().Where(claim => ids.Contains(claim.Tree)).ToList();
+        var claimants = Names(claims.Select(claim => claim.Account));
+        var claimed = claims.Select(claim => claim.Person).ToList();
+        var records = _context.Persons.AsNoTracking().Where(person => claimed.Contains(person.Id)).ToList();
+        return [.. trees
+            .Select(tree => new TreeWaiting(
+                tree,
+                asking.Contains(tree.Id) && named.Contains(tree.Id) && !agreed.Contains(tree.Id),
+                claims.Count(claim => claim.Tree == tree.Id
+                    && claimants.ContainsKey(claim.Account)
+                    && records.FirstOrDefault(record => record.Id == claim.Person && record.Tree == claim.Tree) is { } record
+                    && Reviewer(record, claim.Account) == id)))
+            .Where(waiting => waiting.Agreement || waiting.Claims > 0)];
     }
 
     /// <summary>

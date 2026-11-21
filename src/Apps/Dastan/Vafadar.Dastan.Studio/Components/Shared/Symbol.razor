@@ -1,0 +1,10 @@
+@* The symbol of Dastan (ADR 0026) – an open D with a dot and a page – in the head of the tool, before its name,
+   drawn from the one geometry of the brand (BrandGeometry, written by branding/dastan/scripts/build.mjs). The
+   tool of the editors shows the symbol and not the wordmark: its name, "Dastan Studio", is written in words and
+   in the language of the editor, and the drawing beside it says nothing to a screen reader. The D is a Latin
+   letter and is never mirrored. *@
+<svg class="logo" viewBox="0 0 @BrandGeometry.SymbolWidth @BrandGeometry.Height" aria-hidden="true" focusable="false">
+    <path d="@BrandGeometry.Letter" />
+    <path d="@BrandGeometry.Page" />
+    <circle cx="@BrandGeometry.DotX.ToString(CultureInfo.InvariantCulture)" cy="@BrandGeometry.DotY.ToString(CultureInfo.InvariantCulture)" r="@BrandGeometry.DotRadius.ToString(CultureInfo.InvariantCulture)" />
+</svg>

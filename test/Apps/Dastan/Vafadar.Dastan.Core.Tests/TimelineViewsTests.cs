@@ -223,6 +223,12 @@ public sealed class TimelineViewsTests
         Assert.Equal((TimeShape.Moment, 3m, 3m, "s3-child"), (mark.Shape, mark.From, mark.To, mark.Key));
         Assert.Equal(story.Lanes.Sum(lane => lane.Cells.Count(cell => cell is not null)), view.Lanes.Sum(lane => lane.Marks.Length));
 
+        // A mark says what its cell says about the name being there: who acts and who is only mentioned stay two things.
+        Assert.Equal(
+            story.Lanes.SelectMany(lane => lane.Cells.OfType<EventAssociation>().Select(cell => (Presence?)cell.Presence)),
+            view.Lanes.SelectMany(lane => lane.Marks.Select(mark => mark.Presence)));
+        Assert.True(view.Lanes.SelectMany(lane => lane.Marks).Select(mark => mark.Presence).Distinct().Count() > 1, "The small story has one presence only.");
+
         // Who has read less has a shorter axis and no lane of somebody not met; a telling without steps has no view.
         var early = Assert.Single(TimelineViews.OfStory(Read(0)).Views);
         Assert.True(early.To < 3m);

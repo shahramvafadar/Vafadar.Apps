@@ -87,8 +87,13 @@ of a visitor, in an address; the comparisons the editors write (ADR 0008) are an
 * **A stretch of years that the connections and the pictures of a name honour.** Today only the chart of
   time leaves years out; the two others name the wish as set aside. Whether they should leave years out too
   belongs to the explorer (20.8).
-* **Where a drawing stood** – its movement and its size – is not kept when a visitor leaves a view and
-  comes back; what was opened and chosen is. Keeping the movement for the Back button is part of 20.8.
+* **Where a drawing stood** – its movement and its size. *Built on 2026-11-21 (section 23 of the delivery
+  plan):* the moving drawing of connections, of a family and of a family tree writes how large it is shown and
+  how far it was moved into the place of the history the visitor is at (`history.state`), a moment after the
+  visitor – not the page – moved it; Back, Forward and loading the page again put it back, and "the whole
+  drawing" forgets it. It is not part of the address: an address is passed on and says what is explored, not
+  where somebody's eye was. It is believed only for a drawing of as many cards. The timeline kept its stretch
+  in the address already.
 * **The inspector.** What is chosen is a block of the page here; the panel beside the drawing and the sheet
   of a phone are 20.8.
 * **A context wider than one name** – exploring a story or a thread as such. The contract explores one
