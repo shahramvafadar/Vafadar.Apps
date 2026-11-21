@@ -6432,3 +6432,20 @@ zero photos and invoked zero financial actions. The dedicated package and AVD
 were retired. The evidence covers the cancellation branch with a live
 activity. Earlier accepted photo flows retain their original evidence.
 Strict Windows and offline Android Release builds passed without warnings.
+
+## Signed offline APK handoff for source 523e957b (2026-11-21)
+
+The complete Android Release APK includes the camera, notification settings and transaction
+attachment cancellation changes. The supported offline build and package verifier produced
+`artifacts/android-offline-523e957b-release-review/pro.vafadar.zanance-Signed.apk`
+(100,286,367 bytes, SHA-256 `55774a3e19a8c536215f4cdde19c91c65e4ee449bddb27bd922fabb0f34c50ec`).
+The verified package is `pro.vafadar.zanance`, version `0.1.0` (code `1`), with minimum
+API 24, target API 36 and embedded arm64-v8a and x86_64 payloads.
+
+The SDK confirmed v2 and v3 signatures and the same public signing certificate as the
+preceding local offline handoff. The certificate is the local Android Debug certificate for
+test distribution. Verification covered 16 KiB ZIP and ELF alignment, embedded managed
+payloads, the pinned SQLCipher package, the offline permission and sign-in component
+policy, and compiled backup and provider rules. The APK was prepared for handoff without
+installation, financial actions or rerunning accepted native scenarios. Physical-device
+acceptance and Play signing remain open.
