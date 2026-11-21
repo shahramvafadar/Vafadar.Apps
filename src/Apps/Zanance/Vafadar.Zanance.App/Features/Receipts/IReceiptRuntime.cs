@@ -12,11 +12,11 @@ public sealed record ReceiptPickedFile(string Name, string ContentType, byte[] D
 public sealed record ReceiptDraft(ReceiptReadReview Review, ReceiptSuggestion Suggestion, ReceiptPickedFile? File)
 {
     /// <summary>Revalidates the exact original destination before applying a late suggestion to an editor.</summary>
-    public async Task ValidateAsync(ReceiptWorkStore reader, Guid? entryId)
+    public async Task ValidateAsync(ReceiptWorkStore reader, Guid? entryId, CancellationToken ct = default)
     {
         if (entryId != Review.EntryId || File?.RecognitionData is not null)
             throw new InvalidOperationException("The receipt draft destination changed.");
-        await reader.ValidateAsync(Review);
+        await reader.ValidateAsync(Review, ct);
     }
 }
 
@@ -24,7 +24,7 @@ public sealed record ReceiptDraft(ReceiptReadReview Review, ReceiptSuggestion Su
 public interface IReceiptRuntime
 {
     /// <summary>Picks or captures with the original contextual permission and bounded preparation.</summary>
-    Task<ReceiptPickedFile?> PickAsync();
+    Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin);
     /// <summary>Runs recognition/publication only through the original app-lock gate after external picking.</summary>
     Task RunWhenUnlockedAsync(Func<Task> action);
     /// <summary>Captures only the creating native page/root, independently of a receipt's original file review.</summary>

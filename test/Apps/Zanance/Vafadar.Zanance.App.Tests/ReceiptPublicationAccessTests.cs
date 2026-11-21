@@ -31,7 +31,7 @@ public sealed class ReceiptPublicationAccessTests
         internal Func<Task>? DuringRead, DuringAlert;
         public ReceiptReadOrigin CaptureOrigin() => new(() => OwnerCurrent, Retired.Token);
         internal ReceiptPickedFile File = new("Fictitious compact.jpg", "image/jpeg", [1], [2]);
-        public Task<ReceiptPickedFile?> PickAsync() { Picks++; return Task.FromResult<ReceiptPickedFile?>(File); }
+        public Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin) { Picks++; return Task.FromResult<ReceiptPickedFile?>(File); }
         public async Task RunWhenUnlockedAsync(Func<Task> action) { await gate.RunWhenUnlockedAsync(action); Queued.TrySetResult(); }
         public async Task<bool> QueueWhenUnlockedAsync(Func<Task> action) { await RunWhenUnlockedAsync(action); return true; }
         public bool RetainPublicationIfLocked(Func<Task> continuation)

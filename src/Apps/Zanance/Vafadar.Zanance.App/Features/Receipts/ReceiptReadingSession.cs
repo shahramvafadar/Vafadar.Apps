@@ -40,7 +40,8 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
         try
         {
             origin = runtime.CaptureOrigin();
-            retirement = origin.Invalidated.Register(() =>
+            var invalidated = origin.Invalidated;
+            retirement = invalidated.Register(() =>
             {
                 // Own navigation may retire the source page before its original native Task completes.
                 lock (compactGate)
@@ -51,20 +52,20 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             // Every publication stays inside cleanup and rechecks that captured owner before effects.
             IsBusy = true; RequireCurrent();
             Error = null; RequireCurrent();
-            var reviewed = await reader.CaptureAsync(entryId, attachmentId);
+            var reviewed = await reader.CaptureAsync(entryId, attachmentId, invalidated);
             var original = reviewed.Attachment;
             transientOriginal = original?.Data;
             RequireCurrent();
             var file = original is not null
                 ? new ReceiptPickedFile(original.FileName, AttachmentFiles.ResolveContentType(original.FileName, original.ContentType), original.Data)
-                : await runtime.PickAsync();
+                : await runtime.PickAsync(origin);
             if (file is null) return;
             if (original is null) compactBytes = file.Data;
             if (file.RecognitionData is { } recognitionData && !ReferenceEquals(recognitionData, file.Data))
                 transientOriginal = recognitionData;
             var hasTransientOriginal = transientOriginal is not null;
             RequireCurrent();
-            await reader.ValidateAsync(reviewed);
+            await reader.ValidateAsync(reviewed, invalidated);
             if (file.Data.Length == 0 || file.Data.Length > EntryAttachment.MaxBytes)
                 throw new ReceiptPreparationException(file.Data.Length == 0 ? "Attachment_Failed" : "Attachment_TooLarge", new InvalidDataException());
 
@@ -73,7 +74,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
             async Task<bool> ReadAndPrepareAsync()
             {
                 RequireCurrent();
-                await reader.ValidateAsync(reviewed);
+                await reader.ValidateAsync(reviewed, invalidated);
                 RequireCurrent();
                 // PDFs can use the same bytes for reading and attachment. While the reader
                 // borrows that buffer, retirement can mark it for clearing but cannot clear it.
@@ -93,7 +94,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                     if (borrowed is not null) ReturnCompact(borrowed);
                 }
                 RequireCurrent();
-                await reader.ValidateAsync(reviewed);
+                await reader.ValidateAsync(reviewed, invalidated);
                 RequireCurrent();
                 var suggestion = ReceiptParser.Parse(document.Text, DateOnly.FromDateTime(time.GetLocalNow().DateTime), document.IsAmbiguous);
                 var draft = new ReceiptDraft(reviewed, suggestion, entryId is null ? file with { RecognitionData = null } : null);
@@ -103,7 +104,7 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                 async Task<bool> PublishAsync()
                 {
                     RequireCurrent();
-                    await reader.ValidateAsync(reviewed);
+                    await reader.ValidateAsync(reviewed, invalidated);
                     RequireCurrent();
                     // D-709: retain only the completed result at the original access drain's head.
                     // Unlock revalidates this exact source; it never repeats OCR or an answered notice.
@@ -113,11 +114,11 @@ public sealed partial class ReceiptReadingSession(ReceiptWorkStore reader, IRece
                         await runtime.AlertAsync(translator["Receipt_Title"], translator[entryId is null ? "Receipt_NothingNew" : "Receipt_Nothing"], translator["Common_Ok"]);
                         noticeShown = true;
                         RequireCurrent();
-                        await reader.ValidateAsync(reviewed);
+                        await reader.ValidateAsync(reviewed, invalidated);
                         RequireCurrent();
                     }
                     if (suggestion.IsEmpty && entryId is not null) return false;
-                    await draft.ValidateAsync(reader, entryId);
+                    await draft.ValidateAsync(reader, entryId, invalidated);
                     RequireCurrent();
                     if (runtime.RetainPublicationIfLocked(() => GuardedAsync(PublishAsync))) return true;
                     lock (compactGate)

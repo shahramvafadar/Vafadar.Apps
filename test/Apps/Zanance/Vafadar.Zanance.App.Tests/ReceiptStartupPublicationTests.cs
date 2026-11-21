@@ -13,6 +13,38 @@ public sealed class ReceiptStartupPublicationTests
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
     [Fact]
+    public async Task Departing_receipt_origin_cancels_held_source_before_picker_can_open()
+    {
+        using var f = new FlowFixture();
+        using var retired = new CancellationTokenSource();
+        using var testLifetime = CancellationTokenSource.CreateLinkedTokenSource(Ct);
+        var native = new Native { Invalidated = retired.Token };
+        var factory = new AccountDetailOriginalBoundaryTests.ControlledFactory(f.Services.GetRequiredService<IDbContextFactory<ZananceDbContext>>());
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        factory.Before = async token =>
+        {
+            using var wait = CancellationTokenSource.CreateLinkedTokenSource(token, testLifetime.Token);
+            entered.TrySetResult();
+            await release.Task.WaitAsync(wait.Token);
+        };
+        var session = new ReceiptReadingSession(new ReceiptWorkStore(factory, new InactiveAccess()), native, f.Translator, f.Time);
+        var before = await GoalChooserFlowTests.SnapshotAsync(f);
+        var running = session.PickAsync();
+        try
+        {
+            await entered.Task.WaitAsync(TimeSpan.FromSeconds(5), Ct);
+            retired.Cancel();
+            await running.WaitAsync(TimeSpan.FromSeconds(3), Ct);
+            Assert.False(release.Task.IsCompleted);
+            Assert.False(session.IsBusy);
+            Assert.Equal((1, 1, 0, 0), (native.Captured, native.Released, native.Picks, native.Alerts));
+            Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
+        }
+        finally { release.TrySetResult(); await running; }
+    }
+
+    [Fact]
     public async Task Receipt_startup_busy_retirement_never_captures_the_replacement_page_or_reads()
     {
         using var f = new FlowFixture(); var s = Prepare(f); var before = await GoalChooserFlowTests.SnapshotAsync(f);
@@ -92,9 +124,10 @@ public sealed class ReceiptStartupPublicationTests
     private sealed class Native : IReceiptRuntime
     {
         internal int Epoch, Captured, Released, Picks, Alerts;
+        internal CancellationToken Invalidated;
         public ReceiptReadOrigin CaptureOrigin()
-        { Captured++; var epoch = Epoch; return new(() => epoch == Epoch, release: () => Released++); }
-        public Task<ReceiptPickedFile?> PickAsync() { Picks++; return Task.FromResult<ReceiptPickedFile?>(null); }
+        { Captured++; var epoch = Epoch; return new(() => epoch == Epoch, Invalidated, () => Released++); }
+        public Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin) { Picks++; return Task.FromResult<ReceiptPickedFile?>(null); }
         public Task RunWhenUnlockedAsync(Func<Task> action) => action();
         public Task<TextLayoutResult> ReadAsync(byte[] data, string contentType) => throw new InvalidOperationException("D952 recognition must remain unreachable");
         public Task AlertAsync(string title, string message, string cancel) { Alerts++; return Task.CompletedTask; }

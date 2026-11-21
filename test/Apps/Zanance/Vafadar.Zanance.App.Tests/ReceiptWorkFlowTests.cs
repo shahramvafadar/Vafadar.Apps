@@ -46,7 +46,7 @@ public sealed class ReceiptWorkFlowTests
         internal bool AllowUnlock = true;
         internal List<string> Alerts = [];
         internal List<ReceiptDraft> Drafts = [];
-        public async Task<ReceiptPickedFile?> PickAsync() { Picked++; if (DuringPick is not null) await DuringPick(); return File; }
+        public async Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin) { Picked++; if (DuringPick is not null) await DuringPick(); return File; }
         public Task RunWhenUnlockedAsync(Func<Task> action) { Unlocked++; return AllowUnlock ? action() : Task.CompletedTask; }
         public async Task<TextLayoutResult> ReadAsync(byte[] data, string contentType)
         { Read++; Recognition = data; RecognitionAtRead = data.ToArray(); RecognizedContentType = contentType; if (DuringRead is not null) await DuringRead(); return Document; }
@@ -196,7 +196,7 @@ public sealed class ReceiptWorkFlowTests
         var native = new Native(); var session = Session(f, p, native); var before = await GoalChooserFlowTests.SnapshotAsync(f); await session.PickAsync();
         var draft = Assert.Single(native.Drafts); Assert.Null(session.Error); Assert.Equal(1, native.Unlocked); Assert.Equal(native.File!.RecognitionData, native.Recognition);
         Assert.Equal(24.50m, draft.Suggestion.Amount); Assert.Equal(ReceiptAmountStatus.Found, draft.Suggestion.AmountStatus); Assert.Null(draft.File!.RecognitionData);
-        Assert.Equal(native.File.Data, draft.File.Data); await draft.ValidateAsync(p.GetRequiredService<ReceiptWorkStore>(), null);
+        Assert.Equal(native.File.Data, draft.File.Data); await draft.ValidateAsync(p.GetRequiredService<ReceiptWorkStore>(), null, Ct);
         Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Fact]
@@ -287,8 +287,8 @@ public sealed class ReceiptWorkFlowTests
     {
         using var f = new FlowFixture(); var original = await SeedAsync(f); var access = new Access(); using var p = Provider(f, access); Enable(f, access, ProductPlan.Plus); var native = new Native();
         var before = await GoalChooserFlowTests.SnapshotAsync(f); await Session(f, p, native).ReadAttachmentAsync(original.Entry.Id, original.Attachment.Id); var draft = Assert.Single(native.Drafts);
-        await Assert.ThrowsAsync<InvalidOperationException>(() => draft.ValidateAsync(p.GetRequiredService<ReceiptWorkStore>(), Guid.NewGuid()));
-        Enable(f, access); await Assert.ThrowsAsync<InvalidOperationException>(() => draft.ValidateAsync(p.GetRequiredService<ReceiptWorkStore>(), original.Entry.Id));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => draft.ValidateAsync(p.GetRequiredService<ReceiptWorkStore>(), Guid.NewGuid(), Ct));
+        Enable(f, access); await Assert.ThrowsAsync<InvalidOperationException>(() => draft.ValidateAsync(p.GetRequiredService<ReceiptWorkStore>(), original.Entry.Id, Ct));
         Assert.Equal(1, native.Read); Assert.Equal(before, await GoalChooserFlowTests.SnapshotAsync(f));
     }
     [Fact]

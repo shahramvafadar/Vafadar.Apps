@@ -13,11 +13,10 @@ namespace Vafadar.Zanance.App.Features.Receipts;
 public sealed class MauiReceiptRuntime(Translator translator, AppLockService appLock, IAppInteraction interaction) : IReceiptRuntime
 {
     /// <inheritdoc />
-    public async Task<ReceiptPickedFile?> PickAsync()
+    public async Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin)
     {
         try
         {
-            using var origin = CaptureOrigin();
             var invalidated = origin.Invalidated;
             void RequireCurrent()
             {

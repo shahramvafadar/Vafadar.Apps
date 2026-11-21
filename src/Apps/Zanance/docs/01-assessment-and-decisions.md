@@ -1,5 +1,17 @@
 # 01 – Assessment and decision log
 
+## Receipt source work uses the original page lifetime (2026-11-21)
+
+Leaving the original receipt page now cancels its pending database capture and
+revalidation. The file chooser uses the same owner as the reading session.
+Existing on-device recognition and the lock-cover rules remain in place.
+
+A focused regression held the actual SQLite context factory before any picker
+could open. Before the change, leaving the page did not release the pending
+command. After the change, the same page retirement cancelled the hold and
+released the owner without a picker, editor or alert. The synthetic source
+matched its pre-check state.
+
 ## Android camera owner retires after acceptance (2026-11-21)
 
 The native camera result can arrive before the activity is destroyed. A successful result therefore

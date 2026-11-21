@@ -28,7 +28,7 @@ internal static partial class DebugSnapshots
         internal int Picked, Read;
         internal ReceiptDraft? Draft;
         internal TextLayoutResult Document = new("Fictitious shop\nTOTAL EUR 24.50");
-        public Task<ReceiptPickedFile?> PickAsync()
+        public Task<ReceiptPickedFile?> PickAsync(ReceiptReadOrigin origin)
         { Picked++; return Task.FromResult<ReceiptPickedFile?>(new("Fictitious compact receipt.png", "image/png", ReceiptReviewImage(), [1, 2, 3])); }
         public Task RunWhenUnlockedAsync(Func<Task> action) => action();
         public Task<TextLayoutResult> ReadAsync(byte[] data, string contentType) { Read++; return Task.FromResult(Document); }
