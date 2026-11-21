@@ -24,12 +24,98 @@ using Vafadar.Zanance.Api.Sync;
 using Vafadar.Zanance.Core.Commerce;
 using Vafadar.Zanance.Core.Analysis;
 using Vafadar.Zanance.Core.Sharing;
+using Vafadar.Zanance.Core.Sync;
 
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Pending_account_deletion_stops_new_personal_sync_writes()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        connection.Database = "zanance_delete_sync_writes_fixture";
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "sync-writes"));
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var users = fixture.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        const string password = "Fictional-Sync-Retirement9!";
+        using var owner = await LoginAsync("sync-writing-owner@example.invalid");
+        using var other = await LoginAsync("sync-writing-other@example.invalid");
+        const string devices = "/sync/devices";
+        const string profiles = "/sync/profiles";
+        using var registration = await owner.PostAsJsonAsync(devices, new SyncNameInput("Original"), ct);
+        Assert.Equal(HttpStatusCode.OK, registration.StatusCode);
+        var device = Assert.IsType<SyncDevice>(await registration.Content.ReadFromJsonAsync<SyncDevice>(ct));
+        using var creation = await owner.PostAsJsonAsync(profiles, new SyncCreateProfile(device.Id, Guid.NewGuid(), "Original", SyncSchema.Hash), ct);
+        Assert.Equal(HttpStatusCode.OK, creation.StatusCode);
+        var profile = Assert.IsType<SyncProfile>(await creation.Content.ReadFromJsonAsync<SyncProfile>(ct));
+        var profilePath = $"{profiles}/{profile.Id}";
+        var rounds = $"{profilePath}/rounds";
+        using var opening = await owner.PostAsJsonAsync(rounds, new SyncOpenRound(device.Id, Guid.NewGuid(), SyncSchema.Hash), ct);
+        Assert.Equal(HttpStatusCode.OK, opening.StatusCode);
+        var round = Assert.IsType<SyncRoundHandle>(await opening.Content.ReadFromJsonAsync<SyncRoundHandle>(ct));
+
+        using var intake = await owner.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+        Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
+        var boundDevice = $"?deviceId={device.Id}";
+        var originalRound = $"{rounds}/{round.Id}";
+        var blob = $"{profilePath}/blobs/{new string('a', 64)}";
+        await RefusesAsync(owner.PostAsJsonAsync(devices, new SyncNameInput("Replacement"), ct));
+        await RefusesAsync(owner.PostAsJsonAsync(profiles, new SyncCreateProfile(device.Id, Guid.NewGuid(), "Replacement", SyncSchema.Hash), ct));
+        await RefusesAsync(owner.PostAsJsonAsync($"{profilePath}/initialization", new SyncClaimInitialization(device.Id, device.Id), ct));
+        await RefusesAsync(owner.PostAsJsonAsync(rounds, new SyncOpenRound(device.Id, Guid.NewGuid(), SyncSchema.Hash), ct));
+        await RefusesAsync(owner.PutAsJsonAsync($"{originalRound}/parts{boundDevice}", new SyncRoundPart(0, []), ct));
+        await RefusesAsync(owner.PostAsJsonAsync($"{originalRound}/commit{boundDevice}", new SyncCommitRound(0, 0, new string('a', 64), []), ct));
+        await RefusesAsync(owner.PostAsJsonAsync(blob + boundDevice, new SyncBlobDeclaration(1), ct));
+        using var bytes = new ByteArrayContent([1]);
+        bytes.Headers.ContentType = new("application/octet-stream");
+        await RefusesAsync(owner.PutAsync($"{blob}/parts/0{boundDevice}", bytes, ct));
+        await RefusesAsync(owner.PostAsync($"{blob}/complete{boundDevice}", null, ct));
+
+        using var lookup = await owner.GetAsync(originalRound + boundDevice, ct);
+        Assert.Equal(HttpStatusCode.OK, lookup.StatusCode);
+        Assert.Equal(round, await lookup.Content.ReadFromJsonAsync<SyncRoundHandle>(ct));
+        Assert.Equal(profile.Id, Assert.Single(await db.Set<SyncSpaceRow>().AsNoTracking().ToListAsync(ct)).Id);
+        Assert.Empty(await db.Set<SyncBlobRow>().ToListAsync(ct));
+        using var abandoned = await owner.DeleteAsync(originalRound + boundDevice, ct);
+        Assert.Equal(HttpStatusCode.NoContent, abandoned.StatusCode);
+        using var unrelated = await other.PostAsJsonAsync(devices, new SyncNameInput("Other device"), ct);
+        Assert.Equal(HttpStatusCode.OK, unrelated.StatusCode);
+
+        async Task<HttpClient> LoginAsync(string email)
+        {
+            var user = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+            Assert.True((await users.CreateAsync(user, password)).Succeeded);
+            var client = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+            using var response = await client.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var grant = await response.Content.ReadFromJsonAsync<JsonElement>(ct);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+            return client;
+        }
+
+        async Task RefusesAsync(Task<HttpResponseMessage> request)
+        {
+            using var response = await request;
+            Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+            var value = await response.Content.ReadFromJsonAsync<JsonElement>(ct);
+            Assert.Equal("AccountDeletionPending", value.GetProperty("code").GetString());
+        }
+    }
+
     [Fact]
     public async Task Pending_account_deletion_refunds_only_an_exact_never_dispatched_reservation()
     {

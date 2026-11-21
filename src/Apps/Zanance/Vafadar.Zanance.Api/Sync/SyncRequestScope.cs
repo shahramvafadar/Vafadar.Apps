@@ -22,6 +22,13 @@ internal sealed class SyncRequestScope : IAsyncDisposable
     /// <summary>Only an actual device resolved under this locked session can authorize financial resource work.</summary>
     internal Guid? AuthorizedDeviceId { get; private set; }
 
+    /// <summary>Refuses new personal sync writes once the same owner lock has admitted deletion.</summary>
+    internal async Task RequireActiveAccountAsync(CancellationToken ct)
+    {
+        if (await _db.AccountDeletionRequests.AnyAsync(row => row.UserId == Owner, ct))
+            throw new SyncProtocolRefusal(409, "AccountDeletionPending");
+    }
+
     /// <summary>Rechecks session after taking the same owner lock used by personal revocation.</summary>
     internal static async Task<SyncRequestScope?> OpenAsync(ClaimsPrincipal principal, ServiceDbContext db, TimeProvider time, CancellationToken ct)
     {

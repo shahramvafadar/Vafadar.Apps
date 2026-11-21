@@ -16,7 +16,10 @@ internal static class SyncBlobRoutes
         group.MapPost("/profiles/{profile:guid}/blobs/{hash}", async (Guid profile, string hash, Guid deviceId, SyncBlobDeclaration input,
             ClaimsPrincipal principal, ServiceDbContext db, ServiceStorage storage, IDataProtectionProvider protection, TimeProvider time, CancellationToken ct) =>
             await RunAsync(profile, deviceId, principal, db, storage, protection, time, async (scope, space, store) =>
-                Results.Ok(await store.StatusAsync(await store.DeclareAsync(scope, space, hash, input.Length, ct), ct)), ct));
+            {
+                await scope.RequireActiveAccountAsync(ct);
+                return Results.Ok(await store.StatusAsync(await store.DeclareAsync(scope, space, hash, input.Length, ct), ct));
+            }, ct));
         group.MapGet("/profiles/{profile:guid}/blobs/{hash}", async (Guid profile, string hash, Guid deviceId,
             ClaimsPrincipal principal, ServiceDbContext db, ServiceStorage storage, IDataProtectionProvider protection, TimeProvider time, CancellationToken ct) =>
             await RunAsync(profile, deviceId, principal, db, storage, protection, time, async (_, space, store) =>
@@ -25,7 +28,10 @@ internal static class SyncBlobRoutes
         group.MapPost("/profiles/{profile:guid}/blobs/{hash}/complete", async (Guid profile, string hash, Guid deviceId,
             ClaimsPrincipal principal, ServiceDbContext db, ServiceStorage storage, IDataProtectionProvider protection, TimeProvider time, CancellationToken ct) =>
             await RunAsync(profile, deviceId, principal, db, storage, protection, time, async (scope, space, store) =>
-                Results.Ok(await store.CompleteAsync(scope, space, await BlobAsync(db, space.Id, hash, ct), ct)), ct));
+            {
+                await scope.RequireActiveAccountAsync(ct);
+                return Results.Ok(await store.CompleteAsync(scope, space, await BlobAsync(db, space.Id, hash, ct), ct));
+            }, ct));
         group.MapGet("/profiles/{profile:guid}/blobs/{hash}/parts/{index:int}", async (Guid profile, string hash, int index, Guid deviceId,
             ClaimsPrincipal principal, ServiceDbContext db, ServiceStorage storage, IDataProtectionProvider protection, TimeProvider time, CancellationToken ct) =>
             await RunAsync(profile, deviceId, principal, db, storage, protection, time, async (scope, space, store) =>
@@ -63,6 +69,7 @@ internal static class SyncBlobRoutes
             {
                 return await RunAsync(profile, deviceId, http.User, db, storage, protection, time, async (scope, space, store) =>
                 {
+                    await scope.RequireActiveAccountAsync(ct);
                     await store.PutAsync(scope, space, await BlobAsync(db, space.Id, hash, ct), index, bytes, ct);
                     return Results.NoContent();
                 }, ct);

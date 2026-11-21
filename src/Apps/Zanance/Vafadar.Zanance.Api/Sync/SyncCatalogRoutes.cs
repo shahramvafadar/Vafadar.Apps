@@ -42,6 +42,7 @@ internal static class SyncCatalogRoutes
             if (!ValidName(input.Name)) return Results.BadRequest();
             await using var scope = await SyncRequestScope.OpenAsync(principal, db, time, ct);
             if (scope is null) return Results.Unauthorized();
+            await scope.RequireActiveAccountAsync(ct);
             var device = await db.Set<SyncDeviceRow>().SingleOrDefaultAsync(row => row.UserId == scope.Owner && row.SessionId == scope.Session, ct);
             if (device is not null)
             {
@@ -89,6 +90,7 @@ internal static class SyncCatalogRoutes
             if (!ValidName(input.Name) || input.OperationId == Guid.Empty || input.SchemaHash != SyncSchema.Hash) return Results.BadRequest();
             await using var scope = await SyncRequestScope.OpenAsync(principal, db, time, ct);
             if (scope is null) return Results.Unauthorized();
+            await scope.RequireActiveAccountAsync(ct);
             if (await scope.DeviceAsync(input.DeviceId, ct) is null) return Results.NotFound();
             var space = await db.Set<SyncSpaceRow>().SingleOrDefaultAsync(row => row.UserId == scope.Owner && row.CreationOperationId == input.OperationId, ct);
             if (space is not null)
@@ -114,6 +116,7 @@ internal static class SyncCatalogRoutes
             if (input.DeviceId == Guid.Empty || input.ExpectedBootstrapDeviceId == Guid.Empty) return Results.BadRequest();
             await using var scope = await SyncRequestScope.OpenAsync(principal, db, time, ct);
             if (scope is null) return Results.Unauthorized();
+            await scope.RequireActiveAccountAsync(ct);
             if (await scope.DeviceAsync(input.DeviceId, ct) is null) return Results.NotFound();
             // This owner lookup intentionally precedes bootstrap-device filtering: only this explicit
             // reviewed endpoint may transfer an unpublished initialization to another actual device.
