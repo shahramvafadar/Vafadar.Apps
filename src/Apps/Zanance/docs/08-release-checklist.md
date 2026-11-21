@@ -6545,7 +6545,7 @@ build, installation, device session or re-execution of accepted tests.
 
 ## Signed offline handoff with completed AI retirement (2026-11-21)
 
-The current test APK from `2eede0f5` includes cancellation of direct PDF
+The earlier test APK from `2eede0f5` includes cancellation of direct PDF
 text extraction and releases the original AI connection even when cancellation
 feedback fails. The new opt-out regression used a synthetic account and a
 held metadata quotation with zero submissions. It failed before the fix,
@@ -6559,3 +6559,17 @@ Strict offline Android Release and the canonical exact-archive verification
 passed. The archive has arm64-v8a and x86_64, 16 KiB alignment and the same
 local test certificate as the preceding handoff with v2 and v3 signatures.
 No device installation or genuine AI service request ran in this check.
+
+### Licensed offline replacement
+
+The replacement is `artifacts/android-offline-847ca560-licensed-review/pro.vafadar.zanance-Signed.apk`
+(100,093,721 bytes, SHA-256
+`279dda06c03ca3446b13db921255509ba982be3e0b6de7c8e93a0ff0dbf8ff98`).
+It built with zero warnings or errors in the canonical checkout with its
+validated local Syncfusion license. The exact signed file passes the offline
+package verifier, including the absence of Internet permission, and retains
+the same local v2/v3 review signer and both Android ABIs.
+
+A fresh installation on an owned Android 16 x86-64 emulator reached Welcome
+on its first launch without the trial notice or any screen tap. The package
+was removed without setup, provider calls or financial writes.

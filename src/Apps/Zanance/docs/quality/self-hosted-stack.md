@@ -83,6 +83,19 @@ The hosted workflow runs original clients, refusal, restore and renewal on a dis
 uploads no private volumes/keys/dumps/payloads. Hosted success awaits the actual run.
 ## Current signed personal-sync review APK
 
+The licensed replacement is
+`artifacts/android-personal-sync-847ca560-licensed-review/pro.vafadar.zanance-Signed.apk`
+(99,696,239 bytes, SHA-256
+`1ae75786940b57b70c52c2516adc39432a45320d93f3105a1913f42675d306f6`).
+The canonical checkout's validated Syncfusion configuration was used for the
+clean Android Release build. The signed archive passed the package checks
+and declares Internet without Play Billing. A fresh Android 16 x86-64
+installation reached Welcome on its first launch without a license dialog or
+screen tap. The package and dedicated emulator were retired. Live sign-in,
+service traffic and physical-device acceptance remain separate.
+
+### Earlier personal-sync review APK
+
 The Android Release build of `216204c3` completed with zero warnings or errors
 and includes the shared-session refresh refusal fix in `0aafbb55`.
 The 100,093,721-byte handoff is

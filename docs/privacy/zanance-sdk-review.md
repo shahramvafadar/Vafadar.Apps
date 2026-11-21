@@ -1,6 +1,6 @@
 # Zanance SDK and permission review (SEC-09, D-69)
 
-## Current signed Android review artifacts
+## SDK definitions in the original signed Android review artifacts
 
 These observations bind to the exact already signed review APKs listed below.
 Android SDK AAPT2 reported the manifest permissions and SDK dexdump reported
