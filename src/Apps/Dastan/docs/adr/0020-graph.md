@@ -89,7 +89,11 @@ repository as the record of what was seen and as the place where a new version o
   and each Persian line is wrapped in marks of its direction; lines are broken at spaces by the control and
   handed back as lines; each end of a relation has a point of its own on the side of the card that looks at
   the other card, and a label stands at its own part of its line; the saved SVG carries the font and the
-  pictures, and the PNG is drawn from it at twice the size; every padding names four sides.
+  pictures, and the PNG is drawn from it at twice the size; every padding names four sides. A sixth came with
+  the drawing that is put back where it was left ([ADR 0025](0025-exploring.md), 2026-11-21): a movement no
+  finger makes is not added to where the drawing stands – the control adds the step and turns the whole place
+  around –, so the step is chosen for that; where the drawing stands is read from the scroller of the control,
+  not from its settings, whose sign differs from one movement to another.
 * **The keyboard**: the drawing is one stop of Tab; the arrow keys go to the nearest card in their direction;
   Enter opens the profile in the panel of the page (ADR 0017) and Escape returns to the drawing; + − 0 make
   it larger, smaller and whole; Tab and Shift+Tab leave. The control gets no key. What is chosen is said in a

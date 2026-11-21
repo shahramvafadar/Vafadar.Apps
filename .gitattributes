@@ -61,3 +61,13 @@ eng/patches/maui-10.0.120-android-configuration-metrics.patch text eol=lf whites
 eng/maui/** text eol=lf
 # The already qualified input profile uses CRLF; retain those recipe bytes on both hosts.
 eng/maui/configuration-metrics.inputs.json text eol=crlf
+
+# Written by branding/dastan/scripts/build.mjs with LF on every system; tests compare them byte for byte with
+# what the site and the tool of the editors serve, so they are LF in every working copy.
+branding/dastan/source/*.svg text eol=lf
+branding/dastan/exports/svg/*.svg text eol=lf
+branding/dastan/previews/report.json text eol=lf
+src/Apps/Dastan/Vafadar.Dastan.Web/wwwroot/favicon.svg text eol=lf
+src/Apps/Dastan/Vafadar.Dastan.Studio/wwwroot/favicon.svg text eol=lf
+src/Apps/Dastan/Vafadar.Dastan.Web/Site/BrandGeometry.cs text eol=lf
+src/Apps/Dastan/Vafadar.Dastan.Studio/Site/BrandGeometry.cs text eol=lf

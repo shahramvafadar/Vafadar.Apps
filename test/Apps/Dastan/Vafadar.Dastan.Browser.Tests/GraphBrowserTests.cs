@@ -351,17 +351,23 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         var (host, _) = await Drawn(page, address);
         var whole = await Seen(host);
 
-        // Made larger with the tool and moved with a drag on the ground of the drawing.
+        // Made larger with the tool – which is written at once, not a moment later: somebody may leave at once.
         await host.Locator("[data-graph-in]").ClickAsync();
-        await host.Locator("[data-graph-in]").ClickAsync();
+        Assert.True(await host.EvaluateAsync<bool>(
+            "host => { host.querySelector('[data-graph-in]').click(); return Math.abs(history.state.drawings.g0.zoom - host.graph.seen.zoom) < 0.0001; }"),
+            "What a tool did is written when the tool has done it.");
+
+        // Moved with a drag on the ground of the drawing: written when the finger lets go.
         var box = (await host.Locator("[data-graph-canvas]").BoundingBoxAsync())!;
         await page.Mouse.MoveAsync((float)(box.X + 12), (float)(box.Y + 12));
         await page.Mouse.DownAsync();
         await page.Mouse.MoveAsync((float)(box.X + 52), (float)(box.Y + 42), new() { Steps = 6 });
         await page.Mouse.UpAsync();
-        await page.WaitForFunctionAsync($"() => history.state?.drawings?.g0?.zoom > {whole.GetProperty("zoom").GetDouble().ToString(System.Globalization.CultureInfo.InvariantCulture)}");
+        await page.WaitForFunctionAsync(
+            "() => { const [kept, seen] = [history.state?.drawings?.g0, document.querySelector('dastan-graph').graph.seen]; return kept && Math.abs(kept.x - seen.x) < 0.01 && Math.abs(kept.y - seen.y) < 0.01 && Math.abs(kept.zoom - seen.zoom) < 0.0001; }");
         var left = await Seen(host);
         Assert.True(left.GetProperty("zoom").GetDouble() > whole.GetProperty("zoom").GetDouble());
+        Assert.NotEqual(whole.GetProperty("x").GetDouble(), left.GetProperty("x").GetDouble(), 1.0);
 
         // Where it stood is kept with the place of the history, not in the address that is passed on.
         Assert.EndsWith(address, page.Url, StringComparison.Ordinal);
@@ -369,6 +375,20 @@ public sealed class GraphBrowserTests(BrowserSite site) : IClassFixture<BrowserS
         async Task Same(JsonElement expected)
         {
             await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live", new() { Timeout = 30_000 });
+
+            // The drawing stands where it stood once the control has settled; then it is read, so that a failure
+            // says where it stands instead.
+            try
+            {
+                await page.WaitForFunctionAsync(
+                    "to => { const seen = document.querySelector('dastan-graph').graph?.seen; return seen && Math.abs(seen.zoom - to[0]) < 0.001 && Math.abs(seen.x - to[1]) < 1 && Math.abs(seen.y - to[2]) < 1; }",
+                    new[] { expected.GetProperty("zoom").GetDouble(), expected.GetProperty("x").GetDouble(), expected.GetProperty("y").GetDouble() },
+                    new() { Timeout = 5_000 });
+            }
+            catch (TimeoutException)
+            {
+            }
+
             var now = await Seen(host);
             Assert.Equal(expected.GetProperty("zoom").GetDouble(), now.GetProperty("zoom").GetDouble(), 0.001);
             Assert.Equal(expected.GetProperty("x").GetDouble(), now.GetProperty("x").GetDouble(), 1.0);

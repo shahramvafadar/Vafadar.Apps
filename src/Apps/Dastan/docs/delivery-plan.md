@@ -974,11 +974,33 @@ with the form as it was filled in); the presence of every mark in `TimelineViews
 at 390 px; `A_visitor_who_comes_back_finds_the_drawing_as_large_and_as_far_moved_as_it_was_left` in
 `GraphBrowserTests` (loaded anew, Back, forgotten by "the whole drawing", whole for who comes first) at 1280
 and 360 px. The whole suite ran once after the last change: 3321 tests, none failed. *Looked at:* the head of the tool of the editors in English, light, 1280 px and in Persian,
-dark, 360 px, on the machine of development, over an empty store.
+dark, 360 px, on the machine of development, over an empty store; after the work was merged, the moving view of
+the story in English, dark, in a wide window, read to the end – thirty marks, three of them hollow, among them
+Sohrab at "The remedy does not arrive" and at "Mourning in Zabulistan", each saying so in its name.
 
-**Not shown:** the five other changes were not looked at by eye – they are shown by the tests above, of which
-those of the drawings run in a real browser; nothing was looked at in the published build; Firefox and WebKit
-run the tests on the build server only.
+*Found by the build server, and corrected:* the run of the first version failed in WebKit and in nothing else –
+a drawing came back moved to the other side on a Persian page of 360 px. The control keeps its movement with
+one sign and writes it into its settings with another after some movements, and it turns a movement no finger
+makes around; where the drawing stands is now read from the control itself and the step is chosen for what the
+control does (workaround 6 of [ADR 0020](adr/0020-graph.md)). The three engines of the browser container run
+on the machine of development too (`DASTAN_BROWSER_ENGINE`) – what earlier steps said of "the build server
+only" was a habit, not a limit. Run there, the test found two more things: a movement was written a moment
+after it ended and was lost to somebody who left within that moment – it is written when it ends –, and WebKit
+let the drawing stand two pixels beside where it had stood – the rest of the way is gone once the control has
+settled. The tests of the graph then passed twice in each of the three engines before this was pushed again.
+After the corrections the whole suite ran again: 3321 tests, none failed. (The run before that one had one
+failure, of `StudioSymbolTests`, which compares the icon of the tool byte for byte with the one the brand made
+and met a working copy in which Git had written the same file once with CRLF and once with LF. What the script
+of the brand writes is LF in every working copy now – `.gitattributes`.) The tests in a browser ran whole in
+WebKit (404 of 407 passed, 1 not asked of it) and in Firefox (403 of 407 passed, 3 not asked of it). What failed
+there are budgets of time and nothing else: the whole way of the largest tree could be used after 30 to 40 s
+against 5 s in both, and a step among 100 people took 312 ms against 300 in WebKit. The budgets were set on this
+machine for Chromium, which meets them; the build server writes the times down and does not judge them.
+
+**Not shown:** what a tree asks on My World, the link of a place of a relationship, the inputs of the Studio for
+the places of a picture and a drawing put back were not looked at by eye – My World and the page of the people
+were opened with an account of which nothing is asked and that has no relationship; they are shown by the tests
+above, of which those of the drawings run in a real browser. Nothing was looked at in the published build.
 
 **What is still open, and whose it is.** Nothing below is forgotten; none of it can be built without the one
 named.

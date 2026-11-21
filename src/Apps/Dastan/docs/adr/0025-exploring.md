@@ -89,11 +89,18 @@ of a visitor, in an address; the comparisons the editors write (ADR 0008) are an
   belongs to the explorer (20.8).
 * **Where a drawing stood** – its movement and its size. *Built on 2026-11-21 (section 23 of the delivery
   plan):* the moving drawing of connections, of a family and of a family tree writes how large it is shown and
-  how far it was moved into the place of the history the visitor is at (`history.state`), a moment after the
-  visitor – not the page – moved it; Back, Forward and loading the page again put it back, and "the whole
-  drawing" forgets it. It is not part of the address: an address is passed on and says what is explored, not
+  how far it was moved into the place of the history the visitor is at (`history.state`) when the visitor –
+  not the page – has moved it: at once when a finger lets go and when a tool or a key was used, a moment after
+  a wheel has stopped. Back, Forward and loading the page again put it back, and "the whole drawing" forgets
+  it. It is not part of the address: an address is passed on and says what is explored, not
   where somebody's eye was. It is believed only for a drawing of as many cards. The timeline kept its stretch
-  in the address already.
+  in the address already. *Found by the build server:* the first version read the movement from the settings of
+  the control and came back moved to the other side in WebKit on a Persian page of 360 px; the control is now
+  asked where it stands itself, and the step that puts it back is the sixth workaround of ADR 0020. *Found on
+  the machine of development after that:* a movement written a moment later was lost to somebody who left
+  within that moment, and writing while the page is left is not kept by Chromium and Firefox – so a movement is
+  written when it ends; and WebKit let the drawing stand two pixels beside once its bars of scrolling had
+  settled – the rest of the way is gone once, two frames later. The test runs in Chromium, WebKit and Firefox.
 * **The inspector.** What is chosen is a block of the page here; the panel beside the drawing and the sheet
   of a phone are 20.8.
 * **A context wider than one name** – exploring a story or a thread as such. The contract explores one
