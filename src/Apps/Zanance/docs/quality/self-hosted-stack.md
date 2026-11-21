@@ -81,7 +81,24 @@ host firewall/trust change or unrelated resource modification occurred.
 
 The hosted workflow runs original clients, refusal, restore and renewal on a disposable runner and
 uploads no private volumes/keys/dumps/payloads. Hosted success awaits the actual run.
-## Final current signed artifact
+## Current signed personal-sync review APK
+
+The Android Release build of `216204c3` completed with zero warnings or errors
+and includes the shared-session refresh refusal fix in `0aafbb55`.
+The 100,093,721-byte handoff is
+`artifacts/android-personal-sync-216204c3-release-review/pro.vafadar.zanance-Signed.apk`.
+SHA-256 is `95933e405db963bbe3b9de91e7bdcd340818f067991fae3cf552d10ad37e1ed2`.
+The exact archive passes the repository's native and package checks. It
+targets API 36, supports API 24 and above, and includes ARM64 and x86-64.
+Its v2/v3 signer matches the current offline review APK, and the manifest
+contains INTERNET without Play Billing. The verifier initially expected
+`sdkVersion` in the SDK output. The actual `minSdkVersion` field confirmed
+API 24 on the same archive without rebuilding it.
+
+This is a review build with billing and OAuth client configuration disabled.
+No device installation, live sign-in, provider call or financial test ran.
+
+## Original D-293 signed artifact
 
 artifacts/android-selfhost-d293/pro.vafadar.zanance-Signed.apk: 89,774,576 bytes; SHA256
 ed5337b45ac976639bf421902f4d4872bfdd0ce2ac71f8310d2c497478e98d68.
