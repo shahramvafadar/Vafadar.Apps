@@ -87,8 +87,9 @@ and review, hosting, the in-app policy link and the Console declaration remain o
 [PRI-05](../spec/Zanance-Product-Specification.md#182-data-policy)
 requires a deletion request path both inside the app and on the public web for
 an edition with Zanance account creation. Local profile deletion, disconnecting
-sync and revoking a session have different effects. The service now serializes
-pending identity operations against removal of a synthetic identity, but the
-end-to-end request, associated data handling, public web path, verified retention,
-and Console answer are open. See [the service boundary](../../Vafadar.Zanance.Api/README.md#api-boundary)
+sync and revoking a session have different effects. The service accepts one
+pending deletion request for the current reauthenticated owner and gives it a
+stable receipt. The app and public web still need to offer that request, and the
+service still needs deletion execution and associated data handling. Verified
+retention and the Console declaration are open. See [the service boundary](../../Vafadar.Zanance.Api/README.md#api-boundary)
 and [Play User Data policy](https://support.google.com/googleplay/android-developer/answer/10144311).

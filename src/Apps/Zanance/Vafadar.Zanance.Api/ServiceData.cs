@@ -77,6 +77,19 @@ public sealed class RequestWindow
     public int Count { get; set; }
 }
 
+/// <summary>Pending account deletion request, bound to its original authenticated identity.</summary>
+public sealed class AccountDeletionRequest
+{
+    /// <summary>The identity whose deletion was requested.</summary>
+    public string UserId { get; set; } = "";
+
+    /// <summary>Opaque receipt identifying this original request.</summary>
+    public Guid ReceiptId { get; set; }
+
+    /// <summary>Server UTC time at which the confirmed request was accepted.</summary>
+    public DateTimeOffset RequestedAt { get; set; }
+}
+
 /// <summary>Independent PostgreSQL service schema and maintained Identity persistence.</summary>
 public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options, Sharing.IHouseholdDeletionLedger? householdDeletions = null) : IdentityDbContext<ServiceUser>(options)
 {
@@ -88,6 +101,8 @@ public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options,
     public DbSet<IdentityChallenge> Challenges => Set<IdentityChallenge>();
     /// <summary>Private manifests.</summary>
     public DbSet<PrivateObject> Objects => Set<PrivateObject>();
+    /// <summary>One pending deletion request per authenticated identity.</summary>
+    public DbSet<AccountDeletionRequest> AccountDeletionRequests => Set<AccountDeletionRequest>();
     /// <summary>Shared request windows.</summary>
     public DbSet<RequestWindow> RequestWindows => Set<RequestWindow>();
 
@@ -105,6 +120,10 @@ public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options,
         builder.Entity<DeviceSession>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         builder.Entity<IdentityChallenge>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         builder.Entity<PrivateObject>().HasOne<ServiceUser>().WithMany().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
+        var deletionRequests = builder.Entity<AccountDeletionRequest>();
+        deletionRequests.HasKey(row => row.UserId);
+        deletionRequests.HasIndex(row => row.ReceiptId).IsUnique();
+        deletionRequests.HasOne<ServiceUser>().WithMany().HasForeignKey(row => row.UserId).OnDelete(DeleteBehavior.Cascade);
         builder.Entity<RequestWindow>().HasKey(x => new { x.Partition, x.StartsAt });
         builder.Entity<RequestWindow>().Property(x => x.Partition).HasMaxLength(64);
         builder.Entity<DeviceSession>().HasIndex(x => new { x.UserId, x.Revoked });

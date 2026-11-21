@@ -154,6 +154,25 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.AccountDeletionRequest", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ReceiptId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("RequestedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("ReceiptId")
+                        .IsUnique();
+
+                    b.ToTable("AccountDeletionRequests");
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.Analysis.AiCreditRow", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2158,6 +2177,15 @@ namespace Vafadar.Zanance.Api.Migrations
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Vafadar.Zanance.Api.AccountDeletionRequest", b =>
                 {
                     b.HasOne("Vafadar.Zanance.Api.ServiceUser", null)
                         .WithMany()

@@ -37,6 +37,7 @@ The local service binds 127.0.0.1, does not configure proxy headers and sends no
 ## API boundary
 
 - POST `/identity/register`, `/identity/login`, `/identity/recover`, `/identity/complete`, `/identity/refresh`.
+- GET/POST `/identity/deletion-request` reads or accepts the current owner's pending account deletion request.
 - GET `/sessions`; DELETE `/sessions/{id}`; POST `/sessions/revoke-all`.
 - GET/POST `/objects/`; GET/DELETE `/objects/{id}`.
 - GET `/health/live` and `/health/ready`, without identity or financial content.
@@ -67,11 +68,21 @@ that same lock. Three focused HTTP tests on a disposable PostgreSQL database
 verified the behavior when the fictional account was removed while each request
 waited. There was no new session or challenge. No real mail or provider was used.
 
-This is a prerequisite for account deletion. The integration fixture removed only
-an identity without user content or shared data. The service still requires the
-account deletion workflow for PRI-05. Sessions and challenges cascade from the
-identity, while private objects, personal sync, household ownership and membership,
-billing and analysis have separate restrictive dependencies. A complete deletion
+Deletion request intake requires the original current session and fresh password
+proof. It stores one pending receipt and UTC timestamp, returned as HTTP 202.
+A duplicate submission returns the same receipt. GET returns the pending receipt
+or 204, with no caching. The request itself removes no account data and revokes no
+session. The additive migration, previous account preservation, unauthorized and
+wrong-password refusal, concurrent duplicate receipt and different-owner isolation
+passed together in a fresh PostgreSQL HTTP fixture. No real mail or provider was
+used. The temporary database was removed; evidence is under
+`artifacts/account-deletion-request-intake`.
+
+Deletion execution for PRI-05 is still required. The earlier identity retirement
+fixture removed only an identity without user content or shared data. Sessions and
+challenges cascade from the identity, while private objects, personal sync,
+household ownership and membership, billing and analysis have separate restrictive
+dependencies. A complete deletion
 request must address those records, private file retirement, already-dispatched
 provider work and what may be retained. Restore and independent recipient copies
 also need their scope explained. The in-app and external request entry points

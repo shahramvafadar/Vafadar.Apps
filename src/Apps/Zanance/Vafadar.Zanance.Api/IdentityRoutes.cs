@@ -40,6 +40,7 @@ public static class IdentityRoutes
     /// <summary>Maps the complete optional identity lifecycle without billing or financial sync.</summary>
     public static void Map(WebApplication app)
     {
+        AccountDeletionRoutes.Map(app);
         app.MapPost("/identity/register", async (IdentityInput input, UserManager<ServiceUser> users, ServiceDbContext db,
             IDataProtectionProvider protection, TimeProvider time, IServiceProvider services, CancellationToken ct) =>
         {

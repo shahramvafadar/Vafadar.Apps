@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("61b79ea4-3dbb-4991-9d51-7de5fc67082b"), entityTypeCount: 51)
+            : base(skipDetectChanges: false, modelId: new Guid("c17cdccb-40dc-4ca3-86fd-ba2f001ed2f5"), entityTypeCount: 52)
         {
         }
 
@@ -24,6 +24,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var identityUserLogin = IdentityUserLoginEntityType.Create(this);
             var identityUserRole = IdentityUserRoleEntityType.Create(this);
             var identityUserToken = IdentityUserTokenEntityType.Create(this);
+            var accountDeletionRequest = AccountDeletionRequestEntityType.Create(this);
             var aiCreditRow = AiCreditRowEntityType.Create(this);
             var aiOfferRow = AiOfferRowEntityType.Create(this);
             var aiPilotCompletionNoticeRow = AiPilotCompletionNoticeRowEntityType.Create(this);
@@ -76,6 +77,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             IdentityUserRoleEntityType.CreateForeignKey1(identityUserRole, identityRole);
             IdentityUserRoleEntityType.CreateForeignKey2(identityUserRole, serviceUser);
             IdentityUserTokenEntityType.CreateForeignKey1(identityUserToken, serviceUser);
+            AccountDeletionRequestEntityType.CreateForeignKey1(accountDeletionRequest, serviceUser);
             AiCreditRowEntityType.CreateForeignKey1(aiCreditRow, aiRequestRow);
             AiCreditRowEntityType.CreateForeignKey2(aiCreditRow, serviceUser);
             AiOfferRowEntityType.CreateForeignKey1(aiOfferRow, aiPilotRouteRow);
@@ -133,6 +135,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             IdentityUserLoginEntityType.CreateAnnotations(identityUserLogin);
             IdentityUserRoleEntityType.CreateAnnotations(identityUserRole);
             IdentityUserTokenEntityType.CreateAnnotations(identityUserToken);
+            AccountDeletionRequestEntityType.CreateAnnotations(accountDeletionRequest);
             AiCreditRowEntityType.CreateAnnotations(aiCreditRow);
             AiOfferRowEntityType.CreateAnnotations(aiOfferRow);
             AiPilotCompletionNoticeRowEntityType.CreateAnnotations(aiPilotCompletionNoticeRow);
