@@ -78,6 +78,9 @@ the handoff.
    Cloud backup requires at least one configured Android backup client before building.
    Google Play caps the Android version code at 2100000000. The workflow verifies the allowed range; check the last used code in Play Console before choosing the next one.
 3. Approve the `production` environment deployment.
+   Before approving, verify the final policy at `https://vafadar.pro/privacy` and set
+   `ZANANCE_PRIVACY_POLICY_PUBLISHED=true` in that GitHub environment. The store workflow
+   requires this confirmation and includes the About link in the build.
    AAB signing uses temporary restricted password files because the Android SDK does not support the
    `env:` password prefix for bundles. The keystore and password files are removed after verification or failure.
 4. The workflow requires exactly one signed App Bundle and reads each payload entry to verify its signature against the
@@ -113,7 +116,8 @@ the handoff.
    This workflow leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size
    acceptance need their own checks. Download the
    verified `.aab` artifact named for the selected edition. Its `android-release-receipt.json` records the
-   exact file's SHA-256, byte length, edition, version and producing commit. Compare the downloaded AAB's
+   exact file's SHA-256, byte length, edition, version and producing commit, plus the production
+   environment's policy-publication confirmation. Verify the link on the installed release package and compare the downloaded AAB's
    SHA-256 with that receipt and record it with the release declaration. Upload the verified file in Play Console,
    then **delete the artifact** (artifacts of public
    repositories are downloadable by any signed-in GitHub user; the workflow keeps them only 3 days).

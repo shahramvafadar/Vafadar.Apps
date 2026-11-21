@@ -54,6 +54,10 @@ jobs:
     steps:
       - name: Validate inputs
         run: |
+          if [[ "$ZANANCE_PRIVACY_POLICY_PUBLISHED" != true ]]; then
+            echo "::error::Confirm the published Zanance privacy policy and set ZANANCE_PRIVACY_POLICY_PUBLISHED=true in the production environment."
+            exit 1
+          fi
           case "$APP_EDITION" in
             offline)
               [[ -z "$MicrosoftEntraClientId" && -z "$GoogleOAuthClientIdAndroid" ]] || { echo "::error::offline cannot use cloud backup clients"; exit 1; }
@@ -218,6 +222,7 @@ jobs:
                   "edition": os.environ["APP_EDITION"],
                   "version": os.environ["APP_VERSION"],
                   "versionCode": int(os.environ["APP_BUILD_NUMBER"]),
+                  "privacyPolicyPublicationConfirmed": os.environ["ZANANCE_PRIVACY_POLICY_PUBLISHED"] == "true",
                   "sourceRevision": os.environ["GITHUB_SHA"],
               }, stream, indent=2)
               stream.write("\n")

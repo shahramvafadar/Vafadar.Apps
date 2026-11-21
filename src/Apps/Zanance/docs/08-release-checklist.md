@@ -298,7 +298,7 @@ independent work and overall goal remain active. Broader gates stay open.
 - [x] `INTERNET` permission removed if no online feature ships (D-20) – the offline build's merged manifest declares only notifications, boot and biometric (USE_BIOMETRIC / USE_FINGERPRINT from AndroidX Biometric); re-checked 2026-09-29 with the cloud libraries referenced
 - [ ] Privacy policy published at a stable URL on vafadar.pro, reachable in the app and in Play Console (PRI-03)
   After confirming the published policy at `https://vafadar.pro/privacy`, set the production environment
-  variable `ZANANCE_PRIVACY_POLICY_PUBLISHED` to `true` before building the store bundle. For a local
+  variable `ZANANCE_PRIVACY_POLICY_PUBLISHED` to `true`. The store workflow requires it. For a local
   build of the same edition, use `-p:ZanancePrivacyPolicyPublished=true`. Check More → About →
   Privacy Policy in the signed package. The app opens the link in the system browser on request and
   the offline edition needs no network permission. Enter the same URL in Play Console.
