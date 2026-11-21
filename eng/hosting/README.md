@@ -86,6 +86,10 @@ separate target and free checked subnet/port; source and snapshot remain intact.
 runtime image IDs. Images must remain locally available or be rebuilt/qualified before an upgrade. Never prune
 images/volumes as a retry. Docker snapshots on this disk are not an off-machine disaster backup.
 
+If a restore is interrupted, continue with the same snapshot and target.
+The operator refuses `start`, `backup` and `renew-transport` for a target
+whose restore receipt is incomplete. `status` and `stop` remain available.
+
 `renew-transport --snapshot zanance-hosting-snapshot-PRE-RENEWAL` takes a mandatory complete snapshot, stops this
 project's workers/database and renews only internal TLS leaf certificates with the same keys and CA. It retains
 the historical protection certificate/key used by the key ring, restarts the stack and requires a readiness check.

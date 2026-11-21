@@ -235,6 +235,48 @@ class GatewayTests(unittest.TestCase):
             with patch.object(Path, 'read_bytes', side_effect=AssertionError('Credential content access refused')):
                 self.assertEqual(str(path.absolute()), tunnel._file(str(path), credential=True))
 
+    def test_incomplete_restore_cannot_start_or_become_a_new_backup_source(self):
+        project = 'zanance-selfhost-incomplete-restore'
+        helper = 'sha256:' + '1' * 64
+        state = {'Target': project, 'Snapshot': 'zanance-hosting-snapshot-old', 'DatabaseRestored': True,
+                 'PrivacyReconciled': False, 'Complete': False}
+        for action in ('start', 'backup', 'renew-transport'):
+            with (
+                self.subTest(action=action),
+                patch.object(sys, 'argv', ['operate.py', action, '--project', project,
+                                           '--snapshot', 'zanance-hosting-snapshot-new']),
+                patch.object(operate, '_run', return_value=helper.encode()),
+                patch.object(operate, '_exists', side_effect=lambda kind, name: name == project + '_restore-state'),
+                patch.object(operate, '_volume', return_value=project + '_restore-state'),
+                patch.object(operate, '_receipt', return_value=state),
+                patch.object(operate, '_require_gateway'),
+                patch.object(operate, '_container'),
+                patch.object(operate, '_household_mode'),
+                patch.object(operate, '_compose') as compose,
+                patch.object(operate, '_backup') as backup,
+            ):
+                with self.assertRaisesRegex(RuntimeError, 'Restore is incomplete'):
+                    operate.main()
+                compose.assert_not_called()
+                backup.assert_not_called()
+
+    def test_restore_receipt_admits_completed_target_and_preserves_nonrestored_sources(self):
+        project = 'zanance-selfhost-reviewed'
+        helper = 'sha256:' + '1' * 64
+        with patch.object(operate, '_exists', return_value=False), patch.object(operate, '_receipt') as receipt:
+            operate._require_completed_restore(project, helper)
+            receipt.assert_not_called()
+        state = {'Target': project, 'DatabaseRestored': True, 'Complete': True}
+        volume = project + '_restore-state'
+        with (patch.object(operate, '_exists', return_value=True),
+              patch.object(operate, '_volume', return_value=volume),
+              patch.object(operate, '_receipt', return_value=state) as receipt):
+            operate._require_completed_restore(project, helper)
+            receipt.assert_called_once_with(helper, volume)
+            receipt.return_value = dict(state, Target='zanance-selfhost-different')
+            with self.assertRaisesRegex(RuntimeError, 'restore authority differs'):
+                operate._require_completed_restore(project, helper)
+
     def test_missing_credential_path_cannot_create_a_host_directory(self):
         """A missing bind source fails through metadata validation before any Compose invocation."""
         with tempfile.TemporaryDirectory(prefix='zanance-tunnel-test-') as directory:

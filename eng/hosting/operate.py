@@ -219,6 +219,17 @@ def _receipt(helper, volume, value=None):
     _run(_helper(helper, mounts, script), data=json.dumps(value).encode())
 
 
+def _require_completed_restore(project, helper):
+    volume = project + '_restore-state'
+    if not _exists('volume', volume):
+        return
+    state = _receipt(helper, _volume(project, 'restore-state'))
+    if not isinstance(state, dict) or state.get('Target') != project:
+        raise RuntimeError('Existing restore authority differs; no target changes made.')
+    if state.get('Complete') is not True or state.get('DatabaseRestored') is not True:
+        raise RuntimeError('Restore is incomplete; continue the original restore before starting or backing up the target.')
+
+
 def _backup(args, helper):
     if not SNAPSHOT.fullmatch(args.snapshot or '') or _exists('volume', args.snapshot):
         raise RuntimeError('Choose a fresh owned snapshot volume; existing snapshots are never reset.')
@@ -442,6 +453,8 @@ def main():
     helper = _run(['docker', 'image', 'inspect', 'zanance-bootstrap:d293', '--format', '{{.Id}}']).decode().strip()
     if not IMAGE.fullmatch(helper):
         raise RuntimeError('Build the reviewed immutable helper image first.')
+    if args.action in ('start', 'backup', 'renew-transport'):
+        _require_completed_restore(args.project, helper)
     if args.action == 'backup': _backup(args, helper)
     elif args.action == 'restore': _restore(args, helper)
     elif args.action == 'renew-transport':
