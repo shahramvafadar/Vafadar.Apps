@@ -154,6 +154,20 @@ namespace Vafadar.Zanance.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Vafadar.Zanance.Api.AccountDeletionCompletion", b =>
+                {
+                    b.Property<Guid>("ReceiptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CompletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("ReceiptId");
+
+                    b.ToTable("AccountDeletionCompletions", (string)null);
+                });
+
             modelBuilder.Entity("Vafadar.Zanance.Api.AccountDeletionRequest", b =>
                 {
                     b.Property<string>("UserId")

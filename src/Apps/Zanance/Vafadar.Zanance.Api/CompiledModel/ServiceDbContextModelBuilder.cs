@@ -12,7 +12,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
     public partial class ServiceDbContextModel
     {
         private ServiceDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("436ef3a2-6ef4-41a2-b978-402c07954be3"), entityTypeCount: 53)
+            : base(skipDetectChanges: false, modelId: new Guid("a8ece202-e368-49a7-ab8d-5b0af1f28ef6"), entityTypeCount: 54)
         {
         }
 
@@ -24,6 +24,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             var identityUserLogin = IdentityUserLoginEntityType.Create(this);
             var identityUserRole = IdentityUserRoleEntityType.Create(this);
             var identityUserToken = IdentityUserTokenEntityType.Create(this);
+            var accountDeletionCompletion = AccountDeletionCompletionEntityType.Create(this);
             var accountDeletionRequest = AccountDeletionRequestEntityType.Create(this);
             var accountSyncFileRetirement = AccountSyncFileRetirementEntityType.Create(this);
             var aiCreditRow = AiCreditRowEntityType.Create(this);
@@ -136,6 +137,7 @@ namespace Vafadar.Zanance.Api.CompiledModel
             IdentityUserLoginEntityType.CreateAnnotations(identityUserLogin);
             IdentityUserRoleEntityType.CreateAnnotations(identityUserRole);
             IdentityUserTokenEntityType.CreateAnnotations(identityUserToken);
+            AccountDeletionCompletionEntityType.CreateAnnotations(accountDeletionCompletion);
             AccountDeletionRequestEntityType.CreateAnnotations(accountDeletionRequest);
             AccountSyncFileRetirementEntityType.CreateAnnotations(accountSyncFileRetirement);
             AiCreditRowEntityType.CreateAnnotations(aiCreditRow);

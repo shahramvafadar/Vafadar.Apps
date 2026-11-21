@@ -124,6 +124,17 @@ directories or links are excluded. The stage covers the current server copies
 and needs a final recheck under the account execution lock. Independent device
 copies and backups have their own retention boundaries.
 
+After the approved stages and retention review, the operator can use
+`--erase-account-identity <receipt-id> --confirm-server-identity-erasure`.
+The active-service transaction rechecks the original dependencies under the
+owner lock. It refuses pending identity mail, sync retirement, household
+references, billing and analysis, and deliberately verifies retired private
+paths before removing their manifests. It removes the original service
+identity, sessions and pending request together. The completion record
+retains only the opaque receipt and timestamp, so an ambiguous result can
+be reconciled without doing the deletion again. Backup restoration and
+off-service retention need separate handling before production activation.
+
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity
 rate limit. The browser form requires antiforgery validation, returns no-store

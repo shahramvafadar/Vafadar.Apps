@@ -1,4 +1,5 @@
 using System.Net;
+using System.Data.Common;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +25,95 @@ namespace Vafadar.Zanance.Api.Tests;
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Identity_erasure_refuses_unresolved_files_and_revokes_only_the_original_service_account()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_identity_fixture";
+
+        var uploadWait = new OwnerUploadWait();
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "identity-erasure-service"), uploadWait);
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        var time = services.ServiceProvider.GetRequiredService<TimeProvider>();
+        var users = services.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync("20261121021759_AccountSyncFileRetirement", ct);
+        const string email = "identity-erasure-target@example.invalid";
+        const string password = "Synthetic-identity-erasure9!";
+        var target = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+        var other = new ServiceUser { UserName = "identity-erasure-other@example.invalid" };
+        Assert.True((await users.CreateAsync(target, password)).Succeeded);
+        db.Users.Add(other);
+        var now = DateTimeOffset.UtcNow;
+        var receipt = Guid.NewGuid();
+        var retired = new PrivateObject { Id = Guid.NewGuid(), UserId = target.Id, CreatedAt = now, Deleted = true, StorageRetired = true };
+        var unaffected = new PrivateObject { Id = Guid.NewGuid(), UserId = other.Id, CreatedAt = now };
+        db.Objects.AddRange(retired, unaffected);
+        db.AccountDeletionRequests.Add(new() { UserId = target.Id, ReceiptId = receipt, RequestedAt = now });
+        db.Sessions.Add(new() { Id = Guid.NewGuid(), UserId = other.Id, ExpiresAt = now.AddDays(1) });
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+        await db.Database.MigrateAsync(ct);
+        Assert.False(db.Database.HasPendingModelChanges());
+
+        using var app = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var login = await app.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        using var grant = JsonDocument.Parse(await login.Content.ReadAsStringAsync(ct));
+        app.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.RootElement.GetProperty("accessToken").GetString());
+        var known = await app.GetFromJsonAsync<AccountDeletionReceipt>("/identity/deletion-request", ct);
+        Assert.Equal(receipt, known?.ReceiptId);
+
+        // The database claims retirement, but a restored copy still exists and must prevent final erasure.
+        var file = storage.ObjectPath(retired.Id);
+        await File.WriteAllBytesAsync(file, new byte[] { 1, 2, 3 }, ct);
+        var refused = await AccountIdentityErasure.CompleteAsync(db, storage, time, receipt, ct);
+        Assert.Equal(new(AccountIdentityErasureStatus.DependenciesRemain, AccountDeletionDependencies.PrivateObjects), refused);
+        Assert.Equal(2, await db.Users.CountAsync(ct));
+        Assert.Empty(await db.Set<AccountDeletionCompletion>().ToListAsync(ct));
+        Assert.True(File.Exists(file));
+        File.Delete(file);
+
+        // The upload already passed HTTP authentication, but is paused before taking the owner lock.
+        uploadWait.Arm();
+        using var content = new ByteArrayContent(new byte[] { 71, 82, 93 });
+        content.Headers.ContentType = new("application/octet-stream");
+        var pendingUpload = app.PostAsync("/objects/", content, ct);
+        AccountIdentityErasureResult result;
+        try
+        {
+            await uploadWait.Entered.Task.WaitAsync(TimeSpan.FromSeconds(10), ct);
+            result = await AccountIdentityErasure.CompleteAsync(db, storage, time, receipt, ct);
+        }
+        finally { uploadWait.Release.TrySetResult(); }
+        using var refusedUpload = await pendingUpload;
+        Assert.Equal(HttpStatusCode.Unauthorized, refusedUpload.StatusCode);
+        Assert.Empty(Directory.EnumerateFiles(Path.Combine(storage.Root, "objects")));
+        Assert.Equal(AccountIdentityErasureStatus.Completed, result.Status);
+        Assert.Equal(other.Id, (await db.Users.AsNoTracking().SingleAsync(ct)).Id);
+        Assert.Equal(other.Id, (await db.Sessions.AsNoTracking().SingleAsync(ct)).UserId);
+        Assert.Equal(unaffected.Id, (await db.Objects.AsNoTracking().SingleAsync(ct)).Id);
+        Assert.Empty(await db.AccountDeletionRequests.ToListAsync(ct));
+        var completion = await db.Set<AccountDeletionCompletion>().AsNoTracking().SingleAsync(ct);
+        Assert.Equal(receipt, completion.ReceiptId);
+        Assert.Equal(result, await AccountIdentityErasure.CompleteAsync(db, storage, time, receipt, ct));
+        Assert.Equal(AccountIdentityErasureStatus.UnknownReceipt,
+            (await AccountIdentityErasure.CompleteAsync(db, storage, time, Guid.NewGuid(), ct)).Status);
+        Assert.Equal(completion.CompletedAt, (await db.Set<AccountDeletionCompletion>().AsNoTracking().SingleAsync(ct)).CompletedAt);
+        using var retiredSession = await app.GetAsync("/identity/deletion-request", ct);
+        Assert.Equal(HttpStatusCode.Unauthorized, retiredSession.StatusCode);
+    }
+
     [Fact]
     public async Task Personal_sync_retirement_cascades_original_rows_and_resumes_exact_queued_pieces()
     {
@@ -374,14 +465,39 @@ public sealed class AccountDeletionRequestTests
         }
     }
 
-    private sealed class IdentityHost(string connection, string root) : WebApplicationFactory<Program>
+    private sealed class OwnerUploadWait : DbCommandInterceptor
+    {
+        private int armed;
+        internal TaskCompletionSource Entered { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        internal TaskCompletionSource Release { get; } = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        internal void Arm() => Interlocked.Exchange(ref armed, 1);
+
+        public override async ValueTask<InterceptionResult<int>> NonQueryExecutingAsync(DbCommand command,
+            CommandEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
+        {
+            if (command.CommandText.StartsWith("SELECT pg_advisory_xact_lock(hashtextextended(", StringComparison.Ordinal) &&
+                Interlocked.Exchange(ref armed, 0) == 1)
+            {
+                Entered.TrySetResult();
+                await Release.Task.WaitAsync(cancellationToken);
+            }
+            return result;
+        }
+    }
+
+    private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null) : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Integration");
             builder.UseSetting("ConnectionStrings:Service", connection);
             builder.UseSetting("Service:Root", root);
-            builder.ConfigureServices(services => services.RemoveAll<IHostedService>());
+            builder.ConfigureServices(services =>
+            {
+                services.RemoveAll<IHostedService>();
+                if (uploadWait is not null)
+                    services.ConfigureDbContext<ServiceDbContext>(options => options.AddInterceptors(uploadWait));
+            });
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.DataProtection;
+using Vafadar.Zanance.Api.Sync;
 
 namespace Vafadar.Zanance.Api;
 
@@ -51,10 +52,10 @@ public static class ObjectRoutes
             await content.WriteAsync(buffer.AsMemory(0, count), ct);
         }
         if (content.Length == 0) return Results.BadRequest();
-        var owner = http.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new InvalidOperationException("Identity required.");
-        await using var tx = await db.Database.BeginTransactionAsync(ct);
-        // Serialize capacity across all workers on this real owner, rather than a process-local quota.
-        await db.Database.ExecuteSqlInterpolatedAsync($"SELECT pg_advisory_xact_lock(hashtextextended({owner}, 0))", ct);
+        // Recheck the original session after waiting for any owner erasure or revocation.
+        await using var scope = await SyncRequestScope.OpenAsync(http.User, db, time, ct);
+        if (scope is null) return Results.Unauthorized();
+        var owner = scope.Owner;
         var used = await db.Objects.Where(o => o.UserId == owner && !o.Deleted).SumAsync(o => o.Length, ct);
         if (used + content.Length > 64 * 1024 * 1024 || await db.Objects.CountAsync(o => o.UserId == owner && !o.Deleted, ct) >= 100)
             return Results.StatusCode(409);
@@ -67,7 +68,7 @@ public static class ObjectRoutes
         {
             await file.WriteAsync(protection.CreateProtector("private-object-v1").Protect(bytes), ct); file.Flush(flushToDisk: true);
         }
-        db.Objects.Add(manifest); await db.SaveChangesAsync(ct); await tx.CommitAsync(ct);
+        db.Objects.Add(manifest); await scope.CommitAsync(ct);
         return Results.Created($"/objects/{manifest.Id}", new { manifest.Id, manifest.Length, manifest.Sha256 });
     }
 }

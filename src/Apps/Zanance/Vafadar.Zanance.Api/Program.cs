@@ -20,8 +20,10 @@ var deletePilotResult = args.FirstOrDefault() == "--delete-analysis-pilot-result
 var inspectDeletion = args.FirstOrDefault() == "--inspect-account-deletion";
 var retireAccountObjects = args.FirstOrDefault() == "--retire-account-objects";
 var retireAccountSync = args.FirstOrDefault() == "--retire-account-personal-sync";
+var eraseAccountIdentity = args.FirstOrDefault() == "--erase-account-identity";
+var accountRetirement = retireAccountObjects || retireAccountSync || eraseAccountIdentity;
 var deletionReceipt = Guid.Empty;
-if ((inspectDeletion || retireAccountObjects || retireAccountSync) &&
+if ((inspectDeletion || accountRetirement) &&
     (args.Length < 2 || !Guid.TryParseExact(args[1], "D", out deletionReceipt) || deletionReceipt == Guid.Empty ||
         args.Contains("--migrate", StringComparer.Ordinal)))
     throw new InvalidOperationException("The original pending deletion receipt is required.");
@@ -29,6 +31,8 @@ if (retireAccountObjects && (args.Length < 3 || args[2] != "--confirm-private-ob
     throw new InvalidOperationException("Explicit confirmation of private-object retirement is required.");
 if (retireAccountSync && (args.Length < 3 || args[2] != "--confirm-personal-sync-retirement"))
     throw new InvalidOperationException("Explicit confirmation of personal sync retirement is required.");
+if (eraseAccountIdentity && (args.Length < 3 || args[2] != "--confirm-server-identity-erasure"))
+    throw new InvalidOperationException("Explicit confirmation of active server identity erasure is required.");
 var pilotRequestId = Guid.Empty;
 if (deletePilotResult &&
     (args.Length < 3 || !Guid.TryParseExact(args[1], "D", out pilotRequestId) || pilotRequestId == Guid.Empty ||
@@ -40,12 +44,12 @@ if (selectModel && (args.Length < 3 || args[1] is not ("report" or "comparison")
     listModels && args.Contains("--migrate"))
     throw new InvalidOperationException("Choose report or comparison and an allowlisted model or off.");
 var hostArgs = selectAnalysis || inspectDeletion ? args[2..] :
-    selectModel || deletePilotResult || retireAccountObjects || retireAccountSync ? args[3..] :
+    selectModel || deletePilotResult || accountRetirement ? args[3..] :
     listModels ? args[1..] : args.Where(arg => arg != "--migrate").ToArray();
 var builder = WebApplication.CreateBuilder(hostArgs);
 builder.AddZananceService(migrationOnly: args.Contains("--migrate", StringComparer.Ordinal));
 var app = builder.Build();
-if (retireAccountObjects || retireAccountSync)
+if (accountRetirement)
 {
     var privateStorage = app.Services.GetRequiredService<ServiceStorage>();
     var privateAuthority = Path.Combine(privateStorage.Root, "installation.protected");
@@ -53,7 +57,16 @@ if (retireAccountObjects || retireAccountSync)
     if (!File.Exists(privateAuthority) || privateProtector.Unprotect(await File.ReadAllTextAsync(privateAuthority)) != "Zanance private service v1")
         throw new InvalidOperationException("The existing private installation authority is required.");
     await using var db = await app.Services.GetRequiredService<IDbContextFactory<ServiceDbContext>>().CreateDbContextAsync();
-    if (retireAccountSync)
+    if (eraseAccountIdentity)
+    {
+        var result = await AccountIdentityErasure.CompleteAsync(db, privateStorage,
+            app.Services.GetRequiredService<TimeProvider>(), deletionReceipt, CancellationToken.None);
+        Console.WriteLine("Active-service identity erasure: " + result.Status);
+        if (result.Status == AccountIdentityErasureStatus.DependenciesRemain)
+            Console.WriteLine("Remaining dependencies: " + result.Dependencies);
+        if (result.Status != AccountIdentityErasureStatus.Completed) Environment.ExitCode = 1;
+    }
+    else if (retireAccountSync)
     {
         var result = await AccountPersonalSyncRetirement.RunAsync(db, privateStorage, deletionReceipt, CancellationToken.None);
         Console.WriteLine("Account personal-sync retirement: " + result);

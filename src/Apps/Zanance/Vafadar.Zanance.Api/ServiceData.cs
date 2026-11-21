@@ -124,6 +124,9 @@ public sealed class ServiceDbContext(DbContextOptions<ServiceDbContext> options,
         deletionRequests.HasKey(row => row.UserId);
         deletionRequests.HasIndex(row => row.ReceiptId).IsUnique();
         deletionRequests.HasOne<ServiceUser>().WithMany().HasForeignKey(row => row.UserId).OnDelete(DeleteBehavior.Cascade);
+        var deletionCompletions = builder.Entity<AccountDeletionCompletion>();
+        deletionCompletions.ToTable("AccountDeletionCompletions");
+        deletionCompletions.HasKey(row => row.ReceiptId);
         var syncRetirements = builder.Entity<AccountSyncFileRetirement>();
         syncRetirements.ToTable("AccountSyncFileRetirements");
         syncRetirements.HasKey(row => row.FileId);

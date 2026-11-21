@@ -33,6 +33,13 @@ public static class AccountDeletionInventory
         var owner = await db.AccountDeletionRequests.AsNoTracking().Where(row => row.ReceiptId == receipt)
             .Select(row => row.UserId).SingleOrDefaultAsync(ct);
         if (owner is null) return null;
+        var dependencies = await ReadOwnerAsync(db, owner, receipt, ct);
+        await snapshot.CommitAsync(ct);
+        return dependencies;
+    }
+
+    internal static async Task<AccountDeletionDependencies> ReadOwnerAsync(ServiceDbContext db, string owner, Guid receipt, CancellationToken ct)
+    {
         var dependencies = AccountDeletionDependencies.None;
 
         if (await db.Sessions.AnyAsync(row => row.UserId == owner, ct))
@@ -69,7 +76,6 @@ public static class AccountDeletionInventory
             await db.Set<AiPilotStatusCheckRow>().AnyAsync(row => row.Actor == owner, ct))
             dependencies |= AccountDeletionDependencies.Analysis;
 
-        await snapshot.CommitAsync(ct);
         return dependencies;
     }
 }
