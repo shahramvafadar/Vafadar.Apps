@@ -33,6 +33,7 @@ internal sealed class TestDbContext(DbContextOptions<TestDbContext> options) : L
 /// <summary>A file based test database registered exactly like an app database.</summary>
 internal sealed class TestDatabase : IDisposable
 {
+    private static readonly object RelationalModelInitialization = new();
     private readonly TemporaryDirectory _directory = new();
     private readonly ServiceProvider _services;
 
@@ -44,6 +45,12 @@ internal sealed class TestDatabase : IDisposable
             .BuildServiceProvider();
 
         using var context = CreateContext();
+        // EF Core's lazy relational model can race on first use across fixtures. Remove
+        // this warm-up when the pinned package includes https://github.com/dotnet/efcore/pull/39423.
+        lock (RelationalModelInitialization)
+        {
+            _ = context.Model.GetRelationalModel();
+        }
         context.Database.EnsureCreated();
     }
 
