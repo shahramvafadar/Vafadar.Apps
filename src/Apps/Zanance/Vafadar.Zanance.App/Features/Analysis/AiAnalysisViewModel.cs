@@ -234,10 +234,15 @@ public sealed partial class AiAnalysisViewModel(AiSnapshotStore store, Translato
         featureRetirement = default;
         // Detach before any callback/disposal can reenter retirement or adopt a newer connection.
         var detached = remote; remote = null; metadataReady = false;
+        var retiredVisibility = visible; visible = null;
         local.Changed -= OnLanguageChanged; frameEpoch++; active = false;
-        visible?.Cancel(); visible?.Dispose(); visible = null;
-        try { Loaded = false; choiceEpoch++; Invalidate(); }
-        finally { detached?.Dispose(); Refresh(); }
+        try { retiredVisibility?.Cancel(); }
+        finally
+        {
+            retiredVisibility?.Dispose();
+            try { Loaded = false; choiceEpoch++; Invalidate(); }
+            finally { detached?.Dispose(); Refresh(); }
+        }
     }
     private void RetireDisabledFeature(CancellationToken original)
     {

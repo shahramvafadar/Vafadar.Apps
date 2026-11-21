@@ -280,6 +280,50 @@ public sealed partial class AiAnalysisFlowTests
         Assert.Equal(0, runtime.Remote.Submissions);
     }
 
+    [Fact]
+    public async Task Turning_off_AI_disposes_the_original_connection_when_cancellation_feedback_fails()
+    {
+        using var fixture = new FlowFixture();
+        var runtime = new Runtime();
+        await fixture.Store.SaveAccountAsync(new Account
+        {
+            Name = "Fictitious cancellation account", CurrencyCode = "EUR", OpeningDate = new(2026, 1, 1),
+        }, Ct);
+        var model = new AiAnalysisViewModel(fixture.Services.GetRequiredService<AiSnapshotStore>(), fixture.Translator,
+            fixture.Localization, new DateFormatter(fixture.Localization), fixture.Time, fixture.Platform, runtime);
+        await model.LoadAsync();
+        await model.CheckProviderAsync();
+        await Review(model);
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        runtime.Remote.HoldQuote = async token =>
+        {
+            using var registration = token.Register(() => throw new IOException("Fictitious cancellation feedback failure."));
+            entered.TrySetResult();
+            await release.Task;
+        };
+        var quotation = model.QuoteAsync();
+        try
+        {
+            await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+            runtime.Features.Enabled = false;
+
+            Assert.Equal(1, runtime.Remote.Disposals);
+            Assert.False(model.Loaded);
+            Assert.False(model.CanSend);
+            Assert.False(model.CanShare);
+            Assert.Null(model.Disclosure);
+        }
+        finally { release.TrySetResult(); await quotation; }
+
+        runtime.Features.Enabled = true;
+        await model.ActivateAsync();
+        Assert.True(model.Loaded);
+        Assert.Null(model.Disclosure);
+        Assert.Equal(1, runtime.Opens);
+        Assert.Equal(0, runtime.Remote.Submissions);
+    }
+
     /// <summary>Re-enabling AI cannot revive a provider check already pending when AI was disabled.</summary>
     [Fact]
     public async Task Turning_off_AI_retires_a_pending_provider_check()
