@@ -6648,6 +6648,13 @@ server stayed running. The source APK and the evidence JSON and XML are under
 `artifacts/android-connected-c29ee3cd-synthetic-about-review` and
 `artifacts/zanance-about-connected-c29ee3cd`.
 
+A new isolated guest installed the same verified archive to check the button's
+native handoff. One tap sent Android's VIEW intent with the exact
+`https://vafadar.pro/privacy` URI to Chrome. Chrome showed its first-run screen
+and the guest remained offline, so this does not qualify the public page. The
+guest was retired. The exact OS intent is recorded in
+`artifacts/zanance-about-policy-link-c29ee3cd/browser-verification.json`.
+
 ### Offline signed package with the AI preference binding fix
 
 The licensed offline Android Release build from `86668b46` carries the app
