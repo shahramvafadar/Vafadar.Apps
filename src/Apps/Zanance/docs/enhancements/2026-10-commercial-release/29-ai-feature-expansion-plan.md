@@ -95,6 +95,29 @@ re-enabling AI, the old navigation failure stayed hidden and a fresh tap
 carried the new session and the goal funding facts. The isolated financial
 rows matched their pre-navigation snapshot.
 
+The signed offline Android Release APK for `bd0938b3` (SHA-256
+`c6c1235324cb33626393c8231b981bbce05aca80895fe4e6cd2aac457020e4c4`)
+also passed the package, signature, permission, storage and alignment
+checks. An owned Android 16 x86-64 emulator installed that exact file. One
+synthetic zero-opening account and one EUR 100.00 goal were created.
+The goal detail showed Explain the funding gap before opt-out. After
+turning AI off in Settings and returning to the same goal, that action
+was absent and the original EUR 0.00 of EUR 100.00 and EUR 100.00 left
+captions matched exactly. Edit opened the existing goal with the original
+name and target. Cancel returned without saving. Transactions still
+reported no entries. No analysis, provider or financial posting was
+invoked. This native check covers the visible action and classical edit
+route. The held-source cancellation is covered by the host checks above.
+
+The first AVD tool wrapper could not parse the JDK path; the official
+Java entry point succeeded with its documented tool-directory argument.
+A boot observer saw the guest offline before it finished starting. The
+same emulator continued without repeating installation. An initial
+caption search expected Goals instead of Savings goals; the same app
+continued without another Insights tap. Guest geometry was restored,
+the test package was removed, and the owned emulator and its AVD were
+retired. Evidence is under `artifacts/goal-ai-toggle-native-bd0938b3`.
+
 Signed Offline Release APK `e7cf917b` also verified the switch across two local profiles
 on an owned Android 16 x86-64 emulator. AI was turned off once in Main. The second profile
 showed the switch off and omitted Analysis in More. Returning to Main in the same process
