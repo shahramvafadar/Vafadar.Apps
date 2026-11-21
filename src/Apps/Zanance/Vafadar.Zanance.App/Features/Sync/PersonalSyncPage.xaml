@@ -82,6 +82,26 @@
                         </VerticalStackLayout>
                     </Border>
                     <VerticalStackLayout Spacing="12" IsVisible="{Binding ShowPersonalSignedIn}">
+                        <Border Style="{StaticResource Card}" IsVisible="{Binding ShowAccountDeletion}">
+                            <VerticalStackLayout Spacing="8">
+                                <Label Text="{v:Translate AccountDeletion_Title}" Style="{StaticResource SectionHeader}" />
+                                <Label Text="{v:Translate AccountDeletion_Explanation}" Style="{StaticResource Secondary}" />
+                                <p:WrappingAction Text="{v:Translate AccountDeletion_Status}" Command="{Binding ReadAccountDeletionCommand}"
+                                    IsEnabled="{Binding CanInteract}" />
+                                <VerticalStackLayout Spacing="8" IsVisible="{Binding ShowAccountDeletionForm}" IsEnabled="{Binding CanInteract}">
+                                    <Label Text="{v:Translate Sync_Password}" />
+                                    <Entry Text="{Binding DeletionPassword, Converter={StaticResource RequestText}}" IsPassword="True"
+                                        MaxLength="256" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"
+                                        SemanticProperties.Description="{v:Translate Sync_Password}" />
+                                    <p:WrappingAction Text="{v:Translate AccountDeletion_Submit}" Appearance="Destructive"
+                                        Command="{Binding RequestAccountDeletionCommand}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Spacing="4" IsVisible="{Binding ShowAccountDeletionReceipt}">
+                                    <Label Text="{v:Translate AccountDeletion_Pending}" />
+                                    <Label Text="{Binding AccountDeletionReference}" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
                         <Border Style="{StaticResource Card}" IsVisible="{Binding IsOnboardingRestore, Converter={StaticResource InvertedBoolConverter}}">
                             <VerticalStackLayout Spacing="8">
                                 <Label Text="{v:Translate Sync_NewSpace}" />

@@ -8852,4 +8852,19 @@
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>امکانات هوش مصنوعی خاموش است. می‌توانید آن را در تنظیمات روشن کنید.</value>
   </data>
+  <data name="AccountDeletion_Title" xml:space="preserve">
+    <value>حذف حساب</value>
+  </data>
+  <data name="AccountDeletion_Explanation" xml:space="preserve">
+    <value>وضعیت درخواست را بررسی کنید. برای درخواست حذف، رمز عبور خود را تأیید کنید. رسید در انتظار یعنی سرویس درخواست شما را دریافت کرده است.</value>
+  </data>
+  <data name="AccountDeletion_Status" xml:space="preserve">
+    <value>بررسی وضعیت درخواست</value>
+  </data>
+  <data name="AccountDeletion_Submit" xml:space="preserve">
+    <value>درخواست حذف حساب</value>
+  </data>
+  <data name="AccountDeletion_Pending" xml:space="preserve">
+    <value>درخواست در انتظار است. شناسهٔ رسید</value>
+  </data>
 </root>

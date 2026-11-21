@@ -22,6 +22,47 @@ public sealed partial class PersonalSyncSessionLifetimeTests
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
     [Fact]
+    public async Task Account_deletion_recovers_a_pending_receipt_after_an_ambiguous_response_without_resubmitting()
+    {
+        using var fixture = new FlowFixture();
+        await using var host = await ProtocolHost.StartAsync();
+        using var environment = new PersonalSyncFlowTests.EnvironmentPort
+        { AllowPeerMemory = true, OpenTransport = (peer, verify) => new(peer, host.Tokens, verifyAccess: verify) };
+        var model = Create(fixture, environment);
+        await model.ActivateAsync();
+        try
+        {
+            model.Address = host.Peer.Address.AbsoluteUri;
+            model.Fingerprint = host.Peer.Fingerprint;
+            model.Email = "deletion@example.invalid";
+            model.Password = "Synthetic-original-password9!";
+            await model.SignInCommand.ExecuteAsync(null);
+            Assert.True(model.ShowAccountDeletion);
+            Assert.False(model.ShowAccountDeletionForm);
+
+            await model.ReadAccountDeletionCommand.ExecuteAsync(null);
+            Assert.True(model.ShowAccountDeletionForm);
+            model.DeletionPassword = "Synthetic-original-password9!";
+            await model.RequestAccountDeletionCommand.ExecuteAsync(null);
+            Assert.NotNull(model.Error);
+            Assert.Empty(model.DeletionPassword);
+            Assert.False(model.ShowAccountDeletionForm);
+            Assert.False(model.ShowAccountDeletionReceipt);
+            await model.RequestAccountDeletionCommand.ExecuteAsync(null);
+            Assert.Equal(1, host.DeletionSubmissions);
+
+            await model.ReadAccountDeletionCommand.ExecuteAsync(null);
+            Assert.Null(model.Error);
+            Assert.True(model.ShowAccountDeletionReceipt);
+            Assert.Equal(host.DeletionReceiptId.ToString("D"), model.AccountDeletionReference);
+            Assert.Equal(1, host.DeletionSubmissions);
+            Assert.Empty(await fixture.Store.GetEntriesAsync(cancellationToken: Ct));
+        }
+        finally { model.Deactivate(); }
+        Assert.Null(model.AccountDeletionReference);
+    }
+
+    [Fact]
     public async Task Original_sign_in_publishes_the_received_identity_and_device_and_local_Reload_does_not_reopen_credentials()
     {
         using var f = new FlowFixture(); await using var host = await ProtocolHost.StartAsync();
@@ -84,6 +125,8 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         internal readonly SyntheticSessions Tokens = new();
         internal LocalSyncPeer Peer = null!;
         internal int Requests, Registrations;
+        internal readonly Guid DeletionReceiptId = Guid.NewGuid();
+        internal int DeletionSubmissions;
         internal Action? BeforeIdentityResponse;
         internal SyncProfile[] CatalogProfiles = [];
         internal SyncDevice[] CatalogDevices = [];
@@ -155,6 +198,13 @@ public sealed partial class PersonalSyncSessionLifetimeTests
                     await context.Response.Body.WriteAsync(new byte[] { 11, 23, 47 }, Ct); break;
                 case "/identity/login":
                     await context.Response.WriteAsJsonAsync(new { tokenType = "Bearer", accessToken = access, refreshToken = refresh, expiresIn = 3600 }, Ct); break;
+                case "/identity/deletion-request" when context.Request.Method == "POST":
+                    Interlocked.Increment(ref DeletionSubmissions);
+                    context.Response.StatusCode = 503; break;
+                case "/identity/deletion-request":
+                    if (Volatile.Read(ref DeletionSubmissions) == 0) context.Response.StatusCode = 204;
+                    else await context.Response.WriteAsJsonAsync(new AccountDeletionReceipt(DeletionReceiptId, DateTimeOffset.UtcNow), Ct);
+                    break;
                 case "/sync/identity":
                     BeforeIdentityResponse?.Invoke();
                     await context.Response.WriteAsJsonAsync(new SyncIdentity("d660-synthetic-local-owner"), Ct); break;

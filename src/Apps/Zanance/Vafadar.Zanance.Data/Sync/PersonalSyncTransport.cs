@@ -408,6 +408,8 @@ internal sealed class SyncTokenGrant
 [JsonSerializable(typeof(SyncSignInBody))]
 [JsonSerializable(typeof(SyncRefreshBody))]
 [JsonSerializable(typeof(SyncTokenGrant))]
+[JsonSerializable(typeof(AccountDeletionProof))]
+[JsonSerializable(typeof(AccountDeletionReceipt))]
 internal partial class SyncCredentialJsonContext : JsonSerializerContext { }
 
 /// <summary>AOT-safe session serialization for platform secure storage only, never portable preferences.</summary>

@@ -8829,4 +8829,19 @@ SHA-256 du XML original : {5}</value>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>Les fonctionnalités d’IA sont désactivées. Vous pouvez les réactiver dans les paramètres.</value>
   </data>
+  <data name="AccountDeletion_Title" xml:space="preserve">
+    <value>Suppression du compte</value>
+  </data>
+  <data name="AccountDeletion_Explanation" xml:space="preserve">
+    <value>Vérifiez l’état de la demande. Pour demander la suppression, confirmez votre mot de passe. Un reçu en attente indique que le service a reçu votre demande.</value>
+  </data>
+  <data name="AccountDeletion_Status" xml:space="preserve">
+    <value>Vérifier l’état de la demande</value>
+  </data>
+  <data name="AccountDeletion_Submit" xml:space="preserve">
+    <value>Demander la suppression du compte</value>
+  </data>
+  <data name="AccountDeletion_Pending" xml:space="preserve">
+    <value>Demande en attente. Référence du reçu</value>
+  </data>
 </root>

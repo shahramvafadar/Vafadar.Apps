@@ -8852,4 +8852,19 @@ Original-XML SHA-256: {5}</value>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>KI-Funktionen sind deaktiviert. Du kannst sie in den Einstellungen wieder aktivieren.</value>
   </data>
+  <data name="AccountDeletion_Title" xml:space="preserve">
+    <value>Kontolöschung</value>
+  </data>
+  <data name="AccountDeletion_Explanation" xml:space="preserve">
+    <value>Prüfe den Status der Anfrage. Bestätige dein Passwort, um die Löschung zu beantragen. Eine offene Anfrage wurde vom Dienst entgegengenommen.</value>
+  </data>
+  <data name="AccountDeletion_Status" xml:space="preserve">
+    <value>Anfragestatus prüfen</value>
+  </data>
+  <data name="AccountDeletion_Submit" xml:space="preserve">
+    <value>Kontolöschung beantragen</value>
+  </data>
+  <data name="AccountDeletion_Pending" xml:space="preserve">
+    <value>Anfrage offen. Referenznummer</value>
+  </data>
 </root>

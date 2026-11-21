@@ -8841,4 +8841,19 @@ SHA-256 dell’XML originale: {5}</value>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>Le funzionalità IA sono disattivate. Puoi riattivarle nelle impostazioni.</value>
   </data>
+  <data name="AccountDeletion_Title" xml:space="preserve">
+    <value>Eliminazione dell’account</value>
+  </data>
+  <data name="AccountDeletion_Explanation" xml:space="preserve">
+    <value>Controlla lo stato della richiesta. Per chiedere l’eliminazione, conferma la password. Una ricevuta in sospeso indica che il servizio ha ricevuto la richiesta.</value>
+  </data>
+  <data name="AccountDeletion_Status" xml:space="preserve">
+    <value>Controlla lo stato della richiesta</value>
+  </data>
+  <data name="AccountDeletion_Submit" xml:space="preserve">
+    <value>Richiedi l’eliminazione dell’account</value>
+  </data>
+  <data name="AccountDeletion_Pending" xml:space="preserve">
+    <value>Richiesta in sospeso. Riferimento della ricevuta</value>
+  </data>
 </root>

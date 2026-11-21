@@ -209,6 +209,9 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
         Retire(() => operation?.Cancel());
         Retire(() => retiringTransport?.Dispose());
         Retire(ClearRetiringPassword);
+        deletionOwner = null;
+        deletionReceipt = null;
+        Retire(ClearAccountDeletionPassword);
         Retire(ClearAttachmentPreview);
         Retire(RefreshProperties);
         // Keep the first actual failure, after every independent retirement has been attempted.
@@ -762,6 +765,13 @@ public sealed partial class PersonalSyncViewModel : ViewModelBase
     private void RefreshProperties()
     {
         RefreshAttachmentProperties();
+        if (!OwnsAccountDeletionStatus)
+        {
+            deletionOwner = null;
+            deletionReceipt = null;
+            ClearAccountDeletionPassword();
+        }
+        RefreshAccountDeletionProperties();
         foreach (var property in new[] { nameof(PageTitle), nameof(IntroText), nameof(HelpTopic), nameof(ShowPersonalConnection), nameof(ShowPersonalSignedIn), nameof(HouseholdReviewEmpty) }) OnPropertyChanged(property);
         foreach (var property in new[] { nameof(Available), nameof(CanRead), nameof(HasPendingOperation), nameof(IsReady), nameof(CanInteract), nameof(CanConnect), nameof(CanSync), nameof(IsHouseholdConnection), nameof(SignedIn), nameof(CanLeave),
             nameof(Error), nameof(AutomaticError), nameof(StatusText), nameof(DetailText), nameof(NoProfiles), nameof(HasConflicts) }) OnPropertyChanged(property);

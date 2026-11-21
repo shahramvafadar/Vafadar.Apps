@@ -8893,4 +8893,19 @@ Original XML SHA-256: {5}</value>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>AI features are off. You can turn them on in Settings.</value>
   </data>
+  <data name="AccountDeletion_Title" xml:space="preserve">
+    <value>Account deletion</value>
+  </data>
+  <data name="AccountDeletion_Explanation" xml:space="preserve">
+    <value>Check the request status. To request deletion, confirm your password. A pending receipt means the service has received your request.</value>
+  </data>
+  <data name="AccountDeletion_Status" xml:space="preserve">
+    <value>Check request status</value>
+  </data>
+  <data name="AccountDeletion_Submit" xml:space="preserve">
+    <value>Request account deletion</value>
+  </data>
+  <data name="AccountDeletion_Pending" xml:space="preserve">
+    <value>Request pending. Receipt reference</value>
+  </data>
 </root>

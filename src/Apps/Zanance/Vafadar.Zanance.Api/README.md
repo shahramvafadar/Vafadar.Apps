@@ -78,6 +78,13 @@ passed together in a fresh PostgreSQL HTTP fixture. No real mail or provider was
 used. The temporary database was removed; evidence is under
 `artifacts/account-deletion-request-intake`.
 
+The signed-in personal sync page can check request status for its original service
+account and submit fresh password proof. Acknowledgement displays the pending
+receipt reference. After an ambiguous submission the user can check status before
+submitting again. A focused TLS fixture checked the actual client transport against
+the service wire contract and verified that a replacement account triggers neither
+an HTTP request nor a credential refresh.
+
 Deletion execution for PRI-05 is still required. The earlier identity retirement
 fixture removed only an identity without user content or shared data. Sessions and
 challenges cascade from the identity, while private objects, personal sync,
@@ -85,8 +92,8 @@ household ownership and membership, billing and analysis have separate restricti
 dependencies. A complete deletion
 request must address those records, private file retirement, already-dispatched
 provider work and what may be retained. Restore and independent recipient copies
-also need their scope explained. The in-app and external request entry points
-remain part of that delivery.
+also need their scope explained. Account paths outside Personal Sync and the
+external request form remain part of that delivery.
 
 Bearer/refresh tickets use the framework BearerToken handler, not JWT/OIDC or a new token format.
 Access lasts 15 minutes; absolute device grants last 14 days. Each authorized request rechecks the

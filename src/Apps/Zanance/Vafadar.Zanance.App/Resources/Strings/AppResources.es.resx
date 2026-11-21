@@ -8821,4 +8821,19 @@ SHA-256 del XML original: {5}</value>
   <data name="Ai_DisabledHere" xml:space="preserve">
     <value>Las funciones de IA están desactivadas. Puedes activarlas en Ajustes.</value>
   </data>
+  <data name="AccountDeletion_Title" xml:space="preserve">
+    <value>Eliminación de la cuenta</value>
+  </data>
+  <data name="AccountDeletion_Explanation" xml:space="preserve">
+    <value>Consulta el estado de la solicitud. Para solicitar la eliminación, confirma tu contraseña. Un justificante pendiente indica que el servicio ha recibido tu solicitud.</value>
+  </data>
+  <data name="AccountDeletion_Status" xml:space="preserve">
+    <value>Consultar estado de la solicitud</value>
+  </data>
+  <data name="AccountDeletion_Submit" xml:space="preserve">
+    <value>Solicitar la eliminación de la cuenta</value>
+  </data>
+  <data name="AccountDeletion_Pending" xml:space="preserve">
+    <value>Solicitud pendiente. Referencia del justificante</value>
+  </data>
 </root>
