@@ -158,6 +158,34 @@ public sealed class ExplorationTests
     }
 
     [Fact]
+    public void The_comparison_is_carried_on_every_view_and_holds_each_name_once()
+    {
+        var work = new EntityId("work-shahnameh");
+        var state = Read(ExplorationView.Connections, "open=character-zal").Compare(work).Compare(Zal);
+
+        Assert.Equal([work, Zal], state.Compared);
+        Assert.Equal("entity/character-rostam/timeline?with=work-shahnameh,character-zal&open=character-zal", state.Address(ExplorationView.Timeline));
+
+        // Twice is once; what is explored is not compared with itself; a name taken out is out.
+        Assert.Same(state, state.Compare(work));
+        Assert.Same(state, state.Compare(Rostam));
+        Assert.Equal([Zal], state.Uncompare(work).Compared);
+        Assert.Empty(state.Uncompare(work).Uncompare(Zal).Compared);
+        Assert.Equal("entity/character-rostam", state.Uncompare(work).Uncompare(Zal).Choose(null).Opened([]).Address(ExplorationView.Overview));
+
+        // Read from an address: the name in the middle is not in it, and it has room for so many.
+        Assert.Equal([Zal], Read(ExplorationView.Timeline, "with=character-rostam,character-zal,character-zal").Compared);
+        var many = string.Join(',', Enumerable.Range(0, 9).Select(number => $"name-{number}"));
+        var full = Read(ExplorationView.Timeline, "with=" + many);
+        Assert.Equal(Exploration.MostCompared, full.Compared.Length);
+        Assert.Same(full, full.Compare(Zal));
+
+        // Another name in the middle keeps the comparison – without itself.
+        Assert.Equal([work], state.Centre(Zal).Compared);
+        Assert.Equal("entity/character-zal/connections?with=work-shahnameh", state.Centre(Zal).Address(ExplorationView.Connections));
+    }
+
+    [Fact]
     public void Only_what_the_projection_says_is_open_is_carried_as_open()
     {
         var asked = Read(ExplorationView.Connections, "open=character-zal,character-sohrab,nobody&sel=character-zal");

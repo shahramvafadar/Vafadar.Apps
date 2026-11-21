@@ -393,3 +393,9 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
 - The start page begins with a large search, shows the story with its picture or a drawing of what it is, the
   names to start with as cards, and a piece of a real drawing of connections that you can open in full. It shows
   only what you have read to, and nothing on it asks for an account.
+- In a drawing of connections or of a family, what you choose is shown closer beside the drawing – on a phone
+  in a sheet from the foot of the screen that you open and close –, with the ways to put it in the middle, to
+  its whole profile, its timeline and its pictures. The tools you use all the time are in sight with their
+  keys; saving a picture is behind "More". A family tree that grows sideways can now be moved, made larger and
+  saved like the one that grows down. Under a drawing stand the steps of the story the name takes part in, as
+  far as you have read. You can add names to a comparison and see their times side by side.

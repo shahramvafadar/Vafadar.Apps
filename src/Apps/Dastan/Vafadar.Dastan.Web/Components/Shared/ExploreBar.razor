@@ -20,8 +20,34 @@
             <p class="actions">
                 <a class="action secondary" href="@Address(State.Centre(chosen.Id), State.View)">@T["Explore_Centre"]<span class="visually-hidden"> – @name</span></a>
                 <a class="action secondary" href="@Address(State.Centre(chosen.Id), ExplorationView.Overview)">@T["Explore_Profile"]<span class="visually-hidden"> – @name</span></a>
+                @if (Exploring.CanCompare(Visitor.Projection, State, chosen.Id))
+                {
+                    <a class="action secondary" href="@Address(State.Compare(chosen.Id), State.View)">@T["Explore_Compare"]<span class="visually-hidden"> – @name</span></a>
+                }
                 <a class="action secondary" href="@Address(State.Choose(null), State.View)">@T["Explore_Unchoose"]<span class="visually-hidden"> – @name</span></a>
             </p>
+        </div>
+    }
+    @if (_compared.Count > 0)
+    {
+        @* The comparison (step 20.8): the names whose times stand beside the times of this one in the chart of
+           time. Each can be taken out again; the chart is one step away. *@
+        <div class="explore-compared">
+            <p class="meta" id="compared">@T["Explore_Compared"]</p>
+            <ul class="chips" role="list" aria-labelledby="compared">
+                @foreach (var other in _compared)
+                {
+                    <li>
+                        <a class="chip" href="@Address(State.Uncompare(other.Id), State.View)">
+                            <Loc Text="other.Label" /><span aria-hidden="true"> ×</span><span class="visually-hidden"> – @T["Explore_Uncompare"]</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+            @if (State.View != ExplorationView.Timeline)
+            {
+                <p><a class="action secondary" href="@Address(State, ExplorationView.Timeline)">@T["Explore_CompareTimes"]</a></p>
+            }
         </div>
     }
     @if (!State.SetAside.IsEmpty)
@@ -34,6 +60,7 @@
 @code {
     private Entity? _subject;
     private Entity? _chosen;
+    private readonly List<Entity> _compared = [];
     private IReadOnlyList<ViewBar.View> _views = [];
 
     /// <summary>Gets or sets the state of exploring, read from the address of the page.</summary>
@@ -52,6 +79,10 @@
         // What is chosen is shown when this visitor may see it; a name of anything else is as good as none.
         _chosen = State.Chosen is { } chosen ? projection.Find(chosen) : null;
 
+        // What is compared is named when this visitor may see it; a name of anything else is as good as none.
+        _compared.Clear();
+        _compared.AddRange(State.Compared.Select(projection.Find).OfType<Entity>());
+
         // A view the thing does not have for this visitor is not offered – except the one that is shown.
         var views = new List<ViewBar.View> { View(ExplorationView.Overview, "overview", "View_Overview"), View(ExplorationView.Connections, "connections", "View_Connections") };
         if (State.View == ExplorationView.Family || projection.Family(State.Subject) is { Members.IsEmpty: false })
@@ -59,7 +90,7 @@
             views.Add(View(ExplorationView.Family, "family", "View_Family"));
         }
 
-        if (State.View == ExplorationView.Timeline || projection.Timeline().Subjects.Any(subject => subject.Id == State.Subject))
+        if (State.View == ExplorationView.Timeline || Exploring.HasTimes(projection, State.Subject) || _compared.Count > 0)
         {
             views.Add(View(ExplorationView.Timeline, "timeline", "View_Timeline"));
         }

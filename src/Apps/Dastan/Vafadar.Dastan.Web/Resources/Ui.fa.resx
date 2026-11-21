@@ -3604,7 +3604,7 @@
     <value>نمایش نمودار جابه‌جاشدنی</value>
   </data>
   <data name="Graph_Keys" xml:space="preserve">
-    <value>در نمودار: کلیدهای جهت از یک کارت به کارت کناری می‌روند، Enter نمایهٔ کارت را باز می‌کند، + و − نمودار را بزرگ‌تر و کوچک‌تر می‌کنند، 0 همهٔ آن را نشان می‌دهد و Escape کارت را رها می‌کند. فهرست همین صفحه همین را با واژه می‌گوید.</value>
+    <value>در نمودار: کلیدهای جهت از یک کارت به کارت کناری می‌روند، Enter به آنچه کنار نمودار دربارهٔ کارت نشان داده می‌شود می‌رود، + و − نمودار را بزرگ‌تر و کوچک‌تر می‌کنند، 0 همهٔ آن را نشان می‌دهد و Escape کارت را رها می‌کند. فهرست همین صفحه همین را با واژه می‌گوید.</value>
   </data>
   <data name="Age_Years" xml:space="preserve">
     <value>{0} سال</value>
@@ -3965,5 +3965,38 @@
   </data>
   <data name="Discover_Drawing_Open" xml:space="preserve">
     <value>این پیوندها را بکاوید</value>
+  </data>
+  <data name="Graph_More" xml:space="preserve">
+    <value>بیشتر</value>
+  </data>
+  <data name="Inspector_Close" xml:space="preserve">
+    <value>بستن</value>
+  </data>
+  <data name="Explore_Compare" xml:space="preserve">
+    <value>به مقایسه بیفزا</value>
+  </data>
+  <data name="Explore_Compared" xml:space="preserve">
+    <value>مقایسه با:</value>
+  </data>
+  <data name="Explore_Uncompare" xml:space="preserve">
+    <value>از مقایسه بردار</value>
+  </data>
+  <data name="Explore_CompareTimes" xml:space="preserve">
+    <value>زمان‌ها را کنار هم ببین</value>
+  </data>
+  <data name="Explore_Telling" xml:space="preserve">
+    <value>به ترتیب روایت</value>
+  </data>
+  <data name="Explore_Telling_More" xml:space="preserve">
+    <value>روایت پس از آنچه خوانده‌اید ادامه دارد.</value>
+  </data>
+  <data name="Explore_Next" xml:space="preserve">
+    <value>گام بعد</value>
+  </data>
+  <data name="Explore_Times" xml:space="preserve">
+    <value>زمان‌هایش</value>
+  </data>
+  <data name="Explore_Pictures" xml:space="preserve">
+    <value>تصویرهایش</value>
   </data>
 </root>

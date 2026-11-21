@@ -3604,7 +3604,7 @@
     <value>Show the drawing that can be moved</value>
   </data>
   <data name="Graph_Keys" xml:space="preserve">
-    <value>In the drawing: the arrow keys go from one card to the next, Enter opens the profile of the card, + and − make the drawing larger and smaller, 0 shows the whole of it, and Escape lets go of the card. The list on this page says the same in words.</value>
+    <value>In the drawing: the arrow keys go from one card to the next, Enter goes to what is shown about the card beside the drawing, + and − make the drawing larger and smaller, 0 shows the whole of it, and Escape lets go of the card. The list on this page says the same in words.</value>
   </data>
   <data name="Age_Years" xml:space="preserve">
     <value>{0} years</value>
@@ -3965,5 +3965,38 @@
   </data>
   <data name="Discover_Drawing_Open" xml:space="preserve">
     <value>Explore these connections</value>
+  </data>
+  <data name="Graph_More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="Inspector_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Explore_Compare" xml:space="preserve">
+    <value>Add to the comparison</value>
+  </data>
+  <data name="Explore_Compared" xml:space="preserve">
+    <value>Compared with:</value>
+  </data>
+  <data name="Explore_Uncompare" xml:space="preserve">
+    <value>take out of the comparison</value>
+  </data>
+  <data name="Explore_CompareTimes" xml:space="preserve">
+    <value>Compare the times</value>
+  </data>
+  <data name="Explore_Telling" xml:space="preserve">
+    <value>In the order of the telling</value>
+  </data>
+  <data name="Explore_Telling_More" xml:space="preserve">
+    <value>The telling goes on after what you have read.</value>
+  </data>
+  <data name="Explore_Next" xml:space="preserve">
+    <value>What comes next</value>
+  </data>
+  <data name="Explore_Times" xml:space="preserve">
+    <value>Its times</value>
+  </data>
+  <data name="Explore_Pictures" xml:space="preserve">
+    <value>Its pictures</value>
   </data>
 </root>

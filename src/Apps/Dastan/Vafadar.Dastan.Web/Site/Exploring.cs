@@ -19,4 +19,23 @@ public static class Exploring
         ArgumentNullException.ThrowIfNull(visitor);
         return Exploration.Read(subject, view, visitor.Boundary, context.Request.Query.Select(asked => new KeyValuePair<string, string?>(asked.Key, asked.Value.Count > 0 ? asked.Value[0] : null)));
     }
+
+    /// <summary>
+    /// Returns whether a name has a lane in the chart of time of its collection: something is stated of it
+    /// with a time. That is what a comparison can lay beside others.
+    /// </summary>
+    public static bool HasTimes(Projection? projection, EntityId entity)
+    {
+        return projection?.Timeline().Subjects.Any(subject => subject.Id == entity) ?? false;
+    }
+
+    /// <summary>
+    /// Returns whether a name can be added to the comparison of a state: it is not the one in the middle, not
+    /// compared already, the comparison has room, and the name has something with a time.
+    /// </summary>
+    public static bool CanCompare(Projection? projection, Exploration state, EntityId entity)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        return entity != state.Subject && !state.Compared.Contains(entity) && state.Compared.Length < Exploration.MostCompared && HasTimes(projection, entity);
+    }
 }

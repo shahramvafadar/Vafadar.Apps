@@ -148,10 +148,12 @@
         var view = projection.Timeline();
         if (_of is { } only)
         {
-            // Of one name: what is stated about it, and the pictures that show it.
+            // Of one name: what is stated about it, and the pictures that show it – and, beside it, what is
+            // stated about the names the visitor compares it with (step 20.8), in the order they were added.
+            var beside = _explore?.Compared ?? [];
             view = view with
             {
-                Subjects = [.. view.Subjects.Where(subject => subject.Id == only.Id)],
+                Subjects = [.. view.Subjects.Where(subject => subject.Id == only.Id), .. beside.Select(other => view.Subjects.FirstOrDefault(subject => subject.Id == other)).OfType<Entity>()],
                 Made = [.. view.Made.Where(item => item.DepictedEntities.Contains(only.Id))],
             };
         }
