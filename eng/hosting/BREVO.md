@@ -83,6 +83,16 @@ Completing a password reset retires the account's other reset challenges in the
 same transaction as the password change and session revocation. The worker
 skips the retired challenges on subsequent passes.
 
+The packaged Linux service from `493b1571` was checked in a fresh Compose
+project using its original reverse proxy over loopback HTTPS. Two concurrent
+recovery requests returned HTTP 202 and preserved the original challenge ID,
+expiry and encrypted envelope. A subsequent request queued a fresh challenge
+after the fixture marked the first one delivered. The service ran as UID/GID
+1654 with a read-only root. The project was retired and the receipt remains at
+`artifacts/zanance-packaged-recovery-493b1571/evidence.json`. This checked the
+packaged queue without a provider. Password completion was checked separately
+in the isolated route test.
+
 The original UUID is the batch idempotency key. Its documented 30-minute lifetime
 exceeds the original 15-minute challenge. Only 201 with a nonempty receipt or the
 exact 400 `duplicate_parameter` reply acknowledges provider acceptance. Unknown
