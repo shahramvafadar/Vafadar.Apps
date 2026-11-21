@@ -23,6 +23,67 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Account_objects_remain_hidden_after_io_failure_and_resume_only_the_original_retirement()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_objects_fixture";
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "object-retirement-service"));
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = fixture.ServiceProvider.GetRequiredService<ServiceStorage>();
+        await db.Database.MigrateAsync(ct);
+        var target = new ServiceUser { UserName = "objects-retirement-target@example.invalid" };
+        var other = new ServiceUser { UserName = "objects-retirement-other@example.invalid" };
+        var receipt = Guid.NewGuid();
+        var now = DateTimeOffset.UtcNow;
+        var original = new PrivateObject { Id = Guid.NewGuid(), UserId = target.Id, CreatedAt = now };
+        var blocked = new PrivateObject { Id = Guid.NewGuid(), UserId = target.Id, CreatedAt = now.AddSeconds(1) };
+        var unrelated = new PrivateObject { Id = Guid.NewGuid(), UserId = other.Id, CreatedAt = now };
+        db.Users.AddRange(target, other);
+        db.AccountDeletionRequests.Add(new() { UserId = target.Id, ReceiptId = receipt, RequestedAt = now });
+        db.Objects.AddRange(original, blocked, unrelated);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+        await File.WriteAllBytesAsync(storage.ObjectPath(original.Id), new byte[] { 1, 2, 3 }, ct);
+        await File.WriteAllBytesAsync(storage.ObjectPath(unrelated.Id), new byte[] { 4, 5, 6 }, ct);
+        var blockedPath = storage.ObjectPath(blocked.Id);
+        Directory.CreateDirectory(blockedPath);
+        try
+        {
+            Assert.Equal(AccountPrivateObjectRetirementResult.UnknownReceipt,
+                await AccountPrivateObjectRetirement.RunAsync(db, storage, Guid.NewGuid(), ct));
+            Assert.Equal(3, await db.Objects.CountAsync(row => !row.Deleted, ct));
+            Assert.Equal(AccountPrivateObjectRetirementResult.Pending,
+                await AccountPrivateObjectRetirement.RunAsync(db, storage, receipt, ct));
+            Assert.True(await db.Objects.Where(row => row.UserId == target.Id).AllAsync(row => row.Deleted, ct));
+            Assert.True((await db.Objects.AsNoTracking().SingleAsync(row => row.Id == original.Id, ct)).StorageRetired);
+            Assert.False((await db.Objects.AsNoTracking().SingleAsync(row => row.Id == blocked.Id, ct)).StorageRetired);
+            Assert.False(File.Exists(storage.ObjectPath(original.Id)));
+        }
+        finally { Directory.Delete(blockedPath); }
+        // The blocked directory stood in for an interrupted file operation. The real original file can now retire.
+        await File.WriteAllBytesAsync(blockedPath, new byte[] { 7, 8, 9 }, ct);
+        Assert.Equal(AccountPrivateObjectRetirementResult.Retired,
+            await AccountPrivateObjectRetirement.RunAsync(db, storage, receipt, ct));
+        Assert.False(File.Exists(blockedPath));
+        Assert.True(await db.Objects.Where(row => row.UserId == target.Id).AllAsync(row => row.Deleted && row.StorageRetired, ct));
+        Assert.False((await db.Objects.AsNoTracking().SingleAsync(row => row.Id == unrelated.Id, ct)).Deleted);
+        Assert.Equal(new byte[] { 4, 5, 6 }, await File.ReadAllBytesAsync(storage.ObjectPath(unrelated.Id), ct));
+        Assert.Equal(2, await db.Users.CountAsync(ct));
+        Assert.Equal(receipt, (await db.AccountDeletionRequests.SingleAsync(ct)).ReceiptId);
+    }
+
+    [Fact]
     public async Task Deletion_inventory_scopes_each_record_group_to_the_original_receipt_without_mutation()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");

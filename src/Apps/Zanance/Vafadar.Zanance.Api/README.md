@@ -102,6 +102,17 @@ household membership and historical links, billing, and analysis. A missing
 receipt returns exit code 1. The inventory needs to be revalidated at execution
 and does not determine file, backup, recipient or vendor retention.
 
+For an approved pending request, the private-object stage is
+`--retire-account-objects <receipt-id> --confirm-private-object-retirement`.
+It requires the existing protected service installation. It marks only that
+account's current object manifests deleted in one owner-locked transaction,
+then processes one bounded batch using the ordinary object retirement queue.
+An unavailable file remains pending. A later worker pass or a repeat of the
+same command can resume it. The command reports only the current registered
+object scope. The receipt, identity and other service records remain pending.
+Final account erasure must recheck for new objects under its execution lock
+and handle backups separately.
+
 The browser entry point is `/identity/delete-account` on the service HTTPS
 origin. It uses the current Zanance account password and the service identity
 rate limit. The browser form requires antiforgery validation, returns no-store

@@ -31,11 +31,7 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
         var now = time.GetUtcNow();
         await syncPieces.RunAsync(db, ct);
         await scope.ServiceProvider.GetRequiredService<Sharing.HouseholdRetirement>().RunOnceAsync(ct);
-        foreach (var id in await db.Objects.Where(o => o.Deleted && !o.StorageRetired).OrderBy(o => o.CreatedAt).ThenBy(o => o.Id).Select(o => o.Id).Take(100).ToListAsync(ct))
-        {
-            File.Delete(storage.ObjectPath(id));
-            await db.Objects.Where(o => o.Id == id && o.Deleted).ExecuteUpdateAsync(u => u.SetProperty(o => o.StorageRetired, true), ct);
-        }
+        await AccountPrivateObjectRetirement.RetireFilesAsync(db, storage, db.Objects, ct);
         foreach (var path in Directory.EnumerateFiles(Path.Combine(storage.Root, "objects")).Take(1000))
         {
             if (!Guid.TryParseExact(Path.GetFileName(path), "N", out var id) || File.GetLastWriteTimeUtc(path) >= now.AddDays(-1).UtcDateTime) continue;
