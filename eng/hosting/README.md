@@ -212,6 +212,24 @@ The receipt and retirement evidence is in
 their volumes and networks, and the synthetic snapshot and restore receipt
 were retired. No live deploy, external mail, provider or ledger action ran.
 
+### Linux migration preserves older pending requests (2026-11-21)
+
+The Linux service image built from `0a11729f` has immutable ID
+`sha256:e54a2d4969325e914352d23162f987d724ca473239f37973a9ffdebc164ed1eb`.
+Its packaged `--migrate` ran with a read-only root and UID/GID 1654 on an
+isolated Integration fixture. The database used the earlier packaged schema
+and contained one committed synthetic deletion request without a marker.
+The new image wrote the expected marker as UID/GID 1654 and preserved the
+original identity, receipt and timestamp. The completion table stayed empty.
+
+The first fixture setup was refused before database creation because its
+restricted initializer tried to set the mode after transferring ownership.
+The admitted fixture set the mode first. Its PostgreSQL process, network and
+private volume were retired. Evidence is in
+`artifacts/zanance-legacy-receipts-image-0a11729f`. This was an isolated
+package migration with synthetic data. Production upgrade and activation
+remain separate.
+
 ### Restore startup and operator requirements
 
 An older image is refused before target creation. A capable application refuses
