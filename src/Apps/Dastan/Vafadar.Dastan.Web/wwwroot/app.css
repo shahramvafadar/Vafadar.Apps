@@ -1863,6 +1863,44 @@ span.choice {
   stroke-width: 2;
 }
 
+/* A window in which something happened once: its two ends are stated and nothing between them, so it is drawn
+   open – an edge in the colour of the lane and the ground of the chart inside –, unlike the bar of what lasted. */
+.tl-window {
+  fill: var(--surface);
+  stroke: var(--lane);
+  stroke-width: 2;
+  stroke-dasharray: 4 2;
+}
+
+/* What a still chart cannot say – a depth of time, the order of a telling – as a table of its own axis. */
+.other-axes table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.other-axes caption {
+  padding-block: var(--space-2);
+  font-weight: 600;
+  text-align: start;
+}
+
+.other-axes th,
+.other-axes td {
+  padding: var(--space-2);
+  border-block-end: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.media-own-caption {
+  margin-block-start: var(--space-2);
+}
+
+.gallery-about {
+  margin-block: 0 var(--space-4);
+  border-block-start: 0;
+}
+
 .tl-lane-name {
   display: flex;
   align-items: center;
@@ -3464,6 +3502,11 @@ dastan-timeline,
 .tlv-name {
   fill: var(--text);
   font-size: 0.8rem;
+}
+
+/* A name that had room for its beginning only goes on: three dots, drawn. */
+.tlv-more {
+  fill: var(--text);
 }
 
 .tlv-bar {

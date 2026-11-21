@@ -406,3 +406,11 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   read, as cards. Every fact of the profile, the other names, the sources and what other catalogues call it
   are under "Details and sources", folded until you open it. The page of an account and of a record in a
   family tree say what they are in the same way.
+- The page of a story shows its steps on the timeline of the site: with the script the chart can be moved and made
+  larger, on the axis of the order of the telling – it says nothing of dates or lengths. A chart without the
+  script now draws a window of time as a window, not as a point in its middle; what is counted in a depth of
+  time or in the order of a telling stands under it as a table of its own, and is not put among years.
+- A gallery begins with its pictures; why they are there, the time you can ask for and the order are in one
+  fold above them. Opening a picture and going back returns to the gallery as you left it – the same time, the
+  same order, the same kind. One picture can stand beside somebody and at a step of the story with words for
+  each place; the picture itself, its rights and its sources stay one.

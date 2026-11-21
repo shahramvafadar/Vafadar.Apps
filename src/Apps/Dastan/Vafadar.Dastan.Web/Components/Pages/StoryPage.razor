@@ -78,25 +78,32 @@
             _chart.Lanes.Length < _chart.LaneCount ? _state with { Lanes = _chart.Lanes.Length + 1 == _chart.LaneCount ? null : _chart.Lanes.Length + 1 } : null);
 
         <h2>@T["Story_Chart"]</h2>
-        <p class="note">@T["Story_ChartLead"] @T["Stage_Lead"]</p>
         @if (story.Steps.Any(step => step.Event.Review == ReviewStatus.Disputed))
         {
             <p class="note">@T["Disputed_Legend"]</p>
         }
 
-        <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Story_ChartShown"], Visitor.Number(_chart.First), Visitor.Number(_chart.Last), Visitor.Number(_chart.StepCount), Visitor.Number(_chart.Lanes.Length), Visitor.Number(_chart.LaneCount))</p>
-        if (Visitor.Language.IsRightToLeft)
-        {
-            <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Story_ChartRegion"], title)" Right="earlier" Left="later" Top="heads" Bottom="rows">
-                <StoryLanesChart Chart="_chart" Titles="_state.Titles" Here="@_here" />
-            </ChartStage>
-        }
-        else
-        {
-            <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Story_ChartRegion"], title)" Left="earlier" Right="later" Top="heads" Bottom="rows">
-                <StoryLanesChart Chart="_chart" Titles="_state.Titles" Here="@_here" />
-            </ChartStage>
-        }
+        @* The same steps on the timeline of the site (ADR 0021, step 20.10): with the script the chart becomes a view
+           that is moved and made larger – on the axis of the order of the telling and on no other. The chart of
+           the server stays what a page without the script shows, and what the view can be turned back into; what
+           is said about that chart alone – its marks, how much of it is shown – stands with it. *@
+        <p class="note">@T["Story_OnTimelineLead"]</p>
+        <TimelineLive Timeline="_timeline" Here="@_base">
+            <p class="note">@T["Story_ChartLead"] @T["Stage_Lead"]</p>
+            <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Story_ChartShown"], Visitor.Number(_chart.First), Visitor.Number(_chart.Last), Visitor.Number(_chart.StepCount), Visitor.Number(_chart.Lanes.Length), Visitor.Number(_chart.LaneCount))</p>
+            @if (Visitor.Language.IsRightToLeft)
+            {
+                <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Story_ChartRegion"], title)" Right="earlier" Left="later" Top="heads" Bottom="rows">
+                    <StoryLanesChart Chart="_chart" Titles="_state.Titles" Here="@_here" />
+                </ChartStage>
+            }
+            else
+            {
+                <ChartStage Id="chart" Label="@string.Format(CultureInfo.CurrentCulture, T["Story_ChartRegion"], title)" Left="earlier" Right="later" Top="heads" Bottom="rows">
+                    <StoryLanesChart Chart="_chart" Titles="_state.Titles" Here="@_here" />
+                </ChartStage>
+            }
+        </TimelineLive>
 
         <h3>@T["Story_Legend"]</h3>
         <ul class="legend" role="list">
@@ -130,9 +137,10 @@
                         {
                             <tr>
                                 <th scope="row"><a href="@($"{Site.Collection}/entity/{lane.Entity.Id}")"><Loc Text="lane.Entity.Label" /></a></th>
-                                @foreach (var cell in lane.Cells)
+                                @foreach (var (cell, at) in lane.Cells.Select((cell, at) => (cell, at)))
                                 {
-                                    <td>
+                                    @* A cell that says something is where a mark of the timeline leads to. *@
+                                    <td id="@(cell is null ? null : $"item-{TimelineViews.StoryMark(_lanes.Steps[at], lane.Entity.Id)}")">
                                         @if (cell is not null)
                                         {
                                             <span class="mark" aria-hidden="true">@StoryLanesChart.Mark(cell.Presence)</span>
@@ -153,6 +161,7 @@
     private StoryView? _story;
     private LanesView _lanes = null!;
     private StoryChart _chart = null!;
+    private Timeline _timeline = null!;
     private StoryChartState _state = new();
     private string _here = string.Empty;
     private string _base = string.Empty;
@@ -192,6 +201,7 @@
 
         _base = StoryAddress.Of(Site, Visitor, _story.Story.Id);
         _lanes = Visitor.Projection!.Lanes(_story.Story.Id)!;
+        _timeline = TimelineViews.OfStory(_lanes);
 
         // The chart is cut out of the lanes the visitor may see; the address only says how much of them. What the
         // chart then shows is written back into the state, so that its links never name a step that is not there.

@@ -17,14 +17,20 @@
             <p class="meta"><a href="@_back">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _backName)</a></p>
         }
         <h1>@_title</h1>
-        @* The page says why its items are here (document 15): the rule, not a search the visitor cannot see. *@
-        <p class="lead">@_lead</p>
     </header>
 
     @if (_explore is not null)
     {
         <ExploreBar State="_explore" />
     }
+
+    @* The gallery begins with its pictures (step 20.10). Why they are here, the time that can be asked for and how
+       they are arranged stand in one fold above them – open when the visitor has chosen something there, or when
+       there is nothing to show and the fold says why. *@
+    <details class="fold gallery-about" open="@_open">
+        <summary>@T["Gallery_About"]</summary>
+        @* The page says why its items are here (document 15): the rule, not a search the visitor cannot see. *@
+        <p class="lead">@_lead</p>
 
     @* The gallery of a time (ADR 0021, R-MED-02): what shows a year, a stretch of years or a depth of time. It is
        asked for with a form that asks for a page, by the one reader of a time of the site. *@
@@ -91,6 +97,7 @@
             <p class="note">@T["Gallery_OrderMade"]</p>
         }
     }
+    </details>
 
     @if (!gallery.Items.IsEmpty)
     {
@@ -110,7 +117,7 @@
                     }
                     <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
                     <h2><a href="@viewer"><Loc Text="item.Label" /></a></h2>
-                    <p><Loc Text="item.Caption" /></p>
+                    <p><Loc Text="Caption(item)" /></p>
                     <p class="meta">@T["Media_Made"]: @TimeText.Of(item.Created, Visitor, T)</p>
                     @if (item.Shows is { } shows)
                     {
@@ -221,6 +228,7 @@
     private MediaKind? _kind;
     private IReadOnlyList<MediaKind> _kinds = [];
     private bool _invalid;
+    private bool _open;
     private string _asked = string.Empty;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
@@ -320,7 +328,26 @@
                 _backName = Visitor.Text(overview.Subject.Label).Value;
                 break;
         }
+
+        // What a page of an item needs to lead back here as it is: the place, the time, the order, the kind.
+        var carried = new[]
+        {
+            _context.Length == 0 ? null : _context[1..],
+            _asked.Length == 0 ? null : _asked,
+            _order switch { GalleryOrder.OldestFirst => "order=oldest", GalleryOrder.NewestFirst => "order=newest", _ => null },
+            _kind is { } only ? $"kind={only.ToString().ToLowerInvariant()}" : null,
+        }.Where(part => part is not null).ToList();
+        _context = carried.Count == 0 ? string.Empty : "?" + string.Join('&', carried);
+        _open = _gallery.IsEmpty || _invalid || time is not null || _order != GalleryOrder.Editorial || _kind is not null;
     }
+
+    // The caption of an item in this gallery: the one of the place the gallery is of, where the item has one (R-MED-07).
+    private LocalizedText Caption(MediaItem item) => _gallery switch
+    {
+        { Entity: { } entity } => item.CaptionAt(entity.Id),
+        { Step: { } step } => item.CaptionAt(step.Event.Id),
+        _ => item.Caption,
+    };
 
     private string Address(GalleryOrder order, MediaKind? kind)
     {

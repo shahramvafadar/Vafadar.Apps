@@ -4023,4 +4023,37 @@
   <data name="Entity_Details" xml:space="preserve">
     <value>جزئیات و منبع‌ها</value>
   </data>
+  <data name="Media_OwnCaption" xml:space="preserve">
+    <value>دربارهٔ خودِ تصویر:</value>
+  </data>
+  <data name="Gallery_About" xml:space="preserve">
+    <value>دربارهٔ این نگارخانه – چرا این‌ها، بر پایهٔ زمان، به چه ترتیب</value>
+  </data>
+  <data name="Timeline_Axis_OrderInWorld" xml:space="preserve">
+    <value>ترتیب درونِ جهانِ قصه – نه ترتیبِ بازگفتن، بدون تاریخ و بدون مدت</value>
+  </data>
+  <data name="Chart_OtherAxes" xml:space="preserve">
+    <value>آنچه به جز سال‌های تقویم شمرده شده است</value>
+  </data>
+  <data name="Chart_OtherAxesLead" xml:space="preserve">
+    <value>این نمودار سال‌های تقویم را می‌کشد. ژرفای زمان و ترتیبِ یک روایت محورِ خودشان را دارند؛ هیچ‌چیز از یکی به دیگری تبدیل نمی‌شود، پس این‌جا به شکل جدول می‌آیند، هر کدام به ترتیبِ محورِ خودش.</value>
+  </data>
+  <data name="Chart_Col_Whose" xml:space="preserve">
+    <value>از</value>
+  </data>
+  <data name="Chart_Shape_Window" xml:space="preserve">
+    <value>(یک بار، جایی در این بازه)</value>
+  </data>
+  <data name="Chart_Shape_Lasting" xml:space="preserve">
+    <value>(ادامه داشت)</value>
+  </data>
+  <data name="Story_OnTimeline" xml:space="preserve">
+    <value>گام‌ها روی خط زمان</value>
+  </data>
+  <data name="Story_OnTimelineLead" xml:space="preserve">
+    <value>خط زمانِ زیر گام‌های بازگفتن را می‌شمارد: گام ۲ در بازگفتن پس از گام ۱ می‌آید. دربارهٔ تاریخ‌ها، مدتِ چیزی یا ترتیبِ درونِ جهانِ قصه چیزی نمی‌گوید.</value>
+  </data>
+  <data name="Media_PlaceSources" xml:space="preserve">
+    <value>آنچه پشتوانهٔ نوشتهٔ این‌جاست:</value>
+  </data>
 </root>

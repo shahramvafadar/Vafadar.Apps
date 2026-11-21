@@ -25,6 +25,12 @@ public sealed record TimelineMark(string Key, string Label, decimal At, bool IsA
 {
     /// <summary>Gets whether the sources disagree about the statement; the chart says so.</summary>
     public bool IsDisputed { get; init; }
+
+    /// <summary>Gets where the window begins in which the event happened once, when only a window is stated; the chart draws the window, not a point nobody stated.</summary>
+    public decimal? WindowFrom { get; init; }
+
+    /// <summary>Gets where that window ends.</summary>
+    public decimal? WindowTo { get; init; }
 }
 
 /// <summary>One lane of a timeline: a subject with its periods and its single events.</summary>
@@ -123,7 +129,14 @@ public sealed record PlacedBand(TimelineBand Band, int Lane, int Row, double Sta
 /// <param name="Start">Where its callout begins along the timeline.</param>
 /// <param name="Length">How long the callout is along the timeline.</param>
 /// <param name="Level">The level of the callout; zero is the one next to the axis.</param>
-public sealed record PlacedMark(TimelineMark Mark, int Lane, double At, double Start, double Length, int Level);
+public sealed record PlacedMark(TimelineMark Mark, int Lane, double At, double Start, double Length, int Level)
+{
+    /// <summary>Gets where the window of the event begins along the timeline, for an event of which only a window is stated – cut to the stretch that is shown.</summary>
+    public double? WindowStart { get; init; }
+
+    /// <summary>Gets where that window ends along the timeline.</summary>
+    public double? WindowEnd { get; init; }
+}
 
 /// <summary>A timeline laid out: lengths along the time in the unit of the frame, rows and levels across it as counts.</summary>
 /// <param name="Length">The length of the timeline.</param>
@@ -280,7 +293,11 @@ public static class TimelineLayout
                 }
             }
 
-            placed.Add(new PlacedMark(mark, lane, at, start, extent, level));
+            placed.Add(new PlacedMark(mark, lane, at, start, extent, level)
+            {
+                WindowStart = mark.WindowFrom is { } first ? Math.Clamp(Place(first, frame), 0, length) : null,
+                WindowEnd = mark.WindowTo is { } last ? Math.Clamp(Place(last, frame), 0, length) : null,
+            });
         }
 
         levels = frame.Stacking == MarkStacking.Push ? Math.Min(1, ends.Count) : ends.Count;

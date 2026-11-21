@@ -108,6 +108,30 @@ public sealed class MediaItem
     /// <summary>Gets the events the item shows.</summary>
     public ImmutableArray<EventId> DepictedEvents { get; init; } = [];
 
+    /// <summary>
+    /// Gets the captions the item has in the places it stands in (R-MED-07): the one picture on the page of
+    /// somebody it shows and at a step of a telling, with words for each. A place refers to the item; the item
+    /// is not copied, so its rights, its sources and what it gives away stay one. A place is one of
+    /// <see cref="DepictedEntities"/> or <see cref="DepictedEvents"/>.
+    /// </summary>
+    public ImmutableArray<MediaPlace> Places { get; init; } = [];
+
+    /// <summary>Returns the place the item has beside an entity, when it has words of its own there.</summary>
+    /// <param name="entity">The entity.</param>
+    public MediaPlace? PlaceAt(EntityId entity) => Places.FirstOrDefault(place => place.Entity == entity);
+
+    /// <summary>Returns the place the item has at a step of a telling, when it has words of its own there.</summary>
+    /// <param name="storyEvent">The event of the step.</param>
+    public MediaPlace? PlaceAt(EventId storyEvent) => Places.FirstOrDefault(place => place.Event == storyEvent);
+
+    /// <summary>Returns the caption of the item where it stands with an entity: the one of that place, or its own.</summary>
+    /// <param name="entity">The entity.</param>
+    public LocalizedText CaptionAt(EntityId entity) => Places.FirstOrDefault(place => place.Entity == entity)?.Caption ?? Caption;
+
+    /// <summary>Returns the caption of the item where it stands at a step of a telling: the one of that place, or its own.</summary>
+    /// <param name="storyEvent">The event of the step.</param>
+    public LocalizedText CaptionAt(EventId storyEvent) => Places.FirstOrDefault(place => place.Event == storyEvent)?.Caption ?? Caption;
+
     /// <summary>Gets the relations the item explains.</summary>
     public ImmutableArray<RelationId> RelatedRelations { get; init; } = [];
 
@@ -174,3 +198,13 @@ public sealed class MediaItem
     /// <summary>Gets the credit line the holding institution asks for.</summary>
     public string? CreditLine { get; init; }
 }
+
+/// <summary>
+/// A place a media item stands in with a caption of its own (R-MED-07): beside an entity it shows, or at a
+/// step of a telling it shows. Exactly one of the two is named.
+/// </summary>
+/// <param name="Entity">The entity, for a place beside an entity.</param>
+/// <param name="Event">The event, for a place at a step of a telling.</param>
+/// <param name="Caption">What is said about the item in this place.</param>
+/// <param name="Sources">The sources that support what is said in this place, beyond those of the item itself.</param>
+public sealed record MediaPlace(EntityId? Entity, EventId? Event, LocalizedText Caption, ImmutableArray<SourceId> Sources);

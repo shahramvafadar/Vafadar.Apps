@@ -1343,6 +1343,44 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         var depictedEntities = Ids(record, "depictedEntityIds", required: false);
         var depictedEvents = Ids(record, "depictedEventIds", required: false);
         var relatedRelations = Ids(record, "relatedRelationIds", required: false);
+
+        // A caption of its own in a place the item stands in (R-MED-07): the place names the entity or the event,
+        // which the item says it shows; the item is referred to, not copied.
+        var places = ImmutableArray.CreateBuilder<MediaPlace>();
+        foreach (var place in record.Children("placements", required: false))
+        {
+            var entity = place.Identifier("entityId", required: false);
+            var storyEvent = place.Identifier("eventId", required: false);
+            var words = place.Text("caption");
+            var supports = Ids(place, "sourceIds", required: false);
+            place.Finish();
+            if (words is null || id is null)
+            {
+                continue;
+            }
+
+            if ((entity is null) == (storyEvent is null))
+            {
+                record.Problem("a placement names one entity or one event.");
+            }
+            else if (entity is not null ? !depictedEntities.Contains(entity) : !depictedEvents.Contains(storyEvent!))
+            {
+                record.Problem($"a placement names {entity ?? storyEvent}, which the item does not say it shows.");
+            }
+            else if (places.Any(other => other.Entity?.Value == entity && other.Event?.Value == storyEvent))
+            {
+                record.Problem($"two placements name {entity ?? storyEvent}.");
+            }
+            else
+            {
+                places.Add(new MediaPlace(
+                    entity is null ? null : new EntityId(entity),
+                    storyEvent is null ? null : new EventId(storyEvent),
+                    Localized(words, $"media/{id}/places/{entity ?? storyEvent}"),
+                    [.. supports.Select(source => new SourceId(source))]));
+            }
+        }
+
         var representationKnown = ReadDepictedContext(record.Child("depictedContext"), out var representation, out var representationScope);
         var created = ReadCreation(record.Child("creationDate"));
 
@@ -1510,6 +1548,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
             DepictedEntities = [.. depictedEntities.Select(entity => new EntityId(entity))],
             DepictedEvents = [.. depictedEvents.Select(storyEvent => new EventId(storyEvent))],
             RelatedRelations = [.. relatedRelations.Select(relation => new RelationId(relation))],
+            Places = places.ToImmutable(),
             Sources = [.. sources.Select(source => new SourceId(source))],
             Level = level.Value,
             DemoRenderAllowed = allowed.Value,
@@ -1881,7 +1920,7 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
         new("entities", ["label", "summary"], Facts: true),
         new("relations", ["label"]),
         new("events", ["label", "summary"], Roles: true),
-        new("media", ["label", "caption", "altText"]),
+        new("media", ["label", "caption", "altText"], Places: true),
         new("dated", ["label", "summary"]),
         new("threads", ["label", "summary"], Notes: true),
     ];
@@ -1912,6 +1951,15 @@ internal sealed partial class PilotReader(PilotSampleOptions options, List<strin
                 foreach (var (entity, role) in texts.NamedTexts("roles", required: false))
                 {
                     translation.Add($"{group}/{id}/roles/{entity}", role);
+                }
+            }
+
+            if (translated.Places)
+            {
+                // The captions an item has in its places, by the identifier of the entity or the event (R-MED-07).
+                foreach (var (place, words) in texts.NamedTexts("places", required: false))
+                {
+                    translation.Add($"{group}/{id}/places/{place}", words);
                 }
             }
 

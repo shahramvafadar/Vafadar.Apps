@@ -4023,4 +4023,37 @@
   <data name="Entity_Details" xml:space="preserve">
     <value>Details and sources</value>
   </data>
+  <data name="Media_OwnCaption" xml:space="preserve">
+    <value>Of the picture itself:</value>
+  </data>
+  <data name="Gallery_About" xml:space="preserve">
+    <value>About this gallery – why these, by time, in which order</value>
+  </data>
+  <data name="Timeline_Axis_OrderInWorld" xml:space="preserve">
+    <value>The order inside the world of the story – not the order it is told in, no dates, no lengths</value>
+  </data>
+  <data name="Chart_OtherAxes" xml:space="preserve">
+    <value>Counted otherwise than in years of the calendar</value>
+  </data>
+  <data name="Chart_OtherAxesLead" xml:space="preserve">
+    <value>This chart draws the years of the calendar. A depth of time and the order of a telling have axes of their own; nothing is converted from one into another, so they stand here as tables, each in the order of its axis.</value>
+  </data>
+  <data name="Chart_Col_Whose" xml:space="preserve">
+    <value>Of</value>
+  </data>
+  <data name="Chart_Shape_Window" xml:space="preserve">
+    <value>(once, somewhere in this window)</value>
+  </data>
+  <data name="Chart_Shape_Lasting" xml:space="preserve">
+    <value>(lasted)</value>
+  </data>
+  <data name="Story_OnTimeline" xml:space="preserve">
+    <value>The steps on the timeline</value>
+  </data>
+  <data name="Story_OnTimelineLead" xml:space="preserve">
+    <value>The timeline below counts steps of the telling: step 2 comes after step 1 as it is told. It says nothing of dates, of how long anything took, or of the order inside the world of the story.</value>
+  </data>
+  <data name="Media_PlaceSources" xml:space="preserve">
+    <value>What supports the words of this place:</value>
+  </data>
 </root>

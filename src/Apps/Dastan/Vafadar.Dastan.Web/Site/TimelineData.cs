@@ -26,6 +26,32 @@ public sealed record TimelineData(IReadOnlyList<TimelineViewData> Views, Timelin
     /// <summary>Returns the data as the text a page holds.</summary>
     public string ToJson() => JsonSerializer.Serialize(this, Written);
 
+    /// <summary>Returns the name of a view of an order: of the telling or inside its world, and of which telling when the page says.</summary>
+    /// <param name="view">The view.</param>
+    /// <param name="text">The texts of the site.</param>
+    public static string OrderTitle(TimeView view, IStringLocalizer<Ui> text)
+    {
+        ArgumentNullException.ThrowIfNull(view);
+        ArgumentNullException.ThrowIfNull(text);
+        return text[view.InWorld ? "Timeline_Axis_OrderInWorld" : "Timeline_Axis_Order"];
+    }
+
+    /// <summary>Returns the name of a view: the axis it counts on.</summary>
+    /// <param name="view">The view.</param>
+    /// <param name="visitor">The visitor.</param>
+    /// <param name="text">The texts of the site.</param>
+    public static string Title(TimeView view, Visitor visitor, IStringLocalizer<Ui> text)
+    {
+        ArgumentNullException.ThrowIfNull(view);
+        ArgumentNullException.ThrowIfNull(text);
+        return view.Axis switch
+        {
+            TimeAxis.Depth => string.Format(CultureInfo.CurrentCulture, text["Timeline_Axis_Depth"], TimeText.Year(Vafadar.Temporal.Era.CommonEra, view.Present!.Value, visitor, text)),
+            TimeAxis.Order => OrderTitle(view, text),
+            _ => text["Timeline_Axis_Calendar"],
+        };
+    }
+
     /// <summary>Makes the data of a timeline for a visitor.</summary>
     /// <param name="timeline">The timeline.</param>
     /// <param name="visitor">The visitor.</param>
@@ -44,7 +70,7 @@ public sealed record TimelineData(IReadOnlyList<TimelineViewData> Views, Timelin
                 view.Axis switch
                 {
                     TimeAxis.Depth => string.Format(CultureInfo.CurrentCulture, text["Timeline_Axis_Depth"], TimeText.Year(Vafadar.Temporal.Era.CommonEra, view.Present!.Value, visitor, text)),
-                    TimeAxis.Order => text["Timeline_Axis_Order"],
+                    TimeAxis.Order => TimelineData.OrderTitle(view, text),
                     _ => text["Timeline_Axis_Calendar"],
                 },
                 view.From,

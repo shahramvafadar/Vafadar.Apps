@@ -163,3 +163,36 @@ made up here); a picture in several places with a caption of its own in each (R-
 of an account shows (it has the day it was taken and the day it was brought in); the page of a story on the
 control (it keeps its own chart of the telling); a choice of the calendar by the reader; carrying filters – a
 kind, a stretch of time – from the search to the graph.
+
+## Stories, the still chart and pictures in places (step 20.10)
+
+* **The page of a story is on the control.** `TimelineViews.OfStory` makes one view of the lanes of a telling as
+  the visitor may see them: the axis is the order of the telling, a lane is a name, a mark stands at every step
+  the name has to do with and leads to the cell of the table of the page that says the same. The chart of the
+  server (`StoryLanesChart`) is the still drawing inside `TimelineLive`, as the chart of years is elsewhere.
+* **Four things stay four.** The order of the telling, the order inside the world of a telling, the calendar and
+  the depth of time are axes with no common measure. A view says which it is (`TimeView.InWorld` for the second;
+  until now it was an English word written into the name of the telling), and nothing is converted from one to
+  another: a step has no year, and the order it is told in makes no order inside the world.
+* **The still chart says what the moving one says, or says that it cannot.** A window in which something happened
+  once is drawn as that window, open inside (`TimelineMark.WindowFrom/WindowTo`, `tl-window`) – not as a point at
+  a middle nobody stated. A depth of time and the order of a telling are not drawn on the chart of years; under
+  it they stand as a table for each axis, named as the moving view is named, in the order of that axis, each row
+  leading to the statement. What stands in such a table is no longer listed as "not drawn".
+* **A gallery begins with its pictures.** Why the items are there, the form that asks for a time and the tools of
+  order and kind are one fold (`<details>`) above them, open when the visitor chose something in it or when
+  there is nothing to show. **The way back returns where one was:** the page of an item is opened with the place
+  (entity or step), the time, the order and the kind of the gallery; it believes of them what the projection
+  confirms, leads back to that gallery at that item, and its neighbours are those of that gallery.
+* **One picture in several places (R-MED-07), by reference.** An item may say `placements`: for an entity or a
+  step it says it shows, a caption of that place and, where wanted, sources of that place. The item is not
+  copied – its file, rights, stage and own sources are one. The gallery of an entity or a step, the cards of a
+  profile and the page of the item opened from such a place show the caption of the place, and the page says
+  what is said of the picture itself below it. A translation gives the captions of places under `places`.
+
+**Not built:** the order inside the world of a story of a collection – the reader of a collection accepts a
+step with the order of the telling only, so the page of a story has one view; a comparison file can state the
+other and gets a view of its own. The moving view of a story does not tell "takes part" from "is only
+mentioned" – the still chart, its legend and the table do. The still chart draws no axis of depth: a table says
+it. Themes of a gallery (R-MED-02). The Studio shows `placements` as plain rows and has no input for the
+translation of a caption of a place.

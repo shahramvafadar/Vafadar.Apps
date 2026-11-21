@@ -771,6 +771,12 @@ public sealed class Catalogue
         {
             var name = item.Id.Value;
             CheckSources(name, item.Sources, item.Level);
+            // A place may have sources of its own; without any, what it says rests on the sources of the item.
+            foreach (var place in item.Places.Where(place => !place.Sources.IsEmpty))
+            {
+                CheckSources($"{name}, placed with {place.Entity?.Value ?? place.Event?.Value}", place.Sources, item.Level);
+            }
+
             CheckStage(name, item.Level);
             foreach (var id in item.DepictedEntities)
             {

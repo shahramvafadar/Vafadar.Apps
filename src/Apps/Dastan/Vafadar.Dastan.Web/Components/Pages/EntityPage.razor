@@ -66,7 +66,7 @@
                         }
                         <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
                         <h3><a href="@viewer"><Loc Text="item.Label" /></a></h3>
-                        <p><Loc Text="item.Caption" /></p>
+                        <p><Loc Text="item.CaptionAt(overview.Entity.Id)" /></p>
                     </li>
                 }
                 @foreach (var appearance in overview.Appearances)
