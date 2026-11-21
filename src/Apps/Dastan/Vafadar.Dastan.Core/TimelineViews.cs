@@ -92,6 +92,9 @@ public sealed record TimeView(TimeAxis Axis, decimal From, decimal To, Immutable
     /// <summary>Gets the telling whose order the axis is, for <see cref="TimeAxis.Order"/>.</summary>
     public string? Sequence { get; init; }
 
+    /// <summary>Gets a value indicating whether the order is the one inside the world of the telling, not the order it is told in.</summary>
+    public bool InWorld { get; init; }
+
     /// <summary>Gets the year of the common era a depth of time is counted from, for <see cref="TimeAxis.Depth"/>.</summary>
     public int? Present { get; init; }
 }
@@ -116,7 +119,7 @@ public static class TimelineViews
     {
         ArgumentNullException.ThrowIfNull(comparison);
         var unplaced = ImmutableArray.CreateBuilder<UnplacedItem>();
-        var placed = new List<(TimeAxis Axis, string? Sequence, ComparisonLane Lane, TimeMark Mark)>();
+        var placed = new List<(TimeAxis Axis, string? Sequence, bool InWorld, ComparisonLane Lane, TimeMark Mark)>();
         foreach (var lane in comparison.Lanes)
         {
             foreach (var period in lane.Periods)
@@ -131,7 +134,7 @@ public static class TimelineViews
         }
 
         var views = ImmutableArray.CreateBuilder<TimeView>();
-        foreach (var view in placed.GroupBy(item => (item.Axis, item.Sequence)).OrderBy(group => group.Key.Axis).ThenBy(group => group.Key.Sequence, StringComparer.Ordinal))
+        foreach (var view in placed.GroupBy(item => (item.Axis, item.Sequence, item.InWorld)).OrderBy(group => group.Key.Axis).ThenBy(group => group.Key.Sequence, StringComparer.Ordinal).ThenBy(group => group.Key.InWorld))
         {
             var older = view.Key.Axis == TimeAxis.Depth;
             var lanes = comparison.Lanes
@@ -151,7 +154,7 @@ public static class TimelineViews
                 TimeAxis.Depth => (all.Max(mark => mark.From), all.Min(mark => mark.To)),
                 _ => (all.Min(mark => mark.From), all.Max(mark => mark.To)),
             };
-            views.Add(new TimeView(view.Key.Axis, from, to, lanes) { Sequence = view.Key.Sequence, Present = older ? present : null });
+            views.Add(new TimeView(view.Key.Axis, from, to, lanes) { Sequence = view.Key.Sequence, InWorld = view.Key.InWorld, Present = older ? present : null });
         }
 
         return new(views.ToImmutable(), unplaced.ToImmutable());
@@ -160,7 +163,7 @@ public static class TimelineViews
         {
             if (Mark(key, label, time, present) is { } found)
             {
-                placed.Add((found.Axis, found.Sequence, lane, found.Mark with { IsDisputed = review == ReviewStatus.Disputed }));
+                placed.Add((found.Axis, found.Sequence, found.InWorld, lane, found.Mark with { IsDisputed = review == ReviewStatus.Disputed }));
             }
             else
             {
@@ -169,17 +172,50 @@ public static class TimelineViews
         }
     }
 
+    /// <summary>
+    /// Returns the steps of a telling as a timeline (step 20.10): one view, the order of the telling, with a lane
+    /// for every name and a mark at every step the name has to do with. Nothing but the order is said – a step
+    /// has no date and no length here, and no order inside the world is made of the order it is told in. The
+    /// lanes are those the visitor may see; a step that was not read is not among them.
+    /// </summary>
+    /// <param name="story">The telling as rows of names over its steps.</param>
+    public static Timeline OfStory(LanesView story)
+    {
+        ArgumentNullException.ThrowIfNull(story);
+        var lanes = story.Lanes
+            .Select(lane => new TimeLane(
+                lane.Entity.Id.Value,
+                lane.Entity.Label,
+                [.. story.Steps
+                    .Where((_, index) => lane.Cells[index] is not null)
+                    .Select(step => new TimeMark(StoryMark(step, lane.Entity.Id), step.Event.Label, TimeShape.Moment, step.Number, step.Number, step.Event.Time))]))
+            .Where(lane => !lane.Marks.IsEmpty)
+            .ToImmutableArray();
+        return lanes.IsEmpty
+            ? new([], [])
+            : new([new TimeView(TimeAxis.Order, story.Steps.Min(step => step.Number), story.Steps.Max(step => step.Number), lanes)], []);
+    }
+
+    /// <summary>Returns the key of the mark of a name at a step of a telling; the page names the cell of its table the same.</summary>
+    /// <param name="step">The step.</param>
+    /// <param name="entity">The name.</param>
+    public static string StoryMark(StoryStep step, EntityId entity)
+    {
+        ArgumentNullException.ThrowIfNull(step);
+        return FormattableString.Invariant($"s{step.Number}-{entity}");
+    }
+
     // The mark of a statement and the axis it lies on, or nothing when its time has no place on one axis.
-    private static (TimeAxis Axis, string? Sequence, TimeMark Mark)? Mark(string key, LocalizedText label, TemporalExpression time, int present)
+    private static (TimeAxis Axis, string? Sequence, bool InWorld, TimeMark Mark)? Mark(string key, LocalizedText label, TemporalExpression time, int present)
     {
         switch (time)
         {
             case Occurrence occurrence when Place(occurrence.At, present) is { } at:
-                return (at.Axis, at.Sequence, new TimeMark(key, label, TimeShape.Moment, at.From, at.To, time) { IsLoose = TimePlaces.IsLoose(occurrence.At) });
+                return (at.Axis, at.Sequence, at.InWorld, new TimeMark(key, label, TimeShape.Moment, at.From, at.To, time) { IsLoose = TimePlaces.IsLoose(occurrence.At) });
 
             case OccurrenceWindow window when Place(window.Earliest, present) is { } earliest && Place(window.Latest, present) is { } latest && Same(earliest, latest):
                 // The same time twice is a moment; anything else is the window in which it happened.
-                return (earliest.Axis, earliest.Sequence, new TimeMark(key, label, window.Earliest == window.Latest ? TimeShape.Moment : TimeShape.Window, earliest.From, latest.To, time)
+                return (earliest.Axis, earliest.Sequence, earliest.InWorld, new TimeMark(key, label, window.Earliest == window.Latest ? TimeShape.Moment : TimeShape.Window, earliest.From, latest.To, time)
                 {
                     IsLoose = TimePlaces.IsLoose(window.Earliest) || TimePlaces.IsLoose(window.Latest),
                 });
@@ -214,7 +250,7 @@ public static class TimelineViews
                     PeriodEndState.EndedAtUnknownTime => TimeEdge.EndedAtUnknownTime,
                     _ => TimeEdge.Unknown,
                 };
-                return (known[0].Axis, known[0].Sequence, new TimeMark(key, label, TimeShape.Lasting, from, to, time)
+                return (known[0].Axis, known[0].Sequence, known[0].InWorld, new TimeMark(key, label, TimeShape.Lasting, from, to, time)
                 {
                     Start = start,
                     End = end,
@@ -228,21 +264,23 @@ public static class TimelineViews
         }
     }
 
-    private static bool Same((TimeAxis Axis, string? Sequence, decimal From, decimal To) one, (TimeAxis Axis, string? Sequence, decimal From, decimal To) other) =>
-        one.Axis == other.Axis && one.Sequence == other.Sequence;
+    private static bool Same((TimeAxis Axis, string? Sequence, bool InWorld, decimal From, decimal To) one, (TimeAxis Axis, string? Sequence, bool InWorld, decimal From, decimal To) other) =>
+        one.Axis == other.Axis && one.Sequence == other.Sequence && one.InWorld == other.InWorld;
 
     // Where a position lies, on the axis it is counted on. On the axis of depth a place is a number of years before the present, and the earlier end is the larger.
-    private static (TimeAxis Axis, string? Sequence, decimal From, decimal To)? Place(TimePosition position, int present)
+    private static (TimeAxis Axis, string? Sequence, bool InWorld, decimal From, decimal To)? Place(TimePosition position, int present)
     {
         switch (position)
         {
             case CalendarPosition when YearAxis.Of(position) is { } span:
-                return (TimeAxis.Calendar, null, span.From, span.To);
+                return (TimeAxis.Calendar, null, false, span.From, span.To);
             case AgePosition age:
                 var years = age.Years + (present - (age.Reference.CommonEraYear ?? present));
-                return (TimeAxis.Depth, null, years, years);
+                return (TimeAxis.Depth, null, false, years, years);
             case NarrativePosition step:
-                return (TimeAxis.Order, step.Order == NarrativeOrder.InWorld ? step.Sequence + " (in the world)" : step.Sequence, step.Ordinal, step.Ordinal);
+                // The order of the telling and the order inside the world of the same telling are two axes: a step of
+                // the one says nothing of where the same happening stands in the other.
+                return (TimeAxis.Order, step.Sequence, step.Order == NarrativeOrder.InWorld, step.Ordinal, step.Ordinal);
             default:
                 return null;
         }

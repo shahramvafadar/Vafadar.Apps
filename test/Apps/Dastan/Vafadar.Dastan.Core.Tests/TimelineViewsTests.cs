@@ -190,4 +190,43 @@ public sealed class TimelineViewsTests
         var mark = Only(Of(Lane("east", [Lasting("reign", PeriodStart.At(Bce(550)), PeriodEnd.At(Bce(330)), ReviewStatus.Disputed)])), TimeAxis.Calendar);
         Assert.True(mark.IsDisputed);
     }
+
+    [Fact]
+    public void The_order_of_the_telling_and_the_order_inside_its_world_are_two_views_of_the_same_telling()
+    {
+        var timeline = Of(Lane("hero", [],
+        [
+            Happening("told-third", new Occurrence(Step(3))),
+            Happening("happened-first", new Occurrence(NarrativePosition.Of("story", NarrativeOrder.InWorld, 1))),
+        ]));
+
+        // Two axes with no common measure: neither statement is put on the axis of the other, and the name of
+        // the telling is the name of the telling in both – nothing is written into it.
+        Assert.Equal(
+            [(TimeAxis.Order, "story", false, "told-third"), (TimeAxis.Order, "story", true, "happened-first")],
+            timeline.Views.Select(view => (view.Axis, view.Sequence!, view.InWorld, Assert.Single(Assert.Single(view.Lanes).Marks).Key)));
+        Assert.Empty(timeline.Unplaced);
+    }
+
+    [Fact]
+    public void A_telling_as_a_timeline_is_one_view_of_its_order_with_a_mark_where_a_name_has_to_do_with_a_step()
+    {
+        LanesView Read(int level) => Projection.Of(new SmallStory().Build(), new ReadingLevel(level), Audience.LocalDemonstration)!.Lanes()!;
+        var story = Read(2);
+        var view = Assert.Single(TimelineViews.OfStory(story).Views);
+
+        Assert.Equal((TimeAxis.Order, 1m, 3m, false), (view.Axis, view.From, view.To, view.InWorld));
+        Assert.Equal(["hero", "town", "keepsake", "child"], view.Lanes.Select(lane => lane.Key));
+
+        // The child has to do with the third step alone: one mark, a moment at 3, named as the cell of the table is.
+        var mark = Assert.Single(view.Lanes[3].Marks);
+        Assert.Equal((TimeShape.Moment, 3m, 3m, "s3-child"), (mark.Shape, mark.From, mark.To, mark.Key));
+        Assert.Equal(story.Lanes.Sum(lane => lane.Cells.Count(cell => cell is not null)), view.Lanes.Sum(lane => lane.Marks.Length));
+
+        // Who has read less has a shorter axis and no lane of somebody not met; a telling without steps has no view.
+        var early = Assert.Single(TimelineViews.OfStory(Read(0)).Views);
+        Assert.True(early.To < 3m);
+        Assert.DoesNotContain("child", early.Lanes.Select(lane => lane.Key));
+        Assert.Empty(TimelineViews.OfStory(new LanesView([], [])).Views);
+    }
 }

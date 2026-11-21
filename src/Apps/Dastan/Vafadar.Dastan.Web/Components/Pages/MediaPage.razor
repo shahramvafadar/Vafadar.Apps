@@ -3,6 +3,7 @@
 @inject DastanSite Site
 @inject NavigationManager Navigation
 @inject IStringLocalizer<Ui> T
+@inject TimeProvider Clock
 
 @if (_media is { } media)
 {
@@ -11,7 +12,7 @@
     <PageTitle>@title – @T["Site_Name"]</PageTitle>
 
     <header class="page-header">
-        <p class="meta"><a href="@($"{_galleryAddress}#{item.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _galleryName)</a></p>
+        <p class="meta"><a href="@($"{_galleryAddress}{_galleryAsked}#{item.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Story_Back"], _galleryName)</a></p>
         <h1><Loc Text="item.Label" /></h1>
         @* What kind of picture this is stands above the picture: nobody takes a diagram of today for an old painting. *@
         <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
@@ -44,8 +45,25 @@
                 <a href="@_file">@T["Media_VideoFallback"]</a>
             </video>
         }
-        <figcaption><Loc Text="item.Caption" /></figcaption>
+        @* The caption of the place the visitor came from (R-MED-07): the same picture stands beside somebody it
+           shows and at a step of a telling with words for each. What is said of the picture itself stays below. *@
+        <figcaption><Loc Text="_caption" /></figcaption>
     </figure>
+    @if (!ReferenceEquals(_caption, item.Caption))
+    {
+        <p class="meta media-own-caption">@T["Media_OwnCaption"] <Loc Text="item.Caption" /></p>
+        @if (!_placeSources.IsEmpty)
+        {
+            @* What supports the words of this place, beyond the sources of the picture itself. *@
+            <p class="meta">
+                @T["Media_PlaceSources"]
+                @foreach (var source in _placeSources)
+                {
+                    <a href="@EvidenceAddress.Source(Site.Collection, source.Id, _here)"><Foreign Text="@source.Title" /></a>
+                }
+            </p>
+        }
+    }
 
     @if (_file is not null && item.Kind == MediaKind.Video)
     {
@@ -284,6 +302,9 @@
     private string _galleryAddress = string.Empty;
     private string _galleryName = string.Empty;
     private string _context = string.Empty;
+    private string _galleryAsked = string.Empty;
+    private LocalizedText _caption = null!;
+    private System.Collections.Immutable.ImmutableArray<Source> _placeSources = [];
     private string _here = string.Empty;
     private int? _start;
 
@@ -307,6 +328,18 @@
     /// <summary>Gets or sets the event whose gallery the visitor came from, if the address says so.</summary>
     [SupplyParameterFromQuery(Name = "event")]
     public string? FromEvent { get; set; }
+
+    /// <summary>Gets or sets the order of the gallery the visitor came from: <c>oldest</c> or <c>newest</c>.</summary>
+    [SupplyParameterFromQuery(Name = "order")]
+    public string? Order { get; set; }
+
+    /// <summary>Gets or sets the kind the gallery the visitor came from was narrowed to: <c>image</c> or <c>video</c>.</summary>
+    [SupplyParameterFromQuery(Name = "kind")]
+    public string? Kind { get; set; }
+
+    /// <summary>Gets or sets the time of the gallery the visitor came from, as it was typed.</summary>
+    [SupplyParameterFromQuery(Name = "time")]
+    public string? Time { get; set; }
 
     /// <summary>Gets or sets the moment of a video the address names: seconds, or minutes and seconds with a colon.</summary>
     [SupplyParameterFromQuery(Name = "t")]
@@ -356,6 +389,9 @@
         // The gallery the visitor came from, as far as the address says and the projection confirms it. Anything
         // else – nothing, something hidden, something that does not show this item – is the gallery of the collection.
         var gallery = projection!.Gallery();
+        _caption = item.Caption;
+        var asked = new List<string>();
+        MediaPlace? placed = null;
         _galleryAddress = $"{Site.Collection}/gallery";
         _galleryName = T["Gallery_Title"];
         if (Named(FromEntity) is { } entity && projection.Gallery(new EntityId(entity)) is { Entity: { } subject } ofEntity && ofEntity.Items.Contains(item))
@@ -364,6 +400,8 @@
             _galleryAddress = $"{Site.Collection}/entity/{subject.Id}/gallery";
             _galleryName = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleEntity"], Visitor.Text(subject.Label).Value);
             _context = $"?entity={Uri.EscapeDataString(subject.Id.Value)}";
+            _caption = item.CaptionAt(subject.Id);
+            placed = item.PlaceAt(subject.Id);
         }
         else if (Named(FromEvent) is { } storyEvent && projection.Gallery(new EventId(storyEvent)) is { Step: { } step } ofEvent && ofEvent.Items.Contains(item))
         {
@@ -371,9 +409,48 @@
             _galleryAddress = $"{Site.Collection}/event/{step.Event.Id}/gallery";
             _galleryName = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleStep"], Visitor.Text(step.Event.Label).Value);
             _context = $"?event={Uri.EscapeDataString(step.Event.Id.Value)}";
+            _caption = item.CaptionAt(step.Event.Id);
+            placed = item.PlaceAt(step.Event.Id);
+        }
+        else if (!string.IsNullOrWhiteSpace(Time) && AskedTime.Read(Time) is { } time && projection.Gallery(time, Clock.GetUtcNow().Year) is { } ofTime && ofTime.Items.Contains(item))
+        {
+            // The gallery of a time: the way back leads to the same time (step 20.10).
+            gallery = ofTime;
+            _galleryName = string.Format(CultureInfo.CurrentCulture, T["Gallery_TitleTime"], TimeText.Of(time, Visitor, T));
+            asked.Add("time=" + Uri.EscapeDataString(time.Written));
+        }
+
+        // How the gallery was arranged is kept as well, so that the way back, the one before and the next are
+        // those of the gallery the visitor looked at – as far as this item is in it that way.
+        var order = Order switch { "oldest" => GalleryOrder.OldestFirst, "newest" => GalleryOrder.NewestFirst, _ => GalleryOrder.Editorial };
+        MediaKind? kind = Kind switch { "image" => MediaKind.Image, "video" => MediaKind.Video, _ => null };
+        if (kind is not null && kind != item.Kind)
+        {
+            kind = null;
+        }
+
+        if (order != GalleryOrder.Editorial || kind is not null)
+        {
+            gallery = gallery.Arranged(order, kind);
+            if (order != GalleryOrder.Editorial)
+            {
+                asked.Add(order == GalleryOrder.OldestFirst ? "order=oldest" : "order=newest");
+            }
+
+            if (kind is { } one)
+            {
+                asked.Add("kind=" + one.ToString().ToLowerInvariant());
+            }
+        }
+
+        if (asked.Count > 0)
+        {
+            _galleryAsked = "?" + string.Join('&', asked);
+            _context = _context.Length == 0 ? _galleryAsked : $"{_context}&{string.Join('&', asked)}";
         }
 
         _here = $"{Site.Collection}/media/{item.Id}{_context}";
+        _placeSources = placed is null ? [] : [.. projection.Sources.Where(source => placed.Sources.Contains(source.Id))];
         var at = gallery.Items.IndexOf(item);
         _previous = at > 0 ? gallery.Items[at - 1] : null;
         _next = at >= 0 && at < gallery.Items.Length - 1 ? gallery.Items[at + 1] : null;

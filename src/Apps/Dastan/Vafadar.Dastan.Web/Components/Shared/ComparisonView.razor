@@ -66,11 +66,51 @@ RenderFragment Lanes(string stage) => Steps(
 
 <p class="note">@T["Chart_Legend"] @T["Stage_Lead"]</p>
 
-@if (!_chart.Unplaced.IsEmpty)
+@{
+    // What lies on another axis than the calendar – a depth of time, the order of a telling. The still chart draws
+    // the calendar only and does not put these among its years: no measure leads from a step of a telling to a
+    // year. They stand as a table of their own axis, in its order, and say the same as the moving views (step 20.10).
+    var others = _timeline.Views.Where(view => view.Axis != TimeAxis.Calendar).ToList();
+    var tabled = others.SelectMany(view => view.Lanes).SelectMany(lane => lane.Marks).Select(mark => mark.Key).ToHashSet(StringComparer.Ordinal);
+    var nowhere = _chart.Unplaced.Where(item => !tabled.Contains(item.Key)).ToList();
+}
+
+@if (others.Count > 0)
+{
+    <section class="other-axes" aria-labelledby="other-axes">
+        <h2 id="other-axes">@T["Chart_OtherAxes"]</h2>
+        <p class="note">@T["Chart_OtherAxesLead"]</p>
+        @foreach (var view in others)
+        {
+            <table>
+                <caption>@TimelineData.Title(view, Visitor, T)</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">@T["Chart_Col_Whose"]</th>
+                        <th scope="col">@T["Chart_Col_What"]</th>
+                        <th scope="col">@T["Chart_Col_When"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var (lane, mark) in view.Lanes.SelectMany(lane => lane.Marks.Select(mark => (lane, mark))).OrderBy(row => view.Axis == TimeAxis.Depth ? -row.mark.From : row.mark.From).ThenBy(row => row.mark.Key, StringComparer.Ordinal))
+                    {
+                        <tr>
+                            <th scope="row"><Loc Text="lane.Label" /></th>
+                            <td><a href="@($"{_here}#item-{mark.Key}")"><Loc Text="mark.Label" /></a> @(mark.Shape switch { TimeShape.Window => T["Chart_Shape_Window"].Value, TimeShape.Lasting => T["Chart_Shape_Lasting"].Value, _ => null })</td>
+                            <td>@TimeText.Of(mark.Time, Visitor, T)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </section>
+}
+
+@if (nowhere.Count > 0)
 {
     <p class="note">
         @T["Chart_Unplaced"]
-        @foreach (var item in _chart.Unplaced)
+        @foreach (var item in nowhere)
         {
             <a class="chart-unplaced" href="@($"{_here}#item-{item.Key}")"><Loc Text="item.Label" /></a>
         }

@@ -465,6 +465,7 @@ not say what each has to do with the step.
 | `depictedContext` | `kind` – `later_artwork_of_literary_narrative` or `present_day_explanatory_diagram`; `worldId`; optional `scope`. `calendarDate` is refused: an artwork does not date the story |
 | `creationDate` | When the item was made – see below |
 | `depictedTime` | Optional: the time the item shows, where it shows a time of the world – apart from `creationDate`, and never guessed from it. Written like the `time` of a dated statement (a date of a calendar, a window between two, a depth of time). A step of the telling an item shows is not written here: that is `depictedEventIds`. The gallery of a time finds an item by this time |
+| `placements` | Optional: the places the item stands in with words of their own (R-MED-07). Each names one `entityId` or one `eventId` – one the item lists in `depictedEntityIds` or `depictedEventIds`, each at most once – with a `caption` and optional `sourceIds`. The item is referred to, not copied: where it has no placement its own `caption` is shown |
 | `demoRenderEligibility` | `allowed` – whether a local demonstration shows the item; optional `reason` |
 | `publicRenderEligibility` | Optional: `allowed` – whether the item is shown to everybody in a published revision, a decision of its own; optional `reason`. It needs rights that are `original_project_content` or `verified_open_access_metadata`, and what showing an item needs |
 | `sourceIds`, `spoilerLevel` | As for every record |
@@ -521,6 +522,7 @@ stops in an order a reader can follow: the later the stage, the later the stop.
 | `media` | Identifier → `label`, `caption`, `altText` |
 | `threads` | Identifier → `label`, `summary`, and `notes`: the identifier of what a stop names → the note of that stop |
 | `dated` | Key of a dated statement → `label`, `summary` |
+| `media` … `places` | Inside the texts of an item: the identifier of the entity or the event of a placement → its caption (`"places": { "character-rostam": "…" }`) |
 | `entities` … `facts` | Inside the texts of an entity: the key of a fact → its words (`"facts": { "role": "…" }`) |
 
 Every part is optional. A text that is left out is shown in the language of the collection and marked as such. A

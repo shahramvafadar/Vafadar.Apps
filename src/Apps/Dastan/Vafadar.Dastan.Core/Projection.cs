@@ -106,7 +106,7 @@ public sealed class Projection
         var cited = Entities.SelectMany(entity => entity.Sources.Concat(entity.Dated.SelectMany(dated => dated.Sources)).Concat(entity.Names.SelectMany(name => name.Sources)).Concat(entity.Facts.SelectMany(fact => fact.Sources)))
             .Concat(Relations.SelectMany(relation => relation.Sources))
             .Concat(AllSteps.SelectMany(step => step.Event.Sources))
-            .Concat(Media.SelectMany(item => item.Sources))
+            .Concat(Media.SelectMany(item => item.Sources.Concat(item.Places.SelectMany(place => place.Sources))))
             .ToHashSet();
         Sources = [.. catalogue.Sources.Where(source => cited.Contains(source.Id))];
 

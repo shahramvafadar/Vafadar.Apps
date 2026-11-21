@@ -195,6 +195,25 @@ class TimelineView {
     return ticks.sort((one, other) => one.at - other.at);
   }
 
+  // How long a name is when it is drawn: measured, not guessed from the number of its letters – the letters of
+  // Persian and of English are not equally wide, and a name that stands before its mark must not reach the one
+  // before it. A name is measured once.
+  private readonly lengths = new Map<string, number>();
+
+  private long(label: string): number {
+    let length = this.lengths.get(label);
+    if (length === undefined) {
+      const probe = shape('text', { class: 'tlv-name', x: 0, y: -100, 'unicode-bidi': 'plaintext' }, this.svg);
+      probe.textContent = label;
+      const measured = probe.getComputedTextLength();
+      probe.remove();
+      length = measured > 0 ? measured : label.length * 7.2;
+      this.lengths.set(label, length);
+    }
+
+    return length;
+  }
+
   private draw(): void {
     const width = Math.floor(this.frame.clientWidth);
     if (width < 40) {
@@ -224,8 +243,12 @@ class TimelineView {
         }
 
         const start = Math.max(this.x(first), -40), end = Math.min(Math.max(this.x(last), this.x(first) + 4), this.width + 40);
-        const extent = end + 12 + mark.label.length * 7.2 + 14;
-        let row = ends.findIndex(taken => start >= taken + 8);
+        // A name stands after its mark. Where the view ends before the name would (seen on a phone, step 20.10:
+        // the name then lay over its own mark), it stands before the mark – and the row has to be free that far.
+        const long = this.long(mark.label);
+        const before = mark.shape !== 'lasting' && end + 12 + long > this.width - 4 && start - 10 - long >= 4;
+        const [needs, extent] = before ? [start - 10 - long, end + 14] : [start, end + 12 + long + 14];
+        let row = ends.findIndex(taken => needs >= taken + 8);
         if (row < 0) {
           row = ends.length;
           ends.push(extent);
@@ -234,7 +257,7 @@ class TimelineView {
         }
 
         const y = top + row * rowHeight;
-        rows.push(() => this.mark(mark, start, end, y));
+        rows.push(() => this.mark(mark, start, end, y, before));
       }
 
       top += Math.max(1, ends.length) * rowHeight + laneGap;
@@ -262,7 +285,7 @@ class TimelineView {
     }
   }
 
-  private mark(mark: Mark, start: number, end: number, y: number): void {
+  private mark(mark: Mark, start: number, end: number, y: number, before: boolean): void {
     const link = shape('a', { class: `tlv-mark tlv-${mark.shape}${mark.disputed ? ' tlv-disputed' : ''}${mark.loose ? ' tlv-loose' : ''}`, href: new URL(mark.address, document.baseURI).href, 'aria-label': `${mark.label}: ${mark.when}` }, this.svg);
     link.dataset['key'] = mark.key;
     shape('title', {}, link).textContent = `${mark.label} – ${mark.when}`;
@@ -314,17 +337,46 @@ class TimelineView {
     // The name stands after its mark. Seen in a browser: where the mark runs out of the view at the right, the
     // name was out of sight with it. Then it stands on the part of the bar that is in sight, where that has
     // room for it, and otherwise at the right side of the view.
-    const long = mark.label.length * 7.2;
+    const long = this.long(mark.label);
     const name = shape('text', { class: 'tlv-name', x: textAt, y: middle + 4, 'unicode-bidi': 'plaintext' }, link);
     name.textContent = mark.label;
-    if (textAt + long > this.width - 4) {
+    if (before) {
+      // The row was kept free for it: the name ends where the mark begins.
+      name.setAttribute('x', String(start - 10));
+      name.setAttribute('text-anchor', 'end');
+    } else if (textAt + long > this.width - 4) {
       const [left, right] = [Math.max(start, 0), Math.min(end, this.width)];
       if (mark.shape === 'lasting' && right - left >= long + 12) {
         name.setAttribute('x', String(left + 6));
         name.setAttribute('class', 'tlv-name tlv-name-inside');
-      } else {
+      } else if (mark.shape === 'lasting') {
         name.setAttribute('x', String(this.width - 6));
         name.setAttribute('text-anchor', 'end');
+      } else {
+        // A point or a window with room for its whole name on neither side (a phone, a long name): the name is
+        // shortened on the side that has more room, so that it never lies over its mark. The whole name is what
+        // the mark is called for a screen reader, what its title shows, and what the table of the page says.
+        const [after, ahead] = [this.width - 6 - textAt, start - 14];
+        const room = Math.max(after, ahead);
+        const letters = Math.floor(room / (long / Math.max(mark.label.length, 1)));
+        // What is shown is the beginning of the name as it is, so that somebody who speaks to the device can say
+        // what they see (WCAG 2.5.3); that it goes on is drawn – three dots where the reading would go on –, not
+        // written into the words.
+        // Whole words only: half a word is nothing a reader or a device can match with the name.
+        const cut = mark.label.slice(0, Math.max(letters - 1, 0));
+        name.textContent = cut.includes(' ') ? cut.slice(0, cut.lastIndexOf(' ')).trimEnd() : '';
+        if (ahead > after) {
+          name.setAttribute('x', String(start - 10));
+          name.setAttribute('text-anchor', 'end');
+        }
+
+        if (name.textContent !== '') {
+          const box = name.getBBox();
+          const leftward = /[֐-ࣿיִ-ﻼ]/.test(mark.label);
+          for (const step of [1, 2, 3]) {
+            shape('circle', { class: 'tlv-more', cx: leftward ? box.x - step * 4 : box.x + box.width + step * 4, cy: middle + 3, r: 1.1 }, link);
+          }
+        }
       }
     }
   }

@@ -268,7 +268,17 @@ public static class ComparisonCharts
             {
                 if (Moment(single.Time) is { } moment)
                 {
-                    marks.Add(new TimelineMark(single.Key, callout?.Invoke(single) ?? text(single.Label), moment.At, moment.Approximate) { IsDisputed = single.Review == ReviewStatus.Disputed });
+                    // Of a window only the window is stated: its two ends go with the mark, and the chart draws them.
+                    var window = single.Time is OccurrenceWindow { } between && between.Earliest != between.Latest
+                        && YearAxis.Of(between.Earliest) is { } opens && YearAxis.Of(between.Latest) is { } closes
+                        ? (From: opens.From, To: closes.To)
+                        : ((decimal From, decimal To)?)null;
+                    marks.Add(new TimelineMark(single.Key, callout?.Invoke(single) ?? text(single.Label), moment.At, moment.Approximate)
+                    {
+                        IsDisputed = single.Review == ReviewStatus.Disputed,
+                        WindowFrom = window?.From,
+                        WindowTo = window?.To,
+                    });
                 }
                 else
                 {

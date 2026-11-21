@@ -300,7 +300,7 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         var lanes = projection.Lanes()!;
         var table = Regex.Match(page.Html, "<tbody>.*?</tbody>", RegexOptions.Singleline).Value;
         Assert.Equal(lanes.Lanes.Length, Regex.Matches(table, "<tr>").Count);
-        Assert.Equal(lanes.Lanes.Length * lanes.Steps.Length, Regex.Matches(table, "<td>").Count);
+        Assert.Equal(lanes.Lanes.Length * lanes.Steps.Length, Regex.Matches(table, "<td[ >]").Count);
         Assert.Equal(projection.Steps.Sum(step => step.Event.Associations.Length), Regex.Matches(table, "class=\"mark\"").Count);
         Assert.Equal(projection.Steps.Sum(step => step.Event.Associations.Length), Regex.Matches(page.Html, "<ul class=\"participants\".*?</ul>", RegexOptions.Singleline).Sum(list => Regex.Matches(list.Value, "<li>").Count));
         Assert.Equal(level < 4, page.Text.Contains(language == "en" ? "The story continues beyond this point." : "قصه پس از این نقطه ادامه دارد.", StringComparison.Ordinal));
@@ -315,7 +315,7 @@ public sealed class FamilyAndStoryPageTests(DemoSite site) : IClassFixture<DemoS
         var page = await visitor.Get($"/en/{Story}/story");
         var step = Regex.Match(page.Html, "id=\"step-3\">.*?</ul>", RegexOptions.Singleline).Value;
         var lane = Regex.Match(page.Html, "<tr><th scope=\"row\"><a href=\"[^\"]*character-rostam\">.*?</tr>", RegexOptions.Singleline).Value;
-        var cells = Regex.Matches(lane, "<td>(.*?)</td>", RegexOptions.Singleline).Select(match => WebUtility.HtmlDecode(match.Groups[1].Value)).ToList();
+        var cells = Regex.Matches(lane, "<td[^>]*>(.*?)</td>", RegexOptions.Singleline).Select(match => WebUtility.HtmlDecode(match.Groups[1].Value)).ToList();
 
         Assert.Matches("character-rostam\"><bdi>Rostam</bdi></a>\\s*<span class=\"role\"><bdi>father identified in the explanation</bdi></span>\\s*<span class=\"presence\">is only mentioned, not present</span>", step);
         Assert.Equal(4, cells.Count);

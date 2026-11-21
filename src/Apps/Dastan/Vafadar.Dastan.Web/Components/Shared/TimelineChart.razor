@@ -61,7 +61,15 @@
 
         @foreach (var mark in Drawing.Marks)
         {
-            <circle class="tl-dot @Colour(mark.Lane)" cx="@Em(Pad + mark.At)" cy="@Em(LaneTop(Drawing.Lanes[mark.Lane]) + LanePad)" r="0.3em" />
+            @if (mark is { WindowStart: { } opens, WindowEnd: { } closes } && closes > opens)
+            {
+                @* A window in which it happened once (ADR 0021): the window itself, open inside – not a point at a middle nobody stated. *@
+                <rect class="tl-window @Colour(mark.Lane)" x="@Em(Pad + opens)" y="@Em(LaneTop(Drawing.Lanes[mark.Lane]) + LanePad - 0.3)" width="@Em(closes - opens)" height="0.6em" rx="0.3em" />
+            }
+            else
+            {
+                <circle class="tl-dot @Colour(mark.Lane)" cx="@Em(Pad + mark.At)" cy="@Em(LaneTop(Drawing.Lanes[mark.Lane]) + LanePad)" r="0.3em" />
+            }
             <foreignObject x="@Em(Pad + mark.Start)" y="@Em(CalloutTop(mark))" width="@Em(mark.Length)" height="@Em(CalloutHeight - 0.35)">
                 <a class="tl-callout@(mark.Mark.IsDisputed ? " tl-disputed" : null) @Colour(mark.Lane)" href="@($"{Here}#item-{mark.Mark.Key}")" title="@($"{Drawing.Lanes[mark.Lane].Lane.Label}: {mark.Mark.Label}" + (mark.Mark.IsDisputed ? $" – {T["Disputed_Mark"]}" : null))" dir="@Visitor.Language.Direction">@mark.Mark.Label</a>
             </foreignObject>

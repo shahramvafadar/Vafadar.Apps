@@ -69,7 +69,14 @@
                     if (mark.Lane == index)
                     {
                         <line class="tl-leader @Colour(mark.Lane)" x1="@Em(LaneWidth(lane) - 0.35)" y1="@Em(Pad + mark.At)" x2="100%" y2="@Em(Pad + mark.At)" />
-                        <circle class="tl-dot @Colour(mark.Lane)" cx="@Em(LaneWidth(lane) - 0.35)" cy="@Em(Pad + mark.At)" r="0.3em" />
+                        @if (mark is { WindowStart: { } opens, WindowEnd: { } closes } && closes > opens)
+                        {
+                            <rect class="tl-window @Colour(mark.Lane)" x="@Em(LaneWidth(lane) - 0.65)" y="@Em(Pad + opens)" width="0.6em" height="@Em(closes - opens)" rx="0.3em" />
+                        }
+                        else
+                        {
+                            <circle class="tl-dot @Colour(mark.Lane)" cx="@Em(LaneWidth(lane) - 0.35)" cy="@Em(Pad + mark.At)" r="0.3em" />
+                        }
                     }
                     else
                     {

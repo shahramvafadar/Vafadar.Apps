@@ -9,7 +9,7 @@ namespace Vafadar.Dastan.Web.Tests;
 /// media of the sample: the illustration shows the year 1020, the video a time between 600 and 500 BCE, and a
 /// picture that is only named with the museum that holds it shows the year 1020 too. All were made later.
 /// </summary>
-public sealed class ShownTimeSite : DatedSite
+public class ShownTimeSite : DatedSite
 {
     /// <summary>Gets the identifiers of the media the tests wrote a time on, in the order of the collection.</summary>
     public IReadOnlyList<string> Media { get; private set; } = [];

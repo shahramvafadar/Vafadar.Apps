@@ -252,4 +252,55 @@ public sealed class StoryChartBrowserTests(BrowserSite site) : IClassFixture<Bro
         await Arrived(page, new Regex("to=7#chart$"));
         await Assertions.Expect(page.Locator(".sc-head")).ToHaveCountAsync(7);
     }
+
+    [Theory]
+    [InlineData("en", 1280, false)]
+    [InlineData("fa", 390, true)]
+    public async Task With_the_script_the_steps_stand_on_the_timeline_of_the_site_and_the_chart_of_the_server_comes_back_when_asked(string language, int width, bool dark)
+    {
+        // The timeline of the site (step 20.10): one view, the order of the telling, a mark for every cell of the table.
+        var page = await site.Visitor(width, readTo: 4, dark: dark, graph: true);
+        await page.GotoAsync($"/{language}/{Address}");
+        var host = page.Locator("dastan-timeline");
+        await Assertions.Expect(host).ToHaveAttributeAsync("data-state", "live", new() { Timeout = 30_000 });
+
+        await Assertions.Expect(host.Locator(".tlv-view")).ToHaveCountAsync(1);
+        Assert.Equal("order", await host.Locator(".tlv-view").EvaluateAsync<string>("view => view.dataset.axis"));
+        var cells = await page.Locator("td[id^='item-s']").CountAsync();
+        Assert.True(cells > 0);
+        await Assertions.Expect(host.Locator("a.tlv-mark")).ToHaveCountAsync(cells);
+        await Assertions.Expect(page.Locator(".stage")).ToBeHiddenAsync();
+        Assert.False(await ScrollsSideways(page), "The page scrolls sideways.");
+
+        // No name lies over its own mark, however narrow the view and however long the name (seen on a phone).
+        var over = await host.Locator("a.tlv-mark").EvaluateAllAsync<int>(
+            """
+            marks => marks.filter(mark => {
+                const [point, name] = [mark.querySelector('.tlv-point, .tlv-bar'), mark.querySelector('.tlv-name')];
+                if (!point || !name || name.textContent === '') return false;
+                const [a, b] = [point.getBoundingClientRect(), name.getBoundingClientRect()];
+                return a.left < b.right - 1 && b.left < a.right - 1;
+            }).length
+            """);
+        Assert.Equal(0, over);
+
+        // A mark leads to the cell that says the same.
+        var first = await host.Locator("a.tlv-mark").First.EvaluateAsync<string>("mark => mark.getAttribute('href')");
+        Assert.Matches("#item-s\\d+-", first);
+        await Assertions.Expect(page.Locator("#" + first[(first.IndexOf('#', StringComparison.Ordinal) + 1)..])).ToHaveCountAsync(1);
+
+        var result = await page.RunAxe(new AxeRunOptions
+        {
+            RunOnly = new RunOnlyOptions { Type = "tag", Values = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"] },
+        });
+        Assert.True(
+            result.Violations.Length == 0,
+            string.Join(Environment.NewLine, result.Violations.Select(violation =>
+                $"{violation.Id} ({violation.Impact}): {violation.Help} – {string.Join(" | ", violation.Nodes.Select(node => node.Html))}")));
+
+        // The chart of the server is one press away, with its sides.
+        await host.Locator("[data-timeline-to-still]").ClickAsync();
+        await Assertions.Expect(page.Locator(".stage")).ToBeVisibleAsync();
+        await Assertions.Expect(page.Locator(".sc-head")).ToHaveCountAsync(8);
+    }
 }
