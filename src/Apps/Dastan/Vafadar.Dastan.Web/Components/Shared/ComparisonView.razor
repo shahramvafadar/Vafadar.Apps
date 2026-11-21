@@ -216,7 +216,14 @@ RenderFragment Lanes(string stage) => Steps(
         return TimeText.Year(era, year, Visitor, T);
     }
 
-    private string AddressOf(ChartState state) => $"{Address}{state.Query()}";
+    private string AddressOf(ChartState state) => Carry is null ? $"{Address}{state.Query()}" : Carry($"{Address}{state.Query()}");
+
+    /// <summary>
+    /// Gets or sets what adds to an address of the chart what the page carries beside the state of the chart
+    /// (step 20.6): the state of exploring. Without it an address is the chart and its state.
+    /// </summary>
+    [Parameter]
+    public Func<string, string>? Carry { get; set; }
 
     // The chart with another stretch of time; nothing when less than a step would be left of it or when it would
     // leave what an address can name. The stretch the comparison is about is not written into an address.

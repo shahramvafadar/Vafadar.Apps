@@ -12,8 +12,9 @@
     <header class="page-header">
         <p class="meta"><TypeName Type="view.Focus.Type" /></p>
         <h1>@string.Format(CultureInfo.CurrentCulture, T["Connections_Title"], name)</h1>
-        <p class="meta"><a href="@($"{Site.Collection}/entity/{view.Focus.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Graph_ToEntity"], name)</a></p>
     </header>
+
+    <ExploreBar State="_explore" />
 
     @if (view.Edges.IsEmpty)
     {
@@ -46,7 +47,15 @@
             <ul class="statements" role="list">
                 @foreach (var edge in view.Edges)
                 {
-                    <li><Statement Relation="edge" Self="view.Focus.Id" Evidence="true" From="@_here" /></li>
+                    var other = edge.From.Id == view.Focus.Id ? edge.To : edge.From;
+                    <li>
+                        <Statement Relation="edge" Self="view.Focus.Id" Evidence="true" From="@_here" />
+                        @if (other.Id != view.Focus.Id && other.Id != _explore.Chosen)
+                        {
+                            @* Choosing looks at the other one closer and leaves the drawing as it is (ADR 0025). *@
+                            <a class="choose" href="@($"{Site.Collection}/{_explore.Choose(other.Id).Address(ExplorationView.Connections)}#chosen")">@T["Explore_Choose"]<span class="visually-hidden"> – @Visitor.Text(other.Label).Value</span></a>
+                        }
+                    </li>
                 }
             </ul>
         </section>
@@ -58,6 +67,11 @@
     private ConnectionsChart _chart = null!;
     private IReadOnlyList<EntityId> _open = [];
     private string _here = string.Empty;
+    private Exploration _explore = null!;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -86,8 +100,11 @@
             return;
         }
 
+        _explore = Exploring.Of(Context, Visitor, _view.Focus.Id, ExplorationView.Connections);
+
         // Only what is really open stays in the links of the page.
         _open = [.. _view.Expanded.Select(entity => entity.Id)];
+        _explore = _explore.Opened(_open);
 
         // Where this page stands, with what is open on it: the sources of a relation return here.
         _here = Address(_view.Focus.Id, _open);
@@ -97,7 +114,11 @@
     private string Address(EntityId focus, IEnumerable<EntityId> open)
     {
         var boxes = string.Join(',', open.Select(id => id.Value).Distinct());
-        return $"{Site.Collection}/entity/{focus}/connections{(boxes.Length > 0 ? $"?open={boxes}" : null)}";
+        var address = $"{Site.Collection}/entity/{focus}/connections{(boxes.Length > 0 ? $"?open={boxes}" : null)}";
+
+        // A step in the drawing of the same name keeps what the other views were told and what is chosen;
+        // another name in the middle is another exploring, with the manner of looking and nothing else.
+        return focus == _explore.Subject ? _explore.Carry(address) : _explore.Centre(focus).Carry(address);
     }
 
     // The steps of a side: one further opens what the chart says can be opened there, one back closes it again.

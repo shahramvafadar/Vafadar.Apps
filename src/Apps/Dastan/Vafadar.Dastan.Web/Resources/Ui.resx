@@ -3918,4 +3918,49 @@
   <data name="View_Pictures" xml:space="preserve">
     <value>Pictures</value>
   </data>
+  <data name="View_Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="View_Family" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="Explore_Label" xml:space="preserve">
+    <value>Views of this</value>
+  </data>
+  <data name="Explore_Chosen" xml:space="preserve">
+    <value>Chosen:</value>
+  </data>
+  <data name="Explore_Choose" xml:space="preserve">
+    <value>Look closer</value>
+  </data>
+  <data name="Explore_Centre" xml:space="preserve">
+    <value>Put in the middle</value>
+  </data>
+  <data name="Explore_Profile" xml:space="preserve">
+    <value>The whole profile</value>
+  </data>
+  <data name="Explore_Unchoose" xml:space="preserve">
+    <value>Choose nothing</value>
+  </data>
+  <data name="Explore_Aside" xml:space="preserve">
+    <value>Not left out in this view:</value>
+  </data>
+  <data name="Explore_Aside_And" xml:space="preserve">
+    <value>, </value>
+  </data>
+  <data name="Explore_Aside_End" xml:space="preserve">
+    <value>. It is kept for the view it belongs to.</value>
+  </data>
+  <data name="Explore_Filter_Years" xml:space="preserve">
+    <value>the years you chose</value>
+  </data>
+  <data name="Explore_Filter_WithoutEvents" xml:space="preserve">
+    <value>the events you hid</value>
+  </data>
+  <data name="Explore_Filter_FewerLanes" xml:space="preserve">
+    <value>the rows you closed</value>
+  </data>
+  <data name="Explore_Filter_KindOfPicture" xml:space="preserve">
+    <value>the kind of picture you chose</value>
+  </data>
 </root>

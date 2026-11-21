@@ -31,6 +31,7 @@ the whole repository are in [`docs/adr`](../../../../../docs/adr/README.md); the
 | [0022](0022-locks.md) | Every act that looks before it writes holds the locks of what it looks at, in one order | Accepted; step 20.2 |
 | [0023](0023-institutions.md) | A place somebody was at is an entity of a collection when they choose one, and a time there is a stretch of its own | Accepted; step 20.4 |
 | [0024](0024-parts.md) | The frame of the site – the main ways, the account, language and appearance behind one control, a bar at the foot of a phone – and the parts every page is made of | Accepted for the structure; step 20.5 |
+| [0025](0025-exploring.md) | One state of exploring – what is explored, the view, what is chosen, what each view was told – read from the address and known to no renderer | Accepted; step 20.6 |
 
 Related repository decisions: [0011](../../../../../docs/adr/0011-languages-per-app.md) (languages per app),
 [0012](../../../../../docs/adr/0012-temporal-model.md) (stated time), [0013](../../../../../docs/adr/0013-web-library.md) (the web library).

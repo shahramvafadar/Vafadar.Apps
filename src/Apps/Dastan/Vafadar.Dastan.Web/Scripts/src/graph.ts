@@ -11,6 +11,7 @@ import {
   NodeConstraints, type NodeModel, type PointPortModel, PortVisibility, PrintAndExport, Size, SnapConstraints, StackPanel, TextElement,
 } from '@syncfusion/ej2-diagrams';
 import { registerLicense, Telemetry } from '@syncfusion/ej2-base';
+import { carry, explores, said } from './explore';
 
 // Found in a browser (step 19.8): the control comes with a count of its use that it sends to a host of its
 // maker (Application Insights) when a page runs at an address of development. Dastan sends nothing about a
@@ -269,6 +270,12 @@ class DastanGraph {
     this.diagram.fitToPage({ mode: 'Page', region: 'Content', canZoomIn: false, margin: { left: 24, right: 24, top: 24, bottom: 24 } });
     this.oneStop();
     this.keys();
+
+    // What the address says is chosen (ADR 0025) is chosen in the drawing as it is on the page of the server.
+    const chosen = explores() ? this.keyOf.get(said('sel') ?? '') : undefined;
+    if (chosen) {
+      this.choose(chosen);
+    }
   }
 
   // The keyboard of ADR 0020: the drawing is one stop of Tab. Nothing inside it takes the focus by itself.
@@ -286,6 +293,17 @@ class DastanGraph {
   private say(key: string | null): void {
     const node = this.node(key);
     this.selected = node ? key : null;
+
+    // What is chosen is part of the state of exploring (ADR 0025): it goes into the address and into the links
+    // of the views, and what the page of the server said was chosen is taken away when it is no longer so.
+    // What stands in the middle is not chosen in itself.
+    const chosenNow = node && node.id !== this.graph.focus ? node.id : null;
+    carry('sel', chosenNow);
+    const written = document.querySelector<HTMLElement>('[data-explore-chosen]');
+    if (written && written.dataset['exploreChosen'] !== chosenNow) {
+      written.remove();
+    }
+
     const said = this.host.querySelector<HTMLElement>('[data-graph-said]');
     const open = this.host.querySelector<HTMLButtonElement>('[data-graph-profile]');
     if (open) {

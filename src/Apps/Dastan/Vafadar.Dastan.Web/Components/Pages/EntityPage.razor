@@ -54,6 +54,8 @@
         <SaveControl Kind="SavedKind.Entity" Id="@overview.Entity.Id.Value" />
     </header>
 
+    <ExploreBar State="_explore" />
+
     @if (_profile is { } profile)
     {
         @* The profile (step 19.5, ADR 0017): the picture this visitor may see, or the drawing of the kind, and
@@ -130,10 +132,10 @@
                 }
             </ul>
             <p class="actions">
-                <a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/connections")">@T["Entity_ToGraph"]</a>
+                <a class="action secondary" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Connections)}")">@T["Entity_ToGraph"]</a>
                 @if (_hasFamily)
                 {
-                    <a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/family")">@T["Entity_ToFamily"]</a>
+                    <a class="action secondary" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Family)}")">@T["Entity_ToFamily"]</a>
                 }
             </p>
         }
@@ -168,7 +170,7 @@
 
     @if (_hasMedia)
     {
-        <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/entity/{overview.Entity.Id}/gallery")">@T["Gallery_Title"]</a></p>
+        <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Pictures)}")">@T["Gallery_Title"]</a></p>
     }
 
     @if (!overview.Entity.Identifiers.IsEmpty)
@@ -226,6 +228,10 @@
     private bool _hasMedia;
     private System.Collections.Immutable.ImmutableArray<ThreadOnward> _onward = [];
     private string _here = string.Empty;
+    private Exploration _explore = null!;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -247,6 +253,7 @@
         }
 
         _here = $"{Site.Collection}/entity/{_entity.Entity.Id}";
+        _explore = Exploring.Of(Context, Visitor, _entity.Entity.Id, ExplorationView.Overview);
         _profile = Visitor.Projection!.Profile(_entity.Entity.Id);
         _hasFamily = !Visitor.Projection!.Family(_entity.Entity.Id)!.Members.IsEmpty;
         _hasMedia = !Visitor.Projection.Gallery(_entity.Entity.Id)!.IsEmpty;

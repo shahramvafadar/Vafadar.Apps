@@ -1,0 +1,78 @@
+@* The bar of exploring one thing (step 20.6, ADR 0025): what is explored, the views of it this visitor has –
+   each led to with everything the state says, so that a view is found as it was left –, what is chosen, and
+   what was left out elsewhere and is shown here. It is the same on the page of every view. No script: a view
+   is a page, choosing is a link. The script of a drawing keeps the links in step with what it shows. *@
+@inject Visitor Visitor
+@inject DastanSite Site
+@inject IStringLocalizer<Ui> T
+
+@if (_subject is { } subject)
+{
+    <ViewBar Label="@T["Explore_Label"]" Views="_views">
+        <Where><a href="@Address(State, ExplorationView.Overview)"><Loc Text="subject.Label" /></a></Where>
+    </ViewBar>
+    @if (_chosen is { } chosen)
+    {
+        @* What is chosen is looked at closer without leaving; putting it in the middle is an act of its own. *@
+        var name = Visitor.Text(chosen.Label).Value;
+        <div class="explore-chosen" id="chosen" data-explore-chosen="@chosen.Id">
+            <p><span class="meta">@T["Explore_Chosen"]</span> <strong><Loc Text="chosen.Label" /></strong> <span class="meta">– <TypeName Type="chosen.Type" /></span></p>
+            <p class="actions">
+                <a class="action secondary" href="@Address(State.Centre(chosen.Id), State.View)">@T["Explore_Centre"]<span class="visually-hidden"> – @name</span></a>
+                <a class="action secondary" href="@Address(State.Centre(chosen.Id), ExplorationView.Overview)">@T["Explore_Profile"]<span class="visually-hidden"> – @name</span></a>
+                <a class="action secondary" href="@Address(State.Choose(null), State.View)">@T["Explore_Unchoose"]<span class="visually-hidden"> – @name</span></a>
+            </p>
+        </div>
+    }
+    @if (!State.SetAside.IsEmpty)
+    {
+        @* Nothing the visitor asked for is dropped in silence: this view shows more than they asked, and says so. *@
+        <p class="note explore-aside" role="status">@T["Explore_Aside"] @string.Join(T["Explore_Aside_And"], State.SetAside.Select(filter => T[$"Explore_Filter_{filter}"].Value))@T["Explore_Aside_End"]</p>
+    }
+}
+
+@code {
+    private Entity? _subject;
+    private Entity? _chosen;
+    private IReadOnlyList<ViewBar.View> _views = [];
+
+    /// <summary>Gets or sets the state of exploring, read from the address of the page.</summary>
+    [Parameter, EditorRequired]
+    public Exploration State { get; set; } = null!;
+
+    protected override void OnParametersSet()
+    {
+        var projection = Visitor.Projection;
+        _subject = projection?.Find(State.Subject);
+        if (projection is null || _subject is null)
+        {
+            return;
+        }
+
+        // What is chosen is shown when this visitor may see it; a name of anything else is as good as none.
+        _chosen = State.Chosen is { } chosen ? projection.Find(chosen) : null;
+
+        // A view the thing does not have for this visitor is not offered – except the one that is shown.
+        var views = new List<ViewBar.View> { View(ExplorationView.Overview, "overview", "View_Overview"), View(ExplorationView.Connections, "connections", "View_Connections") };
+        if (State.View == ExplorationView.Family || projection.Family(State.Subject) is { Members.IsEmpty: false })
+        {
+            views.Add(View(ExplorationView.Family, "family", "View_Family"));
+        }
+
+        if (State.View == ExplorationView.Timeline || projection.Timeline().Subjects.Any(subject => subject.Id == State.Subject))
+        {
+            views.Add(View(ExplorationView.Timeline, "timeline", "View_Timeline"));
+        }
+
+        if (State.View == ExplorationView.Pictures || projection.Gallery(State.Subject) is { IsEmpty: false })
+        {
+            views.Add(View(ExplorationView.Pictures, "pictures", "View_Pictures"));
+        }
+
+        _views = views;
+    }
+
+    private string Address(Exploration state, ExplorationView view) => $"{Site.Collection}/{state.Address(view)}";
+
+    private ViewBar.View View(ExplorationView view, string icon, string name) => new(icon, T[name], Address(State, view), State.View == view);
+}

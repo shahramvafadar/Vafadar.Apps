@@ -12,8 +12,9 @@
     <header class="page-header">
         <p class="meta"><TypeName Type="_entity.Type" /></p>
         <h1>@string.Format(CultureInfo.CurrentCulture, T["Family_Title"], name)</h1>
-        <p class="meta"><a href="@($"{Site.Collection}/entity/{_entity.Id}")">@string.Format(CultureInfo.CurrentCulture, T["Graph_ToEntity"], name)</a></p>
     </header>
+
+    <ExploreBar State="_explore" />
 
     @if (family.Members.IsEmpty)
     {
@@ -108,6 +109,11 @@
     private FamilyTree _tree = null!;
     private TreeState _state = new();
     private string _here = string.Empty;
+    private Exploration _explore = null!;
+
+    [CascadingParameter]
+    private HttpContext Context { get; set; } = null!;
+
 
     /// <summary>Gets or sets the name of the collection in the address.</summary>
     [Parameter]
@@ -155,11 +161,12 @@
         }
 
         _entity = Visitor.Projection!.Find(id!.Value)!;
+        _explore = Exploring.Of(Context, Visitor, _entity.Id, ExplorationView.Family);
         _here = Address(_state);
         _tree = FamilyTreeLayout.Of(_family, text => Visitor.Text(text).Value);
     }
 
-    private string Address(TreeState state) => $"{Site.Collection}/entity/{_entity.Id}/family{state.Query()}";
+    private string Address(TreeState state) => _explore.Carry($"{Site.Collection}/entity/{_entity.Id}/family{state.Query()}");
 
     // A choice of several: the one that is on says so and leads nowhere else.
     private RenderFragment Choice(TreeState state, string name) => state == _state
