@@ -188,7 +188,10 @@ independent room marker is retained.
 It removes the original service
 identity, sessions and pending request together. The completion record
 retains only the opaque receipt and timestamp, so an ambiguous result can
-be reconciled without doing the deletion again. A separate opaque marker in
+be reconciled without doing the deletion again. The browser deletion page can
+check this reference after sign-in ends. Its protected POST keeps the reference
+out of the URL and reports only pending, completed active-service deletion,
+or unavailable. A separate opaque marker in
 the latest private volume fences startup on older restored databases.
 The restore operator can reapply a matched pending request offline through
 the existing local stages. Current markers bind the receipt to the original

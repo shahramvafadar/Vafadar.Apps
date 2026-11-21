@@ -97,7 +97,11 @@ German layout contexts at widths 360, 412 and 1280 in light and dark themes.
 Each native status action opened the empty password form without a submission.
 The service also implements the English browser request form at
 `/identity/delete-account`. Isolated PostgreSQL HTTP evidence confirms protected
-submission and the same pending receipt through the app API. Personal Sync
+submission and the same pending receipt through the app API. Users can check
+the opaque reference on that page after their session is retired. The protected
+POST returns only pending, completed active-service deletion, or unavailable.
+The focused test opens the receipt before and after actual synthetic account
+erasure. Personal Sync
 native layout review, publicly reachable deployment, deletion execution,
 verified retention and the Console declaration remain open.
 See [the service boundary](../../Vafadar.Zanance.Api/README.md#api-boundary)

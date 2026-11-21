@@ -11,21 +11,20 @@ namespace Vafadar.Zanance.Api;
 internal static class AccountDeletionPage
 {
     internal const string Path = "/identity/delete-account";
+    private const string StatusPath = Path + "/status";
     private const string Rejected = "We could not verify your account. Check your credentials and try again.";
 
     internal static void Map(WebApplication app)
     {
         app.MapGet(Path, (HttpContext http, IAntiforgery csrf) => Form(http, csrf));
         app.MapPost(Path, SubmitAsync);
+        app.MapPost(StatusPath, ReadStatusAsync);
     }
 
     private static async Task<IResult> SubmitAsync(HttpContext http, IAntiforgery csrf, UserManager<ServiceUser> users,
         SignInManager<ServiceUser> signIn, ServiceDbContext db, TimeProvider time, CancellationToken ct)
     {
-        if (http.Request.ContentLength is not (> 0 and <= 4096) ||
-            !MediaTypeHeaderValue.TryParse(http.Request.ContentType, out var contentType) ||
-            !contentType.MediaType.Equals("application/x-www-form-urlencoded", StringComparison.OrdinalIgnoreCase) ||
-            !await csrf.IsRequestValidAsync(http))
+        if (!await ValidFormAsync(http, csrf))
             return Form(http, csrf, "Reload this page before submitting the request.", 400);
 
         var form = await http.Request.ReadFormAsync(ct);
@@ -52,9 +51,38 @@ internal static class AccountDeletionPage
         return Page(http, $"""
             <p>Your request has been received and is pending.</p>
             <p>Receipt reference <strong>{receipt.ReceiptId:D}</strong></p>
-            <p>Keep this reference for your records.</p>
+            <p>Keep this reference private. Use it to <a href="{Path}#check-status">check the status</a> after your account is closed.</p>
             """, 202);
     }
+
+    private static async Task<IResult> ReadStatusAsync(HttpContext http, IAntiforgery csrf, ServiceDbContext db, CancellationToken ct)
+    {
+        if (!await ValidFormAsync(http, csrf))
+            return Form(http, csrf, "Reload this page before checking the status.", 400);
+        var form = await http.Request.ReadFormAsync(ct);
+        if (form["receipt"].Count != 1 || form["receipt"][0] is not { Length: 36 } value ||
+            !Guid.TryParseExact(value, "D", out var receipt) || receipt == Guid.Empty)
+            return Form(http, csrf, "Enter the receipt reference exactly as it appears on your request.", 400);
+
+        // A single statement observes the handoff from pending request to completed receipt.
+        // The reference is sent only in the POST body and never identifies the account in the response.
+        var states = await db.AccountDeletionRequests.Where(row => row.ReceiptId == receipt).Select(_ => false)
+            .Concat(db.Set<AccountDeletionCompletion>().Where(row => row.ReceiptId == receipt).Select(_ => true))
+            .Take(2).ToArrayAsync(ct);
+        var feedback = states switch
+        {
+            [true] => "Deletion from the active Zanance service is complete.",
+            [false] => "Your deletion request is pending.",
+            _ => "No deletion status is available for this reference.",
+        };
+        return Form(http, csrf, feedback);
+    }
+
+    private static async Task<bool> ValidFormAsync(HttpContext http, IAntiforgery csrf) =>
+        http.Request.ContentLength is > 0 and <= 4096 &&
+        MediaTypeHeaderValue.TryParse(http.Request.ContentType, out var contentType) &&
+        contentType.MediaType.Equals("application/x-www-form-urlencoded", StringComparison.OrdinalIgnoreCase) &&
+        await csrf.IsRequestValidAsync(http);
 
     private static IResult Form(HttpContext http, IAntiforgery csrf, string? feedback = null, int status = 200)
     {
@@ -70,6 +98,13 @@ internal static class AccountDeletionPage
               <p><label for="password">Password</label><br>
               <input id="password" name="password" type="password" autocomplete="current-password" maxlength="256" required></p>
               <button type="submit">Request account deletion</button>
+            </form>
+            <h2 id="check-status">Check deletion status</h2>
+            <form action="{StatusPath}" method="post">
+              <input type="hidden" name="{WebUtility.HtmlEncode(tokens.FormFieldName)}" value="{WebUtility.HtmlEncode(tokens.RequestToken)}">
+              <p><label for="receipt">Receipt reference</label><br>
+              <input id="receipt" name="receipt" type="text" autocomplete="off" maxlength="36" required></p>
+              <button type="submit">Check status</button>
             </form>
             """, status);
     }

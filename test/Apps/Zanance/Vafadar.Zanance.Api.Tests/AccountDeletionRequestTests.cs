@@ -1278,6 +1278,43 @@ public sealed class AccountDeletionRequestTests
         var receipt = await app.GetFromJsonAsync<AccountDeletionReceipt>("/identity/deletion-request", ct);
         Assert.Equal(new AccountDeletionReceipt(pending.ReceiptId, pending.RequestedAt), receipt);
 
+        const string statusPath = page + "/status";
+        var reference = pending.ReceiptId.ToString("D");
+        Assert.Contains($"action=\"{statusPath}\"", html, StringComparison.Ordinal);
+        using var invalidStatus = await browser.PostAsync(statusPath, StatusForm(reference, null), ct);
+        Assert.Equal(HttpStatusCode.BadRequest, invalidStatus.StatusCode);
+        using var unknownStatus = await browser.PostAsync(statusPath, StatusForm(Guid.NewGuid().ToString("D"), token), ct);
+        Assert.Equal(HttpStatusCode.OK, unknownStatus.StatusCode);
+        Assert.Contains("No deletion status is available", await unknownStatus.Content.ReadAsStringAsync(ct), StringComparison.Ordinal);
+        using var pendingStatus = await browser.PostAsync(statusPath, StatusForm(reference, token), ct);
+        await VerifyStatusAsync(pendingStatus, "Your deletion request is pending.");
+
+        var storage = fixture.ServiceProvider.GetRequiredService<ServiceStorage>();
+        var erasure = await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, pending.ReceiptId, ct);
+        Assert.Equal(AccountIdentityErasureStatus.Completed, erasure.Status);
+        using var retiredSession = await app.GetAsync("/identity/deletion-request", ct);
+        Assert.Equal(HttpStatusCode.Unauthorized, retiredSession.StatusCode);
+        using var completedStatus = await browser.PostAsync(statusPath, StatusForm(reference, token), ct);
+        await VerifyStatusAsync(completedStatus, "Deletion from the active Zanance service is complete.");
+        Assert.Empty(await db.Users.ToListAsync(ct));
+        Assert.Equal(pending.ReceiptId, (await db.Set<AccountDeletionCompletion>().SingleAsync(ct)).ReceiptId);
+
+        async Task VerifyStatusAsync(HttpResponseMessage response, string expected)
+        {
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(response.Headers.CacheControl?.NoStore);
+            var body = await response.Content.ReadAsStringAsync(ct);
+            Assert.Contains(expected, body, StringComparison.Ordinal);
+            Assert.DoesNotContain(email, body, StringComparison.Ordinal);
+            Assert.DoesNotContain(owner.Id, body, StringComparison.Ordinal);
+            Assert.DoesNotContain(reference, body, StringComparison.Ordinal);
+        }
+        static FormUrlEncodedContent StatusForm(string reference, string? token)
+        {
+            var fields = new Dictionary<string, string> { ["receipt"] = reference };
+            if (token is not null) fields["__RequestVerificationToken"] = token;
+            return new(fields);
+        }
         static FormUrlEncodedContent Form(string email, string password, string? token)
         {
             var fields = new Dictionary<string, string> { ["email"] = email, ["password"] = password };
