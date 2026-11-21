@@ -439,6 +439,8 @@ internal sealed class AiRequestStore(IDbContextFactory<ServiceDbContext> factory
         await using var db = await factory.CreateDbContextAsync(ct); await using var scope = await OpenAsync(actor, db, ct);
         var row = await db.Set<AiRequestRow>().SingleOrDefaultAsync(r => r.Id == id && r.UserId == scope.Owner, ct)
             ?? throw new AiRefusal(404, "AiRequestUnavailable");
+        if (row.State == AiRequestState.Completed && row.ProtectedPayload.Length == 0 && row.ProtectedText == "")
+            throw new AiRefusal(410, "AiResultRetired");
         var balance = await BalanceAsync(db, scope.Owner, ct);
         var text = row.ProtectedText is null ? null : Protector(scope.Owner, id).Unprotect(row.ProtectedText);
         var result = new AiRequestResult(id, row.PayloadDigest, row.State, row.ChargedUnits, text, balance); await scope.CommitAsync(ct); return result;

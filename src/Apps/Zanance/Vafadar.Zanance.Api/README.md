@@ -140,12 +140,15 @@ It removes unused offers and refused requests whose rows prove no dispatch,
 provider result, status or deletion attempt, credit reservation or journal
 effect. If a pilot request is provably unclaimed and has exactly its original
 reservation entry, the same stage releases that reservation once through the
-existing append-only refund journal. It uses the original owner lock, contacts
-no provider, and preserves discharged credit history. Dispatched work,
+existing append-only refund journal. For an exact completed request with an
+existing confirmed provider deletion receipt, the stage clears the local input
+and result text. Status for the retired result returns `410 AiResultRetired`.
+The stage uses the original owner lock, makes zero provider calls, and keeps
+the deletion receipt, usage and credit history. Unconfirmed provider effects,
 unverified reservations and retained journals remain pending for their
-specific retention decisions. Isolated restore reconciliation removes local
-unused and refused records only, since a historical queue cannot prove that
-the live service never began dispatch.
+specific retention decisions. Isolated restore reconciliation can also clear
+confirmed local content, but a historical queue cannot authorize a refund on
+the premise that the live service never began dispatch.
 
 An accepted account deletion pauses analysis admission immediately. Availability
 reports analysis disabled, new offers and submissions refuse before any new

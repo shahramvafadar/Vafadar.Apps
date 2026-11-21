@@ -32,6 +32,93 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Analysis_retirement_erases_content_only_for_the_confirmed_owner_result()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        connection.Database = "zanance_delete_analysis_content_fixture";
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "analysis-content"), analysis: true);
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var users = fixture.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        const string email = "analysis-content@example.invalid";
+        const string password = "Fictional-Analysis-Content9!";
+        var owner = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+        Assert.True((await users.CreateAsync(owner, password)).Succeeded);
+        var other = new ServiceUser { UserName = "other-analysis-content@example.invalid" };
+        db.Users.Add(other);
+        var now = DateTimeOffset.UtcNow;
+        var confirmed = Seed(owner, now);
+        var uncertain = Seed(owner, null);
+        var foreign = Seed(other, now);
+        var journal = new AiCreditRow { Id = Guid.NewGuid(), UserId = owner.Id, RequestId = confirmed.Id,
+            Kind = AiCreditEvent.Settle, GiftedReserved = -1, CreatedAt = now };
+        db.Add(journal);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        using var client = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+        using var login = await client.PostAsJsonAsync("/identity/login", new IdentityInput(email, password), ct);
+        Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+        var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+        using var intake = await client.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+        Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
+        var receipt = Assert.IsType<AccountDeletionReceipt>(await intake.Content.ReadFromJsonAsync<AccountDeletionReceipt>(ct));
+        foreach (var original in new[] { uncertain, foreign })
+        {
+            var refused = await Assert.ThrowsAsync<PostgresException>(() => db.Database.ExecuteSqlInterpolatedAsync(
+                $"""UPDATE "AiRequests" SET "ProtectedPayload" = '', "ProtectedText" = '' WHERE "Id" = {original.Id}""", ct));
+            Assert.Equal(PostgresErrorCodes.CheckViolation, refused.SqlState);
+        }
+        var altered = await Assert.ThrowsAsync<PostgresException>(() => db.Database.ExecuteSqlInterpolatedAsync(
+            $"""UPDATE "AiRequests" SET "ProtectedPayload" = '', "ProtectedText" = '', "ChargedUnits" = 0 WHERE "Id" = {confirmed.Id}""", ct));
+        Assert.Equal(PostgresErrorCodes.CheckViolation, altered.SqlState);
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, receipt.ReceiptId, TimeProvider.System, ct));
+
+        var rows = await db.Set<AiRequestRow>().AsNoTracking().ToDictionaryAsync(row => row.Id, ct);
+        Assert.Equal(3, rows.Count);
+        Assert.Empty(rows[confirmed.Id].ProtectedPayload);
+        Assert.Equal("", rows[confirmed.Id].ProtectedText);
+        Assert.Equal(confirmed.PayloadDigest, rows[confirmed.Id].PayloadDigest);
+        Assert.Equal(confirmed.VendorOperationId, rows[confirmed.Id].VendorOperationId);
+        Assert.Equal(confirmed.ChargedUnits, rows[confirmed.Id].ChargedUnits);
+        Assert.Equal(AiRequestState.Completed, rows[confirmed.Id].State);
+        foreach (var original in new[] { uncertain, foreign })
+        {
+            Assert.Equal(original.ProtectedPayload, rows[original.Id].ProtectedPayload);
+            Assert.Equal(original.ProtectedText, rows[original.Id].ProtectedText);
+        }
+        Assert.Equal(journal.Id, (await db.Set<AiCreditRow>().SingleAsync(ct)).Id);
+        Assert.Equal(3, await db.Set<AiPilotDeletionRow>().CountAsync(ct));
+        using var status = await client.PostAsync($"/analysis/requests/{confirmed.Id}/status", null, ct);
+        Assert.Equal(HttpStatusCode.Gone, status.StatusCode);
+        Assert.Equal("AiResultRetired", (await status.Content.ReadFromJsonAsync<JsonElement>(ct)).GetProperty("code").GetString());
+
+        AiRequestRow Seed(ServiceUser account, DateTimeOffset? confirmedAt)
+        {
+            var offer = new AiOfferRow { Id = Guid.NewGuid(), UserId = account.Id, MaximumUnits = 1, ExpiresAt = now.AddMinutes(5) };
+            var result = new AiRequestRow { Id = Guid.NewGuid(), UserId = account.Id, OfferId = offer.Id,
+                State = AiRequestState.Completed, ProtectedPayload = "Fictional protected input", ProtectedText = "Fictional protected answer",
+                CreatedAt = now, PayloadDigest = new string('a', 64), VendorOperationId = "fictional-exact-receipt",
+                GiftedReserved = 1, ChargedUnits = 1 };
+            db.AddRange(offer, result, new AiPilotDeletionRow { RequestId = result.Id, Actor = "fictional-operator",
+                StartedAt = now.AddSeconds(-1), ConfirmedAt = confirmedAt });
+            return result;
+        }
+    }
+
+    [Fact]
     public async Task Pending_account_deletion_stops_new_personal_sync_writes()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
@@ -1015,13 +1102,14 @@ public sealed class AccountDeletionRequestTests
         }
     }
 
-    private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null) : WebApplicationFactory<Program>
+    private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null, bool analysis = false) : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseEnvironment("Integration");
             builder.UseSetting("ConnectionStrings:Service", connection);
             builder.UseSetting("Service:Root", root);
+            if (analysis) builder.UseSetting("Analysis:LocalQualification", "true");
             builder.ConfigureServices(services =>
             {
                 services.RemoveAll<IHostedService>();

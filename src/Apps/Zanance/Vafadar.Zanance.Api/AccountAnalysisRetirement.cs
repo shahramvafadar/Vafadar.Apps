@@ -13,10 +13,10 @@ public enum AccountAnalysisRetirementResult
     Retired,
 }
 
-/// <summary>Retires only local offers and refused requests for the account identified by the original receipt.</summary>
+/// <summary>Retires local analysis content for the account identified by the original receipt.</summary>
 public static class AccountAnalysisRetirement
 {
-    /// <summary>Releases an exact never-dispatched reservation and preserves the original credit journal.</summary>
+    /// <summary>Retires eligible content and preserves the original credit journal and provider receipts.</summary>
     public static async Task<AccountAnalysisRetirementResult> RunAsync(ServiceDbContext db, Guid receipt, TimeProvider time,
         CancellationToken ct, bool releaseUnclaimedReservations = true)
     {
@@ -56,6 +56,14 @@ public static class AccountAnalysisRetirement
             AiRequestStore.RecordRefund(db, row, row.PurchasedReserved, row.GiftedReserved, time.GetUtcNow());
         }
         await db.SaveChangesAsync(ct);
+        // Provider confirmation is bound to this exact completed request. Keep its receipt,
+        // usage and credit records while removing local copies of the disclosed content.
+        // Empty text retains the original database invariant for a completed request.
+        await requests.Where(row => row.UserId == owner && row.State == AiRequestState.Completed &&
+                (row.ProtectedPayload != "" || row.ProtectedText != "") &&
+                deletions.Any(effect => effect.RequestId == row.Id && effect.ConfirmedAt >= effect.StartedAt))
+            .ExecuteUpdateAsync(set => set.SetProperty(row => row.ProtectedPayload, "")
+                .SetProperty(row => row.ProtectedText, ""), ct);
         await requests.Where(row => row.UserId == owner && row.State == AiRequestState.NotAccepted &&
                 row.PurchasedReserved == 0 && row.GiftedReserved == 0 && row.ChargedUnits == 0 &&
                 row.VendorOperationId == null && row.PilotDispatchStage == null && row.PilotDispatchClaimedAt == null &&
