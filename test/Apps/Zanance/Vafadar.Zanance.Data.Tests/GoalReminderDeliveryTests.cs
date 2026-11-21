@@ -176,7 +176,7 @@ public sealed class GoalReminderDeliveryTests : IDisposable
         Assert.Equal(goal.Id, Assert.Single(GoalReminderLink.Parse(_scheduler.Pending[0].Link)!.Targets).GoalId);
         Assert.Equal(_scheduler.Pending.OrderBy(n => n.NotifyAt).ThenBy(n => n.Id), _scheduler.Pending);
         Assert.Contains(_scheduler.Pending, n => Vafadar.Zanance.Core.Reminders.PlanReminderLink.Parse(n.Link) is { IsContract: false });
-        Assert.Contains(_scheduler.Pending, n => n.Link == "review");
+        Assert.Contains(_scheduler.Pending, n => PeriodReviewReminderLink.Parse(n.Link) is not null);
         Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));
     }
 

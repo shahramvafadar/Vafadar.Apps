@@ -10,6 +10,7 @@ using Vafadar.Testing;
 using Vafadar.Zanance.App.Reminders;
 using Vafadar.Zanance.Core.Accounts;
 using Vafadar.Zanance.Core.Budgets;
+using Vafadar.Zanance.Core.Reminders;
 
 namespace Vafadar.Zanance.Data.Tests;
 
@@ -70,10 +71,14 @@ public sealed class ReviewReminderDeliveryTests : IDisposable
         {
             Assert.Equal(_translator["App_Name"], n.Title);
             Assert.Equal(_translator["Reminder_ReviewGeneric"], n.Body);
-            Assert.Equal("review", n.Link);
             Assert.False(n.CanSnooze);
             Assert.Equal(9, n.NotifyAt!.Value.Hour);
         });
+        foreach (var notification in _scheduler.Pending)
+        {
+            var link = Assert.IsType<PeriodReviewReminderLink>(PeriodReviewReminderLink.Parse(notification.Link));
+            Assert.True(await _store.IsPeriodReviewReminderCurrentAsync(link, Ct));
+        }
         Assert.Equal(0, _scheduler.PermissionRequests);
         Assert.Null((await _store.GetSettingsAsync(Ct)).ReviewProgress);
         Assert.Empty(await _store.GetEntriesAsync(cancellationToken: Ct));

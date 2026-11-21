@@ -61,7 +61,9 @@ internal static class CameraCapture
             Volatile.Write(ref _pending, own);
             activity.StartActivityForResult(intent, own.Code);
             launched = true;
-            var accepted = await own.Completion.Task.WaitAsync(lifetime);
+            // Destruction settles Completion after canceling the read lifetime. Waiting on
+            // the caller token alone keeps destruction from racing the detached cleanup path.
+            var accepted = await own.Completion.Task.WaitAsync(ct);
             received = true;
             lifetime.ThrowIfCancellationRequested();
             if (!accepted || !file.Exists() || file.Length() == 0)
