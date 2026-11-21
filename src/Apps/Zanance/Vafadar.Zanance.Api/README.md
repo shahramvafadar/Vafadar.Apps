@@ -124,6 +124,16 @@ directories or links are excluded. The stage covers the current server copies
 and needs a final recheck under the account execution lock. Independent device
 copies and backups have their own retention boundaries.
 
+The identity-mail stage is
+`--retire-account-identity-mail <receipt-id> --confirm-identity-mail-retirement`.
+It consumes original verification and recovery challenges under the owner
+lock, then retires their exact local mailbox files and challenge rows in a
+bounded pass. Local publication uses the same lock and rechecks its lease
+before writing. An unconfirmed claimed delivery remains pending until its
+outcome or ordinary expiry. The expiry worker removes both final and temporary
+local copies before dropping the row. This stage makes no external mail request.
+Provider and recipient copies remain outside its evidence.
+
 After the approved stages and retention review, the operator can use
 `--erase-account-identity <receipt-id> --confirm-server-identity-erasure`.
 The active-service transaction rechecks the original dependencies under the

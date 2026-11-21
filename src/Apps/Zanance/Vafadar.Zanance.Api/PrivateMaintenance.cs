@@ -41,11 +41,17 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
         await db.RequestWindows.Where(w => w.StartsAt < now.AddHours(-1)).ExecuteDeleteAsync(ct);
         await Sync.SyncStagingMaintenance.RunAsync(db, now, ct);
         await db.Sessions.Where(s => s.ExpiresAt < now.AddDays(-1)).ExecuteDeleteAsync(ct);
-        var expiredMail = await db.Challenges.Where(c => c.ExpiresAt < now.AddDays(-1)).OrderBy(c => c.ExpiresAt).ThenBy(c => c.Id).Select(c => c.Id).Take(100).ToListAsync(ct);
-        foreach (var id in expiredMail)
+        var cutoff = now.AddDays(-1);
+        var expiredMail = await db.Challenges.Where(c => c.ExpiresAt < cutoff).OrderBy(c => c.ExpiresAt).ThenBy(c => c.Id)
+            .Select(c => new { c.Id, c.UserId }).Take(100).ToListAsync(ct);
+        foreach (var row in expiredMail)
         {
-            File.Delete(Path.Combine(storage.Root, "mailbox", id.ToString("N")));
-            await db.Challenges.Where(c => c.Id == id && c.ExpiresAt < now.AddDays(-1)).ExecuteDeleteAsync(ct);
+            await using var retirement = await db.Database.BeginTransactionAsync(ct);
+            await Sync.SyncRequestScope.LockOwnerAsync(db, row.UserId, ct);
+            var original = db.Challenges.Where(c => c.Id == row.Id && c.UserId == row.UserId && c.ExpiresAt < cutoff);
+            if (await original.AnyAsync(ct) && AccountIdentityMailRetirement.RemoveLocalCopies(storage, row.Id))
+                await original.ExecuteDeleteAsync(ct);
+            await retirement.CommitAsync(ct);
         }
         var sender = scope.ServiceProvider.GetService<IIdentityMailSender>();
         if (!storage.LocalMailbox && sender is null) return;
@@ -58,8 +64,8 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
             var claimed = await db.Challenges.Where(c => c.Id == id && !c.Delivered && !c.Consumed && c.ExpiresAt > now && (c.LeaseUntil == null || c.LeaseUntil < now))
                 .ExecuteUpdateAsync(u => u.SetProperty(c => c.LeaseOwner, lease).SetProperty(c => c.LeaseUntil, now.AddMinutes(1)), ct);
             if (claimed != 1) continue;
-            var row = await db.Challenges.AsNoTracking().SingleAsync(c => c.Id == id, ct);
-            if (row.Consumed || row.ExpiresAt <= time.GetUtcNow()) continue;
+            var row = await db.Challenges.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id && c.LeaseOwner == lease, ct);
+            if (row is null || row.Consumed || row.ExpiresAt <= time.GetUtcNow()) continue;
             if (sender is not null)
             {
                 try
@@ -76,10 +82,21 @@ public sealed class PrivateMaintenance(IServiceScopeFactory scopes, ServiceStora
             }
             else
             {
+                // Local publication and explicit account retirement share the same original owner lock.
+                // An expired/replaced lease cannot recreate a file after retirement has completed.
+                await using var local = await db.Database.BeginTransactionAsync(ct);
+                await Sync.SyncRequestScope.LockOwnerAsync(db, row.UserId, ct);
+                if (!await db.Challenges.AnyAsync(c => c.Id == id && c.LeaseOwner == lease &&
+                        !c.Consumed && !c.Delivered && c.ExpiresAt > time.GetUtcNow() && c.LeaseUntil > time.GetUtcNow(), ct))
+                    continue;
                 var path = Path.Combine(storage.Root, "mailbox", id.ToString("N"));
                 var temporary = path + "." + lease.ToString("N") + ".pending";
                 await File.WriteAllTextAsync(temporary, row.ProtectedMail, ct);
                 File.Move(temporary, path, overwrite: true);
+                await db.Challenges.Where(c => c.Id == id && c.LeaseOwner == lease)
+                    .ExecuteUpdateAsync(u => u.SetProperty(c => c.Delivered, true), ct);
+                await local.CommitAsync(ct);
+                continue;
             }
             await db.Challenges.Where(c => c.Id == id && c.LeaseOwner == lease).ExecuteUpdateAsync(u => u.SetProperty(c => c.Delivered, true), ct);
         }

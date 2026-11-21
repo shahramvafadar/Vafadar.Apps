@@ -21,7 +21,8 @@ var inspectDeletion = args.FirstOrDefault() == "--inspect-account-deletion";
 var retireAccountObjects = args.FirstOrDefault() == "--retire-account-objects";
 var retireAccountSync = args.FirstOrDefault() == "--retire-account-personal-sync";
 var eraseAccountIdentity = args.FirstOrDefault() == "--erase-account-identity";
-var accountRetirement = retireAccountObjects || retireAccountSync || eraseAccountIdentity;
+var retireIdentityMail = args.FirstOrDefault() == "--retire-account-identity-mail";
+var accountRetirement = retireAccountObjects || retireAccountSync || eraseAccountIdentity || retireIdentityMail;
 var deletionReceipt = Guid.Empty;
 if ((inspectDeletion || accountRetirement) &&
     (args.Length < 2 || !Guid.TryParseExact(args[1], "D", out deletionReceipt) || deletionReceipt == Guid.Empty ||
@@ -33,6 +34,8 @@ if (retireAccountSync && (args.Length < 3 || args[2] != "--confirm-personal-sync
     throw new InvalidOperationException("Explicit confirmation of personal sync retirement is required.");
 if (eraseAccountIdentity && (args.Length < 3 || args[2] != "--confirm-server-identity-erasure"))
     throw new InvalidOperationException("Explicit confirmation of active server identity erasure is required.");
+if (retireIdentityMail && (args.Length < 3 || args[2] != "--confirm-identity-mail-retirement"))
+    throw new InvalidOperationException("Explicit confirmation of identity mail retirement is required.");
 var pilotRequestId = Guid.Empty;
 if (deletePilotResult &&
     (args.Length < 3 || !Guid.TryParseExact(args[1], "D", out pilotRequestId) || pilotRequestId == Guid.Empty ||
@@ -65,6 +68,12 @@ if (accountRetirement)
         if (result.Status == AccountIdentityErasureStatus.DependenciesRemain)
             Console.WriteLine("Remaining dependencies: " + result.Dependencies);
         if (result.Status != AccountIdentityErasureStatus.Completed) Environment.ExitCode = 1;
+    }
+    else if (retireIdentityMail)
+    {
+        var result = await AccountIdentityMailRetirement.RunAsync(db, privateStorage, deletionReceipt, CancellationToken.None);
+        Console.WriteLine("Account identity-mail retirement: " + result);
+        if (result != AccountIdentityMailRetirementResult.Retired) Environment.ExitCode = 1;
     }
     else if (retireAccountSync)
     {
