@@ -183,13 +183,16 @@ public static class ServiceHost
             listener.UseHttps(options.ApplicationServices.GetRequiredService<Sync.LocalSyncCertificate>().Certificate));
     }
 
-    /// <summary>Schema changes are an explicit operator action, not ordinary worker startup.</summary>
+    /// <summary>Applies schema changes and preserves earlier committed pending requests in the private restore authority.</summary>
     public static async Task MigrateAsync(IServiceProvider services)
     {
         await using var scope = services.CreateAsyncScope();
         var factory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<ServiceDbContext>>();
         await using var db = await factory.CreateDbContextAsync();
         await db.Database.MigrateAsync();
+        var storage = scope.ServiceProvider.GetRequiredService<ServiceStorage>();
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(db, storage, CancellationToken.None);
+        await AccountDeletionRestoreFence.PreserveCommittedRequestsAsync(db, storage, CancellationToken.None);
     }
 
     /// <summary>Applies durable rate limits and validates session/stamp on every request.</summary>

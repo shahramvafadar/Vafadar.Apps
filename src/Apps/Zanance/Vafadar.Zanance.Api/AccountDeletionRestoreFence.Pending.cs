@@ -40,6 +40,16 @@ public static partial class AccountDeletionRestoreFence
         }
     }
 
+    internal static async Task PreserveCommittedRequestsAsync(ServiceDbContext db, ServiceStorage storage, CancellationToken ct)
+    {
+        // Older deployments could acknowledge a committed request before the independent
+        // marker existed. Preserve its original identity and time without completing it.
+        var pending = db.AccountDeletionRequests.AsNoTracking()
+            .Select(row => new { row.ReceiptId, row.UserId, row.RequestedAt });
+        await foreach (var row in pending.AsAsyncEnumerable().WithCancellation(ct))
+            await WritePendingMarkerAsync(storage, new(row.ReceiptId, OwnerHash(row.UserId), row.RequestedAt), ct);
+    }
+
     private static IEnumerable<PendingMarker> PendingMarkers(string storage)
     {
         var root = RootOf(storage);

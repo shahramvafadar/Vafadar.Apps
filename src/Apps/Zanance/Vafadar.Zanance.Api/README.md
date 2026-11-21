@@ -221,8 +221,11 @@ only the receipt, a digest of the original internal account identity, and the
 original UTC request time. The restore process merges it from the stopped
 current service and restores the exact pending row when its original account
 matches. A pending marker alone grants no authority to erase the account.
-Earlier acknowledged requests without a marker are covered once they are
-retrieved through the authenticated app status endpoint or submitted again.
+Schema maintenance also checks the existing deletion markers and preserves
+committed pending requests that predate the marker format. It publishes each
+original receipt and timestamp without completing the request or contacting
+the user. An authenticated status read or repeat submission can still repair
+a marker when its destination becomes available.
 The isolated PostgreSQL acknowledgement check covers an unavailable marker
 destination after the database commit. The authenticated status read returns
 the original receipt once the destination is usable, without another request

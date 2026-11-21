@@ -34,6 +34,51 @@ namespace Vafadar.Zanance.Api.Tests;
 public sealed class AccountDeletionRequestTests
 {
     [Fact]
+    public async Task Schema_maintenance_preserves_a_committed_legacy_deletion_without_another_user_request()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_pending_legacy_fixture";
+
+        var serviceRoot = Path.Combine(root, "legacy-pending-request");
+        await using var host = new IdentityHost(connection.ConnectionString, serviceRoot);
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        await db.Database.MigrateAsync(ct);
+        var owner = new ServiceUser { UserName = "legacy-pending-deletion@example.invalid" };
+        var receipt = Guid.NewGuid();
+        var originalTime = new DateTimeOffset(2026, 11, 20, 1, 34, 56, TimeSpan.Zero);
+        db.Users.Add(owner);
+        db.AccountDeletionRequests.Add(new() { UserId = owner.Id, ReceiptId = receipt, RequestedAt = originalTime });
+        await db.SaveChangesAsync(ct);
+        var marker = Path.Combine(serviceRoot, "account-deletions", receipt.ToString("N") + ".request");
+        Assert.False(File.Exists(marker));
+
+        await ServiceHost.MigrateAsync(host.Services);
+
+        var text = await File.ReadAllTextAsync(marker, ct);
+        var fields = text.Split('\n');
+        Assert.Equal("1", fields[0]);
+        Assert.Equal(receipt.ToString("D"), fields[1]);
+        Assert.Equal(originalTime.UtcTicks.ToString(System.Globalization.CultureInfo.InvariantCulture), fields[3]);
+        Assert.DoesNotContain(owner.Id, text, StringComparison.Ordinal);
+        await AccountDeletionRestoreFence.VerifyDatabaseAsync(db, storage, ct);
+        var pending = await db.AccountDeletionRequests.AsNoTracking().SingleAsync(ct);
+        Assert.Equal((owner.Id, receipt, originalTime), (pending.UserId, pending.ReceiptId, pending.RequestedAt));
+        Assert.Empty(await db.Set<AccountDeletionCompletion>().ToListAsync(ct));
+        Assert.True(await db.Users.AnyAsync(row => row.Id == owner.Id, ct));
+    }
+
+    [Fact]
     public async Task Unavailable_pending_marker_refuses_acknowledgement_until_a_status_read_repairs_it()
     {
         var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
