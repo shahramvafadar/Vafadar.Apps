@@ -61,7 +61,7 @@ class GatewayTests(unittest.TestCase):
               patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
               patch.object(operate, '_volume', return_value='original-private') as volume,
               patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.household-privacy': 'deletion-v1'}),
-              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'', b'account\n']),
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'account ' + b'1' * 64 + b'\n']),
               patch.object(operate, '_exists') as exists):
             with self.assertRaisesRegex(RuntimeError, 'cannot enforce current account deletions'):
                 operate._restore(args, 'sha256:' + '1' * 64)
@@ -76,7 +76,7 @@ class GatewayTests(unittest.TestCase):
               patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
               patch.object(operate, '_volume', return_value='original-private'),
               patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.account-privacy': 'receipt-fence-v2'}),
-              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'', b'analysis\n']) as run,
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'analysis ' + b'1' * 64 + b'\n']) as run,
               patch.object(operate, '_exists') as exists,
               patch.object(operate, '_compose') as compose):
             with self.assertRaisesRegex(RuntimeError, 'cannot enforce current analysis retirements'):
@@ -93,7 +93,7 @@ class GatewayTests(unittest.TestCase):
               patch.object(operate, '_container', return_value=('stopped', {'state': 'exited'})),
               patch.object(operate, '_volume', return_value='original-private'),
               patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.account-privacy': 'receipt-fence-v3'}),
-              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'', b'request\n']) as run,
+              patch.object(operate, '_run', side_effect=[b'database\n', b'', b'request ' + b'1' * 64 + b'\n']) as run,
               patch.object(operate, '_exists') as exists,
               patch.object(operate, '_compose') as compose):
             with self.assertRaisesRegex(RuntimeError, 'cannot enforce current pending account deletions'):
@@ -128,7 +128,7 @@ class GatewayTests(unittest.TestCase):
                     if command[:2] == ['docker', 'ps'] and '--format' in command:
                         return b'database\n'
                     if '*.analysis-retired' in command[-1]:
-                        return b'analysis\n'
+                        return b'analysis ' + b'1' * 64 + b'\n'
                     return b''
 
                 with (patch.object(operate, '_manifest', return_value=manifest),
@@ -190,6 +190,40 @@ class GatewayTests(unittest.TestCase):
                 operate._restore(args, 'sha256:' + '1' * 64)
         self.assertEqual([['up', '-d', '--wait', 'database']], actions)
         self.assertEqual(3, source_volume_checks)
+        self.assertFalse(state['Complete'])
+        self.assertFalse(state.get('PrivacyReconciled', False))
+
+    def test_restore_refuses_an_added_marker_even_after_its_writer_stops(self):
+        """Adding a receipt of an already admitted type still invalidates the restore."""
+        args = argparse.Namespace(snapshot='zanance-hosting-snapshot-test', project='zanance-selfhost-target',
+                                  public=False, gateway='direct', port=14543, subnet='172.29.90.0/24')
+        source = 'zanance-selfhost-source'
+        images = {'api': 'sha256:' + '2' * 64, 'database': 'sha256:' + '3' * 64}
+        manifest = {'SourceProject': source, 'Quiesced': True, 'Images': images}
+        state = {'Snapshot': args.snapshot, 'Target': args.project, 'PrivacySource': source,
+                 'Copied': list(operate.VOLUMES), 'DatabaseRestored': True, 'Complete': False}
+        actions = []
+        marker_copies = []
+
+        def run(command, **_):
+            if '--merge-account-deletions' in command:
+                marker_copies.append(command)
+            if '*.request' in command[-1]:
+                return b'request ' + (b'2' if marker_copies else b'1') * 64 + b'\n'
+            return b''
+
+        with (patch.object(operate, '_manifest', return_value=manifest),
+              patch.object(operate, '_container', return_value=('stopped', {'state': 'exited', 'image': images['database']})),
+              patch.object(operate, '_volume', side_effect=lambda project, name: project + '_' + name),
+              patch.object(operate, '_metadata', return_value={'pro.vafadar.zanance.account-privacy': 'receipt-fence-v4'}),
+              patch.object(operate, '_exists', return_value=True),
+              patch.object(operate, '_receipt', return_value=state),
+              patch.object(operate, '_compose', side_effect=lambda project, port, subnet, action, *inputs, **options: actions.append(action)),
+              patch.object(operate, '_run', side_effect=run)):
+            with self.assertRaisesRegex(RuntimeError, 'Original deletion marker inventory changed'):
+                operate._restore(args, 'sha256:' + '1' * 64)
+        self.assertEqual(1, len(marker_copies))
+        self.assertEqual([['up', '-d', '--wait', 'database']], actions)
         self.assertFalse(state['Complete'])
         self.assertFalse(state.get('PrivacyReconciled', False))
 

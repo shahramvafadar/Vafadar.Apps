@@ -133,6 +133,13 @@ An old database/private-volume snapshot is not the latest privacy authority. Bef
 
 Before the restored service starts, a deletion-v1 image runs its offline --merge-household-deletions command with the latest original private volume read-only and the restored private volume writable. The merge validates and adds only immutable public-metadata deletion markers; it never copies keys, mail or financial objects and refuses conflicting existing originals. Restore checks both projects and their exact private volumes before merging and starting the target. A live one-off volume mount also blocks these steps. Keep all private-storage clients drained throughout the operation. Historical images without the immutable capability label cannot start when newer source deletion markers exist; an explicit separately qualified upgrade is required.
 
+Restore compares the original deletion-marker inventories before merging and
+again before starting the destination. It calculates per-type hashes of marker
+filenames inside the read-only helper and returns only those hashes. If the
+inventory changes, the destination stays stopped and the copied state remains
+available for continuation. The service still validates marker contents
+during the merge.
+
 Account identity erasure publishes a separate opaque receipt marker before the
 database commit. Restore transfers these exact markers from the stopped latest
 source using an image with the matching `pro.vafadar.zanance.account-privacy`

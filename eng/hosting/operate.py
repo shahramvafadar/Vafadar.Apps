@@ -55,7 +55,7 @@ def _volume(project, logical, create=False):
     return name
 
 
-def _helper(image, mounts, script, data=None):
+def _helper(image, mounts, script, data=None, *, shell='sh'):
     if not IMAGE.fullmatch(image):
         raise RuntimeError('An existing immutable helper image is required.')
     args = ['docker', 'run', '--rm', '-i', '--network', 'none', '--user', '0:0', '--read-only',
@@ -63,7 +63,7 @@ def _helper(image, mounts, script, data=None):
             '--security-opt', 'no-new-privileges:true']
     for volume, target, readonly in mounts:
         args += ['--mount', 'type=volume,source=' + volume + ',target=' + target + (',readonly' if readonly else '')]
-    return args + ['--entrypoint', 'sh', image, '-c', script]
+    return args + ['--entrypoint', shell, image, '-c', script]
 
 
 def _pipe(left, right):
@@ -271,6 +271,37 @@ def _require_drained_restore_clients(project, private_volume):
         raise RuntimeError('Private volume clients must be drained before using private state.')
 
 
+def _deletion_marker_inventory(helper, private_volume):
+    """Return marker types and stable digests of their filenames without exporting names or contents."""
+    output = _run(_helper(helper, [(private_volume, '/current', True)], '''
+        set -euo pipefail
+        export LC_ALL=C
+        inventory() {
+            dir=$1; pattern=$2; kind=$3
+            test ! -L "$dir" || exit 23
+            if test -e "$dir"; then
+                test -d "$dir" || exit 23
+                hash=$(find "$dir" -mindepth 1 -maxdepth 1 -name "$pattern" -print0 | sort -z | sha256sum)
+                hash=${hash%% *}
+                if test "$hash" != e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; then
+                    printf '%s %s\n' "$kind" "$hash"
+                fi
+            fi
+        }
+        inventory /current/household-deletions '*.json' household
+        inventory /current/account-deletions '*.receipt' account
+        inventory /current/account-deletions '*.analysis-retired' analysis
+        inventory /current/account-deletions '*.request' request
+        ''', shell='bash'))
+    result = {}
+    for line in output.splitlines():
+        entry = re.fullmatch(rb'(household|account|analysis|request) ([a-f0-9]{64})', line)
+        if entry is None or entry[1] in result:
+            raise RuntimeError('Invalid original deletion marker inventory.')
+        result[entry[1]] = entry[2]
+    return result
+
+
 def _restore(args, helper):
     manifest = _manifest(args.snapshot, helper)
     if bool(manifest.get('Public', False)) != args.public or manifest.get('Gateway', 'direct') != args.gateway:
@@ -291,23 +322,10 @@ def _restore(args, helper):
     privacy_image = manifest['Images']['api']
     privacy_labels = _metadata('image', privacy_image, '{{json .Config.Labels}}') or {}
     capable = privacy_labels.get('pro.vafadar.zanance.household-privacy') == 'deletion-v1'
-    markers = _run(_helper(helper, [(current_private, '/current', True)],
-        'test ! -L /current/household-deletions || exit 23; if test -e /current/household-deletions; then test -d /current/household-deletions || exit 23; find /current/household-deletions -mindepth 1 -maxdepth 1 -name "*.json" -print -quit; fi')).strip()
-    if markers and not capable:
+    original_markers = _deletion_marker_inventory(helper, current_private)
+    if b'household' in original_markers and not capable:
         raise RuntimeError('Historical service image cannot enforce current household deletions; explicit upgrade qualification required.')
-    account_markers = _run(_helper(helper, [(current_private, '/current', True)], '''
-        dir=/current/account-deletions
-        test ! -L "$dir" || exit 23
-        if test -e "$dir"; then
-            test -d "$dir" || exit 23
-            receipts=$(find "$dir" -mindepth 1 -maxdepth 1 -name "*.receipt" -print -quit) || exit 23
-            analysis=$(find "$dir" -mindepth 1 -maxdepth 1 -name "*.analysis-retired" -print -quit) || exit 23
-            requests=$(find "$dir" -mindepth 1 -maxdepth 1 -name "*.request" -print -quit) || exit 23
-            if test -n "$receipts"; then printf 'account\n'; fi
-            if test -n "$analysis"; then printf 'analysis\n'; fi
-            if test -n "$requests"; then printf 'request\n'; fi
-        fi
-        ''')).splitlines()
+    account_markers = original_markers.keys() - {b'household'}
     account_privacy = privacy_labels.get('pro.vafadar.zanance.account-privacy')
     if b'account' in account_markers and account_privacy not in ('receipt-fence-v1', 'receipt-fence-v2', 'receipt-fence-v3', 'receipt-fence-v4'):
         raise RuntimeError('Historical service image cannot enforce current account deletions; explicit upgrade qualification required.')
@@ -364,6 +382,8 @@ def _restore(args, helper):
         state['DatabaseRestored'] = True; _receipt(helper, state_name, state)
     _require_drained_restore_clients(privacy_source, current_private)
     _require_drained_restore_clients(args.project, target_private)
+    if _deletion_marker_inventory(helper, current_private) != original_markers:
+        raise RuntimeError('Original deletion marker inventory changed; target remains stopped.')
     if capable:
         # Re-run only this idempotent additive merge on interrupted restoration; never
         # replace an original marker or skip newer privacy intent before serving data.
@@ -389,6 +409,8 @@ def _restore(args, helper):
             raise RuntimeError('Original privacy workers restarted during restore; target remains stopped.')
     _require_drained_restore_clients(privacy_source, current_private)
     _require_drained_restore_clients(args.project, target_private)
+    if _deletion_marker_inventory(helper, current_private) != original_markers:
+        raise RuntimeError('Original deletion marker inventory changed; target remains stopped.')
     state['PrivacySource'] = privacy_source
     state['PrivacyReconciled'] = True
     _receipt(helper, state_name, state)
