@@ -19,12 +19,73 @@ using Vafadar.Zanance.Api.Rates;
 using Vafadar.Zanance.Api.Sharing;
 using Vafadar.Zanance.Api.Sync;
 using Vafadar.Zanance.Core.Commerce;
+using Vafadar.Zanance.Core.Analysis;
 
 namespace Vafadar.Zanance.Api.Tests;
 
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Local_analysis_retirement_removes_only_refused_requests_without_provider_or_credit_effects()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+        connection.Database = "zanance_delete_analysis_fixture";
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, "analysis-retirement-service"));
+        await using var services = host.Services.CreateAsyncScope();
+        var db = services.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var storage = services.ServiceProvider.GetRequiredService<ServiceStorage>();
+        await db.Database.MigrateAsync(ct);
+        var target = new ServiceUser { UserName = "analysis-retirement-target@example.invalid" };
+        var other = new ServiceUser { UserName = "analysis-retirement-other@example.invalid" };
+        var receipt = Guid.NewGuid();
+        var otherReceipt = Guid.NewGuid();
+        var now = DateTimeOffset.UtcNow;
+        db.Users.AddRange(target, other);
+        db.AccountDeletionRequests.AddRange(new() { UserId = target.Id, ReceiptId = receipt, RequestedAt = now },
+            new() { UserId = other.Id, ReceiptId = otherReceipt, RequestedAt = now });
+        var refusedOffer = Offer(target);
+        var pendingOffer = Offer(target);
+        var unused = Offer(target);
+        var unrelated = Offer(other);
+        var refused = new AiRequestRow { Id = Guid.NewGuid(), OfferId = refusedOffer.Id, UserId = target.Id,
+            CreatedAt = now, PayloadDigest = new string('a', 64), ProtectedPayload = "Fictional refused payload", State = AiRequestState.NotAccepted };
+        var pending = new AiRequestRow { Id = Guid.NewGuid(), OfferId = pendingOffer.Id, UserId = target.Id,
+            CreatedAt = now, PayloadDigest = new string('b', 64), ProtectedPayload = "Fictional pending payload",
+            GiftedReserved = 1, VendorOperationId = "fictional-unresolved-response", State = AiRequestState.Pending };
+        db.AddRange(refusedOffer, pendingOffer, unused, unrelated, refused, pending);
+        await db.SaveChangesAsync(ct);
+        db.ChangeTracker.Clear();
+
+        Assert.Equal(AccountAnalysisRetirementResult.UnknownReceipt, await AccountAnalysisRetirement.RunAsync(db, Guid.NewGuid(), ct));
+        Assert.Equal(4, await db.Set<AiOfferRow>().CountAsync(ct));
+        Assert.Equal(AccountAnalysisRetirementResult.Pending, await AccountAnalysisRetirement.RunAsync(db, receipt, ct));
+        var retained = await db.Set<AiRequestRow>().AsNoTracking().SingleAsync(ct);
+        Assert.Equal(pending.Id, retained.Id);
+        Assert.Equal(AiRequestState.Pending, retained.State);
+        Assert.Equal(pending.ProtectedPayload, retained.ProtectedPayload);
+        Assert.Equal(pending.VendorOperationId, retained.VendorOperationId);
+        Assert.True(await db.Set<AiOfferRow>().AnyAsync(row => row.Id == unrelated.Id, ct));
+        Assert.Equal(2, await db.Set<AiOfferRow>().CountAsync(ct));
+        Assert.Empty(await db.Set<AiCreditRow>().ToListAsync(ct));
+        var result = await AccountIdentityErasure.CompleteAsync(db, storage, TimeProvider.System, receipt, ct);
+        Assert.Equal(new(AccountIdentityErasureStatus.DependenciesRemain, AccountDeletionDependencies.Analysis), result);
+        Assert.Equal(AccountAnalysisRetirementResult.Retired, await AccountAnalysisRetirement.RunAsync(db, otherReceipt, ct));
+        Assert.Equal(pendingOffer.Id, (await db.Set<AiOfferRow>().SingleAsync(ct)).Id);
+
+        AiOfferRow Offer(ServiceUser owner) => new() { Id = Guid.NewGuid(), UserId = owner.Id, MaximumUnits = 1, ExpiresAt = now.AddMinutes(5) };
+    }
+
     [Fact]
     public async Task Restore_reconciliation_binds_a_pre_request_snapshot_to_the_original_account()
     {

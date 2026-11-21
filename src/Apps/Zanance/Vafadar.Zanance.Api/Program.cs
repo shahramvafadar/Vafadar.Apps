@@ -29,11 +29,12 @@ var retireAccountObjects = args.FirstOrDefault() == "--retire-account-objects";
 var retireAccountSync = args.FirstOrDefault() == "--retire-account-personal-sync";
 var eraseAccountIdentity = args.FirstOrDefault() == "--erase-account-identity";
 var retireIdentityMail = args.FirstOrDefault() == "--retire-account-identity-mail";
+var retireAccountAnalysis = args.FirstOrDefault() == "--retire-account-local-analysis";
 var reconcileRestoredAccounts = args.FirstOrDefault() == "--reconcile-restored-account-deletions";
 if (reconcileRestoredAccounts && (args.Length < 2 || args[1] != "--confirm-isolated-restored-database" ||
     args.Contains("--migrate", StringComparer.Ordinal)))
     throw new InvalidOperationException("An explicitly confirmed isolated restored database is required.");
-var accountRetirement = retireAccountObjects || retireAccountSync || eraseAccountIdentity || retireIdentityMail;
+var accountRetirement = retireAccountObjects || retireAccountSync || eraseAccountIdentity || retireIdentityMail || retireAccountAnalysis;
 var deletionReceipt = Guid.Empty;
 if ((inspectDeletion || accountRetirement) &&
     (args.Length < 2 || !Guid.TryParseExact(args[1], "D", out deletionReceipt) || deletionReceipt == Guid.Empty ||
@@ -47,6 +48,8 @@ if (eraseAccountIdentity && (args.Length < 3 || args[2] != "--confirm-server-ide
     throw new InvalidOperationException("Explicit confirmation of active server identity erasure is required.");
 if (retireIdentityMail && (args.Length < 3 || args[2] != "--confirm-identity-mail-retirement"))
     throw new InvalidOperationException("Explicit confirmation of identity mail retirement is required.");
+if (retireAccountAnalysis && (args.Length < 3 || args[2] != "--confirm-local-analysis-retirement"))
+    throw new InvalidOperationException("Explicit confirmation of local analysis retirement is required.");
 var pilotRequestId = Guid.Empty;
 if (deletePilotResult &&
     (args.Length < 3 || !Guid.TryParseExact(args[1], "D", out pilotRequestId) || pilotRequestId == Guid.Empty ||
@@ -92,6 +95,12 @@ if (accountRetirement || reconcileRestoredAccounts)
         var result = await AccountIdentityMailRetirement.RunAsync(db, privateStorage, deletionReceipt, CancellationToken.None);
         Console.WriteLine("Account identity-mail retirement: " + result);
         if (result != AccountIdentityMailRetirementResult.Retired) Environment.ExitCode = 1;
+    }
+    else if (retireAccountAnalysis)
+    {
+        var result = await AccountAnalysisRetirement.RunAsync(db, deletionReceipt, CancellationToken.None);
+        Console.WriteLine("Account local analysis retirement: " + result);
+        if (result != AccountAnalysisRetirementResult.Retired) Environment.ExitCode = 1;
     }
     else if (retireAccountSync)
     {

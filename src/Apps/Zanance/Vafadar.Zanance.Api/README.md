@@ -134,6 +134,15 @@ outcome or ordinary expiry. The expiry worker removes both final and temporary
 local copies before dropping the row. This stage makes no external mail request.
 Provider and recipient copies remain outside its evidence.
 
+The local analysis stage is
+`--retire-account-local-analysis <receipt-id> --confirm-local-analysis-retirement`.
+It removes unused offers and refused requests whose rows prove no dispatch,
+provider result, status or deletion attempt, credit reservation or journal
+effect. It uses the original owner lock. Dispatched or unresolved work and
+credit records remain pending for their specific retention decisions. The
+same local stage is used during isolated restore reconciliation. It does not
+send provider traffic or alter credit records.
+
 After the approved stages and retention review, the operator can use
 `--erase-account-identity <receipt-id> --confirm-server-identity-erasure`.
 The active-service transaction rechecks the original dependencies under the

@@ -68,14 +68,15 @@ public static class AccountDeletionInventory
             await db.Set<BillingIdentityRow>().AnyAsync(row => row.UserId == owner, ct) ||
             await db.Set<BillingPurchaseRow>().AnyAsync(row => row.UserId == owner, ct))
             dependencies |= AccountDeletionDependencies.Billing;
-        if (await db.Set<AiOfferRow>().AnyAsync(row => row.UserId == owner, ct) ||
+        if (await HasAnalysisAsync(db, owner, ct)) dependencies |= AccountDeletionDependencies.Analysis;
+        return dependencies;
+    }
+
+    internal static async Task<bool> HasAnalysisAsync(ServiceDbContext db, string owner, CancellationToken ct) =>
+            await db.Set<AiOfferRow>().AnyAsync(row => row.UserId == owner, ct) ||
             await db.Set<AiRequestRow>().AnyAsync(row => row.UserId == owner, ct) ||
             await db.Set<AiCreditRow>().AnyAsync(row => row.UserId == owner, ct) ||
             await db.Set<AiPilotDeletionRow>().AnyAsync(row => row.Actor == owner, ct) ||
             await db.Set<AiPilotRouteRow>().AnyAsync(row => row.Actor == owner, ct) ||
-            await db.Set<AiPilotStatusCheckRow>().AnyAsync(row => row.Actor == owner, ct))
-            dependencies |= AccountDeletionDependencies.Analysis;
-
-        return dependencies;
-    }
+            await db.Set<AiPilotStatusCheckRow>().AnyAsync(row => row.Actor == owner, ct);
 }
