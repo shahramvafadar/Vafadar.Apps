@@ -112,7 +112,10 @@ the handoff.
    no Entra client is configured. A correctly packaged callback still requires an actual Microsoft sign-in check.
    This workflow leaves personal sync and billing disabled. Play-generated APK packaging and runtime page-size
    acceptance need their own checks. Download the
-   verified `.aab` artifact named for the selected edition, upload it in Play Console, then **delete the artifact** (artifacts of public
+   verified `.aab` artifact named for the selected edition. Its `android-release-receipt.json` records the
+   exact file's SHA-256, byte length, edition, version and producing commit. Compare the downloaded AAB's
+   SHA-256 with that receipt and record it with the release declaration. Upload the verified file in Play Console,
+   then **delete the artifact** (artifacts of public
    repositories are downloadable by any signed-in GitHub user; the workflow keeps them only 3 days).
 5. Tag the commit: `git tag zanance/v1.2.0 && git push origin zanance/v1.2.0`.
 

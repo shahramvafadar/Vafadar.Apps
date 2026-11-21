@@ -192,6 +192,37 @@ jobs:
           java --class-path "$bundletool" eng/maui/VerifyAndroidStorageRules.java "${bundles[0]}" pro.vafadar.zanance
           printf 'path=%s\n' "${bundles[0]}" >> "$GITHUB_OUTPUT"
 
+      - name: Record verified bundle identity
+        id: receipt
+        env:
+          VERIFIED_BUNDLE: ${{ steps.bundle.outputs.path }}
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          from pathlib import Path
+
+          bundle = Path(os.environ["VERIFIED_BUNDLE"])
+          with bundle.open("rb") as stream:
+              digest = hashlib.file_digest(stream, "sha256").hexdigest()
+          receipt = bundle.with_name("android-release-receipt.json")
+          with receipt.open("x", encoding="utf-8") as stream:
+              json.dump({
+                  "file": bundle.name,
+                  "sha256": digest,
+                  "bytes": bundle.stat().st_size,
+                  "package": "pro.vafadar.zanance",
+                  "edition": os.environ["APP_EDITION"],
+                  "version": os.environ["APP_VERSION"],
+                  "versionCode": int(os.environ["APP_BUILD_NUMBER"]),
+                  "sourceRevision": os.environ["GITHUB_SHA"],
+              }, stream, indent=2)
+              stream.write("\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as stream:
+              stream.write(f"path={receipt}\n")
+          PY
+
       - name: Remove temporary bundle signing files
         if: always()
         shell: bash
@@ -208,6 +239,8 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: android-${{ inputs.edition }}-${{ inputs.version }}-${{ inputs.build-number }}
-          path: ${{ steps.bundle.outputs.path }}
+          path: |
+            ${{ steps.bundle.outputs.path }}
+            ${{ steps.receipt.outputs.path }}
           if-no-files-found: error
           retention-days: 3
