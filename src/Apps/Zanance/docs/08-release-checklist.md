@@ -6449,3 +6449,30 @@ payloads, the pinned SQLCipher package, the offline permission and sign-in compo
 policy, and compiled backup and provider rules. The APK was prepared for handoff without
 installation, financial actions or rerunning accepted native scenarios. Physical-device
 acceptance and Play signing remain open.
+
+## Offline Release upgrade preserves AI opt-out (2026-11-21)
+
+The complete signed offline Release APK from source revision `1fe6e594`
+includes the latest camera read cancellation. It is available at
+`artifacts/android-offline-1fe6e594-release-review/pro.vafadar.zanance-Signed.apk`.
+SHA-256 is `520f0a28d3a7a72dea7a4a3e2792a198d6d201e98612bebf63170ab1f3b903d4`.
+The canonical verification passed for package `pro.vafadar.zanance`, API 24
+minimum, API 36 target, arm64-v8a and x86_64, and 16 KiB ZIP and ELF
+alignment. The local test certificate matches the `523e957b` APK and both
+v2 and v3 signatures were verified.
+
+On an owned Android 16 x86-64 emulator, the previous APK served as the setup
+for one fictitious zero-opening account and one explicit AI opt-out. One
+`install -r` upgraded directly to the new signed APK. The activity returned
+to Home, displaying the same account and the manual New expense action.
+The More section omitted Analysis and Settings still showed AI off. The guest
+boot, application ID and credential/device-encrypted data directory inodes
+matched across the update.
+
+A duplicate More caption and a changed Settings accessibility label caused
+the initial observer to stop. The existing guest continued from the visible
+state and no accepted input was repeated. The evidence is under
+`artifacts/android-release-upgrade-1fe6e594`. Only the test installation and
+owned AVD were retired. No ledger entry, receipt scan, provider request or
+financial action ran. This is evidence for the named release pair and opt-out
+state, with whole-database and physical-device acceptance still open.
