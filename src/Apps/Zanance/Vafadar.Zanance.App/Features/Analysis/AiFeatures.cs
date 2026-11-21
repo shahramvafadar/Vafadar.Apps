@@ -27,6 +27,11 @@ public sealed class AiFeatures(bool enabled, Action<bool> persist) : INotifyProp
             }
             // Old work must stay retired even when the user subsequently enables AI.
             try { retired?.Cancel(); }
+            catch (AggregateException error) when (!error.Flatten().InnerExceptions.Any(inner => inner is OutOfMemoryException))
+            {
+                // Cancel has notified all registered operations. Their failures cannot undo the persisted choice.
+                System.Diagnostics.Debug.WriteLine("An AI operation failed while handling cancellation.");
+            }
             finally { PropertyChanged?.Invoke(this, new(nameof(Enabled))); }
         }
     }

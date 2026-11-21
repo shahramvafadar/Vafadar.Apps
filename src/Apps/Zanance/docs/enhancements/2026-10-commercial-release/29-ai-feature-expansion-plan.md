@@ -30,6 +30,9 @@ is retained when the app restarts. Turning it off hides Analysis and its shortcu
 requests and manual AI handoffs. On-device receipt OCR and deterministic category matching remain
 available alongside manual entries, attachments, CSV category selection and explicit category rules.
 The choice does not erase existing records or recall work already accepted by a service.
+The device-wide switch still publishes the saved choice when a retired
+operation fails during cancellation. A focused host regression covers that
+failure, notification of the remaining operations and a fresh enabled lifetime.
 
 The initial 2026-11-20 Android review used one new API 36 emulator and one zero-opening synthetic account.
 The native switch hid Analysis in More and receipt scanning on Home while manual expense and transfer
