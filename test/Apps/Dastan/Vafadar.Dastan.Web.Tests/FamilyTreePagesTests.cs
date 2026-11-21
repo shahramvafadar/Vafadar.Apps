@@ -564,4 +564,48 @@ public sealed class FamilyTreePagesTests : IDisposable
 
         Assert.Equal("/refused", answer.Response.Headers.Location?.OriginalString);
     }
+
+    [Fact]
+    public async Task The_page_of_a_tree_is_three_tasks_and_shows_each_only_to_who_may_do_it()
+    {
+        var mina = await Signed("Mina");
+        var sara = await Signed("Sara");
+        var dara = await Signed("Dara");
+        var saraId = await Friends(mina, sara, "Sara");
+        var daraId = await Friends(mina, dara, "Dara");
+        var page = await Tree(mina);
+        await Person(mina, page, "Rostam");
+        await Send(mina, page, "member", ("account", saraId), ("role", "viewer"));
+        await Send(mina, page, "member", ("account", daraId), ("role", "editor"));
+
+        static string[] Tasks(Page shown) => [.. Regex.Matches(shown.Main, "<section class=\"task\" id=\"([a-z]+)\"").Select(match => match.Groups[1].Value)];
+        static string[] Ways(Page shown) => [.. Regex.Matches(Regex.Match(shown.Main, "<nav class=\"task-nav\"(?s:.*?)</nav>").Value, "href=\"[^\"#]*#([a-z]+)\"").Select(match => match.Groups[1].Value)];
+
+        // The owner sees, changes and shares; who may change sees and changes; who may see, sees. What somebody
+        // may not do has no part of the page and no way that would lead to it.
+        var (owner, editor, viewer) = (await mina.Get(page), await dara.Get(page), await sara.Get(page));
+        Assert.Equal(["see", "change", "share"], Tasks(owner));
+        Assert.Equal(["see", "change"], Tasks(editor));
+        Assert.Equal(["see"], Tasks(viewer));
+        Assert.All(new[] { owner, editor, viewer }, shown => Assert.Equal(Tasks(shown), Ways(shown)));
+
+        // Each thing stands in the task it is: the people and the history are seen, a person is added in
+        // changing, and who else may see the tree is said in sharing.
+        int At(string words) => owner.Main.IndexOf(words, StringComparison.Ordinal);
+        Assert.InRange(At("id=\"people\""), At("id=\"see\""), At("id=\"change\""));
+        Assert.InRange(At("id=\"history\""), At("id=\"see\""), At("id=\"change\""));
+        Assert.InRange(At($"action=\"{Forms}/person-add\""), At("id=\"change\""), At("id=\"share\""));
+        Assert.InRange(At($"action=\"{Forms}/rename\""), At("id=\"change\""), At("id=\"share\""));
+        Assert.True(At($"action=\"{Forms}/member\"") > At("id=\"share\""));
+        Assert.True(At($"action=\"{Forms}/publication\"") > At("id=\"share\""));
+
+        // One title, the three tasks below it, their parts below them.
+        Assert.Single(Regex.Matches(owner.Main, "<h1[ >]"));
+        Assert.Equal(["see-title", "change-title", "share-title"], Regex.Matches(owner.Main, "<h2 id=\"([a-z]+-title)\"").Select(match => match.Groups[1].Value));
+        Assert.Contains("<h3 id=\"people-title\">", owner.Main, StringComparison.Ordinal);
+        Assert.Contains("<h3 id=\"members-title\">", owner.Main, StringComparison.Ordinal);
+
+        // Nothing waits for anybody here, and the page says nothing of waiting.
+        Assert.DoesNotContain("waits for your answer", owner.Main, StringComparison.Ordinal);
+    }
 }

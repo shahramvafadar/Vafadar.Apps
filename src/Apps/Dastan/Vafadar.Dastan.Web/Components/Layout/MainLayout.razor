@@ -23,7 +23,7 @@
             @* The private space of who signed in; everybody else is shown what it is and where to sign in.
                Nobody is sent anything: who is asked for a relationship finds the number here. *@
             var waiting = AccountState.Of(Context).Waiting;
-            <a href="@(_session is null ? "account" : waiting > 0 ? "account/people#waiting" : "account/people")" aria-current="@Current("account/")">
+            <a href="@(_session is null ? "account" : waiting > 0 ? "account/world#waiting" : "account/world")" aria-current="@Current("account/")">
                 <Icon Name="world" /><span>@T["Nav_World"]</span>
                 @if (waiting > 0)
                 {

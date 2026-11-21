@@ -4056,4 +4056,79 @@
   <data name="Media_PlaceSources" xml:space="preserve">
     <value>What supports the words of this place:</value>
   </data>
+  <data name="Tree_Waiting" xml:space="preserve">
+    <value>Something here waits for your answer.</value>
+  </data>
+  <data name="Tree_Tasks" xml:space="preserve">
+    <value>What you can do with this tree</value>
+  </data>
+  <data name="Tree_Task_See" xml:space="preserve">
+    <value>See the tree</value>
+  </data>
+  <data name="Tree_Task_Change" xml:space="preserve">
+    <value>Change the tree</value>
+  </data>
+  <data name="Tree_Task_Share" xml:space="preserve">
+    <value>Share the tree</value>
+  </data>
+  <data name="Tree_Task_See_Lead" xml:space="preserve">
+    <value>The drawing, everybody in the tree, and every change with who made it.</value>
+  </data>
+  <data name="Tree_Task_Change_Lead" xml:space="preserve">
+    <value>Add somebody, say who is whose parent, partner or child, give the tree another name. Every change is kept and can be seen above.</value>
+  </data>
+  <data name="Tree_Task_Share_Lead" xml:space="preserve">
+    <value>Who else may see or change the tree, whether everybody may see it, and what is asked of the people it names. Each is a decision of its own: none follows from another.</value>
+  </data>
+  <data name="World_Title" xml:space="preserve">
+    <value>My World</value>
+  </data>
+  <data name="World_Lead" xml:space="preserve">
+    <value>What is yours on Dastan: the people you are connected with, where you were, your family trees and your photographs. Each has its own page, and each thing you show has its own answer to who may see it.</value>
+  </data>
+  <data name="World_Waiting" xml:space="preserve">
+    <value>Waiting for your answer</value>
+  </data>
+  <data name="World_NothingWaiting" xml:space="preserve">
+    <value>Nothing waits for your answer.</value>
+  </data>
+  <data name="World_People_Count" xml:space="preserve">
+    <value>{0} relationships</value>
+  </data>
+  <data name="World_People_None" xml:space="preserve">
+    <value>No relationship yet. A relationship is asked by one and accepted by the other.</value>
+  </data>
+  <data name="World_Places_Count" xml:space="preserve">
+    <value>{0} places and times</value>
+  </data>
+  <data name="World_Places_None" xml:space="preserve">
+    <value>You have not said where you were. Being found by a place is a decision apart from showing its dates.</value>
+  </data>
+  <data name="World_Trees_Count" xml:space="preserve">
+    <value>{0} family trees</value>
+  </data>
+  <data name="World_Trees_None" xml:space="preserve">
+    <value>No family tree yet, and none is shared with you.</value>
+  </data>
+  <data name="World_Photos_Count" xml:space="preserve">
+    <value>{0} photographs</value>
+  </data>
+  <data name="World_Photos_None" xml:space="preserve">
+    <value>No photograph yet. A photograph is seen by you alone until you say otherwise.</value>
+  </data>
+  <data name="World_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="World_AsOthers" xml:space="preserve">
+    <value>Your page as others see it</value>
+  </data>
+  <data name="World_Account" xml:space="preserve">
+    <value>Account and sign-in</value>
+  </data>
+  <data name="World_Bar" xml:space="preserve">
+    <value>What is yours</value>
+  </data>
+  <data name="World_Tags_Waiting" xml:space="preserve">
+    <value>{0} photographs name you and wait for your agreement</value>
+  </data>
 </root>

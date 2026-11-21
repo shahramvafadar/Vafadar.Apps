@@ -141,4 +141,4 @@ The pages of an account and of a record in a tree keep their own bodies – what
 other rules (PRIV-003, PRIV-008) – and carry the same mark above their names.
 
 **Not built:** an account and a record in a tree do not use `IdentityHead` – they have no `NodeProfile`; their
-heads are made the same as the others with the spaces of an account (step 20.11).
+heads carry the mark above the name. Step 20.11 kept it so and says why in [ADR 0024](0024-parts.md).

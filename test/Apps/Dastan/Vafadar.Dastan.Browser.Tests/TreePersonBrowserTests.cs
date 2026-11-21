@@ -68,6 +68,23 @@ public sealed class TreePersonBrowserTests(AccountsBrowserSite site) : IClassFix
         await page.Locator("form[action$='/trees/add'] button[type=submit]").ClickAsync();
         await BrowserSite.Arrived(page, new Regex(@"/account/trees/[a-f0-9]{32}\?said=made$"));
 
+        // The page of a tree is three tasks – seeing, changing, sharing – with a way to each (step 20.11); it
+        // fits its screen and breaks no rule a tool can check, and so does My World with the bar of the spaces.
+        var tree = page.Url;
+        await Assertions.Expect(page.Locator("section.task")).ToHaveCountAsync(3);
+        await Assertions.Expect(page.Locator(".task-nav a")).ToHaveCountAsync(3);
+        Assert.False(await ScrollsSideways(page), "The page of the tree scrolls sideways.");
+        await BreaksNoRule(page);
+        await page.Locator(".task-nav a[href$='#share']").ClickAsync();
+        await Assertions.Expect(page.Locator("#share-title")).ToBeInViewportAsync();
+
+        await page.GotoAsync($"/{language}/account/world");
+        await Assertions.Expect(page.Locator(".account-bar a[aria-current=page]")).ToHaveCountAsync(1);
+        await Assertions.Expect(page.Locator(".world-card")).ToHaveCountAsync(4);
+        Assert.False(await ScrollsSideways(page), "My World scrolls sideways.");
+        await BreaksNoRule(page);
+        await page.GotoAsync(tree);
+
         var form = page.Locator("#person-add form");
         await form.Locator("[name=name]").FillAsync("زال");
         await form.Locator("[name=born]").FillAsync("1250");

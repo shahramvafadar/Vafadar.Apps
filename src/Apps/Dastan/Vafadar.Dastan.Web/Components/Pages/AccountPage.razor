@@ -39,6 +39,11 @@
         }
     </header>
 
+    @if (_info is not null)
+    {
+        <AccountBar Here="account" />
+    }
+
     @if (_said is not null)
     {
         <p class="note" role="status">@T[$"Account_Said_{_said}"]</p>
