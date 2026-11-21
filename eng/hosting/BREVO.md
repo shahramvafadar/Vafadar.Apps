@@ -79,6 +79,9 @@ login or device authentication is introduced.
 Repeating recovery while a valid reset email is queued or in flight keeps the
 original challenge and delivery key. A delivered or expired challenge allows
 another explicit recovery request under the existing request limits.
+Completing a password reset retires the account's other reset challenges in the
+same transaction as the password change and session revocation. The worker
+skips the retired challenges on subsequent passes.
 
 The original UUID is the batch idempotency key. Its documented 30-minute lifetime
 exceeds the original 15-minute challenge. Only 201 with a nonempty receipt or the

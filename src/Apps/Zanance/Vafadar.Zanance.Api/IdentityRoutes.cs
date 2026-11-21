@@ -214,7 +214,12 @@ public static class IdentityRoutes
             input.Password is { Length: >= 12 } ? await users.ResetPasswordAsync(user, input.Token, input.Password) : IdentityResult.Failed();
         if (!result.Succeeded) return Results.BadRequest();
         if (challenge.Purpose == "reset")
+        {
             await db.Sessions.Where(s => s.UserId == user.Id).ExecuteUpdateAsync(u => u.SetProperty(s => s.Revoked, true), ct);
+            // The password change invalidates the other reset tokens. Retire their queued work in the same transaction.
+            await db.Challenges.Where(c => c.UserId == user.Id && c.Purpose == "reset" && !c.Consumed)
+                .ExecuteUpdateAsync(u => u.SetProperty(c => c.Consumed, true), ct);
+        }
         await tx.CommitAsync(ct);
         return Results.NoContent();
     }

@@ -67,12 +67,25 @@ public sealed class IdentityMailEndToEndTests
                 await resets.Where(row => row.Id == original.Id).ExecuteUpdateAsync(set => set.SetProperty(row => row.Delivered, true), ct);
                 await RequestAsync("fa-IR");
                 Assert.Equal(2, await resets.CountAsync(ct));
-                Assert.NotEqual(original.Id, await resets.Where(row => !row.Delivered).Select(row => row.Id).SingleAsync(ct));
+                var queued = await resets.SingleAsync(row => !row.Delivered, ct);
+                Assert.NotEqual(original.Id, queued.Id);
+
+                var originalMail = IdentityMailEnvelope.Read(original,
+                    scope.ServiceProvider.GetRequiredService<IDataProtectionProvider>(), sender.Authority);
+                using (var response = await http.PostAsJsonAsync("/identity/complete",
+                    new ChallengeInput(originalMail.Id, originalMail.Token, "Fictional-Recovered-Password8!"), ct))
+                    Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+                Assert.True(await resets.Where(row => row.Id == queued.Id).Select(row => row.Consumed).SingleAsync(ct));
+
+                await RequestAsync("fr-FR");
+                var current = await resets.SingleAsync(row => !row.Consumed, ct);
+                Assert.NotEqual(queued.Id, current.Id);
+                Assert.Equal(3, await resets.CountAsync(ct));
             }
             finally
             {
                 await db.Challenges.Where(row => row.UserId == owner.Id).ExecuteDeleteAsync(CancellationToken.None);
-                Assert.True((await manager.DeleteAsync(owner)).Succeeded);
+                Assert.Equal(1, await db.Users.Where(row => row.Id == owner.Id).ExecuteDeleteAsync(CancellationToken.None));
             }
         }
         finally
