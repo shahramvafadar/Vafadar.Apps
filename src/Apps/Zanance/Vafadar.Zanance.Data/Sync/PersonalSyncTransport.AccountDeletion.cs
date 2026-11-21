@@ -43,11 +43,9 @@ public sealed partial class PersonalSyncTransport
             // Do not renew another account's credentials or send a password after the original session changed.
             if (!string.Equals(retained?.UserId, expectedUser, StringComparison.Ordinal))
                 throw new InvalidDataException("The original account changed.");
-            var session = await SessionAsync(ct);
+            var session = await SessionAsync(ct, expectedUser);
             ct.ThrowIfCancellationRequested();
             verifyAccess?.Invoke();
-            if (!string.Equals(session.UserId, expectedUser, StringComparison.Ordinal))
-                throw new InvalidDataException("The original account changed.");
 
             using var request = Request(proof is null ? HttpMethod.Get : HttpMethod.Post, "identity/deletion-request",
                 proof is null ? null : JsonContent.Create(proof, SyncCredentialJsonContext.Default.AccountDeletionProof), session);

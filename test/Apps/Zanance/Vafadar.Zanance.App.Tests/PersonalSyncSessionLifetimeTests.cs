@@ -99,6 +99,44 @@ public sealed partial class PersonalSyncSessionLifetimeTests
         finally { model.Deactivate(); }
     }
 
+    [Theory]
+    [InlineData("analysis")]
+    [InlineData("billing")]
+    [InlineData("deletion")]
+    public async Task An_owner_bound_request_cannot_refresh_a_replaced_expired_session(string operation)
+    {
+        await using var host = await ProtocolHost.StartAsync();
+        const string owner = "fictional-original";
+        var replaced = new PersonalSyncSession
+        {
+            UserId = "fictional-replacement",
+            RefreshToken = "synthetic-replacement-refresh",
+            ExpiresAt = DateTimeOffset.UnixEpoch,
+        };
+        var key = host.Peer.BindingKey("session");
+        await host.Tokens.WriteAsync(key, operation == "deletion"
+            ? new PersonalSyncSession { UserId = owner, ExpiresAt = DateTimeOffset.UtcNow.AddMinutes(1) }
+            : replaced, Ct);
+        if (operation == "deletion")
+            host.Tokens.BeforeRead = () =>
+            {
+                if (host.Tokens.Reads == 2) host.Tokens.ReplaceForTest(replaced);
+            };
+        using var transport = new PersonalSyncTransport(host.Peer, host.Tokens);
+        var requests = host.Requests;
+
+        Func<Task> invoke = operation switch
+        {
+            "analysis" => () => transport.AnalysisAvailabilityAsync(owner, Ct),
+            "billing" => () => transport.BillingRegisterAsync(owner, new("fictional-public", "fictional-envelope"), Ct),
+            _ => () => transport.RequestAccountDeletionAsync(owner, "Synthetic-deletion-password9!", Ct),
+        };
+        await Assert.ThrowsAsync<InvalidDataException>(invoke);
+        Assert.Equal(requests, host.Requests);
+        Assert.Equal(1, host.Tokens.Writes);
+        Assert.Equal(0, host.Tokens.Removals);
+    }
+
     [Fact]
     public async Task Original_sign_in_publishes_the_received_identity_and_device_and_local_Reload_does_not_reopen_credentials()
     {
@@ -146,6 +184,7 @@ public sealed partial class PersonalSyncSessionLifetimeTests
     private sealed class SyntheticSessions : IPersonalSyncTokenStore
     {
         private PersonalSyncSession? session;
+        internal void ReplaceForTest(PersonalSyncSession replacement) => session = replacement;
         internal int Reads, Writes, Removals;
         internal Action? BeforeRead;
         public Task<PersonalSyncSession?> ReadAsync(string peer, CancellationToken ct) { Reads++; BeforeRead?.Invoke(); return Task.FromResult(session); }

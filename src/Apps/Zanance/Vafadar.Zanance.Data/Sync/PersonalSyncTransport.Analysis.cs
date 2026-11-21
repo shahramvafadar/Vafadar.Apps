@@ -28,8 +28,7 @@ public sealed partial class PersonalSyncTransport
         await requests.WaitAsync(ct);
         try
         {
-            var session = await SessionAsync(ct);
-            if (session.UserId != expectedUser) throw new InvalidDataException("Original analysis identity changed.");
+            var session = await SessionAsync(ct, expectedUser);
             using var content = body is null ? null : JsonContent.Create(body, bodyType!);
             return await SendCoreAsync(method, path, content, responseType, session, ct);
         }

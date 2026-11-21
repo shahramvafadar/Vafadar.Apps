@@ -298,8 +298,7 @@ public sealed partial class PersonalSyncTransport : IProfileSynchronizationTrans
         await requests.WaitAsync(ct);
         try
         {
-            var session = await SessionAsync(ct);
-            if (session.UserId != expectedUser) throw new InvalidDataException("Current billing identity changed.");
+            var session = await SessionAsync(ct, expectedUser);
             return await SendCoreAsync(HttpMethod.Post, path, JsonContent.Create(body, bodyType), responseType, session, ct);
         }
         finally { requests.Release(); }
@@ -307,10 +306,12 @@ public sealed partial class PersonalSyncTransport : IProfileSynchronizationTrans
     private static PersonalSyncSession WithIdentity(PersonalSyncSession session, string? user) => new()
     { AccessToken = session.AccessToken, RefreshToken = session.RefreshToken, ExpiresAt = session.ExpiresAt, UserId = user };
 
-    private async Task<PersonalSyncSession> SessionAsync(CancellationToken ct)
+    private async Task<PersonalSyncSession> SessionAsync(CancellationToken ct, string? expectedUser = null)
     {
         verifyAccess?.Invoke();
         var session = await tokens.ReadAsync(credentialKey, ct) ?? throw new PersonalSyncHttpException(HttpStatusCode.Unauthorized);
+        if (expectedUser is not null && !string.Equals(session.UserId, expectedUser, StringComparison.Ordinal))
+            throw new InvalidDataException("The original account changed.");
         if (session.ExpiresAt > time.GetUtcNow().AddSeconds(30)) return session;
         try
         {
