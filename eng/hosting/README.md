@@ -177,6 +177,37 @@ overlapped an existing Docker network and was refused before creating state.
 An ephemeral Integration protection key also refused the separate reconciliation
 process. The certificate-backed fixture reused the exact merged marker bytes.
 
+### End-to-end operator restore with a later pending request (2026-11-21)
+
+The operator in `4321ac9a` copied a private snapshot from a fresh fictional
+Compose source into a second, loopback-only project. The source snapshot
+contained one synthetic identity and no deletion request. With its API and
+proxy stopped, the fixture then added an exact synthetic pending database row
+and a format-1 `.request` marker to the current source. The marker follows the
+service contract. This fixture did not exercise public request submission.
+
+The original restore procedure used the immutable `e7d45753` service image
+with `receipt-fence-v4`, merged the marker, ran the packaged reconciliation
+through Compose, and started the target. The target retained the original
+identity, opaque receipt and UTC request time, with zero completion rows.
+The source and target marker hashes match. The API reported healthy and
+the target proxy returned HTTPS 200 for readiness using its own public
+fixture CA and hostname verification. The original API and proxy stayed
+stopped throughout the restore.
+
+An occupied subnet was rejected before creating resources. Docker's default
+address pool was exhausted during source provisioning. The same empty
+fixture continued using explicit, nonoverlapping database and edge subnets
+in a fixture-only Compose overlay. The proxy has no Compose healthcheck.
+The final read-only verification used its HTTPS readiness route after the
+initial observer expected a health status and the Windows client required
+revocation data that the isolated fixture CA does not publish.
+
+The receipt and retirement evidence is in
+`artifacts/zanance-operator-restore-chain-4321ac9a`. Both fixture projects,
+their volumes and networks, and the synthetic snapshot and restore receipt
+were retired. No live deploy, external mail, provider or ledger action ran.
+
 ### Restore startup and operator requirements
 
 An older image is refused before target creation. A capable application refuses
