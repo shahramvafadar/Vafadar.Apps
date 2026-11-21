@@ -12,72 +12,77 @@
     <PageTitle>@Visitor.Text(overview.Entity.Label).Value – @T["Site_Name"]</PageTitle>
     <PageDescription Title="@Visitor.Text(overview.Entity.Label).Value" Text="@Visitor.Text(overview.Entity.Summary).Value" />
 
-    <header class="page-header">
-        <p class="meta"><TypeName Type="overview.Entity.Type" /></p>
-        <h1><Loc Text="overview.Entity.Label" /></h1>
-        <p class="lead"><Loc Text="overview.Entity.Summary" /></p>
-        @if (overview.Entity.Position is { } position)
-        {
-            @* Where the place is. The link is a position a device opens with its own map; the page loads no map. *@
-            <p class="meta position">
-                @T["Position_Title"]: <a href="@PositionText.Address(position)"><bdi>@PositionText.Of(position, Visitor, T)</bdi></a>
-                @if (position.Precision != PositionPrecision.Exact)
-                {
-                    <span>– @T[$"PositionPrecision_{position.Precision}"]</span>
-                }
+    @* The head (step 20.9): the same for every kind of thing – what it is at the first glance, its picture or the
+       drawing of its kind, its name, where it is, a line and the facts of a card – and below it the two things
+       a visitor does first: explore its connections, keep it. *@
+    <IdentityHead Profile="_profile!" Flavour="@IdentityMark.Of(overview.Entity.Type)">
+        <Where>
+            @if (overview.Entity.Position is { } position)
+            {
+                @* Where the place is. The link is a position a device opens with its own map; the page loads no map. *@
+                <p class="meta position">
+                    @T["Position_Title"]: <a href="@PositionText.Address(position)"><bdi>@PositionText.Of(position, Visitor, T)</bdi></a>
+                    @if (position.Precision != PositionPrecision.Exact)
+                    {
+                        <span>– @T[$"PositionPrecision_{position.Precision}"]</span>
+                    }
+                </p>
+            }
+            <p class="meta">
+                <a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Entity_Collection"], Visitor.Text(story.Label).Value)</a>
             </p>
-        }
-        @if (!overview.Entity.Names.IsEmpty)
-        {
-            @* The other names, each in its own language and with what kind of name it is. *@
-            <p class="meta" id="names">@T["Names_Title"]:</p>
-            <ul class="names" role="list" aria-labelledby="names">
-                @foreach (var name in overview.Entity.Names)
-                {
-                    <li>
-                        <span lang="@name.Language" dir="auto">@name.Name</span>
-                        <span class="meta">– @T[$"NameKind_{name.Kind}"]@if (name.Time is { } time) {<text>, @TimeText.Of(time, Visitor, T)</text>}</span>
-                    </li>
-                }
-            </ul>
-        }
-        <p class="meta">
-            <a href="@Site.Collection">@string.Format(CultureInfo.CurrentCulture, T["Entity_Collection"], Visitor.Text(story.Label).Value)</a>
-        </p>
-        <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
-        @if (Desk.IsOpen && Library.Institutions.Find(new EntityReference(Site.Collection, overview.Entity.Id)) is not null)
-        {
-            @* A place people can have been at: who signed in may ask who states to have been here and lets
-               them know (step 20.4). The page itself names nobody. *@
-            <p class="meta"><a rel="nofollow" href="@($"account/affiliations?entity={Uri.EscapeDataString($"{Site.Collection}/{overview.Entity.Id}")}#find")">@T["Entity_WhoWasHere"]</a></p>
-        }
-        <SaveControl Kind="SavedKind.Entity" Id="@overview.Entity.Id.Value" />
-    </header>
+        </Where>
+        <ChildContent>
+            <a class="action" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Connections)}")">@T["Entity_Explore"]</a>
+            <SaveControl Kind="SavedKind.Entity" Id="@overview.Entity.Id.Value" />
+            @if (Desk.IsOpen && Library.Institutions.Find(new EntityReference(Site.Collection, overview.Entity.Id)) is not null)
+            {
+                @* A place people can have been at: who signed in may ask who states to have been here and lets
+                   them know (step 20.4). The page itself names nobody. *@
+                <a class="action secondary" rel="nofollow" href="@($"account/affiliations?entity={Uri.EscapeDataString($"{Site.Collection}/{overview.Entity.Id}")}#find")">@T["Entity_WhoWasHere"]</a>
+            }
+        </ChildContent>
+    </IdentityHead>
 
     <ExploreBar State="_explore" />
 
-    @if (_profile is { } profile)
+    @if (_hasMedia || !overview.Appearances.IsEmpty)
     {
-        @* The profile (step 19.5, ADR 0017): the picture this visitor may see, or the drawing of the kind, and
-           the facts the kind needs – each stated or said to be unknown – with those that were added. *@
-        <section class="profile" aria-labelledby="profile">
-            <h2 id="profile">@T["Profile_Title"]</h2>
-            <div class="profile-body">
-                <figure class="profile-figure">
-                    <ProfilePicture Profile="profile" />
-                    <figcaption class="meta">
-                        @if (profile.Picture is { } picture)
+        @* In story and picture (step 20.9): what shows it and where the telling has to do with it, as cards – a
+           few pictures first, then every step of the telling the visitor has read to, in the order of the story. *@
+        <section class="in-story" aria-labelledby="in-story">
+            <h2 id="in-story">@T["Entity_InStory"]</h2>
+            <ul class="cards in-story-cards" role="list">
+                @foreach (var item in overview.Media.Take(_pictures))
+                {
+                    var viewer = $"{Site.Collection}/media/{item.Id}?entity={Uri.EscapeDataString(overview.Entity.Id.Value)}";
+                    var picture = Site.ContentFile(item.Kind == MediaKind.Video ? item.Poster : item.File) is null
+                        ? null
+                        : item.Kind == MediaKind.Video ? MediaAddress.Poster(Site.Collection, item.Id) : MediaAddress.File(Site.Collection, item.Id);
+                    <li class="card media-card">
+                        @if (picture is not null)
                         {
-                            <a href="@($"{Site.Collection}/media/{picture.Id}")"><Loc Text="picture.Label" /></a>
+                            <a class="thumb" href="@viewer" tabindex="-1" aria-hidden="true"><img src="@picture" srcset="@MediaAddress.SourceSet(Site.Collection, item, file => Site.ContentFile(file) is not null)" sizes="@(item.Sizes.IsEmpty ? null : "(min-width: 40rem) 20rem, 100vw")" alt="" loading="lazy" /></a>
                         }
-                        else
-                        {
-                            @T["Profile_NoPicture"]
-                        }
-                    </figcaption>
-                </figure>
-                <ProfileFactList Lines="[.. profile.Essential, .. profile.More]" />
-            </div>
+                        <p class="meta">@T[$"Media_Kind_{item.Kind}"] – @T[$"Media_Representation_{item.Representation}"]</p>
+                        <h3><a href="@viewer"><Loc Text="item.Label" /></a></h3>
+                        <p><Loc Text="item.Caption" /></p>
+                    </li>
+                }
+                @foreach (var appearance in overview.Appearances)
+                {
+                    <li class="card step-card">
+                        <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(appearance.Step.Number))</p>
+                        <h3><a href="@(StoryAddress.Of(Site, Visitor, appearance.Step))"><Loc Text="appearance.Step.Event.Label" /></a></h3>
+                        <p><Loc Text="appearance.Association.Role" /> <span class="presence">@T[$"Presence_{appearance.Association.Presence}"]</span></p>
+                        <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, appearance.Step.Event.Id, overview.Entity.Id, _here)">@T["Evidence_Link"]<span class="visually-hidden"> – @Visitor.Text(appearance.Step.Event.Label).Value</span></a></p>
+                    </li>
+                }
+            </ul>
+            @if (_hasMedia)
+            {
+                <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Pictures)}")">@T["Entity_AllPictures"]</a></p>
+            }
         </section>
     }
 
@@ -168,63 +173,86 @@
         </section>
     }
 
-    @if (_hasMedia)
-    {
-        <p class="actions"><a class="action secondary" href="@($"{Site.Collection}/{_explore.Address(ExplorationView.Pictures)}")">@T["Gallery_Title"]</a></p>
-    }
+    @* Folded until asked for (step 20.9): every fact of the profile with what is not known, the other names,
+       the sources and what other catalogues call it. Nothing is hidden – a page without script shows the fold
+       and opens it –, it only does not stand before what a visitor came for. *@
+    <details class="fold" id="details">
+        <summary>@T["Entity_Details"]</summary>
+        @if (_profile is { } profile)
+        {
+            @* The profile (step 19.5, ADR 0017): the facts the kind needs – each stated or said to be unknown –
+               with those that were added, and which picture the head shows. *@
+            <section class="profile" aria-labelledby="profile">
+                <h2 id="profile">@T["Profile_Title"]</h2>
+                <ProfileFactList Lines="[.. profile.Essential, .. profile.More]" />
+                <p class="meta">
+                    @if (profile.Picture is { } picture)
+                    {
+                        <a href="@($"{Site.Collection}/media/{picture.Id}")"><Loc Text="picture.Label" /></a>
+                    }
+                    else
+                    {
+                        @T["Profile_NoPicture"]
+                    }
+                </p>
+            </section>
+        }
 
-    @if (!overview.Entity.Identifiers.IsEmpty)
-    {
-        @* What others call it. A link leaves Dastan; what the other catalogue states is not vouched for here. *@
-        <section aria-labelledby="identifiers">
-            <h2 id="identifiers">@T["Identifiers_Title"]</h2>
-            <p class="note">@T["Identifiers_Note"]</p>
-            <ul class="identifiers" role="list">
-                @foreach (var identifier in overview.Entity.Identifiers)
+        @if (!overview.Entity.Names.IsEmpty)
+        {
+            @* The other names, each in its own language and with what kind of name it is. *@
+            <p class="meta" id="names">@T["Names_Title"]:</p>
+            <ul class="names" role="list" aria-labelledby="names">
+                @foreach (var name in overview.Entity.Names)
                 {
                     <li>
-                        <span dir="auto">@identifier.Issuer</span>:
-                        @if (identifier.Url is { } url)
-                        {
-                            <a href="@url" rel="external noopener noreferrer"><bdi>@identifier.Value</bdi></a>
-                        }
-                        else
-                        {
-                            <bdi>@identifier.Value</bdi>
-                        }
-                        @if (identifier.Match != IdentifierMatch.Exact)
-                        {
-                            <span class="meta">– @T[$"IdentifierMatch_{identifier.Match}"]</span>
-                        }
+                        <span lang="@name.Language" dir="auto">@name.Name</span>
+                        <span class="meta">– @T[$"NameKind_{name.Kind}"]@if (name.Time is { } time) {<text>, @TimeText.Of(time, Visitor, T)</text>}</span>
                     </li>
                 }
             </ul>
-        </section>
-    }
+        }
 
-    @if (!overview.Appearances.IsEmpty)
-    {
-        <section aria-labelledby="appearances">
-            <h2 id="appearances">@T["Entity_Appearances"]</h2>
-            <ol class="steps" role="list">
-                @foreach (var appearance in overview.Appearances)
-                {
-                    <li class="step">
-                        <p class="meta">@string.Format(CultureInfo.CurrentCulture, T["Step_Number"], Visitor.Number(appearance.Step.Number))</p>
-                        <h3><a href="@(StoryAddress.Of(Site, Visitor, appearance.Step))"><Loc Text="appearance.Step.Event.Label" /></a></h3>
-                        <p><Loc Text="appearance.Association.Role" /> <span class="presence">@T[$"Presence_{appearance.Association.Presence}"]</span></p>
-                        <p><a class="evidence-link" href="@EvidenceAddress.Of(Site.Collection, appearance.Step.Event.Id, overview.Entity.Id, _here)">@T["Evidence_Link"]<span class="visually-hidden"> – @Visitor.Text(appearance.Step.Event.Label).Value</span></a></p>
-                    </li>
-                }
-            </ol>
-        </section>
-    }
+        <p class="meta"><a href="@EvidenceAddress.Of(Site.Collection, overview.Entity.Id, _here)">@T["Evidence_Title"]</a></p>
+
+        @if (!overview.Entity.Identifiers.IsEmpty)
+        {
+            @* What others call it. A link leaves Dastan; what the other catalogue states is not vouched for here. *@
+            <section aria-labelledby="identifiers">
+                <h2 id="identifiers">@T["Identifiers_Title"]</h2>
+                <p class="note">@T["Identifiers_Note"]</p>
+                <ul class="identifiers" role="list">
+                    @foreach (var identifier in overview.Entity.Identifiers)
+                    {
+                        <li>
+                            <span dir="auto">@identifier.Issuer</span>:
+                            @if (identifier.Url is { } url)
+                            {
+                                <a href="@url" rel="external noopener noreferrer"><bdi>@identifier.Value</bdi></a>
+                            }
+                            else
+                            {
+                                <bdi>@identifier.Value</bdi>
+                            }
+                            @if (identifier.Match != IdentifierMatch.Exact)
+                            {
+                                <span class="meta">– @T[$"IdentifierMatch_{identifier.Match}"]</span>
+                            }
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+    </details>
 }
 
 @code {
     private EntityOverview? _entity;
     private NodeProfile? _profile;
     private bool _hasFamily;
+    // So many pictures stand before the steps of the telling; the rest is one step away.
+    private const int _pictures = 3;
+
     private bool _hasMedia;
     private System.Collections.Immutable.ImmutableArray<ThreadOnward> _onward = [];
     private string _here = string.Empty;

@@ -25,22 +25,28 @@ public sealed class NodeProfileBrowserTests(BrowserSite site) : IClassFixture<Br
 
         // Nothing of the profile reaches beyond the screen, and the drawing of the kind is a square that is seen.
         Assert.False(await page.EvaluateAsync<bool>("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1"));
-        var picture = await page.Locator(".profile .profile-picture").BoundingBoxAsync();
+        var picture = await page.Locator(".identity .profile-picture").BoundingBoxAsync();
         Assert.NotNull(picture);
         Assert.InRange(picture.Width, 100, 240);
         Assert.Equal(picture.Width, picture.Height, 1.0);
-        var facts = await page.Locator(".profile .profile-facts").BoundingBoxAsync();
+        var facts = await page.Locator(".identity .identity-words").BoundingBoxAsync();
         Assert.NotNull(facts);
 
-        // Beside each other where there is room, under each other where there is none.
+        // The head (step 20.9): the words beside the picture where there is room, under it where there is none.
         if (width >= 1000)
         {
-            Assert.True(Math.Abs(facts.Y - picture.Y) < 4, "The facts stand beside the picture.");
+            Assert.True(Math.Abs(facts.Y - picture.Y) < 4, "The words stand beside the picture.");
         }
         else
         {
-            Assert.True(facts.Y > picture.Y + picture.Height, "The facts stand under the picture.");
+            Assert.True(facts.Y > picture.Y + picture.Height, "The words stand under the picture.");
         }
+
+        // Every fact is folded until asked for, opens without a script of the site, and fits the screen as well.
+        await Assertions.Expect(page.Locator(".profile .profile-facts")).ToBeHiddenAsync();
+        await page.Locator("details.fold > summary").ClickAsync();
+        await Assertions.Expect(page.Locator(".profile .profile-facts")).ToBeVisibleAsync();
+        Assert.False(await page.EvaluateAsync<bool>("document.documentElement.scrollWidth > document.documentElement.clientWidth + 1"));
 
         var result = await page.RunAxe(new AxeRunOptions
         {
@@ -66,6 +72,6 @@ public sealed class NodeProfileBrowserTests(BrowserSite site) : IClassFixture<Br
 
         await card.Locator("h3 a").ClickAsync();
         await BrowserSite.Arrived(page, new System.Text.RegularExpressions.Regex("/entity/"));
-        await Assertions.Expect(page.Locator("#profile")).ToBeVisibleAsync();
+        await Assertions.Expect(page.Locator(".identity h1")).ToBeVisibleAsync();
     }
 }

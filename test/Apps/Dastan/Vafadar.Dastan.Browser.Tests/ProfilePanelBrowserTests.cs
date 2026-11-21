@@ -28,6 +28,7 @@ public sealed class ProfilePanelBrowserTests(BrowserSite site) : IClassFixture<B
         var page = await site.Visitor(width, readTo: 4, dark: dark);
         await page.GotoAsync($"/{language}/{Story}/entity/{entity}");
         var name = Words(await page.Locator("main h1").InnerTextAsync());
+        await page.Locator("details.fold > summary").ClickAsync();
         var facts = Words(await page.Locator(".profile .profile-facts").InnerTextAsync());
 
         await page.GotoAsync($"/{language}/{Story}");
@@ -93,7 +94,7 @@ public sealed class ProfilePanelBrowserTests(BrowserSite site) : IClassFixture<B
         // The name of the card leads to the page of the node, as before.
         await page.Locator("#subjects ~ ul .node-card h3 a, section[aria-labelledby=subjects] .node-card h3 a").First.ClickAsync();
         await BrowserSite.Arrived(page, new Regex("/entity/"));
-        await Assertions.Expect(page.Locator(".profile .profile-facts")).ToBeVisibleAsync();
+        await Assertions.Expect(page.Locator(".identity h1")).ToBeVisibleAsync();
     }
 
     [Fact]

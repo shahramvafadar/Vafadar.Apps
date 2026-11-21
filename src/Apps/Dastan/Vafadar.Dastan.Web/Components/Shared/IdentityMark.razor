@@ -1,0 +1,38 @@
+@* What kind of somebody or something a profile is about, said at the first glance (step 20.9): a figure of a
+   story, somebody or something of the world, the account of a visitor, a record in a family tree. The four
+   are told apart in words and by a small drawing – never by a colour alone –, because they are four different
+   things: a statement about a character is of a telling, one about a person of history has sources, an
+   account speaks for itself, and a record in a tree is what its owner wrote. *@
+@inject IStringLocalizer<Ui> T
+
+<p class="identity-mark mark-@Flavour"><Icon Name="@Drawing" /><span>@T[$"Identity_{Flavour}"]</span></p>
+
+@code {
+    /// <summary>A figure, a place or a thing of a story.</summary>
+    public const string Story = "story";
+
+    /// <summary>Somebody or something of the world: a person of history, a place on a map, a work, an institution.</summary>
+    public const string World = "world";
+
+    /// <summary>The account of a visitor.</summary>
+    public const string Account = "account";
+
+    /// <summary>A record in a family tree of a visitor.</summary>
+    public const string Record = "record";
+
+    /// <summary>Gets or sets which of the four it is.</summary>
+    [Parameter, EditorRequired]
+    public string Flavour { get; set; } = World;
+
+    private string Drawing => Flavour switch { Story => "story", Account => "account", Record => "family", _ => "globe" };
+
+    /// <summary>Returns whether an entity of a type is of a story or of the world: the types of a story say so themselves.</summary>
+    public static string Of(EntityType type)
+    {
+        ArgumentNullException.ThrowIfNull(type);
+        return type == EntityTypes.Character || type == EntityTypes.AnimalCharacter || type == EntityTypes.NarrativePlace
+            || type == EntityTypes.NarrativeRegion || type == EntityTypes.NarrativeObject || type == EntityTypes.StoryArc
+            ? Story
+            : World;
+    }
+}

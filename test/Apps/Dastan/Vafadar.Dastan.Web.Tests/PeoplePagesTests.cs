@@ -116,6 +116,9 @@ public sealed class PeoplePagesTests : IDisposable
 
         Assert.Matches("Sara</a>\\s*<span class=\"meta\">– friend", (await mina.Get(page)).Main);
         Assert.Matches("Sara</a>\\s*<span class=\"meta\">– friend", (await sara.Get(page)).Main);
+
+        // The page says at the first glance that this is an account – to whoever looks (step 20.9).
+        Assert.Matches("<p class=\"identity-mark mark-account\">(?s:.*?)<span>An account on Dastan</span></p>", (await dara.Get(page)).Main);
         Assert.Contains("Nothing is shown to you here.", (await dara.Get(page)).Main, StringComparison.Ordinal);
         Assert.Contains("Nothing is shown to you here.", (await _site.Visitor().Get(page)).Main, StringComparison.Ordinal);
 

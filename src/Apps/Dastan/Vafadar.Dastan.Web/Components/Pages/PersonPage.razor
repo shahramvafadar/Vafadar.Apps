@@ -17,7 +17,8 @@
     @* The page of a person is for people, not for search engines. *@
     <HeadContent><meta name="robots" content="noindex, nofollow" /></HeadContent>
 
-    <header class="page-header">
+    <header class="page-header is-account">
+        <IdentityMark Flavour="@IdentityMark.Account" />
         <h1 dir="auto">@_profile.Person.Name</h1>
         @if (_own && _seen is null)
         {

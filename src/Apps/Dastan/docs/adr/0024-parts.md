@@ -64,6 +64,7 @@ A visitor who asks the device for more contrast gets lines and secondary text as
 | `RelationshipRequest` | A request that waits: who asks, what for, the two answers |
 | `StateNote` | Something goes on, nothing is here, something went wrong – in words, with what to do next |
 | `Icon` | A small drawing beside words |
+| `IdentityMark` | What kind of somebody or something a profile is about: of a story, of the world, an account, a record in a tree (step 20.9, ADR 0017) |
 | the panel of a profile | The inspector (ADR 0019), unchanged |
 
 **Drawings.** The icons are Dastan's own: lines on a grid of 24, drawn for this site in `Icon.razor`. They

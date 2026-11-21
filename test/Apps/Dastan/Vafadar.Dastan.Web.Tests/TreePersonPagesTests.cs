@@ -173,6 +173,9 @@ public sealed class TreePersonPagesTests : IDisposable
         Assert.Equal($"{here}?said=described#profile", sent.Response.Headers.Location?.OriginalString);
         var page = await mina.Get(sent.Response.Headers.Location!.OriginalString);
         Assert.Contains(saved, page.Main, StringComparison.Ordinal);
+
+        // The page says at the first glance that this is a record in a tree, not an account and not a figure of a story (step 20.9).
+        Assert.Contains("<header class=\"page-header is-record\"><p class=\"identity-mark mark-record\">", page.Main, StringComparison.Ordinal);
         Assert.Contains("<dd><bdi>Zabol</bdi></dd>", Profile(page), StringComparison.Ordinal);
         Assert.Contains("<p class=\"person-about\" dir=\"auto\">He raised Rostam.\nHe had white hair.</p>", WebUtility.HtmlDecode(page.Html), StringComparison.Ordinal);
 
@@ -216,6 +219,7 @@ public sealed class TreePersonPagesTests : IDisposable
         var stranger = _site.Visitor();
         var seen = await stranger.Get(open);
         Assert.Equal(HttpStatusCode.OK, seen.Status);
+        Assert.Contains("class=\"identity-mark mark-record\"", seen.Main, StringComparison.Ordinal);
         Assert.Contains("kind-drawing", Profile(seen), StringComparison.Ordinal);
         Assert.Contains("<dd><bdi>Zabol</bdi></dd>", Profile(seen), StringComparison.Ordinal);
         Assert.DoesNotContain("person-describe", seen.Html, StringComparison.Ordinal);

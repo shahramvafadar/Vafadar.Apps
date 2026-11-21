@@ -3999,4 +3999,28 @@
   <data name="Explore_Pictures" xml:space="preserve">
     <value>Its pictures</value>
   </data>
+  <data name="Identity_story" xml:space="preserve">
+    <value>Of a story</value>
+  </data>
+  <data name="Identity_world" xml:space="preserve">
+    <value>Of the world</value>
+  </data>
+  <data name="Identity_account" xml:space="preserve">
+    <value>An account on Dastan</value>
+  </data>
+  <data name="Identity_record" xml:space="preserve">
+    <value>A record in a family tree</value>
+  </data>
+  <data name="Entity_Explore" xml:space="preserve">
+    <value>Explore the connections</value>
+  </data>
+  <data name="Entity_InStory" xml:space="preserve">
+    <value>In story and picture</value>
+  </data>
+  <data name="Entity_AllPictures" xml:space="preserve">
+    <value>All its pictures</value>
+  </data>
+  <data name="Entity_Details" xml:space="preserve">
+    <value>Details and sources</value>
+  </data>
 </root>
