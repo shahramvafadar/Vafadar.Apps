@@ -1,0 +1,165 @@
+{
+  "files": [
+    {
+      "out": "exports/png/dastan-logo-color-512.png",
+      "width": 512,
+      "height": 146,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-color-1024.png",
+      "width": 1024,
+      "height": 292,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-color-2048.png",
+      "width": 2048,
+      "height": 584,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-white-512.png",
+      "width": 512,
+      "height": 146,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-white-1024.png",
+      "width": 1024,
+      "height": 292,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-white-2048.png",
+      "width": 2048,
+      "height": 584,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-black-512.png",
+      "width": 512,
+      "height": 146,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-black-1024.png",
+      "width": 1024,
+      "height": 292,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-logo-black-2048.png",
+      "width": 2048,
+      "height": 584,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-indigo-256.png",
+      "width": 256,
+      "height": 268,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-indigo-512.png",
+      "width": 512,
+      "height": 537,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-indigo-1024.png",
+      "width": 1024,
+      "height": 1074,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-white-256.png",
+      "width": 256,
+      "height": 268,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-white-512.png",
+      "width": 512,
+      "height": 537,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-white-1024.png",
+      "width": 1024,
+      "height": 1074,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-black-256.png",
+      "width": 256,
+      "height": 268,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-black-512.png",
+      "width": 512,
+      "height": 537,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/png/dastan-symbol-black-1024.png",
+      "width": 1024,
+      "height": 1074,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/icons/icon-192.png",
+      "width": 192,
+      "height": 192,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/icons/icon-512.png",
+      "width": 512,
+      "height": 512,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/icons/icon-maskable-192.png",
+      "width": 192,
+      "height": 192,
+      "leastAlpha": 255
+    },
+    {
+      "out": "exports/icons/icon-maskable-512.png",
+      "width": 512,
+      "height": 512,
+      "leastAlpha": 255
+    },
+    {
+      "out": "exports/icons/apple-touch-icon.png",
+      "width": 180,
+      "height": 180,
+      "leastAlpha": 255
+    },
+    {
+      "out": "exports/icons/favicon-48.png",
+      "width": 48,
+      "height": 48,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/icons/favicon-32.png",
+      "width": 32,
+      "height": 32,
+      "leastAlpha": 0
+    },
+    {
+      "out": "exports/icons/favicon-16.png",
+      "width": 16,
+      "height": 16,
+      "leastAlpha": 24
+    }
+  ],
+  "reference": {
+    "inkPixels": 130591,
+    "differing": 3393,
+    "share": 0.026
+  }
+}

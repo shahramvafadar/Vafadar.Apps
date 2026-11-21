@@ -1,0 +1,24 @@
+@* The logo of Dastan (ADR 0026): the symbol – an open D with a dot and a page – and beside it the wordmark, drawn
+   from the one geometry of the brand (BrandGeometry, written by branding/dastan/scripts/build.mjs). It stands
+   in the page as a drawing, so it needs no request of its own and takes its colours from the appearance the
+   visitor chose: indigo and ink on a light ground, white on a dark one.
+
+   The drawing says nothing to a screen reader: what carries it – the link of the head – is named "Dastan" once.
+   The wordmark is Latin and is never mirrored: a drawing has no direction of writing, and the page gives it none. *@
+<svg class="logo" viewBox="0 0 @(SymbolOnly ? BrandGeometry.SymbolWidth : BrandGeometry.LockupWidth) @BrandGeometry.Height" aria-hidden="true" focusable="false">
+    <g class="logo-symbol">
+        <path d="@BrandGeometry.Letter" />
+        <path d="@BrandGeometry.Page" />
+        <circle cx="@BrandGeometry.DotX.ToString(CultureInfo.InvariantCulture)" cy="@BrandGeometry.DotY.ToString(CultureInfo.InvariantCulture)" r="@BrandGeometry.DotRadius.ToString(CultureInfo.InvariantCulture)" />
+    </g>
+    @if (!SymbolOnly)
+    {
+        <path class="logo-word" fill-rule="evenodd" d="@BrandGeometry.Wordmark" />
+    }
+</svg>
+
+@code {
+    /// <summary>Gets or sets a value indicating whether the symbol stands alone, where there is no room for the wordmark.</summary>
+    [Parameter]
+    public bool SymbolOnly { get; set; }
+}

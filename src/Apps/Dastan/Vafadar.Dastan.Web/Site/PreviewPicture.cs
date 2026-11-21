@@ -37,26 +37,23 @@ public static class PreviewPicture
         return endpoints;
     }
 
-    // The mark of icon.svg – two paths that meet and one that continues – on the ground of the mark, as large
-    // as leaves room around it. The mark is drawn in a square of 64, like the icon.
+    // The symbol of the logo (ADR 0026) in white on the indigo of the brand, as large as leaves room around
+    // it. Its geometry is the one of the brand (BrandGeometry), so the picture cannot drift from the logo.
     private static byte[] Draw()
     {
         using var bitmap = new SKBitmap(new SKImageInfo(Width, Height, SKColorType.Rgba8888, SKAlphaType.Opaque));
         using (var canvas = new SKCanvas(bitmap))
         {
-            canvas.Clear(new SKColor(0x2f, 0x2e, 0x7a));
-            const float scale = 9f;
-            canvas.Translate((Width - (64 * scale)) / 2, (Height - (64 * scale)) / 2);
+            canvas.Clear(SKColor.Parse(BrandGeometry.Indigo));
+            const float scale = 1f;
+            canvas.Translate((Width - (BrandGeometry.SymbolWidth * scale)) / 2, (Height - (BrandGeometry.Height * scale)) / 2);
             canvas.Scale(scale);
-            using var line = new SKPaint { IsAntialias = true, Style = SKPaintStyle.Stroke, StrokeWidth = 5, StrokeCap = SKStrokeCap.Round };
-            using var first = SKPath.ParseSvgPathData("M14 18c14 0 14 28 28 28");
-            using var second = SKPath.ParseSvgPathData("M14 46c10 0 12-10 20-14s10-14 16-14");
-            line.Color = new SKColor(0xfb, 0xfa, 0xf7);
-            canvas.DrawPath(first, line);
-            line.Color = new SKColor(0xf4, 0xb8, 0x60);
-            canvas.DrawPath(second, line);
-            using var dot = new SKPaint { IsAntialias = true, Style = SKPaintStyle.Fill, Color = new SKColor(0xf4, 0xb8, 0x60) };
-            canvas.DrawCircle(50, 18, 4.5f, dot);
+            using var fill = new SKPaint { IsAntialias = true, Style = SKPaintStyle.Fill, Color = SKColors.White };
+            using var letter = SKPath.ParseSvgPathData(BrandGeometry.Letter);
+            using var page = SKPath.ParseSvgPathData(BrandGeometry.Page);
+            canvas.DrawPath(letter, fill);
+            canvas.DrawPath(page, fill);
+            canvas.DrawCircle(BrandGeometry.DotX, BrandGeometry.DotY, BrandGeometry.DotRadius, fill);
         }
 
         using var image = SKImage.FromBitmap(bitmap);

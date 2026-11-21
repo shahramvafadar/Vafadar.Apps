@@ -14,7 +14,9 @@
        that the text does not move when it arrives. The address is the one the style sheet asks for – beside
        itself, inside the language – or the font would be fetched twice. *@
     <link rel="preload" href="fonts/vazirmatn-nl-wght.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="icon" href="@Assets["icon.svg"]" type="image/svg+xml" />
+    @* The icon of the tab (ADR 0026): the drawing where a browser takes one, three sizes of pixels where it does not. *@
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="@Assets["favicon.svg"]" type="image/svg+xml" />
 
     @* The installable app (ADR 0007). These addresses carry no language: there is one app, not one per language. *@
     <link rel="manifest" href="/manifest.webmanifest" />

@@ -17,8 +17,8 @@ public sealed class PreviewPictureTests(DemoSite demo) : IClassFixture<DemoSite>
         using var read = SkiaSharp.SKBitmap.Decode(await picture.Bytes());
         Assert.Equal((1200, 630), (read.Width, read.Height));
 
-        // The ground of the mark at a corner, and the mark – something lighter – in the middle of the picture.
-        Assert.Equal(new SkiaSharp.SKColor(0x2f, 0x2e, 0x7a), read.GetPixel(5, 5));
+        // The indigo of the brand at a corner, and the symbol of the logo – white – in the middle of the picture.
+        Assert.Equal(new SkiaSharp.SKColor(0x3b, 0x3a, 0x8f), read.GetPixel(5, 5));
         Assert.Contains(Enumerable.Range(400, 400).Select(x => read.GetPixel(x, 315)), colour => colour.Red > 0xc0);
     }
 

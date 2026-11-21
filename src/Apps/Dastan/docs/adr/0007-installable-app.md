@@ -23,6 +23,9 @@ browser keeps is a risk: a kept page or file would outlive the reading position 
 2. **Icons are the provisional drawing** (`icon.svg`) as PNG of 192 and 512 px, a second drawing with the same
    paths inside the middle of a full square for platforms that cut their own shape (`maskable`, and the icon for a
    home screen of 180 px). They are original and provisional like the palette (ADR 0004).
+   **Since 2026-11-21 the icons are the symbol of the logo** ([ADR 0026](0026-logo.md)): `favicon.svg` and
+   `favicon.ico` for a tab, 192 and 512 px for "any", 192 and 512 px of their own for "maskable", 180 px for a
+   home screen; the store of the worker is `dastan-shell-2`.
 3. **A service worker with one job: the page for "no connection".** It keeps that page and the four files it is
    made of (two style sheets, the font, the icon) and nothing else. A page is always asked for from the network;
    only when that fails the visitor gets the kept page, at the address they asked for. The kept files themselves

@@ -166,7 +166,9 @@ With a library that writes images (D-056) the site draws one.
   – and takes the Latin letters from the device of the visitor; a container has no fonts at all. Persian
   needs its letters joined as well, which is a second library. Fonts in the program are a decision that was
   not made.
-* The mark is the provisional one; a new mark is a change in two places, `icon.svg` and `PreviewPicture`.
+* The mark was the provisional one, drawn in two places. Since 2026-11-21 the picture draws the symbol of the
+  logo from the one geometry of the brand (`BrandGeometry`, [ADR 0026](0026-logo.md)): a new mark is a change
+  of that geometry and nowhere else.
 
 Checked: `PreviewPictureTests` (4 cases): the picture is a PNG of that size with the ground at its corner and
 the mark in its middle; pages in both languages name it; a page without an address names none. Looked at in a

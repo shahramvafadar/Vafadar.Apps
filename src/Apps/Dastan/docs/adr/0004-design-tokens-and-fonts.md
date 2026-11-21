@@ -39,8 +39,9 @@ pages have to work in two scripts, two directions and two themes from the first 
 
 ## Open – for the owner
 
-* The palette, the wordmark and the icon are placeholders until the identity work of document 11 is done. The
-  icon (`wwwroot/icon.svg`) is an original provisional drawing.
+* The palette is a placeholder until the identity work of document 11 is done. The wordmark and the icon were
+  placeholders too until 2026-11-21: the owner chose a logo (D-082), and [ADR 0026](0026-logo.md) says how the
+  site shows it. (As written first: "The icon (`wwwroot/icon.svg`) is an original provisional drawing.")
 
 ## Consequences
 

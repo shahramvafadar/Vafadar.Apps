@@ -11,7 +11,7 @@ public sealed class WorkerUpdateTests(BrowserSite site) : IClassFixture<BrowserS
         var page = await site.Visitor(offline: true);
         await page.GotoAsync("/en/");
         await page.EvaluateAsync("() => navigator.serviceWorker.ready.then(() => new Promise(done => navigator.serviceWorker.controller ? done() : navigator.serviceWorker.addEventListener('controllerchange', () => done())))");
-        Assert.Equal(["dastan-shell-1"], await page.EvaluateAsync<string[]>("caches.keys()"));
+        Assert.Equal(["dastan-shell-2"], await page.EvaluateAsync<string[]>("caches.keys()"));
 
         // The site now answers with a worker that keeps its files under another name – as after a release that
         // changed what is kept. The browser is told to look for it, which it also does by itself on a later visit.
@@ -36,7 +36,7 @@ public sealed class WorkerUpdateTests(BrowserSite site) : IClassFixture<BrowserS
             """);
 
         // The page was not closed and not loaded again: the new worker is in charge of it, and the old store is gone.
-        Assert.Equal(["dastan-shell-2"], stores);
+        Assert.Equal(["dastan-shell-3"], stores);
         Assert.Equal("Dastan", await page.Locator("h1").InnerTextAsync());
 
         // What the worker is there for still works, from the new store.

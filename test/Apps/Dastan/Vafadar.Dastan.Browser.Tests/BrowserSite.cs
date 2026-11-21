@@ -158,7 +158,7 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
             // Firefox, driven from here, forgets the appearance of the device when a window opens its first
             // page. The window opens a file of the site first and is told the appearance again; from then on
             // it keeps it.
-            await page.GotoAsync("/icon.svg");
+            await page.GotoAsync("/favicon.svg");
             await page.EmulateMediaAsync(new PageEmulateMediaOptions { ColorScheme = ColorScheme.Dark });
         }
 
@@ -230,7 +230,7 @@ public class BrowserSite : WebApplicationFactory<Program>, IAsyncLifetime
                 var worker = await File.ReadAllTextAsync(Path.Combine(files, "service-worker.js"), context.RequestAborted);
                 context.Response.ContentType = "text/javascript";
                 context.Response.Headers.CacheControl = "no-cache";
-                await context.Response.WriteAsync(worker.Replace("'dastan-shell-1'", "'dastan-shell-2'", StringComparison.Ordinal), context.RequestAborted);
+                await context.Response.WriteAsync(worker.Replace("'dastan-shell-2'", "'dastan-shell-3'", StringComparison.Ordinal), context.RequestAborted);
             });
             next(app);
         };

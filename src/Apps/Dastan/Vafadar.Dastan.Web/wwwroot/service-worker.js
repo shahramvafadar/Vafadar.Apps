@@ -5,7 +5,7 @@
 // everything goes to the network exactly as without it.
 
 // Changing a name makes browsers drop what an earlier worker kept.
-const SHELL = 'dastan-shell-1';
+const SHELL = 'dastan-shell-2';
 const READ = 'dastan-read-1';
 
 // How many pages and files of pages are kept; beyond that the ones kept longest ago go.
@@ -17,7 +17,7 @@ const FILES = [
   '/app.css',
   '/_content/Vafadar.Web/vafadar.css',
   '/fonts/vazirmatn-nl-wght.woff2',
-  '/icon.svg',
+  '/favicon.svg',
 ];
 
 self.addEventListener('install', event => {
