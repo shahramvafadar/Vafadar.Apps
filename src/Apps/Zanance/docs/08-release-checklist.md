@@ -302,6 +302,8 @@ independent work and overall goal remain active. Broader gates stay open.
   build of the same edition, use `-p:ZanancePrivacyPolicyPublished=true`. Check More → About →
   Privacy Policy in the signed package. The app opens the link in the system browser on request and
   the offline edition needs no network permission. Enter the same URL in Play Console.
+  In the same About screen, check that the data summary shows only the edition's configured cloud
+  backup, personal sync and online Analysis disclosures.
 - [ ] Android Auto Backup disclosed (D-16); decision re-checked against the release edition.
   The retained offline ARM64 and cloud-backup x64 bundles both bind the legacy and modern exclusion rules and
   declare `allowBackup=false` in the base manifest. Their compiled legacy, cloud-backup and device-transfer

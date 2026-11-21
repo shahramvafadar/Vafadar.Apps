@@ -3160,7 +3160,16 @@ Flexible: separa las facturas mensuales y la parte mensual de las menos frecuent
     <value>Política de privacidad</value>
   </data>
   <data name="About_DataText" xml:space="preserve">
-    <value>Puedes usar Zanance sin una cuenta en línea. No hay anuncios. Si lo usas en modo local, tus registros financieros se quedan en este dispositivo. Tú decides cuándo exportarlos o hacer una copia. Las copias opcionales en la nube se guardan en tu cuenta conectada. Si activas la sincronización personal, Zanance puede enviar registros automáticamente a su servicio. El análisis en línea con IA solo envía el resumen después de que lo revises y confirmes. Puedes desactivar la IA en Ajustes.</value>
+    <value>Puedes usar Zanance sin una cuenta en línea. No hay anuncios. Si lo usas en modo local, tus registros financieros se quedan en este dispositivo. Tú decides cuándo exportarlos o hacer una copia.</value>
+  </data>
+  <data name="About_DataCloudBackup" xml:space="preserve">
+    <value>Las copias opcionales en la nube se guardan en tu cuenta conectada.</value>
+  </data>
+  <data name="About_DataPersonalSync" xml:space="preserve">
+    <value>Si activas la sincronización personal, Zanance puede enviar registros automáticamente a su servicio.</value>
+  </data>
+  <data name="About_DataOnlineAnalysis" xml:space="preserve">
+    <value>El análisis en línea con IA solo envía el resumen después de que lo revises y confirmes. Puedes desactivar la IA en Ajustes.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Avisos de componentes de terceros</value>

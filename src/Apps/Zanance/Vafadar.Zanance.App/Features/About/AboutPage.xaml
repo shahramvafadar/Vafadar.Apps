@@ -25,6 +25,9 @@
             <Border Style="{StaticResource Card}">
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{v:Translate About_DataText}" />
+                    <Label Text="{v:Translate About_DataCloudBackup}" IsVisible="{Binding HasCloudBackup}" />
+                    <Label Text="{v:Translate About_DataPersonalSync}" IsVisible="{x:Static local:AboutViewModel.HasPersonalSync}" />
+                    <Label Text="{v:Translate About_DataOnlineAnalysis}" IsVisible="{x:Static local:AboutViewModel.HasOnlineAnalysis}" />
                     <Button Style="{StaticResource SecondaryButton}" Text="{v:Translate About_PrivacyPolicy}"
                             IsVisible="{x:Static local:AboutViewModel.HasPublishedPrivacyPolicy}"
                             Command="{Binding OpenPrivacyPolicyCommand}" />

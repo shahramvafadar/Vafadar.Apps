@@ -1,6 +1,7 @@
 using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Vafadar.Authentication.Maui;
 using Vafadar.Core.Hosting;
 using Vafadar.Localization;
 using Vafadar.Maui.Mvvm;
@@ -12,7 +13,7 @@ namespace Vafadar.Zanance.App.Features.About;
 /// platforms, a problem report the user sends themselves, and the third-party notices the licences of the included
 /// software and fonts require (<c>Resources/Raw/ThirdPartyNotices.txt</c>, shown in full on its own page).
 /// </summary>
-public sealed partial class AboutViewModel(Translator translator, IAppEnvironment app) : ViewModelBase
+public sealed partial class AboutViewModel(Translator translator, IAppEnvironment app, CloudSignIn cloud) : ViewModelBase
 {
     /// <summary>The file with the notices; the first block lists the components, the licence texts follow.</summary>
     public const string NoticesFile = "ThirdPartyNotices.txt";
@@ -32,6 +33,15 @@ public sealed partial class AboutViewModel(Translator translator, IAppEnvironmen
 
     [ObservableProperty]
     public partial string VersionText { get; set; } = string.Empty;
+
+    /// <summary>Whether the backup screen can offer at least one configured provider.</summary>
+    public bool HasCloudBackup => cloud.IsAnyAvailable;
+
+    /// <summary>Whether this edition includes personal synchronization.</summary>
+    public static bool HasPersonalSync => Sync.PersonalSyncBuild.IsAvailable;
+
+    /// <summary>Whether this edition can open the optional online Analysis route.</summary>
+    public static bool HasOnlineAnalysis => HasPersonalSync || Commerce.Billing.BillingBuild.IsAvailable;
 
     /// <summary>Gets the full notices, re-flowed so that they read well at any width.</summary>
     [ObservableProperty]
