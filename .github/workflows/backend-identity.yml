@@ -75,6 +75,7 @@ jobs:
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_analysis_content_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_analysis_restore_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_household_fixture'
+          docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_household_admission_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_dispatch_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_fence_current_fixture'
           docker exec zanance-backend-ci psql -h 127.0.0.1 -U postgres -d zanance_identity_ci -v ON_ERROR_STOP=1 -c 'CREATE DATABASE zanance_delete_fence_restored_fixture'

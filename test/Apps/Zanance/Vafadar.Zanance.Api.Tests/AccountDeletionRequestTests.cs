@@ -1,6 +1,7 @@
 using System.Net;
 using System.Data.Common;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
+using Vafadar.Cryptography;
 using Vafadar.Zanance.Api.Analysis;
 using Vafadar.Zanance.Api.Billing;
 using Vafadar.Zanance.Api.Rates;
@@ -31,6 +33,112 @@ namespace Vafadar.Zanance.Api.Tests;
 /// <summary>Authenticated account deletion intake retains one original receipt and never applies deletion itself.</summary>
 public sealed class AccountDeletionRequestTests
 {
+    [Fact]
+    public async Task Pending_account_deletion_refuses_new_household_admission()
+    {
+        var configured = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_DB");
+        Assert.SkipWhen(configured is null, "Requires the fresh fictional deletion request database.");
+        var connection = new NpgsqlConnectionStringBuilder(configured!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal(55489, connection.Port);
+        Assert.Equal("zanance_delete_request_fixture", connection.Database);
+        connection.Database = "zanance_delete_household_admission_fixture";
+        var root = Environment.GetEnvironmentVariable("ZANANCE_DELETE_REQUEST_FIXTURE_ROOT");
+        Assert.False(string.IsNullOrWhiteSpace(root));
+        var ct = TestContext.Current.CancellationToken;
+        Assert.Equal("Zanance fictional deletion request fixture", await File.ReadAllTextAsync(Path.Combine(root, "fixture.marker"), ct));
+
+        await using var host = new IdentityHost(connection.ConnectionString, Path.Combine(root, $"household-admission-{Guid.NewGuid():N}"), household: true);
+        await using var fixture = host.Services.CreateAsyncScope();
+        var db = fixture.ServiceProvider.GetRequiredService<ServiceDbContext>();
+        var users = fixture.ServiceProvider.GetRequiredService<UserManager<ServiceUser>>();
+        await db.Database.MigrateAsync(ct);
+        const string password = "Fictional-Household-Admission9!";
+        var owner = await SeedAsync("household-admission-owner@example.invalid");
+        var claimant = await SeedAsync("household-admission-claimant@example.invalid");
+        var other = await SeedAsync("household-admission-other@example.invalid");
+        using var ownerHttp = await LoginAsync(owner);
+        using var claimantHttp = await LoginAsync(claimant);
+        using var otherHttp = await LoginAsync(other);
+        using var roomKey = SigningRecipientIdentity.Create();
+        using var ownerKey = SigningRecipientIdentity.Create();
+        using var claimantKey = SigningRecipientIdentity.Create();
+        using var otherKey = SigningRecipientIdentity.Create();
+        var operation = new HouseholdReserveSpace(Guid.NewGuid(), new('a', 64), Keys(roomKey), Keys(ownerKey));
+        using var reservation = await ownerHttp.PostAsJsonAsync("/households/", operation, ct);
+        Assert.Equal(HttpStatusCode.OK, reservation.StatusCode);
+        var room = Assert.IsType<HouseholdSpaceReservation>(await reservation.Content.ReadFromJsonAsync<HouseholdSpaceReservation>(ct));
+        var now = DateTimeOffset.UtcNow;
+        await db.Set<HouseholdSpaceRow>().Where(row => row.Id == room.SpaceId).ExecuteUpdateAsync(set =>
+            set.SetProperty(row => row.MembershipVersion, 1).SetProperty(row => row.KeyEpoch, 1)
+                .SetProperty(row => row.HostExpiresAt, now.AddHours(2)), ct);
+        await db.Set<HouseholdMemberRow>().Where(row => row.SpaceId == room.SpaceId).ExecuteUpdateAsync(set => set.SetProperty(row => row.Accepted, true), ct);
+        await db.Set<HouseholdDeviceRow>().Where(row => row.Id == room.DeviceId).ExecuteUpdateAsync(set => set.SetProperty(row => row.Approved, true), ct);
+
+        var capability = Convert.ToHexStringLower(RandomNumberGenerator.GetBytes(32));
+        var invitation = new HouseholdInvitationStatement(1, room.SpaceId, Guid.NewGuid(), Guid.NewGuid(), 1, new('0', 64),
+            HouseholdRole.Editor, Convert.ToHexStringLower(SHA256.HashData(Convert.FromHexString(capability))), now.AddMinutes(10).ToUnixTimeSeconds());
+        var inviteRoute = $"/households/{room.SpaceId}/invitations";
+        var originalInvitation = SignInvitation(invitation);
+        using var invite = await ownerHttp.PostAsJsonAsync(inviteRoute, originalInvitation, ct);
+        Assert.Equal(HttpStatusCode.OK, invite.StatusCode);
+        foreach (var account in new[] { ownerHttp, claimantHttp })
+        {
+            using var intake = await account.PostAsJsonAsync("/identity/deletion-request", new AccountDeletionInput(password), ct);
+            Assert.Equal(HttpStatusCode.Accepted, intake.StatusCode);
+        }
+
+        await RefusesAsync(claimantHttp.PostAsJsonAsync("/households/", operation with { OperationId = Guid.NewGuid() }, ct));
+        await RefusesAsync(ownerHttp.PostAsJsonAsync(inviteRoute,
+            SignInvitation(invitation with { InvitationId = Guid.NewGuid(), OperationId = Guid.NewGuid() }), ct));
+        var claimRoute = $"{inviteRoute}/{invitation.InvitationId}/claim";
+        await RefusesAsync(claimantHttp.PostAsJsonAsync(claimRoute, Claim(claimant, claimantKey), ct));
+        Assert.Null((await db.Set<HouseholdInvitationRow>().AsNoTracking().SingleAsync(ct)).ClaimedUserId);
+        Assert.Single(await db.Set<HouseholdSpaceRow>().AsNoTracking().ToListAsync(ct));
+        Assert.Single(await db.Set<HouseholdDeviceRow>().AsNoTracking().ToListAsync(ct));
+
+        using var original = await ownerHttp.PostAsJsonAsync("/households/", operation, ct);
+        Assert.Equal(HttpStatusCode.OK, original.StatusCode);
+        Assert.Equal(room.SpaceId, (await original.Content.ReadFromJsonAsync<HouseholdSpaceReservation>(ct))?.SpaceId);
+        using var unaffected = await otherHttp.PostAsJsonAsync(claimRoute, Claim(other, otherKey), ct);
+        Assert.Equal(HttpStatusCode.OK, unaffected.StatusCode);
+        Assert.Equal(other.Id, (await db.Set<HouseholdInvitationRow>().AsNoTracking().SingleAsync(ct)).ClaimedUserId);
+        Assert.Empty(await db.Set<HouseholdRecordRow>().ToListAsync(ct));
+
+        static HouseholdPublicKeys Keys(SigningRecipientIdentity key) => new(key.Public.SigningKey, key.Public.WrappingKey);
+        HouseholdCreateInvitation SignInvitation(HouseholdInvitationStatement statement) => new(room.DeviceId,
+            StandardJoseSignatures.Sign(JsonSerializer.SerializeToUtf8Bytes(statement, HouseholdMetadataJsonContext.Default.HouseholdInvitationStatement),
+                roomKey, HouseholdMetadataProofs.InvitationType));
+        HouseholdClaimInvitation Claim(ServiceUser user, SigningRecipientIdentity key)
+        {
+            var claim = new HouseholdInvitationClaimStatement(1, room.SpaceId, invitation.InvitationId, Guid.NewGuid(), user.Id,
+                HouseholdMetadataProofs.Digest(originalInvitation.SignedInvitation, HouseholdLimits.MembershipBytes * 2), roomKey.Public.Fingerprint, Keys(key));
+            return new(capability, StandardJoseSignatures.Sign(JsonSerializer.SerializeToUtf8Bytes(claim,
+                HouseholdMetadataJsonContext.Default.HouseholdInvitationClaimStatement), key, HouseholdMetadataProofs.ClaimType), Keys(key));
+        }
+        async Task<ServiceUser> SeedAsync(string email)
+        {
+            var user = new ServiceUser { UserName = email, Email = email, EmailConfirmed = true };
+            Assert.True((await users.CreateAsync(user, password)).Succeeded);
+            return user;
+        }
+        async Task<HttpClient> LoginAsync(ServiceUser user)
+        {
+            var client = host.CreateClient(new() { BaseAddress = new Uri("https://localhost") });
+            using var login = await client.PostAsJsonAsync("/identity/login", new IdentityInput(user.Email!, password), ct);
+            Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+            var grant = await login.Content.ReadFromJsonAsync<JsonElement>(ct);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", grant.GetProperty("accessToken").GetString());
+            return client;
+        }
+        async Task RefusesAsync(Task<HttpResponseMessage> response)
+        {
+            using var result = await response;
+            Assert.Equal(HttpStatusCode.Conflict, result.StatusCode);
+            Assert.Equal("AccountDeletionPending", (await result.Content.ReadFromJsonAsync<JsonElement>(ct)).GetProperty("title").GetString());
+        }
+    }
+
     [Fact]
     public async Task Analysis_retirement_erases_content_only_for_the_confirmed_owner_result()
     {
@@ -1143,7 +1251,7 @@ public sealed class AccountDeletionRequestTests
         }
     }
 
-    private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null, bool analysis = false) : WebApplicationFactory<Program>
+    private sealed class IdentityHost(string connection, string root, OwnerUploadWait? uploadWait = null, bool analysis = false, bool household = false) : WebApplicationFactory<Program>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -1151,6 +1259,7 @@ public sealed class AccountDeletionRequestTests
             builder.UseSetting("ConnectionStrings:Service", connection);
             builder.UseSetting("Service:Root", root);
             if (analysis) builder.UseSetting("Analysis:LocalQualification", "true");
+            if (household) builder.UseSetting("Service:Household:LocalQualification", "true");
             builder.ConfigureServices(services =>
             {
                 services.RemoveAll<IHostedService>();

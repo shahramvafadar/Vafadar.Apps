@@ -25,9 +25,13 @@ internal sealed class SyncRequestScope : IAsyncDisposable
     /// <summary>Refuses new personal sync writes once the same owner lock has admitted deletion.</summary>
     internal async Task RequireActiveAccountAsync(CancellationToken ct)
     {
-        if (await _db.AccountDeletionRequests.AnyAsync(row => row.UserId == Owner, ct))
+        if (await AccountDeletionPendingAsync(ct))
             throw new SyncProtocolRefusal(409, "AccountDeletionPending");
     }
+
+    /// <summary>Reads the original deletion state while the same owner transaction remains locked.</summary>
+    internal Task<bool> AccountDeletionPendingAsync(CancellationToken ct) =>
+        _db.AccountDeletionRequests.AnyAsync(row => row.UserId == Owner, ct);
 
     /// <summary>Rechecks session after taking the same owner lock used by personal revocation.</summary>
     internal static async Task<SyncRequestScope?> OpenAsync(ClaimsPrincipal principal, ServiceDbContext db, TimeProvider time, CancellationToken ct)

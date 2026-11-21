@@ -27,6 +27,8 @@ internal sealed class HouseholdMembershipStore(ServiceDbContext db)
                 throw Refuse(409, "AlteredHouseholdReservation");
             return new(prior.Id, device.Id, scope.Owner, prior.MembershipVersion > 0);
         }
+        if (await scope.AccountDeletionPendingAsync(ct))
+            throw Refuse(409, "AccountDeletionPending");
         // This technical bound is not a verified purchase/subscription grant. Public activation requires separate authority.
         if (await db.Set<HouseholdSpaceRow>().AnyAsync(row => row.OwnerId == scope.Owner && !row.Deleted, ct))
             throw Refuse(413, "HouseholdHostedSpaceBound");
@@ -55,6 +57,7 @@ internal sealed class HouseholdMembershipStore(ServiceDbContext db)
             if (prior.Revoked || prior.ExpiresAt <= scope.Now && !prior.Accepted) throw Refuse(410, "HouseholdInvitationUnavailable");
             return prior.Id;
         }
+        await scope.RequireActiveAccountAsync(ct);
         if (value.MembershipVersion != scope.Space.MembershipVersion || value.MembershipHead != scope.Space.MembershipHead ||
             value.ExpiresUnixSeconds <= scope.Now.ToUnixTimeSeconds() ||
             value.ExpiresUnixSeconds > scope.Now.Add(HouseholdLimits.InvitationLifetime).ToUnixTimeSeconds())
@@ -105,6 +108,7 @@ internal sealed class HouseholdMembershipStore(ServiceDbContext db)
             if (!invitation.Accepted && invitation.ExpiresAt <= scope.Now) throw Refuse(410, "HouseholdInvitationUnavailable");
             return new(invitationId, claimed, scope.ActorId, key.Fingerprint, invitation.Role, invitation.Accepted);
         }
+        await scope.RequireActiveAccountAsync(ct);
         if (invitation.Accepted || invitation.ExpiresAt <= scope.Now) throw Refuse(410, "HouseholdInvitationUnavailable");
         if (await db.Set<HouseholdMemberRow>().AnyAsync(row => row.SpaceId == scope.Space.Id && row.UserId == scope.ActorId && !row.Revoked, ct))
             throw Refuse(409, "HouseholdIdentityAlreadyEnrolled");

@@ -33,6 +33,13 @@ internal sealed class HouseholdRequestScope : IAsyncDisposable
     /// <summary>Authoritative remote window; security revocation/device approval are still independently required.</summary>
     internal HouseholdRetentionState Retention => HouseholdAccessPolicy.Retention(Now, Space.HostExpiresAt, Space.Deleted);
 
+    /// <summary>Checks before new sharing admission using the original locked actor identity.</summary>
+    internal async Task RequireActiveAccountAsync(CancellationToken ct)
+    {
+        if (await session.AccountDeletionPendingAsync(ct))
+            throw new HouseholdProtocolRefusal(409, "AccountDeletionPending");
+    }
+
     /// <summary>Locks session owner then room; no shared operation takes a second identity lock in reverse order.</summary>
     internal static async Task<HouseholdRequestScope?> OpenAsync(ClaimsPrincipal principal, ServiceDbContext db,
         TimeProvider time, Guid spaceId, CancellationToken ct)

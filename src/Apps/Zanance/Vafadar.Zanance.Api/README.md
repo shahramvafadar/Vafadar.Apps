@@ -161,6 +161,13 @@ The owner lock orders a pilot claim against the deletion request. Existing work
 that has crossed its dispatch boundary retains its original status and credit
 handling.
 
+In isolated household qualification, a pending deletion also blocks the account
+from reserving a new room, issuing a new invitation, or claiming an existing
+invitation for the first time. The original owner lock orders each admission
+against deletion intake. Exact retries of existing reservations and claims
+remain observable, and existing room ownership and retirement have their own
+authority checks.
+
 After the approved stages and retention review, the operator can use
 `--erase-account-identity <receipt-id> --confirm-server-identity-erasure`.
 The active-service transaction rechecks the original dependencies under the
