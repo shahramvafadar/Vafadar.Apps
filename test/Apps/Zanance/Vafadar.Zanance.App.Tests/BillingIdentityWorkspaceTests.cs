@@ -6,6 +6,48 @@ namespace Vafadar.Zanance.App.Tests;
 /// <summary>Original optional identity read and native consent ownership; all effects are isolated and fictitious.</summary>
 public sealed class BillingIdentityWorkspaceTests
 {
+    [Theory]
+    [InlineData("retired")]
+    [InlineData("language")]
+    [InlineData("feedback")]
+    public async Task Billing_confirmation_startup_refuses_an_obsolete_or_failed_disclosure(string interruption)
+    {
+        using var fixture = new FlowFixture();
+        var effects = new Effects();
+        var model = new BillingIdentityViewModel(effects, fixture.Translator, fixture.Platform);
+        await model.ActivateAsync();
+        var interrupted = false;
+        model.PropertyChanged += (_, args) =>
+        {
+            if (interrupted || args.PropertyName != nameof(model.CanSignOut) || model.CanSignOut) return;
+            interrupted = true;
+            switch (interruption)
+            {
+                case "retired": model.RetireRoot(); break;
+                case "language":
+                    fixture.Localization.SetLanguage(fixture.Localization.SupportedLanguages.Single(x => x.CultureName == "de"));
+                    break;
+                case "feedback": throw new InvalidOperationException("Synthetic review feedback failure.");
+            }
+        };
+
+        await model.SignOutCommand.ExecuteAsync(null);
+
+        Assert.True(interrupted);
+        Assert.Empty(fixture.Platform.ConfirmationDialogs);
+        Assert.Equal(0, effects.Signouts);
+        Assert.True(model.CanLeave);
+        if (interruption != "retired")
+        {
+            Assert.True(model.CanSignOut);
+            // A fresh review opens once. The fixture declines, so no sign-out is dispatched.
+            await model.SignOutCommand.ExecuteAsync(null);
+            Assert.Single(fixture.Platform.ConfirmationDialogs);
+            Assert.Equal(0, effects.Signouts);
+        }
+        model.Deactivate();
+    }
+
     [Fact]
     public async Task Billing_identity_startup_feedback_failure_leaves_read_retry_available()
     {

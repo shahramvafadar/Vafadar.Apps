@@ -177,12 +177,13 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
         ChallengeError = ShowChallenge && !validChallenge ? translator["BillingIdentity_ChallengeError"] : null;
         TokenError = ShowChallenge && (token.Length is < 1 or > 8192 || token.Any(char.IsControl)) ? translator["BillingIdentity_TokenError"] : null;
         if (EmailError is not null || PasswordError is not null || ChallengeError is not null || TokenError is not null) return;
+        bool SameRequest() => captured == epoch && mode == ModeIndex && revision == inputRevision && disclosure == Disclosure();
         if (mode == 1)
         {
-            var accepted = await ConfirmOriginalAsync("BillingIdentity_Register", "BillingIdentity_Explanation");
+            var accepted = await ConfirmOriginalAsync("BillingIdentity_Register", "BillingIdentity_Explanation", SameRequest);
             if (!accepted) return;
         }
-        if (captured != epoch || !CanSubmit || mode != ModeIndex || revision != inputRevision || disclosure != Disclosure()) return;
+        if (!CanSubmit || !SameRequest()) return;
         Password = ""; Token = "";
         await RunAsync(async ct =>
         {
@@ -203,8 +204,9 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
         if (!CanSignOut) return;
         var revision = inputRevision; var disclosure = Disclosure();
         var captured = epoch;
-        var accepted = await ConfirmOriginalAsync("BillingIdentity_SignOut", "BillingIdentity_SignOutExplanation");
-        if (!accepted || captured != epoch || !CanSignOut || revision != inputRevision || disclosure != Disclosure()) return;
+        bool SameRequest() => captured == epoch && Connected && revision == inputRevision && disclosure == Disclosure();
+        var accepted = await ConfirmOriginalAsync("BillingIdentity_SignOut", "BillingIdentity_SignOutExplanation", SameRequest);
+        if (!accepted || !CanSignOut || !SameRequest()) return;
         Password = ""; Token = "";
         await RunAsync(async ct =>
         {
@@ -212,13 +214,23 @@ public sealed partial class BillingIdentityViewModel(IBillingIdentityEnvironment
             return confirmed ? "BillingIdentity_SignedOut" : "BillingIdentity_LocalSignOut";
         });
     }
-    private async Task<bool> ConfirmOriginalAsync(string titleKey, string explanationKey)
+    private async Task<bool> ConfirmOriginalAsync(string titleKey, string explanationKey, Func<bool> sameRequest)
     {
-        var original = epoch; reviewing = true; RefreshDisplay();
-        try { return await interaction.ConfirmAsync(translator[titleKey], translator[explanationKey], translator[titleKey], translator["Common_Cancel"]); }
+        var original = epoch;
+        reviewing = true;
+        try
+        {
+            RefreshDisplay();
+            if (!IsReady || !environment.Available || HasPendingOperation || !sameRequest()) return false;
+            return await interaction.ConfirmAsync(translator[titleKey], translator[explanationKey], translator[titleKey], translator["Common_Cancel"]);
+        }
         catch (Exception error) when (error is not OutOfMemoryException)
         { if (original == epoch && OwnsPresentation) statusKey = "BillingIdentity_Unavailable"; return false; }
-        finally { reviewing = false; RefreshDisplay(); }
+        finally
+        {
+            reviewing = false;
+            if (OwnsPresentation) RefreshDisplay();
+        }
     }
     // Only nonsecret disclosure facts and an input revision are retained across native consent.
     private string Disclosure() => translator.Culture.Name + "\n" + translator["BillingIdentity_Explanation"]
