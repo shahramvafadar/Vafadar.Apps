@@ -6573,3 +6573,19 @@ the same local v2/v3 review signer and both Android ABIs.
 A fresh installation on an owned Android 16 x86-64 emulator reached Welcome
 on its first launch without the trial notice or any screen tap. The package
 was removed without setup, provider calls or financial writes.
+
+### Offline test APK with AI opt-out and shortcut fixes
+
+The licensed offline build from `f23d814d` includes the AI opt-out cancellation
+fix and the shortcut failure handling for Forecast, Budget, Goals and Reports.
+Existing on-device OCR, rule-based category matching and manual workflows
+remain available under their existing access rules.
+
+- APK: `artifacts/android-offline-f23d814d-licensed-review/pro.vafadar.zanance-Signed.apk`
+- Size: 100,097,817 bytes
+- SHA-256: `efac655d7f4cf3944a3ec4364bef8ad1e25017727edddc6276bc67eee753dfad`
+
+Android Release built with zero warnings and errors. The canonical offline
+verifier passed on the APK. The copied archive has the same SHA-256, supports
+arm64-v8a and x86_64, and retains the previous licensed review certificate with
+v2 and v3 signatures. This APK was prepared for testing and has not been installed.
