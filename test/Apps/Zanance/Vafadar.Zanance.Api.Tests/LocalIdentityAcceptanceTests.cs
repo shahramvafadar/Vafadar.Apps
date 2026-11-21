@@ -340,6 +340,59 @@ public sealed class LocalIdentityAcceptanceTests
         }
     }
 
+    /// <summary>Both current revocation routes persist their changes for the authenticated owner.</summary>
+    [Fact]
+    public async Task Session_revocation_commits_for_the_current_owner()
+    {
+        var input = Environment.GetEnvironmentVariable("ZANANCE_SESSION_TEST_DB");
+        Assert.SkipWhen(input is null, "Requires a dedicated fictional session database.");
+        var connection = new NpgsqlConnectionStringBuilder(input!);
+        Assert.Equal("127.0.0.1", connection.Host);
+        Assert.Equal("zanance_identity_session_revocation", connection.Database);
+        var ct = TestContext.Current.CancellationToken;
+        var options = new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection.ConnectionString).Options;
+        await using (var db = new ServiceDbContext(options))
+        {
+            await db.Database.MigrateAsync(ct);
+            Assert.Empty(await db.Users.ToArrayAsync(ct));
+        }
+
+        var root = Path.Combine(Path.GetTempPath(), "zanance-session-revocation-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            await using var host = new IdentityHost(connection.ConnectionString, root, new FakeTimeProvider(TimeProvider.System.GetUtcNow()));
+            using var current = host.CreateSecureClient();
+            using var otherDevice = host.CreateSecureClient();
+            const string email = "session-owner@example.invalid";
+            await using (var services = host.Services.CreateAsyncScope())
+            {
+                var users = services.ServiceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.UserManager<ServiceUser>>();
+                var result = await users.CreateAsync(new ServiceUser { UserName = email, Email = email, EmailConfirmed = true }, "Fictional-Password9!");
+                Assert.True(result.Succeeded);
+            }
+
+            var otherGrant = await LoginAsync(otherDevice, email);
+            otherDevice.DefaultRequestHeaders.Authorization = new("Bearer", otherGrant.GetProperty("accessToken").GetString());
+            var originalSession = Assert.Single(await otherDevice.GetFromJsonAsync<JsonElement[]>("/sessions", ct) ?? []);
+            var currentGrant = await LoginAsync(current, email);
+            current.DefaultRequestHeaders.Authorization = new("Bearer", currentGrant.GetProperty("accessToken").GetString());
+
+            var originalId = originalSession.GetProperty("id").GetGuid();
+            using var single = await current.DeleteAsync($"/sessions/{originalId:D}", ct);
+            Assert.Equal(HttpStatusCode.NoContent, single.StatusCode);
+            await using var check = new ServiceDbContext(options);
+            var revoked = await check.Sessions.Where(session => session.Revoked).Select(session => session.Id).ToArrayAsync(ct);
+            Assert.Equal(originalId, Assert.Single(revoked));
+
+            using var all = await current.PostAsync("/sessions/revoke-all", null, ct);
+            Assert.Equal(HttpStatusCode.NoContent, all.StatusCode);
+            var sessions = await check.Sessions.AsNoTracking().ToArrayAsync(ct);
+            Assert.Equal(2, sessions.Length);
+            Assert.All(sessions, session => Assert.True(session.Revoked));
+        }
+        finally { if (Directory.Exists(root)) Directory.Delete(root, recursive: true); }
+    }
+
     private static async Task<string> EnrollAsync(HttpClient client, IdentityHost host, string email)
     {
         Assert.Equal(HttpStatusCode.Accepted, (await client.PostAsJsonAsync("/identity/register", new IdentityInput(email, "Fictional-Password9!"), cancellationToken: TestContext.Current.CancellationToken)).StatusCode);
