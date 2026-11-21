@@ -390,3 +390,6 @@ Changes a visitor or the owner can notice, newest first. Technical decisions are
   each to the others. Going to another view and coming back finds the first as you left it: what you opened, how
   far, in which order. You can look closer at somebody in a list or a drawing without leaving – "Chosen" – and
   put them in the middle when you want to. An address you pass on carries all of it, and nothing about you.
+- The start page begins with a large search, shows the story with its picture or a drawing of what it is, the
+  names to start with as cards, and a piece of a real drawing of connections that you can open in full. It shows
+  only what you have read to, and nothing on it asks for an account.

@@ -3963,4 +3963,7 @@
   <data name="Explore_Filter_KindOfPicture" xml:space="preserve">
     <value>نوع تصویری که انتخاب کردید</value>
   </data>
+  <data name="Discover_Drawing_Open" xml:space="preserve">
+    <value>این پیوندها را بکاوید</value>
+  </data>
 </root>
