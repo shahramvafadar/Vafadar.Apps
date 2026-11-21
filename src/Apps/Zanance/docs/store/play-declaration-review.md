@@ -55,3 +55,29 @@ An internal-testing-only app is exempt from the Data safety form under current g
 the evidence for closed testing, open testing or production.
 Record the final bundle SHA-256, enabled features, SDK evidence, policy URL and owner-reviewed
 answers alongside the release receipt. Console review, declarations and publication remain open.
+
+## In-app explanation and public policy
+
+About Zanance now distinguishes local use, user-owned cloud backups, personal
+synchronization and explicitly confirmed online analysis in all six app
+languages. It discloses that enabling personal synchronization can cause
+records to be sent automatically to the Zanance service, and points to the
+Settings switch for disabling AI.
+
+Strict Windows and Android Release builds passed. The signed offline APK
+`fa00cffc03cf2ecf2a14102245f38d982822ed7984810519cbc37c01c1b82cb4`
+passed package verification. On an owned Android 16 x86-64 emulator, the
+actual About page displayed the full English string exactly. All six resource
+entries were checked in source and compiled. The other five were not rendered
+on Android in this check. One synthetic zero-opening account was used. No
+financial posting, provider request or sharing was invoked. The guest geometry
+was restored and the owned package and emulator were retired. Local evidence
+is in `artifacts/about-local-connected-disclosure`.
+
+[Play's User Data policy](https://support.google.com/googleplay/android-developer/answer/10144311)
+requires in-app access and an active public policy URL in the Console. The
+[policy draft](../../../../../docs/privacy/privacy-policy.md) names
+`https://vafadar.pro/privacy` as its intended URL. On 2026-11-21 the hostname
+did not resolve from the development environment, so no HTTPS policy response
+was verified and no new external link was added to the app. Final policy content
+and review, hosting, the in-app policy link and the Console declaration remain open.

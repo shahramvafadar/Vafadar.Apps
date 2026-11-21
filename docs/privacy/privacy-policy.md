@@ -1,6 +1,6 @@
 # Privacy Policy
 
-> **Draft.** Source text for the policy published at `https://vafadar.pro/privacy`. Before publishing: fill in the
+> **Draft.** Source text for the proposed public policy at `https://vafadar.pro/privacy`. Before publishing: fill in the
 > contact address, effective date, exact online features and processors, and remove this note. Only an exact
 > offline artifact with no network permission can use a "does not connect to the internet" statement; absent
 > cloud-backup OAuth alone does not establish this when optional service features are included.

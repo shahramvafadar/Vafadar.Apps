@@ -3195,7 +3195,7 @@ Flex: Monatsrechnungen und Monatsanteile seltenerer Rechnungen getrennt betracht
     <value>Ihre Daten</value>
   </data>
   <data name="About_DataText" xml:space="preserve">
-    <value>Für die lokale Nutzung von Zanance ist kein Onlinekonto erforderlich. Die App zeigt keine Werbung und sendet Ihre Finanzdaten nicht automatisch an den Entwickler. Sie entscheiden selbst, ob Sie Sicherungen erstellen, einen eigenen Cloud-Speicher verbinden oder Daten teilen.</value>
+    <value>Du kannst Zanance ohne Online-Konto nutzen. Es gibt keine Werbung. Bei lokaler Nutzung bleiben deine Finanzdaten auf diesem Gerät. Du entscheidest, wann du sie exportierst oder sicherst. Optionale Cloud-Sicherungen gehen an dein verbundenes Cloud-Konto. Wenn du die persönliche Synchronisierung aktivierst, kann Zanance Daten automatisch an den Zanance-Dienst senden. Die Online-KI-Analyse sendet eine Zusammenfassung erst, wenn du sie geprüft und bestätigt hast. In den Einstellungen kannst du die KI ausschalten.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Hinweise zu Drittanbieter-Komponenten</value>

@@ -3163,7 +3163,7 @@ Flexible : séparez les factures mensuelles et la part mensuelle des factures m
     <value>Vos données</value>
   </data>
   <data name="About_DataText" xml:space="preserve">
-    <value>Zanance fonctionne sans compte en ligne et n’affiche aucune publicité. Vos données financières sont stockées sur cet appareil. Vous choisissez quand les exporter ou créer des sauvegardes. Les sauvegardes cloud facultatives sont conservées dans votre propre compte cloud connecté. Zanance n’envoie pas automatiquement vos données financières au développeur.</value>
+    <value>Vous pouvez utiliser Zanance sans compte en ligne. Il n’y a pas de publicité. En utilisation locale, vos données financières restent sur cet appareil. Vous choisissez quand les exporter ou les sauvegarder. Les sauvegardes facultatives dans le cloud sont enregistrées dans votre compte connecté. Si vous activez la synchronisation personnelle, Zanance peut envoyer automatiquement des données à son service. L’analyse en ligne par IA envoie un résumé uniquement après votre vérification et votre confirmation. Vous pouvez désactiver l’IA dans les paramètres.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Avis des composants tiers</value>

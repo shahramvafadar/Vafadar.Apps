@@ -3209,7 +3209,7 @@ Flex: track monthly bills and the monthly share of less frequent bills separatel
     <value>Your data</value>
   </data>
   <data name="About_DataText" xml:space="preserve">
-    <value>Zanance works without an online account and does not show ads. Your financial data is stored on this device. You choose when to export it or create backups. Optional cloud backups are stored in your own connected cloud account. Zanance does not automatically send your financial records to the developer.</value>
+    <value>You can use Zanance without an online account. There are no ads. For local use, your financial records stay on this device. You choose when to export or back them up. Optional cloud backups go to your connected cloud account. If you enable personal sync, Zanance can send records automatically to the Zanance service. Online AI analysis sends a summary only after you review and confirm it. You can turn AI off in Settings.</value>
   </data>
   <data name="About_ShowLicences" xml:space="preserve">
     <value>Third-party component notices</value>
