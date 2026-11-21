@@ -660,15 +660,26 @@ public sealed class AccountDeletionRequestTests
         await using var restored = new ServiceDbContext(new DbContextOptionsBuilder<ServiceDbContext>().UseNpgsql(connection.ConnectionString).Options);
         await restored.Database.MigrateAsync(ct);
         var originalOffer = await db.Set<AiOfferRow>().AsNoTracking().SingleAsync(row => row.Id == confirmed.OfferId, ct);
+        var originalPending = await db.AccountDeletionRequests.AsNoTracking().SingleAsync(row => row.ReceiptId == receipt.ReceiptId, ct);
         restored.AddRange(owner, originalOffer);
         await restored.SaveChangesAsync(ct);
         restored.ChangeTracker.Clear();
-        Assert.Equal(1, await AccountDeletionRestoreFence.MergeAsync(currentRoot, restoredRoot, ct));
+        Assert.Equal(2, await AccountDeletionRestoreFence.MergeAsync(currentRoot, restoredRoot, ct));
         await AccountDeletionRestoreFence.VerifyDatabaseAsync(db, storage, ct);
-        await Assert.ThrowsAsync<IOException>(() => AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct));
+        var pendingRefusal = await Assert.ThrowsAsync<IOException>(() =>
+            AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct));
+        Assert.Contains("Pending account deletion is missing or differs", pendingRefusal.Message, StringComparison.Ordinal);
         restored.Add(confirmed);
         await restored.SaveChangesAsync(ct);
         restored.ChangeTracker.Clear();
+
+        Assert.Equal(1, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
+        var pendingBeforeProviderReceipt = await restored.AccountDeletionRequests.AsNoTracking().SingleAsync(ct);
+        Assert.Equal(originalPending.ReceiptId, pendingBeforeProviderReceipt.ReceiptId);
+        Assert.Equal(originalPending.UserId, pendingBeforeProviderReceipt.UserId);
+        Assert.Equal(originalPending.RequestedAt, pendingBeforeProviderReceipt.RequestedAt);
+        Assert.Equal(confirmed.ProtectedText, (await restored.Set<AiRequestRow>().AsNoTracking().SingleAsync(ct)).ProtectedText);
+
         var startupRefusal = await Assert.ThrowsAsync<IOException>(() =>
             AccountDeletionRestoreFence.VerifyDatabaseAsync(restored, restoredStorage, ct));
         Assert.Contains("Analysis retirement is not reconciled", startupRefusal.Message, StringComparison.Ordinal);
@@ -676,10 +687,6 @@ public sealed class AccountDeletionRequestTests
         var startup = Record.Exception(() => oldHost.CreateClient().Dispose());
         Assert.NotNull(startup);
         Assert.Contains("Analysis retirement is not reconciled", startup.ToString(), StringComparison.Ordinal);
-        Assert.Equal(1, await AccountDeletionRestoreFence.ReconcileAsync(restored, restoredStorage, TimeProvider.System, ct));
-        Assert.Empty(await restored.AccountDeletionRequests.ToListAsync(ct));
-        Assert.Equal(confirmed.ProtectedText, (await restored.Set<AiRequestRow>().AsNoTracking().SingleAsync(ct)).ProtectedText);
-
         var confirmedEffect = await db.Set<AiPilotDeletionRow>().AsNoTracking().SingleAsync(row => row.RequestId == confirmed.Id, ct);
         restored.Add(confirmedEffect);
         await restored.SaveChangesAsync(ct);

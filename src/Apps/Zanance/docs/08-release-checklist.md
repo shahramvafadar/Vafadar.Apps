@@ -6647,3 +6647,18 @@ account enabled access to About. The AVD was removed and the shared ADB
 server stayed running. The source APK and the evidence JSON and XML are under
 `artifacts/android-connected-c29ee3cd-synthetic-about-review` and
 `artifacts/zanance-about-connected-c29ee3cd`.
+
+### Offline signed package with the AI preference binding fix
+
+The licensed offline Android Release build from `86668b46` carries the app
+change in `db66f46d` that keeps other pages informed when one AI preference
+observer fails.
+
+- APK: `artifacts/android-offline-86668b46-licensed-review/pro.vafadar.zanance-Signed.apk`
+- Size: 99,712,623 bytes
+- SHA-256: `dfb452e1fd9eb224fbc7f6704b599e9d418b5750f2785429ebe71406737d02e9`
+
+The exact archive passed the offline verifier, 16 KiB alignment checks, v2/v3
+signer continuity and ARM64/x86_64 checks. The new preference regression was
+qualified separately at source level. This APK was not installed, and no
+accepted device case was replayed.
